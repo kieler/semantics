@@ -50,18 +50,12 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static final ImageDescriptor ICON_SSM = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconSSM.png");
     
-    public static final ImageDescriptor ICON_SIDE_BY_SIDE = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconSideBySide.png");
-
     /** The action for toggling the advanced mode. */
     private Action actionAdvancedToggle;
 
     /** The action for toggling the SSM mode. */
     private Action actionSSMToggle;
     
-    /** The action for toggling side-by-side display mode. */
-    private Action actionSideBySideToggle;
-
     /** The Constant ID. */
     public static final String ID = "de.cau.cs.kieler.kico.selection";
     
@@ -70,13 +64,6 @@ public class KiCoSelectionView extends DiagramViewPart {
     
     /** The active tranformations property key. */
     public static final String ACTIVE_TRANSFORMATIONS_PROPERTY_KEY = "de.cau.cs.kieler.kico.ui.activeTransformations";
-    
-    /** The active display mode property key. */
-    public static final String DISPLAY_MODE_PROPERTY_KEY = "de.cau.cs.kieler.kico.ui.displayMode";
-    
-    /** Display modes for kico.klighd. */
-    public static final String DISPLAY_SINGLE_MODEL = "single"; 
-    public static final String DISPLAY_SIDE_BY_SIDE = "side-by-side";
 
     /** The graph model of TransformationDummys per editor instance. */
     static HashMap<Integer, List<TransformationDummy>> model =
@@ -617,7 +604,6 @@ public class KiCoSelectionView extends DiagramViewPart {
         IToolBarManager toolBarManager = bars.getToolBarManager();
         toolBarManager.add(getActionAdvancedToggle());
         toolBarManager.add(getActionSSMToggle());
-        toolBarManager.add(getActionSideBySide());
 
         DiagramViewManager.getInstance().registerView(this);
 
@@ -667,35 +653,6 @@ public class KiCoSelectionView extends DiagramViewPart {
         // Add the IPartListener2 to the page
         IWorkbenchPage page = this.getSite().getPage();
         page.addPartListener(pl);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the action to toggle side-by-side display mode.
-     * 
-     * @return the action
-     */
-    private Action getActionSideBySide() {
-        if (actionSideBySideToggle != null) {
-            return actionSideBySideToggle;
-        }
-        actionSideBySideToggle = new Action("", IAction.AS_CHECK_BOX) {
-            public void run() {
-                if(actionSideBySideToggle.isChecked()){
-                    setPartProperty(DISPLAY_MODE_PROPERTY_KEY, DISPLAY_SIDE_BY_SIDE);                    
-                }else{
-                    setPartProperty(DISPLAY_MODE_PROPERTY_KEY, DISPLAY_SINGLE_MODEL);
-                }
-            }
-        };
-        actionSideBySideToggle.setText("Enable side-by-side display mode");
-        actionSideBySideToggle.setToolTipText("Enable side-by-side display mode");
-        //actionSideBySideToggle.setToolTipText("Enables side-by-side display mode of compiled and source model.");
-        actionSideBySideToggle.setImageDescriptor(ICON_SIDE_BY_SIDE);
-        actionSideBySideToggle.setChecked(false);
-        setPartProperty(DISPLAY_MODE_PROPERTY_KEY, DISPLAY_SINGLE_MODEL);
-        return actionSideBySideToggle;
     }
     
     // -------------------------------------------------------------------------

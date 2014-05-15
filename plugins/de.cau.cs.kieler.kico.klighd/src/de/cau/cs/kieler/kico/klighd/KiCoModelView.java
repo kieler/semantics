@@ -13,12 +13,9 @@
  */
 package de.cau.cs.kieler.kico.klighd;
 
-import java.lang.ref.WeakReference;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -30,6 +27,8 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
@@ -55,7 +54,6 @@ import de.cau.cs.kieler.kico.klighd.model.KiCoModelWrapper;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionView;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
-import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
 /**
  * Singleton instance of DiagramViewPart to display any model
@@ -65,44 +63,74 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
  */
 public class KiCoModelView extends DiagramViewPart {
 
+    /**
+     * Events that can cause a update of shown model
+     * 
+     * @author als
+     * 
+     */
     private enum ChangeEvent {
         SAVED, DISPLAY_MODE, TRANSFORMATIONS, ACTIVE_EDITOR, COMPILE, ACTIVE_RESOURCE
     }
 
+    /** This instance */
+    private KiCoModelView thisInstance;
+
     /** Viewer ID **/
     private static final String ID = "de.cau.cs.kieler.kico.klighd.view";
-    private static long newSubID = 1;
-    private static final String NAME = "KIELER Model View";
 
+    // ICONS
+    /** The icon for toggling side-by-side display mode button. */
     public static final ImageDescriptor ICON_COMPILE = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.klighd", "icons/KiCoModelViewIconCompile.png");
+    /** The icon for toggling compile button. */
+    public static final ImageDescriptor ICON_FORK = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "de.cau.cs.kieler.kico.klighd", "icons/KiCoModelViewIconDuplicate.png");
+    /** The icon for forking view button. */
+    public static final ImageDescriptor ICON_SIDE_BY_SIDE = AbstractUIPlugin
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.ui",
+                    "icons/KiCoViewIconSideBySide.png");
 
-    public static final ImageDescriptor ICON_DUPLICATE = AbstractUIPlugin
-            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.klighd",
-                    "icons/KiCoModelViewIconDuplicate.png");
+    // ACTIONS
+    /** The action for toggling side-by-side display mode. */
+    private Action actionSideBySideToggle;
+    /** Flag if side-by-side display mode is active. */
+    private boolean displaySideBySide = false;
 
     /** The action for toggling compile. */
     private Action actionCompileToggle;
+    /** Flag if compile mode is active. */
     private boolean compileModel = true;
 
-    /** The action for toggling compile. */
-    private Action actionDuplicate;
+    /** Flag if resources should be displayed. */
+    private boolean visualizeResourceModels = false;
+
+    /** String of pinned transformations. */
+    private String pinnedTransformations = null;
+
+    /** The action for forking view. */
+    private Action actionFork;
+
     private String secondaryID;
-    private static HashMap<String, WeakReference<KiCoModelView>> parentalViews =
-    new HashMap<String, WeakReference<KiCoModelView>>(0);
+    // TODO sync id dilevery and assignment after restart
+    private static long newSubID = 1;
+    private boolean isPrimaryView = false;
+    private static List<String> secondaryIDs = new LinkedList<String>();
 
     private KiCoSelectionView selectionView;
     private HashMap<String, String> tranformations = new HashMap<String, String>();
-    private boolean visualizeResourceModels = false;
+
     private LinkedList<IEditorPart> editors = new LinkedList<IEditorPart>();
     private IEditorPart activeEditor;
     private Object currentModel;
-    private String displayMode = KiCoSelectionView.DISPLAY_SINGLE_MODEL;
-    private boolean isPrimaryView = false;
-    private static KiCoModelView primaryView;
-    private String pinnedTransformations = null;
-    
-    private KiCoModelView thisInstance;
+
+    // TODO StartupDeamon
+    // IEditorPart editor =
+    // PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+    // .getActivePage().getActiveEditor();
+    // if (isModelEditor(editor)) {
+    // setActiveEditor(editor);
+    // }
 
     /**
      * Create an instance
@@ -121,14 +149,12 @@ public class KiCoModelView extends DiagramViewPart {
 
         if (site.getSecondaryId() != null) {
             secondaryID = site.getSecondaryId();
-        }else{
-            primaryView = this;
+            synchronized (secondaryIDs) {
+                secondaryIDs.add(secondaryID);
+            }
+        } else {
             isPrimaryView = true;
         }
-
-        // TODO get active editor
-        setSelectionView(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-                .findView(KiCoSelectionView.ID));
     }
 
     /**
@@ -143,7 +169,131 @@ public class KiCoModelView extends DiagramViewPart {
         }
     }
 
+    // -- LISTENER
     // -------------------------------------------------------------------------
+
+    /** PropertyListener to check if a editor was saved. */
+    final IPropertyListener dirtyPropertyListener = new IPropertyListener() {
+
+        public void propertyChanged(Object source, int propId) {
+            if (propId == IWorkbenchPartConstants.PROP_DIRTY && !((IEditorPart) source).isDirty()) {
+                updateModel(ChangeEvent.SAVED);
+            }
+        }
+    };
+
+    /** PropertyChangeListener to get changes of selected transformations in KiCoSelectionView. */
+    final IPropertyChangeListener tranformationsPropertyListener = new IPropertyChangeListener() {
+
+        public void propertyChange(PropertyChangeEvent event) {
+            if (event.getProperty() == KiCoSelectionView.ACTIVE_TRANSFORMATIONS_PROPERTY_KEY) {
+                String editorHash =
+                        ((KiCoSelectionView) event.getSource())
+                                .getPartProperty(KiCoSelectionView.ACTIVE_EDITOR_PROPERTY_KEY);
+                if (event.getNewValue() != null
+                        && !event.getNewValue().equals(
+                                tranformations.put(editorHash, (String) event.getNewValue()))) {
+                    updateModel(ChangeEvent.TRANSFORMATIONS);
+                }
+            }
+        }
+    };
+
+    /** PartListener to react on opened/closed/activated Editors and KiCoSelectionView. */
+    final IPartListener2 partListener = new IPartListener2() {
+
+        public void partVisible(IWorkbenchPartReference partRef) {
+            // Do nothing
+        }
+
+        public void partOpened(IWorkbenchPartReference partRef) {
+            IWorkbenchPart part = partRef.getPart(false);
+            if (part != null) {
+                if (isModelEditor(part)) {
+                    editors.add((IEditorPart) part);
+                } else if (partRef.getId() == KiCoSelectionView.ID) {
+                    setSelectionView(part);
+                }
+            }
+        }
+
+        public void partInputChanged(IWorkbenchPartReference partRef) {
+            // Do nothing
+        }
+
+        public void partHidden(IWorkbenchPartReference partRef) {
+            // Do nothing
+        }
+
+        public void partDeactivated(IWorkbenchPartReference partRef) {
+            // Do nothing
+        }
+
+        public void partClosed(IWorkbenchPartReference partRef) {
+            IWorkbenchPart part = partRef.getPart(false);
+            if (isModelEditor(part)) {
+                //add to editor list
+                IEditorPart editor = (IEditorPart) part;
+                editors.remove(editor);
+                editor.removePropertyListener(dirtyPropertyListener);
+                // close this secondary view if editor was active editor
+                if (!isPrimaryView && editor == activeEditor) {
+                    PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                            .hideView(thisInstance);
+                }
+            } else if (partRef.getId() == KiCoSelectionView.ID) {
+                setSelectionView(null);
+                tranformations.clear();
+            }
+        }
+
+        public void partBroughtToTop(IWorkbenchPartReference partRef) {
+            // Do nothing
+        }
+
+        public void partActivated(IWorkbenchPartReference partRef) {
+            IWorkbenchPart part = partRef.getPart(false);
+            if (isModelEditor(part) && isPrimaryView) {
+                setActiveEditor((IEditorPart) part);
+            }
+        }
+    };
+
+    // -- Register LISTENER
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public void createPartControl(final Composite parent) {
+        super.createPartControl(parent);
+
+        IActionBars bars = getViewSite().getActionBars();
+        IToolBarManager toolBarManager = bars.getToolBarManager();
+        // toolBarManager.add(getActionSave());
+        toolBarManager.add(getActionFork());
+        // toolBarManager.add(getActionResourceVisualization());
+        toolBarManager.add(getActionCompile());
+        toolBarManager.add(getActionSideBySide());
+
+        DiagramViewManager.getInstance().registerView(this);
+
+        // Add the partListener to the page
+        final IWorkbenchPage page = this.getSite().getPage();
+        page.addPartListener(partListener);
+
+        // Take care of removing part listener
+        parent.addDisposeListener(new DisposeListener() {
+
+            public void widgetDisposed(DisposeEvent e) {
+                page.removePartListener(partListener);
+            }
+        });
+
+        // Find KiCoSelectionView and register as transformation source
+        setSelectionView(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                .findView(KiCoSelectionView.ID));
+    }
 
     /**
      * @param selectionView
@@ -165,133 +315,26 @@ public class KiCoModelView extends DiagramViewPart {
 
     }
 
-    final IPropertyListener dirtyPropertyListener = new IPropertyListener() {
-
-        public void propertyChanged(Object source, int propId) {
-            if (propId == IWorkbenchPartConstants.PROP_DIRTY && !((IEditorPart) source).isDirty()) {
-                updateDiagram(ChangeEvent.SAVED);
-            }
-        }
-    };
-
-    final IPropertyChangeListener tranformationsPropertyListener = new IPropertyChangeListener() {
-
-        public void propertyChange(PropertyChangeEvent event) {
-            if (event.getProperty() == KiCoSelectionView.ACTIVE_TRANSFORMATIONS_PROPERTY_KEY) {
-                String editorHash =
-                        ((KiCoSelectionView) event.getSource())
-                                .getPartProperty(KiCoSelectionView.ACTIVE_EDITOR_PROPERTY_KEY);
-                if (event.getNewValue() != null
-                        && !event.getNewValue().equals(
-                                tranformations.put(editorHash, (String) event.getNewValue()))) {
-                    updateDiagram(ChangeEvent.TRANSFORMATIONS);
-                }
-            } else if (event.getProperty() == KiCoSelectionView.DISPLAY_MODE_PROPERTY_KEY) {
-                displayMode = (String) event.getNewValue();
-                updateDiagram(ChangeEvent.DISPLAY_MODE);
-            }
-        }
-    };
-
     /**
      * {@inheritDoc}
      */
-    public void createPartControl(final Composite parent) {
-        super.createPartControl(parent);
-
-        IActionBars bars = getViewSite().getActionBars();
-        IToolBarManager toolBarManager = bars.getToolBarManager();
-        // toolBarManager.add(getActionSave());
-        toolBarManager.add(getActionDuplicate());
-        // toolBarManager.add(getActionResourceVisualization());
-        toolBarManager.add(getActionCompile());
-
-        DiagramViewManager.getInstance().registerView(this);
-
-        // Create an IPartListener2
-        IPartListener2 pl = new IPartListener2() {
-
-            public void partVisible(IWorkbenchPartReference partRef) {
-                // TODO Auto-generated method stub
+    @Override
+    public void dispose() {
+        // Cleanup
+        if (!isPrimaryView) {
+            synchronized (secondaryIDs) {
+                secondaryIDs.remove(secondaryID);
             }
+        }
+        // remove listener from selectionView
+        setSelectionView(null);
 
-            public void partOpened(IWorkbenchPartReference partRef) {
-                IWorkbenchPart part = partRef.getPart(false);
-                if (part != null) {
-                    if (isModelEditor(part)) {
-                        editors.add((IEditorPart) part);
-                    } else if (partRef.getId() == KiCoSelectionView.ID) {
-                        setSelectionView(part);
-                    } else if (part == thisInstance) {
-                        if (isPrimaryView) {
-                            IEditorPart editor =
-                                    PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                                            .getActivePage().getActiveEditor();
-                            if (isModelEditor(editor)) {
-                                setActiveEditor(editor);
-                            }
-                        } else if (parentalViews.containsKey(secondaryID)) {
-                            KiCoModelView parentView = parentalViews.get(secondaryID).get();
-                            if (parent != null) {
-                                tranformations.putAll(parentView.tranformations);
-                                compileModel = parentView.compileModel;
-                                setActiveEditor(parentView.activeEditor);
-                            } else {
-                                parentalViews.remove(secondaryID);
-                            }
-                        }
-                    }
-                }
-            }
-
-            public void partInputChanged(IWorkbenchPartReference partRef) {
-                // TODO Auto-generated method stub
-
-            }
-
-            public void partHidden(IWorkbenchPartReference partRef) {
-                // TODO Auto-generated method stub
-
-            }
-
-            public void partDeactivated(IWorkbenchPartReference partRef) {
-                // TODO Auto-generated method stub
-
-            }
-
-            public void partClosed(IWorkbenchPartReference partRef) {
-                IWorkbenchPart part = partRef.getPart(false);
-                if (isModelEditor(part)) {
-                    IEditorPart editor = (IEditorPart) part;
-                    editors.remove(editor);
-                    editor.removePropertyListener(dirtyPropertyListener);
-                } else if (partRef.getId() == KiCoSelectionView.ID) {
-                    setSelectionView(null);
-                    tranformations.clear();
-                } else if (part == thisInstance) {
-                    // TODO hide primary
-                    if (isPrimaryView) {
-                        primaryView = null;
-                    }
-                }
-            }
-
-            public void partBroughtToTop(IWorkbenchPartReference partRef) {
-                // TODO Auto-generated method stub
-            }
-
-            public void partActivated(IWorkbenchPartReference partRef) {
-                IWorkbenchPart part = partRef.getPart(false);
-                if (isModelEditor(part) && isPrimaryView) {
-                    setActiveEditor((IEditorPart) part);
-                }
-            }
-        };
-
-        // Add the IPartListener2 to the page
-        IWorkbenchPage page = this.getSite().getPage();
-        page.addPartListener(pl);
+        super.dispose();
     }
+
+    // -- TEST and SET
+    // -------------------------------------------------------------------------
+    // TODO docu
 
     private boolean isModelEditor(IWorkbenchPart part) {
         if (part instanceof IEditorPart) {
@@ -317,9 +360,12 @@ public class KiCoModelView extends DiagramViewPart {
             if (!isPrimaryView) {
                 setPartName(editor.getTitle());
             }
-            updateDiagram(ChangeEvent.ACTIVE_EDITOR);
+            updateModel(ChangeEvent.ACTIVE_EDITOR);
         }
     }
+
+    // -- ACTIONS
+    // -------------------------------------------------------------------------
 
     /**
      * Gets the action to toggle compile.
@@ -333,6 +379,7 @@ public class KiCoModelView extends DiagramViewPart {
         actionCompileToggle = new Action("", IAction.AS_CHECK_BOX) {
             public void run() {
                 compileModel = actionCompileToggle.isChecked();
+                updateModel(ChangeEvent.COMPILE);
             }
         };
         actionCompileToggle.setText("Show compiled model");
@@ -340,50 +387,78 @@ public class KiCoModelView extends DiagramViewPart {
         // actionCompileToggle.setToolTipText("Show compiled model acording to compiler selection");
         actionCompileToggle.setImageDescriptor(ICON_COMPILE);
         actionCompileToggle.setChecked(compileModel);
-        actionCompileToggle.setEnabled(true);
         return actionCompileToggle;
     }
 
     /**
-     * Gets the action to duplicate.
+     * Gets the action to toggle side-by-side display mode.
      * 
      * @return the action
      */
-    private Action getActionDuplicate() {
-        if (actionDuplicate != null) {
-            return actionDuplicate;
+    private Action getActionSideBySide() {
+        if (actionSideBySideToggle != null) {
+            return actionSideBySideToggle;
         }
-        actionDuplicate = new Action("", IAction.AS_PUSH_BUTTON) {
+        actionSideBySideToggle = new Action("", IAction.AS_CHECK_BOX) {
+            public void run() {
+                displaySideBySide = actionSideBySideToggle.isChecked();
+                updateModel(ChangeEvent.DISPLAY_MODE);
+            }
+        };
+        actionSideBySideToggle.setText("Enable side-by-side display mode");
+        actionSideBySideToggle.setToolTipText("Enable side-by-side display mode");
+        // actionSideBySideToggle.setToolTipText("Enables side-by-side display mode of compiled and source model.");
+        actionSideBySideToggle.setImageDescriptor(ICON_SIDE_BY_SIDE);
+        actionSideBySideToggle.setChecked(displaySideBySide);
+        return actionSideBySideToggle;
+    }
+
+    /**
+     * Gets the action to fork this view.
+     * 
+     * @return the action
+     */
+    private Action getActionFork() {
+        if (actionFork != null) {
+            return actionFork;
+        }
+        actionFork = new Action("", IAction.AS_PUSH_BUTTON) {
             public void run() {
                 try {
+                    // Create new subID
                     String subID = "secondary" + newSubID++;
-                    parentalViews.put(subID, new WeakReference<KiCoModelView>(thisInstance));
+                    // Create new View
                     IViewPart newViewPart =
                             PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
                                     .showView(ID, subID, IWorkbenchPage.VIEW_ACTIVATE);
-                    if (newViewPart != null) {
-                        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-                                .bringToTop(newViewPart);
+                    // Configure child view
+                    if (newViewPart instanceof KiCoModelView) {
+                        KiCoModelView child = (KiCoModelView) newViewPart;
+                        child.setActiveEditor(KiCoModelView.this.activeEditor);
+                        // TODO configure child
                     }
 
                 } catch (PartInitException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
         };
-        actionDuplicate.setText("Fork this view");
-        actionDuplicate.setToolTipText("Fork this view");
-        actionDuplicate.setImageDescriptor(ICON_DUPLICATE);
-        return actionDuplicate;
+        actionFork.setText("Fork this view");
+        actionFork.setToolTipText("Fork this view");
+        actionFork.setImageDescriptor(ICON_FORK);
+        return actionFork;
     }
 
-    private void updateDiagram(ChangeEvent change) {
+    // -- UPDATE
+    // -------------------------------------------------------------------------
+
+    private void updateModel(ChangeEvent change) {
         if (visualizeResourceModels) {
+            // TODO Resource selection
             return;
         }
         if (activeEditor != null) {
-            if (activeEditor instanceof XtextEditor) {
+            if (activeEditor instanceof XtextEditor) {// Get model from XTextEditor
                 IXtextDocument document = ((XtextEditor) activeEditor).getDocument();
                 if (document != null) {
                     document.readOnly(new IUnitOfWork.Void<XtextResource>() {
@@ -394,7 +469,8 @@ public class KiCoModelView extends DiagramViewPart {
                         }
                     });
                 }
-            } else if (activeEditor instanceof IEditingDomainProvider) {
+            } else if (activeEditor instanceof IEditingDomainProvider) {// Get model from EMF
+                                                                        // TreeEditor
                 IEditingDomainProvider editor = (IEditingDomainProvider) activeEditor;
 
                 List<Resource> resources =
@@ -417,27 +493,43 @@ public class KiCoModelView extends DiagramViewPart {
                                     tranformations.get(Integer.toString(activeEditor.hashCode())),
                                     (EObject) currentModel);
 
+                    // TODO test if compiler error occured
                     // composite model in given display mode
                     if (compiledModel != null) {
-                        if (displayMode == KiCoSelectionView.DISPLAY_SINGLE_MODEL) {
-                            currentModel = compiledModel;
-                        } else if (displayMode == KiCoSelectionView.DISPLAY_SIDE_BY_SIDE) {
+                        if (displaySideBySide) {
                             KiCoModelChain chain = new KiCoModelChain();
                             chain.models.add(new KiCoModelWrapper(currentModel));
                             chain.models.add(new KiCoModelWrapper(compiledModel));
 
                             currentModel = chain;
+                        } else {
+                            currentModel = compiledModel;
                         }
                     }
 
-                    DiagramViewManager.getInstance().createView(getPartId(), null, currentModel,
-                            KlighdSynthesisProperties.emptyConfig());
+                    updateDiagram();
                 } else if (change != ChangeEvent.DISPLAY_MODE
                         && change != ChangeEvent.TRANSFORMATIONS) {
-                    DiagramViewManager.getInstance().createView(getPartId(), null, currentModel,
-                            KlighdSynthesisProperties.emptyConfig());
+                    updateDiagram();
                 }
             }
         }
+    }
+
+    /**
+     * Updates displayed diagram to currentModel.
+     */
+    private void updateDiagram() {
+        if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
+            // the initialization case
+            DiagramViewManager.getInstance().createView(getPartId(), null, currentModel, null);
+            this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
+        } else {
+            // update case
+            this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
+            DiagramViewManager.getInstance().updateView(this.getViewer().getViewContext(),
+                    currentModel);
+        }
+
     }
 }
