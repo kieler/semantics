@@ -24,7 +24,7 @@ import de.cau.cs.kieler.sccharts.State;
  * @author chsch
  *
  */
-public class StateLayoutConfig extends SemanticLayoutConfig{
+public class RegionLayoutConfig extends SemanticLayoutConfig{
 
 
     /** the priority for this semantic layout configuration. */

@@ -82,6 +82,10 @@
             class="de.cau.cs.kieler.sccharts.State"
             config="de.cau.cs.kieler.sccharts.klighd.layout.StateLayoutConfig">
       </semanticConfig>
+      <semanticConfig
+            class="de.cau.cs.kieler.sccharts.Region"
+            config="de.cau.cs.kieler.sccharts.klighd.layout.RegionLayoutConfig">
+      </semanticConfig>
    </extension>
 
 </plugin>
