@@ -191,13 +191,19 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
         //        // ---------
 //        return transformed.translate();
 
-        return createNode() => [ children += model.translate ] 
+        return createNode() => [
+            addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot") 
+            addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES)
+            children += model.translate
+        ] 
     }
 
     // -------------------------------------------------------------------------
     // Transform a region
     def dispatch KNode translate(Region r) {
         return r.createNode().putToLookUpWith(r) => [ node |
+            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot")
+            node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES)
             if (r.states.size > 1) {
                 //node.setLayoutOption(KlighdConstants::EXPAND, false);
             }
@@ -340,6 +346,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
         }
 
         return s.createNode().putToLookUpWith(s) => [ node |
+            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box")
             node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
             if (s.isInitial) {
                 node.setParent(node.parent)

@@ -31,26 +31,6 @@
    <extension
          point="de.cau.cs.kieler.kiml.layoutConfigs">
       <staticConfig
-            class="de.cau.cs.kieler.sccharts.Region"
-            option="de.cau.cs.kieler.diagramType"
-            value="de.cau.cs.kieler.layout.diagrams.stateMachine">
-      </staticConfig>
-      <staticConfig
-            class="de.cau.cs.kieler.sccharts.State"
-            option="de.cau.cs.kieler.diagramType"
-            value="de.cau.cs.kieler.layout.diagrams.boxes">
-      </staticConfig>
-      <staticConfig
-            class="de.cau.cs.kieler.core.kexpressions.Signal"
-            option="de.cau.cs.kieler.noLayout"
-            value="true">
-      </staticConfig>
-      <staticConfig
-            class="de.cau.cs.kieler.core.kexpressions.Variable"
-            option="de.cau.cs.kieler.noLayout"
-            value="true">
-      </staticConfig>
-      <staticConfig
             class="de.cau.cs.kieler.sccharts.State"
             option="de.cau.cs.kieler.spacing"
             value="1.0">
