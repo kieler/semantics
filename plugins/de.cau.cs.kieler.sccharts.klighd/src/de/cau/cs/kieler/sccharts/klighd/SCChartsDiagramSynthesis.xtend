@@ -112,9 +112,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
     extension SCChartsExtension
 
     @Inject
-    extension SCChartsCoreTransformation
-
-    @Inject
     extension DependencyTransformation
 
     @Inject
