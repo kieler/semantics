@@ -48,7 +48,7 @@ class Static {
     // references (accesses) to x to the new name. Remove the static keyword from the declaration.
     // This is applied for all superstates that contain static variable declarations.
     //
-    def Region transformStatic(Region rootRegion) {
+    def Region transform(Region rootRegion) {
 
         // Clone the complete SCCharts region 
         var targetRootRegion = rootRegion.copy.fixAllPriorities;
