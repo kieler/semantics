@@ -11,6 +11,7 @@ Export-Package: de.cau.cs.kieler.sccharts,
  de.cau.cs.kieler.sccharts.extensions,
  de.cau.cs.kieler.sccharts.handler,
  de.cau.cs.kieler.sccharts.impl,
+ de.cau.cs.kieler.sccharts.transformations,
  de.cau.cs.kieler.sccharts.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
