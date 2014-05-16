@@ -20,5 +20,10 @@
             restorable="true">
       </view>
    </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="de.cau.cs.kieler.kico.klighd.KiCoModelViewManager"></startup>
+   </extension>
 
 </plugin>

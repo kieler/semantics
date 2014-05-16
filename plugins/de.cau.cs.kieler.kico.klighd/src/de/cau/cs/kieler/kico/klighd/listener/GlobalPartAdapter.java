@@ -58,20 +58,25 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
 
     /** Either the listener to which the part events are delegated, or null. */
     private IPartListener2 delegateListener;
+    private boolean initialNotifications;
 
     /**
      * 
      */
     public GlobalPartAdapter() {
-        this(null);
+        this(null, false);
     }
 
     /**
      * @param theDelegateListener
      *            a part listener to which all part events are delegated.
+     * 
+     * @param initialNotifications
+     *                 if true this listen will initially inform about past events
      */
-    public GlobalPartAdapter(final IPartListener2 theDelegateListener) {
+    public GlobalPartAdapter(final IPartListener2 theDelegateListener, boolean initialNotifications) {
         this.delegateListener = theDelegateListener;
+        this.initialNotifications = initialNotifications;
 
         // register as window listener
         PlatformUI.getWorkbench().addWindowListener(this);
@@ -163,7 +168,8 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
         IWorkbenchPartReference part = page.getActivePartReference();
         if (part != null) {
             partOpened(part);
-        } else {
+        }
+        if(part == null || initialNotifications) {
             IEditorReference[] edRefs = page.getEditorReferences();
             if (edRefs != null && edRefs.length > 0) {
                 for (IEditorReference ref : edRefs) {
