@@ -16,15 +16,14 @@ package de.cau.cs.kieler.kico.klighd.listener;
 import java.util.List;
 
 import org.eclipse.core.runtime.Status;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPageListener;
 import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWindowListener;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -48,8 +47,9 @@ import de.cau.cs.kieler.core.kivi.KiViPlugin;
  * <ul>
  * 
  * @author uru
+ * @author als
  */
-public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartListener {
+public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartListener2 {
 
     /** Holds all currently known workbench windows this instance is registered to as listener. */
     private List<IWorkbenchWindow> windows = Lists.newLinkedList();
@@ -57,7 +57,7 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
     private List<IWorkbenchPage> pages = Lists.newLinkedList();
 
     /** Either the listener to which the part events are delegated, or null. */
-    private IPartListener delegateListener;
+    private IPartListener2 delegateListener;
 
     /**
      * 
@@ -70,7 +70,7 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
      * @param theDelegateListener
      *            a part listener to which all part events are delegated.
      */
-    public GlobalPartAdapter(final IPartListener theDelegateListener) {
+    public GlobalPartAdapter(final IPartListener2 theDelegateListener) {
         this.delegateListener = theDelegateListener;
 
         // register as window listener
@@ -160,27 +160,21 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
         pages.add(page);
         page.addPartListener(this);
 
-        IWorkbenchPart part = page.getActivePart();
+        IWorkbenchPartReference part = page.getActivePartReference();
         if (part != null) {
             partOpened(part);
         } else {
             IEditorReference[] edRefs = page.getEditorReferences();
             if (edRefs != null && edRefs.length > 0) {
                 for (IEditorReference ref : edRefs) {
-                    IEditorPart editor = ref.getEditor(false);
-                    if (editor != null) {
-                        partOpened(editor);
-                    }
+                        partOpened(ref);
                 }
             }
 
             IViewReference[] viewRefs = page.getViewReferences();
             if (viewRefs != null && viewRefs.length > 0) {
                 for (IViewReference ref : viewRefs) {
-                    IViewPart view = ref.getView(false);
-                    if (view != null) {
-                        partOpened(view);
-                    }
+                    partOpened(ref);
                 }
             }
         }
@@ -223,51 +217,78 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
 
     /*
      * --------------------------------------------------------------------------------------------
-     * Empty implementations of the IPartListener interface.
+     * Empty implementations of the IPartListener2 interface.
      */
 
     /**
      * {@inheritDoc}
      */
-    public void partBroughtToTop(final IWorkbenchPart part) {
+    public void partActivated(IWorkbenchPartReference partRef) {
         if (delegateListener != null) {
-            delegateListener.partBroughtToTop(part);
+            delegateListener.partActivated(partRef);
         }
     }
 
     /**
      * {@inheritDoc}
      */
-    public void partActivated(final IWorkbenchPart part) {
+    public void partBroughtToTop(IWorkbenchPartReference partRef) {
         if (delegateListener != null) {
-            delegateListener.partActivated(part);
+            delegateListener.partBroughtToTop(partRef);
         }
     }
 
     /**
      * {@inheritDoc}
      */
-    public void partClosed(final IWorkbenchPart part) {
+    public void partClosed(IWorkbenchPartReference partRef) {
         if (delegateListener != null) {
-            delegateListener.partClosed(part);
+            delegateListener.partClosed(partRef);
+        } 
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void partDeactivated(IWorkbenchPartReference partRef) {
+        if (delegateListener != null) {
+            delegateListener.partDeactivated(partRef);
         }
     }
 
     /**
      * {@inheritDoc}
      */
-    public void partDeactivated(final IWorkbenchPart part) {
+    public void partOpened(IWorkbenchPartReference partRef) {
         if (delegateListener != null) {
-            delegateListener.partDeactivated(part);
+            delegateListener.partOpened(partRef);
         }
     }
 
     /**
      * {@inheritDoc}
      */
-    public void partOpened(final IWorkbenchPart part) {
+    public void partHidden(IWorkbenchPartReference partRef) {
         if (delegateListener != null) {
-            delegateListener.partOpened(part);
+            delegateListener.partHidden(partRef);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void partVisible(IWorkbenchPartReference partRef) {
+        if (delegateListener != null) {
+            delegateListener.partVisible(partRef);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void partInputChanged(IWorkbenchPartReference partRef) {
+        if (delegateListener != null) {
+            delegateListener.partInputChanged(partRef);
         }
     }
 }
