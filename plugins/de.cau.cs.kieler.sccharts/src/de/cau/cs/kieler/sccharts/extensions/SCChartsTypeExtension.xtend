@@ -163,7 +163,7 @@ class SCChartsTypeExtension {
     }
 
     //-------------------------------------------------------------------------
-    //--                FEATURE ANALYSERS                                    --
+    //--                FEATURE ANALYZERS                                    --
     //-------------------------------------------------------------------------
     // All checks are optimized in cases lazy execution in Xtend.
     // Thus a checks return immediately if a feature is found.

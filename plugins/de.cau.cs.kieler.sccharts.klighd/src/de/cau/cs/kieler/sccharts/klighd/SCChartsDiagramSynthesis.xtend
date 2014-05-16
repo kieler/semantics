@@ -65,7 +65,6 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import static de.cau.cs.kieler.sccharts.klighd.SCChartsDiagramSynthesis.*
 import de.cau.cs.kieler.kico.KielerCompiler
@@ -111,9 +110,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Region> {
 
     @Inject
     extension SCChartsExtension
-
-    @Inject
-    extension SCChartsCoreTransformation
 
     @Inject
     extension DependencyTransformation
