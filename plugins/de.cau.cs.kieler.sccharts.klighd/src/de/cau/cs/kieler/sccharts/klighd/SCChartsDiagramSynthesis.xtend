@@ -54,7 +54,6 @@ import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.s.DataDependency
 import de.cau.cs.kieler.sccharts.s.DependencyGraph
@@ -68,6 +67,8 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+
+
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
@@ -109,9 +110,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
 
     @Inject
     extension SCChartsExtension
-
-    @Inject
-    extension SCChartsCoreTransformation
 
     @Inject
     extension DependencyTransformation
