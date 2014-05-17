@@ -42,8 +42,8 @@ import de.cau.cs.kieler.core.kivi.KiViPlugin;
  * 
  * <emph>Implementation Notes</emph> There are two possibilities to use this listener.
  * <ul>
- *      <li>Pass a {@link IPartListener} to the constructor which then is used as delegator.</li>
- *      <li>Override any of the {@link IPartListener} methods to add the desired functionality.</li>
+ * <li>Pass a {@link IPartListener} to the constructor which then is used as delegator.</li>
+ * <li>Override any of the {@link IPartListener} methods to add the desired functionality.</li>
  * <ul>
  * 
  * @author uru
@@ -72,7 +72,7 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
      *            a part listener to which all part events are delegated.
      * 
      * @param initialNotifications
-     *                 if true this listen will initially inform about past events
+     *            if true this listen will initially inform about past events
      */
     public GlobalPartAdapter(final IPartListener2 theDelegateListener, boolean initialNotifications) {
         this.delegateListener = theDelegateListener;
@@ -169,20 +169,34 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
         if (part != null) {
             partOpened(part);
         }
-        if(part == null || initialNotifications) {
+        if (part == null || initialNotifications) {
+            // Re-notify about already open editors
             IEditorReference[] edRefs = page.getEditorReferences();
             if (edRefs != null && edRefs.length > 0) {
                 for (IEditorReference ref : edRefs) {
-                        partOpened(ref);
+                    partOpened(ref);
                 }
             }
 
+            // Re-notify about already open view
             IViewReference[] viewRefs = page.getViewReferences();
             if (viewRefs != null && viewRefs.length > 0) {
                 for (IViewReference ref : viewRefs) {
                     partOpened(ref);
                 }
             }
+
+            // Re-notify about activation of active editor
+            if (page.getActiveEditor() != null && initialNotifications) {
+                partActivated(page.getReference(page.getActiveEditor()));
+            }
+
+            // Re-notify about activation of active view
+            if (page.getActivePartReference() != null
+                    && page.getActivePart() instanceof IViewReference && initialNotifications) {
+                partActivated(page.getActivePartReference());
+            }
+
         }
     }
 
@@ -250,7 +264,7 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
     public void partClosed(IWorkbenchPartReference partRef) {
         if (delegateListener != null) {
             delegateListener.partClosed(partRef);
-        } 
+        }
     }
 
     /**

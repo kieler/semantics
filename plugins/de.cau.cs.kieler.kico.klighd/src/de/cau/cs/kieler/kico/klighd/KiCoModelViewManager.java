@@ -14,10 +14,11 @@
 package de.cau.cs.kieler.kico.klighd;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
@@ -27,6 +28,8 @@ import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.progress.UIJob;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 
 import com.google.common.base.Predicate;
@@ -43,7 +46,7 @@ import de.cau.cs.kieler.kico.ui.KiCoSelectionView;
  * @author als
  * 
  */
-public class KiCoModelViewManager implements IStartup {
+public class KiCoModelViewManager extends UIJob implements IStartup  {
 
     // -- PSEUDO SINGLETON
     // -------------------------------------------------------------------------
@@ -55,6 +58,7 @@ public class KiCoModelViewManager implements IStartup {
      * Standard Constructor
      */
     public KiCoModelViewManager() {
+        super(KiCoModelViewManager.class.getName());
         if (instance == null) {
             instance = this;
         } else {
@@ -73,10 +77,15 @@ public class KiCoModelViewManager implements IStartup {
     // -------------------------------------------------------------------------
 
     private GlobalPartAdapter adapter;
+    /** List of open model editors. */
     private LinkedList<IEditorPart> editors = new LinkedList<IEditorPart>();
+    /** List of open KiCoSelectionViews. */
     private LinkedList<KiCoSelectionView> kicoSelections = new LinkedList<KiCoSelectionView>();
+    /** List of open KiCoModelViews. */
     private LinkedList<KiCoModelView> modelViews = new LinkedList<KiCoModelView>();
+    /** Map from edtors (hash) to selected transformations. */
     private HashMap<String, String> tranformations = new HashMap<String, String>();
+    /** Indicated that earlyStartup has not finished yet */
 
     // -- STARTUP
     // -------------------------------------------------------------------------
@@ -85,9 +94,18 @@ public class KiCoModelViewManager implements IStartup {
      * {@inheritDoc}
      */
     public void earlyStartup() {
+        //now run in UI thread
+        this.schedule();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IStatus runInUIThread(IProgressMonitor monitor) {
         // just register global part listener
         adapter = new GlobalPartAdapter(partListener, true);
-
+        return Status.OK_STATUS;
     }
 
     // -- LISTENER
@@ -107,15 +125,12 @@ public class KiCoModelViewManager implements IStartup {
                     editors.add((IEditorPart) part);
                 } else if (part instanceof KiCoSelectionView) {
                     kicoSelections.add((KiCoSelectionView) part);
-                    // listen for transformation changes
+                    // listen to transformation selection changes
                     ((KiCoSelectionView) part)
                             .addPartPropertyListener(tranformationsPropertyListener);
                 } else if (part instanceof KiCoModelView) {
                     KiCoModelView modelView = (KiCoModelView) part;
                     modelViews.add(modelView);
-                    if (modelView.isPrimaryView()) {
-                        modelView.setActiveEditor(partRef.getPage().getActiveEditor());
-                    }
                 }
             }
         }
@@ -146,7 +161,12 @@ public class KiCoModelViewManager implements IStartup {
                                             && !view.isPrimaryView();
                                 }
                             }))) {
-                        modelView.getSite().getPage().hideView(modelView);
+                        // close view if eclipse is not shutting down
+                        // Thus open model views will be restored after restart
+                        if (!PlatformUI.getWorkbench().isClosing()) {
+                            modelView.setActiveEditor(null);
+                            modelView.getSite().getPage().hideView(modelView);
+                        }
                     }
                 } else if (kicoSelections.contains(part)) {
                     kicoSelections.remove(part);
@@ -163,7 +183,7 @@ public class KiCoModelViewManager implements IStartup {
         }
 
         public void partActivated(final IWorkbenchPartReference partRef) {
-            IWorkbenchPart part = partRef.getPart(false);
+           IWorkbenchPart part = partRef.getPart(false);
             if (editors.contains(part)) {
                 // get related primary model view
                 KiCoModelView primaryView =
@@ -178,7 +198,7 @@ public class KiCoModelViewManager implements IStartup {
                 // update or open new view
                 if (primaryView != null) {
                     primaryView.setActiveEditor((IEditorPart) part);
-                } else {
+                } else if (primaryView == null) {
                     try {
                         partRef.getPage().showView(KiCoModelView.ID);
                     } catch (PartInitException e) {
@@ -220,6 +240,13 @@ public class KiCoModelViewManager implements IStartup {
 
     // -- HELPER
     // -------------------------------------------------------------------------
+    /**
+     * Checks if given editor part is a valid model editor visualizable with a ModelView
+     * 
+     * @param part
+     *            editor
+     * @return true if editor is model editor
+     */
     private boolean isModelEditor(IEditorPart part) {
         if (part instanceof XtextEditor || part instanceof IEditingDomainProvider) {
             // TODO check if model has synthesis
@@ -241,5 +268,6 @@ public class KiCoModelViewManager implements IStartup {
         }
         return null;
     }
+
 
 }

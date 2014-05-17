@@ -386,20 +386,16 @@ public class KiCoModelView extends DiagramViewPart {
      * Updates displayed diagram to currentModel.
      */
     private void updateDiagram() {
-        if (PlatformUI.getWorkbench().getActiveWorkbenchWindow() != null
-                && PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage() != null) {
-            if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
-                // the initialization case
-                DiagramViewManager.initializeView(this, currentModel, null, null);
-                this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
-            } else {
-                // update case
-                this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
-                DiagramViewManager.getInstance().updateView(this.getViewer().getViewContext(),
-                        currentModel);
-            }
+        if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
+            // the initialization case
+            DiagramViewManager.initializeView(this, currentModel, null, null);
+            this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
+        } else {
+            // update case
+            this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
+            DiagramViewManager.getInstance().updateView(this.getViewer().getViewContext(),
+                    currentModel);
         }
-
     }
 
 }
