@@ -42,6 +42,7 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelWrapper;
+import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 
@@ -374,8 +375,14 @@ public class KiCoModelView extends DiagramViewPart {
                     }
 
                     updateDiagram();
-                } else if (change != ChangeEvent.DISPLAY_MODE
-                        && change != ChangeEvent.TRANSFORMATIONS) {
+                } else if (!(
+                // Don't update uncompiled diagram when..
+                // display mode changed (no effect on uncomipled)
+                change == ChangeEvent.DISPLAY_MODE
+                // transformations changed but should not compile (no effect on uncomipled)
+                        || (!compileModel && change == ChangeEvent.TRANSFORMATIONS)
+                // switched to uncompiled view but no compiled diagram was shown before
+                || (change == ChangeEvent.COMPILE && transformations == null))) {
                     updateDiagram();
                 }
             }
@@ -387,14 +394,16 @@ public class KiCoModelView extends DiagramViewPart {
      */
     private void updateDiagram() {
         if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
-            // the initialization case
+            // the initialization case            
             DiagramViewManager.initializeView(this, currentModel, null, null);
             this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
         } else {
             // update case
+            // FIXME chsch
+            // - update synthesis as well in view context
+            // - make static
+            DiagramViewManager.getInstance().updateView(this.getViewer().getViewContext(),  currentModel);
             this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
-            DiagramViewManager.getInstance().updateView(this.getViewer().getViewContext(),
-                    currentModel);
         }
     }
 

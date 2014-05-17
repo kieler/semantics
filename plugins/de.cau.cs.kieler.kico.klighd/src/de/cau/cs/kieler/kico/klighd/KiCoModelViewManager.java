@@ -46,7 +46,7 @@ import de.cau.cs.kieler.kico.ui.KiCoSelectionView;
  * @author als
  * 
  */
-public class KiCoModelViewManager extends UIJob implements IStartup  {
+public class KiCoModelViewManager extends UIJob implements IStartup {
 
     // -- PSEUDO SINGLETON
     // -------------------------------------------------------------------------
@@ -76,6 +76,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup  {
     // -- ATTRIBUTES
     // -------------------------------------------------------------------------
 
+    /** Global Listener Adapter */
     private GlobalPartAdapter adapter;
     /** List of open model editors. */
     private LinkedList<IEditorPart> editors = new LinkedList<IEditorPart>();
@@ -85,6 +86,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup  {
     private LinkedList<KiCoModelView> modelViews = new LinkedList<KiCoModelView>();
     /** Map from edtors (hash) to selected transformations. */
     private HashMap<String, String> tranformations = new HashMap<String, String>();
+
     /** Indicated that earlyStartup has not finished yet */
 
     // -- STARTUP
@@ -94,10 +96,10 @@ public class KiCoModelViewManager extends UIJob implements IStartup  {
      * {@inheritDoc}
      */
     public void earlyStartup() {
-        //now run in UI thread
+        // now run in UI thread
         this.schedule();
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -124,13 +126,29 @@ public class KiCoModelViewManager extends UIJob implements IStartup  {
                 if (part instanceof IEditorPart && isModelEditor((IEditorPart) part)) {
                     editors.add((IEditorPart) part);
                 } else if (part instanceof KiCoSelectionView) {
-                    kicoSelections.add((KiCoSelectionView) part);
+                    KiCoSelectionView selectionView = (KiCoSelectionView) part;
+                    kicoSelections.add(selectionView);
                     // listen to transformation selection changes
-                    ((KiCoSelectionView) part)
-                            .addPartPropertyListener(tranformationsPropertyListener);
+                    selectionView.addPartPropertyListener(tranformationsPropertyListener);
+                    // be kind an help selection view to initialize (because in some startup cases
+                    // it activation of an editor)
+                    selectionView.updateView(selectionView.getSite().getPage()
+                            .getReference(selectionView.getSite().getPage().getActiveEditor()));
                 } else if (part instanceof KiCoModelView) {
-                    KiCoModelView modelView = (KiCoModelView) part;
+                    final KiCoModelView modelView = (KiCoModelView) part;
                     modelViews.add(modelView);
+                    if (modelView.isPrimaryView()
+                            && modelView.getSite().getPage().getActiveEditor() != null) {
+                        new UIJob("Init" + KiCoModelView.class.getName()) {
+
+                            @Override
+                            public IStatus runInUIThread(IProgressMonitor monitor) {
+                                modelView.setActiveEditor(modelView.getSite().getPage()
+                                        .getActiveEditor());
+                                return Status.OK_STATUS;
+                            }
+                        }.schedule(2);
+                    }
                 }
             }
         }
@@ -183,7 +201,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup  {
         }
 
         public void partActivated(final IWorkbenchPartReference partRef) {
-           IWorkbenchPart part = partRef.getPart(false);
+            IWorkbenchPart part = partRef.getPart(false);
             if (editors.contains(part)) {
                 // get related primary model view
                 KiCoModelView primaryView =
@@ -268,6 +286,5 @@ public class KiCoModelViewManager extends UIJob implements IStartup  {
         }
         return null;
     }
-
 
 }
