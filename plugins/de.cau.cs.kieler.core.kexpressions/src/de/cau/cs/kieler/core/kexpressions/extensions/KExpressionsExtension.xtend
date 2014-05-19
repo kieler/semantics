@@ -904,6 +904,12 @@ class KExpressionsExtension {
     def ValuedObject createVariable(String variableName) {
         createValuedObject(variableName)
     }
+    
+    def void delete(ValuedObject valuedObject) {
+        val declaration = valuedObject.declaration
+        valuedObject.remove
+        if (declaration.valuedObjects.nullOrEmpty) declaration.remove
+    }
 
 
     //============  SIGNALS  ============

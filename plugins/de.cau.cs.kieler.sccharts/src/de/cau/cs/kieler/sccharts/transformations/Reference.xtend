@@ -18,16 +18,22 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.sccharts.Assignment
 
 /**
  * SCCharts Reference Transformation.
  * 
- * @author cmot
- * @kieler.design 2013-09-05 proposed 
- * @kieler.rating 2013-09-05 proposed yellow
+ * @author ssm
+ * @kieler.design 2014-05-19 proposed 
+ * @kieler.rating 2014-05-19 proposed yellow
  */
 class Reference {
 
+    @Inject
+    extension KExpressionsExtension
+    
     @Inject
     extension SCChartsExtension
 
@@ -39,17 +45,50 @@ class Reference {
     //-------------------------------------------------------------------------
     // ...
     def State transform(State rootState) {
-        var targetRootState = rootState.fixAllPriorities;
+        val targetRootState = rootState.fixAllPriorities;
 
-        // Traverse all states
-        for (targetTransition : targetRootState.getAllContainedStates.immutableCopy) {
-            targetTransition.transformReference(targetRootState);
-        }
+        // Traverse all referenced states
+        targetRootState.allContainedStates.filter[ referencedState ].toList.immutableCopy.forEach[
+            transformReference(targetRootState)
+        ]
+        
         targetRootState;
     }
 
     def void transformReference(State state, State targetRootState) {
-        //TODO
+        
+        // Referenced scopes are always SCCharts
+        val newState = state.referencedScope.copy as State
+
+        // Each referenced state must be contained in a region.
+        state.parentRegion => [ states += newState ] 
+
+        for(eObject : newState.eAllContents.toList) {
+            if (eObject instanceof Assignment || eObject instanceof ValuedObjectReference) {
+                for(binding : state.bindings) {
+                    if (eObject instanceof Assignment) {
+                        if ((eObject as Assignment).valuedObject.ID == binding.formal.ID) {
+                            (eObject as Assignment).valuedObject = binding.actual
+                        }
+                    } else if (eObject instanceof ValuedObjectReference) {
+                        if ((eObject as ValuedObjectReference).valuedObject.ID == binding.formal.ID) {
+                            (eObject as ValuedObjectReference).valuedObject = binding.actual
+                        }
+                    }
+                }
+            }
+        }
+        
+        state.bindings.immutableCopy.forEach[ binding |
+            newState.declarations.immutableCopy.forEach[ 
+                valuedObjects.filter[ ID == binding.formal.ID ].toList.immutableCopy.forEach[delete]
+            ]
+        ]
+        
+        state.incomingTransitions.immutableCopy.forEach[ targetState = newState ]
+        state.outgoingTransitions.immutableCopy.forEach[ sourceState = newState ]
+        
+        state.remove        
     }
 
 }
