@@ -522,7 +522,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         (type=TransitionType | type=TransitionTypeLegacy) 
+	 *         (type=TransitionTypeLegacy | type=TransitionType) 
 	 *         targetState=[State|ID] 
 	 *         (
 	 *             immediate?='immediate'? 

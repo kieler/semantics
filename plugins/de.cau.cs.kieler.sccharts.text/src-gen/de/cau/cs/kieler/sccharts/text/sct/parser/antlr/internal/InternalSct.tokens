@@ -91,7 +91,7 @@ RULE_WS=14
 '>='=72
 'o->'=63
 '=='=68
-'/'=36
+'/'=35
 'string'=89
 'shallow history'=66
 '>'=71
@@ -147,7 +147,7 @@ RULE_WS=14
 'entry'=47
 'max'=92
 '%'=80
-'do'=35
+'do'=36
 'float'=88
 'connector'=56
 '}'=24

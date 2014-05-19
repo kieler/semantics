@@ -1086,11 +1086,11 @@ ruleState returns [EObject current=null]
 	    }
 
 )
-)*	otherlv_22=';' 
+)*(	otherlv_22=';' 
     {
     	newLeafNode(otherlv_22, grammarAccess.getStateAccess().getSemicolonKeyword_8());
     }
-)
+)?)
 ;
 
 
@@ -1204,9 +1204,9 @@ ruleTransition returns [EObject current=null]
 )*((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTransitionAccess().getTypeTransitionTypeEnumRuleCall_1_0_0()); 
+	        newCompositeNode(grammarAccess.getTransitionAccess().getTypeTransitionTypeLegacyEnumRuleCall_1_0_0()); 
 	    }
-		lv_type_1_0=ruleTransitionType		{
+		lv_type_1_0=ruleTransitionTypeLegacy		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTransitionRule());
 	        }
@@ -1214,7 +1214,7 @@ ruleTransition returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_1_0, 
-        		"TransitionType");
+        		"TransitionTypeLegacy");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1223,9 +1223,9 @@ ruleTransition returns [EObject current=null]
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTransitionAccess().getTypeTransitionTypeLegacyEnumRuleCall_1_1_0()); 
+	        newCompositeNode(grammarAccess.getTransitionAccess().getTypeTransitionTypeEnumRuleCall_1_1_0()); 
 	    }
-		lv_type_2_0=ruleTransitionTypeLegacy		{
+		lv_type_2_0=ruleTransitionType		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTransitionRule());
 	        }
@@ -1233,7 +1233,7 @@ ruleTransition returns [EObject current=null]
        			$current, 
        			"type",
         		lv_type_2_0, 
-        		"TransitionTypeLegacy");
+        		"TransitionType");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1302,15 +1302,15 @@ ruleTransition returns [EObject current=null]
 	    }
 
 )
-)?(((	otherlv_7='with' 
+)?((((	otherlv_7='with' 
     {
-    	newLeafNode(otherlv_7, grammarAccess.getTransitionAccess().getWithKeyword_3_3_0_0_0());
+    	newLeafNode(otherlv_7, grammarAccess.getTransitionAccess().getWithKeyword_3_3_0_0_0_0());
     }
 (
 (
 		lv_delay_8_0=RULE_INT
 		{
-			newLeafNode(lv_delay_8_0, grammarAccess.getTransitionAccess().getDelayINTTerminalRuleCall_3_3_0_0_1_0()); 
+			newLeafNode(lv_delay_8_0, grammarAccess.getTransitionAccess().getDelayINTTerminalRuleCall_3_3_0_0_0_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1327,7 +1327,7 @@ ruleTransition returns [EObject current=null]
 )?(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTransitionAccess().getTriggerBoolExpressionParserRuleCall_3_3_0_0_2_0()); 
+	        newCompositeNode(grammarAccess.getTransitionAccess().getTriggerBoolExpressionParserRuleCall_3_3_0_0_0_2_0()); 
 	    }
 		lv_trigger_9_0=ruleBoolExpression		{
 	        if ($current==null) {
@@ -1342,50 +1342,55 @@ ruleTransition returns [EObject current=null]
 	    }
 
 )
-))?((	otherlv_10='do' 
+))
+    |	otherlv_10='with' 
     {
-    	newLeafNode(otherlv_10, grammarAccess.getTransitionAccess().getDoKeyword_3_3_0_1_0_0());
+    	newLeafNode(otherlv_10, grammarAccess.getTransitionAccess().getWithKeyword_3_3_0_0_1());
+    }
+)?((	otherlv_11='/' 
+    {
+    	newLeafNode(otherlv_11, grammarAccess.getTransitionAccess().getSolidusKeyword_3_3_0_1_0_0());
     }
 
-    |	otherlv_11='/' 
+    |	otherlv_12='do' 
     {
-    	newLeafNode(otherlv_11, grammarAccess.getTransitionAccess().getSolidusKeyword_3_3_0_1_0_1());
+    	newLeafNode(otherlv_12, grammarAccess.getTransitionAccess().getDoKeyword_3_3_0_1_0_1());
     }
 )(
 (
 		{ 
 	        newCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_3_3_0_1_1_0()); 
 	    }
-		lv_effects_12_0=ruleEffect		{
+		lv_effects_13_0=ruleEffect		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTransitionRule());
 	        }
        		add(
        			$current, 
        			"effects",
-        		lv_effects_12_0, 
+        		lv_effects_13_0, 
         		"Effect");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)(	otherlv_13=',' 
+)(	otherlv_14=';' 
     {
-    	newLeafNode(otherlv_13, grammarAccess.getTransitionAccess().getCommaKeyword_3_3_0_1_2_0());
+    	newLeafNode(otherlv_14, grammarAccess.getTransitionAccess().getSemicolonKeyword_3_3_0_1_2_0());
     }
 (
 (
 		{ 
 	        newCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_3_3_0_1_2_1_0()); 
 	    }
-		lv_effects_14_0=ruleEffect		{
+		lv_effects_15_0=ruleEffect		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTransitionRule());
 	        }
        		add(
        			$current, 
        			"effects",
-        		lv_effects_14_0, 
+        		lv_effects_15_0, 
         		"Effect");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1394,9 +1399,9 @@ ruleTransition returns [EObject current=null]
 ))*)?)
     |(
 (
-		lv_label_15_0=RULE_STRING
+		lv_label_16_0=RULE_STRING
 		{
-			newLeafNode(lv_label_15_0, grammarAccess.getTransitionAccess().getLabelSTRINGTerminalRuleCall_3_3_1_0()); 
+			newLeafNode(lv_label_16_0, grammarAccess.getTransitionAccess().getLabelSTRINGTerminalRuleCall_3_3_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1405,7 +1410,7 @@ ruleTransition returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"label",
-        		lv_label_15_0, 
+        		lv_label_16_0, 
         		"STRING");
 	    }
 
@@ -1560,11 +1565,11 @@ ruleDeclaration returns [EObject current=null]
 	    }
 
 )
-)(	otherlv_8=',' 
+)((	otherlv_8=';' 
     {
-    	newLeafNode(otherlv_8, grammarAccess.getDeclarationAccess().getCommaKeyword_8_0());
+    	newLeafNode(otherlv_8, grammarAccess.getDeclarationAccess().getSemicolonKeyword_8_0());
     }
-(
+)?(
 (
 		{ 
 	        newCompositeNode(grammarAccess.getDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_8_1_0()); 
@@ -1582,11 +1587,11 @@ ruleDeclaration returns [EObject current=null]
 	    }
 
 )
-))*	otherlv_10=';' 
+))*(	otherlv_10=';' 
     {
     	newLeafNode(otherlv_10, grammarAccess.getDeclarationAccess().getSemicolonKeyword_9());
     }
-)
+)?)
 ;
 
 
