@@ -39,7 +39,7 @@ class Reference {
     //-------------------------------------------------------------------------
     // ...
     def State transform(State rootState) {
-        val targetRootState = rootState.copy.fixAllPriorities;
+        val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all referenced states
         targetRootState.allContainedStates.filter[ referencedState ].toList.immutableCopy.forEach[

@@ -55,7 +55,7 @@ class Suspend {
     // (within the disabledExpression) 
     // Transforming Suspends.
     def State transform(State rootState) {
-        var targetRootState = rootState.copy.fixAllPriorities;
+        var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
         for (targetState : targetRootState.getAllContainedStates) {

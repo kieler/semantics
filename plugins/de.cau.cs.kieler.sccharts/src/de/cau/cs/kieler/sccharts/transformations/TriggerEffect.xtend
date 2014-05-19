@@ -45,7 +45,7 @@ class TriggerEffect {
     //     Set the T_eff to have T's target state. Set T to have the target C.
     //     Add T_eff to C's outgoing transitions. 
     def State transform(State rootState) {
-        var targetRootState = rootState.copy.fixAllPriorities;
+        var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all transitions
         for (targetTransition : targetRootState.getAllContainedTransitions) {

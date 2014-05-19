@@ -16,7 +16,6 @@ package de.cau.cs.kieler.sccharts.transformations
 import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.State
 
 /**
@@ -40,7 +39,7 @@ class ExposeLocalValuedObject {
     // Transforming Local ValuedObjects and optionally exposing them as
     // output signals.
     def State transform(State rootState) {
-        val targetRootState = rootState.copy;
+        val targetRootState = rootState;
 
         // Traverse all states
         for (targetState : targetRootState.getAllContainedStates) {

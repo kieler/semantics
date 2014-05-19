@@ -514,13 +514,13 @@ class SCChartsExtension {
     }
 
     def State fixAllPriorities(State state) {
-        for (containedState : state.allContainedStates) {
-            var prio = 1
-            for (transition : containedState.outgoingTransitions) {
-                transition.setPriority(prio)
-                prio = prio + 1
-            }
-        }
+//        for (containedState : state.allContainedStates) {
+//            var prio = 1
+//            for (transition : containedState.outgoingTransitions) {
+//                transition.setPriority(prio)
+//                prio = prio + 1
+//            }
+//        }
         state
     }
 
@@ -864,8 +864,8 @@ class SCChartsExtension {
     //--  F I X   F O R   T E R M I N A T I O N S   / W    E F F E C T S     --
     //-------------------------------------------------------------------------
     // This fixes termination transitions that have effects
-    def Region fixTerminationWithEffects(Region rootRegion) {
-        val terminationTransitions = rootRegion.allContainedTransitions.filter[type == TransitionType::TERMINATION].filter[!effects.nullOrEmpty]
+    def State fixTerminationWithEffects(State rootState) {
+        val terminationTransitions = rootState.allContainedTransitions.filter[type == TransitionType::TERMINATION].filter[!effects.nullOrEmpty]
         
         for (terminationTransition : terminationTransitions) {
             val originalSource = terminationTransition.sourceState
@@ -878,7 +878,7 @@ class SCChartsExtension {
             }
             terminationTransition.setTargetState(auxiliaryState)
         }
-        rootRegion
+        rootState
     }
     
 
@@ -886,13 +886,13 @@ class SCChartsExtension {
     //--                F I X   F O R   H A L T   S T A T E S                --
     //-------------------------------------------------------------------------
     // This fixes halt states and adds an explicit delayed self transition
-    def Region fixPossibleHaltStates(Region rootRegion) {
-        val haltStates = rootRegion.allContainedStates.filter[!hasInnerStatesOrRegions && outgoingTransitions.nullOrEmpty && !final]
+    def State fixPossibleHaltStates(State rootState) {
+        val haltStates = rootState.allContainedStates.filter[!hasInnerStatesOrRegions && outgoingTransitions.nullOrEmpty && !final]
         
         for (haltState : haltStates) {
             haltState.createTransitionTo(haltState)
         }
-        rootRegion
+        rootState
     }
 
 

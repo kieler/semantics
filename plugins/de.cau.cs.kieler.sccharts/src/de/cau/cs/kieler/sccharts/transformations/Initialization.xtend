@@ -44,7 +44,7 @@ class Initialization {
     // @requires: entry actions
     // Transforming Variable Initializations
     def State transform(State rootState) {
-        val targetRootState = rootState.copy.fixAllPriorities;
+        val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
         for (targetState : targetRootState.getAllContainedStates.immutableCopy) {

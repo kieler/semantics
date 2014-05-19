@@ -43,7 +43,7 @@ class WeakSuspend {
     //-------------------------------------------------------------------------
     // ...
     def State transform(State rootState) {
-        var targetRootState = rootState.copy.fixAllPriorities;
+        var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all transitions
         for (targetTransition : targetRootState.getAllContainedStates.immutableCopy) {
