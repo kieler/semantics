@@ -390,6 +390,7 @@ public class KiCoModelView extends DiagramViewPart {
                 change == ChangeEvent.DISPLAY_MODE
                 // transformations changed but should not compile (no effect on uncomipled)
                         || (!compileModel && change == ChangeEvent.TRANSFORMATIONS)
+                        || (change == ChangeEvent.TRANSFORMATIONS && !transformationsChanged)
                 // switched to uncompiled view but no compiled diagram was shown before
                 || (change == ChangeEvent.COMPILE && transformations == null))) {
                     updateDiagram();
