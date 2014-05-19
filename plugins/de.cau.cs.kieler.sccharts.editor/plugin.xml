@@ -49,6 +49,18 @@
    </extension>
 
    <extension point="org.eclipse.ui.editors">
+      <!-- @generated sccharts -->
+      <editor
+            id="kexpressions.presentation.KexpressionsEditorID"
+            name="%_UI_KexpressionsEditor_label"
+            icon="icons/full/obj16/KexpressionsModelFile.gif"
+            extensions="kexpressions"
+            class="kexpressions.presentation.KexpressionsEditor"
+            contributorClass="kexpressions.presentation.KexpressionsActionBarContributor">
+      </editor>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
       <editor
             id="de.cau.cs.kieler.sccharts.presentation.SCChartsEditorID"
             name="KIELER SCCharts Editor"
@@ -57,6 +69,22 @@
             class="de.cau.cs.kieler.sccharts.presentation.SCChartsEditor"
             contributorClass="de.cau.cs.kieler.sccharts.presentation.SCChartsActionBarContributor">
       </editor>
+   </extension>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated sccharts -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="kexpressions.presentation.KexpressionsModelWizardID"
+            name="%_UI_KexpressionsModelWizard_label"
+            class="kexpressions.presentation.KexpressionsModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/KexpressionsModelFile.gif">
+         <description>%_UI_KexpressionsModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
    </extension>
 
 </plugin>

@@ -14,7 +14,8 @@
 package de.cau.cs.kieler.sccharts;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -55,12 +56,12 @@ public interface For extends EObject {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Loop Variable</em>' reference.
-     * @see #setLoopVariable(ValuedObject)
+     * @see #setLoopVariable(ValuedObjectReference)
      * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getFor_LoopVariable()
      * @model
      * @generated
      */
-    ValuedObject getLoopVariable();
+    ValuedObjectReference getLoopVariable();
 
     /**
      * Sets the value of the '{@link de.cau.cs.kieler.sccharts.For#getLoopVariable <em>Loop Variable</em>}' reference.
@@ -70,7 +71,7 @@ public interface For extends EObject {
      * @see #getLoopVariable()
      * @generated
      */
-    void setLoopVariable(ValuedObject value);
+    void setLoopVariable(ValuedObjectReference value);
 
     /**
      * Returns the value of the '<em><b>Body Scope</b></em>' reference.

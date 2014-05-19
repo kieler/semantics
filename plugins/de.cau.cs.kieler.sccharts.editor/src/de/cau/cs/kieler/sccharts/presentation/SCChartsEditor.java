@@ -725,6 +725,7 @@ public class SCChartsEditor
 
         adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
         adapterFactory.addAdapterFactory(new SCChartsItemProviderAdapterFactory());
+        adapterFactory.addAdapterFactory(new KExpressionsItemProviderAdapterFactory());
         adapterFactory.addAdapterFactory(new AnnotationsItemProviderAdapterFactory());
         adapterFactory.addAdapterFactory(new KExpressionsItemProviderAdapterFactory());
         adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());

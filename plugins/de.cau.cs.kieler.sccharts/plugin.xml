@@ -23,6 +23,14 @@
             class="de.cau.cs.kieler.sccharts.SCChartsPackage"
             genModel="model/sccharts.genmodel"/>
    </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated sccharts -->
+      <package
+            uri="http://kieler.cs.cau.de/esterel/kexpressions/0.1.2"
+            class="kexpressions.KexpressionsPackage"
+            genModel="model/sccharts.genmodel"/>
+   </extension>
    <extension
          point="org.eclipse.ui.commands">
       <category
