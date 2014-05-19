@@ -280,8 +280,8 @@ public class KiCoModelView extends DiagramViewPart {
                     // Configure child view
                     if (newViewPart instanceof KiCoModelView) {
                         KiCoModelView child = (KiCoModelView) newViewPart;
-                        child.setActiveEditor(KiCoModelView.this.activeEditor);
                         // TODO configure child
+                        child.setActiveEditor(KiCoModelView.this.activeEditor);
                     }
 
                 } catch (PartInitException e) {
@@ -399,10 +399,7 @@ public class KiCoModelView extends DiagramViewPart {
             this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
         } else {
             // update case
-            // FIXME chsch
-            // - update synthesis as well in view context
-            // - make static
-            DiagramViewManager.getInstance().updateView(this.getViewer().getViewContext(),  currentModel);
+            DiagramViewManager.updateView(this.getViewer().getViewContext(),  currentModel);
             this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
         }
     }
