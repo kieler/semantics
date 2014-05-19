@@ -43,19 +43,17 @@ class WeakSuspend {
     //--                     W E A K   S U S P E N D                         --
     //-------------------------------------------------------------------------
     // ...
-    def Region transform(Region rootRegion) {
+    def State transform(State rootState) {
+        var targetRootState = rootState.copy.fixAllPriorities;
 
-        // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy.fixAllPriorities;
-
-        // For every state in the SyncChart do the transformation
-        for (targetTransition : targetRootRegion.getAllContainedStates.immutableCopy) {
-            targetTransition.transformWeakSuspend(targetRootRegion);
+        // Traverse all transitions
+        for (targetTransition : targetRootState.getAllContainedStates.immutableCopy) {
+            targetTransition.transformWeakSuspend(targetRootState);
         }
-        targetRootRegion.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
-    def void transformWeakSuspend(State state, Region targetRootRegion) {
+    def void transformWeakSuspend(State state, State targetRootState) {
 
         val weakSuspends = state.suspendActions.filter[weak].toList
 

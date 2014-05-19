@@ -41,20 +41,18 @@ class Connector {
     //-------------------------------------------------------------------------
     // Turn every connector into a simple state and turn all outgoing 
     // transitions into immediate transitions.
-    def Region transform(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy.fixAllPriorities;
+    def State transform(State rootState) {
+        var targetRootState = rootState.copy.fixAllPriorities;
 
         // Traverse all states
-        for (targetTransition : targetRootRegion.allContainedStates) {
-            targetTransition.transformConnector(targetRootRegion);
+        for (targetTransition : targetRootState.allContainedStates) {
+            targetTransition.transformConnector(targetRootState);
         }
 
-        targetRootRegion.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
-    def void transformConnector(State state, Region targetRootRegion) {
+    def void transformConnector(State state, State targetRootState) {
         if (state.type == StateType::CONNECTOR) {
             state.setTypeNormal
             for (transition : state.outgoingTransitions) {

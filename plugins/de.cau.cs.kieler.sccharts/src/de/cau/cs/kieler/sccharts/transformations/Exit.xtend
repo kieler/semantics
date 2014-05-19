@@ -48,24 +48,22 @@ class Exit {
     // @requires: suspend
     // @requires: valued valuedObjects
     // Transforming Exit Actions. 
-    def Region transform(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy.fixAllPriorities;
+    def State transform(State rootState) {
+        val targetRootState = rootState.copy.fixAllPriorities;
 
         // Prepare all states so that each reagion has at most one final state
-        for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.prepareExit(targetRootRegion);
+        for (targetState : targetRootState.getAllContainedStates) {
+            targetState.prepareExit(targetRootState);
         }
 
         // Traverse all states
-        for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformExit(targetRootRegion);
+        for (targetState : targetRootState.getAllContainedStates) {
+            targetState.transformExit(targetRootState);
         }
-        targetRootRegion.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
-    def void prepareExit(State state, Region targetRootRegion) {
+    def void prepareExit(State state, State targetRootState) {
         for (region : state.regions) {
             val finalStates = region.finalStates
             if (finalStates.size > 1) {
@@ -81,7 +79,7 @@ class Exit {
     }
 
     // Traverse all states and transform macro states that have actions to transform
-    def void transformExit(State state, Region targetRootRegion) {
+    def void transformExit(State state, Region targetRootState) {
         if (!state.exitActions.nullOrEmpty && !state.final) {
 
             val stateOutgoingTransitions = state.outgoingTransitions.size

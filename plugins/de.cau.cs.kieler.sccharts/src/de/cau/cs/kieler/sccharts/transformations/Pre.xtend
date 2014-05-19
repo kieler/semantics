@@ -51,12 +51,14 @@ class Pre {
     //--                        P R E -  O P E R A T O R                     --
     //-------------------------------------------------------------------------
     // Transforming PRE Operator.
-    def Region transform(Region rootRegion) {
-        val targetRootRegion = rootRegion.copy.fixAllPriorities;
-        for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformPre(targetRootRegion);
+    def State transform(State rootState) {
+        val targetRootState = rootState.copy.fixAllPriorities;
+
+        // Traverse all states
+        for (targetState : targetRootState.getAllContainedStates) {
+            targetState.transformPre(targetRootState);
         }
-        targetRootRegion.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
     // Return a list of Pre Expressions for an action that references the valuedObject
@@ -90,7 +92,7 @@ class Pre {
     }
 
     // Traverse all states that might declare a valuedObject that is used with the PRE operator
-    def void transformPre(State state, Region targetRootRegion) {
+    def void transformPre(State state, Region targetRootState) {
 
         // Filter all valuedObjects and retrieve those that are referenced
         val allActions = state.eAllContents.filter(typeof(Action)).toList();

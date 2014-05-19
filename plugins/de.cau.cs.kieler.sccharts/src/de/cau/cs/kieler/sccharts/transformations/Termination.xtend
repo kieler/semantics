@@ -61,20 +61,18 @@ class Termination {
     // Therefore a transformed transition must explicitly negate all triggers
     // of other outgoing transitions.
     // Transforming Normal Termination. 
-    def Region transform(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy.fixAllPriorities;
+    def State transform(State rootState) {
+        val targetRootState = rootState.copy.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformTermination(targetRootRegion);
+        for (targetState : targetRootState.getAllContainedStates) {
+            targetState.transformTermination(targetRootState);
         }
-        targetRootRegion.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform outgoing normal termination transitions into weak aborts
-    def void transformTermination(State state, Region targetRootRegion) {
+    def void transformTermination(State state, State targetRootState) {
 
         // NORMAL TERMINATION : For every state with normal termination transitions transform these into
         // weak abort transitions. Create a trigger for these new transitions that contains a conjunction
@@ -117,7 +115,7 @@ class Termination {
 
                 // Setup the auxiliary termination valuedObject indicating that a normal termination
                 // should be taken.
-                val finishedValuedObject = targetRootRegion.rootState.createSignal(GENERATED_PREFIX + "finished").
+                val finishedValuedObject = targetRootState.rootState.createSignal(GENERATED_PREFIX + "finished").
                     setTypePure.uniqueName
 
                 val finalStates = region.states.filter(e|e.isFinal == true);

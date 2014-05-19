@@ -39,16 +39,14 @@ class ExposeLocalValuedObject {
     //-------------------------------------------------------------------------
     // Transforming Local ValuedObjects and optionally exposing them as
     // output signals.
-    def Region transform(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
+    def State transform(State rootState) {
+        val targetRootState = rootState.copy;
 
         // Traverse all states
-        for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformExposeLocalValuedObject(targetRootRegion, true);
+        for (targetState : targetRootState.getAllContainedStates) {
+            targetState.transformExposeLocalValuedObject(targetRootState, true);
         }
-        targetRootRegion;
+        targetRootState;
     }
 
 }

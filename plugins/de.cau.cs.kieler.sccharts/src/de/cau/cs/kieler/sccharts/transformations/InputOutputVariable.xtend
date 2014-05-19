@@ -39,19 +39,17 @@ class InputOutputVariable {
     //--          I N P U T   O U T P U T   V A R I A B L E                  --
     //-------------------------------------------------------------------------
     // ...
-    def Region transform(Region rootRegion) {
+    def State transform(State rootState) {
+        var targetRootState = rootState.copy.fixAllPriorities;
 
-        // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy.fixAllPriorities;
-
-        // For every state in the SyncChart do the transformation
-        for (targetTransition : targetRootRegion.getAllContainedStates.immutableCopy) {
-            targetTransition.transformInputOutputVariable(targetRootRegion);
+        // Traverse all states
+        for (targetTransition : targetRootState.getAllContainedStates.immutableCopy) {
+            targetTransition.transformInputOutputVariable(targetRootState);
         }
-        targetRootRegion;
+        targetRootState;
     }
 
-    def void transformInputOutputVariable(State state, Region targetRootRegion) {
+    def void transformInputOutputVariable(State state, State targetRootState) {
         //TODO
     }
 

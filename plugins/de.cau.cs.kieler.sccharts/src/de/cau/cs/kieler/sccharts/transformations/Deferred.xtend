@@ -50,16 +50,14 @@ class Deferred {
     // Prevent any immediate internal behavior of the state and any immediate outgoing
     // transition in case deferVariable is set to TRUE, i.e., the state was entered
     // by a deferred transition.
-    def Region transform(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy.fixAllPriorities;
+    def State transform(State rootState) {
+        var targetRootState = rootState.copy.fixAllPriorities;
 
         // Traverse all states
-        for (targetTransition : targetRootRegion.allContainedStates) {
+        for (targetTransition : targetRootState.allContainedStates) {
             targetTransition.transformDeferredState;
         }
-        targetRootRegion.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
     def void transformDeferredState(State state) {

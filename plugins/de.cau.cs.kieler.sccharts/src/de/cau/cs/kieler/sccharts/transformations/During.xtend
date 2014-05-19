@@ -44,10 +44,8 @@ class During {
     //--                     D U R I N G       A C T I O N                   --
     //-------------------------------------------------------------------------
     // Transforming During Actions.
-    def Region transform(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy.fixAllPriorities;
+    def State transform(State rootState) {
+        val targetRootRegion = rootState.copy.fixAllPriorities;
 
         // Traverse all states
         for (targetState : targetRootRegion.getAllContainedStates) {
@@ -57,7 +55,7 @@ class During {
     }
 
     // Traverse all states and transform macro states that have actions to transform
-    def void transformDuring(State state, Region targetRootRegion) {
+    def void transformDuring(State state, State targetRootRegion) {
 
         // DURING ACTIONS : 
         // For each action create a separate region in the state. 

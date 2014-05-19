@@ -55,21 +55,17 @@ class Suspend {
     // an auxiliaryDisableValuedObject that is added to all outgoing transitions
     // (within the disabledExpression) 
     // Transforming Suspends.
-    def Region transform(Region rootRegion) {
+    def State transform(State rootState) {
+        var targetRootState = rootState.copy.fixAllPriorities;
 
-        // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy.fixAllPriorities;
-
-        // For every state in the SyncChart do the transformation
-        // Iterate over a copy of the list  
-        for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformSuspend(targetRootRegion);
+        // Traverse all states
+        for (targetState : targetRootState.getAllContainedStates) {
+            targetState.transformSuspend(targetRootState);
         }
-
-        targetRootRegion.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
-    def void transformSuspend(State state, Region targetRootRegion) {
+    def void transformSuspend(State state, State targetRootState) {
         for (suspension : state.suspendActions.filter[!weak].toList.immutableCopy) {
             val suspendTrigger = suspension.trigger;
             val notSuspendTrigger = not(suspendTrigger)

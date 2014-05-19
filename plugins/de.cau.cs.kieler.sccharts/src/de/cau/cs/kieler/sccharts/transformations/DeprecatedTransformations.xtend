@@ -107,22 +107,22 @@ class ExposeLocalSignals {
     //    // be inserted. \code{S} is then marked not to be initial. This is a necessary pre-processing for
     //    // the above transformation.
     //    
-    //    def Region transformSurfaceDepth (Region rootRegion) {
+    //    def Region transformSurfaceDepth (State rootState) {
     //        // Clone the complete SCCharts region 
-    //        var targetRootRegion = rootRegion.copy;
+    //        var targetRootState = rootState.copy;
     //
-    //        var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).filter(e | !e.hierarchical).toList();
+    //        var targetStates = targetRootState.eAllContents().toIterable().filter(typeof(State)).filter(e | !e.hierarchical).toList();
     //
     //        // For every state in the SyncChart do the transformation
     //        // Iterate over a copy of the list  
     //        for(targetState : targetStates) {
-    //            targetState.transformSurfaceDepth(targetRootRegion);
+    //            targetState.transformSurfaceDepth(targetRootState);
     //        }
     //        
-    //        targetRootRegion;
+    //        targetRootState;
     //    }
     //         
-    //     def void transformSurfaceDepth(State state, Region targetRootRegion) {
+    //     def void transformSurfaceDepth(State state, Region targetRootState) {
     //       if (state.outgoingTransitions.size > 0 && state.type == StateType::NORMAL) {
     //         val parentRegion = state.parentRegion;
     //         val stateId = state.id;
@@ -248,22 +248,22 @@ class ExposeLocalSignals {
     //    // Set the T_eff to have T's target state. Set T to have the target C.
     //    // Add T_eff to C's outgoing transitions. 
     //    
-    //    def Region transformTriggerEffect (Region rootRegion) {
+    //    def Region transformTriggerEffect (State rootState) {
     //        // Clone the complete SCCharts region 
-    //        var targetRootRegion = rootRegion.copy;
+    //        var targetRootState = rootState.copy;
     //
-    //        var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
+    //        var targetTransitions = targetRootState.eAllContents().toIterable().filter(typeof(Transition)).toList();
     //
     //        // For every transition in the SyncChart do the transformation
     //        // Iterate over a copy of the list  
     //        for(targetTransition : targetTransitions) {
-    //            targetTransition.transformTriggerEffect(targetRootRegion);
+    //            targetTransition.transformTriggerEffect(targetRootState);
     //        }
     //        
-    //        targetRootRegion;
+    //        targetRootState;
     //    }
     //         
-    //     def void transformTriggerEffect(Transition transition, Region targetRootRegion) {
+    //     def void transformTriggerEffect(Transition transition, Region targetRootState) {
     //         
     //         // Only apply this to transition that have both, a trigger and effects!
     //         if (transition.trigger != null && !transition.effects.nullOrEmpty) {
@@ -305,19 +305,19 @@ class ExposeLocalSignals {
     //    // NO, THE FOLLOWING SEEMS TO BE WRONG
     //    // Optimization: We dont need to watch final states with outgoing transitions! These states are transformed 
     //    // anyway ***
-    //    def Region transformFinalStateTransition(Region rootRegion) {
+    //    def Region transformFinalStateTransition(State rootState) {
     //
     //        // Clone the complete SCCharts region 
-    //        var targetRootRegion = rootRegion.copy;
+    //        var targetRootState = rootState.copy;
     //
     //        // For every state in the SyncChart do the transformation
-    //        for (targetState : targetRootRegion.getAllContainedStates) {
-    //            targetState.transformFinalStateTransition(rootRegion);
+    //        for (targetState : targetRootState.getAllContainedStates) {
+    //            targetState.transformFinalStateTransition(rootState);
     //        }
-    //        targetRootRegion;
+    //        targetRootState;
     //    }
     //
-    //    def void transformFinalStateTransition(State parentState, Region targetRootRegion) {
+    //    def void transformFinalStateTransition(State parentState, Region targetRootState) {
     //        val parentStatesIsConsidered = parentState.eAllContents().toIterable().filter(typeof(State)).filter(
     //            e|e.parentRegion.parentState == parentState && e.isFinal && !e.outgoingTransitions.nullOrEmpty).toList();
     //
@@ -463,27 +463,27 @@ class ExposeLocalSignals {
     //    //-------------------------------------------------------------------------
     //    // @requires: none
     //    // Transforming Local ValuedObjects.
-    //    def Region transformExposeLocalValuedObject(Region rootRegion) {
+    //    def Region transformExposeLocalValuedObject(State rootState) {
     //
     //        // Clone the complete SCCharts region 
-    //        val targetRootRegion = rootRegion.copy;
+    //        val targetRootState = rootState.copy;
     //
     //        // Traverse all states
-    //        for (targetState : targetRootRegion.getAllContainedStates) {
-    //            targetState.transformExposeLocalValuedObject(targetRootRegion);
+    //        for (targetState : targetRootState.getAllContainedStates) {
+    //            targetState.transformExposeLocalValuedObject(targetRootState);
     //        }
-    //        targetRootRegion;
+    //        targetRootState;
     //    }
     //
     //    // Traverse all states and transform possible local valuedObjects.
-    //    def void transformExposeLocalValuedObject(State state, Region targetRootRegion) {
+    //    def void transformExposeLocalValuedObject(State state, Region targetRootState) {
     //
     //        // EXPOSE LOCAL SIGNALS: For every local valuedObject create a global valuedObject
     //        // and wherever the local valuedObject is emitted, also emit the new global 
     //        // valuedObject.
     //        // Name the new global valuedObjects according to the local valuedObject's hierarchy. 
     //        // Exclude the top level state
-    //        if (state.parentRegion == targetRootRegion) {
+    //        if (state.parentRegion == targetRootState) {
     //            return;
     //        }
     //
@@ -493,7 +493,7 @@ class ExposeLocalSignals {
     //
     //            for (ValuedObject localValuedObject : ImmutableList::copyOf(state.valuedObjects)) {
     //                val newValuedObjectName = hierarchicalStateName + "_" + localValuedObject.name
-    //                val globalValuedObject = targetRootRegion.rootState.createValuedObject(newValuedObjectName).setOutput
+    //                val globalValuedObject = targetRootState.rootState.createValuedObject(newValuedObjectName).setOutput
     //                globalValuedObject.applyAttributes(localValuedObject)
     //
     //                // For every Emission/Assignment of the local ValuedObject add an Emission of the new
@@ -529,27 +529,27 @@ class ExposeLocalSignals {
     //    // by the last transition of the auxiliary region R. Create n+1 states within R and connect
     //    // these by the same trigger of T just without the count delay. The n+1's state must be final
     //    // in order to handle possible outgoing normal terminations of S correctly.
-    //    def Region transformCountDelay(Region rootRegion) {
+    //    def Region transformCountDelay(State rootState) {
     //
     //        // Clone the complete SCCharts region 
-    //        var targetRootRegion = rootRegion.copy;
+    //        var targetRootState = rootState.copy;
     //
-    //        var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
+    //        var targetTransitions = targetRootState.eAllContents().toIterable().filter(typeof(Transition)).toList();
     //
     //        // For every transition in the SyncChart do the transformation
     //        // Iterate over a copy of the list  
     //        for (targetTransition : targetTransitions) {
     //
-    //            targetTransition.transformCountDelay(targetRootRegion);
+    //            targetTransition.transformCountDelay(targetRootState);
     //        }
     //        
-    //        targetRootRegion;
+    //        targetRootState;
     //    }
     //
     //    // This will encode count delays in transitions.
-    //    def void transformCountDelay(Transition transition, Region targetRootRegion) {
+    //    def void transformCountDelay(Transition transition, Region targetRootState) {
     //        if (transition.delay > 1) {
-    //            val targetRootState = targetRootRegion.states.get(0);
+    //            val targetRootState = targetRootState.states.get(0);
     //            val sourceState = transition.sourceState;
     //
     //            // Optimization: If there is no outgoing normal termination out of S then do not mark states as final
@@ -620,27 +620,27 @@ class ExposeLocalSignals {
     //    // @requires: auxiliary (host) variables
     //     
     //    // Transforming Count Delays entry function.
-    //    def Region transformCountDelay (Region rootRegion) {
+    //    def Region transformCountDelay (State rootState) {
     //        // Clone the complete SCCharts region 
-    //        var targetRootRegion = CloningExtensions::clone(rootRegion) as Region;
+    //        var targetRootState = CloningExtensions::clone(rootState) as Region;
     //
-    //        var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
+    //        var targetTransitions = targetRootState.eAllContents().toIterable().filter(typeof(Transition)).toList();
     //
     //        // For every transition in the SyncChart do the transformation
     //        // Iterate over a copy of the list  
     //        for(targetTransition : targetTransitions) {
     //            
-    //            targetTransition.transformCountDelay(targetRootRegion);
+    //            targetTransition.transformCountDelay(targetRootState);
     //        }
     //        
-    //        targetRootRegion;
+    //        targetRootState;
     //    }
     //         
     //     // This will encode count delays in transitions and insert additional counting
     //     // host code variables plus modifying the trigger of the count delayed transition
     //     // to be immediate and guarded by a host code expression (with the specific
     //    // number of ticks).
-    //     def void transformCountDelay(Transition transition, Region targetRootRegion) {
+    //     def void transformCountDelay(Transition transition, Region targetRootState) {
     //          if (transition.delay > 1) {
     //               // auxiliary valuedObject
     //               val auxiliaryVariable = KExpressionsFactory::eINSTANCE.createVariable;
@@ -650,7 +650,7 @@ class ExposeLocalSignals {
     //               auxiliaryVariable.setInitialValue("0");
     //
     //               // add auxiliaryVariable to first (and only) root region state SCCharts main interface
-    //                 targetRootRegion.states.get(0).variables.add(auxiliaryVariable);
+    //                 targetRootState.states.get(0).variables.add(auxiliaryVariable);
     //                 
     //               // add self-loop transition, counting up the variable
     //               val selfLoop = SCChartsFactory::eINSTANCE.createTransition();
@@ -697,26 +697,26 @@ class ExposeLocalSignals {
     //    // an auxiliaryDisableValuedObject that is added to all outgoing transitions
     //    // (within the disabledExpression) 
     //    // Transforming Suspends.
-    //    def Region transformSuspend(Region rootRegion) {
+    //    def Region transformSuspend(State rootState) {
     //
     //        // Clone the complete SCCharts region 
-    //        var targetRootRegion = rootRegion.copy;
+    //        var targetRootState = rootState.copy;
     //
     //        // For every state in the SyncChart do the transformation
     //        // Iterate over a copy of the list  
-    //        for (targetState : targetRootRegion.getAllContainedStates) {
+    //        for (targetState : targetRootState.getAllContainedStates) {
     //
-    //            targetState.transformSuspend(targetRootRegion);
+    //            targetState.transformSuspend(targetRootState);
     //        }
     //
     //        // Now delete all suspends
-    //        for (targetState : targetRootRegion.getAllContainedStates.filter(e|e.suspendActions.size > 0)) {
+    //        for (targetState : targetRootState.getAllContainedStates.filter(e|e.suspendActions.size > 0)) {
     //            for (suspendAction : targetState.suspendActions.immutableCopy) {
     //                targetState.localActions.remove(suspendAction)
     //            }
     //        }
     //        
-    //        targetRootRegion;
+    //        targetRootState;
     //    }
     //
     //    // Tells whether a state is a macro state
@@ -766,7 +766,7 @@ class ExposeLocalSignals {
     //    // In case there is such a trigger, to all outgoing transitions, add 
     //    // an "(<condition>) && !trigger" to disable ALL these transitions
     //    // if the suspension trigger is enabled.
-    //    def void transformSuspend(State state, Region targetRootRegion) {
+    //    def void transformSuspend(State state, Region targetRootState) {
     //
     //        for (suspension : state.suspendActions) {
     //            val suspendTrigger = suspension.trigger;
@@ -781,7 +781,7 @@ class ExposeLocalSignals {
     //            disabledValuedObject.setInput(false);
     //            disabledValuedObject.setOutput(false);
     //            disabledValuedObject.setType(ValueType::PURE);
-    //            targetRootRegion.rootState.valuedObjects.add(disabledValuedObject);
+    //            targetRootState.rootState.valuedObjects.add(disabledValuedObject);
     //
     //            // Add a NonSuspended and Suspended state
     //            val runningState = SCChartsFactory::eINSTANCE.createState();
@@ -841,7 +841,7 @@ class ExposeLocalSignals {
     //            suspendActionRegion.states.add(actionState);
     //            suspendActionRegion.states.add(runningState);
     //            suspendActionRegion.states.add(disabledState);
-    //            targetRootRegion.states.get(0).regions.add(suspendActionRegion);
+    //            targetRootState.states.get(0).regions.add(suspendActionRegion);
     //
     //            // Add disabled valuedObject  to ALL hierarchically lower (immediate) transitions
     //            // that appear INSIDE the considered state (in its regions)
@@ -874,23 +874,23 @@ class ExposeLocalSignals {
     //    // @requires: suspend
     //    // Transforming History. This is using the concept of suspend so it must
     //    // be followed by resolving suspension
-    //    def Region transformHistory(Region rootRegion) {
+    //    def Region transformHistory(State rootState) {
     //
     //        // Clone the complete SCCharts region 
-    //        val targetRootRegion = rootRegion.copy;
+    //        val targetRootState = rootState.copy;
     //
     //        // For every state in the SyncChart do the transformation
     //        // Iterate over a copy of the list
     //        // The following can also be written functional:
     //        //        ImmutableList::copyOf(targetStates).forEach[
-    //        //             it.transformHistory(targetRootRegion);
+    //        //             it.transformHistory(targetRootState);
     //        //        ]
-    //        for (targetState : targetRootRegion.getAllContainedStates) {
+    //        for (targetState : targetRootState.getAllContainedStates) {
     //
-    //            targetState.transformHistory(targetRootRegion);
+    //            targetState.transformHistory(targetRootState);
     //        }
     //        
-    //        targetRootRegion;
+    //        targetRootState;
     //    }
     //
     //
@@ -934,7 +934,7 @@ class ExposeLocalSignals {
     //
     //    // Traverse all states and transform macro states that have connecting
     //    // (incoming) history transitions.    
-    //    def void transformHistory(State state, Region targetRootRegion) {
+    //    def void transformHistory(State state, Region targetRootState) {
     //        val historyTransitions = ImmutableList::copyOf(state.incomingTransitions.filter(e|e.isHistory));
     //        val nonHistoryTransitions = ImmutableList::copyOf(state.incomingTransitions.filter(e|!e.isHistory));
     //        val allTransitions = ImmutableList::copyOf(state.incomingTransitions);
@@ -967,7 +967,7 @@ class ExposeLocalSignals {
     //            auxiliarySuspendValuedObject.setType(ValueType::PURE);
     //
     //            // Add auxiliaryValuedObject to first (and only) root region state SCCharts main interface
-    //            targetRootRegion.rootState.valuedObjects.add(auxiliarySuspendValuedObject);
+    //            targetRootState.rootState.valuedObjects.add(auxiliarySuspendValuedObject);
     //
     //            var Expression suspensionTrigger;
     //            val notAuxiliaryTrigger = KExpressionsFactory::eINSTANCE.createOperatorExpression;
@@ -1038,7 +1038,7 @@ class ExposeLocalSignals {
     //            auxiliaryEntryValuedObject.setType(ValueType::PURE);
     //
     //            // Add auxiliaryValuedObject to first (and only) root region state SCCharts main interface
-    //            targetRootRegion.rootState.valuedObjects.add(auxiliaryEntryValuedObject);
+    //            targetRootState.rootState.valuedObjects.add(auxiliaryEntryValuedObject);
     //
     //            // For all incoming transitions now add a suspendValuedObject emission (to immediately enable the execution of the body)
     //            // also for all history transitions (re-entry) add an entryValuedObject emission to (in most times) disabled outgoing transitions that are NOT immediate
@@ -1077,7 +1077,7 @@ class ExposeLocalSignals {
     //            auxiliaryResetValuedObject.setType(ValueType::PURE);
     //
     //            // Add auxiliaryValuedObject to first (and only) root region state SCCharts main interface
-    //            targetRootRegion.rootState.valuedObjects.add(auxiliaryResetValuedObject);
+    //            targetRootState.rootState.valuedObjects.add(auxiliaryResetValuedObject);
     //
     //            // Add a self loop to the NEW state that resets it if auxiliary reset valuedObject is present
     //            val resetSelfLoop = SCChartsFactory::eINSTANCE.createTransition();
@@ -1102,20 +1102,20 @@ class ExposeLocalSignals {
     //    //--                     D U R I N G       A C T I O N S                 --
     //    //-------------------------------------------------------------------------
     //    // Transforming During Actions.
-    //    def Region transformDuring(Region rootRegion) {
+    //    def Region transformDuring(State rootState) {
     //
     //        // Clone the complete SCCharts region 
-    //        val targetRootRegion = rootRegion.copy;
+    //        val targetRootState = rootState.copy;
     //
     //        // Traverse all states
-    //        for (targetState : targetRootRegion.getAllContainedStates) {
-    //            targetState.transformDuring(targetRootRegion);
+    //        for (targetState : targetRootState.getAllContainedStates) {
+    //            targetState.transformDuring(targetRootState);
     //        }
-    //        targetRootRegion;
+    //        targetRootState;
     //    }
     //
     //    // Traverse all states and transform macro states that have actions to transform
-    //    def void transformDuring(State state, Region targetRootRegion) {
+    //    def void transformDuring(State state, Region targetRootState) {
     //
     //        // DURING ACTIONS : 
     //        // For each action create a separate region in the state. 
@@ -1176,20 +1176,20 @@ class ExposeLocalSignals {
     //    //-------------------------------------------------------------------------
     //    // @requires: during actions
     //    // Transforming Entry and During Actions.
-    //    def Region transformEntry(Region rootRegion) {
+    //    def Region transformEntry(State rootState) {
     //
     //        // Clone the complete SCCharts region 
-    //        val targetRootRegion = rootRegion.copy;
+    //        val targetRootState = rootState.copy;
     //
     //        // Traverse all states
-    //        for (targetState : targetRootRegion.getAllContainedStates) {
-    //            targetState.transformEntry(targetRootRegion);
+    //        for (targetState : targetRootState.getAllContainedStates) {
+    //            targetState.transformEntry(targetRootState);
     //        }
-    //        targetRootRegion;
+    //        targetRootState;
     //    }
     //
     //    // Traverse all states and transform macro states that have actions to transform
-    //    def void transformEntry(State state, Region targetRootRegion) {
+    //    def void transformEntry(State state, Region targetRootState) {
     //
     //        // ENTRY ACTIONS :
     //        // First Idea: Create a macro state for all incoming transitions. Weak abort the
@@ -1289,16 +1289,16 @@ class ExposeLocalSignals {
     //    }
     //
     //    // Transforming Exit Actions. 
-    //    def Region transformExit(Region rootRegion) {
+    //    def Region transformExit(State rootState) {
     //
     //        // Clone the complete SCCharts region 
-    //        val targetRootRegion = rootRegion.copy;
+    //        val targetRootState = rootState.copy;
     //
     //        // Traverse all states
-    //        for (targetState : targetRootRegion.getAllContainedStates) {
-    //            targetState.transformExit(targetRootRegion);
+    //        for (targetState : targetRootState.getAllContainedStates) {
+    //            targetState.transformExit(targetRootState);
     //        }
-    //        targetRootRegion;
+    //        targetRootState;
     //    }
     //
     //    // For a state, have a look at all outgoing transition weak abort triggers and collect them
@@ -1351,7 +1351,7 @@ class ExposeLocalSignals {
     //    }
     //
     //    // Traverse all states and transform macro states that have actions to transform
-    //    def void transformExit(State state, Region targetRootRegion) {
+    //    def void transformExit(State state, Region targetRootState) {
     //
     //        // EXIT ACTIONS : For every state with exit actions create a new top-level region and
     //        // create SET and RESET valuedObjects. This region contains a set and reset (inital) state
@@ -1402,7 +1402,7 @@ class ExposeLocalSignals {
     //            setValuedObject.setInput(false);
     //            setValuedObject.setOutput(false);
     //            setValuedObject.setType(ValueType::PURE);
-    //            targetRootRegion.rootState.valuedObjects.add(setValuedObject);
+    //            targetRootState.rootState.valuedObjects.add(setValuedObject);
     //
     //            // This valuedObject is produced by ALL immediate outputs (also hierarchically higher)
     //            // it is able to trigger an immediate transition back from reset to set (when entering reset)
@@ -1412,21 +1412,21 @@ class ExposeLocalSignals {
     //            setIValuedObject.setInput(false);
     //            setIValuedObject.setOutput(false);
     //            setIValuedObject.setType(ValueType::PURE);
-    //            targetRootRegion.rootState.valuedObjects.add(setIValuedObject);
+    //            targetRootState.rootState.valuedObjects.add(setIValuedObject);
     //
     //            val resetIValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
     //            resetIValuedObject.setName("ResetI" + state.id);
     //            resetIValuedObject.setInput(false);
     //            resetIValuedObject.setOutput(false);
     //            resetIValuedObject.setType(ValueType::PURE);
-    //            targetRootRegion.rootState.valuedObjects.add(resetIValuedObject);
+    //            targetRootState.rootState.valuedObjects.add(resetIValuedObject);
     //
     //            val resetNValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
     //            resetNValuedObject.setName("ResetN" + state.id);
     //            resetNValuedObject.setInput(false);
     //            resetNValuedObject.setOutput(false);
     //            resetNValuedObject.setType(ValueType::PURE);
-    //            targetRootRegion.rootState.valuedObjects.add(resetNValuedObject);
+    //            targetRootState.rootState.valuedObjects.add(resetNValuedObject);
     //
     //            // Add a Set and Reset state
     //            val resetState = SCChartsFactory::eINSTANCE.createState();
@@ -1497,7 +1497,7 @@ class ExposeLocalSignals {
     //            exitActionRegion.setId(state.id("ExitActionRegion"));
     //            exitActionRegion.states.add(resetState);
     //            exitActionRegion.states.add(setState);
-    //            targetRootRegion.states.get(0).regions.add(exitActionRegion);
+    //            targetRootState.states.get(0).regions.add(exitActionRegion);
     //
     //            // Create conditioned sustain and actions for Set state containing the exit actions
     //            // For every exit action: Create a during and entry action for Set state
@@ -1547,7 +1547,7 @@ class ExposeLocalSignals {
     //                setValuedObjectInner.setInput(false);
     //                setValuedObjectInner.setOutput(false);
     //                setValuedObjectInner.setType(ValueType::PURE);
-    //                targetRootRegion.rootState.valuedObjects.add(setValuedObjectInner);
+    //                targetRootState.rootState.valuedObjects.add(setValuedObjectInner);
     //                val setValuedObjectInnerReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference()
     //                setValuedObjectInnerReference.setValuedObject(setValuedObjectInner);
     //
@@ -1649,16 +1649,16 @@ class ExposeLocalSignals {
     //    //--                        P R E -  O P E R A T O R                     --
     //    //-------------------------------------------------------------------------
     //    // Transforming PRE Operator.
-    //    def Region transformPre(Region rootRegion) {
+    //    def Region transformPre(State rootState) {
     //
     //        // Clone the complete SCCharts region 
-    //        val targetRootRegion = rootRegion.copy;
+    //        val targetRootState = rootState.copy;
     //
     //        // Traverse all states
-    //        for (targetState : targetRootRegion.getAllContainedStates) {
-    //            targetState.transformPre(targetRootRegion);
+    //        for (targetState : targetRootState.getAllContainedStates) {
+    //            targetState.transformPre(targetRootState);
     //        }
-    //        targetRootRegion;
+    //        targetRootState;
     //    }
     //
     //    // Return a list of Pre Expressions for an action that references the valuedObject
@@ -1692,7 +1692,7 @@ class ExposeLocalSignals {
     //    }
     //
     //    // Traverse all states that might declare a valuedObject that is used with the PRE operator
-    //    def void transformPre(State state, Region targetRootRegion) {
+    //    def void transformPre(State state, Region targetRootState) {
     //
     //        // Filter all valuedObjects and retrieve those that are referenced
     //        val allActions = state.eAllContents.filter(typeof(Action)).toList();
@@ -1916,7 +1916,7 @@ class ExposeLocalSignals {
     //-------------------------------------------------------------------------
     // -- OLD IMPLEMENTATION --
     // Traverse all states 
-    def void transformSCCAborts_OLD_IMPLEMENTATION_(State state, Region targetRootRegion) {
+    def void transformSCCAborts_OLD_IMPLEMENTATION_(State state, Region targetRootState) {
 
         if ((state.hasInnerStatesOrRegions || state.hasInnerActions) && state.outgoingTransitions.size() > 0) {
 

@@ -65,22 +65,18 @@ class SurfaceDepth {
     // then an additional initial state I with a true triggered immediate transition to S will
     // be inserted. \code{S} is then marked not to be initial. This is a necessary pre-processing for
     // the above transformation.
-    def Region transform(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy.fixAllPriorities;
-
-        var targetStates = targetRootRegion.allContainedStates
+    def State transform(State rootState) {
+        var targetRootState = rootState.copy.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetStates) {
-            targetState.transformSurfaceDepth(targetRootRegion);
+        for (targetState : targetRootState.allContainedStates) {
+            targetState.transformSurfaceDepth(targetRootState);
         }
 
-        targetRootRegion.fixAllTextualOrdersByPriorities.optimizeSuperflousConditionalStates.optimizeSuperflousImmediateTransitions.fixDeadCode;
+        targetRootState.fixAllTextualOrdersByPriorities.optimizeSuperflousConditionalStates.optimizeSuperflousImmediateTransitions.fixDeadCode;
     }
 
-    def void transformSurfaceDepth(State state, Region targetRootRegion) {
+    def void transformSurfaceDepth(State state, State targetRootState) {
         if (state.outgoingTransitions.size > 0 && state.type == StateType::NORMAL &&
             !state.outgoingTransitions.get(0).typeTermination &&
             (state.outgoingTransitions.get(0).trigger != null || !state.outgoingTransitions.get(0).immediate)) {

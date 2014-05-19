@@ -61,20 +61,18 @@ class Signal {
     //input signal S:bool; --> input boolean S; input boolean S_val;
     //input signal S:integer; --> input boolean S; input integer S_val;
     // Transforming a signal to a variable. 
-    def Region transform(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy.fixAllPriorities;
+    def State transform(State rootState) {
+        val targetRootState = rootState.copy.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformSignal(targetRootRegion);
+        for (targetState : targetRootState.getAllContainedStates) {
+            targetState.transformSignal(targetRootState);
         }
-        targetRootRegion.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform outgoing normal termination transitions into weak aborts
-    def void transformSignal(State state, Region targetRootRegion) {
+    def void transformSignal(State state, State targetRootState) {
         val allSignals = state.signals
 
         // Go thru all signals

@@ -44,20 +44,18 @@ class Initialization {
     //-------------------------------------------------------------------------
     // @requires: entry actions
     // Transforming Variable Initializations
-    def Region transform(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy.fixAllPriorities;
+    def State transform(State rootState) {
+        val targetRootState = rootState.copy.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootRegion.getAllContainedStates.immutableCopy) {
-            targetState.transformInitialization(targetRootRegion);
+        for (targetState : targetRootState.getAllContainedStates.immutableCopy) {
+            targetState.transformInitialization(targetRootState);
         }
-        targetRootRegion.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform macro states that have actions to transform
-    def void transformInitialization(State state, Region targetRootRegion) {
+    def void transformInitialization(State state, State targetRootState) {
         val valuedObjects = state.valuedObjects.filter[initialValue != null]
 
         if (!valuedObjects.nullOrEmpty) {

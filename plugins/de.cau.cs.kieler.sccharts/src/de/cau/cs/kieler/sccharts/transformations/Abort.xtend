@@ -48,16 +48,14 @@ class Abort {
     //--   A B O R T   A L T E R N A T I V E  T R A N S F O R M A T I O N    --
     //-------------------------------------------------------------------------
     // Transforming Aborts.
-    def Region transformAbortAlternative(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy.fixAllPriorities;
+    def State transformAbortAlternative(State rootState) {
+        val targetRootState = rootState.copy.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformAbortAlternative(targetRootRegion);
+        for (targetState : targetRootState.getAllContainedStates) {
+            targetState.transformAbortAlternative(targetRootState);
         }
-        targetRootRegion.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
     // For all transitions of a state compute the maximal priority
@@ -73,7 +71,7 @@ class Abort {
     }
 
     // Traverse all states 
-    def void transformAbortAlternative(State state, Region targetRootRegion) {
+    def void transformAbortAlternative(State state, State targetRootState) {
 
         val stateHasUntransformedTransitions = (!(state.outgoingTransitions.size == 0) || ((state.outgoingTransitions.
             size == 1) && state.outgoingTransitions.filter[typeTermination].filter[trigger == null].size == 1))
@@ -234,22 +232,22 @@ class Abort {
     //--     A B O R T     D E F A U L T      T R A N S F O R M A T I O N    --
     //-------------------------------------------------------------------------
     // Transforming Aborts.
-    def Region transform(Region rootRegion) {
-        val targetRootRegion = rootRegion.copy.fixAllPriorities;
+    def Region transform(State rootState) {
+        val targetRootState = rootState.copy.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformAbortDefault(targetRootRegion);
+        for (targetState : targetRootState.getAllContainedStates) {
+            targetState.transformAbortDefault(targetRootState);
         }
-        targetRootRegion.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states 
-    //    def void preTransformAborts2(State state, Region targetRootRegion) {
+    //    def void preTransformAborts2(State state, Region targetRootState) {
     //        // For all normal hierarchical states, add a single connector
     //        // add
     //    }
-    def void transformAbortDefault(State state, Region targetRootRegion) {
+    def void transformAbortDefault(State state, Region targetRootState) {
 
         val stateHasUntransformedTransitions = (!(state.outgoingTransitions.size == 0) || ((state.outgoingTransitions.
             size == 1) && state.outgoingTransitions.filter[typeTermination].filter[trigger == null].size == 1))

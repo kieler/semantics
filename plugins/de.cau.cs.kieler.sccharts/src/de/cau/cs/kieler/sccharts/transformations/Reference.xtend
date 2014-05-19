@@ -39,19 +39,17 @@ class Reference {
     //--                        R E F E R E N C E                            --
     //-------------------------------------------------------------------------
     // ...
-    def Region transform(Region rootRegion) {
+    def State transform(State rootState) {
+        var targetRootState = rootState.copy.fixAllPriorities;
 
-        // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy.fixAllPriorities;
-
-        // For every state in the SyncChart do the transformation
-        for (targetTransition : targetRootRegion.getAllContainedStates.immutableCopy) {
-            targetTransition.transformReference(targetRootRegion);
+        // Traverse all states
+        for (targetTransition : targetRootState.getAllContainedStates.immutableCopy) {
+            targetTransition.transformReference(targetRootState);
         }
-        targetRootRegion;
+        targetRootState;
     }
 
-    def void transformReference(State state, Region targetRootRegion) {
+    def void transformReference(State state, State targetRootState) {
         //TODO
     }
 

@@ -43,23 +43,19 @@ class CountDelay {
     //--                   C O U N T   D E L A Y                             --
     //-------------------------------------------------------------------------
     // ...
-    def Region transform(Region rootRegion) {
+    def State transform(State rootState) {
+        var targetRootState = rootState.copy.fixAllPriorities;
 
-        // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy.fixAllPriorities;
-
-        // For every transition in the SyncChart do the transformation
-        // Iterate over a copy of the list  
-        for (targetTransition : targetRootRegion.getAllContainedTransitions) {
-
-            targetTransition.transformCountDelay(targetRootRegion);
+        // Traverse all transitions
+        for (targetTransition : targetRootState.getAllContainedTransitions) {
+            targetTransition.transformCountDelay(targetRootState);
         }
 
-        targetRootRegion.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
     // This will encode count delays in transitions.
-    def void transformCountDelay(Transition transition, Region targetRootRegion) {
+    def void transformCountDelay(Transition transition, State targetRootState) {
         if (transition.delay > 1) {
             val sourceState = transition.sourceState
             val parentState = sourceState.parentRegion.parentState

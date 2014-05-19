@@ -50,17 +50,19 @@ class History {
     // @requires: suspend
     // Transforming History. This is using the concept of suspend so it must
     // be followed by resolving suspension
-    def Region transform(Region rootRegion) {
-        val targetRootRegion = rootRegion.copy.fixAllPriorities;
-        for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformHistory(targetRootRegion);
+    def State transform(State rootState) {
+        val targetRootState = rootState.copy.fixAllPriorities;
+
+        // Traverse all states
+        for (targetState : targetRootState.getAllContainedStates) {
+            targetState.transformHistory(targetRootState);
         }
-        targetRootRegion.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform macro states that have connecting
     // (incoming) history transitions.    
-    def void transformHistory(State state, Region targetRootRegion) {
+    def void transformHistory(State state, State targetRootState) {
         val historyTransitions = ImmutableList::copyOf(state.incomingTransitions.filter[isHistory])
         val deepHistoryTransitions = historyTransitions.filter[!isDeepHistory]
         val nonHistoryTransitions = ImmutableList::copyOf(state.incomingTransitions.filter[!isHistory])

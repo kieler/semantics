@@ -43,20 +43,18 @@ class Entry {
     // Idea: Setup or create a firstState and a lastState and place the
     // entry actions of a state in between these two states.
     // Transforming Entry Actions.
-    def Region transform(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy.fixAllPriorities;
+    def State transform(State rootState) {
+        val targetRootState = rootState.copy.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootRegion.getAllContainedStates.immutableCopy) {
-            targetState.transformEntry(targetRootRegion);
+        for (targetState : targetRootState.getAllContainedStates.immutableCopy) {
+            targetState.transformEntry(targetRootState);
         }
-        targetRootRegion.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform macro states that have actions to transform
-    def void transformEntry(State state, Region targetRootRegion) {
+    def void transformEntry(State state, State targetRootState) {
         if (!state.entryActions.nullOrEmpty) {
 
             var State firstState

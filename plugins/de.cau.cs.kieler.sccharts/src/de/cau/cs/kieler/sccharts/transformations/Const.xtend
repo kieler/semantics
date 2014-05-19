@@ -39,19 +39,17 @@ class Const {
     //--                           C O N S T                                 --
     //-------------------------------------------------------------------------
     // ...
-    def Region transform(Region rootRegion) {
+    def State transform(State rootState) {
+        var targetRootState = rootState.copy.fixAllPriorities;
 
-        // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy.fixAllPriorities;
-
-        // For every state in the SyncChart do the transformation
-        for (targetTransition : targetRootRegion.getAllContainedStates.immutableCopy) {
-            targetTransition.transformConst(targetRootRegion);
+        // Traverse all states
+        for (targetTransition : targetRootState.getAllContainedStates.immutableCopy) {
+            targetTransition.transformConst(targetRootState);
         }
-        targetRootRegion;
+        targetRootState;
     }
 
-    def void transformConst(State state, Region targetRootRegion) {
+    def void transformConst(State state, State targetRootState) {
         //TODO
     }
 

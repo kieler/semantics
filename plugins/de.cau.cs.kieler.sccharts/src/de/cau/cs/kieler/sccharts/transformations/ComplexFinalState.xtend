@@ -56,19 +56,17 @@ class ComplexFinalState {
     // (3)   If just one regions: No watcher region is needed, no abort signal and
     //       only a single term signal 
     //       (TODO)                
-    def Region transform(Region rootRegion) {
+    def State transform(State rootState) {
+        var targetRootState = rootState.copy.fixAllPriorities;
 
-        // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy.fixAllPriorities;
-
-        // For every state in the SyncChart do the transformation
-        for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformComplexFinalState(rootRegion);
+        // Traverse all states
+        for (targetState : targetRootState.getAllContainedStates) {
+            targetState.transformComplexFinalState(rootState);
         }
-        targetRootRegion.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
-    def void transformComplexFinalState(State state, Region targetRootRegion) {
+    def void transformComplexFinalState(State state, State targetRootState) {
         val complexFinalStates = state.allContainedStates.filter(
             e|
                 e.parentRegion.parentState == state && e.isFinal && (!e.outgoingTransitions.nullOrEmpty ||

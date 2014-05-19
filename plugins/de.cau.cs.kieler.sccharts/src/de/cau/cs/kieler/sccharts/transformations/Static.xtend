@@ -48,19 +48,17 @@ class Static {
     // references (accesses) to x to the new name. Remove the static keyword from the declaration.
     // This is applied for all superstates that contain static variable declarations.
     //
-    def Region transform(Region rootRegion) {
+    def State transform(State rootState) {
+        var targetRootState = rootState.copy.fixAllPriorities;
 
-        // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy.fixAllPriorities;
-
-        // For every state in the SyncChart do the transformation
-        for (targetTransition : targetRootRegion.getAllContainedStates.immutableCopy) {
-            targetTransition.transformStatic(targetRootRegion);
+        // Traverse all states
+        for (targetTransition : targetRootState.getAllContainedStates.immutableCopy) {
+            targetTransition.transformStatic(targetRootState);
         }
-        targetRootRegion.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
-    def void transformStatic(State state, Region targetRootRegion) {
+    def void transformStatic(State state, State targetRootState) {
         val staticValuedObjects = state.valuedObjects.filter[isStatic].toList
         for (staticValuedObject : staticValuedObjects.immutableCopy) {
             staticValuedObject.setName(

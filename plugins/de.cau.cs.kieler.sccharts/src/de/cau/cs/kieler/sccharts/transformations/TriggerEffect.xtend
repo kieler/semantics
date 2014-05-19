@@ -44,19 +44,17 @@ class TriggerEffect {
     //     create a new true triggered immediate effect transition T_eff and move all effects of T to T_eff.
     //     Set the T_eff to have T's target state. Set T to have the target C.
     //     Add T_eff to C's outgoing transitions. 
-    def Region transform(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
-        var targetRootRegion = rootRegion.copy.fixAllPriorities;
+    def State transform(State rootState) {
+        var targetRootState = rootState.copy.fixAllPriorities;
 
         // Traverse all transitions
-        for (targetTransition : targetRootRegion.getAllContainedTransitions) {
-            targetTransition.transformTriggerEffect(targetRootRegion);
+        for (targetTransition : targetRootState.getAllContainedTransitions) {
+            targetTransition.transformTriggerEffect(targetRootState);
         }
-        targetRootRegion.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
-    def void transformTriggerEffect(Transition transition, Region targetRootRegion) {
+    def void transformTriggerEffect(Transition transition, State targetRootState) {
 
         // Only apply this to transition that have both, a trigger (or is a termination) and one or more effects 
         if (((transition.trigger != null || !transition.immediate || transition.typeTermination) &&
