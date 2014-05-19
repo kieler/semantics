@@ -13,38 +13,32 @@
  */
  package de.cau.cs.kieler.synccharts.sccharts
 
+import com.google.common.collect.BiMap
+import com.google.common.collect.HashBiMap
 import com.google.inject.Inject
 import com.google.inject.Injector
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.esterel.kexpressions.BooleanValue
+import de.cau.cs.kieler.esterel.kexpressions.FloatValue
+import de.cau.cs.kieler.esterel.kexpressions.IntValue
+import de.cau.cs.kieler.esterel.kexpressions.OperatorExpression
+import de.cau.cs.kieler.esterel.kexpressions.TextExpression
+import de.cau.cs.kieler.esterel.kexpressions.ValueType
+import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.sccharts.Effect
+import de.cau.cs.kieler.sccharts.Emission
+import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.TransitionType
+import de.cau.cs.kieler.sccharts.TextEffect
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
 import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
-import java.util.HashMap
-import org.eclipse.emf.ecore.EObject
-    ////import org.eclipse.xtext.serializer.ISerializer
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.IntValue
-import de.cau.cs.kieler.core.kexpressions.FloatValue
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import com.google.common.collect.BiMap
-import com.google.common.collect.HashBiMap
-import de.cau.cs.kieler.sccharts.Action
-import de.cau.cs.kieler.sccharts.HistoryType
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.sccharts.Effect
-import de.cau.cs.kieler.sccharts.Emission
-import de.cau.cs.kieler.sccharts.TextEffect
-import static de.cau.cs.kieler.synccharts.sccharts.SyncChartsTransformation.*
+import de.cau.cs.kieler.synccharts.State
+import de.cau.cs.kieler.synccharts.TransitionType
 
 /** 
  * Transforming SyncCharts into SCCharts.
@@ -70,15 +64,15 @@ class SyncChartsTransformation {
     //-------------------------------------------------------------------------
          
     // State mappings         
-    BiMap<State, de.cau.cs.kieler.synccharts.State> states = HashBiMap.create();
+    BiMap<de.cau.cs.kieler.sccharts.State, State> states = HashBiMap.create();
     
-    def State getState(de.cau.cs.kieler.synccharts.State syncState) {
+    def de.cau.cs.kieler.sccharts.State getState(State syncState) {
         return states.inverse().get(syncState)
     }
-    def de.cau.cs.kieler.synccharts.State getSyncState(State syncState) {
+    def State getSyncState(de.cau.cs.kieler.sccharts.State syncState) {
         return states.get(syncState)
     }
-    def void map(State state, de.cau.cs.kieler.synccharts.State syncState) {
+    def void map(de.cau.cs.kieler.sccharts.State state, State syncState) {
         states.put(state, syncState)
     }
     
@@ -129,29 +123,30 @@ class SyncChartsTransformation {
     // @requires: none
 
     // Transforming Local ValuedObjects.
-    def Region transformSyncChart(de.cau.cs.kieler.synccharts.Region syncRootRegion) {
+    def de.cau.cs.kieler.sccharts.State transformSyncChart(de.cau.cs.kieler.synccharts.Region syncRootRegion) {
 
         // Create an map root region        
-        val rootRegion = createRegion("")
-        rootRegion.map(syncRootRegion)
+//        val rootRegion = createRegion("")
+//        rootRegion.map(syncRootRegion)
+        val rootState = createSCChart()
 
         // Start transformation with the single root state (= the SyncChart)        
         val syncRootState = syncRootRegion.states.get(0)
-        syncRootState.transform(rootRegion)
+        syncRootState.transform(rootState)
         
         // Now create transitions and actions
-        val syncStates = syncRootState.eAllContents.filter(typeof(de.cau.cs.kieler.synccharts.State)).toList.immutableCopy
+        val syncStates = syncRootState.eAllContents.filter(typeof(State)).toList.immutableCopy
         for (syncState : syncStates) {
-            syncState.transformTransitionsAndActions(rootRegion)
+            syncState.transformTransitionsAndActions()
         }
 
-        rootRegion.fixAllTextualOrdersByPriorities
+        rootState.fixAllTextualOrdersByPriorities
     }
     
    // -------------------------------------------------------------------------   
 
     // Transforming transitions and actions
-    def void transformTransitionsAndActions(de.cau.cs.kieler.synccharts.State syncState, Region rootRegion) {
+    def void transformTransitionsAndActions(State syncState) {
         for (syncTransition : syncState.outgoingTransitions) {
             val targetState = syncTransition.targetState.state
             val sourceState = syncTransition.sourceState.state
@@ -171,10 +166,10 @@ class SyncChartsTransformation {
             for (syncEffect : syncTransition.effects) {
                   transition.addEffect(syncEffect.transformEffect)
             }
-            if (syncTransition.type == de.cau.cs.kieler.synccharts.TransitionType::NORMALTERMINATION) {
+            if (syncTransition.type == TransitionType::NORMALTERMINATION) {
                 transition.setTypeTermination
             }
-            else if (syncTransition.type == de.cau.cs.kieler.synccharts.TransitionType::STRONGABORT) {
+            else if (syncTransition.type == TransitionType::STRONGABORT) {
                 transition.setTypeStrongAbort
             }
         }
@@ -194,10 +189,14 @@ class SyncChartsTransformation {
    // -------------------------------------------------------------------------   
 
     // Transforming states
-    def dispatch void transform(de.cau.cs.kieler.synccharts.State syncState, Region rootRegion) {
+    def dispatch void transform(State syncState, Region rootRegion) {
         val parentRegion = syncState.parentRegion.region
         var syncId = syncState.id.correctId;
         val state = parentRegion.createState(syncId).uniqueName
+        syncState.transform(state)
+    }
+        
+    def dispatch void transform(State syncState, de.cau.cs.kieler.sccharts.State state) {
         state.setLabel(syncState.label); 
         state.map(syncState)
         
@@ -209,28 +208,28 @@ class SyncChartsTransformation {
             signal.map(syncSignal)
             signal.setInput(syncSignal.isInput)
             signal.setOutput(syncSignal.isOutput)
-            if (syncSignal.type == de.cau.cs.kieler.esterel.kexpressions.ValueType::INT) {
+            if (syncSignal.type == ValueType::INT) {
                 signal.setTypeInt
                 if (!syncSignal.initialValue.nullOrEmpty) {
                     val initial = Integer.parseInt(syncSignal.initialValue.replace("\"", ""))
                     signal.setInitialValue(initial.createIntValue)
                 }
             }
-            else if (syncSignal.type == de.cau.cs.kieler.esterel.kexpressions.ValueType::BOOL) {
+            else if (syncSignal.type == ValueType::BOOL) {
                 signal.setTypeBool
                 if (!syncSignal.initialValue.nullOrEmpty) {
                     val initial = Boolean.parseBoolean(syncSignal.initialValue.replace("\"", ""))
                     signal.setInitialValue(initial.createBoolValue)
                 }
             }
-            else if (syncSignal.type == de.cau.cs.kieler.esterel.kexpressions.ValueType::DOUBLE) {
+            else if (syncSignal.type == ValueType::DOUBLE) {
                 signal.setTypeDouble
                 if (!syncSignal.initialValue.nullOrEmpty) {
                     val initial = Float.parseFloat(syncSignal.initialValue.replace("\"", ""))
                     signal.setInitialValue(initial.createFloatValue)
                 }
             }
-            else if (syncSignal.type == de.cau.cs.kieler.esterel.kexpressions.ValueType::FLOAT) {
+            else if (syncSignal.type == ValueType::FLOAT) {
                 signal.setTypeFloat
                 if (!syncSignal.initialValue.nullOrEmpty) {
                     val initial = Float.parseFloat(syncSignal.initialValue.replace("\"", ""))
@@ -240,13 +239,13 @@ class SyncChartsTransformation {
         }
         
         for (syncRegion : syncState.regions) {
-            syncRegion.transform(rootRegion)
+            syncRegion.transform(state)
         }
         
     }
     
     // Transforming regions
-    def dispatch void transform(de.cau.cs.kieler.synccharts.Region syncRegion, Region rootRegion) {
+    def dispatch void transform(de.cau.cs.kieler.synccharts.Region syncRegion, de.cau.cs.kieler.sccharts.State state) {
         val parentState = syncRegion.parentState.state
         val region = parentState.createRegion(syncRegion.id)
         region.map(syncRegion)
@@ -254,7 +253,7 @@ class SyncChartsTransformation {
             region.setLabel(syncRegion.label)
         }
         for (syncState : syncRegion.states) {
-            syncState.transform(rootRegion)
+            syncState.transform(state)
         }
     }
     
@@ -287,7 +286,7 @@ class SyncChartsTransformation {
     //-------------------------------------------------------------------------
 
     // Create a new reference Expression to the corresponding sValuedObject of the expression
-    def dispatch Expression transformExpression(de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference expression) {
+    def dispatch Expression transformExpression(ValuedObjectReference expression) {
         val syncchartValuedObject = expression.valuedObject
         val scchartValuedObject = syncchartValuedObject.valuedObject
         scchartValuedObject.reference
@@ -346,7 +345,7 @@ class SyncChartsTransformation {
     }
 
     // Apply conversion to operator expressions like and, equals, not, greater, val, pre, add, etc.
-    def dispatch Expression transformExpression(de.cau.cs.kieler.esterel.kexpressions.OperatorExpression expression) {
+    def dispatch Expression transformExpression(OperatorExpression expression) {
         val newExpression = createOperatorExpression(expression.operator.transformOperator)
         for (subExpression : expression.subExpressions) {
             newExpression.subExpressions.add(subExpression.transformExpression)
@@ -355,22 +354,22 @@ class SyncChartsTransformation {
     }
 
     // Apply conversion to integer values
-    def dispatch Expression transformExpression(de.cau.cs.kieler.esterel.kexpressions.IntValue expression) {
+    def dispatch Expression transformExpression(IntValue expression) {
         createIntValue(expression.value)
     }
 
     // Apply conversion to float values
-    def dispatch Expression transformExpression(de.cau.cs.kieler.esterel.kexpressions.FloatValue expression) {
+    def dispatch Expression transformExpression(FloatValue expression) {
         createFloatValue(expression.value)
     }
 
     // Apply conversion to boolean values
-    def dispatch Expression transformExpression(de.cau.cs.kieler.esterel.kexpressions.BooleanValue expression) {
+    def dispatch Expression transformExpression(BooleanValue expression) {
         createBoolValue(expression.value)
     }    
 
     // Apply conversion to textual host code 
-    def dispatch Expression transformExpression(de.cau.cs.kieler.esterel.kexpressions.TextExpression expression) {
+    def dispatch Expression transformExpression(TextExpression expression) {
         var code = expression.code;
         val textExpression = createTextExpression
         textExpression.setText(code);
