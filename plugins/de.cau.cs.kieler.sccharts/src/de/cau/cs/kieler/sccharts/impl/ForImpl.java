@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.sccharts.For;
@@ -37,6 +38,8 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ForImpl#getLoopVariable <em>Loop Variable</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ForImpl#getBodyScope <em>Body Scope</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ForImpl#getParentScope <em>Parent Scope</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ForImpl#getFrom <em>From</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ForImpl#getTo <em>To</em>}</li>
  * </ul>
  * </p>
  *
@@ -79,6 +82,26 @@ public class ForImpl extends EObjectImpl implements For {
      * @ordered
      */
     protected Scope parentScope;
+
+    /**
+     * The cached value of the '{@link #getFrom() <em>From</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getFrom()
+     * @generated
+     * @ordered
+     */
+    protected Expression from;
+
+    /**
+     * The cached value of the '{@link #getTo() <em>To</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTo()
+     * @generated
+     * @ordered
+     */
+    protected Expression to;
 
     /**
      * <!-- begin-user-doc -->
@@ -218,6 +241,82 @@ public class ForImpl extends EObjectImpl implements For {
      * <!-- end-user-doc -->
      * @generated
      */
+    public Expression getFrom() {
+        if (from != null && from.eIsProxy()) {
+            InternalEObject oldFrom = (InternalEObject)from;
+            from = (Expression)eResolveProxy(oldFrom);
+            if (from != oldFrom) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.FOR__FROM, oldFrom, from));
+            }
+        }
+        return from;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Expression basicGetFrom() {
+        return from;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setFrom(Expression newFrom) {
+        Expression oldFrom = from;
+        from = newFrom;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.FOR__FROM, oldFrom, from));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Expression getTo() {
+        if (to != null && to.eIsProxy()) {
+            InternalEObject oldTo = (InternalEObject)to;
+            to = (Expression)eResolveProxy(oldTo);
+            if (to != oldTo) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.FOR__TO, oldTo, to));
+            }
+        }
+        return to;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Expression basicGetTo() {
+        return to;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setTo(Expression newTo) {
+        Expression oldTo = to;
+        to = newTo;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.FOR__TO, oldTo, to));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
@@ -230,6 +329,12 @@ public class ForImpl extends EObjectImpl implements For {
             case SCChartsPackage.FOR__PARENT_SCOPE:
                 if (resolve) return getParentScope();
                 return basicGetParentScope();
+            case SCChartsPackage.FOR__FROM:
+                if (resolve) return getFrom();
+                return basicGetFrom();
+            case SCChartsPackage.FOR__TO:
+                if (resolve) return getTo();
+                return basicGetTo();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -250,6 +355,12 @@ public class ForImpl extends EObjectImpl implements For {
                 return;
             case SCChartsPackage.FOR__PARENT_SCOPE:
                 setParentScope((Scope)newValue);
+                return;
+            case SCChartsPackage.FOR__FROM:
+                setFrom((Expression)newValue);
+                return;
+            case SCChartsPackage.FOR__TO:
+                setTo((Expression)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -272,6 +383,12 @@ public class ForImpl extends EObjectImpl implements For {
             case SCChartsPackage.FOR__PARENT_SCOPE:
                 setParentScope((Scope)null);
                 return;
+            case SCChartsPackage.FOR__FROM:
+                setFrom((Expression)null);
+                return;
+            case SCChartsPackage.FOR__TO:
+                setTo((Expression)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -290,6 +407,10 @@ public class ForImpl extends EObjectImpl implements For {
                 return bodyScope != null;
             case SCChartsPackage.FOR__PARENT_SCOPE:
                 return parentScope != null;
+            case SCChartsPackage.FOR__FROM:
+                return from != null;
+            case SCChartsPackage.FOR__TO:
+                return to != null;
         }
         return super.eIsSet(featureID);
     }

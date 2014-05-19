@@ -78,6 +78,8 @@ public class ForItemProvider
             addLoopVariablePropertyDescriptor(object);
             addBodyScopePropertyDescriptor(object);
             addParentScopePropertyDescriptor(object);
+            addFromPropertyDescriptor(object);
+            addToPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -140,6 +142,50 @@ public class ForItemProvider
                  getString("_UI_For_parentScope_feature"),
                  getString("_UI_PropertyDescriptor_description", "_UI_For_parentScope_feature", "_UI_For_type"),
                  SCChartsPackage.Literals.FOR__PARENT_SCOPE,
+                 true,
+                 false,
+                 true,
+                 null,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the From feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addFromPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_For_from_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_For_from_feature", "_UI_For_type"),
+                 SCChartsPackage.Literals.FOR__FROM,
+                 true,
+                 false,
+                 true,
+                 null,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the To feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addToPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_For_to_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_For_to_feature", "_UI_For_type"),
+                 SCChartsPackage.Literals.FOR__TO,
                  true,
                  false,
                  true,

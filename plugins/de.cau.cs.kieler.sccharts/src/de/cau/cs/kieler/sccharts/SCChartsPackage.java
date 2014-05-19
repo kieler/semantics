@@ -1176,13 +1176,31 @@ public interface SCChartsPackage extends EPackage {
     int FOR__PARENT_SCOPE = 2;
 
     /**
+     * The feature id for the '<em><b>From</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FOR__FROM = 3;
+
+    /**
+     * The feature id for the '<em><b>To</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FOR__TO = 4;
+
+    /**
      * The number of structural features of the '<em>For</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int FOR_FEATURE_COUNT = 3;
+    int FOR_FEATURE_COUNT = 5;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}' enum.
@@ -1782,6 +1800,28 @@ public interface SCChartsPackage extends EPackage {
     EReference getFor_ParentScope();
 
     /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.For#getFrom <em>From</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>From</em>'.
+     * @see de.cau.cs.kieler.sccharts.For#getFrom()
+     * @see #getFor()
+     * @generated
+     */
+    EReference getFor_From();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.For#getTo <em>To</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>To</em>'.
+     * @see de.cau.cs.kieler.sccharts.For#getTo()
+     * @see #getFor()
+     * @generated
+     */
+    EReference getFor_To();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2291,6 +2331,22 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference FOR__PARENT_SCOPE = eINSTANCE.getFor_ParentScope();
+
+        /**
+         * The meta object literal for the '<em><b>From</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference FOR__FROM = eINSTANCE.getFor_From();
+
+        /**
+         * The meta object literal for the '<em><b>To</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference FOR__TO = eINSTANCE.getFor_To();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}' enum.

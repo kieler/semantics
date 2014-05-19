@@ -201,5 +201,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="loopVariable" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bodyScope" eType="#//Scope"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentScope" eType="#//Scope"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="to" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"/>
   </eClassifiers>
 </ecore:EPackage>

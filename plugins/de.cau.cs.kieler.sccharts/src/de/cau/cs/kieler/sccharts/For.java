@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 import org.eclipse.emf.ecore.EObject;
@@ -28,6 +29,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.sccharts.For#getLoopVariable <em>Loop Variable</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.For#getBodyScope <em>Body Scope</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.For#getParentScope <em>Parent Scope</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.For#getFrom <em>From</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.For#getTo <em>To</em>}</li>
  * </ul>
  * </p>
  *
@@ -120,5 +123,57 @@ public interface For extends EObject {
      * @generated
      */
     void setParentScope(Scope value);
+
+    /**
+     * Returns the value of the '<em><b>From</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>From</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>From</em>' reference.
+     * @see #setFrom(Expression)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getFor_From()
+     * @model
+     * @generated
+     */
+    Expression getFrom();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.For#getFrom <em>From</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>From</em>' reference.
+     * @see #getFrom()
+     * @generated
+     */
+    void setFrom(Expression value);
+
+    /**
+     * Returns the value of the '<em><b>To</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>To</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>To</em>' reference.
+     * @see #setTo(Expression)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getFor_To()
+     * @model
+     * @generated
+     */
+    Expression getTo();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.For#getTo <em>To</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>To</em>' reference.
+     * @see #getTo()
+     * @generated
+     */
+    void setTo(Expression value);
 
 } // For
