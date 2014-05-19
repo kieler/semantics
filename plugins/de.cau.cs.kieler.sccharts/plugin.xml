@@ -803,6 +803,33 @@
      <extension
          point="de.cau.cs.kieler.kico.transformation">
          
+       <!-- check dependencies -->        
+      <transformationMethod
+            class="de.cau.cs.kieler.sccharts.transformations.Const"
+            dependencies="CONNECTOR" 
+            id="CONST"
+            method="transform"
+            name="Const">
+      </transformationMethod>
+         
+       <!-- check dependencies -->        
+      <transformationMethod
+            class="de.cau.cs.kieler.sccharts.transformations.For"
+            dependencies="CONNECTOR" 
+            id="FOR"
+            method="transform"
+            name="For">
+      </transformationMethod>
+      
+       <!-- check dependencies -->        
+      <transformationMethod
+            class="de.cau.cs.kieler.sccharts.transformations.Reference"
+            dependencies="CONNECTOR" 
+            id="REFERENCE"
+            method="transform"
+            name="Reference">
+      </transformationMethod>
+         
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.History"
             dependencies="STATIC"
@@ -944,7 +971,7 @@
             id="SCADEQUARTZESTEREL"
             isFeatureGroup="true"
             name="SCADE / QUARTZ / Esterel v7"
-            transformations="HISTORY, STATIC, WEAKSUSPEND, DEFERRED">
+            transformations="HISTORY, STATIC, WEAKSUSPEND, DEFERRED, CONST, FOR, REFERENCE">
       </transformationGroup>
 
       <transformationGroup
