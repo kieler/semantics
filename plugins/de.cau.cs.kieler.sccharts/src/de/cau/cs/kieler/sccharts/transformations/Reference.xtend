@@ -22,9 +22,9 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 /**
  * SCCharts Reference Transformation.
  * 
- * @author cmot
- * @kieler.design 2013-09-05 proposed 
- * @kieler.rating 2013-09-05 proposed yellow
+ * @author ssm
+ * @kieler.design 2014-05-19 proposed 
+ * @kieler.rating 2014-05-19 proposed yellow
  */
 class Reference {
 
@@ -39,17 +39,28 @@ class Reference {
     //-------------------------------------------------------------------------
     // ...
     def State transform(State rootState) {
-        var targetRootState = rootState.copy.fixAllPriorities;
+        val targetRootState = rootState.copy.fixAllPriorities;
 
-        // Traverse all states
-        for (targetTransition : targetRootState.getAllContainedStates.immutableCopy) {
-            targetTransition.transformReference(targetRootState);
-        }
+        // Traverse all referenced states
+        targetRootState.allContainedStates.filter[ referencedState ].toList.immutableCopy.forEach[
+            transformReference(targetRootState)
+        ]
+        
         targetRootState;
     }
 
     def void transformReference(State state, State targetRootState) {
-        //TODO
+        
+        // Referenced scopes are always SCCharts
+        val newState = state.referencedScope.copy as State
+
+        // Each referenced state must be contained in a region.
+        state.parentRegion => [ states += newState ] 
+        
+        state.incomingTransitions.forEach[ targetState = newState ]
+        state.outgoingTransitions.forEach[ sourceState = newState ]
+        
+        state.remove        
     }
 
 }
