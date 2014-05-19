@@ -30,9 +30,10 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.For#getLoopVariable <em>Loop Variable</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.For#getBodyScope <em>Body Scope</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.For#getParentScope <em>Parent Scope</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.For#getParentState <em>Parent State</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.For#getFrom <em>From</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.For#getTo <em>To</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.For#getEReference0 <em>EReference0</em>}</li>
  * </ul>
  * </p>
  *
@@ -101,30 +102,30 @@ public interface For extends EObject {
     void setBodyScope(Scope value);
 
     /**
-     * Returns the value of the '<em><b>Parent Scope</b></em>' reference.
+     * Returns the value of the '<em><b>Parent State</b></em>' reference.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Parent Scope</em>' reference isn't clear,
+     * If the meaning of the '<em>Parent State</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Parent Scope</em>' reference.
-     * @see #setParentScope(Scope)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getFor_ParentScope()
+     * @return the value of the '<em>Parent State</em>' reference.
+     * @see #setParentState(Region)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getFor_ParentState()
      * @model
      * @generated
      */
-    Scope getParentScope();
+    Region getParentState();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.For#getParentScope <em>Parent Scope</em>}' reference.
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.For#getParentState <em>Parent State</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Parent Scope</em>' reference.
-     * @see #getParentScope()
+     * @param value the new value of the '<em>Parent State</em>' reference.
+     * @see #getParentState()
      * @generated
      */
-    void setParentScope(Scope value);
+    void setParentState(Region value);
 
     /**
      * Returns the value of the '<em><b>From</b></em>' reference.
@@ -177,5 +178,31 @@ public interface For extends EObject {
      * @generated
      */
     void setTo(Expression value);
+
+    /**
+     * Returns the value of the '<em><b>EReference0</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>EReference0</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>EReference0</em>' reference.
+     * @see #setEReference0(Region)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getFor_EReference0()
+     * @model
+     * @generated
+     */
+    Region getEReference0();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.For#getEReference0 <em>EReference0</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>EReference0</em>' reference.
+     * @see #getEReference0()
+     * @generated
+     */
+    void setEReference0(Region value);
 
 } // For

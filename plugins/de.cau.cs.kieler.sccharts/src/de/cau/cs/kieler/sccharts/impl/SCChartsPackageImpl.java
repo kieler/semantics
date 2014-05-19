@@ -746,7 +746,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getFor_ParentScope() {
+    public EReference getFor_ParentState() {
         return (EReference)forEClass.getEStructuralFeatures().get(2);
     }
 
@@ -766,6 +766,15 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      */
     public EReference getFor_To() {
         return (EReference)forEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getFor_EReference0() {
+        return (EReference)forEClass.getEStructuralFeatures().get(5);
     }
 
     /**
@@ -900,9 +909,10 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         forEClass = createEClass(FOR);
         createEReference(forEClass, FOR__LOOP_VARIABLE);
         createEReference(forEClass, FOR__BODY_SCOPE);
-        createEReference(forEClass, FOR__PARENT_SCOPE);
+        createEReference(forEClass, FOR__PARENT_STATE);
         createEReference(forEClass, FOR__FROM);
         createEReference(forEClass, FOR__TO);
+        createEReference(forEClass, FOR__EREFERENCE0);
 
         // Create enums
         stateTypeEEnum = createEEnum(STATE_TYPE);
@@ -1029,9 +1039,10 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEClass(forEClass, For.class, "For", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getFor_LoopVariable(), theKExpressionsPackage.getValuedObject(), null, "loopVariable", null, 0, 1, For.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getFor_BodyScope(), this.getScope(), null, "bodyScope", null, 0, 1, For.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getFor_ParentScope(), this.getScope(), null, "parentScope", null, 0, 1, For.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getFor_ParentState(), this.getRegion(), null, "parentState", null, 0, 1, For.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getFor_From(), theKExpressionsPackage.getExpression(), null, "from", null, 0, 1, For.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getFor_To(), theKExpressionsPackage.getExpression(), null, "to", null, 0, 1, For.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getFor_EReference0(), this.getRegion(), null, "EReference0", null, 0, 1, For.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(stateTypeEEnum, StateType.class, "StateType");

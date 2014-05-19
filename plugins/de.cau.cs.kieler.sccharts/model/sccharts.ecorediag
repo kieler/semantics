@@ -537,21 +537,8 @@
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_1aEBgd9gEeO3hdps36PTRw" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_1aEBgt9gEeO3hdps36PTRw" fontColor="4210752" fontHeight="10"/>
     <element xmi:type="ecore:EReference" href="sccharts.ecore#//For/bodyScope"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_1aEBg99gEeO3hdps36PTRw" points="[19, 19, -149, 114]$[27, 27, -141, 122]$[168, 15, 0, 110]$[168, -61, 0, 34]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_1aEBg99gEeO3hdps36PTRw" points="[19, 13, -149, 108]$[39, 27, -129, 122]$[75, 15, -93, 110]$[168, 15, 0, 110]$[168, -61, 0, 34]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_1aNygt9gEeO3hdps36PTRw" id="(0.8137254901960784,0.23809523809523808)"/>
-  </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_FGuusN9hEeO3hdps36PTRw" type="3002" source="_oc6rEN9fEeO3hdps36PTRw" target="_QTczqBt_EeOTbsNx0IQBYA">
-    <children xmi:type="notation:Node" xmi:id="_FGuutN9hEeO3hdps36PTRw" type="4011">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_FGuutd9hEeO3hdps36PTRw" x="-24" y="-33"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_FGuutt9hEeO3hdps36PTRw" type="4012">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_FGuut99hEeO3hdps36PTRw" x="-12" y="17"/>
-    </children>
-    <styles xmi:type="notation:ConnectorStyle" xmi:id="_FGuusd9hEeO3hdps36PTRw" lineColor="4210752"/>
-    <styles xmi:type="notation:FontStyle" xmi:id="_FGuust9hEeO3hdps36PTRw" fontColor="4210752" fontHeight="10"/>
-    <element xmi:type="ecore:EReference" href="sccharts.ecore#//For/parentScope"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_FGuus99hEeO3hdps36PTRw" points="[50, -9, -161, 126]$[118, -20, -93, 115]$[160, -72, -51, 63]"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_FGuuuN9hEeO3hdps36PTRw" id="(0.5928571428571429,0.08571428571428572)"/>
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_M7iSUN9iEeO3hdps36PTRw" type="3002" source="_oc6rEN9fEeO3hdps36PTRw" target="_9cVGsBt_EeOTbsNx0IQBYA">
     <children xmi:type="notation:Node" xmi:id="_M7iSVN9iEeO3hdps36PTRw" type="4011">

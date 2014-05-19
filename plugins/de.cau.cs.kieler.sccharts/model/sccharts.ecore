@@ -203,8 +203,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="loopVariable" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bodyScope" eType="#//Scope"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parentScope" eType="#//Scope"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentState" eType="#//Region"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="to" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//Region"/>
   </eClassifiers>
 </ecore:EPackage>

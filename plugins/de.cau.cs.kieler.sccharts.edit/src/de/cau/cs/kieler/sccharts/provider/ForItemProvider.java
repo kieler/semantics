@@ -77,9 +77,10 @@ public class ForItemProvider
 
             addLoopVariablePropertyDescriptor(object);
             addBodyScopePropertyDescriptor(object);
-            addParentScopePropertyDescriptor(object);
+            addParentStatePropertyDescriptor(object);
             addFromPropertyDescriptor(object);
             addToPropertyDescriptor(object);
+            addEReference0PropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -129,19 +130,19 @@ public class ForItemProvider
     }
 
     /**
-     * This adds a property descriptor for the Parent Scope feature.
+     * This adds a property descriptor for the Parent State feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addParentScopePropertyDescriptor(Object object) {
+    protected void addParentStatePropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_For_parentScope_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_For_parentScope_feature", "_UI_For_type"),
-                 SCChartsPackage.Literals.FOR__PARENT_SCOPE,
+                 getString("_UI_For_parentState_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_For_parentState_feature", "_UI_For_type"),
+                 SCChartsPackage.Literals.FOR__PARENT_STATE,
                  true,
                  false,
                  true,
@@ -186,6 +187,28 @@ public class ForItemProvider
                  getString("_UI_For_to_feature"),
                  getString("_UI_PropertyDescriptor_description", "_UI_For_to_feature", "_UI_For_type"),
                  SCChartsPackage.Literals.FOR__TO,
+                 true,
+                 false,
+                 true,
+                 null,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the EReference0 feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addEReference0PropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_For_EReference0_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_For_EReference0_feature", "_UI_For_type"),
+                 SCChartsPackage.Literals.FOR__EREFERENCE0,
                  true,
                  false,
                  true,
