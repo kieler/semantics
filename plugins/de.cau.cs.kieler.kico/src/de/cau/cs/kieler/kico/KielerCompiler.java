@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * This is the main class of the Kieler Compiler (KiCo) Project that aims to provide an
@@ -776,7 +777,31 @@ public class KielerCompiler {
      * consecutive transformations. Specify desired transformations as a String List of IDs. Use
      * this with care! Note that if switching autoexpand off you cannot use transformation group IDs
      * any more. Also no dependencies will be considered. The transformations will be applied
-     * straight forward in the order defined by the transformationIDs list.
+     * straight forward in the order defined by the transformationIDs list. Inplace is false by
+     * default meaning the compilation will be done on a copy of the input EObject.
+     *
+     * @param transformationIDs the transformation i ds
+     * @param excludedTransformationIDs the excluded transformation i ds
+     * @param eObject the e object
+     * @param prerequirements the prerequirements
+     * @return the e object
+     */
+    public static EObject compile(final List<String> transformationIDs,
+            final List<String> excludedTransformationIDs, final EObject eObject,
+            final boolean prerequirements) {
+        boolean inplace = false;
+        return  compile(transformationIDs, excludedTransformationIDs, eObject,
+                prerequirements, inplace);
+    }
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Advanced KIELER Compiler compile method. It can be called in order to call several
+     * consecutive transformations. Specify desired transformations as a String List of IDs. Use
+     * this with care! Note that if switching autoexpand off you cannot use transformation group IDs
+     * any more. Also no dependencies will be considered. The transformations will be applied
+     * straight forward in the order defined by the transformationIDs list. Inplace tells whether
+     * the compilation will be done on a copy of the input EObject or on the original EObject.
      * 
      * @param transformationID
      *            the transformation id
@@ -786,10 +811,14 @@ public class KielerCompiler {
      */
     public static EObject compile(final List<String> transformationIDs,
             final List<String> excludedTransformationIDs, final EObject eObject,
-            final boolean prerequirements) {
+            final boolean prerequirements, final boolean inplace) {
         updateMapping(DEBUG);
-
+        
         EObject transformedObject = eObject;
+        // If not inplace then produce a copy of the input EObject
+        if (!inplace) {
+            transformedObject = EcoreUtil.copy(eObject);
+        }
 
         // Auto expansion will resolve dependencies and expand transformation groups
         List<String> processedTransformationIDs = transformationIDs;
