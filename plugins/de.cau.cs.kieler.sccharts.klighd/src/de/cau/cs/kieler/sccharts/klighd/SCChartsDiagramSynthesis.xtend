@@ -380,7 +380,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 ]
             else if (s.isReferencedState) 
                 figure => [
-                    it.setBackgroundGradient("#fefef0".color, "#e0a0066".color, 90.0f);
+                    it.setBackgroundGradient("#fefef0".color, "#e0b0099".color, 90.0f);
                 ]
             else if (s.isFinal)
                 figure.addRoundedRectangle(cornerRadius, cornerRadius) => [
