@@ -92,7 +92,7 @@ class Pre {
     }
 
     // Traverse all states that might declare a valuedObject that is used with the PRE operator
-    def void transformPre(State state, Region targetRootState) {
+    def void transformPre(State state, State targetRootState) {
 
         // Filter all valuedObjects and retrieve those that are referenced
         val allActions = state.eAllContents.filter(typeof(Action)).toList();

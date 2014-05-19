@@ -232,7 +232,7 @@ class Abort {
     //--     A B O R T     D E F A U L T      T R A N S F O R M A T I O N    --
     //-------------------------------------------------------------------------
     // Transforming Aborts.
-    def Region transform(State rootState) {
+    def State transform(State rootState) {
         val targetRootState = rootState.copy.fixAllPriorities;
 
         // Traverse all states
@@ -247,7 +247,7 @@ class Abort {
     //        // For all normal hierarchical states, add a single connector
     //        // add
     //    }
-    def void transformAbortDefault(State state, Region targetRootState) {
+    def void transformAbortDefault(State state, State targetRootState) {
 
         val stateHasUntransformedTransitions = (!(state.outgoingTransitions.size == 0) || ((state.outgoingTransitions.
             size == 1) && state.outgoingTransitions.filter[typeTermination].filter[trigger == null].size == 1))

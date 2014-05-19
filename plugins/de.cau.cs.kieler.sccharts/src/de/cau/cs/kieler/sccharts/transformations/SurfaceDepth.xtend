@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
@@ -78,7 +77,7 @@ class SurfaceDepth {
 
     def void transformSurfaceDepth(State state, State targetRootState) {
         if (state.outgoingTransitions.size > 0 && state.type == StateType::NORMAL &&
-            !state.outgoingTransitions.get(0).typeTermination &&
+            !state.outgoingTransitions.get(0).typeTermination && 
             (state.outgoingTransitions.get(0).trigger != null || !state.outgoingTransitions.get(0).immediate)) {
             val parentRegion = state.parentRegion;
 

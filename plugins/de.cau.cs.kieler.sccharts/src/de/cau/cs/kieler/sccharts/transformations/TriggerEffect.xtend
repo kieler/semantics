@@ -14,11 +14,11 @@
 package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.sccharts.State
 
 /**
  * SCCharts TriggerEffect Transformation.

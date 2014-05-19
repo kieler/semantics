@@ -513,27 +513,27 @@ class SCChartsExtension {
         transition.setPriority2(0).trimPriorities
     }
 
-    def Region fixAllPriorities(Region region) {
-        for (state : region.allContainedStates) {
+    def State fixAllPriorities(State state) {
+        for (containedState : state.allContainedStates) {
             var prio = 1
-            for (transition : state.outgoingTransitions) {
+            for (transition : containedState.outgoingTransitions) {
                 transition.setPriority(prio)
                 prio = prio + 1
             }
         }
-        region
+        state
     }
 
-    def Region fixAllTextualOrdersByPriorities(Region region) {
-        for (state : region.allContainedStates) {
-            val transitions = state.outgoingTransitions.sortBy[priority].toList.immutableCopy;
+    def State fixAllTextualOrdersByPriorities(State state) {
+        for (containedState : state.allContainedStates) {
+            val transitions = containedState.outgoingTransitions.sortBy[priority].toList.immutableCopy;
             for (transition : transitions) {
-                state.outgoingTransitions.remove(transition)
-                state.outgoingTransitions.add(transition)
+                containedState.outgoingTransitions.remove(transition)
+                containedState.outgoingTransitions.add(transition)
                 transition.setPriority(0)
             }
         }
-        region
+        state
     }
 
     def Transition trimPriorities(Transition transition) {
@@ -901,14 +901,14 @@ class SCChartsExtension {
     //--                F I X   F O R   D E A D    C O D E                   --
     //-------------------------------------------------------------------------
     // This fixes halt states and adds an explicit delayed self transition
-    def Region fixDeadCode(Region rootRegion) {
-        val nonReachabledStates = rootRegion.allContainedStates.filter[!isStateReachable].toList
+    def State fixDeadCode(State rootState) {
+        val nonReachabledStates = rootState.allContainedStates.filter[!isStateReachable].toList
         
         for (nonReachabledState : nonReachabledStates.immutableCopy) {
             val parentRegion = (nonReachabledState.eContainer as Region)
             parentRegion.states.remove(nonReachabledState)
         }
-        rootRegion
+        rootState
     }
     def  boolean isStateReachable(State originalState) {
         // Must ensure not to loop forever when having cycles in the model
@@ -943,27 +943,25 @@ class SCChartsExtension {
     //--               L O C A L   V A L U E D O B J E C T S                 --
     //-------------------------------------------------------------------------
     
-    def Region transformLocalValuedObject(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
+    def State transformLocalValuedObject(State rootState) {
+        val targetRootState = rootState.copy;
 
         // Traverse all states
-        for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformExposeLocalValuedObject(targetRootRegion, false);
+        for (targetState : targetRootState.getAllContainedStates) {
+            targetState.transformExposeLocalValuedObject(targetRootState, false);
         }
-        targetRootRegion;
+        targetRootState;
     }
     
     // Traverse all states and transform possible local valuedObjects.
-    def void transformExposeLocalValuedObject(State state, Region targetRootRegion, boolean expose) {
+    def void transformExposeLocalValuedObject(State state, State targetRootState, boolean expose) {
 
         // EXPOSE LOCAL SIGNALS: For every local valuedObject create a global valuedObject
         // and wherever the local valuedObject is emitted, also emit the new global 
         // valuedObject.
         // Name the new global valuedObjects according to the local valuedObject's hierarchy. 
         // Exclude the top level state
-        if (state.parentRegion == targetRootRegion) {
+        if (state == targetRootState) {
             return;
         }
 
@@ -980,7 +978,7 @@ class SCChartsExtension {
                 }
 
                 // Relocate
-                targetRootRegion.rootState.valuedObjects.add(localValuedObject)
+                targetRootState.valuedObjects.add(localValuedObject)
                 
                 // Rename
                 if (expose) {

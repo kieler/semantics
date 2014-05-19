@@ -35,15 +35,15 @@ class SCChartsOptimization {
     //-------------------------------------------------------------------------
     //--     O P T I M I Z E : Immediate Transitions with no Trigger/Effect  --
     //-------------------------------------------------------------------------
-    def Region optimizeSuperflousImmediateTransitions(Region rootRegion) {
-        var targetStates = rootRegion.allContainedStates
+    def State optimizeSuperflousImmediateTransitions(State rootState) {
+        var targetStates = rootState.allContainedStates
         for (targetState : targetStates) {
-            targetState.optimizeSuperflousImmediateTransitions(rootRegion);
+            targetState.optimizeSuperflousImmediateTransitions(rootState);
         }
-        rootRegion;
+        rootState;
     }
 
-    def void optimizeSuperflousImmediateTransitions(State state, Region targetRootRegion) {
+    def void optimizeSuperflousImmediateTransitions(State state, State targetRootState) {
         if (state.outgoingTransitions.size == 1 && !state.hasInnerStatesOrRegions) {
             val transition = state.outgoingTransitions.get(0)
             val targetState = transition.targetState
@@ -69,15 +69,15 @@ class SCChartsOptimization {
     //--     O P T I M I Z E :  Conditional  States  --
     //-------------------------------------------------------------------------
     // Optimize states with two outgoing transitions
-    def Region optimizeSuperflousConditionalStates(Region rootRegion) {
-        var targetStates = rootRegion.allContainedStates
+    def State optimizeSuperflousConditionalStates(State rootState) {
+        var targetStates = rootState.allContainedStates
         for (targetState : targetStates) {
-            targetState.optimizeSuperflousConditionalStates(rootRegion);
+            targetState.optimizeSuperflousConditionalStates(rootState);
         }
-        rootRegion;
+        rootState;
     }
 
-    def void optimizeSuperflousConditionalStates(State state, Region targetRootRegion) {
+    def void optimizeSuperflousConditionalStates(State state, State targetRootState) {
         if (state.outgoingTransitions.size == 2 && !state.hasInnerStatesOrRegions) {
             val transition1 = state.outgoingTransitions.get(0)
             val transition2 = state.outgoingTransitions.get(1)

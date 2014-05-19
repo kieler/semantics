@@ -79,7 +79,7 @@ class Exit {
     }
 
     // Traverse all states and transform macro states that have actions to transform
-    def void transformExit(State state, Region targetRootState) {
+    def void transformExit(State state, State targetRootState) {
         if (!state.exitActions.nullOrEmpty && !state.final) {
 
             val stateOutgoingTransitions = state.outgoingTransitions.size
