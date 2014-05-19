@@ -18,6 +18,9 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.sccharts.Assignment
 
 /**
  * SCCharts Reference Transformation.
@@ -28,6 +31,9 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  */
 class Reference {
 
+    @Inject
+    extension KExpressionsExtension
+    
     @Inject
     extension SCChartsExtension
 
@@ -56,9 +62,31 @@ class Reference {
 
         // Each referenced state must be contained in a region.
         state.parentRegion => [ states += newState ] 
+
+        for(eObject : newState.eAllContents.toList) {
+            if (eObject instanceof Assignment || eObject instanceof ValuedObjectReference) {
+                for(binding : state.bindings) {
+                    if (eObject instanceof Assignment) {
+                        if ((eObject as Assignment).valuedObject.ID == binding.formal.ID) {
+                            (eObject as Assignment).valuedObject = binding.actual
+                        }
+                    } else if (eObject instanceof ValuedObjectReference) {
+                        if ((eObject as ValuedObjectReference).valuedObject.ID == binding.formal.ID) {
+                            (eObject as ValuedObjectReference).valuedObject = binding.actual
+                        }
+                    }
+                }
+            }
+        }
         
-        state.incomingTransitions.forEach[ targetState = newState ]
-        state.outgoingTransitions.forEach[ sourceState = newState ]
+        state.bindings.immutableCopy.forEach[ binding |
+            newState.declarations.immutableCopy.forEach[ 
+                valuedObjects.filter[ ID == binding.formal.ID ].toList.immutableCopy.forEach[delete]
+            ]
+        ]
+        
+        state.incomingTransitions.immutableCopy.forEach[ targetState = newState ]
+        state.outgoingTransitions.immutableCopy.forEach[ sourceState = newState ]
         
         state.remove        
     }
