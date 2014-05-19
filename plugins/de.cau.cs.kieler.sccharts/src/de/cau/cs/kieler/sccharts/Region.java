@@ -36,6 +36,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.Region#getStates <em>States</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Region#getParentState <em>Parent State</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Region#getFor <em>For</em>}</li>
  * </ul>
  * </p>
  *
@@ -96,5 +97,31 @@ public interface Region extends Scope {
      * @generated
      */
     void setParentState(State value);
+
+    /**
+     * Returns the value of the '<em><b>For</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>For</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>For</em>' containment reference.
+     * @see #setFor(For)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getRegion_For()
+     * @model containment="true"
+     * @generated
+     */
+    For getFor();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Region#getFor <em>For</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>For</em>' containment reference.
+     * @see #getFor()
+     * @generated
+     */
+    void setFor(For value);
 
 } // Region

@@ -419,13 +419,22 @@ public interface SCChartsPackage extends EPackage {
     int REGION__PARENT_STATE = SCOPE_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>For</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__FOR = SCOPE_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Region</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REGION_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 2;
+    int REGION_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 3;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.BindingImpl <em>Binding</em>}' class.
@@ -601,13 +610,22 @@ public interface SCChartsPackage extends EPackage {
     int STATE__INCOMING_TRANSITIONS = SCOPE_FEATURE_COUNT + 6;
 
     /**
+     * The feature id for the '<em><b>For</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STATE__FOR = SCOPE_FEATURE_COUNT + 7;
+
+    /**
      * The number of structural features of the '<em>State</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATE_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 7;
+    int STATE_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 8;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.
@@ -1158,7 +1176,7 @@ public interface SCChartsPackage extends EPackage {
     int FOR__LOOP_VARIABLE = 0;
 
     /**
-     * The feature id for the '<em><b>Body Scope</b></em>' reference.
+     * The feature id for the '<em><b>Body Scope</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -1415,6 +1433,17 @@ public interface SCChartsPackage extends EPackage {
     EReference getRegion_ParentState();
 
     /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Region#getFor <em>For</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>For</em>'.
+     * @see de.cau.cs.kieler.sccharts.Region#getFor()
+     * @see #getRegion()
+     * @generated
+     */
+    EReference getRegion_For();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Binding <em>Binding</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1532,6 +1561,17 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EReference getState_IncomingTransitions();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.State#getFor <em>For</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>For</em>'.
+     * @see de.cau.cs.kieler.sccharts.State#getFor()
+     * @see #getState()
+     * @generated
+     */
+    EReference getState_For();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Transition <em>Transition</em>}'.
@@ -1778,10 +1818,10 @@ public interface SCChartsPackage extends EPackage {
     EReference getFor_LoopVariable();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.For#getBodyScope <em>Body Scope</em>}'.
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.For#getBodyScope <em>Body Scope</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Body Scope</em>'.
+     * @return the meta object for the containment reference '<em>Body Scope</em>'.
      * @see de.cau.cs.kieler.sccharts.For#getBodyScope()
      * @see #getFor()
      * @generated
@@ -2023,6 +2063,14 @@ public interface SCChartsPackage extends EPackage {
         EReference REGION__PARENT_STATE = eINSTANCE.getRegion_ParentState();
 
         /**
+         * The meta object literal for the '<em><b>For</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference REGION__FOR = eINSTANCE.getRegion_For();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.BindingImpl <em>Binding</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2113,6 +2161,14 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference STATE__INCOMING_TRANSITIONS = eINSTANCE.getState_IncomingTransitions();
+
+        /**
+         * The meta object literal for the '<em><b>For</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference STATE__FOR = eINSTANCE.getState_For();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.
@@ -2317,7 +2373,7 @@ public interface SCChartsPackage extends EPackage {
         EReference FOR__LOOP_VARIABLE = eINSTANCE.getFor_LoopVariable();
 
         /**
-         * The meta object literal for the '<em><b>Body Scope</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Body Scope</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated

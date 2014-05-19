@@ -24,6 +24,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
@@ -66,7 +67,7 @@ public class ForImpl extends EObjectImpl implements For {
     protected ValuedObject loopVariable;
 
     /**
-     * The cached value of the '{@link #getBodyScope() <em>Body Scope</em>}' reference.
+     * The cached value of the '{@link #getBodyScope() <em>Body Scope</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getBodyScope()
@@ -168,14 +169,6 @@ public class ForImpl extends EObjectImpl implements For {
      * @generated
      */
     public Scope getBodyScope() {
-        if (bodyScope != null && bodyScope.eIsProxy()) {
-            InternalEObject oldBodyScope = (InternalEObject)bodyScope;
-            bodyScope = (Scope)eResolveProxy(oldBodyScope);
-            if (bodyScope != oldBodyScope) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.FOR__BODY_SCOPE, oldBodyScope, bodyScope));
-            }
-        }
         return bodyScope;
     }
 
@@ -184,8 +177,14 @@ public class ForImpl extends EObjectImpl implements For {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Scope basicGetBodyScope() {
-        return bodyScope;
+    public NotificationChain basicSetBodyScope(Scope newBodyScope, NotificationChain msgs) {
+        Scope oldBodyScope = bodyScope;
+        bodyScope = newBodyScope;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.FOR__BODY_SCOPE, oldBodyScope, newBodyScope);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
     }
 
     /**
@@ -194,10 +193,17 @@ public class ForImpl extends EObjectImpl implements For {
      * @generated
      */
     public void setBodyScope(Scope newBodyScope) {
-        Scope oldBodyScope = bodyScope;
-        bodyScope = newBodyScope;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.FOR__BODY_SCOPE, oldBodyScope, bodyScope));
+        if (newBodyScope != bodyScope) {
+            NotificationChain msgs = null;
+            if (bodyScope != null)
+                msgs = ((InternalEObject)bodyScope).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.FOR__BODY_SCOPE, null, msgs);
+            if (newBodyScope != null)
+                msgs = ((InternalEObject)newBodyScope).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.FOR__BODY_SCOPE, null, msgs);
+            msgs = basicSetBodyScope(newBodyScope, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.FOR__BODY_SCOPE, newBodyScope, newBodyScope));
     }
 
     /**
@@ -320,14 +326,27 @@ public class ForImpl extends EObjectImpl implements For {
      * @generated
      */
     @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case SCChartsPackage.FOR__BODY_SCOPE:
+                return basicSetBodyScope(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case SCChartsPackage.FOR__LOOP_VARIABLE:
                 if (resolve) return getLoopVariable();
                 return basicGetLoopVariable();
             case SCChartsPackage.FOR__BODY_SCOPE:
-                if (resolve) return getBodyScope();
-                return basicGetBodyScope();
+                return getBodyScope();
             case SCChartsPackage.FOR__PARENT_SCOPE:
                 if (resolve) return getParentScope();
                 return basicGetParentScope();

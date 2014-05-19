@@ -48,6 +48,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.sccharts.State#isFinal <em>Final</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.State#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.State#getIncomingTransitions <em>Incoming Transitions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.State#getFor <em>For</em>}</li>
  * </ul>
  * </p>
  *
@@ -225,5 +226,31 @@ public interface State extends Scope {
      * @generated
      */
     EList<Transition> getIncomingTransitions();
+
+    /**
+     * Returns the value of the '<em><b>For</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>For</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>For</em>' containment reference.
+     * @see #setFor(For)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_For()
+     * @model containment="true"
+     * @generated
+     */
+    For getFor();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.State#getFor <em>For</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>For</em>' containment reference.
+     * @see #getFor()
+     * @generated
+     */
+    void setFor(For value);
 
 } // State

@@ -75,26 +75,26 @@ public interface For extends EObject {
     void setLoopVariable(ValuedObject value);
 
     /**
-     * Returns the value of the '<em><b>Body Scope</b></em>' reference.
+     * Returns the value of the '<em><b>Body Scope</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Body Scope</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Body Scope</em>' reference.
+     * @return the value of the '<em>Body Scope</em>' containment reference.
      * @see #setBodyScope(Scope)
      * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getFor_BodyScope()
-     * @model
+     * @model containment="true"
      * @generated
      */
     Scope getBodyScope();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.For#getBodyScope <em>Body Scope</em>}' reference.
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.For#getBodyScope <em>Body Scope</em>}' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Body Scope</em>' reference.
+     * @param value the new value of the '<em>Body Scope</em>' containment reference.
      * @see #getBodyScope()
      * @generated
      */

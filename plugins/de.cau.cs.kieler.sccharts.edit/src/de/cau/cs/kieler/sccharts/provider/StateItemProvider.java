@@ -188,6 +188,7 @@ public class StateItemProvider
             super.getChildrenFeatures(object);
             childrenFeatures.add(SCChartsPackage.Literals.STATE__REGIONS);
             childrenFeatures.add(SCChartsPackage.Literals.STATE__OUTGOING_TRANSITIONS);
+            childrenFeatures.add(SCChartsPackage.Literals.STATE__FOR);
         }
         return childrenFeatures;
     }
@@ -249,6 +250,7 @@ public class StateItemProvider
                 return;
             case SCChartsPackage.STATE__REGIONS:
             case SCChartsPackage.STATE__OUTGOING_TRANSITIONS:
+            case SCChartsPackage.STATE__FOR:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -275,6 +277,11 @@ public class StateItemProvider
             (createChildParameter
                 (SCChartsPackage.Literals.STATE__OUTGOING_TRANSITIONS,
                  SCChartsFactory.eINSTANCE.createTransition()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.STATE__FOR,
+                 SCChartsFactory.eINSTANCE.createFor()));
     }
 
 }

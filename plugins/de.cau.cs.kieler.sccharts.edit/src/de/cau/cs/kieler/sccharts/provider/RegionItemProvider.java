@@ -93,6 +93,7 @@ public class RegionItemProvider
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
             childrenFeatures.add(SCChartsPackage.Literals.REGION__STATES);
+            childrenFeatures.add(SCChartsPackage.Literals.REGION__FOR);
         }
         return childrenFeatures;
     }
@@ -148,6 +149,7 @@ public class RegionItemProvider
 
         switch (notification.getFeatureID(Region.class)) {
             case SCChartsPackage.REGION__STATES:
+            case SCChartsPackage.REGION__FOR:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -169,6 +171,11 @@ public class RegionItemProvider
             (createChildParameter
                 (SCChartsPackage.Literals.REGION__STATES,
                  SCChartsFactory.eINSTANCE.createState()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.REGION__FOR,
+                 SCChartsFactory.eINSTANCE.createFor()));
     }
 
 }

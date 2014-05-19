@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
+import de.cau.cs.kieler.sccharts.For;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
@@ -50,6 +51,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#isFinal <em>Final</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getIncomingTransitions <em>Incoming Transitions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getFor <em>For</em>}</li>
  * </ul>
  * </p>
  *
@@ -152,6 +154,16 @@ public class StateImpl extends ScopeImpl implements State {
      * @ordered
      */
     protected EList<Transition> incomingTransitions;
+
+    /**
+     * The cached value of the '{@link #getFor() <em>For</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getFor()
+     * @generated
+     * @ordered
+     */
+    protected For for_;
 
     /**
      * <!-- begin-user-doc -->
@@ -317,6 +329,49 @@ public class StateImpl extends ScopeImpl implements State {
      * <!-- end-user-doc -->
      * @generated
      */
+    public For getFor() {
+        return for_;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetFor(For newFor, NotificationChain msgs) {
+        For oldFor = for_;
+        for_ = newFor;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__FOR, oldFor, newFor);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setFor(For newFor) {
+        if (newFor != for_) {
+            NotificationChain msgs = null;
+            if (for_ != null)
+                msgs = ((InternalEObject)for_).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.STATE__FOR, null, msgs);
+            if (newFor != null)
+                msgs = ((InternalEObject)newFor).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.STATE__FOR, null, msgs);
+            msgs = basicSetFor(newFor, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.STATE__FOR, newFor, newFor));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -351,6 +406,8 @@ public class StateImpl extends ScopeImpl implements State {
                 return ((InternalEList<?>)getOutgoingTransitions()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 return ((InternalEList<?>)getIncomingTransitions()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.STATE__FOR:
+                return basicSetFor(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -391,6 +448,8 @@ public class StateImpl extends ScopeImpl implements State {
                 return getOutgoingTransitions();
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 return getIncomingTransitions();
+            case SCChartsPackage.STATE__FOR:
+                return getFor();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -428,6 +487,9 @@ public class StateImpl extends ScopeImpl implements State {
                 getIncomingTransitions().clear();
                 getIncomingTransitions().addAll((Collection<? extends Transition>)newValue);
                 return;
+            case SCChartsPackage.STATE__FOR:
+                setFor((For)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -461,6 +523,9 @@ public class StateImpl extends ScopeImpl implements State {
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 getIncomingTransitions().clear();
                 return;
+            case SCChartsPackage.STATE__FOR:
+                setFor((For)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -487,6 +552,8 @@ public class StateImpl extends ScopeImpl implements State {
                 return outgoingTransitions != null && !outgoingTransitions.isEmpty();
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 return incomingTransitions != null && !incomingTransitions.isEmpty();
+            case SCChartsPackage.STATE__FOR:
+                return for_ != null;
         }
         return super.eIsSet(featureID);
     }
