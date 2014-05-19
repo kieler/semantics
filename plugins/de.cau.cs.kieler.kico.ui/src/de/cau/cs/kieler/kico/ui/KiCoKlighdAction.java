@@ -15,7 +15,6 @@ package de.cau.cs.kieler.kico.ui;
 
 import java.util.HashMap;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.EcoreUtil2;
 
 import de.cau.cs.kieler.core.kgraph.KGraphData;
@@ -49,7 +48,6 @@ public abstract class KiCoKlighdAction {
             new HashMap<TransformationDummy, KRoundedRectangle>();
     private static HashMap<TransformationDummy, KText> transformationDummy2KText =
             new HashMap<TransformationDummy, KText>();
-    private static EObject model;
 
     // -------------------------------------------------------------------------
 
