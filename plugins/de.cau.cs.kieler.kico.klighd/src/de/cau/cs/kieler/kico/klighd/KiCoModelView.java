@@ -42,7 +42,6 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelWrapper;
-import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 
@@ -95,14 +94,17 @@ public class KiCoModelView extends DiagramViewPart {
 
     /** String of pinned transformations. */
     private String transformations = null;
-    private boolean pinTransformations = false;
+    //private boolean pinTransformations = false;
 
     /** The action for forking view. */
     private Action actionFork;
 
+    /** Secondary ID of this view. Indicates a non primary view */
     private String secondaryID;
 
+    /** Active related editor */
     private IEditorPart activeEditor;
+    /** Current model display as diagram */
     private Object currentModel;
 
     /**
@@ -155,7 +157,7 @@ public class KiCoModelView extends DiagramViewPart {
         }
     };
 
-    // -- Register LISTENER
+    // -- Setup Toolabr
     // -------------------------------------------------------------------------
 
     /**
@@ -173,7 +175,7 @@ public class KiCoModelView extends DiagramViewPart {
         toolBarManager.add(getActionSideBySide());
     }
 
-    // -- Editor Realtion
+    // -- Editor Relation
     // -------------------------------------------------------------------------
 
     /**
@@ -185,14 +187,20 @@ public class KiCoModelView extends DiagramViewPart {
     void setActiveEditor(IEditorPart editor) {
         if (editor != null) {
             if (activeEditor != editor) {
+                //unregister save listener if necessary
                 if (activeEditor != null) {
                     activeEditor.removePropertyListener(dirtyPropertyListener);
                 }
+                //register save listener
                 editor.addPropertyListener(dirtyPropertyListener);
+                
+                //set as active editor
                 activeEditor = editor;
+                
                 if (!isPrimaryView()) {
                     setPartName(editor.getTitle());
                 }
+                
                 updateModel(ChangeEvent.ACTIVE_EDITOR);
             }
         } else {
@@ -337,8 +345,8 @@ public class KiCoModelView extends DiagramViewPart {
             if (currentModel != null) {
                 boolean transformationsChanged = false;
                 // get new transformations
-                if (!pinTransformations
-                        && (transformations != null || change == ChangeEvent.TRANSFORMATIONS)) {
+                //TODO pin transformation
+                if (transformations != null || change == ChangeEvent.TRANSFORMATIONS || change == ChangeEvent.ACTIVE_EDITOR) {
                     KiCoModelViewManager mvm = KiCoModelViewManager.getInstance();
                     if (KiCoModelViewManager.getInstance() != null) {
                         String trans = mvm.getTransformations(activeEditor);
@@ -359,6 +367,7 @@ public class KiCoModelView extends DiagramViewPart {
                     // compile
                     EObject compiledModel =
                             KielerCompiler.compile(transformations, (EObject) currentModel);
+                    System.out.println("Compiled");
 
                     // TODO test if compiler error occured
                     // composite model in given display mode
@@ -390,16 +399,16 @@ public class KiCoModelView extends DiagramViewPart {
     }
 
     /**
-     * Updates displayed diagram to currentModel.
+     * Updates displayed diagram in this view. Initializes this view if necessary.
      */
     private void updateDiagram() {
         if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
-            // the initialization case            
+            // the initialization case
             DiagramViewManager.initializeView(this, currentModel, null, null);
             this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
         } else {
             // update case
-            DiagramViewManager.updateView(this.getViewer().getViewContext(),  currentModel);
+            DiagramViewManager.updateView(this.getViewer().getViewContext(), currentModel);
             this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
         }
     }
