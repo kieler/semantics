@@ -13,10 +13,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener2;
-import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchPartConstants;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
@@ -48,6 +46,9 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
  */
 public class KiCoSelectionView extends DiagramViewPart {
 
+    /** The Constant ID. */
+    static final String ID = "de.cau.cs.kieler.kico.selection";
+
     /** The instance. */
     static KiCoSelectionView instance;
 
@@ -60,27 +61,29 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static final ImageDescriptor ICON_SSM = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconSSM.png");
 
-    public static final ImageDescriptor ICON_EXPANDALL = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconExpandAll.png");
-    
+    public static final ImageDescriptor ICON_EXPANDALL = AbstractUIPlugin
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.ui",
+                    "icons/KiCoViewIconExpandAll.png");
+
     /** The action for toggling the advanced mode. */
     private Action actionAdvancedToggle;
 
     /** The action for toggling the SSM mode. */
     private Action actionSSMToggle;
-    
+
     /** The action for toggling the SSM mode. */
     private Action actionExpandAll;
-    
-    /** The Constant ID. */
-    static final String ID = "de.cau.cs.kieler.kico.selection";
+
+    /** The active editor property key. */
+    public static final String ACTIVE_EDITOR_PROPERTY_KEY = "de.cau.cs.kieler.kico.ui.activeEditor";
+
+    /** The active tranformations property key. */
+    public static final String ACTIVE_TRANSFORMATIONS_PROPERTY_KEY =
+            "de.cau.cs.kieler.kico.ui.activeTransformations";
 
     /** The graph model of TransformationDummys per editor instance. */
     static HashMap<Integer, List<TransformationDummy>> model =
             new HashMap<Integer, List<TransformationDummy>>();
-
-    /** The diagram per editor instance. */
-    static HashMap<Integer, DiagramViewPart> diagram = new HashMap<Integer, DiagramViewPart>();
 
     /** The selected transformations per editor instance. */
     static HashMap<Integer, List<String>> selectedTransformations =
@@ -364,22 +367,6 @@ public class KiCoSelectionView extends DiagramViewPart {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the KLighD diagram for an editor.
-     * 
-     * @param editorID
-     *            the editor id
-     * @return the diagram
-     */
-    public static DiagramViewPart getDiagram(int editorID) {
-        if (diagram.containsKey(editorID)) {
-            return diagram.get(editorID);
-        }
-        return null;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
      * Gets the model graph of TransformationDummys for an editor.
      * 
      * @param editorID
@@ -428,8 +415,7 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static void removeRequiredTransformationVisualization(int editorID) {
         List<String> requiredTransformations =
                 KiCoSelectionView.getRequiredTransformations(editorID, true);
-        DiagramViewPart tempDiagram = getDiagram(editorID);
-        ViewContext context = tempDiagram.getViewer().getViewContext();
+        ViewContext context = instance.getViewer().getViewContext();
         for (String requiredTransformationID : requiredTransformations) {
             TransformationDummy requiredTransformationDummy =
                     resolveTransformationDummy(requiredTransformationID,
@@ -456,8 +442,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         if (advancedMode) {
             List<String> requiredTransformations =
                     KiCoSelectionView.getRequiredTransformations(editorID, true);
-            DiagramViewPart tempDiagram = getDiagram(editorID);
-            ViewContext context = tempDiagram.getViewer().getViewContext();
+            ViewContext context = instance.getViewer().getViewContext();
             for (String requiredTransformationID : requiredTransformations) {
                 TransformationDummy requiredTransformationDummy =
                         resolveTransformationDummy(requiredTransformationID, editorID);
@@ -482,8 +467,7 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static void addSelectedTransformationVisualization(int editorID) {
         List<String> selectedTransformations =
                 KiCoSelectionView.getSelectedTransformations(editorID);
-        DiagramViewPart tempDiagram = getDiagram(editorID);
-        ViewContext context = tempDiagram.getViewer().getViewContext();
+        ViewContext context = instance.getViewer().getViewContext();
         for (String selectedTransformationID : selectedTransformations) {
             TransformationDummy selectedTransformationDummy =
                     resolveTransformationDummy(selectedTransformationID, editorID);
@@ -515,8 +499,7 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static void removeSelectedTransformationVisualization(int editorID) {
         List<String> selectedTransformations =
                 KiCoSelectionView.getSelectedTransformations(editorID);
-        DiagramViewPart tempDiagram = getDiagram(editorID);
-        ViewContext context = tempDiagram.getViewer().getViewContext();
+        ViewContext context = instance.getViewer().getViewContext();
         for (String selectedTransformationID : selectedTransformations) {
             TransformationDummy selectedTransformationDummy =
                     resolveTransformationDummy(selectedTransformationID,
@@ -531,16 +514,6 @@ public class KiCoSelectionView extends DiagramViewPart {
     }
 
     // -------------------------------------------------------------------------
-
-    // TODO remove and move to kico.klighd
-    static final IPropertyListener contentChangeListener = new IPropertyListener() {
-
-        public void propertyChanged(Object source, int propId) {
-            if(propId == IWorkbenchPartConstants.PROP_DIRTY){
-                KiCoKlighdAction.refreshModelView(false);
-            }
-        }
-    };
 
     /**
      * Update view.
@@ -559,21 +532,11 @@ public class KiCoSelectionView extends DiagramViewPart {
                     EditorPart editorPart = (EditorPart) part;
                     String partName = (editorPart).getPartName();
                     if (!partName.equals(lastEditor)) {
-                        // remove change listener
-                        if (lastWorkbenchPartReference != null) {
-                            lastWorkbenchPartReference
-                                    .removePropertyListener(contentChangeListener);
-                        }
-                        ref.addPropertyListener(contentChangeListener);
                         lastEditor = partName;
                         int activeEditorID = getActiveEditorID();
                         List<TransformationDummy> tempModel = KielerCompiler.buildGraph();
                         KielerCompiler.reduceGraph(tempModel, visibleTransformations);
                         model.put(activeEditorID, tempModel);
-
-                        // DiagramViewPart klighdPart =
-                        // DiagramViewManager.getInstance().createView(getPartId(), null,
-                        // tempModel, KlighdSynthesisProperties.newInstance(null));
 
                         KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
                         if (SSMMode) {
@@ -586,10 +549,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                                     "de.cau.cs.kieler.kico.ui.klighd.diagramSynthesis");
                         }
 
-                        DiagramViewPart klighdPart =
-                                DiagramViewManager.getInstance().createView(getPartId(), null,
-                                        tempModel, properties);
-                        diagram.put(activeEditorID, klighdPart);
+                        updateDiagram(tempModel, properties);
 
                         if (KiCoSelectionView.advancedMode) {
                             KiCoSelectionView
@@ -597,9 +557,10 @@ public class KiCoSelectionView extends DiagramViewPart {
                         }
                         KiCoSelectionView.addSelectedTransformationVisualization(activeEditorID);
 
-                        // refresh kico.klighd model view
-                        // TODO register appropriate change listener.
-                        KiCoKlighdAction.refreshModelView(true);
+                        // notify listeners about currently active transformations
+                        setPartProperty(ACTIVE_EDITOR_PROPERTY_KEY,
+                                Integer.toString(activeEditorID));
+                        updateActiveTransformationsProperty();
                     }
                 }
 
@@ -631,8 +592,6 @@ public class KiCoSelectionView extends DiagramViewPart {
         toolBarManager.add(getActionExpandAll());
         toolBarManager.add(getActionAdvancedToggle());
         toolBarManager.add(getActionSSMToggle());
-
-        DiagramViewManager.getInstance().registerView(this);
 
         // Create an IPartListener2
         IPartListener2 pl = new IPartListener2() {
@@ -685,9 +644,9 @@ public class KiCoSelectionView extends DiagramViewPart {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action to toggle presence of signals.
+     * Gets the action to toggle advanced mode.
      * 
-     * @return the action delete
+     * @return the action
      */
     private Action getActionAdvancedToggle() {
         if (actionAdvancedToggle != null) {
@@ -704,8 +663,9 @@ public class KiCoSelectionView extends DiagramViewPart {
                 } else {
                     removeRequiredTransformationVisualization(getActiveEditorID());
                 }
-                
-                KiCoKlighdAction.refreshModelView(true);
+
+                // notify listeners about currently active transformations
+                updateActiveTransformationsProperty();
 
             }
         };
@@ -761,7 +721,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         if (actionExpandAll != null) {
             return actionExpandAll;
         }
-        
+
         final IDiagramWorkbenchPart thisPart = this;
         actionExpandAll = new Action("", IAction.AS_PUSH_BUTTON) {
             public void run() {
@@ -838,6 +798,47 @@ public class KiCoSelectionView extends DiagramViewPart {
     }
 
     // -------------------------------------------------------------------------
+
+    /**
+     * Updates displayed diagram in this view. Initializes this view if necessary.
+     */
+    private void updateDiagram(Object model,KlighdSynthesisProperties properties) {
+        if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
+            // the initialization case
+            DiagramViewManager.initializeView(this, model, null, properties);
+        } else {
+            // update case
+            this.getViewer().getViewContext().configure(properties);
+            DiagramViewManager.updateView(this.getViewer().getViewContext(), model);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Updates the Part property representing currently selected transformations
+     */
+    public static void updateActiveTransformationsProperty() {
+        StringBuilder transString = new StringBuilder();
+        List<String> selectedTrans = selectedTransformations.get(getActiveEditorID());
+        if (selectedTrans != null) {
+            for (String trans : selectedTrans) {
+                transString.append(trans);
+                transString.append(',');
+            }
+            List<String> requiredTrans = requiredTransformations.get(getActiveEditorID());
+            if (advancedMode && requiredTrans != null) {
+                for (String trans : requiredTrans) {
+                    transString.append(trans);
+                    transString.append(',');
+                }
+            }
+            if (transString.length() > 1 && transString.charAt(transString.length() - 1) == ',') {
+                transString.deleteCharAt(transString.length() - 1);
+            }
+        }
+        instance.setPartProperty(ACTIVE_TRANSFORMATIONS_PROPERTY_KEY, transString.toString());
+    }
 
     // -------------------------------------------------------------------------
 }

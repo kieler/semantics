@@ -14,16 +14,8 @@
 package de.cau.cs.kieler.kico.ui;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.xtext.EcoreUtil2;
-import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.ui.editor.XtextEditor;
-import org.eclipse.xtext.ui.editor.model.IXtextDocument;
-import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 import de.cau.cs.kieler.core.kgraph.KGraphData;
 import de.cau.cs.kieler.core.kgraph.KNode;
@@ -33,13 +25,8 @@ import de.cau.cs.kieler.core.krendering.KRendering;
 import de.cau.cs.kieler.core.krendering.KRoundedRectangle;
 import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
-import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.TransformationDummy;
-import de.cau.cs.kieler.kico.klighd.KiCoModelView;
-import de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesis;
-import de.cau.cs.kieler.klighd.IAction.ActionContext;
 import de.cau.cs.kieler.klighd.ViewContext;
-import de.cau.cs.kieler.klighd.xtext.effects.XtextEditorHighlightEffect;
 
 /**
  * This is the base abstract class for a KiCo KLighD action for selecting, unselecting
@@ -61,7 +48,6 @@ public abstract class KiCoKlighdAction {
             new HashMap<TransformationDummy, KRoundedRectangle>();
     private static HashMap<TransformationDummy, KText> transformationDummy2KText =
             new HashMap<TransformationDummy, KText>();
-    private static EObject model;
 
     // -------------------------------------------------------------------------
 
@@ -211,51 +197,6 @@ public abstract class KiCoKlighdAction {
         return EcoreUtil2.copy(color);
     }
 
-    // -------------------------------------------------------------------------
-    // TODO register appropriate change listener.
-    /**
-     * Update KoCo KLighD Model view
-     * 
-     * @param notDirtyListener
-     *            indicates if its is not called by the EditorPart content change listener
-     */
-    static public void refreshModelView(boolean notDirtyListener) {
-        // Ensures that the KLighD view redraws the diagram of the curretly selected editor
-        IEditorPart editor = KiCoSelectionView.getActiveEditor();
-        if (editor != null && editor instanceof XtextEditor) {
-            XtextEditor xpart = (XtextEditor) editor;
-            IXtextDocument document = xpart.getDocument();
-            if (document != null) {
-                document.readOnly(new IUnitOfWork.Void<XtextResource>() {
-
-                    @Override
-                    public void process(final XtextResource state) throws Exception {
-                        model = state.getContents().get(0);
-                    }
-                });
-                if (model != null) {
-                    // check if refreshing is superfluous
-                    if (!notDirtyListener && editor.isDirty()) {
-                        return;
-                    }
-                    List<String> transformations =
-                            KiCoSelectionView.getSelectedTransformations(KiCoSelectionView
-                                    .getActiveEditorID());
-                    EObject compiledModel =
-                            KielerCompiler.compile(transformations, model,
-                                    KiCoSelectionView.advancedMode);
-                    if (transformations.isEmpty()) {
-                        KiCoModelView.getInstance().showModel(compiledModel, editor.getTitle());
-                    } else {
-                        List<Object> side_by_side = new LinkedList<Object>();
-                        side_by_side.add(model);
-                        side_by_side.add(compiledModel);
-                        KiCoModelView.getInstance().showModels(side_by_side, editor.getTitle());
-                    }
-                }
-            }
-        }
-    }
     // -------------------------------------------------------------------------
 
 }

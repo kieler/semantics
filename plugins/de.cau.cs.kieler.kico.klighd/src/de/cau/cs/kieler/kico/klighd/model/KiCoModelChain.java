@@ -11,8 +11,9 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.klighd;
+package de.cau.cs.kieler.kico.klighd.model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -24,5 +25,5 @@ import java.util.List;
  */
 public class KiCoModelChain {
 
-    public List<KiCoModelWrapper> models;
+    public List<KiCoModelWrapper> models = new LinkedList<KiCoModelWrapper>();
 }

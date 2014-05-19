@@ -15,12 +15,4 @@
             id="de.cau.cs.kieler.scg.klighd.diagramSynthesis">
       </diagramSynthesis>
    </extension>
-   <extension
-         point="de.cau.cs.kieler.core.kivi.combinations">
-      <combination
-            active="true"
-            class="de.cau.cs.kieler.scg.klighd.SCGraphShowDiagramCombination"
-            name="Show SCGraph Diagrams with KLighD">
-      </combination>
-   </extension>
 </plugin>
