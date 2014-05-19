@@ -79,7 +79,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.ASSIGNMENT: return createAssignment();
             case SCChartsPackage.EMISSION: return createEmission();
             case SCChartsPackage.REGION: return createRegion();
-            case SCChartsPackage.SUBSTITUTION: return createSubstitution();
+            case SCChartsPackage.BINDING: return createBinding();
             case SCChartsPackage.STATE: return createState();
             case SCChartsPackage.TRANSITION: return createTransition();
             case SCChartsPackage.TEXT_EFFECT: return createTextEffect();
@@ -179,9 +179,9 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    public Substitution createSubstitution() {
-        SubstitutionImpl substitution = new SubstitutionImpl();
-        return substitution;
+    public Binding createBinding() {
+        BindingImpl binding = new BindingImpl();
+        return binding;
     }
 
     /**

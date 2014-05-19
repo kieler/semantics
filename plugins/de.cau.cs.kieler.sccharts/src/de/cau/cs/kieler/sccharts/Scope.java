@@ -52,10 +52,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getLocalActions <em>Local Actions</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getBodyReference <em>Body Reference</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getBodyContents <em>Body Contents</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getBodyText <em>Body Text</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getRenamings <em>Renamings</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getReferencedScope <em>Referenced Scope</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getBindings <em>Bindings</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Scope#getDeclarations <em>Declarations</em>}</li>
  * </ul>
  * </p>
@@ -141,90 +139,46 @@ public interface Scope extends Annotatable {
     EList<LocalAction> getLocalActions();
 
     /**
-     * Returns the value of the '<em><b>Body Reference</b></em>' reference.
+     * Returns the value of the '<em><b>Referenced Scope</b></em>' reference.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Body Reference</em>' reference isn't clear,
+     * If the meaning of the '<em>Referenced Scope</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Body Reference</em>' reference.
-     * @see #setBodyReference(EObject)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_BodyReference()
+     * @return the value of the '<em>Referenced Scope</em>' reference.
+     * @see #setReferencedScope(Scope)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_ReferencedScope()
      * @model
      * @generated
      */
-    EObject getBodyReference();
+    Scope getReferencedScope();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Scope#getBodyReference <em>Body Reference</em>}' reference.
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Scope#getReferencedScope <em>Referenced Scope</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Body Reference</em>' reference.
-     * @see #getBodyReference()
+     * @param value the new value of the '<em>Referenced Scope</em>' reference.
+     * @see #getReferencedScope()
      * @generated
      */
-    void setBodyReference(EObject value);
+    void setReferencedScope(Scope value);
 
     /**
-     * Returns the value of the '<em><b>Body Contents</b></em>' containment reference.
+     * Returns the value of the '<em><b>Bindings</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.sccharts.Binding}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Body Contents</em>' containment reference isn't clear,
+     * If the meaning of the '<em>Bindings</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Body Contents</em>' containment reference.
-     * @see #setBodyContents(EObject)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_BodyContents()
+     * @return the value of the '<em>Bindings</em>' containment reference list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Bindings()
      * @model containment="true"
      * @generated
      */
-    EObject getBodyContents();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Scope#getBodyContents <em>Body Contents</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Body Contents</em>' containment reference.
-     * @see #getBodyContents()
-     * @generated
-     */
-    void setBodyContents(EObject value);
-
-    /**
-     * Returns the value of the '<em><b>Body Text</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.TextExpression}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Body Text</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Body Text</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_BodyText()
-     * @model containment="true"
-     * @generated
-     */
-    EList<TextExpression> getBodyText();
-
-    /**
-     * Returns the value of the '<em><b>Renamings</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.sccharts.Substitution}.
-     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.Substitution#getParentScope <em>Parent Scope</em>}'.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Renamings</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Renamings</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getScope_Renamings()
-     * @see de.cau.cs.kieler.sccharts.Substitution#getParentScope
-     * @model opposite="parentScope" containment="true"
-     * @generated
-     */
-    EList<Substitution> getRenamings();
+    EList<Binding> getBindings();
 
     /**
      * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.

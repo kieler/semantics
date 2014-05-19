@@ -111,8 +111,8 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createRegionAdapter();
             }
             @Override
-            public Adapter caseSubstitution(Substitution object) {
-                return createSubstitutionAdapter();
+            public Adapter caseBinding(Binding object) {
+                return createBindingAdapter();
             }
             @Override
             public Adapter caseState(State object) {
@@ -253,16 +253,16 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Substitution <em>Substitution</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Binding <em>Binding</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.Substitution
+     * @see de.cau.cs.kieler.sccharts.Binding
      * @generated
      */
-    public Adapter createSubstitutionAdapter() {
+    public Adapter createBindingAdapter() {
         return null;
     }
 

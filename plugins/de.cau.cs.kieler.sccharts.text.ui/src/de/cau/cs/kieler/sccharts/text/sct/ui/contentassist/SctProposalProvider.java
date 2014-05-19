@@ -5,9 +5,14 @@ package de.cau.cs.kieler.sccharts.text.sct.ui.contentassist;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.resource.EObjectDescription;
+import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
+
+import com.google.common.base.Predicate;
 
 import de.cau.cs.kieler.sccharts.text.sct.ui.contentassist.AbstractSctProposalProvider;
 /**
@@ -19,5 +24,21 @@ public class SctProposalProvider extends AbstractSctProposalProvider {
         //completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);
     }
 
-    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void completeState_ReferencedScope(EObject model, Assignment assignment,
+            ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+        // TODO Auto-generated method stub
+        lookupCrossReference(((CrossReference)assignment.getTerminal()), context, acceptor, new Predicate<IEObjectDescription>() {
+            
+            public boolean apply(IEObjectDescription arg0) {
+                return 
+                        arg0.getEObjectOrProxy().eIsProxy();
+//                        && arg0.getEObjectOrProxy().eContainer() == null;
+            }
+        });
+        
+    }
 }

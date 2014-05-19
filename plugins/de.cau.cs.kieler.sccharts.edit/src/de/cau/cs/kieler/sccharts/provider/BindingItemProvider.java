@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts.provider;
 
 
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
-import de.cau.cs.kieler.sccharts.Substitution;
 
 import java.util.Collection;
 import java.util.List;
@@ -32,17 +31,15 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
-import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.sccharts.Substitution} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.sccharts.Binding} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class SubstitutionItemProvider
+public class BindingItemProvider
     extends ItemProviderAdapter
     implements
         IEditingDomainItemProvider,
@@ -63,7 +60,7 @@ public class SubstitutionItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    public SubstitutionItemProvider(AdapterFactory adapterFactory) {
+    public BindingItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -95,13 +92,13 @@ public class SubstitutionItemProvider
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_Substitution_formal_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Substitution_formal_feature", "_UI_Substitution_type"),
-                 SCChartsPackage.Literals.SUBSTITUTION__FORMAL,
+                 getString("_UI_Binding_formal_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Binding_formal_feature", "_UI_Binding_type"),
+                 SCChartsPackage.Literals.BINDING__FORMAL,
                  true,
                  false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 true,
+                 null,
                  null,
                  null));
     }
@@ -117,26 +114,26 @@ public class SubstitutionItemProvider
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_Substitution_actual_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Substitution_actual_feature", "_UI_Substitution_type"),
-                 SCChartsPackage.Literals.SUBSTITUTION__ACTUAL,
+                 getString("_UI_Binding_actual_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Binding_actual_feature", "_UI_Binding_type"),
+                 SCChartsPackage.Literals.BINDING__ACTUAL,
                  true,
                  false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 true,
+                 null,
                  null,
                  null));
     }
 
     /**
-     * This returns Substitution.gif.
+     * This returns Binding.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/Substitution"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/Binding"));
     }
 
     /**
@@ -147,10 +144,7 @@ public class SubstitutionItemProvider
      */
     @Override
     public String getText(Object object) {
-        String label = ((Substitution)object).getFormal();
-        return label == null || label.length() == 0 ?
-            getString("_UI_Substitution_type") :
-            getString("_UI_Substitution_type") + " " + label;
+        return getString("_UI_Binding_type");
     }
 
     /**
@@ -163,13 +157,6 @@ public class SubstitutionItemProvider
     @Override
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
-
-        switch (notification.getFeatureID(Substitution.class)) {
-            case SCChartsPackage.SUBSTITUTION__FORMAL:
-            case SCChartsPackage.SUBSTITUTION__ACTUAL:
-                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-                return;
-        }
         super.notifyChanged(notification);
     }
 

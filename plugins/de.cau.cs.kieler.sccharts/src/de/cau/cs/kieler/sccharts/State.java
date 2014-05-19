@@ -123,7 +123,7 @@ public interface State extends Scope {
      * @see #setParentRegion(Region)
      * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_ParentRegion()
      * @see de.cau.cs.kieler.sccharts.Region#getStates
-     * @model opposite="states" required="true" transient="false"
+     * @model opposite="states" transient="false"
      * @generated
      */
     Region getParentRegion();

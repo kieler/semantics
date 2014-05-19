@@ -13,6 +13,9 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct;
 
+import de.cau.cs.kieler.sccharts.text.sct.scoping.SctQualifiedNameProvider;
+import de.cau.cs.kieler.sccharts.text.sct.scoping.SctScopeProvider;
+
 /**
  * @author chsch
  *
@@ -24,10 +27,18 @@ public class SctRuntimeModule extends
         return SctResource.class;
     }
 
-    public Class<? extends org.eclipse.xtext.linking.ILinker> bindILinker() {
-        return SctLinker.class;
+//    public Class<? extends org.eclipse.xtext.linking.ILinker> bindILinker() {
+//        return SctLinker.class;
+//    }
+    
+    public Class<? extends org.eclipse.xtext.naming.IQualifiedNameProvider> bindIQualifiedNameProvider() {
+        return SctQualifiedNameProvider.class;
     }
 
+    public Class<? extends org.eclipse.xtext.scoping.IScopeProvider> bindIScopeProvider() {
+        return SctScopeProvider.class;
+    }    
+    
     public Class<? extends org.eclipse.xtext.parsetree.reconstr.ITransientValueService> bindITransientValueService() {
         return SctTransientValueService.class;
     }

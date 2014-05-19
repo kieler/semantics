@@ -94,9 +94,6 @@ public class SctUIPlugin extends AbstractUIPlugin {
 //        if (SCT_STATE_LANGUAGE.equals(grammar)) {
 //            return new de.cau.cs.kieler.sccharts.text.sctState.SctStateRuntimeModule();
 //        }
-        if (SCT_LANGUAGE_EMBEDDED.equals(grammar)) {
-        	return new de.cau.cs.kieler.sccharts.text.sct.SctEmbeddedRuntimeModule();
-        }
         throw new IllegalArgumentException(grammar);
     }
 
@@ -111,9 +108,6 @@ public class SctUIPlugin extends AbstractUIPlugin {
 //        if (SCT_STATE_LANGUAGE.equals(grammar)) {
 //            return new de.cau.cs.kieler.sccharts.text.sctState.ui.SctStateUiModule(this);
 //        }
-        if (SCT_LANGUAGE_EMBEDDED.equals(grammar)) {
-            return new de.cau.cs.kieler.sccharts.text.sct.ui.SctEmbeddedUIModule(this);
-    }
         throw new IllegalArgumentException(grammar);
     }
 

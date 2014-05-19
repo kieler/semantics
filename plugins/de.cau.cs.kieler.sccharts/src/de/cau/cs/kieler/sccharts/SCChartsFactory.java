@@ -76,13 +76,13 @@ public interface SCChartsFactory extends EFactory {
     Region createRegion();
 
     /**
-     * Returns a new object of class '<em>Substitution</em>'.
+     * Returns a new object of class '<em>Binding</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Substitution</em>'.
+     * @return a new object of class '<em>Binding</em>'.
      * @generated
      */
-    Substitution createSubstitution();
+    Binding createBinding();
 
     /**
      * Returns a new object of class '<em>State</em>'.

@@ -182,26 +182,26 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Substitution} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Binding} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected SubstitutionItemProvider substitutionItemProvider;
+    protected BindingItemProvider bindingItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Substitution}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Binding}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
-    public Adapter createSubstitutionAdapter() {
-        if (substitutionItemProvider == null) {
-            substitutionItemProvider = new SubstitutionItemProvider(this);
+    public Adapter createBindingAdapter() {
+        if (bindingItemProvider == null) {
+            bindingItemProvider = new BindingItemProvider(this);
         }
 
-        return substitutionItemProvider;
+        return bindingItemProvider;
     }
 
     /**
@@ -468,7 +468,7 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
         if (assignmentItemProvider != null) assignmentItemProvider.dispose();
         if (emissionItemProvider != null) emissionItemProvider.dispose();
         if (regionItemProvider != null) regionItemProvider.dispose();
-        if (substitutionItemProvider != null) substitutionItemProvider.dispose();
+        if (bindingItemProvider != null) bindingItemProvider.dispose();
         if (stateItemProvider != null) stateItemProvider.dispose();
         if (transitionItemProvider != null) transitionItemProvider.dispose();
         if (textEffectItemProvider != null) textEffectItemProvider.dispose();

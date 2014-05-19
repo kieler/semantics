@@ -15,15 +15,12 @@ package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
 
-import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.Declaration;
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
-import de.cau.cs.kieler.sccharts.Action;
+import de.cau.cs.kieler.sccharts.Binding;
 import de.cau.cs.kieler.sccharts.LocalAction;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
-import de.cau.cs.kieler.sccharts.Substitution;
 
 import java.util.Collection;
 
@@ -33,13 +30,11 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -52,10 +47,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getLocalActions <em>Local Actions</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getBodyReference <em>Body Reference</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getBodyContents <em>Body Contents</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getBodyText <em>Body Text</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getRenamings <em>Renamings</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getReferencedScope <em>Referenced Scope</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getBindings <em>Bindings</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getDeclarations <em>Declarations</em>}</li>
  * </ul>
  * </p>
@@ -121,44 +114,24 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     protected EList<LocalAction> localActions;
 
     /**
-     * The cached value of the '{@link #getBodyReference() <em>Body Reference</em>}' reference.
+     * The cached value of the '{@link #getReferencedScope() <em>Referenced Scope</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getBodyReference()
+     * @see #getReferencedScope()
      * @generated
      * @ordered
      */
-    protected EObject bodyReference;
+    protected Scope referencedScope;
 
     /**
-     * The cached value of the '{@link #getBodyContents() <em>Body Contents</em>}' containment reference.
+     * The cached value of the '{@link #getBindings() <em>Bindings</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getBodyContents()
+     * @see #getBindings()
      * @generated
      * @ordered
      */
-    protected EObject bodyContents;
-
-    /**
-     * The cached value of the '{@link #getBodyText() <em>Body Text</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getBodyText()
-     * @generated
-     * @ordered
-     */
-    protected EList<TextExpression> bodyText;
-
-    /**
-     * The cached value of the '{@link #getRenamings() <em>Renamings</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getRenamings()
-     * @generated
-     * @ordered
-     */
-    protected EList<Substitution> renamings;
+    protected EList<Binding> bindings;
 
     /**
      * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
@@ -248,16 +221,16 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EObject getBodyReference() {
-        if (bodyReference != null && bodyReference.eIsProxy()) {
-            InternalEObject oldBodyReference = (InternalEObject)bodyReference;
-            bodyReference = eResolveProxy(oldBodyReference);
-            if (bodyReference != oldBodyReference) {
+    public Scope getReferencedScope() {
+        if (referencedScope != null && referencedScope.eIsProxy()) {
+            InternalEObject oldReferencedScope = (InternalEObject)referencedScope;
+            referencedScope = (Scope)eResolveProxy(oldReferencedScope);
+            if (referencedScope != oldReferencedScope) {
                 if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.SCOPE__BODY_REFERENCE, oldBodyReference, bodyReference));
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.SCOPE__REFERENCED_SCOPE, oldReferencedScope, referencedScope));
             }
         }
-        return bodyReference;
+        return referencedScope;
     }
 
     /**
@@ -265,8 +238,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EObject basicGetBodyReference() {
-        return bodyReference;
+    public Scope basicGetReferencedScope() {
+        return referencedScope;
     }
 
     /**
@@ -274,11 +247,11 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setBodyReference(EObject newBodyReference) {
-        EObject oldBodyReference = bodyReference;
-        bodyReference = newBodyReference;
+    public void setReferencedScope(Scope newReferencedScope) {
+        Scope oldReferencedScope = referencedScope;
+        referencedScope = newReferencedScope;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__BODY_REFERENCE, oldBodyReference, bodyReference));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__REFERENCED_SCOPE, oldReferencedScope, referencedScope));
     }
 
     /**
@@ -286,66 +259,11 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EObject getBodyContents() {
-        return bodyContents;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public NotificationChain basicSetBodyContents(EObject newBodyContents, NotificationChain msgs) {
-        EObject oldBodyContents = bodyContents;
-        bodyContents = newBodyContents;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__BODY_CONTENTS, oldBodyContents, newBodyContents);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
+    public EList<Binding> getBindings() {
+        if (bindings == null) {
+            bindings = new EObjectContainmentEList<Binding>(Binding.class, this, SCChartsPackage.SCOPE__BINDINGS);
         }
-        return msgs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setBodyContents(EObject newBodyContents) {
-        if (newBodyContents != bodyContents) {
-            NotificationChain msgs = null;
-            if (bodyContents != null)
-                msgs = ((InternalEObject)bodyContents).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SCOPE__BODY_CONTENTS, null, msgs);
-            if (newBodyContents != null)
-                msgs = ((InternalEObject)newBodyContents).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SCOPE__BODY_CONTENTS, null, msgs);
-            msgs = basicSetBodyContents(newBodyContents, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SCOPE__BODY_CONTENTS, newBodyContents, newBodyContents));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<TextExpression> getBodyText() {
-        if (bodyText == null) {
-            bodyText = new EObjectContainmentEList<TextExpression>(TextExpression.class, this, SCChartsPackage.SCOPE__BODY_TEXT);
-        }
-        return bodyText;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<Substitution> getRenamings() {
-        if (renamings == null) {
-            renamings = new EObjectContainmentWithInverseEList<Substitution>(Substitution.class, this, SCChartsPackage.SCOPE__RENAMINGS, SCChartsPackage.SUBSTITUTION__PARENT_SCOPE);
-        }
-        return renamings;
+        return bindings;
     }
 
     /**
@@ -365,32 +283,13 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
-    @SuppressWarnings("unchecked")
-    @Override
-    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case SCChartsPackage.SCOPE__RENAMINGS:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getRenamings()).basicAdd(otherEnd, msgs);
-        }
-        return super.eInverseAdd(otherEnd, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
                 return ((InternalEList<?>)getLocalActions()).basicRemove(otherEnd, msgs);
-            case SCChartsPackage.SCOPE__BODY_CONTENTS:
-                return basicSetBodyContents(null, msgs);
-            case SCChartsPackage.SCOPE__BODY_TEXT:
-                return ((InternalEList<?>)getBodyText()).basicRemove(otherEnd, msgs);
-            case SCChartsPackage.SCOPE__RENAMINGS:
-                return ((InternalEList<?>)getRenamings()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.SCOPE__BINDINGS:
+                return ((InternalEList<?>)getBindings()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.SCOPE__DECLARATIONS:
                 return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
         }
@@ -411,15 +310,11 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return getLabel();
             case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
                 return getLocalActions();
-            case SCChartsPackage.SCOPE__BODY_REFERENCE:
-                if (resolve) return getBodyReference();
-                return basicGetBodyReference();
-            case SCChartsPackage.SCOPE__BODY_CONTENTS:
-                return getBodyContents();
-            case SCChartsPackage.SCOPE__BODY_TEXT:
-                return getBodyText();
-            case SCChartsPackage.SCOPE__RENAMINGS:
-                return getRenamings();
+            case SCChartsPackage.SCOPE__REFERENCED_SCOPE:
+                if (resolve) return getReferencedScope();
+                return basicGetReferencedScope();
+            case SCChartsPackage.SCOPE__BINDINGS:
+                return getBindings();
             case SCChartsPackage.SCOPE__DECLARATIONS:
                 return getDeclarations();
         }
@@ -445,19 +340,12 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 getLocalActions().clear();
                 getLocalActions().addAll((Collection<? extends LocalAction>)newValue);
                 return;
-            case SCChartsPackage.SCOPE__BODY_REFERENCE:
-                setBodyReference((EObject)newValue);
+            case SCChartsPackage.SCOPE__REFERENCED_SCOPE:
+                setReferencedScope((Scope)newValue);
                 return;
-            case SCChartsPackage.SCOPE__BODY_CONTENTS:
-                setBodyContents((EObject)newValue);
-                return;
-            case SCChartsPackage.SCOPE__BODY_TEXT:
-                getBodyText().clear();
-                getBodyText().addAll((Collection<? extends TextExpression>)newValue);
-                return;
-            case SCChartsPackage.SCOPE__RENAMINGS:
-                getRenamings().clear();
-                getRenamings().addAll((Collection<? extends Substitution>)newValue);
+            case SCChartsPackage.SCOPE__BINDINGS:
+                getBindings().clear();
+                getBindings().addAll((Collection<? extends Binding>)newValue);
                 return;
             case SCChartsPackage.SCOPE__DECLARATIONS:
                 getDeclarations().clear();
@@ -484,17 +372,11 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
             case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
                 getLocalActions().clear();
                 return;
-            case SCChartsPackage.SCOPE__BODY_REFERENCE:
-                setBodyReference((EObject)null);
+            case SCChartsPackage.SCOPE__REFERENCED_SCOPE:
+                setReferencedScope((Scope)null);
                 return;
-            case SCChartsPackage.SCOPE__BODY_CONTENTS:
-                setBodyContents((EObject)null);
-                return;
-            case SCChartsPackage.SCOPE__BODY_TEXT:
-                getBodyText().clear();
-                return;
-            case SCChartsPackage.SCOPE__RENAMINGS:
-                getRenamings().clear();
+            case SCChartsPackage.SCOPE__BINDINGS:
+                getBindings().clear();
                 return;
             case SCChartsPackage.SCOPE__DECLARATIONS:
                 getDeclarations().clear();
@@ -517,14 +399,10 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
             case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
                 return localActions != null && !localActions.isEmpty();
-            case SCChartsPackage.SCOPE__BODY_REFERENCE:
-                return bodyReference != null;
-            case SCChartsPackage.SCOPE__BODY_CONTENTS:
-                return bodyContents != null;
-            case SCChartsPackage.SCOPE__BODY_TEXT:
-                return bodyText != null && !bodyText.isEmpty();
-            case SCChartsPackage.SCOPE__RENAMINGS:
-                return renamings != null && !renamings.isEmpty();
+            case SCChartsPackage.SCOPE__REFERENCED_SCOPE:
+                return referencedScope != null;
+            case SCChartsPackage.SCOPE__BINDINGS:
+                return bindings != null && !bindings.isEmpty();
             case SCChartsPackage.SCOPE__DECLARATIONS:
                 return declarations != null && !declarations.isEmpty();
         }

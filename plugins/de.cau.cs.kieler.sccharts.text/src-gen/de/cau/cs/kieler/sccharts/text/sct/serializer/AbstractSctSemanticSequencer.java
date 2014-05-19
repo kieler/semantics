@@ -20,6 +20,7 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.sccharts.Assignment;
+import de.cau.cs.kieler.sccharts.Binding;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.Emission;
 import de.cau.cs.kieler.sccharts.EntryAction;
@@ -27,11 +28,13 @@ import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.Substitution;
 import de.cau.cs.kieler.sccharts.SuspendAction;
 import de.cau.cs.kieler.sccharts.TextEffect;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.text.actions.serializer.ActionsSemanticSequencer;
+import de.cau.cs.kieler.sccharts.text.sct.sct.ImportDecl;
+import de.cau.cs.kieler.sccharts.text.sct.sct.SCChart;
+import de.cau.cs.kieler.sccharts.text.sct.sct.SctPackage;
 import de.cau.cs.kieler.sccharts.text.sct.services.SctGrammarAccess;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
@@ -136,7 +139,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				   context == grammarAccess.getOrAndExpressionRule() ||
 				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0() ||
 				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0() ||
-				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
@@ -165,7 +167,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
@@ -188,7 +189,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
@@ -210,7 +210,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
@@ -253,7 +252,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				   context == grammarAccess.getOrAndExpressionRule() ||
 				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0() ||
 				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0() ||
-				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getTextExpressionRule() ||
@@ -293,7 +291,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				   context == grammarAccess.getOrAndExpressionRule() ||
 				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0() ||
 				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0() ||
-				   context == grammarAccess.getRootRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule() ||
@@ -309,6 +306,12 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				if(context == grammarAccess.getAssignmentRule() ||
 				   context == grammarAccess.getEffectRule()) {
 					sequence_Assignment(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else break;
+			case SCChartsPackage.BINDING:
+				if(context == grammarAccess.getBindingRule()) {
+					sequence_Binding(context, (Binding) semanticObject); 
 					return; 
 				}
 				else break;
@@ -345,28 +348,14 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 					sequence_Region(context, (Region) semanticObject); 
 					return; 
 				}
-				else if(context == grammarAccess.getRootRegionRule()) {
-					sequence_RootRegion(context, (Region) semanticObject); 
-					return; 
-				}
 				else if(context == grammarAccess.getSingleRegionRule()) {
 					sequence_SingleRegion(context, (Region) semanticObject); 
 					return; 
 				}
 				else break;
 			case SCChartsPackage.STATE:
-				if(context == grammarAccess.getSCChartRule()) {
-					sequence_SCChart(context, (State) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getStateRule()) {
+				if(context == grammarAccess.getStateRule()) {
 					sequence_State(context, (State) semanticObject); 
-					return; 
-				}
-				else break;
-			case SCChartsPackage.SUBSTITUTION:
-				if(context == grammarAccess.getSubstitutionRule()) {
-					sequence_Substitution(context, (Substitution) semanticObject); 
 					return; 
 				}
 				else break;
@@ -391,8 +380,42 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				}
 				else break;
 			}
+		else if(semanticObject.eClass().getEPackage() == SctPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
+			case SctPackage.IMPORT_DECL:
+				if(context == grammarAccess.getImportDeclRule()) {
+					sequence_ImportDecl(context, (ImportDecl) semanticObject); 
+					return; 
+				}
+				else break;
+			case SctPackage.SC_CHART:
+				if(context == grammarAccess.getRootRule() ||
+				   context == grammarAccess.getSCChartRule()) {
+					sequence_SCChart(context, (SCChart) semanticObject); 
+					return; 
+				}
+				else break;
+			}
 		if (errorAcceptor != null) errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
+	
+	/**
+	 * Constraint:
+	 *     (formal=[ValuedObject|ID] actual=[ValuedObject|ID])
+	 */
+	protected void sequence_Binding(EObject context, Binding semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, SCChartsPackage.Literals.BINDING__FORMAL) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SCChartsPackage.Literals.BINDING__FORMAL));
+			if(transientValues.isValueTransient(semanticObject, SCChartsPackage.Literals.BINDING__ACTUAL) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SCChartsPackage.Literals.BINDING__ACTUAL));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getBindingAccess().getFormalValuedObjectIDTerminalRuleCall_0_0_1(), semanticObject.getFormal());
+		feeder.accept(grammarAccess.getBindingAccess().getActualValuedObjectIDTerminalRuleCall_2_0_1(), semanticObject.getActual());
+		feeder.finish();
+	}
+	
 	
 	/**
 	 * Constraint:
@@ -403,7 +426,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         output?='output'? 
 	 *         static?='static'? 
 	 *         signal?='signal'? 
-	 *         type=ValueType? 
+	 *         type=ValueType 
 	 *         valuedObjects+=ValuedObject 
 	 *         valuedObjects+=ValuedObject*
 	 *     )
@@ -415,14 +438,16 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         id=ID? 
-	 *         label=STRING? 
-	 *         declarations+=Declaration* 
-	 *         bodyText+=TextualCode* 
-	 *         states+=State+
-	 *     )
+	 *     (importedType=[State|QualifiedName] | importedNamespace=QualifiedNameWithWildcard)
+	 */
+	protected void sequence_ImportDecl(EObject context, ImportDecl semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (annotations+=Annotation* id=ID? label=STRING? declarations+=Declaration* states+=State+)
 	 */
 	protected void sequence_Region(EObject context, Region semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -432,37 +457,25 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	/**
 	 * Constraint:
 	 *     (
-	 *         annotations+=ImportAnnotation* 
-	 *         (annotations+=Annotation* id=ID label=STRING? declarations+=Declaration* bodyText+=TextualCode*)? 
-	 *         states+=SCChart*
-	 *     )
-	 */
-	protected void sequence_RootRegion(EObject context, Region semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (
+	 *         name=QualifiedName? 
+	 *         imports+=ImportDecl* 
 	 *         annotations+=Annotation* 
-	 *         type=StateType? 
 	 *         id=ID 
 	 *         label=STRING? 
 	 *         (
-	 *             (bodyReference=[State|ID] (renamings+=Substitution renamings+=Substitution*)?) | 
-	 *             ((declarations+=Declaration | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?)
+	 *             (referencedScope=[State|ID] (bindings+=Binding bindings+=Binding*)?) | 
+	 *             ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion regions+=Region*)?)
 	 *         )?
 	 *     )
 	 */
-	protected void sequence_SCChart(EObject context, State semanticObject) {
+	protected void sequence_SCChart(EObject context, SCChart semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Constraint:
-	 *     ((annotations+=Annotation* id=ID? label=STRING? declarations+=Declaration* bodyText+=TextualCode*)? states+=State*)
+	 *     ((annotations+=Annotation* id=ID? label=STRING? declarations+=Declaration*)? states+=State*)
 	 */
 	protected void sequence_SingleRegion(EObject context, Region semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -478,22 +491,13 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         id=ID 
 	 *         label=STRING? 
 	 *         (
-	 *             (bodyReference=[State|ID] (renamings+=Substitution renamings+=Substitution*)?) | 
-	 *             ((declarations+=Declaration | localActions+=LocalAction)* bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?)
+	 *             (referencedScope=[State|ID] (bindings+=Binding bindings+=Binding*)?) | 
+	 *             ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion regions+=Region*)?)
 	 *         )? 
 	 *         outgoingTransitions+=Transition*
 	 *     )
 	 */
 	protected void sequence_State(EObject context, State semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (actual=ID formal=ID)
-	 */
-	protected void sequence_Substitution(EObject context, Substitution semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -518,13 +522,13 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         type=TransitionType 
+	 *         (type=TransitionTypeLegacy | type=TransitionType) 
 	 *         targetState=[State|ID] 
 	 *         (
 	 *             immediate?='immediate'? 
 	 *             deferred?='deferred'? 
 	 *             history=HistoryType? 
-	 *             ((delay=INT? trigger=BoolExpression? (effects+=Effect effects+=Effect*)?) | label=STRING)?
+	 *             (((delay=INT? trigger=BoolExpression)? (effects+=Effect effects+=Effect*)?) | label=STRING)?
 	 *         )?
 	 *     )
 	 */

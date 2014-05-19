@@ -292,40 +292,22 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE__LOCAL_ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Body Reference</b></em>' reference.
+     * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE__BODY_REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+    int SCOPE__REFERENCED_SCOPE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
-     * The feature id for the '<em><b>Body Contents</b></em>' containment reference.
+     * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE__BODY_CONTENTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
-
-    /**
-     * The feature id for the '<em><b>Body Text</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCOPE__BODY_TEXT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
-
-    /**
-     * The feature id for the '<em><b>Renamings</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCOPE__RENAMINGS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+    int SCOPE__BINDINGS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -334,7 +316,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
+    int SCOPE__DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
     /**
      * The number of structural features of the '<em>Scope</em>' class.
@@ -343,7 +325,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
+    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.RegionImpl <em>Region</em>}' class.
@@ -392,40 +374,22 @@ public interface SCChartsPackage extends EPackage {
     int REGION__LOCAL_ACTIONS = SCOPE__LOCAL_ACTIONS;
 
     /**
-     * The feature id for the '<em><b>Body Reference</b></em>' reference.
+     * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REGION__BODY_REFERENCE = SCOPE__BODY_REFERENCE;
+    int REGION__REFERENCED_SCOPE = SCOPE__REFERENCED_SCOPE;
 
     /**
-     * The feature id for the '<em><b>Body Contents</b></em>' containment reference.
+     * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REGION__BODY_CONTENTS = SCOPE__BODY_CONTENTS;
-
-    /**
-     * The feature id for the '<em><b>Body Text</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__BODY_TEXT = SCOPE__BODY_TEXT;
-
-    /**
-     * The feature id for the '<em><b>Renamings</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__RENAMINGS = SCOPE__RENAMINGS;
+    int REGION__BINDINGS = SCOPE__BINDINGS;
 
     /**
      * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -464,50 +428,41 @@ public interface SCChartsPackage extends EPackage {
     int REGION_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 2;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.SubstitutionImpl <em>Substitution</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.BindingImpl <em>Binding</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.SubstitutionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSubstitution()
+     * @see de.cau.cs.kieler.sccharts.impl.BindingImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getBinding()
      * @generated
      */
-    int SUBSTITUTION = 5;
+    int BINDING = 5;
 
     /**
-     * The feature id for the '<em><b>Parent Scope</b></em>' container reference.
+     * The feature id for the '<em><b>Formal</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SUBSTITUTION__PARENT_SCOPE = 0;
+    int BINDING__FORMAL = 0;
 
     /**
-     * The feature id for the '<em><b>Formal</b></em>' attribute.
+     * The feature id for the '<em><b>Actual</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SUBSTITUTION__FORMAL = 1;
+    int BINDING__ACTUAL = 1;
 
     /**
-     * The feature id for the '<em><b>Actual</b></em>' attribute.
+     * The number of structural features of the '<em>Binding</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SUBSTITUTION__ACTUAL = 2;
-
-    /**
-     * The number of structural features of the '<em>Substitution</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SUBSTITUTION_FEATURE_COUNT = 3;
+    int BINDING_FEATURE_COUNT = 2;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.StateImpl <em>State</em>}' class.
@@ -556,40 +511,22 @@ public interface SCChartsPackage extends EPackage {
     int STATE__LOCAL_ACTIONS = SCOPE__LOCAL_ACTIONS;
 
     /**
-     * The feature id for the '<em><b>Body Reference</b></em>' reference.
+     * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATE__BODY_REFERENCE = SCOPE__BODY_REFERENCE;
+    int STATE__REFERENCED_SCOPE = SCOPE__REFERENCED_SCOPE;
 
     /**
-     * The feature id for the '<em><b>Body Contents</b></em>' containment reference.
+     * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATE__BODY_CONTENTS = SCOPE__BODY_CONTENTS;
-
-    /**
-     * The feature id for the '<em><b>Body Text</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int STATE__BODY_TEXT = SCOPE__BODY_TEXT;
-
-    /**
-     * The feature id for the '<em><b>Renamings</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int STATE__RENAMINGS = SCOPE__RENAMINGS;
+    int STATE__BINDINGS = SCOPE__BINDINGS;
 
     /**
      * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -1414,47 +1351,36 @@ public interface SCChartsPackage extends EPackage {
     EReference getRegion_ParentState();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Substitution <em>Substitution</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Binding <em>Binding</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Substitution</em>'.
-     * @see de.cau.cs.kieler.sccharts.Substitution
+     * @return the meta object for class '<em>Binding</em>'.
+     * @see de.cau.cs.kieler.sccharts.Binding
      * @generated
      */
-    EClass getSubstitution();
+    EClass getBinding();
 
     /**
-     * Returns the meta object for the container reference '{@link de.cau.cs.kieler.sccharts.Substitution#getParentScope <em>Parent Scope</em>}'.
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Binding#getFormal <em>Formal</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the container reference '<em>Parent Scope</em>'.
-     * @see de.cau.cs.kieler.sccharts.Substitution#getParentScope()
-     * @see #getSubstitution()
+     * @return the meta object for the reference '<em>Formal</em>'.
+     * @see de.cau.cs.kieler.sccharts.Binding#getFormal()
+     * @see #getBinding()
      * @generated
      */
-    EReference getSubstitution_ParentScope();
+    EReference getBinding_Formal();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Substitution#getFormal <em>Formal</em>}'.
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Binding#getActual <em>Actual</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Formal</em>'.
-     * @see de.cau.cs.kieler.sccharts.Substitution#getFormal()
-     * @see #getSubstitution()
+     * @return the meta object for the reference '<em>Actual</em>'.
+     * @see de.cau.cs.kieler.sccharts.Binding#getActual()
+     * @see #getBinding()
      * @generated
      */
-    EAttribute getSubstitution_Formal();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Substitution#getActual <em>Actual</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Actual</em>'.
-     * @see de.cau.cs.kieler.sccharts.Substitution#getActual()
-     * @see #getSubstitution()
-     * @generated
-     */
-    EAttribute getSubstitution_Actual();
+    EReference getBinding_Actual();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.State <em>State</em>}'.
@@ -1663,48 +1589,26 @@ public interface SCChartsPackage extends EPackage {
     EReference getScope_LocalActions();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Scope#getBodyReference <em>Body Reference</em>}'.
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Scope#getReferencedScope <em>Referenced Scope</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Body Reference</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getBodyReference()
+     * @return the meta object for the reference '<em>Referenced Scope</em>'.
+     * @see de.cau.cs.kieler.sccharts.Scope#getReferencedScope()
      * @see #getScope()
      * @generated
      */
-    EReference getScope_BodyReference();
+    EReference getScope_ReferencedScope();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Scope#getBodyContents <em>Body Contents</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getBindings <em>Bindings</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Body Contents</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getBodyContents()
+     * @return the meta object for the containment reference list '<em>Bindings</em>'.
+     * @see de.cau.cs.kieler.sccharts.Scope#getBindings()
      * @see #getScope()
      * @generated
      */
-    EReference getScope_BodyContents();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getBodyText <em>Body Text</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Body Text</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getBodyText()
-     * @see #getScope()
-     * @generated
-     */
-    EReference getScope_BodyText();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getRenamings <em>Renamings</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Renamings</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getRenamings()
-     * @see #getScope()
-     * @generated
-     */
-    EReference getScope_Renamings();
+    EReference getScope_Bindings();
 
     /**
      * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getDeclarations <em>Declarations</em>}'.
@@ -1990,38 +1894,30 @@ public interface SCChartsPackage extends EPackage {
         EReference REGION__PARENT_STATE = eINSTANCE.getRegion_ParentState();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.SubstitutionImpl <em>Substitution</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.BindingImpl <em>Binding</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.SubstitutionImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSubstitution()
+         * @see de.cau.cs.kieler.sccharts.impl.BindingImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getBinding()
          * @generated
          */
-        EClass SUBSTITUTION = eINSTANCE.getSubstitution();
+        EClass BINDING = eINSTANCE.getBinding();
 
         /**
-         * The meta object literal for the '<em><b>Parent Scope</b></em>' container reference feature.
+         * The meta object literal for the '<em><b>Formal</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference SUBSTITUTION__PARENT_SCOPE = eINSTANCE.getSubstitution_ParentScope();
+        EReference BINDING__FORMAL = eINSTANCE.getBinding_Formal();
 
         /**
-         * The meta object literal for the '<em><b>Formal</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Actual</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute SUBSTITUTION__FORMAL = eINSTANCE.getSubstitution_Formal();
-
-        /**
-         * The meta object literal for the '<em><b>Actual</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute SUBSTITUTION__ACTUAL = eINSTANCE.getSubstitution_Actual();
+        EReference BINDING__ACTUAL = eINSTANCE.getBinding_Actual();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.StateImpl <em>State</em>}' class.
@@ -2182,36 +2078,20 @@ public interface SCChartsPackage extends EPackage {
         EReference SCOPE__LOCAL_ACTIONS = eINSTANCE.getScope_LocalActions();
 
         /**
-         * The meta object literal for the '<em><b>Body Reference</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Referenced Scope</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference SCOPE__BODY_REFERENCE = eINSTANCE.getScope_BodyReference();
+        EReference SCOPE__REFERENCED_SCOPE = eINSTANCE.getScope_ReferencedScope();
 
         /**
-         * The meta object literal for the '<em><b>Body Contents</b></em>' containment reference feature.
+         * The meta object literal for the '<em><b>Bindings</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference SCOPE__BODY_CONTENTS = eINSTANCE.getScope_BodyContents();
-
-        /**
-         * The meta object literal for the '<em><b>Body Text</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference SCOPE__BODY_TEXT = eINSTANCE.getScope_BodyText();
-
-        /**
-         * The meta object literal for the '<em><b>Renamings</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference SCOPE__RENAMINGS = eINSTANCE.getScope_Renamings();
+        EReference SCOPE__BINDINGS = eINSTANCE.getScope_Bindings();
 
         /**
          * The meta object literal for the '<em><b>Declarations</b></em>' containment reference list feature.

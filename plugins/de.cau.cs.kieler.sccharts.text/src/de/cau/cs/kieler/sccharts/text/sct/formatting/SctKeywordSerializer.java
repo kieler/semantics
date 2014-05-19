@@ -45,32 +45,32 @@ public class SctKeywordSerializer extends KeywordSerializer {
     SctGrammarAccess grammarAccess;
 
     public String serializeUnassignedKeyword(EObject context, Keyword keyword, INode node) {
-        if (keyword == grammarAccess.getRootRegionAccess().getRegionKeyword_2_1()
-                || keyword == grammarAccess.getRootRegionAccess().getColonKeyword_2_4()) {
-            Region region = (Region) context;
-            if (Strings.isEmpty(region.getId())
-                    && Strings.isEmpty(region.getLabel())
-                    && (region.getAnnotations() == null || region.getAnnotations().isEmpty())
-//                    && (region.getValuedObjects() == null || region.getValuedObjects().isEmpty())) {
-            		&& (region.getDeclarations() == null || region.getDeclarations().isEmpty())) {
-//                    && (region.getVariables() == null || region.getVariables().isEmpty())) {
-                return null;
-            }
-        }
-        if (keyword == grammarAccess.getSingleRegionAccess().getRegionKeyword_1_1()
-                || keyword == grammarAccess.getSingleRegionAccess().getColonKeyword_1_4()) {
-            Region region = (Region) context;
-            if (region.eContainer() != null
-                    && ((State) region.eContainer()).getRegions().size() == 1
-                    && Strings.isEmpty(region.getId())
-                    && Strings.isEmpty(region.getLabel())
-                    && (region.getAnnotations() == null || region.getAnnotations().isEmpty())
-//                    && (region.getValuedObjects() == null || region.getValuedObjects().isEmpty())) {
-            		&& (region.getDeclarations() == null || region.getDeclarations().isEmpty())) {
-//                    && (region.getVariables() == null || region.getVariables().isEmpty())) {
-                return null;
-            }
-        }
+//        if (keyword == grammarAccess.getTheRootRegionAccess().getRegionKeyword_4_1()
+//                || keyword == grammarAccess.getTheRootRegionAccess().getColonKeyword_4_4()) {
+//            Region region = (Region) context;
+//            if (Strings.isEmpty(region.getId())
+//                    && Strings.isEmpty(region.getLabel())
+//                    && (region.getAnnotations() == null || region.getAnnotations().isEmpty())
+////                    && (region.getValuedObjects() == null || region.getValuedObjects().isEmpty())) {
+//            		&& (region.getTypeGroups() == null || region.getTypeGroups().isEmpty())) {
+////                    && (region.getVariables() == null || region.getVariables().isEmpty())) {
+//                return null;
+//            }
+//        }
+//        if (keyword == grammarAccess.getSingleRegionAccess().getRegionKeyword_1_1()
+//                || keyword == grammarAccess.getSingleRegionAccess().getColonKeyword_1_4()) {
+//            Region region = (Region) context;
+//            if (region.eContainer() != null
+//                    && ((State) region.eContainer()).getRegions().size() == 1
+//                    && Strings.isEmpty(region.getId())
+//                    && Strings.isEmpty(region.getLabel())
+//                    && (region.getAnnotations() == null || region.getAnnotations().isEmpty())
+////                    && (region.getValuedObjects() == null || region.getValuedObjects().isEmpty())) {
+//            		&& (region.getTypeGroups() == null || region.getTypeGroups().isEmpty())) {
+////                    && (region.getVariables() == null || region.getVariables().isEmpty())) {
+//                return null;
+//            }
+//        }
         return super.serializeUnassignedKeyword(context, keyword, node);
     }
 
