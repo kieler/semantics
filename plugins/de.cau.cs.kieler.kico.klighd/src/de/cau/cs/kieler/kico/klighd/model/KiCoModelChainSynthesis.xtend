@@ -102,7 +102,7 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
                 val second = transformModel(currentModel);
                 rootNode.children += second;
                 val edge = createEdge => [
-                    it.addPolyline => [                        
+                    it.addPolyline => [
                         //if label name is null hide edge
                         it.addArrowDecorator.invisible = currentModel.edgeLabel == null;
                         it.invisible = currentModel.edgeLabel == null;
@@ -201,13 +201,13 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
                 it.translateEObject;
             ].toIterable;
         }
+        if (subDiagramNode != null) {
+            // prevent adding of rectangle by adding an invisible own one.
+            subDiagramNode.addRectangle.invisible = true;
 
-        // prevent adding of rectangle by adding an invisible own one.
-        subDiagramNode.addRectangle.invisible = true;
-
-        //Add subdiagram to collapseable child area
-        subDiagramParentNode.children += subDiagramNode;
-
+            //Add subdiagram to collapseable child area
+            subDiagramParentNode.children += subDiagramNode;
+        }
         return node;
     }
 
