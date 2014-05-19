@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
 
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.For;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
@@ -62,7 +63,7 @@ public class ForImpl extends EObjectImpl implements For {
      * @generated
      * @ordered
      */
-    protected ValuedObjectReference loopVariable;
+    protected ValuedObject loopVariable;
 
     /**
      * The cached value of the '{@link #getBodyScope() <em>Body Scope</em>}' reference.
@@ -128,10 +129,10 @@ public class ForImpl extends EObjectImpl implements For {
      * <!-- end-user-doc -->
      * @generated
      */
-    public ValuedObjectReference getLoopVariable() {
+    public ValuedObject getLoopVariable() {
         if (loopVariable != null && loopVariable.eIsProxy()) {
             InternalEObject oldLoopVariable = (InternalEObject)loopVariable;
-            loopVariable = (ValuedObjectReference)eResolveProxy(oldLoopVariable);
+            loopVariable = (ValuedObject)eResolveProxy(oldLoopVariable);
             if (loopVariable != oldLoopVariable) {
                 if (eNotificationRequired())
                     eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.FOR__LOOP_VARIABLE, oldLoopVariable, loopVariable));
@@ -145,7 +146,7 @@ public class ForImpl extends EObjectImpl implements For {
      * <!-- end-user-doc -->
      * @generated
      */
-    public ValuedObjectReference basicGetLoopVariable() {
+    public ValuedObject basicGetLoopVariable() {
         return loopVariable;
     }
 
@@ -154,8 +155,8 @@ public class ForImpl extends EObjectImpl implements For {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setLoopVariable(ValuedObjectReference newLoopVariable) {
-        ValuedObjectReference oldLoopVariable = loopVariable;
+    public void setLoopVariable(ValuedObject newLoopVariable) {
+        ValuedObject oldLoopVariable = loopVariable;
         loopVariable = newLoopVariable;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.FOR__LOOP_VARIABLE, oldLoopVariable, loopVariable));
@@ -349,7 +350,7 @@ public class ForImpl extends EObjectImpl implements For {
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case SCChartsPackage.FOR__LOOP_VARIABLE:
-                setLoopVariable((ValuedObjectReference)newValue);
+                setLoopVariable((ValuedObject)newValue);
                 return;
             case SCChartsPackage.FOR__BODY_SCOPE:
                 setBodyScope((Scope)newValue);
@@ -376,7 +377,7 @@ public class ForImpl extends EObjectImpl implements For {
     public void eUnset(int featureID) {
         switch (featureID) {
             case SCChartsPackage.FOR__LOOP_VARIABLE:
-                setLoopVariable((ValuedObjectReference)null);
+                setLoopVariable((ValuedObject)null);
                 return;
             case SCChartsPackage.FOR__BODY_SCOPE:
                 setBodyScope((Scope)null);

@@ -198,7 +198,7 @@
     </eLiterals>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="For">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="loopVariable" eType="ecore:EClass ../../de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="loopVariable" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bodyScope" eType="#//Scope"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentScope" eType="#//Scope"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"/>

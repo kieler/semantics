@@ -249,16 +249,11 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         // Initialize simple dependencies
         KExpressionsPackage.eINSTANCE.eClass();
 
-        // Obtain or create and register interdependencies
-        KExpressionsPackageImpl theKExpressionsPackage = (KExpressionsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI) instanceof KExpressionsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI) : KExpressionsPackage.eINSTANCE);
-
         // Create package meta-data objects
         theSCChartsPackage.createPackageContents();
-        theKExpressionsPackage.createPackageContents();
 
         // Initialize created meta-data
         theSCChartsPackage.initializePackageContents();
-        theKExpressionsPackage.initializePackageContents();
 
         // Mark meta-data to indicate it can't be changed
         theSCChartsPackage.freeze();
@@ -1010,7 +1005,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEAttribute(getSuspendAction_Weak(), ecorePackage.getEBoolean(), "weak", null, 0, 1, SuspendAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(forEClass, For.class, "For", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getFor_LoopVariable(), theKExpressionsPackage.getValuedObjectReference(), null, "loopVariable", null, 0, 1, For.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getFor_LoopVariable(), theKExpressionsPackage.getValuedObject(), null, "loopVariable", null, 0, 1, For.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getFor_BodyScope(), this.getScope(), null, "bodyScope", null, 0, 1, For.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getFor_ParentScope(), this.getScope(), null, "parentScope", null, 0, 1, For.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getFor_From(), theKExpressionsPackage.getExpression(), null, "from", null, 0, 1, For.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
