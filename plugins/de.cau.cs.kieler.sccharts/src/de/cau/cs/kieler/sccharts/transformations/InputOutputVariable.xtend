@@ -39,7 +39,7 @@ class InputOutputVariable {
     //-------------------------------------------------------------------------
     // ...
     def State transform(State rootState) {
-        var targetRootState = rootState.copy.fixAllPriorities;
+        var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
         for (targetTransition : targetRootState.getAllContainedStates.immutableCopy) {

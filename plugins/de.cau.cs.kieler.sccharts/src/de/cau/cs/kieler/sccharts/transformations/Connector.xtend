@@ -42,7 +42,7 @@ class Connector {
     // Turn every connector into a simple state and turn all outgoing 
     // transitions into immediate transitions.
     def State transform(State rootState) {
-        var targetRootState = rootState.copy.fixAllPriorities;
+        var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
         for (targetTransition : targetRootState.allContainedStates) {

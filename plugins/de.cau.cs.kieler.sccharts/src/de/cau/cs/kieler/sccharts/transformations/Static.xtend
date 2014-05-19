@@ -48,7 +48,7 @@ class Static {
     // This is applied for all superstates that contain static variable declarations.
     //
     def State transform(State rootState) {
-        var targetRootState = rootState.copy.fixAllPriorities;
+        var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
         for (targetTransition : targetRootState.getAllContainedStates.immutableCopy) {

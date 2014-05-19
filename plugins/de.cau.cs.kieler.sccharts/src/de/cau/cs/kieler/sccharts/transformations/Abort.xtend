@@ -49,7 +49,7 @@ class Abort {
     //-------------------------------------------------------------------------
     // Transforming Aborts.
     def State transformAbortAlternative(State rootState) {
-        val targetRootState = rootState.copy.fixAllPriorities;
+        val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
         for (targetState : targetRootState.getAllContainedStates) {

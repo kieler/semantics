@@ -50,7 +50,7 @@ class History {
     // Transforming History. This is using the concept of suspend so it must
     // be followed by resolving suspension
     def State transform(State rootState) {
-        val targetRootState = rootState.copy.fixAllPriorities;
+        val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
         for (targetState : targetRootState.getAllContainedStates) {

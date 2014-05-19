@@ -51,7 +51,7 @@ class Deferred {
     // transition in case deferVariable is set to TRUE, i.e., the state was entered
     // by a deferred transition.
     def State transform(State rootState) {
-        var targetRootState = rootState.copy.fixAllPriorities;
+        var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
         for (targetTransition : targetRootState.allContainedStates) {

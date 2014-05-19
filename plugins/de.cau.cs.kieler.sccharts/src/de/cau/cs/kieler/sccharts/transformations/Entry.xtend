@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
@@ -44,7 +43,7 @@ class Entry {
     // entry actions of a state in between these two states.
     // Transforming Entry Actions.
     def State transform(State rootState) {
-        val targetRootState = rootState.copy.fixAllPriorities;
+        val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
         for (targetState : targetRootState.getAllContainedStates.immutableCopy) {
