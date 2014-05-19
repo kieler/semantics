@@ -135,13 +135,16 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
     private static val SynthesisOption SHOW_ORDER = SynthesisOption::createCheckOption(
         "Dependencies && priorities", false);
 
+    private static val SynthesisOption SHOW_REFERENCEEXPANSION = SynthesisOption::createCheckOption(
+        "Reference Expansion", false);
+
     DependencyGraph dependencyGraph = null
 
     private static val SynthesisOption SHOW_SHADOW = SynthesisOption::createCheckOption("Shadow", true);
 
     override public getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER,
-            SHOW_SHADOW);
+            SHOW_REFERENCEEXPANSION, SHOW_SHADOW);
     }
 
     override public getDisplayedLayoutOptions() {
@@ -466,7 +469,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                             it.fontSize.propagateToChildren = true
                             it.setFontBold(true);
                             it.setGridPlacementData().from(LEFT, 0, 0, TOP, 8f, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
-                            val ktext = it.addText("   " + s.label + prioritySpace + " ").putToLookUpWith(s) => [
+                            var text = s.label
+                            if (s.referencedState) 
+                                text = text + ' @ ' + (s.referencedScope as State).label
+                            val ktext = it.addText("   " + text + prioritySpace + " ").putToLookUpWith(s) => [
                                 it.fontSize = 11;
                             ];
                             if (priorityToShow.length > 0) {
@@ -655,9 +661,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 for (r : s.regions)
                     node.children += r.translate;
             }
-            if (s.referencedState) {
+            if (s.referencedState && SHOW_REFERENCEEXPANSION.booleanValue) {
                 for (r : (s.referencedScope as State).regions) {
-                    node.children += r.translate;
+                    node.children += r.translate => [
+                        it.setLayoutOption(KlighdProperties::EXPAND, false);
+                    ];
                 }
             }
             for (t : s.outgoingTransitions)
