@@ -148,6 +148,15 @@ public interface SCChartsFactory extends EFactory {
     SuspendAction createSuspendAction();
 
     /**
+     * Returns a new object of class '<em>For</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>For</em>'.
+     * @generated
+     */
+    For createFor();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

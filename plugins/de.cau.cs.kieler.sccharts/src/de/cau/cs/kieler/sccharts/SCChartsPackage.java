@@ -1139,6 +1139,52 @@ public interface SCChartsPackage extends EPackage {
     int SUSPEND_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 1;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ForImpl <em>For</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.ForImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getFor()
+     * @generated
+     */
+    int FOR = 15;
+
+    /**
+     * The feature id for the '<em><b>Loop Variable</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FOR__LOOP_VARIABLE = 0;
+
+    /**
+     * The feature id for the '<em><b>Body Scope</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FOR__BODY_SCOPE = 1;
+
+    /**
+     * The feature id for the '<em><b>Parent Scope</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FOR__PARENT_SCOPE = 2;
+
+    /**
+     * The number of structural features of the '<em>For</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FOR_FEATURE_COUNT = 3;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1146,7 +1192,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getStateType()
      * @generated
      */
-    int STATE_TYPE = 15;
+    int STATE_TYPE = 16;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.TransitionType <em>Transition Type</em>}' enum.
@@ -1156,7 +1202,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransitionType()
      * @generated
      */
-    int TRANSITION_TYPE = 16;
+    int TRANSITION_TYPE = 17;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
@@ -1166,7 +1212,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
      * @generated
      */
-    int HISTORY_TYPE = 17;
+    int HISTORY_TYPE = 18;
 
     /**
      * The meta object id for the '<em>Parsable</em>' data type.
@@ -1176,7 +1222,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getParsable()
      * @generated
      */
-    int PARSABLE = 18;
+    int PARSABLE = 19;
 
 
     /**
@@ -1693,6 +1739,49 @@ public interface SCChartsPackage extends EPackage {
     EAttribute getSuspendAction_Weak();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.For <em>For</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>For</em>'.
+     * @see de.cau.cs.kieler.sccharts.For
+     * @generated
+     */
+    EClass getFor();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.For#getLoopVariable <em>Loop Variable</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Loop Variable</em>'.
+     * @see de.cau.cs.kieler.sccharts.For#getLoopVariable()
+     * @see #getFor()
+     * @generated
+     */
+    EReference getFor_LoopVariable();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.For#getBodyScope <em>Body Scope</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Body Scope</em>'.
+     * @see de.cau.cs.kieler.sccharts.For#getBodyScope()
+     * @see #getFor()
+     * @generated
+     */
+    EReference getFor_BodyScope();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.For#getParentScope <em>Parent Scope</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Parent Scope</em>'.
+     * @see de.cau.cs.kieler.sccharts.For#getParentScope()
+     * @see #getFor()
+     * @generated
+     */
+    EReference getFor_ParentScope();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2168,6 +2257,40 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EAttribute SUSPEND_ACTION__WEAK = eINSTANCE.getSuspendAction_Weak();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ForImpl <em>For</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.ForImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getFor()
+         * @generated
+         */
+        EClass FOR = eINSTANCE.getFor();
+
+        /**
+         * The meta object literal for the '<em><b>Loop Variable</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference FOR__LOOP_VARIABLE = eINSTANCE.getFor_LoopVariable();
+
+        /**
+         * The meta object literal for the '<em><b>Body Scope</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference FOR__BODY_SCOPE = eINSTANCE.getFor_BodyScope();
+
+        /**
+         * The meta object literal for the '<em><b>Parent Scope</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference FOR__PARENT_SCOPE = eINSTANCE.getFor_ParentScope();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}' enum.
