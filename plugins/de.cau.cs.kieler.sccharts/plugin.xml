@@ -812,6 +812,13 @@
             method="transform"
             name="Const">
       </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.sccharts.transformations.Map"
+            dependencies="FOR"
+            id="MAP"
+            method="transform"
+            name="Map">
+      </transformationMethod>
          
        <!-- check dependencies -->        
       <transformationMethod
@@ -825,7 +832,7 @@
        <!-- check dependencies -->        
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Reference"
-            dependencies="FOR" 
+            dependencies="MAP" 
             id="REFERENCE"
             method="transform"
             name="Reference">
@@ -989,6 +996,13 @@
             name="SyncCharts"
             transformations="SUSPEND, SIGNAL, COUNTDELAY, PRE">
       </transformationGroup>
+      <transformationGroup
+            id="EXPANSIONS"
+            isCategory="false"
+            isFeatureGroup="true"
+            name="SCCharts Expansions"
+            transformations="REFERENCE, FOR, MAP">
+      </transformationGroup>
 
 
       <transformationGroup
@@ -1025,13 +1039,6 @@
             isCategory="false"
             isFeatureGroup="false"
             transformations="EXTENDED, CORE, SCG">
-      </transformationGroup>
-      <transformationGroup
-            id="EXPANSIONS"
-            isCategory="false"
-            isFeatureGroup="true"
-            name="SCCharts Expansions"
-            transformations="REFERENCE, FOR">
       </transformationGroup>
 
       
