@@ -61,6 +61,7 @@ class Const {
         for (const : constObjects.toList.immutableCopy) {
         	val replacement = const.initialValue
         	state.replaceAllReferences(const, replacement.copy)
+        	const.delete
 		}        	
     }
 
