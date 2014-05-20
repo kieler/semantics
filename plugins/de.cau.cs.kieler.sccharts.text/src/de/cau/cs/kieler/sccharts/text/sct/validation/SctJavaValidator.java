@@ -21,6 +21,14 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.validation.Check;
 
+import de.cau.cs.kieler.core.kexpressions.BoolValue;
+import de.cau.cs.kieler.core.kexpressions.Declaration;
+import de.cau.cs.kieler.core.kexpressions.DoubleValue;
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.FloatValue;
+import de.cau.cs.kieler.core.kexpressions.IntValue;
+import de.cau.cs.kieler.core.kexpressions.TextExpression;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.model.validation.CustomEValidator;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
@@ -31,7 +39,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension;
 /**
  * SCCharts Validation Rules
  * 
- * @author cmot
+ * @author cmot ssm
  * @kieler.design 2014-01-20 proposed 
  * @kieler.rating 2014-01-20 proposed yellow
  */
@@ -51,6 +59,9 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     public static final String REGION_TWO_MANY_INITIAL_STATES = "Every region must not have more than one initial state";
     public static final String REGION_NO_FINAL_STATE = "Every region should have a final state whenever its parent state has a termination transition";
     public static final String STATE_NOT_REACHABLE = "The state is not reachable";
+    
+    public static final String ASSIGNMENT_TO_CONST = "You cannot assign a value to a const object";
+    public static final String NO_CONST_LITERAL = "Const objects must be bound to literals";
     
     public static final SCChartsExtension sCChartExtension = new SCChartsExtension();
 
@@ -251,4 +262,43 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
             }
         }
     }
+    
+    
+    /**
+     *
+     * @param state the state
+     */
+    @Check
+    public void checkAssignmentToConst(final de.cau.cs.kieler.sccharts.Assignment assignment) {
+    	if (assignment.getValuedObject() != null) {
+    		Declaration declaration = (Declaration) assignment.getValuedObject().eContainer();	
+    		if (declaration.isConst()) {
+    			error(ASSIGNMENT_TO_CONST, assignment, null, -1);
+    		}
+    	}
+    }
+    
+    /**
+    *
+    * @param state the state
+    */
+   @Check
+   public void checkConstBinding(final de.cau.cs.kieler.sccharts.State state) {
+	   for(Declaration declaration : state.getDeclarations()) {
+		   if (declaration.isConst()) {
+			   for (ValuedObject valuedObject : declaration.getValuedObjects()) {
+				   Expression initialValue = valuedObject.getInitialValue();
+				   if (initialValue != null && 
+						   !(initialValue instanceof BoolValue
+						   || initialValue instanceof IntValue
+						   || initialValue instanceof FloatValue
+						   || initialValue instanceof DoubleValue
+						   || initialValue instanceof TextExpression
+						   )) {
+					   error(NO_CONST_LITERAL, valuedObject, null, -1);
+				   }
+			   }
+		   }
+	   }
+   }    
 }
