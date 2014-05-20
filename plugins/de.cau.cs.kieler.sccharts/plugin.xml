@@ -807,7 +807,7 @@
        <!-- check dependencies -->        
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Const"
-            dependencies="CONNECTOR" 
+            dependencies="INITIALIZATION" 
             id="CONST"
             method="transform"
             name="Const">
@@ -816,7 +816,7 @@
        <!-- check dependencies -->        
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.For"
-            dependencies="CONNECTOR" 
+            dependencies="SYNCCHARTS, SCADEQUARTZESTEREL, STATECHARTS" 
             id="FOR"
             method="transform"
             name="For">
@@ -825,7 +825,7 @@
        <!-- check dependencies -->        
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Reference"
-            dependencies="CONNECTOR" 
+            dependencies="FOR" 
             id="REFERENCE"
             method="transform"
             name="Reference">
@@ -972,14 +972,14 @@
             id="SCADEQUARTZESTEREL"
             isFeatureGroup="true"
             name="SCADE / QUARTZ / Esterel v7"
-            transformations="HISTORY, STATIC, WEAKSUSPEND, DEFERRED, CONST, FOR, REFERENCE">
+            transformations="HISTORY, STATIC, WEAKSUSPEND, DEFERRED">
       </transformationGroup>
 
       <transformationGroup
             id="STATECHARTS"
             isFeatureGroup="true"
             name="Statecharts"
-            transformations="COMPLEXFINALSTATE, ABORT, DURING, EXIT, INITIALIZATION, ENTRY, CONNECTOR">
+            transformations="CONST, COMPLEXFINALSTATE, ABORT, DURING, EXIT, INITIALIZATION, ENTRY, CONNECTOR">
       </transformationGroup>
 
 
@@ -995,7 +995,7 @@
             id="EXTENDED"
             isCategory="true"
             name="Extended SCCharts"
-            transformations="SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS">
+            transformations="SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXPANSIONS">
       </transformationGroup>
 
       <transformationGroup
@@ -1025,6 +1025,13 @@
             isCategory="false"
             isFeatureGroup="false"
             transformations="EXTENDED, CORE, SCG">
+      </transformationGroup>
+      <transformationGroup
+            id="EXPANSIONS"
+            isCategory="false"
+            isFeatureGroup="true"
+            name="SCCharts Expansions"
+            transformations="REFERENCE, FOR">
       </transformationGroup>
 
       
