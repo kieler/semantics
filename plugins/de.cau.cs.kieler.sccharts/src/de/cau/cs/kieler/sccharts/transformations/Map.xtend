@@ -20,13 +20,13 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
- * SCCharts For Transformation.
+ * SCCharts Map Transformation.
  * 
  * @author cmot
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class For {
+class Map {
 
     @Inject
     extension SCChartsExtension
@@ -43,12 +43,12 @@ class For {
 
         // Traverse all states
         for (targetTransition : targetRootState.getAllContainedStates.immutableCopy) {
-            targetTransition.transformFor(targetRootState);
+            targetTransition.transformMap(targetRootState);
         }
         targetRootState;
     }
 
-    def void transformFor(State state, State targetRootState) {
+    def void transformMap(State state, State targetRootState) {
         //TODO
     }
 
