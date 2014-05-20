@@ -14,22 +14,8 @@
 package de.cau.cs.kieler.kico.ui;
 
 import java.util.Arrays;
-import java.util.List;
 
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.xtext.EcoreUtil2;
-
-import de.cau.cs.kieler.core.kgraph.KGraphData;
-import de.cau.cs.kieler.core.kgraph.KLabel;
 import de.cau.cs.kieler.core.kgraph.KNode;
-import de.cau.cs.kieler.core.krendering.KColor;
-import de.cau.cs.kieler.core.krendering.KContainerRendering;
-import de.cau.cs.kieler.core.krendering.KRendering;
-import de.cau.cs.kieler.core.krendering.KRoundedRectangle;
-import de.cau.cs.kieler.core.krendering.KText;
-import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.kico.TransformationDummy;
 import de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesis;
 import de.cau.cs.kieler.klighd.IAction;
@@ -76,33 +62,33 @@ public class KiCoSelectionAction extends KiCoKlighdAction implements IAction {
             String id = transformationDummy.id;
 
             KiCoSelectionView.removeRequiredTransformationVisualization(activeEditorID);
-            
-            if (!KiCoSelectionView.isSelectedTransformation(id,
-                    activeEditorID)) {
+
+            if (!KiCoSelectionView.isSelectedTransformation(id, activeEditorID)) {
                 // Select
-                setLabelColor(transformationDummy, context.getViewContext(), KiCoDiagramSynthesis.WHITE,
-                        KiCoDiagramSynthesis.BLUE3);
-                setStateColor(transformationDummy, context.getViewContext(), KiCoDiagramSynthesis.BLUE3,
-                        KiCoDiagramSynthesis.BLUE4);
+                setLabelColor(transformationDummy, context.getViewContext(),
+                        KiCoDiagramSynthesis.WHITE, KiCoDiagramSynthesis.BLUE3);
+                setStateColor(transformationDummy, context.getViewContext(),
+                        KiCoDiagramSynthesis.BLUE3, KiCoDiagramSynthesis.BLUE4);
                 KiCoSelectionView.addSelectedTransformation(id,
                         KiCoSelectionView.getActiveEditorID(), true);
             } else {
                 // Un select
-                setLabelColor(transformationDummy, context.getViewContext(), KiCoDiagramSynthesis.BLACK,
-                        KiCoDiagramSynthesis.BLUE1);
-                setStateColor(transformationDummy, context.getViewContext(), KiCoDiagramSynthesis.BLUE1,
-                        KiCoDiagramSynthesis.BLUE2);
+                setLabelColor(transformationDummy, context.getViewContext(),
+                        KiCoDiagramSynthesis.BLACK, KiCoDiagramSynthesis.BLUE1);
+                setStateColor(transformationDummy, context.getViewContext(),
+                        KiCoDiagramSynthesis.BLUE1, KiCoDiagramSynthesis.BLUE2);
                 KiCoSelectionView.removeSelectedTransformation(id,
                         KiCoSelectionView.getActiveEditorID());
             }
 
             KiCoSelectionView.addRequiredTransformationVisualization(activeEditorID);
-            
+
             System.out.println(Arrays.toString(KiCoSelectionView.getSelectedTransformations(
                     KiCoSelectionView.getActiveEditorID()).toArray()));
-        }
 
-        refreshModelView(true);
+            // notify listeners about currently active transformations
+            KiCoSelectionView.updateActiveTransformationsProperty();
+        }
 
         return ActionResult.createResult(true).dontAnimateLayout();
     }

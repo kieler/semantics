@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.klighd
+package de.cau.cs.kieler.kico.klighd.model
 
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.KColor
@@ -102,7 +102,7 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
                 val second = transformModel(currentModel);
                 rootNode.children += second;
                 val edge = createEdge => [
-                    it.addPolyline => [                        
+                    it.addPolyline => [
                         //if label name is null hide edge
                         it.addArrowDecorator.invisible = currentModel.edgeLabel == null;
                         it.invisible = currentModel.edgeLabel == null;
@@ -201,13 +201,13 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
                 it.translateEObject;
             ].toIterable;
         }
+        if (subDiagramNode != null) {
+            // prevent adding of rectangle by adding an invisible own one.
+            subDiagramNode.addRectangle.invisible = true;
 
-        // prevent adding of rectangle by adding an invisible own one.
-        subDiagramNode.addRectangle.invisible = true;
-
-        //Add subdiagram to collapseable child area
-        subDiagramParentNode.children += subDiagramNode;
-
+            //Add subdiagram to collapseable child area
+            subDiagramParentNode.children += subDiagramNode;
+        }
         return node;
     }
 
