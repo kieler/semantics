@@ -19,6 +19,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 
 /**
  * SCCharts Const Transformation.
@@ -28,6 +29,9 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class Const {
+
+    @Inject
+    extension KExpressionsExtension
 
     @Inject
     extension SCChartsExtension
@@ -43,14 +47,21 @@ class Const {
         var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetTransition : targetRootState.getAllContainedStates.immutableCopy) {
+        for (targetTransition : targetRootState.getAllStates.immutableCopy) {
             targetTransition.transformConst(targetRootState);
         }
         targetRootState;
     }
 
     def void transformConst(State state, State targetRootState) {
-        //TODO
+        val constObjects = state.valuedObjects.filter[
+        	const && initialValue != null
+        ].toList
+        
+        for (const : constObjects.toList.immutableCopy) {
+        	val replacement = const.initialValue
+        	state.replaceAllReferences(const, replacement.copy)
+		}        	
     }
 
 }

@@ -469,7 +469,7 @@ class KExpressionsExtension {
         }
         expression
     }
-
+   
     // Trim all AND/OR Expressions if it contains only a single sub expression
     def dispatch Expression trim(Expression expression) {
         expression

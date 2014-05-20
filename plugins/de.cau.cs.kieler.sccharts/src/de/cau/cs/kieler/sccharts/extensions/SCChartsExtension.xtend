@@ -42,6 +42,7 @@ import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 
 /**
  * SCCharts Extensions.
@@ -84,6 +85,13 @@ class SCChartsExtension {
     // Return the list of all contained States.
     def List<State> getAllContainedStates(Scope scope) {
         scope.eAllContents().toList().filter(typeof(State)).toList()
+    }
+
+    // Return the list of all contained States and the root state if the scope is already a state.
+    def List<State> getAllStates(Scope scope) {
+        scope.eAllContents().filter(typeof(State)).toList => [
+        	if (scope instanceof State) it += scope as State
+        ]
     }
 
     // Return the list of all contained Regions.
@@ -993,4 +1001,16 @@ class SCChartsExtension {
     }
 
     // -------------------------------------------------------------------------   
+    
+    def void replaceAllReferences(Scope scope, ValuedObject valuedObject, Expression expression) {
+    	for(obj : scope.eAllContents.toList.immutableCopy) {
+    		if (obj instanceof ValuedObjectReference
+    			&& (obj as ValuedObjectReference).valuedObject == valuedObject
+    		) 
+    		{
+    			obj.replace(expression)
+    		}
+    	}
+    } 
+    
 }
