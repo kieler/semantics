@@ -152,12 +152,12 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//EntryAction returns sccharts::EntryAction:
 		//	{sccharts::EntryAction} //    (annotations += Annotation)*
 		// "entry" trigger=BoolExpression? ("/" effects+=Effect (";"
-		//	effects+=Effect)*)? ";";
+		//	effects+=Effect)*)? ";"?;
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::EntryAction} //    (annotations += Annotation)*
 		// "entry" trigger=BoolExpression? ("/" effects+=Effect (";"
-		//effects+=Effect)*)? ";"
+		//effects+=Effect)*)? ";"?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::EntryAction}
@@ -197,7 +197,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//Effect
 		public RuleCall getEffectsEffectParserRuleCall_3_2_1_0() { return cEffectsEffectParserRuleCall_3_2_1_0; }
 
-		//";"
+		//";"?
 		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
 	}
 
@@ -223,12 +223,12 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//DuringAction returns sccharts::DuringAction:
 		//	{sccharts::DuringAction} //    (annotations += Annotation)*
 		// immediate?="immediate"? "during" trigger=BoolExpression?
-		//	("/" effects+=Effect (";" effects+=Effect)*)? ";";
+		//	("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::DuringAction} //    (annotations += Annotation)*
 		// immediate?="immediate"? "during" trigger=BoolExpression?
-		//("/" effects+=Effect (";" effects+=Effect)*)? ";"
+		//("/" effects+=Effect (";" effects+=Effect)*)? ";"?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::DuringAction}
@@ -273,7 +273,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//Effect
 		public RuleCall getEffectsEffectParserRuleCall_4_2_1_0() { return cEffectsEffectParserRuleCall_4_2_1_0; }
 
-		//";"
+		//";"?
 		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
 	}
 
@@ -297,12 +297,12 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//ExitAction returns sccharts::ExitAction:
 		//	{sccharts::ExitAction} //    (annotations += Annotation)*
 		// "exit" trigger=BoolExpression? ("/" effects+=Effect (";"
-		//	effects+=Effect)*)? ";";
+		//	effects+=Effect)*)? ";"?;
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::ExitAction} //    (annotations += Annotation)*
 		// "exit" trigger=BoolExpression? ("/" effects+=Effect (";"
-		//effects+=Effect)*)? ";"
+		//effects+=Effect)*)? ";"?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::ExitAction}
@@ -342,7 +342,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//Effect
 		public RuleCall getEffectsEffectParserRuleCall_3_2_1_0() { return cEffectsEffectParserRuleCall_3_2_1_0; }
 
-		//";"
+		//";"?
 		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
 	}
 
@@ -362,12 +362,12 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//SuspendAction returns sccharts::SuspendAction:
 		//	{sccharts::SuspendAction} //    (annotations += Annotation)*
 		// immediate?="immediate"? weak?="weak"? "suspend"
-		//	trigger=BoolExpression? ";";
+		//	trigger=BoolExpression? ";"?;
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::SuspendAction} //    (annotations += Annotation)*
 		// immediate?="immediate"? weak?="weak"? "suspend"
-		//trigger=BoolExpression? ";"
+		//trigger=BoolExpression? ";"?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::SuspendAction}
@@ -394,7 +394,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//BoolExpression
 		public RuleCall getTriggerBoolExpressionParserRuleCall_4_0() { return cTriggerBoolExpressionParserRuleCall_4_0; }
 
-		//";"
+		//";"?
 		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
 	}
 
@@ -472,15 +472,20 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValuedObjectAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final CrossReference cValuedObjectValuedObjectCrossReference_0_0 = (CrossReference)cValuedObjectAssignment_0.eContents().get(0);
 		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0_0.eContents().get(1);
-		private final Keyword cEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cExpressionExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cLeftSquareBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cIndicesAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cIndicesExpressionParserRuleCall_1_1_0 = (RuleCall)cIndicesAssignment_1_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Keyword cEqualsSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cExpressionAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cExpressionExpressionParserRuleCall_3_0 = (RuleCall)cExpressionAssignment_3.eContents().get(0);
 		
 		//Assignment returns sccharts::Assignment:
-		//	valuedObject=[kexpressions::ValuedObject] "=" expression=Expression;
+		//	valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "=" expression=Expression;
 		public ParserRule getRule() { return rule; }
 
-		//valuedObject=[kexpressions::ValuedObject] "=" expression=Expression
+		//valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "=" expression=Expression
 		public Group getGroup() { return cGroup; }
 
 		//valuedObject=[kexpressions::ValuedObject]
@@ -492,14 +497,29 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_0_0_1; }
 
-		//"="
-		public Keyword getEqualsSignKeyword_1() { return cEqualsSignKeyword_1; }
+		//("[" indices+=Expression "]")*
+		public Group getGroup_1() { return cGroup_1; }
 
-		//expression=Expression
-		public Assignment getExpressionAssignment_2() { return cExpressionAssignment_2; }
+		//"["
+		public Keyword getLeftSquareBracketKeyword_1_0() { return cLeftSquareBracketKeyword_1_0; }
+
+		//indices+=Expression
+		public Assignment getIndicesAssignment_1_1() { return cIndicesAssignment_1_1; }
 
 		//Expression
-		public RuleCall getExpressionExpressionParserRuleCall_2_0() { return cExpressionExpressionParserRuleCall_2_0; }
+		public RuleCall getIndicesExpressionParserRuleCall_1_1_0() { return cIndicesExpressionParserRuleCall_1_1_0; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_1_2() { return cRightSquareBracketKeyword_1_2; }
+
+		//"="
+		public Keyword getEqualsSignKeyword_2() { return cEqualsSignKeyword_2; }
+
+		//expression=Expression
+		public Assignment getExpressionAssignment_3() { return cExpressionAssignment_3; }
+
+		//Expression
+		public RuleCall getExpressionExpressionParserRuleCall_3_0() { return cExpressionExpressionParserRuleCall_3_0; }
 	}
 
 	public class TextEffectElements extends AbstractParserRuleElementFinder {
@@ -650,7 +670,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//EntryAction returns sccharts::EntryAction:
 	//	{sccharts::EntryAction} //    (annotations += Annotation)*
 	// "entry" trigger=BoolExpression? ("/" effects+=Effect (";"
-	//	effects+=Effect)*)? ";";
+	//	effects+=Effect)*)? ";"?;
 	public EntryActionElements getEntryActionAccess() {
 		return (pEntryAction != null) ? pEntryAction : (pEntryAction = new EntryActionElements());
 	}
@@ -662,7 +682,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//DuringAction returns sccharts::DuringAction:
 	//	{sccharts::DuringAction} //    (annotations += Annotation)*
 	// immediate?="immediate"? "during" trigger=BoolExpression?
-	//	("/" effects+=Effect (";" effects+=Effect)*)? ";";
+	//	("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
 	public DuringActionElements getDuringActionAccess() {
 		return (pDuringAction != null) ? pDuringAction : (pDuringAction = new DuringActionElements());
 	}
@@ -674,7 +694,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//ExitAction returns sccharts::ExitAction:
 	//	{sccharts::ExitAction} //    (annotations += Annotation)*
 	// "exit" trigger=BoolExpression? ("/" effects+=Effect (";"
-	//	effects+=Effect)*)? ";";
+	//	effects+=Effect)*)? ";"?;
 	public ExitActionElements getExitActionAccess() {
 		return (pExitAction != null) ? pExitAction : (pExitAction = new ExitActionElements());
 	}
@@ -686,7 +706,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//SuspendAction returns sccharts::SuspendAction:
 	//	{sccharts::SuspendAction} //    (annotations += Annotation)*
 	// immediate?="immediate"? weak?="weak"? "suspend"
-	//	trigger=BoolExpression? ";";
+	//	trigger=BoolExpression? ";"?;
 	public SuspendActionElements getSuspendActionAccess() {
 		return (pSuspendAction != null) ? pSuspendAction : (pSuspendAction = new SuspendActionElements());
 	}
@@ -716,7 +736,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Assignment returns sccharts::Assignment:
-	//	valuedObject=[kexpressions::ValuedObject] "=" expression=Expression;
+	//	valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "=" expression=Expression;
 	public AssignmentElements getAssignmentAccess() {
 		return (pAssignment != null) ? pAssignment : (pAssignment = new AssignmentElements());
 	}
