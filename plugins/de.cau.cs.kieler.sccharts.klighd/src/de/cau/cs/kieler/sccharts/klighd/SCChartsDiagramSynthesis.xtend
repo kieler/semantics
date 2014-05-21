@@ -378,10 +378,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                     //                    ];
                     node.setNodeSize(7, 7);
                 ]
-            else if (s.isReferencedState) 
-                figure => [
-                    it.setBackgroundGradient("#fefef0".color, "#e0b0099".color, 90.0f);
-                ]
             else if (s.isFinal)
                 figure.addRoundedRectangle(cornerRadius, cornerRadius) => [
                     // re-configure the outer rounded rectangle
@@ -391,7 +387,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                     // configure the inner one
                     //                    it.background = "white".color;
                     it.styleRef = figure;
-                    it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
+                    if (s.referencedState) 
+                        it.background.alpha = 0
+                    else 
+                        it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
                     it.shadow = null
                     it.lineWidth = if(s.isInitial) 1 else 1;
                     it.setAreaPlacementData().from(LEFT, offset, 0, TOP, offset, 0).to(RIGHT, offset, 0, BOTTOM, offset,
@@ -661,6 +660,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 for (r : s.regions)
                     node.children += r.translate;
             }
+            if (s.isReferencedState) 
+                figure => [
+                    it.setBackgroundGradient("#fefef0".color, "#e0b0099".color, 90.0f);
+                ]
             if (s.referencedState && SHOW_REFERENCEEXPANSION.booleanValue) {
                 for (r : (s.referencedScope as State).regions) {
                     node.children += r.translate => [
