@@ -16,28 +16,23 @@ package de.cau.cs.kieler.kico.ui.klighd
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.KColor
+import de.cau.cs.kieler.core.krendering.LineStyle
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kico.TransformationDummy
 import de.cau.cs.kieler.kico.ui.KiCoDisabledSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionAction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.klighd.util.KlighdProperties
-import java.util.HashMap
 import java.util.List
 import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-
-//import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 /**
  * KLighD visualization for KIELER Compiler transformation dependencies (for selecting compilation).
@@ -46,7 +41,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2014-04-08 proposed cmot
  * @kieler.rating 2014-04-08 proposed yellow
  */
-class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationDummy>> {
+class KiCoDiagramFlatSynthesis extends AbstractDiagramSynthesis<List<TransformationDummy>> {
 
     // -------------------------------------------------------------------------
     // We need some extensions 
@@ -70,8 +65,9 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
 
     // --------------------------------------------------------------------------
     // Some color and pattern constants
-    private static val KColor GRAY = RENDERING_FACTORY.createKColor() =>
-        [it.red = 240; it.green = 240; it.blue = 240];
+    private static val float TRANSITION_DASH_BLACK = 7;
+    private static val float TRANSITION_DASH_WHITE = 3;
+    private static val List<Float> TRANSITION_DASH_PATTERN = newArrayList(TRANSITION_DASH_BLACK, TRANSITION_DASH_WHITE);
     public static val KColor DARKGRAY = RENDERING_FACTORY.createKColor() =>
         [it.red = 140; it.green = 140; it.blue = 140];
     public static val KColor BLACK = RENDERING_FACTORY.createKColor() => [it.red = 0; it.green = 0; it.blue = 0];
@@ -96,7 +92,6 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
     public static val KColor GRAY2 = RENDERING_FACTORY.createKColor() =>
         [it.red = 210; it.green = 230; it.blue = 230];
 
-
     // -------------------------------------------------------------------------
     def TransformationDummy container(TransformationDummy transformationDummy) {
         if (transformationDummy != null && transformationDummy.reverseDependencies != null &&
@@ -119,92 +114,90 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
     }
 
     // -------------------------------------------------------------------------
-    def TransformationDummy getHierarchicalSource(TransformationDummy source, TransformationDummy dest) {
-        var returnPair = getHierarchicalSource(source, dest, 0)
-        if (returnPair.first == -1) {
-            return null
-        }
-        return (returnPair.last as TransformationDummy)
-    }
+//    def TransformationDummy getHierarchicalSource(TransformationDummy source, TransformationDummy dest) {
+//        var returnPair = getHierarchicalSource(source, dest, 0)
+//        if (returnPair.first == -1) {
+//            return null
+//        }
+//        return (returnPair.last as TransformationDummy)
+//    }
+//
+//    def Pair<Integer, TransformationDummy> getHierarchicalSource(TransformationDummy source, TransformationDummy dest,
+//        int cnt) {
+//        if (source == null || dest == null) {
+//            return new Pair(-1, null)
+//        }
+//        if (dest.container == source.container) {
+//
+//            // if this is a group-internal transition
+//            return new Pair(cnt, source)
+//        } else {
+//            val left = getHierarchicalSource(source.container, dest, cnt + 1)
+//            val right = getHierarchicalSource(source, dest.container, cnt + 1)
+//            if (left.first != -1 && right.first != -1) {
+//                if (left.first < right.first) {
+//                    return left
+//                } else {
+//                    return right
+//                }
+//            } else if (left.first != -1) {
+//                return left
+//            } else if (right.first != -1) {
+//                return right
+//            }
+//        }
+//        return new Pair(-1, null)
+//    }
+//
+//    def TransformationDummy getHierarchicalDest(TransformationDummy source, TransformationDummy dest) {
+//        var returnPair = getHierarchicalDest(source, dest, 0)
+//        if (returnPair.first == -1) {
+//            return null
+//        }
+//
+//        return (returnPair.last as TransformationDummy)
+//    }
+//
+//    def Pair<Integer, TransformationDummy> getHierarchicalDest(TransformationDummy source, TransformationDummy dest,
+//        int cnt) {
+//        if (source == null || dest == null) {
+//            return new Pair(-1, null)
+//        }
+//        if (dest.container == source.container) {
+//
+//            // if this is a group-internal transition
+//            return new Pair(cnt, dest)
+//        } else {
+//            val left = getHierarchicalDest(source.container, dest, cnt + 1)
+//            val right = getHierarchicalDest(source, dest.container, cnt + 1)
+//            if (left.first != -1 && right.first != -1) {
+//                if (left.first < right.first) {
+//                    return left
+//                } else {
+//                    return right
+//                }
+//            } else if (left.first != -1) {
+//                return left
+//            } else if (right.first != -1) {
+//                return right
+//            }
+//        }
+//        return new Pair(-1, null)
+//    }
 
-    def Pair<Integer, TransformationDummy> getHierarchicalSource(TransformationDummy source, TransformationDummy dest,
-        int cnt) {
-        if (source == null || dest == null) {
-            return new Pair(-1, null)
-        }
-        if (dest.container == source.container) {
-
-            // if this is a group-internal transition
-            return new Pair(cnt, source)
-        } else {
-            val left = getHierarchicalSource(source.container, dest, cnt + 1)
-            val right = getHierarchicalSource(source, dest.container, cnt + 1)
-            if (left.first != -1 && right.first != -1) {
-                if (left.first < right.first) {
-                    return left
-                } else {
-                    return right
-                }
-            } else if (left.first != -1) {
-                return left
-            } else if (right.first != -1) {
-                return right
-            }
-        }
-        return new Pair(-1, null)
-    }
-
-    def TransformationDummy getHierarchicalDest(TransformationDummy source, TransformationDummy dest) {
-        var returnPair = getHierarchicalDest(source, dest, 0)
-        if (returnPair.first == -1) {
-            return null
-        }
-
-        return (returnPair.last as TransformationDummy)
-    }
-
-    def Pair<Integer, TransformationDummy> getHierarchicalDest(TransformationDummy source, TransformationDummy dest,
-        int cnt) {
-        if (source == null || dest == null) {
-            return new Pair(-1, null)
-        }
-        if (dest.container == source.container) {
-
-            // if this is a group-internal transition
-            return new Pair(cnt, dest)
-        } else {
-            val left = getHierarchicalDest(source.container, dest, cnt + 1)
-            val right = getHierarchicalDest(source, dest.container, cnt + 1)
-            if (left.first != -1 && right.first != -1) {
-                if (left.first < right.first) {
-                    return left
-                } else {
-                    return right
-                }
-            } else if (left.first != -1) {
-                return left
-            } else if (right.first != -1) {
-                return right
-            }
-        }
-        return new Pair(-1, null)
-    }
-
-    // -------------------------------------------------------------------------
-    // Remember which super states already are connected (render just a single connection)
-    private HashMap<TransformationDummy, TransformationDummy> connected = new HashMap<TransformationDummy, TransformationDummy>();
+//    // -------------------------------------------------------------------------
+//    // Remember which super states already are connected (render just a single connection)
+//    private HashMap<TransformationDummy, TransformationDummy> connected = new HashMap<TransformationDummy, TransformationDummy>();
 
     // The Main entry transform function   
     override transform(List<TransformationDummy> model) {
-        connected.clear
-
         val knode = model.createNode();
 
         for (elem : model) {
-            if (elem.container == null) {
+//            if (elem.container == null) {
                 val kNode = elem.translate;
                 knode.children.add(kNode);
-            }
+ //           }
         }
 
 
@@ -217,7 +210,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
 
     // -------------------------------------------------------------------------
     // Transform a state    
-    def  KNode translate(TransformationDummy transformationDummy) {
+    def KNode translate(TransformationDummy transformationDummy) {
 
         val root = transformationDummy.createNode().putToLookUpWith(transformationDummy) => [ node |
             node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
@@ -276,116 +269,48 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                         it.fontSize = 11;
                         it.setForeground(BLACK.copy)
                         it.setSelectionBackground(BLUE3.copy)
-                        //                        it.setCursorSelectable(false)
-                        //                        it.setSelectionInvisible(true)
                         it.setFontBold(true);
                         it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
                     ];
                 }
                 if (transformationDummy.isGroup) {
-                    it.addChildArea().setGridPlacementData() => [
-                        from(LEFT, 3, 0, TOP, 3, 0).to(RIGHT, 3, 0, BOTTOM, 3, 0)
-                        minCellHeight = 5;
-                        minCellWidth = 5;
-                    ];
-                } else {
-
-                    //                    System.out.println("FROM "+source.id+" TO "+dest.id)
                     for (dest : transformationDummy.dependencies) {
-
-                        //                        System.out.println("FROM " + s.id + " TO " + dest.id)
                         var transSource = transformationDummy
                         var transDest = dest
-
-                        //Calculate hierarchical source + destination (prevents inter level transitions)
-                        transSource = transformationDummy.getHierarchicalSource(dest)
-                        transDest = transformationDummy.getHierarchicalDest(dest)
-
                         if (transSource != null && transDest != null) {
-
-                            //                            System.out.println(" CONT " + transSource.id + " TO " + transDest.id)
-                            if (connected.get(transSource) != transDest) {
-                                connected.put(transSource, transDest)
-                                transSource.translateTransition(transDest)
-                            }
+                            transSource.translateTransition(transDest, true)
                         }
 
                     }
+                } else {
+                    for (dest : transformationDummy.dependencies) {
+                        var transSource = transformationDummy
+                        var transDest = dest
+                        if (transSource != null && transDest != null) {
+                            transSource.translateTransition(transDest, false)
+                        }
+                    }
                 }
             ];
-            if (transformationDummy.isGroup) {
-                node.children += transformationDummy.translateGroup
-            }
         ]
 
         return root
     }
 
     // -------------------------------------------------------------------------
-    // Translate a Group
-    def KNode translateGroup(TransformationDummy transformationDummy) {
-        return createNode() => [ node |
-            if (transformationDummy.dependencies.size > 1) {
-                node.setLayoutOption(KlighdProperties::EXPAND, false);
-            }
-            for (child : transformationDummy.dependencies) {
-                val childKNode = child.translate;
-                node.children += childKNode;
-            }
-            node.addRectangle() => [
-                it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
-                it.setBackgroundGradient("white".color, GRAY, 90);
-                it.setSelectionBackgroundGradient("white".color, GRAY, 90); // Selection KLighD trick
-                it.setSurroundingSpace(2, 0);
-                it.invisible = false;
-                it.foreground = "gray".color
-                it.lineWidth = 1;
-                it.addText("[-]" + " " + transformationDummy.label) => [
-                    it.foreground = "darkGray".color
-                    it.fontSize = 10
-                    it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
-                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-                ];
-                if (transformationDummy.dependencies.size > 1) {
-                    it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
-                }
-            ];
-            node.addRectangle() => [
-                it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
-                it.setBackgroundGradient("white".color, GRAY, 90);
-                it.setSelectionBackgroundGradient("white".color, GRAY, 90); // Selection KLighD trick
-                it.setSurroundingSpace(4, 0);
-                it.invisible = false;
-                it.foreground = "gray".color
-                it.lineWidth = 1;
-                it.addText("[+]" + " " + transformationDummy.label) => [
-                    it.foreground = "darkGray".color
-                    it.fontSize = 10
-                    it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
-                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-                ];
-                if (transformationDummy.dependencies.size > 1) {
-                    it.addRectangle().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).invisible = true;
-                }
-            ]
-        ];
-    }
-
-    // -------------------------------------------------------------------------
     // Translate a transition
-    def KEdge translateTransition(TransformationDummy source, TransformationDummy dest) {
+    def KEdge translateTransition(TransformationDummy source, TransformationDummy dest, boolean dashed) {
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
             edge.addSpline(2) => [
                 it.setForeground(DARKGRAY.copy)
-                // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
-                //                if (t.isImmediate2) {
-                //                    it.lineStyle = LineStyle::CUSTOM;
-                //                    it.lineStyle.dashPattern.clear;
-                //                    it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
-                //                }
+                if (dashed) {
+                          it.lineStyle = LineStyle::CUSTOM;
+                          it.lineStyle.dashPattern.clear;
+                          it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
+                }
                 it.addArrowDecorator()
             ]
         ];

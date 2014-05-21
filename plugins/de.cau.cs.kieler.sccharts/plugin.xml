@@ -848,7 +848,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.WeakSuspend"
-            dependencies=" DEFERRED, STATIC,COMPLEXFINALSTATE"
+            dependencies="DEFERRED, STATIC, COMPLEXFINALSTATE"
             id="WEAKSUSPEND"
             method="transform"
             name="Weak Suspend">
@@ -896,7 +896,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Suspend"
-            dependencies="INITIALIZATION"
+            dependencies="DURING"
             id="SUSPEND"
             method="transform"
             name="Suspend">
@@ -920,7 +920,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Abort"
-            dependencies="INITIALIZATION"
+            dependencies="EXIT, DURING"
             id="ABORTDEFAULT"
             method="transform"
             name="Abort Default">
@@ -928,7 +928,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Abort"
-            dependencies="INITIALIZATION"
+            dependencies="EXIT, DURING"
             id="ABORTALTERNATIVE"
             method="transformAbortAlternative"
             name="Abort Alternative">

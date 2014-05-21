@@ -58,8 +58,11 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static final ImageDescriptor ICON_ADVANCED = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconAuto.png");
 
-    public static final ImageDescriptor ICON_SSM = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconSSM.png");
+    public static final ImageDescriptor ICON_HIERARCHY = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "de.cau.cs.kieler.kico.ui", "icons/KiCoHierarchyIcon.png");
+
+//    public static final ImageDescriptor ICON_SSM = AbstractUIPlugin.imageDescriptorFromPlugin(
+//            "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconSSM.png");
 
     public static final ImageDescriptor ICON_EXPANDALL = AbstractUIPlugin
             .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.ui",
@@ -68,9 +71,12 @@ public class KiCoSelectionView extends DiagramViewPart {
     /** The action for toggling the advanced mode. */
     private Action actionAdvancedToggle;
 
-    /** The action for toggling the SSM mode. */
-    private Action actionSSMToggle;
+//    /** The action for toggling the SSM mode. */
+//    private Action actionSSMToggle;
 
+    /** The action for toggling the hierarchy mode. */
+    private Action actionHierarchyToggle;
+    
     /** The action for toggling the SSM mode. */
     private Action actionExpandAll;
 
@@ -96,8 +102,12 @@ public class KiCoSelectionView extends DiagramViewPart {
     /** The advaned mode auto selects required transformations. */
     public static boolean advancedMode = true;
 
-    /** The SSM diagram synthesis mode. */
-    public static boolean SSMMode = false;
+//    /** The SSM diagram synthesis mode. */
+//    public static boolean SSMMode = false;
+
+    /** The hierarchy or flat diagram synthesis mode. */
+    public static int hierarchyMode = 0; // 0 = hierarchy, 1 = flat & no groups, 2 = flat 
+    public static final int MAXHIERARCHYMODE = 2;
 
     /** The last editor. */
     String lastEditor = null;
@@ -539,14 +549,22 @@ public class KiCoSelectionView extends DiagramViewPart {
                         model.put(activeEditorID, tempModel);
 
                         KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
-                        if (SSMMode) {
-                            properties.setProperty(
-                                    KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
-                                    "de.cau.cs.kieler.kico.ui.klighd.diagramSynthesisSSM");
-                        } else {
+                        if (hierarchyMode == 0) {
                             properties.setProperty(
                                     KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                                     "de.cau.cs.kieler.kico.ui.klighd.diagramSynthesis");
+//                        } else  if (SSMMode) {
+//                            properties.setProperty(
+//                                    KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
+//                                    "de.cau.cs.kieler.kico.ui.klighd.diagramSynthesisSSM");
+                        } else if (hierarchyMode == 1) {
+                            properties.setProperty(
+                                    KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
+                                    "de.cau.cs.kieler.kico.ui.klighd.diagramFlatNoGroupsSynthesis");
+                        } else {
+                            properties.setProperty(
+                                    KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
+                                    "de.cau.cs.kieler.kico.ui.klighd.diagramFlatSynthesis");
                         }
 
                         updateDiagram(tempModel, properties);
@@ -591,7 +609,8 @@ public class KiCoSelectionView extends DiagramViewPart {
         IToolBarManager toolBarManager = bars.getToolBarManager();
         toolBarManager.add(getActionExpandAll());
         toolBarManager.add(getActionAdvancedToggle());
-        toolBarManager.add(getActionSSMToggle());
+//        toolBarManager.add(getActionSSMToggle());
+        toolBarManager.add(getActionHierarchyToggle());
 
         // Create an IPartListener2
         IPartListener2 pl = new IPartListener2() {
@@ -678,20 +697,56 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     // -------------------------------------------------------------------------
 
+//    /**
+//     * Gets the action to toggle presence of the SSM representation.
+//     * 
+//     * @return the action
+//     */
+//    private Action getActionSSMToggle() {
+//        if (actionSSMToggle != null) {
+//            return actionSSMToggle;
+//        }
+//        actionSSMToggle = new Action("", IAction.AS_CHECK_BOX) {
+//            public void run() {
+//                // TOGGLE
+//                SSMMode = !SSMMode;
+//                actionSSMToggle.setChecked(SSMMode);
+//
+//                // if (SSMMode) {
+//                // addRequiredTransformationVisualization(getActiveEditorID());
+//                // } else {
+//                // removeRequiredTransformationVisualization(getActiveEditorID());
+//                // }
+//                lastEditor = "";
+//                updateView(lastWorkbenchPartReference);
+//
+//            }
+//        };
+//        actionSSMToggle.setText("Toggle SSM Diagram Synthesis");
+//        actionSSMToggle.setToolTipText("Toggle SSM Diagram Synthesis");
+//        actionSSMToggle.setImageDescriptor(ICON_SSM);
+//        actionSSMToggle.setChecked(SSMMode);
+//        return actionSSMToggle;
+//    }
+
+    // -------------------------------------------------------------------------
+
     /**
      * Gets the action to toggle presence of the SSM representation.
      * 
      * @return the action
      */
-    private Action getActionSSMToggle() {
-        if (actionSSMToggle != null) {
-            return actionSSMToggle;
+    private Action getActionHierarchyToggle() {
+        if (actionHierarchyToggle != null) {
+            return actionHierarchyToggle;
         }
-        actionSSMToggle = new Action("", IAction.AS_CHECK_BOX) {
+        actionHierarchyToggle = new Action("", IAction.AS_PUSH_BUTTON) {
             public void run() {
                 // TOGGLE
-                SSMMode = !SSMMode;
-                actionSSMToggle.setChecked(SSMMode);
+                hierarchyMode = hierarchyMode + 1;
+                if (hierarchyMode > MAXHIERARCHYMODE) {
+                    hierarchyMode = 0; 
+                }
 
                 // if (SSMMode) {
                 // addRequiredTransformationVisualization(getActiveEditorID());
@@ -703,11 +758,10 @@ public class KiCoSelectionView extends DiagramViewPart {
 
             }
         };
-        actionSSMToggle.setText("Toggle SSM Diagram Synthesis");
-        actionSSMToggle.setToolTipText("Toggle SSM Diagram Synthesis");
-        actionSSMToggle.setImageDescriptor(ICON_SSM);
-        actionSSMToggle.setChecked(SSMMode);
-        return actionSSMToggle;
+        actionHierarchyToggle.setText("Toggle Hierarchical/Flat View");
+        actionHierarchyToggle.setToolTipText("Toggle between a hiearchical and a flat view of the dependencies.");
+        actionHierarchyToggle.setImageDescriptor(ICON_HIERARCHY);
+        return actionHierarchyToggle;
     }
 
     // -------------------------------------------------------------------------
