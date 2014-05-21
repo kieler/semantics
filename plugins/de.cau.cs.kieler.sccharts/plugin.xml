@@ -823,7 +823,7 @@
        <!-- check dependencies -->        
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.For"
-            dependencies="SYNCCHARTS, SCADEQUARTZESTEREL, STATECHARTS" 
+            dependencies="WEAKSUSPEND, HISTORY, SIGNAL, SUSPEND, COUNTDELAY, PRE, CONST" 
             id="FOR"
             method="transform"
             name="For">
