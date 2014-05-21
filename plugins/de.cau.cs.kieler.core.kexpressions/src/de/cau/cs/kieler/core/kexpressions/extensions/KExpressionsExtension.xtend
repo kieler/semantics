@@ -976,5 +976,5 @@ class KExpressionsExtension {
         expression.setText("'" + text + "'")
         expression
     }
-
+    
 }

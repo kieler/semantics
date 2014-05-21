@@ -561,7 +561,11 @@ class SCGTransformation {
 
     // Create a new reference Expression to the corresponding sValuedObject of the expression
     def dispatch Expression convertToSCGExpression(ValuedObjectReference expression) {
-        expression.valuedObject.SCGValuedObject.reference
+        expression.valuedObject.SCGValuedObject.reference => [ vor |
+        	expression.cardinalities.forEach[
+        		vor.cardinalities += it.convertToSCGExpression
+        	]
+        ]
     }
 
     // Apply conversion to operator expressions like and, equals, not, greater, val, pre, add, etc.
