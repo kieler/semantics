@@ -590,6 +590,15 @@ public interface ScgdepPackage extends EPackage {
     int ASSIGNMENT_DEP__VALUED_OBJECT = ScgPackage.ASSIGNMENT__VALUED_OBJECT;
 
     /**
+	 * The feature id for the '<em><b>Indices</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSIGNMENT_DEP__INDICES = ScgPackage.ASSIGNMENT__INDICES;
+
+				/**
 	 * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -700,7 +709,7 @@ public interface ScgdepPackage extends EPackage {
     int SC_GRAPH_DEP__NODES = ScgPackage.SC_GRAPH__NODES;
 
     /**
-	 * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

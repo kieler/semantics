@@ -384,6 +384,11 @@ class SCGTransformation {
                 }
                 // TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
                 assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression)
+                if (!sCChartAssignment.indices.nullOrEmpty) {
+                	sCChartAssignment.indices.forEach[
+                		assignment.indices += it.convertToSCGExpression
+                	]
+                }
             }
             else if (effect instanceof de.cau.cs.kieler.sccharts.TextEffect) {
                 assignment.setAssignment((effect as de.cau.cs.kieler.sccharts.TextEffect).convertToSCGExpression)
