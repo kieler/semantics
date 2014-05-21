@@ -65,7 +65,7 @@ class Const {
 
     def void transformConst(State state, State targetRootState) {
         val constObjects = state.valuedObjects.filter[
-        	const && initialValue != null
+        	isConst && initialValue != null
         ].toList
         
         for (const : constObjects.toList.immutableCopy) {
