@@ -58,20 +58,19 @@ class Reference {
     def void transformReference(State state, State targetRootState) {
         
         // Referenced scopes are always SCCharts
-        val newState = state.referencedScope.copy as State
-
         // Each referenced state must be contained in a region.
-        state.parentRegion => [ states += newState ] 
+        val newState = state.referencedScope.copy as State
+            => [ state.parentRegion.states += it ]
 
         for(eObject : newState.eAllContents.toList) {
             if (eObject instanceof Assignment || eObject instanceof ValuedObjectReference) {
                 for(binding : state.bindings) {
                     if (eObject instanceof Assignment) {
-                        if ((eObject as Assignment).valuedObject.ID == binding.formal.ID) {
+                        if ((eObject as Assignment).valuedObject.name == binding.formal.name) {
                             (eObject as Assignment).valuedObject = binding.actual
                         }
                     } else if (eObject instanceof ValuedObjectReference) {
-                        if ((eObject as ValuedObjectReference).valuedObject.ID == binding.formal.ID) {
+                        if ((eObject as ValuedObjectReference).valuedObject.name == binding.formal.name) {
                             (eObject as ValuedObjectReference).valuedObject = binding.actual
                         }
                     }
@@ -79,9 +78,11 @@ class Reference {
             }
         }
         
-        state.bindings.immutableCopy.forEach[ binding |
-            newState.declarations.immutableCopy.forEach[ 
-                valuedObjects.filter[ ID == binding.formal.ID ].toList.immutableCopy.forEach[delete]
+        state.bindings.forEach[ binding |
+            newState.declarations.immutableCopy.forEach[
+                val bindingName = binding.formal.name 
+                val objects = valuedObjects.filter[ name == bindingName ].toList
+                objects.immutableCopy.forEach[ delete ]
             ]
         ]
         
