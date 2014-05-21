@@ -67,7 +67,7 @@ class KExpressionsExtension {
     // a new Declaration and removes the ValuedObject from the old one, adding it to the 
     // new one.
     def public Declaration getUniqueDeclaration(ValuedObject valuedObject) {
-        val declaration = valuedObject.declaration
+        val declaration = valuedObject.declarationOrCreate
         if (declaration._containsOnly(valuedObject)) {
             // We don't have to care about other valuedObjects
             return declaration
