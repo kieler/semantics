@@ -44,7 +44,6 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.s.SCCharts2STransformation;
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation;
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension;
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSimulation;
 
@@ -103,8 +102,8 @@ public class SCChartsSSimulationDataComponent extends JSONObjectSimulationDataCo
     private SCChartsSimulation simulationTransformation =
             Guice.createInjector().getInstance(SCChartsSimulation.class);
 
-    private SCChartsCoreTransformation coreTransformation =
-            Guice.createInjector().getInstance(SCChartsCoreTransformation.class);
+//    private SCChartsCoreTransformation coreTransformation =
+//            Guice.createInjector().getInstance(SCChartsCoreTransformation.class);
 
     private SCCharts2STransformation sCodeGenerationTransformation =
             Guice.createInjector().getInstance(SCCharts2STransformation.class);
@@ -423,60 +422,60 @@ public class SCChartsSSimulationDataComponent extends JSONObjectSimulationDataCo
                             true, null);
                 }
             }
-
-            // The following transformations operate on the SyncChart to be simulated
-            // and which already may contain visualization auxiliary signals.
-            // These are done AFTER the visualization transformation because the visualization
-            // transformation MUST operate on the resource file (for URI gathering reasons).
-
-            if (this.getProperties()[KIEM_PROPERTY_EXPOSELOCALSIGNALS + KIEM_PROPERTY_DIFF]
-                    .getValueAsBoolean()) {
-                // We now support exposing Local Signals (should run AFTER raising local signals)
-                transformedModel = coreTransformation
-                        .transformExposeLocalValuedObject(transformedModel);
-            }
-
-            // Normal Pre operator (@requires: none)
-            transformedModel = coreTransformation.transformPre(transformedModel);
-
-            // If a LIGHT runtime is selected, that makes use of normal termination, then
-            // do NOT transform these away.
-//            if (!(runtime.equals(KIEM_RUNTIME_SJL) || runtime.equals(KIEM_RUNTIME_SCL))) {
-//                // Normal Termination transitions (@requires: during actions, @before: exit actions)
-//                transformedModel = (new SCCharts2Simulation())
-//                        .transformNormalTermination(transformedModel);
+//
+//            // The following transformations operate on the SyncChart to be simulated
+//            // and which already may contain visualization auxiliary signals.
+//            // These are done AFTER the visualization transformation because the visualization
+//            // transformation MUST operate on the resource file (for URI gathering reasons).
+//
+//            if (this.getProperties()[KIEM_PROPERTY_EXPOSELOCALSIGNALS + KIEM_PROPERTY_DIFF]
+//                    .getValueAsBoolean()) {
+//                // We now support exposing Local Signals (should run AFTER raising local signals)
+//                transformedModel = coreTransformation
+//                        .transformExposeLocalValuedObject(transformedModel);
 //            }
-
-            // Count Delays now for the SC (host code) simulation.
-            transformedModel = coreTransformation.transformCountDelay(transformedModel);
-
-            // Exit actions (@requires: entry actions, during actions, history)
-            transformedModel = coreTransformation.transformExit(transformedModel);
-
-            // History transitions. (@requires: suspend)
-            transformedModel = coreTransformation.transformHistory(transformedModel);
-
-            // Suspends (non-immediate and non-delayed) (@requires: during)
-            transformedModel = coreTransformation.transformSuspend(transformedModel);
-
-            // Entry actions (@requires: during actions)
-            transformedModel = coreTransformation.transformEntry(transformedModel);
-
-            // During actions (@requires: none)
-            transformedModel = coreTransformation
-                    .transformDuring(transformedModel);
-
-            // Normal SCC Aborts (@requires: none)
-            transformedModel = coreTransformation
-                        .transformAbortDefault(transformedModel);
-
-            // SCG-normalize: Split Transitions (@requires: none)
-            transformedModel = coreTransformation
-                        .transformTriggerEffect(transformedModel);
-
-//            // SCG-normalize: Surface Depth (@requires: none)
+//
+//            // Normal Pre operator (@requires: none)
+//            transformedModel = coreTransformation.transformPre(transformedModel);
+//
+//            // If a LIGHT runtime is selected, that makes use of normal termination, then
+//            // do NOT transform these away.
+////            if (!(runtime.equals(KIEM_RUNTIME_SJL) || runtime.equals(KIEM_RUNTIME_SCL))) {
+////                // Normal Termination transitions (@requires: during actions, @before: exit actions)
+////                transformedModel = (new SCCharts2Simulation())
+////                        .transformNormalTermination(transformedModel);
+////            }
+//
+//            // Count Delays now for the SC (host code) simulation.
+//            transformedModel = coreTransformation.transformCountDelay(transformedModel);
+//
+//            // Exit actions (@requires: entry actions, during actions, history)
+//            transformedModel = coreTransformation.transformExit(transformedModel);
+//
+//            // History transitions. (@requires: suspend)
+//            transformedModel = coreTransformation.transformHistory(transformedModel);
+//
+//            // Suspends (non-immediate and non-delayed) (@requires: during)
+//            transformedModel = coreTransformation.transformSuspend(transformedModel);
+//
+//            // Entry actions (@requires: during actions)
+//            transformedModel = coreTransformation.transformEntry(transformedModel);
+//
+//            // During actions (@requires: none)
 //            transformedModel = coreTransformation
-//                        .transformSurfaceDepth(transformedModel);
+//                    .transformDuring(transformedModel);
+//
+//            // Normal SCC Aborts (@requires: none)
+//            transformedModel = coreTransformation
+//                        .transformAbortDefault(transformedModel);
+//
+//            // SCG-normalize: Split Transitions (@requires: none)
+//            transformedModel = coreTransformation
+//                        .transformTriggerEffect(transformedModel);
+//
+////            // SCG-normalize: Surface Depth (@requires: none)
+////            transformedModel = coreTransformation
+////                        .transformSurfaceDepth(transformedModel);
             
             // Transform SyncChart into S code
             Program program = sCodeGenerationTransformation.transformS(transformedModel);
