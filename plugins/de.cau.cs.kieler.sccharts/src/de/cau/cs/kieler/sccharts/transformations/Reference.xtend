@@ -89,6 +89,11 @@ class Reference {
         state.incomingTransitions.immutableCopy.forEach[ targetState = newState ]
         state.outgoingTransitions.immutableCopy.forEach[ sourceState = newState ]
         
+        newState => [
+            initial = state.initial
+            final = state.final
+        ]
+        
         state.remove        
     }
 
