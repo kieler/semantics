@@ -345,7 +345,7 @@ class KExpressionsExtension {
     // Get the surrounding Declaration of a ValuedObject that contains the ValuedObject. 
     // This Declaration may also contain other ValuedObjects, see containsOnly().
     // If the valuedObject does not have any Declaration yet, then create a new one.
-    def private Declaration getDeclaration(ValuedObject valuedObject) {
+    def private Declaration getDeclarationOrCreate(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof Declaration) {
             return valuedObject.eContainer as Declaration
         } else {
@@ -353,6 +353,12 @@ class KExpressionsExtension {
             newDeclaration._addValuedObject(valuedObject)
             newDeclaration
         }
+    }
+    
+    def public Declaration declaration(ValuedObject valuedObject) {
+        if (valuedObject.eContainer instanceof Declaration) {
+            return valuedObject.eContainer as Declaration
+        } 
     }
     
 //    // Helper method for Setter-Wrapper. It returns the direct Declaration of a ValuedObject
