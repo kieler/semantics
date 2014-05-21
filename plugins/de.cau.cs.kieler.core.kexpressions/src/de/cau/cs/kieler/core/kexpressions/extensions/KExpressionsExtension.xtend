@@ -904,6 +904,11 @@ class KExpressionsExtension {
     //    }    
     
     
+    def void delete(Declaration declaration) {
+    	declaration.valuedObjects.immutableCopy.forEach[ remove ]
+    	declaration.remove
+    }
+    
     //===========  VARIABLES  ===========
     
     // Creates a new variable ValuedObject.

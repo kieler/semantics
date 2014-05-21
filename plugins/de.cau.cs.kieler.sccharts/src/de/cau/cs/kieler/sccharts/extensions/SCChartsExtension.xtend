@@ -43,6 +43,9 @@ import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.Declaration
+import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.sccharts.Binding
 
 /**
  * SCCharts Extensions.
@@ -1011,6 +1014,51 @@ class SCChartsExtension {
     			obj.replace(expression)
     		}
     	}
+    }
+    
+    def void replaceAllOccurrences(Scope scope, ValuedObject valuedObject, ValuedObject replacement) {
+    	for(obj : scope.eAllContents.toList.immutableCopy) {
+    		if (obj instanceof ValuedObjectReference
+    			&& (obj as ValuedObjectReference).valuedObject == valuedObject
+    		)  {
+    			obj.replace(replacement.reference)
+    		}
+
+    		else if (obj instanceof Assignment && (obj as Assignment).valuedObject == valuedObject)  {
+				(obj as Assignment).valuedObject = replacement
+    		}
+
+    		else if (obj instanceof Emission && (obj as Emission).valuedObject == valuedObject)  {
+				(obj as Emission).valuedObject = replacement
+    		}
+
+    		else if (obj instanceof Binding) {
+    			if ((obj as Binding).formal == valuedObject) (obj as Binding).formal == replacement
+    			if ((obj as Binding).actual == valuedObject) (obj as Binding).actual == replacement
+    		}
+    		
+    	}
     } 
+    
+    def ValuedObject findValuedObjectByName(Declaration declaration, String name) {
+    	if (declaration.valuedObjects.filter[ it.name == name].size>0)
+    		declaration.valuedObjects.filter[ it.name == name].head
+    	else null
+    }
+    
+    def ValuedObject findValuedObjectByName(Scope scope, String name) {
+    	var EObject container = scope
+    	while (container != null) {
+    		var EList<Declaration> declarations = null
+    		if (container instanceof State) declarations = (container as State).declarations
+    		else if (container instanceof Region) declarations = (container as Region).declarations
+    		if (!declarations.nullOrEmpty) for (declaration : declarations) {
+    			val valuedObject = declaration.findValuedObjectByName(name)
+    			if (valuedObject != null) return valuedObject
+    		} 
+    		container = container.eContainer
+    	}
+    	null
+    }
     
 }
