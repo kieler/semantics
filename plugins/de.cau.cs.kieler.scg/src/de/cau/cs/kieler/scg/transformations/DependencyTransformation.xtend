@@ -301,9 +301,9 @@ class DependencyTransformation extends AbstractModelTransformation {
     
     private def boolean isSameScalar(ValuedObjectReference vor1, AssignmentDep asg2) {
     	if (vor1.valuedObject != asg2.valuedObject) return false
-    	else if (!vor1.cardinalities.nullOrEmpty && !asg2.indices.nullOrEmpty && vor1.cardinalities.size == asg2.indices.size) {
+    	else if (!vor1.indices.nullOrEmpty && !asg2.indices.nullOrEmpty && vor1.indices.size == asg2.indices.size) {
     		var i = 0
-    		for(idx1 : vor1.cardinalities) {
+    		for(idx1 : vor1.indices) {
     			val idx2 = asg2.indices.get(i)
     			
     			if (idx1 instanceof IntValue && idx2 instanceof IntValue && (idx1 as IntValue).value != (idx2 as IntValue).value) 
