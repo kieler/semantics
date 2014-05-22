@@ -1565,11 +1565,11 @@ ruleDeclaration returns [EObject current=null]
 	    }
 
 )
-)((	otherlv_8=';' 
+)(	otherlv_8=',' 
     {
-    	newLeafNode(otherlv_8, grammarAccess.getDeclarationAccess().getSemicolonKeyword_8_0());
+    	newLeafNode(otherlv_8, grammarAccess.getDeclarationAccess().getCommaKeyword_8_0());
     }
-)?(
+(
 (
 		{ 
 	        newCompositeNode(grammarAccess.getDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_8_1_0()); 
@@ -3672,16 +3672,16 @@ ruleValuedObjectReference returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getCardinalitiesExpressionParserRuleCall_1_1_0()); 
+	        newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_1_1_0()); 
 	    }
-		lv_cardinalities_2_0=ruleExpression		{
+		lv_indices_2_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getValuedObjectReferenceRule());
 	        }
        		add(
        			$current, 
-       			"cardinalities",
-        		lv_cardinalities_2_0, 
+       			"indices",
+        		lv_indices_2_0, 
         		"Expression");
 	        afterParserOrEnumRuleCall();
 	    }

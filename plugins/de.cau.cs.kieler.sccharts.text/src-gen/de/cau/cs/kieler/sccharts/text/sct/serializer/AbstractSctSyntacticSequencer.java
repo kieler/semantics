@@ -24,7 +24,6 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 	protected AbstractElementAlias match_AtomicExpression_LeftParenthesisKeyword_2_0_p;
 	protected AbstractElementAlias match_AtomicValuedExpression_LeftParenthesisKeyword_2_0_a;
 	protected AbstractElementAlias match_AtomicValuedExpression_LeftParenthesisKeyword_2_0_p;
-	protected AbstractElementAlias match_Declaration_SemicolonKeyword_8_0_q;
 	protected AbstractElementAlias match_Declaration_SemicolonKeyword_9_q;
 	protected AbstractElementAlias match_DuringAction_SemicolonKeyword_5_q;
 	protected AbstractElementAlias match_EntryAction_SemicolonKeyword_4_q;
@@ -51,7 +50,6 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 		match_AtomicExpression_LeftParenthesisKeyword_2_0_p = new TokenAlias(true, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0());
 		match_AtomicValuedExpression_LeftParenthesisKeyword_2_0_a = new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0());
 		match_AtomicValuedExpression_LeftParenthesisKeyword_2_0_p = new TokenAlias(true, false, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0());
-		match_Declaration_SemicolonKeyword_8_0_q = new TokenAlias(false, true, grammarAccess.getDeclarationAccess().getSemicolonKeyword_8_0());
 		match_Declaration_SemicolonKeyword_9_q = new TokenAlias(false, true, grammarAccess.getDeclarationAccess().getSemicolonKeyword_9());
 		match_DuringAction_SemicolonKeyword_5_q = new TokenAlias(false, true, grammarAccess.getDuringActionAccess().getSemicolonKeyword_5());
 		match_EntryAction_SemicolonKeyword_4_q = new TokenAlias(false, true, grammarAccess.getEntryActionAccess().getSemicolonKeyword_4());
@@ -93,8 +91,6 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 				emit_AtomicValuedExpression_LeftParenthesisKeyword_2_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_AtomicValuedExpression_LeftParenthesisKeyword_2_0_p.equals(syntax))
 				emit_AtomicValuedExpression_LeftParenthesisKeyword_2_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_Declaration_SemicolonKeyword_8_0_q.equals(syntax))
-				emit_Declaration_SemicolonKeyword_8_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_Declaration_SemicolonKeyword_9_q.equals(syntax))
 				emit_Declaration_SemicolonKeyword_9_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_DuringAction_SemicolonKeyword_5_q.equals(syntax))
@@ -170,14 +166,6 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 	 *     '('+
 	 */
 	protected void emit_AtomicValuedExpression_LeftParenthesisKeyword_2_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Syntax:
-	 *     ';'?
-	 */
-	protected void emit_Declaration_SemicolonKeyword_8_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

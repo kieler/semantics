@@ -13084,26 +13084,26 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_1__1__Impl"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:4463:1: rule__ValuedObjectReference__Group_1__1__Impl : ( ( rule__ValuedObjectReference__CardinalitiesAssignment_1_1 ) ) ;
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:4463:1: rule__ValuedObjectReference__Group_1__1__Impl : ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) ) ;
     public final void rule__ValuedObjectReference__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:4467:1: ( ( ( rule__ValuedObjectReference__CardinalitiesAssignment_1_1 ) ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:4468:1: ( ( rule__ValuedObjectReference__CardinalitiesAssignment_1_1 ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:4467:1: ( ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:4468:1: ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) )
             {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:4468:1: ( ( rule__ValuedObjectReference__CardinalitiesAssignment_1_1 ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:4469:1: ( rule__ValuedObjectReference__CardinalitiesAssignment_1_1 )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:4468:1: ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:4469:1: ( rule__ValuedObjectReference__IndicesAssignment_1_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getValuedObjectReferenceAccess().getCardinalitiesAssignment_1_1()); 
+               before(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_1_1()); 
             }
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:4470:1: ( rule__ValuedObjectReference__CardinalitiesAssignment_1_1 )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:4470:2: rule__ValuedObjectReference__CardinalitiesAssignment_1_1
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:4470:1: ( rule__ValuedObjectReference__IndicesAssignment_1_1 )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:4470:2: rule__ValuedObjectReference__IndicesAssignment_1_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectReference__CardinalitiesAssignment_1_1_in_rule__ValuedObjectReference__Group_1__1__Impl9077);
-            rule__ValuedObjectReference__CardinalitiesAssignment_1_1();
+            pushFollow(FollowSets000.FOLLOW_rule__ValuedObjectReference__IndicesAssignment_1_1_in_rule__ValuedObjectReference__Group_1__1__Impl9077);
+            rule__ValuedObjectReference__IndicesAssignment_1_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -13111,7 +13111,7 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getValuedObjectReferenceAccess().getCardinalitiesAssignment_1_1()); 
+               after(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_1_1()); 
             }
 
             }
@@ -19111,9 +19111,9 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__ValuedObjectReference__ValuedObjectAssignment_0"
 
 
-    // $ANTLR start "rule__ValuedObjectReference__CardinalitiesAssignment_1_1"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:6633:1: rule__ValuedObjectReference__CardinalitiesAssignment_1_1 : ( ruleExpression ) ;
-    public final void rule__ValuedObjectReference__CardinalitiesAssignment_1_1() throws RecognitionException {
+    // $ANTLR start "rule__ValuedObjectReference__IndicesAssignment_1_1"
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:6633:1: rule__ValuedObjectReference__IndicesAssignment_1_1 : ( ruleExpression ) ;
+    public final void rule__ValuedObjectReference__IndicesAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -19125,15 +19125,15 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/actions/ui/contentassist/antlr/internal/InternalActions.g:6639:1: ruleExpression
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getValuedObjectReferenceAccess().getCardinalitiesExpressionParserRuleCall_1_1_0()); 
+               before(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_1_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleExpression_in_rule__ValuedObjectReference__CardinalitiesAssignment_1_113381);
+            pushFollow(FollowSets000.FOLLOW_ruleExpression_in_rule__ValuedObjectReference__IndicesAssignment_1_113381);
             ruleExpression();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getValuedObjectReferenceAccess().getCardinalitiesExpressionParserRuleCall_1_1_0()); 
+               after(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_1_1_0()); 
             }
 
             }
@@ -19153,7 +19153,7 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__ValuedObjectReference__CardinalitiesAssignment_1_1"
+    // $ANTLR end "rule__ValuedObjectReference__IndicesAssignment_1_1"
 
 
     // $ANTLR start "rule__TextExpression__TextAssignment"
@@ -21720,7 +21720,7 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_42_in_rule__ValuedObjectReference__Group_1__0__Impl9016 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ValuedObjectReference__Group_1__1__Impl_in_rule__ValuedObjectReference__Group_1__19047 = new BitSet(new long[]{0x0000080000000000L});
         public static final BitSet FOLLOW_rule__ValuedObjectReference__Group_1__2_in_rule__ValuedObjectReference__Group_1__19050 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ValuedObjectReference__CardinalitiesAssignment_1_1_in_rule__ValuedObjectReference__Group_1__1__Impl9077 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__ValuedObjectReference__IndicesAssignment_1_1_in_rule__ValuedObjectReference__Group_1__1__Impl9077 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ValuedObjectReference__Group_1__2__Impl_in_rule__ValuedObjectReference__Group_1__29107 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_43_in_rule__ValuedObjectReference__Group_1__2__Impl9135 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__TagAnnotation__Group__0__Impl_in_rule__TagAnnotation__Group__09172 = new BitSet(new long[]{0x0000000000000020L});
@@ -21890,7 +21890,7 @@ public class InternalActionsParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0_in_rule__ValuedObjectTestExpression__OperatorAssignment_0_113278 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleValuedObjectTestExpression_in_rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_313311 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_ID_in_rule__ValuedObjectReference__ValuedObjectAssignment_013346 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExpression_in_rule__ValuedObjectReference__CardinalitiesAssignment_1_113381 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleExpression_in_rule__ValuedObjectReference__IndicesAssignment_1_113381 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_HOSTCODE_in_rule__TextExpression__TextAssignment13412 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_INT_in_rule__IntValue__ValueAssignment13443 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_FLOAT_in_rule__FloatValue__ValueAssignment13474 = new BitSet(new long[]{0x0000000000000002L});

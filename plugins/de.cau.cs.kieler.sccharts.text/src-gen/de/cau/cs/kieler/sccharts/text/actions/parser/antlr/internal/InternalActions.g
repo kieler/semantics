@@ -1761,16 +1761,16 @@ ruleValuedObjectReference returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getCardinalitiesExpressionParserRuleCall_1_1_0()); 
+	        newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_1_1_0()); 
 	    }
-		lv_cardinalities_2_0=ruleExpression		{
+		lv_indices_2_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getValuedObjectReferenceRule());
 	        }
        		add(
        			$current, 
-       			"cardinalities",
-        		lv_cardinalities_2_0, 
+       			"indices",
+        		lv_indices_2_0, 
         		"Expression");
 	        afterParserOrEnumRuleCall();
 	    }
