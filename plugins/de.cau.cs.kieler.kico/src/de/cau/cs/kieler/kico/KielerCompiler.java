@@ -427,7 +427,7 @@ public class KielerCompiler {
         if (transformationDummy != null && !transformationDummy.marked) {
             transformationDummy.marked = true;
             markParentGroup(transformationDummy);
-            System.out.println("Marking " + transformationDummy.id);
+            //System.out.println("Marking " + transformationDummy.id);
             for (TransformationDummy otherTransformationDummy : transformationDummy.reverseDependencies) {
                 markReverseDependencies(otherTransformationDummy);
             }
@@ -537,7 +537,7 @@ public class KielerCompiler {
             }
             int index = tmpOrder + 1;
             transformationDummy.order = index;
-            System.out.println("VISIT " + transformationDummy.id + " : " + index);
+            //System.out.println("VISIT " + transformationDummy.id + " : " + index);
             return index;
         } else {
             return order;
@@ -560,7 +560,7 @@ public class KielerCompiler {
             int index = transformationDummy.order;
             index--;
             returnArray[index] = transformationDummy.id;
-            System.out.println("returnArray [" + index + " ]  = " + transformationDummy.id);
+            //System.out.println("returnArray [" + index + " ]  = " + transformationDummy.id);
         }
         return Arrays.asList(returnArray);
     }
