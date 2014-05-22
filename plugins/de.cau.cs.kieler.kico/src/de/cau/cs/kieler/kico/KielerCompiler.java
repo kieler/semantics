@@ -311,8 +311,6 @@ public class KielerCompiler {
                 boolean alternative = isAlternative(transformationDummy, graph);
                 boolean groupReferenced = isGroupReferenced(transformationDummy, graph);
 
-                // System.out.println("TEST " + transformationDummy.id + " " + dependencyReferenced
-                // + "," + alternative + "," + groupReferenced);
                 if (alternative && !dependencyReferenced && !groupReferenced) {
                     if (transformationDummy.reverseDependencies.size() == 0) {
                         toBeDeleted = transformationDummy;
@@ -323,6 +321,7 @@ public class KielerCompiler {
                 }
             }
             if (found) {
+                graph.remove(toBeDeleted);
                 for (TransformationDummy transformationDummy : graph) {
                     if (transformationDummy.reverseDependencies.contains(toBeDeleted)) {
                         // System.out.println("REMOVE " + toBeDeleted.id + " from "
@@ -330,7 +329,6 @@ public class KielerCompiler {
                         transformationDummy.reverseDependencies.remove(toBeDeleted);
                     }
                 }
-                graph.remove(toBeDeleted);
             }
         }
     }
@@ -345,14 +343,14 @@ public class KielerCompiler {
      * @param transformationGroup
      *            the transformation group
      */
-    public static void markGroupNodes(List<TransformationDummy> graph,
+    private static void markGroupNodes(List<TransformationDummy> graph,
             TransformationGroup transformationGroup) {
         for (String groupTransformationID : transformationGroup.getDependencies()) {
             Transformation groupTransformation = getTransformation(groupTransformationID);
             TransformationDummy groupTransformationDummy =
                     transformation2graph.get(groupTransformation);
             groupTransformationDummy.marked = true;
-            System.out.println("Marking " + groupTransformationDummy.id);
+            // System.out.println("Marking " + groupTransformationDummy.id);
             if (groupTransformation instanceof TransformationGroup) {
                 // groupTransformation is a TransformationGroup itself, so close recursion here
                 markGroupNodes(graph, (TransformationGroup) groupTransformation);
@@ -377,7 +375,7 @@ public class KielerCompiler {
 
             TransformationDummy transformationDummy = transformation2graph.get(transformation);
             transformationDummy.marked = true;
-            System.out.println("Marking Group" + transformationDummy.id);
+            // System.out.println("Marking " + transformationDummy.id);
 
             if (expandGroupNodes && (transformation instanceof TransformationGroup)) {
                 TransformationGroup transformationGroup = (TransformationGroup) transformation;
@@ -388,46 +386,16 @@ public class KielerCompiler {
 
     // -------------------------------------------------------------------------
 
-    private static void markParentGroup(
-            TransformationDummy transformationDummy) {
-        for (TransformationDummy parent : transformationDummy.parent) {
-            if (parent.isGroup() && parent.marked == false) {
-                parent.marked = true;
-                markParentGroup(parent);
-            }
-        }
-    }
-
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Mark reverse dependencies (phase 4a).
-     * 
-     * @param graph
-     *            the graph
-     */
-    public static void markParentGroups(List<TransformationDummy> graph) {
-        for (TransformationDummy transformationDummy : graph) {
-            if (transformationDummy.marked) {
-                markParentGroup(transformationDummy);
-            }
-        }
-    }
-    
-    // -------------------------------------------------------------------------
-
     /**
      * Mark reverse dependencies (phase 4).
      * 
      * @param transformationDummy
      *            the transformation dummy
      */
-    public static void markReverseDependencies(TransformationDummy transformationDummy) {
+    private static void markReverseDependencies(TransformationDummy transformationDummy) {
         if (transformationDummy != null && !transformationDummy.marked) {
             transformationDummy.marked = true;
-            markParentGroup(transformationDummy);
-            //System.out.println("Marking " + transformationDummy.id);
+            // System.out.println("Marking " + transformationDummy.id);
             for (TransformationDummy otherTransformationDummy : transformationDummy.reverseDependencies) {
                 markReverseDependencies(otherTransformationDummy);
             }
@@ -459,6 +427,31 @@ public class KielerCompiler {
     }
 
     // -------------------------------------------------------------------------
+    
+    private static void markParentGroup(TransformationDummy transformationDummy) {
+        for (TransformationDummy parent : transformationDummy.parent) {
+            if (!parent.marked && parent.isGroup()) {
+                parent.marked = true;
+                markParentGroup(parent);
+            }
+        }
+    }
+
+    /**
+     * Mark reverse dependencies (phase 4a).
+     * 
+     * @param graph
+     *            the graph
+     */
+    public static void markParentGroups(List<TransformationDummy> graph) {
+        for (TransformationDummy transformationDummy : graph) {
+            if (transformationDummy.marked) {
+                markParentGroup(transformationDummy);
+            }
+        }
+    }
+        
+    // -------------------------------------------------------------------------
 
     /**
      * Eliminated unmarked nodes (phase 5).
@@ -480,6 +473,7 @@ public class KielerCompiler {
                 }
             }
             if (found) {
+                graph.remove(toBeDeleted);
                 for (TransformationDummy transformationDummy : graph) {
                     if (transformationDummy.reverseDependencies.contains(toBeDeleted)) {
                         // System.out.println("REMOVE " + toBeDeleted.id
@@ -492,7 +486,6 @@ public class KielerCompiler {
                         transformationDummy.dependencies.remove(toBeDeleted);
                     }
                 }
-                graph.remove(toBeDeleted);
             }
         }
     }
@@ -535,10 +528,8 @@ public class KielerCompiler {
                     tmpOrder = visit(nextTransformationDummy, tmpOrder);
                 }
             }
-            int index = tmpOrder + 1;
-            transformationDummy.order = index;
-            //System.out.println("VISIT " + transformationDummy.id + " : " + index);
-            return index;
+            transformationDummy.order = tmpOrder + 1;
+            return tmpOrder + 1;
         } else {
             return order;
         }
@@ -557,10 +548,7 @@ public class KielerCompiler {
         // Now insert into return list by order
         String[] returnArray = new String[graph.size()];
         for (TransformationDummy transformationDummy : graph) {
-            int index = transformationDummy.order;
-            index--;
-            returnArray[index] = transformationDummy.id;
-            //System.out.println("returnArray [" + index + " ]  = " + transformationDummy.id);
+            returnArray[transformationDummy.order - 1] = transformationDummy.id;
         }
         return Arrays.asList(returnArray);
     }
@@ -655,8 +643,8 @@ public class KielerCompiler {
      *            the e object
      * @return the object
      */
-    public static EObject compile(final String enabledAndDisabledTransformationIDs,
-            final EObject eObject, final boolean prerequirements) {
+    public static EObject compile(final String enabledAndDisabledTransformationIDs, final EObject eObject,
+            final boolean prerequirements) {
         String trimmed = enabledAndDisabledTransformationIDs.replace(" ", "");
         if (trimmed.length() == 0) {
             return eObject;
@@ -715,24 +703,21 @@ public class KielerCompiler {
     }
 
     // -------------------------------------------------------------------------
-
+    
     /**
      * Advanced KIELER Compiler compile method. It can be called in order to call several
      * consecutive transformations. Specify desired transformations as a String List of IDs. Use
      * this with care! Note that if switching autoexpand off you cannot use transformation group IDs
      * any more. Also no dependencies will be considered. The transformations will be applied
      * straight forward in the order defined by the transformationIDs list.
-     * 
-     * @param enabledAndDisabledTransformationIDs
-     *            the enabled and disabled transformation i ds
-     * @param eObject
-     *            the e object
-     * @param prerequirements
-     *            the prerequirements
+     *
+     * @param enabledAndDisabledTransformationIDs the enabled and disabled transformation i ds
+     * @param eObject the e object
+     * @param prerequirements the prerequirements
      * @return the e object
      */
-    public static EObject compile(final List<String> enabledAndDisabledTransformationIDs,
-            final EObject eObject, final boolean prerequirements) {
+    public static EObject compile(final List<String> enabledAndDisabledTransformationIDs, final EObject eObject,
+            final boolean prerequirements) {
         List<String> excludedTransformations = new ArrayList<String>();
         List<String> transformations = new ArrayList<String>();
         for (String transformation : enabledAndDisabledTransformationIDs) {
@@ -746,16 +731,14 @@ public class KielerCompiler {
     }
 
     // -------------------------------------------------------------------------
-
+    
     /**
      * Calculate pre requirements.
-     * 
-     * @param transformationIDs
-     *            the transformation i ds
+     *
+     * @param transformationIDs the transformation i ds
      * @return the list
      */
-    public static List<String> calculatePreRequirements(
-            List<String> enabledAndDisabledTransformationIDs, boolean noGroups) {
+    public static List<String> calculatePreRequirements(List<String> enabledAndDisabledTransformationIDs, boolean noGroups) {
         List<String> excludedTransformations = new ArrayList<String>();
         List<String> transformations = new ArrayList<String>();
         for (String transformation : enabledAndDisabledTransformationIDs) {
@@ -769,19 +752,17 @@ public class KielerCompiler {
     }
 
     // -------------------------------------------------------------------------
-
+    
     /**
      * Calculate pre requirements.
-     * 
-     * @param transformationIDs
-     *            the transformation i ds
+     *
+     * @param transformationIDs the transformation i ds
      * @return the list
      */
-    public static List<String> calculatePreRequirements(List<String> transformationIDs,
-            final List<String> excludedTransformationIDs, boolean noGroups) {
+    public static List<String> calculatePreRequirements(List<String> transformationIDs, final List<String> excludedTransformationIDs, boolean noGroups) {
         // Auto expansion will resolve dependencies and expand transformation groups
-        List<String> processedTransformationIDs = transformationIDs;
-
+        List<String> processedTransformationIDs = transformationIDs;        
+        
         // 1. build graph (with initially requested transformation IDs as a tie
         // braker for alternative groups)
         List<TransformationDummy> graph = buildGraph(transformationIDs);
@@ -789,14 +770,11 @@ public class KielerCompiler {
         // 2. eliminate unused alternative paths
         cleanupImpossibleAlternatives(graph);
 
-        // 3. mark nodes
+        // 3. mark nodes, including groups
         markNodes(graph, processedTransformationIDs, true);
 
         // 4. mark reverse dependencies
         markReverseDependencies(graph);
-        
-        // 4b. mark parent groups
-        markParentGroups(graph);
 
         // 5. eliminate unmarked nodes
         eliminatedUnmarkedNodes(graph);
@@ -813,7 +791,7 @@ public class KielerCompiler {
             // 7. final cleanup, eliminate any groups
             processedTransformationIDs = eliminateGroupIds(processedTransformationIDs);
         }
-
+        
         return processedTransformationIDs;
     }
 
@@ -826,27 +804,22 @@ public class KielerCompiler {
      * any more. Also no dependencies will be considered. The transformations will be applied
      * straight forward in the order defined by the transformationIDs list. Inplace is false by
      * default meaning the compilation will be done on a copy of the input EObject.
-     * 
-     * @param transformationIDs
-     *            the transformation i ds
-     * @param excludedTransformationIDs
-     *            the excluded transformation i ds
-     * @param eObject
-     *            the e object
-     * @param prerequirements
-     *            the prerequirements
+     *
+     * @param transformationIDs the transformation i ds
+     * @param excludedTransformationIDs the excluded transformation i ds
+     * @param eObject the e object
+     * @param prerequirements the prerequirements
      * @return the e object
      */
     public static EObject compile(final List<String> transformationIDs,
             final List<String> excludedTransformationIDs, final EObject eObject,
             final boolean prerequirements) {
         boolean inplace = false;
-        return compile(transformationIDs, excludedTransformationIDs, eObject, prerequirements,
-                inplace);
+        return  compile(transformationIDs, excludedTransformationIDs, eObject,
+                prerequirements, inplace);
     }
-
     // -------------------------------------------------------------------------
-
+    
     /**
      * Advanced KIELER Compiler compile method. It can be called in order to call several
      * consecutive transformations. Specify desired transformations as a String List of IDs. Use
@@ -865,7 +838,7 @@ public class KielerCompiler {
             final List<String> excludedTransformationIDs, final EObject eObject,
             final boolean prerequirements, final boolean inplace) {
         updateMapping(DEBUG);
-
+        
         EObject transformedObject = eObject;
         // If not inplace then produce a copy of the input EObject
         if (!inplace) {
@@ -882,7 +855,7 @@ public class KielerCompiler {
         // 2. eliminate unused alternative paths
         cleanupImpossibleAlternatives(graph);
 
-        // 3. mark nodes, including (their) groups
+        // 3. mark nodes, including groups
         markNodes(graph, processedTransformationIDs, true);
 
         if (prerequirements) {
@@ -890,7 +863,7 @@ public class KielerCompiler {
             markReverseDependencies(graph);
         }
 
-        // 4b. mark parnt groups 
+        // 4b. mark parent groups
         markParentGroups(graph);
         
         // 5. eliminate unmarked nodes
