@@ -61,6 +61,9 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static final ImageDescriptor ICON_HIERARCHY = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.ui", "icons/KiCoHierarchyIcon.png");
 
+    public static final ImageDescriptor ICON_COMPILE = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconCompile.png");
+
 //    public static final ImageDescriptor ICON_SSM = AbstractUIPlugin.imageDescriptorFromPlugin(
 //            "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconSSM.png");
 
@@ -76,7 +79,10 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     /** The action for toggling the hierarchy mode. */
     private Action actionHierarchyToggle;
-    
+
+    /** The action for toggling the hierarchy mode. */
+    private Action actionCompileToggle;
+
     /** The action for toggling the SSM mode. */
     private Action actionExpandAll;
 
@@ -101,6 +107,10 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     /** The advaned mode auto selects required transformations. */
     public static boolean advancedMode = true;
+
+    /** The advaned mode auto selects required transformations. */
+    public static int compileMode = 0;
+    public static final int COMPILEMODEMAX = 5; // 5 stages of compilation
 
 //    /** The SSM diagram synthesis mode. */
 //    public static boolean SSMMode = false;
@@ -545,6 +555,57 @@ public class KiCoSelectionView extends DiagramViewPart {
                         lastEditor = partName;
                         int activeEditorID = getActiveEditorID();
                         List<TransformationDummy> tempModel = KielerCompiler.buildGraph();
+
+                        List<String> selectedTransformations = new ArrayList<String>();
+                        List<String> excludedTransformationIDs = new ArrayList<String>();
+                        List<String> selectedAndExcludedTransformations = getSelectedTransformations(activeEditorID);
+                        for (String transformation : selectedAndExcludedTransformations) {
+                                if (transformation.startsWith("!")) {
+                                    excludedTransformationIDs.add(transformation.substring(1));
+                                } else {
+                                    selectedTransformations.add(transformation);
+                                }
+                        }
+                        
+                        if (compileMode >= 1) {
+                            // 2. eliminate unused alternative paths
+                            KielerCompiler.cleanupImpossibleAlternatives(tempModel);
+                        }
+                        if (compileMode >= 2) {
+                            // 3. mark nodes, including groups
+                            KielerCompiler.markNodes(tempModel, selectedTransformations, true);
+                        }
+                        if (compileMode >= 3) {
+                            // 4. mark reverse dependencies
+                            KielerCompiler.markReverseDependencies(tempModel);
+                        }
+                        if (compileMode >= 4) {
+                            // 5. eliminate unmarked nodes
+                            KielerCompiler.eliminatedUnmarkedNodes(tempModel);
+                        }
+                        if (compileMode >= 5) {
+                            // 5b remove excluded transformations
+                            if (excludedTransformationIDs.size() > 0) {
+                                KielerCompiler.removeFromGraph(tempModel, excludedTransformationIDs);
+                            }
+                        }
+//                        if (compileMode >= 6) {
+//                            // 6. topological sort
+//                            processedTransformationIDs = KielerCompiler.topologicalSort(tempModel);
+//                        }
+//                        if (compileMode >= 7) {
+//                            
+//                        }
+//                        
+//                        if (excludedTransformationIDs != null && excludedTransformationIDs.size() > 0) {
+//                        }
+//
+//
+//                        if (noGroups) {
+//                            // 7. final cleanup, eliminate any groups
+//                            processedTransformationIDs = eliminateGroupIds(processedTransformationIDs);
+//                        }
+                        
                         KielerCompiler.reduceGraph(tempModel, visibleTransformations);
                         model.put(activeEditorID, tempModel);
 
@@ -611,6 +672,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         toolBarManager.add(getActionAdvancedToggle());
 //        toolBarManager.add(getActionSSMToggle());
         toolBarManager.add(getActionHierarchyToggle());
+        toolBarManager.add(getActionCompileToggle());
 
         // Create an IPartListener2
         IPartListener2 pl = new IPartListener2() {
@@ -697,6 +759,34 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Gets the action to toggle compile mode.
+     * 
+     * @return the action
+     */
+    private Action getActionCompileToggle() {
+        if (actionCompileToggle != null) {
+            return actionCompileToggle;
+        }
+        actionCompileToggle = new Action("", IAction.AS_PUSH_BUTTON) {
+            public void run() {
+                // TOGGLE
+                compileMode++;
+                if (compileMode > COMPILEMODEMAX) {
+                    compileMode = 0;
+                }
+                lastEditor = "";
+                updateView(lastWorkbenchPartReference);
+            }
+        };
+        actionCompileToggle.setText("Toggle Compile Mode");
+        actionCompileToggle.setToolTipText("Toggles between different stages of the transformation selection algorihm until the selection used for compilation");
+        actionCompileToggle.setImageDescriptor(ICON_COMPILE);
+        return actionCompileToggle;
+    }
+
+    // -------------------------------------------------------------------------
+
 //    /**
 //     * Gets the action to toggle presence of the SSM representation.
 //     * 
@@ -747,12 +837,6 @@ public class KiCoSelectionView extends DiagramViewPart {
                 if (hierarchyMode > MAXHIERARCHYMODE) {
                     hierarchyMode = 0; 
                 }
-
-                // if (SSMMode) {
-                // addRequiredTransformationVisualization(getActiveEditorID());
-                // } else {
-                // removeRequiredTransformationVisualization(getActiveEditorID());
-                // }
                 lastEditor = "";
                 updateView(lastWorkbenchPartReference);
 
