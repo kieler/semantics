@@ -15,11 +15,10 @@ package de.cau.cs.kieler.scg.transformations
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Node
@@ -31,7 +30,6 @@ import de.cau.cs.kieler.scgdep.Dependency
 import de.cau.cs.kieler.scgdep.SCGraphDep
 import de.cau.cs.kieler.scgdep.ScgdepFactory
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -123,7 +121,7 @@ class DependencyTransformation extends AbstractModelTransformation {
             if (node != assignment) {
                 var Dependency dependency = null
                 // If they write to the same variable...
-                if (node.valuedObject == assignment.valuedObject) {
+                if (node.isSameScalar(assignment)) {
                     // Check absolute / relative writes and add the corresponding dependency.
                     // The Scgdep factory is used to create the appropriate depenency.
                     if (iAmAbsoluteWriter && node.isRelativeWriter) {
@@ -135,7 +133,7 @@ class DependencyTransformation extends AbstractModelTransformation {
                 } else
                 // Otherwise, check if the assignment reads the variable and add the dependency
                 // if necessary.
-                if (node.assignment.isReader(assignment.valuedObject)) {
+                if (node.isReader(assignment)) {
                     if (iAmAbsoluteWriter) dependency = ScgdepFactory::eINSTANCE.createAbsoluteWrite_Read
                     else dependency = ScgdepFactory::eINSTANCE.createRelativeWrite_Read    
                 }
@@ -154,7 +152,7 @@ class DependencyTransformation extends AbstractModelTransformation {
         // Since conditionals will never write to a variable, it is sufficient to check the reader.
         scg.nodes.filter(typeof(Conditional)).forEach[ node |
             var Dependency dependency = null
-            if (node.condition.isReader(assignment.valuedObject)) {
+            if (node.isReader(assignment)) {
                 if (iAmAbsoluteWriter) dependency = ScgdepFactory::eINSTANCE.createAbsoluteWrite_Read
                 else dependency = ScgdepFactory::eINSTANCE.createRelativeWrite_Read    
             }
@@ -197,14 +195,25 @@ class DependencyTransformation extends AbstractModelTransformation {
      * 			the valuedObject in question
      * @return returns to if the given expression reads the given object.
      */
-    private def boolean isReader(Expression expression, ValuedObject valuedObject) {
+    private def boolean isReader(AssignmentDep asg1, AssignmentDep asg2) {
     	// Returns true if the ValuedObject is referenced directly in the expression or
     	// if the object is part of a more complex expression.
-        if (expression instanceof ValuedObjectReference) {
-            return (expression as ValuedObjectReference).valuedObject == valuedObject
+        if (asg1.assignment instanceof ValuedObjectReference) {
+            return isSameScalar((asg1.assignment as ValuedObjectReference), asg2)
         } else {
-            return expression.eAllContents.filter(typeof(ValuedObjectReference)).filter[ e |
-                e.valuedObject == valuedObject].size > 0
+            return asg1.assignment.eAllContents.filter(typeof(ValuedObjectReference)).toList.
+      			filter[ isSameScalar(it, asg2) ].size > 0
+        }
+    }
+    
+    private def boolean isReader(Conditional cond, AssignmentDep asg2) {
+    	// Returns true if the ValuedObject is referenced directly in the expression or
+    	// if the object is part of a more complex expression.
+        if (cond.condition instanceof ValuedObjectReference) {
+            return isSameScalar((cond.condition as ValuedObjectReference), asg2)
+        } else {
+            return cond.condition.eAllContents.filter(typeof(ValuedObjectReference)).toList.
+      			filter[ isSameScalar(it, asg2) ].size > 0
         }
     }
     
@@ -272,6 +281,38 @@ class DependencyTransformation extends AbstractModelTransformation {
 
         
         false
+    }
+    
+    private def boolean isSameScalar(AssignmentDep asg1, AssignmentDep asg2) {
+    	if (asg1.valuedObject != asg2.valuedObject) return false
+    	else if (!asg1.indices.nullOrEmpty && !asg2.indices.nullOrEmpty && asg1.indices.size == asg2.indices.size) {
+    		var i = 0
+    		for(idx1 : asg1.indices) {
+    			val idx2 = asg2.indices.get(i)
+    			
+    			if (idx1 instanceof IntValue && idx2 instanceof IntValue && (idx1 as IntValue).value != (idx2 as IntValue).value) 
+    				return false
+    			
+    			i = i + 1
+    		}
+    	}
+    	true
+    }
+    
+    private def boolean isSameScalar(ValuedObjectReference vor1, AssignmentDep asg2) {
+    	if (vor1.valuedObject != asg2.valuedObject) return false
+    	else if (!vor1.indices.nullOrEmpty && !asg2.indices.nullOrEmpty && vor1.indices.size == asg2.indices.size) {
+    		var i = 0
+    		for(idx1 : vor1.indices) {
+    			val idx2 = asg2.indices.get(i)
+    			
+    			if (idx1 instanceof IntValue && idx2 instanceof IntValue && (idx1 as IntValue).value != (idx2 as IntValue).value) 
+    				return false
+    			
+    			i = i + 1
+    		}
+    	}
+    	true
     }
  
 }

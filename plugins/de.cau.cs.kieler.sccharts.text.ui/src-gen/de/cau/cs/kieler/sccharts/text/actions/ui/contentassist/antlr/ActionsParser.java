@@ -74,6 +74,7 @@ public class ActionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEmissionAccess().getGroup(), "rule__Emission__Group__0");
 					put(grammarAccess.getEmissionAccess().getGroup_1(), "rule__Emission__Group_1__0");
 					put(grammarAccess.getAssignmentAccess().getGroup(), "rule__Assignment__Group__0");
+					put(grammarAccess.getAssignmentAccess().getGroup_1(), "rule__Assignment__Group_1__0");
 					put(grammarAccess.getOrAndExpressionAccess().getGroup(), "rule__OrAndExpression__Group__0");
 					put(grammarAccess.getOrAndExpressionAccess().getGroup_1_0(), "rule__OrAndExpression__Group_1_0__0");
 					put(grammarAccess.getOrAndExpressionAccess().getGroup_1_1(), "rule__OrAndExpression__Group_1_1__0");
@@ -135,7 +136,8 @@ public class ActionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEmissionAccess().getValuedObjectAssignment_0(), "rule__Emission__ValuedObjectAssignment_0");
 					put(grammarAccess.getEmissionAccess().getNewValueAssignment_1_1(), "rule__Emission__NewValueAssignment_1_1");
 					put(grammarAccess.getAssignmentAccess().getValuedObjectAssignment_0(), "rule__Assignment__ValuedObjectAssignment_0");
-					put(grammarAccess.getAssignmentAccess().getExpressionAssignment_2(), "rule__Assignment__ExpressionAssignment_2");
+					put(grammarAccess.getAssignmentAccess().getIndicesAssignment_1_1(), "rule__Assignment__IndicesAssignment_1_1");
+					put(grammarAccess.getAssignmentAccess().getExpressionAssignment_3(), "rule__Assignment__ExpressionAssignment_3");
 					put(grammarAccess.getTextEffectAccess().getTextAssignment(), "rule__TextEffect__TextAssignment");
 					put(grammarAccess.getOrAndExpressionAccess().getOperatorAssignment_1_0_1(), "rule__OrAndExpression__OperatorAssignment_1_0_1");
 					put(grammarAccess.getOrAndExpressionAccess().getSubExpressionsAssignment_1_0_2(), "rule__OrAndExpression__SubExpressionsAssignment_1_0_2");
@@ -160,7 +162,7 @@ public class ActionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAssignment_0_1(), "rule__ValuedObjectTestExpression__OperatorAssignment_0_1");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3");
 					put(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectAssignment_0(), "rule__ValuedObjectReference__ValuedObjectAssignment_0");
-					put(grammarAccess.getValuedObjectReferenceAccess().getCardinalitiesAssignment_1_1(), "rule__ValuedObjectReference__CardinalitiesAssignment_1_1");
+					put(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_1_1(), "rule__ValuedObjectReference__IndicesAssignment_1_1");
 					put(grammarAccess.getTextExpressionAccess().getTextAssignment(), "rule__TextExpression__TextAssignment");
 					put(grammarAccess.getIntValueAccess().getValueAssignment(), "rule__IntValue__ValueAssignment");
 					put(grammarAccess.getFloatValueAccess().getValueAssignment(), "rule__FloatValue__ValueAssignment");

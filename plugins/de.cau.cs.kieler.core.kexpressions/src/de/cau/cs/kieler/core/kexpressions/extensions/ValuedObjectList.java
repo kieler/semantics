@@ -48,7 +48,7 @@ public class ValuedObjectList extends ArrayList<ValuedObject> {
         boolean returnValue = super.add(valuedObject);
         // Also create a typeGroup
         if (container != null) {
-            kExpressionsExtension.addValuedObject(container, valuedObject);
+            kExpressionsExtension.addValuedObject(container, valuedObject);      
         }
         return returnValue;
     }

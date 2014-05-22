@@ -90,7 +90,7 @@ public interface ScgbbPackage extends EPackage {
     int SC_GRAPH_BB__NODES = ScgdepPackage.SC_GRAPH_DEP__NODES;
 
     /**
-	 * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

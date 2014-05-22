@@ -384,6 +384,11 @@ class SCGTransformation {
                 }
                 // TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
                 assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression)
+                if (!sCChartAssignment.indices.nullOrEmpty) {
+                	sCChartAssignment.indices.forEach[
+                		assignment.indices += it.convertToSCGExpression
+                	]
+                }
             }
             else if (effect instanceof de.cau.cs.kieler.sccharts.TextEffect) {
                 assignment.setAssignment((effect as de.cau.cs.kieler.sccharts.TextEffect).convertToSCGExpression)
@@ -556,7 +561,11 @@ class SCGTransformation {
 
     // Create a new reference Expression to the corresponding sValuedObject of the expression
     def dispatch Expression convertToSCGExpression(ValuedObjectReference expression) {
-        expression.valuedObject.SCGValuedObject.reference
+        expression.valuedObject.SCGValuedObject.reference => [ vor |
+        	expression.indices.forEach[
+        		vor.indices += it.convertToSCGExpression
+        	]
+        ]
     }
 
     // Apply conversion to operator expressions like and, equals, not, greater, val, pre, add, etc.

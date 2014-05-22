@@ -269,14 +269,14 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getValuedObjectReference_Cardinalities() {
+    public EReference getValuedObjectReference_Indices() {
         return (EReference)valuedObjectReferenceEClass.getEStructuralFeatures().get(1);
     }
 
-				/**
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -521,7 +521,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         valuedObjectReferenceEClass = createEClass(VALUED_OBJECT_REFERENCE);
         createEReference(valuedObjectReferenceEClass, VALUED_OBJECT_REFERENCE__VALUED_OBJECT);
-        createEReference(valuedObjectReferenceEClass, VALUED_OBJECT_REFERENCE__CARDINALITIES);
+        createEReference(valuedObjectReferenceEClass, VALUED_OBJECT_REFERENCE__INDICES);
 
         valueEClass = createEClass(VALUE);
 
@@ -608,7 +608,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         initEClass(valuedObjectReferenceEClass, ValuedObjectReference.class, "ValuedObjectReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getValuedObjectReference_ValuedObject(), this.getValuedObject(), null, "valuedObject", null, 1, 1, ValuedObjectReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getValuedObjectReference_Cardinalities(), this.getExpression(), null, "cardinalities", null, 0, -1, ValuedObjectReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getValuedObjectReference_Indices(), this.getExpression(), null, "indices", null, 0, -1, ValuedObjectReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(valueEClass, Value.class, "Value", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

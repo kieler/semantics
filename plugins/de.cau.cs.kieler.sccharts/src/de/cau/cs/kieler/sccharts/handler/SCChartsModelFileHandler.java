@@ -11,7 +11,7 @@ import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.kico.KielerCompiler;
-import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.sccharts.State;
 
 /**
  * The abstract handler for SCCharts file formats scc and sct.
@@ -164,7 +164,7 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
 
         transformed = model;
         
-        transformed = KielerCompiler.compile(commandString, (Region) transformed);
+        transformed = KielerCompiler.compile(commandString, (State) transformed);
 
 //        if (commandString.equals(CORE_TRANSFORMATIONS)) {
 //            transformed = transformation.transformHistory((Region) transformed);

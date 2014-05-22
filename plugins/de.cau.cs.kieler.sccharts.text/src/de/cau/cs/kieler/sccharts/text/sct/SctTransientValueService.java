@@ -25,6 +25,7 @@ import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.impl.AnnotationImpl;
 import de.cau.cs.kieler.core.kexpressions.CombineOperator;
+import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.Action;
@@ -216,7 +217,7 @@ public class SctTransientValueService extends DefaultTransientValueService {
             //  Since Traps are Esterel stuff and the SCCharts stuff must not have any dependency
             //  on this I cannot explicitly check "instanceof TrapDecl".
             // what an evil hack ... :-(
-            if (((EList<ValuedObject>) owner.eGet(feature)).get(index).eClass().getName()
+            if (((EList<Declaration>) owner.eGet(feature)).get(index).eClass().getName()
                     .startsWith("T")) {
                 return true;
             } else {

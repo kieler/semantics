@@ -379,7 +379,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	/**
 	 * Constraint:
-	 *     (valuedObject=[ValuedObject|ID] cardinalities+=Expression*)
+	 *     (valuedObject=[ValuedObject|ID] indices+=Expression*)
 	 */
 	protected void sequence_ValuedObjectReference(EObject context, ValuedObjectReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

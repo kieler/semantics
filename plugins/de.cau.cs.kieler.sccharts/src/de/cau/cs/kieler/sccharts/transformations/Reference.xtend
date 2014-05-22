@@ -21,6 +21,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.Assignment
+import de.cau.cs.kieler.sccharts.Scope
 
 /**
  * SCCharts Reference Transformation.
@@ -85,6 +86,18 @@ class Reference {
                 objects.immutableCopy.forEach[ delete ]
             ]
         ]
+        
+		newState.declarations.immutableCopy.forEach[ declaration |
+			if (declaration.isInput || declaration.isOutput) {
+				declaration.valuedObjects.forEach [
+					val newObject = (newState.eContainer as Scope).findValuedObjectByName(name)
+					if (newObject != null) {
+						newState.replaceAllOccurrences(it, newObject)
+					}
+				]
+				declaration.delete
+			}
+		]
         
         state.incomingTransitions.immutableCopy.forEach[ targetState = newState ]
         state.outgoingTransitions.immutableCopy.forEach[ sourceState = newState ]

@@ -67,7 +67,7 @@ class KExpressionsExtension {
     // a new Declaration and removes the ValuedObject from the old one, adding it to the 
     // new one.
     def public Declaration getUniqueDeclaration(ValuedObject valuedObject) {
-        val declaration = valuedObject.declaration
+        val declaration = valuedObject.declarationOrCreate
         if (declaration._containsOnly(valuedObject)) {
             // We don't have to care about other valuedObjects
             return declaration
@@ -904,6 +904,11 @@ class KExpressionsExtension {
     //    }    
     
     
+    def void delete(Declaration declaration) {
+    	declaration.valuedObjects.immutableCopy.forEach[ remove ]
+    	declaration.remove
+    }
+    
     //===========  VARIABLES  ===========
     
     // Creates a new variable ValuedObject.
@@ -971,5 +976,5 @@ class KExpressionsExtension {
         expression.setText("'" + text + "'")
         expression
     }
-
+    
 }

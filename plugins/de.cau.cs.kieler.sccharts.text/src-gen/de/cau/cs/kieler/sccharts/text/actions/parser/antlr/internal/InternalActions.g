@@ -406,23 +406,49 @@ ruleAssignment returns [EObject current=null]
 	}
 
 )
-)	otherlv_1='=' 
+)(	otherlv_1='[' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getAssignmentAccess().getEqualsSignKeyword_1());
+    	newLeafNode(otherlv_1, grammarAccess.getAssignmentAccess().getLeftSquareBracketKeyword_1_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getAssignmentAccess().getExpressionExpressionParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getAssignmentAccess().getIndicesExpressionParserRuleCall_1_1_0()); 
 	    }
-		lv_expression_2_0=ruleExpression		{
+		lv_indices_2_0=ruleExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAssignmentRule());
+	        }
+       		add(
+       			$current, 
+       			"indices",
+        		lv_indices_2_0, 
+        		"Expression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)	otherlv_3=']' 
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getAssignmentAccess().getRightSquareBracketKeyword_1_2());
+    }
+)*	otherlv_4='=' 
+    {
+    	newLeafNode(otherlv_4, grammarAccess.getAssignmentAccess().getEqualsSignKeyword_2());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAssignmentAccess().getExpressionExpressionParserRuleCall_3_0()); 
+	    }
+		lv_expression_5_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getAssignmentRule());
 	        }
        		set(
        			$current, 
        			"expression",
-        		lv_expression_2_0, 
+        		lv_expression_5_0, 
         		"Expression");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1735,16 +1761,16 @@ ruleValuedObjectReference returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getCardinalitiesExpressionParserRuleCall_1_1_0()); 
+	        newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_1_1_0()); 
 	    }
-		lv_cardinalities_2_0=ruleExpression		{
+		lv_indices_2_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getValuedObjectReferenceRule());
 	        }
        		add(
        			$current, 
-       			"cardinalities",
-        		lv_cardinalities_2_0, 
+       			"indices",
+        		lv_indices_2_0, 
         		"Expression");
 	        afterParserOrEnumRuleCall();
 	    }

@@ -341,20 +341,10 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 	
 	/**
 	 * Constraint:
-	 *     (valuedObject=[ValuedObject|ID] expression=Expression)
+	 *     (valuedObject=[ValuedObject|ID] indices+=Expression* expression=Expression)
 	 */
 	protected void sequence_Assignment(EObject context, Assignment semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, SCChartsPackage.Literals.ASSIGNMENT__VALUED_OBJECT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SCChartsPackage.Literals.ASSIGNMENT__VALUED_OBJECT));
-			if(transientValues.isValueTransient(semanticObject, SCChartsPackage.Literals.ASSIGNMENT__EXPRESSION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SCChartsPackage.Literals.ASSIGNMENT__EXPRESSION));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getAssignmentAccess().getValuedObjectValuedObjectIDTerminalRuleCall_0_0_1(), semanticObject.getValuedObject());
-		feeder.accept(grammarAccess.getAssignmentAccess().getExpressionExpressionParserRuleCall_2_0(), semanticObject.getExpression());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

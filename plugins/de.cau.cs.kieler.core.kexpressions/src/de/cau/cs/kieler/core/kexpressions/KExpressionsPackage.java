@@ -165,15 +165,15 @@ public interface KExpressionsPackage extends EPackage {
     int VALUED_OBJECT_REFERENCE__VALUED_OBJECT = EXPRESSION_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Cardinalities</b></em>' containment reference list.
+     * The feature id for the '<em><b>Indices</b></em>' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int VALUED_OBJECT_REFERENCE__CARDINALITIES = EXPRESSION_FEATURE_COUNT + 1;
+    int VALUED_OBJECT_REFERENCE__INDICES = EXPRESSION_FEATURE_COUNT + 1;
 
-				/**
+    /**
      * The number of structural features of the '<em>Valued Object Reference</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -558,17 +558,17 @@ public interface KExpressionsPackage extends EPackage {
     EReference getValuedObjectReference_ValuedObject();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getCardinalities <em>Cardinalities</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getIndices <em>Indices</em>}'.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Cardinalities</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getCardinalities()
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Indices</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getIndices()
      * @see #getValuedObjectReference()
      * @generated
      */
-	EReference getValuedObjectReference_Cardinalities();
+    EReference getValuedObjectReference_Indices();
 
-				/**
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.Value <em>Value</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -904,14 +904,14 @@ public interface KExpressionsPackage extends EPackage {
         EReference VALUED_OBJECT_REFERENCE__VALUED_OBJECT = eINSTANCE.getValuedObjectReference_ValuedObject();
 
         /**
-         * The meta object literal for the '<em><b>Cardinalities</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Indices</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+         * <!-- end-user-doc -->
          * @generated
          */
-		EReference VALUED_OBJECT_REFERENCE__CARDINALITIES = eINSTANCE.getValuedObjectReference_Cardinalities();
+        EReference VALUED_OBJECT_REFERENCE__INDICES = eINSTANCE.getValuedObjectReference_Indices();
 
-								/**
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ValueImpl <em>Value</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->

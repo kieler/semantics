@@ -132,7 +132,7 @@ Declaration returns kexpressions::Declaration:
     (output?='output')?
     (static?='static')?
     (signal?='signal')?
-    type = ValueType valuedObjects+=ValuedObject (';'? valuedObjects+=ValuedObject)* ';'?
+    type = ValueType valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'?
 ;
 
 // ---------------------------------------------------------------------------------------------------

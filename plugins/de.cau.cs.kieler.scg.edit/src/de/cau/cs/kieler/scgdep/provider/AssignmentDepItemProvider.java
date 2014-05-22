@@ -212,7 +212,9 @@ public class AssignmentDepItemProvider
 
 		boolean qualify =
 			childFeature == ScgPackage.Literals.ASSIGNMENT__NEXT ||
-			childFeature == ScgdepPackage.Literals.NODE_DEP__DEPENDENCIES;
+			childFeature == ScgdepPackage.Literals.NODE_DEP__DEPENDENCIES ||
+			childFeature == ScgPackage.Literals.ASSIGNMENT__ASSIGNMENT ||
+			childFeature == ScgPackage.Literals.ASSIGNMENT__INDICES;
 
 		if (qualify) {
 			return getString
