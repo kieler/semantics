@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectReferenceImpl#getValuedObject <em>Valued Object</em>}</li>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectReferenceImpl#getCardinalities <em>Cardinalities</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectReferenceImpl#getIndices <em>Indices</em>}</li>
  * </ul>
  * </p>
  *
@@ -49,16 +49,16 @@ public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedO
     protected ValuedObject valuedObject;
 
     /**
-     * The cached value of the '{@link #getCardinalities() <em>Cardinalities</em>}' containment reference list.
+     * The cached value of the '{@link #getIndices() <em>Indices</em>}' containment reference list.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @see #getCardinalities()
+     * <!-- end-user-doc -->
+     * @see #getIndices()
      * @generated
      * @ordered
      */
-	protected EList<Expression> cardinalities;
+    protected EList<Expression> indices;
 
-				/**
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -117,17 +117,17 @@ public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedO
 
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public EList<Expression> getCardinalities() {
-        if (cardinalities == null) {
-            cardinalities = new EObjectContainmentEList<Expression>(Expression.class, this, KExpressionsPackage.VALUED_OBJECT_REFERENCE__CARDINALITIES);
+    public EList<Expression> getIndices() {
+        if (indices == null) {
+            indices = new EObjectContainmentEList<Expression>(Expression.class, this, KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES);
         }
-        return cardinalities;
+        return indices;
     }
 
-				/**
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -135,8 +135,8 @@ public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedO
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__CARDINALITIES:
-                return ((InternalEList<?>)getCardinalities()).basicRemove(otherEnd, msgs);
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:
+                return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -152,8 +152,8 @@ public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedO
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
                 if (resolve) return getValuedObject();
                 return basicGetValuedObject();
-            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__CARDINALITIES:
-                return getCardinalities();
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:
+                return getIndices();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -170,9 +170,9 @@ public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedO
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
                 setValuedObject((ValuedObject)newValue);
                 return;
-            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__CARDINALITIES:
-                getCardinalities().clear();
-                getCardinalities().addAll((Collection<? extends Expression>)newValue);
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:
+                getIndices().clear();
+                getIndices().addAll((Collection<? extends Expression>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -189,8 +189,8 @@ public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedO
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
                 setValuedObject((ValuedObject)null);
                 return;
-            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__CARDINALITIES:
-                getCardinalities().clear();
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:
+                getIndices().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -206,8 +206,8 @@ public class ValuedObjectReferenceImpl extends ExpressionImpl implements ValuedO
         switch (featureID) {
             case KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
                 return valuedObject != null;
-            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__CARDINALITIES:
-                return cardinalities != null && !cardinalities.isEmpty();
+            case KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES:
+                return indices != null && !indices.isEmpty();
         }
         return super.eIsSet(featureID);
     }

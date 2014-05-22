@@ -41,6 +41,7 @@ import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension;
+import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.extensions.SExtension;
 import de.cau.cs.kieler.s.s.Program;
@@ -548,8 +549,22 @@ public class SSCSimDataComponent extends JSONObjectSimulationDataComponent imple
             IPath scOutputPath = new Path(scOutput.toPlatformString(false).replace("%20", " "));
             IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
             String scOutputString = KiemUtil.getAbsoluteFilePath(scOutputFile);
-            S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder,
-                    alternativeSyntax);
+            
+            URI header = URI.createURI("");
+            header = URI.createURI(input.toString());
+            header = scOutput.trimFragment();
+            header = scOutput.trimFileExtension().appendFileExtension("h");
+            
+            IPath headerPath = new Path(header.toPlatformString(false).replace("%20", " "));
+            IFile headerFile = ModelUtil.convertIPathToIFile(headerPath);
+            
+            String headerFileInclude = "";
+            if (headerFile.exists()) {
+                headerFileInclude = "#include \""+headerFile.getName()+"\"";
+            }            
+            
+            S2SCPlugin.generateCCode(transformedProgram, scOutputString, outputFolder,
+                    alternativeSyntax, headerFileInclude);
 
             // Compile
             scExecution = new SCExecution(outputFolder, benchmark);

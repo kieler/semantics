@@ -67,7 +67,7 @@ class KExpressionsExtension {
     // a new Declaration and removes the ValuedObject from the old one, adding it to the 
     // new one.
     def public Declaration getUniqueDeclaration(ValuedObject valuedObject) {
-        val declaration = valuedObject.declaration
+        val declaration = valuedObject.declarationOrCreate
         if (declaration._containsOnly(valuedObject)) {
             // We don't have to care about other valuedObjects
             return declaration
@@ -77,7 +77,7 @@ class KExpressionsExtension {
             // Remove the valuedObject from the old group and add it to the new group
             declaration._removeValuedObject(valuedObject)
             if (declaration.valuedObjects.size == 0) {
-                // THIS CANNOT HAPPEN, OTHERWISE WE WOULD HAVE BEEN IN CASE ONE!
+                // THIS CANNOT HAPPEN, OTHERWISE WE WOULD HAVE BEEN IN IF CASE!
             }
             newDeclaration._addValuedObject(valuedObject)
             newDeclaration
@@ -105,8 +105,7 @@ class KExpressionsExtension {
         returnList
     }
 
-    
-    
+   
     
     //=======  DECLARATION WRAPPINGS  ======
     
@@ -346,7 +345,7 @@ class KExpressionsExtension {
     // Get the surrounding Declaration of a ValuedObject that contains the ValuedObject. 
     // This Declaration may also contain other ValuedObjects, see containsOnly().
     // If the valuedObject does not have any Declaration yet, then create a new one.
-    def private Declaration getDeclaration(ValuedObject valuedObject) {
+    def private Declaration getDeclarationOrCreate(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof Declaration) {
             return valuedObject.eContainer as Declaration
         } else {
@@ -354,6 +353,12 @@ class KExpressionsExtension {
             newDeclaration._addValuedObject(valuedObject)
             newDeclaration
         }
+    }
+    
+    def public Declaration declaration(ValuedObject valuedObject) {
+        if (valuedObject.eContainer instanceof Declaration) {
+            return valuedObject.eContainer as Declaration
+        } 
     }
     
 //    // Helper method for Setter-Wrapper. It returns the direct Declaration of a ValuedObject
@@ -470,7 +475,7 @@ class KExpressionsExtension {
         }
         expression
     }
-
+   
     // Trim all AND/OR Expressions if it contains only a single sub expression
     def dispatch Expression trim(Expression expression) {
         expression
@@ -538,6 +543,33 @@ class KExpressionsExtension {
         operatorExpressionCopy.subExpressions.remove(0);
         newOperatorExpression.subExpressions.add(operatorExpressionCopy.fixForOperatorExpressionLists);
         return newOperatorExpression;
+    }
+    
+    def Expression fixHostCode(Expression expression) {
+    	if (expression instanceof TextExpression) 
+    		(expression as TextExpression).fixHostCodeInTextExpression
+    	else if (expression instanceof OperatorExpression)
+    		(expression as OperatorExpression).fixHostCodeInOperatorExpression	
+    	else 
+    		expression	
+    }
+    
+    def TextExpression fixHostCodeInTextExpression(TextExpression expression) {
+    	if (expression.text.startsWith("'")) return expression
+    	else return expression.copy => [ setText("'" + expression.getText + "'") ]
+    }
+    
+    def Expression fixHostCodeInOperatorExpression(OperatorExpression expression) {
+    	if (expression == null || expression.subExpressions.nullOrEmpty) {
+    		return expression
+    	}
+        val oeCopy = expression.copy
+        oeCopy.subExpressions.clear
+        expression.subExpressions.forEach [
+        	oeCopy.subExpressions += it.copy.fixHostCode
+        ]
+        
+        oeCopy
     }
     
 
@@ -872,11 +904,22 @@ class KExpressionsExtension {
     //    }    
     
     
+    def void delete(Declaration declaration) {
+    	declaration.valuedObjects.immutableCopy.forEach[ remove ]
+    	declaration.remove
+    }
+    
     //===========  VARIABLES  ===========
     
     // Creates a new variable ValuedObject.
     def ValuedObject createVariable(String variableName) {
         createValuedObject(variableName)
+    }
+    
+    def void delete(ValuedObject valuedObject) {
+        val declaration = valuedObject.declaration
+        valuedObject.remove
+        if (declaration.valuedObjects.nullOrEmpty) declaration.remove
     }
 
 
@@ -933,5 +976,5 @@ class KExpressionsExtension {
         expression.setText("'" + text + "'")
         expression
     }
-
+    
 }

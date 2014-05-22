@@ -37,4 +37,9 @@ class AnnotationsExtensions {
 	        target.annotations += it.copy
 	    ]
 	}
+	
+	
+	def public boolean hasAnnotation(Annotatable annotatable, String name) {
+		!annotatable.annotations.nullOrEmpty && annotatable.annotations.filter[ it.name == name].size > 0
+	}
 }

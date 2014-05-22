@@ -45,17 +45,17 @@ public class SctFormatter extends ActionsFormatter {
          */
 
         // Suppress any space between 'region' and ':'
-        c.setLinewrap(2).before(f.getRegionAccess().getRegionKeyword_2());
-        c.setLinewrap(2).before(f.getRootRegionAccess().getRegionKeyword_2_1());
-        c.setLinewrap(2).before(f.getSingleRegionAccess().getRegionKeyword_1_1());
-        c.setNoSpace().before(f.getRegionAccess().getColonKeyword_5());
-        c.setLinewrap().after(f.getRegionAccess().getColonKeyword_5());
-
-        c.setNoSpace().before(f.getRootRegionAccess().getColonKeyword_2_4());
-        c.setLinewrap().after(f.getRootRegionAccess().getColonKeyword_2_4());
-
-        c.setNoSpace().before(f.getSingleRegionAccess().getColonKeyword_1_4());
-        c.setLinewrap().after(f.getSingleRegionAccess().getColonKeyword_1_4());
+//        c.setLinewrap(2).before(f.getRegionAccess().getRegionKeyword_2());
+//        c.setLinewrap(2).before(f.getTheRootRegionAccess().getRegionKeyword_4_1());
+//        c.setLinewrap(2).before(f.getSingleRegionAccess().getRegionKeyword_1_1());
+//        c.setNoSpace().before(f.getRegionAccess().getColonKeyword_5());
+//        c.setLinewrap().after(f.getRegionAccess().getColonKeyword_5());
+//
+//        c.setNoSpace().before(f.getTheRootRegionAccess().getColonKeyword_4_4());
+//        c.setLinewrap().after(f.getTheRootRegionAccess().getColonKeyword_4_4());
+//
+//        c.setNoSpace().before(f.getSingleRegionAccess().getColonKeyword_1_4());
+//        c.setLinewrap().after(f.getSingleRegionAccess().getColonKeyword_1_4());
         
 //        /*
 //         *  STATE
@@ -111,9 +111,12 @@ public class SctFormatter extends ActionsFormatter {
 
         // let each transition declaration begin on a new line
         c.setLinewrap().before(f.getTransitionRule());
-        c.setNoSpace().before(f.getTransitionAccess().getSemicolonKeyword_3_3_1_0_2_2_0());
-        c.setNoLinewrap().before(f.getTransitionAccess().getSolidusKeyword_3_3_1_0_2_0()); //changed cmot from getSolidusKeyword_4_1_0_3_0());
-        c.setNoLinewrap().before(f.getTransitionAccess().getSemicolonKeyword_3_3_1_0_2_2_0()); //changed cmot from getSolidusKeyword_4_1_0_3_0());
+//        c.setNoSpace().before(f.getTransitionAccess().getSemicolonKeyword_3_3_1_0_2_2_0());
+//        c.setNoLinewrap().before(f.getTransitionAccess().getSolidusKeyword_3_3_1_0_2_0()); //changed cmot from getSolidusKeyword_4_1_0_3_0());
+//        c.setNoLinewrap().before(f.getTransitionAccess().getSemicolonKeyword_3_3_1_0_2_2_0()); //changed cmot from getSolidusKeyword_4_1_0_3_0());
+        c.setNoSpace().before(f.getTransitionAccess().getSemicolonKeyword_3_3_0_1_2_0());
+        c.setNoLinewrap().before(f.getTransitionAccess().getSolidusKeyword_3_3_0_1_0_0()); 
+        c.setNoLinewrap().before(f.getTransitionAccess().getSemicolonKeyword_3_3_0_1_2_0());
         c.setNoSpace().before(f.getStateAccess().getSemicolonKeyword_8());
 
     }

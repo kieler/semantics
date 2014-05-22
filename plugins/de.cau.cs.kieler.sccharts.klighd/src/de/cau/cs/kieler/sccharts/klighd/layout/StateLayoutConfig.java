@@ -17,6 +17,7 @@ import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.kiml.LayoutOptionData;
 import de.cau.cs.kieler.kiml.config.SemanticLayoutConfig;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
+import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.State;
 
 /**
@@ -62,6 +63,14 @@ public class StateLayoutConfig extends SemanticLayoutConfig{
                 return "de.cau.cs.kieler.box";
             }
         }
+        if (semanticElem instanceof Region) {
+            if (layoutOption.equals(LayoutOptions.SPACING)) {
+                return 20f;
+            }
+            if (layoutOption.equals(LayoutOptions.ALGORITHM)) {
+                return "de.cau.cs.kieler.graphviz.dot";
+            }
+        }        
         return null;
     }
 

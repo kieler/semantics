@@ -616,6 +616,7 @@ class SCGCopyExtensions {
         }
         assignment.assignment = node.assignment.copyExpression
         assignment.valuedObject = node.valuedObject.getValuedObjectCopy;
+        for(index : node.indices) {	assignment.indices += index.copyExpression }
         assignment
     }
 

@@ -16,8 +16,6 @@ package de.cau.cs.kieler.sccharts.extensions
 import com.google.common.collect.ImmutableList
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
@@ -28,6 +26,7 @@ import de.cau.cs.kieler.sccharts.Effect
 import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.ExitAction
+import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.LocalAction
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsFactory
@@ -35,15 +34,18 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.SuspendAction
+import de.cau.cs.kieler.sccharts.TextEffect
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
+import java.util.ArrayList
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.HistoryType
-import de.cau.cs.kieler.sccharts.TextEffect
-import java.util.ArrayList
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.Declaration
+import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.sccharts.Binding
 
 /**
  * SCCharts Extensions.
@@ -86,6 +88,13 @@ class SCChartsExtension {
     // Return the list of all contained States.
     def List<State> getAllContainedStates(Scope scope) {
         scope.eAllContents().toList().filter(typeof(State)).toList()
+    }
+
+    // Return the list of all contained States and the root state if the scope is already a state.
+    def List<State> getAllStates(Scope scope) {
+        scope.eAllContents().filter(typeof(State)).toList => [
+        	if (scope instanceof State) it += scope as State
+        ]
     }
 
     // Return the list of all contained Regions.
@@ -133,31 +142,42 @@ class SCChartsExtension {
         valuedObject.isSignal && valuedObject.type == ValueType::PURE
     }
 
-    // Return the root region.
-    def Region getRootRegion(Region region) {
+// FIXME
+// Due to the SCCharts grammar changes SCCharts do not have a root region anymore.
+// The top-most element is an SCChart which is a State.
+// If necessary, these function should be re-implemented.
 
-        // Recursively find the root region 
-        if (region.parentState == null) {
-            return region;
-        }
-        region.parentState.parentRegion.rootRegion;
-    }
+//    // Return the root region.
+//    def Region getRootRegion(Region region) {
+//
+//        // Recursively find the root region 
+//        if (region.parentState == null) {
+//            return region;
+//        }
+//        region.parentState.parentRegion.rootRegion;
+//    }
+//
+//    // Return the root region.
+//    def Region getRootRegion(State state) {
+//        state.parentRegion.rootRegion;
+//    }
 
-    // Return the root region.
-    def Region getRootRegion(State state) {
-        state.parentRegion.rootRegion;
+    def State getRootState(State state) {
+        if (state.parentRegion == null) return state;
+        state.parentRegion.rootState
     }
 
     // Return the root state.
     def State getRootState(Region region) {
         // There should exactly be one state in the root region
-        region.rootRegion.states.get(0)
+//        region.rootRegion.states.get(0)
+        region.parentState.rootState
     }
 
-    // Return the root state.
-    def State getRootState(State state) {
-        state.parentRegion.rootState;
-    }
+//    // Return the root state.
+//    def State getRootState(State state) {
+//        state.parentRegion.rootState;
+//    }
     
     def State createSCChart() {
          SCChartsFactory::eINSTANCE.createState
@@ -336,7 +356,7 @@ class SCChartsExtension {
     }
     
     def State[] getFinalStates(Region region) {
-        region.allFinalStates.filter[outgoingTransitions.size == 0 && !hierarchical && entryActions.size == 0 && duringActions.size == 0 && exitActions.size == 0]
+        region.allFinalStates.filter[outgoingTransitions.size == 0 && !hasInnerStatesOrRegions && entryActions.size == 0 && duringActions.size == 0 && exitActions.size == 0]
     }
     
     // Get the first (simple) final state if the region contains any, otherwise return null.
@@ -385,6 +405,11 @@ class SCChartsExtension {
         state.setType(StateType::TEXTUAL);
         state
     }
+    
+    // REF
+    def boolean isReferencedState(State state) {
+        state.referencedScope != null
+    }
 
     //========== REGIONS ===========
     def Region createRegion(String id) {
@@ -405,9 +430,15 @@ class SCChartsExtension {
         region
     }
 
-    def boolean isHierarchical(State state) {
-        return (state.regions != null && state.regions.size != 0 && state.eAllContents.filter(typeof(State)).size > 0)
+    def boolean hasInnerStatesOrRegions(State state) {
+        return ((state.regions != null && state.regions.size != 0 && state.eAllContents.filter(typeof(State)).size > 0))
     }
+
+    // These are actions that expand to INNER content like during or exit actions.
+    def boolean hasInnerActions(State state) {
+        return (!state.duringActions.nullOrEmpty || !state.exitActions.nullOrEmpty)
+    }
+
 
     //========== TRANSITIONS ===========
     // A transition is a history transition if it is not a reset transition.
@@ -493,27 +524,27 @@ class SCChartsExtension {
         transition.setPriority2(0).trimPriorities
     }
 
-    def Region fixAllPriorities(Region region) {
-        for (state : region.allContainedStates) {
-            var prio = 1
-            for (transition : state.outgoingTransitions) {
-                transition.setPriority(prio)
-                prio = prio + 1
-            }
-        }
-        region
+    def State fixAllPriorities(State state) {
+//        for (containedState : state.allContainedStates) {
+//            var prio = 1
+//            for (transition : containedState.outgoingTransitions) {
+//                transition.setPriority(prio)
+//                prio = prio + 1
+//            }
+//        }
+        state
     }
 
-    def Region fixAllTextualOrdersByPriorities(Region region) {
-        for (state : region.allContainedStates) {
-            val transitions = state.outgoingTransitions.sortBy[priority].toList.immutableCopy;
+    def State fixAllTextualOrdersByPriorities(State state) {
+        for (containedState : state.allContainedStates) {
+            val transitions = containedState.outgoingTransitions.sortBy[priority].toList.immutableCopy;
             for (transition : transitions) {
-                state.outgoingTransitions.remove(transition)
-                state.outgoingTransitions.add(transition)
+                containedState.outgoingTransitions.remove(transition)
+                containedState.outgoingTransitions.add(transition)
                 transition.setPriority(0)
             }
         }
-        region
+        state
     }
 
     def Transition trimPriorities(Transition transition) {
@@ -844,8 +875,8 @@ class SCChartsExtension {
     //--  F I X   F O R   T E R M I N A T I O N S   / W    E F F E C T S     --
     //-------------------------------------------------------------------------
     // This fixes termination transitions that have effects
-    def Region fixTerminationWithEffects(Region rootRegion) {
-        val terminationTransitions = rootRegion.allContainedTransitions.filter[type == TransitionType::TERMINATION].filter[!effects.nullOrEmpty]
+    def State fixTerminationWithEffects(State rootState) {
+        val terminationTransitions = rootState.allContainedTransitions.filter[type == TransitionType::TERMINATION].filter[!effects.nullOrEmpty]
         
         for (terminationTransition : terminationTransitions) {
             val originalSource = terminationTransition.sourceState
@@ -858,7 +889,7 @@ class SCChartsExtension {
             }
             terminationTransition.setTargetState(auxiliaryState)
         }
-        rootRegion
+        rootState
     }
     
 
@@ -866,13 +897,13 @@ class SCChartsExtension {
     //--                F I X   F O R   H A L T   S T A T E S                --
     //-------------------------------------------------------------------------
     // This fixes halt states and adds an explicit delayed self transition
-    def Region fixPossibleHaltStates(Region rootRegion) {
-        val haltStates = rootRegion.allContainedStates.filter[!hierarchical && outgoingTransitions.nullOrEmpty && !final]
+    def State fixPossibleHaltStates(State rootState) {
+        val haltStates = rootState.allContainedStates.filter[!hasInnerStatesOrRegions && outgoingTransitions.nullOrEmpty && !final]
         
         for (haltState : haltStates) {
             haltState.createTransitionTo(haltState)
         }
-        rootRegion
+        rootState
     }
 
 
@@ -881,14 +912,14 @@ class SCChartsExtension {
     //--                F I X   F O R   D E A D    C O D E                   --
     //-------------------------------------------------------------------------
     // This fixes halt states and adds an explicit delayed self transition
-    def Region fixDeadCode(Region rootRegion) {
-        val nonReachabledStates = rootRegion.allContainedStates.filter[!isStateReachable].toList
+    def State fixDeadCode(State rootState) {
+        val nonReachabledStates = rootState.allContainedStates.filter[!isStateReachable].toList
         
         for (nonReachabledState : nonReachabledStates.immutableCopy) {
             val parentRegion = (nonReachabledState.eContainer as Region)
             parentRegion.states.remove(nonReachabledState)
         }
-        rootRegion
+        rootState
     }
     def  boolean isStateReachable(State originalState) {
         // Must ensure not to loop forever when having cycles in the model
@@ -923,27 +954,25 @@ class SCChartsExtension {
     //--               L O C A L   V A L U E D O B J E C T S                 --
     //-------------------------------------------------------------------------
     
-    def Region transformLocalValuedObject(Region rootRegion) {
-
-        // Clone the complete SCCharts region 
-        val targetRootRegion = rootRegion.copy;
+    def State transformLocalValuedObject(State rootState) {
+        val targetRootState = rootState.copy;
 
         // Traverse all states
-        for (targetState : targetRootRegion.getAllContainedStates) {
-            targetState.transformExposeLocalValuedObject(targetRootRegion, false);
+        for (targetState : targetRootState.getAllContainedStates) {
+            targetState.transformExposeLocalValuedObject(targetRootState, false);
         }
-        targetRootRegion;
+        targetRootState;
     }
     
     // Traverse all states and transform possible local valuedObjects.
-    def void transformExposeLocalValuedObject(State state, Region targetRootRegion, boolean expose) {
+    def void transformExposeLocalValuedObject(State state, State targetRootState, boolean expose) {
 
         // EXPOSE LOCAL SIGNALS: For every local valuedObject create a global valuedObject
         // and wherever the local valuedObject is emitted, also emit the new global 
         // valuedObject.
         // Name the new global valuedObjects according to the local valuedObject's hierarchy. 
         // Exclude the top level state
-        if (state.parentRegion == targetRootRegion) {
+        if (state == targetRootState) {
             return;
         }
 
@@ -960,7 +989,7 @@ class SCChartsExtension {
                 }
 
                 // Relocate
-                targetRootRegion.rootState.valuedObjects.add(localValuedObject)
+                targetRootState.valuedObjects.add(localValuedObject)
                 
                 // Rename
                 if (expose) {
@@ -975,4 +1004,61 @@ class SCChartsExtension {
     }
 
     // -------------------------------------------------------------------------   
+    
+    def void replaceAllReferences(Scope scope, ValuedObject valuedObject, Expression expression) {
+    	for(obj : scope.eAllContents.toList.immutableCopy) {
+    		if (obj instanceof ValuedObjectReference
+    			&& (obj as ValuedObjectReference).valuedObject == valuedObject
+    		) 
+    		{
+    			obj.replace(expression)
+    		}
+    	}
+    }
+    
+    def void replaceAllOccurrences(Scope scope, ValuedObject valuedObject, ValuedObject replacement) {
+    	for(obj : scope.eAllContents.toList.immutableCopy) {
+    		if (obj instanceof ValuedObjectReference
+    			&& (obj as ValuedObjectReference).valuedObject == valuedObject
+    		)  {
+    			obj.replace(replacement.reference)
+    		}
+
+    		else if (obj instanceof Assignment && (obj as Assignment).valuedObject == valuedObject)  {
+				(obj as Assignment).valuedObject = replacement
+    		}
+
+    		else if (obj instanceof Emission && (obj as Emission).valuedObject == valuedObject)  {
+				(obj as Emission).valuedObject = replacement
+    		}
+
+    		else if (obj instanceof Binding) {
+    			if ((obj as Binding).formal == valuedObject) (obj as Binding).formal == replacement
+    			if ((obj as Binding).actual == valuedObject) (obj as Binding).actual == replacement
+    		}
+    		
+    	}
+    } 
+    
+    def ValuedObject findValuedObjectByName(Declaration declaration, String name) {
+    	if (declaration.valuedObjects.filter[ it.name == name].size>0)
+    		declaration.valuedObjects.filter[ it.name == name].head
+    	else null
+    }
+    
+    def ValuedObject findValuedObjectByName(Scope scope, String name) {
+    	var EObject container = scope
+    	while (container != null) {
+    		var EList<Declaration> declarations = null
+    		if (container instanceof State) declarations = (container as State).declarations
+    		else if (container instanceof Region) declarations = (container as Region).declarations
+    		if (!declarations.nullOrEmpty) for (declaration : declarations) {
+    			val valuedObject = declaration.findValuedObjectByName(name)
+    			if (valuedObject != null) return valuedObject
+    		} 
+    		container = container.eContainer
+    	}
+    	null
+    }
+    
 }

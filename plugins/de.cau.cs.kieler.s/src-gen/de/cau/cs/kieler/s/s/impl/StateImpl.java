@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.StateImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.impl.StateImpl#getTypeGroups <em>Type Groups</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.StateImpl#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.StateImpl#getInstructions <em>Instructions</em>}</li>
  * </ul>
  * </p>
@@ -62,14 +62,14 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getTypeGroups() <em>Type Groups</em>}' containment reference list.
+   * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getTypeGroups()
+   * @see #getDeclarations()
    * @generated
    * @ordered
    */
-  protected EList<Declaration> typeGroups;
+  protected EList<Declaration> declarations;
 
   /**
    * The cached value of the '{@link #getInstructions() <em>Instructions</em>}' containment reference list.
@@ -130,13 +130,13 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Declaration> getTypeGroups()
+  public EList<Declaration> getDeclarations()
   {
-    if (typeGroups == null)
+    if (declarations == null)
     {
-      typeGroups = new EObjectContainmentEList<Declaration>(Declaration.class, this, SPackage.STATE__TYPE_GROUPS);
+      declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, SPackage.STATE__DECLARATIONS);
     }
-    return typeGroups;
+    return declarations;
   }
 
   /**
@@ -163,8 +163,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
-      case SPackage.STATE__TYPE_GROUPS:
-        return ((InternalEList<?>)getTypeGroups()).basicRemove(otherEnd, msgs);
+      case SPackage.STATE__DECLARATIONS:
+        return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
       case SPackage.STATE__INSTRUCTIONS:
         return ((InternalEList<?>)getInstructions()).basicRemove(otherEnd, msgs);
     }
@@ -183,8 +183,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
     {
       case SPackage.STATE__NAME:
         return getName();
-      case SPackage.STATE__TYPE_GROUPS:
-        return getTypeGroups();
+      case SPackage.STATE__DECLARATIONS:
+        return getDeclarations();
       case SPackage.STATE__INSTRUCTIONS:
         return getInstructions();
     }
@@ -205,9 +205,9 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
       case SPackage.STATE__NAME:
         setName((String)newValue);
         return;
-      case SPackage.STATE__TYPE_GROUPS:
-        getTypeGroups().clear();
-        getTypeGroups().addAll((Collection<? extends Declaration>)newValue);
+      case SPackage.STATE__DECLARATIONS:
+        getDeclarations().clear();
+        getDeclarations().addAll((Collection<? extends Declaration>)newValue);
         return;
       case SPackage.STATE__INSTRUCTIONS:
         getInstructions().clear();
@@ -230,8 +230,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
       case SPackage.STATE__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case SPackage.STATE__TYPE_GROUPS:
-        getTypeGroups().clear();
+      case SPackage.STATE__DECLARATIONS:
+        getDeclarations().clear();
         return;
       case SPackage.STATE__INSTRUCTIONS:
         getInstructions().clear();
@@ -252,8 +252,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
     {
       case SPackage.STATE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case SPackage.STATE__TYPE_GROUPS:
-        return typeGroups != null && !typeGroups.isEmpty();
+      case SPackage.STATE__DECLARATIONS:
+        return declarations != null && !declarations.isEmpty();
       case SPackage.STATE__INSTRUCTIONS:
         return instructions != null && !instructions.isEmpty();
     }

@@ -69,6 +69,22 @@
       </menuContribution>
 
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <transformationMethod
+            class="de.cau.cs.kieler.sccharts.scg.SCGTransformation"
+            dependencies="SCGDEP"
+            id="SCG"
+            method="transformSCG"
+            name="SCG">
+      </transformationMethod>
+      <transformationGroup
+            id="SCGRAPH"
+            isCategory="true"
+            name="SCGraph"
+            transformations="SCG, SCGDEP, SCGBBGROUP, SCGSCHEDGROUP, SCGSEQ">
+      </transformationGroup>
+   </extension>
 
 
 </plugin>

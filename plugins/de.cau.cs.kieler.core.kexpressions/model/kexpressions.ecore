@@ -176,7 +176,7 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"
         eType="#//ValuedObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="cardinalities" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="indices" upperBound="-1"
         eType="#//Expression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Value" eSuperTypes="#//Expression">

@@ -17,4 +17,7 @@ public class SRuntimeModule extends de.cau.cs.kieler.s.AbstractSRuntimeModule {
         return de.cau.cs.kieler.s.formatting.STransientService.class;
     }
 
+	public Class<? extends org.eclipse.xtext.scoping.IScopeProvider> bindIScopeProvider() {
+		return de.cau.cs.kieler.s.scoping.SScopeProvider.class;
+	}
 }

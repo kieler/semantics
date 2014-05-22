@@ -300,13 +300,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // -------------------------------------------------------------------------
     // -- Constants
     // -------------------------------------------------------------------------
-    /**
-     * Workaround for prefixed spaces
-     * Enter the character code of the char KlighD will recognize as blank. 
-     * Spaces are removed automatically at the moment.
-     */
-    private static val byte KLIGHDSPACERCHARCODE = 255 as byte
-    private static val String KLIGHDSPACERCHAR = "" + KLIGHDSPACERCHARCODE as char
+    /** Spacing for guard indentation. */
+    private static val String KLIGHDSPACERCHAR = " " 
     private static val String KLIGHDSPACER = KLIGHDSPACERCHAR + KLIGHDSPACERCHAR + KLIGHDSPACERCHAR + KLIGHDSPACERCHAR
 
     /** Color codes */
@@ -915,7 +910,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             ]
             // If the outgoing identifier indicates a 'then branch', add a 'then label'.
             if (outgoingPortId == SCGPORTID_OUTGOING_THEN) {
-                edge.createLabel.configureTailLabel('true', 9, KlighdConstants::DEFAULT_FONT_NAME)
+                edge.createLabel.configureTailEdgeLabel('true', 9, KlighdConstants::DEFAULT_FONT_NAME)
             }
         ]
     }
@@ -1044,11 +1039,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         for (tn : nodes) {
             kContainer.children += tn.node
 
-            if (nodeGrouping != NODEGROUPING_HIERARCHY)
-                if (tn.node.getData(typeof(KShapeLayout)).getProperty(Properties::LAYER_CONSTRAINT) ==
-                    LayerConstraint::FIRST) {
-                    kContainer.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
-                }
+// FIXME
+//            if (nodeGrouping != NODEGROUPING_HIERARCHY)
+//                if (tn.node.getData(typeof(KShapeLayout)).getProperty(Properties::LAYER_CONSTRAINT) ==
+//                    LayerConstraint::FIRST) {
+//                        kContainer.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
+//                    }
         }
 
         // Add the container to the original parent.

@@ -45,6 +45,7 @@ import java.util.ArrayList
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import com.google.inject.Inject
 import de.cau.cs.kieler.s.s.HostCodeInstruction
+import de.cau.cs.kieler.core.kexpressions.TextExpression
 
 /**
  * S Extensions. 
@@ -169,9 +170,18 @@ class SExtension {
     // Create host code instruction.
     def HostCodeInstruction createHostCode(String hostCodeString) {
         val hostCodeInstruction = SFactory::eINSTANCE.createHostCodeInstruction
+//        hostCodeInstruction.setHostCode(createTextExpression => [ text = hostCodeString ])
         hostCodeInstruction.setHostCode("'" + hostCodeString + "'")
         hostCodeInstruction
     }
+
+    // Create host code instruction.
+//    def HostCodeInstruction createHostCode(TextExpression hostCode) {
+//        val hostCodeInstruction = SFactory::eINSTANCE.createHostCodeInstruction
+////        hostCodeInstruction.setHostCode(hostCode)
+////        hostCodeInstruction.setHostCode("'" + hostCodeString + "'")
+//        hostCodeInstruction
+//    }
     
     // Create a valued emission.
     def Emit createEmit(ValuedObject valuedObject, Expression expression) {

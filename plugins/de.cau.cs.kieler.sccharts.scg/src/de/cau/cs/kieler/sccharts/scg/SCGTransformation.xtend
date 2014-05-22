@@ -48,6 +48,8 @@ import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.scg.optimizer.SuperfluousForkRemover
+import com.google.inject.Guice
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -142,9 +144,9 @@ class SCGTransformation {
     // @requires: none
 
     // Transforming Local ValuedObjects.
-    def SCGraph transformSCG(Region rootRegion) {
+    def SCGraph transformSCG(State rootState) {
         // Fix termination transitions that have effects
-        var rootRegion2 = rootRegion.fixTerminationWithEffects
+        var rootRegion2 = rootState.fixTerminationWithEffects
         // Fix possible halt states
         rootRegion2 = rootRegion2.fixPossibleHaltStates
         // Expose local variables
@@ -176,8 +178,14 @@ class SCGTransformation {
                 region.transformSCGConnectNodes(sCGraph)
             }
         }
+        
         // Fix superfluous exit nodes
         sCGraph.trimExitNodes.trimConditioanlNodes
+        
+        // Remove superfluous fork constructs 
+        // ssm, 04.05.2014
+        val SuperfluousForkRemover superfluousForkRemover = Guice.createInjector().getInstance(typeof(SuperfluousForkRemover))
+        superfluousForkRemover.optimize(sCGraph)
     }
            
    // -------------------------------------------------------------------------   
@@ -376,6 +384,11 @@ class SCGTransformation {
                 }
                 // TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
                 assignment.setAssignment(sCChartAssignment.expression.convertToSCGExpression)
+                if (!sCChartAssignment.indices.nullOrEmpty) {
+                	sCChartAssignment.indices.forEach[
+                		assignment.indices += it.convertToSCGExpression
+                	]
+                }
             }
             else if (effect instanceof de.cau.cs.kieler.sccharts.TextEffect) {
                 assignment.setAssignment((effect as de.cau.cs.kieler.sccharts.TextEffect).convertToSCGExpression)
@@ -548,7 +561,11 @@ class SCGTransformation {
 
     // Create a new reference Expression to the corresponding sValuedObject of the expression
     def dispatch Expression convertToSCGExpression(ValuedObjectReference expression) {
-        expression.valuedObject.SCGValuedObject.reference
+        expression.valuedObject.SCGValuedObject.reference => [ vor |
+        	expression.indices.forEach[
+        		vor.indices += it.convertToSCGExpression
+        	]
+        ]
     }
 
     // Apply conversion to operator expressions like and, equals, not, greater, val, pre, add, etc.

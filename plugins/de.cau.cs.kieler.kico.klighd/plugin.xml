@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.klighd.diagramSyntheses">
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.KiCoModelChainSynthesis"
+            id="de.cau.cs.kieler.kico.klighd.KiCoModelChainSynthesis">
+      </diagramSynthesis>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="true"
+            category="de.cau.cs.kieler.sim"
+            class="de.cau.cs.kieler.kico.klighd.KiCoModelView"
+            icon="icons/KiCoModelView.gif"
+            id="de.cau.cs.kieler.kico.klighd.view"
+            name="KIELER Model View"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="de.cau.cs.kieler.kico.klighd.KiCoModelViewManager"></startup>
+   </extension>
+
+</plugin>

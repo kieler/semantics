@@ -23,13 +23,9 @@
             class="de.cau.cs.kieler.sccharts.SCChartsPackage"
             genModel="model/sccharts.genmodel"/>
    </extension>
+
    <extension
          point="org.eclipse.ui.commands">
-      <command
-            categoryId="de.cau.cs.kieler.sccharts.commands.category"
-            id="de.cau.cs.kieler.sccharts.commands.AllCoreTransformations"
-            name="AllCoreTransformations">
-      </command>
       <category
             id="de.cau.cs.kieler.sccharts.commands.category"
             name="SCCharts Transformations">
@@ -47,7 +43,7 @@
       </handler>
       <handler
             class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
-            commandId="SCC_NORMALIZE">
+            commandId="SCC_EXTENDED">
       </handler>
       <handler
             class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
@@ -127,7 +123,7 @@
       </handler>
       <handler
             class="de.cau.cs.kieler.sccharts.handler.SccModelFileHandler"
-            commandId="CCC_STATIC">
+            commandId="SCC_STATIC">
       </handler>
    </extension>
 
@@ -172,9 +168,9 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
-               commandId="SCC_CORE"
-               label="All Core Transformations"
-               mnemonic="C"
+               commandId="SCC_EXTENDED"
+               label="All Extended Transformations"
+               mnemonic="E"
                style="push">
             <visibleWhen>
                <iterate
@@ -195,9 +191,9 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
-               commandId="SCC_NORMALIZE"
-               label="All Normalize Transformations"
-               mnemonic="N"
+               commandId="SCC_CORE"
+               label="All Core Transformations"
+               mnemonic="C"
                style="push">
             <visibleWhen>
                <iterate
@@ -807,191 +803,244 @@
    
      <extension
          point="de.cau.cs.kieler.kico.transformation">
+         
+       <!-- check dependencies -->        
       <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
+            class="de.cau.cs.kieler.sccharts.transformations.Const"
+            dependencies="INITIALIZATION" 
+            id="CONST"
+            method="transform"
+            name="Const">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.sccharts.transformations.Map"
+            dependencies="FOR"
+            id="MAP"
+            method="transform"
+            name="Map">
+      </transformationMethod>
+         
+       <!-- check dependencies -->        
+      <transformationMethod
+            class="de.cau.cs.kieler.sccharts.transformations.For"
+            dependencies="WEAKSUSPEND, HISTORY, SIGNAL, SUSPEND, COUNTDELAY, PRE, CONST" 
+            id="FOR"
+            method="transform"
+            name="For">
+      </transformationMethod>
+      
+       <!-- check dependencies -->        
+      <transformationMethod
+            class="de.cau.cs.kieler.sccharts.transformations.Reference"
+            dependencies="MAP" 
+            id="REFERENCE"
+            method="transform"
+            name="Reference">
+      </transformationMethod>
+         
+      <transformationMethod
+            class="de.cau.cs.kieler.sccharts.transformations.History"
             dependencies="STATIC"
             id="HISTORY"
-            method="transformHistory"
-            name="Transform History">
+            method="transform"
+            name="History">
       </transformationMethod>
 
       <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
-            dependencies="STATIC, DEFERRED, COMPLEXFINALSTATE"
+            class="de.cau.cs.kieler.sccharts.transformations.WeakSuspend"
+            dependencies="DEFERRED, STATIC, COMPLEXFINALSTATE"
             id="WEAKSUSPEND"
-            method="transformWeakSuspend"
-            name="Transform Weak Suspend">
+            method="transform"
+            name="Weak Suspend">
       </transformationMethod>
 
       <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
-            dependencies="WEAKSUSPEND"
+            class="de.cau.cs.kieler.sccharts.transformations.Deferred"
+            dependencies="DURING"
             id="DEFERRED"
-            method="transformDeferred"
-            name="Transform Deferred">
+            method="transform"
+            name="Deferred">
       </transformationMethod>
 
       <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
-            dependencies="HISTORY, WEAKSUSPEND"
+            class="de.cau.cs.kieler.sccharts.transformations.Static"
+            dependencies="INITIALIZATION"
             id="STATIC"
-            method="transformStatic"
-            name="Transform Static">
+            method="transform"
+            name="Static">
       </transformationMethod>
 
       <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
+            class="de.cau.cs.kieler.sccharts.transformations.Signal"
             dependencies="DURING"
             id="SIGNAL"
-            method="transformSignal"
-            name="Transform Signal">
+            method="transform"
+            name="Signal">
       </transformationMethod>
 
       <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
-            dependencies="DURING"
+            class="de.cau.cs.kieler.sccharts.transformations.CountDelay"
+            dependencies="DURING, ABORT"
             id="COUNTDELAY"
-            method="transformCountDelay"
-            name="Transform Count Delay">
+            method="transform"
+            name="Count Delay">
       </transformationMethod>
 
       <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
+            class="de.cau.cs.kieler.sccharts.transformations.Pre"
             dependencies="INITIALIZATION"
             id="PRE"
-            method="transformPre"
-            name="Transform Pre">
+            method="transform"
+            name="Pre">
       </transformationMethod>
 
       <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
+            class="de.cau.cs.kieler.sccharts.transformations.Suspend"
+            dependencies="DURING"
             id="SUSPEND"
-            method="transformSuspend"
-            name="Transform Suspend">
+            method="transform"
+            name="Suspend">
       </transformationMethod>
-
-      <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
+      
+     <transformationMethod
+            class="de.cau.cs.kieler.sccharts.transformations.ComplexFinalState"
             dependencies="ABORT"
             id="COMPLEXFINALSTATE"
-            method="transformComplexFinalState"
-            name="Transform Complex Final State">
+            method="transform"
+            name="Complex Final State">
       </transformationMethod>
+
 
       <transformationGroup
             alternatives="true"
             id="ABORT"
-            name="Transform Abort"
+            name="Abort"
             transformations="ABORTDEFAULT, ABORTALTERNATIVE">
       </transformationGroup>
 
       <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
-            dependencies="EXIT, ENTRY, DURING, INITIALIZATION"
+            class="de.cau.cs.kieler.sccharts.transformations.Abort"
+            dependencies="EXIT, DURING"
             id="ABORTDEFAULT"
-            method="transformAbortDefault"
-            name="Transform Abort">
+            method="transform"
+            name="Abort Default">
       </transformationMethod>
 
       <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
-            dependencies="EXIT, ENTRY, DURING, INITIALIZATION"
+            class="de.cau.cs.kieler.sccharts.transformations.Abort"
+            dependencies="EXIT, DURING"
             id="ABORTALTERNATIVE"
             method="transformAbortAlternative"
-            name="Transform Abort Alternative">
+            name="Abort Alternative">
       </transformationMethod>
 
       <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
+            class="de.cau.cs.kieler.sccharts.transformations.During"
             dependencies="INITIALIZATION"
             id="DURING"
-            method="transformDuring"
-            name="Transform During">
+            method="transform"
+            name="During">
       </transformationMethod>
 
       <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
+            class="de.cau.cs.kieler.sccharts.transformations.Initialization"
             dependencies="ENTRY"
             id="INITIALIZATION"
-            method="transformInitialization"
-            name="Transform Initialization">
+            method="transform"
+            name="Initialization">
       </transformationMethod>
 
       <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
+            class="de.cau.cs.kieler.sccharts.transformations.Entry"
             dependencies="CONNECTOR"
             id="ENTRY"
-            method="transformEntry"
-            name="Transform Entry">
+            method="transform"
+            name="Entry">
       </transformationMethod>
 
       <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
+            class="de.cau.cs.kieler.sccharts.transformations.Exit"
             dependencies="CONNECTOR"
             id="EXIT"
-            method="transformExit"
-            name="Transform Exit">
+            method="transform"
+            name="Exit">
       </transformationMethod>
 
       <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
+            class="de.cau.cs.kieler.sccharts.transformations.Connector"
             id="CONNECTOR"
-            method="transformConnector"
-            name="Transform Connector">
+            method="transform"
+            dependencies="TRIGGEREFFECT"
+            name="Connector">
       </transformationMethod>
+
+
+      <transformationGroup
+            id="SCADEQUARTZESTEREL"
+            isFeatureGroup="true"
+            name="SCADE / QUARTZ / Esterel v7"
+            transformations="HISTORY, STATIC, WEAKSUSPEND, DEFERRED">
+      </transformationGroup>
+
+      <transformationGroup
+            id="STATECHARTS"
+            isFeatureGroup="true"
+            name="Statecharts"
+            transformations="CONST, COMPLEXFINALSTATE, ABORT, DURING, EXIT, INITIALIZATION, ENTRY, CONNECTOR">
+      </transformationGroup>
+
+
+      <transformationGroup
+            id="SYNCCHARTS"
+            isFeatureGroup="true"
+            name="SyncCharts"
+            transformations="SUSPEND, SIGNAL, COUNTDELAY, PRE">
+      </transformationGroup>
+      <transformationGroup
+            id="EXPANSIONS"
+            isCategory="false"
+            isFeatureGroup="true"
+            name="SCCharts Expansions"
+            transformations="REFERENCE, FOR, MAP">
+      </transformationGroup>
+
+
+      <transformationGroup
+            id="EXTENDED"
+            isCategory="true"
+            name="Extended SCCharts"
+            transformations="SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXPANSIONS">
+      </transformationGroup>
 
       <transformationGroup
             id="CORE"
-            transformations="HISTORY, WEAKSUSPEND, DEFERRED, STATIC, SIGNAL, COUNTDELAY, PRE, SUSPEND, COMPLEXFINALSTATE, ABORT, DURING, INITIALIZATION, ENTRY, EXIT, CONNECTOR"
-            name="Transform All Core">
-      </transformationGroup>
-
-      <transformationGroup
-            id="NORMALIZE"
-            transformations="TRIGGEREFFECT, SURFACEDEPTH"
-            name="Transform All Normalize">
+            isCategory="true"
+            name="Core SCCharts"
+            transformations="TRIGGEREFFECT, SURFACEDEPTH">
       </transformationGroup>
 
       <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
+            class="de.cau.cs.kieler.sccharts.transformations.TriggerEffect"
             id="TRIGGEREFFECT"
-            method="transformTriggerEffect"
-            name="Transform Trigger and Effect">
+            method="transform"
+            dependencies="SURFACEDEPTH"
+            name="Trigger and Effect">
       </transformationMethod>
 
       <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
+            class="de.cau.cs.kieler.sccharts.transformations.SurfaceDepth"
+            dependencies="SCG"
             id="SURFACEDEPTH"
-            method="transformSurfaceDepth"
-            name="Transform Surface Depth">
+            method="transform"
+            name="Surface Depth">
       </transformationMethod>
-
       <transformationGroup
             id="ALL"
-            transformations="CORE, NORMALIZE"
-            name="Transform All">
+            isCategory="false"
+            isFeatureGroup="false"
+            transformations="EXTENDED, CORE, SCG">
       </transformationGroup>
 
-      <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
-            id="INPUTOUTPUTVARIABLE"
-            method="transformInputOutputVariable"
-            name="Transform Input Output Variable">
-      </transformationMethod>
-
-      <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
-            id="EXPOSELOCALVARIABLE"
-            method="transformExposeLocalVariable"
-            name="Transform Expose Local Variable">
-      </transformationMethod>
-
-      <transformationMethod
-            class="de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation"
-            id="TERMINATION"
-            method="transformTermination"
-            name="Transform Termination">
-      </transformationMethod>
       
    </extension>   
 
