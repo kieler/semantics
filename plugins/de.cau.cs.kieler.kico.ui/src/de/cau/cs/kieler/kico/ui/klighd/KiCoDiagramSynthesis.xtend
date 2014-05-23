@@ -38,6 +38,7 @@ import javax.inject.Inject
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import java.util.ArrayList
 import de.cau.cs.kieler.kiml.options.Direction
+import de.cau.cs.kieler.kico.ui.KiCoSelectionView
 
 //import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
@@ -357,7 +358,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                 node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
                 node.setLayoutOption(LayoutOptions::DIRECTION, Direction::RIGHT);            
             }
-            
+
             node.addRectangle() => [
                 it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
                 it.setBackgroundGradient("white".color, GRAY, 90);
