@@ -72,6 +72,10 @@ public class KExpressionsFormatter extends AnnotationsFormatter {
                 c.setNoLinewrap().after(pair.getSecond());
             }
         }
+        
+        c.setNoSpace().before(f.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_1_0());
+        c.setNoSpace().after(f.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_1_0());
+        c.setNoSpace().before(f.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_1_2());
     }
 
 }

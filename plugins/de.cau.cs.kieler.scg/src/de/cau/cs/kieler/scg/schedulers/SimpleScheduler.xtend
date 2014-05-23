@@ -277,7 +277,7 @@ class SimpleScheduler extends AbstractScheduler {
         schedule.schedulingBlocks.size == schedulingBlocksCopy.size
     }
 	
-	
+
 	/**
 	 * The build method builds the schedules for the given SCG. It uses the information from the dependency and
 	 * basic block analyses to build the guard expressions of the blocks. A schedule itself is an ordered list

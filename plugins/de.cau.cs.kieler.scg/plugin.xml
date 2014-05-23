@@ -487,7 +487,7 @@
             class="de.cau.cs.kieler.scg.schedulers.SimpleScheduler"
             dependencies="SCGSEQ"
             id="SCGSCHEDSIMPLE"
-            method="build"
+            method="schedule"
             name="Simple Scheduler">
       </transformationMethod>
       <transformationGroup
@@ -500,14 +500,14 @@
             class="de.cau.cs.kieler.scg.schedulers.ClusterScheduler"
             dependencies="SCGSEQ"
             id="SCGSCHEDCLUSTER"
-            method="build"
+            method="schedule"
             name="Cluster Scheduler">
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scg.schedulers.HybridScheduler"
             dependencies="SCGSEQ"
             id="SCGSCHEDHYBRID"
-            method="build"
+            method="schedule"
             name="Hybrid Scheduler">
       </transformationMethod>
       <transformationMethod
