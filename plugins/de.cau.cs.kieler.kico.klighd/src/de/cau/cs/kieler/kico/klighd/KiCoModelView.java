@@ -366,7 +366,7 @@ public class KiCoModelView extends DiagramViewPart {
 
                     // compile
                     EObject compiledModel =
-                            KielerCompiler.getEObject(KielerCompiler.compile(transformations, (EObject) currentModel));
+                            (KielerCompiler.compile(transformations, (EObject) currentModel)).getEObject();
                     System.out.println("Compiled");
 
                     // TODO test if compiler error occured
