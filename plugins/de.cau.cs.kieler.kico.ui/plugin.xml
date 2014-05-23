@@ -5,10 +5,6 @@
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis
-            class="DISABLEde.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesisSSM"
-            id="DISABLEde.cau.cs.kieler.kico.ui.klighd.diagramSynthesisSSM">
-      </diagramSynthesis>
-      <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesis"
             id="de.cau.cs.kieler.kico.ui.klighd.diagramSynthesis">
       </diagramSynthesis>
