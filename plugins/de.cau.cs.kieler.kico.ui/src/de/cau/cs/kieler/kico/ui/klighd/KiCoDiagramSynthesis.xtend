@@ -326,6 +326,19 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
     }
 
     // -------------------------------------------------------------------------
+    // Create a string of spaces with the length of the original text
+    def String getSpacedOut(int num) {
+        if (num > 0) {
+            return " " + getSpacedOut(num-1);
+        }
+    }
+
+    // Create a string of spaces with the length of the original text
+    def String getSpacedOut(String originalText) {
+        getSpacedOut(originalText.length)
+    }
+
+    // -------------------------------------------------------------------------
     // Translate a Group
     def KNode translateGroup(TransformationDummy transformationDummy) {
         return createNode() => [ node |
@@ -352,8 +365,9 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                 it.invisible = false;
                 it.foreground = "gray".color
                 it.lineWidth = 1;
-                it.addText("[-]" + " " + transformationDummy.label) => [
+                it.addText("[-]" + getSpacedOut(transformationDummy.label) + " ") => [
                     it.foreground = "darkGray".color
+//                    it.foreground = "white".color
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
@@ -370,8 +384,9 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                 it.invisible = false;
                 it.foreground = "gray".color
                 it.lineWidth = 1;
-                it.addText("[+]" + " " + transformationDummy.label) => [
+                it.addText("[+]" + getSpacedOut(transformationDummy.label) + " ") => [
                     it.foreground = "darkGray".color
+//                    it.foreground = "white".color
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
