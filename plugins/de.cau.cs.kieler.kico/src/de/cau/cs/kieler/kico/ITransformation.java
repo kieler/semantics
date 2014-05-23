@@ -56,13 +56,15 @@ public interface ITransformation {
     //-------------------------------------------------------------------------
 
     /**
-     * Central transform method that implements the transformation.
+     * Central transform method that implements the transformation. It should
+     * return an EObject if there are any following transformations. A code
+     * generation will finally return a String object.
      * 
      * @param eObject
      *            the e object
      * @return the e object
      */
-    public EObject transform(EObject eObject);
+    public Object transform(EObject eObject);
 
     //-------------------------------------------------------------------------
 

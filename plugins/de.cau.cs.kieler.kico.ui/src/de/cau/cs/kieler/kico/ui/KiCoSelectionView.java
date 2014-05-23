@@ -672,7 +672,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         toolBarManager.add(getActionAdvancedToggle());
 //        toolBarManager.add(getActionSSMToggle());
         toolBarManager.add(getActionHierarchyToggle());
-        toolBarManager.add(getActionCompileToggle());
+//        toolBarManager.add(getActionCompileToggle());
 
         // Create an IPartListener2
         IPartListener2 pl = new IPartListener2() {
