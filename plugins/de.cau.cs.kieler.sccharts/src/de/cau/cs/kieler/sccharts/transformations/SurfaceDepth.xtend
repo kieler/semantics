@@ -68,7 +68,7 @@ class SurfaceDepth {
         var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootState.allContainedStates) {
+        for (targetState : targetRootState.allStates) {
             targetState.transformSurfaceDepth(targetRootState);
         }
 

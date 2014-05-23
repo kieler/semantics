@@ -42,7 +42,7 @@ class InputOutputVariable {
         var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetTransition : targetRootState.getAllContainedStates.immutableCopy) {
+        for (targetTransition : targetRootState.getAllStates.immutableCopy) {
             targetTransition.transformInputOutputVariable(targetRootState);
         }
         targetRootState;

@@ -16,11 +16,8 @@ package de.cau.cs.kieler.sccharts.transformations
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.EntryAction
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * SCCharts Deferred Transformation.
@@ -54,7 +51,7 @@ class Deferred {
         var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetTransition : targetRootState.allContainedStates) {
+        for (targetTransition : targetRootState.allStates) {
             targetTransition.transformDeferredState;
         }
         targetRootState.fixAllTextualOrdersByPriorities;

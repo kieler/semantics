@@ -47,7 +47,7 @@ class Initialization {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootState.getAllContainedStates.immutableCopy) {
+        for (targetState : targetRootState.getAllStates.immutableCopy) {
             targetState.transformInitialization(targetRootState);
         }
         targetRootState.fixAllTextualOrdersByPriorities;

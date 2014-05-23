@@ -21,11 +21,8 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Emission
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * SCCharts Signal Transformation.
@@ -65,7 +62,7 @@ class Signal {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootState.getAllContainedStates) {
+        for (targetState : targetRootState.getAllStates) {
             targetState.transformSignal(targetRootState);
         }
         targetRootState.fixAllTextualOrdersByPriorities;

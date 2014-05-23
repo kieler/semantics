@@ -60,7 +60,7 @@ class ComplexFinalState {
         var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootState.getAllContainedStates) {
+        for (targetState : targetRootState.getAllStates) {
             targetState.transformComplexFinalState(rootState);
         }
         targetRootState.fixAllTextualOrdersByPriorities;
