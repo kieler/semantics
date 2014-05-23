@@ -626,7 +626,7 @@ public class KielerCompiler {
      *            the e object
      * @return the object
      */
-    public static EObject compile(final String transformationIDs, final EObject eObject) {
+    public static Object compile(final String transformationIDs, final EObject eObject) {
         return compile(transformationIDs, eObject, false);
     }
 
@@ -643,7 +643,7 @@ public class KielerCompiler {
      *            the e object
      * @return the object
      */
-    public static EObject compile(final String enabledAndDisabledTransformationIDs, final EObject eObject,
+    public static Object compile(final String enabledAndDisabledTransformationIDs, final EObject eObject,
             final boolean prerequirements) {
         String trimmed = enabledAndDisabledTransformationIDs.replace(" ", "");
         if (trimmed.length() == 0) {
@@ -678,7 +678,7 @@ public class KielerCompiler {
      *            the e object
      * @return the object
      */
-    public static EObject compile(final List<String> transformationIDs, final EObject eObject) {
+    public static Object compile(final List<String> transformationIDs, final EObject eObject) {
         return compile(transformationIDs, new ArrayList<String>(), eObject, true);
     }
 
@@ -697,7 +697,7 @@ public class KielerCompiler {
      *            the e object
      * @return the e object
      */
-    public static EObject compile(final List<String> transformationIDs,
+    public static Object compile(final List<String> transformationIDs,
             final List<String> excludedTransformationIDs, final EObject eObject) {
         return compile(transformationIDs, excludedTransformationIDs, eObject, true);
     }
@@ -716,7 +716,7 @@ public class KielerCompiler {
      * @param prerequirements the prerequirements
      * @return the e object
      */
-    public static EObject compile(final List<String> enabledAndDisabledTransformationIDs, final EObject eObject,
+    public static Object compile(final List<String> enabledAndDisabledTransformationIDs, final EObject eObject,
             final boolean prerequirements) {
         List<String> excludedTransformations = new ArrayList<String>();
         List<String> transformations = new ArrayList<String>();
@@ -811,7 +811,7 @@ public class KielerCompiler {
      * @param prerequirements the prerequirements
      * @return the e object
      */
-    public static EObject compile(final List<String> transformationIDs,
+    public static Object compile(final List<String> transformationIDs,
             final List<String> excludedTransformationIDs, final EObject eObject,
             final boolean prerequirements) {
         boolean inplace = false;
@@ -834,7 +834,7 @@ public class KielerCompiler {
      *            the e object
      * @return the object
      */
-    public static EObject compile(final List<String> transformationIDs,
+    public static Object compile(final List<String> transformationIDs,
             final List<String> excludedTransformationIDs, final EObject eObject,
             final boolean prerequirements, final boolean inplace) {
         updateMapping(DEBUG);
@@ -889,7 +889,16 @@ public class KielerCompiler {
                 if (transformation.getId().equals(processedTransformationID)) {
                     // If this is an individual
                     System.out.println("PERFORM TRANSFORMATION: " + processedTransformationID);
-                    transformedObject = transformation.doTransform(transformedObject);
+                    transformation.doTransform(transformedObject);
+                    Object object = transformation.doTransform(transformedObject);
+                    if (object instanceof EObject) {
+                        transformedObject = (EObject) object;
+                    }
+                    else {
+                        // in this case we CANNOT do any further transformation calls
+                        // which require the return value of doTransform to be an EObject
+                        return object;
+                    }
                 }
         }
         return transformedObject;
