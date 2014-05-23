@@ -14,12 +14,9 @@
 package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * SCCharts Connector Transformation.
@@ -45,7 +42,7 @@ class Connector {
         var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetTransition : targetRootState.allContainedStates) {
+        for (targetTransition : targetRootState.allStates) {
             targetTransition.transformConnector(targetRootState);
         }
 

@@ -23,8 +23,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.ArrayList
 import java.util.List
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-
 /**
  * SCCharts History Transformation.
  * 
@@ -53,7 +51,7 @@ class History {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootState.getAllContainedStates) {
+        for (targetState : targetRootState.getAllStates) {
             targetState.transformHistory(targetRootState);
         }
         targetRootState.fixAllTextualOrdersByPriorities;

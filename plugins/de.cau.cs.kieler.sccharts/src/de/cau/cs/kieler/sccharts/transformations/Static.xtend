@@ -18,8 +18,6 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-
 /**
  * SCCharts Static Transformation.
  * 
@@ -51,7 +49,7 @@ class Static {
         var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetTransition : targetRootState.getAllContainedStates.immutableCopy) {
+        for (targetTransition : targetRootState.getAllStates.immutableCopy) {
             targetTransition.transformStatic(targetRootState);
         }
         targetRootState.fixAllTextualOrdersByPriorities;

@@ -19,8 +19,6 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-
 /**
  * SCCharts Suspend Transformation.
  * 
@@ -58,7 +56,7 @@ class Suspend {
         var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootState.getAllContainedStates) {
+        for (targetState : targetRootState.getAllStates) {
             targetState.transformSuspend(targetRootState);
         }
         targetRootState.fixAllTextualOrdersByPriorities;
