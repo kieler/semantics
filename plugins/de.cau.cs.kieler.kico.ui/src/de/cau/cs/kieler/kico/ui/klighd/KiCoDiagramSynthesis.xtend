@@ -331,11 +331,12 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
         if (num > 0) {
             return " " + getSpacedOut(num-1);
         }
+        return ""
     }
 
     // Create a string of spaces with the length of the original text
-    def String getSpacedOut(String originalText) {
-        getSpacedOut(originalText.length)
+    def String getSpacedOut(String originalText, int factor) {
+        return getSpacedOut(originalText.length * factor)
     }
 
     // -------------------------------------------------------------------------
@@ -365,7 +366,8 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                 it.invisible = false;
                 it.foreground = "gray".color
                 it.lineWidth = 1;
-                it.addText("[-]" + getSpacedOut(transformationDummy.label) + " ") => [
+                //FIXME: hacky workaround
+                it.addText("[-]" + getSpacedOut(transformationDummy.label, 2) + " ") => [
                     it.foreground = "darkGray".color
 //                    it.foreground = "white".color
                     it.fontSize = 10
@@ -384,7 +386,8 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                 it.invisible = false;
                 it.foreground = "gray".color
                 it.lineWidth = 1;
-                it.addText("[+]" + getSpacedOut(transformationDummy.label) + " ") => [
+                //FIXME: hacky workaround
+                it.addText("[+]" + getSpacedOut(transformationDummy.label, 2) + " ") => [
                     it.foreground = "darkGray".color
 //                    it.foreground = "white".color
                     it.fontSize = 10
