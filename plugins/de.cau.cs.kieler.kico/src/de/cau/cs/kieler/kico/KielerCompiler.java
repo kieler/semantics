@@ -614,6 +614,38 @@ public class KielerCompiler {
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Convenience method to get a resulting EObject from compilation or null
+     * if the object is not an EObject.
+     *
+     * @param object the object
+     * @return the e object
+     */
+    public static EObject getEObject(final Object object) {
+        if (object instanceof EObject) {
+            return (EObject) object;
+        }
+        return null;
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Convenience method to get a resulting String from compilation or null
+     * if the object is not a String.
+     *
+     * @param object the object
+     * @return the string
+     */
+    public static String getString(final Object object) {
+        if (object instanceof String) {
+            return (String) object;
+        }
+        return null;
+    }
+    
+    // -------------------------------------------------------------------------
 
     /**
      * Central KIELER Compiler compile method. It can be called in order to call several consecutive
