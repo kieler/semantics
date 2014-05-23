@@ -81,5 +81,13 @@ class SCGKExpressionsScopeProvider extends KExpressionsScopeProvider {
     	}
         Scopes.scopeFor(scopeObjects)
     }
+    
+    def IScope scope_Expression(EObject context, EReference reference) {
+        Scopes.scopeFor(valuedObjects)
+    }
+
+    def IScope scope_IntValue(EObject context, EReference reference) {
+        Scopes.scopeFor(valuedObjects)
+    }
 
 }

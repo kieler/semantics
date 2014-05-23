@@ -525,13 +525,13 @@ class SCChartsExtension {
     }
 
     def State fixAllPriorities(State state) {
-//        for (containedState : state.allContainedStates) {
-//            var prio = 1
-//            for (transition : containedState.outgoingTransitions) {
-//                transition.setPriority(prio)
-//                prio = prio + 1
-//            }
-//        }
+        for (containedState : state.allContainedStates) {
+            var prio = 1
+            for (transition : containedState.outgoingTransitions) {
+                transition.setPriority(prio)
+                prio = prio + 1
+            }
+        }
         state
     }
 

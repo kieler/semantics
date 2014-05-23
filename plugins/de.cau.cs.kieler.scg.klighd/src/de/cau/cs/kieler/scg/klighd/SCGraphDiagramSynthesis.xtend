@@ -494,11 +494,15 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 // Additionally, remove unnecessary parenthesis and add spacing in line breaks.
                 if (assignment.valuedObject != null && assignment.assignment != null) {
                     var assignmentText = serializer.serialize(assignment.assignment.copy.fix).removeParenthesis
+                    var valuedObjectName = assignment.valuedObject.name
+                    if (!assignment.indices.nullOrEmpty) {
+                        valuedObjectName = valuedObjectName + serializer.serializeIndices(assignment.indices)
+                    }
                     // added by cmot (9.3.14)
                     if (assignment.assignment instanceof TextExpression) {
                         assignmentText = assignment.assignment.getTextExpressionString
                     }
-                    var assignmentStr = assignment.valuedObject.name + " = " + assignmentText
+                    var assignmentStr = valuedObjectName + " = " + assignmentText
                         
                     if (assignmentStr.contains("&") && assignmentStr.indexOf("&") != assignmentStr.lastIndexOf("&")) {
                         assignmentStr = assignmentStr.replaceAll("=", "=\n" + KLIGHDSPACER)
@@ -1332,6 +1336,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             return str.replaceAll("\\(\\(", "(").replaceAll("\\)\\)", ")");
         }
         return str
+    }
+    
+    def String serializeIndices(ISerializer serializer, List<Expression> indices) {
+        var String indicesStr = ""
+        for(index : indices) {
+            indicesStr = indicesStr + "[" + 
+                serializer.serialize(index.copy)
+                + "]"          
+        }
+        indicesStr
     }
 
     def boolean topdown() {

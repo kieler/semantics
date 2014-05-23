@@ -201,13 +201,15 @@ public abstract class Transformation {
     // -------------------------------------------------------------------------
 
     /**
-     * Do the transformation based on the method field.
+     * Do the transformation based on the method field. It should
+     * return an EObject if there are any following transformations. A code
+     * generation will finally return a String object.
      * 
      * @param eObject
      *            the e object
      * @return the e object
      */
-    public final EObject doTransform(EObject eObject) {
+    public final Object doTransform(EObject eObject) {
         if (method == null) {
             // A Transformation instance with the standard transformation method
             return ((Transformation) transformationInstance).transform(eObject);
