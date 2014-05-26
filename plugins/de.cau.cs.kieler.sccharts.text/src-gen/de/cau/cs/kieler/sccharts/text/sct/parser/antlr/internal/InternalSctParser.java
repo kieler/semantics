@@ -757,7 +757,7 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
             otherlv_4=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleFor515); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              		newLeafNode(otherlv_4, grammarAccess.getForAccess().getFromValueCrossReference_4_0()); 
+              		newLeafNode(otherlv_4, grammarAccess.getForAccess().getFromExpressionCrossReference_4_0()); 
               	
             }
 
@@ -793,7 +793,7 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
             otherlv_6=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleFor551); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              		newLeafNode(otherlv_6, grammarAccess.getForAccess().getToValueCrossReference_6_0()); 
+              		newLeafNode(otherlv_6, grammarAccess.getForAccess().getToExpressionCrossReference_6_0()); 
               	
             }
 

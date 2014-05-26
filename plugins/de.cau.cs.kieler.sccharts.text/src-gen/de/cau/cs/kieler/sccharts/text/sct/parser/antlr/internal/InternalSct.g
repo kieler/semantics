@@ -290,7 +290,7 @@ ruleFor returns [EObject current=null]
         }
 	otherlv_4=RULE_ID
 	{
-		newLeafNode(otherlv_4, grammarAccess.getForAccess().getFromValueCrossReference_4_0()); 
+		newLeafNode(otherlv_4, grammarAccess.getForAccess().getFromExpressionCrossReference_4_0()); 
 	}
 
 )
@@ -310,7 +310,7 @@ ruleFor returns [EObject current=null]
         }
 	otherlv_6=RULE_ID
 	{
-		newLeafNode(otherlv_6, grammarAccess.getForAccess().getToValueCrossReference_6_0()); 
+		newLeafNode(otherlv_6, grammarAccess.getForAccess().getToExpressionCrossReference_6_0()); 
 	}
 
 )

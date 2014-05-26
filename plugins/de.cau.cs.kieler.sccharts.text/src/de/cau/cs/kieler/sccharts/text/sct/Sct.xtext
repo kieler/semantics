@@ -28,7 +28,7 @@ SingleRegion returns sccharts::Region:
 
 For returns sccharts::For:
     {sccharts::For}
-    'for' loopVariable=[kexpressions::ValuedObject] '=' from=[kexpressions::Value] '..' to=[kexpressions::Value]
+    'for' loopVariable=[kexpressions::ValuedObject] '=' from=[kexpressions::Expression] '..' to=[kexpressions::Expression]
 ;
 
 // ---------------------------------------------------------------------------------------------------
