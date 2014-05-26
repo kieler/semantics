@@ -58,7 +58,7 @@ import de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions;
 import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation;
+//import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation;
 import de.cau.cs.kieler.sccharts.scg.SCGTransformation;
 import de.cau.cs.kieler.sccharts.tsccharts.TimingAnnotationProvider;
 import de.cau.cs.kieler.sccharts.tsccharts.annotation.extensions.TSCChartsAnnotationExtension;
@@ -89,8 +89,8 @@ public class TimingAnalysisHandler extends AbstractHandler {
     @Inject
     private TimingAnnotationProvider annotationProvider;
       
-    @Inject
-    private SCChartsCoreTransformation SCCtransformation;
+//    @Inject
+//    private SCChartsCoreTransformation SCCtransformation;
     
     @Inject
     private SCGTransformation SCGtransformation;
