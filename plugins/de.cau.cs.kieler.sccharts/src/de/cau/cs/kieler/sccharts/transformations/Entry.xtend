@@ -46,7 +46,7 @@ class Entry {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootState.getAllContainedStates.immutableCopy) {
+        for (targetState : targetRootState.getAllStates.immutableCopy) {
             targetState.transformEntry(targetRootState);
         }
         targetRootState.fixAllTextualOrdersByPriorities;

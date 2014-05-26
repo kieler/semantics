@@ -198,6 +198,7 @@ class DependencyTransformation extends AbstractModelTransformation {
     private def boolean isReader(AssignmentDep asg1, AssignmentDep asg2) {
     	// Returns true if the ValuedObject is referenced directly in the expression or
     	// if the object is part of a more complex expression.
+    	if (asg1.assignment == null || asg2.assignment == null) return false
         if (asg1.assignment instanceof ValuedObjectReference) {
             return isSameScalar((asg1.assignment as ValuedObjectReference), asg2)
         } else {
@@ -209,6 +210,7 @@ class DependencyTransformation extends AbstractModelTransformation {
     private def boolean isReader(Conditional cond, AssignmentDep asg2) {
     	// Returns true if the ValuedObject is referenced directly in the expression or
     	// if the object is part of a more complex expression.
+        if (asg2.assignment == null) return false
         if (cond.condition instanceof ValuedObjectReference) {
             return isSameScalar((cond.condition as ValuedObjectReference), asg2)
         } else {

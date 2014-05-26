@@ -87,39 +87,39 @@ class SCChartsExtension {
 
     // Return the list of all contained States.
     def List<State> getAllContainedStates(Scope scope) {
-        scope.eAllContents().toList().filter(typeof(State)).toList()
+        scope.eAllContents().filter(typeof(State)).toList()
     }
 
     // Return the list of all contained States and the root state if the scope is already a state.
     def List<State> getAllStates(Scope scope) {
-        scope.eAllContents().filter(typeof(State)).toList => [
+        scope.getAllContainedStates => [
         	if (scope instanceof State) it += scope as State
         ]
     }
 
     // Return the list of all contained Regions.
     def List<Region> getAllContainedRegions(Scope scope) {
-        scope.eAllContents().toList().filter(typeof(Region)).toList()
+        scope.eAllContents().filter(typeof(Region)).toList()
     }
 
     // Return the list of all contained Transitions.
     def List<Transition> getAllContainedTransitions(Scope scope) {
-        scope.eAllContents().toList().filter(typeof(Transition)).toList()
+        scope.eAllContents().filter(typeof(Transition)).toList()
     }
 
     // Return the list of all contained Actions.
     def List<Action> getAllContainedActions(Scope scope) {
-        scope.eAllContents().toList().filter(typeof(Action)).toList()
+        scope.eAllContents().filter(typeof(Action)).toList()
     }
 
     // Return the list of contained Emissions.
     def List<Emission> getAllContainedEmissions(Action action) {
-        action.eAllContents().toIterable().filter(typeof(Emission)).toList();
+        action.eAllContents().filter(typeof(Emission)).toList();
     }
 
     // Return the list of contained Assignments.
     def List<Assignment> getAllContainedAssignments(Action action) {
-        action.eAllContents().toIterable().filter(typeof(Assignment)).toList();
+        action.eAllContents().filter(typeof(Assignment)).toList();
     }
 
     // Return the list of pure signals of a state.

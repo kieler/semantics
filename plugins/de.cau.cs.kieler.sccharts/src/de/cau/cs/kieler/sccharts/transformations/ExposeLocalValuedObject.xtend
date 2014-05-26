@@ -42,7 +42,7 @@ class ExposeLocalValuedObject {
         val targetRootState = rootState;
 
         // Traverse all states
-        for (targetState : targetRootState.getAllContainedStates) {
+        for (targetState : targetRootState.getAllStates) {
             targetState.transformExposeLocalValuedObject(targetRootState, true);
         }
         targetRootState;

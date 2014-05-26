@@ -36,6 +36,8 @@ import java.util.List
 import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import java.util.ArrayList
+import de.cau.cs.kieler.kiml.options.Direction
 
 //import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
@@ -192,7 +194,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
 
     // -------------------------------------------------------------------------
     // Remember which super states already are connected (render just a single connection)
-    private HashMap<TransformationDummy, TransformationDummy> connected = new HashMap<TransformationDummy, TransformationDummy>();
+    private static ArrayList<Integer> connected = new ArrayList<Integer>();
 
     // The Main entry transform function   
     override transform(List<TransformationDummy> model) {
@@ -303,9 +305,11 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
 
                         if (transSource != null && transDest != null) {
 
-                            //                            System.out.println(" CONT " + transSource.id + " TO " + transDest.id)
-                            if (connected.get(transSource) != transDest) {
-                                connected.put(transSource, transDest)
+                            //System.out.println(" CHK  CONT '" + transSource.id + "' TO '" + transDest.id + "'" )
+                            if (!(connected.contains(transSource.hashCode + transDest.hashCode))) {
+                                //System.out.println(" DO   CONT '" + transSource.id + "' TO '" + transDest.id + "'  ::: " + connected.toString);
+                                connected.add(transSource.hashCode + transDest.hashCode)
+                                //System.out.println(" DONE  CONT '" + transSource.id + "' TO '" + transDest.id + "'  ::: " + connected.toString);
                                 transSource.translateTransition(transDest)
                             }
                         }
@@ -322,6 +326,20 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
     }
 
     // -------------------------------------------------------------------------
+    // Create a string of spaces with the length of the original text
+    def String getSpacedOut(int num) {
+        if (num > 0) {
+            return " " + getSpacedOut(num-1);
+        }
+        return ""
+    }
+
+    // Create a string of spaces with the length of the original text
+    def String getSpacedOut(String originalText, int factor) {
+        return getSpacedOut(originalText.length * factor)
+    }
+
+    // -------------------------------------------------------------------------
     // Translate a Group
     def KNode translateGroup(TransformationDummy transformationDummy) {
         return createNode() => [ node |
@@ -332,6 +350,14 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                 val childKNode = child.translate;
                 node.children += childKNode;
             }
+
+            // credits to SSM :-)
+            if (transformationDummy.alternative) {
+                node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
+                node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
+                node.setLayoutOption(LayoutOptions::DIRECTION, Direction::RIGHT);            
+            }
+            
             node.addRectangle() => [
                 it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
                 it.setBackgroundGradient("white".color, GRAY, 90);
@@ -340,8 +366,10 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                 it.invisible = false;
                 it.foreground = "gray".color
                 it.lineWidth = 1;
-                it.addText("[-]" + " " + transformationDummy.label) => [
+                //FIXME: hacky workaround
+                it.addText("[-]" + getSpacedOut(transformationDummy.label, 2) + " ") => [
                     it.foreground = "darkGray".color
+//                    it.foreground = "white".color
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
@@ -358,8 +386,10 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                 it.invisible = false;
                 it.foreground = "gray".color
                 it.lineWidth = 1;
-                it.addText("[+]" + " " + transformationDummy.label) => [
+                //FIXME: hacky workaround
+                it.addText("[+]" + getSpacedOut(transformationDummy.label, 2) + " ") => [
                     it.foreground = "darkGray".color
+//                    it.foreground = "white".color
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
