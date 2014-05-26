@@ -280,18 +280,20 @@ ruleFor returns [EObject current=null]
     }
 (
 (
-		{ 
-		  /* */ 
+		lv_from_4_0=RULE_INT
+		{
+			newLeafNode(lv_from_4_0, grammarAccess.getForAccess().getFromINTTerminalRuleCall_4_0()); 
 		}
 		{
-			if ($current==null) {
+	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getForRule());
 	        }
-        }
-	otherlv_4=RULE_ID
-	{
-		newLeafNode(otherlv_4, grammarAccess.getForAccess().getFromExpressionCrossReference_4_0()); 
-	}
+       		setWithLastConsumed(
+       			$current, 
+       			"from",
+        		lv_from_4_0, 
+        		"INT");
+	    }
 
 )
 )	otherlv_5='..' 
@@ -300,18 +302,20 @@ ruleFor returns [EObject current=null]
     }
 (
 (
-		{ 
-		  /* */ 
+		lv_to_6_0=RULE_INT
+		{
+			newLeafNode(lv_to_6_0, grammarAccess.getForAccess().getToINTTerminalRuleCall_6_0()); 
 		}
 		{
-			if ($current==null) {
+	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getForRule());
 	        }
-        }
-	otherlv_6=RULE_ID
-	{
-		newLeafNode(otherlv_6, grammarAccess.getForAccess().getToExpressionCrossReference_6_0()); 
-	}
+       		setWithLastConsumed(
+       			$current, 
+       			"to",
+        		lv_to_6_0, 
+        		"INT");
+	    }
 
 )
 ))

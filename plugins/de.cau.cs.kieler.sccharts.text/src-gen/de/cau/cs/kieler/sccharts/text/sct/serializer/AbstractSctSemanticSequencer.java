@@ -445,7 +445,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (loopVariable=[ValuedObject|ID] from=[Expression|ID] to=[Expression|ID])
+	 *     (loopVariable=[ValuedObject|ID] from=INT to=INT)
 	 */
 	protected void sequence_For(EObject context, For semanticObject) {
 		if(errorAcceptor != null) {
@@ -459,8 +459,8 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
 		feeder.accept(grammarAccess.getForAccess().getLoopVariableValuedObjectIDTerminalRuleCall_2_0_1(), semanticObject.getLoopVariable());
-		feeder.accept(grammarAccess.getForAccess().getFromExpressionIDTerminalRuleCall_4_0_1(), semanticObject.getFrom());
-		feeder.accept(grammarAccess.getForAccess().getToExpressionIDTerminalRuleCall_6_0_1(), semanticObject.getTo());
+		feeder.accept(grammarAccess.getForAccess().getFromINTTerminalRuleCall_4_0(), semanticObject.getFrom());
+		feeder.accept(grammarAccess.getForAccess().getToINTTerminalRuleCall_6_0(), semanticObject.getTo());
 		feeder.finish();
 	}
 	

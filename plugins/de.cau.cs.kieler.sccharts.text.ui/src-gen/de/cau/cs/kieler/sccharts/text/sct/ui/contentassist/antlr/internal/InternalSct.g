@@ -12004,12 +12004,8 @@ rule__For__FromAssignment_4
     }
 :
 (
-{ before(grammarAccess.getForAccess().getFromValueCrossReference_4_0()); }
-(
-{ before(grammarAccess.getForAccess().getFromValueIDTerminalRuleCall_4_0_1()); }
-	RULE_ID{ after(grammarAccess.getForAccess().getFromValueIDTerminalRuleCall_4_0_1()); }
-)
-{ after(grammarAccess.getForAccess().getFromValueCrossReference_4_0()); }
+{ before(grammarAccess.getForAccess().getFromINTTerminalRuleCall_4_0()); }
+	RULE_INT{ after(grammarAccess.getForAccess().getFromINTTerminalRuleCall_4_0()); }
 )
 
 ;
@@ -12023,12 +12019,8 @@ rule__For__ToAssignment_6
     }
 :
 (
-{ before(grammarAccess.getForAccess().getToValueCrossReference_6_0()); }
-(
-{ before(grammarAccess.getForAccess().getToValueIDTerminalRuleCall_6_0_1()); }
-	RULE_ID{ after(grammarAccess.getForAccess().getToValueIDTerminalRuleCall_6_0_1()); }
-)
-{ after(grammarAccess.getForAccess().getToValueCrossReference_6_0()); }
+{ before(grammarAccess.getForAccess().getToINTTerminalRuleCall_6_0()); }
+	RULE_INT{ after(grammarAccess.getForAccess().getToINTTerminalRuleCall_6_0()); }
 )
 
 ;

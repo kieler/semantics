@@ -66,24 +66,44 @@ public class ForImpl extends EObjectImpl implements For {
     protected ValuedObject loopVariable;
 
     /**
-     * The cached value of the '{@link #getFrom() <em>From</em>}' reference.
+     * The default value of the '{@link #getFrom() <em>From</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getFrom()
      * @generated
      * @ordered
      */
-    protected Expression from;
+    protected static final int FROM_EDEFAULT = 0;
 
     /**
-     * The cached value of the '{@link #getTo() <em>To</em>}' reference.
+     * The cached value of the '{@link #getFrom() <em>From</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getFrom()
+     * @generated
+     * @ordered
+     */
+    protected int from = FROM_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getTo() <em>To</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getTo()
      * @generated
      * @ordered
      */
-    protected Expression to;
+    protected static final int TO_EDEFAULT = 0;
+
+    /**
+     * The cached value of the '{@link #getTo() <em>To</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getTo()
+     * @generated
+     * @ordered
+     */
+    protected int to = TO_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -147,15 +167,7 @@ public class ForImpl extends EObjectImpl implements For {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Expression getFrom() {
-        if (from != null && from.eIsProxy()) {
-            InternalEObject oldFrom = (InternalEObject)from;
-            from = (Expression)eResolveProxy(oldFrom);
-            if (from != oldFrom) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.FOR__FROM, oldFrom, from));
-            }
-        }
+    public int getFrom() {
         return from;
     }
 
@@ -164,17 +176,8 @@ public class ForImpl extends EObjectImpl implements For {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Expression basicGetFrom() {
-        return from;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setFrom(Expression newFrom) {
-        Expression oldFrom = from;
+    public void setFrom(int newFrom) {
+        int oldFrom = from;
         from = newFrom;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.FOR__FROM, oldFrom, from));
@@ -185,15 +188,7 @@ public class ForImpl extends EObjectImpl implements For {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Expression getTo() {
-        if (to != null && to.eIsProxy()) {
-            InternalEObject oldTo = (InternalEObject)to;
-            to = (Expression)eResolveProxy(oldTo);
-            if (to != oldTo) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.FOR__TO, oldTo, to));
-            }
-        }
+    public int getTo() {
         return to;
     }
 
@@ -202,17 +197,8 @@ public class ForImpl extends EObjectImpl implements For {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Expression basicGetTo() {
-        return to;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setTo(Expression newTo) {
-        Expression oldTo = to;
+    public void setTo(int newTo) {
+        int oldTo = to;
         to = newTo;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.FOR__TO, oldTo, to));
@@ -230,11 +216,9 @@ public class ForImpl extends EObjectImpl implements For {
                 if (resolve) return getLoopVariable();
                 return basicGetLoopVariable();
             case SCChartsPackage.FOR__FROM:
-                if (resolve) return getFrom();
-                return basicGetFrom();
+                return getFrom();
             case SCChartsPackage.FOR__TO:
-                if (resolve) return getTo();
-                return basicGetTo();
+                return getTo();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -251,10 +235,10 @@ public class ForImpl extends EObjectImpl implements For {
                 setLoopVariable((ValuedObject)newValue);
                 return;
             case SCChartsPackage.FOR__FROM:
-                setFrom((Expression)newValue);
+                setFrom((Integer)newValue);
                 return;
             case SCChartsPackage.FOR__TO:
-                setTo((Expression)newValue);
+                setTo((Integer)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -272,10 +256,10 @@ public class ForImpl extends EObjectImpl implements For {
                 setLoopVariable((ValuedObject)null);
                 return;
             case SCChartsPackage.FOR__FROM:
-                setFrom((Expression)null);
+                setFrom(FROM_EDEFAULT);
                 return;
             case SCChartsPackage.FOR__TO:
-                setTo((Expression)null);
+                setTo(TO_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -292,11 +276,29 @@ public class ForImpl extends EObjectImpl implements For {
             case SCChartsPackage.FOR__LOOP_VARIABLE:
                 return loopVariable != null;
             case SCChartsPackage.FOR__FROM:
-                return from != null;
+                return from != FROM_EDEFAULT;
             case SCChartsPackage.FOR__TO:
-                return to != null;
+                return to != TO_EDEFAULT;
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (from: ");
+        result.append(from);
+        result.append(", to: ");
+        result.append(to);
+        result.append(')');
+        return result.toString();
     }
 
 } //ForImpl

@@ -114,21 +114,17 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLoopVariableValuedObjectIDTerminalRuleCall_2_0_1 = (RuleCall)cLoopVariableValuedObjectCrossReference_2_0.eContents().get(1);
 		private final Keyword cEqualsSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cFromAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final CrossReference cFromExpressionCrossReference_4_0 = (CrossReference)cFromAssignment_4.eContents().get(0);
-		private final RuleCall cFromExpressionIDTerminalRuleCall_4_0_1 = (RuleCall)cFromExpressionCrossReference_4_0.eContents().get(1);
+		private final RuleCall cFromINTTerminalRuleCall_4_0 = (RuleCall)cFromAssignment_4.eContents().get(0);
 		private final Keyword cFullStopFullStopKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		private final Assignment cToAssignment_6 = (Assignment)cGroup.eContents().get(6);
-		private final CrossReference cToExpressionCrossReference_6_0 = (CrossReference)cToAssignment_6.eContents().get(0);
-		private final RuleCall cToExpressionIDTerminalRuleCall_6_0_1 = (RuleCall)cToExpressionCrossReference_6_0.eContents().get(1);
+		private final RuleCall cToINTTerminalRuleCall_6_0 = (RuleCall)cToAssignment_6.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//For returns sccharts::For:
-		//	{sccharts::For} "for" loopVariable=[kexpressions::ValuedObject] "=" from=[kexpressions::Expression] ".."
-		//	to=[kexpressions::Expression];
+		//	{sccharts::For} "for" loopVariable=[kexpressions::ValuedObject] "=" from=INT ".." to=INT;
 		public ParserRule getRule() { return rule; }
 
-		//{sccharts::For} "for" loopVariable=[kexpressions::ValuedObject] "=" from=[kexpressions::Expression] ".."
-		//to=[kexpressions::Expression]
+		//{sccharts::For} "for" loopVariable=[kexpressions::ValuedObject] "=" from=INT ".." to=INT
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::For}
@@ -149,26 +145,20 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//"="
 		public Keyword getEqualsSignKeyword_3() { return cEqualsSignKeyword_3; }
 
-		//from=[kexpressions::Expression]
+		//from=INT
 		public Assignment getFromAssignment_4() { return cFromAssignment_4; }
 
-		//[kexpressions::Expression]
-		public CrossReference getFromExpressionCrossReference_4_0() { return cFromExpressionCrossReference_4_0; }
-
-		//ID
-		public RuleCall getFromExpressionIDTerminalRuleCall_4_0_1() { return cFromExpressionIDTerminalRuleCall_4_0_1; }
+		//INT
+		public RuleCall getFromINTTerminalRuleCall_4_0() { return cFromINTTerminalRuleCall_4_0; }
 
 		//".."
 		public Keyword getFullStopFullStopKeyword_5() { return cFullStopFullStopKeyword_5; }
 
-		//to=[kexpressions::Expression]
+		//to=INT
 		public Assignment getToAssignment_6() { return cToAssignment_6; }
 
-		//[kexpressions::Expression]
-		public CrossReference getToExpressionCrossReference_6_0() { return cToExpressionCrossReference_6_0; }
-
-		//ID
-		public RuleCall getToExpressionIDTerminalRuleCall_6_0_1() { return cToExpressionIDTerminalRuleCall_6_0_1; }
+		//INT
+		public RuleCall getToINTTerminalRuleCall_6_0() { return cToINTTerminalRuleCall_6_0; }
 	}
 
 	public class RegionElements extends AbstractParserRuleElementFinder {
@@ -1386,8 +1376,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ---------------------------------------------------------------------------------------------------
 	//For returns sccharts::For:
-	//	{sccharts::For} "for" loopVariable=[kexpressions::ValuedObject] "=" from=[kexpressions::Expression] ".."
-	//	to=[kexpressions::Expression];
+	//	{sccharts::For} "for" loopVariable=[kexpressions::ValuedObject] "=" from=INT ".." to=INT;
 	public ForElements getForAccess() {
 		return (pFor != null) ? pFor : (pFor = new ForElements());
 	}

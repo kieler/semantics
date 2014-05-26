@@ -34,6 +34,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -125,7 +126,7 @@ public class ForItemProvider
                  true,
                  false,
                  true,
-                 null,
+                 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
                  null,
                  null));
     }
@@ -147,7 +148,7 @@ public class ForItemProvider
                  true,
                  false,
                  true,
-                 null,
+                 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
                  null,
                  null));
     }
@@ -171,7 +172,8 @@ public class ForItemProvider
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_For_type");
+        For for_ = (For)object;
+        return getString("_UI_For_type") + " " + for_.getFrom();
     }
 
     /**
