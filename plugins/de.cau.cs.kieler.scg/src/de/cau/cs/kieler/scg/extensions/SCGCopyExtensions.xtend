@@ -662,8 +662,9 @@ class SCGCopyExtensions {
         } else {
         	// Otherwise, query all references in the expression and replace the object with the new copy
         	// in the target SCG.
-            newExpression.eAllContents.filter(typeof(ValuedObjectReference)).
-            	forEach[ valuedObject = valuedObject.getValuedObjectCopy ]        
+        	if (newExpression != null)
+                newExpression.eAllContents.filter(typeof(ValuedObjectReference)).
+            	   forEach[ valuedObject = valuedObject.getValuedObjectCopy ]        
         }
         
         // Return the new expression.
