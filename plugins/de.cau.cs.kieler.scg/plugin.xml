@@ -512,7 +512,7 @@
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scg.sequentializer.SimpleSequentializer"
-            dependencies="SCG2C"
+            dependencies="CODEGENERATION"
             id="SCGSEQ"
             method="sequentialize"
             name="Sequentializer">

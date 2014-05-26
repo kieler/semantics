@@ -9,6 +9,14 @@
             method="transform"
             name="C Code">
       </transformationMethod>
+      <transformationGroup
+            alternatives="true"
+            id="CODEGENERATION"
+            isCategory="true"
+            isFeatureGroup="false"
+            name="SCG2C"
+            transformations="SCG2C">
+      </transformationGroup>
    </extension>
 
 </plugin>
