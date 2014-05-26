@@ -26,6 +26,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import org.eclipse.core.resources.IFile;
@@ -41,6 +43,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.osgi.framework.Bundle;
 
@@ -108,11 +111,14 @@ public final class ModelUtil {
 
     /**
      * Open bundle or workspace file.
-     *
-     * @param relativeFilePath the relative file path
-     * @param pluginID the plugin id
+     * 
+     * @param relativeFilePath
+     *            the relative file path
+     * @param pluginID
+     *            the plugin id
      * @return the input stream
-     * @throws FileNotFoundException the file not found exception
+     * @throws FileNotFoundException
+     *             the file not found exception
      */
     public static InputStream openBundleOrWorkspaceFile(final IPath relativeFilePath,
             final String pluginID) throws FileNotFoundException {
@@ -129,40 +135,44 @@ public final class ModelUtil {
 
     /**
      * Open a bundle file and returns an InputStream.
-     *
-     * @param relativeFilePath the relative file path
+     * 
+     * @param relativeFilePath
+     *            the relative file path
      * @return the input stream
-     * @throws FileNotFoundException the file not found exception
+     * @throws FileNotFoundException
+     *             the file not found exception
      */
-    public static OutputStream createWorkspaceFile(final IPath relativeFilePath) 
+    public static OutputStream createWorkspaceFile(final IPath relativeFilePath)
             throws FileNotFoundException {
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
         IFile relativeFile = myWorkspaceRoot.getFile(relativeFilePath);
         IPath rawLocation = relativeFile.getRawLocation();
         OutputStream outputStream;
         outputStream = new FileOutputStream(rawLocation.toString());
-        return outputStream; //relativeFile.getContents(true);
+        return outputStream; // relativeFile.getContents(true);
     }
 
     // -------------------------------------------------------------------------
 
     /**
      * Open a bundle file and returns an InputStream.
-     *
-     * @param relativeFilePath the relative file path
+     * 
+     * @param relativeFilePath
+     *            the relative file path
      * @return the input stream
-     * @throws FileNotFoundException the file not found exception
+     * @throws FileNotFoundException
+     *             the file not found exception
      */
-    public static InputStream openWorkspaceFile(final IPath relativeFilePath) 
+    public static InputStream openWorkspaceFile(final IPath relativeFilePath)
             throws FileNotFoundException {
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
         IFile relativeFile = myWorkspaceRoot.getFile(relativeFilePath);
         IPath rawLocation = relativeFile.getRawLocation();
         InputStream inputStream;
         inputStream = new FileInputStream(rawLocation.toString());
-        return inputStream; //relativeFile.getContents(true);
+        return inputStream; // relativeFile.getContents(true);
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -227,8 +237,9 @@ public final class ModelUtil {
 
     /**
      * Convert i path to i file.
-     *
-     * @param path the path
+     * 
+     * @param path
+     *            the path
      * @return the i file
      */
     public static IFile convertIPathToIFile(final IPath path) {
@@ -283,8 +294,9 @@ public final class ModelUtil {
 
     /**
      * Gets the absolute file path.
-     *
-     * @param resolvedPath the resolved path
+     * 
+     * @param resolvedPath
+     *            the resolved path
      * @return the absolute file path
      */
     public static String getAbsoluteFilePath(final IPath resolvedPath) {
@@ -318,11 +330,11 @@ public final class ModelUtil {
      * @throws URISyntaxException
      *             the uRI syntax exception
      */
-//    public static URL resolveBundleOrWorkspaceFile(final String fileLocation)
-//            throws MalformedURLException, URISyntaxException {
-//        String pluginID = KiemPlugin.PLUGIN_ID;
-//        return resolveBundleOrWorkspaceFile(fileLocation, pluginID);
-//    }
+    // public static URL resolveBundleOrWorkspaceFile(final String fileLocation)
+    // throws MalformedURLException, URISyntaxException {
+    // String pluginID = KiemPlugin.PLUGIN_ID;
+    // return resolveBundleOrWorkspaceFile(fileLocation, pluginID);
+    // }
 
     // -------------------------------------------------------------------------
 
@@ -359,8 +371,9 @@ public final class ModelUtil {
             final Bundle bundle = Platform.getBundle(pluginID);
 
             // first try to resolve bundle files (give preference to bundle files)
-            fileURL = org.eclipse.core.runtime.FileLocator.find(bundle, new Path(fileLocation2),
-                    null);
+            fileURL =
+                    org.eclipse.core.runtime.FileLocator
+                            .find(bundle, new Path(fileLocation2), null);
             // then try to resolve workspace files
             if (fileURL == null) {
                 fileURL = bundle.getResource(fileLocation2);
@@ -484,8 +497,9 @@ public final class ModelUtil {
         if (!fileStringCopy.startsWith("file:/")) {
             fileStringCopy = "file://" + fileStringCopy;
         }
-        org.eclipse.emf.common.util.URI uri = org.eclipse.emf.common.util.URI
-                .createURI(fileStringCopy.replaceAll(" ", "%20").replace("\\", "/"));
+        org.eclipse.emf.common.util.URI uri =
+                org.eclipse.emf.common.util.URI.createURI(fileStringCopy.replaceAll(" ", "%20")
+                        .replace("\\", "/"));
         return uri;
     }
 
@@ -497,17 +511,17 @@ public final class ModelUtil {
      * 
      * @return the currently active editor, or null
      */
-//    public static IEditorSite getActiveEditor() {
-//        IEditorSite editorSite = null;
-//        IPath currentModelPath = KiemPlugin.getCurrentModelFile();
-//        if (currentModelPath != null) {
-//            IEditorPart editor = KiemPlugin.getOpenedModelEditors().get(currentModelPath);
-//            if (editor != null) {
-//                editorSite = editor.getEditorSite();
-//            }
-//        }
-//        return editorSite;
-//    }
+    // public static IEditorSite getActiveEditor() {
+    // IEditorSite editorSite = null;
+    // IPath currentModelPath = KiemPlugin.getCurrentModelFile();
+    // if (currentModelPath != null) {
+    // IEditorPart editor = KiemPlugin.getOpenedModelEditors().get(currentModelPath);
+    // if (editor != null) {
+    // editorSite = editor.getEditorSite();
+    // }
+    // }
+    // return editorSite;
+    // }
 
     // -------------------------------------------------------------------------
 
@@ -522,8 +536,9 @@ public final class ModelUtil {
      */
     public static EObject loadEObjectFromModelFile(final IPath modelFilePath) throws IOException {
         // try to load it
-        org.eclipse.emf.common.util.URI uri = org.eclipse.emf.common.util.URI
-                .createPlatformResourceURI(modelFilePath.toOSString(), true);
+        org.eclipse.emf.common.util.URI uri =
+                org.eclipse.emf.common.util.URI.createPlatformResourceURI(
+                        modelFilePath.toOSString(), true);
         Resource resource = new ResourceSetImpl().createResource(uri);
         resource.load(Collections.EMPTY_MAP);
         if (resource != null && resource.getContents() != null && resource.getContents().size() > 0) {
@@ -609,6 +624,47 @@ public final class ModelUtil {
             }
         }
         return directory.delete();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Save a collection of models to the given URI.
+     * 
+     * @param models
+     *            the models to store in the new file
+     * @param uri
+     *            the target file URI
+     * @throws IOException
+     *             if an error occurs while saving
+     */
+    public static void saveModel(final List<EObject> models,
+            final org.eclipse.emf.common.util.URI uri) throws IOException {
+        // Create a resource set.
+        ResourceSet resourceSet = new ResourceSetImpl();
+        // Create a resource for this file.
+        Resource resource = resourceSet.createResource(uri);
+        // Add the model objects to the contents.
+        resource.getContents().addAll(models);
+        // Save the contents of the resource to the file system.
+        resource.save(Collections.EMPTY_MAP);
+    }
+
+    /**
+     * Save a model to the given URI.
+     * 
+     * @param model
+     *            the model to store in the new file
+     * @param uri
+     *            the target file URI
+     * @throws IOException
+     *             if an error occurs while saving
+     */
+    public static void saveModel(final EObject model, final org.eclipse.emf.common.util.URI uri)
+            throws IOException {
+        LinkedList<EObject> list = new LinkedList<EObject>();
+        list.add(model);
+        saveModel(list, uri);
     }
 
 }
