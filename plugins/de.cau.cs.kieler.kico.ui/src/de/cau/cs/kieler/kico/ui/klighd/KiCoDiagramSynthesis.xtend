@@ -344,7 +344,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
     // Translate a Group
     def KNode translateGroup(TransformationDummy transformationDummy) {
         return createNode() => [ node |
-            if (transformationDummy.dependencies.size > 1) {
+            if (transformationDummy.group) {
                 node.setLayoutOption(KlighdProperties::EXPAND, false);
             }
             for (child : transformationDummy.dependencies) {
