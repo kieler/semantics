@@ -41,30 +41,35 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cAnnotationsAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_1_0_0 = (RuleCall)cAnnotationsAssignment_1_0.eContents().get(0);
 		private final Keyword cRegionKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
-		private final Assignment cIdAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cIdIDTerminalRuleCall_1_2_0 = (RuleCall)cIdAssignment_1_2.eContents().get(0);
-		private final Assignment cLabelAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
-		private final RuleCall cLabelSTRINGTerminalRuleCall_1_3_0 = (RuleCall)cLabelAssignment_1_3.eContents().get(0);
-		private final Keyword cColonKeyword_1_4 = (Keyword)cGroup_1.eContents().get(4);
-		private final Assignment cDeclarationsAssignment_1_5 = (Assignment)cGroup_1.eContents().get(5);
-		private final RuleCall cDeclarationsDeclarationParserRuleCall_1_5_0 = (RuleCall)cDeclarationsAssignment_1_5.eContents().get(0);
+		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
+		private final Keyword cLeftSquareBracketKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
+		private final Assignment cForAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
+		private final RuleCall cForForParserRuleCall_1_2_1_0 = (RuleCall)cForAssignment_1_2_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_1_2_2 = (Keyword)cGroup_1_2.eContents().get(2);
+		private final Assignment cIdAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
+		private final RuleCall cIdIDTerminalRuleCall_1_3_0 = (RuleCall)cIdAssignment_1_3.eContents().get(0);
+		private final Assignment cLabelAssignment_1_4 = (Assignment)cGroup_1.eContents().get(4);
+		private final RuleCall cLabelSTRINGTerminalRuleCall_1_4_0 = (RuleCall)cLabelAssignment_1_4.eContents().get(0);
+		private final Keyword cColonKeyword_1_5 = (Keyword)cGroup_1.eContents().get(5);
+		private final Assignment cDeclarationsAssignment_1_6 = (Assignment)cGroup_1.eContents().get(6);
+		private final RuleCall cDeclarationsDeclarationParserRuleCall_1_6_0 = (RuleCall)cDeclarationsAssignment_1_6.eContents().get(0);
 		private final Assignment cStatesAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cStatesStateParserRuleCall_2_0 = (RuleCall)cStatesAssignment_2.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//SingleRegion returns sccharts::Region:
-		//	{sccharts::Region} (annotations+=Annotation* "region" id=ID? label=STRING? ":" declarations+=Declaration*)?
-		//	states+=State*;
+		//	{sccharts::Region} (annotations+=Annotation* "region" ("[" for=For "]")? id=ID? label=STRING? ":"
+		//	declarations+=Declaration*)? states+=State*;
 		public ParserRule getRule() { return rule; }
 
-		//{sccharts::Region} (annotations+=Annotation* "region" id=ID? label=STRING? ":" declarations+=Declaration*)?
-		//states+=State*
+		//{sccharts::Region} (annotations+=Annotation* "region" ("[" for=For "]")? id=ID? label=STRING? ":"
+		//declarations+=Declaration*)? states+=State*
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::Region}
 		public Action getRegionAction_0() { return cRegionAction_0; }
 
-		//(annotations+=Annotation* "region" id=ID? label=STRING? ":" declarations+=Declaration*)?
+		//(annotations+=Annotation* "region" ("[" for=For "]")? id=ID? label=STRING? ":" declarations+=Declaration*)?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//annotations+=Annotation*
@@ -76,26 +81,41 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//"region"
 		public Keyword getRegionKeyword_1_1() { return cRegionKeyword_1_1; }
 
+		//("[" for=For "]")?
+		public Group getGroup_1_2() { return cGroup_1_2; }
+
+		//"["
+		public Keyword getLeftSquareBracketKeyword_1_2_0() { return cLeftSquareBracketKeyword_1_2_0; }
+
+		//for=For
+		public Assignment getForAssignment_1_2_1() { return cForAssignment_1_2_1; }
+
+		//For
+		public RuleCall getForForParserRuleCall_1_2_1_0() { return cForForParserRuleCall_1_2_1_0; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_1_2_2() { return cRightSquareBracketKeyword_1_2_2; }
+
 		//id=ID?
-		public Assignment getIdAssignment_1_2() { return cIdAssignment_1_2; }
+		public Assignment getIdAssignment_1_3() { return cIdAssignment_1_3; }
 
 		//ID
-		public RuleCall getIdIDTerminalRuleCall_1_2_0() { return cIdIDTerminalRuleCall_1_2_0; }
+		public RuleCall getIdIDTerminalRuleCall_1_3_0() { return cIdIDTerminalRuleCall_1_3_0; }
 
 		//label=STRING?
-		public Assignment getLabelAssignment_1_3() { return cLabelAssignment_1_3; }
+		public Assignment getLabelAssignment_1_4() { return cLabelAssignment_1_4; }
 
 		//STRING
-		public RuleCall getLabelSTRINGTerminalRuleCall_1_3_0() { return cLabelSTRINGTerminalRuleCall_1_3_0; }
+		public RuleCall getLabelSTRINGTerminalRuleCall_1_4_0() { return cLabelSTRINGTerminalRuleCall_1_4_0; }
 
 		//":"
-		public Keyword getColonKeyword_1_4() { return cColonKeyword_1_4; }
+		public Keyword getColonKeyword_1_5() { return cColonKeyword_1_5; }
 
 		//declarations+=Declaration*
-		public Assignment getDeclarationsAssignment_1_5() { return cDeclarationsAssignment_1_5; }
+		public Assignment getDeclarationsAssignment_1_6() { return cDeclarationsAssignment_1_6; }
 
 		//Declaration
-		public RuleCall getDeclarationsDeclarationParserRuleCall_1_5_0() { return cDeclarationsDeclarationParserRuleCall_1_5_0; }
+		public RuleCall getDeclarationsDeclarationParserRuleCall_1_6_0() { return cDeclarationsDeclarationParserRuleCall_1_6_0; }
 
 		//states+=State*
 		public Assignment getStatesAssignment_2() { return cStatesAssignment_2; }
@@ -1376,8 +1396,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ---------------------------------------------------------------------------------------------------
 	//SingleRegion returns sccharts::Region:
-	//	{sccharts::Region} (annotations+=Annotation* "region" id=ID? label=STRING? ":" declarations+=Declaration*)?
-	//	states+=State*;
+	//	{sccharts::Region} (annotations+=Annotation* "region" ("[" for=For "]")? id=ID? label=STRING? ":"
+	//	declarations+=Declaration*)? states+=State*;
 	public SingleRegionElements getSingleRegionAccess() {
 		return (pSingleRegion != null) ? pSingleRegion : (pSingleRegion = new SingleRegionElements());
 	}

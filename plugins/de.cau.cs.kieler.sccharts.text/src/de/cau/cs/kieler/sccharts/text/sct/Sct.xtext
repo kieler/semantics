@@ -19,7 +19,7 @@ SingleRegion returns sccharts::Region:
 	{sccharts::Region}
     (
       (annotations += Annotation)*
-      'region' (id=ID)? (label=STRING)? ':'
+      'region' ('['for=For']')? (id=ID)? (label=STRING)? ':'
       (declarations+=Declaration)*
      )?
     (states+=State)*;
