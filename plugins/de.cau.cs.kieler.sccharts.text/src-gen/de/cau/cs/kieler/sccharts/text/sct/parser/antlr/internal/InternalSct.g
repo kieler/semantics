@@ -280,11 +280,7 @@ ruleFor returns [EObject current=null]
             grammarAccess.getForAccess().getForAction_0(),
             $current);
     }
-)	otherlv_1='for' 
-    {
-    	newLeafNode(otherlv_1, grammarAccess.getForAccess().getForKeyword_1());
-    }
-(
+)(
 (
 		{ 
 		  /* */ 
@@ -294,21 +290,21 @@ ruleFor returns [EObject current=null]
 	            $current = createModelElement(grammarAccess.getForRule());
 	        }
         }
-	otherlv_2=RULE_ID
+	otherlv_1=RULE_ID
 	{
-		newLeafNode(otherlv_2, grammarAccess.getForAccess().getLoopVariableValuedObjectCrossReference_2_0()); 
+		newLeafNode(otherlv_1, grammarAccess.getForAccess().getLoopVariableValuedObjectCrossReference_1_0()); 
 	}
 
 )
-)	otherlv_3='=' 
+)	otherlv_2='=' 
     {
-    	newLeafNode(otherlv_3, grammarAccess.getForAccess().getEqualsSignKeyword_3());
+    	newLeafNode(otherlv_2, grammarAccess.getForAccess().getEqualsSignKeyword_2());
     }
 (
 (
-		lv_from_4_0=RULE_INT
+		lv_from_3_0=RULE_INT
 		{
-			newLeafNode(lv_from_4_0, grammarAccess.getForAccess().getFromINTTerminalRuleCall_4_0()); 
+			newLeafNode(lv_from_3_0, grammarAccess.getForAccess().getFromINTTerminalRuleCall_3_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -317,20 +313,20 @@ ruleFor returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"from",
-        		lv_from_4_0, 
+        		lv_from_3_0, 
         		"INT");
 	    }
 
 )
-)	otherlv_5='..' 
+)	otherlv_4='..' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getForAccess().getFullStopFullStopKeyword_5());
+    	newLeafNode(otherlv_4, grammarAccess.getForAccess().getFullStopFullStopKeyword_4());
     }
 (
 (
-		lv_to_6_0=RULE_INT
+		lv_to_5_0=RULE_INT
 		{
-			newLeafNode(lv_to_6_0, grammarAccess.getForAccess().getToINTTerminalRuleCall_6_0()); 
+			newLeafNode(lv_to_5_0, grammarAccess.getForAccess().getToINTTerminalRuleCall_5_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -339,7 +335,7 @@ ruleFor returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"to",
-        		lv_to_6_0, 
+        		lv_to_5_0, 
         		"INT");
 	    }
 

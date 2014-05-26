@@ -128,57 +128,53 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "For");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cForAction_0 = (Action)cGroup.eContents().get(0);
-		private final Keyword cForKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cLoopVariableAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final CrossReference cLoopVariableValuedObjectCrossReference_2_0 = (CrossReference)cLoopVariableAssignment_2.eContents().get(0);
-		private final RuleCall cLoopVariableValuedObjectIDTerminalRuleCall_2_0_1 = (RuleCall)cLoopVariableValuedObjectCrossReference_2_0.eContents().get(1);
-		private final Keyword cEqualsSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cFromAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cFromINTTerminalRuleCall_4_0 = (RuleCall)cFromAssignment_4.eContents().get(0);
-		private final Keyword cFullStopFullStopKeyword_5 = (Keyword)cGroup.eContents().get(5);
-		private final Assignment cToAssignment_6 = (Assignment)cGroup.eContents().get(6);
-		private final RuleCall cToINTTerminalRuleCall_6_0 = (RuleCall)cToAssignment_6.eContents().get(0);
+		private final Assignment cLoopVariableAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cLoopVariableValuedObjectCrossReference_1_0 = (CrossReference)cLoopVariableAssignment_1.eContents().get(0);
+		private final RuleCall cLoopVariableValuedObjectIDTerminalRuleCall_1_0_1 = (RuleCall)cLoopVariableValuedObjectCrossReference_1_0.eContents().get(1);
+		private final Keyword cEqualsSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cFromAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cFromINTTerminalRuleCall_3_0 = (RuleCall)cFromAssignment_3.eContents().get(0);
+		private final Keyword cFullStopFullStopKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cToAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cToINTTerminalRuleCall_5_0 = (RuleCall)cToAssignment_5.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//For returns sccharts::For:
-		//	{sccharts::For} "for" loopVariable=[kexpressions::ValuedObject] "=" from=INT ".." to=INT;
+		//	{sccharts::For} loopVariable=[kexpressions::ValuedObject] "=" from=INT ".." to=INT;
 		public ParserRule getRule() { return rule; }
 
-		//{sccharts::For} "for" loopVariable=[kexpressions::ValuedObject] "=" from=INT ".." to=INT
+		//{sccharts::For} loopVariable=[kexpressions::ValuedObject] "=" from=INT ".." to=INT
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::For}
 		public Action getForAction_0() { return cForAction_0; }
 
-		//"for"
-		public Keyword getForKeyword_1() { return cForKeyword_1; }
-
 		//loopVariable=[kexpressions::ValuedObject]
-		public Assignment getLoopVariableAssignment_2() { return cLoopVariableAssignment_2; }
+		public Assignment getLoopVariableAssignment_1() { return cLoopVariableAssignment_1; }
 
 		//[kexpressions::ValuedObject]
-		public CrossReference getLoopVariableValuedObjectCrossReference_2_0() { return cLoopVariableValuedObjectCrossReference_2_0; }
+		public CrossReference getLoopVariableValuedObjectCrossReference_1_0() { return cLoopVariableValuedObjectCrossReference_1_0; }
 
 		//ID
-		public RuleCall getLoopVariableValuedObjectIDTerminalRuleCall_2_0_1() { return cLoopVariableValuedObjectIDTerminalRuleCall_2_0_1; }
+		public RuleCall getLoopVariableValuedObjectIDTerminalRuleCall_1_0_1() { return cLoopVariableValuedObjectIDTerminalRuleCall_1_0_1; }
 
 		//"="
-		public Keyword getEqualsSignKeyword_3() { return cEqualsSignKeyword_3; }
+		public Keyword getEqualsSignKeyword_2() { return cEqualsSignKeyword_2; }
 
 		//from=INT
-		public Assignment getFromAssignment_4() { return cFromAssignment_4; }
+		public Assignment getFromAssignment_3() { return cFromAssignment_3; }
 
 		//INT
-		public RuleCall getFromINTTerminalRuleCall_4_0() { return cFromINTTerminalRuleCall_4_0; }
+		public RuleCall getFromINTTerminalRuleCall_3_0() { return cFromINTTerminalRuleCall_3_0; }
 
 		//".."
-		public Keyword getFullStopFullStopKeyword_5() { return cFullStopFullStopKeyword_5; }
+		public Keyword getFullStopFullStopKeyword_4() { return cFullStopFullStopKeyword_4; }
 
 		//to=INT
-		public Assignment getToAssignment_6() { return cToAssignment_6; }
+		public Assignment getToAssignment_5() { return cToAssignment_5; }
 
 		//INT
-		public RuleCall getToINTTerminalRuleCall_6_0() { return cToINTTerminalRuleCall_6_0; }
+		public RuleCall getToINTTerminalRuleCall_5_0() { return cToINTTerminalRuleCall_5_0; }
 	}
 
 	public class RegionElements extends AbstractParserRuleElementFinder {
@@ -1408,7 +1404,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ---------------------------------------------------------------------------------------------------
 	//For returns sccharts::For:
-	//	{sccharts::For} "for" loopVariable=[kexpressions::ValuedObject] "=" from=INT ".." to=INT;
+	//	{sccharts::For} loopVariable=[kexpressions::ValuedObject] "=" from=INT ".." to=INT;
 	public ForElements getForAccess() {
 		return (pFor != null) ? pFor : (pFor = new ForElements());
 	}
