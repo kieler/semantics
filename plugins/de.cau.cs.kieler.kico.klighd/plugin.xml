@@ -7,6 +7,10 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.KiCoModelChainSynthesis"
             id="de.cau.cs.kieler.kico.klighd.KiCoModelChainSynthesis">
       </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolderSynthesis"
+            id="de.cau.cs.kieler.kico.klighd.KiCoCodePlaceHolder">
+      </diagramSynthesis>
    </extension>
    <extension
          point="org.eclipse.ui.views">

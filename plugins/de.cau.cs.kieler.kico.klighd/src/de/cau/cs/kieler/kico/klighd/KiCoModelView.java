@@ -128,6 +128,7 @@ public class KiCoModelView extends DiagramViewPart {
     private IEditorPart activeEditor;
     /** Current model display as diagram */
     private Object currentModel;
+    private Object sourceModel;
 
     /**
      * Create an instance
@@ -347,8 +348,8 @@ public class KiCoModelView extends DiagramViewPart {
                     if (path != null && !path.isEmpty()) {
                         IWorkspace workspace = ResourcesPlugin.getWorkspace();
                         IWorkspaceRoot root = workspace.getRoot();
-                        URI uri = URI.createPlatformResourceURI(path.toString(), false);
                         IFile file = root.getFile(path);
+                        URI uri = URI.createPlatformResourceURI(path.toString(), false);
 
                         try {
                             if (currentModel instanceof EObject) {
@@ -359,8 +360,15 @@ public class KiCoModelView extends DiagramViewPart {
                                         ((CompilationResult) currentModel).getEObject(), uri);
                             } else if (currentModel instanceof CompilationResult
                                     && ((CompilationResult) currentModel).getString() != null) {
-                                file.appendContents(new StringInputStream(
-                                        ((CompilationResult) currentModel).getString()), 0, null);
+                                if (!file.exists()) {
+                                    file.create(new StringInputStream(
+                                            ((CompilationResult) currentModel).getString()), 0,
+                                            null);
+                                } else {
+                                    file.setContents(new StringInputStream(
+                                            ((CompilationResult) currentModel).getString()), 0,
+                                            null);
+                                }
                                 // open editor
                                 PlatformUI
                                         .getWorkbench()
@@ -405,7 +413,7 @@ public class KiCoModelView extends DiagramViewPart {
                         @Override
                         public void process(final XtextResource state) throws Exception {
                             if (!state.getContents().isEmpty()) {
-                                currentModel = state.getContents().get(0);
+                                sourceModel = state.getContents().get(0);
                             }
                         }
                     });
@@ -418,12 +426,11 @@ public class KiCoModelView extends DiagramViewPart {
                         editor.getEditingDomain().getResourceSet().getResources();
 
                 if (!resources.isEmpty() && !resources.get(0).getContents().isEmpty()) {
-                    currentModel =
-                            EcoreUtil.getRootContainer(resources.get(0).getContents().get(0));
+                    sourceModel = EcoreUtil.getRootContainer(resources.get(0).getContents().get(0));
                 }
             }
 
-            if (currentModel != null) {
+            if (sourceModel != null) {
                 boolean transformationsChanged = false;
                 // get new transformations
                 // TODO pin transformation
@@ -449,7 +456,7 @@ public class KiCoModelView extends DiagramViewPart {
 
                     // compile
                     CompilationResult result =
-                            KielerCompiler.compile(transformations, (EObject) currentModel);
+                            KielerCompiler.compile(transformations, (EObject) sourceModel);
 
                     // TODO test if compiler error occured
                     // composite model in given display mode
@@ -461,14 +468,14 @@ public class KiCoModelView extends DiagramViewPart {
                                 chain.models.add(new KiCoModelWrapper(result.getEObject()));
 
                                 currentModel = chain;
+                                updateDiagram(chain);
                             } else {
-                                currentModel = result.getEObject();
+                                currentModel = result;
+                                updateDiagram(result.getEObject());
                             }
-                            updateDiagram(currentModel);
                         } else if (result.getString() != null) {
                             currentModel = result;
-                            updateDiagram(currentModel);
-                            //updateDiagram(new KiCoCodePlaceHolder());
+                            updateDiagram(new KiCoCodePlaceHolder());
                         }
                     }
                 } else if (!(
@@ -480,7 +487,7 @@ public class KiCoModelView extends DiagramViewPart {
                         || (!transformationsChanged && change == ChangeEvent.TRANSFORMATIONS)
                 // switched to uncompiled view but no compiled diagram was shown before
                 || (change == ChangeEvent.COMPILE && transformations == null))) {
-                    updateDiagram(currentModel);
+                    updateDiagram(sourceModel);
                 }
             }
         }
@@ -490,18 +497,23 @@ public class KiCoModelView extends DiagramViewPart {
      * Updates displayed diagram in this view. Initializes this view if necessary.
      */
     private void updateDiagram(Object model) {
-        if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
-            // the initialization case
-            DiagramViewManager.initializeView(this, model, null, null);
-            if (activeEditor != null) {
-                this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
+        try {
+            if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
+                // the initialization case
+                DiagramViewManager.initializeView(this, model, null, null);
+                if (activeEditor != null) {
+                    this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
+                }
+            } else {
+                // update case
+                DiagramViewManager.updateView(this.getViewer().getViewContext(), model);
+                if (activeEditor != null) {
+                    this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
+                }
             }
-        } else {
-            // update case
-            DiagramViewManager.updateView(this.getViewer().getViewContext(), model);
-            if (activeEditor != null) {
-                this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
-            }
+        } catch (Exception e) {
+            // TODO handle exception line NPE if no synthesis available
+            e.printStackTrace();
         }
     }
 
