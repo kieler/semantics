@@ -167,9 +167,12 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Action cRegionAction_0 = (Action)cGroup.eContents().get(0);
 		private final Assignment cAnnotationsAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_1_0 = (RuleCall)cAnnotationsAssignment_1.eContents().get(0);
-		private final Assignment cForAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cForForParserRuleCall_2_0 = (RuleCall)cForAssignment_2.eContents().get(0);
-		private final Keyword cRegionKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Keyword cRegionKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cLeftSquareBracketKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cForAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cForForParserRuleCall_3_1_0 = (RuleCall)cForAssignment_3_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
 		private final Assignment cIdAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cIdIDTerminalRuleCall_4_0 = (RuleCall)cIdAssignment_4.eContents().get(0);
 		private final Assignment cLabelAssignment_5 = (Assignment)cGroup.eContents().get(5);
@@ -182,12 +185,12 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//Region returns sccharts::Region:
-		//	{sccharts::Region} annotations+=Annotation* for=For? "region" id=ID? label=STRING? ":" declarations+=Declaration*
-		//	states+=State+;
+		//	{sccharts::Region} annotations+=Annotation* "region" ("[" for=For "]")? id=ID? label=STRING? ":"
+		//	declarations+=Declaration* states+=State+;
 		public ParserRule getRule() { return rule; }
 
-		//{sccharts::Region} annotations+=Annotation* for=For? "region" id=ID? label=STRING? ":" declarations+=Declaration*
-		//states+=State+
+		//{sccharts::Region} annotations+=Annotation* "region" ("[" for=For "]")? id=ID? label=STRING? ":"
+		//declarations+=Declaration* states+=State+
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::Region}
@@ -199,14 +202,23 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_1_0() { return cAnnotationsAnnotationParserRuleCall_1_0; }
 
-		//for=For?
-		public Assignment getForAssignment_2() { return cForAssignment_2; }
+		//"region"
+		public Keyword getRegionKeyword_2() { return cRegionKeyword_2; }
+
+		//("[" for=For "]")?
+		public Group getGroup_3() { return cGroup_3; }
+
+		//"["
+		public Keyword getLeftSquareBracketKeyword_3_0() { return cLeftSquareBracketKeyword_3_0; }
+
+		//for=For
+		public Assignment getForAssignment_3_1() { return cForAssignment_3_1; }
 
 		//For
-		public RuleCall getForForParserRuleCall_2_0() { return cForForParserRuleCall_2_0; }
+		public RuleCall getForForParserRuleCall_3_1_0() { return cForForParserRuleCall_3_1_0; }
 
-		//"region"
-		public Keyword getRegionKeyword_3() { return cRegionKeyword_3; }
+		//"]"
+		public Keyword getRightSquareBracketKeyword_3_2() { return cRightSquareBracketKeyword_3_2; }
 
 		//id=ID?
 		public Assignment getIdAssignment_4() { return cIdAssignment_4; }
@@ -1387,8 +1399,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ---------------------------------------------------------------------------------------------------
 	//Region returns sccharts::Region:
-	//	{sccharts::Region} annotations+=Annotation* for=For? "region" id=ID? label=STRING? ":" declarations+=Declaration*
-	//	states+=State+;
+	//	{sccharts::Region} annotations+=Annotation* "region" ("[" for=For "]")? id=ID? label=STRING? ":"
+	//	declarations+=Declaration* states+=State+;
 	public RegionElements getRegionAccess() {
 		return (pRegion != null) ? pRegion : (pRegion = new RegionElements());
 	}

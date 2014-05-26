@@ -76,6 +76,7 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSingleRegionAccess().getGroup_1(), "rule__SingleRegion__Group_1__0");
 					put(grammarAccess.getForAccess().getGroup(), "rule__For__Group__0");
 					put(grammarAccess.getRegionAccess().getGroup(), "rule__Region__Group__0");
+					put(grammarAccess.getRegionAccess().getGroup_3(), "rule__Region__Group_3__0");
 					put(grammarAccess.getSCChartAccess().getGroup(), "rule__SCChart__Group__0");
 					put(grammarAccess.getSCChartAccess().getGroup_0(), "rule__SCChart__Group_0__0");
 					put(grammarAccess.getSCChartAccess().getGroup_6_0(), "rule__SCChart__Group_6_0__0");
@@ -171,7 +172,7 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getForAccess().getFromAssignment_4(), "rule__For__FromAssignment_4");
 					put(grammarAccess.getForAccess().getToAssignment_6(), "rule__For__ToAssignment_6");
 					put(grammarAccess.getRegionAccess().getAnnotationsAssignment_1(), "rule__Region__AnnotationsAssignment_1");
-					put(grammarAccess.getRegionAccess().getForAssignment_2(), "rule__Region__ForAssignment_2");
+					put(grammarAccess.getRegionAccess().getForAssignment_3_1(), "rule__Region__ForAssignment_3_1");
 					put(grammarAccess.getRegionAccess().getIdAssignment_4(), "rule__Region__IdAssignment_4");
 					put(grammarAccess.getRegionAccess().getLabelAssignment_5(), "rule__Region__LabelAssignment_5");
 					put(grammarAccess.getRegionAccess().getDeclarationsAssignment_7(), "rule__Region__DeclarationsAssignment_7");
