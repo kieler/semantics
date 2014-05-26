@@ -26,9 +26,17 @@ SingleRegion returns sccharts::Region:
 
 // ---------------------------------------------------------------------------------------------------
 
+For returns sccharts::For:
+    {sccharts::For}
+    'for' loopVariable=[kexpressions::ValuedObject] '=' from=[kexpressions::Value] '..' to=[kexpressions::Value]
+;
+
+// ---------------------------------------------------------------------------------------------------
+
 Region returns sccharts::Region:
 	{sccharts::Region}
     (annotations += Annotation)*
+    (for=For)?
     'region' (id=ID)? (label=STRING)? ':'
       (declarations+=Declaration)*
     (states+=State)+;

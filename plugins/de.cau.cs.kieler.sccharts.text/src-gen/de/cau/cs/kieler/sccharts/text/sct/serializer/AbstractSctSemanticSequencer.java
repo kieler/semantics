@@ -25,6 +25,7 @@ import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.Emission;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
+import de.cau.cs.kieler.sccharts.For;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
@@ -343,6 +344,12 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 					return; 
 				}
 				else break;
+			case SCChartsPackage.FOR:
+				if(context == grammarAccess.getForRule()) {
+					sequence_For(context, (For) semanticObject); 
+					return; 
+				}
+				else break;
 			case SCChartsPackage.REGION:
 				if(context == grammarAccess.getRegionRule()) {
 					sequence_Region(context, (Region) semanticObject); 
@@ -438,6 +445,28 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
+	 *     (loopVariable=[ValuedObject|ID] from=[Value|ID] to=[Value|ID])
+	 */
+	protected void sequence_For(EObject context, For semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, SCChartsPackage.Literals.FOR__LOOP_VARIABLE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SCChartsPackage.Literals.FOR__LOOP_VARIABLE));
+			if(transientValues.isValueTransient(semanticObject, SCChartsPackage.Literals.FOR__FROM) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SCChartsPackage.Literals.FOR__FROM));
+			if(transientValues.isValueTransient(semanticObject, SCChartsPackage.Literals.FOR__TO) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SCChartsPackage.Literals.FOR__TO));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getForAccess().getLoopVariableValuedObjectIDTerminalRuleCall_2_0_1(), semanticObject.getLoopVariable());
+		feeder.accept(grammarAccess.getForAccess().getFromValueIDTerminalRuleCall_4_0_1(), semanticObject.getFrom());
+		feeder.accept(grammarAccess.getForAccess().getToValueIDTerminalRuleCall_6_0_1(), semanticObject.getTo());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (importedType=[State|QualifiedName] | importedNamespace=QualifiedNameWithWildcard)
 	 */
 	protected void sequence_ImportDecl(EObject context, ImportDecl semanticObject) {
@@ -447,7 +476,14 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (annotations+=Annotation* id=ID? label=STRING? declarations+=Declaration* states+=State+)
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         for=For? 
+	 *         id=ID? 
+	 *         label=STRING? 
+	 *         declarations+=Declaration* 
+	 *         states+=State+
+	 *     )
 	 */
 	protected void sequence_Region(EObject context, Region semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
