@@ -14,7 +14,7 @@
             id="CODEGENERATION"
             isCategory="true"
             isFeatureGroup="false"
-            name="SCG2C"
+            name="Code Generation"
             transformations="SCG2C">
       </transformationGroup>
    </extension>
