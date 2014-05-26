@@ -218,9 +218,7 @@ public abstract class Transformation {
             Object result;
             try {
                 result = transformationMethod.invoke(transformationInstance, eObject);
-                if (result instanceof EObject) {
-                    return (EObject) result;
-                }
+                return result;
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (IllegalArgumentException e) {
