@@ -464,7 +464,7 @@ public class KiCoModelView extends DiagramViewPart {
                         if (result.getEObject() != null) {
                             if (displaySideBySide) {
                                 KiCoModelChain chain = new KiCoModelChain();
-                                chain.models.add(new KiCoModelWrapper(currentModel));
+                                chain.models.add(new KiCoModelWrapper(sourceModel));
                                 chain.models.add(new KiCoModelWrapper(result.getEObject()));
 
                                 currentModel = chain;
