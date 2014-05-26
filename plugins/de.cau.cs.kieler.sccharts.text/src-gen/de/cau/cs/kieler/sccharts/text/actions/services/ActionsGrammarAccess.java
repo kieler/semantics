@@ -45,13 +45,10 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEffectsEffectParserRuleCall_7_2_1_0 = (RuleCall)cEffectsAssignment_7_2_1.eContents().get(0);
 		
 		//// haf: We need a Rule for transitions in order to serialize them
-		//
 		//// here we only want to have the features isImmediate, delay, trigger and effects
-		//
 		//// the features type, targetState, priority, isHistory are ignored and set as transient
-		//
 		//// you need to override the rule to support transitions properly
-		// Transition returns sccharts::Transition:
+		//Transition returns sccharts::Transition:
 		//	{sccharts::Transition} annotations+=Annotation* immediate?="immediate"? delay=INT? deferred?="deferred"?
 		//	history=HistoryType? trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)?;
 		public ParserRule getRule() { return rule; }
@@ -142,29 +139,24 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		////// chsch: The action rule is used in Kits.xtext for entry-, during-, exitActions, suspensionTrigger 
-		//
 		////Action returns sccharts::Action:
-		// //    {sccharts::Action}
-		// ////    (annotations += Annotation)*
-		//
+		////    {sccharts::Action}
+		//////    (annotations += Annotation)*
 		////	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?; 		
-		//
 		//EntryAction returns sccharts::EntryAction:
 		//	{sccharts::EntryAction} //    (annotations += Annotation)*
-		// "entry" trigger=BoolExpression? ("/" effects+=Effect (";"
-		//	effects+=Effect)*)? ";"?;
+		//	"entry" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::EntryAction} //    (annotations += Annotation)*
-		// "entry" trigger=BoolExpression? ("/" effects+=Effect (";"
-		//effects+=Effect)*)? ";"?
+		//"entry" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::EntryAction}
 		public Action getEntryActionAction_0() { return cEntryActionAction_0; }
 
 		////    (annotations += Annotation)*
-		// "entry"
+		//"entry"
 		public Keyword getEntryKeyword_1() { return cEntryKeyword_1; }
 
 		//trigger=BoolExpression?
@@ -222,13 +214,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DuringAction returns sccharts::DuringAction:
 		//	{sccharts::DuringAction} //    (annotations += Annotation)*
-		// immediate?="immediate"? "during" trigger=BoolExpression?
-		//	("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
+		//	immediate?="immediate"? "during" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::DuringAction} //    (annotations += Annotation)*
-		// immediate?="immediate"? "during" trigger=BoolExpression?
-		//("/" effects+=Effect (";" effects+=Effect)*)? ";"?
+		//immediate?="immediate"? "during" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::DuringAction}
@@ -296,20 +286,18 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ExitAction returns sccharts::ExitAction:
 		//	{sccharts::ExitAction} //    (annotations += Annotation)*
-		// "exit" trigger=BoolExpression? ("/" effects+=Effect (";"
-		//	effects+=Effect)*)? ";"?;
+		//	"exit" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::ExitAction} //    (annotations += Annotation)*
-		// "exit" trigger=BoolExpression? ("/" effects+=Effect (";"
-		//effects+=Effect)*)? ";"?
+		//"exit" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::ExitAction}
 		public Action getExitActionAction_0() { return cExitActionAction_0; }
 
 		////    (annotations += Annotation)*
-		// "exit"
+		//"exit"
 		public Keyword getExitKeyword_1() { return cExitKeyword_1; }
 
 		//trigger=BoolExpression?
@@ -361,13 +349,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SuspendAction returns sccharts::SuspendAction:
 		//	{sccharts::SuspendAction} //    (annotations += Annotation)*
-		// immediate?="immediate"? weak?="weak"? "suspend"
-		//	trigger=BoolExpression? ";"?;
+		//	immediate?="immediate"? weak?="weak"? "suspend" trigger=BoolExpression? ";"?;
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::SuspendAction} //    (annotations += Annotation)*
-		// immediate?="immediate"? weak?="weak"? "suspend"
-		//trigger=BoolExpression? ";"?
+		//immediate?="immediate"? weak?="weak"? "suspend" trigger=BoolExpression? ";"?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::SuspendAction}
@@ -642,13 +628,10 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//// haf: We need a Rule for transitions in order to serialize them
-	//
 	//// here we only want to have the features isImmediate, delay, trigger and effects
-	//
 	//// the features type, targetState, priority, isHistory are ignored and set as transient
-	//
 	//// you need to override the rule to support transitions properly
-	// Transition returns sccharts::Transition:
+	//Transition returns sccharts::Transition:
 	//	{sccharts::Transition} annotations+=Annotation* immediate?="immediate"? delay=INT? deferred?="deferred"?
 	//	history=HistoryType? trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)?;
 	public TransitionElements getTransitionAccess() {
@@ -660,17 +643,13 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////// chsch: The action rule is used in Kits.xtext for entry-, during-, exitActions, suspensionTrigger 
-	//
 	////Action returns sccharts::Action:
-	// //    {sccharts::Action}
-	// ////    (annotations += Annotation)*
-	//
+	////    {sccharts::Action}
+	//////    (annotations += Annotation)*
 	////	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?; 		
-	//
 	//EntryAction returns sccharts::EntryAction:
 	//	{sccharts::EntryAction} //    (annotations += Annotation)*
-	// "entry" trigger=BoolExpression? ("/" effects+=Effect (";"
-	//	effects+=Effect)*)? ";"?;
+	//	"entry" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
 	public EntryActionElements getEntryActionAccess() {
 		return (pEntryAction != null) ? pEntryAction : (pEntryAction = new EntryActionElements());
 	}
@@ -681,8 +660,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//DuringAction returns sccharts::DuringAction:
 	//	{sccharts::DuringAction} //    (annotations += Annotation)*
-	// immediate?="immediate"? "during" trigger=BoolExpression?
-	//	("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
+	//	immediate?="immediate"? "during" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
 	public DuringActionElements getDuringActionAccess() {
 		return (pDuringAction != null) ? pDuringAction : (pDuringAction = new DuringActionElements());
 	}
@@ -693,8 +671,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ExitAction returns sccharts::ExitAction:
 	//	{sccharts::ExitAction} //    (annotations += Annotation)*
-	// "exit" trigger=BoolExpression? ("/" effects+=Effect (";"
-	//	effects+=Effect)*)? ";"?;
+	//	"exit" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
 	public ExitActionElements getExitActionAccess() {
 		return (pExitAction != null) ? pExitAction : (pExitAction = new ExitActionElements());
 	}
@@ -705,8 +682,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SuspendAction returns sccharts::SuspendAction:
 	//	{sccharts::SuspendAction} //    (annotations += Annotation)*
-	// immediate?="immediate"? weak?="weak"? "suspend"
-	//	trigger=BoolExpression? ";"?;
+	//	immediate?="immediate"? weak?="weak"? "suspend" trigger=BoolExpression? ";"?;
 	public SuspendActionElements getSuspendActionAccess() {
 		return (pSuspendAction != null) ? pSuspendAction : (pSuspendAction = new SuspendActionElements());
 	}

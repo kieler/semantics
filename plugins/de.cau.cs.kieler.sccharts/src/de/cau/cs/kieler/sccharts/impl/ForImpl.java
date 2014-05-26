@@ -40,7 +40,6 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ForImpl#getLoopVariable <em>Loop Variable</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ForImpl#getBodyScope <em>Body Scope</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ForImpl#getFrom <em>From</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ForImpl#getTo <em>To</em>}</li>
  * </ul>
@@ -50,331 +49,254 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  */
 public class ForImpl extends EObjectImpl implements For {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-	 * The cached value of the '{@link #getLoopVariable() <em>Loop Variable</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getLoopVariable() <em>Loop Variable</em>}' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getLoopVariable()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getLoopVariable()
+     * @generated
+     * @ordered
+     */
     protected ValuedObject loopVariable;
 
     /**
-	 * The cached value of the '{@link #getBodyScope() <em>Body Scope</em>}' containment reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getFrom() <em>From</em>}' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getBodyScope()
-	 * @generated
-	 * @ordered
-	 */
-    protected Scope bodyScope;
-
-    /**
-	 * The cached value of the '{@link #getFrom() <em>From</em>}' reference.
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @see #getFrom()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getFrom()
+     * @generated
+     * @ordered
+     */
     protected Expression from;
 
     /**
-	 * The cached value of the '{@link #getTo() <em>To</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getTo() <em>To</em>}' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getTo()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getTo()
+     * @generated
+     * @ordered
+     */
     protected Expression to;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected ForImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return SCChartsPackage.Literals.FOR;
-	}
+        return SCChartsPackage.Literals.FOR;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ValuedObject getLoopVariable() {
-		if (loopVariable != null && loopVariable.eIsProxy()) {
-			InternalEObject oldLoopVariable = (InternalEObject)loopVariable;
-			loopVariable = (ValuedObject)eResolveProxy(oldLoopVariable);
-			if (loopVariable != oldLoopVariable) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.FOR__LOOP_VARIABLE, oldLoopVariable, loopVariable));
-			}
-		}
-		return loopVariable;
-	}
+        if (loopVariable != null && loopVariable.eIsProxy()) {
+            InternalEObject oldLoopVariable = (InternalEObject)loopVariable;
+            loopVariable = (ValuedObject)eResolveProxy(oldLoopVariable);
+            if (loopVariable != oldLoopVariable) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.FOR__LOOP_VARIABLE, oldLoopVariable, loopVariable));
+            }
+        }
+        return loopVariable;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ValuedObject basicGetLoopVariable() {
-		return loopVariable;
-	}
+        return loopVariable;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setLoopVariable(ValuedObject newLoopVariable) {
-		ValuedObject oldLoopVariable = loopVariable;
-		loopVariable = newLoopVariable;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.FOR__LOOP_VARIABLE, oldLoopVariable, loopVariable));
-	}
+        ValuedObject oldLoopVariable = loopVariable;
+        loopVariable = newLoopVariable;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.FOR__LOOP_VARIABLE, oldLoopVariable, loopVariable));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public Scope getBodyScope() {
-		return bodyScope;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public NotificationChain basicSetBodyScope(Scope newBodyScope, NotificationChain msgs) {
-		Scope oldBodyScope = bodyScope;
-		bodyScope = newBodyScope;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.FOR__BODY_SCOPE, oldBodyScope, newBodyScope);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public void setBodyScope(Scope newBodyScope) {
-		if (newBodyScope != bodyScope) {
-			NotificationChain msgs = null;
-			if (bodyScope != null)
-				msgs = ((InternalEObject)bodyScope).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.FOR__BODY_SCOPE, null, msgs);
-			if (newBodyScope != null)
-				msgs = ((InternalEObject)newBodyScope).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.FOR__BODY_SCOPE, null, msgs);
-			msgs = basicSetBodyScope(newBodyScope, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.FOR__BODY_SCOPE, newBodyScope, newBodyScope));
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Expression getFrom() {
-		if (from != null && from.eIsProxy()) {
-			InternalEObject oldFrom = (InternalEObject)from;
-			from = (Expression)eResolveProxy(oldFrom);
-			if (from != oldFrom) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.FOR__FROM, oldFrom, from));
-			}
-		}
-		return from;
-	}
+        if (from != null && from.eIsProxy()) {
+            InternalEObject oldFrom = (InternalEObject)from;
+            from = (Expression)eResolveProxy(oldFrom);
+            if (from != oldFrom) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.FOR__FROM, oldFrom, from));
+            }
+        }
+        return from;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Expression basicGetFrom() {
-		return from;
-	}
+        return from;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setFrom(Expression newFrom) {
-		Expression oldFrom = from;
-		from = newFrom;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.FOR__FROM, oldFrom, from));
-	}
+        Expression oldFrom = from;
+        from = newFrom;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.FOR__FROM, oldFrom, from));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Expression getTo() {
-		if (to != null && to.eIsProxy()) {
-			InternalEObject oldTo = (InternalEObject)to;
-			to = (Expression)eResolveProxy(oldTo);
-			if (to != oldTo) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.FOR__TO, oldTo, to));
-			}
-		}
-		return to;
-	}
+        if (to != null && to.eIsProxy()) {
+            InternalEObject oldTo = (InternalEObject)to;
+            to = (Expression)eResolveProxy(oldTo);
+            if (to != oldTo) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.FOR__TO, oldTo, to));
+            }
+        }
+        return to;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Expression basicGetTo() {
-		return to;
-	}
+        return to;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setTo(Expression newTo) {
-		Expression oldTo = to;
-		to = newTo;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.FOR__TO, oldTo, to));
-	}
+        Expression oldTo = to;
+        to = newTo;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.FOR__TO, oldTo, to));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case SCChartsPackage.FOR__BODY_SCOPE:
-				return basicSetBodyScope(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case SCChartsPackage.FOR__LOOP_VARIABLE:
-				if (resolve) return getLoopVariable();
-				return basicGetLoopVariable();
-			case SCChartsPackage.FOR__BODY_SCOPE:
-				return getBodyScope();
-			case SCChartsPackage.FOR__FROM:
-				if (resolve) return getFrom();
-				return basicGetFrom();
-			case SCChartsPackage.FOR__TO:
-				if (resolve) return getTo();
-				return basicGetTo();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case SCChartsPackage.FOR__LOOP_VARIABLE:
+                if (resolve) return getLoopVariable();
+                return basicGetLoopVariable();
+            case SCChartsPackage.FOR__FROM:
+                if (resolve) return getFrom();
+                return basicGetFrom();
+            case SCChartsPackage.FOR__TO:
+                if (resolve) return getTo();
+                return basicGetTo();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case SCChartsPackage.FOR__LOOP_VARIABLE:
-				setLoopVariable((ValuedObject)newValue);
-				return;
-			case SCChartsPackage.FOR__BODY_SCOPE:
-				setBodyScope((Scope)newValue);
-				return;
-			case SCChartsPackage.FOR__FROM:
-				setFrom((Expression)newValue);
-				return;
-			case SCChartsPackage.FOR__TO:
-				setTo((Expression)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case SCChartsPackage.FOR__LOOP_VARIABLE:
+                setLoopVariable((ValuedObject)newValue);
+                return;
+            case SCChartsPackage.FOR__FROM:
+                setFrom((Expression)newValue);
+                return;
+            case SCChartsPackage.FOR__TO:
+                setTo((Expression)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case SCChartsPackage.FOR__LOOP_VARIABLE:
-				setLoopVariable((ValuedObject)null);
-				return;
-			case SCChartsPackage.FOR__BODY_SCOPE:
-				setBodyScope((Scope)null);
-				return;
-			case SCChartsPackage.FOR__FROM:
-				setFrom((Expression)null);
-				return;
-			case SCChartsPackage.FOR__TO:
-				setTo((Expression)null);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case SCChartsPackage.FOR__LOOP_VARIABLE:
+                setLoopVariable((ValuedObject)null);
+                return;
+            case SCChartsPackage.FOR__FROM:
+                setFrom((Expression)null);
+                return;
+            case SCChartsPackage.FOR__TO:
+                setTo((Expression)null);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case SCChartsPackage.FOR__LOOP_VARIABLE:
-				return loopVariable != null;
-			case SCChartsPackage.FOR__BODY_SCOPE:
-				return bodyScope != null;
-			case SCChartsPackage.FOR__FROM:
-				return from != null;
-			case SCChartsPackage.FOR__TO:
-				return to != null;
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case SCChartsPackage.FOR__LOOP_VARIABLE:
+                return loopVariable != null;
+            case SCChartsPackage.FOR__FROM:
+                return from != null;
+            case SCChartsPackage.FOR__TO:
+                return to != null;
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //ForImpl

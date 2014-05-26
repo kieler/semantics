@@ -24,6 +24,8 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
+import de.cau.cs.kieler.core.properties.IProperty;
+import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.TransformationDummy;
 import de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesis;
@@ -33,8 +35,11 @@ import de.cau.cs.kieler.klighd.LightDiagramServices;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
+import de.cau.cs.kieler.klighd.util.ExpansionAwareLayoutOption;
 import de.cau.cs.kieler.klighd.util.Iterables2;
+import de.cau.cs.kieler.klighd.util.KlighdProperties;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
+import de.cau.cs.kieler.klighd.util.ExpansionAwareLayoutOption.ExpansionAwareLayoutOptionData;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -58,14 +63,14 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static final ImageDescriptor ICON_ADVANCED = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconAuto.png");
 
-    public static final ImageDescriptor ICON_HIERARCHY = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kico.ui", "icons/KiCoHierarchyIcon.png");
+    public static final ImageDescriptor ICON_HIERARCHY = AbstractUIPlugin
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.ui", "icons/KiCoHierarchyIcon.png");
 
     public static final ImageDescriptor ICON_COMPILE = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconCompile.png");
 
-//    public static final ImageDescriptor ICON_SSM = AbstractUIPlugin.imageDescriptorFromPlugin(
-//            "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconSSM.png");
+    // public static final ImageDescriptor ICON_SSM = AbstractUIPlugin.imageDescriptorFromPlugin(
+    // "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconSSM.png");
 
     public static final ImageDescriptor ICON_EXPANDALL = AbstractUIPlugin
             .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.ui",
@@ -74,8 +79,8 @@ public class KiCoSelectionView extends DiagramViewPart {
     /** The action for toggling the advanced mode. */
     private Action actionAdvancedToggle;
 
-//    /** The action for toggling the SSM mode. */
-//    private Action actionSSMToggle;
+    // /** The action for toggling the SSM mode. */
+    // private Action actionSSMToggle;
 
     /** The action for toggling the hierarchy mode. */
     private Action actionHierarchyToggle;
@@ -84,7 +89,7 @@ public class KiCoSelectionView extends DiagramViewPart {
     private Action actionCompileToggle;
 
     /** The action for toggling the SSM mode. */
-    private Action actionExpandAll;
+    private Action actionExpandAllToggle;
 
     /** The active editor property key. */
     public static final String ACTIVE_EDITOR_PROPERTY_KEY = "de.cau.cs.kieler.kico.ui.activeEditor";
@@ -108,15 +113,18 @@ public class KiCoSelectionView extends DiagramViewPart {
     /** The advaned mode auto selects required transformations. */
     public static boolean advancedMode = true;
 
+    /** The flag for expanding or collapsing all groups. */
+    public static boolean allExpanded = false;
+
     /** The advaned mode auto selects required transformations. */
     public static int compileMode = 0;
     public static final int COMPILEMODEMAX = 5; // 5 stages of compilation
 
-//    /** The SSM diagram synthesis mode. */
-//    public static boolean SSMMode = false;
+    // /** The SSM diagram synthesis mode. */
+    // public static boolean SSMMode = false;
 
     /** The hierarchy or flat diagram synthesis mode. */
-    public static int hierarchyMode = 0; // 0 = hierarchy, 1 = flat & no groups, 2 = flat 
+    public static int hierarchyMode = 0; // 0 = hierarchy, 1 = flat & no groups, 2 = flat
     public static final int MAXHIERARCHYMODE = 2;
 
     /** The last editor. */
@@ -558,15 +566,16 @@ public class KiCoSelectionView extends DiagramViewPart {
 
                         List<String> selectedTransformations = new ArrayList<String>();
                         List<String> excludedTransformationIDs = new ArrayList<String>();
-                        List<String> selectedAndExcludedTransformations = getSelectedTransformations(activeEditorID);
+                        List<String> selectedAndExcludedTransformations =
+                                getSelectedTransformations(activeEditorID);
                         for (String transformation : selectedAndExcludedTransformations) {
-                                if (transformation.startsWith("!")) {
-                                    excludedTransformationIDs.add(transformation.substring(1));
-                                } else {
-                                    selectedTransformations.add(transformation);
-                                }
+                            if (transformation.startsWith("!")) {
+                                excludedTransformationIDs.add(transformation.substring(1));
+                            } else {
+                                selectedTransformations.add(transformation);
+                            }
                         }
-                        
+
                         if (compileMode >= 1) {
                             // 2. eliminate unused alternative paths
                             KielerCompiler.cleanupImpossibleAlternatives(tempModel);
@@ -586,26 +595,29 @@ public class KiCoSelectionView extends DiagramViewPart {
                         if (compileMode >= 5) {
                             // 5b remove excluded transformations
                             if (excludedTransformationIDs.size() > 0) {
-                                KielerCompiler.removeFromGraph(tempModel, excludedTransformationIDs);
+                                KielerCompiler
+                                        .removeFromGraph(tempModel, excludedTransformationIDs);
                             }
                         }
-//                        if (compileMode >= 6) {
-//                            // 6. topological sort
-//                            processedTransformationIDs = KielerCompiler.topologicalSort(tempModel);
-//                        }
-//                        if (compileMode >= 7) {
-//                            
-//                        }
-//                        
-//                        if (excludedTransformationIDs != null && excludedTransformationIDs.size() > 0) {
-//                        }
-//
-//
-//                        if (noGroups) {
-//                            // 7. final cleanup, eliminate any groups
-//                            processedTransformationIDs = eliminateGroupIds(processedTransformationIDs);
-//                        }
-                        
+                        // if (compileMode >= 6) {
+                        // // 6. topological sort
+                        // processedTransformationIDs = KielerCompiler.topologicalSort(tempModel);
+                        // }
+                        // if (compileMode >= 7) {
+                        //
+                        // }
+                        //
+                        // if (excludedTransformationIDs != null && excludedTransformationIDs.size()
+                        // > 0) {
+                        // }
+                        //
+                        //
+                        // if (noGroups) {
+                        // // 7. final cleanup, eliminate any groups
+                        // processedTransformationIDs =
+                        // eliminateGroupIds(processedTransformationIDs);
+                        // }
+
                         KielerCompiler.reduceGraph(tempModel, visibleTransformations);
                         model.put(activeEditorID, tempModel);
 
@@ -614,10 +626,10 @@ public class KiCoSelectionView extends DiagramViewPart {
                             properties.setProperty(
                                     KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                                     "de.cau.cs.kieler.kico.ui.klighd.diagramSynthesis");
-//                        } else  if (SSMMode) {
-//                            properties.setProperty(
-//                                    KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
-//                                    "de.cau.cs.kieler.kico.ui.klighd.diagramSynthesisSSM");
+                            // } else if (SSMMode) {
+                            // properties.setProperty(
+                            // KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
+                            // "de.cau.cs.kieler.kico.ui.klighd.diagramSynthesisSSM");
                         } else if (hierarchyMode == 1) {
                             properties.setProperty(
                                     KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
@@ -670,9 +682,9 @@ public class KiCoSelectionView extends DiagramViewPart {
         IToolBarManager toolBarManager = bars.getToolBarManager();
         toolBarManager.add(getActionExpandAll());
         toolBarManager.add(getActionAdvancedToggle());
-//        toolBarManager.add(getActionSSMToggle());
+        // toolBarManager.add(getActionSSMToggle());
         toolBarManager.add(getActionHierarchyToggle());
-//        toolBarManager.add(getActionCompileToggle());
+        // toolBarManager.add(getActionCompileToggle());
 
         // Create an IPartListener2
         IPartListener2 pl = new IPartListener2() {
@@ -780,44 +792,45 @@ public class KiCoSelectionView extends DiagramViewPart {
             }
         };
         actionCompileToggle.setText("Toggle Compile Mode");
-        actionCompileToggle.setToolTipText("Toggles between different stages of the transformation selection algorihm until the selection used for compilation");
+        actionCompileToggle
+                .setToolTipText("Toggles between different stages of the transformation selection algorihm until the selection used for compilation");
         actionCompileToggle.setImageDescriptor(ICON_COMPILE);
         return actionCompileToggle;
     }
 
     // -------------------------------------------------------------------------
 
-//    /**
-//     * Gets the action to toggle presence of the SSM representation.
-//     * 
-//     * @return the action
-//     */
-//    private Action getActionSSMToggle() {
-//        if (actionSSMToggle != null) {
-//            return actionSSMToggle;
-//        }
-//        actionSSMToggle = new Action("", IAction.AS_CHECK_BOX) {
-//            public void run() {
-//                // TOGGLE
-//                SSMMode = !SSMMode;
-//                actionSSMToggle.setChecked(SSMMode);
-//
-//                // if (SSMMode) {
-//                // addRequiredTransformationVisualization(getActiveEditorID());
-//                // } else {
-//                // removeRequiredTransformationVisualization(getActiveEditorID());
-//                // }
-//                lastEditor = "";
-//                updateView(lastWorkbenchPartReference);
-//
-//            }
-//        };
-//        actionSSMToggle.setText("Toggle SSM Diagram Synthesis");
-//        actionSSMToggle.setToolTipText("Toggle SSM Diagram Synthesis");
-//        actionSSMToggle.setImageDescriptor(ICON_SSM);
-//        actionSSMToggle.setChecked(SSMMode);
-//        return actionSSMToggle;
-//    }
+    // /**
+    // * Gets the action to toggle presence of the SSM representation.
+    // *
+    // * @return the action
+    // */
+    // private Action getActionSSMToggle() {
+    // if (actionSSMToggle != null) {
+    // return actionSSMToggle;
+    // }
+    // actionSSMToggle = new Action("", IAction.AS_CHECK_BOX) {
+    // public void run() {
+    // // TOGGLE
+    // SSMMode = !SSMMode;
+    // actionSSMToggle.setChecked(SSMMode);
+    //
+    // // if (SSMMode) {
+    // // addRequiredTransformationVisualization(getActiveEditorID());
+    // // } else {
+    // // removeRequiredTransformationVisualization(getActiveEditorID());
+    // // }
+    // lastEditor = "";
+    // updateView(lastWorkbenchPartReference);
+    //
+    // }
+    // };
+    // actionSSMToggle.setText("Toggle SSM Diagram Synthesis");
+    // actionSSMToggle.setToolTipText("Toggle SSM Diagram Synthesis");
+    // actionSSMToggle.setImageDescriptor(ICON_SSM);
+    // actionSSMToggle.setChecked(SSMMode);
+    // return actionSSMToggle;
+    // }
 
     // -------------------------------------------------------------------------
 
@@ -835,7 +848,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                 // TOGGLE
                 hierarchyMode = hierarchyMode + 1;
                 if (hierarchyMode > MAXHIERARCHYMODE) {
-                    hierarchyMode = 0; 
+                    hierarchyMode = 0;
                 }
                 lastEditor = "";
                 updateView(lastWorkbenchPartReference);
@@ -843,7 +856,8 @@ public class KiCoSelectionView extends DiagramViewPart {
             }
         };
         actionHierarchyToggle.setText("Toggle Hierarchical/Flat View");
-        actionHierarchyToggle.setToolTipText("Toggle between a hiearchical and a flat view of the dependencies.");
+        actionHierarchyToggle
+                .setToolTipText("Toggle between a hiearchical and a flat view of the dependencies.");
         actionHierarchyToggle.setImageDescriptor(ICON_HIERARCHY);
         return actionHierarchyToggle;
     }
@@ -851,35 +865,78 @@ public class KiCoSelectionView extends DiagramViewPart {
     // -------------------------------------------------------------------------
 
     /**
+     * The layout option singleton (similar to those in
+     * {@link de.cau.cs.kieler.kiml.options.LayoutOptions LayoutOptions}.<br>
+     * Its id is also registered in the plugin.xml.
+     */
+    public static final IProperty<ExpansionAwareLayoutOptionData> EXPANDABLE =
+            new Property<ExpansionAwareLayoutOption.ExpansionAwareLayoutOptionData>(
+                    "de.cau.cs.kieler.kico.ui.expandable");
+
+    /**
      * Gets the action to expand all nodes.
      * 
      * @return the action
      */
     private Action getActionExpandAll() {
-        if (actionExpandAll != null) {
-            return actionExpandAll;
+        if (actionExpandAllToggle != null) {
+            return actionExpandAllToggle;
         }
 
         final IDiagramWorkbenchPart thisPart = this;
-        actionExpandAll = new Action("", IAction.AS_PUSH_BUTTON) {
+        actionExpandAllToggle = new Action("", IAction.AS_CHECK_BOX) {
             public void run() {
-                final IViewer<?> viewer = thisPart.getViewer();
-                for (EObject k : Iterables.filter(Iterables2.toIterable(viewer.getViewContext()
-                        .getViewModel().eAllContents()), new Predicate<EObject>() {
+                // TOGGLE
+                allExpanded = !allExpanded;
+                actionExpandAllToggle.setChecked(allExpanded);
 
-                    public boolean apply(EObject arg0) {
-                        return arg0 instanceof KNode && !viewer.isExpanded(arg0);
+                if (allExpanded) {
+                    final IViewer<?> viewer = thisPart.getViewer();
+                    for (EObject k : Iterables.filter(
+                            Iterables2.toIterable(viewer.getViewContext().getViewModel()
+                                    .eAllContents()), new Predicate<EObject>() {
+
+                                public boolean apply(EObject arg0) {
+                                    return arg0 instanceof KNode && !viewer.isExpanded(arg0);
+                                }
+                            })) {
+                        ViewContext vc = viewer.getViewContext();
+                        viewer.expand((KNode) k);
                     }
-                })) {
-                    viewer.expand((KNode) k);
+                } else {
+//                    final IViewer<?> viewer = thisPart.getViewer();
+//                    for (EObject k : Iterables.filter(
+//                            Iterables2.toIterable(viewer.getViewContext().getViewModel()
+//                                    .eAllContents()), new Predicate<EObject>() {
+//
+//                                public boolean apply(EObject arg0) {
+//                                    return arg0 instanceof KNode && viewer.isExpanded(arg0);
+//                                }
+//                            })) {
+//                        ViewContext vc = viewer.getViewContext();
+//                        viewer.collapse((KNode) k);
+//                    }
+                    lastEditor = "";
+                    updateView(lastWorkbenchPartReference);
                 }
+
+                // Object object = vc.getSourceElement(k);
+                // if (object instanceof TransformationDummy) {
+                // TransformationDummy transformationDummy = (TransformationDummy) object;
+                // if (!transformationDummy.isGroup()) {
+                // viewer.collapse((KNode) k);
+                //
+                // }
+                // }
+
                 LightDiagramServices.layoutDiagram(thisPart);
             }
         };
-        actionExpandAll.setText("Expand All");
-        actionExpandAll.setToolTipText("Expand all collapsed transformation groups.");
-        actionExpandAll.setImageDescriptor(ICON_EXPANDALL);
-        return actionExpandAll;
+        actionExpandAllToggle.setText("Expand All");
+        actionExpandAllToggle.setToolTipText("Expand all collapsed transformation groups.");
+        actionExpandAllToggle.setImageDescriptor(ICON_EXPANDALL);
+        actionExpandAllToggle.setChecked(allExpanded);
+        return actionExpandAllToggle;
     }
 
     // -------------------------------------------------------------------------
@@ -940,7 +997,7 @@ public class KiCoSelectionView extends DiagramViewPart {
     /**
      * Updates displayed diagram in this view. Initializes this view if necessary.
      */
-    private void updateDiagram(Object model,KlighdSynthesisProperties properties) {
+    private void updateDiagram(Object model, KlighdSynthesisProperties properties) {
         if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
             // the initialization case
             DiagramViewManager.initializeView(this, model, null, properties);

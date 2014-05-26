@@ -74,6 +74,7 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
 					put(grammarAccess.getSingleRegionAccess().getGroup(), "rule__SingleRegion__Group__0");
 					put(grammarAccess.getSingleRegionAccess().getGroup_1(), "rule__SingleRegion__Group_1__0");
+					put(grammarAccess.getForAccess().getGroup(), "rule__For__Group__0");
 					put(grammarAccess.getRegionAccess().getGroup(), "rule__Region__Group__0");
 					put(grammarAccess.getSCChartAccess().getGroup(), "rule__SCChart__Group__0");
 					put(grammarAccess.getSCChartAccess().getGroup_0(), "rule__SCChart__Group_0__0");
@@ -166,11 +167,15 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSingleRegionAccess().getLabelAssignment_1_3(), "rule__SingleRegion__LabelAssignment_1_3");
 					put(grammarAccess.getSingleRegionAccess().getDeclarationsAssignment_1_5(), "rule__SingleRegion__DeclarationsAssignment_1_5");
 					put(grammarAccess.getSingleRegionAccess().getStatesAssignment_2(), "rule__SingleRegion__StatesAssignment_2");
+					put(grammarAccess.getForAccess().getLoopVariableAssignment_2(), "rule__For__LoopVariableAssignment_2");
+					put(grammarAccess.getForAccess().getFromAssignment_4(), "rule__For__FromAssignment_4");
+					put(grammarAccess.getForAccess().getToAssignment_6(), "rule__For__ToAssignment_6");
 					put(grammarAccess.getRegionAccess().getAnnotationsAssignment_1(), "rule__Region__AnnotationsAssignment_1");
-					put(grammarAccess.getRegionAccess().getIdAssignment_3(), "rule__Region__IdAssignment_3");
-					put(grammarAccess.getRegionAccess().getLabelAssignment_4(), "rule__Region__LabelAssignment_4");
-					put(grammarAccess.getRegionAccess().getDeclarationsAssignment_6(), "rule__Region__DeclarationsAssignment_6");
-					put(grammarAccess.getRegionAccess().getStatesAssignment_7(), "rule__Region__StatesAssignment_7");
+					put(grammarAccess.getRegionAccess().getForAssignment_2(), "rule__Region__ForAssignment_2");
+					put(grammarAccess.getRegionAccess().getIdAssignment_4(), "rule__Region__IdAssignment_4");
+					put(grammarAccess.getRegionAccess().getLabelAssignment_5(), "rule__Region__LabelAssignment_5");
+					put(grammarAccess.getRegionAccess().getDeclarationsAssignment_7(), "rule__Region__DeclarationsAssignment_7");
+					put(grammarAccess.getRegionAccess().getStatesAssignment_8(), "rule__Region__StatesAssignment_8");
 					put(grammarAccess.getSCChartAccess().getNameAssignment_0_1(), "rule__SCChart__NameAssignment_0_1");
 					put(grammarAccess.getSCChartAccess().getImportsAssignment_1(), "rule__SCChart__ImportsAssignment_1");
 					put(grammarAccess.getSCChartAccess().getAnnotationsAssignment_2(), "rule__SCChart__AnnotationsAssignment_2");
