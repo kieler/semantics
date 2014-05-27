@@ -13,8 +13,18 @@
  */
 package de.cau.cs.kieler.kico.klighd;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -33,13 +43,19 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPartConstants;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.SaveAsDialog;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
+import org.eclipse.xtext.util.StringInputStream;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
+import de.cau.cs.kieler.core.model.util.ModelUtil;
+import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
+import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelWrapper;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
@@ -67,6 +83,9 @@ public class KiCoModelView extends DiagramViewPart {
     public static final String ID = "de.cau.cs.kieler.kico.klighd.view";
 
     // ICONS
+    /** The icon for saving current model. */
+    public static final ImageDescriptor ICON_SAVE = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "org.eclipse.ui", "icons/full/etool16/save_edit.gif");
     /** The icon for toggling side-by-side display mode button. */
     public static final ImageDescriptor ICON_COMPILE = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.klighd", "icons/KiCoModelViewIconCompile.png");
@@ -89,12 +108,15 @@ public class KiCoModelView extends DiagramViewPart {
     /** Flag if compile mode is active. */
     private boolean compileModel = true;
 
+    /** The action for toggling side-by-side display mode. */
+    private Action actionSave;
+
     /** Flag if resources should be displayed. */
     private boolean visualizeResourceModels = false;
 
     /** String of pinned transformations. */
     private String transformations = null;
-    //private boolean pinTransformations = false;
+    // private boolean pinTransformations = false;
 
     /** The action for forking view. */
     private Action actionFork;
@@ -106,6 +128,7 @@ public class KiCoModelView extends DiagramViewPart {
     private IEditorPart activeEditor;
     /** Current model display as diagram */
     private Object currentModel;
+    private Object sourceModel;
 
     /**
      * Create an instance
@@ -168,7 +191,7 @@ public class KiCoModelView extends DiagramViewPart {
 
         IActionBars bars = getViewSite().getActionBars();
         IToolBarManager toolBarManager = bars.getToolBarManager();
-        // toolBarManager.add(getActionSave());
+        toolBarManager.add(getActionSave());
         toolBarManager.add(getActionFork());
         // toolBarManager.add(getActionResourceVisualization());
         toolBarManager.add(getActionCompile());
@@ -187,20 +210,20 @@ public class KiCoModelView extends DiagramViewPart {
     void setActiveEditor(IEditorPart editor) {
         if (editor != null) {
             if (activeEditor != editor) {
-                //unregister save listener if necessary
+                // unregister save listener if necessary
                 if (activeEditor != null) {
                     activeEditor.removePropertyListener(dirtyPropertyListener);
                 }
-                //register save listener
+                // register save listener
                 editor.addPropertyListener(dirtyPropertyListener);
-                
-                //set as active editor
+
+                // set as active editor
                 activeEditor = editor;
-                
+
                 if (!isPrimaryView()) {
                     setPartName(editor.getTitle());
                 }
-                
+
                 updateModel(ChangeEvent.ACTIVE_EDITOR);
             }
         } else {
@@ -303,6 +326,70 @@ public class KiCoModelView extends DiagramViewPart {
         return actionFork;
     }
 
+    /**
+     * Gets the action to save current model.
+     * 
+     * @return the action
+     */
+    private Action getActionSave() {
+        if (actionSave != null) {
+            return actionSave;
+        }
+        actionSave = new Action("", IAction.AS_PUSH_BUTTON) {
+            public void run() {
+                if (currentModel != null && activeEditor != null) {
+                    String filename = activeEditor.getTitle();
+                    SaveAsDialog saveAsDialog = new SaveAsDialog(getSite().getShell());
+                    saveAsDialog.setOriginalName(filename);
+                    saveAsDialog.setTitle("Save Model");
+                    saveAsDialog.setBlockOnOpen(true);
+                    saveAsDialog.open();
+                    IPath path = saveAsDialog.getResult();
+                    if (path != null && !path.isEmpty()) {
+                        IWorkspace workspace = ResourcesPlugin.getWorkspace();
+                        IWorkspaceRoot root = workspace.getRoot();
+                        IFile file = root.getFile(path);
+                        URI uri = URI.createPlatformResourceURI(path.toString(), false);
+
+                        try {
+                            if (currentModel instanceof EObject) {
+                                ModelUtil.saveModel((EObject) currentModel, uri);
+                            } else if (currentModel instanceof CompilationResult
+                                    && ((CompilationResult) currentModel).getEObject() != null) {
+                                ModelUtil.saveModel(
+                                        ((CompilationResult) currentModel).getEObject(), uri);
+                            } else if (currentModel instanceof CompilationResult
+                                    && ((CompilationResult) currentModel).getString() != null) {
+                                if (!file.exists()) {
+                                    file.create(new StringInputStream(
+                                            ((CompilationResult) currentModel).getString()), 0,
+                                            null);
+                                } else {
+                                    file.setContents(new StringInputStream(
+                                            ((CompilationResult) currentModel).getString()), 0,
+                                            null);
+                                }
+                                // open editor
+                                PlatformUI
+                                        .getWorkbench()
+                                        .getActiveWorkbenchWindow()
+                                        .getActivePage()
+                                        .openEditor(new FileEditorInput(file),
+                                                "org.eclipse.ui.DefaultTextEditor");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        };
+        actionSave.setText("Save displayed main model");
+        actionSave.setToolTipText("Save displayed main model");
+        actionSave.setImageDescriptor(ICON_SAVE);
+        return actionSave;
+    }
+
     // -- UPDATE
     // -------------------------------------------------------------------------
 
@@ -313,7 +400,7 @@ public class KiCoModelView extends DiagramViewPart {
      */
     void updateModel(ChangeEvent change) {
         if (visualizeResourceModels) {
-            // TODO Resource selection
+            // TODO display resource selection
             return;
         }
         if (activeEditor != null) {
@@ -325,7 +412,9 @@ public class KiCoModelView extends DiagramViewPart {
 
                         @Override
                         public void process(final XtextResource state) throws Exception {
-                            currentModel = state.getContents().get(0);
+                            if (!state.getContents().isEmpty()) {
+                                sourceModel = state.getContents().get(0);
+                            }
                         }
                     });
                 }
@@ -337,16 +426,16 @@ public class KiCoModelView extends DiagramViewPart {
                         editor.getEditingDomain().getResourceSet().getResources();
 
                 if (!resources.isEmpty() && !resources.get(0).getContents().isEmpty()) {
-                    currentModel =
-                            EcoreUtil.getRootContainer(resources.get(0).getContents().get(0));
+                    sourceModel = EcoreUtil.getRootContainer(resources.get(0).getContents().get(0));
                 }
             }
 
-            if (currentModel != null) {
+            if (sourceModel != null) {
                 boolean transformationsChanged = false;
                 // get new transformations
-                //TODO pin transformation
-                if (transformations != null || change == ChangeEvent.TRANSFORMATIONS || change == ChangeEvent.ACTIVE_EDITOR) {
+                // TODO pin transformation
+                if (transformations != null || change == ChangeEvent.TRANSFORMATIONS
+                        || change == ChangeEvent.ACTIVE_EDITOR) {
                     KiCoModelViewManager mvm = KiCoModelViewManager.getInstance();
                     if (KiCoModelViewManager.getInstance() != null) {
                         String trans = mvm.getTransformations(activeEditor);
@@ -362,38 +451,43 @@ public class KiCoModelView extends DiagramViewPart {
                                 || change == ChangeEvent.COMPILE;
 
                 // if compiling is available and requested
-                if (compileModel && transformations != null && transformationsChanged) {
+                if (compileModel && transformations != null
+                        && (transformationsChanged || change == ChangeEvent.SAVED)) {
 
                     // compile
-                    EObject compiledModel =
-                            (KielerCompiler.compile(transformations, (EObject) currentModel)).getEObject();
-                    System.out.println("Compiled");
+                    CompilationResult result =
+                            KielerCompiler.compile(transformations, (EObject) sourceModel);
 
                     // TODO test if compiler error occured
                     // composite model in given display mode
-                    if (compiledModel != null) {
-                        if (displaySideBySide) {
-                            KiCoModelChain chain = new KiCoModelChain();
-                            chain.models.add(new KiCoModelWrapper(currentModel));
-                            chain.models.add(new KiCoModelWrapper(compiledModel));
+                    if (result != null) {
+                        if (result.getEObject() != null) {
+                            if (displaySideBySide) {
+                                KiCoModelChain chain = new KiCoModelChain();
+                                chain.models.add(new KiCoModelWrapper(sourceModel));
+                                chain.models.add(new KiCoModelWrapper(result.getEObject()));
 
-                            currentModel = chain;
-                        } else {
-                            currentModel = compiledModel;
+                                currentModel = chain;
+                                updateDiagram(chain);
+                            } else {
+                                currentModel = result;
+                                updateDiagram(result.getEObject());
+                            }
+                        } else if (result.getString() != null) {
+                            currentModel = result;
+                            updateDiagram(new KiCoCodePlaceHolder());
                         }
                     }
-
-                    updateDiagram();
                 } else if (!(
                 // Don't update uncompiled diagram when..
                 // display mode changed (no effect on uncomipled)
                 change == ChangeEvent.DISPLAY_MODE
-                // transformations changed but should not compile (no effect on uncomipled)
+                        // transformations changed but should not compile (no effect on uncomipled)
                         || (!compileModel && change == ChangeEvent.TRANSFORMATIONS)
-                        || (change == ChangeEvent.TRANSFORMATIONS && !transformationsChanged)
+                        || (!transformationsChanged && change == ChangeEvent.TRANSFORMATIONS)
                 // switched to uncompiled view but no compiled diagram was shown before
                 || (change == ChangeEvent.COMPILE && transformations == null))) {
-                    updateDiagram();
+                    updateDiagram(sourceModel);
                 }
             }
         }
@@ -402,15 +496,24 @@ public class KiCoModelView extends DiagramViewPart {
     /**
      * Updates displayed diagram in this view. Initializes this view if necessary.
      */
-    private void updateDiagram() {
-        if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
-            // the initialization case
-            DiagramViewManager.initializeView(this, currentModel, null, null);
-            this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
-        } else {
-            // update case
-            DiagramViewManager.updateView(this.getViewer().getViewContext(), currentModel);
-            this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
+    private void updateDiagram(Object model) {
+        try {
+            if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
+                // the initialization case
+                DiagramViewManager.initializeView(this, model, null, null);
+                if (activeEditor != null) {
+                    this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
+                }
+            } else {
+                // update case
+                DiagramViewManager.updateView(this.getViewer().getViewContext(), model);
+                if (activeEditor != null) {
+                    this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
+                }
+            }
+        } catch (Exception e) {
+            // TODO handle exception line NPE if no synthesis available
+            e.printStackTrace();
         }
     }
 
