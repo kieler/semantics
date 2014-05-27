@@ -845,6 +845,10 @@ public class KiCoSelectionView extends DiagramViewPart {
         }
         actionHierarchyToggle = new Action("", IAction.AS_PUSH_BUTTON) {
             public void run() {
+                // Next view is collapsed again
+                allExpanded = false;
+                actionExpandAllToggle.setChecked(allExpanded);
+                
                 // TOGGLE
                 hierarchyMode = hierarchyMode + 1;
                 if (hierarchyMode > MAXHIERARCHYMODE) {
