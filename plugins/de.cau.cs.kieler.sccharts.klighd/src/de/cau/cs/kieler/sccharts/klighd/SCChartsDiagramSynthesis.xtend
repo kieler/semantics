@@ -62,13 +62,13 @@ import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
 import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
 import de.cau.cs.kieler.sccharts.text.sct.sct.SCChart
 import java.util.List
-import javax.inject.Inject
+import javax.inject.Provider
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-
-
+import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
+import com.google.inject.Inject
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
@@ -77,6 +77,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow
  */
+@ViewSynthesisShared
 class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
 
     // -------------------------------------------------------------------------
@@ -201,7 +202,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
 
     // -------------------------------------------------------------------------
     // Transform a region
-    def dispatch KNode translate(Region r) {
+    public def dispatch KNode translate(Region r) {
         return r.createNode().putToLookUpWith(r) => [ node |
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot")
             node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES)
@@ -337,7 +338,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
 
     // -------------------------------------------------------------------------
     // Transform a state    
-    def dispatch KNode translate(State s) {
+    public def dispatch KNode translate(State s) {
         if (SHOW_ORDER.booleanValue || SHOW_DEPENDENCIES.booleanValue) {
             if (dependencyGraph == null) {
 
@@ -666,7 +667,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 ]
             if (s.referencedState && SHOW_REFERENCEEXPANSION.booleanValue) {
                 for (r : (s.referencedScope as State).regions) {
-                    node.children += r.translate => [
+                    val synthesis = delegate.get();
+                    synthesis.use(usedContext)
+                    node.children += synthesis.translate(r) => [
                         it.setLayoutOption(KlighdProperties::EXPAND, false);
                     ];
                 }
@@ -675,6 +678,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 t.translateTransition();
         ]
     }
+    
+    @com.google.inject.Inject
+    Provider<SCChartsDiagramSynthesis> delegate;
 
     // -------------------------------------------------------------------------
     // Translate a transition
