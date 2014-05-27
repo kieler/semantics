@@ -34,6 +34,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPropertyListener;
@@ -58,6 +59,7 @@ import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelWrapper;
+import de.cau.cs.kieler.kiml.config.ILayoutConfig;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 
@@ -464,18 +466,18 @@ public class KiCoModelView extends DiagramViewPart {
                         if (result.getEObject() != null) {
                             if (displaySideBySide) {
                                 KiCoModelChain chain = new KiCoModelChain();
-                                chain.models.add(new KiCoModelWrapper(currentModel));
+                                chain.models.add(new KiCoModelWrapper(sourceModel));
                                 chain.models.add(new KiCoModelWrapper(result.getEObject()));
 
                                 currentModel = chain;
-                                updateDiagram(chain);
+                                updateDiagram(chain, true);
                             } else {
                                 currentModel = result;
-                                updateDiagram(result.getEObject());
+                                updateDiagram(result.getEObject(), true);
                             }
                         } else if (result.getString() != null) {
                             currentModel = result;
-                            updateDiagram(new KiCoCodePlaceHolder());
+                            updateDiagram(new KiCoCodePlaceHolder(), change != ChangeEvent.SAVED);
                         }
                     }
                 } else if (!(
@@ -487,7 +489,7 @@ public class KiCoModelView extends DiagramViewPart {
                         || (!transformationsChanged && change == ChangeEvent.TRANSFORMATIONS)
                 // switched to uncompiled view but no compiled diagram was shown before
                 || (change == ChangeEvent.COMPILE && transformations == null))) {
-                    updateDiagram(sourceModel);
+                    updateDiagram(sourceModel, change != ChangeEvent.SAVED);
                 }
             }
         }
@@ -496,20 +498,20 @@ public class KiCoModelView extends DiagramViewPart {
     /**
      * Updates displayed diagram in this view. Initializes this view if necessary.
      */
-    private void updateDiagram(Object model) {
+    private void updateDiagram(Object model, boolean modelTypeChanged) {
         try {
-            if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
+            if (modelTypeChanged || this.getViewer() == null
+                    || this.getViewer().getViewContext() == null) {
                 // the initialization case
                 DiagramViewManager.initializeView(this, model, null, null);
-                if (activeEditor != null) {
-                    this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
-                }
+                //reset layout to resolve KISEMA-905
+                resetLayoutConfig();                
             } else {
-                // update case
+                // update case (keeps options and sidebar)
                 DiagramViewManager.updateView(this.getViewer().getViewContext(), model);
-                if (activeEditor != null) {
-                    this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
-                }
+            }
+            if (activeEditor != null) {
+                this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
             }
         } catch (Exception e) {
             // TODO handle exception line NPE if no synthesis available
