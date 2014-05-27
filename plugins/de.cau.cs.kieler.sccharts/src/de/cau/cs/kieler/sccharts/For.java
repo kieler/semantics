@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.sccharts.For#getLoopVariable <em>Loop Variable</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.For#getFrom <em>From</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.For#getTo <em>To</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.For#getValuedObject <em>Valued Object</em>}</li>
  * </ul>
  * </p>
  *
@@ -123,5 +124,31 @@ public interface For extends EObject {
      * @generated
      */
     void setTo(int value);
+
+    /**
+     * Returns the value of the '<em><b>Valued Object</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Valued Object</em>' reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Valued Object</em>' containment reference.
+     * @see #setValuedObject(ValuedObject)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getFor_ValuedObject()
+     * @model containment="true" required="true"
+     * @generated
+     */
+    ValuedObject getValuedObject();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.For#getValuedObject <em>Valued Object</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Valued Object</em>' containment reference.
+     * @see #getValuedObject()
+     * @generated
+     */
+    void setValuedObject(ValuedObject value);
 
 } // For

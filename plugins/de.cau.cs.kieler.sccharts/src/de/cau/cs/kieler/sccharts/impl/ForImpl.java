@@ -42,6 +42,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ForImpl#getLoopVariable <em>Loop Variable</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ForImpl#getFrom <em>From</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ForImpl#getTo <em>To</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ForImpl#getValuedObject <em>Valued Object</em>}</li>
  * </ul>
  * </p>
  *
@@ -104,6 +105,16 @@ public class ForImpl extends EObjectImpl implements For {
      * @ordered
      */
     protected int to = TO_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getValuedObject()
+     * @generated
+     * @ordered
+     */
+    protected ValuedObject valuedObject;
 
     /**
      * <!-- begin-user-doc -->
@@ -209,6 +220,63 @@ public class ForImpl extends EObjectImpl implements For {
      * <!-- end-user-doc -->
      * @generated
      */
+    public ValuedObject getValuedObject() {
+        return valuedObject;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetValuedObject(ValuedObject newValuedObject, NotificationChain msgs) {
+        ValuedObject oldValuedObject = valuedObject;
+        valuedObject = newValuedObject;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.FOR__VALUED_OBJECT, oldValuedObject, newValuedObject);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setValuedObject(ValuedObject newValuedObject) {
+        if (newValuedObject != valuedObject) {
+            NotificationChain msgs = null;
+            if (valuedObject != null)
+                msgs = ((InternalEObject)valuedObject).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.FOR__VALUED_OBJECT, null, msgs);
+            if (newValuedObject != null)
+                msgs = ((InternalEObject)newValuedObject).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.FOR__VALUED_OBJECT, null, msgs);
+            msgs = basicSetValuedObject(newValuedObject, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.FOR__VALUED_OBJECT, newValuedObject, newValuedObject));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case SCChartsPackage.FOR__VALUED_OBJECT:
+                return basicSetValuedObject(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
@@ -219,6 +287,8 @@ public class ForImpl extends EObjectImpl implements For {
                 return getFrom();
             case SCChartsPackage.FOR__TO:
                 return getTo();
+            case SCChartsPackage.FOR__VALUED_OBJECT:
+                return getValuedObject();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -239,6 +309,9 @@ public class ForImpl extends EObjectImpl implements For {
                 return;
             case SCChartsPackage.FOR__TO:
                 setTo((Integer)newValue);
+                return;
+            case SCChartsPackage.FOR__VALUED_OBJECT:
+                setValuedObject((ValuedObject)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -261,6 +334,9 @@ public class ForImpl extends EObjectImpl implements For {
             case SCChartsPackage.FOR__TO:
                 setTo(TO_EDEFAULT);
                 return;
+            case SCChartsPackage.FOR__VALUED_OBJECT:
+                setValuedObject((ValuedObject)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -279,6 +355,8 @@ public class ForImpl extends EObjectImpl implements For {
                 return from != FROM_EDEFAULT;
             case SCChartsPackage.FOR__TO:
                 return to != TO_EDEFAULT;
+            case SCChartsPackage.FOR__VALUED_OBJECT:
+                return valuedObject != null;
         }
         return super.eIsSet(featureID);
     }
