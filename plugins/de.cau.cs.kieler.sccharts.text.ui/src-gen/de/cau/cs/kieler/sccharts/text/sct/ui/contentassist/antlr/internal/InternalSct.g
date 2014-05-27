@@ -3344,9 +3344,9 @@ rule__For__Group__1__Impl
     }
 :
 (
-{ before(grammarAccess.getForAccess().getLoopVariableAssignment_1()); }
-(rule__For__LoopVariableAssignment_1)
-{ after(grammarAccess.getForAccess().getLoopVariableAssignment_1()); }
+{ before(grammarAccess.getForAccess().getValuedObjectAssignment_1()); }
+(rule__For__ValuedObjectAssignment_1)
+{ after(grammarAccess.getForAccess().getValuedObjectAssignment_1()); }
 )
 
 ;
@@ -12184,18 +12184,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__For__LoopVariableAssignment_1
+rule__For__ValuedObjectAssignment_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getForAccess().getLoopVariableValuedObjectCrossReference_1_0()); }
-(
-{ before(grammarAccess.getForAccess().getLoopVariableValuedObjectIDTerminalRuleCall_1_0_1()); }
-	RULE_ID{ after(grammarAccess.getForAccess().getLoopVariableValuedObjectIDTerminalRuleCall_1_0_1()); }
-)
-{ after(grammarAccess.getForAccess().getLoopVariableValuedObjectCrossReference_1_0()); }
+{ before(grammarAccess.getForAccess().getValuedObjectValuedObjectParserRuleCall_1_0()); }
+	ruleValuedObject{ after(grammarAccess.getForAccess().getValuedObjectValuedObjectParserRuleCall_1_0()); }
 )
 
 ;

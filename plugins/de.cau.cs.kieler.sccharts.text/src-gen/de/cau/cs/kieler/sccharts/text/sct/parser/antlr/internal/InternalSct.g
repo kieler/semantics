@@ -283,17 +283,19 @@ ruleFor returns [EObject current=null]
 )(
 (
 		{ 
-		  /* */ 
-		}
-		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getForRule());
+	        newCompositeNode(grammarAccess.getForAccess().getValuedObjectValuedObjectParserRuleCall_1_0()); 
+	    }
+		lv_valuedObject_1_0=ruleValuedObject		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getForRule());
 	        }
-        }
-	otherlv_1=RULE_ID
-	{
-		newLeafNode(otherlv_1, grammarAccess.getForAccess().getLoopVariableValuedObjectCrossReference_1_0()); 
-	}
+       		set(
+       			$current, 
+       			"valuedObject",
+        		lv_valuedObject_1_0, 
+        		"ValuedObject");
+	        afterParserOrEnumRuleCall();
+	    }
 
 )
 )	otherlv_2='=' 

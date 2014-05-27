@@ -445,23 +445,10 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (loopVariable=[ValuedObject|ID] from=INT to=INT)
+	 *     (valuedObject=ValuedObject from=INT to=INT)
 	 */
 	protected void sequence_For(EObject context, For semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, SCChartsPackage.Literals.FOR__LOOP_VARIABLE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SCChartsPackage.Literals.FOR__LOOP_VARIABLE));
-			if(transientValues.isValueTransient(semanticObject, SCChartsPackage.Literals.FOR__FROM) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SCChartsPackage.Literals.FOR__FROM));
-			if(transientValues.isValueTransient(semanticObject, SCChartsPackage.Literals.FOR__TO) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SCChartsPackage.Literals.FOR__TO));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getForAccess().getLoopVariableValuedObjectIDTerminalRuleCall_1_0_1(), semanticObject.getLoopVariable());
-		feeder.accept(grammarAccess.getForAccess().getFromINTTerminalRuleCall_3_0(), semanticObject.getFrom());
-		feeder.accept(grammarAccess.getForAccess().getToINTTerminalRuleCall_5_0(), semanticObject.getTo());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
