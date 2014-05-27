@@ -10038,34 +10038,34 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SingleRegion__Group_1__2__Impl"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3054:1: rule__SingleRegion__Group_1__2__Impl : ( ( rule__SingleRegion__Group_1_2__0 )? ) ;
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3054:1: rule__SingleRegion__Group_1__2__Impl : ( ( rule__SingleRegion__IdAssignment_1_2 )? ) ;
     public final void rule__SingleRegion__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3058:1: ( ( ( rule__SingleRegion__Group_1_2__0 )? ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3059:1: ( ( rule__SingleRegion__Group_1_2__0 )? )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3058:1: ( ( ( rule__SingleRegion__IdAssignment_1_2 )? ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3059:1: ( ( rule__SingleRegion__IdAssignment_1_2 )? )
             {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3059:1: ( ( rule__SingleRegion__Group_1_2__0 )? )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3060:1: ( rule__SingleRegion__Group_1_2__0 )?
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3059:1: ( ( rule__SingleRegion__IdAssignment_1_2 )? )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3060:1: ( rule__SingleRegion__IdAssignment_1_2 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getSingleRegionAccess().getGroup_1_2()); 
+               before(grammarAccess.getSingleRegionAccess().getIdAssignment_1_2()); 
             }
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3061:1: ( rule__SingleRegion__Group_1_2__0 )?
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3061:1: ( rule__SingleRegion__IdAssignment_1_2 )?
             int alt39=2;
             int LA39_0 = input.LA(1);
 
-            if ( (LA39_0==61) ) {
+            if ( (LA39_0==RULE_ID) ) {
                 alt39=1;
             }
             switch (alt39) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3061:2: rule__SingleRegion__Group_1_2__0
+                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3061:2: rule__SingleRegion__IdAssignment_1_2
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1_2__0_in_rule__SingleRegion__Group_1__2__Impl6653);
-                    rule__SingleRegion__Group_1_2__0();
+                    pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__IdAssignment_1_2_in_rule__SingleRegion__Group_1__2__Impl6653);
+                    rule__SingleRegion__IdAssignment_1_2();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -10076,7 +10076,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getSingleRegionAccess().getGroup_1_2()); 
+               after(grammarAccess.getSingleRegionAccess().getIdAssignment_1_2()); 
             }
 
             }
@@ -10138,34 +10138,34 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SingleRegion__Group_1__3__Impl"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3083:1: rule__SingleRegion__Group_1__3__Impl : ( ( rule__SingleRegion__IdAssignment_1_3 )? ) ;
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3083:1: rule__SingleRegion__Group_1__3__Impl : ( ( rule__SingleRegion__LabelAssignment_1_3 )? ) ;
     public final void rule__SingleRegion__Group_1__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3087:1: ( ( ( rule__SingleRegion__IdAssignment_1_3 )? ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3088:1: ( ( rule__SingleRegion__IdAssignment_1_3 )? )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3087:1: ( ( ( rule__SingleRegion__LabelAssignment_1_3 )? ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3088:1: ( ( rule__SingleRegion__LabelAssignment_1_3 )? )
             {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3088:1: ( ( rule__SingleRegion__IdAssignment_1_3 )? )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3089:1: ( rule__SingleRegion__IdAssignment_1_3 )?
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3088:1: ( ( rule__SingleRegion__LabelAssignment_1_3 )? )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3089:1: ( rule__SingleRegion__LabelAssignment_1_3 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getSingleRegionAccess().getIdAssignment_1_3()); 
+               before(grammarAccess.getSingleRegionAccess().getLabelAssignment_1_3()); 
             }
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3090:1: ( rule__SingleRegion__IdAssignment_1_3 )?
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3090:1: ( rule__SingleRegion__LabelAssignment_1_3 )?
             int alt40=2;
             int LA40_0 = input.LA(1);
 
-            if ( (LA40_0==RULE_ID) ) {
+            if ( (LA40_0==RULE_STRING) ) {
                 alt40=1;
             }
             switch (alt40) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3090:2: rule__SingleRegion__IdAssignment_1_3
+                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3090:2: rule__SingleRegion__LabelAssignment_1_3
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__IdAssignment_1_3_in_rule__SingleRegion__Group_1__3__Impl6714);
-                    rule__SingleRegion__IdAssignment_1_3();
+                    pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__LabelAssignment_1_3_in_rule__SingleRegion__Group_1__3__Impl6714);
+                    rule__SingleRegion__LabelAssignment_1_3();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -10176,7 +10176,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getSingleRegionAccess().getIdAssignment_1_3()); 
+               after(grammarAccess.getSingleRegionAccess().getLabelAssignment_1_3()); 
             }
 
             }
@@ -10238,34 +10238,34 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SingleRegion__Group_1__4__Impl"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3112:1: rule__SingleRegion__Group_1__4__Impl : ( ( rule__SingleRegion__LabelAssignment_1_4 )? ) ;
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3112:1: rule__SingleRegion__Group_1__4__Impl : ( ( rule__SingleRegion__Group_1_4__0 )? ) ;
     public final void rule__SingleRegion__Group_1__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3116:1: ( ( ( rule__SingleRegion__LabelAssignment_1_4 )? ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3117:1: ( ( rule__SingleRegion__LabelAssignment_1_4 )? )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3116:1: ( ( ( rule__SingleRegion__Group_1_4__0 )? ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3117:1: ( ( rule__SingleRegion__Group_1_4__0 )? )
             {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3117:1: ( ( rule__SingleRegion__LabelAssignment_1_4 )? )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3118:1: ( rule__SingleRegion__LabelAssignment_1_4 )?
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3117:1: ( ( rule__SingleRegion__Group_1_4__0 )? )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3118:1: ( rule__SingleRegion__Group_1_4__0 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getSingleRegionAccess().getLabelAssignment_1_4()); 
+               before(grammarAccess.getSingleRegionAccess().getGroup_1_4()); 
             }
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3119:1: ( rule__SingleRegion__LabelAssignment_1_4 )?
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3119:1: ( rule__SingleRegion__Group_1_4__0 )?
             int alt41=2;
             int LA41_0 = input.LA(1);
 
-            if ( (LA41_0==RULE_STRING) ) {
+            if ( (LA41_0==61) ) {
                 alt41=1;
             }
             switch (alt41) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3119:2: rule__SingleRegion__LabelAssignment_1_4
+                    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3119:2: rule__SingleRegion__Group_1_4__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__LabelAssignment_1_4_in_rule__SingleRegion__Group_1__4__Impl6775);
-                    rule__SingleRegion__LabelAssignment_1_4();
+                    pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1_4__0_in_rule__SingleRegion__Group_1__4__Impl6775);
+                    rule__SingleRegion__Group_1_4__0();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -10276,7 +10276,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getSingleRegionAccess().getLabelAssignment_1_4()); 
+               after(grammarAccess.getSingleRegionAccess().getGroup_1_4()); 
             }
 
             }
@@ -10474,23 +10474,23 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__SingleRegion__Group_1__6__Impl"
 
 
-    // $ANTLR start "rule__SingleRegion__Group_1_2__0"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3202:1: rule__SingleRegion__Group_1_2__0 : rule__SingleRegion__Group_1_2__0__Impl rule__SingleRegion__Group_1_2__1 ;
-    public final void rule__SingleRegion__Group_1_2__0() throws RecognitionException {
+    // $ANTLR start "rule__SingleRegion__Group_1_4__0"
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3202:1: rule__SingleRegion__Group_1_4__0 : rule__SingleRegion__Group_1_4__0__Impl rule__SingleRegion__Group_1_4__1 ;
+    public final void rule__SingleRegion__Group_1_4__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3206:1: ( rule__SingleRegion__Group_1_2__0__Impl rule__SingleRegion__Group_1_2__1 )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3207:2: rule__SingleRegion__Group_1_2__0__Impl rule__SingleRegion__Group_1_2__1
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3206:1: ( rule__SingleRegion__Group_1_4__0__Impl rule__SingleRegion__Group_1_4__1 )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3207:2: rule__SingleRegion__Group_1_4__0__Impl rule__SingleRegion__Group_1_4__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1_2__0__Impl_in_rule__SingleRegion__Group_1_2__06940);
-            rule__SingleRegion__Group_1_2__0__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1_4__0__Impl_in_rule__SingleRegion__Group_1_4__06940);
+            rule__SingleRegion__Group_1_4__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1_2__1_in_rule__SingleRegion__Group_1_2__06943);
-            rule__SingleRegion__Group_1_2__1();
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1_4__1_in_rule__SingleRegion__Group_1_4__06943);
+            rule__SingleRegion__Group_1_4__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -10509,12 +10509,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SingleRegion__Group_1_2__0"
+    // $ANTLR end "rule__SingleRegion__Group_1_4__0"
 
 
-    // $ANTLR start "rule__SingleRegion__Group_1_2__0__Impl"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3214:1: rule__SingleRegion__Group_1_2__0__Impl : ( '[' ) ;
-    public final void rule__SingleRegion__Group_1_2__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SingleRegion__Group_1_4__0__Impl"
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3214:1: rule__SingleRegion__Group_1_4__0__Impl : ( '[' ) ;
+    public final void rule__SingleRegion__Group_1_4__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -10526,11 +10526,11 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3220:1: '['
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getSingleRegionAccess().getLeftSquareBracketKeyword_1_2_0()); 
+               before(grammarAccess.getSingleRegionAccess().getLeftSquareBracketKeyword_1_4_0()); 
             }
-            match(input,61,FollowSets000.FOLLOW_61_in_rule__SingleRegion__Group_1_2__0__Impl6971); if (state.failed) return ;
+            match(input,61,FollowSets000.FOLLOW_61_in_rule__SingleRegion__Group_1_4__0__Impl6971); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getSingleRegionAccess().getLeftSquareBracketKeyword_1_2_0()); 
+               after(grammarAccess.getSingleRegionAccess().getLeftSquareBracketKeyword_1_4_0()); 
             }
 
             }
@@ -10550,26 +10550,26 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SingleRegion__Group_1_2__0__Impl"
+    // $ANTLR end "rule__SingleRegion__Group_1_4__0__Impl"
 
 
-    // $ANTLR start "rule__SingleRegion__Group_1_2__1"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3233:1: rule__SingleRegion__Group_1_2__1 : rule__SingleRegion__Group_1_2__1__Impl rule__SingleRegion__Group_1_2__2 ;
-    public final void rule__SingleRegion__Group_1_2__1() throws RecognitionException {
+    // $ANTLR start "rule__SingleRegion__Group_1_4__1"
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3233:1: rule__SingleRegion__Group_1_4__1 : rule__SingleRegion__Group_1_4__1__Impl rule__SingleRegion__Group_1_4__2 ;
+    public final void rule__SingleRegion__Group_1_4__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3237:1: ( rule__SingleRegion__Group_1_2__1__Impl rule__SingleRegion__Group_1_2__2 )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3238:2: rule__SingleRegion__Group_1_2__1__Impl rule__SingleRegion__Group_1_2__2
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3237:1: ( rule__SingleRegion__Group_1_4__1__Impl rule__SingleRegion__Group_1_4__2 )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3238:2: rule__SingleRegion__Group_1_4__1__Impl rule__SingleRegion__Group_1_4__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1_2__1__Impl_in_rule__SingleRegion__Group_1_2__17002);
-            rule__SingleRegion__Group_1_2__1__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1_4__1__Impl_in_rule__SingleRegion__Group_1_4__17002);
+            rule__SingleRegion__Group_1_4__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1_2__2_in_rule__SingleRegion__Group_1_2__17005);
-            rule__SingleRegion__Group_1_2__2();
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1_4__2_in_rule__SingleRegion__Group_1_4__17005);
+            rule__SingleRegion__Group_1_4__2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -10588,30 +10588,30 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SingleRegion__Group_1_2__1"
+    // $ANTLR end "rule__SingleRegion__Group_1_4__1"
 
 
-    // $ANTLR start "rule__SingleRegion__Group_1_2__1__Impl"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3245:1: rule__SingleRegion__Group_1_2__1__Impl : ( ( rule__SingleRegion__ForAssignment_1_2_1 ) ) ;
-    public final void rule__SingleRegion__Group_1_2__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SingleRegion__Group_1_4__1__Impl"
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3245:1: rule__SingleRegion__Group_1_4__1__Impl : ( ( rule__SingleRegion__ForAssignment_1_4_1 ) ) ;
+    public final void rule__SingleRegion__Group_1_4__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3249:1: ( ( ( rule__SingleRegion__ForAssignment_1_2_1 ) ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3250:1: ( ( rule__SingleRegion__ForAssignment_1_2_1 ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3249:1: ( ( ( rule__SingleRegion__ForAssignment_1_4_1 ) ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3250:1: ( ( rule__SingleRegion__ForAssignment_1_4_1 ) )
             {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3250:1: ( ( rule__SingleRegion__ForAssignment_1_2_1 ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3251:1: ( rule__SingleRegion__ForAssignment_1_2_1 )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3250:1: ( ( rule__SingleRegion__ForAssignment_1_4_1 ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3251:1: ( rule__SingleRegion__ForAssignment_1_4_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getSingleRegionAccess().getForAssignment_1_2_1()); 
+               before(grammarAccess.getSingleRegionAccess().getForAssignment_1_4_1()); 
             }
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3252:1: ( rule__SingleRegion__ForAssignment_1_2_1 )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3252:2: rule__SingleRegion__ForAssignment_1_2_1
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3252:1: ( rule__SingleRegion__ForAssignment_1_4_1 )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3252:2: rule__SingleRegion__ForAssignment_1_4_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__ForAssignment_1_2_1_in_rule__SingleRegion__Group_1_2__1__Impl7032);
-            rule__SingleRegion__ForAssignment_1_2_1();
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__ForAssignment_1_4_1_in_rule__SingleRegion__Group_1_4__1__Impl7032);
+            rule__SingleRegion__ForAssignment_1_4_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -10619,7 +10619,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getSingleRegionAccess().getForAssignment_1_2_1()); 
+               after(grammarAccess.getSingleRegionAccess().getForAssignment_1_4_1()); 
             }
 
             }
@@ -10639,21 +10639,21 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SingleRegion__Group_1_2__1__Impl"
+    // $ANTLR end "rule__SingleRegion__Group_1_4__1__Impl"
 
 
-    // $ANTLR start "rule__SingleRegion__Group_1_2__2"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3262:1: rule__SingleRegion__Group_1_2__2 : rule__SingleRegion__Group_1_2__2__Impl ;
-    public final void rule__SingleRegion__Group_1_2__2() throws RecognitionException {
+    // $ANTLR start "rule__SingleRegion__Group_1_4__2"
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3262:1: rule__SingleRegion__Group_1_4__2 : rule__SingleRegion__Group_1_4__2__Impl ;
+    public final void rule__SingleRegion__Group_1_4__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3266:1: ( rule__SingleRegion__Group_1_2__2__Impl )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3267:2: rule__SingleRegion__Group_1_2__2__Impl
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3266:1: ( rule__SingleRegion__Group_1_4__2__Impl )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3267:2: rule__SingleRegion__Group_1_4__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1_2__2__Impl_in_rule__SingleRegion__Group_1_2__27062);
-            rule__SingleRegion__Group_1_2__2__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__SingleRegion__Group_1_4__2__Impl_in_rule__SingleRegion__Group_1_4__27062);
+            rule__SingleRegion__Group_1_4__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -10672,12 +10672,12 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SingleRegion__Group_1_2__2"
+    // $ANTLR end "rule__SingleRegion__Group_1_4__2"
 
 
-    // $ANTLR start "rule__SingleRegion__Group_1_2__2__Impl"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3273:1: rule__SingleRegion__Group_1_2__2__Impl : ( ']' ) ;
-    public final void rule__SingleRegion__Group_1_2__2__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SingleRegion__Group_1_4__2__Impl"
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3273:1: rule__SingleRegion__Group_1_4__2__Impl : ( ']' ) ;
+    public final void rule__SingleRegion__Group_1_4__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -10689,11 +10689,11 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:3279:1: ']'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getSingleRegionAccess().getRightSquareBracketKeyword_1_2_2()); 
+               before(grammarAccess.getSingleRegionAccess().getRightSquareBracketKeyword_1_4_2()); 
             }
-            match(input,62,FollowSets000.FOLLOW_62_in_rule__SingleRegion__Group_1_2__2__Impl7090); if (state.failed) return ;
+            match(input,62,FollowSets000.FOLLOW_62_in_rule__SingleRegion__Group_1_4__2__Impl7090); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getSingleRegionAccess().getRightSquareBracketKeyword_1_2_2()); 
+               after(grammarAccess.getSingleRegionAccess().getRightSquareBracketKeyword_1_4_2()); 
             }
 
             }
@@ -10713,7 +10713,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SingleRegion__Group_1_2__2__Impl"
+    // $ANTLR end "rule__SingleRegion__Group_1_4__2__Impl"
 
 
     // $ANTLR start "rule__For__Group__0"
@@ -35472,29 +35472,111 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__SingleRegion__AnnotationsAssignment_1_0"
 
 
-    // $ANTLR start "rule__SingleRegion__ForAssignment_1_2_1"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12112:1: rule__SingleRegion__ForAssignment_1_2_1 : ( ruleFor ) ;
-    public final void rule__SingleRegion__ForAssignment_1_2_1() throws RecognitionException {
+    // $ANTLR start "rule__SingleRegion__IdAssignment_1_2"
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12112:1: rule__SingleRegion__IdAssignment_1_2 : ( RULE_ID ) ;
+    public final void rule__SingleRegion__IdAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12116:1: ( ( ruleFor ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12117:1: ( ruleFor )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12116:1: ( ( RULE_ID ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12117:1: ( RULE_ID )
             {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12117:1: ( ruleFor )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12118:1: ruleFor
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12117:1: ( RULE_ID )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12118:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getSingleRegionAccess().getForForParserRuleCall_1_2_1_0()); 
+               before(grammarAccess.getSingleRegionAccess().getIdIDTerminalRuleCall_1_2_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleFor_in_rule__SingleRegion__ForAssignment_1_2_124547);
+            match(input,RULE_ID,FollowSets001.FOLLOW_RULE_ID_in_rule__SingleRegion__IdAssignment_1_224547); if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getSingleRegionAccess().getIdIDTerminalRuleCall_1_2_0()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__SingleRegion__IdAssignment_1_2"
+
+
+    // $ANTLR start "rule__SingleRegion__LabelAssignment_1_3"
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12127:1: rule__SingleRegion__LabelAssignment_1_3 : ( RULE_STRING ) ;
+    public final void rule__SingleRegion__LabelAssignment_1_3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12131:1: ( ( RULE_STRING ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12132:1: ( RULE_STRING )
+            {
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12132:1: ( RULE_STRING )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12133:1: RULE_STRING
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getSingleRegionAccess().getLabelSTRINGTerminalRuleCall_1_3_0()); 
+            }
+            match(input,RULE_STRING,FollowSets001.FOLLOW_RULE_STRING_in_rule__SingleRegion__LabelAssignment_1_324578); if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getSingleRegionAccess().getLabelSTRINGTerminalRuleCall_1_3_0()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__SingleRegion__LabelAssignment_1_3"
+
+
+    // $ANTLR start "rule__SingleRegion__ForAssignment_1_4_1"
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12142:1: rule__SingleRegion__ForAssignment_1_4_1 : ( ruleFor ) ;
+    public final void rule__SingleRegion__ForAssignment_1_4_1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12146:1: ( ( ruleFor ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12147:1: ( ruleFor )
+            {
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12147:1: ( ruleFor )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12148:1: ruleFor
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getSingleRegionAccess().getForForParserRuleCall_1_4_1_0()); 
+            }
+            pushFollow(FollowSets001.FOLLOW_ruleFor_in_rule__SingleRegion__ForAssignment_1_4_124609);
             ruleFor();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getSingleRegionAccess().getForForParserRuleCall_1_2_1_0()); 
+               after(grammarAccess.getSingleRegionAccess().getForForParserRuleCall_1_4_1_0()); 
             }
 
             }
@@ -35514,89 +35596,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__SingleRegion__ForAssignment_1_2_1"
-
-
-    // $ANTLR start "rule__SingleRegion__IdAssignment_1_3"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12127:1: rule__SingleRegion__IdAssignment_1_3 : ( RULE_ID ) ;
-    public final void rule__SingleRegion__IdAssignment_1_3() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12131:1: ( ( RULE_ID ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12132:1: ( RULE_ID )
-            {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12132:1: ( RULE_ID )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12133:1: RULE_ID
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getSingleRegionAccess().getIdIDTerminalRuleCall_1_3_0()); 
-            }
-            match(input,RULE_ID,FollowSets001.FOLLOW_RULE_ID_in_rule__SingleRegion__IdAssignment_1_324578); if (state.failed) return ;
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getSingleRegionAccess().getIdIDTerminalRuleCall_1_3_0()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__SingleRegion__IdAssignment_1_3"
-
-
-    // $ANTLR start "rule__SingleRegion__LabelAssignment_1_4"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12142:1: rule__SingleRegion__LabelAssignment_1_4 : ( RULE_STRING ) ;
-    public final void rule__SingleRegion__LabelAssignment_1_4() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12146:1: ( ( RULE_STRING ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12147:1: ( RULE_STRING )
-            {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12147:1: ( RULE_STRING )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:12148:1: RULE_STRING
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getSingleRegionAccess().getLabelSTRINGTerminalRuleCall_1_4_0()); 
-            }
-            match(input,RULE_STRING,FollowSets001.FOLLOW_RULE_STRING_in_rule__SingleRegion__LabelAssignment_1_424609); if (state.failed) return ;
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getSingleRegionAccess().getLabelSTRINGTerminalRuleCall_1_4_0()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__SingleRegion__LabelAssignment_1_4"
+    // $ANTLR end "rule__SingleRegion__ForAssignment_1_4_1"
 
 
     // $ANTLR start "rule__SingleRegion__DeclarationsAssignment_1_6"
@@ -42647,10 +42647,10 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
     static final String DFA16_acceptS =
         "\1\uffff\1\1\54\uffff\1\2";
     static final String DFA16_specialS =
-        "\2\uffff\1\17\1\7\1\45\1\0\1\35\1\24\1\53\1\21\1\5\1\23\1\41\1"+
-        "\42\1\2\1\46\1\14\1\40\1\37\1\4\1\25\1\36\1\22\1\30\1\1\1\44\1\34"+
-        "\1\11\1\20\1\32\1\13\1\27\1\52\1\3\1\33\1\26\1\16\1\10\1\12\1\51"+
-        "\1\15\1\6\1\31\1\50\1\47\1\43\1\uffff}>";
+        "\2\uffff\1\16\1\7\1\45\1\0\1\34\1\23\1\53\1\20\1\5\1\22\1\41\1"+
+        "\42\1\2\1\46\1\36\1\40\1\37\1\4\1\24\1\35\1\21\1\27\1\1\1\44\1\33"+
+        "\1\11\1\17\1\31\1\13\1\26\1\52\1\3\1\32\1\25\1\15\1\10\1\12\1\51"+
+        "\1\14\1\6\1\30\1\50\1\47\1\43\1\uffff}>";
     static final String[] DFA16_transitionS = {
             "\1\7\7\uffff\1\1\1\56\6\uffff\1\1\1\56\1\uffff\1\54\1\55\1"+
             "\13\1\14\1\15\1\16\1\51\1\52\1\53\1\46\1\47\1\50\11\uffff\1"+
@@ -42923,21 +42923,6 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         if ( s>=0 ) return s;
                         break;
                     case 12 : 
-                        int LA16_16 = input.LA(1);
-
-                         
-                        int index16_16 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred18_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 46;}
-
-                         
-                        input.seek(index16_16);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 13 : 
                         int LA16_40 = input.LA(1);
 
                          
@@ -42952,7 +42937,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index16_40);
                         if ( s>=0 ) return s;
                         break;
-                    case 14 : 
+                    case 13 : 
                         int LA16_36 = input.LA(1);
 
                          
@@ -42967,7 +42952,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index16_36);
                         if ( s>=0 ) return s;
                         break;
-                    case 15 : 
+                    case 14 : 
                         int LA16_2 = input.LA(1);
 
                          
@@ -42982,7 +42967,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index16_2);
                         if ( s>=0 ) return s;
                         break;
-                    case 16 : 
+                    case 15 : 
                         int LA16_28 = input.LA(1);
 
                          
@@ -42997,7 +42982,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index16_28);
                         if ( s>=0 ) return s;
                         break;
-                    case 17 : 
+                    case 16 : 
                         int LA16_9 = input.LA(1);
 
                          
@@ -43012,7 +42997,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index16_9);
                         if ( s>=0 ) return s;
                         break;
-                    case 18 : 
+                    case 17 : 
                         int LA16_22 = input.LA(1);
 
                          
@@ -43027,7 +43012,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index16_22);
                         if ( s>=0 ) return s;
                         break;
-                    case 19 : 
+                    case 18 : 
                         int LA16_11 = input.LA(1);
 
                          
@@ -43042,7 +43027,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index16_11);
                         if ( s>=0 ) return s;
                         break;
-                    case 20 : 
+                    case 19 : 
                         int LA16_7 = input.LA(1);
 
                          
@@ -43057,7 +43042,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index16_7);
                         if ( s>=0 ) return s;
                         break;
-                    case 21 : 
+                    case 20 : 
                         int LA16_20 = input.LA(1);
 
                          
@@ -43072,7 +43057,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index16_20);
                         if ( s>=0 ) return s;
                         break;
-                    case 22 : 
+                    case 21 : 
                         int LA16_35 = input.LA(1);
 
                          
@@ -43087,7 +43072,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index16_35);
                         if ( s>=0 ) return s;
                         break;
-                    case 23 : 
+                    case 22 : 
                         int LA16_31 = input.LA(1);
 
                          
@@ -43102,7 +43087,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index16_31);
                         if ( s>=0 ) return s;
                         break;
-                    case 24 : 
+                    case 23 : 
                         int LA16_23 = input.LA(1);
 
                          
@@ -43117,7 +43102,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index16_23);
                         if ( s>=0 ) return s;
                         break;
-                    case 25 : 
+                    case 24 : 
                         int LA16_42 = input.LA(1);
 
                          
@@ -43132,7 +43117,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index16_42);
                         if ( s>=0 ) return s;
                         break;
-                    case 26 : 
+                    case 25 : 
                         int LA16_29 = input.LA(1);
 
                          
@@ -43147,7 +43132,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index16_29);
                         if ( s>=0 ) return s;
                         break;
-                    case 27 : 
+                    case 26 : 
                         int LA16_34 = input.LA(1);
 
                          
@@ -43162,7 +43147,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index16_34);
                         if ( s>=0 ) return s;
                         break;
-                    case 28 : 
+                    case 27 : 
                         int LA16_26 = input.LA(1);
 
                          
@@ -43177,7 +43162,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index16_26);
                         if ( s>=0 ) return s;
                         break;
-                    case 29 : 
+                    case 28 : 
                         int LA16_6 = input.LA(1);
 
                          
@@ -43192,7 +43177,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index16_6);
                         if ( s>=0 ) return s;
                         break;
-                    case 30 : 
+                    case 29 : 
                         int LA16_21 = input.LA(1);
 
                          
@@ -43205,6 +43190,21 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
 
                          
                         input.seek(index16_21);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 30 : 
+                        int LA16_16 = input.LA(1);
+
+                         
+                        int index16_16 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred18_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 46;}
+
+                         
+                        input.seek(index16_16);
                         if ( s>=0 ) return s;
                         break;
                     case 31 : 
@@ -45918,26 +45918,26 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_60_in_rule__SingleRegion__Group_1__1__Impl6592 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__SingleRegion__Group_1__2__Impl_in_rule__SingleRegion__Group_1__26623 = new BitSet(new long[]{0x2000000000010030L});
         public static final BitSet FOLLOW_rule__SingleRegion__Group_1__3_in_rule__SingleRegion__Group_1__26626 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1_2__0_in_rule__SingleRegion__Group_1__2__Impl6653 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__IdAssignment_1_2_in_rule__SingleRegion__Group_1__2__Impl6653 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__SingleRegion__Group_1__3__Impl_in_rule__SingleRegion__Group_1__36684 = new BitSet(new long[]{0x2000000000010030L});
         public static final BitSet FOLLOW_rule__SingleRegion__Group_1__4_in_rule__SingleRegion__Group_1__36687 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__IdAssignment_1_3_in_rule__SingleRegion__Group_1__3__Impl6714 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__LabelAssignment_1_3_in_rule__SingleRegion__Group_1__3__Impl6714 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__SingleRegion__Group_1__4__Impl_in_rule__SingleRegion__Group_1__46745 = new BitSet(new long[]{0x2000000000010030L});
         public static final BitSet FOLLOW_rule__SingleRegion__Group_1__5_in_rule__SingleRegion__Group_1__46748 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__LabelAssignment_1_4_in_rule__SingleRegion__Group_1__4__Impl6775 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1_4__0_in_rule__SingleRegion__Group_1__4__Impl6775 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__SingleRegion__Group_1__5__Impl_in_rule__SingleRegion__Group_1__56806 = new BitSet(new long[]{0x01FC000000000400L,0x000000003E100000L});
         public static final BitSet FOLLOW_rule__SingleRegion__Group_1__6_in_rule__SingleRegion__Group_1__56809 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_16_in_rule__SingleRegion__Group_1__5__Impl6837 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__SingleRegion__Group_1__6__Impl_in_rule__SingleRegion__Group_1__66868 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__SingleRegion__DeclarationsAssignment_1_6_in_rule__SingleRegion__Group_1__6__Impl6895 = new BitSet(new long[]{0x01FC000000000402L,0x000000003E100000L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1_2__0__Impl_in_rule__SingleRegion__Group_1_2__06940 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1_2__1_in_rule__SingleRegion__Group_1_2__06943 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_61_in_rule__SingleRegion__Group_1_2__0__Impl6971 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1_2__1__Impl_in_rule__SingleRegion__Group_1_2__17002 = new BitSet(new long[]{0x4000000000000000L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1_2__2_in_rule__SingleRegion__Group_1_2__17005 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__ForAssignment_1_2_1_in_rule__SingleRegion__Group_1_2__1__Impl7032 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__SingleRegion__Group_1_2__2__Impl_in_rule__SingleRegion__Group_1_2__27062 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_62_in_rule__SingleRegion__Group_1_2__2__Impl7090 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1_4__0__Impl_in_rule__SingleRegion__Group_1_4__06940 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1_4__1_in_rule__SingleRegion__Group_1_4__06943 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_61_in_rule__SingleRegion__Group_1_4__0__Impl6971 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1_4__1__Impl_in_rule__SingleRegion__Group_1_4__17002 = new BitSet(new long[]{0x4000000000000000L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1_4__2_in_rule__SingleRegion__Group_1_4__17005 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__ForAssignment_1_4_1_in_rule__SingleRegion__Group_1_4__1__Impl7032 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SingleRegion__Group_1_4__2__Impl_in_rule__SingleRegion__Group_1_4__27062 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_62_in_rule__SingleRegion__Group_1_4__2__Impl7090 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__For__Group__0__Impl_in_rule__For__Group__07127 = new BitSet(new long[]{0x0000000000000020L});
         public static final BitSet FOLLOW_rule__For__Group__1_in_rule__For__Group__07130 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__For__Group__1__Impl_in_rule__For__Group__17188 = new BitSet(new long[]{0x8000000000000000L});
@@ -46679,9 +46679,9 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_rule__ExtendedID__Group_1__1__Impl_in_rule__ExtendedID__Group_1__124451 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_ID_in_rule__ExtendedID__Group_1__1__Impl24478 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleAnnotation_in_rule__SingleRegion__AnnotationsAssignment_1_024516 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleFor_in_rule__SingleRegion__ForAssignment_1_2_124547 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__SingleRegion__IdAssignment_1_324578 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_STRING_in_rule__SingleRegion__LabelAssignment_1_424609 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__SingleRegion__IdAssignment_1_224547 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_STRING_in_rule__SingleRegion__LabelAssignment_1_324578 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleFor_in_rule__SingleRegion__ForAssignment_1_4_124609 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleDeclaration_in_rule__SingleRegion__DeclarationsAssignment_1_624640 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleState_in_rule__SingleRegion__StatesAssignment_224671 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleValuedObject_in_rule__For__ValuedObjectAssignment_124702 = new BitSet(new long[]{0x0000000000000002L});

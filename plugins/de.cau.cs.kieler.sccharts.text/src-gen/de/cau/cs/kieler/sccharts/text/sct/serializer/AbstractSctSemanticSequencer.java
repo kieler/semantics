@@ -498,7 +498,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     ((annotations+=Annotation* for=For? id=ID? label=STRING? declarations+=Declaration*)? states+=State*)
+	 *     ((annotations+=Annotation* id=ID? label=STRING? for=For? declarations+=Declaration*)? states+=State*)
 	 */
 	protected void sequence_SingleRegion(EObject context, Region semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
