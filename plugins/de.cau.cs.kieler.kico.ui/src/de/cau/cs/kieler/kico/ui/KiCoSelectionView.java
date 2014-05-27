@@ -560,6 +560,11 @@ public class KiCoSelectionView extends DiagramViewPart {
                     EditorPart editorPart = (EditorPart) part;
                     String partName = (editorPart).getPartName();
                     if (!partName.equals(lastEditor)) {
+                        // Next view is collapsed again
+                        allExpanded = false;
+                        actionExpandAllToggle.setChecked(allExpanded);
+                        
+                        
                         lastEditor = partName;
                         int activeEditorID = getActiveEditorID();
                         List<TransformationDummy> tempModel = KielerCompiler.buildGraph();
@@ -845,10 +850,6 @@ public class KiCoSelectionView extends DiagramViewPart {
         }
         actionHierarchyToggle = new Action("", IAction.AS_PUSH_BUTTON) {
             public void run() {
-                // Next view is collapsed again
-                allExpanded = false;
-                actionExpandAllToggle.setChecked(allExpanded);
-                
                 // TOGGLE
                 hierarchyMode = hierarchyMode + 1;
                 if (hierarchyMode > MAXHIERARCHYMODE) {
