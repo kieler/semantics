@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct;
 
+import org.eclipse.xtext.ui.editor.IXtextEditorCallback;
+
 import de.cau.cs.kieler.sccharts.text.sct.scoping.SctQualifiedNameProvider;
 import de.cau.cs.kieler.sccharts.text.sct.scoping.SctScopeProvider;
 
@@ -42,7 +44,7 @@ public class SctRuntimeModule extends
     public Class<? extends org.eclipse.xtext.parsetree.reconstr.ITransientValueService> bindITransientValueService() {
         return SctTransientValueService.class;
     }
-
+   
     public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
         return de.cau.cs.kieler.sccharts.text.sct.formatting.SctValueConverter.class;
     }
@@ -62,5 +64,5 @@ public class SctRuntimeModule extends
     public Class<? extends org.eclipse.xtext.formatting.IIndentationInformation> bindIIndentationInformation() {
         return de.cau.cs.kieler.sccharts.text.sct.formatting.SctIndentionInformation.class;
     }
-
+    
 }

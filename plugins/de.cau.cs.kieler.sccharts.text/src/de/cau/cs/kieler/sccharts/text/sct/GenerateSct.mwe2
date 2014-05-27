@@ -101,6 +101,7 @@ Workflow {
 				}
 			}
 
+            // This fragment introduces the registration of the NatureAddingCallback. 
 			fragment = builder.BuilderIntegrationFragment {}
 
 			// project wizard (optional) 

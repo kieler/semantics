@@ -24,10 +24,10 @@ public class SctUiModule extends de.cau.cs.kieler.sccharts.text.sct.ui.AbstractS
         super(plugin);
     }
 
-//    /* get rid of the dawn XtextNature question */
-//    public Class<? extends org.eclipse.xtext.ui.editor.IXtextEditorCallback> bindIXtextEditorCallback() {
-//        return org.eclipse.xtext.ui.editor.IXtextEditorCallback.NullImpl.class;
-//    }
+    /* get rid of the dawn XtextNature question */
+    public Class<? extends org.eclipse.xtext.ui.editor.IXtextEditorCallback> bindIXtextEditorCallback() {
+        return org.eclipse.xtext.ui.editor.IXtextEditorCallback.NullImpl.class;
+    }
 
     /* e.g. declares '-->' '>->' to be highlighted as usual keywords */
     public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultAntlrTokenToAttributeIdMapper> bindAbstractAntlrTokenToAttributeIdMapper() {
