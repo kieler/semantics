@@ -88,7 +88,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
 
     // -------------------------------------------------------------------------
     // We need some extensions 
-    @Inject
+    @Inject 
     extension KNodeExtensions
 
     @Inject
@@ -212,6 +212,16 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             for (s : r.states) {
                 node.children += s.translate;
             }
+            var regionLabelVar = r.label
+            if (r.^for != null) {
+                scopeProvider.parent = r.parentState;
+                //val forCopy = r.^for.copy
+                val forCopy = r.^for.valuedObject.copy
+                //forCopy.annotations.clear // do not serialize copied annotations
+                var String forLabel = "[" + r.^for.valuedObject.name + "=" +  r.^for.from + ".." + r.^for.to + "]"//serializer.serialize(forCopy)
+                regionLabelVar = regionLabelVar + " " + forLabel
+            }
+            val regionLabel = regionLabelVar
 //            if (r.eContainer == null) {
 //                return;
 //            }
@@ -222,7 +232,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 it.invisible = false;
                 it.foreground = "gray".color
                 it.lineWidth = 1;
-                it.addText("[-]" + if(r.label.nullOrEmpty) "" else " " + r.label).putToLookUpWith(r) => [
+                it.addText("[-]" + if(r.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(r) => [
                     it.foreground = "darkGray".color
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
@@ -239,7 +249,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 it.invisible = false;
                 it.foreground = "gray".color
                 it.lineWidth = 1;
-                it.addText("[+]" + if(r.label.nullOrEmpty) "" else " " + r.label).putToLookUpWith(r) => [
+                it.addText("[+]" + if(r.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(r) => [
                     it.foreground = "darkGray".color
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);

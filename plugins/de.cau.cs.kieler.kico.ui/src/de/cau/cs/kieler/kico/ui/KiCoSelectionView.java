@@ -560,6 +560,11 @@ public class KiCoSelectionView extends DiagramViewPart {
                     EditorPart editorPart = (EditorPart) part;
                     String partName = (editorPart).getPartName();
                     if (!partName.equals(lastEditor)) {
+                        // Next view is collapsed again
+                        allExpanded = false;
+                        actionExpandAllToggle.setChecked(allExpanded);
+                        
+                        
                         lastEditor = partName;
                         int activeEditorID = getActiveEditorID();
                         List<TransformationDummy> tempModel = KielerCompiler.buildGraph();

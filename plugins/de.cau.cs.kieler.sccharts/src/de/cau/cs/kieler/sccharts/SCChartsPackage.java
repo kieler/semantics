@@ -1194,7 +1194,7 @@ public interface SCChartsPackage extends EPackage {
     int FOR__LOOP_VARIABLE = 0;
 
     /**
-     * The feature id for the '<em><b>From</b></em>' reference.
+     * The feature id for the '<em><b>From</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -1203,7 +1203,7 @@ public interface SCChartsPackage extends EPackage {
     int FOR__FROM = 1;
 
     /**
-     * The feature id for the '<em><b>To</b></em>' reference.
+     * The feature id for the '<em><b>To</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -1212,13 +1212,22 @@ public interface SCChartsPackage extends EPackage {
     int FOR__TO = 2;
 
     /**
+     * The feature id for the '<em><b>Valued Object</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FOR__VALUED_OBJECT = 3;
+
+    /**
      * The number of structural features of the '<em>For</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int FOR_FEATURE_COUNT = 3;
+    int FOR_FEATURE_COUNT = 4;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}' enum.
@@ -1818,26 +1827,37 @@ public interface SCChartsPackage extends EPackage {
     EReference getFor_LoopVariable();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.For#getFrom <em>From</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.For#getFrom <em>From</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>From</em>'.
+     * @return the meta object for the attribute '<em>From</em>'.
      * @see de.cau.cs.kieler.sccharts.For#getFrom()
      * @see #getFor()
      * @generated
      */
-    EReference getFor_From();
+    EAttribute getFor_From();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.For#getTo <em>To</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.For#getTo <em>To</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>To</em>'.
+     * @return the meta object for the attribute '<em>To</em>'.
      * @see de.cau.cs.kieler.sccharts.For#getTo()
      * @see #getFor()
      * @generated
      */
-    EReference getFor_To();
+    EAttribute getFor_To();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.For#getValuedObject <em>Valued Object</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Valued Object</em>'.
+     * @see de.cau.cs.kieler.sccharts.For#getValuedObject()
+     * @see #getFor()
+     * @generated
+     */
+    EReference getFor_ValuedObject();
 
     /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}'.
@@ -2351,20 +2371,28 @@ public interface SCChartsPackage extends EPackage {
         EReference FOR__LOOP_VARIABLE = eINSTANCE.getFor_LoopVariable();
 
         /**
-         * The meta object literal for the '<em><b>From</b></em>' reference feature.
+         * The meta object literal for the '<em><b>From</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference FOR__FROM = eINSTANCE.getFor_From();
+        EAttribute FOR__FROM = eINSTANCE.getFor_From();
 
         /**
-         * The meta object literal for the '<em><b>To</b></em>' reference feature.
+         * The meta object literal for the '<em><b>To</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference FOR__TO = eINSTANCE.getFor_To();
+        EAttribute FOR__TO = eINSTANCE.getFor_To();
+
+        /**
+         * The meta object literal for the '<em><b>Valued Object</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference FOR__VALUED_OBJECT = eINSTANCE.getFor_ValuedObject();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.StateType <em>State Type</em>}' enum.

@@ -932,7 +932,7 @@ class SCChartsExtension {
             return false
         }
         visited.add(state);
-        if (originalState.parentRegion.parentState == null) {
+        if (originalState.parentRegion == null) {
             // Root states ARE reachable
             return true
         }

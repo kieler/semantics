@@ -737,8 +737,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getFor_From() {
-        return (EReference)forEClass.getEStructuralFeatures().get(1);
+    public EAttribute getFor_From() {
+        return (EAttribute)forEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -746,8 +746,17 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getFor_To() {
-        return (EReference)forEClass.getEStructuralFeatures().get(2);
+    public EAttribute getFor_To() {
+        return (EAttribute)forEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getFor_ValuedObject() {
+        return (EReference)forEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -881,8 +890,9 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         forEClass = createEClass(FOR);
         createEReference(forEClass, FOR__LOOP_VARIABLE);
-        createEReference(forEClass, FOR__FROM);
-        createEReference(forEClass, FOR__TO);
+        createEAttribute(forEClass, FOR__FROM);
+        createEAttribute(forEClass, FOR__TO);
+        createEReference(forEClass, FOR__VALUED_OBJECT);
 
         // Create enums
         stateTypeEEnum = createEEnum(STATE_TYPE);
@@ -1008,8 +1018,9 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         initEClass(forEClass, For.class, "For", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getFor_LoopVariable(), theKExpressionsPackage.getValuedObject(), null, "loopVariable", null, 0, 1, For.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getFor_From(), theKExpressionsPackage.getExpression(), null, "from", null, 1, 1, For.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getFor_To(), theKExpressionsPackage.getExpression(), null, "to", null, 1, 1, For.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getFor_From(), ecorePackage.getEInt(), "from", null, 0, 1, For.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getFor_To(), ecorePackage.getEInt(), "to", null, 0, 1, For.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getFor_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, For.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(stateTypeEEnum, StateType.class, "StateType");

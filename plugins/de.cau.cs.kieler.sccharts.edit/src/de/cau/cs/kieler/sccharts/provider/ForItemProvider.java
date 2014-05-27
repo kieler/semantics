@@ -34,6 +34,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -82,6 +83,7 @@ public class ForItemProvider
             addLoopVariablePropertyDescriptor(object);
             addFromPropertyDescriptor(object);
             addToPropertyDescriptor(object);
+            addValuedObjectPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -124,8 +126,8 @@ public class ForItemProvider
                  SCChartsPackage.Literals.FOR__FROM,
                  true,
                  false,
-                 true,
-                 null,
+                 false,
+                 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
                  null,
                  null));
     }
@@ -144,6 +146,28 @@ public class ForItemProvider
                  getString("_UI_For_to_feature"),
                  getString("_UI_PropertyDescriptor_description", "_UI_For_to_feature", "_UI_For_type"),
                  SCChartsPackage.Literals.FOR__TO,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Valued Object feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addValuedObjectPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_For_valuedObject_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_For_valuedObject_feature", "_UI_For_type"),
+                 SCChartsPackage.Literals.FOR__VALUED_OBJECT,
                  true,
                  false,
                  true,
@@ -171,7 +195,8 @@ public class ForItemProvider
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_For_type");
+        For for_ = (For)object;
+        return getString("_UI_For_type") + " " + for_.getFrom();
     }
 
     /**
@@ -184,6 +209,13 @@ public class ForItemProvider
     @Override
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
+
+        switch (notification.getFeatureID(For.class)) {
+            case SCChartsPackage.FOR__FROM:
+            case SCChartsPackage.FOR__TO:
+                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+                return;
+        }
         super.notifyChanged(notification);
     }
 
