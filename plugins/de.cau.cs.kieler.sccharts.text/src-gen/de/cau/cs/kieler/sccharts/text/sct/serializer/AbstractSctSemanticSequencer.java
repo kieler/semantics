@@ -465,9 +465,9 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         for=For? 
 	 *         id=ID? 
 	 *         label=STRING? 
+	 *         for=For? 
 	 *         declarations+=Declaration* 
 	 *         states+=State+
 	 *     )

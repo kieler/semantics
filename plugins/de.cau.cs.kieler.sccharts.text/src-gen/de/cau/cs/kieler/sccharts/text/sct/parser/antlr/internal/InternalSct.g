@@ -394,37 +394,11 @@ ruleRegion returns [EObject current=null]
     {
     	newLeafNode(otherlv_2, grammarAccess.getRegionAccess().getRegionKeyword_2());
     }
-(	otherlv_3='[' 
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getRegionAccess().getLeftSquareBracketKeyword_3_0());
-    }
 (
 (
-		{ 
-	        newCompositeNode(grammarAccess.getRegionAccess().getForForParserRuleCall_3_1_0()); 
-	    }
-		lv_for_4_0=ruleFor		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getRegionRule());
-	        }
-       		set(
-       			$current, 
-       			"for",
-        		lv_for_4_0, 
-        		"For");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)	otherlv_5=']' 
-    {
-    	newLeafNode(otherlv_5, grammarAccess.getRegionAccess().getRightSquareBracketKeyword_3_2());
-    }
-)?(
-(
-		lv_id_6_0=RULE_ID
+		lv_id_3_0=RULE_ID
 		{
-			newLeafNode(lv_id_6_0, grammarAccess.getRegionAccess().getIdIDTerminalRuleCall_4_0()); 
+			newLeafNode(lv_id_3_0, grammarAccess.getRegionAccess().getIdIDTerminalRuleCall_3_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -433,16 +407,16 @@ ruleRegion returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"id",
-        		lv_id_6_0, 
+        		lv_id_3_0, 
         		"ID");
 	    }
 
 )
 )?(
 (
-		lv_label_7_0=RULE_STRING
+		lv_label_4_0=RULE_STRING
 		{
-			newLeafNode(lv_label_7_0, grammarAccess.getRegionAccess().getLabelSTRINGTerminalRuleCall_5_0()); 
+			newLeafNode(lv_label_4_0, grammarAccess.getRegionAccess().getLabelSTRINGTerminalRuleCall_4_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -451,11 +425,37 @@ ruleRegion returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"label",
-        		lv_label_7_0, 
+        		lv_label_4_0, 
         		"STRING");
 	    }
 
 )
+)?(	otherlv_5='[' 
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getRegionAccess().getLeftSquareBracketKeyword_5_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getRegionAccess().getForForParserRuleCall_5_1_0()); 
+	    }
+		lv_for_6_0=ruleFor		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getRegionRule());
+	        }
+       		set(
+       			$current, 
+       			"for",
+        		lv_for_6_0, 
+        		"For");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)	otherlv_7=']' 
+    {
+    	newLeafNode(otherlv_7, grammarAccess.getRegionAccess().getRightSquareBracketKeyword_5_2());
+    }
 )?	otherlv_8=':' 
     {
     	newLeafNode(otherlv_8, grammarAccess.getRegionAccess().getColonKeyword_6());

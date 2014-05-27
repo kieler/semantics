@@ -36,7 +36,7 @@ For returns sccharts::For:
 Region returns sccharts::Region:
 	{sccharts::Region}
     (annotations += Annotation)*
-    'region' ('['for=For']')? (id=ID)? (label=STRING)? ':'
+    'region' (id=ID)? (label=STRING)? ('['for=For']')? ':'
       (declarations+=Declaration)*
     (states+=State)+;
 
