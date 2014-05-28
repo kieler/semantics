@@ -157,7 +157,9 @@ class SCGTransformation {
         val sCGraph = ScgFactory::eINSTANCE.createSCGraph
         // Handle declarations
         for (valuedObject : rootRegion2.rootState.valuedObjects) {
-            val valuedObjectSCG = sCGraph.createValuedObject(valuedObject.name)
+//            val valuedObjectSCG = sCGraph.createValuedObject(valuedObject.name)
+            val valuedObjectSCG = valuedObject.copy
+            sCGraph.valuedObjects.add(valuedObjectSCG)
             valuedObjectSCG.applyAttributes(valuedObject)
             valuedObjectSCG.map(valuedObject)
         }

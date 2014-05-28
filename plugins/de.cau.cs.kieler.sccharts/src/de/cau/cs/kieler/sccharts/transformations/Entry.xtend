@@ -67,6 +67,7 @@ class Entry {
                 firstState = connector
                 lastState = state
             } else if (!state.hasInnerStatesOrRegions) {
+                state.regions.clear // FIX: need to erase dummy single region
                 val region = state.createRegion(GENERATED_PREFIX + "Entry")
                 firstState = region.createInitialState(GENERATED_PREFIX + "Init")
                 lastState = region.createFinalState(GENERATED_PREFIX + "Done")

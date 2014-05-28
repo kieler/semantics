@@ -132,6 +132,15 @@ public interface SctPackage extends EPackage
   int SC_CHART__DECLARATIONS = SCChartsPackage.STATE__DECLARATIONS;
 
   /**
+   * The feature id for the '<em><b>For</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SC_CHART__FOR = SCChartsPackage.STATE__FOR;
+
+  /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -193,15 +202,6 @@ public interface SctPackage extends EPackage
    * @ordered
    */
   int SC_CHART__INCOMING_TRANSITIONS = SCChartsPackage.STATE__INCOMING_TRANSITIONS;
-
-  /**
-   * The feature id for the '<em><b>For</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SC_CHART__FOR = SCChartsPackage.STATE__FOR;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.

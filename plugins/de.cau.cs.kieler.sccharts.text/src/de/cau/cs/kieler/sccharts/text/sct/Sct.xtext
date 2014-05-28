@@ -19,17 +19,24 @@ SingleRegion returns sccharts::Region:
 	{sccharts::Region}
     (
       (annotations += Annotation)*
-      'region' (id=ID)? (label=STRING)? ':'
+      'region' (id=ID)? (label=STRING)? ('['for=For']')?  ':'
       (declarations+=Declaration)*
      )?
     (states+=State)*;
 
 // ---------------------------------------------------------------------------------------------------
 
+For returns sccharts::For:
+    {sccharts::For}
+    valuedObject=ValuedObject '=' from=INT '..' to=INT 
+;
+
+// ---------------------------------------------------------------------------------------------------
+
 Region returns sccharts::Region:
 	{sccharts::Region}
     (annotations += Annotation)*
-    'region' (id=ID)? (label=STRING)? ':'
+    'region' (id=ID)? (label=STRING)? ('['for=For']')? ':'
       (declarations+=Declaration)*
     (states+=State)+;
 
@@ -131,8 +138,12 @@ Declaration returns kexpressions::Declaration:
     (input?='input')?
     (output?='output')?
     (static?='static')?
-    (signal?='signal')?
-    type = ValueType valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'?
+    (
+        ((signal?='signal')? type = ValueType)
+        |
+        (signal?='signal')
+    )
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'?
 ;
 
 // ---------------------------------------------------------------------------------------------------

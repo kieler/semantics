@@ -62,7 +62,9 @@ Declaration returns kexpressions::Declaration:
 
 ValuedObject returns kexpressions::ValuedObject:
 //    (annotations+=Annotation)*
-    name=ID ('=' initialValue=Expression)?
+    name=ID
+    ('[' cardinalities+=INT ']')* 
+    ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
     )?;
@@ -101,7 +103,7 @@ Instruction:
 ;
 
 Assignment:
-   variable = [kexpressions::ValuedObject] '=' expression=Expression
+   variable = [kexpressions::ValuedObject]('[' indices+=Expression ']')* '=' expression=Expression
 ;
 
 // Change priority

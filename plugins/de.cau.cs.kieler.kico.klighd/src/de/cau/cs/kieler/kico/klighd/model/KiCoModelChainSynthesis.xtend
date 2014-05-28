@@ -89,6 +89,8 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
     override KNode transform(KiCoModelChain chainWrapper) {
         val chain = chainWrapper.models;
         val rootNode = createNode();
+        rootNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+        rootNode.addLayoutParam(LayoutOptions::DIRECTION, Direction.RIGHT);
 
         if (!chain.empty) {
 

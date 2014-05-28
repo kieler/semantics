@@ -38,6 +38,7 @@ import javax.inject.Inject
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import java.util.ArrayList
 import de.cau.cs.kieler.kiml.options.Direction
+import de.cau.cs.kieler.kico.ui.KiCoSelectionView
 
 //import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
@@ -343,7 +344,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
     // Translate a Group
     def KNode translateGroup(TransformationDummy transformationDummy) {
         return createNode() => [ node |
-            if (transformationDummy.dependencies.size > 1) {
+            if (transformationDummy.group) {
                 node.setLayoutOption(KlighdProperties::EXPAND, false);
             }
             for (child : transformationDummy.dependencies) {
@@ -357,7 +358,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                 node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
                 node.setLayoutOption(LayoutOptions::DIRECTION, Direction::RIGHT);            
             }
-            
+
             node.addRectangle() => [
                 it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
                 it.setBackgroundGradient("white".color, GRAY, 90);

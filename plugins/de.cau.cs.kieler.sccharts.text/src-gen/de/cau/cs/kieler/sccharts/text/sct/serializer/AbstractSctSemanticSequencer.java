@@ -25,6 +25,7 @@ import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.Emission;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
+import de.cau.cs.kieler.sccharts.For;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
@@ -343,6 +344,12 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 					return; 
 				}
 				else break;
+			case SCChartsPackage.FOR:
+				if(context == grammarAccess.getForRule()) {
+					sequence_For(context, (For) semanticObject); 
+					return; 
+				}
+				else break;
 			case SCChartsPackage.REGION:
 				if(context == grammarAccess.getRegionRule()) {
 					sequence_Region(context, (Region) semanticObject); 
@@ -425,13 +432,21 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         input?='input'? 
 	 *         output?='output'? 
 	 *         static?='static'? 
-	 *         signal?='signal'? 
-	 *         type=ValueType 
+	 *         ((signal?='signal'? type=ValueType) | signal?='signal') 
 	 *         valuedObjects+=ValuedObject 
 	 *         valuedObjects+=ValuedObject*
 	 *     )
 	 */
 	protected void sequence_Declaration(EObject context, Declaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (valuedObject=ValuedObject from=INT to=INT)
+	 */
+	protected void sequence_For(EObject context, For semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -447,7 +462,14 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (annotations+=Annotation* id=ID? label=STRING? declarations+=Declaration* states+=State+)
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         id=ID? 
+	 *         label=STRING? 
+	 *         for=For? 
+	 *         declarations+=Declaration* 
+	 *         states+=State+
+	 *     )
 	 */
 	protected void sequence_Region(EObject context, Region semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -475,7 +497,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     ((annotations+=Annotation* id=ID? label=STRING? declarations+=Declaration*)? states+=State*)
+	 *     ((annotations+=Annotation* id=ID? label=STRING? for=For? declarations+=Declaration*)? states+=State*)
 	 */
 	protected void sequence_SingleRegion(EObject context, Region semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
