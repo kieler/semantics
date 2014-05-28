@@ -231,6 +231,11 @@ class KExpressionsExtension {
         valuedObject.getConst()
     }
 
+    // Return whether the ValuedObject is an array.
+    def public boolean isArray(ValuedObject valuedObject) {
+        !valuedObject.cardinalities.nullOrEmpty
+    }
+
     // Return whether the ValuedObject is a signal.
     def public boolean getSignal(ValuedObject valuedObject) {
         valuedObject.declaration.signal
