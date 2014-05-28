@@ -67,7 +67,8 @@ class SCGToSTransformation {
 //        for(typeGroup : scg.typeGroups) {
 //            val newTypeGroup = createTypeGroup(typeGroup)
             for (valuedObject : scg.valuedObjects) {
-            	val newValuedObject = createValuedObject(valuedObject.name).setTypeBool
+//                val newValuedObject = createValuedObject(valuedObject.name).setTypeBool
+                val newValuedObject = valuedObject.copy
             	sProgram.valuedObjects.add(newValuedObject)
 	            valuedObjectMapping.put(valuedObject, newValuedObject)
             }
@@ -127,6 +128,7 @@ class SCGToSTransformation {
 	    	sAssignment.variable = valuedObjectMapping.get(assignment.valuedObject)
 	    	val expression = assignment.assignment.copyExpression.fix.fixHostCode
             sAssignment.expression = expression
+            for(index : assignment.indices) { sAssignment.indices += index.copyExpression }
 	    	instructions += sAssignment
     	} else if (assignment.assignment instanceof TextExpression) {
     	     // This is the case when the valuedObject is null
