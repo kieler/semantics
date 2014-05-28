@@ -69,6 +69,7 @@ class SCGToSTransformation {
             for (valuedObject : scg.valuedObjects) {
 //                val newValuedObject = createValuedObject(valuedObject.name).setTypeBool
                 val newValuedObject = valuedObject.copy
+                newValuedObject.applyAttributes(valuedObject)
             	sProgram.valuedObjects.add(newValuedObject)
 	            valuedObjectMapping.put(valuedObject, newValuedObject)
             }
