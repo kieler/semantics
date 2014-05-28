@@ -1015,6 +1015,17 @@ class SCChartsExtension {
     		}
     	}
     }
+
+    def void replaceAllReferencesWithCopy(Scope scope, ValuedObject valuedObject, Expression expression) {
+    	for(obj : scope.eAllContents.toList.immutableCopy) {
+    		if (obj instanceof ValuedObjectReference
+    			&& (obj as ValuedObjectReference).valuedObject == valuedObject
+    		) 
+    		{
+    			obj.replace(expression.copy)
+    		}
+    	}
+    }
     
     def void replaceAllOccurrences(Scope scope, ValuedObject valuedObject, ValuedObject replacement) {
     	for(obj : scope.eAllContents.toList.immutableCopy) {
