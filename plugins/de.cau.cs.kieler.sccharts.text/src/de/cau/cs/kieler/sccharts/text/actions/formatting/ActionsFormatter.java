@@ -63,5 +63,9 @@ public class ActionsFormatter extends KExpressionsFormatter {
        // Emission ( value ) -> (value)
        c.setNoSpace().after(f.getEmissionAccess().getLeftParenthesisKeyword_1_0());
        c.setNoSpace().before(f.getEmissionAccess().getRightParenthesisKeyword_1_2());
+       
+       c.setNoSpace().before(f.getAssignmentAccess().getLeftSquareBracketKeyword_1_0());
+       c.setNoSpace().after(f.getAssignmentAccess().getLeftSquareBracketKeyword_1_0());
+       c.setNoSpace().before(f.getAssignmentAccess().getRightSquareBracketKeyword_1_2());
     }
 }
