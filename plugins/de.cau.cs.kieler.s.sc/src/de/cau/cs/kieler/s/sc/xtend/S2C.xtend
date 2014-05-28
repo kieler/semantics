@@ -259,7 +259,16 @@ class S2C {
 
    // Expand a ASSIGNMENT instruction.
    def dispatch CharSequence expand(Assignment assignment) {
-       '''«assignment.variable.expand » = «assignment.expression.expand»;'''
+       if (!assignment.indices.nullOrEmpty) {
+          var returnValue = '''«assignment.variable.expand »'''
+          for (index : assignment.indices) {
+              returnValue = returnValue + '''[«index.expand»]'''
+          }
+          returnValue = returnValue + ''' = «assignment.expression.expand»;'''
+          return returnValue
+       } else {
+          return '''«assignment.variable.expand » = «assignment.expression.expand»;'''
+       }
    }   
       
    // Expand a PAUSE instruction.
