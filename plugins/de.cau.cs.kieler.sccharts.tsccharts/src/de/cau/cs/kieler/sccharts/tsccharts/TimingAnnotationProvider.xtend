@@ -54,18 +54,17 @@ class TimingAnnotationProvider {
      */
     def public doTimingAnnotations(State scchart, /* ModelWrapper KTMRoot,*/ String fileName) {
 
-//        // TimingDomains for test reasons
-//        var Integer domainNumber = 0;
-//        val regionList = scchart.regions;
-//        val regionListIterator = regionList.iterator;
-//        while (regionListIterator.hasNext()) {
-//            val childRegion = regionListIterator.next;
-//
-////            // threadTree will be used to determine program point pairs for requests of local timing
-////            val HashMap<Integer, LinkedList<Integer>> threadTree = new HashMap<Integer, LinkedList<Integer>>;
-////            domainNumber = setTimingDomainsSimple(childRegion, domainNumber, threadTree, null);
-//        }
-        
+        //        // TimingDomains for test reasons
+        //        var Integer domainNumber = 0;
+        //        val regionList = scchart.regions;
+        //        val regionListIterator = regionList.iterator;
+        //        while (regionListIterator.hasNext()) {
+        //            val childRegion = regionListIterator.next;
+        //
+        ////            // threadTree will be used to determine program point pairs for requests of local timing
+        ////            val HashMap<Integer, LinkedList<Integer>> threadTree = new HashMap<Integer, LinkedList<Integer>>;
+        ////            domainNumber = setTimingDomainsSimple(childRegion, domainNumber, threadTree, null);
+        //        }
         val Map<Integer, Integer> timingInformation = getTimingInformation(fileName);
         if (timingInformation != null) {
             annotateStatesAndRegions(scchart, timingInformation);
@@ -170,7 +169,43 @@ class TimingAnnotationProvider {
         return domainNumber;
     }
 
-    /* This method is a test method that sets the timing Domains for regions, but not for the 
+    def Integer setTimingDomainsWithS(State state, Integer currentDomainNumber,
+        HashMap<Integer, LinkedList<Integer>> threadTree, Integer parentDomain) {
+        var domainNumber = currentDomainNumber;
+        val stateRegions = state.regions;
+        val stateRegionsIterator = stateRegions.iterator;
+        while (stateRegionsIterator.hasNext()) {
+            val region = stateRegionsIterator.next();
+
+            // set the time domain for this region
+            region.setTimeDomain(domainNumber);
+
+            // register this region as child of its parent region in the thread tree
+            if (parentDomain != null) {
+                threadTree.get(parentDomain).add(domainNumber);
+            }
+
+            // prepare descendant list for this region in the thread tree
+            threadTree.put(domainNumber, new LinkedList<Integer>);
+
+            // save this regions domain number for the registrations of its children in the thread tree
+            val regionDomain = domainNumber;
+            domainNumber = domainNumber + 1;
+            val childStates = region.states;
+            val childStatesIterator = childStates.iterator;
+            while (childStatesIterator.hasNext()) {
+                setTimingDomainsWithS(
+                    childStatesIterator.next(),
+                    domainNumber,
+                    threadTree,
+                    regionDomain
+                );
+            }
+        }
+        return domainNumber + 1;
+    }
+
+    /*  This method is a test method that sets the timing Domains for regions, but not for the 
      * elements of the according S model. To test the "upwards" timing information path*/
     def Integer setTimingDomainsWithS(Region region, Integer currentDomainNumber,
         HashMap<Integer, LinkedList<Integer>> threadTree, Integer parentDomain) {
@@ -292,18 +327,15 @@ class TimingAnnotationProvider {
                     );
                 }
                 case RequestType::LBCET: {
-                    timeValueTable.LBCETMap.put(
-                        currentResult.startPoint,
+                    timeValueTable.LBCETMap.put(currentResult.startPoint,
                         Integer.parseInt(currentResult.result.get(0)))
                 }
                 case RequestType::FWCET: {
-                    timeValueTable.FWCETMap.put(
-                        currentResult.startPoint,
+                    timeValueTable.FWCETMap.put(currentResult.startPoint,
                         Integer.parseInt(currentResult.result.get(0)))
                 }
                 case RequestType::FBCET: {
-                    timeValueTable.FBCETMap.put(
-                        currentResult.startPoint,
+                    timeValueTable.FBCETMap.put(currentResult.startPoint,
                         Integer.parseInt(currentResult.result.get(0)))
                 }
                 case RequestType::WCP: {
