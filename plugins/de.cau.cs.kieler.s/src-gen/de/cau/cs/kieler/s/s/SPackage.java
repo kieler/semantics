@@ -233,13 +233,22 @@ public interface SPackage extends EPackage
   int ASSIGNMENT__VARIABLE = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Indices</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNMENT__INDICES = INSTRUCTION_FEATURE_COUNT + 1;
+
+  /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ASSIGNMENT__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 1;
+  int ASSIGNMENT__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Assignment</em>' class.
@@ -248,7 +257,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
+  int ASSIGNMENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.PrioImpl <em>Prio</em>}' class.
@@ -811,6 +820,17 @@ public interface SPackage extends EPackage
   EReference getAssignment_Variable();
 
   /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Assignment#getIndices <em>Indices</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Indices</em>'.
+   * @see de.cau.cs.kieler.s.s.Assignment#getIndices()
+   * @see #getAssignment()
+   * @generated
+   */
+  EReference getAssignment_Indices();
+
+  /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.s.s.Assignment#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1302,6 +1322,14 @@ public interface SPackage extends EPackage
      * @generated
      */
     EReference ASSIGNMENT__VARIABLE = eINSTANCE.getAssignment_Variable();
+
+    /**
+     * The meta object literal for the '<em><b>Indices</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ASSIGNMENT__INDICES = eINSTANCE.getAssignment_Indices();
 
     /**
      * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.

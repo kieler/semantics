@@ -437,20 +437,10 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (variable=[ValuedObject|ID] expression=Expression)
+	 *     (variable=[ValuedObject|ID] indices+=Expression* expression=Expression)
 	 */
 	protected void sequence_Assignment(EObject context, Assignment semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, SPackage.Literals.ASSIGNMENT__VARIABLE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SPackage.Literals.ASSIGNMENT__VARIABLE));
-			if(transientValues.isValueTransient(semanticObject, SPackage.Literals.ASSIGNMENT__EXPRESSION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SPackage.Literals.ASSIGNMENT__EXPRESSION));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getAssignmentAccess().getVariableValuedObjectIDTerminalRuleCall_0_0_1(), semanticObject.getVariable());
-		feeder.accept(grammarAccess.getAssignmentAccess().getExpressionExpressionParserRuleCall_2_0(), semanticObject.getExpression());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -630,7 +620,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (name=ID initialValue=Expression? combineOperator=CombineOperator?)
+	 *     (name=ID cardinalities+=INT* initialValue=Expression? combineOperator=CombineOperator?)
 	 */
 	protected void sequence_ValuedObject(EObject context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

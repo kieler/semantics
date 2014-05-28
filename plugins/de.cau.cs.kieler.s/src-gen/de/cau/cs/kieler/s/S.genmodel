@@ -25,6 +25,7 @@
     <genClasses ecoreClass="S.ecore#//Instruction"/>
     <genClasses ecoreClass="S.ecore#//Assignment">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Assignment/variable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Assignment/indices"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Assignment/expression"/>
     </genClasses>
     <genClasses ecoreClass="S.ecore#//Prio">
