@@ -407,30 +407,7 @@ public class KiCoModelView extends DiagramViewPart {
         }
         if (activeEditor != null) {
             // Get model
-            if (activeEditor instanceof XtextEditor) {// Get model from XTextEditor
-                IXtextDocument document = ((XtextEditor) activeEditor).getDocument();
-                if (document != null) {
-                    document.readOnly(new IUnitOfWork.Void<XtextResource>() {
-
-                        @Override
-                        public void process(final XtextResource state) throws Exception {
-                            if (!state.getContents().isEmpty()) {
-                                sourceModel = state.getContents().get(0);
-                            }
-                        }
-                    });
-                }
-            } else if (activeEditor instanceof IEditingDomainProvider) {// Get model from EMF
-                                                                        // TreeEditor
-                IEditingDomainProvider editor = (IEditingDomainProvider) activeEditor;
-
-                List<Resource> resources =
-                        editor.getEditingDomain().getResourceSet().getResources();
-
-                if (!resources.isEmpty() && !resources.get(0).getContents().isEmpty()) {
-                    sourceModel = EcoreUtil.getRootContainer(resources.get(0).getContents().get(0));
-                }
-            }
+            sourceModel = ModelUtil.getModelFromModelEditor(activeEditor);
 
             if (sourceModel != null) {
                 boolean transformationsChanged = false;

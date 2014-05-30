@@ -21,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.ref.Reference;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -52,6 +53,13 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.ui.editor.XtextEditor;
+import org.eclipse.xtext.ui.editor.model.IXtextDocument;
+import org.eclipse.xtext.util.RuntimeIOException;
+import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import org.osgi.framework.Bundle;
 
 /**
@@ -672,6 +680,53 @@ public final class ModelUtil {
         LinkedList<EObject> list = new LinkedList<EObject>();
         list.add(model);
         saveModel(list, uri);
+    }
+
+    /**
+     * Extracts an ecore model from given EdtorPart in it supports ecore models.
+     * 
+     * @param editor
+     *            IEditorPart containing model
+     * @return EObject model
+     */
+    public static EObject getModelFromModelEditor(final IEditorPart editor) {
+        EObject model = null;
+        if (editor instanceof XtextEditor) { // Get model from XTextEditor
+            IXtextDocument document = ((XtextEditor) editor).getDocument();
+            if (document != null) {
+                /**
+                 * Internal class to read semanitc model from XTextEditor
+                 */
+                class ReadModel extends IUnitOfWork.Void<XtextResource> {
+                    public EObject result = null;
+                    public boolean processed = false;
+
+                    @Override
+                    public void process(final XtextResource state) throws Exception {
+                        if (!state.getContents().isEmpty()) {
+                            result = state.getContents().get(0);
+                            processed = true;
+                        }
+                    }
+                }
+                ReadModel read = new ReadModel();
+                document.readOnly(read);
+                if (read.processed) {
+                    model = read.result;
+                } else {
+                    throw new RuntimeIOException("Cannot read from XtextResource in time");
+                }
+            }
+        } else if (editor instanceof IEditingDomainProvider) { // Get model from EMF TreeEditor
+            IEditingDomainProvider provider = (IEditingDomainProvider) editor;
+
+            List<Resource> resources = provider.getEditingDomain().getResourceSet().getResources();
+
+            if (!resources.isEmpty() && !resources.get(0).getContents().isEmpty()) {
+                model = EcoreUtil.getRootContainer(resources.get(0).getContents().get(0));
+            }
+        }
+        return model;
     }
 
     // -------------------------------------------------------------------------
