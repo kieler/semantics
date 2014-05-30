@@ -19,7 +19,7 @@ import java.util.LinkedList;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.ui.IEditorPart;
@@ -30,15 +30,16 @@ import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.UIJob;
-import org.eclipse.xtext.ui.editor.XtextEditor;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
+import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.kico.klighd.KiCoModelView.ChangeEvent;
 import de.cau.cs.kieler.kico.klighd.listener.GlobalPartAdapter;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionView;
+import de.cau.cs.kieler.klighd.KlighdDataManager;
 
 /**
  * Observes Workspace and manages KiCoModelViews
@@ -266,14 +267,17 @@ public class KiCoModelViewManager extends UIJob implements IStartup {
      * @return true if editor is model editor
      */
     private boolean isModelEditor(IEditorPart part) {
-        if (part instanceof XtextEditor || part instanceof IEditingDomainProvider) {
-            // TODO check if model has synthesis
+        EObject model = ModelUtil.getModelFromModelEditor(part);
+        if (model != null
+                && !Iterables.isEmpty(KlighdDataManager.getInstance().getAvailableSyntheses(
+                        model.getClass()))) {
             return true;
         }
         return false;
     }
 
     /**
+     * Return a string containing the current compiler selection to given editor
      * @param activeEditor
      */
     public String getTransformations(final IEditorPart activeEditor) {
