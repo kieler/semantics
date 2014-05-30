@@ -711,10 +711,21 @@ public final class ModelUtil {
                 }
                 ReadModel read = new ReadModel();
                 document.readOnly(read);
+
+                // wait for processing but at least 1000ms
+                for (int i = 0; i < 1000 && !read.processed; i++) {
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                // get result
                 if (read.processed) {
                     model = read.result;
                 } else {
-                    throw new RuntimeIOException("Cannot read from XtextResource in time");
+                    throw new RuntimeIOException("Cannot read from XtextResource in time.");
                 }
             }
         } else if (editor instanceof IEditingDomainProvider) { // Get model from EMF TreeEditor
