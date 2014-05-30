@@ -13,28 +13,20 @@
  */
 package de.cau.cs.kieler.kico.klighd;
 
-import java.io.IOException;
-import java.util.List;
+import java.util.WeakHashMap;
 
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPropertyListener;
@@ -47,11 +39,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.ui.editor.XtextEditor;
-import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.util.StringInputStream;
-import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.kico.CompilationResult;
@@ -59,7 +47,6 @@ import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelWrapper;
-import de.cau.cs.kieler.kiml.config.ILayoutConfig;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 
@@ -83,6 +70,9 @@ public class KiCoModelView extends DiagramViewPart {
 
     /** Viewer ID **/
     public static final String ID = "de.cau.cs.kieler.kico.klighd.view";
+
+    /** default view title **/
+    public static final String defaultViewTitle = "KIELER Model View";
 
     // ICONS
     /** The icon for saving current model. */
@@ -130,7 +120,10 @@ public class KiCoModelView extends DiagramViewPart {
     private IEditorPart activeEditor;
     /** Current model display as diagram */
     private Object currentModel;
-    private Object sourceModel;
+    /** Model extracted from editor */
+    private EObject sourceModel;
+    /** Stores all last saved files for active editors */
+    private WeakHashMap<IEditorPart, IFile> lastSavedFiles = new WeakHashMap<IEditorPart, IFile>();
 
     /**
      * Create an instance
@@ -145,6 +138,7 @@ public class KiCoModelView extends DiagramViewPart {
     @Override
     public void init(IViewSite site) throws PartInitException {
         super.init(site);
+        // if has secondary id set variable
         if (site.getSecondaryId() != null) {
             secondaryID = site.getSecondaryId();
         }
@@ -177,12 +171,13 @@ public class KiCoModelView extends DiagramViewPart {
 
         public void propertyChanged(Object source, int propId) {
             if (propId == IWorkbenchPartConstants.PROP_DIRTY && !((IEditorPart) source).isDirty()) {
+                // dirty flag changed and editor is not dirty -> saved
                 updateModel(ChangeEvent.SAVED);
             }
         }
     };
 
-    // -- Setup Toolabr
+    // -- Setup Toolbar
     // -------------------------------------------------------------------------
 
     /**
@@ -198,9 +193,11 @@ public class KiCoModelView extends DiagramViewPart {
         // toolBarManager.add(getActionResourceVisualization());
         toolBarManager.add(getActionCompile());
         toolBarManager.add(getActionSideBySide());
+
+        updateViewTitle();
     }
 
-    // -- Editor Relation
+    // -- Editor
     // -------------------------------------------------------------------------
 
     /**
@@ -222,9 +219,7 @@ public class KiCoModelView extends DiagramViewPart {
                 // set as active editor
                 activeEditor = editor;
 
-                if (!isPrimaryView()) {
-                    setPartName(editor.getTitle());
-                }
+                updateViewTitle();
 
                 updateModel(ChangeEvent.ACTIVE_EDITOR);
             }
@@ -313,7 +308,11 @@ public class KiCoModelView extends DiagramViewPart {
                     // Configure child view
                     if (newViewPart instanceof KiCoModelView) {
                         KiCoModelView child = (KiCoModelView) newViewPart;
-                        // TODO configure child
+                        child.compileModel = compileModel;
+                        child.actionCompileToggle.setChecked(compileModel);
+                        child.displaySideBySide = displaySideBySide;
+                        child.actionSideBySideToggle.setChecked(displaySideBySide);
+                        // TODO update when implemented new toggle buttons
                         child.setActiveEditor(KiCoModelView.this.activeEditor);
                     }
 
@@ -339,51 +338,7 @@ public class KiCoModelView extends DiagramViewPart {
         }
         actionSave = new Action("", IAction.AS_PUSH_BUTTON) {
             public void run() {
-                if (currentModel != null && activeEditor != null) {
-                    String filename = activeEditor.getTitle();
-                    SaveAsDialog saveAsDialog = new SaveAsDialog(getSite().getShell());
-                    saveAsDialog.setOriginalName(filename);
-                    saveAsDialog.setTitle("Save Model");
-                    saveAsDialog.setBlockOnOpen(true);
-                    saveAsDialog.open();
-                    IPath path = saveAsDialog.getResult();
-                    if (path != null && !path.isEmpty()) {
-                        IWorkspace workspace = ResourcesPlugin.getWorkspace();
-                        IWorkspaceRoot root = workspace.getRoot();
-                        IFile file = root.getFile(path);
-                        URI uri = URI.createPlatformResourceURI(path.toString(), false);
-
-                        try {
-                            if (currentModel instanceof EObject) {
-                                ModelUtil.saveModel((EObject) currentModel, uri);
-                            } else if (currentModel instanceof CompilationResult
-                                    && ((CompilationResult) currentModel).getEObject() != null) {
-                                ModelUtil.saveModel(
-                                        ((CompilationResult) currentModel).getEObject(), uri);
-                            } else if (currentModel instanceof CompilationResult
-                                    && ((CompilationResult) currentModel).getString() != null) {
-                                if (!file.exists()) {
-                                    file.create(new StringInputStream(
-                                            ((CompilationResult) currentModel).getString()), 0,
-                                            null);
-                                } else {
-                                    file.setContents(new StringInputStream(
-                                            ((CompilationResult) currentModel).getString()), 0,
-                                            null);
-                                }
-                                // open editor
-                                PlatformUI
-                                        .getWorkbench()
-                                        .getActiveWorkbenchWindow()
-                                        .getActivePage()
-                                        .openEditor(new FileEditorInput(file),
-                                                "org.eclipse.ui.DefaultTextEditor");
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
+                saveCurrentModel();
             }
         };
         actionSave.setText("Save displayed main model");
@@ -392,8 +347,115 @@ public class KiCoModelView extends DiagramViewPart {
         return actionSave;
     }
 
+    // -- Save model
+    // -------------------------------------------------------------------------
+
+    /**
+     * Saves the current model into a file with saveAs dialog
+     */
+    protected void saveCurrentModel() {
+        if (currentModel != null && activeEditor != null) {
+            // Get workspace
+            IWorkspace workspace = ResourcesPlugin.getWorkspace();
+            IWorkspaceRoot root = workspace.getRoot();
+
+            // get filename with correct extension
+            String filename = activeEditor.getTitle();
+            if (filename.contains(".")) {
+                filename = filename.substring(0, filename.lastIndexOf('.'));
+            }
+            //TODO add correct file extension
+//            if (currentModel instanceof EObject) {
+//                filename = "." + ModelUtil.getFileExtension((EObject) currentModel);
+//            } else if (currentModel instanceof CompilationResult) {
+//                filename = "." + ((CompilationResult) currentModel).getFileExtension();
+//            }
+
+            SaveAsDialog saveAsDialog = new SaveAsDialog(getSite().getShell());
+            // Configure dialog
+
+            if (lastSavedFiles.containsKey(activeEditor)) {
+                IFile lastSavedFile = lastSavedFiles.get(activeEditor);
+                IPath path = lastSavedFile.getFullPath();
+                // remove filename
+                path = path.removeLastSegments(1);
+                // add new filename
+                path = path.append(filename);
+                saveAsDialog.setOriginalFile(root.getFile(path));
+            } else {
+                saveAsDialog.setOriginalName(filename);
+            }
+
+            saveAsDialog.setTitle("Save Model");
+            saveAsDialog.setBlockOnOpen(true);
+
+            // open and get result
+            saveAsDialog.open();
+            IPath path = saveAsDialog.getResult();
+
+            // save
+            if (path != null && !path.isEmpty()) {
+                IFile file = root.getFile(path);
+                URI uri = URI.createPlatformResourceURI(path.toString(), false);
+
+                // register as last save
+                lastSavedFiles.put(activeEditor, file);
+
+                try {
+                    if (currentModel instanceof EObject) {
+                        ModelUtil.saveModel((EObject) currentModel, uri);
+                    } else if (currentModel instanceof CompilationResult
+                            && ((CompilationResult) currentModel).getEObject() != null) {
+                        ModelUtil.saveModel(((CompilationResult) currentModel).getEObject(), uri);
+                    } else if (currentModel instanceof CompilationResult
+                            && ((CompilationResult) currentModel).getString() != null) {
+                        // save to text file (create if necessary)
+                        if (!file.exists()) {
+                            file.create(
+                                    new StringInputStream(((CompilationResult) currentModel)
+                                            .getString()), 0, null);
+                        } else {
+                            file.setContents(new StringInputStream(
+                                    ((CompilationResult) currentModel).getString()), 0, null);
+                        }
+
+                        // open editor with content
+                        // todo handle with code diagram
+                        PlatformUI
+                                .getWorkbench()
+                                .getActiveWorkbenchWindow()
+                                .getActivePage()
+                                .openEditor(new FileEditorInput(file),
+                                        "org.eclipse.ui.DefaultTextEditor");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     // -- UPDATE
     // -------------------------------------------------------------------------
+
+    /**
+     * Sets view title according to current context
+     */
+    private void updateViewTitle() {
+        if (!isPrimaryView()) {
+            if (activeEditor != null) {
+                setPartName(activeEditor.getTitle());
+            } else {
+                setPartName("Secondary " + defaultViewTitle);
+            }
+        } else {
+            if (activeEditor != null) {
+                setPartName(defaultViewTitle + " [" + activeEditor.getTitle() + "]");
+            } else {
+                setPartName(defaultViewTitle);
+            }
+        }
+    }
 
     /**
      * Updates the current model caused by changeEvent if necessary
@@ -466,6 +528,7 @@ public class KiCoModelView extends DiagramViewPart {
                         || (!transformationsChanged && change == ChangeEvent.TRANSFORMATIONS)
                 // switched to uncompiled view but no compiled diagram was shown before
                 || (change == ChangeEvent.COMPILE && transformations == null))) {
+                    currentModel = sourceModel;
                     updateDiagram(sourceModel, change != ChangeEvent.SAVED);
                 }
             }
@@ -481,8 +544,8 @@ public class KiCoModelView extends DiagramViewPart {
                     || this.getViewer().getViewContext() == null) {
                 // the initialization case
                 DiagramViewManager.initializeView(this, model, null, null);
-                //reset layout to resolve KISEMA-905
-                resetLayoutConfig();                
+                // reset layout to resolve KISEMA-905
+                resetLayoutConfig();
             } else {
                 // update case (keeps options and sidebar)
                 DiagramViewManager.updateView(this.getViewer().getViewContext(), model);
