@@ -11,6 +11,10 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolderSynthesis"
             id="de.cau.cs.kieler.kico.klighd.KiCoCodePlaceHolder">
       </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.KiCoErrorModelSynthesis"
+            id="de.cau.cs.kieler.kico.klighd.KiCoErrorModel">
+      </diagramSynthesis>
    </extension>
    <extension
          point="org.eclipse.ui.views">

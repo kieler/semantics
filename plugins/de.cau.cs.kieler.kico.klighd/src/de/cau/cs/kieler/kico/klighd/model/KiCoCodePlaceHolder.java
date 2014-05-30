@@ -20,4 +20,22 @@ package de.cau.cs.kieler.kico.klighd.model;
  *
  */
 public class KiCoCodePlaceHolder {
+    
+    private final String code;
+
+    /**
+     * Creates a CodePlaceHolder for given code
+     * @param code
+     */
+    public KiCoCodePlaceHolder(String code) {
+        super();
+        this.code = code;
+    }
+
+    /**
+     * @return the code string
+     */
+    public String getCode() {
+        return code;
+    }
 }
