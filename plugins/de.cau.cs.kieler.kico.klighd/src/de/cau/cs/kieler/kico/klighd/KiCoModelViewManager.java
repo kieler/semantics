@@ -15,11 +15,15 @@ package de.cau.cs.kieler.kico.klighd;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.ui.IEditorPart;
@@ -30,12 +34,13 @@ import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.UIJob;
+import org.eclipse.xtext.ui.editor.XtextEditor;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-import de.cau.cs.kieler.core.model.util.ModelUtil;
+import de.cau.cs.kieler.core.model.xtext.util.XtextModelingUtil;
 import de.cau.cs.kieler.kico.klighd.KiCoModelView.ChangeEvent;
 import de.cau.cs.kieler.kico.klighd.listener.GlobalPartAdapter;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionView;
@@ -267,7 +272,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup {
      * @return true if editor is model editor
      */
     private boolean isModelEditor(IEditorPart part) {
-        EObject model = ModelUtil.getModelFromModelEditor(part);
+        EObject model = getModelFromModelEditor(part);
         if (model != null
                 && !Iterables.isEmpty(KlighdDataManager.getInstance().getAvailableSyntheses(
                         model.getClass()))) {
@@ -278,6 +283,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup {
 
     /**
      * Return a string containing the current compiler selection to given editor
+     * 
      * @param activeEditor
      */
     public String getTransformations(final IEditorPart activeEditor) {
@@ -289,6 +295,32 @@ public class KiCoModelViewManager extends UIJob implements IStartup {
             }
         }
         return null;
+    }
+
+    // -- Utility
+    // -------------------------------------------------------------------------
+
+    /**
+     * Extracts an ecore model from given EdtorPart in it supports ecore models.
+     * 
+     * @param editor
+     *            IEditorPart containing model
+     * @return EObject model
+     */
+    public static EObject getModelFromModelEditor(final IEditorPart editor) {
+        EObject model = null;
+        if (editor instanceof XtextEditor) { // Get model from XTextEditor
+            return XtextModelingUtil.getModelFromXtextEditor((XtextEditor) editor, true);
+        } else if (editor instanceof IEditingDomainProvider) { // Get model from EMF TreeEditor
+            IEditingDomainProvider provider = (IEditingDomainProvider) editor;
+
+            List<Resource> resources = provider.getEditingDomain().getResourceSet().getResources();
+
+            if (!resources.isEmpty() && !resources.get(0).getContents().isEmpty()) {
+                model = EcoreUtil.getRootContainer(resources.get(0).getContents().get(0));
+            }
+        }
+        return model;
     }
 
 }

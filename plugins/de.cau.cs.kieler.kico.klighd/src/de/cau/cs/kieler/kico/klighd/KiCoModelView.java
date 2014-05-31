@@ -497,7 +497,7 @@ public class KiCoModelView extends DiagramViewPart {
             // Get model if necessary
             Object previousSourceModel = sourceModel;
             if (do_get_model) {
-                sourceModel = ModelUtil.getModelFromModelEditor(activeEditor);
+                sourceModel = KiCoModelViewManager.getModelFromModelEditor(activeEditor);
             }
             // compare types and set type change flag
             if (previousSourceModel != null && sourceModel != null
