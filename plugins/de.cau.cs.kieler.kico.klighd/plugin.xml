@@ -39,6 +39,10 @@
             class="de.cau.cs.kieler.kico.klighd.model.action.ErrorShowExceptionAction"
             id="de.cau.cs.kieler.kico.klighd.model.action.ErrorShowExceptionAction">
       </action>
+      <action
+            class="de.cau.cs.kieler.kico.klighd.model.action.OpenCodeInEditorAction"
+            id="de.cau.cs.kieler.kico.klighd.model.action.OpenCodeInEditorAction">
+      </action>
    </extension>
 
 </plugin>

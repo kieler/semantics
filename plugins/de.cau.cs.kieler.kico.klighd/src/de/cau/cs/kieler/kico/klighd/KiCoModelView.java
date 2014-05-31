@@ -375,16 +375,7 @@ public class KiCoModelView extends DiagramViewPart {
             IWorkspaceRoot root = workspace.getRoot();
 
             // get filename with correct extension
-            String filename = activeEditor.getTitle();
-            if (filename.contains(".")) {
-                filename = filename.substring(0, filename.lastIndexOf('.'));
-            }
-            // TODO add correct file extension
-            // if (currentModel instanceof EObject) {
-            // filename = "." + ModelUtil.getFileExtension((EObject) currentModel);
-            // } else if (currentModel instanceof CompilationResult) {
-            // filename = "." + ((CompilationResult) currentModel).getFileExtension();
-            // }
+            String filename = getCurrentFileName();
 
             SaveAsDialog saveAsDialog = new SaveAsDialog(getSite().getShell());
             // Configure dialog
@@ -457,6 +448,26 @@ public class KiCoModelView extends DiagramViewPart {
                 }
             }
         }
+    }
+
+    /**
+     * @return
+     */
+    private String getCurrentFileName() {
+        if (activeEditor != null && currentModel != null) {
+            String filename = activeEditor.getTitle();
+            if (filename.contains(".")) {
+                filename = filename.substring(0, filename.lastIndexOf('.'));
+            }
+            // TODO add correct file extension
+            // if (currentModel instanceof EObject) {
+            // filename = "." + ModelUtil.getFileExtension((EObject) currentModel);
+            // } else if (currentModel instanceof CompilationResult) {
+            // filename = "." + ((CompilationResult) currentModel).getFileExtension();
+            // }
+            return filename;
+        }
+        return null;
     }
 
     // -- UPDATE
@@ -596,7 +607,8 @@ public class KiCoModelView extends DiagramViewPart {
                 if (result.getEObject() != null) {
                     currentModel = result.getEObject();
                 } else if (result.getString() != null) {
-                    currentModel = new KiCoCodePlaceHolder(result.getString());
+                    currentModel =
+                            new KiCoCodePlaceHolder(getCurrentFileName(), result.getString());
                 }
 
                 // composite model in given display mode
@@ -658,8 +670,7 @@ public class KiCoModelView extends DiagramViewPart {
             // FIXME this only works with simple update strategy!
             // TODO chsch: any success indication should be returned by klighd
             KNode currentDiagram = this.getViewer().getViewContext().getViewModel();
-            if (currentDiagram == null || currentDiagram == previousDiagram
-                    || currentDiagram.getChildren().size() == 0) {
+            if (currentDiagram == null || currentDiagram.getChildren().isEmpty()) {
                 throw new Exception("Diagram is empty. Inernal KLighD error.");
             }
 
