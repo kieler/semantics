@@ -610,7 +610,8 @@ public class KiCoModelView extends DiagramViewPart {
             do_update_diagram |= do_compile;
             // should compile but no transformations are selected
             do_update_diagram |= is_compile_update && transformations != null;
-            do_update_diagram |= compileModel && transformations == null;
+            // compile and transformations changed to null 
+            do_update_diagram |= compileModel && transformations == null && transformations_changed;
 
             if (do_update_diagram) {
                 updateDiagram(currentModel, model_type_changed, false);
