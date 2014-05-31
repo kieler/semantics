@@ -145,12 +145,15 @@ public class KiCoModelViewManager extends UIJob implements IStartup {
                     modelViews.add(modelView);
                     if (modelView.isPrimaryView()
                             && modelView.getSite().getPage().getActiveEditor() != null) {
+                        //update to active editor (delayed to prevent klighd init errors)
                         new UIJob("Init" + KiCoModelView.class.getName()) {
 
                             @Override
                             public IStatus runInUIThread(IProgressMonitor monitor) {
-                                modelView.setActiveEditor(modelView.getSite().getPage()
-                                        .getActiveEditor());
+                                IEditorPart activeEditor = modelView.getSite().getPage().getActiveEditor();
+                                if(editors.contains(activeEditor)){
+                                    modelView.setActiveEditor(activeEditor);
+                                }
                                 return Status.OK_STATUS;
                             }
                         }.schedule(2);
