@@ -447,11 +447,11 @@ public class KiCoModelView extends DiagramViewPart {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    ErrorDialog errorDialog = new ErrorDialog(getSite().getShell(), "Saving model failed!",
-                            "Saving model failed.", new Status(
-                                    IStatus.WARNING, ID,
-                                    "An error occured while saving displayed model", e),
-                            IStatus.WARNING);
+                    ErrorDialog errorDialog =
+                            new ErrorDialog(getSite().getShell(), "Saving model failed!",
+                                    "Saving model failed.", new Status(IStatus.ERROR, ID,
+                                            "An error occured while saving displayed model", e),
+                                    IStatus.ERROR);
                     errorDialog.create();
                     errorDialog.open();
                 }
@@ -580,8 +580,10 @@ public class KiCoModelView extends DiagramViewPart {
                 CompilationResult result;
                 try {
                     result = KielerCompiler.compile(transformations, (EObject) sourceModel);
-                    if (result == null) {
-                        throw new NullPointerException("Compiled model is NULL.");
+                    if (result == null
+                            || (result.getEObject() == null && result.getString() == null)) {
+                        throw new NullPointerException(
+                                "Compilation produced no result. Internal compilation error.");
                     }
                 } catch (Exception e) {
                     currentModel = null;
@@ -658,7 +660,7 @@ public class KiCoModelView extends DiagramViewPart {
             KNode currentDiagram = this.getViewer().getViewContext().getViewModel();
             if (currentDiagram == null || currentDiagram == previousDiagram
                     || currentDiagram.getChildren().size() == 0) {
-                throw new Exception("Inernal KLighD error");
+                throw new Exception("Diagram is empty. Inernal KLighD error.");
             }
 
             // enable synchronous selection between diagram and editor

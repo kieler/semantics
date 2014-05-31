@@ -22,7 +22,9 @@ import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.kico.klighd.model.action.ErrorShowExceptionAction
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import javax.inject.Inject
 
 /**
@@ -63,9 +65,45 @@ class KiCoErrorModelSynthesis extends AbstractDiagramSynthesis<KiCoErrorModel> {
         val rootNode = createNode();
         rootNode.children += createNode(errorModel) => [
             it.addRectangle() => [
-                it.addText(errorModel.message);
+                it.invisible = true;
+                it.setGridPlacement(1);
+                //upper part is sign
+                it.addRectangle => [
+                    it.invisible = true;
+                    //add image of sign with size 250x250
+                    it.setGridPlacementData(250, 250);
+                    it.addImage("de.cau.cs.kieler.kico.klighd", "icons/KiCoErrorModelSign.png").addRectangularClip.
+                        setPointPlacementData(LEFT, 0, 0, TOP, 0, 0, H_CENTRAL, V_CENTRAL, 0, 0, 500, 500);
+                ]
+                //lower part is message
+                it.addRoundedRectangle(7, 7) => [
+                    it.setGridPlacement(1);
+                    //title
+                    it.addText("ERROR") => [
+                        it.fontSize = 12;
+                        it.setFontBold = true;
+                        it.foreground = "red".color;
+                        it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
+                        it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+                    ]
+                    //message
+                    it.addText(errorModel.message) => [
+                        it.fontSize = 12;
+                        it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
+                        it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+                    ]
+                    //link to exception if available
+                    if (errorModel.exception != null) {
+                        it.addText("[Show Exception]") => [
+                            it.foreground = "blue".color
+                            it.fontSize = 9
+                            it.addSingleClickAction(ErrorShowExceptionAction.ID);
+                            it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
+                        ]
+                    }
+                ]
             ]
-        ];
+        ]
         return rootNode;
     }
 }

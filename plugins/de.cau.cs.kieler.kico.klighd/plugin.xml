@@ -33,5 +33,12 @@
       <startup
             class="de.cau.cs.kieler.kico.klighd.KiCoModelViewManager"></startup>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.extensions">
+      <action
+            class="de.cau.cs.kieler.kico.klighd.model.action.ErrorShowExceptionAction"
+            id="de.cau.cs.kieler.kico.klighd.model.action.ErrorShowExceptionAction">
+      </action>
+   </extension>
 
 </plugin>
