@@ -647,12 +647,9 @@ public class KiCoModelView extends DiagramViewPart {
      */
     private void updateDiagram(Object model, boolean modelTypeChanged, boolean isErrorModel) {
         try {
-            KNode previousDiagram = null;
             if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
                 // if viewer or context does not exist always init view
                 modelTypeChanged = true;
-            } else {
-                previousDiagram = this.getViewer().getViewContext().getViewModel();
             }
 
             // Update diagram

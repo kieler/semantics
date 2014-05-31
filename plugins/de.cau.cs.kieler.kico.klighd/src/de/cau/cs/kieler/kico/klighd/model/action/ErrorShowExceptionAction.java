@@ -24,6 +24,8 @@ import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
 import de.cau.cs.kieler.klighd.IAction;
 
 /**
+ * Action to open a ErrorDialog to show additional exception information of KiCoErrorModel.
+ * 
  * @author als
  * 
  */

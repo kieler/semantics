@@ -70,26 +70,32 @@ class KiCoErrorModelSynthesis extends AbstractDiagramSynthesis<KiCoErrorModel> {
                 //upper part is sign
                 it.addRectangle => [
                     it.invisible = true;
-                    //add image of sign with size 250x250
+                    //set minimal size
                     it.setGridPlacementData(250, 250);
-                    it.addImage("de.cau.cs.kieler.kico.klighd", "icons/KiCoErrorModelSign.png").addRectangularClip.
-                        setPointPlacementData(LEFT, 0, 0, TOP, 0, 0, H_CENTRAL, V_CENTRAL, 0, 0, 500, 500);
+                    it.addImage("de.cau.cs.kieler.kico.klighd", "icons/KiCoErrorModelSign.png").
+                        setPointPlacementData(LEFT, 0, 0.5f, TOP, 0, 0.5f, H_CENTRAL, V_CENTRAL, 0, 0, 250, 250).
+                        addRectangularClip;
                 ]
                 //lower part is message
                 it.addRoundedRectangle(7, 7) => [
                     it.setGridPlacement(1);
+                    it.lineWidth = 3;
                     //title
                     it.addText("ERROR") => [
                         it.fontSize = 12;
                         it.setFontBold = true;
                         it.foreground = "red".color;
-                        it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
+                        it.setGridPlacementData().from(LEFT, 8, 0, TOP, 8, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
                         it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
                     ]
                     //message
                     it.addText(errorModel.message) => [
                         it.fontSize = 12;
-                        it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
+                        if (errorModel.exception != null) {
+                            it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
+                        } else {
+                            it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
+                        }
                         it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
                     ]
                     //link to exception if available
@@ -98,7 +104,7 @@ class KiCoErrorModelSynthesis extends AbstractDiagramSynthesis<KiCoErrorModel> {
                             it.foreground = "blue".color
                             it.fontSize = 9
                             it.addSingleClickAction(ErrorShowExceptionAction.ID);
-                            it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
+                            it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
                         ]
                     }
                 ]
