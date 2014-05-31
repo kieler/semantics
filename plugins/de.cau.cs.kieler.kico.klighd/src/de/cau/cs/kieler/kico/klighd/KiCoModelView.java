@@ -21,11 +21,14 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
@@ -443,8 +446,14 @@ public class KiCoModelView extends DiagramViewPart {
                                         "org.eclipse.ui.DefaultTextEditor");
                     }
                 } catch (Exception e) {
-                    // todo show error dialog
                     e.printStackTrace();
+                    ErrorDialog errorDialog = new ErrorDialog(getSite().getShell(), "Saving model failed!",
+                            "Saving model failed.", new Status(
+                                    IStatus.WARNING, ID,
+                                    "An error occured while saving displayed model", e),
+                            IStatus.WARNING);
+                    errorDialog.create();
+                    errorDialog.open();
                 }
             }
         }
@@ -610,7 +619,7 @@ public class KiCoModelView extends DiagramViewPart {
             do_update_diagram |= do_compile;
             // should compile but no transformations are selected
             do_update_diagram |= is_compile_update && transformations != null;
-            // compile and transformations changed to null 
+            // compile and transformations changed to null
             do_update_diagram |= compileModel && transformations == null && transformations_changed;
 
             if (do_update_diagram) {
