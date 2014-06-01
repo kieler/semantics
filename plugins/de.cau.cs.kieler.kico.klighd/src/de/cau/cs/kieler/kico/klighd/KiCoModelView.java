@@ -95,10 +95,13 @@ public class KiCoModelView extends DiagramViewPart {
     /** The icon for toggling compile button. */
     private static final ImageDescriptor ICON_FORK = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.klighd", "icons/KiCoModelViewIconDuplicate.png");
-    /** The icon for forking view button. */
+    /** The icon for fork view button. */
     private static final ImageDescriptor ICON_SIDE_BY_SIDE = AbstractUIPlugin
-            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.ui",
-                    "icons/KiCoViewIconSideBySide.png");
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.klighd",
+                    "icons/KiCoModelViewIconSideBySide.png");
+    /** The icon for pin selection button. */
+    private static final ImageDescriptor ICON_PIN = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "de.cau.cs.kieler.kico.klighd", "icons/KiCoModelViewIconPin.png");
 
     // ACTIONS
     /** The action for toggling side-by-side display mode. */
@@ -114,9 +117,13 @@ public class KiCoModelView extends DiagramViewPart {
     /** The action for toggling side-by-side display mode. */
     private Action actionSave;
 
-    /** String of pinned transformations. */
+    /** The action for toggling compile. */
+    private Action actionPinToggle;
+    /** String currently saved transformations. */
     private String transformations = null;
-    // private boolean pinTransformations = false;
+    /** Map with pinned transformations */
+    private WeakHashMap<IEditorPart, String> pinnedTransformations =
+            new WeakHashMap<IEditorPart, String>();
 
     /** The action for forking view. */
     private Action actionFork;
@@ -205,8 +212,8 @@ public class KiCoModelView extends DiagramViewPart {
         IToolBarManager toolBarManager = bars.getToolBarManager();
         toolBarManager.add(getActionSave());
         toolBarManager.add(getActionFork());
-        // toolBarManager.add(getActionResourceVisualization());
         toolBarManager.add(getActionCompile());
+        toolBarManager.add(getActionPin());
         toolBarManager.add(getActionSideBySide());
 
         updateViewTitle();
@@ -278,6 +285,35 @@ public class KiCoModelView extends DiagramViewPart {
     }
 
     /**
+     * Gets the action to toggle pin selection.
+     * 
+     * @return the action
+     */
+    private Action getActionPin() {
+        if (actionPinToggle != null) {
+            return actionPinToggle;
+        }
+        actionPinToggle = new Action("", IAction.AS_CHECK_BOX) {
+            public void run() {
+                if (activeEditor != null) {
+                    if (isChecked()) {
+                        pinnedTransformations.put(activeEditor, transformations);
+                    } else {
+                        pinnedTransformations.remove(activeEditor);
+                        // update model due to possible changed of transformation configuration
+                        updateModel(ChangeEvent.TRANSFORMATIONS);
+                    }
+                }
+            }
+        };
+        actionPinToggle.setText("Pin selected transformations");
+        actionPinToggle.setToolTipText("Pin selected transformations");
+        actionPinToggle.setImageDescriptor(ICON_PIN);
+        actionPinToggle.setChecked(false);
+        return actionPinToggle;
+    }
+
+    /**
      * Gets the action to toggle side-by-side display mode.
      * 
      * @return the action
@@ -288,7 +324,7 @@ public class KiCoModelView extends DiagramViewPart {
         }
         actionSideBySideToggle = new Action("", IAction.AS_CHECK_BOX) {
             public void run() {
-                displaySideBySide = actionSideBySideToggle.isChecked();
+                displaySideBySide = isChecked();
                 updateModel(ChangeEvent.DISPLAY_MODE);
             }
         };
@@ -311,29 +347,7 @@ public class KiCoModelView extends DiagramViewPart {
         }
         actionFork = new Action("", IAction.AS_PUSH_BUTTON) {
             public void run() {
-                try {
-                    // Create new View
-                    IViewPart newViewPart =
-                            PlatformUI
-                                    .getWorkbench()
-                                    .getActiveWorkbenchWindow()
-                                    .getActivePage()
-                                    .showView(ID, Long.toString(System.currentTimeMillis()),
-                                            IWorkbenchPage.VIEW_ACTIVATE);
-                    // Configure child view
-                    if (newViewPart instanceof KiCoModelView) {
-                        KiCoModelView child = (KiCoModelView) newViewPart;
-                        child.compileModel = compileModel;
-                        child.actionCompileToggle.setChecked(compileModel);
-                        child.displaySideBySide = displaySideBySide;
-                        child.actionSideBySideToggle.setChecked(displaySideBySide);
-                        // TODO update when implemented new toggle buttons
-                        child.setActiveEditor(KiCoModelView.this.activeEditor);
-                    }
-
-                } catch (PartInitException e) {
-                    e.printStackTrace();
-                }
+                forkView();
             }
         };
         actionFork.setText("Fork this view");
@@ -470,13 +484,53 @@ public class KiCoModelView extends DiagramViewPart {
         return null;
     }
 
+    // -- Fork
+    // -------------------------------------------------------------------------
+
+    /**
+     * Forks this view into new one with the same settings
+     */
+    protected void forkView() {
+        try {
+            // Create new View
+            IViewPart newViewPart =
+                    PlatformUI
+                            .getWorkbench()
+                            .getActiveWorkbenchWindow()
+                            .getActivePage()
+                            .showView(ID, Long.toString(System.currentTimeMillis()),
+                                    IWorkbenchPage.VIEW_ACTIVATE);
+            // Configure child view
+            if (newViewPart instanceof KiCoModelView) {
+                KiCoModelView child = (KiCoModelView) newViewPart;
+                // adopt compile settings
+                child.compileModel = compileModel;
+                child.actionCompileToggle.setChecked(compileModel);
+                // adopt display mode settings
+                child.displaySideBySide = displaySideBySide;
+                child.actionSideBySideToggle.setChecked(displaySideBySide);
+                // adopt transformation settings
+                child.pinnedTransformations =
+                        new WeakHashMap<IEditorPart, String>(pinnedTransformations);
+
+                // TODO update when implemented new toggle buttons
+
+                // update model of forked view
+                child.setActiveEditor(KiCoModelView.this.activeEditor);
+            }
+
+        } catch (PartInitException e) {
+            e.printStackTrace();
+        }
+    }
+
     // -- UPDATE
     // -------------------------------------------------------------------------
 
     /**
      * Sets view title according to current context
      */
-    private void updateViewTitle() {
+    protected void updateViewTitle() {
         if (!isPrimaryView()) {
             if (activeEditor != null) {
                 setPartName(activeEditor.getTitle());
@@ -490,6 +544,15 @@ public class KiCoModelView extends DiagramViewPart {
                 setPartName(defaultViewTitle);
             }
         }
+    }
+
+    /**
+     * Updates checked and enabled state of transformation pin toggle button according to current
+     * transformation
+     */
+    private void updatePinToggleButton() {
+        actionPinToggle.setEnabled(transformations != null);
+        actionPinToggle.setChecked(pinnedTransformations.containsKey(activeEditor));
     }
 
     /**
@@ -533,13 +596,12 @@ public class KiCoModelView extends DiagramViewPart {
                 return;
             }
 
-            // TODO pin transformation
             // Evaluate if current transformation configuration should be asked
             boolean do_get_transformations = false;
             do_get_transformations |= is_transformation_update;
             do_get_transformations |= is_active_editor_update;
             do_get_transformations |= is_compile_update && compileModel;
-
+            updatePinToggleButton();
             // Indicates of the current transformation configuration differs from previous
             // configuration
             boolean transformations_changed = false;
@@ -548,7 +610,14 @@ public class KiCoModelView extends DiagramViewPart {
             if (do_get_transformations) {
                 KiCoModelViewManager mvm = KiCoModelViewManager.getInstance();
                 if (mvm != null) {
-                    String newTransformations = mvm.getTransformations(activeEditor);
+                    // if there is a pinned transformation for active editor take pinned one else
+                    // take selected ones
+                    String newTransformations = null;
+                    if (pinnedTransformations.containsKey(activeEditor)) {
+                        newTransformations = pinnedTransformations.get(activeEditor);
+                    } else {
+                        newTransformations = mvm.getTransformations(activeEditor);
+                    }
                     // if newTransformations is references can be compares else a string compare
                     // is necessary
                     if (newTransformations == null) {
@@ -565,13 +634,16 @@ public class KiCoModelView extends DiagramViewPart {
                                 transformations_changed |= true;
                                 transformations = newTransformations;
                             }
-                        } else {// transformations are null but new ones are not -> chnage
+                        } else {// transformations are null but new ones are not -> change happend
                             transformations_changed |= true;
                             transformations = newTransformations;
                         }
                     }
                 }
             }
+
+            // update pin button according to current transformations selection
+            updatePinToggleButton();
 
             // Evaluate if compilation is needed
             boolean do_compile = false;
