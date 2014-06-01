@@ -440,15 +440,6 @@ public class KiCoModelView extends DiagramViewPart {
                             file.setContents(new StringInputStream(
                                     ((KiCoCodePlaceHolder) saveModel).getCode()), 0, null);
                         }
-
-                        // open editor with content
-                        // todo handle in code diagram
-                        PlatformUI
-                                .getWorkbench()
-                                .getActiveWorkbenchWindow()
-                                .getActivePage()
-                                .openEditor(new FileEditorInput(file),
-                                        "org.eclipse.ui.DefaultTextEditor");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
