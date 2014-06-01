@@ -162,6 +162,10 @@ class SCChartsExtension {
 //        state.parentRegion.rootRegion;
 //    }
 
+	def boolean isRootState(State state) {
+		state.parentRegion == null
+	}
+
     def State getRootState(State state) {
         if (state.parentRegion == null) return state;
         state.parentRegion.rootState

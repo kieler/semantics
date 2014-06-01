@@ -76,6 +76,8 @@ class SCGTransformation {
     //-------------------------------------------------------------------------
     //--                         U T I L I T Y                               --
     //-------------------------------------------------------------------------
+    
+    private var Entry rootStateEntry = null
          
     // State mappings         
     HashMap<EObject, Node> stateOrRegion2node = new HashMap<EObject, Node>()    
@@ -129,6 +131,7 @@ class SCGTransformation {
     
     // ValuedObject mappings
     HashMap<ValuedObject, ValuedObject> valuedObjectSSChart2SCG = new HashMap<ValuedObject, ValuedObject>()
+    
     def void map(ValuedObject valuedObjectSCG, ValuedObject valuedObjectSCChart) {
         valuedObjectSSChart2SCG.put(valuedObjectSCChart, valuedObjectSCG)
     }
@@ -146,40 +149,46 @@ class SCGTransformation {
     // Transforming Local ValuedObjects.
     def SCGraph transformSCG(State rootState) {
         // Fix termination transitions that have effects
-        var rootRegion2 = rootState.fixTerminationWithEffects
+        var state = rootState.fixTerminationWithEffects
         // Fix possible halt states
-        rootRegion2 = rootRegion2.fixPossibleHaltStates
+        state = state.fixPossibleHaltStates
         // Expose local variables
-        rootRegion2 = rootRegion2.transformLocalValuedObject  
+        state = state.transformLocalValuedObject  
         // Clear mappings
         resetMapping
         // Create a new SCGraph
         val sCGraph = ScgFactory::eINSTANCE.createSCGraph
         // Handle declarations
-        for (valuedObject : rootRegion2.rootState.valuedObjects) {
-//            val valuedObjectSCG = sCGraph.createValuedObject(valuedObject.name)
-            val valuedObjectSCG = valuedObject.copy
-            sCGraph.valuedObjects.add(valuedObjectSCG)
+        for (valuedObject : state.valuedObjects) {
+            val valuedObjectSCG = sCGraph.createValuedObject(valuedObject.name)
+//            sCGraph.valuedObjects.add(valuedObjectSCG)
             valuedObjectSCG.applyAttributes(valuedObject)
             valuedObjectSCG.map(valuedObject)
         }
         // Include top most level of hierarchy 
         // if the root state itself already contains multiple regions.
         // Otherwise skip the first layer of hierarchy.
-        if (rootRegion2.rootState.regions.size>1) {
-            // Generate nodes and recursively traverse model
-            rootRegion2.transformSCGGenerateNodes(sCGraph)
-            rootRegion2.transformSCGConnectNodes(sCGraph)        
-        } else {
-            // Generate nodes and recursively traverse model
-            for (region : rootRegion2.rootState.regions) {
-               region.transformSCGGenerateNodes(sCGraph)
-            }
-            // Generate nodes and recursively traverse model
-            for (region : rootRegion2.rootState.regions) {
-                region.transformSCGConnectNodes(sCGraph)
-            }
-        }
+        
+        rootStateEntry = sCGraph.addEntry => [ setExit(sCGraph.addExit) ]
+        
+          state.transformSCGGenerateNodes(sCGraph)
+          state.transformSCGConnectNodes(sCGraph)       
+          
+        state.mappedNode.createControlFlow => [ rootStateEntry.setNext(it) ] 
+//        if (state.rootState.regions.size==1) {
+//            // Generate nodes and recursively traverse model
+//            state.transformSCGGenerateNodes(sCGraph)
+//            state.transformSCGConnectNodes(sCGraph)        
+//        } else {
+//            // Generate nodes and recursively traverse model
+//            for (region : state.rootState.regions) {
+//               region.transformSCGGenerateNodes(sCGraph)
+//            }
+//            // Generate nodes and recursively traverse model
+//            for (region : state.rootState.regions) {
+//                region.transformSCGConnectNodes(sCGraph)
+//            }
+//        }
         
         // Fix superfluous exit nodes
         sCGraph.trimExitNodes.trimConditioanlNodes
@@ -433,7 +442,7 @@ class SCGTransformation {
        val entry = region.mappedEntry
        // Connect all entry nodes with the initial state's nodes.
        // Also check the parent container in case the "initial" state is the root state.
-       val initialState = region.states.filter(e | e.isInitial || e.eContainer.eContainer == null).get(0)
+       val initialState = region.states.filter(e | e.isInitial || e.eContainer == null).get(0)
        val initialNode = initialState.mappedNode
        val controlFlowInitial = initialNode.createControlFlow
        entry.setNext(controlFlowInitial)
@@ -543,8 +552,13 @@ class SCGTransformation {
             } else {
                 // The root state does not have a normal termination.
                 // Use the corresponding exit node of the root region in this case. 
-                val controlFlow = (state.eContainer as Region).getMappedEntry.exit.createControlFlow 
-                join.setNext(controlFlow)
+                if (state.isRootState) {
+                	val controlFlow = rootStateEntry.exit.createControlFlow 
+                	join.setNext(controlFlow)
+                } else {
+                	val controlFlow = (state.eContainer as Region).getMappedEntry.exit.createControlFlow 
+                	join.setNext(controlFlow)
+              	}
             }
         }
         else if (state.exit) {
