@@ -60,8 +60,11 @@ class Reference {
         
         // Referenced scopes are always SCCharts
         // Each referenced state must be contained in a region.
-        val newState = state.referencedScope.copy as State
-            => [ state.parentRegion.states += it ]
+        val newState = (state.referencedScope as State).copyState => [ 
+        	state.parentRegion.states += it
+        	id = state.id
+        	label = state.label
+        ]
 
         for(eObject : newState.eAllContents.toList) {
             if (eObject instanceof Assignment || eObject instanceof ValuedObjectReference) {
@@ -104,7 +107,7 @@ class Reference {
         
         newState => [
             initial = state.initial
-            final = state.final
+            ^final = state.^final
         ]
         
         state.remove        

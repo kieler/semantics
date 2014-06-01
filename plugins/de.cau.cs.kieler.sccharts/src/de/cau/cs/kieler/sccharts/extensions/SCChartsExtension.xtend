@@ -1076,4 +1076,30 @@ class SCChartsExtension {
     	null
     }
     
+    
+    def State copyState(State state) {
+    	createState(state.id) => [ newState |
+    		newState.label = state.label
+    		newState.type = state.type
+    		newState.initial = state.initial
+    		newState.^final = state.^final
+    		newState.regions += state.regions.copyAll
+    		newState.outgoingTransitions += state.outgoingTransitions.copyAll
+    		newState.incomingTransitions += state.incomingTransitions.copyAll
+    		newState.localActions += state.localActions.copyAll
+    		newState.referencedScope = state.referencedScope
+    		newState.bindings += state.bindings.copyAll
+    		newState.declarations += state.declarations.copyAll
+    		newState.^for = state.^for.copy
+    		newState.annotations += state.annotations.copyAll
+    		
+    		// Fix valued object references
+    		state.valuedObjects.forEach[
+    			val newValuedObject = newState.findValuedObjectByName(it.name)
+    			if (newValuedObject != null) {
+    				newState.replaceAllOccurrences(it, newValuedObject)
+   				}
+    		]
+    	]
+    }
 }
