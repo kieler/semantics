@@ -27,7 +27,9 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Composite;
@@ -41,7 +43,6 @@ import org.eclipse.ui.IWorkbenchPartConstants;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.SaveAsDialog;
-import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.util.StringInputStream;
 
@@ -127,6 +128,11 @@ public class KiCoModelView extends DiagramViewPart {
 
     /** The action for forking view. */
     private Action actionFork;
+
+    /** The action for toggling pausing of synchronization. */
+    private Action actionPauseSyncToggle;
+    /** Flag if this view is paused and does not update its model due to external changes. */
+    private boolean pauseSynchronization = false;
 
     // Models
 
@@ -215,6 +221,10 @@ public class KiCoModelView extends DiagramViewPart {
         toolBarManager.add(getActionCompile());
         toolBarManager.add(getActionPin());
         toolBarManager.add(getActionSideBySide());
+
+        IMenuManager menu = bars.getMenuManager();
+        menu.add(new Separator());
+        menu.add(getActionPauseSync());
 
         updateViewTitle();
     }
@@ -376,6 +386,39 @@ public class KiCoModelView extends DiagramViewPart {
         return actionSave;
     }
 
+    /**
+     * Gets the action to pause synchronization of this view.
+     * 
+     * @return the action
+     */
+    private Action getActionPauseSync() {
+        final String pauseText = "Pause editor synchronization";
+        final String continueText = "Continue editor synchronization";
+
+        if (actionPauseSyncToggle != null) {
+            return actionPauseSyncToggle;
+        }
+        actionPauseSyncToggle = new Action("", IAction.AS_PUSH_BUTTON) {
+            public void run() {
+
+                if (pauseSynchronization) {
+                    pauseSynchronization = false;
+                    setText(pauseText);
+                    // force view to update model
+                    updateModel(ChangeEvent.ACTIVE_EDITOR);
+                } else {
+                    pauseSynchronization = true;
+                    setText(continueText);
+                }
+                updateViewTitle();
+            }
+        };
+        actionPauseSyncToggle.setText(pauseText);
+        actionPauseSyncToggle
+                .setToolTipText("If paused, this view will no longer update its status.");
+        return actionPauseSyncToggle;
+    }
+
     // -- Save model
     // -------------------------------------------------------------------------
 
@@ -456,7 +499,7 @@ public class KiCoModelView extends DiagramViewPart {
     }
 
     /**
-     * @return
+     * @return filename of current model with appropriate file extension
      */
     private String getCurrentFileName() {
         if (activeEditor != null && currentModel != null) {
@@ -503,6 +546,7 @@ public class KiCoModelView extends DiagramViewPart {
                 // adopt transformation settings
                 child.pinnedTransformations =
                         new WeakHashMap<IEditorPart, String>(pinnedTransformations);
+                // synchronization settings cannot be adopted
 
                 // TODO update when implemented new toggle buttons
 
@@ -522,17 +566,26 @@ public class KiCoModelView extends DiagramViewPart {
      * Sets view title according to current context
      */
     protected void updateViewTitle() {
-        if (!isPrimaryView()) {
-            if (activeEditor != null) {
-                setPartName(activeEditor.getTitle());
-            } else {
-                setPartName("Secondary " + defaultViewTitle);
+        // prefix when paused
+        if (pauseSynchronization) {
+            String syncPrefix = "!!PAUSED!! ";
+            if (!getPartName().startsWith(syncPrefix)) {
+                setPartName(syncPrefix + getPartName());
             }
         } else {
-            if (activeEditor != null) {
-                setPartName(defaultViewTitle + " [" + activeEditor.getTitle() + "]");
+            // else set name according to view type and state
+            if (!isPrimaryView()) {
+                if (activeEditor != null) {
+                    setPartName(activeEditor.getTitle());
+                } else {
+                    setPartName("Secondary " + defaultViewTitle);
+                }
             } else {
-                setPartName(defaultViewTitle);
+                if (activeEditor != null) {
+                    setPartName(defaultViewTitle + " [" + activeEditor.getTitle() + "]");
+                } else {
+                    setPartName(defaultViewTitle);
+                }
             }
         }
     }
@@ -552,7 +605,7 @@ public class KiCoModelView extends DiagramViewPart {
      * @param change
      */
     void updateModel(ChangeEvent change) {
-        if (activeEditor != null) {
+        if (activeEditor != null && !pauseSynchronization) {
             // change event flags
             boolean is_active_editor_update = change == ChangeEvent.ACTIVE_EDITOR;
             boolean is_save_update = change == ChangeEvent.SAVED;
@@ -592,7 +645,7 @@ public class KiCoModelView extends DiagramViewPart {
             do_get_transformations |= is_transformation_update;
             do_get_transformations |= is_active_editor_update;
             do_get_transformations |= is_compile_update && compileModel;
-            updatePinToggleButton();
+
             // Indicates of the current transformation configuration differs from previous
             // configuration
             boolean transformations_changed = false;
@@ -640,6 +693,7 @@ public class KiCoModelView extends DiagramViewPart {
             boolean do_compile = false;
             // -- compile only if something changed
             do_compile |= transformations_changed;
+            do_compile |= is_active_editor_update;
             do_compile |= is_save_update;
             do_compile |= is_compile_update;
             do_compile |= is_display_mode_update;
