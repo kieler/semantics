@@ -175,7 +175,7 @@ class SCChartsExtension {
     def State getRootState(Region region) {
         // There should exactly be one state in the root region
 //        region.rootRegion.states.get(0)
-        region.parentState.rootState
+        region.parentState.getRootState
     }
 
 //    // Return the root state.

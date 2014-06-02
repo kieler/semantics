@@ -60,7 +60,7 @@ class Static {
         for (staticValuedObject : staticValuedObjects.immutableCopy) {
             staticValuedObject.setName(
                 state.getHierarchicalName(GENERATED_PREFIX) + GENERATED_PREFIX + staticValuedObject.name)
-            state.rootState.valuedObjects.add(staticValuedObject)
+            state.getRootState.valuedObjects.add(staticValuedObject)
             staticValuedObject.setStatic(false)
         }
     }
