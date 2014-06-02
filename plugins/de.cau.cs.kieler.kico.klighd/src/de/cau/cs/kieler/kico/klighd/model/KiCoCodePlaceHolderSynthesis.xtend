@@ -22,6 +22,7 @@ import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.kico.klighd.model.action.OpenCodeInEditorAction
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import java.util.LinkedList
@@ -72,10 +73,11 @@ class KiCoCodePlaceHolderSynthesis extends AbstractDiagramSynthesis<KiCoCodePlac
         val rootNode = createNode();
         rootNode.children += createNode(code) => [
             it.addRoundedRectangle(8, 8) => [
+                it.addDoubleClickAction(OpenCodeInEditorAction.ID);
                 it.setGridPlacement(1);
                 
                 //title
-                it.addText("CODE") => [
+                it.addText("CODE") => [                
                     it.fontSize = 11;
                     it.setFontBold = true;
                     it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
@@ -87,7 +89,7 @@ class KiCoCodePlaceHolderSynthesis extends AbstractDiagramSynthesis<KiCoCodePlac
                     it.fontSize = 10;
                     it.foreground = "blue".color
                     it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
-                    it.suppressSelectability;
+                    it.addSingleClickAction(OpenCodeInEditorAction.ID);
                 ]
                 
                 //separator
@@ -105,9 +107,11 @@ class KiCoCodePlaceHolderSynthesis extends AbstractDiagramSynthesis<KiCoCodePlac
                         previewLines.add(line);
                     }
                 }
+                
                 //rebuild to single string
                 val preview = new StringBuilder();
                 previewLines.forEach[preview.append(it).append("\n")];
+                
                 //add continue sign
                 if (tokenizer.hasMoreTokens) {
                     preview.append("...")
@@ -118,7 +122,8 @@ class KiCoCodePlaceHolderSynthesis extends AbstractDiagramSynthesis<KiCoCodePlac
                     it.fontSize = 8;
                     it.fontName = KlighdConstants.DEFAULT_MONOSPACE_FONT_NAME;
                     it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
-                    it.suppressSelectability;
+                    it.suppressSelectability;                    
+                    it.addDoubleClickAction(OpenCodeInEditorAction.ID);
                 ]
             ]
         ];
