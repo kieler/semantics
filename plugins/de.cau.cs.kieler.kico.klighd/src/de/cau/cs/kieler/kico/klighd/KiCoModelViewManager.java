@@ -43,6 +43,8 @@ import com.google.common.collect.Lists;
 import de.cau.cs.kieler.core.model.xtext.util.XtextModelingUtil;
 import de.cau.cs.kieler.kico.klighd.KiCoModelView.ChangeEvent;
 import de.cau.cs.kieler.kico.klighd.listener.GlobalPartAdapter;
+import de.cau.cs.kieler.kico.ui.KiCoSelection;
+import de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager.KiCoSelectionChangeEventListerner;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionView;
 import de.cau.cs.kieler.klighd.KlighdDataManager;
 
@@ -52,7 +54,8 @@ import de.cau.cs.kieler.klighd.KlighdDataManager;
  * @author als
  * 
  */
-public class KiCoModelViewManager extends UIJob implements IStartup {
+public class KiCoModelViewManager extends UIJob implements IStartup,
+        KiCoSelectionChangeEventListerner {
 
     // -- PSEUDO SINGLETON
     // -------------------------------------------------------------------------
@@ -91,7 +94,8 @@ public class KiCoModelViewManager extends UIJob implements IStartup {
     /** List of open KiCoModelViews. */
     private LinkedList<KiCoModelView> modelViews = new LinkedList<KiCoModelView>();
     /** Map from edtors (hash) to selected transformations. */
-    private HashMap<String, String> tranformations = new HashMap<String, String>();
+    private HashMap<Integer, KiCoSelection> compilerSelection =
+            new HashMap<Integer, KiCoSelection>();
 
     /** Indicated that earlyStartup has not finished yet */
 
@@ -135,7 +139,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup {
                     KiCoSelectionView selectionView = (KiCoSelectionView) part;
                     kicoSelections.add(selectionView);
                     // listen to transformation selection changes
-                    selectionView.addPartPropertyListener(tranformationsPropertyListener);
+                    selectionView.addSelectionChangeEventListener(instance);
                     // be kind an help selection view to initialize (because in some startup cases
                     // it activation of an editor)
                     selectionView.updateView(selectionView.getSite().getPage()
@@ -145,13 +149,14 @@ public class KiCoModelViewManager extends UIJob implements IStartup {
                     modelViews.add(modelView);
                     if (modelView.isPrimaryView()
                             && modelView.getSite().getPage().getActiveEditor() != null) {
-                        //update to active editor (delayed to prevent klighd init errors)
+                        // update to active editor (delayed to prevent klighd init errors)
                         new UIJob("Init" + KiCoModelView.class.getName()) {
 
                             @Override
                             public IStatus runInUIThread(IProgressMonitor monitor) {
-                                IEditorPart activeEditor = modelView.getSite().getPage().getActiveEditor();
-                                if(editors.contains(activeEditor)){
+                                IEditorPart activeEditor =
+                                        modelView.getSite().getPage().getActiveEditor();
+                                if (editors.contains(activeEditor)) {
                                     modelView.setActiveEditor(activeEditor);
                                 }
                                 return Status.OK_STATUS;
@@ -197,8 +202,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup {
                     }
                 } else if (kicoSelections.contains(part)) {
                     kicoSelections.remove(part);
-                    ((KiCoSelectionView) part)
-                            .removePartPropertyListener(tranformationsPropertyListener);
+                    ((KiCoSelectionView) part).removeSelectionChangeEventListener(instance);
                 } else if (modelViews.contains(part)) {
                     modelViews.remove(part);
                 }
@@ -237,33 +241,17 @@ public class KiCoModelViewManager extends UIJob implements IStartup {
     };
 
     /** PropertyChangeListener to get changes of selected transformations in KiCoSelectionView. */
-    final IPropertyChangeListener tranformationsPropertyListener = new IPropertyChangeListener() {
-
-        public void propertyChange(PropertyChangeEvent event) {
-            if (event.getProperty() == KiCoSelectionView.ACTIVE_TRANSFORMATIONS_PROPERTY_KEY) {
-                final KiCoSelectionView selectionView = (KiCoSelectionView) event.getSource();
-                String editorHash =
-                        selectionView.getPartProperty(KiCoSelectionView.ACTIVE_EDITOR_PROPERTY_KEY);
-                // if value changed
-                if (event.getNewValue() != null
-                        && !event.getNewValue().equals(
-                                tranformations.put(editorHash, (String) event.getNewValue()))) {
-                    // update related model views
-                    for (KiCoModelView modelView : Iterables.filter(modelViews,
-                            new Predicate<KiCoModelView>() {
-
-                                public boolean apply(KiCoModelView view) {
-                                    return view.getSite().getPage() == selectionView.getSite()
-                                            .getPage();
-                                }
-                            })) {
-                        modelView.updateModel(ChangeEvent.TRANSFORMATIONS);
-                    }
-
-                }
+    public void selectionChange(KiCoSelection newSelection) {
+        if (newSelection != null
+                && !newSelection.equals(compilerSelection.put(newSelection.getEditorID(),
+                        newSelection))) {
+            // update model views
+            for (KiCoModelView modelView : modelViews) {
+                modelView.updateModel(ChangeEvent.TRANSFORMATIONS);
             }
+
         }
-    };
+    }
 
     // -- HELPER
     // -------------------------------------------------------------------------
@@ -285,19 +273,12 @@ public class KiCoModelViewManager extends UIJob implements IStartup {
     }
 
     /**
-     * Return a string containing the current compiler selection to given editor
+     * Returns compiler selection to given editor
      * 
-     * @param activeEditor
+     * @param editor
      */
-    public String getTransformations(final IEditorPart activeEditor) {
-        String editorHash = Long.toString(activeEditor.hashCode());
-        if (tranformations.containsKey(editorHash)) {
-            String trans = tranformations.get(editorHash);
-            if (trans != null && !trans.trim().isEmpty()) {
-                return trans;
-            }
-        }
-        return null;
+    public KiCoSelection getSelection(final IEditorPart activeEditor) {
+        return compilerSelection.get(activeEditor.hashCode());
     }
 
     // -- Utility
