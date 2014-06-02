@@ -46,7 +46,6 @@ import de.cau.cs.kieler.klighd.util.ExpansionAwareLayoutOption.ExpansionAwareLay
 import de.cau.cs.kieler.klighd.util.Iterables2;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class KiCoSelectionView.
  * 
@@ -1061,7 +1060,9 @@ public class KiCoSelectionView extends DiagramViewPart {
             }.schedule();            
         } else {
             // update case
-            DiagramViewManager.updateView(this.getViewer().getViewContext(), model);
+            ViewContext viewContext = this.getViewer().getViewContext();
+            viewContext.configure(properties);
+            DiagramViewManager.updateView(viewContext, model);
         }
     }
 
