@@ -999,7 +999,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         }
 
         // Set options for the container.
-        kContainer.addLayoutParam(LayoutOptions::SPACING, 10.0f)
+//        kContainer.addLayoutParam(LayoutOptions::SPACING, 10.0f)
         if (topdown())
             kContainer.addLayoutParam(LayoutOptions::DIRECTION, Direction::DOWN)
         else
@@ -1010,7 +1010,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         kContainer.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
 
         if (nodeGrouping == NODEGROUPING_HIERARCHY) {
-            kContainer.addLayoutParam(LayoutOptions::SPACING, 25.0f)
+//            kContainer.addLayoutParam(LayoutOptions::SPACING, 25.0f)
             kContainer.addRoundedRectangle(5, 5, 0)
             kContainer.KRendering.foreground = SCCHARTSBLUE.copy;
             kContainer.KRendering.foreground.alpha = Math.round(HIERARCHY_TRANSPARENCY.objectValue as Float)
@@ -1018,7 +1018,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             kContainer.KRendering.background.alpha = Math.round(HIERARCHY_TRANSPARENCY.objectValue as Float)
         }
         if (nodeGrouping == NODEGROUPING_BASICBLOCK) {
-            kContainer.addLayoutParam(LayoutOptions::SPACING, 5.0f)
+//            kContainer.addLayoutParam(LayoutOptions::SPACING, 5.0f)
             kContainer.addRoundedRectangle(1, 1, 1) => [
                 it.lineStyle = LineStyle::SOLID
             ]
@@ -1028,7 +1028,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             kContainer.KRendering.background.alpha = Math.round(0f)
         }
         if (nodeGrouping == NODEGROUPING_SCHEDULINGBLOCK) {
-            kContainer.addLayoutParam(LayoutOptions::SPACING, 5.0f)
+//            kContainer.addLayoutParam(LayoutOptions::SPACING, 5.0f)
             kContainer.addRoundedRectangle(1, 1, 1) => [
                 it.lineStyle = LineStyle::SOLID
             ]

@@ -490,9 +490,9 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
         if (actionItemProvider != null) actionItemProvider.dispose();
         if (assignmentItemProvider != null) assignmentItemProvider.dispose();
         if (emissionItemProvider != null) emissionItemProvider.dispose();
+        if (stateItemProvider != null) stateItemProvider.dispose();
         if (regionItemProvider != null) regionItemProvider.dispose();
         if (bindingItemProvider != null) bindingItemProvider.dispose();
-        if (stateItemProvider != null) stateItemProvider.dispose();
         if (transitionItemProvider != null) transitionItemProvider.dispose();
         if (textEffectItemProvider != null) textEffectItemProvider.dispose();
         if (entryActionItemProvider != null) entryActionItemProvider.dispose();

@@ -120,7 +120,7 @@ public class KiCoPlugin extends AbstractUIPlugin {
      *            the clazz
      * @return true, if is e object
      */
-    private static boolean isEObject(Class clazz) {
+    private static boolean isEObject(Class<?> clazz) {
         if (EObject.class.isAssignableFrom(clazz)) {
             return true;
         }
@@ -204,10 +204,6 @@ public class KiCoPlugin extends AbstractUIPlugin {
                 String dependenciesString = transformations[i].getAttribute("dependencies");
                 String transformationsString = transformations[i].getAttribute("transformations");
                 String alternativesString = transformations[i].getAttribute("alternatives");
-                String isCategoryString = transformations[i].getAttribute("isCategory");
-                String isFeatureGroupString = transformations[i].getAttribute("isFeatureGroup");
-                String categoryColor1String = transformations[i].getAttribute("categoryColor1");
-                String categoryColor2String = transformations[i].getAttribute("categoryColor2");
 
                 if (DEBUG) {
 //                    System.out.println("KiCo loading component: "
@@ -233,20 +229,6 @@ public class KiCoPlugin extends AbstractUIPlugin {
                         }
                     }
                     
-                    if (isCategoryString != null && isCategoryString.equals("true")) {
-                        ((TransformationGroup) transformation).setIsCategory(true);
-                        if (categoryColor1String != null) {
-                            ((TransformationGroup) transformation).setCategoryColor1(categoryColor1String);
-                        }
-                        if (categoryColor2String != null) {
-                            ((TransformationGroup) transformation).setCategoryColor1(categoryColor2String);
-                        }
-                    }
-
-                    if (isFeatureGroupString != null && isFeatureGroupString.equals("true")) {
-                        ((TransformationGroup) transformation).setIsFeatureGroup(true);
-                    }
-
                 }
                 else if (transformationInstance instanceof Transformation) {
                     // The specified class is a Transformation, use it directly
@@ -388,7 +370,7 @@ public class KiCoPlugin extends AbstractUIPlugin {
      * @param message
      *            the message to present
      */
-    private void showWarning(final String message) {
+    public void showWarning(final String message) {
         if (parentShell != null) {
             MessageDialog.openWarning(parentShell, KICO_MSGDLG_TITLE, message);
         } else {

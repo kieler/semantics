@@ -116,6 +116,14 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case SCChartsPackage.STATE: {
+                State state = (State)theEObject;
+                T result = caseState(state);
+                if (result == null) result = caseScope(state);
+                if (result == null) result = caseAnnotatable(state);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case SCChartsPackage.REGION: {
                 Region region = (Region)theEObject;
                 T result = caseRegion(region);
@@ -127,14 +135,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
             case SCChartsPackage.BINDING: {
                 Binding binding = (Binding)theEObject;
                 T result = caseBinding(binding);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.STATE: {
-                State state = (State)theEObject;
-                T result = caseState(state);
-                if (result == null) result = caseScope(state);
-                if (result == null) result = caseAnnotatable(state);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }

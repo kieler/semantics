@@ -219,13 +219,13 @@ public abstract class Transformation {
             try {
                 result = transformationMethod.invoke(transformationInstance, eObject);
                 return result;
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-                e.getTargetException().printStackTrace();
+            } catch (Exception e) {
+                KiCoPlugin
+                .getInstance()
+                .showError(
+                        "An error occurred while calling transformation with the ID '"
+                                + ((Transformation) transformationInstance).id
+                                + "'.", KiCoPlugin.PLUGIN_ID, null, true);
             }
             return null;
         }

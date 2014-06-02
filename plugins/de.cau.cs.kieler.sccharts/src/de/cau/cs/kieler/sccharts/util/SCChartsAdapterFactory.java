@@ -107,16 +107,16 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createEmissionAdapter();
             }
             @Override
+            public Adapter caseState(State object) {
+                return createStateAdapter();
+            }
+            @Override
             public Adapter caseRegion(Region object) {
                 return createRegionAdapter();
             }
             @Override
             public Adapter caseBinding(Binding object) {
                 return createBindingAdapter();
-            }
-            @Override
-            public Adapter caseState(State object) {
-                return createStateAdapter();
             }
             @Override
             public Adapter caseTransition(Transition object) {
