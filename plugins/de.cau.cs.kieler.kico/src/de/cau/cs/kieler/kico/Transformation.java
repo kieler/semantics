@@ -225,7 +225,7 @@ public abstract class Transformation {
                 .showError(
                         "An error occurred while calling transformation with the ID '"
                                 + ((Transformation) transformationInstance).id
-                                + "'.", KiCoPlugin.PLUGIN_ID, null, true);
+                                + "'.", KiCoPlugin.PLUGIN_ID, e, true);
             }
             return null;
         }
