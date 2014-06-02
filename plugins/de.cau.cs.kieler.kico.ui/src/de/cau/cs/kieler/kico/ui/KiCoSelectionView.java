@@ -372,7 +372,7 @@ public class KiCoSelectionView extends DiagramViewPart {
             requiredList.clear();
             List<String> selectedTransformations = getSelectedTransformations(editorID);
             List<String> allRequiredTransformations =
-                    KielerCompiler.calculatePreRequirements(selectedTransformations, true);
+                    KielerCompiler.calculatePreRequirements(selectedTransformations, false);
             for (String requiredTransformation : allRequiredTransformations) {
                 boolean found = false;
                 for (String selectedTransformation : selectedTransformations) {
