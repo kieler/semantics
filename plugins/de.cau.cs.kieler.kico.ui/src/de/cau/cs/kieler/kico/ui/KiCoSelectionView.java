@@ -538,7 +538,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         List<TransformationDummy> returnList = new ArrayList<TransformationDummy>();
         TransformationDummy transformationDummy =
                 resolveTransformationDummy(transformationDummyID, editorID);
-        if (transformationDummy.reverseDependencies != null) {
+        if (transformationDummy != null && transformationDummy.reverseDependencies != null) {
             for (TransformationDummy reverseDependency : transformationDummy.reverseDependencies) {
                 if (reverseDependency.isAlternative()) {
                     // in this case the parent is an alternative group and we need to deselect ALL
