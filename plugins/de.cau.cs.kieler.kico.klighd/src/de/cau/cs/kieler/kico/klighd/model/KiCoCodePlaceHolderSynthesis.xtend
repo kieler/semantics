@@ -28,6 +28,7 @@ import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.LinkedList
 import java.util.StringTokenizer
 import javax.inject.Inject
+import de.cau.cs.kieler.klighd.KlighdConstants
 
 /**
  * Diagram synthesis of a KiCoModelChain.
@@ -63,7 +64,6 @@ class KiCoCodePlaceHolderSynthesis extends AbstractDiagramSynthesis<KiCoCodePlac
 
     // -------------------------------------------------------------------------
     // Constants
-    val String codeFont = "Monospace";
     val int maxPreviewLines = 50;
 
     // -------------------------------------------------------------------------
@@ -116,7 +116,7 @@ class KiCoCodePlaceHolderSynthesis extends AbstractDiagramSynthesis<KiCoCodePlac
                 //code preview
                 it.addText(preview.toString()) => [
                     it.fontSize = 8;
-                    it.fontName = codeFont;
+                    it.fontName = KlighdConstants.DEFAULT_MONOSPACE_FONT_NAME;
                     it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
                     it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
                 ]
