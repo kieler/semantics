@@ -353,106 +353,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getRegion()
      * @generated
      */
-    int REGION = 4;
-
-    /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__ANNOTATIONS = SCOPE__ANNOTATIONS;
-
-    /**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__ID = SCOPE__ID;
-
-    /**
-     * The feature id for the '<em><b>Label</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__LABEL = SCOPE__LABEL;
-
-    /**
-     * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__LOCAL_ACTIONS = SCOPE__LOCAL_ACTIONS;
-
-    /**
-     * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__REFERENCED_SCOPE = SCOPE__REFERENCED_SCOPE;
-
-    /**
-     * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__BINDINGS = SCOPE__BINDINGS;
-
-    /**
-     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__DECLARATIONS = SCOPE__DECLARATIONS;
-
-    /**
-     * The feature id for the '<em><b>For</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__FOR = SCOPE__FOR;
-
-    /**
-     * The feature id for the '<em><b>States</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__STATES = SCOPE_FEATURE_COUNT + 0;
-
-    /**
-     * The feature id for the '<em><b>Parent State</b></em>' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__PARENT_STATE = SCOPE_FEATURE_COUNT + 1;
-
-    /**
-     * The number of structural features of the '<em>Region</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 2;
+    int REGION = 5;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.BindingImpl <em>Binding</em>}' class.
@@ -462,34 +363,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getBinding()
      * @generated
      */
-    int BINDING = 5;
-
-    /**
-     * The feature id for the '<em><b>Formal</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int BINDING__FORMAL = 0;
-
-    /**
-     * The feature id for the '<em><b>Actual</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int BINDING__ACTUAL = 1;
-
-    /**
-     * The number of structural features of the '<em>Binding</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int BINDING_FEATURE_COUNT = 2;
+    int BINDING = 6;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.StateImpl <em>State</em>}' class.
@@ -499,7 +373,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getState()
      * @generated
      */
-    int STATE = 6;
+    int STATE = 4;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -644,6 +518,132 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int STATE_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 7;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__ANNOTATIONS = SCOPE__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__ID = SCOPE__ID;
+
+    /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__LABEL = SCOPE__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Local Actions</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__LOCAL_ACTIONS = SCOPE__LOCAL_ACTIONS;
+
+    /**
+     * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__REFERENCED_SCOPE = SCOPE__REFERENCED_SCOPE;
+
+    /**
+     * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__BINDINGS = SCOPE__BINDINGS;
+
+    /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__DECLARATIONS = SCOPE__DECLARATIONS;
+
+    /**
+     * The feature id for the '<em><b>For</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__FOR = SCOPE__FOR;
+
+    /**
+     * The feature id for the '<em><b>States</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__STATES = SCOPE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Parent State</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__PARENT_STATE = SCOPE_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Region</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>Formal</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BINDING__FORMAL = 0;
+
+    /**
+     * The feature id for the '<em><b>Actual</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BINDING__ACTUAL = 1;
+
+    /**
+     * The number of structural features of the '<em>Binding</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BINDING_FEATURE_COUNT = 2;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.

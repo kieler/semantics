@@ -42,14 +42,6 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//Emission/valuedObject"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Emission/newValue"/>
     </genClasses>
-    <genClasses ecoreClass="sccharts.ecore#//Region">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Region/states"/>
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference sccharts.ecore#//Region/parentState"/>
-    </genClasses>
-    <genClasses ecoreClass="sccharts.ecore#//Binding">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//Binding/formal"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//Binding/actual"/>
-    </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//State">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//State/type"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//State/regions"/>
@@ -58,6 +50,14 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//State/final"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//State/outgoingTransitions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//State/incomingTransitions"/>
+    </genClasses>
+    <genClasses ecoreClass="sccharts.ecore#//Region">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Region/states"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference sccharts.ecore#//Region/parentState"/>
+    </genClasses>
+    <genClasses ecoreClass="sccharts.ecore#//Binding">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//Binding/formal"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//Binding/actual"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//Transition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Transition/priority"/>
@@ -85,6 +85,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//SuspendAction/weak"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//For">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//For/loopVariable"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//For/from"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//For/to"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//For/valuedObject"/>
