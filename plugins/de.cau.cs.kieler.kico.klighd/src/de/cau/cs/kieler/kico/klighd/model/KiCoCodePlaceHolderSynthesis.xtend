@@ -22,13 +22,13 @@ import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.kico.klighd.model.action.OpenCodeInEditorAction
+import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.LinkedList
 import java.util.StringTokenizer
 import javax.inject.Inject
-import de.cau.cs.kieler.klighd.KlighdConstants
+
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 /**
  * Diagram synthesis of a KiCoModelChain.
@@ -79,7 +79,7 @@ class KiCoCodePlaceHolderSynthesis extends AbstractDiagramSynthesis<KiCoCodePlac
                     it.fontSize = 11;
                     it.setFontBold = true;
                     it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
-                    it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+                    it.suppressSelectability;
                 ]
                 
                 //open option
@@ -87,7 +87,7 @@ class KiCoCodePlaceHolderSynthesis extends AbstractDiagramSynthesis<KiCoCodePlac
                     it.fontSize = 10;
                     it.foreground = "blue".color
                     it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
-                    it.addSingleClickAction(OpenCodeInEditorAction.ID);
+                    it.suppressSelectability;
                 ]
                 
                 //separator
@@ -118,7 +118,7 @@ class KiCoCodePlaceHolderSynthesis extends AbstractDiagramSynthesis<KiCoCodePlac
                     it.fontSize = 8;
                     it.fontName = KlighdConstants.DEFAULT_MONOSPACE_FONT_NAME;
                     it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
-                    it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+                    it.suppressSelectability;
                 ]
             ]
         ];

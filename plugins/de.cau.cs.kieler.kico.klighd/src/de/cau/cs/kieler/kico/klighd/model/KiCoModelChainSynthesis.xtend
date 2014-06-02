@@ -32,10 +32,11 @@ import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.List
+import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import javax.inject.Inject
 
 /**
  * Diagram synthesis of a KiCoModelChain.
@@ -138,7 +139,7 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
                 it.fontSize = 11;
                 it.setFontBold = true;
                 it.setGridPlacementData().from(LEFT, 8, 0, TOP, 8, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
-                it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+                it.suppressSelectability;
             ];
 
             //Add regions for expanded/collapsed child area
@@ -158,7 +159,7 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
                         it.fontSize = 11;
                         it.setFontBold = true;
                         it.invisible = true;
-                        it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+                        it.suppressSelectability;
                     ];
                     it.addText("[Show Model]") => [
                         it.foreground = "blue".color
@@ -228,7 +229,7 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
             it.fontSize = 11;
             it.setFontBold(true);
             it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
-            it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+            it.suppressSelectability;
         ];
 
         //add all attributes as string representation
@@ -237,7 +238,7 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
             figure.addText(it.name + ": " + String::valueOf(object.eGet(it))) => [
                 it.fontSize = 9;
                 it.setGridPlacementData().from(LEFT, 5, 0, TOP, 2, 0).to(RIGHT, 5, 0, BOTTOM, 2, 0);
-                it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+                it.suppressSelectability;
             ];
         ]
 

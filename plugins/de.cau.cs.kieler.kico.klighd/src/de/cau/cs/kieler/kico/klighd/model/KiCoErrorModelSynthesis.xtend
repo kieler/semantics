@@ -24,8 +24,9 @@ import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.kico.klighd.model.action.ErrorShowExceptionAction
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.klighd.util.KlighdProperties
 import javax.inject.Inject
+
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 /**
  * Diagram synthesis of a KiCoModelChain.
@@ -86,7 +87,7 @@ class KiCoErrorModelSynthesis extends AbstractDiagramSynthesis<KiCoErrorModel> {
                         it.setFontBold = true;
                         it.foreground = "red".color;
                         it.setGridPlacementData().from(LEFT, 8, 0, TOP, 8, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
-                        it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+                        it.suppressSelectability;
                     ]
                     //message
                     it.addText(errorModel.message) => [
@@ -96,7 +97,7 @@ class KiCoErrorModelSynthesis extends AbstractDiagramSynthesis<KiCoErrorModel> {
                         } else {
                             it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
                         }
-                        it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+                        it.suppressSelectability;
                     ]
                     //link to exception if available
                     if (errorModel.exception != null) {
