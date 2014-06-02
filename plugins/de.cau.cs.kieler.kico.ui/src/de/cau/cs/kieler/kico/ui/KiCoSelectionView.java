@@ -519,6 +519,37 @@ public class KiCoSelectionView extends DiagramViewPart {
     // -------------------------------------------------------------------------
 
     /**
+     * Removes other possibly selected alternatives for a transformation from the list of selected
+     * transformations.
+     *
+     * @param transformationDummyID the transformation dummy id
+     * @param editorID the editor id
+     * @return the list
+     */
+    public static List<TransformationDummy> calculateOtherAlternativeTransformations(
+            String transformationDummyID, int editorID) {
+        List<TransformationDummy> returnList = new ArrayList<TransformationDummy>();
+        TransformationDummy transformationDummy =
+                resolveTransformationDummy(transformationDummyID, editorID);
+        if (transformationDummy.reverseDependencies != null) {
+            for (TransformationDummy reverseDependency : transformationDummy.reverseDependencies) {
+                if (reverseDependency.isAlternative()) {
+                    // in this case the parent is an alternative group and we need to deselect ALL
+                    // OTHER alternatives
+                    for (TransformationDummy otherAlternative : reverseDependency.dependencies) {
+                        if (otherAlternative != transformationDummy) {
+                            returnList.add(otherAlternative);
+                        }
+                    }
+                }
+            }
+        }
+        return returnList;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Removes the selected transformation visualization.
      * 
      * @param editorID

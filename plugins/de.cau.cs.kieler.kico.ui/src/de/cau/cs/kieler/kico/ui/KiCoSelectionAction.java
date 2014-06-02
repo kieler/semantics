@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.kico.ui;
 
 import java.util.Arrays;
+import java.util.List;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.kico.TransformationDummy;
@@ -71,6 +72,19 @@ public class KiCoSelectionAction extends KiCoKlighdAction implements IAction {
                         KiCoDiagramSynthesis.BLUE3, KiCoDiagramSynthesis.BLUE4);
                 KiCoSelectionView.addSelectedTransformation(id,
                         KiCoSelectionView.getActiveEditorID(), true);
+
+
+              // Unselect OTHER alternatives
+              List<TransformationDummy> otherAlternatives = KiCoSelectionView.calculateOtherAlternativeTransformations(id, activeEditorID);
+              for (TransformationDummy otherAlternative : otherAlternatives) {
+                  setLabelColor(otherAlternative, context.getViewContext(),
+                          KiCoDiagramSynthesis.BLACK, KiCoDiagramSynthesis.BLUE1);
+                  setStateColor(otherAlternative, context.getViewContext(),
+                          KiCoDiagramSynthesis.BLUE1, KiCoDiagramSynthesis.BLUE2);
+                  KiCoSelectionView.removeSelectedTransformation(otherAlternative.id,
+                          activeEditorID);
+              }
+                
             } else {
                 // Un select
                 setLabelColor(transformationDummy, context.getViewContext(),
