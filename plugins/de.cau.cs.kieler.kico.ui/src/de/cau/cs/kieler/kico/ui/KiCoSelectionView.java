@@ -1061,7 +1061,9 @@ public class KiCoSelectionView extends DiagramViewPart {
             }.schedule();            
         } else {
             // update case
-            DiagramViewManager.updateView(this.getViewer().getViewContext(), model);
+            ViewContext viewContext = this.getViewer().getViewContext();
+            viewContext.configure(properties);
+            DiagramViewManager.updateView(viewContext, model);
         }
     }
 
