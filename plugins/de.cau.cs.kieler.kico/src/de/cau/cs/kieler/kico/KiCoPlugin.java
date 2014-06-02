@@ -120,7 +120,7 @@ public class KiCoPlugin extends AbstractUIPlugin {
      *            the clazz
      * @return true, if is e object
      */
-    private static boolean isEObject(Class clazz) {
+    private static boolean isEObject(Class<?> clazz) {
         if (EObject.class.isAssignableFrom(clazz)) {
             return true;
         }
