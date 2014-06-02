@@ -56,6 +56,7 @@ import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelWrapper;
+import de.cau.cs.kieler.kico.ui.KiCoSelection;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 
@@ -121,10 +122,10 @@ public class KiCoModelView extends DiagramViewPart {
     /** The action for toggling compile. */
     private Action actionPinToggle;
     /** String currently saved transformations. */
-    private String transformations = null;
+    private KiCoSelection transformations = null;
     /** Map with pinned transformations */
-    private WeakHashMap<IEditorPart, String> pinnedTransformations =
-            new WeakHashMap<IEditorPart, String>();
+    private WeakHashMap<IEditorPart, KiCoSelection> pinnedTransformations =
+            new WeakHashMap<IEditorPart, KiCoSelection>();
 
     /** The action for forking view. */
     private Action actionFork;
@@ -545,7 +546,7 @@ public class KiCoModelView extends DiagramViewPart {
                 child.actionSideBySideToggle.setChecked(displaySideBySide);
                 // adopt transformation settings
                 child.pinnedTransformations =
-                        new WeakHashMap<IEditorPart, String>(pinnedTransformations);
+                        new WeakHashMap<IEditorPart, KiCoSelection>(pinnedTransformations);
                 // synchronization settings cannot be adopted
 
                 // TODO update when implemented new toggle buttons
@@ -656,30 +657,26 @@ public class KiCoModelView extends DiagramViewPart {
                 if (mvm != null) {
                     // if there is a pinned transformation for active editor take pinned one else
                     // take selected ones
-                    String newTransformations = null;
+                    KiCoSelection newTransformations = null;
                     if (pinnedTransformations.containsKey(activeEditor)) {
                         newTransformations = pinnedTransformations.get(activeEditor);
+                        //null pointer is indicator for no selection
+                        if(newTransformations.isEmpty()){
+                            newTransformations = null;
+                        }
                     } else {
-                        newTransformations = mvm.getTransformations(activeEditor);
+                        newTransformations = mvm.getSelection(activeEditor);
                     }
-                    // if newTransformations is references can be compares else a string compare
-                    // is necessary
+                    //check if selection changed
                     if (newTransformations == null) {
                         if (newTransformations != transformations) {
                             transformations_changed |= true;
                             transformations = newTransformations;
                         }
                     } else {
-                        if (transformations != null) {// Ignore order in comparison
-                            HashSet<String> trans = Sets.newHashSet(transformations.split(","));
-                            HashSet<String> newTrans =
-                                    Sets.newHashSet(newTransformations.split(","));
-                            if (!trans.equals(newTrans)) {
-                                transformations_changed |= true;
-                                transformations = newTransformations;
-                            }
-                        } else {// transformations are null but new ones are not -> change happend
+                        if (!newTransformations.equals(transformations)){
                             transformations_changed |= true;
+                            
                             transformations = newTransformations;
                         }
                     }
@@ -707,7 +704,7 @@ public class KiCoModelView extends DiagramViewPart {
             if (do_compile) {
                 CompilationResult result;
                 try {
-                    result = KielerCompiler.compile(transformations, (EObject) sourceModel);
+                    result = KielerCompiler.compile(transformations.getSelection(), (EObject) sourceModel, transformations.isAdvanced());
                     if (result == null
                             || (result.getEObject() == null && result.getString() == null)) {
                         throw new NullPointerException(
