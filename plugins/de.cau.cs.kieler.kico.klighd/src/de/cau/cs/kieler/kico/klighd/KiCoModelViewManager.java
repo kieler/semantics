@@ -24,12 +24,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
-import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartConstants;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -87,8 +87,10 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
 
     /** Global Listener Adapter */
     private GlobalPartAdapter adapter;
-    /** List of open model editors. */
+    /** List of open model editors which MAY contain valid models. */
     private LinkedList<IEditorPart> editors = new LinkedList<IEditorPart>();
+    /** List of open model editors which contain valid models. */
+    private LinkedList<IEditorPart> validEditors = new LinkedList<IEditorPart>();
     /** List of open KiCoSelectionViews. */
     private LinkedList<KiCoSelectionView> kicoSelections = new LinkedList<KiCoSelectionView>();
     /** List of open KiCoModelViews. */
@@ -156,7 +158,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
                             public IStatus runInUIThread(IProgressMonitor monitor) {
                                 IEditorPart activeEditor =
                                         modelView.getSite().getPage().getActiveEditor();
-                                if (editors.contains(activeEditor)) {
+                                if (validEditors.contains(activeEditor)) {
                                     modelView.setActiveEditor(activeEditor);
                                 }
                                 return Status.OK_STATUS;
@@ -184,6 +186,8 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
             if (part != null) {
                 if (editors.contains(part)) {
                     editors.remove(part);
+                    validEditors.remove(part);
+                    part.removePropertyListener(undecidedValidityEditorDirtyPropertyListener);
                     // close related model views
                     for (KiCoModelView modelView : Lists.newLinkedList(Iterables.filter(modelViews,
                             new Predicate<KiCoModelView>() {
@@ -216,24 +220,45 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
         public void partActivated(final IWorkbenchPartReference partRef) {
             IWorkbenchPart part = partRef.getPart(false);
             if (editors.contains(part)) {
-                // get related primary model view
-                KiCoModelView primaryView =
-                        Iterables.getFirst(
-                                Iterables.filter(modelViews, new Predicate<KiCoModelView>() {
+                IEditorPart editor = (IEditorPart) part;
+                int isValid = 0;
+                if (!validEditors.contains(part)) {
+                    //check if valid
+                    isValid = isValidModelEditor(editor);
+                    if(isValid == 0){
+                        editors.remove(part);
+                        part.removePropertyListener(undecidedValidityEditorDirtyPropertyListener);
+                    }else if(isValid == 1){
+                        validEditors.add(editor);
+                        part.removePropertyListener(undecidedValidityEditorDirtyPropertyListener);
+                    }else if(isValid == 2){//wait until validity is decidable
+                        part.addPropertyListener(undecidedValidityEditorDirtyPropertyListener);
+                        return;
+                    }
+                } else {
+                    isValid = 1;
+                }
+                //update if valid
+                if (isValid == 1) {
+                    // get related primary model view
+                    KiCoModelView primaryView =
+                            Iterables.getFirst(
+                                    Iterables.filter(modelViews, new Predicate<KiCoModelView>() {
 
-                                    public boolean apply(KiCoModelView view) {
-                                        return view.getSite().getPage() == partRef.getPage()
-                                                && view.isPrimaryView();
-                                    }
-                                }), null);
-                // update or open new view
-                if (primaryView != null) {
-                    primaryView.setActiveEditor((IEditorPart) part);
-                } else if (primaryView == null) {
-                    try {
-                        partRef.getPage().showView(KiCoModelView.ID);
-                    } catch (PartInitException e) {
-                        e.printStackTrace();
+                                        public boolean apply(KiCoModelView view) {
+                                            return view.getSite().getPage() == partRef.getPage()
+                                                    && view.isPrimaryView();
+                                        }
+                                    }), null);
+                    // update or open new view
+                    if (primaryView != null) {
+                        primaryView.setActiveEditor(editor);
+                    } else if (primaryView == null) {
+                        try {
+                            partRef.getPage().showView(KiCoModelView.ID);
+                        } catch (PartInitException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -252,24 +277,55 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
 
         }
     }
+    
+    /** PropertyListener to check if a editor with undecided validity was saved. */
+    final IPropertyListener undecidedValidityEditorDirtyPropertyListener = new IPropertyListener() {
+
+        public void propertyChanged(Object source, int propId) {
+            IEditorPart editor = (IEditorPart) source;
+            if (propId == IWorkbenchPartConstants.PROP_DIRTY && !editor.isDirty()) {      
+                //fire activation again to decide its valitidy
+                partListener.partActivated(editor.getSite().getPage().getReference(editor));
+            }
+        }
+    };
 
     // -- HELPER
     // -------------------------------------------------------------------------
     /**
-     * Checks if given editor part is a valid model editor visualizable with a ModelView
+     * Checks if given editor part can contain visualizable models
      * 
      * @param part
      *            editor
      * @return true if editor is model editor
      */
     private boolean isModelEditor(IEditorPart part) {
-        EObject model = getModelFromModelEditor(part);
-        if (model != null
-                && !Iterables.isEmpty(KlighdDataManager.getInstance().getAvailableSyntheses(
-                        model.getClass()))) {
+        // If XTextEditor of EMF Tree Editor
+        if (part instanceof XtextEditor || part instanceof IEditingDomainProvider) {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Checks if given editor part is a valid model editor thus contains a visualizable model
+     * 
+     * @param editor
+     *            editor
+     * @return 0 == NO, 1 == YES , 2 == MAYBE
+     * 
+     */
+    private int isValidModelEditor(IEditorPart editor) {
+        EObject model = getModelFromModelEditor(editor);
+        if (model != null) {
+            if (!Iterables.isEmpty(KlighdDataManager.getInstance().getAvailableSyntheses(
+                    model.getClass()))) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+        return 2;// Undecidable if model is null
     }
 
     /**
