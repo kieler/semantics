@@ -55,7 +55,7 @@ class DependencyTransformation {
 
         // Go thru all states and create a dependency representation for it (DepenedencyState)
         for (state : rootState.allContainedStates) {
-            if (state != rootState.rootState) {
+            if (state != rootState.getRootState) {
                 val dependencyNode = (new DependencyNode(state)).map(state, false)
                 dependencyNodes.add(dependencyNode)
                 if (state.hasInnerStatesOrRegions) {
@@ -102,7 +102,7 @@ class DependencyTransformation {
                 val valuedObject = valuedObjectReference.valuedObject
 
                 // Search ALL actions of the node
-                val allActions = transition.sourceState.rootState.eAllContents.filter(typeof(Action)).toList
+                val allActions = transition.sourceState.getRootState.eAllContents.filter(typeof(Action)).toList
 
                 for (action : allActions) {
                     for (effect : action.effects) {

@@ -162,6 +162,10 @@ class SCChartsExtension {
 //        state.parentRegion.rootRegion;
 //    }
 
+	def boolean isRootState(State state) {
+		state.parentRegion == null
+	}
+
     def State getRootState(State state) {
         if (state.parentRegion == null) return state;
         state.parentRegion.rootState
@@ -171,7 +175,7 @@ class SCChartsExtension {
     def State getRootState(Region region) {
         // There should exactly be one state in the root region
 //        region.rootRegion.states.get(0)
-        region.parentState.rootState
+        region.parentState.getRootState
     }
 
 //    // Return the root state.
@@ -1015,6 +1019,17 @@ class SCChartsExtension {
     		}
     	}
     }
+
+    def void replaceAllReferencesWithCopy(Scope scope, ValuedObject valuedObject, Expression expression) {
+    	for(obj : scope.eAllContents.toList.immutableCopy) {
+    		if (obj instanceof ValuedObjectReference
+    			&& (obj as ValuedObjectReference).valuedObject == valuedObject
+    		) 
+    		{
+    			obj.replace(expression.copy)
+    		}
+    	}
+    }
     
     def void replaceAllOccurrences(Scope scope, ValuedObject valuedObject, ValuedObject replacement) {
     	for(obj : scope.eAllContents.toList.immutableCopy) {
@@ -1061,4 +1076,30 @@ class SCChartsExtension {
     	null
     }
     
+    
+    def State copyState(State state) {
+    	createState(state.id) => [ newState |
+    		newState.label = state.label
+    		newState.type = state.type
+    		newState.initial = state.initial
+    		newState.^final = state.^final
+    		newState.regions += state.regions.copyAll
+    		newState.outgoingTransitions += state.outgoingTransitions.copyAll
+    		newState.incomingTransitions += state.incomingTransitions.copyAll
+    		newState.localActions += state.localActions.copyAll
+    		newState.referencedScope = state.referencedScope
+    		newState.bindings += state.bindings.copyAll
+    		newState.declarations += state.declarations.copyAll
+    		newState.^for = state.^for.copy
+    		newState.annotations += state.annotations.copyAll
+    		
+    		// Fix valued object references
+    		state.valuedObjects.forEach[
+    			val newValuedObject = newState.findValuedObjectByName(it.name)
+    			if (newValuedObject != null) {
+    				newState.replaceAllOccurrences(it, newValuedObject)
+   				}
+    		]
+    	]
+    }
 }

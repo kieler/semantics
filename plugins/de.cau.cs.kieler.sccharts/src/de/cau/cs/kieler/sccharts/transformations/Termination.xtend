@@ -89,7 +89,7 @@ class Termination {
 
             // Setup the auxiliary terminated valuedObject indicating that a normal termination
             // has been taken in the same synchronous tick and must not be taken again.
-            val rootState = state.rootState
+            val rootState = state.getRootState
             val terminatedValuedObject = rootState.createSignal(GENERATED_PREFIX + "terminated").setTypePure.uniqueName;
 
             val terminatedEmission = terminatedValuedObject.emit
@@ -114,7 +114,7 @@ class Termination {
 
                 // Setup the auxiliary termination valuedObject indicating that a normal termination
                 // should be taken.
-                val finishedValuedObject = targetRootState.rootState.createSignal(GENERATED_PREFIX + "finished").
+                val finishedValuedObject = targetRootState.getRootState.createSignal(GENERATED_PREFIX + "finished").
                     setTypePure.uniqueName
 
                 val finalStates = region.states.filter(e|e.isFinal == true);

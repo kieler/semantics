@@ -44,6 +44,7 @@ import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
 import de.cau.cs.kieler.s.extensions.SExtension
+import java.util.List
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -134,8 +135,8 @@ class S2C {
 			«signal.type.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»			
 			«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
 			  «IF signal.isArray»
-                «FOR card : signal.cardinalities»{int i«card.hashCode» = 0; for(i«card.hashCode»=0; i<«card.intValue»; i«card.hashCode»++) {«ENDFOR»
-		        «signal.name»«FOR card : signal.cardinalities»[i«card.hashCode»]«ENDFOR» = «signal.initialValue.expand»
+                «FOR card : signal.cardinalities»{int i«card.hashCode» = 0; for(i«card.hashCode»=0; i«card.hashCode» < «card.intValue»; i«card.hashCode»++) {«ENDFOR»
+		        «signal.name»«FOR card : signal.cardinalities»[i«card.hashCode»]«ENDFOR» = «signal.initialValue.expand»;
                 «FOR card : signal.cardinalities»}}«ENDFOR»
 		      	«ELSE»
 	   		      = «signal.initialValue.expand» 
@@ -159,8 +160,16 @@ class S2C {
  		ENDIF»«ENDFOR»'''
    }
 
-   def resetPreVariables(Program program) {
+   def resetVariables(Program program) {
        '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal]»
+       
+        «IF signal.isArray»
+                «FOR card : signal.cardinalities»{int _i«signal.cardinalities.indexOf(card)» = 0; for(_i«signal.cardinalities.indexOf(card)»=0; _i«signal.cardinalities.indexOf(card)» < «card.intValue»; _i«signal.cardinalities.indexOf(card)»++) {«ENDFOR»
+                «signal.name»«FOR card : signal.cardinalities»[_i«signal.cardinalities.indexOf(card)»]«ENDFOR» = 0;
+                «FOR card : signal.cardinalities»}}
+                «ENDFOR»
+        «ENDIF»
+       
        «IF program.usesPre(signal) 
  			» PRE_«signal.name» = 0;« // FIXME: Must be the INITIAL value of the valued object
  		ENDIF»«ENDFOR»'''
@@ -184,7 +193,7 @@ class S2C {
    def sResetFunction(Program program) {
        '''    int reset(){
        _GO = 1;
-       «program.resetPreVariables»
+       «program.resetVariables» 
     }
     '''
    }
@@ -250,7 +259,16 @@ class S2C {
 
    // Expand a ASSIGNMENT instruction.
    def dispatch CharSequence expand(Assignment assignment) {
-       '''«assignment.variable.expand » = «assignment.expression.expand»;'''
+       if (!assignment.indices.nullOrEmpty) {
+          var returnValue = '''«assignment.variable.expand »'''
+          for (index : assignment.indices) {
+              returnValue = returnValue + '''[«index.expand»]'''
+          }
+          returnValue = returnValue + ''' = «assignment.expression.expand»;'''
+          return returnValue
+       } else {
+          return '''«assignment.variable.expand » = «assignment.expression.expand»;'''
+       }
    }   
       
    // Expand a PAUSE instruction.
@@ -491,8 +509,20 @@ class S2C {
        //}
        //return ''''''
    }
+   // Expand a signal within a value reference for arrays
+   def CharSequence expand_val_array(ValuedObject signal, List<Expression> indices) {
+       var returnValue = '''«signal.name»'''
+       for (index : indices) {
+           returnValue = returnValue + '''[«index.expand»]'''
+       }
+       return returnValue
+   }
    def dispatch CharSequence expand_val(ValuedObjectReference valuedObjectReference) {
+       if (!valuedObjectReference.indices.nullOrEmpty) {
+        '''«valuedObjectReference.valuedObject.expand_val_array(valuedObjectReference.indices)»'''
+       } else {
         '''«valuedObjectReference.valuedObject.expand_val»'''
+       }
    }   
    def dispatch CharSequence expand_val(Expression other) {
         other.expand;
@@ -515,7 +545,12 @@ class S2C {
 
    // Expand an object reference.
    def dispatch CharSequence expand(ValuedObjectReference valuedObjectReference) {
+       if (!valuedObjectReference.indices.nullOrEmpty) {
+        '''«valuedObjectReference.valuedObject.expand_val_array(valuedObjectReference.indices)»'''
+       } else {
         '''«valuedObjectReference.valuedObject.expand»'''
+       }
+
    }
    
    // -------------------------------------------------------------------------   

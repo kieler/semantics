@@ -29,9 +29,9 @@ import de.cau.cs.kieler.core.kexpressions.DoubleValue
 /**
  * SCCharts Const Transformation.
  * 
- * @author cmot
- * @kieler.design 2013-09-05 proposed 
- * @kieler.rating 2013-09-05 proposed yellow
+ * @author ssm
+ * @kieler.design 2014-05-22 proposed 
+ * @kieler.rating 2014-05-22 proposed yellow
  */
 class Const {
 
@@ -70,7 +70,7 @@ class Const {
         
         for (const : constObjects.toList.immutableCopy) {
         	val replacement = const.initialValue
-        	state.replaceAllReferences(const, replacement.copy)
+        	state.replaceAllReferencesWithCopy(const, replacement.copy)
         	if (const.declaration.hasAnnotation(HOSTCODE_ANNOTATION)) {
         		state.eAllContents.filter(typeof(TextExpression)).forEach[
         			var replacementString = ""

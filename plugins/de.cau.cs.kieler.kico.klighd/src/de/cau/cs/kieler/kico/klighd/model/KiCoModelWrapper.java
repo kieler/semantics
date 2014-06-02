@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.kico.klighd.model;
 
-import java.util.List;
-
 /**
  * @author als
  *
