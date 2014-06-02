@@ -727,16 +727,16 @@ public class KiCoModelView extends DiagramViewPart {
                     currentModel =
                             new KiCoCodePlaceHolder(getCurrentFileName(), result.getString());
                 }
-
-                // composite model in given display mode
-                if (displaySideBySide) {
-                    KiCoModelChain chain = new KiCoModelChain();
-                    chain.getModels().add(new KiCoModelWrapper(sourceModel));
-                    chain.getModels().add(new KiCoModelWrapper(currentModel));
-                    currentModel = chain;
-                }
             } else {
                 currentModel = sourceModel;
+            }
+            
+            // composite model in given display mode
+            if (displaySideBySide) {
+                KiCoModelChain chain = new KiCoModelChain();
+                chain.getModels().add(new KiCoModelWrapper(sourceModel));
+                chain.getModels().add(new KiCoModelWrapper(currentModel));
+                currentModel = chain;
             }
 
             // compare types and set type change flag
@@ -748,6 +748,7 @@ public class KiCoModelView extends DiagramViewPart {
             boolean do_update_diagram = false;
             do_update_diagram |= do_get_model;
             do_update_diagram |= do_compile;
+            do_update_diagram |= is_display_mode_update;
             // should compile but no transformations are selected
             do_update_diagram |= is_compile_update && transformations != null;
             // compile and transformations changed to null
