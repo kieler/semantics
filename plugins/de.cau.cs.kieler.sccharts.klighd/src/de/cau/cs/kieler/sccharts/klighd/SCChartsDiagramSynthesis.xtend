@@ -353,7 +353,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             if (dependencyGraph == null) {
 
                 // Calculate only once
-                dependencyGraph = s.rootState.getDependencyGraph
+                dependencyGraph = s.getRootState.getDependencyGraph
             }
         }
 
