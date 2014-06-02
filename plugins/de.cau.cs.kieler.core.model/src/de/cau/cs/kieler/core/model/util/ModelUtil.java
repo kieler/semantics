@@ -433,8 +433,9 @@ public final class ModelUtil {
     // -------------------------------------------------------------------------
 
     /**
-     * Creates a linked workspace file and opens the corresponding project. If cleanProject is true,
-     * then the project will be deleted and re-created before.
+     * Creates a linked workspace file and opereturn
+     * XtextModelingUtil.getModelFromXtextEditor((XtextEditor)editor, true);ns the corresponding
+     * project. If cleanProject is true, then the project will be deleted and re-created before.
      * 
      * @param fullBundleUrl
      *            the full bundle url

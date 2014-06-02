@@ -25,5 +25,29 @@ import java.util.List;
  */
 public class KiCoModelChain {
 
-    public List<KiCoModelWrapper> models = new LinkedList<KiCoModelWrapper>();
+    private final List<KiCoModelWrapper> models = new LinkedList<KiCoModelWrapper>();    
+
+    /**
+     * Standard Constructor
+     */
+    public KiCoModelChain() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+    
+    /**
+     * @return list of models in chain
+     */
+    public List<KiCoModelWrapper> getModels() {
+        return models;
+    }
+
+    /**
+     * @return selected model
+     */
+    public Object getSelectedModel() {
+        //TODO implement selection detection
+        return models.get(models.size() - 1).getModel();
+    }
+
 }

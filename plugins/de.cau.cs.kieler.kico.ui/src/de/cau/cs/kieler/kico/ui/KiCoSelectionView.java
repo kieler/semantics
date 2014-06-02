@@ -4,11 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
@@ -19,6 +24,7 @@ import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.ui.progress.UIJob;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -36,10 +42,9 @@ import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 import de.cau.cs.kieler.klighd.util.ExpansionAwareLayoutOption;
-import de.cau.cs.kieler.klighd.util.Iterables2;
-import de.cau.cs.kieler.klighd.util.KlighdProperties;
-import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.klighd.util.ExpansionAwareLayoutOption.ExpansionAwareLayoutOptionData;
+import de.cau.cs.kieler.klighd.util.Iterables2;
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -594,8 +599,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                         // Next view is collapsed again
                         allExpanded = false;
                         actionExpandAllToggle.setChecked(allExpanded);
-                        
-                        
+
                         lastEditor = partName;
                         int activeEditorID = getActiveEditorID();
                         List<TransformationDummy> tempModel = KielerCompiler.buildGraph();
@@ -723,7 +727,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         // toolBarManager.add(getActionCompileToggle());
 
         // Create an IPartListener2
-        IPartListener2 pl = new IPartListener2() {
+        final IPartListener2 pl = new IPartListener2() {
 
             public void partVisible(IWorkbenchPartReference partRef) {
                 // TODO Auto-generated method stub
@@ -766,8 +770,18 @@ public class KiCoSelectionView extends DiagramViewPart {
         };
 
         // Add the IPartListener2 to the page
-        IWorkbenchPage page = this.getSite().getPage();
+        final IWorkbenchPage page = this.getSite().getPage();
         page.addPartListener(pl);
+
+        // Take care of removing part listener
+        // Otherwise the listener would keep updating this view causing widget is disposed errors.
+        parent.addDisposeListener(new DisposeListener() {
+
+            public void widgetDisposed(DisposeEvent e) {
+                page.removePartListener(pl);
+            }
+        });
+
     }
 
     // -------------------------------------------------------------------------
@@ -940,18 +954,18 @@ public class KiCoSelectionView extends DiagramViewPart {
                         viewer.expand((KNode) k);
                     }
                 } else {
-//                    final IViewer<?> viewer = thisPart.getViewer();
-//                    for (EObject k : Iterables.filter(
-//                            Iterables2.toIterable(viewer.getViewContext().getViewModel()
-//                                    .eAllContents()), new Predicate<EObject>() {
-//
-//                                public boolean apply(EObject arg0) {
-//                                    return arg0 instanceof KNode && viewer.isExpanded(arg0);
-//                                }
-//                            })) {
-//                        ViewContext vc = viewer.getViewContext();
-//                        viewer.collapse((KNode) k);
-//                    }
+                    // final IViewer<?> viewer = thisPart.getViewer();
+                    // for (EObject k : Iterables.filter(
+                    // Iterables2.toIterable(viewer.getViewContext().getViewModel()
+                    // .eAllContents()), new Predicate<EObject>() {
+                    //
+                    // public boolean apply(EObject arg0) {
+                    // return arg0 instanceof KNode && viewer.isExpanded(arg0);
+                    // }
+                    // })) {
+                    // ViewContext vc = viewer.getViewContext();
+                    // viewer.collapse((KNode) k);
+                    // }
                     lastEditor = "";
                     updateView(lastWorkbenchPartReference);
                 }
@@ -1033,13 +1047,20 @@ public class KiCoSelectionView extends DiagramViewPart {
     /**
      * Updates displayed diagram in this view. Initializes this view if necessary.
      */
-    private void updateDiagram(Object model, KlighdSynthesisProperties properties) {
+    private void updateDiagram(final Object model, final  KlighdSynthesisProperties properties) {
         if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
-            // the initialization case
-            DiagramViewManager.initializeView(this, model, null, properties);
+            // The initialization case
+            // Sometimes the initialization happens too fast for klighd thus do it delayed
+            new UIJob("Init" + KiCoSelectionView.class.getName()) {
+
+                @Override
+                public IStatus runInUIThread(IProgressMonitor monitor) {
+                    DiagramViewManager.initializeView(instance, model, null, properties);
+                    return Status.OK_STATUS;
+                }
+            }.schedule();            
         } else {
             // update case
-            this.getViewer().getViewContext().configure(properties);
             DiagramViewManager.updateView(this.getViewer().getViewContext(), model);
         }
     }

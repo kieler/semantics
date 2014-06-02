@@ -11,6 +11,10 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolderSynthesis"
             id="de.cau.cs.kieler.kico.klighd.KiCoCodePlaceHolder">
       </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.KiCoErrorModelSynthesis"
+            id="de.cau.cs.kieler.kico.klighd.KiCoErrorModel">
+      </diagramSynthesis>
    </extension>
    <extension
          point="org.eclipse.ui.views">
@@ -28,6 +32,17 @@
          point="org.eclipse.ui.startup">
       <startup
             class="de.cau.cs.kieler.kico.klighd.KiCoModelViewManager"></startup>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.klighd.extensions">
+      <action
+            class="de.cau.cs.kieler.kico.klighd.model.action.ErrorShowExceptionAction"
+            id="de.cau.cs.kieler.kico.klighd.model.action.ErrorShowExceptionAction">
+      </action>
+      <action
+            class="de.cau.cs.kieler.kico.klighd.model.action.OpenCodeInEditorAction"
+            id="de.cau.cs.kieler.kico.klighd.model.action.OpenCodeInEditorAction">
+      </action>
    </extension>
 
 </plugin>

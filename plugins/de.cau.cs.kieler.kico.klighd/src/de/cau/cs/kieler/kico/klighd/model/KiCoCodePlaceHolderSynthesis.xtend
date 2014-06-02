@@ -22,7 +22,11 @@ import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.kico.klighd.model.action.OpenCodeInEditorAction
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
+import de.cau.cs.kieler.klighd.util.KlighdProperties
+import java.util.LinkedList
+import java.util.StringTokenizer
 import javax.inject.Inject
 
 /**
@@ -58,12 +62,64 @@ class KiCoCodePlaceHolderSynthesis extends AbstractDiagramSynthesis<KiCoCodePlac
     extension KColorExtensions
 
     // -------------------------------------------------------------------------
+    // Constants
+    val String codeFont = "Monospace";
+    val int maxPreviewLines = 50;
+
+    // -------------------------------------------------------------------------
     // The Main entry transform function
-    override KNode transform(KiCoCodePlaceHolder placeholder) {
+    override KNode transform(KiCoCodePlaceHolder code) {
         val rootNode = createNode();
-        rootNode.children += createNode(placeholder) => [
-            it.addRectangle() => [
-                it.addText("CODE");
+        rootNode.children += createNode(code) => [
+            it.addRoundedRectangle(8, 8) => [
+                it.setGridPlacement(1);
+                
+                //title
+                it.addText("CODE") => [
+                    it.fontSize = 11;
+                    it.setFontBold = true;
+                    it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
+                    it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+                ]
+                
+                //open option
+                it.addText("[Open in Editor]") => [
+                    it.fontSize = 10;
+                    it.foreground = "blue".color
+                    it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
+                    it.addSingleClickAction(OpenCodeInEditorAction.ID);
+                ]
+                
+                //separator
+                it.addHorizontalSeperatorLine(1, 0);
+                
+                //preprocess code to compress
+                val tokenizer = new StringTokenizer(code.code, "\n");
+                val previewLines = new LinkedList<String>();
+                previewLines.add("");
+                while (previewLines.size < maxPreviewLines && tokenizer.hasMoreTokens) {
+                    val line = tokenizer.nextToken;
+
+                    //skip multiple empty lines
+                    if (!line.trim.empty || !previewLines.getLast().trim.empty) {
+                        previewLines.add(line);
+                    }
+                }
+                //rebuild to single string
+                val preview = new StringBuilder();
+                previewLines.forEach[preview.append(it).append("\n")];
+                //add continue sign
+                if (tokenizer.hasMoreTokens) {
+                    preview.append("...")
+                }
+                
+                //code preview
+                it.addText(preview.toString()) => [
+                    it.fontSize = 8;
+                    it.fontName = codeFont;
+                    it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
+                    it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+                ]
             ]
         ];
         return rootNode;
