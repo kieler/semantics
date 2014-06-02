@@ -370,7 +370,7 @@ public class KiCoPlugin extends AbstractUIPlugin {
      * @param message
      *            the message to present
      */
-    private void showWarning(final String message) {
+    public void showWarning(final String message) {
         if (parentShell != null) {
             MessageDialog.openWarning(parentShell, KICO_MSGDLG_TITLE, message);
         } else {

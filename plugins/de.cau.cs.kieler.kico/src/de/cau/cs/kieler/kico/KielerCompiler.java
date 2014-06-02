@@ -583,12 +583,18 @@ public class KielerCompiler {
         updateMapping(false);
         Transformation transformation = id2transformations.get(transformationID);
         if (transformation == null) {
-            throw new RuntimeException("Cannot find a transformation with the ID '"
+            KiCoPlugin.getInstance().showWarning("Cannot find a transformation with the ID '"
                     + transformationID
                     + "'. Make sure that the transformation with this ID is registered and its"
                     + " declaring plugin is loaded. Make sure that the ID does exactly match"
                     + " (case sensitive). Maybe you forgot to separate multiple ID's by a"
-                    + " comma.");
+                    + " comma.", KiCoPlugin.PLUGIN_ID, null, true);
+//            throw new RuntimeException("Cannot find a transformation with the ID '"
+//                    + transformationID
+//                    + "'. Make sure that the transformation with this ID is registered and its"
+//                    + " declaring plugin is loaded. Make sure that the ID does exactly match"
+//                    + " (case sensitive). Maybe you forgot to separate multiple ID's by a"
+//                    + " comma.");
         }
         return transformation;
     }
