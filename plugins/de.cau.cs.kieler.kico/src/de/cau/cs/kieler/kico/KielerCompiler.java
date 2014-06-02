@@ -126,16 +126,17 @@ public class KielerCompiler {
 
             for (String dependencyId : dependencies) {
                 Transformation otherTransformationOrGroup = getTransformation(dependencyId);
-                // System.out.println("Dependencies for " + transformation.getId());
-                // System.out.println("  " + otherTransformationOrGroup.getId());
-                TransformationDummy otherTransformationDummy =
-                        transformation2graph.get(otherTransformationOrGroup);
+                if (otherTransformationOrGroup != null) {
+                    // System.out.println("Dependencies for " + transformation.getId());
+                    // System.out.println("  " + otherTransformationOrGroup.getId());
+                    TransformationDummy otherTransformationDummy =
+                            transformation2graph.get(otherTransformationOrGroup);
 
-                // Insert dependency in dummy
-                transformationDummy.dependencies.add(otherTransformationDummy);
-                // Insert reverse dependency in other dummy
-                otherTransformationDummy.reverseDependencies.add(transformationDummy);
-
+                    // Insert dependency in dummy
+                    transformationDummy.dependencies.add(otherTransformationDummy);
+                    // Insert reverse dependency in other dummy
+                    otherTransformationDummy.reverseDependencies.add(transformationDummy);
+                }
             }
         }
         return returnList;
@@ -347,13 +348,15 @@ public class KielerCompiler {
             TransformationGroup transformationGroup) {
         for (String groupTransformationID : transformationGroup.getDependencies()) {
             Transformation groupTransformation = getTransformation(groupTransformationID);
-            TransformationDummy groupTransformationDummy =
-                    transformation2graph.get(groupTransformation);
-            groupTransformationDummy.marked = true;
-            // System.out.println("Marking " + groupTransformationDummy.id);
-            if (groupTransformation instanceof TransformationGroup) {
-                // groupTransformation is a TransformationGroup itself, so close recursion here
-                markGroupNodes(graph, (TransformationGroup) groupTransformation);
+            if (groupTransformation != null) {
+                TransformationDummy groupTransformationDummy =
+                        transformation2graph.get(groupTransformation);
+                groupTransformationDummy.marked = true;
+                // System.out.println("Marking " + groupTransformationDummy.id);
+                if (groupTransformation instanceof TransformationGroup) {
+                    // groupTransformation is a TransformationGroup itself, so close recursion here
+                    markGroupNodes(graph, (TransformationGroup) groupTransformation);
+                }
             }
         }
     }
@@ -373,13 +376,15 @@ public class KielerCompiler {
         for (String transformationID : transformationIDs) {
             Transformation transformation = getTransformation(transformationID);
 
-            TransformationDummy transformationDummy = transformation2graph.get(transformation);
-            transformationDummy.marked = true;
-            // System.out.println("Marking " + transformationDummy.id);
+            if (transformation != null) {
+                TransformationDummy transformationDummy = transformation2graph.get(transformation);
+                transformationDummy.marked = true;
+                // System.out.println("Marking " + transformationDummy.id);
 
-            if (expandGroupNodes && (transformation instanceof TransformationGroup)) {
-                TransformationGroup transformationGroup = (TransformationGroup) transformation;
-                markGroupNodes(graph, transformationGroup);
+                if (expandGroupNodes && (transformation instanceof TransformationGroup)) {
+                    TransformationGroup transformationGroup = (TransformationGroup) transformation;
+                    markGroupNodes(graph, transformationGroup);
+                }
             }
         }
     }
@@ -583,18 +588,21 @@ public class KielerCompiler {
         updateMapping(false);
         Transformation transformation = id2transformations.get(transformationID);
         if (transformation == null) {
-            KiCoPlugin.getInstance().showWarning("Cannot find a transformation with the ID '"
-                    + transformationID
-                    + "'. Make sure that the transformation with this ID is registered and its"
-                    + " declaring plugin is loaded. Make sure that the ID does exactly match"
-                    + " (case sensitive). Maybe you forgot to separate multiple ID's by a"
-                    + " comma.", KiCoPlugin.PLUGIN_ID, null, true);
-//            throw new RuntimeException("Cannot find a transformation with the ID '"
-//                    + transformationID
-//                    + "'. Make sure that the transformation with this ID is registered and its"
-//                    + " declaring plugin is loaded. Make sure that the ID does exactly match"
-//                    + " (case sensitive). Maybe you forgot to separate multiple ID's by a"
-//                    + " comma.");
+            KiCoPlugin
+                    .getInstance()
+                    .showWarning(
+                            "Cannot find a transformation with the ID '"
+                                    + transformationID
+                                    + "'. Make sure that the transformation with this ID is registered and its"
+                                    + " declaring plugin is loaded. Make sure that the ID does exactly match"
+                                    + " (case sensitive). Maybe you forgot to separate multiple ID's by a"
+                                    + " comma.", KiCoPlugin.PLUGIN_ID, null, true);
+            // throw new RuntimeException("Cannot find a transformation with the ID '"
+            // + transformationID
+            // + "'. Make sure that the transformation with this ID is registered and its"
+            // + " declaring plugin is loaded. Make sure that the ID does exactly match"
+            // + " (case sensitive). Maybe you forgot to separate multiple ID's by a"
+            // + " comma.");
         }
         return transformation;
     }
@@ -615,32 +623,35 @@ public class KielerCompiler {
         List<String> returnList = new ArrayList<String>();
         for (String transformationID : transformationIDs) {
             Transformation transformation = getTransformation(transformationID);
-            if (transformation instanceof TransformationGroup) {
-                TransformationGroup transformationGroup = (TransformationGroup) transformation;
-                if (!transformationGroup.isAlternatives()) {
-                    // Add/expand all NON-alternative group members
-                       for (String otherTransformationID : transformationGroup.getDependencies()) {
-                           returnList.add(otherTransformationID);
-                       }
-                } else {
-                    // Add/expand ONE alternative group members (if no other already exists)
-                    boolean exists = false;
-                    for (String otherTransformationID : transformationGroup.getDependencies()) {
-                        for (String returnListItem : transformationIDs) {
-                            if (returnListItem.equals(otherTransformationID)) {
-                                exists = true;
-                                break;
+            if (transformation != null) {
+                if (transformation instanceof TransformationGroup) {
+                    TransformationGroup transformationGroup = (TransformationGroup) transformation;
+                    if (!transformationGroup.isAlternatives()) {
+                        // Add/expand all NON-alternative group members
+                        for (String otherTransformationID : transformationGroup.getDependencies()) {
+                            returnList.add(otherTransformationID);
+                        }
+                    } else {
+                        // Add/expand ONE alternative group members (if no other already exists)
+                        boolean exists = false;
+                        for (String otherTransformationID : transformationGroup.getDependencies()) {
+                            for (String returnListItem : transformationIDs) {
+                                if (returnListItem.equals(otherTransformationID)) {
+                                    exists = true;
+                                    break;
+                                }
                             }
                         }
+                        if (!exists) {
+                            // Add default here because no alternative of this group is yet included
+                            String defaultTransformation =
+                                    transformationGroup.getSelectedDependency(transformationIDs);
+                            returnList.add(defaultTransformation);
+                        }
                     }
-                    if (!exists) {
-                        // Add default here because no alternative of this group is yet included
-                        String defaultTransformation = transformationGroup.getSelectedDependency(transformationIDs);
-                        returnList.add(defaultTransformation);
-                    }
+                } else {
+                    returnList.add(transformationID);
                 }
-            } else {
-                returnList.add(transformationID);
             }
         }
         return returnList;
@@ -662,34 +673,36 @@ public class KielerCompiler {
         List<String> returnList = new ArrayList<String>();
         for (String transformationID : transformationIDs) {
             Transformation transformation = getTransformation(transformationID);
-            if (!(transformation instanceof TransformationGroup)) {
-                returnList.add(transformationID);
-            } else {
-                TransformationGroup group = (TransformationGroup) transformation;
-                if (!allGroups) {
-                    // if we do NOT want to eliminate ALL groups, then do NOT delete
-                    // 1. alternative groups
-                    // 2. non-alternative groups where ALL members are marked
-                    if (group.isAlternatives()) {
-                        returnList.add(transformationID);
-                    } else {
-                        boolean allMarked = true;
-                        List<String> dependencyIDs = expandGroups(group.getDependencies());
-                        for (String dependencyID : dependencyIDs) {
-                            boolean found = false;
-                            for (String searchTransformationID : transformationIDs) {
-                                if (searchTransformationID.equals(dependencyID)) {
-                                    found = true;
+            if (transformation != null) {
+                if (!(transformation instanceof TransformationGroup)) {
+                    returnList.add(transformationID);
+                } else {
+                    TransformationGroup group = (TransformationGroup) transformation;
+                    if (!allGroups) {
+                        // if we do NOT want to eliminate ALL groups, then do NOT delete
+                        // 1. alternative groups
+                        // 2. non-alternative groups where ALL members are marked
+                        if (group.isAlternatives()) {
+                            returnList.add(transformationID);
+                        } else {
+                            boolean allMarked = true;
+                            List<String> dependencyIDs = expandGroups(group.getDependencies());
+                            for (String dependencyID : dependencyIDs) {
+                                boolean found = false;
+                                for (String searchTransformationID : transformationIDs) {
+                                    if (searchTransformationID.equals(dependencyID)) {
+                                        found = true;
+                                        break;
+                                    }
+                                }
+                                if (!found) {
+                                    allMarked = false;
                                     break;
                                 }
                             }
-                            if (!found) {
-                                allMarked = false;
-                                break;
+                            if (allMarked) {
+                                returnList.add(transformationID);
                             }
-                        }
-                        if (allMarked) {
-                            returnList.add(transformationID);
                         }
                     }
                 }
@@ -993,25 +1006,26 @@ public class KielerCompiler {
         for (String processedTransformationID : processedTransformationIDs) {
             Transformation transformation = getTransformation(processedTransformationID);
 
-            if (transformation != null)
+            if (transformation != null) {
                 compilationResult.getTransformations().add(processedTransformationID);
 
-            // If the requested TransformationID
-            if (transformation.getId().equals(processedTransformationID)) {
-                // If this is an individual
-                System.out.println("PERFORM TRANSFORMATION: " + processedTransformationID);
-                transformation.doTransform(transformedObject);
-                Object object = transformation.doTransform(transformedObject);
+                // If the requested TransformationID
+                if (transformation.getId().equals(processedTransformationID)) {
+                    // If this is an individual
+                    System.out.println("PERFORM TRANSFORMATION: " + processedTransformationID);
+                    transformation.doTransform(transformedObject);
+                    Object object = transformation.doTransform(transformedObject);
 
-                // Add to compilation result
-                compilationResult.getIntermediateResults().add(object);
+                    // Add to compilation result
+                    compilationResult.getIntermediateResults().add(object);
 
-                if (object instanceof EObject) {
-                    transformedObject = (EObject) object;
-                } else {
-                    // in this case we CANNOT do any further transformation calls
-                    // which require the return value of doTransform to be an EObject
-                    return compilationResult;
+                    if (object instanceof EObject) {
+                        transformedObject = (EObject) object;
+                    } else {
+                        // in this case we CANNOT do any further transformation calls
+                        // which require the return value of doTransform to be an EObject
+                        return compilationResult;
+                    }
                 }
             }
         }
