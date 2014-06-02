@@ -595,6 +595,53 @@ public class KielerCompiler {
 
     // -------------------------------------------------------------------------
 
+    private static List<String> expandGroups(List<String> transformationIDs) {
+        List<String> returnList = expandGroupsHelper(transformationIDs);
+        while (returnList.size() != transformationIDs.size()) {
+            // find fixed point
+            transformationIDs = returnList;
+            returnList = expandGroupsHelper(transformationIDs);
+        }
+        return returnList;
+    }
+
+    private static List<String> expandGroupsHelper(List<String> transformationIDs) {
+        List<String> returnList = new ArrayList<String>();
+        for (String transformationID : transformationIDs) {
+            Transformation transformation = getTransformation(transformationID);
+            if (transformation instanceof TransformationGroup) {
+                TransformationGroup transformationGroup = (TransformationGroup) transformation;
+                if (!transformationGroup.isAlternatives()) {
+                    // Add/expand all NON-alternative group members
+                       for (String otherTransformationID : transformationGroup.getDependencies()) {
+                           returnList.add(otherTransformationID);
+                       }
+                } else {
+                    // Add/expand ONE alternative group members (if no other already exists)
+                    boolean exists = false;
+                    for (String otherTransformationID : transformationGroup.getDependencies()) {
+                        for (String returnListItem : transformationIDs) {
+                            if (returnListItem.equals(otherTransformationID)) {
+                                exists = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (!exists) {
+                        // Add default here because no alternative of this group is yet included
+                        String defaultTransformation = transformationGroup.getSelectedDependency(transformationIDs);
+                        returnList.add(defaultTransformation);
+                    }
+                }
+            } else {
+                returnList.add(transformationID);
+            }
+        }
+        return returnList;
+    }
+
+    // -------------------------------------------------------------------------
+
     /**
      * Eliminate group ids (phase 7).
      * 
@@ -621,7 +668,8 @@ public class KielerCompiler {
                         returnList.add(transformationID);
                     } else {
                         boolean allMarked = true;
-                        for (String dependencyID : group.getDependencies()) {
+                        List<String> dependencyIDs = expandGroups(group.getDependencies());
+                        for (String dependencyID : dependencyIDs) {
                             boolean found = false;
                             for (String searchTransformationID : transformationIDs) {
                                 if (searchTransformationID.equals(dependencyID)) {

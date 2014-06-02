@@ -46,7 +46,6 @@ import de.cau.cs.kieler.klighd.util.ExpansionAwareLayoutOption.ExpansionAwareLay
 import de.cau.cs.kieler.klighd.util.Iterables2;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class KiCoSelectionView.
  * 
