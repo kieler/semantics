@@ -210,6 +210,8 @@ public abstract class Transformation {
      * @return the e object
      */
     public final Object doTransform(EObject eObject) {
+        String transformationID = "unknown";
+        transformationID = this.id;
         if (method == null) {
             // A Transformation instance with the standard transformation method
             return ((Transformation) transformationInstance).transform(eObject);
@@ -224,7 +226,7 @@ public abstract class Transformation {
                 .getInstance()
                 .showError(
                         "An error occurred while calling transformation with the ID '"
-                                + ((Transformation) transformationInstance).id
+                                + transformationID
                                 + "'.", KiCoPlugin.PLUGIN_ID, e, true);
             }
             return null;
