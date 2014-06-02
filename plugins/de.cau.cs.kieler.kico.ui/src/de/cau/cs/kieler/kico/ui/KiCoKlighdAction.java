@@ -158,8 +158,10 @@ public abstract class KiCoKlighdAction {
     public static void setLabelColor(final TransformationDummy transformationDummy,
             final ViewContext context, KColor foregroundColor, KColor backgroundColor) {
         KText kText = getKText(transformationDummy, context);
-        kRenderingExtensions.setForeground(kText, copy(foregroundColor));
-        kRenderingExtensions.setSelectionBackground(kText, copy(backgroundColor));
+        if (kText != null) {
+            kRenderingExtensions.setForeground(kText, copy(foregroundColor));
+            kRenderingExtensions.setSelectionBackground(kText, copy(backgroundColor));
+        }
 
     }
 
@@ -180,8 +182,10 @@ public abstract class KiCoKlighdAction {
     public static void setStateColor(final TransformationDummy transformationDummy,
             final ViewContext context, KColor color1, KColor color2) {
         KRoundedRectangle rect = getKRoundedRectangle(transformationDummy, context);
-        kRenderingExtensions.setBackgroundGradient(rect, copy(color1), copy(color2), 90);
-        kRenderingExtensions.setSelectionBackgroundGradient(rect, copy(color1), copy(color2), 90);
+        if (rect != null) {
+            kRenderingExtensions.setBackgroundGradient(rect, copy(color1), copy(color2), 90);
+            kRenderingExtensions.setSelectionBackgroundGradient(rect, copy(color1), copy(color2), 90);
+        }
     }
 
     // -------------------------------------------------------------------------
