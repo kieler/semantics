@@ -76,7 +76,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * 
      */
     public enum ChangeEvent {
-        SAVED, DISPLAY_MODE, TRANSFORMATIONS, ACTIVE_EDITOR, COMPILE, ACTIVE_RESOURCE
+        SAVED, DISPLAY_MODE, TRANSFORMATIONS, ACTIVE_EDITOR, COMPILE
     }
 
     /** Viewer ID **/
@@ -263,7 +263,6 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
         } else {
             activeEditor = null;
         }
-
     }
 
     /**
@@ -271,6 +270,17 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      */
     public IEditorPart getActiveEditor() {
         return activeEditor;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void dispose() {
+        // unregister save listener if necessary
+        if (activeEditor != null) {
+            activeEditor.removePropertyListener(dirtyPropertyListener);
+        }
+        super.dispose();
     }
 
     // -- ACTIONS
