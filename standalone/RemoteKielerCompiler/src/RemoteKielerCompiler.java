@@ -35,9 +35,9 @@ public class RemoteKielerCompiler {
 
         if (args.length < 1) {
             System.out.println("\n"
-                    + "==================\n"
-                    + "= KielerCompiler =\n"
-                    + "==================\n"
+                    + "******************\n"
+                    + "* KielerCompiler *\n"
+                    + "******************\n"
                     + "  Usage: RemoteKielerCompiler <host>:<port> <transformation 1> ... <transformation n>\n"
                     + "Example: cat <FILE.sct> | java RemoteKielerCompiler localhost:5555 EXTENDED CORE > code.c\n");
             return;
