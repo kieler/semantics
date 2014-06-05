@@ -33,10 +33,14 @@ public class RemoteKielerCompiler {
      */
     public static void main(String[] args) {
 
-        if (args.length < 3) {
-            System.out.println("KielerCompiler\n"
-                    + "Usage: RemoteKielerCompiler <host>:<port> <transformation 1> ... <transformation n>"
-                    + "Usage Example: cat <FILE.sct> | java RemoteKielerCompiler localhost:5555 EXTENDED CORE");
+        if (args.length < 1) {
+            System.out.println("\n"
+                    + "==================\n"
+                    + "= KielerCompiler =\n"
+                    + "==================\n"
+                    + "  Usage: RemoteKielerCompiler <host>:<port> <transformation 1> ... <transformation n>\n"
+                    + "Example: cat <FILE.sct> | java RemoteKielerCompiler localhost:5555 EXTENDED CORE\n");
+            return;
         }
 
         String hostAndPort[] = args[0].split(":");
