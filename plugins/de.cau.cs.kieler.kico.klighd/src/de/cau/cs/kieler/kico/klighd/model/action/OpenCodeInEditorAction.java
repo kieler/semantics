@@ -39,19 +39,31 @@ public class OpenCodeInEditorAction implements IAction {
     public ActionResult execute(ActionContext context) {
         Object inputModel = context.getViewContext().getInputModel();
         // get error model
+        KiCoCodePlaceHolder codeModel = null;
         if (inputModel instanceof KiCoCodePlaceHolder) {
-            KiCoCodePlaceHolder codeModel = (KiCoCodePlaceHolder) inputModel;
-            //get window for opening editor
+            codeModel = (KiCoCodePlaceHolder) inputModel;
+        } else if (context.getKNode() != null) {
+            // if input model is not KiCoCodePlaceHolder check if clicked node is associated with it
+            Object domainElement = context.getDomainElement(context.getKNode());
+            if (domainElement instanceof KiCoCodePlaceHolder) {
+                codeModel = (KiCoCodePlaceHolder) domainElement;
+            }
+        }
+        // open editor
+        if (codeModel != null) {
+            // get window for opening editor
             IWorkbenchWindow window =
                     context.getViewContext().getDiagramWorkbenchPart().getSite()
                             .getWorkbenchWindow();
-            
-            //Create editor input based on string.
-            //Currently it is better to set this read only because if normal save is used instead of save as saving has no effect
+
+            // Create editor input based on string.
+            // Currently it is better to set this read only because if normal save is used instead
+            // of save as saving has no effect
             IStorageEditorInput input =
-                    new StringBasedEditorInput(codeModel.getName(), "Generated Code", codeModel.getCode(), true);
-            
-            //open editor
+                    new StringBasedEditorInput(codeModel.getName(), "Generated Code",
+                            codeModel.getCode(), true);
+
+            // open editor
             IWorkbenchPage page = window.getActivePage();
             if (page != null)
                 try {

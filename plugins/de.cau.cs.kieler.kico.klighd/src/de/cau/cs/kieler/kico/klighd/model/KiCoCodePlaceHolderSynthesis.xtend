@@ -72,6 +72,7 @@ class KiCoCodePlaceHolderSynthesis extends AbstractDiagramSynthesis<KiCoCodePlac
     override KNode transform(KiCoCodePlaceHolder code) {
         val rootNode = createNode();
         rootNode.children += createNode(code) => [
+            it.associateWith(code);
             it.addRoundedRectangle(8, 8) => [
                 it.addDoubleClickAction(OpenCodeInEditorAction.ID);
                 it.setGridPlacement(1);
@@ -90,6 +91,7 @@ class KiCoCodePlaceHolderSynthesis extends AbstractDiagramSynthesis<KiCoCodePlac
                     it.foreground = "blue".color
                     it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
                     it.addSingleClickAction(OpenCodeInEditorAction.ID);
+                    it.addDoubleClickAction(OpenCodeInEditorAction.ID);
                 ]
                 
                 //separator
