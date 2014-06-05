@@ -35,5 +35,11 @@
          </toolbar>
       </menuContribution>
    </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="de.cau.cs.kieler.kico.web.KiCoWebStartup">
+      </startup>
+   </extension>
 
 </plugin>

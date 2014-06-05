@@ -122,8 +122,6 @@ public class KiCoWebDialog extends Dialog {
                     }
                 } else {
                     KiCoWebPlugin.getServer().abort();
-                    KiCoWebPlugin.getServer().cancel();
-                    KiCoWebPlugin.setServer(null);
                 }
                 shlDdd.close();
             }

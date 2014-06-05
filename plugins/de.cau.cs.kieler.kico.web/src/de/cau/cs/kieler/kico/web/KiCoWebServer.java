@@ -88,23 +88,28 @@ public class KiCoWebServer extends Job {
 
     protected void canceling() {
         abort();
+        KiCoWebPlugin.saveEnabled(false);
     }    
     
     public void abort() {
+        aborted = true;
         if (socket != null) {
             try {
                 socket.close();
-                socket = null;
             } catch (IOException e) {
             }
         }
-        aborted = true;
+        socket = null;
+        KiCoWebPlugin.setServer(null);
     }
 
     // public static JSONClient client;
 
     @Override
     protected IStatus run(IProgressMonitor monitor) {
+        
+        aborted = false;
+        socket = null;
 
         while (KiCoWebPlugin.loadEnabled() && !aborted) {
 
@@ -139,8 +144,8 @@ public class KiCoWebServer extends Job {
                         model += s;
                     }
 
-                    System.out.println("transformations: " + transformations);
-                    System.out.println("model: " + model);
+//                    System.out.println("transformations: " + transformations);
+//                    System.out.println("model: " + model);
 
                     EObject eObject = parse(model);
                     
@@ -156,7 +161,6 @@ public class KiCoWebServer extends Job {
                     printWriter.flush();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
             }
 
         }
@@ -195,7 +199,7 @@ public class KiCoWebServer extends Job {
                 XtextResourceSet resourceSet = provider.get(XtextResourceSet.class);
                 Resource res = resourceSet.createResource(uri);
                 
-                System.out.println(ext + " : " + res.getClass().getName());
+//                System.out.println(ext + " : " + res.getClass().getName());
                 
                 done = false;
                 try {
