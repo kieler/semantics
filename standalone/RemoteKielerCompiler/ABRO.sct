@@ -1,0 +1,33 @@
+@HVLayout
+scchart ABRO {
+  input bool A;
+  input bool B;
+  input bool R;
+  output bool O = false;
+
+  region Main:
+
+  initial state ABO {
+
+    initial state WaitAB {
+
+      region HandleA:
+
+      initial state WA
+      --> DA with A;
+
+      final state DA;
+
+      region HandleB:
+
+      initial state WB
+      --> DB with B;
+
+      final state DB;
+    }
+    >-> Done with / O = true;
+
+    state Done;
+  }
+  o-> ABO with R;
+}
