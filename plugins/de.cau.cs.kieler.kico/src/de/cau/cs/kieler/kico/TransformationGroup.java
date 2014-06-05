@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kico;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -31,13 +30,6 @@ public class TransformationGroup extends Transformation {
     /** The alternative flag, initially it is false. */
     private boolean alternatives = false;
     
-    private boolean isCategory = false;
-    
-    private boolean isFeatureGroup = false;
-    
-    private String categoryColor1 = "";
-    
-    private String categoryColor2 = "";
 
     // -------------------------------------------------------------------------
 
@@ -59,21 +51,6 @@ public class TransformationGroup extends Transformation {
         return alternatives;
     }
     
-    public boolean isCategory() {
-        return isCategory;
-    }
-    
-    public boolean isFeatureGroup() {
-        return isFeatureGroup;
-    }
-    
-    public String getCategoryColor1() {
-        return categoryColor1;
-    }
-    
-    public String getCategoryColor2() {
-        return categoryColor2;
-    }
 
     // -------------------------------------------------------------------------
 
@@ -138,20 +115,6 @@ public class TransformationGroup extends Transformation {
         this.alternatives = alternatives;
     }
 
-    public void setIsCategory(boolean isCategory) {
-        this.isCategory = isCategory;
-    }
-    
-    public void setIsFeatureGroup(boolean isFeatureGroup) {
-        this.isFeatureGroup = isFeatureGroup;
-    }
-    
-    public void setCategoryColor1(String color) {
-        this.categoryColor1 = color;
-    }
 
-    public void setCategoryColor2(String color) {
-        this.categoryColor2 = color;
-    }
     // -------------------------------------------------------------------------
 }

@@ -273,7 +273,7 @@ class Abort {
                 for (transition : outgoingTransitions) {
 
                     // Create a new _transitionTrigger valuedObject
-                    val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
+                    val transitionTriggerVariable = state.createVariable(
                         GENERATED_PREFIX + "trig").setTypeBool.uniqueName
                     transitionTriggerVariable.setInitialValue(FALSE)
                     transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)

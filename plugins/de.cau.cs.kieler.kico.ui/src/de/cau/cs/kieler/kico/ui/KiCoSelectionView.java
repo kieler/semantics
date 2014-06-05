@@ -34,6 +34,7 @@ import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.TransformationDummy;
+import de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager.KiCoSelectionChangeEventListerner;
 import de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesis;
 import de.cau.cs.kieler.klighd.IDiagramWorkbenchPart;
 import de.cau.cs.kieler.klighd.IViewer;
@@ -46,7 +47,6 @@ import de.cau.cs.kieler.klighd.util.ExpansionAwareLayoutOption.ExpansionAwareLay
 import de.cau.cs.kieler.klighd.util.Iterables2;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class KiCoSelectionView.
  * 
@@ -526,9 +526,11 @@ public class KiCoSelectionView extends DiagramViewPart {
     /**
      * Removes other possibly selected alternatives for a transformation from the list of selected
      * transformations.
-     *
-     * @param transformationDummyID the transformation dummy id
-     * @param editorID the editor id
+     * 
+     * @param transformationDummyID
+     *            the transformation dummy id
+     * @param editorID
+     *            the editor id
      * @return the list
      */
     public static List<TransformationDummy> calculateOtherAlternativeTransformations(
@@ -536,7 +538,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         List<TransformationDummy> returnList = new ArrayList<TransformationDummy>();
         TransformationDummy transformationDummy =
                 resolveTransformationDummy(transformationDummyID, editorID);
-        if (transformationDummy.reverseDependencies != null) {
+        if (transformationDummy != null && transformationDummy.reverseDependencies != null) {
             for (TransformationDummy reverseDependency : transformationDummy.reverseDependencies) {
                 if (reverseDependency.isAlternative()) {
                     // in this case the parent is an alternative group and we need to deselect ALL
@@ -689,8 +691,6 @@ public class KiCoSelectionView extends DiagramViewPart {
                         KiCoSelectionView.addSelectedTransformationVisualization(activeEditorID);
 
                         // notify listeners about currently active transformations
-                        setPartProperty(ACTIVE_EDITOR_PROPERTY_KEY,
-                                Integer.toString(activeEditorID));
                         updateActiveTransformationsProperty();
                     }
                 }
@@ -1047,7 +1047,7 @@ public class KiCoSelectionView extends DiagramViewPart {
     /**
      * Updates displayed diagram in this view. Initializes this view if necessary.
      */
-    private void updateDiagram(final Object model, final  KlighdSynthesisProperties properties) {
+    private void updateDiagram(final Object model, final KlighdSynthesisProperties properties) {
         if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
             // The initialization case
             // Sometimes the initialization happens too fast for klighd thus do it delayed
@@ -1058,7 +1058,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                     DiagramViewManager.initializeView(instance, model, null, properties);
                     return Status.OK_STATUS;
                 }
-            }.schedule();            
+            }.schedule();
         } else {
             // update case
             ViewContext viewContext = this.getViewer().getViewContext();
@@ -1067,31 +1067,37 @@ public class KiCoSelectionView extends DiagramViewPart {
         }
     }
 
+    // TransformationChange Event Manager
     // -------------------------------------------------------------------------
 
+    /** Manager to handle listeners on selection change events */
+    private final static KiCoSelectionChangeEventManager selectionEventManger =
+            new KiCoSelectionChangeEventManager();
+
     /**
-     * Updates the Part property representing currently selected transformations
+     * @param listener
+     * @see de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager#addSelectionChangeEventListener(de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager.KiCoSelectionChangeEventListerner)
+     */
+    public void addSelectionChangeEventListener(KiCoSelectionChangeEventListerner listener) {
+        selectionEventManger.addSelectionChangeEventListener(listener);
+    }
+
+    /**
+     * @param listener
+     * @see de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager#removeSelectionChangeEventListener(de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager.KiCoSelectionChangeEventListerner)
+     */
+    public void removeSelectionChangeEventListener(KiCoSelectionChangeEventListerner listener) {
+        selectionEventManger.removeSelectionChangeEventListener(listener);
+    }
+
+    /**
+     * Notifies all listeners about the new selection
      */
     public static void updateActiveTransformationsProperty() {
-        StringBuilder transString = new StringBuilder();
-        List<String> selectedTrans = selectedTransformations.get(getActiveEditorID());
-        if (selectedTrans != null) {
-            for (String trans : selectedTrans) {
-                transString.append(trans);
-                transString.append(',');
-            }
-            List<String> requiredTrans = requiredTransformations.get(getActiveEditorID());
-            if (advancedMode && requiredTrans != null) {
-                for (String trans : requiredTrans) {
-                    transString.append(trans);
-                    transString.append(',');
-                }
-            }
-            if (transString.length() > 1 && transString.charAt(transString.length() - 1) == ',') {
-                transString.deleteCharAt(transString.length() - 1);
-            }
-        }
-        instance.setPartProperty(ACTIVE_TRANSFORMATIONS_PROPERTY_KEY, transString.toString());
+        KiCoSelection currentSelection =
+                new KiCoSelection(getActiveEditorID(),
+                        selectedTransformations.get(getActiveEditorID()), advancedMode);
+        selectionEventManger.fireSelectionChangeEvent(currentSelection);
     }
 
     // -------------------------------------------------------------------------

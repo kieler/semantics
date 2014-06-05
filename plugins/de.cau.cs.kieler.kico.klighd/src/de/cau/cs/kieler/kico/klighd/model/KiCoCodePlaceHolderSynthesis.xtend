@@ -23,11 +23,13 @@ import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.kico.klighd.model.action.OpenCodeInEditorAction
+import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.LinkedList
 import java.util.StringTokenizer
 import javax.inject.Inject
+
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 /**
  * Diagram synthesis of a KiCoModelChain.
@@ -63,7 +65,6 @@ class KiCoCodePlaceHolderSynthesis extends AbstractDiagramSynthesis<KiCoCodePlac
 
     // -------------------------------------------------------------------------
     // Constants
-    val String codeFont = "Monospace";
     val int maxPreviewLines = 50;
 
     // -------------------------------------------------------------------------
@@ -72,14 +73,15 @@ class KiCoCodePlaceHolderSynthesis extends AbstractDiagramSynthesis<KiCoCodePlac
         val rootNode = createNode();
         rootNode.children += createNode(code) => [
             it.addRoundedRectangle(8, 8) => [
+                it.addDoubleClickAction(OpenCodeInEditorAction.ID);
                 it.setGridPlacement(1);
                 
                 //title
-                it.addText("CODE") => [
+                it.addText("CODE") => [                
                     it.fontSize = 11;
                     it.setFontBold = true;
                     it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
-                    it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+                    it.suppressSelectability;
                 ]
                 
                 //open option
@@ -105,9 +107,11 @@ class KiCoCodePlaceHolderSynthesis extends AbstractDiagramSynthesis<KiCoCodePlac
                         previewLines.add(line);
                     }
                 }
+                
                 //rebuild to single string
                 val preview = new StringBuilder();
                 previewLines.forEach[preview.append(it).append("\n")];
+                
                 //add continue sign
                 if (tokenizer.hasMoreTokens) {
                     preview.append("...")
@@ -116,9 +120,10 @@ class KiCoCodePlaceHolderSynthesis extends AbstractDiagramSynthesis<KiCoCodePlac
                 //code preview
                 it.addText(preview.toString()) => [
                     it.fontSize = 8;
-                    it.fontName = codeFont;
+                    it.fontName = KlighdConstants.DEFAULT_MONOSPACE_FONT_NAME;
                     it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
-                    it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+                    it.suppressSelectability;                    
+                    it.addDoubleClickAction(OpenCodeInEditorAction.ID);
                 ]
             ]
         ];

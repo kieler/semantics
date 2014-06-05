@@ -677,7 +677,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 ]
             if (s.referencedState && SHOW_REFERENCEEXPANSION.booleanValue) {
                 for (r : (s.referencedScope as State).regions) {
-                    val synthesis = delegate.get();
+                    val synthesis = delegate.get() as SCChartsDiagramSynthesis;
                     synthesis.use(usedContext)
                     node.children += synthesis.translate(r) => [
                         it.setLayoutOption(KlighdProperties::EXPAND, false);
@@ -690,7 +690,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
     }
     
     @com.google.inject.Inject
-    Provider<SCChartsDiagramSynthesis> delegate;
+    Provider<AbstractDiagramSynthesis<?>> delegate;
 
     // -------------------------------------------------------------------------
     // Translate a transition

@@ -210,6 +210,8 @@ public abstract class Transformation {
      * @return the e object
      */
     public final Object doTransform(EObject eObject) {
+        String transformationID = "unknown";
+        transformationID = this.id;
         if (method == null) {
             // A Transformation instance with the standard transformation method
             return ((Transformation) transformationInstance).transform(eObject);
@@ -219,13 +221,13 @@ public abstract class Transformation {
             try {
                 result = transformationMethod.invoke(transformationInstance, eObject);
                 return result;
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-                e.getTargetException().printStackTrace();
+            } catch (Exception e) {
+                KiCoPlugin
+                .getInstance()
+                .showError(
+                        "An error occurred while calling transformation with the ID '"
+                                + transformationID
+                                + "'.", KiCoPlugin.PLUGIN_ID, e, true);
             }
             return null;
         }

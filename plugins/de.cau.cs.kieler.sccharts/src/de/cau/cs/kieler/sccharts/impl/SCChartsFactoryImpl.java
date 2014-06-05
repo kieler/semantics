@@ -78,9 +78,9 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.ACTION: return createAction();
             case SCChartsPackage.ASSIGNMENT: return createAssignment();
             case SCChartsPackage.EMISSION: return createEmission();
+            case SCChartsPackage.STATE: return createState();
             case SCChartsPackage.REGION: return createRegion();
             case SCChartsPackage.BINDING: return createBinding();
-            case SCChartsPackage.STATE: return createState();
             case SCChartsPackage.TRANSITION: return createTransition();
             case SCChartsPackage.TEXT_EFFECT: return createTextEffect();
             case SCChartsPackage.ENTRY_ACTION: return createEntryAction();

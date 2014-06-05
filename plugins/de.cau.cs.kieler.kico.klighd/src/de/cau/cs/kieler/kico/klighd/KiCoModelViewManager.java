@@ -24,12 +24,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
-import org.eclipse.jface.util.IPropertyChangeListener;
-import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartConstants;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -43,6 +43,8 @@ import com.google.common.collect.Lists;
 import de.cau.cs.kieler.core.model.xtext.util.XtextModelingUtil;
 import de.cau.cs.kieler.kico.klighd.KiCoModelView.ChangeEvent;
 import de.cau.cs.kieler.kico.klighd.listener.GlobalPartAdapter;
+import de.cau.cs.kieler.kico.ui.KiCoSelection;
+import de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager.KiCoSelectionChangeEventListerner;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionView;
 import de.cau.cs.kieler.klighd.KlighdDataManager;
 
@@ -52,7 +54,8 @@ import de.cau.cs.kieler.klighd.KlighdDataManager;
  * @author als
  * 
  */
-public class KiCoModelViewManager extends UIJob implements IStartup {
+public class KiCoModelViewManager extends UIJob implements IStartup,
+        KiCoSelectionChangeEventListerner {
 
     // -- PSEUDO SINGLETON
     // -------------------------------------------------------------------------
@@ -84,14 +87,17 @@ public class KiCoModelViewManager extends UIJob implements IStartup {
 
     /** Global Listener Adapter */
     private GlobalPartAdapter adapter;
-    /** List of open model editors. */
+    /** List of open model editors which MAY contain valid models. */
     private LinkedList<IEditorPart> editors = new LinkedList<IEditorPart>();
+    /** List of open model editors which contain valid models. */
+    private LinkedList<IEditorPart> validEditors = new LinkedList<IEditorPart>();
     /** List of open KiCoSelectionViews. */
     private LinkedList<KiCoSelectionView> kicoSelections = new LinkedList<KiCoSelectionView>();
     /** List of open KiCoModelViews. */
     private LinkedList<KiCoModelView> modelViews = new LinkedList<KiCoModelView>();
     /** Map from edtors (hash) to selected transformations. */
-    private HashMap<String, String> tranformations = new HashMap<String, String>();
+    private HashMap<Integer, KiCoSelection> compilerSelection =
+            new HashMap<Integer, KiCoSelection>();
 
     /** Indicated that earlyStartup has not finished yet */
 
@@ -135,7 +141,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup {
                     KiCoSelectionView selectionView = (KiCoSelectionView) part;
                     kicoSelections.add(selectionView);
                     // listen to transformation selection changes
-                    selectionView.addPartPropertyListener(tranformationsPropertyListener);
+                    selectionView.addSelectionChangeEventListener(instance);
                     // be kind an help selection view to initialize (because in some startup cases
                     // it activation of an editor)
                     selectionView.updateView(selectionView.getSite().getPage()
@@ -145,13 +151,14 @@ public class KiCoModelViewManager extends UIJob implements IStartup {
                     modelViews.add(modelView);
                     if (modelView.isPrimaryView()
                             && modelView.getSite().getPage().getActiveEditor() != null) {
-                        //update to active editor (delayed to prevent klighd init errors)
+                        // update to active editor (delayed to prevent klighd init errors)
                         new UIJob("Init" + KiCoModelView.class.getName()) {
 
                             @Override
                             public IStatus runInUIThread(IProgressMonitor monitor) {
-                                IEditorPart activeEditor = modelView.getSite().getPage().getActiveEditor();
-                                if(editors.contains(activeEditor)){
+                                IEditorPart activeEditor =
+                                        modelView.getSite().getPage().getActiveEditor();
+                                if (validEditors.contains(activeEditor)) {
                                     modelView.setActiveEditor(activeEditor);
                                 }
                                 return Status.OK_STATUS;
@@ -179,6 +186,8 @@ public class KiCoModelViewManager extends UIJob implements IStartup {
             if (part != null) {
                 if (editors.contains(part)) {
                     editors.remove(part);
+                    validEditors.remove(part);
+                    part.removePropertyListener(undecidedValidityEditorDirtyPropertyListener);
                     // close related model views
                     for (KiCoModelView modelView : Lists.newLinkedList(Iterables.filter(modelViews,
                             new Predicate<KiCoModelView>() {
@@ -197,8 +206,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup {
                     }
                 } else if (kicoSelections.contains(part)) {
                     kicoSelections.remove(part);
-                    ((KiCoSelectionView) part)
-                            .removePartPropertyListener(tranformationsPropertyListener);
+                    ((KiCoSelectionView) part).removeSelectionChangeEventListener(instance);
                 } else if (modelViews.contains(part)) {
                     modelViews.remove(part);
                 }
@@ -212,24 +220,45 @@ public class KiCoModelViewManager extends UIJob implements IStartup {
         public void partActivated(final IWorkbenchPartReference partRef) {
             IWorkbenchPart part = partRef.getPart(false);
             if (editors.contains(part)) {
-                // get related primary model view
-                KiCoModelView primaryView =
-                        Iterables.getFirst(
-                                Iterables.filter(modelViews, new Predicate<KiCoModelView>() {
+                IEditorPart editor = (IEditorPart) part;
+                int isValid = 0;
+                if (!validEditors.contains(part)) {
+                    //check if valid
+                    isValid = isValidModelEditor(editor);
+                    if(isValid == 0){
+                        editors.remove(part);
+                        part.removePropertyListener(undecidedValidityEditorDirtyPropertyListener);
+                    }else if(isValid == 1){
+                        validEditors.add(editor);
+                        part.removePropertyListener(undecidedValidityEditorDirtyPropertyListener);
+                    }else if(isValid == 2){//wait until validity is decidable
+                        part.addPropertyListener(undecidedValidityEditorDirtyPropertyListener);
+                        return;
+                    }
+                } else {
+                    isValid = 1;
+                }
+                //update if valid
+                if (isValid == 1) {
+                    // get related primary model view
+                    KiCoModelView primaryView =
+                            Iterables.getFirst(
+                                    Iterables.filter(modelViews, new Predicate<KiCoModelView>() {
 
-                                    public boolean apply(KiCoModelView view) {
-                                        return view.getSite().getPage() == partRef.getPage()
-                                                && view.isPrimaryView();
-                                    }
-                                }), null);
-                // update or open new view
-                if (primaryView != null) {
-                    primaryView.setActiveEditor((IEditorPart) part);
-                } else if (primaryView == null) {
-                    try {
-                        partRef.getPage().showView(KiCoModelView.ID);
-                    } catch (PartInitException e) {
-                        e.printStackTrace();
+                                        public boolean apply(KiCoModelView view) {
+                                            return view.getSite().getPage() == partRef.getPage()
+                                                    && view.isPrimaryView();
+                                        }
+                                    }), null);
+                    // update or open new view
+                    if (primaryView != null) {
+                        primaryView.setActiveEditor(editor);
+                    } else if (primaryView == null) {
+                        try {
+                            partRef.getPage().showView(KiCoModelView.ID);
+                        } catch (PartInitException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -237,30 +266,26 @@ public class KiCoModelViewManager extends UIJob implements IStartup {
     };
 
     /** PropertyChangeListener to get changes of selected transformations in KiCoSelectionView. */
-    final IPropertyChangeListener tranformationsPropertyListener = new IPropertyChangeListener() {
+    public void selectionChange(KiCoSelection newSelection) {
+        if (newSelection != null
+                && !newSelection.equals(compilerSelection.put(newSelection.getEditorID(),
+                        newSelection))) {
+            // update model views
+            for (KiCoModelView modelView : modelViews) {
+                modelView.updateModel(ChangeEvent.TRANSFORMATIONS);
+            }
 
-        public void propertyChange(PropertyChangeEvent event) {
-            if (event.getProperty() == KiCoSelectionView.ACTIVE_TRANSFORMATIONS_PROPERTY_KEY) {
-                final KiCoSelectionView selectionView = (KiCoSelectionView) event.getSource();
-                String editorHash =
-                        selectionView.getPartProperty(KiCoSelectionView.ACTIVE_EDITOR_PROPERTY_KEY);
-                // if value changed
-                if (event.getNewValue() != null
-                        && !event.getNewValue().equals(
-                                tranformations.put(editorHash, (String) event.getNewValue()))) {
-                    // update related model views
-                    for (KiCoModelView modelView : Iterables.filter(modelViews,
-                            new Predicate<KiCoModelView>() {
+        }
+    }
+    
+    /** PropertyListener to check if a editor with undecided validity was saved. */
+    final IPropertyListener undecidedValidityEditorDirtyPropertyListener = new IPropertyListener() {
 
-                                public boolean apply(KiCoModelView view) {
-                                    return view.getSite().getPage() == selectionView.getSite()
-                                            .getPage();
-                                }
-                            })) {
-                        modelView.updateModel(ChangeEvent.TRANSFORMATIONS);
-                    }
-
-                }
+        public void propertyChanged(Object source, int propId) {
+            IEditorPart editor = (IEditorPart) source;
+            if (propId == IWorkbenchPartConstants.PROP_DIRTY && !editor.isDirty()) {      
+                //fire activation again to decide its valitidy
+                partListener.partActivated(editor.getSite().getPage().getReference(editor));
             }
         }
     };
@@ -268,36 +293,48 @@ public class KiCoModelViewManager extends UIJob implements IStartup {
     // -- HELPER
     // -------------------------------------------------------------------------
     /**
-     * Checks if given editor part is a valid model editor visualizable with a ModelView
+     * Checks if given editor part can contain visualizable models
      * 
      * @param part
      *            editor
      * @return true if editor is model editor
      */
     private boolean isModelEditor(IEditorPart part) {
-        EObject model = getModelFromModelEditor(part);
-        if (model != null
-                && !Iterables.isEmpty(KlighdDataManager.getInstance().getAvailableSyntheses(
-                        model.getClass()))) {
+        // If XTextEditor of EMF Tree Editor
+        if (part instanceof XtextEditor || part instanceof IEditingDomainProvider) {
             return true;
         }
         return false;
     }
 
     /**
-     * Return a string containing the current compiler selection to given editor
+     * Checks if given editor part is a valid model editor thus contains a visualizable model
      * 
-     * @param activeEditor
+     * @param editor
+     *            editor
+     * @return 0 == NO, 1 == YES , 2 == MAYBE
+     * 
      */
-    public String getTransformations(final IEditorPart activeEditor) {
-        String editorHash = Long.toString(activeEditor.hashCode());
-        if (tranformations.containsKey(editorHash)) {
-            String trans = tranformations.get(editorHash);
-            if (trans != null && !trans.trim().isEmpty()) {
-                return trans;
+    private int isValidModelEditor(IEditorPart editor) {
+        EObject model = getModelFromModelEditor(editor);
+        if (model != null) {
+            if (!Iterables.isEmpty(KlighdDataManager.getInstance().getAvailableSyntheses(
+                    model.getClass()))) {
+                return 1;
+            } else {
+                return 0;
             }
         }
-        return null;
+        return 2;// Undecidable if model is null
+    }
+
+    /**
+     * Returns compiler selection to given editor
+     * 
+     * @param editor
+     */
+    public KiCoSelection getSelection(final IEditorPart activeEditor) {
+        return compilerSelection.get(activeEditor.hashCode());
     }
 
     // -- Utility

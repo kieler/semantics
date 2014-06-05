@@ -32,6 +32,25 @@ import de.cau.cs.kieler.scg.s.transformations.SCGToSTransformation;
  */
 public class SCG2C {
 
+    
+        private String removeEmptyLines(String text) {
+            String output = "";
+            String modifiedOutput = text;
+            while (!output.equals(modifiedOutput)) {
+                output = modifiedOutput;
+                modifiedOutput = output.replace("\r\n\r\n","\r\n").replace("\n\n","\n").replace(" ;",";").replace("\r\n;",";").replace("\n;",";");//.replace("(\r\n","(").replace("(\n","(").replace("\r\n)",")").replace("\n)",")");
+            }
+            
+            String[] lines = modifiedOutput.split("\n");
+            modifiedOutput = "";
+            for (String line : lines) {
+                if (line.trim().length() > 0) {
+                    modifiedOutput += line + "\n";
+                }
+            }
+            return modifiedOutput;
+        }
+    
         /**
          * Transform the incoming SCG to C code. If the eObject is not an SCG then just return it.
          *
@@ -47,7 +66,7 @@ public class SCG2C {
                 Program sProgram = transform1.transformSCGToS(scg);
                 
                 S2C transform2 = Guice.createInjector().getInstance(S2C.class);
-                String cProgram = transform2.transform(sProgram).toString();
+                String cProgram = removeEmptyLines(transform2.transform(sProgram).toString());
                 
                 return cProgram;
             }
