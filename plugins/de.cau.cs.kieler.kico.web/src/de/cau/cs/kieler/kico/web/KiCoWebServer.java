@@ -83,7 +83,7 @@ public class KiCoWebServer extends Job {
 
     @Inject
     public KiCoWebServer(String name) {
-        super(name);
+        super("KIELER Compiler TCP Server (" +KiCoWebPlugin.loadPort()+ ")");
     }
 
     protected void canceling() {
