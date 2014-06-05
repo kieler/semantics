@@ -39,7 +39,7 @@ public class RemoteKielerCompiler {
                     + "= KielerCompiler =\n"
                     + "==================\n"
                     + "  Usage: RemoteKielerCompiler <host>:<port> <transformation 1> ... <transformation n>\n"
-                    + "Example: cat <FILE.sct> | java RemoteKielerCompiler localhost:5555 EXTENDED CORE\n");
+                    + "Example: cat <FILE.sct> | java RemoteKielerCompiler localhost:5555 EXTENDED CORE > code.c\n");
             return;
         }
 
