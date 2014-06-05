@@ -342,7 +342,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     /** Constants for annotations */
     private static val String ANNOTATION_BRANCH = "branch"
-    private static val String ANNOTATION_REGIONNAME = "RegionName"
+    private static val String ANNOTATION_REGIONNAME = "regionName"
 
     /** 
 	 * Constants for hierarchical node groups
@@ -450,7 +450,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                             val regionLabel = it.getStringAnnotationValue(ANNOTATION_REGIONNAME)
                             getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY) => [
                                 if (!regionLabel.nullOrEmpty)
-                                    addInsideTopLeftNodeLabel(regionLabel, 8, KlighdConstants::DEFAULT_FONT_NAME).foreground = REGIONLABEL
+                                    addInsideTopLeftNodeLabel(regionLabel, 10, KlighdConstants::DEFAULT_FONT_NAME).foreground = REGIONLABEL
                             ]
                         }
                     ]]

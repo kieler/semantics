@@ -30,6 +30,9 @@ import de.cau.cs.kieler.scgdep.Dependency
 import de.cau.cs.kieler.scgdep.SCGraphDep
 import de.cau.cs.kieler.scgdep.ScgdepFactory
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import java.util.List
+import java.util.HashMap
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -63,6 +66,10 @@ class DependencyTransformation extends AbstractModelTransformation {
     /** Inject SCG copy extensions. */  
     @Inject
     extension SCGCopyExtensions
+    @Inject
+    extension SCChartsExtension
+    
+    private val threadNodeList = new HashMap<Node, Entry>
     
     // -------------------------------------------------------------------------
     // -- Transformation method
@@ -91,7 +98,20 @@ class DependencyTransformation extends AbstractModelTransformation {
         // Finally, add all dependencies. Therefore, search all assignmentdep nodes and create their 
         // dependency information. The data is automatically stored in the SCG by the createDependencies
         // function.
-        scgdep.nodes.filter(typeof(AssignmentDep)).filter[ valuedObject != null ].forEach[ it.createDependencies ]
+        threadNodeList.clear
+        val assignments = scgdep.nodes.filter(typeof(AssignmentDep)).filter[ valuedObject != null ].toList.immutableCopy
+        
+        scgdep.nodes.filter(typeof(Entry)).forEach[ entry |
+        	entry.getThreadNodes.forEach[ node |
+        		if ((node instanceof AssignmentDep) || (node instanceof Conditional)) {
+        			threadNodeList.put(node, entry)
+	        	}
+        	]
+        ]
+        
+        for(node : assignments) {
+        	 node.createDependencies(assignments) 
+      	 }
         
         // Return the SCG with dependency data.
         scgdep
@@ -110,14 +130,14 @@ class DependencyTransformation extends AbstractModelTransformation {
      * 			the assignment node in question
      * @return Returns the given assignment for further processing.
      */
-    private def AssignmentDep createDependencies(AssignmentDep assignment) {
+    private def AssignmentDep createDependencies(AssignmentDep assignment, List<AssignmentDep> assignments) {
     	// Retrieve the SCG of the assignment node. This is done via the SCG extensions method graph.
     	val scg = assignment.graph
         // Cache own absolute/relative state.
         val iAmAbsoluteWriter = !assignment.isRelativeWriter
         
         // Filter all other assignments.
-        scg.nodes.filter(typeof(AssignmentDep)).forEach[ node |
+        assignments.forEach[ node |
             if (node != assignment) {
                 var Dependency dependency = null
                 // If they write to the same variable...
@@ -244,8 +264,8 @@ class DependencyTransformation extends AbstractModelTransformation {
                 val threadEntries = node.getAllNext
                 for(t : threadEntries) {
                     if (t.target instanceof Entry 
-                        && (t.target as Entry).getThreadNodes.contains(node1)
-                        && (t.target as Entry).getThreadNodes.contains(node2)
+                        && threadNodeList.get(node) == (t.target as Entry)
+                        && threadNodeList.get(node) == (t.target as Entry)
                     ) isConcurrent = false 
                 }
                 // If they are in separate threads, return true.
