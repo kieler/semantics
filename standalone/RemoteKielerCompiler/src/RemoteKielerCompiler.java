@@ -35,8 +35,8 @@ public class RemoteKielerCompiler {
 
         if (args.length < 3) {
             System.out.println("KielerCompiler\n"
-                    + "Usage: RemoteKielerCompiler <host>:<port> <file extension> <transformation 1> ... <transformation n>"
-                    + "Usage Example: cat <FILE.sct> | java RemoteKielerCompiler localhost:5555 sct EXTENDED");
+                    + "Usage: RemoteKielerCompiler <host>:<port> <transformation 1> ... <transformation n>"
+                    + "Usage Example: cat <FILE.sct> | java RemoteKielerCompiler localhost:5555 EXTENDED CORE");
         }
 
         String hostAndPort[] = args[0].split(":");
@@ -49,10 +49,8 @@ public class RemoteKielerCompiler {
             }
         }
         
-        String fileExtension = args[1];
-        
         String transformations = ""; 
-        for (int c = 2; c < args.length; c++) {
+        for (int c = 1; c < args.length; c++) {
             if (!transformations.equals("")) {
                 transformations +=  ",";
             }
@@ -79,16 +77,15 @@ public class RemoteKielerCompiler {
         //System.out.println("transformations: " + transformations);
         //System.out.println("model: " + model);
 
-        System.out.println(remoteCompile(host, port, model, fileExtension, transformations));
+        System.out.println(remoteCompile(host, port, model, transformations));
     }
     
     
-    public static String remoteCompile(String host, int port, String model, String fileExtension, String transformations) {
+    public static String remoteCompile(String host, int port, String model, String transformations) {
         String compiledModel = "";
         
         try {
             TCPClient client = new TCPClient(host, port);
-            client.sndMessage(fileExtension  + "\n" );
             client.sndMessage(transformations  + "\n");
             client.sndMessage(model.split("\n").length + "\n");
             client.sndMessage(model + "\n");

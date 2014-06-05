@@ -124,7 +124,6 @@ public class KiCoWebServer extends Job {
                             new OutputStreamWriter(connectionSocket.getOutputStream());
                     PrintWriter printWriter = new PrintWriter(out);
 
-                    String fileExtension = inFromClient.readLine();
                     String transformations = inFromClient.readLine();
 
                     int lines = Integer.parseInt(inFromClient.readLine());
@@ -140,17 +139,16 @@ public class KiCoWebServer extends Job {
                         model += s;
                     }
 
-                    System.out.println("fileExtension: " + fileExtension);
                     System.out.println("transformations: " + transformations);
                     System.out.println("model: " + model);
 
-                    EObject eObject = parse(model, fileExtension);
+                    EObject eObject = parse(model);
                     
-                    Object compiledModel = KielerCompiler.compile(transformations, eObject).getObject();
+                    Object compiledModel = KielerCompiler.compile(transformations, eObject, true).getObject();
                     
                     String serializedCompiledModel = compiledModel.toString();
                     if (compiledModel instanceof EObject) {
-                        serializedCompiledModel = serialize((EObject)compiledModel, fileExtension);
+                        serializedCompiledModel = serialize((EObject)compiledModel);
                     }
 
                     printWriter.print(serializedCompiledModel.split("\n").length + "\n");
@@ -186,7 +184,7 @@ public class KiCoWebServer extends Job {
 
     // -------------------------------------------------------------------------
 
-    private String serialize(EObject model, String fileExtension) {
+    private String serialize(EObject model) {
         String returnText = "";
         boolean done = false;
         try {
@@ -308,33 +306,71 @@ public class KiCoWebServer extends Job {
 
     // -------------------------------------------------------------------------
 
-    private EObject parse(String text, String fileExtension) {
+    private EObject parse(String text) {
         EObject returnEObject = null;
 
+        
+        boolean done = false;
         try {
-            URI uri = URI.createURI("dummy:/inmemory." + fileExtension);
-            // Object object = reg.getExtensionToFactoryMap().get(fileExtension);
-
-            IResourceServiceProvider provider = reg.getResourceServiceProvider(uri);
-            XtextResourceSet resourceSet = provider.get(XtextResourceSet.class);
-
-            resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
-            Resource resource =
-                    resourceSet.createResource(URI.createURI("dummy:/inmemory." + fileExtension));
-            InputStream in = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
-            resource.load(in, resourceSet.getLoadOptions());
-            returnEObject = resource.getContents().get(0);
-
+          
+            for (String ext : reg.getExtensionToFactoryMap().keySet()) {
+                URI uri = URI.createURI("dummy:/inmemory." + ext);
+                IResourceServiceProvider provider = reg.getResourceServiceProvider(uri);
+                XtextResourceSet resourceSet = provider.get(XtextResourceSet.class);
+                resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
+                Resource res = resourceSet.createResource(uri);
+                
+                done = false;
+                try {
+                    InputStream in = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
+                    res.load(in, resourceSet.getLoadOptions());
+                    returnEObject = res.getContents().get(0);
+                    done = true;
+                } catch (Exception e) {
+                }
+                
+                if (done) {
+                    break;
+                }
+            }
+            
+            
+            if (!done) {
+                InputStream in = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
+                XMIResourceImpl inputResource = new XMIResourceImpl();
+                try {
+                    inputResource.load(in, new HashMap<Object,Object>());
+                    returnEObject = inputResource.getContents().get(0);
+                    done = true;
+                } catch (Exception e) {
+                }
+            }
+        
+//        
+//        try {
+//            URI uri = URI.createURI("dummy:/inmemory." + fileExtension);
+//            // Object object = reg.getExtensionToFactoryMap().get(fileExtension);
+//
+//            IResourceServiceProvider provider = reg.getResourceServiceProvider(uri);
+//            XtextResourceSet resourceSet = provider.get(XtextResourceSet.class);
+//
+//            resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
+//            Resource resource =
+//                    resourceSet.createResource(URI.createURI("dummy:/inmemory." + fileExtension));
+//            InputStream in = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
+//            resource.load(in, resourceSet.getLoadOptions());
+//            returnEObject = resource.getContents().get(0);
+//
         } catch (Exception e) {
-
-            InputStream in = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
-            // Try to load SCCharts model
-            XMIResourceImpl inputResource = new XMIResourceImpl();
-            // Load SCCharts model
-            try {
-                inputResource.load(in, new HashMap<Object,Object>());
-                returnEObject = inputResource.getContents().get(0);
-            } catch (Exception e2) {
+//
+//            InputStream in = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
+//            // Try to load SCCharts model
+//            XMIResourceImpl inputResource = new XMIResourceImpl();
+//            // Load SCCharts model
+//            try {
+//                inputResource.load(in, new HashMap<Object,Object>());
+//                returnEObject = inputResource.getContents().get(0);
+//            } catch (Exception e2) {
                 String text2 = "";
                 if (text != null) {
                     if (text.length() > 20) {
@@ -343,8 +379,8 @@ public class KiCoWebServer extends Job {
                         text2 = text;
                     }
                 }
-                KiCoPlugin.getInstance().showError("Could not parse model '"+text2+"'", KiCoWebPlugin.PLUGIN_ID, e2, true);
-            }
+                KiCoPlugin.getInstance().showError("Could not parse model '"+text2+"'", KiCoWebPlugin.PLUGIN_ID, e, true);
+//            }
 
         }
 
