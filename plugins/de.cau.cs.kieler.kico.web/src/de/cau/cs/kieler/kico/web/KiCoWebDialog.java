@@ -34,7 +34,7 @@ import com.google.inject.Guice;
  * @author cmot
  * @kieler.design 2014-06-08 proposed
  * @kieler.rating 2014-06-08 proposed yellow
- *
+ * 
  */
 public class KiCoWebDialog extends Dialog {
 
@@ -46,6 +46,7 @@ public class KiCoWebDialog extends Dialog {
 
     /**
      * Create the dialog.
+     * 
      * @param parent
      * @param style
      */
@@ -57,15 +58,16 @@ public class KiCoWebDialog extends Dialog {
 
     /**
      * Open the dialog.
+     * 
      * @return the result
      */
     public Object open() {
         createContents();
         shlDdd.open();
-        
+
         text.setText(KiCoWebPlugin.loadPort() + "");
         button.setSelection(KiCoWebPlugin.loadEnabled());
-        
+
         shlDdd.layout();
         Display display = getParent().getDisplay();
         while (!shlDdd.isDisposed()) {
@@ -83,52 +85,57 @@ public class KiCoWebDialog extends Dialog {
         shlDdd = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
         shlDdd.setSize(326, 195);
         shlDdd.setText("KIELER Compiler TCP Web Interface");
-        
+
         Composite composite = new Composite(shlDdd, SWT.BORDER);
         composite.setBounds(10, 10, 300, 121);
-        
+
         button = new Button(composite, SWT.CHECK);
         button.setText("Enable Server");
         button.setBounds(77, 24, 85, 16);
-        
+
         CLabel lblPort = new CLabel(composite, SWT.NONE);
         lblPort.setText("Port :");
         lblPort.setBounds(77, 63, 33, 19);
-        
+
         text = new Text(composite, SWT.BORDER);
         text.setBounds(114, 63, 76, 19);
-        
+
         Button btnOk = new Button(shlDdd, SWT.NONE);
         btnOk.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 KiCoWebPlugin.saveEnabled(button.getSelection());
-                int port = 5555; 
+                int port = 5555;
                 try {
                     port = Integer.parseInt(text.getText());
                 } catch (Exception ee) {
                     port = 5555;
                 }
                 KiCoWebPlugin.savePort(port);
-                
+
                 if (KiCoWebPlugin.loadEnabled()) {
-                   KiCoWebServer newServer = Guice.createInjector().getInstance(KiCoWebServer.class);
-                   KiCoWebPlugin.setServer(newServer);
-                   KiCoWebPlugin.getServer().schedule();
+                    if (KiCoWebPlugin.getServer() == null) {
+                        KiCoWebServer newServer =
+                                Guice.createInjector().getInstance(KiCoWebServer.class);
+                        KiCoWebPlugin.setServer(newServer);
+                        KiCoWebPlugin.getServer().schedule();
+                    }
                 } else {
                     KiCoWebPlugin.getServer().abort();
+                    KiCoWebPlugin.getServer().cancel();
+                    KiCoWebPlugin.setServer(null);
                 }
-                shlDdd.close(); 
+                shlDdd.close();
             }
         });
         btnOk.setBounds(161, 137, 75, 23);
         btnOk.setText("&Ok");
-        
+
         Button btncancel = new Button(shlDdd, SWT.NONE);
         btncancel.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                shlDdd.close(); 
+                shlDdd.close();
             }
         });
         btncancel.setBounds(242, 137, 68, 23);

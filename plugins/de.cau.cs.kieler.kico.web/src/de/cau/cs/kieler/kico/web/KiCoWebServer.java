@@ -39,6 +39,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -71,6 +72,8 @@ import de.cau.cs.kieler.kico.KielerCompiler;
 public class KiCoWebServer extends Job {
 
     ServerSocket socket = null;
+    
+    boolean aborted = false;
 
     /**
      * @param name
@@ -83,13 +86,19 @@ public class KiCoWebServer extends Job {
         super(name);
     }
 
+    protected void canceling() {
+        abort();
+    }    
+    
     public void abort() {
         if (socket != null) {
             try {
                 socket.close();
+                socket = null;
             } catch (IOException e) {
             }
         }
+        aborted = true;
     }
 
     // public static JSONClient client;
@@ -97,7 +106,7 @@ public class KiCoWebServer extends Job {
     @Override
     protected IStatus run(IProgressMonitor monitor) {
 
-        while (KiCoWebPlugin.loadEnabled()) {
+        while (KiCoWebPlugin.loadEnabled() && !aborted) {
 
             if (socket == null) {
                 socket = listenPort(KiCoWebPlugin.loadPort());
@@ -172,33 +181,65 @@ public class KiCoWebServer extends Job {
         // e.printStackTrace();
         // }
 
-        return Job.ASYNC_FINISH;
+        return Status.OK_STATUS;
     }
 
     // -------------------------------------------------------------------------
 
     private String serialize(EObject model, String fileExtension) {
         String returnText = "";
+        boolean done = false;
         try {
-          URI uri = URI.createURI("dummy:/inmemory." + fileExtension);
-          // Object object = reg.getExtensionToFactoryMap().get(fileExtension);
-
-          IResourceServiceProvider provider = reg.getResourceServiceProvider(uri);
-          XtextResourceSet resourceSet = provider.get(XtextResourceSet.class);
           
-          
-          Resource res = resourceSet.createResource(uri);
-          if (res instanceof XtextResource) {
-              XtextResource xtextRes = (XtextResource) res;
-              
-              ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-              xtextRes.getContents().add(model);
-              //outputStream.write("Hallo".getBytes());
-//              System.out.println();
-              
-              xtextRes.save(outputStream, getSaveOptions());
-              returnText = outputStream.toString();
-          }
+            for (String ext : reg.getExtensionToFactoryMap().keySet()) {
+                URI uri = URI.createURI("dummy:/inmemory." + ext);
+                IResourceServiceProvider provider = reg.getResourceServiceProvider(uri);
+                XtextResourceSet resourceSet = provider.get(XtextResourceSet.class);
+                Resource res = resourceSet.createResource(uri);
+                
+                System.out.println(ext + " : " + res.getClass().getName());
+                
+                done = false;
+                try {
+                    //XtextResource xtextRes = (XtextResource) res;
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    res.getContents().add(model);
+                    res.save(outputStream, getSaveOptions());
+                    returnText = outputStream.toString();
+                    done = true;
+                } catch (Exception e) {
+                }
+                
+                if (done) {
+                    break;
+                }
+            }
+            
+            
+            if (!done) {
+                XMIResourceImpl xmiResource = new XMIResourceImpl();            
+                try {
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    xmiResource.getContents().add(model);
+                    xmiResource.save(outputStream, getSaveOptions());
+                    returnText = outputStream.toString();
+                    done = true;
+                } catch (Exception e) {
+                }
+            }
+            
+//          IResourceServiceProvider provider = reg.getResourceServiceProvider(uri);
+//          XtextResourceSet resourceSet = provider.get(XtextResourceSet.class);
+//          
+//          
+//          Resource res = model.eResource(); //resourceSet.createResource(uri);
+//          if (res instanceof XtextResource) {
+//              XtextResource xtextRes = (XtextResource) res;
+//              ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//              xtextRes.getContents().add(model);
+//              xtextRes.save(outputStream, getSaveOptions());
+//              returnText = outputStream.toString();
+//          }
                     
 //
 //            resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
@@ -210,6 +251,23 @@ public class KiCoWebServer extends Job {
 
         } catch (Exception e) {
             e.printStackTrace();
+            
+            
+            // Copies the root to avoid modifying it
+//            final EObject copyRoot = EcoreUtil.copy(root);
+//            attachResource(URI.createFileURI("resource.xml"), copyRoot); //$NON-NLS-1$
+//            final StringWriter writer = new StringWriter();
+//            final Map<String, String> options = new EMFCompareMap<String, String>();
+//            options.put(XMLResource.OPTION_ENCODING, System.getProperty(ENCODING_PROPERTY));
+//            // Should not throw ClassCast since uri calls for an xml resource
+//            ((XMLResource)copyRoot.eResource()).save(writer, options);
+//            final String result = writer.toString();            
+
+            
+            
+            
+            
+            
 //            InputStream in = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
 //            // Try to load SCCharts model
 //            XMIResourceImpl inputResource = new XMIResourceImpl();

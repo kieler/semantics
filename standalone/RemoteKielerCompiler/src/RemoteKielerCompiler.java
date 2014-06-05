@@ -19,14 +19,16 @@ import java.io.InputStreamReader;
 
 /**
  * @author cmot
- *
+ * @kieler.design 2014-06-08 proposed
+ * @kieler.rating 2014-06-08 proposed yellow
+ * 
  * Example Call:
  * C:\DATA\KEPLER\RemoteKielerCompiler\bin>cat ../ABRO.sct | java KielerCompiler localhost:5555 sct EXTENDED
  *
  */
 public class RemoteKielerCompiler {
 
-    /**
+    /** 
      * @param args
      */
     public static void main(String[] args) {
