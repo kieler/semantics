@@ -103,8 +103,9 @@ class DependencyTransformation extends AbstractModelTransformation {
         
         scgdep.nodes.filter(typeof(Entry)).forEach[ entry |
         	entry.getThreadNodes.forEach[ node |
+        	    if (!threadNodeList.containsKey(node))
         		if ((node instanceof AssignmentDep) || (node instanceof Conditional)) {
-        			threadNodeList.put(node, entry)
+        			threadNodeList.put(node, node.getThreadEntry)
 	        	}
         	]
         ]
@@ -269,7 +270,7 @@ class DependencyTransformation extends AbstractModelTransformation {
                     ) isConcurrent = false 
                 }
                 // If they are in separate threads, return true.
-                if (isConcurrent) return true
+                if (isConcurrent) return true else return false
             }
         }
         return false
