@@ -23,7 +23,7 @@ import java.io.InputStreamReader;
  * @kieler.rating 2014-06-08 proposed yellow
  * 
  * Example Call:
- * C:\DATA\KEPLER\RemoteKielerCompiler\bin>cat ../ABRO.sct | java KielerCompiler localhost:5555 sct EXTENDED
+ * C:\DATA\KEPLER\RemoteKielerCompiler\bin>cat ../ABRO.sct | java RemoteKielerCompiler localhost:5555 sct EXTENDED
  *
  */
 public class RemoteKielerCompiler {
