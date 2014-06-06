@@ -19,15 +19,14 @@ import java.util.HashMap;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.statushandlers.IStatusAdapterConstants;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
-import org.osgi.framework.BundleContext;
 
 import com.google.inject.Guice;
 
@@ -38,7 +37,7 @@ import com.google.inject.Guice;
  * @kieler.design 2014-03-11 proposed
  * @kieler.rating 2014-03-11 proposed yellow
  */
-public class KiCoPlugin extends AbstractUIPlugin {
+public class KiCoPlugin extends Plugin {
 
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.kico"; //$NON-NLS-1$
@@ -74,30 +73,6 @@ public class KiCoPlugin extends AbstractUIPlugin {
      */
     public KiCoPlugin() {
         plugin = this;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-     */
-    public void start(BundleContext context) throws Exception {
-        super.start(context);
-        plugin = this;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-     */
-    public void stop(BundleContext context) throws Exception {
-        plugin = null;
-        super.stop(context);
     }
 
     // -------------------------------------------------------------------------
