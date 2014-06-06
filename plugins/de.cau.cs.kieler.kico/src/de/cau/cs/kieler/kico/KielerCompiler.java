@@ -22,6 +22,7 @@ import java.util.Map.Entry;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+// TODO: Auto-generated Javadoc
 /**
  * This is the main class of the Kieler Compiler (KiCo) Project that aims to provide an
  * infrastructure for compiling via consecutive modal transformations.
@@ -45,8 +46,32 @@ public class KielerCompiler {
     /** The cached transformations to graph elements. */
     private static HashMap<Transformation, TransformationDummy> transformation2graph =
             new HashMap<Transformation, TransformationDummy>();;
+            
+    /** The global verbose mode. */
+    private static boolean verboseMode = false;            
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Checks if is verbose mode.
+     *
+     * @return true, if is verbose mode
+     */
+    public static boolean isVerboseMode() {
+        return verboseMode;
+    }
+
+    /**
+     * Sets the verbose mode.
+     *
+     * @param verboseMode the new verbose mode
+     */
+    public static void setVerboseMode(boolean verboseMode) {
+        KielerCompiler.verboseMode = verboseMode;
+    }
+
+    // -------------------------------------------------------------------------
+    
 
     /**
      * Builds the graph adding only defaults for alternatives iff not prioritized.
@@ -221,9 +246,9 @@ public class KielerCompiler {
 
     /**
      * Reduces the graph to the transformations selected as transformationIDs.
-     * 
-     * @param graph
-     *            the graph
+     *
+     * @param graph the graph
+     * @param transformationIDs the transformation i ds
      */
     public static void reduceGraph(List<TransformationDummy> graph, List<String> transformationIDs) {
         // not remove the selected but ALL UNselected
@@ -235,9 +260,9 @@ public class KielerCompiler {
 
     /**
      * Removes all transformations selected as transformationIDs from the graph.
-     * 
-     * @param graph
-     *            the graph
+     *
+     * @param graph the graph
+     * @param transformationIDs the transformation i ds
      */
     public static void removeFromGraph(List<TransformationDummy> graph,
             List<String> transformationIDs) {
@@ -250,9 +275,10 @@ public class KielerCompiler {
 
     /**
      * Removes all transformations selected OR not-selected as transformationIDs from the graph.
-     * 
-     * @param graph
-     *            the graph
+     *
+     * @param graph the graph
+     * @param transformationIDs the transformation i ds
+     * @param removeSelected the remove selected
      */
     public static void removeFromGraph(List<TransformationDummy> graph,
             List<String> transformationIDs, boolean removeSelected) {
@@ -365,11 +391,10 @@ public class KielerCompiler {
 
     /**
      * Mark nodes including expand of groups (phase 3).
-     * 
-     * @param graph
-     *            the graph
-     * @param transformationIDs
-     *            the transformation i ds
+     *
+     * @param graph the graph
+     * @param transformationIDs the transformation i ds
+     * @param expandGroupNodes the expand group nodes
      */
     public static void markNodes(List<TransformationDummy> graph, List<String> transformationIDs,
             boolean expandGroupNodes) {
@@ -433,6 +458,11 @@ public class KielerCompiler {
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Mark parent group.
+     *
+     * @param transformationDummy the transformation dummy
+     */
     private static void markParentGroup(TransformationDummy transformationDummy) {
         for (TransformationDummy parent : transformationDummy.parent) {
             if (!parent.marked && parent.isGroup()) {
@@ -510,6 +540,12 @@ public class KielerCompiler {
     // visit(m)
     // add n to L
 
+    /**
+     * Gets the transformation dummy with no dependencies.
+     *
+     * @param graph the graph
+     * @return the transformation dummy with no dependencies
+     */
     private static List<TransformationDummy> getTransformationDummyWithNoDependencies(
             List<TransformationDummy> graph) {
         List<TransformationDummy> returnList = new ArrayList<TransformationDummy>();
@@ -523,6 +559,13 @@ public class KielerCompiler {
 
     // ------------------------------------------
 
+    /**
+     * Visit.
+     *
+     * @param transformationDummy the transformation dummy
+     * @param order the order
+     * @return the int
+     */
     private static int visit(TransformationDummy transformationDummy, int order) {
         if (transformationDummy.order == -1) {
             // This transformationDummy has not been seen yet
@@ -542,6 +585,12 @@ public class KielerCompiler {
 
     // ------------------------------------------
 
+    /**
+     * Topological sort.
+     *
+     * @param graph the graph
+     * @return the list
+     */
     private static List<String> topologicalSort(List<TransformationDummy> graph) {
         List<TransformationDummy> initialTransformationDummys =
                 getTransformationDummyWithNoDependencies(graph);
@@ -563,6 +612,8 @@ public class KielerCompiler {
 
     /**
      * Update mapping between transformation IDs and transformations.
+     *
+     * @param force the force
      */
     private static void updateMapping(boolean force) {
         if (transformations == null || id2transformations == null || force) {
@@ -609,6 +660,12 @@ public class KielerCompiler {
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Expand groups.
+     *
+     * @param transformationIDs the transformation i ds
+     * @return the list
+     */
     private static List<String> expandGroups(List<String> transformationIDs) {
         List<String> returnList = expandGroupsHelper(transformationIDs);
         while (returnList.size() != transformationIDs.size()) {
@@ -619,6 +676,12 @@ public class KielerCompiler {
         return returnList;
     }
 
+    /**
+     * Expand groups helper.
+     *
+     * @param transformationIDs the transformation i ds
+     * @return the list
+     */
     private static List<String> expandGroupsHelper(List<String> transformationIDs) {
         List<String> returnList = new ArrayList<String>();
         for (String transformationID : transformationIDs) {
@@ -734,11 +797,10 @@ public class KielerCompiler {
      * Central KIELER Compiler compile method. It can be called in order to call several consecutive
      * transformations. Specify desired transformations or transformation groups with comma
      * separated IDs.
-     * 
-     * @param transformationIDs
-     *            the transformation i ds
-     * @param eObject
-     *            the e object
+     *
+     * @param enabledAndDisabledTransformationIDs the enabled and disabled transformation i ds
+     * @param eObject the e object
+     * @param prerequirements the prerequirements
      * @return the object
      */
     public static CompilationResult compile(final String enabledAndDisabledTransformationIDs,
@@ -769,11 +831,9 @@ public class KielerCompiler {
      * Central KIELER Compiler compile method. It can be called in order to call several consecutive
      * transformations. Specify desired transformations or transformation groups as a String List of
      * their IDs.
-     * 
-     * @param transformationID
-     *            the transformation id
-     * @param eObject
-     *            the e object
+     *
+     * @param transformationIDs the transformation i ds
+     * @param eObject the e object
      * @return the object
      */
     public static CompilationResult compile(final List<String> transformationIDs,
@@ -811,13 +871,11 @@ public class KielerCompiler {
      * this with care! Note that if switching autoexpand off you cannot use transformation group IDs
      * any more. Also no dependencies will be considered. The transformations will be applied
      * straight forward in the order defined by the transformationIDs list.
-     * 
-     * @param enabledAndDisabledTransformationIDs
-     *            the enabled and disabled transformation i ds
-     * @param eObject
-     *            the e object
-     * @param prerequirements
-     *            the prerequirements
+     *
+     * @param enabledAndDisabledTransformationIDs the enabled and disabled transformation i ds
+     * @param eObject the e object
+     * @param prerequirements the prerequirements
+     * @param verbose the verbose
      * @return the e object
      */
     public static CompilationResult compile(final List<String> enabledAndDisabledTransformationIDs,
@@ -919,15 +977,12 @@ public class KielerCompiler {
      * any more. Also no dependencies will be considered. The transformations will be applied
      * straight forward in the order defined by the transformationIDs list. Inplace is false by
      * default meaning the compilation will be done on a copy of the input EObject.
-     * 
-     * @param transformationIDs
-     *            the transformation i ds
-     * @param excludedTransformationIDs
-     *            the excluded transformation i ds
-     * @param eObject
-     *            the e object
-     * @param prerequirements
-     *            the prerequirements
+     *
+     * @param transformationIDs the transformation i ds
+     * @param excludedTransformationIDs the excluded transformation i ds
+     * @param eObject the e object
+     * @param prerequirements the prerequirements
+     * @param verbose the verbose
      * @return the e object
      */
     public static CompilationResult compile(final List<String> transformationIDs,
@@ -947,11 +1002,13 @@ public class KielerCompiler {
      * any more. Also no dependencies will be considered. The transformations will be applied
      * straight forward in the order defined by the transformationIDs list. Inplace tells whether
      * the compilation will be done on a copy of the input EObject or on the original EObject.
-     * 
-     * @param transformationID
-     *            the transformation id
-     * @param eObject
-     *            the e object
+     *
+     * @param transformationIDs the transformation i ds
+     * @param excludedTransformationIDs the excluded transformation i ds
+     * @param eObject the e object
+     * @param prerequirements the prerequirements
+     * @param verbose the verbose
+     * @param inplace the inplace
      * @return the object
      */
     public static CompilationResult compile(final List<String> transformationIDs,

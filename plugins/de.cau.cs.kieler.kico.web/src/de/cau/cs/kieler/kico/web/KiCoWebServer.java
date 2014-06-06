@@ -139,9 +139,21 @@ public class KiCoWebServer extends Job {
                     PrintWriter printWriter = new PrintWriter(out);
 
                     String transformations = inFromClient.readLine();
+                    
+                    boolean verbose = false;
+                    boolean strict = false;
 
                     // length of the following model
-                    int lines = Integer.parseInt(inFromClient.readLine());
+                    String lengthAndOptionsLine = inFromClient.readLine();
+                    if (lengthAndOptionsLine.contains("v")) {
+                        verbose = true;
+                        lengthAndOptionsLine = lengthAndOptionsLine.replace("v", "");
+                    }
+                    if (lengthAndOptionsLine.contains("s")) {
+                        strict = true;
+                        lengthAndOptionsLine = lengthAndOptionsLine.replace("s", "");
+                    }
+                    int lines = Integer.parseInt(lengthAndOptionsLine);
 
                     String model = "";
                     String s;
@@ -159,9 +171,11 @@ public class KiCoWebServer extends Job {
 
                     EObject eObject = parse(model);
 
+                    KielerCompiler.setVerboseMode(verbose);
+                    
                     // process the model
                     Object compiledModel =
-                            KielerCompiler.compile(transformations, eObject, true).getObject();
+                            KielerCompiler.compile(transformations, eObject, strict).getObject();
 
                     String serializedCompiledModel = compiledModel.toString();
                     if (compiledModel instanceof EObject) {
