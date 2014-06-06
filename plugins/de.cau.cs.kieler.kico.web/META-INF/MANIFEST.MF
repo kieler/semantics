@@ -5,14 +5,9 @@ Bundle-SymbolicName: de.cau.cs.kieler.kico.web;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: org.eclipse.ui;bundle-version="3.105.0",
- org.eclipse.core.runtime;bundle-version="3.9.0",
- de.cau.cs.kieler.kico;bundle-version="0.1.0",
- org.eclipse.emf;bundle-version="2.6.0",
- org.eclipse.emf.ecore;bundle-version="2.9.2",
- com.google.inject;bundle-version="3.0.0",
- org.eclipse.emf.ecore.xmi;bundle-version="2.9.1",
- de.cau.cs.kieler.core.model.xtext;bundle-version="0.3.2",
- org.eclipse.xtext;bundle-version="2.5.4"
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ de.cau.cs.kieler.kico,
+ org.eclipse.xtext
 Bundle-Activator: de.cau.cs.kieler.kico.web.KiCoWebPlugin
 Bundle-ActivationPolicy: lazy
