@@ -21,6 +21,14 @@ import org.eclipse.equinox.app.IApplicationContext;
 /**
  * The non-gui server application for KiCoServer.
  * 
+ * Start the sever: kieler -application de.cau.cs.kieler.kico.web -consoleLog -noExit first second
+ * last
+ * 
+ * -application will tell eclipse which application to start. You might omit this if you want to run
+ * the default application you exported. It makes sense for RCPs with multiple applications though.
+ * -consoleLog opens a dedicated eclipse console and should be well known already. -noExit will keep
+ * eclipse running even if our apllication finished. It keeps the console open to examine output
+ * 
  * @author cmot
  * @kieler.design 2014-04-08 proposed
  * @kieler.rating 2014-04-08 proposed yellow
@@ -31,20 +39,20 @@ public class KiCoServerApplication implements IApplication {
      * {@inheritDoc}
      */
     public Object start(IApplicationContext context) throws Exception {
-        
-        final Map<?, ?> args = context.getArguments();  
-        final String[] appArgs = (String[]) args.get("application.args");  
-        for (final String arg : appArgs) {  
-         System.out.println(arg);  
-        }  
-        
+
+        final Map<?, ?> args = context.getArguments();
+        final String[] appArgs = (String[]) args.get("application.args");
+        for (final String arg : appArgs) {
+            System.out.println(arg);
+        }
+
         if (KiCoWebPlugin.loadEnabled()) {
             KiCoWebPlugin.startServer();
         }
         return null;
     }
-    
-    //-------------------------------------------------------------------------
+
+    // -------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -53,5 +61,5 @@ public class KiCoServerApplication implements IApplication {
         KiCoWebPlugin.stopServer();
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 }
