@@ -264,8 +264,8 @@ class DependencyTransformation extends AbstractModelTransformation {
                 val threadEntries = node.getAllNext
                 for(t : threadEntries) {
                     if (t.target instanceof Entry 
-                        && threadNodeList.get(node) == (t.target as Entry)
-                        && threadNodeList.get(node) == (t.target as Entry)
+                        && threadNodeList.get(node1) == (t.target as Entry)
+                        && threadNodeList.get(node2) == (t.target as Entry)
                     ) isConcurrent = false 
                 }
                 // If they are in separate threads, return true.
