@@ -8,6 +8,12 @@ import org.osgi.service.prefs.BackingStoreException;
 import com.google.inject.Guice;
 
 /**
+ * The KiCoWebPlugin is the non-UI part of offering a TCP based web interface for KiCo compilation.
+ * The TCP Message must conform to the protocol: 1. line are the comma separated transformation IDs
+ * 2. line is the maximum line number of the following model 3.-n. is the model itself. The return
+ * message will be the compiled model 1. line is the maximum line number of the following model
+ * 2.-n. is the model itself.
+ * 
  * The activator class controls the plug-in life cycle.
  * 
  * @author cmot
@@ -21,9 +27,9 @@ public class KiCoWebPlugin extends Plugin {
 
     /** The shared instance. */
     private static KiCoWebPlugin plugin;
-    
+
+    /** The single web server. */
     private static KiCoWebServer webServer;
-    
 
     // -------------------------------------------------------------------------
 
@@ -45,79 +51,117 @@ public class KiCoWebPlugin extends Plugin {
     }
 
     // -------------------------------------------------------------------------
-    
+
+    /**
+     * Load the saved port number for the TCP server.
+     *
+     * @return the int
+     */
     public static int loadPort() {
         IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(PLUGIN_ID);
         String returnString = prefs.get("port", "");
         try {
             return Integer.parseInt(returnString);
-        } catch(Exception e) {
+        } catch (Exception e) {
             return 5555;
         }
     }
-    
+
     // -------------------------------------------------------------------------
-    
+
+    /**
+     * Load enabled flag for the TCP server.
+     *
+     * @return true, if successful
+     */
     public static boolean loadEnabled() {
         IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(PLUGIN_ID);
         return prefs.getBoolean("enabled", false);
     }
 
     // -------------------------------------------------------------------------
-    
+
+    /**
+     * Save the port number for the TCP server.
+     *
+     * @param port the port
+     */
     public static void savePort(int port) {
         IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(PLUGIN_ID);
         prefs.put("port", port + "");
         try {
-          prefs.flush();
-        } catch(BackingStoreException e) {
-          e.printStackTrace();
+            prefs.flush();
+        } catch (BackingStoreException e) {
+            e.printStackTrace();
         }
     }
 
     // -------------------------------------------------------------------------
-    
+
+    /**
+     * Save enabled flag for the TCP server. This option will not turn on or off
+     * the TCP server. Use startServer() and stopServer() for turning on or off
+     * the TCP server.
+     *
+     * @param enabled the enabled
+     */
     public static void saveEnabled(boolean enabled) {
         IEclipsePreferences prefs = InstanceScope.INSTANCE.getNode(PLUGIN_ID);
         prefs.putBoolean("enabled", enabled);
         try {
-          prefs.flush();
-        } catch(BackingStoreException e) {
-          e.printStackTrace();
+            prefs.flush();
+        } catch (BackingStoreException e) {
+            e.printStackTrace();
         }
     }
 
     // -------------------------------------------------------------------------
-    
-    public static void setServer(KiCoWebServer webServer) {
+
+    /**
+     * Sets the single server for KiCoWebPlugin. There should always only be one
+     * KiCoWebServer instance. Be sure to stop any existing KiCoWebServer before
+     * setting up and starting a new one. This is an internal method.
+     *
+     * @param webServer the new server
+     */
+    private static void setServer(KiCoWebServer webServer) {
         KiCoWebPlugin.webServer = webServer;
     }
-    
+
     // -------------------------------------------------------------------------
 
-    public static KiCoWebServer getServer() {
+    /**
+     * Gets the KiCoWebServer. This is an internal method.
+     *
+     * @return the server
+     */
+    private static KiCoWebServer getServer() {
         return KiCoWebPlugin.webServer;
     }
 
-    
     // -------------------------------------------------------------------------
 
+    /**
+     * Start the single TCP server.
+     */
     public static void startServer() {
         if (KiCoWebPlugin.getServer() == null) {
-            KiCoWebServer newServer =
-                    Guice.createInjector().getInstance(KiCoWebServer.class);
+            KiCoWebServer newServer = Guice.createInjector().getInstance(KiCoWebServer.class);
             KiCoWebPlugin.setServer(newServer);
             KiCoWebPlugin.getServer().schedule();
         }
     }
 
-    
     // -------------------------------------------------------------------------
+
+    /**
+     * Stop the signle TCP server.
+     */
     public static void stopServer() {
         KiCoWebPlugin.getServer().abort();
+        KiCoWebPlugin.setServer(null);
     }
 
-    
     // -------------------------------------------------------------------------
 
 }
