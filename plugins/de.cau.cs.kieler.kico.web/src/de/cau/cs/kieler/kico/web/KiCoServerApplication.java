@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.kico.web;
 
+import java.util.Map;
+
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 
@@ -29,6 +31,13 @@ public class KiCoServerApplication implements IApplication {
      * {@inheritDoc}
      */
     public Object start(IApplicationContext context) throws Exception {
+        
+        final Map<?, ?> args = context.getArguments();  
+        final String[] appArgs = (String[]) args.get("application.args");  
+        for (final String arg : appArgs) {  
+         System.out.println(arg);  
+        }  
+        
         if (KiCoWebPlugin.loadEnabled()) {
             KiCoWebPlugin.startServer();
         }
