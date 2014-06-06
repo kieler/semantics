@@ -1,10 +1,22 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2014 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-
-
 /**
- * The activator class controls the plug-in life cycle.
+ * The UI for the KiCoWebPlugin which offers a TCP server for using the KIELER compiler.The
+ * activator class controls the plug-in life cycle.
  * 
  * @author cmot
  * @kieler.design 2014-06-08 proposed
@@ -21,11 +33,11 @@ public class KiCoWebUIPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * The constructor
+     * Instantiates a new KiCoWebUIPlugin plugin.
      */
-        public KiCoWebUIPlugin() {
-            plugin = this;
-        }
+    public KiCoWebUIPlugin() {
+        plugin = this;
+    }
 
     // -------------------------------------------------------------------------
 
@@ -63,5 +75,5 @@ public class KiCoWebUIPlugin extends AbstractUIPlugin {
     }
 
     // -------------------------------------------------------------------------
-    
+
 }

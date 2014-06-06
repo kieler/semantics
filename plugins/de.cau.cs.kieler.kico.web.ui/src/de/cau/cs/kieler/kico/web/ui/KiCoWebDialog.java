@@ -27,6 +27,8 @@ import org.eclipse.swt.widgets.Text;
 import de.cau.cs.kieler.kico.web.KiCoWebPlugin;
 
 /**
+ * The dialog window for controlling the TCP server, i.e., starting, stopping and changeing its port.
+ * 
  * @author cmot
  * @kieler.design 2014-06-08 proposed
  * @kieler.rating 2014-06-08 proposed yellow
