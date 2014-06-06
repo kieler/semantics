@@ -121,13 +121,13 @@ public class KielerCompiler {
 
         }
 
-        System.out.println("host: " + host);
-        System.out.println("port: " + port);
-        System.out.println("inputFile: " + inputFile);
-        System.out.println("outputFile: " + outputFile);
-        System.out.println("verbose: " + verbose);
-        System.out.println("strict: " + strict);
-        System.out.println("transformations: " + transformations);
+//        System.out.println("host: " + host);
+//        System.out.println("port: " + port);
+//        System.out.println("inputFile: " + inputFile);
+//        System.out.println("outputFile: " + outputFile);
+//        System.out.println("verbose: " + verbose);
+//        System.out.println("strict: " + strict);
+//        System.out.println("transformations: " + transformations);
 
         String model = readInputModel(inputFile);
 
