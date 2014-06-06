@@ -11,24 +11,20 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.web;
+package de.cau.cs.kieler.kico.web.ui;
 
-import org.eclipse.swt.widgets.Dialog;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.xtext.resource.impl.DefaultResourceServiceProvider;
+import org.eclipse.swt.widgets.Dialog;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
-import com.google.inject.Guice;
+import de.cau.cs.kieler.kico.web.KiCoWebPlugin;
 
 /**
  * @author cmot
@@ -114,14 +110,9 @@ public class KiCoWebDialog extends Dialog {
                 KiCoWebPlugin.savePort(port);
 
                 if (KiCoWebPlugin.loadEnabled()) {
-                    if (KiCoWebPlugin.getServer() == null) {
-                        KiCoWebServer newServer =
-                                Guice.createInjector().getInstance(KiCoWebServer.class);
-                        KiCoWebPlugin.setServer(newServer);
-                        KiCoWebPlugin.getServer().schedule();
-                    }
+                    KiCoWebPlugin.startServer();
                 } else {
-                    KiCoWebPlugin.getServer().abort();
+                    KiCoWebPlugin.stopServer();
                 }
                 shlDdd.close();
             }

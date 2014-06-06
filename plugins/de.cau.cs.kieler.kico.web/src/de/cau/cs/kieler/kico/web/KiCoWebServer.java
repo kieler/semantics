@@ -71,7 +71,6 @@ public class KiCoWebServer extends Job {
 
     protected void canceling() {
         abort();
-        KiCoWebPlugin.saveEnabled(false);
     }    
     
     public void abort() {

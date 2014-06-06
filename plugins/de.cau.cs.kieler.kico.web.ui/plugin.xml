@@ -4,20 +4,20 @@
    <extension
          point="org.eclipse.ui.commands">
       <category
-            id="de.cau.cs.kieler.kico.web.commands.category"
-            name="Sample Category">
+            id="de.cau.cs.kieler.kico.web.ui.commands.category"
+            name="KIELER Compiler Web Interface">
       </category>
       <command
-            categoryId="de.cau.cs.kieler.kico.web.commands.category"
-            id="de.cau.cs.kieler.kico.web.commands.enableCommand"
+            categoryId="de.cau.cs.kieler.kico.web.ui.commands.category"
+            id="de.cau.cs.kieler.kico.web.ui.commands.enableCommand"
             name="Enable KiCo Web Interface Command">
       </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="de.cau.cs.kieler.kico.web.handlers.ButtonHandler"
-            commandId="de.cau.cs.kieler.kico.web.commands.enableCommand">
+            class="de.cau.cs.kieler.kico.web.ui.KiCoWebButtonHandler"
+            commandId="de.cau.cs.kieler.kico.web.ui.commands.enableCommand">
       </handler>
    </extension>
    <extension
@@ -25,11 +25,11 @@
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
          <toolbar
-               id="de.cau.cs.kieler.kico.web.toolbars.enableToolbar">
+               id="de.cau.cs.kieler.kico.web.ui.toolbars.enableToolbar">
             <command
-                  commandId="de.cau.cs.kieler.kico.web.commands.enableCommand"
+                  commandId="de.cau.cs.kieler.kico.web.ui.commands.enableCommand"
                   icon="icons/KiCoViewIcon.png"
-                  id="de.cau.cs.kieler.kico.web.toolbars.enableCommand"
+                  id="de.cau.cs.kieler.kico.web.ui.toolbars.enableCommand"
                   tooltip="KIELER Compiler Web Interface">
             </command>
          </toolbar>
@@ -38,7 +38,7 @@
    <extension
          point="org.eclipse.ui.startup">
       <startup
-            class="de.cau.cs.kieler.kico.web.KiCoWebStartup">
+            class="de.cau.cs.kieler.kico.web.ui.KiCoWebStartup">
       </startup>
    </extension>
 

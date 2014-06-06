@@ -1,15 +1,11 @@
 package de.cau.cs.kieler.kico.web;
 
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.util.prefs.Preferences;
-
+import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.osgi.framework.BundleContext;
 import org.osgi.service.prefs.BackingStoreException;
+
+import com.google.inject.Guice;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -18,7 +14,7 @@ import org.osgi.service.prefs.BackingStoreException;
  * @kieler.design 2014-06-08 proposed
  * @kieler.rating 2014-06-08 proposed yellow
  */
-public class KiCoWebPlugin extends AbstractUIPlugin {
+public class KiCoWebPlugin extends Plugin {
 
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.kico.web"; //$NON-NLS-1$
@@ -35,26 +31,6 @@ public class KiCoWebPlugin extends AbstractUIPlugin {
      * The constructor
      */
     public KiCoWebPlugin() {
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * {@inheritDoc}
-     */
-    public void start(BundleContext context) throws Exception {
-        super.start(context);
-        plugin = this;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * {@inheritDoc}
-     */
-    public void stop(BundleContext context) throws Exception {
-        plugin = null;
-        super.stop(context);
     }
 
     // -------------------------------------------------------------------------
@@ -125,4 +101,23 @@ public class KiCoWebPlugin extends AbstractUIPlugin {
 
     
     // -------------------------------------------------------------------------
+
+    public static void startServer() {
+        if (KiCoWebPlugin.getServer() == null) {
+            KiCoWebServer newServer =
+                    Guice.createInjector().getInstance(KiCoWebServer.class);
+            KiCoWebPlugin.setServer(newServer);
+            KiCoWebPlugin.getServer().schedule();
+        }
+    }
+
+    
+    // -------------------------------------------------------------------------
+    public static void stopServer() {
+        KiCoWebPlugin.getServer().abort();
+    }
+
+    
+    // -------------------------------------------------------------------------
+
 }

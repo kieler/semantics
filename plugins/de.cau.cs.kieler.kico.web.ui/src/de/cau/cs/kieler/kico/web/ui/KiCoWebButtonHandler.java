@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.kico.web.handlers;
+package de.cau.cs.kieler.kico.web.ui;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -7,18 +7,16 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.jface.dialogs.MessageDialog;
 
-import de.cau.cs.kieler.kico.web.KiCoWebDialog;
-
 /**
  * @author cmot
  * @kieler.design 2014-06-08 proposed
  * @kieler.rating 2014-06-08 proposed yellow
  */
-public class ButtonHandler extends AbstractHandler {
+public class KiCoWebButtonHandler extends AbstractHandler {
 	/**
 	 * The constructor.
 	 */
-	public ButtonHandler() {
+	public KiCoWebButtonHandler() {
 	}
 
 	/**
