@@ -24,7 +24,7 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
+//import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -309,7 +309,7 @@ public class KiCoWebServer extends Job {
                 
                 done = false;
                 try {
-                    InputStream in = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
+                    InputStream in = new ByteArrayInputStream(text.getBytes());//StandardCharsets.UTF_8));
                     res.load(in, resourceSet.getLoadOptions());
                     returnEObject = res.getContents().get(0);
                     done = true;
@@ -323,7 +323,7 @@ public class KiCoWebServer extends Job {
             
             
             if (!done) {
-                InputStream in = new ByteArrayInputStream(text.getBytes(StandardCharsets.UTF_8));
+                InputStream in = new ByteArrayInputStream(text.getBytes());//StandardCharsets.UTF_8));
                 XMIResourceImpl inputResource = new XMIResourceImpl();
                 try {
                     inputResource.load(in, new HashMap<Object,Object>());
