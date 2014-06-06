@@ -175,7 +175,7 @@ public class KiCoWebServer extends Job {
                     
                     // process the model
                     Object compiledModel =
-                            KielerCompiler.compile(transformations, eObject, strict).getObject();
+                            KielerCompiler.compile(transformations, eObject, !strict).getObject();
 
                     String serializedCompiledModel = compiledModel.toString();
                     if (compiledModel instanceof EObject) {
