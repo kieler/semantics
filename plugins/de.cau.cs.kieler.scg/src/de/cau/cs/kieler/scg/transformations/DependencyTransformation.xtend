@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.List
 import java.util.HashMap
+import java.util.LinkedList
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -69,7 +70,7 @@ class DependencyTransformation extends AbstractModelTransformation {
     @Inject
     extension SCChartsExtension
     
-    private val threadNodeList = new HashMap<Node, Entry>
+    private val threadNodeList = new HashMap<Node, List<Entry>>
     
     // -------------------------------------------------------------------------
     // -- Transformation method
@@ -103,10 +104,17 @@ class DependencyTransformation extends AbstractModelTransformation {
         
         scgdep.nodes.filter(typeof(Entry)).forEach[ entry |
         	entry.getThreadNodes.forEach[ node |
-        	    if (!threadNodeList.containsKey(node))
         		if ((node instanceof AssignmentDep) || (node instanceof Conditional)) {
-        			threadNodeList.put(node, node.getThreadEntry)
-	        	}
+            	    if (!threadNodeList.containsKey(node)) {
+            	        var entryNodes = new LinkedList<Entry>();
+            	        entryNodes.add(entry);
+                        threadNodeList.put(node, entryNodes);
+                    } else {
+                        var entryNodes = threadNodeList.get(node);
+                        entryNodes.add(entry);
+                        threadNodeList.put(node, entryNodes);
+                    }
+	           	}
         	]
         ]
         
@@ -265,12 +273,12 @@ class DependencyTransformation extends AbstractModelTransformation {
                 val threadEntries = node.getAllNext
                 for(t : threadEntries) {
                     if (t.target instanceof Entry 
-                        && threadNodeList.get(node1) == (t.target as Entry)
-                        && threadNodeList.get(node2) == (t.target as Entry)
+                        && threadNodeList.get(node1).contains((t.target as Entry))
+                        && threadNodeList.get(node2).contains((t.target as Entry))
                     ) isConcurrent = false 
                 }
                 // If they are in separate threads, return true.
-                if (isConcurrent) return true else return false
+                if (isConcurrent) return true
             }
         }
         return false
