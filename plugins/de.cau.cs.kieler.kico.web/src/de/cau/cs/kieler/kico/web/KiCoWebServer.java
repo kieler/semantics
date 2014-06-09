@@ -22,8 +22,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 //import java.nio.charset.StandardCharsets;
 
-
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -52,7 +50,6 @@ public class KiCoWebServer extends Job {
     private boolean aborted = false;
 
     // -------------------------------------------------------------------------
-
 
     /**
      * Instantiates a new KiCo web server. Note that the name is automatically set to include also
@@ -125,7 +122,7 @@ public class KiCoWebServer extends Job {
                     PrintWriter printWriter = new PrintWriter(out);
 
                     String transformations = inFromClient.readLine();
-                    
+
                     boolean verbose = false;
                     boolean strict = false;
 
@@ -157,24 +154,24 @@ public class KiCoWebServer extends Job {
 
                     EObject eObject = KiCoUtil.parse(model);
 
-                    //String fileExt = KiCoUIUtil.getFileExtension(eObject);
-                    
+                    // String fileExt = KiCoUIUtil.getFileExtension(eObject);
+
                     KielerCompiler.setVerboseMode(verbose);
-                    
+
                     KiCoPlugin.resetLastError();
-                    
+
                     // process the model
                     Object compiledModel =
                             KielerCompiler.compile(transformations, eObject, !strict).getObject();
 
                     String serializedCompiledModel = "";
-                    if (KiCoPlugin.getLastError() != null) {
-                        serializedCompiledModel = KiCoPlugin.getLastError();
-                    } else if (compiledModel != null) {
+                    if (compiledModel != null) {
                         serializedCompiledModel = compiledModel.toString();
                         if (compiledModel instanceof EObject) {
                             serializedCompiledModel = KiCoUtil.serialize((EObject) compiledModel);
                         }
+                    } else if (KiCoPlugin.getLastError() != null) {
+                        serializedCompiledModel = KiCoPlugin.getLastError();
                     }
 
                     // answer with compiled & serialized model
@@ -194,39 +191,40 @@ public class KiCoWebServer extends Job {
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
-//    /**
-//     * Test port whether it is ready to be used for the server socket.
-//     *
-//     * @param port the port
-//     * @return true, if successful
-//     */
-//    private boolean testPort(int port) {
-//        boolean out = false;
-//        Socket socket = null;
-//        try {
-//            socket = new Socket();
-//            socket.connect(new InetSocketAddress("localhost", port), 1000);
-//
-//        } catch (IOException e) {
-//            out = true;
-//        } finally {
-//            if (socket != null) {
-//                try {
-//                    socket.close();
-//                } catch (IOException e) {
-//                }
-//                out = true;
-//            }
-//        }
-//        return out;
-//    }
+    // /**
+    // * Test port whether it is ready to be used for the server socket.
+    // *
+    // * @param port the port
+    // * @return true, if successful
+    // */
+    // private boolean testPort(int port) {
+    // boolean out = false;
+    // Socket socket = null;
+    // try {
+    // socket = new Socket();
+    // socket.connect(new InetSocketAddress("localhost", port), 1000);
+    //
+    // } catch (IOException e) {
+    // out = true;
+    // } finally {
+    // if (socket != null) {
+    // try {
+    // socket.close();
+    // } catch (IOException e) {
+    // }
+    // out = true;
+    // }
+    // }
+    // return out;
+    // }
 
     // -------------------------------------------------------------------------
 
     /**
      * Open a server listening port.
-     *
-     * @param port the port
+     * 
+     * @param port
+     *            the port
      * @return the server socket
      */
     private ServerSocket listenPort(int port) {
