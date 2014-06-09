@@ -145,7 +145,9 @@ public class KielerCompiler {
             if (verbose) {
                 System.out.println(compilationResult.error);
             }
+            System.exit(1);
         }
+        System.exit(0);
 
     }
 
