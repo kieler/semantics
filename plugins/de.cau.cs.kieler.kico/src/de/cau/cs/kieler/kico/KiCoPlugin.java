@@ -458,7 +458,11 @@ public class KiCoPlugin extends Plugin {
 
     public void showError(final String textMessage, final String pluginID,
             final Exception exception, final boolean silent) {
-        KiCoPlugin.lastError = "";
+        if (KiCoPlugin.lastError != null && KiCoPlugin.lastError.length()  > 0) {
+            KiCoPlugin.lastError += ",\n";
+        } else {
+            KiCoPlugin.lastError = "";
+        }
         if (pluginID != null) {
             KiCoPlugin.lastError += pluginID + ": ";
         }
