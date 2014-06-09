@@ -79,7 +79,7 @@ public class KielerCompiler {
             }
         } else {
             try {
-                port = Integer.parseInt(hostAndPort[1]);
+                port = Integer.parseInt(hostAndPort[0]);
             } catch (Exception e) {
             }
             if (port > 0) {
