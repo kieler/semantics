@@ -16,5 +16,4 @@ Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kico
 Import-Package: org.eclipse.jface.dialogs,
  org.eclipse.swt.widgets,
- org.eclipse.ui,
  org.eclipse.ui.statushandlers
