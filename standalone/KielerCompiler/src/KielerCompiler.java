@@ -54,12 +54,12 @@ public class KielerCompiler {
         if (args.length < 1 || args[0].startsWith("-")) {
             System.out
                     .println("\n"
-                            + "******************\n"
-                            + "* KielerCompiler *\n"
-                            + "******************\n"
+                            + "====================\n"
+                            + "== KielerCompiler ==\n"
+                            + "====================\n"
                             + "    Usage: KielerCompiler <host>:<port> [Options] <transformation 1> ... <transformation n>\n"
-                            + "Example 1: cat <FILE.sct> | java KielerCompiler localhost:5555 EXTENDED CORE > code.c\n"
-                            + "Example 2: java KielerCompiler localhost:5555 -f FILE.sct -o code.c EXTENDED CORE\n"
+                            + "Example 1: cat <FILE.sct> | java -jar KielerCompiler.jar localhost:5555 EXTENDED CORE > code.c\n"
+                            + "Example 2: java -jar KielerCompiler.jar localhost:5555 -f FILE.sct -o code.c CODEGENERATION \n"
                             + "\n"
                             + "Options:\n"
                             + "-f <filename> : Use a specific input file\n"
