@@ -112,6 +112,7 @@ public class KiCoWebDialog extends Dialog {
                 KiCoWebPlugin.savePort(port);
 
                 if (KiCoWebPlugin.loadEnabled()) {
+                    KiCoWebPlugin.stopServer();
                     KiCoWebPlugin.startServer();
                 } else {
                     KiCoWebPlugin.stopServer();

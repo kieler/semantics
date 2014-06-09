@@ -23,6 +23,7 @@ import java.net.Socket;
 //import java.nio.charset.StandardCharsets;
 
 
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -31,6 +32,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import com.google.inject.Inject;
 
+import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.ui.KiCoUIUtil;
@@ -163,9 +165,14 @@ public class KiCoWebServer extends Job {
                     Object compiledModel =
                             KielerCompiler.compile(transformations, eObject, !strict).getObject();
 
-                    String serializedCompiledModel = compiledModel.toString();
-                    if (compiledModel instanceof EObject) {
-                        serializedCompiledModel = KiCoUtil.serialize((EObject) compiledModel);
+                    String serializedCompiledModel = "";
+                    if (KiCoPlugin.getLastError() != null && KiCoPlugin.getLastError().length() > 0) {
+                        serializedCompiledModel = KiCoPlugin.getLastError();
+                    } else {
+                        serializedCompiledModel = compiledModel.toString();
+                        if (compiledModel instanceof EObject) {
+                            serializedCompiledModel = KiCoUtil.serialize((EObject) compiledModel);
+                        }
                     }
 
                     // answer with compiled & serialized model
