@@ -170,13 +170,18 @@ public class KiCoWebServer extends Job {
                         if (compiledModel instanceof EObject) {
                             serializedCompiledModel = KiCoUtil.serialize((EObject) compiledModel);
                         }
-                    } else if (KiCoPlugin.getLastError() != null) {
-                        serializedCompiledModel = KiCoPlugin.getLastError();
                     }
 
                     // answer with compiled & serialized model
-                    printWriter.print(serializedCompiledModel.split("\n").length + "\n");
-                    printWriter.print(serializedCompiledModel + "\n");
+                    if (KiCoPlugin.getLastError() != null) {
+                        printWriter.print(serializedCompiledModel.split("\n").length + ":"
+                                + KiCoPlugin.getLastError().split("\n").length + "\n");
+                        printWriter.print(serializedCompiledModel + "\n");
+                        printWriter.print(KiCoPlugin.getLastError() + "\n");
+                    } else {
+                        printWriter.print(serializedCompiledModel.split("\n").length + "\n");
+                        printWriter.print(serializedCompiledModel + "\n");
+                    }
                     printWriter.flush();
                 }
             } catch (IOException e) {
