@@ -1117,15 +1117,17 @@ public class KielerCompiler {
                         transformation.doTransform(transformedObject);
                         Object object = transformation.doTransform(transformedObject);
 
-                        // Add to compilation result
-                        compilationResult.getIntermediateResults().add(object);
+                        if (object != null) {
+                            // Add to compilation result
+                            compilationResult.getIntermediateResults().add(object);
 
-                        if (object instanceof EObject) {
-                            transformedObject = (EObject) object;
-                        } else {
-                            // in this case we CANNOT do any further transformation calls
-                            // which require the return value of doTransform to be an EObject
-                            return compilationResult;
+                            if (object instanceof EObject) {
+                                transformedObject = (EObject) object;
+                            } else {
+                                // in this case we CANNOT do any further transformation calls
+                                // which require the return value of doTransform to be an EObject
+                                return compilationResult;
+                            }
                         }
                     }
                 }
