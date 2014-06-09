@@ -460,13 +460,16 @@ public class KiCoPlugin extends Plugin {
             final Exception exception, final boolean silent) {
         KiCoPlugin.lastError = "";
         if (pluginID != null) {
-            KiCoPlugin.lastError += pluginID + ":";
+            KiCoPlugin.lastError += pluginID + ": ";
         }
         if (textMessage != null) {
             KiCoPlugin.lastError += textMessage;
         }
         if (exception != null) {
-            KiCoPlugin.lastError += exception.getMessage();
+            KiCoPlugin.lastError += " (" + exception.getClass().getName() + ")";
+            if (exception.getMessage() != null) {
+                KiCoPlugin.lastError += " " + exception.getMessage();
+            }
         }
         if (isForceNoErrorOutput()) {
             return;
