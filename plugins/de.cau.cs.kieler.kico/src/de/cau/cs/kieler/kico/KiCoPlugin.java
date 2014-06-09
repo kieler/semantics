@@ -106,8 +106,9 @@ public class KiCoPlugin extends Plugin {
 
     /**
      * Gets the guice instance.
-     *
-     * @param object the object
+     * 
+     * @param object
+     *            the object
      * @return the guice instance
      */
     public static Object getGuiceInstance(Object object) {
@@ -119,9 +120,11 @@ public class KiCoPlugin extends Plugin {
 
     /**
      * Gets the invokable method.
-     *
-     * @param object the object
-     * @param method the method
+     * 
+     * @param object
+     *            the object
+     * @param method
+     *            the method
      * @return the invokable method
      */
     private Method getInvokableMethod(Object object, String method) {
@@ -149,20 +152,21 @@ public class KiCoPlugin extends Plugin {
      * @return the TransformationList
      */
     public HashMap<String, Transformation> getRegisteredTransformations() {
-//        if (transformationMap != null && !forceUpdate) {
-//            // return a cached version of the list
-//            // it is only built the first time
-//            return transformationMap;
-//        }
-//        // suggest calling the garbage collector: this may
-//        // remove any DataComponent threads still running (but not
-//        // linked==needed any more)
-//        System.gc();
+        // if (transformationMap != null && !forceUpdate) {
+        // // return a cached version of the list
+        // // it is only built the first time
+        // return transformationMap;
+        // }
+        // // suggest calling the garbage collector: this may
+        // // remove any DataComponent threads still running (but not
+        // // linked==needed any more)
+        // System.gc();
         // get the available interfaces and initialize them
         IConfigurationElement[] transformations =
                 Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_POINT_ID);
 
-        HashMap<String, Transformation> transformationMap = new HashMap<String, Transformation>(transformations.length);
+        HashMap<String, Transformation> transformationMap =
+                new HashMap<String, Transformation>(transformations.length);
 
         for (int i = 0; i < transformations.length; i++) {
             try {
@@ -170,8 +174,7 @@ public class KiCoPlugin extends Plugin {
                 String transformationClass = transformations[i].getAttribute("class");
                 Object transformationInstance = null;
                 if (transformationClass != null) {
-                    transformationInstance =
-                            transformations[i].createExecutableExtension("class");
+                    transformationInstance = transformations[i].createExecutableExtension("class");
                 }
                 String id = transformations[i].getAttribute("id");
                 String name = transformations[i].getAttribute("name");
@@ -181,15 +184,15 @@ public class KiCoPlugin extends Plugin {
                 String alternativesString = transformations[i].getAttribute("alternatives");
 
                 if (DEBUG) {
-//                    System.out.println("KiCo loading component: "
-//                            + transformations[i].getContributor().getName() + "::" + id);
+                    // System.out.println("KiCo loading component: "
+                    // + transformations[i].getContributor().getName() + "::" + id);
                 }
-                
+
                 Transformation transformation;
                 if (transformationInstance == null) {
                     // The Transformation is defined as a GROUP by its dependencies
                     transformation = new TransformationGroup();
-                    
+
                     // Internally transformations of groups are represented as dependencies!
                     if (transformationsString != null) {
                         String[] dependenciesArray = transformationsString.split(",");
@@ -197,15 +200,14 @@ public class KiCoPlugin extends Plugin {
                             transformation.getDependencies().add(dependency.trim());
                         }
                     }
-                    
+
                     if (alternativesString != null) {
                         if (alternativesString.equals("true")) {
                             ((TransformationGroup) transformation).setAlternatives(true);
                         }
                     }
-                    
-                }
-                else if (transformationInstance instanceof Transformation) {
+
+                } else if (transformationInstance instanceof Transformation) {
                     // The specified class is a Transformation, use it directly
                     transformation =
                             (Transformation) transformations[i].createExecutableExtension("class");
@@ -216,9 +218,11 @@ public class KiCoPlugin extends Plugin {
                     // instance as a wrapper
                     transformation = new TransformationWrapper();
                     // Handle the case that wee need Google Guice for instantiation
-                    transformation.setTransformationInstance(getGuiceInstance(transformationInstance));
+                    transformation
+                            .setTransformationInstance(getGuiceInstance(transformationInstance));
                     // Find the correct method and save it in the wrapper for later reflection calls
-                    Method transformationMethod = getInvokableMethod(transformationInstance, method);
+                    Method transformationMethod =
+                            getInvokableMethod(transformationInstance, method);
                     transformation.setTransformationMethod(transformationMethod);
                 }
 
@@ -228,11 +232,11 @@ public class KiCoPlugin extends Plugin {
                     transformation.setId(id);
                     // Check if ID is already taken
                     if (transformationMap.containsKey(id)) {
-                        showWarning("Extension '"+id+"' from component: "
-                                + transformations[i].getContributor().getName() + " cannot be loaded because this ID is already taken.", KiCoPlugin.PLUGIN_ID,
-                                null, true);
-                    }
-                    else {
+                        showWarning("Extension '" + id + "' from component: "
+                                + transformations[i].getContributor().getName()
+                                + " cannot be loaded because this ID is already taken.",
+                                KiCoPlugin.PLUGIN_ID, null, true);
+                    } else {
                         transformationMap.put(id, transformation);
                     }
                 } else {
@@ -303,7 +307,7 @@ public class KiCoPlugin extends Plugin {
             message = textMessage + message;
             // exception = null;
         } else if (exception != null) {
-                message = exceptionMessage + message;
+            message = exceptionMessage + message;
             // exception = null;
         }
 
@@ -454,17 +458,17 @@ public class KiCoPlugin extends Plugin {
 
     public void showError(final String textMessage, final String pluginID,
             final Exception exception, final boolean silent) {
+        KiCoPlugin.lastError = "";
+        if (pluginID != null) {
+            KiCoPlugin.lastError += pluginID + ":";
+        }
+        if (textMessage != null) {
+            KiCoPlugin.lastError += textMessage;
+        }
+        if (exception != null) {
+            KiCoPlugin.lastError += exception.getMessage();
+        }
         if (isForceNoErrorOutput()) {
-            KiCoPlugin.lastError = "";
-            if (pluginID != null) {
-                KiCoPlugin.lastError += pluginID + ":";
-            }
-            if (textMessage != null) {
-                KiCoPlugin.lastError += textMessage;
-            }
-            if (exception != null) {
-                KiCoPlugin.lastError += exception.getMessage();
-            }
             return;
         }
         try {

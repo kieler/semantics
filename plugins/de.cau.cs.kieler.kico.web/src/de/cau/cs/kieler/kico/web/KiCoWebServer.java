@@ -161,14 +161,16 @@ public class KiCoWebServer extends Job {
                     
                     KielerCompiler.setVerboseMode(verbose);
                     
+                    KiCoPlugin.resetLastError();
+                    
                     // process the model
                     Object compiledModel =
                             KielerCompiler.compile(transformations, eObject, !strict).getObject();
 
                     String serializedCompiledModel = "";
-                    if (KiCoPlugin.getLastError() != null && KiCoPlugin.getLastError().length() > 0) {
+                    if (KiCoPlugin.getLastError() != null) {
                         serializedCompiledModel = KiCoPlugin.getLastError();
-                    } else {
+                    } else if (compiledModel != null) {
                         serializedCompiledModel = compiledModel.toString();
                         if (compiledModel instanceof EObject) {
                             serializedCompiledModel = KiCoUtil.serialize((EObject) compiledModel);
