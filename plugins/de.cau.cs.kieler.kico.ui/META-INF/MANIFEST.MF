@@ -30,3 +30,4 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kico.ui
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
