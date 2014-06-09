@@ -64,7 +64,7 @@ public class KielerCompiler {
                             + "Options:\n"
                             + "-f <filename> : Use a specific input file\n"
                             + "-o <filename> : Use a specific output file\n"
-                            + "-v            : Use verbose compilation, do not stop on errors\n"
+                            + "-v            : Use verbose compilation, more error messages\n"
                             + "-s            : Use strict mode in which only selected transformations are applied\n");
             return;
         }
@@ -133,13 +133,18 @@ public class KielerCompiler {
 
         //System.out.println("model: " + model);
 
-        String compiledModel =
+        CompilationResult compilationResult =
                 remoteCompile(host, port, outputFile, verbose, strict, model, transformations);
 
         if (outputFile == null || outputFile.trim().equals("")) {
-            System.out.println(compiledModel);
+            System.out.println(compilationResult.model);
         } else {
-            writeOutputModel(outputFile, compiledModel);
+            writeOutputModel(outputFile, compilationResult.model);
+        }
+        if (compilationResult.error != null && compilationResult.error.length() > 0) {
+            if (verbose) {
+                System.out.println(compilationResult.error);
+            }
         }
 
     }
@@ -231,9 +236,9 @@ public class KielerCompiler {
      *            the transformations
      * @return the string
      */
-    public static String remoteCompile(String host, int port, String outputFile, boolean verbose,
+    public static CompilationResult remoteCompile(String host, int port, String outputFile, boolean verbose,
             boolean strict, String model, String transformations) {
-        String compiledModel = "";
+        CompilationResult result = new CompilationResult(model, "");
         
         String options = "";
         if (verbose) {
@@ -249,17 +254,30 @@ public class KielerCompiler {
             client.sndMessage(model.split("\n").length + options + "\n");
             client.sndMessage(model + "\n");
 
-            compiledModel = client.rcvModel();
+            result = client.rcvCompilationResult();
 
             client.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return compiledModel;
+        return result;
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * The Class CompilationResult.
+     */
+    static private class CompilationResult {
+        public String model;
+        public String error;
+        CompilationResult(String model, String error) {
+            this.model = model;
+            this.error = error;
+        }
+    }
+    
     // -------------------------------------------------------------------------
     
     /**
@@ -280,24 +298,38 @@ public class KielerCompiler {
             out.flush();
         }
 
-        String rcvModel() throws IOException {
+        CompilationResult rcvCompilationResult() throws IOException {
             InputStreamReader in = new InputStreamReader(socket.getInputStream());
             BufferedReader bufferedReader = new BufferedReader(in);
 
-            int lines = Integer.parseInt(bufferedReader.readLine());
+            String[] linesArray = bufferedReader.readLine().split(":");
+            int linesModel = Integer.parseInt(linesArray[0]);
+            int linesError = 0;
+            if (linesArray.length > 1) {
+                linesError = Integer.parseInt(linesArray[1]);
+            }
 
             String model = "";
+            String error = "";
             String s;
-            while (lines > 0) {
+            while (linesModel > 0) {
                 s = bufferedReader.readLine();
-                lines--;
+                linesModel--;
                 if (!model.equals("")) {
                     model += "\n";
                 }
                 model += s;
             }
+            while (linesError > 0) {
+                s = bufferedReader.readLine();
+                linesError--;
+                if (!error.equals("")) {
+                    error += "\n";
+                }
+                error += s;
+            }
 
-            return model;
+            return new CompilationResult(model, error);
         }
 
         void close() throws IOException {
