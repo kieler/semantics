@@ -62,7 +62,7 @@ public class KielerCompiler {
                             + "Example 1:\n"
                             + "  cat <FILE.sct> | java -jar KielerCompiler.jar localhost:5555 EXTENDED CORE > code.c\n"
                             + "Example 2:\n"
-                            + "  java -jar KielerCompiler.jar localhost:5555 -f FILE.sct -o code.c CODEGENERATION \n"
+                            + "  java -jar KielerCompiler.jar 5555 -f FILE.sct -o code.c CODEGENERATION \n"
                             + "\n"
                             + "Options:\n"
                             + "-f <filename> : Use a specific input file\n"
