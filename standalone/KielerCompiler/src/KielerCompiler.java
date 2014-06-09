@@ -199,6 +199,7 @@ public class KielerCompiler {
             } else {
                 // file non exits
                 System.out.println("Error: Input file not exists.");
+                System.exit(1);
             }
         }
         return model;
