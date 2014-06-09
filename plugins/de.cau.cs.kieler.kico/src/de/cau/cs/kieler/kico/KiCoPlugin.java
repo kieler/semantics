@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.kico;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
@@ -456,9 +458,16 @@ public class KiCoPlugin extends Plugin {
      */
     // StatusAdapter statusAdapter;
 
+    private String getErrorMessage(Throwable t) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        t.printStackTrace(pw);
+        return sw.toString(); // stack trace as a string
+    }
+
     public void showError(final String textMessage, final String pluginID,
             final Exception exception, final boolean silent) {
-        if (KiCoPlugin.lastError != null && KiCoPlugin.lastError.length()  > 0) {
+        if (KiCoPlugin.lastError != null && KiCoPlugin.lastError.length() > 0) {
             KiCoPlugin.lastError += ",\n";
         } else {
             KiCoPlugin.lastError = "";
@@ -471,8 +480,9 @@ public class KiCoPlugin extends Plugin {
         }
         if (exception != null) {
             KiCoPlugin.lastError += " (" + exception.getClass().getName() + ")";
-            if (exception.getMessage() != null) {
-                KiCoPlugin.lastError += " " + exception.getMessage();
+            String errorMessage = getErrorMessage(exception);
+            if (errorMessage != null) {
+                KiCoPlugin.lastError += " " + errorMessage;
             }
         }
         if (isForceNoErrorOutput()) {

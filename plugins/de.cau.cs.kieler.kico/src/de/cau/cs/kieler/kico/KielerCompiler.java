@@ -657,7 +657,7 @@ public class KielerCompiler {
         if (transformation == null) {
             KiCoPlugin
                     .getInstance()
-                    .showWarning(
+                    .showError(
                             "Cannot find a transformation with the ID '"
                                     + transformationID
                                     + "'. Make sure that the transformation with this ID is registered and its"

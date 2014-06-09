@@ -142,10 +142,12 @@ public class KielerCompiler {
             writeOutputModel(outputFile, compilationResult.model);
         }
         if (compilationResult.error != null && compilationResult.error.length() > 0) {
-            if (verbose) {
+            if (verbose || compilationResult.model.length() == 0) {
                 System.out.println(compilationResult.error);
             }
-            System.exit(1);
+            if (compilationResult.model.length() == 0) {
+                System.exit(1);
+            }
         }
         System.exit(0);
 
