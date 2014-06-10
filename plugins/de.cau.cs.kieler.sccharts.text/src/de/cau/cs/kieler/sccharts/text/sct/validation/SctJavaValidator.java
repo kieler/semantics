@@ -59,6 +59,9 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     public static final String REGION_TWO_MANY_INITIAL_STATES = "Every region must not have more than one initial state";
     public static final String REGION_NO_FINAL_STATE = "Every region should have a final state whenever its parent state has a termination transition";
     public static final String STATE_NOT_REACHABLE = "The state is not reachable";
+
+    public static final String NON_SIGNAL_EMISSION = "Non-signals cannot be used in an emission";
+    public static final String NON_VARIABLE_ASSIGNMENT = "Non-variables cannot be used in an assignment";
     
     public static final String ASSIGNMENT_TO_CONST = "You cannot assign a value to a const object";
     public static final String NO_CONST_LITERAL = "Const objects must be bound to literals";
@@ -145,6 +148,40 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Forbid emissions of non-signals
+     *
+     * @param state the state
+     */
+    @Check
+    public void checkNoBooleanEmissions(final de.cau.cs.kieler.sccharts.Emission emission) {
+        if (emission.getValuedObject() != null && emission.getValuedObject().eContainer() != null && emission.getValuedObject().eContainer() instanceof Declaration) {
+            Declaration declaration = (Declaration) emission.getValuedObject().eContainer();
+            if (!declaration.isSignal()) {
+                error(NON_SIGNAL_EMISSION, emission, null, -1);
+            }
+        } 
+    }
+
+    // -------------------------------------------------------------------------    
+
+    /**
+     * Forbid assignments of non-variables
+     *
+     * @param state the state
+     */
+    @Check
+    public void checkNoBooleanEmissions(final de.cau.cs.kieler.sccharts.Assignment assignment) {
+        if (assignment.getValuedObject() != null && assignment.getValuedObject().eContainer() != null && assignment.getValuedObject().eContainer() instanceof Declaration) {
+            Declaration declaration = (Declaration) assignment.getValuedObject().eContainer();
+            if (declaration.isSignal()) {
+                error(NON_VARIABLE_ASSIGNMENT, assignment, null, -1);
+            }
+        } 
+    }
+
+    // -------------------------------------------------------------------------    
+    
 //    // Must ensure not to loop forever when having cycles in the model
 //    ArrayList<de.cau.cs.kieler.sccharts.State> visited = new ArrayList<de.cau.cs.kieler.sccharts.State>();
 //    
