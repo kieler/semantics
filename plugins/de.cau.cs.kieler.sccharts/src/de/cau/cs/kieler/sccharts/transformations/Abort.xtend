@@ -73,8 +73,8 @@ class Abort {
     // Traverse all states 
     def void transformAbortAlternative(State state, State targetRootState) {
 
-        val stateHasUntransformedTransitions = (!(state.outgoingTransitions.size == 0) || ((state.outgoingTransitions.
-            size == 1) && state.outgoingTransitions.filter[typeTermination].filter[trigger == null].size == 1))
+        val stateHasUntransformedTransitions = ((state.outgoingTransitions.size > 1) || ((state.outgoingTransitions.
+            size == 1) && state.outgoingTransitions.filter[typeTermination].filter[trigger != null].size == 1))
 
         val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))
 
@@ -86,7 +86,7 @@ class Abort {
             val outgoingTransitions = state.outgoingTransitions.immutableCopy
             val regions = state.regions.immutableCopy
 
-            if (stateHasUntransformedAborts) {
+            if (stateHasUntransformedAborts || stateHasUntransformedTransitions) {
                 val ctrlRegion = state.createRegion(GENERATED_PREFIX + "Ctrl").uniqueName
                 val runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueName
                 val doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
@@ -133,7 +133,7 @@ class Abort {
                     }
 
                     // Inside every region create a _Aborted
-                    val abortedState = region.createFinalState(GENERATED_PREFIX + "Aborted").uniqueName
+                    val abortedState = region.retrieveFinalState(GENERATED_PREFIX + "Aborted").uniqueName
                     for (innerState : region.states.filter[!final]) {
                         if (innerState != abortedState) {
                             if (strongAbortTrigger != null) {
@@ -249,8 +249,8 @@ class Abort {
     //    }
     def void transformAbortDefault(State state, State targetRootState) {
 
-        val stateHasUntransformedTransitions = (!(state.outgoingTransitions.size == 0) || ((state.outgoingTransitions.
-            size == 1) && state.outgoingTransitions.filter[typeTermination].filter[trigger == null].size == 1))
+        val stateHasUntransformedTransitions = ((state.outgoingTransitions.size > 1) || ((state.outgoingTransitions.
+            size == 1) && state.outgoingTransitions.filter[typeTermination].filter[trigger != null].size == 1))
 
         val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))
 
@@ -262,7 +262,7 @@ class Abort {
             val outgoingTransitions = state.outgoingTransitions.immutableCopy
             val regions = state.regions.immutableCopy
 
-            if (stateHasUntransformedAborts) {
+            if (stateHasUntransformedAborts || stateHasUntransformedTransitions) {
                 val ctrlRegion = state.createRegion(GENERATED_PREFIX + "Ctrl").uniqueName
                 val runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueName
                 val doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
@@ -309,7 +309,7 @@ class Abort {
                     }
 
                     // Inside every region create a _Aborted
-                    val abortedState = region.createFinalState(GENERATED_PREFIX + "Aborted").uniqueName
+                    val abortedState = region.retrieveFinalState(GENERATED_PREFIX + "Aborted").uniqueName
                     for (innerState : region.states.filter[!final]) {
                         if (innerState != abortedState) {
                             if (strongAbortTrigger != null) {
