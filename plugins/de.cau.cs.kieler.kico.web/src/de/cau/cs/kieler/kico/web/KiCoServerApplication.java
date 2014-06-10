@@ -59,6 +59,7 @@ public class KiCoServerApplication implements IApplication {
      * {@inheritDoc}
      */
     public void stop() {
+        System.out.println("Stopping KiCo TCP Server");
         KiCoWebPlugin.stopServer();
     }
 
