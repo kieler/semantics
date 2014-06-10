@@ -112,6 +112,8 @@ public class KiCoWebServer extends Job {
      * Abort the web server. Be sure to clear all references to it in KiCoWebPlugin.setServer().
      */
     public void abort() {
+        debug("Abort server");
+
         aborted = true;
         if (socket != null) {
             try {
@@ -134,6 +136,8 @@ public class KiCoWebServer extends Job {
         // when started, invalidate the socket and set aborted to false
         aborted = false;
         socket = null;
+        
+        debug("Server enabled: " + KiCoWebPlugin.loadEnabled());
 
         // continuously while enabled provide the service
         while (KiCoWebPlugin.loadEnabled() && !aborted) {
