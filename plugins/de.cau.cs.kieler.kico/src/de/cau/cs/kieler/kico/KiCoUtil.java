@@ -22,6 +22,7 @@ import java.util.Map;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.Resource.Factory;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
@@ -41,9 +42,9 @@ import com.google.inject.Inject;
  */
 public class KiCoUtil {
 
-    /** The reg is necessary to find serializer or parser for Xtext models. */
-    @Inject
-    IResourceServiceProvider.Registry regXtext;
+//    /** The reg is necessary to find serializer or parser for Xtext models. */
+//    @Inject
+//    IResourceServiceProvider.Registry regXtext;
     
     final static Resource.Factory.Registry regXMI = Resource.Factory.Registry.INSTANCE;//getExtensionToFactoryMap();
 
@@ -58,12 +59,12 @@ public class KiCoUtil {
 
     // -------------------------------------------------------------------------
 
-    public static IResourceServiceProvider.Registry getRegXtext() {
-        if (instance == null) {
-            instance = Guice.createInjector().getInstance(KiCoUtil.class);
-        }
-        return instance.regXtext;
-    }
+//    public static IResourceServiceProvider.Registry getRegXtext() {
+//        if (instance == null) {
+//            instance = Guice.createInjector().getInstance(KiCoUtil.class);
+//        }
+//        return instance.regXtext;
+//    }
 
     // -------------------------------------------------------------------------
 
@@ -81,11 +82,13 @@ public class KiCoUtil {
         boolean done = false;
         try {
 
-            for (String ext : getRegXtext().getExtensionToFactoryMap().keySet()) {
+            for (String ext : regXMI.getExtensionToFactoryMap().keySet()) {
                 URI uri = URI.createURI("dummy:/inmemory." + ext);
-                IResourceServiceProvider provider = getRegXtext().getResourceServiceProvider(uri);
-                XtextResourceSet resourceSet = provider.get(XtextResourceSet.class);
-                Resource res = resourceSet.createResource(uri);
+                Factory provider = regXMI.getFactory(uri);
+                Resource res = provider.createResource(uri);
+//                IResourceServiceProvider provider = getRegXtext().getResourceServiceProvider(uri);
+//                XtextResourceSet resourceSet = provider.get(XtextResourceSet.class);
+//                Resource res = resourceSet.createResource(uri);
 
                 done = false;
                 try {
@@ -95,6 +98,7 @@ public class KiCoUtil {
                     returnText = outputStream.toString();
                     done = true;
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
                 if (done) {
@@ -170,17 +174,21 @@ public class KiCoUtil {
         if (!done) {
             try {
 
-                for (String ext : getRegXtext().getExtensionToFactoryMap().keySet()) {
+//                for (String ext : getRegXtext().getExtensionToFactoryMap().keySet()) {
+                  for (String ext : regXMI.getExtensionToFactoryMap().keySet()) {
                     URI uri = URI.createURI("dummy:/inmemory." + ext);
-                    IResourceServiceProvider provider = getRegXtext().getResourceServiceProvider(uri);
-                    XtextResourceSet resourceSet = provider.get(XtextResourceSet.class);
-                    resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
-                    Resource res = resourceSet.createResource(uri);
+                    Factory provider = regXMI.getFactory(uri);
+                    Resource res = provider.createResource(uri);
+//                    IResourceServiceProvider provider = getRegXtext().getResourceServiceProvider(uri);
+//                    XtextResourceSet resourceSet = provider.get(XtextResourceSet.class);
+//                    resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
+//                    Resource res = resourceSet.createResource(uri);
 
                     done = false;
                     try {
                         InputStream in = new ByteArrayInputStream(text.getBytes());// StandardCharsets.UTF_8));
-                        res.load(in, resourceSet.getLoadOptions());
+                        res.load(in, null);
+//                        res.load(in, resourceSet.getLoadOptions());
                         returnEObject = res.getContents().get(0);
                         done = true;
                     } catch (Exception e) {
