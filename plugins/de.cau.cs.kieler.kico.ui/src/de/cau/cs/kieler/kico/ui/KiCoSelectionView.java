@@ -723,6 +723,8 @@ public class KiCoSelectionView extends DiagramViewPart {
         IActionBars bars = getViewSite().getActionBars();
         IToolBarManager toolBarManager = bars.getToolBarManager();
 
+        //FIXME: It would be nice if KLighD could provide IDs for the following items so that we
+        // would not have to rely on the labels
         // Delete the refresh-button
         ActionContributionItem refreshAction = null;
         ActionContributionItem arrangeAction = null;
