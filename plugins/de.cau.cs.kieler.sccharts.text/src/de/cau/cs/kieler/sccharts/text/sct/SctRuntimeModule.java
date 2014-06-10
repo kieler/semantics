@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct;
 
-import org.eclipse.xtext.ui.editor.IXtextEditorCallback;
+//import org.eclipse.xtext.ui.editor.IXtextEditorCallback;
 
 import de.cau.cs.kieler.sccharts.text.sct.scoping.SctQualifiedNameProvider;
 import de.cau.cs.kieler.sccharts.text.sct.scoping.SctScopeProvider;
