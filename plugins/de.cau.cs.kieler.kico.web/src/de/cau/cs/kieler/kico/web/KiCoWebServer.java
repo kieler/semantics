@@ -22,7 +22,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 //import java.nio.charset.StandardCharsets;
 
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -35,9 +34,12 @@ import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompiler;
-import de.cau.cs.kieler.kico.ui.KiCoUIUtil;
 
 /**
+ * This class implements to KIELER Compiler TCP Web Server that runs as an Eclipse Job. Typically it
+ * uses the port 5555 but it can be called to use any other TCP port. It tries to compile the
+ * received model and returns the compilation result with error messages if present.
+ * 
  * @author cmot
  * @kieler.design 2014-06-08 proposed
  * @kieler.rating 2014-06-08 proposed yellow
@@ -163,8 +165,9 @@ public class KiCoWebServer extends Job {
                     KiCoPlugin.resetLastError();
 
                     // process the model
-                    CompilationResult compilationResult = KielerCompiler.compile(transformations, eObject, !strict);
-                    
+                    CompilationResult compilationResult =
+                            KielerCompiler.compile(transformations, eObject, !strict);
+
                     boolean majorError = (compilationResult.getIntermediateResults().size() <= 1);
                     Object compiledModel = compilationResult.getObject();
 
