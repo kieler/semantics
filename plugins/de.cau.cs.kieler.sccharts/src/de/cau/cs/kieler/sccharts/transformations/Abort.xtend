@@ -99,7 +99,7 @@ class Abort {
                     // Create a new _transitionTrigger valuedObject
                     val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
                         GENERATED_PREFIX + "trig").setTypeBool.uniqueName
-                    transitionTriggerVariable.setInitialValue(FALSE)
+                    state.createEntryAction.addEffect(transitionTriggerVariable.assign(FALSE))
                     transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
                     if (transition.typeStrongAbort) {
                         strongAbortTrigger = strongAbortTrigger.or2(transitionTriggerVariable.reference)
@@ -273,9 +273,9 @@ class Abort {
                 for (transition : outgoingTransitions) {
 
                     // Create a new _transitionTrigger valuedObject
-                    val transitionTriggerVariable = state.createVariable(
+                    val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
                         GENERATED_PREFIX + "trig").setTypeBool.uniqueName
-                    transitionTriggerVariable.setInitialValue(FALSE)
+                    state.createEntryAction.addEffect(transitionTriggerVariable.assign(FALSE))
                     transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
                     if (transition.typeStrongAbort) {
                         strongAbortTrigger = strongAbortTrigger.or2(transitionTriggerVariable.reference)
