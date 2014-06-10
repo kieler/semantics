@@ -9,7 +9,9 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.events.DisposeEvent;
@@ -720,6 +722,39 @@ public class KiCoSelectionView extends DiagramViewPart {
 
         IActionBars bars = getViewSite().getActionBars();
         IToolBarManager toolBarManager = bars.getToolBarManager();
+
+        // Delete the refresh-button
+        ActionContributionItem refreshAction = null;
+        ActionContributionItem arrangeAction = null;
+        ActionContributionItem zoomToOriginalSizeAction = null;
+        for (IContributionItem item : toolBarManager.getItems()) {
+            if (item instanceof ActionContributionItem) {
+                ActionContributionItem actionItem = (ActionContributionItem)item;
+                //System.out.println(actionItem.getAction().getText());
+                if (actionItem.getAction().getText().equals("Refresh diagram")) {
+                    refreshAction = actionItem;
+                }
+                if (actionItem.getAction().getText().equals("Arrange")) {
+                    arrangeAction = actionItem;
+                }
+                if (actionItem.getAction().getText().equals("Zoom to Original Size")) {
+                    zoomToOriginalSizeAction = actionItem;
+                }
+            }
+        }
+        if (arrangeAction != null && refreshAction != null) {
+            // give the arrange action the refresh icon :-)
+            arrangeAction.getAction().setImageDescriptor(refreshAction.getAction().getImageDescriptor());
+        }
+        if (refreshAction != null) {
+            // remove the refresh action
+            toolBarManager.remove(refreshAction);
+        }
+        if (zoomToOriginalSizeAction != null) {
+            // remove the zoom to original size action
+            toolBarManager.remove(zoomToOriginalSizeAction);
+        }
+        
         toolBarManager.add(getActionExpandAll());
         toolBarManager.add(getActionAdvancedToggle());
         // toolBarManager.add(getActionSSMToggle());
