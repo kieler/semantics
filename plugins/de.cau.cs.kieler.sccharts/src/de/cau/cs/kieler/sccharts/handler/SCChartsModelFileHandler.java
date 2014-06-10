@@ -141,11 +141,17 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
      */
     protected String getCommandString(ExecutionEvent event) {
         String commandString = event.getCommand().getId().toString();
+        
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).
         // Use commandString for Scc and Sct Transformation
         commandString = commandString.replace("SCC_", "");
         commandString = commandString.replace("SCT_", "");
+
+        if (commandString.equals("ALL")) {
+            commandString = "EXTENDED, CORE";
+        }
+        
         return commandString;
     }
 
