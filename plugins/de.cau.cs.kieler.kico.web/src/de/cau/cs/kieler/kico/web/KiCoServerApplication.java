@@ -21,13 +21,14 @@ import org.eclipse.equinox.app.IApplicationContext;
 /**
  * The non-gui server application for KiCoServer.
  * 
- * Start the sever: kieler -application de.cau.cs.kieler.kico.web.server -consoleLog -noExit first second
- * last
+ * Start the sever: kieler -application de.cau.cs.kieler.kico.web.server -noExit -p 5555 Start the
+ * sever with console log: kieler -application de.cau.cs.kieler.kico.web.server -consoleLog -noExit
+ * --port 5555
  * 
  * -application will tell eclipse which application to start. You might omit this if you want to run
  * the default application you exported. It makes sense for RCPs with multiple applications though.
  * -consoleLog opens a dedicated eclipse console and should be well known already. -noExit will keep
- * eclipse running even if our apllication finished. It keeps the console open to examine output
+ * eclipse running even if our application finished. It keeps the console open to examine output.
  * 
  * @author cmot
  * @kieler.design 2014-04-08 proposed
@@ -42,14 +43,32 @@ public class KiCoServerApplication implements IApplication {
 
         final Map<?, ?> args = context.getArguments();
         final String[] appArgs = (String[]) args.get("application.args");
+        boolean nextPort = false;
+        ;
         for (final String arg : appArgs) {
             System.out.println(arg);
+            if (arg.equals("-p")) {
+                nextPort = true;
+            } else if (arg.equals("--port")) {
+                nextPort = true;
+            } else if (nextPort) {
+                int newPort = -1;
+                try {
+                    newPort = Integer.parseInt(arg);
+                } catch (Exception e) {
+                    newPort = -1;
+                }
+                if (newPort > 0) {
+                    System.out.println("Setting KiCo TCP Server port to " + newPort);
+                    KiCoWebPlugin.savePort(newPort);
+                } else {
+                    System.out.println("Error setting KiCo TCP Server port (" + arg + ")");
+                }
+            }
         }
 
-        //if (KiCoWebPlugin.loadEnabled()) {
         System.out.println("Starting KiCo TCP Server at port " + KiCoWebPlugin.loadPort());
         KiCoWebPlugin.startServer();
-        //}
         return null;
     }
 
