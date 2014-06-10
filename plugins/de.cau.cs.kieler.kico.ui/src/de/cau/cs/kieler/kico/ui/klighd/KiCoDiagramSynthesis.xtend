@@ -244,6 +244,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                     it.setGridPlacement(1);
                 }
                 if (transformationDummy.isGroup) {
+                    it.setProperty(KlighdProperties::TOOLTIP, transformationDummy.id);
 
                     // Get a smaller window-title-bare if this a macro state 
                     if (!transformationDummy.label.empty)
@@ -268,6 +269,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                             ];
                         ];
                 } else {
+                    it.setProperty(KlighdProperties::TOOLTIP, transformationDummy.id);
 
                     // For simple states we want a larger area 
                     it.addText(" " + transformationDummy.label).putToLookUpWith(transformationDummy) => [
@@ -349,7 +351,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                 val childKNode = child.translate;
                 node.children += childKNode;
             }
-
+            
             // credits to SSM :-)
             if (transformationDummy.alternative) {
                 node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
