@@ -52,6 +52,7 @@ public class KiCoServerApplication implements IApplication {
             } else if (arg.equals("--port")) {
                 nextPort = true;
             } else if (nextPort) {
+                nextPort = false;
                 int newPort = -1;
                 try {
                     newPort = Integer.parseInt(arg);
