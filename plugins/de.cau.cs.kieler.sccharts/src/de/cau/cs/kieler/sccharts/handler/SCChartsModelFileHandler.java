@@ -123,7 +123,7 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
         String commandString = getCommandString(event);
         if (commandString.equals(EXTENDED_TRANSFORMATIONS)) {
             return "core";
-        } else if (commandString.equals(CORE_TRANSFORMATIONS)) {
+        } else if ((commandString.equals(CORE_TRANSFORMATIONS)) || (commandString.equals(ALL_TRANSFORMATIONS))) {
             return "normalized";
         } else {
             return "transformed";
