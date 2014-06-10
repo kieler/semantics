@@ -46,9 +46,10 @@ public class KiCoServerApplication implements IApplication {
             System.out.println(arg);
         }
 
-        if (KiCoWebPlugin.loadEnabled()) {
-            KiCoWebPlugin.startServer();
-        }
+        //if (KiCoWebPlugin.loadEnabled()) {
+        System.out.println("Starting KiCo TCP Server at port " + KiCoWebPlugin.loadPort());
+        KiCoWebPlugin.startServer();
+        //}
         return null;
     }
 
