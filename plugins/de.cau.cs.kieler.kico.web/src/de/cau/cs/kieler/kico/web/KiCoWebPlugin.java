@@ -171,7 +171,9 @@ public class KiCoWebPlugin extends Plugin {
      * Stop the signle TCP server.
      */
     public static void stopServer() {
-        KiCoWebPlugin.getServer().abort();
+        if (KiCoWebPlugin.getServer() != null) {
+            KiCoWebPlugin.getServer().abort();
+        }
         KiCoWebPlugin.setServer(null);
     }
 

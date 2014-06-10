@@ -819,6 +819,11 @@ class KExpressionsExtension {
         valuedObject.setInitialValue(valuedObjectWithAttributes.initialValue.copy)
         valuedObject.setType(valuedObjectWithAttributes.type)
         valuedObject.setCombineOperator(valuedObjectWithAttributes.combineOperator)
+        if (!valuedObjectWithAttributes.cardinalities.nullOrEmpty) {
+            for (card : valuedObjectWithAttributes.cardinalities) {
+                valuedObject.cardinalities.add(card);        
+            }
+        }
         valuedObject
     }
 

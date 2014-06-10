@@ -132,20 +132,20 @@ class S2C {
    // Generate variables.
    def sVariables(Program program) {
        '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal]»
-			«signal.type.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
-			  «IF signal.isArray»
+            «signal.type.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
+              «IF signal.isArray»
                 «FOR card : signal.cardinalities»{int i«card.hashCode» = 0; for(i«card.hashCode»=0; i«card.hashCode» < «card.intValue»; i«card.hashCode»++) {«ENDFOR»
-		        «signal.name»«FOR card : signal.cardinalities»[i«card.hashCode»]«ENDFOR» = «signal.initialValue.expand»;
+                «signal.name»«FOR card : signal.cardinalities»[i«card.hashCode»]«ENDFOR» = «signal.initialValue.expand»;
                 «FOR card : signal.cardinalities»}}«ENDFOR»
-		      	«ELSE»
-	   		      = «signal.initialValue.expand» 
+                «ELSE»
+                  = «signal.initialValue.expand» 
                 «ENDIF»«ENDIF»;
-			
-			«IF program.usesPre(signal)»
-				«signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
-			«ENDIF»
-  		«ENDFOR»
-		'''
+            
+            «IF program.usesPre(signal)»
+                «signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
+            «ENDIF»
+        «ENDFOR»
+        '''
    }
 
    // Generate PRE variables setter.

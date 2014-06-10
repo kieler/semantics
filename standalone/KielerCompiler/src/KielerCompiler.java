@@ -54,17 +54,20 @@ public class KielerCompiler {
         if (args.length < 1 || args[0].startsWith("-")) {
             System.out
                     .println("\n"
-                            + "******************\n"
-                            + "* KielerCompiler *\n"
-                            + "******************\n"
-                            + "    Usage: KielerCompiler <host>:<port> [Options] <transformation 1> ... <transformation n>\n"
-                            + "Example 1: cat <FILE.sct> | java KielerCompiler localhost:5555 EXTENDED CORE > code.c\n"
-                            + "Example 2: java KielerCompiler localhost:5555 -f FILE.sct -o code.c EXTENDED CORE\n"
+                            + "====================\n"
+                            + "== KielerCompiler ==\n"
+                            + "====================\n"
+                            + "Usage: \n"
+                            + "  KielerCompiler <host>:<port> [Options] <transformation 1> ... <transformation n>\n"
+                            + "Example 1:\n"
+                            + "  cat <FILE.sct> | java -jar KielerCompiler.jar localhost:5555 EXTENDED CORE > code.c\n"
+                            + "Example 2:\n"
+                            + "  java -jar KielerCompiler.jar 5555 -f FILE.sct -o code.c CODEGENERATION \n"
                             + "\n"
                             + "Options:\n"
                             + "-f <filename> : Use a specific input file\n"
                             + "-o <filename> : Use a specific output file\n"
-                            + "-v            : Use verbose compilation, do not stop on errors\n"
+                            + "-v            : Use verbose compilation, more error messages\n"
                             + "-s            : Use strict mode in which only selected transformations are applied\n");
             return;
         }
@@ -79,7 +82,7 @@ public class KielerCompiler {
             }
         } else {
             try {
-                port = Integer.parseInt(hostAndPort[1]);
+                port = Integer.parseInt(hostAndPort[0]);
             } catch (Exception e) {
             }
             if (port > 0) {
@@ -97,19 +100,19 @@ public class KielerCompiler {
             String option = args[c];
 
             if (option.startsWith("-")) {
-                if (option.equals("-f")) {
+                if (option.equals("-f") || option.equals("--file")) {
                     if (c + 1 < args.length) {
                         inputFile = args[c + 1];
                         c++;
                     }
-                } else if (option.equals("-o")) {
+                } else if (option.equals("-o") || option.equals("--output")) {
                     if (c + 1 < args.length) {
                         outputFile = args[c + 1];
                         c++;
                     }
-                } else if (option.equals("-v")) {
+                } else if (option.equals("-v") || option.equals("--verbose")) {
                     verbose = true;
-                } else if (option.equals("-s")) {
+                } else if (option.equals("-s") || option.equals("--strict")) {
                     strict = true;
                 }
             } else {
@@ -121,26 +124,35 @@ public class KielerCompiler {
 
         }
 
-//        System.out.println("host: " + host);
-//        System.out.println("port: " + port);
-//        System.out.println("inputFile: " + inputFile);
-//        System.out.println("outputFile: " + outputFile);
-//        System.out.println("verbose: " + verbose);
-//        System.out.println("strict: " + strict);
-//        System.out.println("transformations: " + transformations);
+        // System.out.println("host: " + host);
+        // System.out.println("port: " + port);
+        // System.out.println("inputFile: " + inputFile);
+        // System.out.println("outputFile: " + outputFile);
+        // System.out.println("verbose: " + verbose);
+        // System.out.println("strict: " + strict);
+        // System.out.println("transformations: " + transformations);
 
         String model = readInputModel(inputFile);
 
-        //System.out.println("model: " + model);
+        // System.out.println("model: " + model);
 
-        String compiledModel =
+        CompilationResult compilationResult =
                 remoteCompile(host, port, outputFile, verbose, strict, model, transformations);
 
         if (outputFile == null || outputFile.trim().equals("")) {
-            System.out.println(compiledModel);
+            System.out.println(compilationResult.model);
         } else {
-            writeOutputModel(outputFile, compiledModel);
+            writeOutputModel(outputFile, compilationResult.model);
         }
+        if (compilationResult.error != null && compilationResult.error.length() > 0) {
+            if (verbose || compilationResult.model.length() == 0) {
+                System.out.println(compilationResult.error);
+            }
+            if (compilationResult.model.length() == 0) {
+                System.exit(1);
+            }
+        }
+        System.exit(0);
 
     }
 
@@ -190,6 +202,7 @@ public class KielerCompiler {
             } else {
                 // file non exits
                 System.out.println("Error: Input file not exists.");
+                System.exit(1);
             }
         }
         return model;
@@ -231,10 +244,10 @@ public class KielerCompiler {
      *            the transformations
      * @return the string
      */
-    public static String remoteCompile(String host, int port, String outputFile, boolean verbose,
-            boolean strict, String model, String transformations) {
-        String compiledModel = "";
-        
+    public static CompilationResult remoteCompile(String host, int port, String outputFile,
+            boolean verbose, boolean strict, String model, String transformations) {
+        CompilationResult result = new CompilationResult(model, "");
+
         String options = "";
         if (verbose) {
             options += "v";
@@ -249,19 +262,33 @@ public class KielerCompiler {
             client.sndMessage(model.split("\n").length + options + "\n");
             client.sndMessage(model + "\n");
 
-            compiledModel = client.rcvModel();
+            result = client.rcvCompilationResult();
 
             client.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return compiledModel;
+        return result;
     }
 
     // -------------------------------------------------------------------------
+
+    /**
+     * The Class CompilationResult.
+     */
+    static private class CompilationResult {
+        public String model;
+        public String error;
+
+        CompilationResult(String model, String error) {
+            this.model = model;
+            this.error = error;
+        }
+    }
+
     // -------------------------------------------------------------------------
-    
+
     /**
      * The internal Class TCPClient.
      */
@@ -280,24 +307,38 @@ public class KielerCompiler {
             out.flush();
         }
 
-        String rcvModel() throws IOException {
+        CompilationResult rcvCompilationResult() throws IOException {
             InputStreamReader in = new InputStreamReader(socket.getInputStream());
             BufferedReader bufferedReader = new BufferedReader(in);
 
-            int lines = Integer.parseInt(bufferedReader.readLine());
+            String[] linesArray = bufferedReader.readLine().split(":");
+            int linesModel = Integer.parseInt(linesArray[0]);
+            int linesError = 0;
+            if (linesArray.length > 1) {
+                linesError = Integer.parseInt(linesArray[1]);
+            }
 
             String model = "";
+            String error = "";
             String s;
-            while (lines > 0) {
+            while (linesModel >= 0) {
                 s = bufferedReader.readLine();
-                lines--;
+                linesModel--;
                 if (!model.equals("")) {
                     model += "\n";
                 }
                 model += s;
             }
+            while (linesError > 0) {
+                s = bufferedReader.readLine();
+                linesError--;
+                if (!error.equals("")) {
+                    error += "\n";
+                }
+                error += s;
+            }
 
-            return model;
+            return new CompilationResult(model, error);
         }
 
         void close() throws IOException {

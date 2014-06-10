@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import de.cau.cs.kieler.kico.web.KiCoWebPlugin;
+import org.eclipse.swt.widgets.Link;
 
 /**
  * The dialog window for controlling the TCP server, i.e., starting, stopping and changeing its port.
@@ -81,22 +82,30 @@ public class KiCoWebDialog extends Dialog {
      */
     private void createContents() {
         shlDdd = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-        shlDdd.setSize(326, 195);
+        shlDdd.setSize(326, 224);
         shlDdd.setText("KIELER Compiler TCP Web Interface");
 
         Composite composite = new Composite(shlDdd, SWT.BORDER);
-        composite.setBounds(10, 10, 300, 121);
+        composite.setBounds(10, 10, 300, 151);
 
         button = new Button(composite, SWT.CHECK);
         button.setText("Enable Server");
-        button.setBounds(77, 24, 85, 16);
+        button.setBounds(78, 10, 85, 16);
 
         CLabel lblPort = new CLabel(composite, SWT.NONE);
         lblPort.setText("Port :");
-        lblPort.setBounds(77, 63, 33, 19);
+        lblPort.setBounds(78, 43, 33, 19);
 
         text = new Text(composite, SWT.BORDER);
-        text.setBounds(114, 63, 76, 19);
+        text.setBounds(116, 43, 76, 19);
+        
+        Link link = new Link(composite, SWT.NONE);
+        link.setBounds(27, 105, 259, 32);
+        link.setText("<a>http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Compiler+Console</a>");
+        
+        CLabel lblMoreInformation = new CLabel(composite, SWT.NONE);
+        lblMoreInformation.setText("More Information:");
+        lblMoreInformation.setBounds(27, 78, 104, 21);
 
         Button btnOk = new Button(shlDdd, SWT.NONE);
         btnOk.addSelectionListener(new SelectionAdapter() {
@@ -112,6 +121,7 @@ public class KiCoWebDialog extends Dialog {
                 KiCoWebPlugin.savePort(port);
 
                 if (KiCoWebPlugin.loadEnabled()) {
+                    KiCoWebPlugin.stopServer();
                     KiCoWebPlugin.startServer();
                 } else {
                     KiCoWebPlugin.stopServer();
@@ -119,7 +129,7 @@ public class KiCoWebDialog extends Dialog {
                 shlDdd.close();
             }
         });
-        btnOk.setBounds(161, 137, 75, 23);
+        btnOk.setBounds(159, 167, 75, 23);
         btnOk.setText("&Ok");
 
         Button btncancel = new Button(shlDdd, SWT.NONE);
@@ -129,7 +139,7 @@ public class KiCoWebDialog extends Dialog {
                 shlDdd.close();
             }
         });
-        btncancel.setBounds(242, 137, 68, 23);
+        btncancel.setBounds(240, 167, 68, 23);
         btncancel.setText("&Cancel");
 
     }
