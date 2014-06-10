@@ -122,7 +122,7 @@ public class KiCoWebDialog extends Dialog {
 
                 if (KiCoWebPlugin.loadEnabled()) {
                     KiCoWebPlugin.stopServer();
-                    KiCoWebPlugin.startServer();
+                    KiCoWebPlugin.startServer(false);
                 } else {
                     KiCoWebPlugin.stopServer();
                 }

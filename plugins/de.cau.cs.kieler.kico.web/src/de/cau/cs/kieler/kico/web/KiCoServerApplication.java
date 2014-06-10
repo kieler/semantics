@@ -44,10 +44,15 @@ public class KiCoServerApplication implements IApplication {
         final Map<?, ?> args = context.getArguments();
         final String[] appArgs = (String[]) args.get("application.args");
         boolean nextPort = false;
+        boolean debug = false;
         ;
         for (final String arg : appArgs) {
             System.out.println(arg);
-            if (arg.equals("-p")) {
+            if (arg.equals("-d")) {
+                debug = true;
+            } else if (arg.equals("--debug")) {
+                debug = true;
+            } else if (arg.equals("-p")) {
                 nextPort = true;
             } else if (arg.equals("--port")) {
                 nextPort = true;
@@ -69,7 +74,7 @@ public class KiCoServerApplication implements IApplication {
         }
 
         System.out.println("Starting KiCo TCP Server at port " + KiCoWebPlugin.loadPort());
-        KiCoWebPlugin.startServer();
+        KiCoWebPlugin.startServer(debug);
         return null;
     }
 

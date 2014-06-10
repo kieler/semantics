@@ -24,7 +24,7 @@ public class KiCoWebStartup implements IStartup {
 
     public void earlyStartup() {
         if (KiCoWebPlugin.loadEnabled()) {
-            KiCoWebPlugin.startServer();
+            KiCoWebPlugin.startServer(false);
         }
     }
 

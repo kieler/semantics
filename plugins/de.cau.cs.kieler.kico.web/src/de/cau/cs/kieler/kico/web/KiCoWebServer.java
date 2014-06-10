@@ -53,6 +53,23 @@ public class KiCoWebServer extends Job {
     /** The aborted flag internally used for aborting a running server. */
     private boolean aborted = false;
 
+    /** The debug. */
+    private boolean debug = false;
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Output debug text.
+     * 
+     * @param text
+     *            the text
+     */
+    private void debug(String text) {
+        if (debug) {
+            System.out.println(text);
+        }
+    }
+
     // -------------------------------------------------------------------------
 
     /**
@@ -65,6 +82,19 @@ public class KiCoWebServer extends Job {
     @Inject
     public KiCoWebServer(String name) {
         super("KIELER Compiler TCP Server (" + KiCoWebPlugin.loadPort() + ")");
+        debug("Server created");
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the debug.
+     * 
+     * @param debug
+     *            the new debug
+     */
+    public void setDebug(boolean debug) {
+        this.debug = debug;
     }
 
     // -------------------------------------------------------------------------
@@ -99,6 +129,7 @@ public class KiCoWebServer extends Job {
      */
     @Override
     protected IStatus run(IProgressMonitor monitor) {
+        debug("Server started");
 
         // when started, invalidate the socket and set aborted to false
         aborted = false;
@@ -106,17 +137,23 @@ public class KiCoWebServer extends Job {
 
         // continuously while enabled provide the service
         while (KiCoWebPlugin.loadEnabled() && !aborted) {
+            debug("Server enabled");
 
             // if no socket then create a new listening server socket
             if (socket == null) {
+                debug("No socket. Creating socket.");
                 socket = listenPort(KiCoWebPlugin.loadPort());
+                debug("Server listen socket established");
             }
+            
 
             try {
                 if (socket != null) {
+                    debug("Server listen socket present");
                     Socket connectionSocket;
                     // accept incoming compilation requests
                     connectionSocket = socket.accept();
+                    debug("Socket accepted");
                     BufferedReader inFromClient =
                             new BufferedReader(new InputStreamReader(
                                     connectionSocket.getInputStream()));
@@ -125,13 +162,16 @@ public class KiCoWebServer extends Job {
                             new OutputStreamWriter(connectionSocket.getOutputStream());
                     PrintWriter printWriter = new PrintWriter(out);
 
+                    debug("Socket input and output streams established");
                     String transformations = inFromClient.readLine();
 
                     boolean verbose = false;
                     boolean strict = false;
+                    debug("Transformations read");
 
                     // length of the following model
                     String lengthAndOptionsLine = inFromClient.readLine();
+                    debug("Length and options read");
                     if (lengthAndOptionsLine.contains("v")) {
                         verbose = true;
                         lengthAndOptionsLine = lengthAndOptionsLine.replace("v", "");
@@ -142,6 +182,7 @@ public class KiCoWebServer extends Job {
                     }
                     int lines = Integer.parseInt(lengthAndOptionsLine);
 
+                    debug("Reading model");
                     String model = "";
                     String s;
                     while (lines > 0) {
@@ -152,11 +193,13 @@ public class KiCoWebServer extends Job {
                         }
                         model += s;
                     }
+                    debug("Model read");
 
                     // System.out.println("transformations: " + transformations);
                     // System.out.println("model: " + model);
 
                     EObject eObject = KiCoUtil.parse(model);
+                    debug("Model parsed");
 
                     // String fileExt = KiCoUIUtil.getFileExtension(eObject);
 
@@ -167,6 +210,7 @@ public class KiCoWebServer extends Job {
                     // process the model
                     CompilationResult compilationResult =
                             KielerCompiler.compile(transformations, eObject, !strict);
+                    debug("Model compiled");
 
                     boolean majorError = (compilationResult.getIntermediateResults().size() <= 1);
                     Object compiledModel = compilationResult.getObject();
@@ -177,6 +221,7 @@ public class KiCoWebServer extends Job {
                         if (compiledModel instanceof EObject) {
                             serializedCompiledModel = KiCoUtil.serialize((EObject) compiledModel);
                         }
+                        debug("Model serialized");
                     }
                     if (majorError) {
                         serializedCompiledModel = "";
@@ -185,20 +230,30 @@ public class KiCoWebServer extends Job {
                     // answer with compiled & serialized model
                     String lastError = KiCoPlugin.getLastError();
                     if (lastError != null) {
+                        debug("Errors serialized");
                         printWriter.print(serializedCompiledModel.split("\n").length + ":"
                                 + lastError.split("\n").length + "\n");
                         printWriter.print(serializedCompiledModel);
                         printWriter.print(lastError + "\n");
                     } else {
+                        debug("No errors to serialize");
                         printWriter.print(serializedCompiledModel.split("\n").length + "\n");
                         printWriter.print(serializedCompiledModel + "\n");
                     }
+                    debug("Compiled model sent to client");
                     printWriter.flush();
+                } else {
+                    debug("No server listen socket present!");
                 }
             } catch (IOException e) {
+                debug("Server IO error");
+                if (debug) {
+                    e.printStackTrace();
+                }
             }
 
         }
+        debug("Server aborted");
         abort();
 
         return Status.OK_STATUS;

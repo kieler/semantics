@@ -157,9 +157,10 @@ public class KiCoWebPlugin extends Plugin {
     /**
      * Start the single TCP server.
      */
-    public static void startServer() {
+    public static void startServer(boolean debug) {
         if (KiCoWebPlugin.getServer() == null) {
             KiCoWebServer newServer = Guice.createInjector().getInstance(KiCoWebServer.class);
+            newServer.setDebug(debug);
             KiCoWebPlugin.setServer(newServer);
             KiCoWebPlugin.getServer().schedule();
         }
