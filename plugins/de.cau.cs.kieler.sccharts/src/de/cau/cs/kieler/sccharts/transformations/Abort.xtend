@@ -74,7 +74,7 @@ class Abort {
     def void transformAbortAlternative(State state, State targetRootState) {
 
         val stateHasUntransformedTransitions = ((state.outgoingTransitions.size > 1) || ((state.outgoingTransitions.
-            size == 1) && state.outgoingTransitions.filter[typeTermination].filter[trigger != null].size == 1))
+            size == 1) && (!(state.outgoingTransitions.filter[typeTermination].filter[trigger == null].size == 1))))
 
         val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))
 
@@ -250,7 +250,7 @@ class Abort {
     def void transformAbortDefault(State state, State targetRootState) {
 
         val stateHasUntransformedTransitions = ((state.outgoingTransitions.size > 1) || ((state.outgoingTransitions.
-            size == 1) && state.outgoingTransitions.filter[typeTermination].filter[trigger != null].size == 1))
+            size == 1) && (!(state.outgoingTransitions.filter[typeTermination].filter[trigger == null].size == 1))))
 
         val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))
 
