@@ -100,19 +100,19 @@ public class KielerCompiler {
             String option = args[c];
 
             if (option.startsWith("-")) {
-                if (option.equals("-f")) {
+                if (option.equals("-f") || option.equals("--file")) {
                     if (c + 1 < args.length) {
                         inputFile = args[c + 1];
                         c++;
                     }
-                } else if (option.equals("-o")) {
+                } else if (option.equals("-o") || option.equals("--output")) {
                     if (c + 1 < args.length) {
                         outputFile = args[c + 1];
                         c++;
                     }
-                } else if (option.equals("-v")) {
+                } else if (option.equals("-v") || option.equals("--verbose")) {
                     verbose = true;
-                } else if (option.equals("-s")) {
+                } else if (option.equals("-s") || option.equals("--strict")) {
                     strict = true;
                 }
             } else {
@@ -124,17 +124,17 @@ public class KielerCompiler {
 
         }
 
-//        System.out.println("host: " + host);
-//        System.out.println("port: " + port);
-//        System.out.println("inputFile: " + inputFile);
-//        System.out.println("outputFile: " + outputFile);
-//        System.out.println("verbose: " + verbose);
-//        System.out.println("strict: " + strict);
-//        System.out.println("transformations: " + transformations);
+        // System.out.println("host: " + host);
+        // System.out.println("port: " + port);
+        // System.out.println("inputFile: " + inputFile);
+        // System.out.println("outputFile: " + outputFile);
+        // System.out.println("verbose: " + verbose);
+        // System.out.println("strict: " + strict);
+        // System.out.println("transformations: " + transformations);
 
         String model = readInputModel(inputFile);
 
-        //System.out.println("model: " + model);
+        // System.out.println("model: " + model);
 
         CompilationResult compilationResult =
                 remoteCompile(host, port, outputFile, verbose, strict, model, transformations);
@@ -244,10 +244,10 @@ public class KielerCompiler {
      *            the transformations
      * @return the string
      */
-    public static CompilationResult remoteCompile(String host, int port, String outputFile, boolean verbose,
-            boolean strict, String model, String transformations) {
+    public static CompilationResult remoteCompile(String host, int port, String outputFile,
+            boolean verbose, boolean strict, String model, String transformations) {
         CompilationResult result = new CompilationResult(model, "");
-        
+
         String options = "";
         if (verbose) {
             options += "v";
@@ -273,21 +273,22 @@ public class KielerCompiler {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * The Class CompilationResult.
      */
     static private class CompilationResult {
         public String model;
         public String error;
+
         CompilationResult(String model, String error) {
             this.model = model;
             this.error = error;
         }
     }
-    
+
     // -------------------------------------------------------------------------
-    
+
     /**
      * The internal Class TCPClient.
      */
@@ -320,7 +321,7 @@ public class KielerCompiler {
             String model = "";
             String error = "";
             String s;
-            while (linesModel > 0) {
+            while (linesModel >= 0) {
                 s = bufferedReader.readLine();
                 linesModel--;
                 if (!model.equals("")) {

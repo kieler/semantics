@@ -180,11 +180,12 @@ public class KiCoWebServer extends Job {
                     }
 
                     // answer with compiled & serialized model
-                    if (KiCoPlugin.getLastError() != null) {
+                    String lastError = KiCoPlugin.getLastError();
+                    if (lastError != null) {
                         printWriter.print(serializedCompiledModel.split("\n").length + ":"
-                                + KiCoPlugin.getLastError().split("\n").length + "\n");
-                        printWriter.print(serializedCompiledModel + "\n");
-                        printWriter.print(KiCoPlugin.getLastError() + "\n");
+                                + lastError.split("\n").length + "\n");
+                        printWriter.print(serializedCompiledModel);
+                        printWriter.print(lastError + "\n");
                     } else {
                         printWriter.print(serializedCompiledModel.split("\n").length + "\n");
                         printWriter.print(serializedCompiledModel + "\n");
