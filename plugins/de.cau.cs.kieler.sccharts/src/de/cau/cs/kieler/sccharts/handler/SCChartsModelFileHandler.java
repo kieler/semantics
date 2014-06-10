@@ -23,7 +23,7 @@ import de.cau.cs.kieler.sccharts.State;
 public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandler {
 
     public static final String ALL_TRANSFORMATIONS =
-            "ALL";
+            "EXTENDED, CORE";
 
     public static final String EXTENDED_TRANSFORMATIONS =
             "EXTENDED";
