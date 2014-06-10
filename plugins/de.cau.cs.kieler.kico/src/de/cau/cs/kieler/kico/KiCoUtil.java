@@ -25,12 +25,12 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Factory;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
-import org.eclipse.xtext.resource.IResourceServiceProvider;
-import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.resource.XtextResourceSet;
-
-import com.google.inject.Guice;
-import com.google.inject.Inject;
+//import org.eclipse.xtext.resource.IResourceServiceProvider;
+//import org.eclipse.xtext.resource.XtextResource;
+//import org.eclipse.xtext.resource.XtextResourceSet;
+//
+//import com.google.inject.Guice;
+//import com.google.inject.Inject;
 
 /**
  * This class is a collection of utility methods for handling models in/with KiCo.
@@ -52,7 +52,7 @@ public class KiCoUtil {
 
     // -------------------------------------------------------------------------
 
-    @Inject
+    //@Inject
     public KiCoUtil() {
         // no code
     }
