@@ -13,35 +13,23 @@
  */
 package de.cau.cs.kieler.kico.ui;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Factory;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
-import org.eclipse.ui.IEditorDescriptor;
-import org.eclipse.ui.IFileEditorMapping;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
-import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 
 import de.cau.cs.kieler.kico.KiCoPlugin;
-import de.cau.cs.kieler.kico.KiCoUtil;
 
 /**
  * This class is a collection of utility methods for handling models in/with KiCo.

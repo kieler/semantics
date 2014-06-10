@@ -26,19 +26,17 @@ import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kico.TransformationDummy
 import de.cau.cs.kieler.kico.ui.KiCoDisabledSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionAction
+import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
-import java.util.HashMap
+import java.util.ArrayList
 import java.util.List
 import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import java.util.ArrayList
-import de.cau.cs.kieler.kiml.options.Direction
-import de.cau.cs.kieler.kico.ui.KiCoSelectionView
 
 //import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 

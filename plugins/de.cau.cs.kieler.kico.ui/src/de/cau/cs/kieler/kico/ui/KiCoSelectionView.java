@@ -76,9 +76,6 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static final ImageDescriptor ICON_COMPILE = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconCompile.png");
 
-    // public static final ImageDescriptor ICON_SSM = AbstractUIPlugin.imageDescriptorFromPlugin(
-    // "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconSSM.png");
-
     public static final ImageDescriptor ICON_EXPANDALL = AbstractUIPlugin
             .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.ui",
                     "icons/KiCoViewIconExpandAll.png");
@@ -86,16 +83,13 @@ public class KiCoSelectionView extends DiagramViewPart {
     /** The action for toggling the advanced mode. */
     private Action actionAdvancedToggle;
 
-    // /** The action for toggling the SSM mode. */
-    // private Action actionSSMToggle;
-
     /** The action for toggling the hierarchy mode. */
     private Action actionHierarchyToggle;
 
     /** The action for toggling the hierarchy mode. */
-    private Action actionCompileToggle;
+    //private Action actionCompileToggle;
 
-    /** The action for toggling the SSM mode. */
+    /** The action for toggling the expand mode. */
     private Action actionExpandAllToggle;
 
     /** The active editor property key. */
@@ -126,9 +120,6 @@ public class KiCoSelectionView extends DiagramViewPart {
     /** The advaned mode auto selects required transformations. */
     public static int compileMode = 0;
     public static final int COMPILEMODEMAX = 5; // 5 stages of compilation
-
-    // /** The SSM diagram synthesis mode. */
-    // public static boolean SSMMode = false;
 
     /** The hierarchy or flat diagram synthesis mode. */
     public static int hierarchyMode = 0; // 0 = hierarchy, 1 = flat & no groups, 2 = flat
@@ -670,10 +661,6 @@ public class KiCoSelectionView extends DiagramViewPart {
                             properties.setProperty(
                                     KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                                     "de.cau.cs.kieler.kico.ui.klighd.diagramSynthesis");
-                            // } else if (SSMMode) {
-                            // properties.setProperty(
-                            // KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
-                            // "de.cau.cs.kieler.kico.ui.klighd.diagramSynthesisSSM");
                         } else if (hierarchyMode == 1) {
                             properties.setProperty(
                                     KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
@@ -759,7 +746,6 @@ public class KiCoSelectionView extends DiagramViewPart {
         
         toolBarManager.add(getActionExpandAll());
         toolBarManager.add(getActionAdvancedToggle());
-        // toolBarManager.add(getActionSSMToggle());
         toolBarManager.add(getActionHierarchyToggle());
         // toolBarManager.add(getActionCompileToggle());
 
@@ -858,71 +844,37 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Gets the action to toggle compile mode.
-     * 
-     * @return the action
-     */
-    private Action getActionCompileToggle() {
-        if (actionCompileToggle != null) {
-            return actionCompileToggle;
-        }
-        actionCompileToggle = new Action("", IAction.AS_PUSH_BUTTON) {
-            public void run() {
-                // TOGGLE
-                compileMode++;
-                if (compileMode > COMPILEMODEMAX) {
-                    compileMode = 0;
-                }
-                lastEditor = "";
-                updateView(lastWorkbenchPartReference);
-            }
-        };
-        actionCompileToggle.setText("Toggle Compile Mode");
-        actionCompileToggle
-                .setToolTipText("Toggles between different stages of the transformation selection algorihm until the selection used for compilation");
-        actionCompileToggle.setImageDescriptor(ICON_COMPILE);
-        return actionCompileToggle;
-    }
-
-    // -------------------------------------------------------------------------
-
-    // /**
-    // * Gets the action to toggle presence of the SSM representation.
-    // *
-    // * @return the action
-    // */
-    // private Action getActionSSMToggle() {
-    // if (actionSSMToggle != null) {
-    // return actionSSMToggle;
-    // }
-    // actionSSMToggle = new Action("", IAction.AS_CHECK_BOX) {
-    // public void run() {
-    // // TOGGLE
-    // SSMMode = !SSMMode;
-    // actionSSMToggle.setChecked(SSMMode);
-    //
-    // // if (SSMMode) {
-    // // addRequiredTransformationVisualization(getActiveEditorID());
-    // // } else {
-    // // removeRequiredTransformationVisualization(getActiveEditorID());
-    // // }
-    // lastEditor = "";
-    // updateView(lastWorkbenchPartReference);
-    //
-    // }
-    // };
-    // actionSSMToggle.setText("Toggle SSM Diagram Synthesis");
-    // actionSSMToggle.setToolTipText("Toggle SSM Diagram Synthesis");
-    // actionSSMToggle.setImageDescriptor(ICON_SSM);
-    // actionSSMToggle.setChecked(SSMMode);
-    // return actionSSMToggle;
-    // }
+//    /**
+//     * Gets the action to toggle compile mode.
+//     * 
+//     * @return the action
+//     */
+//    private Action getActionCompileToggle() {
+//        if (actionCompileToggle != null) {
+//            return actionCompileToggle;
+//        }
+//        actionCompileToggle = new Action("", IAction.AS_PUSH_BUTTON) {
+//            public void run() {
+//                // TOGGLE
+//                compileMode++;
+//                if (compileMode > COMPILEMODEMAX) {
+//                    compileMode = 0;
+//                }
+//                lastEditor = "";
+//                updateView(lastWorkbenchPartReference);
+//            }
+//        };
+//        actionCompileToggle.setText("Toggle Compile Mode");
+//        actionCompileToggle
+//                .setToolTipText("Toggles between different stages of the transformation selection algorihm until the selection used for compilation");
+//        actionCompileToggle.setImageDescriptor(ICON_COMPILE);
+//        return actionCompileToggle;
+//    }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action to toggle presence of the SSM representation.
+     * Gets the action to toggle hierarchy mode.
      * 
      * @return the action
      */
@@ -987,7 +939,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                                     return arg0 instanceof KNode && !viewer.isExpanded(arg0);
                                 }
                             })) {
-                        ViewContext vc = viewer.getViewContext();
+                        //ViewContext vc = viewer.getViewContext();
                         viewer.expand((KNode) k);
                     }
                 } else {

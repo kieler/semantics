@@ -1,6 +1,5 @@
 package de.cau.cs.kieler.kico.ui;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,9 +15,6 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.kico.KiCoPlugin;
-import de.cau.cs.kieler.kico.Transformation;
-import de.cau.cs.kieler.kico.TransformationGroup;
-import de.cau.cs.kieler.kico.TransformationWrapper;
 
 /**
  * The activator class controls the plug-in life cycle.
