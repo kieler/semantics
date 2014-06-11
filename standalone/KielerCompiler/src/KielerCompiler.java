@@ -321,8 +321,9 @@ public class KielerCompiler {
             String model = "";
             String error = "";
             String s;
-            while (linesModel >= 0) {
+            while (linesModel > 0) {
                 s = bufferedReader.readLine();
+                //System.out.println("M" + linesModel + ". " + s);
                 linesModel--;
                 if (!model.equals("")) {
                     model += "\n";
@@ -331,6 +332,7 @@ public class KielerCompiler {
             }
             while (linesError > 0) {
                 s = bufferedReader.readLine();
+                //System.out.println("E" + linesError + ". " + s);
                 linesError--;
                 if (!error.equals("")) {
                     error += "\n";
