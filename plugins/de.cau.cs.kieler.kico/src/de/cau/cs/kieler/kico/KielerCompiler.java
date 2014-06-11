@@ -35,7 +35,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 public class KielerCompiler {
 
     /** The Constant DEBUG. */
-    public static final boolean DEBUG = !System.getProperty("java.vm.info", "").contains("sharing");
+    public static final boolean DEBUG = java.lang.management.ManagementFactory.getRuntimeMXBean(). getInputArguments().toString().contains("-agentlib:jdwp");
 
     /** The cached map id to transformations. */
     private static HashMap<String, Transformation> id2transformations = null;
