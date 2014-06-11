@@ -112,7 +112,7 @@ public class KiCoUtil {
                     returnText = outputStream.toString();
                     done = true;
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
 
                 if (done) {
