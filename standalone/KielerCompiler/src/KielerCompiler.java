@@ -246,7 +246,7 @@ public class KielerCompiler {
      */
     public static CompilationResult remoteCompile(String host, int port, String outputFile,
             boolean verbose, boolean strict, String model, String transformations) {
-        CompilationResult result = new CompilationResult(model, "");
+        CompilationResult result = new CompilationResult("", "");
 
         String options = "";
         if (verbose) {
