@@ -1036,15 +1036,19 @@ class SCChartsExtension {
     		if (obj instanceof ValuedObjectReference
     			&& (obj as ValuedObjectReference).valuedObject == valuedObject
     		)  {
+    		    var indices = (obj as ValuedObjectReference).indices.toList;
     			obj.replace(replacement.reference)
+    			(obj as ValuedObjectReference).indices.addAll(indices);
     		}
 
     		else if (obj instanceof Assignment && (obj as Assignment).valuedObject == valuedObject)  {
-				(obj as Assignment).valuedObject = replacement
+                var indices = (obj as Assignment).indices.toList;
+				(obj as Assignment).valuedObject = replacement;
+                (obj as Assignment).indices.addAll(indices);
     		}
 
     		else if (obj instanceof Emission && (obj as Emission).valuedObject == valuedObject)  {
-				(obj as Emission).valuedObject = replacement
+				(obj as Emission).valuedObject = replacement;
     		}
 
     		else if (obj instanceof Binding) {
