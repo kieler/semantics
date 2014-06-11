@@ -136,7 +136,7 @@ public class KiCoWebServer extends Job {
         // when started, invalidate the socket and set aborted to false
         aborted = false;
         socket = null;
-        
+
         debug("Server enabled: " + KiCoWebPlugin.loadEnabled());
 
         // continuously while enabled provide the service
@@ -149,7 +149,6 @@ public class KiCoWebServer extends Job {
                 socket = listenPort(KiCoWebPlugin.loadPort());
                 debug("Server listen socket established");
             }
-            
 
             try {
                 if (socket != null) {
@@ -235,15 +234,15 @@ public class KiCoWebServer extends Job {
                     String lastError = KiCoPlugin.getLastError();
                     if (lastError != null) {
                         debug("Errors serialized");
-                        printWriter.print(serializedCompiledModel.split("\n").length + ":"
-                                + lastError.split("\n").length + "\n");
-                        printWriter.print(serializedCompiledModel);
-                        printWriter.print(lastError + "\n");
                     } else {
+                        lastError = "";
                         debug("No errors to serialize");
-                        printWriter.print(serializedCompiledModel.split("\n").length + "\n");
-                        printWriter.print(serializedCompiledModel + "\n");
                     }
+                    String header = serializedCompiledModel.split("\n").length + ":"
+                            + lastError.split("\n").length + "\n";
+                    printWriter.print(header);
+                    printWriter.print(serializedCompiledModel + "\n");
+                    printWriter.print(lastError + "\n");
                     debug("Compiled model sent to client");
                     printWriter.flush();
                 } else {
