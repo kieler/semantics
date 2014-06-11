@@ -1032,19 +1032,28 @@ class SCChartsExtension {
     }
     
     def void replaceAllOccurrences(Scope scope, ValuedObject valuedObject, ValuedObject replacement) {
-    	for(obj : scope.eAllContents.toList.immutableCopy) {
+        val relevantObjects = scope.eAllContents.filter(e | e instanceof ValuedObjectReference || 
+                                                            e instanceof Assignment ||
+                                                            e instanceof Emission ||
+                                                            e instanceof Binding
+        ).toList.immutableCopy;
+    	for(obj : relevantObjects) {
     		if (obj instanceof ValuedObjectReference
     			&& (obj as ValuedObjectReference).valuedObject == valuedObject
     		)  {
-    		    var indices = (obj as ValuedObjectReference).indices.toList;
+                val valuedObjectReference = (obj as ValuedObjectReference)
+    		    var indices = valuedObjectReference.indices.toList;
     			obj.replace(replacement.reference)
-    			(obj as ValuedObjectReference).indices.addAll(indices);
+      			valuedObjectReference.indices.clear
+      			valuedObjectReference.indices.addAll(indices);
     		}
 
     		else if (obj instanceof Assignment && (obj as Assignment).valuedObject == valuedObject)  {
-                var indices = (obj as Assignment).indices.toList;
-				(obj as Assignment).valuedObject = replacement;
-                (obj as Assignment).indices.addAll(indices);
+    		    val assignment = (obj as Assignment)
+                var indices = assignment.indices.toList;
+				assignment.valuedObject = replacement;
+                assignment.indices.clear
+                assignment.indices.addAll(indices);
     		}
 
     		else if (obj instanceof Emission && (obj as Emission).valuedObject == valuedObject)  {
