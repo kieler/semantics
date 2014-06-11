@@ -188,11 +188,11 @@ public class KiCoUtil {
         if (!done) {
             try {
 
-//                for (String ext : getRegXtext().getExtensionToFactoryMap().keySet()) {
-                  for (String ext : getRegXtext().getExtensionToFactoryMap().keySet()) {
+                for (String ext : getRegXtext().getExtensionToFactoryMap().keySet()) {
                     URI uri = URI.createURI("dummy:/inmemory." + ext);
-//                    Factory provider = regXMI.getFactory(uri);
-//                    Resource res = provider.createResource(uri);
+//                  Factory provider = regXMI.getFactory(uri);
+//                  Resource res = provider.createResource(uri);
+
                     IResourceServiceProvider provider = getRegXtext().getResourceServiceProvider(uri);
                     XtextResourceSet resourceSet = provider.get(XtextResourceSet.class);
                     resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
@@ -201,8 +201,8 @@ public class KiCoUtil {
                     done = false;
                     try {
                         InputStream in = new ByteArrayInputStream(text.getBytes());// StandardCharsets.UTF_8));
-                        res.load(in, null);
-//                        res.load(in, resourceSet.getLoadOptions());
+//                      res.load(in, null);
+                        res.load(in, resourceSet.getLoadOptions());
                         returnEObject = res.getContents().get(0);
                         done = true;
                     } catch (Exception e) {
@@ -212,7 +212,7 @@ public class KiCoUtil {
                         break;
                     }
                 }
-
+                
             } catch (Exception e) {
                 String text2 = "";
                 if (text != null) {
