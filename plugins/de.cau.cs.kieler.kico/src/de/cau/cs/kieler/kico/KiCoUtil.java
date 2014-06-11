@@ -26,12 +26,14 @@ import org.eclipse.emf.ecore.resource.Resource.Factory;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
+import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 //import org.eclipse.xtext.resource.XtextResource;
 //import org.eclipse.xtext.resource.XtextResourceSet;
 
-//import com.google.inject.Guice;
-//import com.google.inject.Inject;
+
+import com.google.inject.Guice;
+import com.google.inject.Inject;
 
 
 /**
@@ -46,30 +48,30 @@ public class KiCoUtil {
 
     
 //    /** The reg is necessary to find serializer or parser for Xtext models. */
-//    @Inject
-//    IResourceServiceProvider.Registry regXtext2;
+    @Inject
+    IResourceServiceProvider.Registry regXtext;
     
-    final static Resource.Factory.Registry regXMI = Resource.Factory.Registry.INSTANCE;//getExtensionToFactoryMap();
+//    final static Resource.Factory.Registry regXMI = Resource.Factory.Registry.INSTANCE;//getExtensionToFactoryMap();
     
-    final static IResourceServiceProvider.Registry regXtext = IResourceServiceProvider.Registry.INSTANCE; //.getResourceServiceProvider(
+//    final static IResourceServiceProvider.Registry regXtext = IResourceServiceProvider.Registry.INSTANCE; //.getResourceServiceProvider(
 
-//    private static KiCoUtil instance = null;
+    private static KiCoUtil instance = null;
 
     // -------------------------------------------------------------------------
 
-    //@Inject
+    @Inject
     public KiCoUtil() {
         // no code
     }
 
     // -------------------------------------------------------------------------
 
-//    public static IResourceServiceProvider.Registry getRegXtext() {
-//        if (instance == null) {
-//            instance = Guice.createInjector().getInstance(KiCoUtil.class);
-//        }
-//        return instance.regXtext;
-//    }
+    public static IResourceServiceProvider.Registry getRegXtext() {
+        if (instance == null) {
+            instance = Guice.createInjector().getInstance(KiCoUtil.class);
+        }
+        return instance.regXtext;
+    }
 
     // -------------------------------------------------------------------------
 
@@ -90,12 +92,12 @@ public class KiCoUtil {
         boolean done = false;
         try {
 
-            for (String ext :  regXtext.getExtensionToFactoryMap().keySet()) {
+            for (String ext :  getRegXtext().getExtensionToFactoryMap().keySet()) {
                 URI uri = URI.createURI("dummy:/inmemory." + ext);
 //                Factory provider = regXMI.getFactory(uri);
 //                Resource res = provider.createResource(uri);
                 
-                IResourceServiceProvider provider =  regXtext.getResourceServiceProvider(uri);
+                IResourceServiceProvider provider =  getRegXtext().getResourceServiceProvider(uri);
                 XtextResourceSet resourceSet = provider.get(XtextResourceSet.class);
                 Resource res = resourceSet.createResource(uri);
 
@@ -187,14 +189,14 @@ public class KiCoUtil {
             try {
 
 //                for (String ext : getRegXtext().getExtensionToFactoryMap().keySet()) {
-                  for (String ext : regXMI.getExtensionToFactoryMap().keySet()) {
+                  for (String ext : getRegXtext().getExtensionToFactoryMap().keySet()) {
                     URI uri = URI.createURI("dummy:/inmemory." + ext);
-                    Factory provider = regXMI.getFactory(uri);
-                    Resource res = provider.createResource(uri);
-//                    IResourceServiceProvider provider = getRegXtext().getResourceServiceProvider(uri);
-//                    XtextResourceSet resourceSet = provider.get(XtextResourceSet.class);
-//                    resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
-//                    Resource res = resourceSet.createResource(uri);
+//                    Factory provider = regXMI.getFactory(uri);
+//                    Resource res = provider.createResource(uri);
+                    IResourceServiceProvider provider = getRegXtext().getResourceServiceProvider(uri);
+                    XtextResourceSet resourceSet = provider.get(XtextResourceSet.class);
+                    resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
+                    Resource res = resourceSet.createResource(uri);
 
                     done = false;
                     try {
