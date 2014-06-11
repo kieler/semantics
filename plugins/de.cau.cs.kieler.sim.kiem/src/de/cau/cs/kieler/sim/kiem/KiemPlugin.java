@@ -77,7 +77,8 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 public class KiemPlugin extends AbstractUIPlugin {
 
     /** The Constant DEBUG. */
-    public static final boolean DEBUG = !System.getProperty("java.vm.info", "").contains("sharing");
+    public static final boolean DEBUG = java.lang.management.ManagementFactory.getRuntimeMXBean(). getInputArguments().toString().contains("-agentlib:jdwp");
+//    public static final boolean DEBUG = !System.getProperty("java.vm.info", "").contains("sharing");
 
     /**
      * The Constant AIMED_STEP_DURATION_DEFAULT. Default value of the AimedStepDuration text field
