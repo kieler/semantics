@@ -1140,10 +1140,12 @@ public class KielerCompiler {
 
                     Class<?> parameterType = transformedObject.getClass();
                     Class<?> handledParameterType = transformation.getParameterType();
-                    System.out.println("PERFORM TRANSFORMATION: " + processedTransformationID
-                            + " ( is " + parameterType.getName() + "  handled by "
-                            + handledParameterType.getName() + "? "
-                            + handledParameterType.isInstance(transformedObject) + " )");
+                    if (DEBUG) {
+                        System.out.println("PERFORM TRANSFORMATION: " + processedTransformationID
+                                + " ( is " + parameterType.getName() + "  handled by "
+                                + handledParameterType.getName() + "? "
+                                + handledParameterType.isInstance(transformedObject) + " )");
+                    }
                     if (handledParameterType.isInstance(transformedObject)) {
 
                         String transformationID = "unknown";
