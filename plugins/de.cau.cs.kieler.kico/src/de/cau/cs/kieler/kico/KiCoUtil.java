@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.resource.Resource.Factory;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
+import org.eclipse.xtext.resource.XtextResourceSet;
 //import org.eclipse.xtext.resource.XtextResource;
 //import org.eclipse.xtext.resource.XtextResourceSet;
 
@@ -51,7 +52,7 @@ public class KiCoUtil {
     
     final static Resource.Factory.Registry regXMI = Resource.Factory.Registry.INSTANCE;//getExtensionToFactoryMap();
     
-//    final static IResourceServiceProvider.Registry regXtext = IResourceServiceProvider.Registry.INSTANCE; //.getResourceServiceProvider(
+    final static IResourceServiceProvider.Registry regXtext = IResourceServiceProvider.Registry.INSTANCE; //.getResourceServiceProvider(
 
 //    private static KiCoUtil instance = null;
 
@@ -90,14 +91,14 @@ public class KiCoUtil {
         boolean done = false;
         try {
 
-            for (String ext :  regXMI.getExtensionToFactoryMap().keySet()) {
+            for (String ext :  regXtext.getExtensionToFactoryMap().keySet()) {
                 URI uri = URI.createURI("dummy:/inmemory." + ext);
-                Factory provider = regXMI.getFactory(uri);
-                Resource res = provider.createResource(uri);
+//                Factory provider = regXMI.getFactory(uri);
+//                Resource res = provider.createResource(uri);
                 
-//                IResourceServiceProvider provider =  getRegXtext().getResourceServiceProvider(uri);
-//                XtextResourceSet resourceSet = provider.get(XtextResourceSet.class);
-//                Resource res = resourceSet.createResource(uri);
+                IResourceServiceProvider provider =  regXtext.getResourceServiceProvider(uri);
+                XtextResourceSet resourceSet = provider.get(XtextResourceSet.class);
+                Resource res = resourceSet.createResource(uri);
 
                 done = false;
                 try {
