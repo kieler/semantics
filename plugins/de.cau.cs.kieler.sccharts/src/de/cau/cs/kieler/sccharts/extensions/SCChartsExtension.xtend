@@ -1042,18 +1042,23 @@ class SCChartsExtension {
     			&& (obj as ValuedObjectReference).valuedObject == valuedObject
     		)  {
                 val valuedObjectReference = (obj as ValuedObjectReference)
-    		    var indices = valuedObjectReference.indices.toList;
-    			obj.replace(replacement.reference)
-      			valuedObjectReference.indices.clear
-      			valuedObjectReference.indices.addAll(indices);
+    		    val valuedObjectReferenceCopy = valuedObjectReference.copy;
+    		    val replacementValuedObjectReference = replacement.reference;
+    			obj.replace(replacementValuedObjectReference)
+      			replacementValuedObjectReference.indices.clear
+      			for (index : valuedObjectReferenceCopy.indices) {
+                    replacementValuedObjectReference.indices.add(index.copy);
+      			}
     		}
 
     		else if (obj instanceof Assignment && (obj as Assignment).valuedObject == valuedObject)  {
     		    val assignment = (obj as Assignment)
-                var indices = assignment.indices.toList;
+                val assignmentCopy = assignment.copy;
 				assignment.valuedObject = replacement;
                 assignment.indices.clear
-                assignment.indices.addAll(indices);
+                for (index : assignmentCopy.indices) {
+                    assignment.indices.add(index.copy);
+                }
     		}
 
     		else if (obj instanceof Emission && (obj as Emission).valuedObject == valuedObject)  {

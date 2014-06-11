@@ -70,12 +70,24 @@ class Reference {
             if (eObject instanceof Assignment || eObject instanceof ValuedObjectReference) {
                 for(binding : state.bindings) {
                     if (eObject instanceof Assignment) {
-                        if ((eObject as Assignment).valuedObject.name == binding.formal.name) {
-                            (eObject as Assignment).valuedObject = binding.actual
+                        val assignment = (eObject as Assignment);
+                        val assignmentCopy = assignment.copy;
+                        if (assignment.valuedObject.name == binding.formal.name) {
+                           assignment.valuedObject = binding.actual
+                        }
+                        assignment.indices.clear
+                        for (index : assignmentCopy.indices) {
+                            assignment.indices.add(index.copy);
                         }
                     } else if (eObject instanceof ValuedObjectReference) {
-                        if ((eObject as ValuedObjectReference).valuedObject.name == binding.formal.name) {
-                            (eObject as ValuedObjectReference).valuedObject = binding.actual
+                        val valuedObjectReference = (eObject as ValuedObjectReference);
+                        val valuedObjectReferenceCopy = valuedObjectReference.copy
+                        if (valuedObjectReference.valuedObject.name == binding.formal.name) {
+                            valuedObjectReference.valuedObject = binding.actual
+                        }
+                        valuedObjectReference.indices.clear
+                        for (index : valuedObjectReferenceCopy.indices) {
+                            valuedObjectReference.indices.add(index.copy);
                         }
                     }
                 }
