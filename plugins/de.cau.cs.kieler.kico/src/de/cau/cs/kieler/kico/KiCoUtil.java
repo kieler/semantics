@@ -16,6 +16,7 @@ package de.cau.cs.kieler.kico;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,12 +26,13 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Factory;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
-//import org.eclipse.xtext.resource.IResourceServiceProvider;
+import org.eclipse.xtext.resource.IResourceServiceProvider;
 //import org.eclipse.xtext.resource.XtextResource;
 //import org.eclipse.xtext.resource.XtextResourceSet;
-//
+
 //import com.google.inject.Guice;
 //import com.google.inject.Inject;
+
 
 /**
  * This class is a collection of utility methods for handling models in/with KiCo.
@@ -42,13 +44,16 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
  */
 public class KiCoUtil {
 
+    
 //    /** The reg is necessary to find serializer or parser for Xtext models. */
 //    @Inject
-//    IResourceServiceProvider.Registry regXtext;
+//    IResourceServiceProvider.Registry regXtext2;
     
     final static Resource.Factory.Registry regXMI = Resource.Factory.Registry.INSTANCE;//getExtensionToFactoryMap();
+    
+//    final static IResourceServiceProvider.Registry regXtext = IResourceServiceProvider.Registry.INSTANCE; //.getResourceServiceProvider(
 
-    private static KiCoUtil instance = null;
+//    private static KiCoUtil instance = null;
 
     // -------------------------------------------------------------------------
 
@@ -68,6 +73,9 @@ public class KiCoUtil {
 
     // -------------------------------------------------------------------------
 
+
+// -------------------------------------------------------------------------
+
     /**
      * Serialize the EObject (if the compilation result is not plain text (String)). This is
      * implemented by finding the first suitable XtextResourceProvider that is able to serialize the
@@ -82,16 +90,20 @@ public class KiCoUtil {
         boolean done = false;
         try {
 
-            for (String ext : regXMI.getExtensionToFactoryMap().keySet()) {
+            for (String ext :  regXMI.getExtensionToFactoryMap().keySet()) {
                 URI uri = URI.createURI("dummy:/inmemory." + ext);
                 Factory provider = regXMI.getFactory(uri);
                 Resource res = provider.createResource(uri);
-//                IResourceServiceProvider provider = getRegXtext().getResourceServiceProvider(uri);
+                
+//                IResourceServiceProvider provider =  getRegXtext().getResourceServiceProvider(uri);
 //                XtextResourceSet resourceSet = provider.get(XtextResourceSet.class);
 //                Resource res = resourceSet.createResource(uri);
 
                 done = false;
                 try {
+//                    returnText = getSerializer().serialize(model);
+//                    returnText = getSerializer().serialize(model.get(0), new OutputStreamWriter(outputStream, getEncoding()), saveOptions);
+                    
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                     res.getContents().add(model);
                     res.save(outputStream, getSaveOptions());
