@@ -235,7 +235,6 @@ public abstract class Transformation {
      * @return the e object
      */
     public final Object doTransform(EObject eObject) throws Exception {
-        String transformationID = this.id;
         if (method == null) {
             // A Transformation instance with the standard transformation method
             return ((Transformation) transformationInstance).transform(eObject);
