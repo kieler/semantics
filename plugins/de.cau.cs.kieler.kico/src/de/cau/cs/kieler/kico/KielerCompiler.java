@@ -49,9 +49,34 @@ public class KielerCompiler {
 
     /** The global verbose mode. */
     private static boolean verboseMode = false;
+    
+    /** Further included models can be searched by a scoper. */
+    private static ArrayList<EObject> includedModels = new ArrayList<EObject>();
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Sets additionally included models that can be searched by a scoper.
+     *
+     * @param includedModels the new included models
+     */
+    public static void setIncludedModels(ArrayList<EObject> includedModels) {
+        KielerCompiler.includedModels = includedModels;
+    }
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Get additionally included models that can be searched by a scoper.
+     *
+     * @param includedModels the new included models
+     */
+    public static ArrayList<EObject> getIncludedModels() {
+        return KielerCompiler.includedModels;
+    }
 
+    // -------------------------------------------------------------------------
+    
     /**
      * Checks if is verbose mode.
      * 

@@ -22,6 +22,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 //import java.nio.charset.StandardCharsets;
 
+import java.util.ArrayList;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -183,28 +185,53 @@ public class KiCoWebServer extends Job {
                         strict = true;
                         lengthAndOptionsLine = lengthAndOptionsLine.replace("s", "");
                     }
-                    int lines = Integer.parseInt(lengthAndOptionsLine);
-
-                    debug("Reading model");
-                    String model = "";
-                    String s;
-                    while (lines > 0) {
-                        s = inFromClient.readLine();
-                        lines--;
-                        if (!model.equals("")) {
-                            model += "\n";
-                        }
-                        model += s;
+                    
+                    
+                    ArrayList<String> models = new ArrayList<String>();
+                    ArrayList<Integer> lines = new ArrayList<Integer>();
+                    
+                    String[] linesArray = lengthAndOptionsLine.split(":");
+                    for (String lineString : linesArray) {
+                        int line = Integer.parseInt(lineString);
+                        lines.add(line);
                     }
-                    debug("Model read");
+                    
+                    for (Integer line : lines) {
+                        debug("Reading model (" + line +")");
+                        int countDown = line;
+                        String model = "";
+                        String s;
+                        while (countDown > 0) {
+                            s = inFromClient.readLine();
+                            countDown--;
+                            if (!model.equals("")) {
+                                model += "\n";
+                            }
+                            model += s;
+                        }
+                        models.add(model);
+                        debug("Model read");
+                    }
 
                     // System.out.println("transformations: " + transformations);
                     // System.out.println("model: " + model);
 
-                    EObject eObject = KiCoUtil.parse(model);
+                    EObject mainModel = null;
+                    ArrayList<EObject> includedModels = new ArrayList<EObject>();
+                    
+                    for (String model : models) {
+                        EObject eObject = KiCoUtil.parse(model);
+                        if (mainModel == null) {
+                            mainModel = eObject;
+                        } else {
+                            includedModels.add(eObject);
+                        }
+                    }
                     debug("Model parsed");
 
                     // String fileExt = KiCoUIUtil.getFileExtension(eObject);
+                    
+                    KielerCompiler.setIncludedModels(includedModels);
 
                     KielerCompiler.setVerboseMode(verbose);
 
@@ -212,7 +239,7 @@ public class KiCoWebServer extends Job {
 
                     // process the model
                     CompilationResult compilationResult =
-                            KielerCompiler.compile(transformations, eObject, !strict);
+                            KielerCompiler.compile(transformations, mainModel, !strict);
                     debug("Model compiled");
 
                     boolean majorError = (compilationResult.getIntermediateResults().size() <= 1);

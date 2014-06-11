@@ -21,6 +21,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * The KIELER Compiler TCP client interface for compiling EMF models using KiCo. This is a plain
@@ -50,6 +51,7 @@ public class KielerCompiler {
         boolean strict = false;
         String inputFile = null;
         String outputFile = null;
+        ArrayList<String> includeFiles = new ArrayList<String>();
 
         if (args.length < 1 || args[0].startsWith("-")) {
             System.out
@@ -66,6 +68,7 @@ public class KielerCompiler {
                             + "\n"
                             + "Options:\n"
                             + "-f <filename> : Use a specific input file\n"
+                            + "-i <filename> : Use each specific additional included input file that is referenced\n"
                             + "-o <filename> : Use a specific output file\n"
                             + "-v            : Use verbose compilation, more error messages\n"
                             + "-s            : Use strict mode in which only selected transformations are applied\n");
@@ -105,6 +108,12 @@ public class KielerCompiler {
                         inputFile = args[c + 1];
                         c++;
                     }
+                } else if (option.equals("-i") || option.equals("--include")) {
+                    if (c + 1 < args.length) {
+                        String includeFile = args[c + 1];
+                        includeFiles.add(includeFile);
+                        c++;
+                    }
                 } else if (option.equals("-o") || option.equals("--output")) {
                     if (c + 1 < args.length) {
                         outputFile = args[c + 1];
@@ -132,12 +141,21 @@ public class KielerCompiler {
         // System.out.println("strict: " + strict);
         // System.out.println("transformations: " + transformations);
 
+        
+        ArrayList<String> models = new ArrayList<String>();
+        
         String model = readInputModel(inputFile);
+        models.add(model);
 
+        for (String includeFile : includeFiles) {
+            String includedModel = readInputModel(includeFile);
+            //model += "\n\n" + includedModel;
+            models.add(includedModel);
+        }
         // System.out.println("model: " + model);
 
         CompilationResult compilationResult =
-                remoteCompile(host, port, outputFile, verbose, strict, model, transformations);
+                remoteCompile(host, port, outputFile, verbose, strict, models, transformations);
 
         if (outputFile == null || outputFile.trim().equals("")) {
             System.out.println(compilationResult.model);
@@ -245,7 +263,7 @@ public class KielerCompiler {
      * @return the string
      */
     public static CompilationResult remoteCompile(String host, int port, String outputFile,
-            boolean verbose, boolean strict, String model, String transformations) {
+            boolean verbose, boolean strict, ArrayList<String> models, String transformations) {
         CompilationResult result = new CompilationResult("", "");
 
         String options = "";
@@ -259,8 +277,20 @@ public class KielerCompiler {
         try {
             TCPClient client = new KielerCompiler.TCPClient(host, port);
             client.sndMessage(transformations + "\n");
-            client.sndMessage(model.split("\n").length + options + "\n");
-            client.sndMessage(model + "\n");
+            
+            String header = "";
+            for (String model : models) {
+                if (header.length() > 0) {
+                    header += ":";
+                }
+                header += model.split("\n").length + "";
+            }
+            header += options + "\n";
+            client.sndMessage(header);
+            
+            for (String model : models) {
+                client.sndMessage(model + "\n");
+            }
 
             result = client.rcvCompilationResult();
 
@@ -323,7 +353,7 @@ public class KielerCompiler {
             String s;
             while (linesModel > 0) {
                 s = bufferedReader.readLine();
-                //System.out.println("M" + linesModel + ". " + s);
+                // System.out.println("M" + linesModel + ". " + s);
                 linesModel--;
                 if (!model.equals("")) {
                     model += "\n";
@@ -332,7 +362,7 @@ public class KielerCompiler {
             }
             while (linesError > 0) {
                 s = bufferedReader.readLine();
-                //System.out.println("E" + linesError + ". " + s);
+                // System.out.println("E" + linesError + ". " + s);
                 linesError--;
                 if (!error.equals("")) {
                     error += "\n";

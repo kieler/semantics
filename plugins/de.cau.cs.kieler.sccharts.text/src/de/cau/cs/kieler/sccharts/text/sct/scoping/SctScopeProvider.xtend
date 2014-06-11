@@ -33,6 +33,9 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.xtext.scoping.impl.SimpleScope
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kico.KielerCompiler
+import java.util.List
+import de.cau.cs.kieler.sccharts.text.sct.sct.SCChart
 
 /**
  * @author J
@@ -92,7 +95,23 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
             l.add(new EObjectDescription(QualifiedName.create(key), s,
                     Collections.<String, String> emptyMap()))
             m.add(key);
-
+        }
+        if (KielerCompiler != null) {
+            try {
+               val eObjects = KielerCompiler.getIncludedModels();
+               for (eObject : eObjects) {
+                    val s = (eObject as State);
+                    key = s.getId();
+                    if (m.contains(key)) {
+                        key = s.getId()
+                    }
+                    l.add(new EObjectDescription(QualifiedName.create(key), s,
+                            Collections.<String, String> emptyMap()))
+                    m.add(key);
+               }
+            } catch (Exception e) {
+                
+            }
         }
         return new SimpleScope(l)
     }    
