@@ -56,7 +56,7 @@ public abstract class Transformation {
 
     /**
      * Gets the argument parameter type.
-     *
+     * 
      * @return the argument parameter type
      */
     public Class<?> getParameterType() {
@@ -234,24 +234,16 @@ public abstract class Transformation {
      *            the e object
      * @return the e object
      */
-    public final Object doTransform(EObject eObject) {
-        String transformationID = "unknown";
-        transformationID = this.id;
+    public final Object doTransform(EObject eObject) throws Exception {
+        String transformationID = this.id;
         if (method == null) {
             // A Transformation instance with the standard transformation method
             return ((Transformation) transformationInstance).transform(eObject);
         } else {
             // Some other class instance with an individual transformation method
             Object result;
-            try {
-                result = transformationMethod.invoke(transformationInstance, eObject);
-                return result;
-            } catch (Exception e) {
-                KiCoPlugin.getInstance().showError(
-                        "An error occurred while calling transformation with the ID '"
-                                + transformationID + "'.", KiCoPlugin.PLUGIN_ID, e, true);
-            }
-            return null;
+            result = transformationMethod.invoke(transformationInstance, eObject);
+            return result;
         }
 
     }

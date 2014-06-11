@@ -1028,12 +1028,38 @@ public class KielerCompiler {
     // -------------------------------------------------------------------------
 
     /**
+     * Generate all postponed errors.
+     * 
+     * @param errorListTransformationID
+     *            the error list transformation id
+     * @param errorListException
+     *            the error list exception
+     */
+    private static void generatePostponedErrors(ArrayList<String> errorListTransformationID,
+            ArrayList<Exception> errorListException) {
+        for (int c = 0; c < errorListTransformationID.size(); c++) {
+            String transformationID = errorListTransformationID.get(c);
+            Exception e = errorListException.get(c);
+            KiCoPlugin.getInstance().showError(
+                    "An error occurred while calling transformation with the ID '"
+                            + transformationID + "'.", KiCoPlugin.PLUGIN_ID, e, true);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Advanced KIELER Compiler compile method. It can be called in order to call several
      * consecutive transformations. Specify desired transformations as a String List of IDs. Use
      * this with care! Note that if switching autoexpand off you cannot use transformation group IDs
      * any more. Also no dependencies will be considered. The transformations will be applied
      * straight forward in the order defined by the transformationIDs list. Inplace tells whether
      * the compilation will be done on a copy of the input EObject or on the original EObject.
+     * 
+     * The error management is as follows. KielerCompiler will gather all errors that occur. If
+     * verbose mode is on then ALL errors are logged. If verbose mode is off then potential
+     * errors before the first successful transformation are discarded, all other errors are
+     * logged.
      * 
      * @param transformationIDs
      *            the transformation i ds
@@ -1097,6 +1123,10 @@ public class KielerCompiler {
 
         CompilationResult compilationResult = new CompilationResult(eObject);
 
+        // Lists for postponing errors
+        ArrayList<String> errorListTransformationID = new ArrayList<String>();
+        ArrayList<Exception> errorListException = new ArrayList<Exception>();
+
         // System.out.println("=== ");
         for (String processedTransformationID : processedTransformationIDs) {
             Transformation transformation = getTransformation(processedTransformationID);
@@ -1112,12 +1142,30 @@ public class KielerCompiler {
                     Class<?> handledParameterType = transformation.getParameterType();
                     System.out.println("PERFORM TRANSFORMATION: " + processedTransformationID
                             + " ( is " + parameterType.getName() + "  handled by "
-                            + handledParameterType.getName() + "? " + handledParameterType.isInstance(transformedObject) + " )");
+                            + handledParameterType.getName() + "? "
+                            + handledParameterType.isInstance(transformedObject) + " )");
                     if (handledParameterType.isInstance(transformedObject)) {
-                        transformation.doTransform(transformedObject);
-                        Object object = transformation.doTransform(transformedObject);
+
+                        String transformationID = "unknown";
+                        Object object = null;
+                        try {
+                            transformationID = transformation.getId();
+                            object = transformation.doTransform(transformedObject);
+                        } catch (Exception e) {
+                            errorListTransformationID.add(transformationID);
+                            errorListException.add(e);
+                        }
 
                         if (object != null) {
+                            // If this is the FIRST successful transformation AND we are NOT in
+                            // verbose mode
+                            // then clear all possibly previous errors
+                            if (compilationResult.getIntermediateResults().size() <= 1
+                                    && !KielerCompiler.isVerboseMode()) {
+                                errorListTransformationID.clear();
+                                errorListException.clear();
+                            }
+
                             // Add to compilation result
                             compilationResult.getIntermediateResults().add(object);
 
@@ -1126,6 +1174,8 @@ public class KielerCompiler {
                             } else {
                                 // in this case we CANNOT do any further transformation calls
                                 // which require the return value of doTransform to be an EObject
+                                generatePostponedErrors(errorListTransformationID,
+                                        errorListException);
                                 return compilationResult;
                             }
                         }
@@ -1133,6 +1183,7 @@ public class KielerCompiler {
                 }
             }
         }
+        generatePostponedErrors(errorListTransformationID, errorListException);
         return compilationResult;
     }
 
