@@ -38,6 +38,7 @@ import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.TransformationDummy;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager.KiCoSelectionChangeEventListerner;
 import de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesis;
+import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
 import de.cau.cs.kieler.klighd.IDiagramWorkbenchPart;
 import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
@@ -46,7 +47,9 @@ import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 import de.cau.cs.kieler.klighd.util.ExpansionAwareLayoutOption;
 import de.cau.cs.kieler.klighd.util.ExpansionAwareLayoutOption.ExpansionAwareLayoutOptionData;
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties.ZoomConfigButtonsHandling;
 import de.cau.cs.kieler.klighd.util.Iterables2;
+import de.cau.cs.kieler.klighd.util.KlighdProperties;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
 /**
@@ -670,6 +673,11 @@ public class KiCoSelectionView extends DiagramViewPart {
                                     KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                                     "de.cau.cs.kieler.kico.ui.klighd.diagramFlatSynthesis");
                         }
+                        
+                        //Hide zoom buttons
+                        properties.setProperty(
+                                KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
+                                ZoomConfigButtonsHandling.HIDE);
 
                         updateDiagram(tempModel, properties);
 
@@ -685,16 +693,6 @@ public class KiCoSelectionView extends DiagramViewPart {
                 }
 
                 lastWorkbenchPartReference = ref;
-            } else {
-                // if (part instanceof EditorPart) {
-                // DiagramViewManager
-                // .getInstance()
-                // .createView(
-                // getPartId(),
-                // null,
-                // "Not supported model editor.\n\nThe currently selected editor is not registered for any KIELER Compiler transformations. The editor must use the extension point de.cau.cs.kieler.kico.ui to declare transformations that should bis visible when such an editor instance is active.",
-                // KlighdSynthesisProperties.newInstance(null));
-                // }
             }
         }
     }
@@ -709,46 +707,12 @@ public class KiCoSelectionView extends DiagramViewPart {
 
         IActionBars bars = getViewSite().getActionBars();
         IToolBarManager toolBarManager = bars.getToolBarManager();
-
-        //FIXME: It would be nice if KLighD could provide IDs for the following items so that we
-        // would not have to rely on the labels
-        // Delete the refresh-button
-        ActionContributionItem refreshAction = null;
-        ActionContributionItem arrangeAction = null;
-        ActionContributionItem zoomToOriginalSizeAction = null;
-        for (IContributionItem item : toolBarManager.getItems()) {
-            if (item instanceof ActionContributionItem) {
-                ActionContributionItem actionItem = (ActionContributionItem)item;
-                //System.out.println(actionItem.getAction().getText());
-                if (actionItem.getAction().getText().equals("Refresh diagram")) {
-                    refreshAction = actionItem;
-                }
-                if (actionItem.getAction().getText().equals("Arrange")) {
-                    arrangeAction = actionItem;
-                }
-                if (actionItem.getAction().getText().equals("Zoom to Original Size")) {
-                    zoomToOriginalSizeAction = actionItem;
-                }
-            }
-        }
-        if (arrangeAction != null && refreshAction != null) {
-            // give the arrange action the refresh icon :-)
-            arrangeAction.getAction().setImageDescriptor(refreshAction.getAction().getImageDescriptor());
-        }
-        if (refreshAction != null) {
-            // remove the refresh action
-            toolBarManager.remove(refreshAction);
-        }
-        if (zoomToOriginalSizeAction != null) {
-            // remove the zoom to original size action
-            toolBarManager.remove(zoomToOriginalSizeAction);
-        }
         
         toolBarManager.add(getActionExpandAll());
         toolBarManager.add(getActionAdvancedToggle());
         toolBarManager.add(getActionHierarchyToggle());
-        // toolBarManager.add(getActionCompileToggle());
-
+        //toolBarManager.add(getActionCompileToggle());
+        
         // Create an IPartListener2
         final IPartListener2 pl = new IPartListener2() {
 
@@ -806,8 +770,34 @@ public class KiCoSelectionView extends DiagramViewPart {
         });
 
     }
+    
+
+    /**
+     * {@inheritDoc}
+     */
+    protected void addButtons() {
+        // By overriding this method the KlighD view will not have any of its default buttons.
+        // Instead only the following buttons will be added.
+        // Zoom buttons are removed by setting SyntheisOption in updateView.
+        
+        IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
+        // automatic layout button
+        toolBarManager.add(new Action("Arrange", IAction.AS_PUSH_BUTTON) {
+            // Constructor
+            {
+                setImageDescriptor(KimlUiPlugin
+                        .getImageDescriptor("icons/menu16/kieler-arrange.gif"));
+            }
+
+            @Override
+            public void run() {
+                LightDiagramServices.layoutDiagram(instance);
+            }
+        });
+    }
 
     // -------------------------------------------------------------------------
+
 
     /**
      * Gets the action to toggle advanced mode.
