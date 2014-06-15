@@ -199,9 +199,9 @@ public class KiCoUtil {
                     //Resource res = provider.createResource(uri);
                     
                     ResourceSet resourceSet = null;
-//                    if (context != null) {
-//                        resourceSet = context.getModelResourceSet();
-//                    }
+                    if (context != null) {
+                        resourceSet = context.getModelResourceSet();
+                    }
                     if (resourceSet == null) {
                       IResourceServiceProvider provider = getRegXtext().getResourceServiceProvider(uri);
                       XtextResourceSet newResourceSet = provider.get(XtextResourceSet.class);
@@ -228,7 +228,7 @@ public class KiCoUtil {
                             } else {
                                 context.setTransformationObject(returnEObject);
                             }
-                            // save the resource set for possibly next resouces
+                            // save the resource set for possibly next resources
                             context.setModelResourceSet(resourceSet);
                         }
                         done = true;
