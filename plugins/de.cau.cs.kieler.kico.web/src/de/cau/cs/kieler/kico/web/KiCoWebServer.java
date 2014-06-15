@@ -36,6 +36,7 @@ import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompiler;
+import de.cau.cs.kieler.kico.KielerCompilerContext;
 
 /**
  * This class implements to KIELER Compiler TCP Web Server that runs as an Eclipse Job. Typically it
@@ -168,7 +169,7 @@ public class KiCoWebServer extends Job {
                     PrintWriter printWriter = new PrintWriter(out);
 
                     debug("Socket input and output streams established");
-                    String transformations = inFromClient.readLine();
+                    String transformationIDs = inFromClient.readLine();
 
                     boolean verbose = false;
                     boolean strict = false;
@@ -215,32 +216,33 @@ public class KiCoWebServer extends Job {
 
                     // System.out.println("transformations: " + transformations);
                     // System.out.println("model: " + model);
-
-                    EObject mainModel = null;
-                    ArrayList<EObject> includedModels = new ArrayList<EObject>();
                     
-                    for (String model : models) {
-                        EObject eObject = KiCoUtil.parse(model);
-                        if (mainModel == null) {
+                    EObject mainModel = null;
+                    KielerCompilerContext context = new KielerCompilerContext(transformationIDs, mainModel);
+                    
+                    for (int i = models.size()-1; i >= 0; i--) {
+                        boolean isMainModel = (i == 0);
+                        String model = models.get(i);
+                        EObject eObject = KiCoUtil.parse(model, context, isMainModel);
+                        if (isMainModel) {
                             mainModel = eObject;
-                        } else {
-                            includedModels.add(eObject);
                         }
                     }
                     debug("Model parsed");
 
                     // String fileExt = KiCoUIUtil.getFileExtension(eObject);
                     
-                    KielerCompiler.setIncludedModels(includedModels);
 
-                    KielerCompiler.setVerboseMode(verbose);
+                    context.setVerboseMode(verbose);
+                    context.setPrerequirements(!strict);
 
                     KiCoPlugin.resetLastError();
 
                     // process the model
                     CompilationResult compilationResult =
-                            KielerCompiler.compile(transformations, mainModel, !strict);
+                            KielerCompiler.compile(context);
                     debug("Model compiled");
+
 
                     boolean majorError = (compilationResult.getIntermediateResults().size() <= 1);
                     Object compiledModel = compilationResult.getObject();

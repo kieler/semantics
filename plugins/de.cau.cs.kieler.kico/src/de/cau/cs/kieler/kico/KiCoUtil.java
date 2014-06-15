@@ -23,6 +23,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Factory;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
@@ -30,6 +32,8 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 //import org.eclipse.xtext.resource.XtextResource;
 //import org.eclipse.xtext.resource.XtextResourceSet;
+
+
 
 
 import com.google.inject.Guice;
@@ -164,12 +168,12 @@ public class KiCoUtil {
     /**
      * Parse the model provided as a serialized String. This is implemented by finding the first
      * suitable XtextResourceProvider that is able to parse the model to an EObject.
-     * 
-     * @param text
-     *            the text
+     *
+     * @param text the text
+     * @param context the context may be null, otherwise the resource is added to the context
      * @return the e object
      */
-    public static EObject parse(String text) {
+    public static EObject parse(String text, KielerCompilerContext context, boolean mainModel) {
         EObject returnEObject = null;
 
         boolean done = false;
@@ -189,23 +193,47 @@ public class KiCoUtil {
             try {
 
                 for (String ext : getRegXtext().getExtensionToFactoryMap().keySet()) {
-                    URI uri = URI.createURI("dummy:/inmemory." + ext);
-//                  Factory provider = regXMI.getFactory(uri);
-//                  Resource res = provider.createResource(uri);
-
-                    IResourceServiceProvider provider = getRegXtext().getResourceServiceProvider(uri);
-                    XtextResourceSet resourceSet = provider.get(XtextResourceSet.class);
-                    resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
+                    String num = (text.hashCode() + "").replace("-","");
+                    URI uri = URI.createURI("dummy:/inmemory." + num + "." + ext);
+                    //Factory provider = regXMI.getFactory(uri);
+                    //Resource res = provider.createResource(uri);
+                    
+                    ResourceSet resourceSet = null;
+//                    if (context != null) {
+//                        resourceSet = context.getModelResourceSet();
+//                    }
+                    if (resourceSet == null) {
+                      IResourceServiceProvider provider = getRegXtext().getResourceServiceProvider(uri);
+                      XtextResourceSet newResourceSet = provider.get(XtextResourceSet.class);
+                      newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
+                      resourceSet = newResourceSet;
+                    }
+                    
                     Resource res = resourceSet.createResource(uri);
 
                     done = false;
                     try {
                         InputStream in = new ByteArrayInputStream(text.getBytes());// StandardCharsets.UTF_8));
-//                      res.load(in, null);
+                        //res.load(in, null);
+//                        for (EObject otherModel : KielerCompiler.getIncludedModels()) {
+//                            Resource otherRes = KielerCompiler.getIncludedModelResource(otherModel);
+//                            resourceSet.getResources().add(otherRes);
+//                        }
                         res.load(in, resourceSet.getLoadOptions());
+                        EcoreUtil.resolveAll(resourceSet);
                         returnEObject = res.getContents().get(0);
+                        if (context != null) {
+                            if (!mainModel) {
+                                context.addIncludedModel(returnEObject);
+                            } else {
+                                context.setTransformationObject(returnEObject);
+                            }
+                            // save the resource set for possibly next resouces
+                            context.setModelResourceSet(resourceSet);
+                        }
                         done = true;
                     } catch (Exception e) {
+                        e.printStackTrace();
                     }
 
                     if (done) {
