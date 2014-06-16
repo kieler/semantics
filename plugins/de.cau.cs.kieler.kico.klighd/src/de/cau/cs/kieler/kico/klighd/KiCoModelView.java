@@ -57,7 +57,9 @@ import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelWrapper;
 import de.cau.cs.kieler.kico.ui.KiCoSelection;
+import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
 import de.cau.cs.kieler.klighd.KlighdPlugin;
+import de.cau.cs.kieler.klighd.LightDiagramServices;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 
@@ -232,6 +234,50 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
         menu.add(getActionPauseSync());
 
         updateViewTitle();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void addButtons() {
+        final IToolBarManager toolBar = getViewSite().getActionBars().getToolBarManager();
+
+//        toolBar.add(new Action("Refresh diagram", KlighdPlugin
+//                .getImageDescriptor("icons/full/elcl16/refresh.gif")) {
+//
+//            @Override
+//            public void run() {
+//                updateModel(ChangeEvent.ACTIVE_EDITOR);
+//            }
+//        });
+
+        // automatic layout button
+        toolBar.add(new Action("Arrange", IAction.AS_PUSH_BUTTON) {
+            // Constructor
+            {
+                setImageDescriptor(KimlUiPlugin
+                        .getImageDescriptor("icons/menu16/kieler-arrange.gif"));
+            }
+
+            @Override
+            public void run() {
+                LightDiagramServices.layoutDiagram(KiCoModelView.this);
+            }
+        });
+
+        // reset the layout options set over the side pane
+        final IMenuManager menu = getViewSite().getActionBars().getMenuManager();
+        menu.add(new Action("Reset Layout Options") {
+            {
+                this.setId(ACTION_ID_RESET_LAYOUT_OPTIONS);
+            }
+
+            @Override
+            public void run() {
+                resetLayoutConfig();
+            }
+        });
     }
 
     // -- Editor
@@ -619,7 +665,8 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     void updateModel(ChangeEvent change) {
         if (activeEditor != null && !pauseSynchronization) {
             // change event flags
-            boolean is_active_editor_update = change == ChangeEvent.ACTIVE_EDITOR;
+            boolean is_active_editor_update =
+                    change == ChangeEvent.ACTIVE_EDITOR;
             boolean is_save_update = change == ChangeEvent.SAVED;
             boolean is_transformation_update = change == ChangeEvent.TRANSFORMATIONS;
             boolean is_display_mode_update = change == ChangeEvent.DISPLAY_MODE;
@@ -756,7 +803,8 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             // Indicates if type of model changed and thus the model view has to reinitialize
             boolean model_type_changed = false;
             // compare types and set type change flag
-            if (previousCurrentModel == null || previousCurrentModel.getClass() != currentModel.getClass()) {
+            if (previousCurrentModel == null
+                    || previousCurrentModel.getClass() != currentModel.getClass()) {
                 model_type_changed = true;
             }
 
