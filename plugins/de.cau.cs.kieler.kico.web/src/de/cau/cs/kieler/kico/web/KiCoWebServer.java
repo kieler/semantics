@@ -251,7 +251,7 @@ public class KiCoWebServer extends Job {
                     if (compiledModel != null) {
                         serializedCompiledModel = compiledModel.toString();
                         if (compiledModel instanceof EObject) {
-                            serializedCompiledModel = KiCoUtil.serialize((EObject) compiledModel);
+                            serializedCompiledModel = KiCoUtil.serialize((EObject) compiledModel, context);
                         }
                         debug("Model serialized");
                     }

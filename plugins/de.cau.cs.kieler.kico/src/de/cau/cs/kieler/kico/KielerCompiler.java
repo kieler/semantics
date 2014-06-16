@@ -21,6 +21,7 @@ import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 // TODO: Auto-generated Javadoc
@@ -848,6 +849,9 @@ public class KielerCompiler {
             return context.getCompilationResult();
         }
 
+        Resource r2 = transformationEObject.eResource();
+        ResourceSet r3 = r2.getResourceSet();
+        
         // If not inplace then produce a copy of the input EObject
         if (!context.isInplace()) {
             EObject copiedObject = EcoreUtil.copy(transformationEObject);

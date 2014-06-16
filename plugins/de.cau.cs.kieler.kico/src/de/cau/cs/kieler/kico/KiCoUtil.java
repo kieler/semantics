@@ -91,7 +91,7 @@ public class KiCoUtil {
      *            the model
      * @return the string
      */
-    public static String serialize(EObject model) {
+    public static String serialize(EObject model, KielerCompilerContext context) {
         String returnText = "";
         boolean done = false;
         try {
@@ -101,8 +101,17 @@ public class KiCoUtil {
 //                Factory provider = regXMI.getFactory(uri);
 //                Resource res = provider.createResource(uri);
                 
-                IResourceServiceProvider provider =  getRegXtext().getResourceServiceProvider(uri);
-                XtextResourceSet resourceSet = provider.get(XtextResourceSet.class);
+                ResourceSet resourceSet = null;
+                if (context != null) {
+                    resourceSet = context.getModelResourceSet();
+                }
+                if (resourceSet == null) {
+                    IResourceServiceProvider provider =  getRegXtext().getResourceServiceProvider(uri);
+                    XtextResourceSet newResourceSet = provider.get(XtextResourceSet.class);
+                    //newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
+                    resourceSet = newResourceSet;
+                }
+
                 Resource res = resourceSet.createResource(uri);
 
                 done = false;
@@ -194,7 +203,9 @@ public class KiCoUtil {
 
                 for (String ext : getRegXtext().getExtensionToFactoryMap().keySet()) {
                     String num = (text.hashCode() + "").replace("-","");
-                    URI uri = URI.createURI("dummy:/inmemory." + num + "." + ext);
+                    
+                    URI uri = URI.createURI("platform:/resource/dummy." + num + "." + ext);
+//                    URI uri = URI.createURI("dummy:/inmemory." + num + "." + ext);
                     //Factory provider = regXMI.getFactory(uri);
                     //Resource res = provider.createResource(uri);
                     
@@ -205,7 +216,7 @@ public class KiCoUtil {
                     if (resourceSet == null) {
                       IResourceServiceProvider provider = getRegXtext().getResourceServiceProvider(uri);
                       XtextResourceSet newResourceSet = provider.get(XtextResourceSet.class);
-                      newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
+                      //newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
                       resourceSet = newResourceSet;
                     }
                     
@@ -220,8 +231,13 @@ public class KiCoUtil {
 //                            resourceSet.getResources().add(otherRes);
 //                        }
                         res.load(in, resourceSet.getLoadOptions());
-                        EcoreUtil.resolveAll(resourceSet);
                         returnEObject = res.getContents().get(0);
+                        Resource r2 = returnEObject.eResource();
+                        System.out.println(r2.toString());
+                        ResourceSet r3 = r2.getResourceSet();
+                        System.out.println(r3.toString());
+                        EcoreUtil.resolveAll(resourceSet);
+                        //res.save(getSaveOptions());
                         if (context != null) {
                             if (!mainModel) {
                                 context.addIncludedModel(returnEObject);
