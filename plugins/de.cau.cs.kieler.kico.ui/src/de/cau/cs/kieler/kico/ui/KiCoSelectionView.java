@@ -539,6 +539,21 @@ public class KiCoSelectionView extends DiagramViewPart {
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the all transformations.
+     *
+     * @return the all transformations
+     */
+    public static List<TransformationDummy> getAllTransformations(int editorID) {
+        KielerCompilerContext context = getKielerCompilerContext(editorID);
+        if (context != null) {
+            return context.getGraph();
+        }
+        return new ArrayList<TransformationDummy>();
+    }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Removes other possibly selected alternatives for a transformation from the list of selected
@@ -596,6 +611,29 @@ public class KiCoSelectionView extends DiagramViewPart {
         }
     }
 
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Adds the selected transformation visualization.
+     * 
+     * @param editorID
+     *            the editor id
+     */
+    public static void addSelectedTransformationVisualization(int editorID, List<String> transformationDummyIDs) {
+        ViewContext context = instance.getViewer().getViewContext();
+        for (String selectedTransformationID : transformationDummyIDs) {
+            TransformationDummy selectedTransformationDummy =
+                    resolveTransformationDummy(selectedTransformationID,
+                            KiCoSelectionView.getActiveEditorID());
+            if (selectedTransformationDummy != null) {
+                KiCoKlighdAction.setLabelColor(selectedTransformationDummy, context,
+                        KiCoDiagramSynthesis.WHITE, KiCoDiagramSynthesis.BLUE3);
+                KiCoKlighdAction.setStateColor(selectedTransformationDummy, context,
+                        KiCoDiagramSynthesis.BLUE3, KiCoDiagramSynthesis.BLUE4);
+            }
+        }
+    }    
     // -------------------------------------------------------------------------
 
     /**
@@ -617,11 +655,12 @@ public class KiCoSelectionView extends DiagramViewPart {
                     if (!partName.equals(lastEditor)) {
                         // Next view is collapsed again
                         allExpanded = false;
-                        actionExpandAllToggle.setChecked(allExpanded);
-                        if (actionExpandAllToggle.isChecked()) {
+                        if (allExpanded) {
                             actionExpandAllToggle.setImageDescriptor(ICON_COLLAPSEALL);
+                            actionExpandAllToggle.setToolTipText("Collapse all expanded transformation groups.");
                         } else {
                             actionExpandAllToggle.setImageDescriptor(ICON_EXPANDALL);
+                            actionExpandAllToggle.setToolTipText("Expand all collapsed transformation groups.");
                         }
 
                         lastEditor = partName;
@@ -941,31 +980,47 @@ public class KiCoSelectionView extends DiagramViewPart {
         }
 
         final IDiagramWorkbenchPart thisPart = this;
-        actionSelectAllToggle = new Action("", IAction.AS_CHECK_BOX) {
+        actionSelectAllToggle = new Action("", IAction.AS_PUSH_BUTTON) {
             public void run() {
                 // TOGGLE
                 allSelected = !allSelected;
-                actionSelectAllToggle.setChecked(allSelected);
-                if (actionSelectAllToggle.isChecked()) {
+                if (allSelected) {
                     actionSelectAllToggle.setImageDescriptor(ICON_DESELECTALL);
+                    actionSelectAllToggle.setToolTipText("Deselect all transformations.");
                 } else {
                     actionSelectAllToggle.setImageDescriptor(ICON_SELECTALL);
+                    actionSelectAllToggle.setToolTipText("Select all transformations.");
                 }
-
+                int activeEditorID = getActiveEditorID();
                 if (allSelected) {
-                    // TODO: Code to select all
+                    List<TransformationDummy> allTransformations = getAllTransformations(activeEditorID);
+                    List<String> allTransformationIDs = new ArrayList<String>();
+                    for (TransformationDummy transformationDummy : allTransformations) {
+                        allTransformationIDs.add(transformationDummy.id);
+                    }
+                    addSelectedTransformationVisualization(activeEditorID, allTransformationIDs);
+                    List<String> selectedAndExcludedTransformations =
+                            getSelectedTransformations(activeEditorID);
+                    for (String transformationID : allTransformationIDs) {
+                        addSelectedTransformation(transformationID,
+                                selectedAndExcludedTransformations, true);                        
+                    }
                 } else {
-                    // TODO: Code to deselect all
-                    lastEditor = "";
-                    updateView(lastWorkbenchPartReference);
+                    List<String> selectedAndExcludedTransformations =
+                            getSelectedTransformations(activeEditorID);
+                    removeSelectedTransformationVisualization(activeEditorID);
+                    
+                    while(selectedAndExcludedTransformations.size() > 0) {
+                        String transformationID = selectedAndExcludedTransformations.get(0);
+                        removeSelectedTransformation(transformationID, activeEditorID);
+                    }
                 }
                 LightDiagramServices.layoutDiagram(thisPart);
             }
         };
-        actionSelectAllToggle.setText("Select All");
-        actionSelectAllToggle.setToolTipText("Select or deselect all transformations.");
+        actionSelectAllToggle.setText("Select/Deselect All");
+        actionSelectAllToggle.setToolTipText("Select all transformations.");
         actionSelectAllToggle.setImageDescriptor(ICON_SELECTALL);
-        actionSelectAllToggle.setChecked(allSelected);
         return actionSelectAllToggle;
     }
 
@@ -982,15 +1037,16 @@ public class KiCoSelectionView extends DiagramViewPart {
         }
 
         final IDiagramWorkbenchPart thisPart = this;
-        actionExpandAllToggle = new Action("", IAction.AS_CHECK_BOX) {
+        actionExpandAllToggle = new Action("", IAction.AS_PUSH_BUTTON) {
             public void run() {
                 // TOGGLE
                 allExpanded = !allExpanded;
-                actionExpandAllToggle.setChecked(allExpanded);
-                if (actionExpandAllToggle.isChecked()) {
+                if (allExpanded) {
                     actionExpandAllToggle.setImageDescriptor(ICON_COLLAPSEALL);
+                    actionExpandAllToggle.setToolTipText("Collapse all expanded transformation groups.");
                 } else {
                     actionExpandAllToggle.setImageDescriptor(ICON_EXPANDALL);
+                    actionExpandAllToggle.setToolTipText("Expand all collapsed transformation groups.");
                 }
 
                 if (allExpanded) {
@@ -1035,10 +1091,9 @@ public class KiCoSelectionView extends DiagramViewPart {
                 LightDiagramServices.layoutDiagram(thisPart);
             }
         };
-        actionExpandAllToggle.setText("Expand All");
+        actionExpandAllToggle.setText("Expand/Collapse All");
         actionExpandAllToggle.setToolTipText("Expand all collapsed transformation groups.");
         actionExpandAllToggle.setImageDescriptor(ICON_EXPANDALL);
-        actionExpandAllToggle.setChecked(allExpanded);
         return actionExpandAllToggle;
     }
 
