@@ -37,8 +37,21 @@ public class CompilationResult {
     // -------------------------------------------------------------------------
 
     /**
-     * Instantiates a new compilation result. By convention the first intermediate 
-     * result should always be the source model.
+     * Instantiates a new compilation result. By convention the first intermediate result should
+     * always be the source model. Using this constructor is only advised if you do not intent to
+     * compile but only want to calculate pre requirements.
+     * 
+     * @param sourceModel
+     *            the source model
+     */
+    public CompilationResult() {
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Instantiates a new compilation result. By convention the first intermediate result should
+     * always be the source model.
      * 
      * @param sourceModel
      *            the source model

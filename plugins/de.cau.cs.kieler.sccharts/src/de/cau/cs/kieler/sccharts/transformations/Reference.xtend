@@ -56,8 +56,7 @@ class Reference {
         targetRootState;
     }
 
-    def void transformReference(State state, State targetRootState) {
-        
+    def void transformReference(State state, State targetRootState) {        
         // Referenced scopes are always SCCharts
         // Each referenced state must be contained in a region.
         val newState = (state.referencedScope as State).copyState => [ 

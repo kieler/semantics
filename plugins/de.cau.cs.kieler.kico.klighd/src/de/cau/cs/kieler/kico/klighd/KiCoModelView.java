@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.kico.klighd;
 
+import java.util.ArrayList;
 import java.util.WeakHashMap;
 
 import org.eclipse.core.resources.IFile;
@@ -759,8 +760,8 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
                     // compile
                     result =
-                            KielerCompiler.compile(transformations.getSelection(),
-                                    (EObject) sourceModel, transformations.isAdvanced());
+                            KielerCompiler.compile(transformations.getSelection(), new ArrayList<String>(), 
+                                    (EObject) sourceModel, transformations.isAdvanced(), false);
 
                     // stop listening
                     Platform.removeLogListener(this);
