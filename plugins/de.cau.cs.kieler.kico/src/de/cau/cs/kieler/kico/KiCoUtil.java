@@ -204,8 +204,8 @@ public class KiCoUtil {
                 for (String ext : getRegXtext().getExtensionToFactoryMap().keySet()) {
                     String num = (text.hashCode() + "").replace("-","");
                     
-                    URI uri = URI.createURI("platform:/resource/dummy." + num + "." + ext);
-//                    URI uri = URI.createURI("dummy:/inmemory." + num + "." + ext);
+                    //URI uri = URI.createURI("platform:/resource/dummy." + num + "." + ext);
+                   URI uri = URI.createURI("dummy:/inmemory." + num + "." + ext);
                     //Factory provider = regXMI.getFactory(uri);
                     //Resource res = provider.createResource(uri);
                     
@@ -249,7 +249,7 @@ public class KiCoUtil {
                         }
                         done = true;
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
                     }
 
                     if (done) {
