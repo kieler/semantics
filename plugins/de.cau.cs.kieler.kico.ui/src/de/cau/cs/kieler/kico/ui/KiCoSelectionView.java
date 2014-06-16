@@ -81,13 +81,19 @@ public class KiCoSelectionView extends DiagramViewPart {
             "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconCompile.png");
 
     public static final ImageDescriptor ICON_EXPANDALL = AbstractUIPlugin
-            .imageDescriptorFromPlugin("org.eclipse.ui",
-                    "icons/full/elcl16/expandall.gif");
+            .imageDescriptorFromPlugin("org.eclipse.ui", "icons/full/elcl16/expandall.gif");
 
     public static final ImageDescriptor ICON_COLLAPSEALL = AbstractUIPlugin
-            .imageDescriptorFromPlugin("org.eclipse.ui",
-                    "icons/full/elcl16/collapseall.gif");
-    
+            .imageDescriptorFromPlugin("org.eclipse.ui", "icons/full/elcl16/collapseall.gif");
+
+    public static final ImageDescriptor ICON_SELECTALL = AbstractUIPlugin
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.ui",
+                    "icons/KiCoViewIconSelectAll.png");
+
+    public static final ImageDescriptor ICON_DESELECTALL = AbstractUIPlugin
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.ui",
+                    "icons/KiCoViewIconDeselectAll.png");
+
     /** The action for toggling the advanced mode. */
     private Action actionAdvancedToggle;
 
@@ -99,6 +105,9 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     /** The action for toggling the expand mode. */
     private Action actionExpandAllToggle;
+
+    /** The action for toggling the expand mode. */
+    private Action actionSelectAllToggle;
 
     /** The active editor property key. */
     public static final String ACTIVE_EDITOR_PROPERTY_KEY = "de.cau.cs.kieler.kico.ui.activeEditor";
@@ -127,6 +136,9 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     /** The flag for expanding or collapsing all groups. */
     public static boolean allExpanded = false;
+
+    /** The flag for selecting or deselecting all transformations. */
+    public static boolean allSelected = false;
 
     /** The advaned mode auto selects required transformations. */
     public static int compileMode = 0;
@@ -723,6 +735,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         IActionBars bars = getViewSite().getActionBars();
         IToolBarManager toolBarManager = bars.getToolBarManager();
 
+        toolBarManager.add(getActionSelectAll());
         toolBarManager.add(getActionExpandAll());
         toolBarManager.add(getActionAdvancedToggle());
         toolBarManager.add(getActionHierarchyToggle());
@@ -914,6 +927,49 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static final IProperty<ExpansionAwareLayoutOptionData> EXPANDABLE =
             new Property<ExpansionAwareLayoutOption.ExpansionAwareLayoutOptionData>(
                     "de.cau.cs.kieler.kico.ui.expandable");
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the action to select or deselect all nodes.
+     * 
+     * @return the action
+     */
+    private Action getActionSelectAll() {
+        if (actionSelectAllToggle != null) {
+            return actionSelectAllToggle;
+        }
+
+        final IDiagramWorkbenchPart thisPart = this;
+        actionSelectAllToggle = new Action("", IAction.AS_CHECK_BOX) {
+            public void run() {
+                // TOGGLE
+                allSelected = !allSelected;
+                actionSelectAllToggle.setChecked(allSelected);
+                if (actionSelectAllToggle.isChecked()) {
+                    actionSelectAllToggle.setImageDescriptor(ICON_DESELECTALL);
+                } else {
+                    actionSelectAllToggle.setImageDescriptor(ICON_SELECTALL);
+                }
+
+                if (allSelected) {
+                    // TODO: Code to select all
+                } else {
+                    // TODO: Code to deselect all
+                    lastEditor = "";
+                    updateView(lastWorkbenchPartReference);
+                }
+                LightDiagramServices.layoutDiagram(thisPart);
+            }
+        };
+        actionSelectAllToggle.setText("Select All");
+        actionSelectAllToggle.setToolTipText("Select or deselect all transformations.");
+        actionSelectAllToggle.setImageDescriptor(ICON_SELECTALL);
+        actionSelectAllToggle.setChecked(allSelected);
+        return actionSelectAllToggle;
+    }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Gets the action to expand all nodes.
