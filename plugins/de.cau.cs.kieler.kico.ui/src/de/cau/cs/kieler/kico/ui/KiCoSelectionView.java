@@ -606,6 +606,11 @@ public class KiCoSelectionView extends DiagramViewPart {
                         // Next view is collapsed again
                         allExpanded = false;
                         actionExpandAllToggle.setChecked(allExpanded);
+                        if (actionExpandAllToggle.isChecked()) {
+                            actionExpandAllToggle.setImageDescriptor(ICON_COLLAPSEALL);
+                        } else {
+                            actionExpandAllToggle.setImageDescriptor(ICON_EXPANDALL);
+                        }
 
                         lastEditor = partName;
                         int activeEditorID = getActiveEditorID();
@@ -926,6 +931,11 @@ public class KiCoSelectionView extends DiagramViewPart {
                 // TOGGLE
                 allExpanded = !allExpanded;
                 actionExpandAllToggle.setChecked(allExpanded);
+                if (actionExpandAllToggle.isChecked()) {
+                    actionExpandAllToggle.setImageDescriptor(ICON_COLLAPSEALL);
+                } else {
+                    actionExpandAllToggle.setImageDescriptor(ICON_EXPANDALL);
+                }
 
                 if (allExpanded) {
                     final IViewer<?> viewer = thisPart.getViewer();
