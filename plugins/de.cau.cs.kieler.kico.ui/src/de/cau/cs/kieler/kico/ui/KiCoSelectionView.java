@@ -1015,6 +1015,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                         removeSelectedTransformation(transformationID, activeEditorID);
                     }
                 }
+                updateActiveTransformationsProperty();
                 LightDiagramServices.layoutDiagram(thisPart);
             }
         };
