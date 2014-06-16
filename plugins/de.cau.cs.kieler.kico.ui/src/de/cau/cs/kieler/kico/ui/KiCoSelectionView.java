@@ -81,9 +81,13 @@ public class KiCoSelectionView extends DiagramViewPart {
             "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconCompile.png");
 
     public static final ImageDescriptor ICON_EXPANDALL = AbstractUIPlugin
-            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.ui",
-                    "icons/KiCoViewIconExpandAll.png");
+            .imageDescriptorFromPlugin("org.eclipse.ui",
+                    "icons/full/elcl16/expandall.gif");
 
+    public static final ImageDescriptor ICON_COLLAPSEALL = AbstractUIPlugin
+            .imageDescriptorFromPlugin("org.eclipse.ui",
+                    "icons/full/elcl16/collapseall.gif");
+    
     /** The action for toggling the advanced mode. */
     private Action actionAdvancedToggle;
 
