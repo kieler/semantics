@@ -92,12 +92,14 @@ public class KiCoUtil {
      * @return the string
      */
     public static String serialize(EObject model, KielerCompilerContext context) {
+        String num = (model.hashCode() + "").replace("-","");
+
         String returnText = "";
         boolean done = false;
         try {
 
             for (String ext :  getRegXtext().getExtensionToFactoryMap().keySet()) {
-                URI uri = URI.createURI("dummy:/inmemory." + ext);
+                URI uri = URI.createURI("dummy:/inmemory." + num + "." + ext);
 //                Factory provider = regXMI.getFactory(uri);
 //                Resource res = provider.createResource(uri);
                 
@@ -216,7 +218,7 @@ public class KiCoUtil {
                     if (resourceSet == null) {
                       IResourceServiceProvider provider = getRegXtext().getResourceServiceProvider(uri);
                       XtextResourceSet newResourceSet = provider.get(XtextResourceSet.class);
-                      //newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
+                      newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE);
                       resourceSet = newResourceSet;
                     }
                     
@@ -230,13 +232,14 @@ public class KiCoUtil {
 //                            Resource otherRes = KielerCompiler.getIncludedModelResource(otherModel);
 //                            resourceSet.getResources().add(otherRes);
 //                        }
+//                        res.load(in, resourceSet.getLoadOptions());
                         res.load(in, resourceSet.getLoadOptions());
                         returnEObject = res.getContents().get(0);
-                        Resource r2 = returnEObject.eResource();
-                        System.out.println(r2.toString());
-                        ResourceSet r3 = r2.getResourceSet();
-                        System.out.println(r3.toString());
-                        EcoreUtil.resolveAll(resourceSet);
+//                        Resource r2 = returnEObject.eResource();
+//                        System.out.println(r2.toString());
+//                        ResourceSet r3 = r2.getResourceSet();
+//                        System.out.println(r3.toString());
+//                        EcoreUtil.resolveAll(resourceSet);
                         //res.save(getSaveOptions());
                         if (context != null) {
                             if (!mainModel) {

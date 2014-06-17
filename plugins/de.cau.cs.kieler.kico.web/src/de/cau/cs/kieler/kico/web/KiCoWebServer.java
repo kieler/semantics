@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import com.google.inject.Inject;
 
@@ -229,6 +230,7 @@ public class KiCoWebServer extends Job {
                         }
                     }
                     debug("Model parsed");
+                    //EcoreUtil.resolveAll(context.getModelResourceSet());
 
                     // String fileExt = KiCoUIUtil.getFileExtension(eObject);
                     
