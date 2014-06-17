@@ -34,78 +34,83 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.xtext.scoping.impl.SimpleScope
 
 /**
- * @author J
+ * This class implements to scoping for referencedScope (used in KiCoUtil.parse()) and for binding (used in the sct Xtext editor).
+ * 
+ * @author ssm, chsch, cmot
+ * @kieler.design 2014-06-08 proposed
+ * @kieler.rating 2014-06-08 proposed yellow
  *
  */
 class SctScopeProvider extends AbstractDeclarativeScopeProvider {
-    
+
     private val static final SCChartsPackage pack = SCChartsPackage.eINSTANCE;
-    
+
     @Inject
     SctQualifiedNameProvider nameProvider
-    
+
     private def boolean isProxy(Object o) {
         return (o as EObject).eIsProxy()
     }
-    
+
     public def IScope scope_Scope_referencedScope(EObject context, EReference reference) {
         val superScope = super.getScope(context.eContainer, reference)
-            
+
         val res = context.eResource
         if (res != null) {
             val resSet = res.resourceSet
             if (resSet != null) {
-                val rIterable = <Scope> newArrayList 
-                for(r : resSet.resources) {
-                    val contentList = r.contents.filter(e | e instanceof State).toList
-                    if (!contentList.nullOrEmpty) { 
+                val rIterable = <Scope>newArrayList
+                for (r : resSet.resources) {
+                    val contentList = r.contents.filter(e|e instanceof State).toList
+                    if (!contentList.nullOrEmpty) {
                         for (content : contentList) {
-                        rIterable += content as Scope
+                            rIterable += content as Scope
                         }
                     }
                 }
                 return Scopes.scopeFor(rIterable, nameProvider, superScope);
             }
-        }  
+        }
         return IScope.NULLSCOPE;
     }
-    
+
     public def IScope scope_Binding_formal(EObject context, EReference reference) {
         var EObject theContext = context;
         if (context instanceof Binding) {
             theContext = context.eContainer;
         }
-        
+
         val obj = theContext.eGet(pack.getScope_ReferencedScope(), true);
         if (!isProxy(obj)) {
-            val refScope = obj as Scope 
+            val refScope = obj as Scope
 
-            val voIterable = <ValuedObject> newArrayList 
-            refScope.declarations.forEach[ voIterable += valuedObjects ]
-            
+            val voIterable = <ValuedObject>newArrayList
+            refScope.declarations.forEach[voIterable += valuedObjects]
+
             return Scopes.scopeFor(voIterable);
         } else {
             return IScope.NULLSCOPE;
         }
-//        } else if (context instanceof Scope) {
-//            val obj = context.eGet(pack.getScope_ReferencedScope(), false);
-//            if (!isProxy(obj)) {
-//                val refScope = obj as Scope;
-//                
-//                val voIterable = refScope.declarations.filter(typeof(ValuedObject))
-//                
-//                return Scopes.scopeFor(voIterable);
-//            } else {
-//                return IScope.NULLSCOPE;
-//            }
-//        } else {
-//            return IScope.NULLSCOPE;
-//        }
-    }    
+
+    //        } else if (context instanceof Scope) {
+    //            val obj = context.eGet(pack.getScope_ReferencedScope(), false);
+    //            if (!isProxy(obj)) {
+    //                val refScope = obj as Scope;
+    //                
+    //                val voIterable = refScope.declarations.filter(typeof(ValuedObject))
+    //                
+    //                return Scopes.scopeFor(voIterable);
+    //            } else {
+    //                return IScope.NULLSCOPE;
+    //            }
+    //        } else {
+    //            return IScope.NULLSCOPE;
+    //        }
+    }
 
     public def IScope scope_Transition_targetState(Transition trans, EReference reference) {
-        
-        val l = <IEObjectDescription> newLinkedList
+
+        val l = <IEObjectDescription>newLinkedList
         val m = new HashSet<String>
         var String key = null
         for (State s : ((trans.eContainer().eContainer()) as Region).getStates) {
@@ -113,27 +118,29 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
             if (m.contains(key)) {
                 key = s.getId()
             }
-            l.add(new EObjectDescription(QualifiedName.create(key), s,
-                    Collections.<String, String> emptyMap()))
+            l.add(
+                new EObjectDescription(QualifiedName.create(key), s,
+                    Collections.<String, String>emptyMap()))
             m.add(key);
         }
-//        if (KielerCompiler != null) {
-//            try {
-//               val eObjects = KielerCompiler.getIncludedModels();
-//               for (eObject : eObjects) {
-//                    val s = (eObject as State);
-//                    key = s.getId();
-//                    if (m.contains(key)) {
-//                        key = s.getId()
-//                    }
-//                    l.add(new EObjectDescription(QualifiedName.create(key), s,
-//                            Collections.<String, String> emptyMap()))
-//                    m.add(key);
-//               }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
+
+        //        if (KielerCompiler != null) {
+        //            try {
+        //               val eObjects = KielerCompiler.getIncludedModels();
+        //               for (eObject : eObjects) {
+        //                    val s = (eObject as State);
+        //                    key = s.getId();
+        //                    if (m.contains(key)) {
+        //                        key = s.getId()
+        //                    }
+        //                    l.add(new EObjectDescription(QualifiedName.create(key), s,
+        //                            Collections.<String, String> emptyMap()))
+        //                    m.add(key);
+        //               }
+        //            } catch (Exception e) {
+        //                e.printStackTrace();
+        //            }
+        //        }
         return new SimpleScope(l)
-    }    
+    }
 }
