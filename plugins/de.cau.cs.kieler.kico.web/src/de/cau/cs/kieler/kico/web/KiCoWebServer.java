@@ -21,7 +21,6 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 //import java.nio.charset.StandardCharsets;
-
 import java.util.ArrayList;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -29,7 +28,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import com.google.inject.Inject;
 
@@ -230,10 +228,9 @@ public class KiCoWebServer extends Job {
                         }
                     }
                     debug("Model parsed");
-                    //EcoreUtil.resolveAll(context.getModelResourceSet());
 
-                    // String fileExt = KiCoUIUtil.getFileExtension(eObject);
-                    
+                    // currently do NOT resolve the resource set yet
+                    //EcoreUtil.resolveAll(context.getModelResourceSet());
 
                     context.setVerboseMode(verbose);
                     context.setPrerequirements(!strict);
@@ -294,35 +291,6 @@ public class KiCoWebServer extends Job {
     }
 
     // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-
-    // /**
-    // * Test port whether it is ready to be used for the server socket.
-    // *
-    // * @param port the port
-    // * @return true, if successful
-    // */
-    // private boolean testPort(int port) {
-    // boolean out = false;
-    // Socket socket = null;
-    // try {
-    // socket = new Socket();
-    // socket.connect(new InetSocketAddress("localhost", port), 1000);
-    //
-    // } catch (IOException e) {
-    // out = true;
-    // } finally {
-    // if (socket != null) {
-    // try {
-    // socket.close();
-    // } catch (IOException e) {
-    // }
-    // out = true;
-    // }
-    // }
-    // return out;
-    // }
-
     // -------------------------------------------------------------------------
 
     /**
