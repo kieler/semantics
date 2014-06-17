@@ -326,14 +326,14 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.kico.web"
+         id="de.cau.cs.kieler.kico.server"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.kico.web.ui"
+         id="de.cau.cs.kieler.kico.server.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
