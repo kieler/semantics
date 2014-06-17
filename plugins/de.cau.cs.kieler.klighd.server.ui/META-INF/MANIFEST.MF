@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KLighD TCP Server UI
+Bundle-SymbolicName: de.cau.cs.kieler.klighd.server.ui;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-Activator: KlighdServerUIPlugin
+Require-Bundle: de.cau.cs.kieler.klighd.server,
+ org.eclipse.ui,
+ org.eclipse.core.runtime

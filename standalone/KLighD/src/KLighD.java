@@ -37,7 +37,7 @@ import java.util.ArrayList;
  *                RemoteKielerCompiler localhost:5555 sct EXTENDED
  * 
  */
-public class KielerCompiler {
+public class KLighD {
 
     /**
      * The main method interprets all program parameters and starts the remote compilation.
@@ -47,8 +47,6 @@ public class KielerCompiler {
      */
     public static void main(String[] args) {
 
-        boolean verbose = false;
-        boolean strict = false;
         String inputFile = null;
         String outputFile = null;
         ArrayList<String> includeFiles = new ArrayList<String>();
@@ -56,28 +54,28 @@ public class KielerCompiler {
         if (args.length < 1 || args[0].startsWith("-")) {
             System.out
                     .println("\n"
-                            + "====================\n"
-                            + "== KielerCompiler ==\n"
-                            + "====================\n"
+                            + "=====================\n"
+                            + "== KLighD Renderer ==\n"
+                            + "=====================\n"
                             + "Usage: \n"
-                            + "  KielerCompiler <host>:<port> [Options] <transformation 1> ... <transformation n>\n"
+                            + "  KLighD <host>:<port> [Options]\n"
                             + "Example 1:\n"
-                            + "  cat <FILE.sct> | java -jar KielerCompiler.jar localhost:5555 EXTENDED CORE > code.c\n"
+                            + "  cat <FILE.sct> | java -jar KLighD.jar localhost:4444 -r png -s 3 > model.png\n"
                             + "Example 2:\n"
-                            + "  java -jar KielerCompiler.jar 5555 -f FILE.sct -o code.c CODEGENERATION \n"
+                            + "  java -jar KLighD.jar 4444 -f FILE.sct -o model.png \n"
                             + "\n"
                             + "Options:\n"
                             + "-f <filename> : Use a specific input file\n"
-                            + "-i <filename> : Use each specific additional included input file that is referenced\n"
+                            + "-i <filename> : Include additional input files\n"
                             + "-o <filename> : Use a specific output file\n"
-                            + "-v            : Use verbose compilation, more error messages\n"
-                            + "-s            : Use strict mode in which only selected transformations are applied\n");
+                            + "-r            : Render as png or svg, default is png\n"
+                            + "-s            : Use a specific scale factor, default is 1\n");
             return;
         }
 
         String hostAndPort[] = args[0].split(":");
         String host = hostAndPort[0];
-        int port = 5555;
+        int port = 4444;
         if (hostAndPort.length > 1) {
             try {
                 port = Integer.parseInt(hostAndPort[1]);
@@ -93,9 +91,12 @@ public class KielerCompiler {
                 host = "localhost";
             } else {
                 // if only the hostname was specified, assume 5555 as the standard port
-                port = 5555;
+                port = 4444;
             }
         }
+        
+        String render = "png";
+        String scale = "1";
 
         String transformations = "";
         for (int c = 1; c < args.length; c++) {
@@ -119,10 +120,16 @@ public class KielerCompiler {
                         outputFile = args[c + 1];
                         c++;
                     }
-                } else if (option.equals("-v") || option.equals("--verbose")) {
-                    verbose = true;
-                } else if (option.equals("-s") || option.equals("--strict")) {
-                    strict = true;
+                } else if (option.equals("-r") || option.equals("--render")) {
+                    if (c + 1 < args.length) {
+                        render = args[c + 1];
+                        c++;
+                    }
+                } else if (option.equals("-s") || option.equals("--scale")) {
+                    if (c + 1 < args.length) {
+                        scale = args[c + 1];
+                        c++;
+                    }
                 }
             } else {
                 if (!transformations.equals("")) {
@@ -154,19 +161,19 @@ public class KielerCompiler {
         }
         // System.out.println("model: " + model);
 
-        CompilationResult compilationResult =
-                remoteCompile(host, port, outputFile, verbose, strict, models, transformations);
+        RenderResult renderResult =
+                remoteRender(host, port, outputFile, render, scale, models, transformations);
 
         if (outputFile == null || outputFile.trim().equals("")) {
-            System.out.println(compilationResult.model);
+            System.out.println(renderResult.model);
         } else {
-            writeOutputModel(outputFile, compilationResult.model);
+            writeOutputModel(outputFile, renderResult.model);
         }
-        if (compilationResult.error != null && compilationResult.error.length() > 0) {
-            if (verbose || compilationResult.model.length() == 0) {
-                System.out.println(compilationResult.error);
+        if (renderResult.error != null && renderResult.error.length() > 0) {
+            if (renderResult.model.length() == 0) {
+                System.out.println(renderResult.error);
             }
-            if (compilationResult.model.length() == 0) {
+            if (renderResult.model.length() == 0) {
                 System.exit(1);
             }
         }
@@ -262,20 +269,14 @@ public class KielerCompiler {
      *            the transformations
      * @return the string
      */
-    public static CompilationResult remoteCompile(String host, int port, String outputFile,
-            boolean verbose, boolean strict, ArrayList<String> models, String transformations) {
-        CompilationResult result = new CompilationResult("", "");
+    public static RenderResult remoteRender(String host, int port, String outputFile,
+            String render, String scale, ArrayList<String> models, String transformations) {
+        RenderResult result = new RenderResult("", "");
 
-        String options = "";
-        if (verbose) {
-            options += "v";
-        }
-        if (strict) {
-            options += "s";
-        }
+        String options = render + ":" + scale ;
 
         try {
-            TCPClient client = new KielerCompiler.TCPClient(host, port);
+            TCPClient client = new KLighD.TCPClient(host, port);
             client.sndMessage(transformations + "\n");
             
             String header = "";
@@ -285,7 +286,7 @@ public class KielerCompiler {
                 }
                 header += model.split("\n").length + "";
             }
-            header += options + "\n";
+            header += "\n" + options + "\n";
             client.sndMessage(header);
             
             for (String model : models) {
@@ -305,13 +306,13 @@ public class KielerCompiler {
     // -------------------------------------------------------------------------
 
     /**
-     * The Class CompilationResult.
+     * The Class RenderResult.
      */
-    static private class CompilationResult {
+    static private class RenderResult {
         public String model;
         public String error;
 
-        CompilationResult(String model, String error) {
+        RenderResult(String model, String error) {
             this.model = model;
             this.error = error;
         }
@@ -337,7 +338,7 @@ public class KielerCompiler {
             out.flush();
         }
 
-        CompilationResult rcvCompilationResult() throws IOException {
+        RenderResult rcvCompilationResult() throws IOException {
             InputStreamReader in = new InputStreamReader(socket.getInputStream());
             BufferedReader bufferedReader = new BufferedReader(in);
 
@@ -370,7 +371,7 @@ public class KielerCompiler {
                 error += s;
             }
 
-            return new CompilationResult(model, error);
+            return new RenderResult(model, error);
         }
 
         void close() throws IOException {
