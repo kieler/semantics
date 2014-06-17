@@ -20,16 +20,16 @@ import org.eclipse.equinox.app.IApplicationContext;
 
 /**
  * The non-gui server application for KiCoServer.
- *
- * Start the sever: kieler -application de.cau.cs.kieler.kico.server.headless -noExit -p 5555 Start the
- * sever with console log: kieler -application de.cau.cs.kieler.kico.server.headless -consoleLog -noExit
- * --port 5555
- *
+ * 
+ * Start the sever: kieler -application de.cau.cs.kieler.kico.server.headless -noExit -p 5555 Start
+ * the sever with console log: kieler -application de.cau.cs.kieler.kico.server.headless -consoleLog
+ * -noExit --port 5555
+ * 
  * -application will tell eclipse which application to start. You might omit this if you want to run
  * the default application you exported. It makes sense for RCPs with multiple applications though.
  * -consoleLog opens a dedicated eclipse console and should be well known already. -noExit will keep
  * eclipse running even if our application finished. It keeps the console open to examine output.
- *
+ * 
  * @author cmot
  * @kieler.design 2014-04-08 proposed
  * @kieler.rating 2014-04-08 proposed yellow

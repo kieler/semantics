@@ -1,3 +1,4 @@
+package de.cau.cs.kieler.kico.server.ui;
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
@@ -22,20 +23,20 @@ import org.osgi.framework.BundleContext;
  * @kieler.design 2014-06-08 proposed
  * @kieler.rating 2014-06-08 proposed yellow
  */
-public class KiCoWebUIPlugin extends AbstractUIPlugin {
+public class KiCoServerUIPlugin extends AbstractUIPlugin {
 
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.kico.web.ui"; //$NON-NLS-1$
 
     /** The shared instance. */
-    private static KiCoWebUIPlugin plugin;
+    private static KiCoServerUIPlugin plugin;
 
     // -------------------------------------------------------------------------
 
     /**
      * Instantiates a new KiCoWebUIPlugin plugin.
      */
-    public KiCoWebUIPlugin() {
+    public KiCoServerUIPlugin() {
         plugin = this;
     }
 
@@ -70,7 +71,7 @@ public class KiCoWebUIPlugin extends AbstractUIPlugin {
      * 
      * @return the shared instance
      */
-    public static KiCoWebUIPlugin getInstance() {
+    public static KiCoServerUIPlugin getInstance() {
         return plugin;
     }
 
