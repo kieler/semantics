@@ -66,16 +66,16 @@ public class KiCoServerApplication implements IApplication {
                 }
                 if (newPort > 0) {
                     System.out.println("Setting KiCo TCP Server port to " + newPort);
-                    KiCoPlugin.savePort(newPort);
+                    KiCoServerPlugin.savePort(newPort);
                 } else {
                     System.out.println("Error setting KiCo TCP Server port (" + arg + ")");
                 }
             }
         }
 
-        KiCoPlugin.saveEnabled(true);
-        System.out.println("Starting KiCo TCP Server at port " + KiCoPlugin.loadPort());
-        KiCoPlugin.startServer(debug);
+        KiCoServerPlugin.saveEnabled(true);
+        System.out.println("Starting KiCo TCP Server at port " + KiCoServerPlugin.loadPort());
+        KiCoServerPlugin.startServer(debug);
         return null;
     }
 
@@ -86,7 +86,7 @@ public class KiCoServerApplication implements IApplication {
      */
     public void stop() {
         System.out.println("Stopping KiCo TCP Server");
-        KiCoPlugin.stopServer();
+        KiCoServerPlugin.stopServer();
     }
 
     // -------------------------------------------------------------------------

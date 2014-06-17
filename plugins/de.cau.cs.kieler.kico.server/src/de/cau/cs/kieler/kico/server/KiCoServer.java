@@ -83,7 +83,7 @@ public class KiCoServer extends Job {
      */
     @Inject
     public KiCoServer(String name) {
-        super("KIELER Compiler TCP Server (" + KiCoPlugin.loadPort() + ")");
+        super("KIELER Compiler TCP Server (" + KiCoServerPlugin.loadPort() + ")");
         debug("Server created");
     }
 
@@ -139,16 +139,16 @@ public class KiCoServer extends Job {
         aborted = false;
         socket = null;
 
-        debug("Server enabled: " + KiCoPlugin.loadEnabled());
+        debug("Server enabled: " + KiCoServerPlugin.loadEnabled());
 
         // continuously while enabled provide the service
-        while (KiCoPlugin.loadEnabled() && !aborted) {
+        while (KiCoServerPlugin.loadEnabled() && !aborted) {
             debug("Server enabled");
 
             // if no socket then create a new listening server socket
             if (socket == null) {
                 debug("No socket. Creating socket.");
-                socket = listenPort(KiCoPlugin.loadPort());
+                socket = listenPort(KiCoServerPlugin.loadPort());
                 debug("Server listen socket established");
             }
 

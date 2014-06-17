@@ -20,19 +20,19 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * KiCoButtonHandler implements the button handler for starting the dialog window in order to
+ * KiCoServerButtonHandler implements the button handler for starting the dialog window in order to
  * start or stop the server and to modify the listening port.
  *
  * @author cmot
  * @kieler.design 2014-06-08 proposed
  * @kieler.rating 2014-06-08 proposed yellow
  */
-public class KiCoButtonHandler extends AbstractHandler {
+public class KiCoServerButtonHandler extends AbstractHandler {
 
 	/**
 	 * Instantiates a new KiCoButtonHandler handler.
 	 */
-	public KiCoButtonHandler() {
+	public KiCoServerButtonHandler() {
 	}
 
 	//---------------------------------------------------------------------

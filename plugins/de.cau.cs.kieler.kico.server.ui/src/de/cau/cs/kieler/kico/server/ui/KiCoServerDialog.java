@@ -24,24 +24,24 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import de.cau.cs.kieler.kico.server.KiCoPlugin;
+import de.cau.cs.kieler.kico.server.KiCoServerPlugin;
 import org.eclipse.swt.widgets.Link;
 
 /**
- * The dialog window for controlling the TCP server, i.e., starting, stopping and changeing its port.
+ * The dialog window for controlling the TCP server, i.e., starting, stopping and changing its port.
  *
  * @author cmot
  * @kieler.design 2014-06-08 proposed
  * @kieler.rating 2014-06-08 proposed yellow
  *
  */
-public class KiCoDialog extends Dialog {
+public class KiCoServerDialog extends Dialog {
 
     protected Object result;
     protected Shell shlDdd;
     private Text text;
     private Button button;
-    static KiCoDialog instance;
+    static KiCoServerDialog instance;
 
     /**
      * Create the dialog.
@@ -49,7 +49,7 @@ public class KiCoDialog extends Dialog {
      * @param parent
      * @param style
      */
-    public KiCoDialog(Shell parent, int style) {
+    public KiCoServerDialog(Shell parent, int style) {
         super(parent, style);
         setText("SWT Dialog");
         instance = this;
@@ -64,8 +64,8 @@ public class KiCoDialog extends Dialog {
         createContents();
         shlDdd.open();
 
-        text.setText(KiCoPlugin.loadPort() + "");
-        button.setSelection(KiCoPlugin.loadEnabled());
+        text.setText(KiCoServerPlugin.loadPort() + "");
+        button.setSelection(KiCoServerPlugin.loadEnabled());
 
         shlDdd.layout();
         Display display = getParent().getDisplay();
@@ -111,20 +111,20 @@ public class KiCoDialog extends Dialog {
         btnOk.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                KiCoPlugin.saveEnabled(button.getSelection());
+                KiCoServerPlugin.saveEnabled(button.getSelection());
                 int port = 5555;
                 try {
                     port = Integer.parseInt(text.getText());
                 } catch (Exception ee) {
                     port = 5555;
                 }
-                KiCoPlugin.savePort(port);
+                KiCoServerPlugin.savePort(port);
 
-                if (KiCoPlugin.loadEnabled()) {
-                    KiCoPlugin.stopServer();
-                    KiCoPlugin.startServer(false);
+                if (KiCoServerPlugin.loadEnabled()) {
+                    KiCoServerPlugin.stopServer();
+                    KiCoServerPlugin.startServer(false);
                 } else {
-                    KiCoPlugin.stopServer();
+                    KiCoServerPlugin.stopServer();
                 }
                 shlDdd.close();
             }

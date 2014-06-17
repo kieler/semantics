@@ -15,16 +15,16 @@ package de.cau.cs.kieler.kico.server.ui;
 
 import org.eclipse.ui.IStartup;
 
-import de.cau.cs.kieler.kico.server.KiCoPlugin;
+import de.cau.cs.kieler.kico.server.KiCoServerPlugin;
 
 /**
- * KiCoStartup starts the TCP server in the UI mode of Eclipse when it was started earlier.
+ * KiCoServerStartup starts the TCP server in the UI mode of Eclipse when it was started earlier.
  */
-public class KiCoStartup implements IStartup {
+public class KiCoServerStartup implements IStartup {
 
     public void earlyStartup() {
-        if (KiCoPlugin.loadEnabled()) {
-            KiCoPlugin.startServer(false);
+        if (KiCoServerPlugin.loadEnabled()) {
+            KiCoServerPlugin.startServer(false);
         }
     }
 

@@ -33,13 +33,13 @@ import com.google.inject.Guice;
  * @kieler.design 2014-06-08 proposed
  * @kieler.rating 2014-06-08 proposed yellow
  */
-public class KiCoPlugin extends Plugin {
+public class KiCoServerPlugin extends Plugin {
 
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.kico.server"; //$NON-NLS-1$
 
     /** The shared instance. */
-    private static KiCoPlugin plugin;
+    private static KiCoServerPlugin plugin;
 
     /** The single server. */
     private static KiCoServer server;
@@ -49,7 +49,7 @@ public class KiCoPlugin extends Plugin {
     /**
      * The constructor
      */
-    public KiCoPlugin() {
+    public KiCoServerPlugin() {
     }
 
     // -------------------------------------------------------------------------
@@ -59,7 +59,7 @@ public class KiCoPlugin extends Plugin {
      *
      * @return the shared instance
      */
-    public static KiCoPlugin getInstance() {
+    public static KiCoServerPlugin getInstance() {
         return plugin;
     }
 
@@ -138,7 +138,7 @@ public class KiCoPlugin extends Plugin {
      * @param server the new server
      */
     private static void setServer(KiCoServer server) {
-        KiCoPlugin.server = server;
+        KiCoServerPlugin.server = server;
     }
 
     // -------------------------------------------------------------------------
@@ -149,7 +149,7 @@ public class KiCoPlugin extends Plugin {
      * @return the server
      */
     private static KiCoServer getServer() {
-        return KiCoPlugin.server;
+        return KiCoServerPlugin.server;
     }
 
     // -------------------------------------------------------------------------
@@ -158,24 +158,24 @@ public class KiCoPlugin extends Plugin {
      * Start the single TCP server.
      */
     public static void startServer(boolean debug) {
-        if (KiCoPlugin.getServer() == null) {
+        if (KiCoServerPlugin.getServer() == null) {
             KiCoServer newServer = Guice.createInjector().getInstance(KiCoServer.class);
             newServer.setDebug(debug);
-            KiCoPlugin.setServer(newServer);
-            KiCoPlugin.getServer().schedule();
+            KiCoServerPlugin.setServer(newServer);
+            KiCoServerPlugin.getServer().schedule();
         }
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Stop the signle TCP server.
+     * Stop the single TCP server.
      */
     public static void stopServer() {
-        if (KiCoPlugin.getServer() != null) {
-            KiCoPlugin.getServer().abort();
+        if (KiCoServerPlugin.getServer() != null) {
+            KiCoServerPlugin.getServer().abort();
         }
-        KiCoPlugin.setServer(null);
+        KiCoServerPlugin.setServer(null);
     }
 
     // -------------------------------------------------------------------------
