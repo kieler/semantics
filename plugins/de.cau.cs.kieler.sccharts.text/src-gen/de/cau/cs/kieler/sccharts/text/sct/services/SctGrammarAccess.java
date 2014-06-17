@@ -1905,7 +1905,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AtomicExpression returns Expression:
-	//	BoolValue | ValuedObjectTestExpression | "(" BoolExpression ")" | TextExpression;
+	//	BoolValue | ValuedObjectTestExpression | "(" BoolExpression ")" | FunctionCall | TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaActions.getAtomicExpressionAccess();
 	}
@@ -1945,6 +1945,26 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getValuedObjectReferenceRule() {
 		return getValuedObjectReferenceAccess().getRule();
+	}
+
+	//FunctionCall:
+	//	"<" functionName=ID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")")? ">";
+	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
+		return gaActions.getFunctionCallAccess();
+	}
+	
+	public ParserRule getFunctionCallRule() {
+		return getFunctionCallAccess().getRule();
+	}
+
+	//Parameter:
+	//	callByReference?="&"? expression=Expression;
+	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
+		return gaActions.getParameterAccess();
+	}
+	
+	public ParserRule getParameterRule() {
+		return getParameterAccess().getRule();
 	}
 
 	//// Example: 'printf(...)'

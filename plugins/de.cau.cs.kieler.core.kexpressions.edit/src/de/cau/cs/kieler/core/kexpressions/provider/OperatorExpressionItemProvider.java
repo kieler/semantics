@@ -219,6 +219,11 @@ public class OperatorExpressionItemProvider
             (createChildParameter
                 (KExpressionsPackage.Literals.OPERATOR_EXPRESSION__SUB_EXPRESSIONS,
                  KExpressionsFactory.eINSTANCE.createTextExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (KExpressionsPackage.Literals.OPERATOR_EXPRESSION__SUB_EXPRESSIONS,
+                 KExpressionsFactory.eINSTANCE.createFunctionCall()));
     }
 
 }

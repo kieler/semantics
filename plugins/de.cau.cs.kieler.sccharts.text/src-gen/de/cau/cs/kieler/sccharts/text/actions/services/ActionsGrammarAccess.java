@@ -942,7 +942,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AtomicExpression returns Expression:
-	//	BoolValue | ValuedObjectTestExpression | "(" BoolExpression ")" | TextExpression;
+	//	BoolValue | ValuedObjectTestExpression | "(" BoolExpression ")" | FunctionCall | TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaKExpressions.getAtomicExpressionAccess();
 	}
@@ -982,6 +982,26 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getValuedObjectReferenceRule() {
 		return getValuedObjectReferenceAccess().getRule();
+	}
+
+	//FunctionCall:
+	//	"<" functionName=ID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")")? ">";
+	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
+		return gaKExpressions.getFunctionCallAccess();
+	}
+	
+	public ParserRule getFunctionCallRule() {
+		return getFunctionCallAccess().getRule();
+	}
+
+	//Parameter:
+	//	callByReference?="&"? expression=Expression;
+	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
+		return gaKExpressions.getParameterAccess();
+	}
+	
+	public ParserRule getParameterRule() {
+		return getParameterAccess().getRule();
 	}
 
 	//// Example: 'printf(...)'
