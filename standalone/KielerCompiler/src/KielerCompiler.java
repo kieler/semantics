@@ -289,7 +289,7 @@ public class KielerCompiler {
             client.sndMessage(header);
             
             for (String model : models) {
-                client.sndMessage(model + "\n");
+                client.sndMessage(model);
             }
 
             result = client.rcvCompilationResult();
