@@ -34,6 +34,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.List
 import java.util.HashMap
 import java.util.LinkedList
+import de.cau.cs.kieler.scg.Fork
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -67,10 +68,10 @@ class DependencyTransformation extends AbstractModelTransformation {
     /** Inject SCG copy extensions. */  
     @Inject
     extension SCGCopyExtensions
-    @Inject
-    extension SCChartsExtension
     
     private val threadNodeList = new HashMap<Node, List<Entry>>
+    private val ancestorForkCache = new HashMap<Node, List<Fork>>
+    private val relativeWriterCache = new HashMap<AssignmentDep, Boolean>
     
     // -------------------------------------------------------------------------
     // -- Transformation method
@@ -100,7 +101,21 @@ class DependencyTransformation extends AbstractModelTransformation {
         // dependency information. The data is automatically stored in the SCG by the createDependencies
         // function.
         threadNodeList.clear
+        relativeWriterCache.clear
+        ancestorForkCache.clear
+        
+        val timestamp = System.currentTimeMillis  
         val assignments = scgdep.nodes.filter(typeof(AssignmentDep)).filter[ valuedObject != null ].toList.immutableCopy
+        val conditionals = scgdep.nodes.filter(typeof(Conditional)).filter[ condition != null ].toList.immutableCopy
+
+        assignments.forEach[ 
+            relativeWriterCache.put(it, it.isRelativeWriter)
+            ancestorForkCache.put(it, it.getAncestorForks)
+        ]
+        conditionals.forEach[
+            ancestorForkCache.put(it, it.getAncestorForks)
+        ]
+
         
         scgdep.nodes.filter(typeof(Entry)).forEach[ entry |
         	entry.getThreadNodes.forEach[ node |
@@ -118,9 +133,15 @@ class DependencyTransformation extends AbstractModelTransformation {
         	]
         ]
         
+        var time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("Preparation for dependency analysis finished (time used: "+(time / 1000)+"s).")  
+        
         for(node : assignments) {
-        	 node.createDependencies(assignments) 
+        	 node.createDependencies(assignments, conditionals, scgdep) 
       	 }
+
+        time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("Dependency analysis finished (time used overall: "+(time / 1000)+"s).")  
         
         // Return the SCG with dependency data.
         scgdep
@@ -139,11 +160,13 @@ class DependencyTransformation extends AbstractModelTransformation {
      * 			the assignment node in question
      * @return Returns the given assignment for further processing.
      */
-    private def AssignmentDep createDependencies(AssignmentDep assignment, List<AssignmentDep> assignments) {
-    	// Retrieve the SCG of the assignment node. This is done via the SCG extensions method graph.
-    	val scg = assignment.graph
+    private def AssignmentDep createDependencies(AssignmentDep assignment, 
+        List<AssignmentDep> assignments,
+        List<Conditional> conditionals,
+        SCGraphDep scg
+    ) {
         // Cache own absolute/relative state.
-        val iAmAbsoluteWriter = !assignment.isRelativeWriter
+        val iAmAbsoluteWriter = !relativeWriterCache.get(assignment)
         
         // Filter all other assignments.
         assignments.forEach[ node |
@@ -153,10 +176,11 @@ class DependencyTransformation extends AbstractModelTransformation {
                 if (node.isSameScalar(assignment)) {
                     // Check absolute / relative writes and add the corresponding dependency.
                     // The Scgdep factory is used to create the appropriate depenency.
-                    if (iAmAbsoluteWriter && node.isRelativeWriter) {
+                    val isRelW = relativeWriterCache.get(node)
+                    if (iAmAbsoluteWriter && isRelW) {
                         dependency = ScgdepFactory::eINSTANCE.createAbsoluteWrite_RelativeWrite                        
                     } else 
-                    if (iAmAbsoluteWriter && !node.isRelativeWriter) {
+                    if (iAmAbsoluteWriter && !isRelW) {
                         dependency = ScgdepFactory::eINSTANCE.createWrite_Write       
                     }
                 } else
@@ -179,7 +203,7 @@ class DependencyTransformation extends AbstractModelTransformation {
         
         // Basically, do the same stuff with conditionals as target. 
         // Since conditionals will never write to a variable, it is sufficient to check the reader.
-        scg.nodes.filter(typeof(Conditional)).forEach[ node |
+        conditionals.forEach[ node |
             var Dependency dependency = null
             if (node.isReader(assignment)) {
                 if (iAmAbsoluteWriter) dependency = ScgdepFactory::eINSTANCE.createAbsoluteWrite_Read
@@ -261,8 +285,8 @@ class DependencyTransformation extends AbstractModelTransformation {
      */ 
     private def boolean areConcurrent(Node node1, Node node2) {
     	// Use the SCG extensions to retrieve all ancestor forks for both nodes.
-        var node1AF = node1.getAncestorForks
-        var node2AF = node2.getAncestorForks
+        var node1AF = ancestorForkCache.get(node1)
+        var node2AF = ancestorForkCache.get(node2)
         // For each ancestor fork of node1 check if it is also present in the list of node2.
         for (node : node1AF) {
             if (node2AF.contains(node)) {
