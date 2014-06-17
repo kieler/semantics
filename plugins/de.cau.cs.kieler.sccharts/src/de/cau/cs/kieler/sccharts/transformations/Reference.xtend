@@ -24,6 +24,7 @@ import de.cau.cs.kieler.sccharts.Assignment
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.sccharts.Binding
 
 /**
  * SCCharts Reference Transformation.
@@ -73,8 +74,10 @@ class Reference {
         ]
 
         for(eObject : newState.eAllContents.toList) {
-            if (eObject instanceof Assignment || eObject instanceof ValuedObjectReference 
-                || (eObject instanceof TextExpression)
+            if (eObject instanceof Assignment 
+                || eObject instanceof ValuedObjectReference 
+                || eObject instanceof TextExpression
+                || eObject instanceof Binding
             ) {
                 for(binding : state.bindings) {
                     if (eObject instanceof Assignment) {
@@ -97,6 +100,11 @@ class Reference {
                         for (index : valuedObjectReferenceCopy.indices) {
                             valuedObjectReference.indices.add(index.copy);
                         }
+                    } else if (eObject instanceof Binding) {
+                        val bing = eObject as Binding
+                        if (bing.actual.name == binding.formal.name) {
+                            bing.actual = binding.actual
+                        } 
                     } else if (eObject instanceof TextExpression) {
                         if (binding.hasAnnotation(HOSTCODE_ANNOTATION)) {
                             val texp = (eObject as TextExpression)
@@ -135,7 +143,11 @@ class Reference {
             ^final = state.^final
         ]
         
-        state.remove        
+        state.remove   
+        
+        newState.allContainedStates.filter[ referencedState ].toList.immutableCopy.forEach[
+            transformReference(newState)
+        ]     
     }
 
 }
