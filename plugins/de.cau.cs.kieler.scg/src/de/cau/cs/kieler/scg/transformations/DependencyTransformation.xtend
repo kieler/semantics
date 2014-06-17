@@ -110,12 +110,7 @@ class DependencyTransformation extends AbstractModelTransformation {
 
         assignments.forEach[ 
             relativeWriterCache.put(it, it.isRelativeWriter)
-            ancestorForkCache.put(it, it.getAncestorForks)
         ]
-        conditionals.forEach[
-            ancestorForkCache.put(it, it.getAncestorForks)
-        ]
-
         
         scgdep.nodes.filter(typeof(Entry)).forEach[ entry |
         	entry.getThreadNodes.forEach[ node |
@@ -285,8 +280,8 @@ class DependencyTransformation extends AbstractModelTransformation {
      */ 
     private def boolean areConcurrent(Node node1, Node node2) {
     	// Use the SCG extensions to retrieve all ancestor forks for both nodes.
-        var node1AF = ancestorForkCache.get(node1)
-        var node2AF = ancestorForkCache.get(node2)
+        var node1AF = node1.getCachedAncestorForks
+        var node2AF = node2.getCachedAncestorForks
         // For each ancestor fork of node1 check if it is also present in the list of node2.
         for (node : node1AF) {
             if (node2AF.contains(node)) {
@@ -306,6 +301,15 @@ class DependencyTransformation extends AbstractModelTransformation {
             }
         }
         return false
+    }
+    
+    private def List<Fork> getCachedAncestorForks(Node node) {
+    	var af = ancestorForkCache.get(node)
+    	if (af == null) {
+    		af = node.getAncestorForks
+    		ancestorForkCache.put(node, af)
+    	}
+    	return af
     }
     
     /** 
