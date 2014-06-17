@@ -165,6 +165,7 @@ TextualCode returns kexpressions::TextExpression:
 // ---------------------------------------------------------------------------------------------------
 
 Binding returns sccharts::Binding:
+    (annotations+=Annotation)*
 	formal = [kexpressions::ValuedObject|ID] 
 	'to' 
 	actual = [kexpressions::ValuedObject|ID]

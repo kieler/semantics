@@ -135,6 +135,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
             case SCChartsPackage.BINDING: {
                 Binding binding = (Binding)theEObject;
                 T result = caseBinding(binding);
+                if (result == null) result = caseAnnotatable(binding);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }

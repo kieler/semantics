@@ -1032,19 +1032,37 @@ class SCChartsExtension {
     }
     
     def void replaceAllOccurrences(Scope scope, ValuedObject valuedObject, ValuedObject replacement) {
-    	for(obj : scope.eAllContents.toList.immutableCopy) {
+        val relevantObjects = scope.eAllContents.filter(e | e instanceof ValuedObjectReference || 
+                                                            e instanceof Assignment ||
+                                                            e instanceof Emission ||
+                                                            e instanceof Binding
+        ).toList.immutableCopy;
+    	for(obj : relevantObjects) {
     		if (obj instanceof ValuedObjectReference
     			&& (obj as ValuedObjectReference).valuedObject == valuedObject
     		)  {
-    			obj.replace(replacement.reference)
+                val valuedObjectReference = (obj as ValuedObjectReference)
+    		    val valuedObjectReferenceCopy = valuedObjectReference.copy;
+    		    val replacementValuedObjectReference = replacement.reference;
+    			obj.replace(replacementValuedObjectReference)
+      			replacementValuedObjectReference.indices.clear
+      			for (index : valuedObjectReferenceCopy.indices) {
+                    replacementValuedObjectReference.indices.add(index.copy);
+      			}
     		}
 
     		else if (obj instanceof Assignment && (obj as Assignment).valuedObject == valuedObject)  {
-				(obj as Assignment).valuedObject = replacement
+    		    val assignment = (obj as Assignment)
+                val assignmentCopy = assignment.copy;
+				assignment.valuedObject = replacement;
+                assignment.indices.clear
+                for (index : assignmentCopy.indices) {
+                    assignment.indices.add(index.copy);
+                }
     		}
 
     		else if (obj instanceof Emission && (obj as Emission).valuedObject == valuedObject)  {
-				(obj as Emission).valuedObject = replacement
+				(obj as Emission).valuedObject = replacement;
     		}
 
     		else if (obj instanceof Binding) {

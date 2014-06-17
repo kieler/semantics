@@ -1886,6 +1886,24 @@ ruleBinding returns [EObject current=null]
 ((
 (
 		{ 
+	        newCompositeNode(grammarAccess.getBindingAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
+	    }
+		lv_annotations_0_0=ruleAnnotation		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getBindingRule());
+	        }
+       		add(
+       			$current, 
+       			"annotations",
+        		lv_annotations_0_0, 
+        		"Annotation");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)*(
+(
+		{ 
 		  /* */ 
 		}
 		{
@@ -1893,15 +1911,15 @@ ruleBinding returns [EObject current=null]
 	            $current = createModelElement(grammarAccess.getBindingRule());
 	        }
         }
-	otherlv_0=RULE_ID
+	otherlv_1=RULE_ID
 	{
-		newLeafNode(otherlv_0, grammarAccess.getBindingAccess().getFormalValuedObjectCrossReference_0_0()); 
+		newLeafNode(otherlv_1, grammarAccess.getBindingAccess().getFormalValuedObjectCrossReference_1_0()); 
 	}
 
 )
-)	otherlv_1='to' 
+)	otherlv_2='to' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getBindingAccess().getToKeyword_1());
+    	newLeafNode(otherlv_2, grammarAccess.getBindingAccess().getToKeyword_2());
     }
 (
 (
@@ -1913,9 +1931,9 @@ ruleBinding returns [EObject current=null]
 	            $current = createModelElement(grammarAccess.getBindingRule());
 	        }
         }
-	otherlv_2=RULE_ID
+	otherlv_3=RULE_ID
 	{
-		newLeafNode(otherlv_2, grammarAccess.getBindingAccess().getActualValuedObjectCrossReference_2_0()); 
+		newLeafNode(otherlv_3, grammarAccess.getBindingAccess().getActualValuedObjectCrossReference_3_0()); 
 	}
 
 )

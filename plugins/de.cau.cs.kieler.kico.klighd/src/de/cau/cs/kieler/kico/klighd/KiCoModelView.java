@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.kico.klighd;
 
+import java.util.ArrayList;
 import java.util.WeakHashMap;
 
 import org.eclipse.core.resources.IFile;
@@ -630,18 +631,9 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             do_get_model |= is_active_editor_update;
             do_get_model |= is_save_update;
 
-            // Indicates if type of model changed and thus the model view has to reinitialize
-            boolean model_type_changed = false;
-
             // Get model if necessary
-            Object previousSourceModel = sourceModel;
             if (do_get_model) {
                 sourceModel = KiCoModelViewManager.getModelFromModelEditor(activeEditor);
-            }
-            // compare types and set type change flag
-            if (previousSourceModel != null && sourceModel != null
-                    && previousSourceModel.getClass() == sourceModel.getClass()) {
-                model_type_changed |= true;
             }
 
             // check if source model is read correctly
@@ -721,8 +713,8 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
                     // compile
                     result =
-                            KielerCompiler.compile(transformations.getSelection(),
-                                    (EObject) sourceModel, transformations.isAdvanced());
+                            KielerCompiler.compile(transformations.getSelection(), new ArrayList<String>(), 
+                                    (EObject) sourceModel, transformations.isAdvanced(), false);
 
                     // stop listening
                     Platform.removeLogListener(this);
@@ -762,10 +754,11 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 currentModel = chain;
             }
 
+            // Indicates if type of model changed and thus the model view has to reinitialize
+            boolean model_type_changed = false;
             // compare types and set type change flag
-            if (previousCurrentModel != null && currentModel != null
-                    && previousCurrentModel.getClass() == currentModel.getClass()) {
-                model_type_changed |= true;
+            if (previousCurrentModel == null || previousCurrentModel.getClass() != currentModel.getClass()) {
+                model_type_changed = true;
             }
 
             boolean do_update_diagram = false;

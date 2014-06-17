@@ -9,7 +9,9 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.events.DisposeEvent;
@@ -33,9 +35,11 @@ import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.kico.KielerCompiler;
+import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.TransformationDummy;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager.KiCoSelectionChangeEventListerner;
 import de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesis;
+import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
 import de.cau.cs.kieler.klighd.IDiagramWorkbenchPart;
 import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
@@ -44,7 +48,9 @@ import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 import de.cau.cs.kieler.klighd.util.ExpansionAwareLayoutOption;
 import de.cau.cs.kieler.klighd.util.ExpansionAwareLayoutOption.ExpansionAwareLayoutOptionData;
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties.ZoomConfigButtonsHandling;
 import de.cau.cs.kieler.klighd.util.Iterables2;
+import de.cau.cs.kieler.klighd.util.KlighdProperties;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
 /**
@@ -74,27 +80,34 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static final ImageDescriptor ICON_COMPILE = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconCompile.png");
 
-    // public static final ImageDescriptor ICON_SSM = AbstractUIPlugin.imageDescriptorFromPlugin(
-    // "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconSSM.png");
-
     public static final ImageDescriptor ICON_EXPANDALL = AbstractUIPlugin
+            .imageDescriptorFromPlugin("org.eclipse.ui", "icons/full/elcl16/expandall.gif");
+
+    public static final ImageDescriptor ICON_COLLAPSEALL = AbstractUIPlugin
+            .imageDescriptorFromPlugin("org.eclipse.ui", "icons/full/elcl16/collapseall.gif");
+
+    public static final ImageDescriptor ICON_SELECTALL = AbstractUIPlugin
             .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.ui",
-                    "icons/KiCoViewIconExpandAll.png");
+                    "icons/KiCoViewIconSelectAll.png");
+
+    public static final ImageDescriptor ICON_DESELECTALL = AbstractUIPlugin
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.ui",
+                    "icons/KiCoViewIconDeselectAll.png");
 
     /** The action for toggling the advanced mode. */
     private Action actionAdvancedToggle;
-
-    // /** The action for toggling the SSM mode. */
-    // private Action actionSSMToggle;
 
     /** The action for toggling the hierarchy mode. */
     private Action actionHierarchyToggle;
 
     /** The action for toggling the hierarchy mode. */
-    private Action actionCompileToggle;
+    // private Action actionCompileToggle;
 
-    /** The action for toggling the SSM mode. */
+    /** The action for toggling the expand mode. */
     private Action actionExpandAllToggle;
+
+    /** The action for toggling the expand mode. */
+    private Action actionSelectAllToggle;
 
     /** The active editor property key. */
     public static final String ACTIVE_EDITOR_PROPERTY_KEY = "de.cau.cs.kieler.kico.ui.activeEditor";
@@ -103,9 +116,12 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static final String ACTIVE_TRANSFORMATIONS_PROPERTY_KEY =
             "de.cau.cs.kieler.kico.ui.activeTransformations";
 
-    /** The graph model of TransformationDummys per editor instance. */
-    static HashMap<Integer, List<TransformationDummy>> model =
-            new HashMap<Integer, List<TransformationDummy>>();
+    /**
+     * The KielerCompiler contexts including graph model of TransformationDummys per editor
+     * instance.
+     */
+    static HashMap<Integer, KielerCompilerContext> knownContexts =
+            new HashMap<Integer, KielerCompilerContext>();
 
     /** The selected transformations per editor instance. */
     static HashMap<Integer, List<String>> selectedTransformations =
@@ -121,12 +137,12 @@ public class KiCoSelectionView extends DiagramViewPart {
     /** The flag for expanding or collapsing all groups. */
     public static boolean allExpanded = false;
 
+    /** The flag for selecting or deselecting all transformations. */
+    public static boolean allSelected = false;
+
     /** The advaned mode auto selects required transformations. */
     public static int compileMode = 0;
     public static final int COMPILEMODEMAX = 5; // 5 stages of compilation
-
-    // /** The SSM diagram synthesis mode. */
-    // public static boolean SSMMode = false;
 
     /** The hierarchy or flat diagram synthesis mode. */
     public static int hierarchyMode = 0; // 0 = hierarchy, 1 = flat & no groups, 2 = flat
@@ -377,7 +393,8 @@ public class KiCoSelectionView extends DiagramViewPart {
             requiredList.clear();
             List<String> selectedTransformations = getSelectedTransformations(editorID);
             List<String> allRequiredTransformations =
-                    KielerCompiler.calculatePreRequirements(selectedTransformations, false);
+                    KielerCompiler.calculatePreRequirements(selectedTransformations,
+                            new ArrayList<String>(), false);
             for (String requiredTransformation : allRequiredTransformations) {
                 boolean found = false;
                 for (String selectedTransformation : selectedTransformations) {
@@ -400,15 +417,15 @@ public class KiCoSelectionView extends DiagramViewPart {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the model graph of TransformationDummys for an editor.
+     * Gets the KielerCompiler context (with the graph of TransformationDummies) for an editor.
      * 
      * @param editorID
      *            the editor id
      * @return the model
      */
-    public static List<TransformationDummy> getModel(int editorID) {
-        if (model.containsKey(editorID)) {
-            return model.get(editorID);
+    public static KielerCompilerContext getKielerCompilerContext(int editorID) {
+        if (knownContexts.containsKey(editorID)) {
+            return knownContexts.get(editorID);
         }
         return null;
     }
@@ -426,9 +443,9 @@ public class KiCoSelectionView extends DiagramViewPart {
      */
     public static TransformationDummy resolveTransformationDummy(String transformationID,
             int editorID) {
-        List<TransformationDummy> tempModel = getModel(editorID);
-        if (tempModel != null) {
-            for (TransformationDummy transformationDummy : tempModel) {
+        KielerCompilerContext context = getKielerCompilerContext(editorID);
+        if (context != null) {
+            for (TransformationDummy transformationDummy : context.getGraph()) {
                 if (transformationDummy.id.equals(transformationID)) {
                     return transformationDummy;
                 }
@@ -522,6 +539,21 @@ public class KiCoSelectionView extends DiagramViewPart {
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the all transformations.
+     *
+     * @return the all transformations
+     */
+    public static List<TransformationDummy> getAllTransformations(int editorID) {
+        KielerCompilerContext context = getKielerCompilerContext(editorID);
+        if (context != null) {
+            return context.getGraph();
+        }
+        return new ArrayList<TransformationDummy>();
+    }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Removes other possibly selected alternatives for a transformation from the list of selected
@@ -579,6 +611,29 @@ public class KiCoSelectionView extends DiagramViewPart {
         }
     }
 
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Adds the selected transformation visualization.
+     * 
+     * @param editorID
+     *            the editor id
+     */
+    public static void addSelectedTransformationVisualization(int editorID, List<String> transformationDummyIDs) {
+        ViewContext context = instance.getViewer().getViewContext();
+        for (String selectedTransformationID : transformationDummyIDs) {
+            TransformationDummy selectedTransformationDummy =
+                    resolveTransformationDummy(selectedTransformationID,
+                            KiCoSelectionView.getActiveEditorID());
+            if (selectedTransformationDummy != null) {
+                KiCoKlighdAction.setLabelColor(selectedTransformationDummy, context,
+                        KiCoDiagramSynthesis.WHITE, KiCoDiagramSynthesis.BLUE3);
+                KiCoKlighdAction.setStateColor(selectedTransformationDummy, context,
+                        KiCoDiagramSynthesis.BLUE3, KiCoDiagramSynthesis.BLUE4);
+            }
+        }
+    }    
     // -------------------------------------------------------------------------
 
     /**
@@ -600,45 +655,57 @@ public class KiCoSelectionView extends DiagramViewPart {
                     if (!partName.equals(lastEditor)) {
                         // Next view is collapsed again
                         allExpanded = false;
-                        actionExpandAllToggle.setChecked(allExpanded);
+                        if (allExpanded) {
+                            actionExpandAllToggle.setImageDescriptor(ICON_COLLAPSEALL);
+                            actionExpandAllToggle.setToolTipText("Collapse all expanded transformation groups.");
+                        } else {
+                            actionExpandAllToggle.setImageDescriptor(ICON_EXPANDALL);
+                            actionExpandAllToggle.setToolTipText("Expand all collapsed transformation groups.");
+                        }
 
                         lastEditor = partName;
                         int activeEditorID = getActiveEditorID();
-                        List<TransformationDummy> tempModel = KielerCompiler.buildGraph();
 
-                        List<String> selectedTransformations = new ArrayList<String>();
-                        List<String> excludedTransformationIDs = new ArrayList<String>();
+                        List<String> selectedTransformationIDs = new ArrayList<String>();
+                        List<String> disabledTransformationIDs = new ArrayList<String>();
                         List<String> selectedAndExcludedTransformations =
                                 getSelectedTransformations(activeEditorID);
                         for (String transformation : selectedAndExcludedTransformations) {
                             if (transformation.startsWith("!")) {
-                                excludedTransformationIDs.add(transformation.substring(1));
+                                disabledTransformationIDs.add(transformation.substring(1));
                             } else {
-                                selectedTransformations.add(transformation);
+                                selectedTransformationIDs.add(transformation);
                             }
                         }
 
+                        KielerCompilerContext context =
+                                new KielerCompilerContext(selectedTransformationIDs,
+                                        disabledTransformationIDs);
+
+                        context.buildGraph();
+
                         if (compileMode >= 1) {
                             // 2. eliminate unused alternative paths
-                            KielerCompiler.cleanupImpossibleAlternatives(tempModel);
+                            KielerCompiler.cleanupImpossibleAlternatives(context);
                         }
                         if (compileMode >= 2) {
                             // 3. mark nodes, including groups
-                            KielerCompiler.markNodes(tempModel, selectedTransformations, true);
+                            KielerCompiler.markNodes(context,
+                                    context.getSelectedTransformationIDs(), true);
                         }
                         if (compileMode >= 3) {
                             // 4. mark reverse dependencies
-                            KielerCompiler.markReverseDependencies(tempModel);
+                            KielerCompiler.markReverseDependencies(context);
                         }
                         if (compileMode >= 4) {
                             // 5. eliminate unmarked nodes
-                            KielerCompiler.eliminatedUnmarkedNodes(tempModel);
+                            KielerCompiler.eliminatedUnmarkedNodes(context);
                         }
                         if (compileMode >= 5) {
                             // 5b remove excluded transformations
-                            if (excludedTransformationIDs.size() > 0) {
-                                KielerCompiler
-                                        .removeFromGraph(tempModel, excludedTransformationIDs);
+                            if (disabledTransformationIDs.size() > 0) {
+                                KielerCompiler.removeFromGraph(context,
+                                        context.getDisabledTransformationIDs());
                             }
                         }
                         // if (compileMode >= 6) {
@@ -660,18 +727,14 @@ public class KiCoSelectionView extends DiagramViewPart {
                         // eliminateGroupIds(processedTransformationIDs);
                         // }
 
-                        KielerCompiler.reduceGraph(tempModel, visibleTransformations);
-                        model.put(activeEditorID, tempModel);
+                        KielerCompiler.reduceGraph(context, visibleTransformations);
+                        knownContexts.put(activeEditorID, context);
 
                         KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
                         if (hierarchyMode == 0) {
                             properties.setProperty(
                                     KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                                     "de.cau.cs.kieler.kico.ui.klighd.diagramSynthesis");
-                            // } else if (SSMMode) {
-                            // properties.setProperty(
-                            // KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
-                            // "de.cau.cs.kieler.kico.ui.klighd.diagramSynthesisSSM");
                         } else if (hierarchyMode == 1) {
                             properties.setProperty(
                                     KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
@@ -682,7 +745,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                                     "de.cau.cs.kieler.kico.ui.klighd.diagramFlatSynthesis");
                         }
 
-                        updateDiagram(tempModel, properties);
+                        updateDiagram(context.getGraph(), properties);
 
                         if (KiCoSelectionView.advancedMode) {
                             KiCoSelectionView
@@ -696,16 +759,6 @@ public class KiCoSelectionView extends DiagramViewPart {
                 }
 
                 lastWorkbenchPartReference = ref;
-            } else {
-                // if (part instanceof EditorPart) {
-                // DiagramViewManager
-                // .getInstance()
-                // .createView(
-                // getPartId(),
-                // null,
-                // "Not supported model editor.\n\nThe currently selected editor is not registered for any KIELER Compiler transformations. The editor must use the extension point de.cau.cs.kieler.kico.ui to declare transformations that should bis visible when such an editor instance is active.",
-                // KlighdSynthesisProperties.newInstance(null));
-                // }
             }
         }
     }
@@ -720,9 +773,10 @@ public class KiCoSelectionView extends DiagramViewPart {
 
         IActionBars bars = getViewSite().getActionBars();
         IToolBarManager toolBarManager = bars.getToolBarManager();
+
+        toolBarManager.add(getActionSelectAll());
         toolBarManager.add(getActionExpandAll());
         toolBarManager.add(getActionAdvancedToggle());
-        // toolBarManager.add(getActionSSMToggle());
         toolBarManager.add(getActionHierarchyToggle());
         // toolBarManager.add(getActionCompileToggle());
 
@@ -784,6 +838,30 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    protected void addButtons() {
+        // By overriding this method the KlighD view will not have any of its default buttons.
+        // Instead only the following buttons will be added.
+        // Zoom buttons are removed by setting SyntheisOption in updateView.
+
+        IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
+        // automatic layout button
+        toolBarManager.add(new Action("Arrange", IAction.AS_PUSH_BUTTON) {
+            // Constructor
+            {
+                setImageDescriptor(KimlUiPlugin
+                        .getImageDescriptor("icons/menu16/kieler-arrange.gif"));
+            }
+
+            @Override
+            public void run() {
+                LightDiagramServices.layoutDiagram(instance);
+            }
+        });
+    }
+
     // -------------------------------------------------------------------------
 
     /**
@@ -821,71 +899,37 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Gets the action to toggle compile mode.
-     * 
-     * @return the action
-     */
-    private Action getActionCompileToggle() {
-        if (actionCompileToggle != null) {
-            return actionCompileToggle;
-        }
-        actionCompileToggle = new Action("", IAction.AS_PUSH_BUTTON) {
-            public void run() {
-                // TOGGLE
-                compileMode++;
-                if (compileMode > COMPILEMODEMAX) {
-                    compileMode = 0;
-                }
-                lastEditor = "";
-                updateView(lastWorkbenchPartReference);
-            }
-        };
-        actionCompileToggle.setText("Toggle Compile Mode");
-        actionCompileToggle
-                .setToolTipText("Toggles between different stages of the transformation selection algorihm until the selection used for compilation");
-        actionCompileToggle.setImageDescriptor(ICON_COMPILE);
-        return actionCompileToggle;
-    }
-
-    // -------------------------------------------------------------------------
-
     // /**
-    // * Gets the action to toggle presence of the SSM representation.
+    // * Gets the action to toggle compile mode.
     // *
     // * @return the action
     // */
-    // private Action getActionSSMToggle() {
-    // if (actionSSMToggle != null) {
-    // return actionSSMToggle;
+    // private Action getActionCompileToggle() {
+    // if (actionCompileToggle != null) {
+    // return actionCompileToggle;
     // }
-    // actionSSMToggle = new Action("", IAction.AS_CHECK_BOX) {
+    // actionCompileToggle = new Action("", IAction.AS_PUSH_BUTTON) {
     // public void run() {
     // // TOGGLE
-    // SSMMode = !SSMMode;
-    // actionSSMToggle.setChecked(SSMMode);
-    //
-    // // if (SSMMode) {
-    // // addRequiredTransformationVisualization(getActiveEditorID());
-    // // } else {
-    // // removeRequiredTransformationVisualization(getActiveEditorID());
-    // // }
+    // compileMode++;
+    // if (compileMode > COMPILEMODEMAX) {
+    // compileMode = 0;
+    // }
     // lastEditor = "";
     // updateView(lastWorkbenchPartReference);
-    //
     // }
     // };
-    // actionSSMToggle.setText("Toggle SSM Diagram Synthesis");
-    // actionSSMToggle.setToolTipText("Toggle SSM Diagram Synthesis");
-    // actionSSMToggle.setImageDescriptor(ICON_SSM);
-    // actionSSMToggle.setChecked(SSMMode);
-    // return actionSSMToggle;
+    // actionCompileToggle.setText("Toggle Compile Mode");
+    // actionCompileToggle
+    // .setToolTipText("Toggles between different stages of the transformation selection algorihm until the selection used for compilation");
+    // actionCompileToggle.setImageDescriptor(ICON_COMPILE);
+    // return actionCompileToggle;
     // }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action to toggle presence of the SSM representation.
+     * Gets the action to toggle hierarchy mode.
      * 
      * @return the action
      */
@@ -923,6 +967,66 @@ public class KiCoSelectionView extends DiagramViewPart {
             new Property<ExpansionAwareLayoutOption.ExpansionAwareLayoutOptionData>(
                     "de.cau.cs.kieler.kico.ui.expandable");
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the action to select or deselect all nodes.
+     * 
+     * @return the action
+     */
+    private Action getActionSelectAll() {
+        if (actionSelectAllToggle != null) {
+            return actionSelectAllToggle;
+        }
+
+        final IDiagramWorkbenchPart thisPart = this;
+        actionSelectAllToggle = new Action("", IAction.AS_PUSH_BUTTON) {
+            public void run() {
+                // TOGGLE
+                allSelected = !allSelected;
+                if (allSelected) {
+                    actionSelectAllToggle.setImageDescriptor(ICON_DESELECTALL);
+                    actionSelectAllToggle.setToolTipText("Deselect all transformations.");
+                } else {
+                    actionSelectAllToggle.setImageDescriptor(ICON_SELECTALL);
+                    actionSelectAllToggle.setToolTipText("Select all transformations.");
+                }
+                int activeEditorID = getActiveEditorID();
+                if (allSelected) {
+                    List<TransformationDummy> allTransformations = getAllTransformations(activeEditorID);
+                    List<String> allTransformationIDs = new ArrayList<String>();
+                    for (TransformationDummy transformationDummy : allTransformations) {
+                        allTransformationIDs.add(transformationDummy.id);
+                    }
+                    addSelectedTransformationVisualization(activeEditorID, allTransformationIDs);
+                    List<String> selectedAndExcludedTransformations =
+                            getSelectedTransformations(activeEditorID);
+                    for (String transformationID : allTransformationIDs) {
+                        addSelectedTransformation(transformationID,
+                                selectedAndExcludedTransformations, true);                        
+                    }
+                } else {
+                    List<String> selectedAndExcludedTransformations =
+                            getSelectedTransformations(activeEditorID);
+                    removeSelectedTransformationVisualization(activeEditorID);
+                    
+                    while(selectedAndExcludedTransformations.size() > 0) {
+                        String transformationID = selectedAndExcludedTransformations.get(0);
+                        removeSelectedTransformation(transformationID, activeEditorID);
+                    }
+                }
+                updateActiveTransformationsProperty();
+                LightDiagramServices.layoutDiagram(thisPart);
+            }
+        };
+        actionSelectAllToggle.setText("Select/Deselect All");
+        actionSelectAllToggle.setToolTipText("Select all transformations.");
+        actionSelectAllToggle.setImageDescriptor(ICON_SELECTALL);
+        return actionSelectAllToggle;
+    }
+
+    // -------------------------------------------------------------------------
+
     /**
      * Gets the action to expand all nodes.
      * 
@@ -934,11 +1038,17 @@ public class KiCoSelectionView extends DiagramViewPart {
         }
 
         final IDiagramWorkbenchPart thisPart = this;
-        actionExpandAllToggle = new Action("", IAction.AS_CHECK_BOX) {
+        actionExpandAllToggle = new Action("", IAction.AS_PUSH_BUTTON) {
             public void run() {
                 // TOGGLE
                 allExpanded = !allExpanded;
-                actionExpandAllToggle.setChecked(allExpanded);
+                if (allExpanded) {
+                    actionExpandAllToggle.setImageDescriptor(ICON_COLLAPSEALL);
+                    actionExpandAllToggle.setToolTipText("Collapse all expanded transformation groups.");
+                } else {
+                    actionExpandAllToggle.setImageDescriptor(ICON_EXPANDALL);
+                    actionExpandAllToggle.setToolTipText("Expand all collapsed transformation groups.");
+                }
 
                 if (allExpanded) {
                     final IViewer<?> viewer = thisPart.getViewer();
@@ -950,7 +1060,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                                     return arg0 instanceof KNode && !viewer.isExpanded(arg0);
                                 }
                             })) {
-                        ViewContext vc = viewer.getViewContext();
+                        // ViewContext vc = viewer.getViewContext();
                         viewer.expand((KNode) k);
                     }
                 } else {
@@ -982,10 +1092,9 @@ public class KiCoSelectionView extends DiagramViewPart {
                 LightDiagramServices.layoutDiagram(thisPart);
             }
         };
-        actionExpandAllToggle.setText("Expand All");
+        actionExpandAllToggle.setText("Expand/Collapse All");
         actionExpandAllToggle.setToolTipText("Expand all collapsed transformation groups.");
         actionExpandAllToggle.setImageDescriptor(ICON_EXPANDALL);
-        actionExpandAllToggle.setChecked(allExpanded);
         return actionExpandAllToggle;
     }
 

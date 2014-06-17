@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
+import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.sccharts.Binding;
@@ -40,7 +41,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class BindingImpl extends EObjectImpl implements Binding {
+public class BindingImpl extends AnnotatableImpl implements Binding {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

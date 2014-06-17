@@ -105,6 +105,7 @@ class KiCoErrorModelSynthesis extends AbstractDiagramSynthesis<KiCoErrorModel> {
                             it.foreground = "blue".color
                             it.fontSize = 9
                             it.addSingleClickAction(ErrorShowExceptionAction.ID);
+                            it.addDoubleClickAction(ErrorShowExceptionAction.ID);
                             it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
                         ]
                     }

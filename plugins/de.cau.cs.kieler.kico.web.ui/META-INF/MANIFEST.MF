@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER Compiler Web Interface UI
+Bundle-SymbolicName: de.cau.cs.kieler.kico.web.ui;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: de.cau.cs.kieler.kico.web,
+ org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-Activator: KiCoWebUIPlugin

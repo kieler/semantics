@@ -22,6 +22,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.Collections
 import java.util.HashSet
+import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.naming.QualifiedName
@@ -32,8 +33,6 @@ import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.xtext.scoping.impl.SimpleScope
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-
 /**
  * @author J
  *
@@ -42,8 +41,29 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
     
     private val static final SCChartsPackage pack = SCChartsPackage.eINSTANCE;
     
+    @Inject
+    SctQualifiedNameProvider nameProvider
+    
     private def boolean isProxy(Object o) {
         return (o as EObject).eIsProxy()
+    }
+    
+    public def IScope scope_Scope_referencedScope(EObject context, EReference reference) {
+        val superScope = super.getScope(context.eContainer, reference)
+            
+        val res = context.eResource
+        if (res != null) {
+            val resSet = res.resourceSet
+            if (resSet != null) {
+                val rIterable = <Scope> newArrayList 
+                for(r : resSet.resources) {
+                    val content = r.contents.head
+                    if (content != null && content instanceof Scope) { rIterable += content as Scope }
+                }
+                return Scopes.scopeFor(rIterable, nameProvider, superScope);
+            }
+        }  
+        return IScope.NULLSCOPE;
     }
     
     public def IScope scope_Binding_formal(EObject context, EReference reference) {
@@ -92,8 +112,24 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
             l.add(new EObjectDescription(QualifiedName.create(key), s,
                     Collections.<String, String> emptyMap()))
             m.add(key);
-
         }
+//        if (KielerCompiler != null) {
+//            try {
+//               val eObjects = KielerCompiler.getIncludedModels();
+//               for (eObject : eObjects) {
+//                    val s = (eObject as State);
+//                    key = s.getId();
+//                    if (m.contains(key)) {
+//                        key = s.getId()
+//                    }
+//                    l.add(new EObjectDescription(QualifiedName.create(key), s,
+//                            Collections.<String, String> emptyMap()))
+//                    m.add(key);
+//               }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
         return new SimpleScope(l)
     }    
 }

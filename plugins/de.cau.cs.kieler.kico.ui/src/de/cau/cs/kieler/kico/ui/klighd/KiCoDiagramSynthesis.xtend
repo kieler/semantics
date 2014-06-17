@@ -26,19 +26,17 @@ import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kico.TransformationDummy
 import de.cau.cs.kieler.kico.ui.KiCoDisabledSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionAction
+import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
-import java.util.HashMap
+import java.util.ArrayList
 import java.util.List
 import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import java.util.ArrayList
-import de.cau.cs.kieler.kiml.options.Direction
-import de.cau.cs.kieler.kico.ui.KiCoSelectionView
 
 //import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
@@ -246,6 +244,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                     it.setGridPlacement(1);
                 }
                 if (transformationDummy.isGroup) {
+                    it.setProperty(KlighdProperties::TOOLTIP, transformationDummy.id);
 
                     // Get a smaller window-title-bare if this a macro state 
                     if (!transformationDummy.label.empty)
@@ -270,6 +269,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                             ];
                         ];
                 } else {
+                    it.setProperty(KlighdProperties::TOOLTIP, transformationDummy.id);
 
                     // For simple states we want a larger area 
                     it.addText(" " + transformationDummy.label).putToLookUpWith(transformationDummy) => [
@@ -351,7 +351,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                 val childKNode = child.translate;
                 node.children += childKNode;
             }
-
+            
             // credits to SSM :-)
             if (transformationDummy.alternative) {
                 node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")

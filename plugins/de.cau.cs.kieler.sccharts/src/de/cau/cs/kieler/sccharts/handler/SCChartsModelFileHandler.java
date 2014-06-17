@@ -23,7 +23,7 @@ import de.cau.cs.kieler.sccharts.State;
 public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandler {
 
     public static final String ALL_TRANSFORMATIONS =
-            "ALL";
+            "EXTENDED, CORE";
 
     public static final String EXTENDED_TRANSFORMATIONS =
             "EXTENDED";
@@ -123,7 +123,7 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
         String commandString = getCommandString(event);
         if (commandString.equals(EXTENDED_TRANSFORMATIONS)) {
             return "core";
-        } else if (commandString.equals(CORE_TRANSFORMATIONS)) {
+        } else if ((commandString.equals(CORE_TRANSFORMATIONS)) || (commandString.equals(ALL_TRANSFORMATIONS))) {
             return "normalized";
         } else {
             return "transformed";
@@ -141,11 +141,17 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
      */
     protected String getCommandString(ExecutionEvent event) {
         String commandString = event.getCommand().getId().toString();
+        
         // Call the model transformation (this creates a copy of the model containing the
         // refactored model).
         // Use commandString for Scc and Sct Transformation
         commandString = commandString.replace("SCC_", "");
         commandString = commandString.replace("SCT_", "");
+
+        if (commandString.equals("ALL")) {
+            commandString = "EXTENDED, CORE";
+        }
+        
         return commandString;
     }
 
@@ -164,7 +170,7 @@ public abstract class SCChartsModelFileHandler extends AbstractConvertModelHandl
 
         transformed = model;
         
-        transformed = (KielerCompiler.compile(commandString, (State) transformed)).getEObject();
+        transformed = (KielerCompiler.compile(commandString, (State) transformed, true, false)).getEObject();
 
 //        if (commandString.equals(CORE_TRANSFORMATIONS)) {
 //            transformed = transformation.transformHistory((Region) transformed);

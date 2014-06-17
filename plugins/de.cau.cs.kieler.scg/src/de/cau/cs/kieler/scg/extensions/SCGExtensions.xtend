@@ -423,7 +423,57 @@ class SCGExtensions {
         // Add the exit node and return.
         returnList.add(exit)
         returnList
-    }    
+    }   
+    
+   /** 
+    * Finds the immediate entry node of a node.
+    * 
+    * @param node
+    *           the node in question
+    * @return Returns the closest entry node.
+    */
+    def Entry getThreadEntry(Node node) {
+        // Create a list for the control flows that will be checked
+        // and a list for all control flows already checked. 
+        val controlFlows = <ControlFlow> newLinkedList
+        val marked = <ControlFlow> newLinkedList
+       
+        // Add all incoming control flows to the list an repeat until the list is empty.
+        controlFlows += node.allPrevious
+        if (node instanceof Depth) controlFlows += (node as Depth).surface.allPrevious
+        while(!controlFlows.empty) {
+            // Check the first control flow and its parent node.
+            var prevNode = controlFlows.head.eContainer as Node
+            
+            // Mark the flow as processed and remove it.
+            marked += controlFlows.head
+            controlFlows.remove(0)
+           
+            if (prevNode instanceof Join) { 
+                // If it is a join, continue at the corresponding fork node.
+                controlFlows += (prevNode as Join).fork.allPrevious
+            }
+            else if (prevNode instanceof Entry) {
+                // If it is a entry node, return it
+                return prevNode as Entry
+            } 
+            else if (prevNode instanceof Depth) {
+                // If it is a depth, continue at the corresponding surface node.
+                controlFlows += (prevNode as Depth).surface.allPrevious
+            } else {
+                // Otherwise, proceed on the control flow path.
+                controlFlows += prevNode.allPrevious           
+            }
+           
+            // If the a newly added control flow is already marked, remove it.
+            marked.forEach[
+                if (controlFlows.contains(it)) controlFlows.remove(it)
+            ]
+        }
+       
+        // Return null if finished without entry
+        return null
+    }     
     
 
    /** 

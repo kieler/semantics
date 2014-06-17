@@ -619,13 +619,22 @@ public interface SCChartsPackage extends EPackage {
     int REGION_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 2;
 
     /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BINDING__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+
+    /**
      * The feature id for the '<em><b>Formal</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int BINDING__FORMAL = 0;
+    int BINDING__FORMAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Actual</b></em>' reference.
@@ -634,7 +643,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BINDING__ACTUAL = 1;
+    int BINDING__ACTUAL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
      * The number of structural features of the '<em>Binding</em>' class.
@@ -643,7 +652,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BINDING_FEATURE_COUNT = 2;
+    int BINDING_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.

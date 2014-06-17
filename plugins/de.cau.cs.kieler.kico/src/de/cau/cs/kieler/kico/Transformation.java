@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kico;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +51,33 @@ public abstract class Transformation {
 
     /** The dependencies. */
     private List<String> dependencies = new ArrayList<String>();
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the argument parameter type.
+     * 
+     * @return the argument parameter type
+     */
+    public Class<?> getParameterType() {
+        Method transformMethod = null;
+        if (method == null) {
+            try {
+                transformMethod =
+                        ((Transformation) transformationInstance).getClass().getMethod("transform",
+                                EObject.class);
+            } catch (Exception e) {
+                return null;
+            }
+        } else {
+            transformMethod = transformationMethod;
+        }
+        Class<?>[] classArray = transformMethod.getParameterTypes();
+        if (classArray.length > 0) {
+            return classArray[0];
+        }
+        return null;
+    }
 
     // -------------------------------------------------------------------------
 
@@ -201,35 +227,22 @@ public abstract class Transformation {
     // -------------------------------------------------------------------------
 
     /**
-     * Do the transformation based on the method field. It should
-     * return an EObject if there are any following transformations. A code
-     * generation will finally return a String object.
+     * Do the transformation based on the method field. It should return an EObject if there are any
+     * following transformations. A code generation will finally return a String object.
      * 
      * @param eObject
      *            the e object
      * @return the e object
      */
-    public final Object doTransform(EObject eObject) {
-        String transformationID = "unknown";
-        transformationID = this.id;
+    public final Object doTransform(EObject eObject) throws Exception {
         if (method == null) {
             // A Transformation instance with the standard transformation method
             return ((Transformation) transformationInstance).transform(eObject);
         } else {
             // Some other class instance with an individual transformation method
             Object result;
-            try {
-                result = transformationMethod.invoke(transformationInstance, eObject);
-                return result;
-            } catch (Exception e) {
-                KiCoPlugin
-                .getInstance()
-                .showError(
-                        "An error occurred while calling transformation with the ID '"
-                                + transformationID
-                                + "'.", KiCoPlugin.PLUGIN_ID, e, true);
-            }
-            return null;
+            result = transformationMethod.invoke(transformationInstance, eObject);
+            return result;
         }
 
     }

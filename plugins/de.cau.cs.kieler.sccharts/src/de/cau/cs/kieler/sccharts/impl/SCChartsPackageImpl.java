@@ -940,6 +940,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         emissionEClass.getESuperTypes().add(this.getEffect());
         stateEClass.getESuperTypes().add(this.getScope());
         regionEClass.getESuperTypes().add(this.getScope());
+        bindingEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         transitionEClass.getESuperTypes().add(this.getAction());
         scopeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         textEffectEClass.getESuperTypes().add(theKExpressionsPackage.getTextExpression());

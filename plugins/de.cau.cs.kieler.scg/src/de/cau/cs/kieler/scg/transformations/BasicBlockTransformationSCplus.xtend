@@ -391,7 +391,11 @@ class BasicBlockTransformationSCplus extends AbstractModelTransformation {
                 	// It must be present in the list of the basic block because this list is the containment 
                 	// of the guards in the metamodel. The information is later used to serialize the guard names. 
 			        guard = KExpressionsFactory::eINSTANCE.createValuedObject
-        			guard.name = basicBlock.guards.head.name + (96 + schedulingBlocks.size + 1) as char
+			        if (schedulingBlocks.size>25) {
+        				guard.name = basicBlock.guards.head.name + "z" + (schedulingBlocks.size - 25) 
+			        } else {
+        				guard.name = basicBlock.guards.head.name + (96 + schedulingBlocks.size + 1) as char
+       				}
 //        			guard.type = ValueType::BOOL
         			basicBlock.guards.add(guard)
                 }

@@ -7125,9 +7125,9 @@ rule__Binding__Group__0__Impl
     }
 :
 (
-{ before(grammarAccess.getBindingAccess().getFormalAssignment_0()); }
-(rule__Binding__FormalAssignment_0)
-{ after(grammarAccess.getBindingAccess().getFormalAssignment_0()); }
+{ before(grammarAccess.getBindingAccess().getAnnotationsAssignment_0()); }
+(rule__Binding__AnnotationsAssignment_0)*
+{ after(grammarAccess.getBindingAccess().getAnnotationsAssignment_0()); }
 )
 
 ;
@@ -7154,11 +7154,9 @@ rule__Binding__Group__1__Impl
     }
 :
 (
-{ before(grammarAccess.getBindingAccess().getToKeyword_1()); }
-
-	'to' 
-
-{ after(grammarAccess.getBindingAccess().getToKeyword_1()); }
+{ before(grammarAccess.getBindingAccess().getFormalAssignment_1()); }
+(rule__Binding__FormalAssignment_1)
+{ after(grammarAccess.getBindingAccess().getFormalAssignment_1()); }
 )
 
 ;
@@ -7173,6 +7171,7 @@ rule__Binding__Group__2
     }
 :
 	rule__Binding__Group__2__Impl
+	rule__Binding__Group__3
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -7184,15 +7183,47 @@ rule__Binding__Group__2__Impl
     }
 :
 (
-{ before(grammarAccess.getBindingAccess().getActualAssignment_2()); }
-(rule__Binding__ActualAssignment_2)
-{ after(grammarAccess.getBindingAccess().getActualAssignment_2()); }
+{ before(grammarAccess.getBindingAccess().getToKeyword_2()); }
+
+	'to' 
+
+{ after(grammarAccess.getBindingAccess().getToKeyword_2()); }
 )
 
 ;
 finally {
 	restoreStackSize(stackSize);
 }
+
+
+rule__Binding__Group__3
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__Binding__Group__3__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Binding__Group__3__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getBindingAccess().getActualAssignment_3()); }
+(rule__Binding__ActualAssignment_3)
+{ after(grammarAccess.getBindingAccess().getActualAssignment_3()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
 
 
 
@@ -13324,18 +13355,14 @@ finally {
 }
 
 
-rule__Binding__FormalAssignment_0
+rule__Binding__AnnotationsAssignment_0
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getBindingAccess().getFormalValuedObjectCrossReference_0_0()); }
-(
-{ before(grammarAccess.getBindingAccess().getFormalValuedObjectIDTerminalRuleCall_0_0_1()); }
-	RULE_ID{ after(grammarAccess.getBindingAccess().getFormalValuedObjectIDTerminalRuleCall_0_0_1()); }
-)
-{ after(grammarAccess.getBindingAccess().getFormalValuedObjectCrossReference_0_0()); }
+{ before(grammarAccess.getBindingAccess().getAnnotationsAnnotationParserRuleCall_0_0()); }
+	ruleAnnotation{ after(grammarAccess.getBindingAccess().getAnnotationsAnnotationParserRuleCall_0_0()); }
 )
 
 ;
@@ -13343,18 +13370,37 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Binding__ActualAssignment_2
+rule__Binding__FormalAssignment_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getBindingAccess().getActualValuedObjectCrossReference_2_0()); }
+{ before(grammarAccess.getBindingAccess().getFormalValuedObjectCrossReference_1_0()); }
 (
-{ before(grammarAccess.getBindingAccess().getActualValuedObjectIDTerminalRuleCall_2_0_1()); }
-	RULE_ID{ after(grammarAccess.getBindingAccess().getActualValuedObjectIDTerminalRuleCall_2_0_1()); }
+{ before(grammarAccess.getBindingAccess().getFormalValuedObjectIDTerminalRuleCall_1_0_1()); }
+	RULE_ID{ after(grammarAccess.getBindingAccess().getFormalValuedObjectIDTerminalRuleCall_1_0_1()); }
 )
-{ after(grammarAccess.getBindingAccess().getActualValuedObjectCrossReference_2_0()); }
+{ after(grammarAccess.getBindingAccess().getFormalValuedObjectCrossReference_1_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Binding__ActualAssignment_3
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getBindingAccess().getActualValuedObjectCrossReference_3_0()); }
+(
+{ before(grammarAccess.getBindingAccess().getActualValuedObjectIDTerminalRuleCall_3_0_1()); }
+	RULE_ID{ after(grammarAccess.getBindingAccess().getActualValuedObjectIDTerminalRuleCall_3_0_1()); }
+)
+{ after(grammarAccess.getBindingAccess().getActualValuedObjectCrossReference_3_0()); }
 )
 
 ;

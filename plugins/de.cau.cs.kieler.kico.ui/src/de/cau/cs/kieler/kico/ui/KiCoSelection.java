@@ -17,10 +17,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.google.common.collect.Collections2;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
-
 /**
  * 
  * Represents a selection in KiCoSelectionView with its context.

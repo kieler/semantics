@@ -13,21 +13,22 @@
  */
 package de.cau.cs.kieler.kico;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.statushandlers.IStatusAdapterConstants;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
-import org.osgi.framework.BundleContext;
 
 import com.google.inject.Guice;
 
@@ -38,7 +39,7 @@ import com.google.inject.Guice;
  * @kieler.design 2014-03-11 proposed
  * @kieler.rating 2014-03-11 proposed yellow
  */
-public class KiCoPlugin extends AbstractUIPlugin {
+public class KiCoPlugin extends Plugin {
 
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.kico"; //$NON-NLS-1$
@@ -78,30 +79,6 @@ public class KiCoPlugin extends AbstractUIPlugin {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-     */
-    public void start(BundleContext context) throws Exception {
-        super.start(context);
-        plugin = this;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-     */
-    public void stop(BundleContext context) throws Exception {
-        plugin = null;
-        super.stop(context);
-    }
-
-    // -------------------------------------------------------------------------
-
     /**
      * Returns the shared instance
      * 
@@ -131,8 +108,9 @@ public class KiCoPlugin extends AbstractUIPlugin {
 
     /**
      * Gets the guice instance.
-     *
-     * @param object the object
+     * 
+     * @param object
+     *            the object
      * @return the guice instance
      */
     public static Object getGuiceInstance(Object object) {
@@ -144,9 +122,11 @@ public class KiCoPlugin extends AbstractUIPlugin {
 
     /**
      * Gets the invokable method.
-     *
-     * @param object the object
-     * @param method the method
+     * 
+     * @param object
+     *            the object
+     * @param method
+     *            the method
      * @return the invokable method
      */
     private Method getInvokableMethod(Object object, String method) {
@@ -174,20 +154,21 @@ public class KiCoPlugin extends AbstractUIPlugin {
      * @return the TransformationList
      */
     public HashMap<String, Transformation> getRegisteredTransformations() {
-//        if (transformationMap != null && !forceUpdate) {
-//            // return a cached version of the list
-//            // it is only built the first time
-//            return transformationMap;
-//        }
-//        // suggest calling the garbage collector: this may
-//        // remove any DataComponent threads still running (but not
-//        // linked==needed any more)
-//        System.gc();
+        // if (transformationMap != null && !forceUpdate) {
+        // // return a cached version of the list
+        // // it is only built the first time
+        // return transformationMap;
+        // }
+        // // suggest calling the garbage collector: this may
+        // // remove any DataComponent threads still running (but not
+        // // linked==needed any more)
+        // System.gc();
         // get the available interfaces and initialize them
         IConfigurationElement[] transformations =
                 Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_POINT_ID);
 
-        HashMap<String, Transformation> transformationMap = new HashMap<String, Transformation>(transformations.length);
+        HashMap<String, Transformation> transformationMap =
+                new HashMap<String, Transformation>(transformations.length);
 
         for (int i = 0; i < transformations.length; i++) {
             try {
@@ -195,8 +176,7 @@ public class KiCoPlugin extends AbstractUIPlugin {
                 String transformationClass = transformations[i].getAttribute("class");
                 Object transformationInstance = null;
                 if (transformationClass != null) {
-                    transformationInstance =
-                            transformations[i].createExecutableExtension("class");
+                    transformationInstance = transformations[i].createExecutableExtension("class");
                 }
                 String id = transformations[i].getAttribute("id");
                 String name = transformations[i].getAttribute("name");
@@ -206,15 +186,15 @@ public class KiCoPlugin extends AbstractUIPlugin {
                 String alternativesString = transformations[i].getAttribute("alternatives");
 
                 if (DEBUG) {
-//                    System.out.println("KiCo loading component: "
-//                            + transformations[i].getContributor().getName() + "::" + id);
+                    // System.out.println("KiCo loading component: "
+                    // + transformations[i].getContributor().getName() + "::" + id);
                 }
-                
+
                 Transformation transformation;
                 if (transformationInstance == null) {
                     // The Transformation is defined as a GROUP by its dependencies
                     transformation = new TransformationGroup();
-                    
+
                     // Internally transformations of groups are represented as dependencies!
                     if (transformationsString != null) {
                         String[] dependenciesArray = transformationsString.split(",");
@@ -222,15 +202,14 @@ public class KiCoPlugin extends AbstractUIPlugin {
                             transformation.getDependencies().add(dependency.trim());
                         }
                     }
-                    
+
                     if (alternativesString != null) {
                         if (alternativesString.equals("true")) {
                             ((TransformationGroup) transformation).setAlternatives(true);
                         }
                     }
-                    
-                }
-                else if (transformationInstance instanceof Transformation) {
+
+                } else if (transformationInstance instanceof Transformation) {
                     // The specified class is a Transformation, use it directly
                     transformation =
                             (Transformation) transformations[i].createExecutableExtension("class");
@@ -241,9 +220,11 @@ public class KiCoPlugin extends AbstractUIPlugin {
                     // instance as a wrapper
                     transformation = new TransformationWrapper();
                     // Handle the case that wee need Google Guice for instantiation
-                    transformation.setTransformationInstance(getGuiceInstance(transformationInstance));
+                    transformation
+                            .setTransformationInstance(getGuiceInstance(transformationInstance));
                     // Find the correct method and save it in the wrapper for later reflection calls
-                    Method transformationMethod = getInvokableMethod(transformationInstance, method);
+                    Method transformationMethod =
+                            getInvokableMethod(transformationInstance, method);
                     transformation.setTransformationMethod(transformationMethod);
                 }
 
@@ -253,11 +234,11 @@ public class KiCoPlugin extends AbstractUIPlugin {
                     transformation.setId(id);
                     // Check if ID is already taken
                     if (transformationMap.containsKey(id)) {
-                        showWarning("Extension '"+id+"' from component: "
-                                + transformations[i].getContributor().getName() + " cannot be loaded because this ID is already taken.", KiCoPlugin.PLUGIN_ID,
-                                null, true);
-                    }
-                    else {
+                        showWarning("Extension '" + id + "' from component: "
+                                + transformations[i].getContributor().getName()
+                                + " cannot be loaded because this ID is already taken.",
+                                KiCoPlugin.PLUGIN_ID, null, true);
+                    } else {
                         transformationMap.put(id, transformation);
                     }
                 } else {
@@ -328,7 +309,7 @@ public class KiCoPlugin extends AbstractUIPlugin {
             message = textMessage + message;
             // exception = null;
         } else if (exception != null) {
-                message = exceptionMessage + message;
+            message = exceptionMessage + message;
             // exception = null;
         }
 
@@ -477,19 +458,34 @@ public class KiCoPlugin extends AbstractUIPlugin {
      */
     // StatusAdapter statusAdapter;
 
+    private String getErrorMessage(Throwable t) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        t.printStackTrace(pw);
+        return sw.toString(); // stack trace as a string
+    }
+
     public void showError(final String textMessage, final String pluginID,
             final Exception exception, final boolean silent) {
-        if (isForceNoErrorOutput()) {
+        if (KiCoPlugin.lastError != null && KiCoPlugin.lastError.length() > 0) {
+            KiCoPlugin.lastError += ",\n";
+        } else {
             KiCoPlugin.lastError = "";
-            if (pluginID != null) {
-                KiCoPlugin.lastError += pluginID + ":";
+        }
+        if (pluginID != null) {
+            KiCoPlugin.lastError += pluginID + ": ";
+        }
+        if (textMessage != null) {
+            KiCoPlugin.lastError += textMessage;
+        }
+        if (exception != null) {
+            KiCoPlugin.lastError += " (" + exception.getClass().getName() + ")";
+            String errorMessage = getErrorMessage(exception);
+            if (errorMessage != null) {
+                KiCoPlugin.lastError += " " + errorMessage;
             }
-            if (textMessage != null) {
-                KiCoPlugin.lastError += textMessage;
-            }
-            if (exception != null) {
-                KiCoPlugin.lastError += exception.getMessage();
-            }
+        }
+        if (isForceNoErrorOutput()) {
             return;
         }
         try {

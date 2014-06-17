@@ -22,6 +22,9 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.Assignment
 import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.sccharts.Binding
 
 /**
  * SCCharts Reference Transformation.
@@ -36,10 +39,15 @@ class Reference {
     extension KExpressionsExtension
     
     @Inject
+    extension AnnotationsExtensions    
+    
+    @Inject
     extension SCChartsExtension
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
+
+    static private final String HOSTCODE_ANNOTATION = "alterHostcode"
 
     //-------------------------------------------------------------------------
     //--                        R E F E R E N C E                            --
@@ -56,8 +64,7 @@ class Reference {
         targetRootState;
     }
 
-    def void transformReference(State state, State targetRootState) {
-        
+    def void transformReference(State state, State targetRootState) {        
         // Referenced scopes are always SCCharts
         // Each referenced state must be contained in a region.
         val newState = (state.referencedScope as State).copyState => [ 
@@ -67,17 +74,43 @@ class Reference {
         ]
 
         for(eObject : newState.eAllContents.toList) {
-            if (eObject instanceof Assignment || eObject instanceof ValuedObjectReference) {
+            if (eObject instanceof Assignment 
+                || eObject instanceof ValuedObjectReference 
+                || eObject instanceof TextExpression
+                || eObject instanceof Binding
+            ) {
                 for(binding : state.bindings) {
                     if (eObject instanceof Assignment) {
-                        if ((eObject as Assignment).valuedObject.name == binding.formal.name) {
-                            (eObject as Assignment).valuedObject = binding.actual
+                        val assignment = (eObject as Assignment);
+                        val assignmentCopy = assignment.copy;
+                        if (assignment.valuedObject.name == binding.formal.name) {
+                           assignment.valuedObject = binding.actual
+                        }
+                        assignment.indices.clear
+                        for (index : assignmentCopy.indices) {
+                            assignment.indices.add(index.copy);
                         }
                     } else if (eObject instanceof ValuedObjectReference) {
-                        if ((eObject as ValuedObjectReference).valuedObject.name == binding.formal.name) {
-                            (eObject as ValuedObjectReference).valuedObject = binding.actual
+                        val valuedObjectReference = (eObject as ValuedObjectReference);
+                        val valuedObjectReferenceCopy = valuedObjectReference.copy
+                        if (valuedObjectReference.valuedObject.name == binding.formal.name) {
+                            valuedObjectReference.valuedObject = binding.actual
                         }
-                    }
+                        valuedObjectReference.indices.clear
+                        for (index : valuedObjectReferenceCopy.indices) {
+                            valuedObjectReference.indices.add(index.copy);
+                        }
+                    } else if (eObject instanceof Binding) {
+                        val bing = eObject as Binding
+                        if (bing.actual.name == binding.formal.name) {
+                            bing.actual = binding.actual
+                        } 
+                    } else if (eObject instanceof TextExpression) {
+                        if (binding.hasAnnotation(HOSTCODE_ANNOTATION)) {
+                            val texp = (eObject as TextExpression)
+                             texp.text = texp.text.replaceAll(binding.formal.name, binding.actual.name)
+                        }                        
+                    }                    
                 }
             }
         }
@@ -110,7 +143,11 @@ class Reference {
             ^final = state.^final
         ]
         
-        state.remove        
+        state.remove   
+        
+        newState.allContainedStates.filter[ referencedState ].toList.immutableCopy.forEach[
+            transformReference(newState)
+        ]     
     }
 
 }

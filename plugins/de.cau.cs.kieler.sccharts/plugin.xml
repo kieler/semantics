@@ -146,7 +146,7 @@
             locationURI="popup:de.cau.cs.kieler.sccharts.coretransformations">
          <command
                commandId="SCC_ALL"
-               label="All Transformations"
+               label="All SCCharts Transformations"
                mnemonic="A"
                style="push">
             <visibleWhen>
