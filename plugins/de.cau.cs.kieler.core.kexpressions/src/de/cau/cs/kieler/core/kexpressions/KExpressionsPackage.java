@@ -442,6 +442,80 @@ public interface KExpressionsPackage extends EPackage {
     int DECLARATION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.FunctionCallImpl <em>Function Call</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.kexpressions.impl.FunctionCallImpl
+     * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getFunctionCall()
+     * @generated
+     */
+    int FUNCTION_CALL = 10;
+
+    /**
+     * The feature id for the '<em><b>Function Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FUNCTION_CALL__FUNCTION_NAME = EXPRESSION_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FUNCTION_CALL__PARAMETERS = EXPRESSION_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Function Call</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FUNCTION_CALL_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ParameterImpl <em>Parameter</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.kexpressions.impl.ParameterImpl
+     * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getParameter()
+     * @generated
+     */
+    int PARAMETER = 11;
+
+    /**
+     * The feature id for the '<em><b>Call By Reference</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETER__CALL_BY_REFERENCE = 0;
+
+    /**
+     * The feature id for the '<em><b>Expression</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETER__EXPRESSION = 1;
+
+    /**
+     * The number of structural features of the '<em>Parameter</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PARAMETER_FEATURE_COUNT = 2;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -449,7 +523,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getCombineOperator()
      * @generated
      */
-    int COMBINE_OPERATOR = 10;
+    int COMBINE_OPERATOR = 12;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.OperatorType <em>Operator Type</em>}' enum.
@@ -459,7 +533,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getOperatorType()
      * @generated
      */
-    int OPERATOR_TYPE = 11;
+    int OPERATOR_TYPE = 13;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.ValueType <em>Value Type</em>}' enum.
@@ -469,7 +543,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getValueType()
      * @generated
      */
-    int VALUE_TYPE = 12;
+    int VALUE_TYPE = 14;
 
 
     /**
@@ -782,6 +856,70 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getDeclaration_Const();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.FunctionCall <em>Function Call</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Function Call</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.FunctionCall
+     * @generated
+     */
+    EClass getFunctionCall();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.FunctionCall#getFunctionName <em>Function Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Function Name</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.FunctionCall#getFunctionName()
+     * @see #getFunctionCall()
+     * @generated
+     */
+    EAttribute getFunctionCall_FunctionName();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.FunctionCall#getParameters <em>Parameters</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Parameters</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.FunctionCall#getParameters()
+     * @see #getFunctionCall()
+     * @generated
+     */
+    EReference getFunctionCall_Parameters();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.Parameter <em>Parameter</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Parameter</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.Parameter
+     * @generated
+     */
+    EClass getParameter();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.Parameter#isCallByReference <em>Call By Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Call By Reference</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.Parameter#isCallByReference()
+     * @see #getParameter()
+     * @generated
+     */
+    EAttribute getParameter_CallByReference();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.core.kexpressions.Parameter#getExpression <em>Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Expression</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.Parameter#getExpression()
+     * @see #getParameter()
+     * @generated
+     */
+    EReference getParameter_Expression();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1084,6 +1222,58 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EAttribute DECLARATION__CONST = eINSTANCE.getDeclaration_Const();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.FunctionCallImpl <em>Function Call</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.core.kexpressions.impl.FunctionCallImpl
+         * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getFunctionCall()
+         * @generated
+         */
+        EClass FUNCTION_CALL = eINSTANCE.getFunctionCall();
+
+        /**
+         * The meta object literal for the '<em><b>Function Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute FUNCTION_CALL__FUNCTION_NAME = eINSTANCE.getFunctionCall_FunctionName();
+
+        /**
+         * The meta object literal for the '<em><b>Parameters</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference FUNCTION_CALL__PARAMETERS = eINSTANCE.getFunctionCall_Parameters();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ParameterImpl <em>Parameter</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.core.kexpressions.impl.ParameterImpl
+         * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getParameter()
+         * @generated
+         */
+        EClass PARAMETER = eINSTANCE.getParameter();
+
+        /**
+         * The meta object literal for the '<em><b>Call By Reference</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute PARAMETER__CALL_BY_REFERENCE = eINSTANCE.getParameter_CallByReference();
+
+        /**
+         * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference PARAMETER__EXPRESSION = eINSTANCE.getParameter_Expression();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.CombineOperator <em>Combine Operator</em>}' enum.
