@@ -57,8 +57,12 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
             if (resSet != null) {
                 val rIterable = <Scope> newArrayList 
                 for(r : resSet.resources) {
-                    val content = r.contents.head
-                    if (content != null && content instanceof Scope) { rIterable += content as Scope }
+                    val contentList = r.contents.filter(e | e instanceof State).toList
+                    if (!contentList.nullOrEmpty) { 
+                        for (content : contentList) {
+                        rIterable += content as Scope
+                        }
+                    }
                 }
                 return Scopes.scopeFor(rIterable, nameProvider, superScope);
             }
