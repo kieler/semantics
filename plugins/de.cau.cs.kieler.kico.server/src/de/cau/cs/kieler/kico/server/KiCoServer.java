@@ -2,16 +2,16 @@
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
- * 
+ *
  * Copyright 2014 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
- * 
+ *
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.web;
+package de.cau.cs.kieler.kico.server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -38,16 +38,16 @@ import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 
 /**
- * This class implements to KIELER Compiler TCP Web Server that runs as an Eclipse Job. Typically it
+ * This class implements to KIELER Compiler TCP Server that runs as an Eclipse Job. Typically it
  * uses the port 5555 but it can be called to use any other TCP port. It tries to compile the
  * received model and returns the compilation result with error messages if present.
- * 
+ *
  * @author cmot
  * @kieler.design 2014-06-08 proposed
  * @kieler.rating 2014-06-08 proposed yellow
- * 
+ *
  */
-public class KiCoWebServer extends Job {
+public class KiCoServer extends Job {
 
     /** The socket for communicating with the client. */
     private ServerSocket socket = null;
@@ -62,7 +62,7 @@ public class KiCoWebServer extends Job {
 
     /**
      * Output debug text.
-     * 
+     *
      * @param text
      *            the text
      */
@@ -75,15 +75,15 @@ public class KiCoWebServer extends Job {
     // -------------------------------------------------------------------------
 
     /**
-     * Instantiates a new KiCo web server. Note that the name is automatically set to include also
+     * Instantiates a new KiCo server. Note that the name is automatically set to include also
      * the listening port.
-     * 
+     *
      * @param name
      *            the name
      */
     @Inject
-    public KiCoWebServer(String name) {
-        super("KIELER Compiler TCP Server (" + KiCoWebPlugin.loadPort() + ")");
+    public KiCoServer(String name) {
+        super("KIELER Compiler TCP Server (" + KiCoPlugin.loadPort() + ")");
         debug("Server created");
     }
 
@@ -91,7 +91,7 @@ public class KiCoWebServer extends Job {
 
     /**
      * Sets the debug.
-     * 
+     *
      * @param debug
      *            the new debug
      */
@@ -111,7 +111,7 @@ public class KiCoWebServer extends Job {
     // -------------------------------------------------------------------------
 
     /**
-     * Abort the web server. Be sure to clear all references to it in KiCoWebPlugin.setServer().
+     * Abort the server. Be sure to clear all references to it in KiCoPlugin.setServer().
      */
     public void abort() {
         debug("Abort server");
@@ -139,16 +139,16 @@ public class KiCoWebServer extends Job {
         aborted = false;
         socket = null;
 
-        debug("Server enabled: " + KiCoWebPlugin.loadEnabled());
+        debug("Server enabled: " + KiCoPlugin.loadEnabled());
 
         // continuously while enabled provide the service
-        while (KiCoWebPlugin.loadEnabled() && !aborted) {
+        while (KiCoPlugin.loadEnabled() && !aborted) {
             debug("Server enabled");
 
             // if no socket then create a new listening server socket
             if (socket == null) {
                 debug("No socket. Creating socket.");
-                socket = listenPort(KiCoWebPlugin.loadPort());
+                socket = listenPort(KiCoPlugin.loadPort());
                 debug("Server listen socket established");
             }
 
@@ -185,17 +185,17 @@ public class KiCoWebServer extends Job {
                         strict = true;
                         lengthAndOptionsLine = lengthAndOptionsLine.replace("s", "");
                     }
-                    
-                    
+
+
                     ArrayList<String> models = new ArrayList<String>();
                     ArrayList<Integer> lines = new ArrayList<Integer>();
-                    
+
                     String[] linesArray = lengthAndOptionsLine.split(":");
                     for (String lineString : linesArray) {
                         int line = Integer.parseInt(lineString);
                         lines.add(line);
                     }
-                    
+
                     for (Integer line : lines) {
                         debug("Reading model (" + line +")");
                         int countDown = line;
@@ -215,10 +215,10 @@ public class KiCoWebServer extends Job {
 
                     // System.out.println("transformations: " + transformations);
                     // System.out.println("model: " + model);
-                    
+
                     EObject mainModel = null;
                     KielerCompilerContext context = new KielerCompilerContext(transformationIDs, mainModel);
-                    
+
                     for (int i = models.size()-1; i >= 0; i--) {
                         boolean isMainModel = (i == 0);
                         String model = models.get(i);
@@ -295,7 +295,7 @@ public class KiCoWebServer extends Job {
 
     /**
      * Open a server listening port.
-     * 
+     *
      * @param port
      *            the port
      * @return the server socket

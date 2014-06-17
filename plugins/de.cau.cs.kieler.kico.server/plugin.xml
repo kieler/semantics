@@ -10,7 +10,7 @@
             thread="main"
             visible="true">
          <run
-               class="de.cau.cs.kieler.kico.web.KiCoServerApplication">
+               class="de.cau.cs.kieler.kico.server.KiCoServerApplication">
          </run>
       </application>
    </extension>

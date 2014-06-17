@@ -2,16 +2,16 @@
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
- * 
+ *
  * Copyright 2014 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
- * 
+ *
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.web;
+package de.cau.cs.kieler.kico.server;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
@@ -21,45 +21,45 @@ import org.osgi.service.prefs.BackingStoreException;
 import com.google.inject.Guice;
 
 /**
- * The KiCoWebPlugin is the non-UI part of offering a TCP based web interface for KiCo compilation.
+ * The KiCoPlugin is the non-UI part of offering a TCP based  interface for KiCo compilation.
  * The TCP Message must conform to the protocol: 1. line are the comma separated transformation IDs
  * 2. line is the maximum line number of the following model 3.-n. is the model itself. The return
  * message will be the compiled model 1. line is the maximum line number of the following model
  * 2.-n. is the model itself.
- * 
+ *
  * The activator class controls the plug-in life cycle.
- * 
+ *
  * @author cmot
  * @kieler.design 2014-06-08 proposed
  * @kieler.rating 2014-06-08 proposed yellow
  */
-public class KiCoWebPlugin extends Plugin {
+public class KiCoPlugin extends Plugin {
 
     /** The Constant PLUGIN_ID. */
-    public static final String PLUGIN_ID = "de.cau.cs.kieler.kico.web"; //$NON-NLS-1$
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.kico.server"; //$NON-NLS-1$
 
     /** The shared instance. */
-    private static KiCoWebPlugin plugin;
+    private static KiCoPlugin plugin;
 
-    /** The single web server. */
-    private static KiCoWebServer webServer;
+    /** The single server. */
+    private static KiCoServer server;
 
     // -------------------------------------------------------------------------
 
     /**
      * The constructor
      */
-    public KiCoWebPlugin() {
+    public KiCoPlugin() {
     }
 
     // -------------------------------------------------------------------------
 
     /**
      * Returns the shared instance.
-     * 
+     *
      * @return the shared instance
      */
-    public static KiCoWebPlugin getInstance() {
+    public static KiCoPlugin getInstance() {
         return plugin;
     }
 
@@ -131,25 +131,25 @@ public class KiCoWebPlugin extends Plugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the single server for KiCoWebPlugin. There should always only be one
-     * KiCoWebServer instance. Be sure to stop any existing KiCoWebServer before
+     * Sets the single server for KiCoPlugin. There should always only be one
+     * KiCoServer instance. Be sure to stop any existing KiCoServer before
      * setting up and starting a new one. This is an internal method.
      *
-     * @param webServer the new server
+     * @param server the new server
      */
-    private static void setServer(KiCoWebServer webServer) {
-        KiCoWebPlugin.webServer = webServer;
+    private static void setServer(KiCoServer server) {
+        KiCoPlugin.server = server;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the KiCoWebServer. This is an internal method.
+     * Gets the KiCoServer. This is an internal method.
      *
      * @return the server
      */
-    private static KiCoWebServer getServer() {
-        return KiCoWebPlugin.webServer;
+    private static KiCoServer getServer() {
+        return KiCoPlugin.server;
     }
 
     // -------------------------------------------------------------------------
@@ -158,11 +158,11 @@ public class KiCoWebPlugin extends Plugin {
      * Start the single TCP server.
      */
     public static void startServer(boolean debug) {
-        if (KiCoWebPlugin.getServer() == null) {
-            KiCoWebServer newServer = Guice.createInjector().getInstance(KiCoWebServer.class);
+        if (KiCoPlugin.getServer() == null) {
+            KiCoServer newServer = Guice.createInjector().getInstance(KiCoServer.class);
             newServer.setDebug(debug);
-            KiCoWebPlugin.setServer(newServer);
-            KiCoWebPlugin.getServer().schedule();
+            KiCoPlugin.setServer(newServer);
+            KiCoPlugin.getServer().schedule();
         }
     }
 
@@ -172,10 +172,10 @@ public class KiCoWebPlugin extends Plugin {
      * Stop the signle TCP server.
      */
     public static void stopServer() {
-        if (KiCoWebPlugin.getServer() != null) {
-            KiCoWebPlugin.getServer().abort();
+        if (KiCoPlugin.getServer() != null) {
+            KiCoPlugin.getServer().abort();
         }
-        KiCoWebPlugin.setServer(null);
+        KiCoPlugin.setServer(null);
     }
 
     // -------------------------------------------------------------------------
