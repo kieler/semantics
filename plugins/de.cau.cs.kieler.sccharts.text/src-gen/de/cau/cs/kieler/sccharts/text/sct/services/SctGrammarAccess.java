@@ -1192,43 +1192,51 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	public class BindingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Binding");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cFormalAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cFormalValuedObjectCrossReference_0_0 = (CrossReference)cFormalAssignment_0.eContents().get(0);
-		private final RuleCall cFormalValuedObjectIDTerminalRuleCall_0_0_1 = (RuleCall)cFormalValuedObjectCrossReference_0_0.eContents().get(1);
-		private final Keyword cToKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cActualAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final CrossReference cActualValuedObjectCrossReference_2_0 = (CrossReference)cActualAssignment_2.eContents().get(0);
-		private final RuleCall cActualValuedObjectIDTerminalRuleCall_2_0_1 = (RuleCall)cActualValuedObjectCrossReference_2_0.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Assignment cFormalAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cFormalValuedObjectCrossReference_1_0 = (CrossReference)cFormalAssignment_1.eContents().get(0);
+		private final RuleCall cFormalValuedObjectIDTerminalRuleCall_1_0_1 = (RuleCall)cFormalValuedObjectCrossReference_1_0.eContents().get(1);
+		private final Keyword cToKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cActualAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final CrossReference cActualValuedObjectCrossReference_3_0 = (CrossReference)cActualAssignment_3.eContents().get(0);
+		private final RuleCall cActualValuedObjectIDTerminalRuleCall_3_0_1 = (RuleCall)cActualValuedObjectCrossReference_3_0.eContents().get(1);
 		
 		//// ---------------------------------------------------------------------------------------------------
 		// Binding returns
 		//sccharts::Binding:
-		//	formal=[kexpressions::ValuedObject] "to" actual=[kexpressions::ValuedObject];
+		//	annotations+=Annotation* formal=[kexpressions::ValuedObject] "to" actual=[kexpressions::ValuedObject];
 		public ParserRule getRule() { return rule; }
 
-		//formal=[kexpressions::ValuedObject] "to" actual=[kexpressions::ValuedObject]
+		//annotations+=Annotation* formal=[kexpressions::ValuedObject] "to" actual=[kexpressions::ValuedObject]
 		public Group getGroup() { return cGroup; }
 
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
+
 		//formal=[kexpressions::ValuedObject]
-		public Assignment getFormalAssignment_0() { return cFormalAssignment_0; }
+		public Assignment getFormalAssignment_1() { return cFormalAssignment_1; }
 
 		//[kexpressions::ValuedObject]
-		public CrossReference getFormalValuedObjectCrossReference_0_0() { return cFormalValuedObjectCrossReference_0_0; }
+		public CrossReference getFormalValuedObjectCrossReference_1_0() { return cFormalValuedObjectCrossReference_1_0; }
 
 		//ID
-		public RuleCall getFormalValuedObjectIDTerminalRuleCall_0_0_1() { return cFormalValuedObjectIDTerminalRuleCall_0_0_1; }
+		public RuleCall getFormalValuedObjectIDTerminalRuleCall_1_0_1() { return cFormalValuedObjectIDTerminalRuleCall_1_0_1; }
 
 		//"to"
-		public Keyword getToKeyword_1() { return cToKeyword_1; }
+		public Keyword getToKeyword_2() { return cToKeyword_2; }
 
 		//actual=[kexpressions::ValuedObject]
-		public Assignment getActualAssignment_2() { return cActualAssignment_2; }
+		public Assignment getActualAssignment_3() { return cActualAssignment_3; }
 
 		//[kexpressions::ValuedObject]
-		public CrossReference getActualValuedObjectCrossReference_2_0() { return cActualValuedObjectCrossReference_2_0; }
+		public CrossReference getActualValuedObjectCrossReference_3_0() { return cActualValuedObjectCrossReference_3_0; }
 
 		//ID
-		public RuleCall getActualValuedObjectIDTerminalRuleCall_2_0_1() { return cActualValuedObjectIDTerminalRuleCall_2_0_1; }
+		public RuleCall getActualValuedObjectIDTerminalRuleCall_3_0_1() { return cActualValuedObjectIDTerminalRuleCall_3_0_1; }
 	}
 	
 	
@@ -1583,7 +1591,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//// ---------------------------------------------------------------------------------------------------
 	// Binding returns
 	//sccharts::Binding:
-	//	formal=[kexpressions::ValuedObject] "to" actual=[kexpressions::ValuedObject];
+	//	annotations+=Annotation* formal=[kexpressions::ValuedObject] "to" actual=[kexpressions::ValuedObject];
 	public BindingElements getBindingAccess() {
 		return (pBinding != null) ? pBinding : (pBinding = new BindingElements());
 	}

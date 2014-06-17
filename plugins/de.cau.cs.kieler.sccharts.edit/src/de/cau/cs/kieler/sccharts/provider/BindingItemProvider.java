@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.sccharts.provider;
 
 
+import de.cau.cs.kieler.core.annotations.provider.AnnotatableItemProvider;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 import java.util.Collection;
@@ -40,7 +41,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
  * @generated
  */
 public class BindingItemProvider
-    extends ItemProviderAdapter
+    extends AnnotatableItemProvider
     implements
         IEditingDomainItemProvider,
         IStructuredItemContentProvider,

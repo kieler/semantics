@@ -407,20 +407,10 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (formal=[ValuedObject|ID] actual=[ValuedObject|ID])
+	 *     (annotations+=Annotation* formal=[ValuedObject|ID] actual=[ValuedObject|ID])
 	 */
 	protected void sequence_Binding(EObject context, Binding semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, SCChartsPackage.Literals.BINDING__FORMAL) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SCChartsPackage.Literals.BINDING__FORMAL));
-			if(transientValues.isValueTransient(semanticObject, SCChartsPackage.Literals.BINDING__ACTUAL) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, SCChartsPackage.Literals.BINDING__ACTUAL));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getBindingAccess().getFormalValuedObjectIDTerminalRuleCall_0_0_1(), semanticObject.getFormal());
-		feeder.accept(grammarAccess.getBindingAccess().getActualValuedObjectIDTerminalRuleCall_2_0_1(), semanticObject.getActual());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
