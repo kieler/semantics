@@ -32,7 +32,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.swt.program.Program;
+//import org.eclipse.swt.program.Program;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.xtext.resource.XtextResource;
@@ -244,6 +244,8 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 // }
                 // });
 
+                
+                
                 State state = scchart;//rootRegionStates.get(0);
                 IFile file = ResourceUtil.getFile(maybe.get().eResource());
                 String uri = file.getLocationURI().toString();

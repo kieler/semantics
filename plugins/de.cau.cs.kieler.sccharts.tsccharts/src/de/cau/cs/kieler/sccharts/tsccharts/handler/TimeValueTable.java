@@ -18,7 +18,7 @@ import java.util.HashMap;
 
 /**
  * This class represents a mapping of all possible time value types to the timing domains of the model 
- * elements represented by the analysed code sequences.
+ * elements represented by the analyzed code sequences.
  * 
  * @author: ima
  * @kieler.design
