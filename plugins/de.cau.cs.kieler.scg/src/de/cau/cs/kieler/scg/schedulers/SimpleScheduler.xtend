@@ -41,6 +41,8 @@ import de.cau.cs.kieler.scgsched.Schedule
 import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import java.util.HashMap
+import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a scheduler performs additional 
@@ -81,9 +83,9 @@ class SimpleScheduler extends AbstractScheduler {
     @Inject
     extension SCGExtensions    
 
-	/** Inject SCG copy extensions. */
+	/** Inject SCG cache extensions. */
     @Inject
-    extension SCGCopyExtensions    
+    extension SCGCacheExtensions    
     
     /** Inject KExpression extensions. */
     @Inject
@@ -110,6 +112,7 @@ class SimpleScheduler extends AbstractScheduler {
     private var PROGRESS_PLACED = 0;
     
     private val List<SchedulingBlock> TSVISITED = <SchedulingBlock> newArrayList; 
+    private val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
     
     // -------------------------------------------------------------------------
     // -- Scheduler 
@@ -212,8 +215,9 @@ class SimpleScheduler extends AbstractScheduler {
         for(dep : schedulingBlock.dependencies) {
             if (dep.concurrent && !dep.confluent) {
            	// If the interleaved assignment analyzer marked this dependency as interleaving, ignore it.
-    	       	if (scg.analyses.filter[ id == interleavedAssignmentAnalyzerId ].filter[ objectReferences.contains(dep) ].empty) 
-	    	      	if (!schedule.schedulingBlocks.contains((dep.eContainer as Node).schedulingBlock)) { return false }
+//    	       	if (scg.analyses.filter[ id == interleavedAssignmentAnalyzerId ].filter[ objectReferences.contains(dep) ].empty) 
+					val sb = schedulingBlockCache.get(dep.eContainer as Node)
+	    	      	if (!schedule.schedulingBlocks.contains(sb)) { return false }
             }
     	}
     	
@@ -234,21 +238,22 @@ class SimpleScheduler extends AbstractScheduler {
             }
             for(dep : schedulingBlock.dependencies) {
                 if (dep.concurrent && !dep.confluent) {
-                    if (scg.analyses.filter[ id == interleavedAssignmentAnalyzerId ].filter[ objectReferences.contains(dep) ].empty) 
-                        (dep.eContainer as Node).schedulingBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, scg) 
+//                    if (scg.analyses.filter[ id == interleavedAssignmentAnalyzerId ].filter[ objectReferences.contains(dep) ].empty) 
+						val sb = schedulingBlockCache.get(dep.eContainer as Node)
+                        sb.topologicalPlacement(schedulingBlocks, schedule, constraints, scg) 
                 }
             }
             
             if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg) && !schedule.schedulingBlocks.contains(schedulingBlock)) {
                 schedule.schedulingBlocks.add(schedulingBlock)
-//                scg.guards += schedulingBlock.createGuardExpression(schedule, scg)
+                scg.guards += schedulingBlock.createGuardExpression(schedule, scg)
                 schedulingBlocks.remove(schedulingBlock)
                 placed = placed + 1
                 PROGRESS_PLACED = PROGRESS_PLACED + 1
-                if (PROGRESS_PLACED % 10 == 0) {
+                if (PROGRESS_PLACED % 100 == 0) {
                     System.out.print("o");
                 }
-                if (PROGRESS_PLACED % 100 == 0) {
+                if (PROGRESS_PLACED % 1000 == 0) {
                     System.out.println("");
                 }
             }
@@ -298,6 +303,8 @@ class SimpleScheduler extends AbstractScheduler {
         
         // Create and fill a list for all scheduling blocks.
         val schedulingConstraints = scg.orderSchedulingBlocks
+        
+        scg.createSchedulingBlockCache(schedulingBlockCache)
         
         val schedulable = scg.createSchedule(schedule, schedulingConstraints)
         
@@ -415,6 +422,7 @@ class SimpleScheduler extends AbstractScheduler {
 		// The simple scheduler uses the SurfaceSynchronizer. 
 		// The result of the synchronizer is stored in the synchronizerData class joinData.
 		val SurfaceSynchronizer synchronizer = Guice.createInjector().getInstance(typeof(SurfaceSynchronizer))
+		synchronizer.setSchedulingCache(schedulingBlockCache)
 		val joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join)
 
 		// Add additional valued objects to the SCG and use the guard expression of the synchronizer as it is.
@@ -524,8 +532,8 @@ class SimpleScheduler extends AbstractScheduler {
     }
     
     protected def SchedulingBlock getSchedulingBlockTwin(Predecessor predecessor, BlockType blockType, Schedule schedule, SCGraph scg) {
-    	val predecessorTwin = scg.eAllContents.filter(typeof(Predecessor)).filter[ it.getBasicBlock == predecessor.basicBlock && it.blockType == blockType].head
-    	scg.eAllContents.filter(typeof(SchedulingBlock)).filter[ it.basicBlock.predecessors.contains(predecessorTwin) ].head
+//    	val predecessorTwin = scg.eAllContents.filter(typeof(Predecessor)).filter[ it.getBasicBlock == predecessor.basicBlock && it.blockType == blockType].head
+//    	scg.eAllContents.filter(typeof(SchedulingBlock)).filter[ it.basicBlock.predecessors.contains(predecessorTwin) ].head
     }
 
 }

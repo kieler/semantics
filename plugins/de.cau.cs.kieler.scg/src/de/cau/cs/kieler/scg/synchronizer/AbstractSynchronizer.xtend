@@ -14,6 +14,11 @@
 package de.cau.cs.kieler.scg.synchronizer
 
 import de.cau.cs.kieler.scg.Join
+import java.util.Map
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scgbb.SchedulingBlock
+import com.google.inject.Inject
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -44,6 +49,12 @@ import de.cau.cs.kieler.scg.Join
  * @abstract
  */
 abstract class AbstractSynchronizer {
+	
+    /** Inject SCG extensions. */    
+    @Inject
+    extension SCGExtensions	
+	
+	protected var Map<Node, SchedulingBlock> schedulingCache = null
    
     /**
      * This function has to be overwritten in the derived class. It is called by the 
@@ -70,4 +81,14 @@ abstract class AbstractSynchronizer {
     public def SynchronizerData synchronize(Join join) {
         build(join)
     }    
+    
+    
+    public def setSchedulingCache(Map<Node, SchedulingBlock> cache) {
+    	schedulingCache = cache
+    }
+    
+    protected def getCachedSchedulingBlock(Node node) {
+    	if (schedulingCache == null) { return node.schedulingBlock }
+    	schedulingCache.get(node)
+    }
 }

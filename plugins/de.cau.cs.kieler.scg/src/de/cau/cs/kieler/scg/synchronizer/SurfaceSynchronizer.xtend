@@ -13,20 +13,19 @@
  */
  package de.cau.cs.kieler.scg.synchronizer
 
+import com.google.common.collect.ImmutableList
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scgsched.ScgschedFactory
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import com.google.common.collect.ImmutableList
-import de.cau.cs.kieler.core.kexpressions.Expression
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -103,7 +102,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 		
 		// Since we are working we completely enriched SCGs, we can use the SCG extensions 
 		// to retrieve the scheduling block of the join node in question.
-		val joinSB = join.schedulingBlock
+		val joinSB = join.getCachedSchedulingBlock
 		
 		// Create a new list for all exit nodes of the threads of the fork-join-combination...
         val exitNodes = <Exit> newLinkedList
@@ -127,7 +126,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         for(exit:exitNodes){
         	// Increment the exit node counter and retrieve the scheduling block of the exit node.
         	exitNodeCount = exitNodeCount + 1
-            val exitSB = exit.schedulingBlock
+            val exitSB = exit.getCachedSchedulingBlock
             // This scheduling block is a predecessor of the join node. Add it to the data structure.
             data.predecessors.add(exitSB)
             
@@ -162,12 +161,12 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 	            	val subExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
     	        	subExpression.setOperator(OperatorType::OR)
 //        	    	threadSurfaces.forEach[subExpression.subExpressions.add(it.schedulingBlock.guard.reference)]
-                    threadSurfaces.forEach[subExpression.subExpressions.add(it.basicBlock.guards.head.reference)]
+                    threadSurfaces.forEach[subExpression.subExpressions.add(it.getCachedSchedulingBlock.basicBlock.guards.head.reference)]
 	            	expression.subExpressions.add(subExpression)
             	} else {
             		// Otherwise, add a reference to the surface block directly.
 //                    expression.subExpressions.add(threadSurfaces.head.schedulingBlock.guard.reference)
-                    expression.subExpressions.add(threadSurfaces.head.basicBlock.guards.head.reference)
+                    expression.subExpressions.add(threadSurfaces.head.getCachedSchedulingBlock.basicBlock.guards.head.reference)
             	}
             	// Add the newly created expression to the empty expression and link the thread exit object field
             	// to the guard of the exit node. This enables further processors to identify the block responsible
