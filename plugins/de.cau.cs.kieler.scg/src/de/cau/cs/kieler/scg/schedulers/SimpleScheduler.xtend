@@ -196,7 +196,6 @@ class SimpleScheduler extends AbstractScheduler {
     	Schedule schedule, SCGraphSched scg
     ) {
        	// Assume all preconditions are met and query parent basic block.
-        var placeable = true
         val parentBB = schedulingBlock.eContainer as BasicBlock
                 
         // For all predecessor blocks check whether they are already processed.
@@ -204,7 +203,7 @@ class SimpleScheduler extends AbstractScheduler {
             for(sb : pred.basicBlock.schedulingBlocks){
            	// If any scheduling block of that basic block is not already in our schedule,
            	// the precondition test fails. Set placeable to false.
-	            if (!schedule.schedulingBlocks.contains(sb)) { placeable = false }
+	            if (!schedule.schedulingBlocks.contains(sb)) { return false }
             }
         }
                 
@@ -214,12 +213,11 @@ class SimpleScheduler extends AbstractScheduler {
             if (dep.concurrent && !dep.confluent) {
            	// If the interleaved assignment analyzer marked this dependency as interleaving, ignore it.
     	       	if (scg.analyses.filter[ id == interleavedAssignmentAnalyzerId ].filter[ objectReferences.contains(dep) ].empty) 
-	    	      	if (!schedule.schedulingBlocks.contains((dep.eContainer as Node).schedulingBlock)) { placeable = false }
-                
+	    	      	if (!schedule.schedulingBlocks.contains((dep.eContainer as Node).schedulingBlock)) { return false }
             }
     	}
     	
-    	placeable
+    	return true
     }
     
     protected def int topologicalPlacement(SchedulingBlock schedulingBlock, 
@@ -243,7 +241,7 @@ class SimpleScheduler extends AbstractScheduler {
             
             if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg) && !schedule.schedulingBlocks.contains(schedulingBlock)) {
                 schedule.schedulingBlocks.add(schedulingBlock)
-                scg.guards += schedulingBlock.createGuardExpression(schedule, scg)
+//                scg.guards += schedulingBlock.createGuardExpression(schedule, scg)
                 schedulingBlocks.remove(schedulingBlock)
                 placed = placed + 1
                 PROGRESS_PLACED = PROGRESS_PLACED + 1

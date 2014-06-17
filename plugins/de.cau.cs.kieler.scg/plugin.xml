@@ -490,20 +490,6 @@
             transformations="SCGSCHEDSIMPLE, SCGSCHEDCLUSTER, SCGSCHEDHYBRID">
       </transformationGroup>
       <transformationMethod
-            class="de.cau.cs.kieler.scg.schedulers.ClusterScheduler"
-            dependencies="SCGSEQ"
-            id="SCGSCHEDCLUSTER"
-            method="schedule"
-            name="Cluster Scheduler">
-      </transformationMethod>
-      <transformationMethod
-            class="de.cau.cs.kieler.scg.schedulers.HybridScheduler"
-            dependencies="SCGSEQ"
-            id="SCGSCHEDHYBRID"
-            method="schedule"
-            name="Hybrid Scheduler">
-      </transformationMethod>
-      <transformationMethod
             class="de.cau.cs.kieler.scg.sequentializer.SimpleSequentializer"
             dependencies="CODEGENERATION"
             id="SCGSEQ"
