@@ -5,18 +5,18 @@
          point="org.eclipse.ui.commands">
       <category
             id="de.cau.cs.kieler.kico.server.ui.commands.category"
-            name="KIELER Compiler Web Interface">
+            name="KIELER Compiler Server">
       </category>
       <command
             categoryId="de.cau.cs.kieler.kico.server.ui.commands.category"
             id="de.cau.cs.kieler.kico.server.ui.commands.enableCommand"
-            name="Enable KiCo Web Interface Command">
+            name="Enable KIELER Compiler Server">
       </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="de.cau.cs.kieler.kico.server.ui.KiCoWebButtonHandler"
+            class="de.cau.cs.kieler.kico.server.ui.KiCoServerButtonHandler"
             commandId="de.cau.cs.kieler.kico.server.ui.commands.enableCommand">
       </handler>
    </extension>
@@ -30,7 +30,7 @@
                   commandId="de.cau.cs.kieler.kico.server.ui.commands.enableCommand"
                   icon="icons/KiCoViewIcon.png"
                   id="de.cau.cs.kieler.kico.server.ui.toolbars.enableCommand"
-                  tooltip="KIELER Compiler Web Interface">
+                  tooltip="KIELER Compiler Server">
             </command>
          </toolbar>
       </menuContribution>
@@ -38,7 +38,7 @@
    <extension
          point="org.eclipse.ui.startup">
       <startup
-            class="de.cau.cs.kieler.kico.server.ui.KiCoWebStartup">
+            class="de.cau.cs.kieler.kico.server.ui.KiCoServerStartup">
       </startup>
    </extension>
 

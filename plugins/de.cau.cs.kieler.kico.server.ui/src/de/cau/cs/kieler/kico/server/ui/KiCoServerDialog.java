@@ -83,7 +83,7 @@ public class KiCoServerDialog extends Dialog {
     private void createContents() {
         shlDdd = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
         shlDdd.setSize(326, 224);
-        shlDdd.setText("KIELER Compiler TCP Interface");
+        shlDdd.setText("KIELER Compiler TCP Server");
 
         Composite composite = new Composite(shlDdd, SWT.BORDER);
         composite.setBounds(10, 10, 300, 151);

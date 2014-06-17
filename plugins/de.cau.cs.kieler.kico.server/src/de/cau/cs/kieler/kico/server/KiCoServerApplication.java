@@ -21,8 +21,8 @@ import org.eclipse.equinox.app.IApplicationContext;
 /**
  * The non-gui server application for KiCoServer.
  *
- * Start the sever: kieler -application de.cau.cs.kieler.kico.server.server -noExit -p 5555 Start the
- * sever with console log: kieler -application de.cau.cs.kieler.kico.server.server -consoleLog -noExit
+ * Start the sever: kieler -application de.cau.cs.kieler.kico.server.headless -noExit -p 5555 Start the
+ * sever with console log: kieler -application de.cau.cs.kieler.kico.server.headless -consoleLog -noExit
  * --port 5555
  *
  * -application will tell eclipse which application to start. You might omit this if you want to run
