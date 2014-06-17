@@ -470,13 +470,6 @@
             method="transform"
             name="BasicBlocks">
       </transformationMethod>
-      <transformationMethod
-            class="de.cau.cs.kieler.scg.transformations.BasicBlockTransformationSCplus"
-            dependencies="SCGSCHEDGROUP"
-            id="SCGBBSCPLUS"
-            method="transform"
-            name="BasicBlocksSC+">
-      </transformationMethod>
       <transformationGroup
             alternatives="true"
             id="SCGBBGROUP"
