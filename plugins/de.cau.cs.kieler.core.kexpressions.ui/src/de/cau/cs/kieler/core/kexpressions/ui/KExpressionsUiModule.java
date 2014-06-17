@@ -4,6 +4,8 @@
 package de.cau.cs.kieler.core.kexpressions.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
+import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -12,4 +14,12 @@ public class KExpressionsUiModule extends de.cau.cs.kieler.core.kexpressions.ui.
 	public KExpressionsUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
 	}
+	
+        public Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration () {
+            return KExpressionsHighlightingConfiguration.class;
+        }
+        
+        public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator(){
+            return KExpressionsSemanticHighlightingCalculator.class;
+        }
 }
