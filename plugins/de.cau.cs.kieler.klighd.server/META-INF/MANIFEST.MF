@@ -9,5 +9,6 @@ Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtext,
  org.eclipse.osgi,
- de.cau.cs.kieler.kico;bundle-version="0.1.0"
+ de.cau.cs.kieler.kico;bundle-version="0.1.0",
+ de.cau.cs.kieler.klighd;bundle-version="0.5.0"
 Export-Package: de.cau.cs.kieler.klighd.server

@@ -14,10 +14,13 @@
 package de.cau.cs.kieler.klighd.server;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 //import java.nio.charset.StandardCharsets;
@@ -28,12 +31,14 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.swt.widgets.Display;
 
 import com.google.inject.Inject;
 
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.klighd.LightDiagramServices;
 
 /**
  * This class implements to KIELER KLighD TCP Server that runs as an Eclipse Job. Typically it
@@ -125,6 +130,21 @@ public class KlighdServer extends Job {
     }
 
     // -------------------------------------------------------------------------
+    
+    private String getErrorMessage(Throwable t) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        t.printStackTrace(pw);
+        return sw.toString(); // stack trace as a string
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /** The async done flag. */
+    boolean renderingDone = false;
+    
+    IStatus renderingResult = null;
+    
 
     /**
      * {@inheritDoc}
@@ -161,34 +181,37 @@ public class KlighdServer extends Job {
                             new BufferedReader(new InputStreamReader(
                                     connectionSocket.getInputStream()));
 
-                    OutputStreamWriter out =
-                            new OutputStreamWriter(connectionSocket.getOutputStream());
-                    PrintWriter printWriter = new PrintWriter(out);
+                    OutputStream out =
+                            connectionSocket.getOutputStream();
+                    //PrintWriter printWriter = new PrintWriter(out);
 
                     debug("Socket input and output streams established");
-                    String transformationIDs = inFromClient.readLine();
+                    
+                    String render = "png";
+                    String scale = "1";
+                    int scaleInteger = 1;
 
-                    boolean verbose = false;
-                    boolean strict = false;
                     debug("Transformations read");
 
                     // length of the following model
-                    String lengthAndOptionsLine = inFromClient.readLine();
+                    String optionsLine = inFromClient.readLine();
+                    String[] optionsArray = optionsLine.split(":");
+                    if (optionsArray.length > 1) {
+                        render = optionsArray[0];
+                        scale = optionsArray[1];
+                    }
+                    try {
+                        scaleInteger = Integer.parseInt(scale);
+                    }catch (Exception e) {
+                    }
+                    
+                    String lengthLine = inFromClient.readLine();
                     debug("Length and options read");
-                    if (lengthAndOptionsLine.contains("v")) {
-                        verbose = true;
-                        lengthAndOptionsLine = lengthAndOptionsLine.replace("v", "");
-                    }
-                    if (lengthAndOptionsLine.contains("s")) {
-                        strict = true;
-                        lengthAndOptionsLine = lengthAndOptionsLine.replace("s", "");
-                    }
-
 
                     ArrayList<String> models = new ArrayList<String>();
                     ArrayList<Integer> lines = new ArrayList<Integer>();
 
-                    String[] linesArray = lengthAndOptionsLine.split(":");
+                    String[] linesArray = lengthLine.split(":");
                     for (String lineString : linesArray) {
                         int line = Integer.parseInt(lineString);
                         lines.add(line);
@@ -215,7 +238,7 @@ public class KlighdServer extends Job {
                     // System.out.println("model: " + model);
 
                     EObject mainModel = null;
-                    KielerCompilerContext context = new KielerCompilerContext(transformationIDs, mainModel);
+                    KielerCompilerContext context = new KielerCompilerContext("", mainModel);
 
                     for (int i = models.size()-1; i >= 0; i--) {
                         boolean isMainModel = (i == 0);
@@ -230,42 +253,58 @@ public class KlighdServer extends Job {
                     // currently do NOT resolve the resource set yet
                     //EcoreUtil.resolveAll(context.getModelResourceSet());
 
-                    context.setVerboseMode(verbose);
-                    context.setPrerequirements(!strict);
-
                     KiCoPlugin.resetLastError();
 
                     //TODO: render the model
                     //mainModel
-                    debug("Model rendered");
-
-                    Object compiledModel = mainModel;
-
-                    //TODO: return image
-                    String serializedCompiledModel = "";
-                    if (compiledModel != null) {
-                        serializedCompiledModel = compiledModel.toString();
-                        if (compiledModel instanceof EObject) {
-                            serializedCompiledModel = KiCoUtil.serialize((EObject) compiledModel, context);
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    
+                    final EObject mainModelParam = mainModel;
+                    final String renderParam = render;
+                    final ByteArrayOutputStream outputStreamParam = outputStream;
+                    
+                    renderingDone = false;
+                    Display defaultDisplay = Display.getDefault();
+                    
+                    defaultDisplay.asyncExec (new Runnable () {
+                        public void run () {
+                            renderingResult = LightDiagramServices.renderOffScreen(mainModelParam, renderParam, "d:\\model.png");
+                            renderingResult = LightDiagramServices.renderOffScreen(mainModelParam, renderParam, outputStreamParam);
+                            renderingDone = true;
                         }
-                        debug("Model serialized");
+                     });
+                    
+                    while (!renderingDone) {
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                        }
                     }
+                    
+                    debug("Model rendered");
+                    
 
-                    // answer with compiled & serialized model
-                    String lastError = KiCoPlugin.getLastError();
-                    if (lastError != null) {
-                        debug("Errors serialized");
+                    byte[] serializedRenderedModel;
+
+                    if (renderingResult != null && renderingResult.getCode() == IStatus.OK) {
+                        // everything ok, return output stream
+                        serializedRenderedModel = outputStream.toByteArray();
                     } else {
-                        lastError = "";
-                        debug("No errors to serialize");
+                        String serializedRenderedModelString = "Generation of diagram failed: ";
+                        if (renderingResult != null && renderingResult.getException() != null) {
+                            serializedRenderedModelString += getErrorMessage(renderingResult.getException());
+                        }
+                        serializedRenderedModel = serializedRenderedModelString.getBytes();
                     }
-                    String header = serializedCompiledModel.split("\n").length + ":"
-                            + lastError.split("\n").length + "\n";
-                    printWriter.print(header);
-                    printWriter.print(serializedCompiledModel + "\n");
-                    printWriter.print(lastError + "\n");
-                    debug("Compiled model sent to client");
-                    printWriter.flush();
+                    debug("Model rendered");
+                    
+
+                    int len = serializedRenderedModel.length;
+                    
+                    //out.write(len);
+                    out.write(serializedRenderedModel);
+                    debug("Rendered model sent to client");
+                    out.flush();
                 } else {
                     debug("No server listen socket present!");
                 }

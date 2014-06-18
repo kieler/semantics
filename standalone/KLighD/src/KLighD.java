@@ -15,11 +15,15 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -33,8 +37,8 @@ import java.util.ArrayList;
  * @kieler.design 2014-06-08 proposed
  * @kieler.rating 2014-06-08 proposed yellow
  * 
- *                Example Call: C:\DATA\KEPLER\RemoteKielerCompiler\bin>cat ../ABRO.sct | java
- *                RemoteKielerCompiler localhost:5555 sct EXTENDED
+ *                Example Call: C:\DATA\KEPLER\KLighD\bin>cat ../ABRO.sct | java
+ *                KLighD localhost:4444 -f abro.sct -s 1 -r png -o mode.png
  * 
  */
 public class KLighD {
@@ -98,7 +102,6 @@ public class KLighD {
         String render = "png";
         String scale = "1";
 
-        String transformations = "";
         for (int c = 1; c < args.length; c++) {
 
             String option = args[c];
@@ -131,12 +134,7 @@ public class KLighD {
                         c++;
                     }
                 }
-            } else {
-                if (!transformations.equals("")) {
-                    transformations += ",";
-                }
-                transformations += args[c];
-            }
+            } 
 
         }
 
@@ -162,18 +160,22 @@ public class KLighD {
         // System.out.println("model: " + model);
 
         RenderResult renderResult =
-                remoteRender(host, port, outputFile, render, scale, models, transformations);
+                remoteRender(host, port, outputFile, render, scale, models);
 
         if (outputFile == null || outputFile.trim().equals("")) {
-            System.out.println(renderResult.model);
+            try {
+                System.out.write(renderResult.model);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             writeOutputModel(outputFile, renderResult.model);
         }
         if (renderResult.error != null && renderResult.error.length() > 0) {
-            if (renderResult.model.length() == 0) {
+            if (renderResult.model.length == 0) {
                 System.out.println(renderResult.error);
             }
-            if (renderResult.model.length() == 0) {
+            if (renderResult.model.length == 0) {
                 System.exit(1);
             }
         }
@@ -243,13 +245,15 @@ public class KLighD {
      * @param modelAsText
      *            the model as text
      */
-    private static void writeOutputModel(String outputFile, String model) {
-        PrintWriter out;
+    private static void writeOutputModel(String outputFile, byte[] model) {
+        FileOutputStream out;
         try {
-            out = new PrintWriter(outputFile);
-            out.println(model);
+            out = new FileOutputStream(outputFile);
+            out.write(model);
             out.close();
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -270,14 +274,14 @@ public class KLighD {
      * @return the string
      */
     public static RenderResult remoteRender(String host, int port, String outputFile,
-            String render, String scale, ArrayList<String> models, String transformations) {
-        RenderResult result = new RenderResult("", "");
+            String render, String scale, ArrayList<String> models) {
+        RenderResult result = new RenderResult(new byte[0], "");
 
         String options = render + ":" + scale ;
 
         try {
             TCPClient client = new KLighD.TCPClient(host, port);
-            client.sndMessage(transformations + "\n");
+            client.sndMessage(options + "\n");
             
             String header = "";
             for (String model : models) {
@@ -286,7 +290,7 @@ public class KLighD {
                 }
                 header += model.split("\n").length + "";
             }
-            header += "\n" + options + "\n";
+            header += "\n";
             client.sndMessage(header);
             
             for (String model : models) {
@@ -309,10 +313,10 @@ public class KLighD {
      * The Class RenderResult.
      */
     static private class RenderResult {
-        public String model;
+        public byte[] model;
         public String error;
 
-        RenderResult(String model, String error) {
+        RenderResult(byte[] model, String error) {
             this.model = model;
             this.error = error;
         }
@@ -339,39 +343,56 @@ public class KLighD {
         }
 
         RenderResult rcvCompilationResult() throws IOException {
-            InputStreamReader in = new InputStreamReader(socket.getInputStream());
-            BufferedReader bufferedReader = new BufferedReader(in);
+            int bufferSize = socket.getReceiveBufferSize();
+            InputStream in = socket.getInputStream();
+            //BufferedReader bufferedReader = new BufferedReader(in);
 
-            String[] linesArray = bufferedReader.readLine().split(":");
-            int linesModel = Integer.parseInt(linesArray[0]);
-            int linesError = 0;
-            if (linesArray.length > 1) {
-                linesError = Integer.parseInt(linesArray[1]);
+            int len = in.read();
+//            while (true) {
+//                char c = (char) 
+//                if (c == '\n') {
+//                    break;
+//                }
+//                len += c;
+//            }
+//            int lenInteger = 0;
+//            try {
+//                lenInteger = Integer.parseInt(len);
+//            } catch(Exception e) {
+//            }
+            
+            ArrayList<Byte> model = new ArrayList<Byte>();
+            byte[] bytes = new byte[bufferSize];
+            int count;
+            while ((count = in.read(bytes)) > 0) {
+                for (byte data : bytes) {
+                    model.add(data);
+                    count--;
+                    if (count == 0) {
+                        break;
+                    }
+                }
+                //bos.write(bytes, 0, count);
             }
-
-            String model = "";
+            
+            byte[] returnModel = new byte[model.size()];
+            int c = 0;
+            for (Byte data : model) {
+                returnModel[c] = data;
+                System.out.println(c  + ", " + len + ", " + ((int)returnModel[c]));
+                c++;
+            }
+            
             String error = "";
-            String s;
-            while (linesModel > 0) {
-                s = bufferedReader.readLine();
-                // System.out.println("M" + linesModel + ". " + s);
-                linesModel--;
-                if (!model.equals("")) {
-                    model += "\n";
-                }
-                model += s;
-            }
-            while (linesError > 0) {
-                s = bufferedReader.readLine();
-                // System.out.println("E" + linesError + ". " + s);
-                linesError--;
-                if (!error.equals("")) {
-                    error += "\n";
-                }
-                error += s;
-            }
+//            int c = 0;
+//            while (len > 0) {
+//                model[c] = (byte) in.read();
+//                System.out.println(c  + ", " + len + ", " + ((int)model[c]));
+//                c++;
+//                len--;
+//            }
 
-            return new RenderResult(model, error);
+            return new RenderResult(returnModel, error);
         }
 
         void close() throws IOException {
