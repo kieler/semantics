@@ -196,6 +196,11 @@ public class EmissionItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SCChartsPackage.Literals.EMISSION__NEW_VALUE,
+                 SCChartsFactory.eINSTANCE.createFunctionCallEffect()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.EMISSION__NEW_VALUE,
                  KExpressionsFactory.eINSTANCE.createExpression()));
 
         newChildDescriptors.add
@@ -232,6 +237,11 @@ public class EmissionItemProvider
             (createChildParameter
                 (SCChartsPackage.Literals.EMISSION__NEW_VALUE,
                  KExpressionsFactory.eINSTANCE.createTextExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.EMISSION__NEW_VALUE,
+                 KExpressionsFactory.eINSTANCE.createFunctionCall()));
     }
 
 }

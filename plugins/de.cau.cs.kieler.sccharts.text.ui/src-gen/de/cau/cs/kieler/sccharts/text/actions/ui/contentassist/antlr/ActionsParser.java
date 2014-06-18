@@ -75,6 +75,10 @@ public class ActionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEmissionAccess().getGroup_1(), "rule__Emission__Group_1__0");
 					put(grammarAccess.getAssignmentAccess().getGroup(), "rule__Assignment__Group__0");
 					put(grammarAccess.getAssignmentAccess().getGroup_1(), "rule__Assignment__Group_1__0");
+					put(grammarAccess.getFunctionCallEffectAccess().getGroup(), "rule__FunctionCallEffect__Group__0");
+					put(grammarAccess.getFunctionCallEffectAccess().getGroup_2(), "rule__FunctionCallEffect__Group_2__0");
+					put(grammarAccess.getFunctionCallEffectAccess().getGroup_2_2(), "rule__FunctionCallEffect__Group_2_2__0");
+					put(grammarAccess.getParameterAccess().getGroup(), "rule__Parameter__Group__0");
 					put(grammarAccess.getOrAndExpressionAccess().getGroup(), "rule__OrAndExpression__Group__0");
 					put(grammarAccess.getOrAndExpressionAccess().getGroup_1_0(), "rule__OrAndExpression__Group_1_0__0");
 					put(grammarAccess.getOrAndExpressionAccess().getGroup_1_1(), "rule__OrAndExpression__Group_1_1__0");
@@ -100,7 +104,6 @@ public class ActionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionCallAccess().getGroup(), "rule__FunctionCall__Group__0");
 					put(grammarAccess.getFunctionCallAccess().getGroup_2(), "rule__FunctionCall__Group_2__0");
 					put(grammarAccess.getFunctionCallAccess().getGroup_2_2(), "rule__FunctionCall__Group_2_2__0");
-					put(grammarAccess.getParameterAccess().getGroup(), "rule__Parameter__Group__0");
 					put(grammarAccess.getTagAnnotationAccess().getGroup(), "rule__TagAnnotation__Group__0");
 					put(grammarAccess.getTagAnnotationAccess().getGroup_2(), "rule__TagAnnotation__Group_2__0");
 					put(grammarAccess.getKeyStringValueAnnotationAccess().getGroup(), "rule__KeyStringValueAnnotation__Group__0");
@@ -143,6 +146,11 @@ public class ActionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAssignmentAccess().getIndicesAssignment_1_1(), "rule__Assignment__IndicesAssignment_1_1");
 					put(grammarAccess.getAssignmentAccess().getExpressionAssignment_3(), "rule__Assignment__ExpressionAssignment_3");
 					put(grammarAccess.getTextEffectAccess().getTextAssignment(), "rule__TextEffect__TextAssignment");
+					put(grammarAccess.getFunctionCallEffectAccess().getFunctionNameAssignment_1(), "rule__FunctionCallEffect__FunctionNameAssignment_1");
+					put(grammarAccess.getFunctionCallEffectAccess().getParametersAssignment_2_1(), "rule__FunctionCallEffect__ParametersAssignment_2_1");
+					put(grammarAccess.getFunctionCallEffectAccess().getParametersAssignment_2_2_1(), "rule__FunctionCallEffect__ParametersAssignment_2_2_1");
+					put(grammarAccess.getParameterAccess().getCallByReferenceAssignment_0(), "rule__Parameter__CallByReferenceAssignment_0");
+					put(grammarAccess.getParameterAccess().getExpressionAssignment_1(), "rule__Parameter__ExpressionAssignment_1");
 					put(grammarAccess.getOrAndExpressionAccess().getOperatorAssignment_1_0_1(), "rule__OrAndExpression__OperatorAssignment_1_0_1");
 					put(grammarAccess.getOrAndExpressionAccess().getSubExpressionsAssignment_1_0_2(), "rule__OrAndExpression__SubExpressionsAssignment_1_0_2");
 					put(grammarAccess.getOrAndExpressionAccess().getOperatorAssignment_1_1_1(), "rule__OrAndExpression__OperatorAssignment_1_1_1");
@@ -170,8 +178,6 @@ public class ActionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionCallAccess().getFunctionNameAssignment_1(), "rule__FunctionCall__FunctionNameAssignment_1");
 					put(grammarAccess.getFunctionCallAccess().getParametersAssignment_2_1(), "rule__FunctionCall__ParametersAssignment_2_1");
 					put(grammarAccess.getFunctionCallAccess().getParametersAssignment_2_2_1(), "rule__FunctionCall__ParametersAssignment_2_2_1");
-					put(grammarAccess.getParameterAccess().getCallByReferenceAssignment_0(), "rule__Parameter__CallByReferenceAssignment_0");
-					put(grammarAccess.getParameterAccess().getExpressionAssignment_1(), "rule__Parameter__ExpressionAssignment_1");
 					put(grammarAccess.getTextExpressionAccess().getTextAssignment(), "rule__TextExpression__TextAssignment");
 					put(grammarAccess.getIntValueAccess().getValueAssignment(), "rule__IntValue__ValueAssignment");
 					put(grammarAccess.getFloatValueAccess().getValueAssignment(), "rule__FloatValue__ValueAssignment");

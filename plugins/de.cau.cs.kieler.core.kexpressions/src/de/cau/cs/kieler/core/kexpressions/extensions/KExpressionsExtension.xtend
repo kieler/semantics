@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EObject
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.Parameter
+import java.util.List
 
 /**
  * KExpressions Extensions. 
@@ -827,6 +828,16 @@ class KExpressionsExtension {
             }
         }
         valuedObject
+    }
+    
+    def List<ValuedObjectReference> getAllReferences(Expression expression) {
+        val list = <ValuedObjectReference> newArrayList
+        if (expression instanceof ValuedObjectReference) {
+            list += expression as ValuedObjectReference
+        } else {
+            list += expression.eAllContents.filter(typeof(ValuedObjectReference)).toList
+        }
+        return list
     }
 
     //    def public void addValuedObject(EObject eObject, ValuedObject valuedObject) {

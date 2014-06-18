@@ -1689,7 +1689,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Effect returns sccharts::Effect:
-	//	Emission | Assignment | TextEffect;
+	//	Emission | Assignment | TextEffect | FunctionCallEffect;
 	public ActionsGrammarAccess.EffectElements getEffectAccess() {
 		return gaActions.getEffectAccess();
 	}
@@ -1726,6 +1726,26 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getTextEffectRule() {
 		return getTextEffectAccess().getRule();
+	}
+
+	//FunctionCallEffect returns sccharts::FunctionCallEffect:
+	//	"<" functionName=ID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")")? ">";
+	public ActionsGrammarAccess.FunctionCallEffectElements getFunctionCallEffectAccess() {
+		return gaActions.getFunctionCallEffectAccess();
+	}
+	
+	public ParserRule getFunctionCallEffectRule() {
+		return getFunctionCallEffectAccess().getRule();
+	}
+
+	//Parameter returns kexpressions::Parameter:
+	//	callByReference?="&"? expression=Expression;
+	public ActionsGrammarAccess.ParameterElements getParameterAccess() {
+		return gaActions.getParameterAccess();
+	}
+	
+	public ParserRule getParameterRule() {
+		return getParameterAccess().getRule();
 	}
 
 	//enum DivOperator returns kexpressions::OperatorType:
@@ -1955,16 +1975,6 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getFunctionCallRule() {
 		return getFunctionCallAccess().getRule();
-	}
-
-	//Parameter:
-	//	callByReference?="&"? expression=Expression;
-	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
-		return gaActions.getParameterAccess();
-	}
-	
-	public ParserRule getParameterRule() {
-		return getParameterAccess().getRule();
 	}
 
 	//// Example: 'printf(...)'

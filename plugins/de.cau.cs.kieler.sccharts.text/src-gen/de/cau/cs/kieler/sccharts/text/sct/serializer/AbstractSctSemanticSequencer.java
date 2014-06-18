@@ -28,6 +28,7 @@ import de.cau.cs.kieler.sccharts.Emission;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.For;
+import de.cau.cs.kieler.sccharts.FunctionCallEffect;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
@@ -384,6 +385,13 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 			case SCChartsPackage.FOR:
 				if(context == grammarAccess.getForRule()) {
 					sequence_For(context, (For) semanticObject); 
+					return; 
+				}
+				else break;
+			case SCChartsPackage.FUNCTION_CALL_EFFECT:
+				if(context == grammarAccess.getEffectRule() ||
+				   context == grammarAccess.getFunctionCallEffectRule()) {
+					sequence_FunctionCallEffect(context, (FunctionCallEffect) semanticObject); 
 					return; 
 				}
 				else break;

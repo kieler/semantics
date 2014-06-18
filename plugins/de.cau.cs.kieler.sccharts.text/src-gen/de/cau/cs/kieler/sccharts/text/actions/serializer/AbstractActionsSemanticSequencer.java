@@ -25,6 +25,7 @@ import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.Emission;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
+import de.cau.cs.kieler.sccharts.FunctionCallEffect;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.SuspendAction;
 import de.cau.cs.kieler.sccharts.TextEffect;
@@ -354,6 +355,13 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 					return; 
 				}
 				else break;
+			case SCChartsPackage.FUNCTION_CALL_EFFECT:
+				if(context == grammarAccess.getEffectRule() ||
+				   context == grammarAccess.getFunctionCallEffectRule()) {
+					sequence_FunctionCallEffect(context, (FunctionCallEffect) semanticObject); 
+					return; 
+				}
+				else break;
 			case SCChartsPackage.SUSPEND_ACTION:
 				if(context == grammarAccess.getSuspendActionRule()) {
 					sequence_SuspendAction(context, (SuspendAction) semanticObject); 
@@ -418,6 +426,24 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 	 *     (trigger=BoolExpression? (effects+=Effect effects+=Effect*)?)
 	 */
 	protected void sequence_ExitAction(EObject context, ExitAction semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (functionName=ID (parameters+=Parameter parameters+=Parameter*)?)
+	 */
+	protected void sequence_FunctionCallEffect(EObject context, FunctionCallEffect semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (callByReference?='&'? expression=Expression)
+	 */
+	protected void sequence_Parameter(EObject context, Parameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

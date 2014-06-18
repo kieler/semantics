@@ -264,8 +264,18 @@ public class ActionItemProvider
 
         newChildDescriptors.add
             (createChildParameter
+                (SCChartsPackage.Literals.ACTION__EFFECTS,
+                 SCChartsFactory.eINSTANCE.createFunctionCallEffect()));
+
+        newChildDescriptors.add
+            (createChildParameter
                 (SCChartsPackage.Literals.ACTION__TRIGGER,
                  SCChartsFactory.eINSTANCE.createTextEffect()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.ACTION__TRIGGER,
+                 SCChartsFactory.eINSTANCE.createFunctionCallEffect()));
 
         newChildDescriptors.add
             (createChildParameter
@@ -306,6 +316,11 @@ public class ActionItemProvider
             (createChildParameter
                 (SCChartsPackage.Literals.ACTION__TRIGGER,
                  KExpressionsFactory.eINSTANCE.createTextExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.ACTION__TRIGGER,
+                 KExpressionsFactory.eINSTANCE.createFunctionCall()));
     }
 
     /**
