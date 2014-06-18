@@ -114,6 +114,10 @@ class SimpleScheduler extends AbstractScheduler {
     private val List<SchedulingBlock> TSVISITED = <SchedulingBlock> newArrayList; 
     private val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
     
+    private val predecessorTwinCache = new HashMap<Predecessor, Predecessor>
+    private val predecessorBBCache = new HashMap<BasicBlock, List<Predecessor>>    
+    private val predecessorSBCache = new HashMap<Predecessor, List<SchedulingBlock>>
+    
     // -------------------------------------------------------------------------
     // -- Scheduler 
     // -------------------------------------------------------------------------
@@ -300,6 +304,19 @@ class SimpleScheduler extends AbstractScheduler {
         val schedule = ScgschedFactory::eINSTANCE.createSchedule
         
         scg.createGOSignal
+        
+        val basicBlocks = scg.eAllContents.filter(typeof(BasicBlock)).toList
+        scg.eAllContents => [ all |
+            val predecessors = all.filter(typeof(Predecessor))
+            predecessors.forEach[ p |
+                if (p.blockType == BlockType::TRUEBRANCH) {
+                    p.cacheTwin(basicBlocks)
+                } 
+                else if (p.blockType == BlockType::ELSEBRANCH) {
+                    p.cacheTwin(basicBlocks)
+                }
+            ]
+        ]    
         
         // Create and fill a list for all scheduling blocks.
         val schedulingConstraints = scg.orderSchedulingBlocks
@@ -534,6 +551,33 @@ class SimpleScheduler extends AbstractScheduler {
     protected def SchedulingBlock getSchedulingBlockTwin(Predecessor predecessor, BlockType blockType, Schedule schedule, SCGraph scg) {
 //    	val predecessorTwin = scg.eAllContents.filter(typeof(Predecessor)).filter[ it.getBasicBlock == predecessor.basicBlock && it.blockType == blockType].head
 //    	scg.eAllContents.filter(typeof(SchedulingBlock)).filter[ it.basicBlock.predecessors.contains(predecessorTwin) ].head
+        val twin = predecessorTwinCache.get(predecessor)
+//        twin.basicBlock.schedulingBlocks.head
+        predecessorSBCache.get(twin).head
+    }
+
+    private def cacheTwin(Predecessor predecessor, List<BasicBlock> basicBlocks) {
+        val bb = predecessor.basicBlock
+        var predList = predecessorBBCache.get(bb)
+        if (predList == null) {
+            predList = <Predecessor> newArrayList => [ add(predecessor) ]
+            predecessorBBCache.put(bb, predList)
+        } else {
+            val fPred = predList.get(0)
+            predList.add(predecessor)
+            predecessorTwinCache.put(fPred, predecessor)
+            predecessorTwinCache.put(predecessor, fPred)
+            
+            val sbList1 = <SchedulingBlock> newArrayList
+//            bb.schedulingBlocks.forEach[ sbList1 += it ]
+            sbList1 += basicBlocks.filter[ it.predecessors.contains(fPred) ].head.schedulingBlocks.head
+            predecessorSBCache.put(fPred, sbList1)
+            
+            val sbList2 = <SchedulingBlock> newArrayList
+//            bb.schedulingBlocks.forEach[ sbList2 += it ]
+            sbList2 += basicBlocks.filter[ it.predecessors.contains(predecessor) ].head.schedulingBlocks.head
+            predecessorSBCache.put(predecessor, sbList2)
+        }
     }
 
 }
