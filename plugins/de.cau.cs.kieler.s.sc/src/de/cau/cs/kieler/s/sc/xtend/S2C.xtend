@@ -45,6 +45,7 @@ import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
 import de.cau.cs.kieler.s.extensions.SExtension
 import java.util.List
+import java.util.HashMap
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -66,7 +67,8 @@ class S2C {
     
     // General method to create the c simulation interface.
     def transform (Program program) {
-       '''
+        val timestamp = System.currentTimeMillis  
+      val code = '''
 «/* Generate the C header */»
        «scHeader(program)»
 
@@ -80,6 +82,9 @@ class S2C {
        «/* Generate the tick function */»
        «sTickFunction(program)»
        '''
+        val time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("C code generation finished (time used: "+(time / 1000)+"s).")    
+       code
    }     
 
    // -------------------------------------------------------------------------   
@@ -110,9 +115,33 @@ class S2C {
    }
    
    // -------------------------------------------------------------------------
+   
+   private var List<OperatorExpression> cachedFoundePres = null;
+   
+   def  List<OperatorExpression> cachedFoundPres(Program program) {
+      if (cachedFoundePres == null) {
+         cachedFoundePres = program.eAllContents.filter(typeof(OperatorExpression)).filter[operator == OperatorType::PRE].toList  
+      }  
+      cachedFoundePres
+   }
+   
+   // -------------------------------------------------------------------------
+   
+   private var HashMap<Integer, List<ValuedObjectReference>> cachedfound = new HashMap<Integer, List<ValuedObjectReference>>();
+   
+   def  List<ValuedObjectReference> cachedFound(Expression expression) {
+      val hash = expression.hashCode
+      if (cachedfound.get(hash) == null) {
+         cachedfound.put(hash, expression.eAllContents.filter(typeof(ValuedObjectReference)).toList)  
+      }  
+      cachedfound.get(hash)
+   }
+   
+   // -------------------------------------------------------------------------
 
+   
    def boolean usesPre(Program program, ValuedObject valuedObject) {
-       val foundPres = program.eAllContents.filter(typeof(OperatorExpression)).filter[operator == OperatorType::PRE].toList; 
+       val foundPres = program.cachedFoundPres
        for (pre : foundPres) {
            for (subExpression : pre.subExpressions) {
                if (subExpression instanceof ValuedObjectReference) {
@@ -120,8 +149,8 @@ class S2C {
                        return true
                    }
                }
-               val found = subExpression.eAllContents.filter(typeof(ValuedObjectReference)).filter(e | e.valuedObject == valuedObject).toList
-               if (found.size > 0) {
+               val found = subExpression.cachedFound.filter(e | e.valuedObject == valuedObject).toList
+             if (found.size > 0) {
                    return true
                }
            }
