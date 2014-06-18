@@ -46,6 +46,7 @@ import de.cau.cs.kieler.s.s.Trans
 import de.cau.cs.kieler.s.extensions.SExtension
 import java.util.List
 import java.util.HashMap
+import de.cau.cs.kieler.core.kexpressions.FunctionCall
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -284,7 +285,10 @@ class S2C {
 
    // Expand a ASSIGNMENT instruction.
    def dispatch CharSequence expand(Assignment assignment) {
-       if (!assignment.indices.nullOrEmpty) {
+       if (assignment.expression instanceof FunctionCall) {
+          return '''«assignment.expression.expand»;'''
+       }
+       else if (!assignment.indices.nullOrEmpty) {
           var returnValue = '''«assignment.variable.expand »'''
           for (index : assignment.indices) {
               returnValue = returnValue + '''[«index.expand»]'''
@@ -576,6 +580,20 @@ class S2C {
         '''«valuedObjectReference.valuedObject.expand»'''
        }
 
+   }
+   
+    def dispatch CharSequence expand(FunctionCall functionCall) {
+        var funcCall = functionCall.functionName + "("
+        
+        var cnt = 0
+        for(par : functionCall.parameters) {
+            if (cnt>0) { funcCall = funcCall + ", " }
+            if (par.callByReference) { funcCall = funcCall + "&" }
+            funcCall = funcCall + par.expression.expand
+            cnt = cnt + 1
+        }
+        funcCall = funcCall + ")"
+        funcCall
    }
    
    // -------------------------------------------------------------------------   
