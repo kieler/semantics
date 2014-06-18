@@ -49,290 +49,290 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class SCGraphSchedImpl extends SCGraphBBImpl implements SCGraphSched {
     /**
-	 * The default value of the '{@link #isUnschedulable() <em>Unschedulable</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #isUnschedulable() <em>Unschedulable</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #isUnschedulable()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #isUnschedulable()
+     * @generated
+     * @ordered
+     */
     protected static final boolean UNSCHEDULABLE_EDEFAULT = false;
 
     /**
-	 * The cached value of the '{@link #isUnschedulable() <em>Unschedulable</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #isUnschedulable() <em>Unschedulable</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #isUnschedulable()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #isUnschedulable()
+     * @generated
+     * @ordered
+     */
     protected boolean unschedulable = UNSCHEDULABLE_EDEFAULT;
 
     /**
-	 * The cached value of the '{@link #getSchedules() <em>Schedules</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getSchedules() <em>Schedules</em>}' containment reference list.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getSchedules()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getSchedules()
+     * @generated
+     * @ordered
+     */
     protected EList<Schedule> schedules;
 
     /**
-	 * The cached value of the '{@link #getGuards() <em>Guards</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getGuards() <em>Guards</em>}' containment reference list.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getGuards()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getGuards()
+     * @generated
+     * @ordered
+     */
 	protected EList<GuardExpression> guards;
 
 				/**
-	 * The cached value of the '{@link #getAnalyses() <em>Analyses</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getAnalyses() <em>Analyses</em>}' containment reference list.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getAnalyses()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getAnalyses()
+     * @generated
+     * @ordered
+     */
 	protected EList<Analysis> analyses;
 
 				/**
-	 * The cached value of the '{@link #getAlterations() <em>Alterations</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getAlterations() <em>Alterations</em>}' containment reference list.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getAlterations()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getAlterations()
+     * @generated
+     * @ordered
+     */
 	protected EList<Alteration> alterations;
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected SCGraphSchedImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return ScgschedPackage.Literals.SC_GRAPH_SCHED;
-	}
+        return ScgschedPackage.Literals.SC_GRAPH_SCHED;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public boolean isUnschedulable() {
-		return unschedulable;
-	}
+        return unschedulable;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setUnschedulable(boolean newUnschedulable) {
-		boolean oldUnschedulable = unschedulable;
-		unschedulable = newUnschedulable;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.SC_GRAPH_SCHED__UNSCHEDULABLE, oldUnschedulable, unschedulable));
-	}
+        boolean oldUnschedulable = unschedulable;
+        unschedulable = newUnschedulable;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.SC_GRAPH_SCHED__UNSCHEDULABLE, oldUnschedulable, unschedulable));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EList<Schedule> getSchedules() {
-		if (schedules == null) {
-			schedules = new EObjectContainmentEList<Schedule>(Schedule.class, this, ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES);
-		}
-		return schedules;
-	}
+        if (schedules == null) {
+            schedules = new EObjectContainmentEList<Schedule>(Schedule.class, this, ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES);
+        }
+        return schedules;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EList<GuardExpression> getGuards() {
-		if (guards == null) {
-			guards = new EObjectContainmentEList<GuardExpression>(GuardExpression.class, this, ScgschedPackage.SC_GRAPH_SCHED__GUARDS);
-		}
-		return guards;
-	}
+        if (guards == null) {
+            guards = new EObjectContainmentEList<GuardExpression>(GuardExpression.class, this, ScgschedPackage.SC_GRAPH_SCHED__GUARDS);
+        }
+        return guards;
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EList<Analysis> getAnalyses() {
-		if (analyses == null) {
-			analyses = new EObjectContainmentEList<Analysis>(Analysis.class, this, ScgschedPackage.SC_GRAPH_SCHED__ANALYSES);
-		}
-		return analyses;
-	}
+        if (analyses == null) {
+            analyses = new EObjectContainmentEList<Analysis>(Analysis.class, this, ScgschedPackage.SC_GRAPH_SCHED__ANALYSES);
+        }
+        return analyses;
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public EList<Alteration> getAlterations() {
-		if (alterations == null) {
-			alterations = new EObjectContainmentEList<Alteration>(Alteration.class, this, ScgschedPackage.SC_GRAPH_SCHED__ALTERATIONS);
-		}
-		return alterations;
-	}
+        if (alterations == null) {
+            alterations = new EObjectContainmentEList<Alteration>(Alteration.class, this, ScgschedPackage.SC_GRAPH_SCHED__ALTERATIONS);
+        }
+        return alterations;
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES:
-				return ((InternalEList<?>)getSchedules()).basicRemove(otherEnd, msgs);
-			case ScgschedPackage.SC_GRAPH_SCHED__GUARDS:
-				return ((InternalEList<?>)getGuards()).basicRemove(otherEnd, msgs);
-			case ScgschedPackage.SC_GRAPH_SCHED__ANALYSES:
-				return ((InternalEList<?>)getAnalyses()).basicRemove(otherEnd, msgs);
-			case ScgschedPackage.SC_GRAPH_SCHED__ALTERATIONS:
-				return ((InternalEList<?>)getAlterations()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES:
+                return ((InternalEList<?>)getSchedules()).basicRemove(otherEnd, msgs);
+            case ScgschedPackage.SC_GRAPH_SCHED__GUARDS:
+                return ((InternalEList<?>)getGuards()).basicRemove(otherEnd, msgs);
+            case ScgschedPackage.SC_GRAPH_SCHED__ANALYSES:
+                return ((InternalEList<?>)getAnalyses()).basicRemove(otherEnd, msgs);
+            case ScgschedPackage.SC_GRAPH_SCHED__ALTERATIONS:
+                return ((InternalEList<?>)getAlterations()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case ScgschedPackage.SC_GRAPH_SCHED__UNSCHEDULABLE:
-				return isUnschedulable();
-			case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES:
-				return getSchedules();
-			case ScgschedPackage.SC_GRAPH_SCHED__GUARDS:
-				return getGuards();
-			case ScgschedPackage.SC_GRAPH_SCHED__ANALYSES:
-				return getAnalyses();
-			case ScgschedPackage.SC_GRAPH_SCHED__ALTERATIONS:
-				return getAlterations();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case ScgschedPackage.SC_GRAPH_SCHED__UNSCHEDULABLE:
+                return isUnschedulable();
+            case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES:
+                return getSchedules();
+            case ScgschedPackage.SC_GRAPH_SCHED__GUARDS:
+                return getGuards();
+            case ScgschedPackage.SC_GRAPH_SCHED__ANALYSES:
+                return getAnalyses();
+            case ScgschedPackage.SC_GRAPH_SCHED__ALTERATIONS:
+                return getAlterations();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case ScgschedPackage.SC_GRAPH_SCHED__UNSCHEDULABLE:
-				setUnschedulable((Boolean)newValue);
-				return;
-			case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES:
-				getSchedules().clear();
-				getSchedules().addAll((Collection<? extends Schedule>)newValue);
-				return;
-			case ScgschedPackage.SC_GRAPH_SCHED__GUARDS:
-				getGuards().clear();
-				getGuards().addAll((Collection<? extends GuardExpression>)newValue);
-				return;
-			case ScgschedPackage.SC_GRAPH_SCHED__ANALYSES:
-				getAnalyses().clear();
-				getAnalyses().addAll((Collection<? extends Analysis>)newValue);
-				return;
-			case ScgschedPackage.SC_GRAPH_SCHED__ALTERATIONS:
-				getAlterations().clear();
-				getAlterations().addAll((Collection<? extends Alteration>)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case ScgschedPackage.SC_GRAPH_SCHED__UNSCHEDULABLE:
+                setUnschedulable((Boolean)newValue);
+                return;
+            case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES:
+                getSchedules().clear();
+                getSchedules().addAll((Collection<? extends Schedule>)newValue);
+                return;
+            case ScgschedPackage.SC_GRAPH_SCHED__GUARDS:
+                getGuards().clear();
+                getGuards().addAll((Collection<? extends GuardExpression>)newValue);
+                return;
+            case ScgschedPackage.SC_GRAPH_SCHED__ANALYSES:
+                getAnalyses().clear();
+                getAnalyses().addAll((Collection<? extends Analysis>)newValue);
+                return;
+            case ScgschedPackage.SC_GRAPH_SCHED__ALTERATIONS:
+                getAlterations().clear();
+                getAlterations().addAll((Collection<? extends Alteration>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case ScgschedPackage.SC_GRAPH_SCHED__UNSCHEDULABLE:
-				setUnschedulable(UNSCHEDULABLE_EDEFAULT);
-				return;
-			case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES:
-				getSchedules().clear();
-				return;
-			case ScgschedPackage.SC_GRAPH_SCHED__GUARDS:
-				getGuards().clear();
-				return;
-			case ScgschedPackage.SC_GRAPH_SCHED__ANALYSES:
-				getAnalyses().clear();
-				return;
-			case ScgschedPackage.SC_GRAPH_SCHED__ALTERATIONS:
-				getAlterations().clear();
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case ScgschedPackage.SC_GRAPH_SCHED__UNSCHEDULABLE:
+                setUnschedulable(UNSCHEDULABLE_EDEFAULT);
+                return;
+            case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES:
+                getSchedules().clear();
+                return;
+            case ScgschedPackage.SC_GRAPH_SCHED__GUARDS:
+                getGuards().clear();
+                return;
+            case ScgschedPackage.SC_GRAPH_SCHED__ANALYSES:
+                getAnalyses().clear();
+                return;
+            case ScgschedPackage.SC_GRAPH_SCHED__ALTERATIONS:
+                getAlterations().clear();
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case ScgschedPackage.SC_GRAPH_SCHED__UNSCHEDULABLE:
-				return unschedulable != UNSCHEDULABLE_EDEFAULT;
-			case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES:
-				return schedules != null && !schedules.isEmpty();
-			case ScgschedPackage.SC_GRAPH_SCHED__GUARDS:
-				return guards != null && !guards.isEmpty();
-			case ScgschedPackage.SC_GRAPH_SCHED__ANALYSES:
-				return analyses != null && !analyses.isEmpty();
-			case ScgschedPackage.SC_GRAPH_SCHED__ALTERATIONS:
-				return alterations != null && !alterations.isEmpty();
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case ScgschedPackage.SC_GRAPH_SCHED__UNSCHEDULABLE:
+                return unschedulable != UNSCHEDULABLE_EDEFAULT;
+            case ScgschedPackage.SC_GRAPH_SCHED__SCHEDULES:
+                return schedules != null && !schedules.isEmpty();
+            case ScgschedPackage.SC_GRAPH_SCHED__GUARDS:
+                return guards != null && !guards.isEmpty();
+            case ScgschedPackage.SC_GRAPH_SCHED__ANALYSES:
+                return analyses != null && !analyses.isEmpty();
+            case ScgschedPackage.SC_GRAPH_SCHED__ALTERATIONS:
+                return alterations != null && !alterations.isEmpty();
+        }
+        return super.eIsSet(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public String toString() {
-		if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (unschedulable: ");
-		result.append(unschedulable);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (unschedulable: ");
+        result.append(unschedulable);
+        result.append(')');
+        return result.toString();
+    }
 
 } //SCGraphSchedImpl

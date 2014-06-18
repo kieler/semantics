@@ -45,310 +45,310 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  */
 public class ScgdepItemProviderAdapterFactory extends ScgdepAdapterFactory implements ComposeableAdapterFactory, IChangeNotifier, IDisposable {
     /**
-	 * This keeps track of the root adapter factory that delegates to this adapter factory.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the root adapter factory that delegates to this adapter factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected ComposedAdapterFactory parentAdapterFactory;
 
     /**
-	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
-	 * <!-- begin-user-doc -->
+     * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected IChangeNotifier changeNotifier = new ChangeNotifier();
 
     /**
-	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
-	 * <!-- begin-user-doc -->
+     * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
     /**
-	 * This constructs an instance.
-	 * <!-- begin-user-doc -->
+     * This constructs an instance.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ScgdepItemProviderAdapterFactory() {
-		supportedTypes.add(IEditingDomainItemProvider.class);
-		supportedTypes.add(IStructuredItemContentProvider.class);
-		supportedTypes.add(ITreeItemContentProvider.class);
-		supportedTypes.add(IItemLabelProvider.class);
-		supportedTypes.add(IItemPropertySource.class);
-	}
+        supportedTypes.add(IEditingDomainItemProvider.class);
+        supportedTypes.add(IStructuredItemContentProvider.class);
+        supportedTypes.add(ITreeItemContentProvider.class);
+        supportedTypes.add(IItemLabelProvider.class);
+        supportedTypes.add(IItemPropertySource.class);
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgdep.Dependency} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgdep.Dependency} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected DependencyItemProvider dependencyItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scgdep.Dependency}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.scgdep.Dependency}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createDependencyAdapter() {
-		if (dependencyItemProvider == null) {
-			dependencyItemProvider = new DependencyItemProvider(this);
-		}
+        if (dependencyItemProvider == null) {
+            dependencyItemProvider = new DependencyItemProvider(this);
+        }
 
-		return dependencyItemProvider;
-	}
+        return dependencyItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgdep.AbsoluteWrite_Read} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgdep.AbsoluteWrite_Read} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected AbsoluteWrite_ReadItemProvider absoluteWrite_ReadItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scgdep.AbsoluteWrite_Read}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.scgdep.AbsoluteWrite_Read}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createAbsoluteWrite_ReadAdapter() {
-		if (absoluteWrite_ReadItemProvider == null) {
-			absoluteWrite_ReadItemProvider = new AbsoluteWrite_ReadItemProvider(this);
-		}
+        if (absoluteWrite_ReadItemProvider == null) {
+            absoluteWrite_ReadItemProvider = new AbsoluteWrite_ReadItemProvider(this);
+        }
 
-		return absoluteWrite_ReadItemProvider;
-	}
+        return absoluteWrite_ReadItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgdep.RelativeWrite_Read} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgdep.RelativeWrite_Read} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected RelativeWrite_ReadItemProvider relativeWrite_ReadItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scgdep.RelativeWrite_Read}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.scgdep.RelativeWrite_Read}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createRelativeWrite_ReadAdapter() {
-		if (relativeWrite_ReadItemProvider == null) {
-			relativeWrite_ReadItemProvider = new RelativeWrite_ReadItemProvider(this);
-		}
+        if (relativeWrite_ReadItemProvider == null) {
+            relativeWrite_ReadItemProvider = new RelativeWrite_ReadItemProvider(this);
+        }
 
-		return relativeWrite_ReadItemProvider;
-	}
+        return relativeWrite_ReadItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgdep.AbsoluteWrite_RelativeWrite} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgdep.AbsoluteWrite_RelativeWrite} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected AbsoluteWrite_RelativeWriteItemProvider absoluteWrite_RelativeWriteItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scgdep.AbsoluteWrite_RelativeWrite}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.scgdep.AbsoluteWrite_RelativeWrite}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createAbsoluteWrite_RelativeWriteAdapter() {
-		if (absoluteWrite_RelativeWriteItemProvider == null) {
-			absoluteWrite_RelativeWriteItemProvider = new AbsoluteWrite_RelativeWriteItemProvider(this);
-		}
+        if (absoluteWrite_RelativeWriteItemProvider == null) {
+            absoluteWrite_RelativeWriteItemProvider = new AbsoluteWrite_RelativeWriteItemProvider(this);
+        }
 
-		return absoluteWrite_RelativeWriteItemProvider;
-	}
+        return absoluteWrite_RelativeWriteItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgdep.Write_Write} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgdep.Write_Write} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected Write_WriteItemProvider write_WriteItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scgdep.Write_Write}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.scgdep.Write_Write}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createWrite_WriteAdapter() {
-		if (write_WriteItemProvider == null) {
-			write_WriteItemProvider = new Write_WriteItemProvider(this);
-		}
+        if (write_WriteItemProvider == null) {
+            write_WriteItemProvider = new Write_WriteItemProvider(this);
+        }
 
-		return write_WriteItemProvider;
-	}
+        return write_WriteItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgdep.AssignmentDep} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgdep.AssignmentDep} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected AssignmentDepItemProvider assignmentDepItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scgdep.AssignmentDep}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.scgdep.AssignmentDep}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createAssignmentDepAdapter() {
-		if (assignmentDepItemProvider == null) {
-			assignmentDepItemProvider = new AssignmentDepItemProvider(this);
-		}
+        if (assignmentDepItemProvider == null) {
+            assignmentDepItemProvider = new AssignmentDepItemProvider(this);
+        }
 
-		return assignmentDepItemProvider;
-	}
+        return assignmentDepItemProvider;
+    }
 
     /**
-	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgdep.SCGraphDep} instances.
-	 * <!-- begin-user-doc -->
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scgdep.SCGraphDep} instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected SCGraphDepItemProvider scGraphDepItemProvider;
 
     /**
-	 * This creates an adapter for a {@link de.cau.cs.kieler.scgdep.SCGraphDep}.
-	 * <!-- begin-user-doc -->
+     * This creates an adapter for a {@link de.cau.cs.kieler.scgdep.SCGraphDep}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter createSCGraphDepAdapter() {
-		if (scGraphDepItemProvider == null) {
-			scGraphDepItemProvider = new SCGraphDepItemProvider(this);
-		}
+        if (scGraphDepItemProvider == null) {
+            scGraphDepItemProvider = new SCGraphDepItemProvider(this);
+        }
 
-		return scGraphDepItemProvider;
-	}
+        return scGraphDepItemProvider;
+    }
 
     /**
-	 * This returns the root adapter factory that contains this factory.
-	 * <!-- begin-user-doc -->
+     * This returns the root adapter factory that contains this factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ComposeableAdapterFactory getRootAdapterFactory() {
-		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
-	}
+        return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
+    }
 
     /**
-	 * This sets the composed adapter factory that contains this factory.
-	 * <!-- begin-user-doc -->
+     * This sets the composed adapter factory that contains this factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
-		this.parentAdapterFactory = parentAdapterFactory;
-	}
+        this.parentAdapterFactory = parentAdapterFactory;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean isFactoryForType(Object type) {
-		return supportedTypes.contains(type) || super.isFactoryForType(type);
-	}
+        return supportedTypes.contains(type) || super.isFactoryForType(type);
+    }
 
     /**
-	 * This implementation substitutes the factory itself as the key for the adapter.
-	 * <!-- begin-user-doc -->
+     * This implementation substitutes the factory itself as the key for the adapter.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Adapter adapt(Notifier notifier, Object type) {
-		return super.adapt(notifier, this);
-	}
+        return super.adapt(notifier, this);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type)) {
-			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
-				return adapter;
-			}
-		}
+        if (isFactoryForType(type)) {
+            Object adapter = super.adapt(object, type);
+            if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
+                return adapter;
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
     /**
-	 * This adds a listener.
-	 * <!-- begin-user-doc -->
+     * This adds a listener.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void addListener(INotifyChangedListener notifyChangedListener) {
-		changeNotifier.addListener(notifyChangedListener);
-	}
+        changeNotifier.addListener(notifyChangedListener);
+    }
 
     /**
-	 * This removes a listener.
-	 * <!-- begin-user-doc -->
+     * This removes a listener.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void removeListener(INotifyChangedListener notifyChangedListener) {
-		changeNotifier.removeListener(notifyChangedListener);
-	}
+        changeNotifier.removeListener(notifyChangedListener);
+    }
 
     /**
-	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
-	 * <!-- begin-user-doc -->
+     * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void fireNotifyChanged(Notification notification) {
-		changeNotifier.fireNotifyChanged(notification);
+        changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null) {
-			parentAdapterFactory.fireNotifyChanged(notification);
-		}
-	}
+        if (parentAdapterFactory != null) {
+            parentAdapterFactory.fireNotifyChanged(notification);
+        }
+    }
 
     /**
-	 * This disposes all of the item providers created by this factory. 
-	 * <!-- begin-user-doc -->
+     * This disposes all of the item providers created by this factory. 
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void dispose() {
-		if (dependencyItemProvider != null) dependencyItemProvider.dispose();
-		if (absoluteWrite_ReadItemProvider != null) absoluteWrite_ReadItemProvider.dispose();
-		if (relativeWrite_ReadItemProvider != null) relativeWrite_ReadItemProvider.dispose();
-		if (absoluteWrite_RelativeWriteItemProvider != null) absoluteWrite_RelativeWriteItemProvider.dispose();
-		if (write_WriteItemProvider != null) write_WriteItemProvider.dispose();
-		if (assignmentDepItemProvider != null) assignmentDepItemProvider.dispose();
-		if (scGraphDepItemProvider != null) scGraphDepItemProvider.dispose();
-	}
+        if (dependencyItemProvider != null) dependencyItemProvider.dispose();
+        if (absoluteWrite_ReadItemProvider != null) absoluteWrite_ReadItemProvider.dispose();
+        if (relativeWrite_ReadItemProvider != null) relativeWrite_ReadItemProvider.dispose();
+        if (absoluteWrite_RelativeWriteItemProvider != null) absoluteWrite_RelativeWriteItemProvider.dispose();
+        if (write_WriteItemProvider != null) write_WriteItemProvider.dispose();
+        if (assignmentDepItemProvider != null) assignmentDepItemProvider.dispose();
+        if (scGraphDepItemProvider != null) scGraphDepItemProvider.dispose();
+    }
 
 }

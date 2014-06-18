@@ -37,81 +37,81 @@ import de.cau.cs.kieler.scg.Node;
  */
 public interface AssignmentAddition extends Alteration {
 	/**
-	 * Returns the value of the '<em><b>Position</b></em>' reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Position</b></em>' reference.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Position</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Position</em>' reference.
-	 * @see #setPosition(Node)
-	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getAssignmentAddition_Position()
-	 * @model required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Position</em>' reference.
+     * @see #setPosition(Node)
+     * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getAssignmentAddition_Position()
+     * @model required="true"
+     * @generated
+     */
 	Node getPosition();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.AssignmentAddition#getPosition <em>Position</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.scgsched.AssignmentAddition#getPosition <em>Position</em>}' reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Position</em>' reference.
-	 * @see #getPosition()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Position</em>' reference.
+     * @see #getPosition()
+     * @generated
+     */
 	void setPosition(Node value);
 
 	/**
-	 * Returns the value of the '<em><b>Valued Object</b></em>' reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Valued Object</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Valued Object</em>' reference.
-	 * @see #setValuedObject(ValuedObject)
-	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getAssignmentAddition_ValuedObject()
-	 * @model required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Valued Object</em>' reference.
+     * @see #setValuedObject(ValuedObject)
+     * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getAssignmentAddition_ValuedObject()
+     * @model required="true"
+     * @generated
+     */
 	ValuedObject getValuedObject();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.AssignmentAddition#getValuedObject <em>Valued Object</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.scgsched.AssignmentAddition#getValuedObject <em>Valued Object</em>}' reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Valued Object</em>' reference.
-	 * @see #getValuedObject()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Valued Object</em>' reference.
+     * @see #getValuedObject()
+     * @generated
+     */
 	void setValuedObject(ValuedObject value);
 
 	/**
-	 * Returns the value of the '<em><b>Expression</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Expression</b></em>' containment reference.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Expression</em>' containment reference.
-	 * @see #setExpression(Expression)
-	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getAssignmentAddition_Expression()
-	 * @model containment="true" required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Expression</em>' containment reference.
+     * @see #setExpression(Expression)
+     * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getAssignmentAddition_Expression()
+     * @model containment="true" required="true"
+     * @generated
+     */
 	Expression getExpression();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.AssignmentAddition#getExpression <em>Expression</em>}' containment reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.scgsched.AssignmentAddition#getExpression <em>Expression</em>}' containment reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Expression</em>' containment reference.
-	 * @see #getExpression()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Expression</em>' containment reference.
+     * @see #getExpression()
+     * @generated
+     */
 	void setExpression(Expression value);
 
 } // AssignmentAddition
