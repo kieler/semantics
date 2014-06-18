@@ -34,6 +34,7 @@ import java.util.List
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.s.extensions.SExtension
+import de.cau.cs.kieler.core.kexpressions.FunctionCall
 
 /**
  * Transform SCG to S
@@ -125,6 +126,10 @@ class SCGToSTransformation {
     	     // This is the case when the valuedObject is null
     	     val hostCode = (assignment.assignment as TextExpression).text //.copy.fixHostCode as TextExpression
     	     instructions += hostCode.createHostCode
+    	} else if (assignment.assignment instanceof FunctionCall) {
+    	    val sAssignment = SFactory::eINSTANCE.createAssignment
+    	    sAssignment.expression = assignment.assignment.copyExpression.fix
+    	    instructions += sAssignment
     	}
 	    
 	    if (assignment.next != null) assignment.next.target.transform(instructions)
