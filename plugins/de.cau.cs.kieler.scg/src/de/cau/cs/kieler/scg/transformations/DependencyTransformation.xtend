@@ -370,9 +370,11 @@ class DependencyTransformation extends AbstractModelTransformation {
         
         if (asg2.assignment instanceof FunctionCall) {
             for(par : (asg2.assignment as FunctionCall).parameters) {
-                val refs = par.expression.getAllReferences
-                for(ref : refs) {
-                    if (ref.isSameScalar(asg1)) return true
+                if (par.callByReference) {
+                    val refs = par.expression.getAllReferences
+                    for(ref : refs) {
+                        if (ref.isSameScalar(asg1)) return true
+                    }
                 }
             }   
             return false 
