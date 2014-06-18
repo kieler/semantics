@@ -142,8 +142,8 @@ class SCGToSTransformation {
         sIf.expression = conditional.condition.copyExpression
         instructions += sIf
         
-        if (conditional.^else != null) nodeList += conditional.^else.target	    
-        if (conditional.then != null) nodeList += conditional.then.target      
+        if (conditional.^else != null) conditional.^else.target.transform(instructions)     
+        if (conditional.then != null) conditional.then.target.transform(sIf.instructions)        
 	}
 	
 	def ValuedObject findValuedObjectByName(Program s, String name) {
