@@ -3,8 +3,13 @@
  */
 package de.cau.cs.kieler.sccharts.text.actions.formatting;
 
+import org.eclipse.xtext.EcoreUtil2;
+import org.eclipse.xtext.Grammar;
+import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
+import org.eclipse.xtext.util.Pair;
 
+import de.cau.cs.kieler.core.annotations.text.formatting.AnnotationsFormatter;
 import de.cau.cs.kieler.core.kexpressions.formatting.KExpressionsFormatter;
 import de.cau.cs.kieler.sccharts.text.actions.services.ActionsGrammarAccess;
 
@@ -67,5 +72,30 @@ public class ActionsFormatter extends KExpressionsFormatter {
        c.setNoSpace().before(f.getAssignmentAccess().getLeftSquareBracketKeyword_1_0());
        c.setNoSpace().after(f.getAssignmentAccess().getLeftSquareBracketKeyword_1_0());
        c.setNoSpace().before(f.getAssignmentAccess().getRightSquareBracketKeyword_1_2());
+
+       
+       c.setNoSpace().after(f.getFunctionCallEffectAccess().getLessThanSignKeyword_0());
+       c.setNoSpace().before(f.getFunctionCallEffectAccess().getGreaterThanSignKeyword_3());
+       c.setNoSpace().before(f.getFunctionCallEffectAccess().getLeftParenthesisKeyword_2_0());
+       c.setNoSpace().after(f.getParameterAccess().getCallByReferenceAmpersandKeyword_0_0());
+       
+       for (Keyword comma : f.findKeywords(",")) {
+           c.setNoLinewrap().before(comma);
+           c.setNoSpace().before(comma);
+       }
+       
+       for (Pair<Keyword, Keyword> pair : f.findKeywordPairs("(", ")")) {
+           Grammar g = EcoreUtil2.getContainerOfType(pair.getFirst(), Grammar.class);
+
+           // For all pairs '(' ')' that are introduced in KExpression and Grammars
+           //  leveraging KExpressions (i.e. not Annotations) ...
+           if (g != null && !g.getName().equals(AnnotationsFormatter.LANGUAGE_NAME)) {
+               // ... don't insert space after left parenthesis
+               c.setNoSpace().after(pair.getFirst());
+               // ... don't insert space before right parenthesis
+               c.setNoSpace().before(pair.getSecond());
+               c.setNoLinewrap().after(pair.getSecond());
+           }
+       }       
     }
 }
