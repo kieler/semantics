@@ -414,7 +414,10 @@ class SCGTransformation {
             }
             else if (effect instanceof de.cau.cs.kieler.sccharts.TextEffect) {
                 assignment.setAssignment((effect as de.cau.cs.kieler.sccharts.TextEffect).convertToSCGExpression)
-            }
+            } 
+            else if (effect instanceof de.cau.cs.kieler.sccharts.FunctionCallEffect) {
+                assignment.setAssignment((effect as de.cau.cs.kieler.sccharts.FunctionCallEffect).convertToSCGExpression)
+            } 
         }
         else if (state.conditional) {
             val conditional = sCGraph.addConditional
