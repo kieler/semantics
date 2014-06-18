@@ -29,6 +29,8 @@ import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.FunctionCall
+import de.cau.cs.kieler.core.kexpressions.Parameter
 
 /**
  * KExpressions Extensions. 
@@ -978,6 +980,14 @@ class KExpressionsExtension {
     def TextExpression createTextExpression() {
         val expression = KExpressionsFactory::eINSTANCE.createTextExpression()
         expression
+    }
+    
+    def FunctionCall createFunctionCall() {
+        KExpressionsFactory::eINSTANCE.createFunctionCall()
+    }
+    
+    def Parameter createParameter() {
+        KExpressionsFactory::eINSTANCE.createParameter()
     }
 
     // Create a text expression.
