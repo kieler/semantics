@@ -1230,11 +1230,11 @@ ruleState returns [EObject current=null]
 	    }
 
 )
-)*(	otherlv_22=';' 
+)*	otherlv_22=';' 
     {
     	newLeafNode(otherlv_22, grammarAccess.getStateAccess().getSemicolonKeyword_8());
     }
-)?)
+)
 ;
 
 

@@ -5298,9 +5298,9 @@ rule__State__Group__8__Impl
 :
 (
 { before(grammarAccess.getStateAccess().getSemicolonKeyword_8()); }
-(
+
 	';' 
-)?
+
 { after(grammarAccess.getStateAccess().getSemicolonKeyword_8()); }
 )
 

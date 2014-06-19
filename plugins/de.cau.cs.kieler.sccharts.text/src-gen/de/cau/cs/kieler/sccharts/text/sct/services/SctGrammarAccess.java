@@ -599,13 +599,13 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//	annotations+=Annotation* (initial?="initial" final?="final"? | final?="final" initial?="initial"?)? type=StateType?
 		//	"state" id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
 		//	bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion
-		//	regions+=Region*)?) "}")? outgoingTransitions+=Transition* ";"?;
+		//	regions+=Region*)?) "}")? outgoingTransitions+=Transition* ";";
 		public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* (initial?="initial" final?="final"? | final?="final" initial?="initial"?)? type=StateType?
 		//"state" id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
 		//bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion
-		//regions+=Region*)?) "}")? outgoingTransitions+=Transition* ";"?
+		//regions+=Region*)?) "}")? outgoingTransitions+=Transition* ";"
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -759,7 +759,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//Transition
 		public RuleCall getOutgoingTransitionsTransitionParserRuleCall_7_0() { return cOutgoingTransitionsTransitionParserRuleCall_7_0; }
 
-		//";"?
+		//";"
 		public Keyword getSemicolonKeyword_8() { return cSemicolonKeyword_8; }
 	}
 
@@ -1597,7 +1597,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//	annotations+=Annotation* (initial?="initial" final?="final"? | final?="final" initial?="initial"?)? type=StateType?
 	//	"state" id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
 	//	bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion
-	//	regions+=Region*)?) "}")? outgoingTransitions+=Transition* ";"?;
+	//	regions+=Region*)?) "}")? outgoingTransitions+=Transition* ";";
 	public StateElements getStateAccess() {
 		return (pState != null) ? pState : (pState = new StateElements());
 	}

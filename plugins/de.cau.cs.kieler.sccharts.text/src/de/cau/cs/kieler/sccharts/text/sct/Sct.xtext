@@ -105,7 +105,8 @@ State returns sccharts::State:
             )
           '}') 
      )?
-    (outgoingTransitions+=Transition)* ';'?;
+     // The semicolon is mandatory for the backtracking!
+    (outgoingTransitions+=Transition)* ';';
 
     
 // ---------------------------------------------------------------------------------------------------
