@@ -688,6 +688,11 @@ public class KiCoSelectionView extends DiagramViewPart {
                                     KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                                     "de.cau.cs.kieler.kico.ui.klighd.diagramFlatSynthesis");
                         }
+                        
+                        //Hide zoom buttons
+                        properties.setProperty(
+                                KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
+                                ZoomConfigButtonsHandling.HIDE);
 
                         updateDiagram(context.getGraph(), properties);
 
@@ -1083,7 +1088,7 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static void updateActiveTransformationsProperty() {
         KiCoSelection currentSelection =
                 new KiCoSelection(getActiveEditorID(),
-                        selectedTransformations.get(getActiveEditorID()), advancedMode);
+                        selectedTransformations.get(getActiveEditorID()), requiredTransformations.get(getActiveEditorID()), advancedMode);
         selectionEventManger.fireSelectionChangeEvent(currentSelection);
     }
 
