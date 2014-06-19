@@ -134,14 +134,25 @@ Transition returns sccharts::Transition:
 
 Declaration returns kexpressions::Declaration:
     (annotations+=Annotation)*
-	(const?='const')?
-    (input?='input')?
-    (output?='output')?
-    (static?='static')?
     (
-        ((signal?='signal')? type = ValueType)
+        ((extern?='extern')?
+        (static?='static')?
+	    (const?='const')?
+        (input?='input')?
+        (output?='output')?
+        (
+            ((signal?='signal')? type = ValueType)
+            |
+            (signal?='signal')
+        ))
         |
-        (signal?='signal')
+        ((extern?='extern')
+        (static?='static')?
+        (const?='const')?
+        (input?='input')?
+        (output?='output')?        
+        (signal?='signal')? 
+        (type = ValueType)?)
     )
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'?
 ;

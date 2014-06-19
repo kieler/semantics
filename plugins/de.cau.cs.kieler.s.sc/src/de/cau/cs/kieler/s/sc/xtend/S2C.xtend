@@ -161,7 +161,7 @@ class S2C {
 
    // Generate variables.
    def sVariables(Program program) {
-       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal]»
+       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal&&!e.isExtern]»
             «signal.type.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
               «IF signal.isArray»
                 «FOR card : signal.cardinalities»{int i«card.hashCode» = 0; for(i«card.hashCode»=0; i«card.hashCode» < «card.intValue»; i«card.hashCode»++) {«ENDFOR»
@@ -180,14 +180,14 @@ class S2C {
 
    // Generate PRE variables setter.
    def setPreVariables(Program program) {
-       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal]»
+       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal&&!e.isExtern]»
        «IF program.usesPre(signal) 
  			» PRE_«signal.name» = «signal.name»;«
  		ENDIF»«ENDFOR»'''
    }
 
    def resetVariables(Program program) {
-       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal]»
+       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal&&!e.isExtern]»
        
         «IF signal.isArray»
                 «FOR card : signal.cardinalities»{int _i«signal.cardinalities.indexOf(card)» = 0; for(_i«signal.cardinalities.indexOf(card)»=0; _i«signal.cardinalities.indexOf(card)» < «card.intValue»; _i«signal.cardinalities.indexOf(card)»++) {«ENDFOR»

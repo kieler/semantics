@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.Declaration#isStatic <em>Static</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.Declaration#isSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.Declaration#isConst <em>Const</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.Declaration#isExtern <em>Extern</em>}</li>
  * </ul>
  * </p>
  *
@@ -203,5 +204,31 @@ public interface Declaration extends Annotatable {
      * @generated
      */
     void setConst(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Extern</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Extern</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Extern</em>' attribute.
+     * @see #setExtern(boolean)
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getDeclaration_Extern()
+     * @model required="true"
+     * @generated
+     */
+    boolean isExtern();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.Declaration#isExtern <em>Extern</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Extern</em>' attribute.
+     * @see #isExtern()
+     * @generated
+     */
+    void setExtern(boolean value);
 
 } // Declaration

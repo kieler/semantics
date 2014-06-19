@@ -38,6 +38,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl#isStatic <em>Static</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl#isSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl#isConst <em>Const</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl#isExtern <em>Extern</em>}</li>
  * </ul>
  * </p>
  *
@@ -173,6 +174,26 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
      * @ordered
      */
     protected boolean const_ = CONST_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isExtern() <em>Extern</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isExtern()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean EXTERN_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isExtern() <em>Extern</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isExtern()
+     * @generated
+     * @ordered
+     */
+    protected boolean extern = EXTERN_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -336,6 +357,27 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isExtern() {
+        return extern;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setExtern(boolean newExtern) {
+        boolean oldExtern = extern;
+        extern = newExtern;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.DECLARATION__EXTERN, oldExtern, extern));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -367,6 +409,8 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
                 return isSignal();
             case KExpressionsPackage.DECLARATION__CONST:
                 return isConst();
+            case KExpressionsPackage.DECLARATION__EXTERN:
+                return isExtern();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -402,6 +446,9 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
             case KExpressionsPackage.DECLARATION__CONST:
                 setConst((Boolean)newValue);
                 return;
+            case KExpressionsPackage.DECLARATION__EXTERN:
+                setExtern((Boolean)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -435,6 +482,9 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
             case KExpressionsPackage.DECLARATION__CONST:
                 setConst(CONST_EDEFAULT);
                 return;
+            case KExpressionsPackage.DECLARATION__EXTERN:
+                setExtern(EXTERN_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -461,6 +511,8 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
                 return signal != SIGNAL_EDEFAULT;
             case KExpressionsPackage.DECLARATION__CONST:
                 return const_ != CONST_EDEFAULT;
+            case KExpressionsPackage.DECLARATION__EXTERN:
+                return extern != EXTERN_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -487,6 +539,8 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
         result.append(signal);
         result.append(", const: ");
         result.append(const_);
+        result.append(", extern: ");
+        result.append(extern);
         result.append(')');
         return result.toString();
     }

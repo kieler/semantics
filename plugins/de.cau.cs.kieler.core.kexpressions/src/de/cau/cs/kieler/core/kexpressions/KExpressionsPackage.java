@@ -433,13 +433,22 @@ public interface KExpressionsPackage extends EPackage {
     int DECLARATION__CONST = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
 
     /**
+     * The feature id for the '<em><b>Extern</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DECLARATION__EXTERN = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
+
+    /**
      * The number of structural features of the '<em>Declaration</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DECLARATION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
+    int DECLARATION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.FunctionCallImpl <em>Function Call</em>}' class.
@@ -856,6 +865,17 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getDeclaration_Const();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.Declaration#isExtern <em>Extern</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Extern</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.Declaration#isExtern()
+     * @see #getDeclaration()
+     * @generated
+     */
+    EAttribute getDeclaration_Extern();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.FunctionCall <em>Function Call</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1222,6 +1242,14 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EAttribute DECLARATION__CONST = eINSTANCE.getDeclaration_Const();
+
+        /**
+         * The meta object literal for the '<em><b>Extern</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DECLARATION__EXTERN = eINSTANCE.getDeclaration_Extern();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.FunctionCallImpl <em>Function Call</em>}' class.

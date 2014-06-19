@@ -495,11 +495,25 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	/**
 	 * Constraint:
 	 *     (
-	 *         const?='const'? 
-	 *         input?='input'? 
-	 *         output?='output'? 
-	 *         static?='static'? 
-	 *         (signal?='signal' | type=ValueType) 
+	 *         (
+	 *             (
+	 *                 extern?='extern'? 
+	 *                 static?='static'? 
+	 *                 const?='const'? 
+	 *                 input?='input'? 
+	 *                 output?='output'? 
+	 *                 ((signal?='signal'? type=ValueType) | signal?='signal')
+	 *             ) | 
+	 *             (
+	 *                 extern?='extern' 
+	 *                 static?='static'? 
+	 *                 const?='const'? 
+	 *                 input?='input'? 
+	 *                 output?='output'? 
+	 *                 signal?='signal'? 
+	 *                 type=ValueType?
+	 *             )
+	 *         ) 
 	 *         valuedObjects+=ValuedObject 
 	 *         valuedObjects+=ValuedObject*
 	 *     )
