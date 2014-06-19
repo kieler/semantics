@@ -64,7 +64,7 @@ public class SCG2C {
 
                 SCGToSTransformation transform1 = Guice.createInjector().getInstance(SCGToSTransformation.class);
                 Program sProgram = transform1.transformSCGToS(scg);
-                
+               
                 S2C transform2 = Guice.createInjector().getInstance(S2C.class);
                 String cProgram = removeEmptyLines(transform2.transform(sProgram).toString());
                 

@@ -45,7 +45,8 @@ public class LinkImpl extends AnnotatableImpl implements Link {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    protected LinkImpl() {
+    // ima: temp: changed visibility for test reasons
+    public LinkImpl() {
 		super();
 	}
 

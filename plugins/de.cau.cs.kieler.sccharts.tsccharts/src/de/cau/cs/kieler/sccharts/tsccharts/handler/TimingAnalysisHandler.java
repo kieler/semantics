@@ -41,8 +41,10 @@ import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.util.ResourceUtil;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
+import com.google.common.collect.HashMultimap;
 import com.google.inject.Guice;
 
+import de.cau.cs.kieler.core.kexpressions.impl.TextExpressionImpl;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.krendering.HorizontalAlignment;
 import de.cau.cs.kieler.core.krendering.KContainerRendering;
@@ -52,6 +54,9 @@ import de.cau.cs.kieler.core.krendering.VerticalAlignment;
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions;
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.core.util.Maybe;
+import de.cau.cs.kieler.core.util.Pair;
+import de.cau.cs.kieler.kico.CompilationResult;
+import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.klighd.KlighdTreeSelection;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions;
@@ -63,7 +68,22 @@ import de.cau.cs.kieler.sccharts.scg.SCGTransformation;
 import de.cau.cs.kieler.sccharts.text.sct.sct.impl.SCChartImpl;
 import de.cau.cs.kieler.sccharts.tsccharts.TimingAnnotationProvider;
 import de.cau.cs.kieler.sccharts.tsccharts.annotation.extensions.TSCChartsAnnotationExtension;
+import de.cau.cs.kieler.scg.Assignment;
+import de.cau.cs.kieler.scg.Conditional;
+import de.cau.cs.kieler.scg.ControlFlow;
+import de.cau.cs.kieler.scg.Depth;
+import de.cau.cs.kieler.scg.Entry;
+import de.cau.cs.kieler.scg.Exit;
+import de.cau.cs.kieler.scg.Fork;
+import de.cau.cs.kieler.scg.Join;
+import de.cau.cs.kieler.scg.Link;
+import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scg.SCGraph;
+import de.cau.cs.kieler.scg.c.SCG2C;
+import de.cau.cs.kieler.scg.impl.AssignmentImpl;
+import de.cau.cs.kieler.scg.impl.ControlFlowImpl;
+import de.cau.cs.kieler.scg.impl.EntryImpl;
+import de.cau.cs.kieler.scg.impl.LinkImpl;
 import de.cau.cs.kieler.scg.s.transformations.SCGToSTransformation;
 
 /**
@@ -89,17 +109,19 @@ public class TimingAnalysisHandler extends AbstractHandler {
     @Inject
     private TimingAnnotationProvider annotationProvider;
 
+    private SCG2C scg2c = new SCG2C();
+
     // @Inject
     // private SCChartsCoreTransformation SCCtransformation;
 
-    @Inject
-    private SCGTransformation SCGtransformation;
-
-    @Inject
-    private SCGToSTransformation Stransformation;
-
-    private final TransformationTreeExtensions transformationTree = Guice.createInjector()
-            .getInstance(TransformationTreeExtensions.class);
+    // @Inject
+    // private SCGTransformation SCGtransformation;
+    //
+    // @Inject
+    // private SCGToSTransformation Stransformation;
+    // import de.cau.cs.kieler.scg.Entry;
+    // private final TransformationTreeExtensions transformationTree = Guice.createInjector()
+    // .getInstance(TransformationTreeExtensions.class);
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -192,7 +214,7 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 //
                 // ModelWrapper modelNormalizedModelWrapper = transformationTree.
                 // addTransformationToTree(SCCtransformation.extractMapping(),
-                // modelSplitTEModelWrapper, "SurfaceDepth", modelSplitTE,
+                // modelSplitTEModelWrapper, "SurfaceDepth", modelSplitTE,Depth
                 // modelNormalized, "NormalizedChoreSCChart");
                 //
                 // SCGraph modelSCG = SCGtransformation.transformSCG(modelNormalized);
@@ -214,26 +236,26 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 // ///////////////Setting of timing domains in both SCChart and S code with the help
                 // of the KTM tree.////
                 // ///////////////Get thread tree on the
-                // fly.////////////////////////////////////////////////////////////
+                // fly.//////////////////////////////////////////////////// CompilationResult
+                // transformed2 = KielerCompiler.compile("ALL", result1, true, true);
+                // //////
 
                 HashMap<Integer, LinkedList<Integer>> threadTree =
                         new HashMap<Integer, LinkedList<Integer>>();
 
                 // get main region
-                //Region main = rootRegion.getStates().get(0).getRegions().get(0);
-                
-                //Region main = scchart.getRegions().get(0);
-                //Integer domainNumber =
-                //annotationProvider.setTimingDomainsWithS(main, 0, threadTree, null);
+                // Region main = rootRegion.getStates().get(0).getRegions().get(0);
 
-                
+                // Region main = scchart.getRegions().get(0);
+                // Integer domainNumber =
+                // annotationProvider.setTimingDomainsWithS(main, 0, threadTree, null);
+
                 Integer domainNumber =
                         annotationProvider.setTimingDomainsWithS(scchart, 0, threadTree, null);
 
-
                 // annotationProvider.setTimingDomainsSimple(rootRegion, 0);
 
-                //EList<State> rootRegionStates = rootRegion.getStates();
+                // EList<State> rootRegionStates = rootRegion.getStates();
 
                 // PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
                 //
@@ -244,9 +266,96 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 // }
                 // });
 
-                
-                
-                State state = scchart;//rootRegionStates.get(0);
+                CompilationResult transformed =
+                        KielerCompiler.compile("SCGRAPH", scchart, true, true);
+                EObject transformedEObject = transformed.getEObject();
+                SCGraph sequentialSCG = (SCGraph) transformedEObject;
+                HashMultimap<EObject, EObject> testMappingSCC2SCG= getTestMapping(1);
+                EList<Node> nodeList = sequentialSCG.getNodes();
+                Iterator<Node> nodeListIterator = nodeList.iterator();
+                // collect all edges with their source nodes
+                HashMap<ControlFlow, Node> edgesWithSource = new HashMap<ControlFlow, Node>();
+                while (nodeListIterator.hasNext()) {
+                    Node node = nodeListIterator.next();
+                    if (node instanceof Conditional) {
+                        Conditional conditional = (Conditional) node;
+                        edgesWithSource.put(conditional.getElse(), node);
+                        edgesWithSource.put(conditional.getThen(), node);
+                    } else {
+                        if (node instanceof Depth) {
+                            Depth depth = (Depth) node;
+                            edgesWithSource.put(depth.getNext(), node);
+                        } else {
+                            if (node instanceof Assignment) {
+                                Assignment assignment = (Assignment) node;
+                                edgesWithSource.put(assignment.getNext(), node);
+                            } else {
+                                if (node instanceof Join) {
+                                    Join join = (Join) node;
+                                    edgesWithSource.put(join.getNext(), node);
+                                } else {
+                                    if (node instanceof Fork) {
+                                        Fork fork = (Fork) node;
+                                        EList<ControlFlow> forkEdges = fork.getNext();
+                                        Iterator<ControlFlow> forkEdgesIterator =
+                                                forkEdges.iterator();
+                                        while (forkEdgesIterator.hasNext()) {
+                                            edgesWithSource.put(forkEdgesIterator.next(), node);
+                                        }
+                                    } else {
+                                        if (node instanceof Entry) {
+                                            Entry entry = (Entry) node;
+                                            edgesWithSource.put(entry.getNext(), node);
+                                        } else {
+                                            if (node instanceof Exit) {
+                                                Exit exit = (Exit) node;
+                                                edgesWithSource.put(exit.getNext(), node);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                Iterator<ControlFlow> edgeIterator = edgesWithSource.keySet().iterator();
+                while(edgeIterator.hasNext()){
+                  
+                }
+                // EList<Link> incomingList = node.getIncoming();
+                // Iterator<Link> incomingIterator = incomingList.iterator();
+                // while (incomingIterator.hasNext()) {
+                // Link link = incomingIterator.next();
+                // if(edgesWithNodes.containsKey(link)){
+                // edgesWithNodes.get(link).getSecond();
+                // }
+                // // ControlFlowImpl oldControlFlow = (ControlFlowImpl) link;
+                // //
+                // // // get target node of this link
+                // // Node target = link.getTarget();
+                // //
+                // // AssignmentImpl newNode = new AssignmentImpl();
+                // // TextExpressionImpl timingPoint = new TextExpressionImpl();
+                // // timingPoint.setText("TPP(1)");
+                // // newNode.setAssignment(timingPoint);
+                // //
+                // // oldControlFlow.setTarget(newNode);
+                // //
+                // // ControlFlowImpl newControlFlow = new ControlFlowImpl();
+                // // newControlFlow.setTarget(node);
+                // //
+                // // newNode.setNext(newControlFlow);
+                // }
+
+                CompilationResult codeGeneration =
+                        KielerCompiler.compile("CodeGeneration", sequentialSCG, true, true);
+
+                // CompilationResult transformed = KielerCompiler.compile("CODEGENERATION", scchart,
+                // true,
+                // true);
+                // String code = transformed.getString();
+
+                State state = scchart;// rootRegionStates.get(0);
                 IFile file = ResourceUtil.getFile(maybe.get().eResource());
                 String uri = file.getLocationURI().toString();
                 String taFile = uri.replace(".sct", ".ta.out");
@@ -291,6 +400,19 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 // }
                 //
                 return Status.OK_STATUS;
+            }
+
+            /* CAUTION: do not use but for test reasons
+             * 
+             * This method generates a test mapping done by hand as an interim solution until the KTM 
+             * mapping is integrated into KIELER
+             * the parameter i specifies the number of the model for which the task is done
+             * 1: ABO (TODO)
+             * 2:...
+             */
+            private HashMultimap<EObject, EObject> getTestMapping(int i) {
+                // TODO Auto-generated method stub
+                return null;
             }
         };
 

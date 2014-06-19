@@ -13,3 +13,4 @@ Require-Bundle: de.cau.cs.kieler.scg.s,
  com.google.inject,
  de.cau.cs.kieler.scg
 Import-Package: de.cau.cs.kieler.s.s
+Export-Package: de.cau.cs.kieler.scg.c

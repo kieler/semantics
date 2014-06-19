@@ -83,7 +83,8 @@ public class AssignmentImpl extends NodeImpl implements Assignment {
      * <!-- end-user-doc -->
 	 * @generated
 	 */
-    protected AssignmentImpl() {
+	//ima: temp, zu Testzwecken public gesetzt
+    public AssignmentImpl() {
 		super();
 	}
 
