@@ -53,6 +53,7 @@ import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
+import de.cau.cs.kieler.kico.klighd.model.KiCoMessageModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelWrapper;
 import de.cau.cs.kieler.kico.ui.KiCoSelection;
@@ -142,6 +143,11 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     private Action actionPauseSyncToggle;
     /** Flag if this view is paused and does not update its model due to external changes. */
     private boolean pauseSynchronization = false;
+
+    /** The action for toggling pausing of synchronization. */
+    private Action actionNoDiagramToggle;
+    /** Flag if this view is paused and does not update its model due to external changes. */
+    private boolean noDiagram = false;
 
     // Models
 
@@ -246,6 +252,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
         IMenuManager menu = bars.getMenuManager();
         menu.add(new Separator());
         menu.add(getActionPauseSync());
+        menu.add(getActionNoDiagram());
 
         updateViewTitle();
     }
@@ -494,6 +501,39 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
         return actionPauseSyncToggle;
     }
 
+    /**
+     * Gets the action to switch of diagram synthesis of this view.
+     * 
+     * @return the action
+     */
+    private Action getActionNoDiagram() {
+        final String pauseText = "Deactivate model visualization";
+        final String continueText = "Activate model visualization";
+
+        if (actionNoDiagramToggle != null) {
+            return actionNoDiagramToggle;
+        }
+        actionNoDiagramToggle = new Action("", IAction.AS_PUSH_BUTTON) {
+            public void run() {
+                if (noDiagram) {
+                    this.setText(pauseText);
+                    noDiagram = false;
+                    // force synthesis of diagram
+                    if(currentModel != null){
+                        updateDiagram(currentModel, true, false);
+                    }
+                } else {
+                    this.setText(continueText);
+                    noDiagram = true;
+                }
+            }
+        };
+        actionNoDiagramToggle.setText(pauseText);
+        actionNoDiagramToggle
+                .setToolTipText("If visualization is deactiveted, all diagrams will be replaced by a placeholder diagram.");
+        return actionNoDiagramToggle;
+    }
+
     // -- Save model
     // -------------------------------------------------------------------------
 
@@ -585,7 +625,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             // }
             return filename;
         }
-        return null;
+        return "";
     }
 
     // -- Fork
@@ -830,10 +870,10 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                         currentModel = currentCompilation.getModel();
                         currentCompilationResult = currentCompilation.getCompilationResult();
                     }
-                // check if given compilation is most recent
+                    // check if given compilation is most recent
                 } else if (compilation == currentCompilation
                         && currentCompilation.hasFinishedCompilation()) {
-                    //take the result
+                    // take the result
                     currentModel = currentCompilation.getModel();
                     currentCompilationResult = currentCompilation.getCompilationResult();
                     currentCompilation = null;
@@ -876,8 +916,18 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             do_update_diagram |=
                     compileModel && transformations.isEmpty() && transformations_changed;
 
+            boolean is_buisness_model = true;
+            is_buisness_model &= !(currentModel instanceof KiCoErrorModel);
+            is_buisness_model &= !(currentModel instanceof KiCoMessageModel);
+
             if (do_update_diagram) {
-                updateDiagram(currentModel, model_type_changed, false);
+                if (noDiagram && is_buisness_model) {
+                    updateDiagram(new KiCoMessageModel(
+                            "Model Placeholder: " + getCurrentFileName(),
+                            "Model visualization is deactivated"), true, false);
+                } else {
+                    updateDiagram(currentModel, model_type_changed, false);
+                }
             }
         } else if (currentCompilation != null) {
             // drop any existing compilation
