@@ -43,7 +43,7 @@ SuspendAction returns sccharts::SuspendAction:
    (immediate?='immediate')? (weak?='weak')? 'suspend'  (trigger=BoolExpression)? ';'?;      
 
 Effect returns sccharts::Effect: 
-	Emission | Assignment | TextEffect;
+	Emission | Assignment | TextEffect | FunctionCallEffect;
 
 		
 Emission returns sccharts::Emission:
@@ -58,6 +58,15 @@ Assignment returns sccharts::Assignment:
 
 TextEffect returns sccharts::TextEffect:
  	text=HOSTCODE;
+ 	
+FunctionCallEffect returns sccharts::FunctionCallEffect:
+    '<' functionName=ID ('(' parameters += Parameter (',' parameters += Parameter)* ')')? '>'
+;
+
+Parameter returns kexpressions::Parameter:
+    (callByReference ?= '&')?
+    expression = Expression
+;
 
 enum DivOperator returns kexpressions::OperatorType:	
 	DIV=":";

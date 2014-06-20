@@ -24,7 +24,7 @@ import org.eclipse.xtext.ui.editor.utils.TextStyle;
  * to text editors of DSLs based on this Annotations language. Provides profile for key value
  * annotations' keys highlighting.
  * 
- * @author chsch
+ * @author chsch ssm
  */
 public class AnnotationsHighlightingConfiguration extends DefaultHighlightingConfiguration {
 

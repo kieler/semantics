@@ -25,6 +25,8 @@ import de.cau.cs.kieler.sccharts.Emission;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.For;
+import de.cau.cs.kieler.sccharts.FuncCall;
+import de.cau.cs.kieler.sccharts.FunctionCallEffect;
 import de.cau.cs.kieler.sccharts.HistoryType;
 import de.cau.cs.kieler.sccharts.LocalAction;
 import de.cau.cs.kieler.sccharts.Region;
@@ -129,6 +131,13 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     private EClass textEffectEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass functionCallEffectEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -665,6 +674,15 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getFunctionCallEffect() {
+        return functionCallEffectEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getLocalAction() {
         return localActionEClass;
     }
@@ -877,6 +895,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         textEffectEClass = createEClass(TEXT_EFFECT);
 
+        functionCallEffectEClass = createEClass(FUNCTION_CALL_EFFECT);
+
         localActionEClass = createEClass(LOCAL_ACTION);
 
         entryActionEClass = createEClass(ENTRY_ACTION);
@@ -940,10 +960,13 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         emissionEClass.getESuperTypes().add(this.getEffect());
         stateEClass.getESuperTypes().add(this.getScope());
         regionEClass.getESuperTypes().add(this.getScope());
+        bindingEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         transitionEClass.getESuperTypes().add(this.getAction());
         scopeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         textEffectEClass.getESuperTypes().add(theKExpressionsPackage.getTextExpression());
         textEffectEClass.getESuperTypes().add(this.getEffect());
+        functionCallEffectEClass.getESuperTypes().add(theKExpressionsPackage.getFunctionCall());
+        functionCallEffectEClass.getESuperTypes().add(this.getEffect());
         localActionEClass.getESuperTypes().add(this.getAction());
         entryActionEClass.getESuperTypes().add(this.getLocalAction());
         duringActionEClass.getESuperTypes().add(this.getLocalAction());
@@ -1004,6 +1027,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEReference(getScope_For(), this.getFor(), null, "for", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(textEffectEClass, TextEffect.class, "TextEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(functionCallEffectEClass, FunctionCallEffect.class, "FunctionCallEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(localActionEClass, LocalAction.class, "LocalAction", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

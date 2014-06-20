@@ -34,6 +34,7 @@ import java.util.List
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.s.extensions.SExtension
+import de.cau.cs.kieler.core.kexpressions.FunctionCall
 
 /**
  * Transform SCG to S
@@ -59,11 +60,15 @@ class SCGToSTransformation {
     private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>
     private val processedNodes = <Node> newArrayList
     
+    private val nodeList = <Node> newArrayList
+    
 	def Program transformSCGToS(SCGraph scg) {
 		val Program sProgram = SFactory::eINSTANCE.createProgram
 		sProgram.priority = 1
 		sProgram.name = "S"
 		
+        val timestamp = System.currentTimeMillis
+          
 //        for(typeGroup : scg.typeGroups) {
 //            val newTypeGroup = createTypeGroup(typeGroup)
             for (valuedObject : scg.valuedObjects) {
@@ -75,46 +80,32 @@ class SCGToSTransformation {
             }
 //            sProgram.typeGroups += newTypeGroup 
 //        }		
-		
-		
-//        val initState = SFactory::eINSTANCE.createState => [
-//            name = "Init"
-//            sProgram.states += it
-//        ]
+				
+        var time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("Preparation for S transformation finished (time used: "+(time / 1000)+"s).")  
         
         val tickState = SFactory::eINSTANCE.createState => [
             name = "Tick"
             sProgram.states += it
         ]
         
-//        initState.instructions += SFactory::eINSTANCE.createAssignment => [
-//            variable = sProgram.findValuedObjectByName(GOGUARDNAME)
-//            expression = TRUE
-//        ]
-//        
-//        initState.instructions += SFactory::eINSTANCE.createTrans => [
-//            continuation = tickState
-//        ]
-        
-		scg.nodes.head.transform(tickState.instructions)
+		nodeList += scg.nodes.head
 		
-//		tickState.instructions += SFactory::eINSTANCE.createPause
-//
-//        tickState.instructions += SFactory::eINSTANCE.createAssignment => [
-//            variable = sProgram.findValuedObjectByName(GOGUARDNAME)
-//            expression = FALSE
-//        ]
-
-//		tickState.instructions += SFactory::eINSTANCE.createTrans => [
-//		    continuation = tickState
-//		] 
+		while(!nodeList.empty) {
+			val node = nodeList.head
+			nodeList.remove(0)
+			node.transform(tickState.instructions)
+		}
+		
+        time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("S transformation finished (time used overall: "+(time / 1000)+"s).")  
 		
 		sProgram
 	}
 	
 	private def dispatch void transform(Entry entry, List<Instruction> instructions) {
 	   processedNodes += entry
-	   if (entry.next != null) entry.next.target.transform(instructions) 
+	   if (entry.next != null) nodeList += entry.next.target 
 	}
 
     private def dispatch void transform(Exit exit, List<Instruction> instructions) {
@@ -135,6 +126,10 @@ class SCGToSTransformation {
     	     // This is the case when the valuedObject is null
     	     val hostCode = (assignment.assignment as TextExpression).text //.copy.fixHostCode as TextExpression
     	     instructions += hostCode.createHostCode
+    	} else if (assignment.assignment instanceof FunctionCall) {
+    	    val sAssignment = SFactory::eINSTANCE.createAssignment
+    	    sAssignment.expression = assignment.assignment.copyExpression.fix
+    	    instructions += sAssignment
     	}
 	    
 	    if (assignment.next != null) assignment.next.target.transform(instructions)
@@ -147,8 +142,8 @@ class SCGToSTransformation {
         sIf.expression = conditional.condition.copyExpression
         instructions += sIf
         
-        if (conditional.^else != null) conditional.^else.target.transform(instructions)	    
-        if (conditional.then != null) conditional.then.target.transform(sIf.instructions)      
+        if (conditional.^else != null) conditional.^else.target.transform(instructions)     
+        if (conditional.then != null) conditional.then.target.transform(sIf.instructions)        
 	}
 	
 	def ValuedObject findValuedObjectByName(Program s, String name) {
@@ -157,11 +152,6 @@ class SCGToSTransformation {
 	            return valuedObject
 	        }
 	    }
-//    	for(tg : s.typeGroups) {
-//    		for(vo : tg.valuedObjects) {
-//    			if (vo.name == name) return vo
-//    		}
-//   		}
    		return null
     }    
     

@@ -146,6 +146,19 @@ public class KExpressionsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case KExpressionsPackage.FUNCTION_CALL: {
+                FunctionCall functionCall = (FunctionCall)theEObject;
+                T result = caseFunctionCall(functionCall);
+                if (result == null) result = caseExpression(functionCall);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case KExpressionsPackage.PARAMETER: {
+                Parameter parameter = (Parameter)theEObject;
+                T result = caseParameter(parameter);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -297,6 +310,36 @@ public class KExpressionsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseDeclaration(Declaration object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Function Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Function Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseFunctionCall(FunctionCall object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Parameter</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Parameter</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseParameter(Parameter object) {
         return null;
     }
 

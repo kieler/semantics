@@ -33,6 +33,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scgbb.BasicBlock
 import de.cau.cs.kieler.scg.optimizer.CopyPropagation
 import com.google.inject.Guiceimport de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -77,7 +78,9 @@ class SimpleSequentializer extends AbstractSequentializer {
     // -- Globals
     // -------------------------------------------------------------------------
            
-    private val AdditionalConditionals = new HashMap<ConditionalAddition, Conditional>            
+    private val AdditionalConditionals = new HashMap<ConditionalAddition, Conditional>         
+    
+    private val guardExpressionCache = new HashMap<ValuedObject, GuardExpression>   
            
     // -------------------------------------------------------------------------
     // -- Transformation method
@@ -97,6 +100,8 @@ class SimpleSequentializer extends AbstractSequentializer {
         // Create new standard SCG with the Scg factory.
         val scg = ScgFactory::eINSTANCE.createSCGraph()
         
+        val timestamp = System.currentTimeMillis
+          
         /**
          * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 
          * preserve all previous (node) data.
@@ -113,7 +118,15 @@ class SimpleSequentializer extends AbstractSequentializer {
         		it.addToValuedObjectMapping(newGuard)
         	]
         ]
-
+        
+        guardExpressionCache.clear
+        scgSched.guards.forEach[guard |
+        	guardExpressionCache.put(guard.valuedObject, guard)
+        ]
+        
+        var time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("Preparation for sequentialization finished (time used: "+(time / 1000)+"s).")          
+        
 		// Create the entry node, a control flow for the entry node, add the node.
         val entry = ScgFactory::eINSTANCE.createEntry
     	val entryFlow = ScgFactory::eINSTANCE.createControlFlow
@@ -127,6 +140,9 @@ class SimpleSequentializer extends AbstractSequentializer {
         val exit = ScgFactory::eINSTANCE.createExit
         exitFlows.forEach[it.target = exit]
         scg.nodes.add(exit)
+        
+        time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("Sequentialization finished (time used overall: "+(time / 1000)+"s).")  
                 
         // Return the SCG.
         scg     	
@@ -198,7 +214,8 @@ class SimpleSequentializer extends AbstractSequentializer {
 			 */    		
 			// Retrieve the guard expression from the scheduling information.
 //    		var guardExpression = scgSched.eAllContents.filter(typeof(GuardExpression)).filter[valuedObject == sb.guard].head
-            var guardExpression = scgSched.eAllContents.filter(typeof(GuardExpression)).filter[valuedObject == basicBlock.guards.head].head
+//            var guardExpression = scgSched.eAllContents.filter(typeof(GuardExpression)).filter[valuedObject == basicBlock.guards.head].head
+    		var guardExpression = guardExpressionCache.get(basicBlock.guards.head)
     		
     		if (guardExpression != null && guardExpression.expression != null) {
     			

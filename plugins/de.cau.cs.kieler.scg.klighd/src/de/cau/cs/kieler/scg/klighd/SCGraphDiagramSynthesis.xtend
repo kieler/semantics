@@ -83,6 +83,7 @@ import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.FunctionCall
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -512,6 +513,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 } else if (assignment.assignment instanceof TextExpression) {
                     // added by cmot (9.3.14)
                     it.addText(assignment.assignment.getTextExpressionString).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0)
+                } else if (assignment.assignment instanceof FunctionCall) {
+                    var assignmentText = serializer.serialize(assignment.assignment.copy.fix).removeParenthesis
+                    it.addText(assignmentText).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0)
                 }
             ]
             // Add ports for control-flow and dependency routing.

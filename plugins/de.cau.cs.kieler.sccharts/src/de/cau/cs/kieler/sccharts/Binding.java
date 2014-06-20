@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts;
 
+import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
 import org.eclipse.emf.ecore.EObject;
@@ -34,7 +35,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Binding extends EObject {
+public interface Binding extends Annotatable {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

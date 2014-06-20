@@ -81,13 +81,19 @@ public class KiCoSelectionView extends DiagramViewPart {
             "de.cau.cs.kieler.kico.ui", "icons/KiCoViewIconCompile.png");
 
     public static final ImageDescriptor ICON_EXPANDALL = AbstractUIPlugin
-            .imageDescriptorFromPlugin("org.eclipse.ui",
-                    "icons/full/elcl16/expandall.gif");
+            .imageDescriptorFromPlugin("org.eclipse.ui", "icons/full/elcl16/expandall.gif");
 
     public static final ImageDescriptor ICON_COLLAPSEALL = AbstractUIPlugin
-            .imageDescriptorFromPlugin("org.eclipse.ui",
-                    "icons/full/elcl16/collapseall.gif");
-    
+            .imageDescriptorFromPlugin("org.eclipse.ui", "icons/full/elcl16/collapseall.gif");
+
+    public static final ImageDescriptor ICON_SELECTALL = AbstractUIPlugin
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.ui",
+                    "icons/KiCoViewIconSelectAll.png");
+
+    public static final ImageDescriptor ICON_DESELECTALL = AbstractUIPlugin
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.ui",
+                    "icons/KiCoViewIconDeselectAll.png");
+
     /** The action for toggling the advanced mode. */
     private Action actionAdvancedToggle;
 
@@ -99,6 +105,9 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     /** The action for toggling the expand mode. */
     private Action actionExpandAllToggle;
+
+    /** The action for toggling the expand mode. */
+    private Action actionSelectAllToggle;
 
     /** The active editor property key. */
     public static final String ACTIVE_EDITOR_PROPERTY_KEY = "de.cau.cs.kieler.kico.ui.activeEditor";
@@ -127,6 +136,9 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     /** The flag for expanding or collapsing all groups. */
     public static boolean allExpanded = false;
+
+    /** The flag for selecting or deselecting all transformations. */
+    public static boolean allSelected = false;
 
     /** The advaned mode auto selects required transformations. */
     public static int compileMode = 0;
@@ -527,6 +539,21 @@ public class KiCoSelectionView extends DiagramViewPart {
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the all transformations.
+     *
+     * @return the all transformations
+     */
+    public static List<TransformationDummy> getAllTransformations(int editorID) {
+        KielerCompilerContext context = getKielerCompilerContext(editorID);
+        if (context != null) {
+            return context.getGraph();
+        }
+        return new ArrayList<TransformationDummy>();
+    }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Removes other possibly selected alternatives for a transformation from the list of selected
@@ -584,6 +611,29 @@ public class KiCoSelectionView extends DiagramViewPart {
         }
     }
 
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Adds the selected transformation visualization.
+     * 
+     * @param editorID
+     *            the editor id
+     */
+    public static void addSelectedTransformationVisualization(int editorID, List<String> transformationDummyIDs) {
+        ViewContext context = instance.getViewer().getViewContext();
+        for (String selectedTransformationID : transformationDummyIDs) {
+            TransformationDummy selectedTransformationDummy =
+                    resolveTransformationDummy(selectedTransformationID,
+                            KiCoSelectionView.getActiveEditorID());
+            if (selectedTransformationDummy != null) {
+                KiCoKlighdAction.setLabelColor(selectedTransformationDummy, context,
+                        KiCoDiagramSynthesis.WHITE, KiCoDiagramSynthesis.BLUE3);
+                KiCoKlighdAction.setStateColor(selectedTransformationDummy, context,
+                        KiCoDiagramSynthesis.BLUE3, KiCoDiagramSynthesis.BLUE4);
+            }
+        }
+    }    
     // -------------------------------------------------------------------------
 
     /**
@@ -605,7 +655,13 @@ public class KiCoSelectionView extends DiagramViewPart {
                     if (!partName.equals(lastEditor)) {
                         // Next view is collapsed again
                         allExpanded = false;
-                        actionExpandAllToggle.setChecked(allExpanded);
+                        if (allExpanded) {
+                            actionExpandAllToggle.setImageDescriptor(ICON_COLLAPSEALL);
+                            actionExpandAllToggle.setToolTipText("Collapse all expanded transformation groups.");
+                        } else {
+                            actionExpandAllToggle.setImageDescriptor(ICON_EXPANDALL);
+                            actionExpandAllToggle.setToolTipText("Expand all collapsed transformation groups.");
+                        }
 
                         lastEditor = partName;
                         int activeEditorID = getActiveEditorID();
@@ -723,6 +779,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         IActionBars bars = getViewSite().getActionBars();
         IToolBarManager toolBarManager = bars.getToolBarManager();
 
+        toolBarManager.add(getActionSelectAll());
         toolBarManager.add(getActionExpandAll());
         toolBarManager.add(getActionAdvancedToggle());
         toolBarManager.add(getActionHierarchyToggle());
@@ -915,6 +972,66 @@ public class KiCoSelectionView extends DiagramViewPart {
             new Property<ExpansionAwareLayoutOption.ExpansionAwareLayoutOptionData>(
                     "de.cau.cs.kieler.kico.ui.expandable");
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the action to select or deselect all nodes.
+     * 
+     * @return the action
+     */
+    private Action getActionSelectAll() {
+        if (actionSelectAllToggle != null) {
+            return actionSelectAllToggle;
+        }
+
+        final IDiagramWorkbenchPart thisPart = this;
+        actionSelectAllToggle = new Action("", IAction.AS_PUSH_BUTTON) {
+            public void run() {
+                // TOGGLE
+                allSelected = !allSelected;
+                if (allSelected) {
+                    actionSelectAllToggle.setImageDescriptor(ICON_DESELECTALL);
+                    actionSelectAllToggle.setToolTipText("Deselect all transformations.");
+                } else {
+                    actionSelectAllToggle.setImageDescriptor(ICON_SELECTALL);
+                    actionSelectAllToggle.setToolTipText("Select all transformations.");
+                }
+                int activeEditorID = getActiveEditorID();
+                if (allSelected) {
+                    List<TransformationDummy> allTransformations = getAllTransformations(activeEditorID);
+                    List<String> allTransformationIDs = new ArrayList<String>();
+                    for (TransformationDummy transformationDummy : allTransformations) {
+                        allTransformationIDs.add(transformationDummy.id);
+                    }
+                    addSelectedTransformationVisualization(activeEditorID, allTransformationIDs);
+                    List<String> selectedAndExcludedTransformations =
+                            getSelectedTransformations(activeEditorID);
+                    for (String transformationID : allTransformationIDs) {
+                        addSelectedTransformation(transformationID,
+                                selectedAndExcludedTransformations, true);                        
+                    }
+                } else {
+                    List<String> selectedAndExcludedTransformations =
+                            getSelectedTransformations(activeEditorID);
+                    removeSelectedTransformationVisualization(activeEditorID);
+                    
+                    while(selectedAndExcludedTransformations.size() > 0) {
+                        String transformationID = selectedAndExcludedTransformations.get(0);
+                        removeSelectedTransformation(transformationID, activeEditorID);
+                    }
+                }
+                updateActiveTransformationsProperty();
+                LightDiagramServices.layoutDiagram(thisPart);
+            }
+        };
+        actionSelectAllToggle.setText("Select/Deselect All");
+        actionSelectAllToggle.setToolTipText("Select all transformations.");
+        actionSelectAllToggle.setImageDescriptor(ICON_SELECTALL);
+        return actionSelectAllToggle;
+    }
+
+    // -------------------------------------------------------------------------
+
     /**
      * Gets the action to expand all nodes.
      * 
@@ -926,11 +1043,17 @@ public class KiCoSelectionView extends DiagramViewPart {
         }
 
         final IDiagramWorkbenchPart thisPart = this;
-        actionExpandAllToggle = new Action("", IAction.AS_CHECK_BOX) {
+        actionExpandAllToggle = new Action("", IAction.AS_PUSH_BUTTON) {
             public void run() {
                 // TOGGLE
                 allExpanded = !allExpanded;
-                actionExpandAllToggle.setChecked(allExpanded);
+                if (allExpanded) {
+                    actionExpandAllToggle.setImageDescriptor(ICON_COLLAPSEALL);
+                    actionExpandAllToggle.setToolTipText("Collapse all expanded transformation groups.");
+                } else {
+                    actionExpandAllToggle.setImageDescriptor(ICON_EXPANDALL);
+                    actionExpandAllToggle.setToolTipText("Expand all collapsed transformation groups.");
+                }
 
                 if (allExpanded) {
                     final IViewer<?> viewer = thisPart.getViewer();
@@ -974,10 +1097,9 @@ public class KiCoSelectionView extends DiagramViewPart {
                 LightDiagramServices.layoutDiagram(thisPart);
             }
         };
-        actionExpandAllToggle.setText("Expand All");
+        actionExpandAllToggle.setText("Expand/Collapse All");
         actionExpandAllToggle.setToolTipText("Expand all collapsed transformation groups.");
         actionExpandAllToggle.setImageDescriptor(ICON_EXPANDALL);
-        actionExpandAllToggle.setChecked(allExpanded);
         return actionExpandAllToggle;
     }
 

@@ -22,6 +22,9 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.Assignment
 import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.sccharts.Binding
 
 /**
  * SCCharts Reference Transformation.
@@ -36,10 +39,15 @@ class Reference {
     extension KExpressionsExtension
     
     @Inject
+    extension AnnotationsExtensions    
+    
+    @Inject
     extension SCChartsExtension
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
+
+    static private final String HOSTCODE_ANNOTATION = "alterHostcode"
 
     //-------------------------------------------------------------------------
     //--                        R E F E R E N C E                            --
@@ -66,7 +74,11 @@ class Reference {
         ]
 
         for(eObject : newState.eAllContents.toList) {
-            if (eObject instanceof Assignment || eObject instanceof ValuedObjectReference) {
+            if (eObject instanceof Assignment 
+                || eObject instanceof ValuedObjectReference 
+                || eObject instanceof TextExpression
+                || eObject instanceof Binding
+            ) {
                 for(binding : state.bindings) {
                     if (eObject instanceof Assignment) {
                         val assignment = (eObject as Assignment);
@@ -88,7 +100,17 @@ class Reference {
                         for (index : valuedObjectReferenceCopy.indices) {
                             valuedObjectReference.indices.add(index.copy);
                         }
-                    }
+                    } else if (eObject instanceof Binding) {
+                        val bing = eObject as Binding
+                        if (bing.actual.name == binding.formal.name) {
+                            bing.actual = binding.actual
+                        } 
+                    } else if (eObject instanceof TextExpression) {
+                        if (binding.hasAnnotation(HOSTCODE_ANNOTATION)) {
+                            val texp = (eObject as TextExpression)
+                             texp.text = texp.text.replaceAll(binding.formal.name, binding.actual.name)
+                        }                        
+                    }                    
                 }
             }
         }
@@ -121,7 +143,11 @@ class Reference {
             ^final = state.^final
         ]
         
-        state.remove        
+        state.remove   
+        
+        newState.allContainedStates.filter[ referencedState ].toList.immutableCopy.forEach[
+            transformReference(newState)
+        ]     
     }
 
 }

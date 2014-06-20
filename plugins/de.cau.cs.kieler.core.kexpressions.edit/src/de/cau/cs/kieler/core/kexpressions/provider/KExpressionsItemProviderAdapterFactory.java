@@ -306,6 +306,52 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.FunctionCall} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected FunctionCallItemProvider functionCallItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.FunctionCall}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createFunctionCallAdapter() {
+        if (functionCallItemProvider == null) {
+            functionCallItemProvider = new FunctionCallItemProvider(this);
+        }
+
+        return functionCallItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.kexpressions.Parameter} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ParameterItemProvider parameterItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.kexpressions.Parameter}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createParameterAdapter() {
+        if (parameterItemProvider == null) {
+            parameterItemProvider = new ParameterItemProvider(this);
+        }
+
+        return parameterItemProvider;
+    }
+
+    /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -414,6 +460,8 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
         if (operatorExpressionItemProvider != null) operatorExpressionItemProvider.dispose();
         if (textExpressionItemProvider != null) textExpressionItemProvider.dispose();
         if (declarationItemProvider != null) declarationItemProvider.dispose();
+        if (functionCallItemProvider != null) functionCallItemProvider.dispose();
+        if (parameterItemProvider != null) parameterItemProvider.dispose();
     }
 
 }

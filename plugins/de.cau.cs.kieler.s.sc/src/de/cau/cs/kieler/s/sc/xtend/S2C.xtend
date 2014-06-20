@@ -45,6 +45,8 @@ import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
 import de.cau.cs.kieler.s.extensions.SExtension
 import java.util.List
+import java.util.HashMap
+import de.cau.cs.kieler.core.kexpressions.FunctionCall
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -66,7 +68,8 @@ class S2C {
     
     // General method to create the c simulation interface.
     def transform (Program program) {
-       '''
+        val timestamp = System.currentTimeMillis  
+      val code = '''
 «/* Generate the C header */»
        «scHeader(program)»
 
@@ -80,6 +83,9 @@ class S2C {
        «/* Generate the tick function */»
        «sTickFunction(program)»
        '''
+        val time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("C code generation finished (time used: "+(time / 1000)+"s).")    
+       code
    }     
 
    // -------------------------------------------------------------------------   
@@ -110,9 +116,33 @@ class S2C {
    }
    
    // -------------------------------------------------------------------------
+   
+   private var List<OperatorExpression> cachedFoundePres = null;
+   
+   def  List<OperatorExpression> cachedFoundPres(Program program) {
+      if (cachedFoundePres == null) {
+         cachedFoundePres = program.eAllContents.filter(typeof(OperatorExpression)).filter[operator == OperatorType::PRE].toList  
+      }  
+      cachedFoundePres
+   }
+   
+   // -------------------------------------------------------------------------
+   
+   private var HashMap<Integer, List<ValuedObjectReference>> cachedfound = new HashMap<Integer, List<ValuedObjectReference>>();
+   
+   def  List<ValuedObjectReference> cachedFound(Expression expression) {
+      val hash = expression.hashCode
+      if (cachedfound.get(hash) == null) {
+         cachedfound.put(hash, expression.eAllContents.filter(typeof(ValuedObjectReference)).toList)  
+      }  
+      cachedfound.get(hash)
+   }
+   
+   // -------------------------------------------------------------------------
 
+   
    def boolean usesPre(Program program, ValuedObject valuedObject) {
-       val foundPres = program.eAllContents.filter(typeof(OperatorExpression)).filter[operator == OperatorType::PRE].toList; 
+       val foundPres = program.cachedFoundPres
        for (pre : foundPres) {
            for (subExpression : pre.subExpressions) {
                if (subExpression instanceof ValuedObjectReference) {
@@ -120,8 +150,8 @@ class S2C {
                        return true
                    }
                }
-               val found = subExpression.eAllContents.filter(typeof(ValuedObjectReference)).filter(e | e.valuedObject == valuedObject).toList
-               if (found.size > 0) {
+               val found = subExpression.cachedFound.filter(e | e.valuedObject == valuedObject).toList
+             if (found.size > 0) {
                    return true
                }
            }
@@ -131,7 +161,7 @@ class S2C {
 
    // Generate variables.
    def sVariables(Program program) {
-       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal]»
+       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal&&!e.isExtern]»
             «signal.type.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
               «IF signal.isArray»
                 «FOR card : signal.cardinalities»{int i«card.hashCode» = 0; for(i«card.hashCode»=0; i«card.hashCode» < «card.intValue»; i«card.hashCode»++) {«ENDFOR»
@@ -150,14 +180,14 @@ class S2C {
 
    // Generate PRE variables setter.
    def setPreVariables(Program program) {
-       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal]»
+       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal&&!e.isExtern]»
        «IF program.usesPre(signal) 
  			» PRE_«signal.name» = «signal.name»;«
  		ENDIF»«ENDFOR»'''
    }
 
    def resetVariables(Program program) {
-       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal]»
+       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal&&!e.isExtern]»
        
         «IF signal.isArray»
                 «FOR card : signal.cardinalities»{int _i«signal.cardinalities.indexOf(card)» = 0; for(_i«signal.cardinalities.indexOf(card)»=0; _i«signal.cardinalities.indexOf(card)» < «card.intValue»; _i«signal.cardinalities.indexOf(card)»++) {«ENDFOR»
@@ -255,7 +285,10 @@ class S2C {
 
    // Expand a ASSIGNMENT instruction.
    def dispatch CharSequence expand(Assignment assignment) {
-       if (!assignment.indices.nullOrEmpty) {
+       if (assignment.expression instanceof FunctionCall) {
+          return '''«assignment.expression.expand»;'''
+       }
+       else if (!assignment.indices.nullOrEmpty) {
           var returnValue = '''«assignment.variable.expand »'''
           for (index : assignment.indices) {
               returnValue = returnValue + '''[«index.expand»]'''
@@ -547,6 +580,20 @@ class S2C {
         '''«valuedObjectReference.valuedObject.expand»'''
        }
 
+   }
+   
+    def dispatch CharSequence expand(FunctionCall functionCall) {
+        var funcCall = functionCall.functionName + "("
+        
+        var cnt = 0
+        for(par : functionCall.parameters) {
+            if (cnt>0) { funcCall = funcCall + ", " }
+            if (par.callByReference) { funcCall = funcCall + "&" }
+            funcCall = funcCall + par.expression.expand
+            cnt = cnt + 1
+        }
+        funcCall = funcCall + ")"
+        funcCall
    }
    
    // -------------------------------------------------------------------------   

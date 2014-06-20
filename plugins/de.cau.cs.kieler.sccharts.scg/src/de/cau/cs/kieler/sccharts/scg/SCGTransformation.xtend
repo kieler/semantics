@@ -51,6 +51,8 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.scg.optimizer.SuperfluousForkRemover
 import com.google.inject.Guice
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.kexpressions.FunctionCall
+import de.cau.cs.kieler.core.kexpressions.Parameter
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -412,7 +414,10 @@ class SCGTransformation {
             }
             else if (effect instanceof de.cau.cs.kieler.sccharts.TextEffect) {
                 assignment.setAssignment((effect as de.cau.cs.kieler.sccharts.TextEffect).convertToSCGExpression)
-            }
+            } 
+            else if (effect instanceof de.cau.cs.kieler.sccharts.FunctionCallEffect) {
+                assignment.setAssignment((effect as de.cau.cs.kieler.sccharts.FunctionCallEffect).convertToSCGExpression)
+            } 
         }
         else if (state.conditional) {
             val conditional = sCGraph.addConditional
@@ -623,6 +628,20 @@ class SCGTransformation {
         textExpression.setText(expression.text.removeEnclosingQuotes)
         textExpression
     }    
+
+    def dispatch Expression convertToSCGExpression(FunctionCall expression) {
+        createFunctionCall => [ fc |
+            fc.functionName = expression.functionName
+            expression.parameters.forEach[ fc.parameters += it.convertToSCGParameter ]
+        ]
+    }    
+    
+    def Parameter convertToSCGParameter(Parameter parameter) {
+        createParameter => [
+            callByReference = parameter.callByReference
+            expression = parameter.expression.convertToSCGExpression
+        ]
+    }
     
     // Apply conversion to the default case
     def dispatch Expression convertToSCGExpression(Expression expression) {

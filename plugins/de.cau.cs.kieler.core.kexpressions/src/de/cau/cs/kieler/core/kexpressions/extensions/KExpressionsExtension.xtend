@@ -29,6 +29,9 @@ import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.kexpressions.FunctionCall
+import de.cau.cs.kieler.core.kexpressions.Parameter
+import java.util.List
 
 /**
  * KExpressions Extensions. 
@@ -230,6 +233,16 @@ class KExpressionsExtension {
     def public boolean isConst(ValuedObject valuedObject) {
         valuedObject.getConst()
     }
+    
+    // Return whether the ValuedObject is a const.
+    def public boolean getExtern(ValuedObject valuedObject) {
+        valuedObject.declaration.extern
+    }
+
+    // Return whether the ValuedObject is a const.
+    def public boolean isExtern(ValuedObject valuedObject) {
+        valuedObject.getExtern()
+    }    
 
     // Return whether the ValuedObject is an array.
     def public boolean isArray(ValuedObject valuedObject) {
@@ -305,6 +318,19 @@ class KExpressionsExtension {
         valuedObject.setConst(false)
     } 
 
+   // Set the ValuedObject to be or not be a Const.
+   def public ValuedObject setExtern(ValuedObject valuedObject, boolean isExtern) {
+        val uniqueDeclaration = valuedObject.uniqueDeclaration
+        uniqueDeclaration.setExtern(isExtern)
+        valuedObject;
+    }
+    def public ValuedObject setIsExtern(ValuedObject valuedObject) {
+        valuedObject.setExtern(true)
+    } 
+    def public ValuedObject setIsNotExtern(ValuedObject valuedObject) {
+        valuedObject.setExtern(false)
+    } 
+
     // Set the ValuedObject to be or not be a sinal.
     def public ValuedObject setSignal(ValuedObject valuedObject, boolean isSignal) {
         val uniqueDeclaration = valuedObject.uniqueDeclaration
@@ -335,6 +361,7 @@ class KExpressionsExtension {
             signal = declaration.signal
             static = declaration.static
             const = declaration.const
+            extern = declaration.extern
         ]
     }
 
@@ -816,6 +843,8 @@ class KExpressionsExtension {
         valuedObject.setInput(valuedObjectWithAttributes.isInput)
         valuedObject.setOutput(valuedObjectWithAttributes.isOutput)
         valuedObject.setStatic(valuedObjectWithAttributes.isStatic)
+        valuedObject.setConst(valuedObjectWithAttributes.isConst)
+        valuedObject.setExtern(valuedObjectWithAttributes.isExtern)
         valuedObject.setInitialValue(valuedObjectWithAttributes.initialValue.copy)
         valuedObject.setType(valuedObjectWithAttributes.type)
         valuedObject.setCombineOperator(valuedObjectWithAttributes.combineOperator)
@@ -825,6 +854,16 @@ class KExpressionsExtension {
             }
         }
         valuedObject
+    }
+    
+    def List<ValuedObjectReference> getAllReferences(Expression expression) {
+        val list = <ValuedObjectReference> newArrayList
+        if (expression instanceof ValuedObjectReference) {
+            list += expression as ValuedObjectReference
+        } else {
+            list += expression.eAllContents.filter(typeof(ValuedObjectReference)).toList
+        }
+        return list
     }
 
     //    def public void addValuedObject(EObject eObject, ValuedObject valuedObject) {
@@ -978,6 +1017,14 @@ class KExpressionsExtension {
     def TextExpression createTextExpression() {
         val expression = KExpressionsFactory::eINSTANCE.createTextExpression()
         expression
+    }
+    
+    def FunctionCall createFunctionCall() {
+        KExpressionsFactory::eINSTANCE.createFunctionCall()
+    }
+    
+    def Parameter createParameter() {
+        KExpressionsFactory::eINSTANCE.createParameter()
     }
 
     // Create a text expression.

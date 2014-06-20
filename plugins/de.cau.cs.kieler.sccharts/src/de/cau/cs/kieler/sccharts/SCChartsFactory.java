@@ -112,6 +112,15 @@ public interface SCChartsFactory extends EFactory {
     TextEffect createTextEffect();
 
     /**
+     * Returns a new object of class '<em>Function Call Effect</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Function Call Effect</em>'.
+     * @generated
+     */
+    FunctionCallEffect createFunctionCallEffect();
+
+    /**
      * Returns a new object of class '<em>Entry Action</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

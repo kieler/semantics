@@ -15,12 +15,16 @@ package de.cau.cs.kieler.scg.transformations
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.BoolValue
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
@@ -29,11 +33,10 @@ import de.cau.cs.kieler.scgdep.AssignmentDep
 import de.cau.cs.kieler.scgdep.Dependency
 import de.cau.cs.kieler.scgdep.SCGraphDep
 import de.cau.cs.kieler.scgdep.ScgdepFactory
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-import java.util.List
 import java.util.HashMap
 import java.util.LinkedList
+import java.util.List
+import org.eclipse.emf.ecore.EObject
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -67,10 +70,13 @@ class DependencyTransformation extends AbstractModelTransformation {
     /** Inject SCG copy extensions. */  
     @Inject
     extension SCGCopyExtensions
+    
     @Inject
-    extension SCChartsExtension
+    extension KExpressionsExtension
     
     private val threadNodeList = new HashMap<Node, List<Entry>>
+    private val ancestorForkCache = new HashMap<Node, List<Fork>>
+    private val relativeWriterCache = new HashMap<AssignmentDep, Boolean>
     
     // -------------------------------------------------------------------------
     // -- Transformation method
@@ -100,7 +106,17 @@ class DependencyTransformation extends AbstractModelTransformation {
         // dependency information. The data is automatically stored in the SCG by the createDependencies
         // function.
         threadNodeList.clear
-        val assignments = scgdep.nodes.filter(typeof(AssignmentDep)).filter[ valuedObject != null ].toList.immutableCopy
+        relativeWriterCache.clear
+        ancestorForkCache.clear
+        
+        val timestamp = System.currentTimeMillis
+        val allAssignments = scgdep.nodes.filter(typeof(AssignmentDep))  
+        val assignments = allAssignments.filter[ valuedObject != null || assignment instanceof FunctionCall ].toList.immutableCopy
+        val conditionals = scgdep.nodes.filter(typeof(Conditional)).filter[ condition != null ].toList.immutableCopy
+
+        assignments.forEach[ 
+            relativeWriterCache.put(it, it.isRelativeWriter)
+        ]
         
         scgdep.nodes.filter(typeof(Entry)).forEach[ entry |
         	entry.getThreadNodes.forEach[ node |
@@ -118,9 +134,15 @@ class DependencyTransformation extends AbstractModelTransformation {
         	]
         ]
         
+        var time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("Preparation for dependency analysis finished (time used: "+(time / 1000)+"s).")  
+        
         for(node : assignments) {
-        	 node.createDependencies(assignments) 
+        	 node.createDependencies(assignments, conditionals, scgdep) 
       	 }
+
+        time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("Dependency analysis finished (time used overall: "+(time / 1000)+"s).")  
         
         // Return the SCG with dependency data.
         scgdep
@@ -139,11 +161,13 @@ class DependencyTransformation extends AbstractModelTransformation {
      * 			the assignment node in question
      * @return Returns the given assignment for further processing.
      */
-    private def AssignmentDep createDependencies(AssignmentDep assignment, List<AssignmentDep> assignments) {
-    	// Retrieve the SCG of the assignment node. This is done via the SCG extensions method graph.
-    	val scg = assignment.graph
+    private def AssignmentDep createDependencies(AssignmentDep assignment, 
+        List<AssignmentDep> assignments,
+        List<Conditional> conditionals,
+        SCGraphDep scg
+    ) {
         // Cache own absolute/relative state.
-        val iAmAbsoluteWriter = !assignment.isRelativeWriter
+        val iAmAbsoluteWriter = !relativeWriterCache.get(assignment)
         
         // Filter all other assignments.
         assignments.forEach[ node |
@@ -153,10 +177,11 @@ class DependencyTransformation extends AbstractModelTransformation {
                 if (node.isSameScalar(assignment)) {
                     // Check absolute / relative writes and add the corresponding dependency.
                     // The Scgdep factory is used to create the appropriate depenency.
-                    if (iAmAbsoluteWriter && node.isRelativeWriter) {
+                    val isRelW = relativeWriterCache.get(node)
+                    if (iAmAbsoluteWriter && isRelW) {
                         dependency = ScgdepFactory::eINSTANCE.createAbsoluteWrite_RelativeWrite                        
                     } else 
-                    if (iAmAbsoluteWriter && !node.isRelativeWriter) {
+                    if (iAmAbsoluteWriter && !isRelW) {
                         dependency = ScgdepFactory::eINSTANCE.createWrite_Write       
                     }
                 } else
@@ -179,7 +204,7 @@ class DependencyTransformation extends AbstractModelTransformation {
         
         // Basically, do the same stuff with conditionals as target. 
         // Since conditionals will never write to a variable, it is sufficient to check the reader.
-        scg.nodes.filter(typeof(Conditional)).forEach[ node |
+        conditionals.forEach[ node |
             var Dependency dependency = null
             if (node.isReader(assignment)) {
                 if (iAmAbsoluteWriter) dependency = ScgdepFactory::eINSTANCE.createAbsoluteWrite_Read
@@ -210,6 +235,8 @@ class DependencyTransformation extends AbstractModelTransformation {
     private def boolean isRelativeWriter(AssignmentDep assignment) {
     	// Returns true if the assignment in the assignment node is an OperatorExpression
     	// and accesses the same ValuedObject as the assignment is writing to.
+    	if (assignment instanceof FunctionCall) return false
+    	
         assignment.assignment instanceof OperatorExpression &&
         assignment.assignment.eAllContents.filter(typeof(ValuedObjectReference)).filter[ e |
             e.valuedObject == assignment.valuedObject ].size > 0
@@ -224,27 +251,40 @@ class DependencyTransformation extends AbstractModelTransformation {
      * 			the valuedObject in question
      * @return returns to if the given expression reads the given object.
      */
+    private def boolean isReader(Expression expression, AssignmentDep asg2) {
+        if (expression instanceof ValuedObjectReference) {
+            return isSameScalar((expression as ValuedObjectReference), asg2)
+        } else {
+            return expression.eAllContents.filter(typeof(ValuedObjectReference)).toList.
+               filter[ isSameScalar(it, asg2) ].size > 0
+        }
+    }
+    
     private def boolean isReader(AssignmentDep asg1, AssignmentDep asg2) {
     	// Returns true if the ValuedObject is referenced directly in the expression or
     	// if the object is part of a more complex expression.
     	if (asg1.assignment == null || asg2.assignment == null) return false
-        if (asg1.assignment instanceof ValuedObjectReference) {
-            return isSameScalar((asg1.assignment as ValuedObjectReference), asg2)
-        } else {
-            return asg1.assignment.eAllContents.filter(typeof(ValuedObjectReference)).toList.
-      			filter[ isSameScalar(it, asg2) ].size > 0
+    	if (asg1.assignment instanceof FunctionCall) {
+    	    for(par : (asg1.assignment as FunctionCall).parameters) {
+    	        if (par.expression.isReader(asg2)) return true
+    	    }
+    	    return false    
+    	} else {
+    	    (asg1.assignment as Expression).isReader(asg2)
         }
     }
-    
+        
     private def boolean isReader(Conditional cond, AssignmentDep asg2) {
     	// Returns true if the ValuedObject is referenced directly in the expression or
     	// if the object is part of a more complex expression.
         if (asg2.assignment == null) return false
-        if (cond.condition instanceof ValuedObjectReference) {
-            return isSameScalar((cond.condition as ValuedObjectReference), asg2)
+        if (cond.condition instanceof FunctionCall) {
+            for(par : (cond.condition as FunctionCall).parameters) {
+                if (par.expression.isReader(asg2)) return true
+            }
+            return false    
         } else {
-            return cond.condition.eAllContents.filter(typeof(ValuedObjectReference)).toList.
-      			filter[ isSameScalar(it, asg2) ].size > 0
+            (cond.condition as Expression).isReader(asg2)
         }
     }
     
@@ -261,8 +301,8 @@ class DependencyTransformation extends AbstractModelTransformation {
      */ 
     private def boolean areConcurrent(Node node1, Node node2) {
     	// Use the SCG extensions to retrieve all ancestor forks for both nodes.
-        var node1AF = node1.getAncestorForks
-        var node2AF = node2.getAncestorForks
+        var node1AF = node1.getCachedAncestorForks
+        var node2AF = node2.getCachedAncestorForks
         // For each ancestor fork of node1 check if it is also present in the list of node2.
         for (node : node1AF) {
             if (node2AF.contains(node)) {
@@ -282,6 +322,15 @@ class DependencyTransformation extends AbstractModelTransformation {
             }
         }
         return false
+    }
+    
+    private def List<Fork> getCachedAncestorForks(Node node) {
+    	var af = ancestorForkCache.get(node)
+    	if (af == null) {
+    		af = node.getAncestorForks
+    		ancestorForkCache.put(node, af)
+    	}
+    	return af
     }
     
     /** 
@@ -315,6 +364,22 @@ class DependencyTransformation extends AbstractModelTransformation {
     }
     
     private def boolean isSameScalar(AssignmentDep asg1, AssignmentDep asg2) {
+        if (asg1.assignment instanceof FunctionCall && !(asg2.assignment instanceof FunctionCall)) {
+            return asg2.isSameScalar(asg1)
+        }
+        
+        if (asg2.assignment instanceof FunctionCall) {
+            for(par : (asg2.assignment as FunctionCall).parameters) {
+                if (par.callByReference) {
+                    val refs = par.expression.getAllReferences
+                    for(ref : refs) {
+                        if (ref.isSameScalar(asg1)) return true
+                    }
+                }
+            }   
+            return false 
+        }        
+        
     	if (asg1.valuedObject != asg2.valuedObject) return false
     	else if (!asg1.indices.nullOrEmpty && !asg2.indices.nullOrEmpty && asg1.indices.size == asg2.indices.size) {
     		var i = 0
@@ -331,6 +396,16 @@ class DependencyTransformation extends AbstractModelTransformation {
     }
     
     private def boolean isSameScalar(ValuedObjectReference vor1, AssignmentDep asg2) {
+        if (asg2.assignment instanceof FunctionCall) {
+            for(par : (asg2.assignment as FunctionCall).parameters) {
+                val refs = par.expression.getAllReferences
+                for(ref : refs) {
+                    if (vor1.isSameScalar(ref)) return true
+                }
+            }   
+            return false 
+        }
+        
     	if (vor1.valuedObject != asg2.valuedObject) return false
     	else if (!vor1.indices.nullOrEmpty && !asg2.indices.nullOrEmpty && vor1.indices.size == asg2.indices.size) {
     		var i = 0
@@ -345,5 +420,21 @@ class DependencyTransformation extends AbstractModelTransformation {
     	}
     	true
     }
+    
+    private def boolean isSameScalar(ValuedObjectReference vor1, ValuedObjectReference vor2) {
+        if (vor1.valuedObject != vor2.valuedObject) return false
+        else if (!vor1.indices.nullOrEmpty && !vor2.indices.nullOrEmpty && vor1.indices.size == vor2.indices.size) {
+            var i = 0
+            for(idx1 : vor1.indices) {
+                val idx2 = vor2.indices.get(i)
+                
+                if (idx1 instanceof IntValue && idx2 instanceof IntValue && (idx1 as IntValue).value != (idx2 as IntValue).value) 
+                    return false
+                
+                i = i + 1
+            }
+        }
+        true
+    }    
  
 }

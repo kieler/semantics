@@ -305,7 +305,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             (text == "exit") || (text == "signal") || (text == "int") || (text == "bool") ||
             (text == "float") || (text == "unsigned") || (text == "immediate") || (text == "input") ||
             (text == "output") || (text == "pre") || (text == "val") || (text == "combine") || (text == "static") || 
-            (text == "const")
+            (text == "const") || (text == "extern")
     }
 
     // Get a list of words of a text String parsed by a regular expression.
@@ -581,6 +581,15 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                                 if (tg.type != ValueType::PURE) {
                                     type = tg.type.literal.toLowerCase + " "
                                 }
+                                if (tg.isExtern) {
+                                    declaration = declaration + "extern ";
+                                }
+                                if (tg.isStatic) {
+                                    declaration = declaration + "static ";
+                                }
+                                if (tg.isConst) {
+                                    declaration = declaration + "const ";
+                                }
                                 if (tg.isInput) {
                                     declaration = declaration + "input ";
                                 }
@@ -589,12 +598,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                                 }
                                 if (tg.isSignal) {
                                     declaration = declaration + "signal ";
-                                }
-                                if (tg.isStatic) {
-                                    declaration = declaration + "static ";
-                                }
-                                if (tg.isConst) {
-                                    declaration = declaration + "const ";
                                 }
                                 if (!declaration.equals("")) {
                                     declaration = declaration.trim + " "

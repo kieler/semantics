@@ -40,266 +40,266 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class ConditionalAdditionImpl extends AlterationImpl implements ConditionalAddition {
 	/**
-	 * The cached value of the '{@link #getBeforeNode() <em>Before Node</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getBeforeNode() <em>Before Node</em>}' reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getBeforeNode()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getBeforeNode()
+     * @generated
+     * @ordered
+     */
 	protected Node beforeNode;
 
 	/**
-	 * The cached value of the '{@link #getUntilNode() <em>Until Node</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getUntilNode() <em>Until Node</em>}' reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getUntilNode()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getUntilNode()
+     * @generated
+     * @ordered
+     */
 	protected Node untilNode;
 
 	/**
-	 * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getCondition()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getCondition()
+     * @generated
+     * @ordered
+     */
 	protected Expression condition;
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected ConditionalAdditionImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return ScgschedPackage.Literals.CONDITIONAL_ADDITION;
-	}
+        return ScgschedPackage.Literals.CONDITIONAL_ADDITION;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Node getBeforeNode() {
-		if (beforeNode != null && beforeNode.eIsProxy()) {
-			InternalEObject oldBeforeNode = (InternalEObject)beforeNode;
-			beforeNode = (Node)eResolveProxy(oldBeforeNode);
-			if (beforeNode != oldBeforeNode) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_NODE, oldBeforeNode, beforeNode));
-			}
-		}
-		return beforeNode;
-	}
+        if (beforeNode != null && beforeNode.eIsProxy()) {
+            InternalEObject oldBeforeNode = (InternalEObject)beforeNode;
+            beforeNode = (Node)eResolveProxy(oldBeforeNode);
+            if (beforeNode != oldBeforeNode) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_NODE, oldBeforeNode, beforeNode));
+            }
+        }
+        return beforeNode;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Node basicGetBeforeNode() {
-		return beforeNode;
-	}
+        return beforeNode;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setBeforeNode(Node newBeforeNode) {
-		Node oldBeforeNode = beforeNode;
-		beforeNode = newBeforeNode;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_NODE, oldBeforeNode, beforeNode));
-	}
+        Node oldBeforeNode = beforeNode;
+        beforeNode = newBeforeNode;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_NODE, oldBeforeNode, beforeNode));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Node getUntilNode() {
-		if (untilNode != null && untilNode.eIsProxy()) {
-			InternalEObject oldUntilNode = (InternalEObject)untilNode;
-			untilNode = (Node)eResolveProxy(oldUntilNode);
-			if (untilNode != oldUntilNode) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_NODE, oldUntilNode, untilNode));
-			}
-		}
-		return untilNode;
-	}
+        if (untilNode != null && untilNode.eIsProxy()) {
+            InternalEObject oldUntilNode = (InternalEObject)untilNode;
+            untilNode = (Node)eResolveProxy(oldUntilNode);
+            if (untilNode != oldUntilNode) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_NODE, oldUntilNode, untilNode));
+            }
+        }
+        return untilNode;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Node basicGetUntilNode() {
-		return untilNode;
-	}
+        return untilNode;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setUntilNode(Node newUntilNode) {
-		Node oldUntilNode = untilNode;
-		untilNode = newUntilNode;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_NODE, oldUntilNode, untilNode));
-	}
+        Node oldUntilNode = untilNode;
+        untilNode = newUntilNode;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_NODE, oldUntilNode, untilNode));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Expression getCondition() {
-		return condition;
-	}
+        return condition;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public NotificationChain basicSetCondition(Expression newCondition, NotificationChain msgs) {
-		Expression oldCondition = condition;
-		condition = newCondition;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgschedPackage.CONDITIONAL_ADDITION__CONDITION, oldCondition, newCondition);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
+        Expression oldCondition = condition;
+        condition = newCondition;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgschedPackage.CONDITIONAL_ADDITION__CONDITION, oldCondition, newCondition);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setCondition(Expression newCondition) {
-		if (newCondition != condition) {
-			NotificationChain msgs = null;
-			if (condition != null)
-				msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgschedPackage.CONDITIONAL_ADDITION__CONDITION, null, msgs);
-			if (newCondition != null)
-				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgschedPackage.CONDITIONAL_ADDITION__CONDITION, null, msgs);
-			msgs = basicSetCondition(newCondition, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.CONDITIONAL_ADDITION__CONDITION, newCondition, newCondition));
-	}
+        if (newCondition != condition) {
+            NotificationChain msgs = null;
+            if (condition != null)
+                msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgschedPackage.CONDITIONAL_ADDITION__CONDITION, null, msgs);
+            if (newCondition != null)
+                msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgschedPackage.CONDITIONAL_ADDITION__CONDITION, null, msgs);
+            msgs = basicSetCondition(newCondition, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgschedPackage.CONDITIONAL_ADDITION__CONDITION, newCondition, newCondition));
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ScgschedPackage.CONDITIONAL_ADDITION__CONDITION:
-				return basicSetCondition(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case ScgschedPackage.CONDITIONAL_ADDITION__CONDITION:
+                return basicSetCondition(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_NODE:
-				if (resolve) return getBeforeNode();
-				return basicGetBeforeNode();
-			case ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_NODE:
-				if (resolve) return getUntilNode();
-				return basicGetUntilNode();
-			case ScgschedPackage.CONDITIONAL_ADDITION__CONDITION:
-				return getCondition();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_NODE:
+                if (resolve) return getBeforeNode();
+                return basicGetBeforeNode();
+            case ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_NODE:
+                if (resolve) return getUntilNode();
+                return basicGetUntilNode();
+            case ScgschedPackage.CONDITIONAL_ADDITION__CONDITION:
+                return getCondition();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_NODE:
-				setBeforeNode((Node)newValue);
-				return;
-			case ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_NODE:
-				setUntilNode((Node)newValue);
-				return;
-			case ScgschedPackage.CONDITIONAL_ADDITION__CONDITION:
-				setCondition((Expression)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_NODE:
+                setBeforeNode((Node)newValue);
+                return;
+            case ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_NODE:
+                setUntilNode((Node)newValue);
+                return;
+            case ScgschedPackage.CONDITIONAL_ADDITION__CONDITION:
+                setCondition((Expression)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID) {
-			case ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_NODE:
-				setBeforeNode((Node)null);
-				return;
-			case ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_NODE:
-				setUntilNode((Node)null);
-				return;
-			case ScgschedPackage.CONDITIONAL_ADDITION__CONDITION:
-				setCondition((Expression)null);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_NODE:
+                setBeforeNode((Node)null);
+                return;
+            case ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_NODE:
+                setUntilNode((Node)null);
+                return;
+            case ScgschedPackage.CONDITIONAL_ADDITION__CONDITION:
+                setCondition((Expression)null);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_NODE:
-				return beforeNode != null;
-			case ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_NODE:
-				return untilNode != null;
-			case ScgschedPackage.CONDITIONAL_ADDITION__CONDITION:
-				return condition != null;
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case ScgschedPackage.CONDITIONAL_ADDITION__BEFORE_NODE:
+                return beforeNode != null;
+            case ScgschedPackage.CONDITIONAL_ADDITION__UNTIL_NODE:
+                return untilNode != null;
+            case ScgschedPackage.CONDITIONAL_ADDITION__CONDITION:
+                return condition != null;
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //ConditionalAdditionImpl

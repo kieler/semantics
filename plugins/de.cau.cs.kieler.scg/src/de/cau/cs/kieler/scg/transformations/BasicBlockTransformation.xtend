@@ -39,7 +39,7 @@ import java.util.ArrayList
 import java.util.List
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
-import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EObjectimport java.util.HashMap
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -80,6 +80,10 @@ class BasicBlockTransformation extends AbstractModelTransformation {
     /** The prefix of each guard. */
     private val String GUARDPREFIX = "guard"
     
+    
+    private val processedNodes = <Node> newArrayList
+    private val basicBlockNodeMapping = new HashMap<Node, BasicBlock>
+    
     // -------------------------------------------------------------------------
     // -- Transformation method
     // -------------------------------------------------------------------------
@@ -104,12 +108,20 @@ class BasicBlockTransformation extends AbstractModelTransformation {
 
 		// Copy the source SCG with the SCG copy extensions. 
 		// This will preserve all present information of the dependency-enriched SCG.
-        scgDep.copySCG(scgbb)                  
+        scgDep.copySCG(scgbb)         
+        
+        processedNodes.clear     
+        basicBlockNodeMapping.clear
+        System.out.println("Nodes: " + scgbb.nodes.size)  
+        val timestamp = System.currentTimeMillis  
 
         // Create the basic blocks beginning with the first node in the node list.
         // It is expected that this node is an entry node.
         if (!(scgbb.nodes.head instanceof Entry)) throw new UnsupportedSCGException("The basic block analysis expects an entry node as first node!")
         scgbb.createBasicBlocks(scgbb.nodes.head, 0)
+        
+        val time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("Basic Block transformation finished (time used: "+(time / 1000)+"s).")    
         
         // Return the SCG with basic block data.
         scgbb
@@ -177,17 +189,18 @@ class BasicBlockTransformation extends AbstractModelTransformation {
         // First of all we have to check if this block has already been checked.
         // Therefore, gather all nodes of all already created basic blocks 
         // and check whether or not the requested node is present.
-        val nodes = new ArrayList<Node> => [ n |
-            scg.basicBlocks.forEach[it.schedulingBlocks.forEach[n.addAll(it.nodes)]]
-        ]
-        if (nodes.contains(rootNode)) {
+        if (processedNodes.contains(rootNode)) {
         	// If the node has already been processed, add the predecessorList passed by the caller to the basic block
         	// of the node in question. Return afterwards with unmodified index since no new block was created.
         	if (predecessorBlocks != null && predecessorBlocks.size > 0) {
-                val rootBasicBlock = rootNode.basicBlock
+                val rootBasicBlock = basicBlockNodeMapping.get(rootNode)
                 rootBasicBlock.predecessors.addAll(predecessorBlocks.createPredecessors(rootBasicBlock))
             }
             return newIndex;
+        }
+        
+        if (scg.basicBlocks.size % 100 == 0) {
+            System.out.println("Basic Blocks: " + scg.basicBlocks.size + " with " + processedNodes.size + " nodes")
         }
         
         // Create a new ValuedObject for the guards of the upcoming basic block.
@@ -352,6 +365,8 @@ class BasicBlockTransformation extends AbstractModelTransformation {
         // Add the newly created basic block to the SCG...
         scg.basicBlocks.add(basicBlock)
         
+        basicBlock.schedulingBlocks.forEach[ nodes.forEach[ basicBlockNodeMapping.put(it, basicBlock) ]]
+                
         // ... and return the block.
         basicBlock
     }
@@ -406,6 +421,7 @@ class BasicBlockTransformation extends AbstractModelTransformation {
             }
             // Add the node to the scheduling block.
             block.nodes.add(node)
+            processedNodes.add(node)
         }
         // Finally, add the block to the list, if it is not empty and return the list of blocks.
         if (block != null) schedulingBlocks.add(block)

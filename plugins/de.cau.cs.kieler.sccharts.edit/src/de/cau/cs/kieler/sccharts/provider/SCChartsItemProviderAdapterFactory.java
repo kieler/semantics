@@ -274,6 +274,29 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.FunctionCallEffect} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected FunctionCallEffectItemProvider functionCallEffectItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.FunctionCallEffect}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createFunctionCallEffectAdapter() {
+        if (functionCallEffectItemProvider == null) {
+            functionCallEffectItemProvider = new FunctionCallEffectItemProvider(this);
+        }
+
+        return functionCallEffectItemProvider;
+    }
+
+    /**
      * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.EntryAction} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -495,6 +518,7 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
         if (bindingItemProvider != null) bindingItemProvider.dispose();
         if (transitionItemProvider != null) transitionItemProvider.dispose();
         if (textEffectItemProvider != null) textEffectItemProvider.dispose();
+        if (functionCallEffectItemProvider != null) functionCallEffectItemProvider.dispose();
         if (entryActionItemProvider != null) entryActionItemProvider.dispose();
         if (duringActionItemProvider != null) duringActionItemProvider.dispose();
         if (exitActionItemProvider != null) exitActionItemProvider.dispose();
