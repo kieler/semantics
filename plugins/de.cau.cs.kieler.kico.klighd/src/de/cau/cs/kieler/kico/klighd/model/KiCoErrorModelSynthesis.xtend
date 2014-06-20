@@ -29,7 +29,7 @@ import javax.inject.Inject
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 /**
- * Diagram synthesis of a KiCoModelChain.
+ * Diagram synthesis of a KiCoErrorModel.
  * 
  * @author als
  *

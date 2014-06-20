@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kico.klighd;
 
-import java.util.ArrayList;
 import java.util.WeakHashMap;
 
 import org.eclipse.core.resources.IFile;
@@ -52,7 +51,6 @@ import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KiCoPlugin;
-import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
@@ -79,11 +77,17 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * 
      */
     public enum ChangeEvent {
-        SAVED, DISPLAY_MODE, TRANSFORMATIONS, ACTIVE_EDITOR, COMPILE
+        SAVED, DISPLAY_MODE, TRANSFORMATIONS, ACTIVE_EDITOR, COMPILE, COMPILATION_FINISHED
     }
 
     /** Viewer ID **/
     public static final String ID = "de.cau.cs.kieler.kico.klighd.view";
+
+    /**
+     * Indicates how long this view should wait before starting REAL asynchronous compilation. This
+     * timer makes the common case faster (without intermediate model)
+     */
+    public static final int waitForAsync = 500;
 
     /** Secondary ID of this view. Indicates a non primary view */
     private String secondaryID;
@@ -126,7 +130,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     /** The action for toggling compile. */
     private Action actionPinToggle;
     /** String currently saved transformations. */
-    private KiCoSelection transformations = null;
+    private KiCoSelection transformations = KiCoSelection.EMPTY_SELECTION;
     /** Map with pinned transformations */
     private WeakHashMap<IEditorPart, KiCoSelection> pinnedTransformations =
             new WeakHashMap<IEditorPart, KiCoSelection>();
@@ -146,6 +150,15 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
     /** Model extracted from editor */
     private EObject sourceModel;
+
+    /** current compilation running in background */
+    private KiCoAsynchronousCompilation currentCompilation = null;
+
+    /**
+     * current compilation result assocuiiated with current model or null if current model is not
+     * compiled
+     */
+    private CompilationResult currentCompilationResult = null;
 
     // Editor
 
@@ -244,14 +257,14 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     protected void addButtons() {
         final IToolBarManager toolBar = getViewSite().getActionBars().getToolBarManager();
 
-//        toolBar.add(new Action("Refresh diagram", KlighdPlugin
-//                .getImageDescriptor("icons/full/elcl16/refresh.gif")) {
-//
-//            @Override
-//            public void run() {
-//                updateModel(ChangeEvent.ACTIVE_EDITOR);
-//            }
-//        });
+        // toolBar.add(new Action("Refresh diagram", KlighdPlugin
+        // .getImageDescriptor("icons/full/elcl16/refresh.gif")) {
+        //
+        // @Override
+        // public void run() {
+        // updateModel(ChangeEvent.ACTIVE_EDITOR);
+        // }
+        // });
 
         // automatic layout button
         toolBar.add(new Action("Arrange", IAction.AS_PUSH_BUTTON) {
@@ -454,8 +467,8 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * @return the action
      */
     private Action getActionPauseSync() {
-        final String pauseText = "Pause editor synchronization";
-        final String continueText = "Continue editor synchronization";
+        final String pauseText = "Decouple from editors";
+        final String continueText = "Couple to editors";
 
         if (actionPauseSyncToggle != null) {
             return actionPauseSyncToggle;
@@ -532,7 +545,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                     if (saveModel instanceof KiCoModelChain) {
                         saveModel = ((KiCoModelChain) saveModel).getSelectedModel();
                     }
-
+                    // TODO Handle Compiling intermeduate result
                     if (saveModel instanceof EObject) {
                         ModelUtil.saveModel((EObject) saveModel, uri);
                     } else if (saveModel instanceof KiCoCodePlaceHolder) {
@@ -627,9 +640,22 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     protected void updateViewTitle() {
         // prefix when paused
         if (pauseSynchronization) {
-            String syncPrefix = "!!PAUSED!! ";
-            if (!getPartName().startsWith(syncPrefix)) {
-                setPartName(syncPrefix + getPartName());
+            String syncPrefix = "<decoupled>";
+            if (!getPartName().contains(syncPrefix)) {
+                if (!isPrimaryView()) {
+                    if (activeEditor != null) {
+                        setPartName(syncPrefix + activeEditor.getTitle());
+                    } else {
+                        setPartName("Secondary " + defaultViewTitle + " " + syncPrefix);
+                    }
+                } else {
+                    if (activeEditor != null) {
+                        setPartName(defaultViewTitle + " " + syncPrefix + "["
+                                + activeEditor.getTitle() + "]");
+                    } else {
+                        setPartName(defaultViewTitle + " " + syncPrefix);
+                    }
+                }
             }
         } else {
             // else set name according to view type and state
@@ -654,7 +680,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * transformation
      */
     private void updatePinToggleButton() {
-        actionPinToggle.setEnabled(transformations != null);
+        actionPinToggle.setEnabled(!transformations.isEmpty());
         actionPinToggle.setChecked(pinnedTransformations.containsKey(activeEditor));
     }
 
@@ -664,19 +690,30 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * @param change
      */
     void updateModel(ChangeEvent change) {
-        if (activeEditor != null && !pauseSynchronization) {
+        updateModel(change, null);
+    }
+
+    /**
+     * Updates the current model caused by changeEvent if necessary
+     * 
+     * @param change
+     */
+    synchronized void updateModel(ChangeEvent change, KiCoAsynchronousCompilation compilation) {
+        if (activeEditor != null) {
             // change event flags
-            boolean is_active_editor_update =
-                    change == ChangeEvent.ACTIVE_EDITOR;
+            boolean is_active_editor_update = change == ChangeEvent.ACTIVE_EDITOR;
             boolean is_save_update = change == ChangeEvent.SAVED;
             boolean is_transformation_update = change == ChangeEvent.TRANSFORMATIONS;
             boolean is_display_mode_update = change == ChangeEvent.DISPLAY_MODE;
-            boolean is_compile_update = change == ChangeEvent.COMPILE;
+            boolean is_compile_update =
+                    change == ChangeEvent.COMPILE || change == ChangeEvent.COMPILATION_FINISHED;
 
             // Evaluate if source model should be updated
             boolean do_get_model = false;
             do_get_model |= is_active_editor_update;
             do_get_model |= is_save_update;
+            // Don't read input model when paused
+            do_get_model &= !pauseSynchronization;
 
             // Get model if necessary
             if (do_get_model) {
@@ -712,21 +749,21 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                         newTransformations = pinnedTransformations.get(activeEditor);
                         // null pointer is indicator for no selection
                         if (newTransformations.isEmpty()) {
-                            newTransformations = null;
+                            newTransformations = KiCoSelection.EMPTY_SELECTION;
                         }
                     } else {
                         newTransformations = mvm.getSelection(activeEditor);
                     }
                     // check if selection changed
                     if (newTransformations == null) {
-                        if (newTransformations != transformations) {
+                        if (transformations != KiCoSelection.EMPTY_SELECTION) {
                             transformations_changed |= true;
-                            transformations = newTransformations;
+                            transformations = KiCoSelection.EMPTY_SELECTION;
+                            ;
                         }
                     } else {
                         if (!newTransformations.equals(transformations)) {
                             transformations_changed |= true;
-
                             transformations = newTransformations;
                         }
                     }
@@ -745,52 +782,72 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             do_compile |= is_compile_update;
             do_compile |= is_display_mode_update;
             // -- But only if:
-            do_compile &= transformations != null;
+            do_compile &= !transformations.isEmpty();
             do_compile &= compileModel;
 
             Object previousCurrentModel = currentModel;
 
             // Compile if necessary
             if (do_compile) {
-                CompilationResult result;
-                try {
-                    // listen for internal klighd errors
-                    lastException = null;
-                    Platform.addLogListener(this);
 
-                    // compile
-                    result =
-                            KielerCompiler.compile(transformations.getSelection(), new ArrayList<String>(), 
-                                    (EObject) sourceModel, transformations.isAdvanced(), false);
-
-                    // stop listening
-                    Platform.removeLogListener(this);
-
-                    // check result
-                    if (lastException != null) {
-                        throw lastException;
-                    } else if (result == null
-                            || (result.getEObject() == null && result.getString() == null)) {
-                        throw new NullPointerException(
-                                "Compilation produced no result. Internal compilation error.");
+                // this call is not update model run with asynchronous compilation result
+                if (compilation == null) {
+                    // stop already running (now deprecated) compilation
+                    if (currentCompilation != null) {
+                        currentCompilation.cancel();
                     }
-                } catch (Exception e) {
-                    currentModel = null;
-                    updateDiagram(new KiCoErrorModel("Compilation Error!", e), true, true);
-                    return;
-                } finally {
-                    Platform.removeLogListener(this);
-                }
+                    // create compilation job
+                    currentCompilation =
+                            new KiCoAsynchronousCompilation(this, (EObject) sourceModel,
+                                    activeEditor.getTitle(), transformations);
+                    currentCompilationResult = null;
+                    currentModel = currentCompilation.getModel();
+                    // start
+                    currentCompilation.schedule();
 
-                // set current model to either ecore model or code
-                if (result.getEObject() != null) {
-                    currentModel = result.getEObject();
-                } else if (result.getString() != null) {
-                    currentModel =
-                            new KiCoCodePlaceHolder(getCurrentFileName(), result.getString());
+                    boolean showProgress = true;
+                    // To make the common case fast
+                    // First wait some seconds for cases with fast compilation
+                    for (int i = 0; i < waitForAsync / 10; i++) {
+                        // check if finished
+                        if (currentCompilation.hasFinishedCompilation()) {
+                            showProgress = false;
+                            break;
+                        }
+                        // wait
+                        try {
+                            Thread.sleep(10);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                            return;
+                        }
+                    }
+
+                    if (showProgress) {// if not the fast case
+                        currentCompilation.showProgress();
+                        currentCompilation.setUpdateModelView(true);
+                    } else { // directly take result and suppress additional update
+                        currentModel = currentCompilation.getModel();
+                        currentCompilationResult = currentCompilation.getCompilationResult();
+                    }
+                // check if given compilation is most recent
+                } else if (compilation == currentCompilation
+                        && currentCompilation.hasFinishedCompilation()) {
+                    //take the result
+                    currentModel = currentCompilation.getModel();
+                    currentCompilationResult = currentCompilation.getCompilationResult();
+                    currentCompilation = null;
+                } else {// This is not the most recent compilation
+                    return;
                 }
             } else {
                 currentModel = sourceModel;
+                currentCompilationResult = null;
+                // drop any existing compilation
+                if (currentCompilation != null) {
+                    currentCompilation.cancel();
+                    currentCompilation = null;
+                }
             }
 
             // composite model in given display mode
@@ -814,20 +871,26 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             do_update_diagram |= do_compile;
             do_update_diagram |= is_display_mode_update;
             // should compile but no transformations are selected
-            do_update_diagram |= is_compile_update && transformations != null;
+            do_update_diagram |= is_compile_update && !transformations.isEmpty();
             // compile and transformations changed to null
-            do_update_diagram |= compileModel && transformations == null && transformations_changed;
+            do_update_diagram |=
+                    compileModel && transformations.isEmpty() && transformations_changed;
 
             if (do_update_diagram) {
                 updateDiagram(currentModel, model_type_changed, false);
             }
+        } else if (currentCompilation != null) {
+            // drop any existing compilation
+            currentCompilation.cancel();
+            currentCompilation = null;
         }
     }
 
     /**
      * Updates displayed diagram in this view. Initializes this view if necessary.
      */
-    private void updateDiagram(Object model, boolean modelTypeChanged, boolean isErrorModel) {
+    private synchronized void updateDiagram(Object model, boolean modelTypeChanged,
+            boolean isErrorModel) {
         try {
             if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
                 // if viewer or context does not exist always init view

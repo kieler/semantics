@@ -67,7 +67,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
      * Standard Constructor
      */
     public KiCoModelViewManager() {
-        super(KiCoModelViewManager.class.getName());
+        super(KiCoModelViewManager.class.getSimpleName());
         if (instance == null) {
             instance = this;
         } else {
@@ -152,7 +152,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
                     if (modelView.isPrimaryView()
                             && modelView.getSite().getPage().getActiveEditor() != null) {
                         // update to active editor (delayed to prevent klighd init errors)
-                        new UIJob("Init" + KiCoModelView.class.getName()) {
+                        new UIJob("Init" + KiCoModelView.class.getSimpleName()) {
 
                             @Override
                             public IStatus runInUIThread(IProgressMonitor monitor) {

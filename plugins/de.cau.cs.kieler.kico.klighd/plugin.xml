@@ -9,11 +9,15 @@
       </diagramSynthesis>
       <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolderSynthesis"
-            id="de.cau.cs.kieler.kico.klighd.KiCoCodePlaceHolder">
+            id="de.cau.cs.kieler.kico.klighd.KiCoCodePlaceHolderSynthesis">
       </diagramSynthesis>
       <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.KiCoErrorModelSynthesis"
-            id="de.cau.cs.kieler.kico.klighd.KiCoErrorModel">
+            id="de.cau.cs.kieler.kico.klighd.KiCoErrorModelSynthesis">
+      </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.klighd.model.KiCoMessageModelSynthesis"
+            id="de.cau.cs.kieler.kico.klighd.KiCoMessageModelSynthesis">
       </diagramSynthesis>
    </extension>
    <extension
