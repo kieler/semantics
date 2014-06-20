@@ -34,6 +34,8 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
@@ -178,6 +180,10 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
     // Error handling
     private Exception lastException = null;
+    
+    // Visual
+    
+    private Composite viewComposite = null;
 
     // -- Constructor and Initialization
     // -------------------------------------------------------------------------
@@ -242,6 +248,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      */
     public void createPartControl(final Composite parent) {
         super.createPartControl(parent);
+        viewComposite = parent;
 
         IActionBars bars = getViewSite().getActionBars();
         IToolBarManager toolBarManager = bars.getToolBarManager();
@@ -931,7 +938,8 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             boolean is_buisness_model = true;
             is_buisness_model &= !(currentModel instanceof KiCoErrorModel);
             is_buisness_model &= !(currentModel instanceof KiCoMessageModel);
-
+            is_buisness_model &= !(currentModel instanceof KiCoCodePlaceHolder);
+            
             if (do_update_diagram) {
                 if (noDiagram && is_buisness_model) {
                     updateDiagram(new KiCoMessageModel(
