@@ -16,9 +16,11 @@ package de.cau.cs.kieler.kico.klighd;
 import java.util.WeakHashMap;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.ILogListener;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
@@ -519,7 +521,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                     this.setText(pauseText);
                     noDiagram = false;
                     // force synthesis of diagram
-                    if(currentModel != null){
+                    if (currentModel != null) {
                         updateDiagram(currentModel, true, false);
                     }
                 } else {
@@ -550,6 +552,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             String filename = getCurrentFileName();
 
             SaveAsDialog saveAsDialog = new SaveAsDialog(getSite().getShell());
+
             // Configure dialog
 
             if (lastSavedFiles.containsKey(activeEditor)) {
@@ -578,6 +581,15 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
                 // register as last save
                 lastSavedFiles.put(activeEditor, file);
+
+                // refresh workspace to prevent out of sync with filesystem
+                if (file.exists()) {
+                    try {
+                        file.refreshLocal(IResource.DEPTH_INFINITE, null);
+                    } catch (CoreException e) {
+                        e.printStackTrace();
+                    }
+                }
 
                 try {
                     // model to save
