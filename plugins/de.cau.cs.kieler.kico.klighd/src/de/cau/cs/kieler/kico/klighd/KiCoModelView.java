@@ -23,6 +23,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.ILogListener;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -34,8 +35,6 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
@@ -48,6 +47,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.util.StringInputStream;
 
@@ -273,14 +273,15 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     protected void addButtons() {
         final IToolBarManager toolBar = getViewSite().getActionBars().getToolBarManager();
 
-        // toolBar.add(new Action("Refresh diagram", KlighdPlugin
-        // .getImageDescriptor("icons/full/elcl16/refresh.gif")) {
-        //
-        // @Override
-        // public void run() {
-        // updateModel(ChangeEvent.ACTIVE_EDITOR);
-        // }
-        // });
+        // force complete refresh button
+        toolBar.add(new Action("Refresh diagram", KlighdPlugin
+                .getImageDescriptor("icons/full/elcl16/refresh.gif")) {
+
+            @Override
+            public void run() {
+                updateModel(ChangeEvent.ACTIVE_EDITOR);
+            }
+        });
 
         // automatic layout button
         toolBar.add(new Action("Arrange", IAction.AS_PUSH_BUTTON) {
@@ -337,7 +338,14 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 updateModel(ChangeEvent.ACTIVE_EDITOR);
             }
         } else {
+            if (activeEditor != null) {
+                activeEditor.removePropertyListener(dirtyPropertyListener);
+            }
             activeEditor = null;
+            
+            updateViewTitle();
+
+            updateModel(ChangeEvent.ACTIVE_EDITOR);
         }
     }
 
@@ -529,7 +537,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                     noDiagram = false;
                     // force synthesis of diagram
                     if (currentModel != null) {
-                        updateDiagram(currentModel, true, false);
+                        updateDiagram(currentModel, true, activeEditor);
                     }
                 } else {
                     this.setText(continueText);
@@ -646,7 +654,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
         }
         return "";
     }
-
+    
     // -- Fork
     // -------------------------------------------------------------------------
 
@@ -783,7 +791,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             if (sourceModel == null) {
                 currentModel = null;
                 updateDiagram(new KiCoErrorModel("Cannot read model from active Editor!"), true,
-                        true);
+                        activeEditor);
                 return;
             }
 
@@ -859,7 +867,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                     currentCompilation =
                             new KiCoAsynchronousCompilation(this, (EObject) sourceModel,
                                     activeEditor.getTitle(), transformations);
-                    currentCompilationResult = null;
+                    currentCompilationResult = null;                    
                     currentModel = currentCompilation.getModel();
                     // start
                     currentCompilation.schedule();
@@ -883,15 +891,15 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                     }
 
                     if (showProgress) {// if not the fast case
-                        currentCompilation.showProgress();
+                        currentCompilation.showProgress(viewComposite);
                         currentCompilation.setUpdateModelView(true);
+                        //return;
                     } else { // directly take result and suppress additional update
                         currentModel = currentCompilation.getModel();
                         currentCompilationResult = currentCompilation.getCompilationResult();
                     }
                     // check if given compilation is most recent
-                } else if (compilation == currentCompilation
-                        && currentCompilation.hasFinishedCompilation()) {
+                } else if (compilation == currentCompilation) {
                     // take the result
                     currentModel = currentCompilation.getModel();
                     currentCompilationResult = currentCompilation.getCompilationResult();
@@ -910,7 +918,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             }
 
             // composite model in given display mode
-            if (displaySideBySide) {
+            if (!noDiagram && displaySideBySide) {
                 KiCoModelChain chain = new KiCoModelChain();
                 chain.getModels().add(new KiCoModelWrapper(sourceModel));
                 chain.getModels().add(new KiCoModelWrapper(currentModel));
@@ -944,23 +952,44 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 if (noDiagram && is_buisness_model) {
                     updateDiagram(new KiCoMessageModel(
                             "Model Placeholder: " + getCurrentFileName(),
-                            "Model visualization is deactivated"), true, false);
+                            "Model visualization is deactivated"), true, activeEditor);
                 } else {
-                    updateDiagram(currentModel, model_type_changed, false);
+                    updateDiagram(currentModel, model_type_changed, activeEditor);
                 }
             }
-        } else if (currentCompilation != null) {
+        } else {
             // drop any existing compilation
-            currentCompilation.cancel();
-            currentCompilation = null;
+            if (currentCompilation != null) {
+                currentCompilation.cancel();
+                currentCompilation = null;
+            }
+            currentCompilationResult = null;
+            currentModel = new KiCoMessageModel("No model in active editor");
+            updateDiagram(currentModel, true, null);
         }
+    }
+    
+    /**
+     * Updates displayed diagram in this view in a dedicated job.
+     */  
+    private void updateDiagram(final Object model, final boolean modelTypeChanged, final IEditorPart editorContext){
+        new UIJob("Updating ModelView " + (editorContext != null ? "[ "+editorContext.getTitle()+" ]" : "")) {                  
+
+            @Override
+            public IStatus runInUIThread(IProgressMonitor monitor) {
+                updateDiagram(model, modelTypeChanged, editorContext, false);
+                return Status.OK_STATUS;
+            }
+        }.schedule();
     }
 
     /**
+     * DO NOT CALL THIS METHOD!<p>
+     * This method should only be invoked by {@link #updateDiagram(Object, boolean, IEditorPart)}<p>
      * Updates displayed diagram in this view. Initializes this view if necessary.
      */
-    private synchronized void updateDiagram(Object model, boolean modelTypeChanged,
-            boolean isErrorModel) {
+    private void updateDiagram(final Object model, boolean modelTypeChanged,
+            final IEditorPart editorContext, boolean isErrorModel) {
         try {
             if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
                 // if viewer or context does not exist always init view
@@ -997,12 +1026,12 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             }
 
             // enable synchronous selection between diagram and editor
-            if (activeEditor != null && !isErrorModel) {
-                this.getViewer().getViewContext().setSourceWorkbenchPart(activeEditor);
+            if (editorContext != null && !isErrorModel) {
+                this.getViewer().getViewContext().setSourceWorkbenchPart(editorContext);
             }
         } catch (Exception e) {
             if (!isErrorModel) {
-                updateDiagram(new KiCoErrorModel("Displaying diagram failed!", e), true, true);
+                updateDiagram(new KiCoErrorModel("Displaying diagram failed!", e), true, editorContext, true);
             }
         } finally {
             Platform.removeLogListener(this);

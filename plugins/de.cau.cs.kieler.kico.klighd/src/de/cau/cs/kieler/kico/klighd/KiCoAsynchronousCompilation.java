@@ -18,6 +18,9 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.progress.UIJob;
 
 import de.cau.cs.kieler.kico.CompilationResult;
@@ -27,6 +30,7 @@ import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoMessageModel;
 import de.cau.cs.kieler.kico.ui.KiCoSelection;
+import de.cau.cs.kieler.klighd.KlighdConstants;
 
 /**
  * This Job start an asynchronous Compilation
@@ -82,7 +86,7 @@ public class KiCoAsynchronousCompilation extends Job {
         this.transformations = transformations;
 
         // compilation placeholder
-        this.model = new KiCoMessageModel("Compilation in Progress");
+        this.model = new KiCoMessageModel("Compilation in progress...");
     }
 
     /**
@@ -90,6 +94,12 @@ public class KiCoAsynchronousCompilation extends Job {
      */
     protected IStatus run(final IProgressMonitor monitor) {
         try {
+            monitor.beginTask("whoop", 5000);
+            for (int i = 0; i < 5000; i++) {
+                Thread.sleep(1);
+                monitor.worked(1);
+            }
+
             // compile
             result =
                     KielerCompiler.compile(transformations.getSelectionString(),
@@ -124,11 +134,15 @@ public class KiCoAsynchronousCompilation extends Job {
             finishedCompilation = true;
             updateModelView();
         } catch (Exception e) {// error display
+            if (monitor.isCanceled()) {
+                return Status.CANCEL_STATUS;
+            }
             model = new KiCoErrorModel("Compilation Error!", e);
             updateModelView();
             return new Status(Status.ERROR, KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(),
                     e.getCause());
         }
+        // TODO hide progress
         return Status.OK_STATUS;
     }
 
@@ -185,11 +199,22 @@ public class KiCoAsynchronousCompilation extends Job {
     /**
      * Causes additional progressbars to show up ion model view.
      */
-    public void showProgress() {
+    public void showProgress(Composite parent) {
         if (!showsProgress && !hasFinishedCompilation()) {
-            // TODO show progress
+            Composite progressContainer = new Composite(parent, SWT.NONE);
+            addProgressComponents(progressContainer);
+            progressContainer.pack();
+            parent.layout(true, true);
             showsProgress = true;
         }
+    }
+
+    /**
+     * @param progressContainer
+     */
+    private void addProgressComponents(Composite parent) {
+        final Color white = new Color(parent.getDisplay(), KlighdConstants.WHITE);
+        parent.setBackground(white);
     }
 
     /**
@@ -200,6 +225,8 @@ public class KiCoAsynchronousCompilation extends Job {
         if (showsProgress) {
             // TODO hide progress
         }
+        model = new KiCoErrorModel("Compilation aborted!");
+        updateModelView();
     }
 
 }
