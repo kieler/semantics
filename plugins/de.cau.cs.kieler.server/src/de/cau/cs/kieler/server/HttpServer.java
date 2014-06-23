@@ -333,6 +333,9 @@ public abstract class HttpServer extends Job {
                     System.out.println("Writing Response ...");
                     // output this response to client
 
+                    
+                    System.out.println(response.header.toString());
+                    
                     this.to_client.write(response.header.toString());
                     this.to_client.flush();
                     this.connection.getOutputStream().write(response.body);

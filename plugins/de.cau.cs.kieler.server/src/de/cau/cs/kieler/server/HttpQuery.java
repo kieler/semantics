@@ -123,7 +123,7 @@ public class HttpQuery {
      */
     public static HttpQuery parse(String encodedQueryString, HttpQuery httpQueryString) {
         int i = encodedQueryString.indexOf("?");
-        if (i > 0) {
+        if (i >= 0) {
             String encodedQueryString2 = encodedQueryString.substring(i + 1);
             String[] keyVals = encodedQueryString2.split("&");
             for (String keyVal : keyVals) {

@@ -24,14 +24,14 @@ import java.util.ArrayList;
  */
 public class HttpHeader {
 
-    String statusKey = "HTTP/1.1 ";
-    String statusVal = "200 OK";
-    String serverKey = "Server: ";
+    String statusKey = "http/1.1";
+    String statusVal = "200 ok";
+    String serverKey = "server:";
     String serverVal = "";
-    String urlKey = "URL";
+    String urlKey = "url";
     String urlVal = "";
-    String contentLengthKey = "Content-Length";
-    String contentTypeKey = "Content-Type";
+    String contentLengthKey = "content-length";
+    String contentTypeKey = "content-type";
     String contentLengthVal = "";
     String contentTypeVal = " text/html";
     
@@ -216,24 +216,25 @@ public class HttpHeader {
      * @return the header index
      */
     private int getHeaderIndex(String key) {
-        if (key.equals(serverKey)) {
+        String key2 = key.toLowerCase();
+        if (key2.equals(serverKey)) {
             return -2;
         }
-        if (key.equals(statusKey)) {
+        if (key2.equals(statusKey)) {
             return -2;
         }
-        if (key.equals(contentLengthKey)) {
+        if (key2.equals(contentLengthKey)) {
             return -2;
         }
-        if (key.equals(contentTypeKey)) {
+        if (key2.equals(contentTypeKey)) {
             return -2;
         }
-        if (key.equals(urlKey)) {
+        if (key2.equals(urlKey)) {
             return -2;
         }
         for (int c = 0; c < keys.size(); c++) {
             String searchKey = keys.get(c);
-            if (searchKey.equals(key)) {
+            if (searchKey.equals(key2)) {
                 return c;
             }
         }
@@ -249,24 +250,25 @@ public class HttpHeader {
      * @return the header
      */
     public String getHeader(String key) {
-        if (key.equals(serverKey)) {
+        String key2 = key.toLowerCase();
+        if (key2.equals(serverKey)) {
             return serverVal;
         }
-        if (key.equals(statusKey)) {
+        if (key2.equals(statusKey)) {
             return statusVal;
         }
-        if (key.equals(contentLengthKey)) {
+        if (key2.equals(contentLengthKey)) {
             return contentLengthVal;
         }
-        if (key.equals(contentTypeKey)) {
+        if (key2.equals(contentTypeKey)) {
             return contentTypeVal;
         }
-        if (key.equals(urlKey)) {
+        if (key2.equals(urlKey)) {
             return urlVal;
         }
         for (int c = 0; c < keys.size(); c++) {
             String searchKey = keys.get(c);
-            if (searchKey.equals(key)) {
+            if (searchKey.equals(key2)) {
                 return vals.get(c);
             }
         }
@@ -282,15 +284,16 @@ public class HttpHeader {
      * @param value the value
      */
     public void setHeaderField(String key, String value) {
-        int index = getHeaderIndex(key);
+        String key2 = key.toLowerCase();
+        int index = getHeaderIndex(key2);
         if (index == -2) {
-            if (key.equals(serverKey)) {
+            if (key2.equals(serverKey)) {
                 setServerName(value);
             }
-            if (key.equals(statusKey)) {
+            if (key2.equals(statusKey)) {
                 setStatus(value);
             }
-            if (key.equals(contentLengthKey)) {
+            if (key2.equals(contentLengthKey)) {
                 int valueInt = 0;
                 try {
                     valueInt = Integer.parseInt(value);
@@ -298,15 +301,15 @@ public class HttpHeader {
                 }
                 setContentLength(valueInt);
             }
-            if (key.equals(contentTypeKey)) {
+            if (key2.equals(contentTypeKey)) {
                 setType(value);
             }
-            if (key.equals(urlKey)) {
+            if (key2.equals(urlKey)) {
                 setURL(value);
             }
         } else if (index == -1) {
             // new
-            keys.add(key);
+            keys.add(key2);
             vals.add(value);
         } else {
             // old - replace
@@ -322,15 +325,17 @@ public class HttpHeader {
      */
     public String toString() {
         String returnText = "";
-        returnText += this.statusKey + " " + this.statusVal + "\r\n";
-        returnText += this.serverKey + " " + this.serverVal + "\r\n";
-        returnText += this.contentTypeKey + " " + this.contentTypeVal + "\r\n";
-        returnText += this.contentLengthKey + " " + this.contentLengthVal + "\r\n";
-        returnText += this.urlKey + " " + this.urlVal + "\r\n";
+        returnText += this.statusKey.toUpperCase() + " " + this.statusVal + "\r\n";
+        returnText += this.serverKey + ": " + this.serverVal + "\r\n";
+        returnText += this.contentTypeKey + ": " + this.contentTypeVal + "\r\n";
+        returnText += this.contentLengthKey + ": " + this.contentLengthVal + "\r\n";
+        if (urlVal.length() > 0) {
+            returnText += this.urlKey + ": " + this.urlVal + "\r\n";
+        }
         for (int c = 0; c < keys.size(); c++) {
             String key = keys.get(c);
             String val = vals.get(c);
-            returnText += key + " " + val + "\r\n";
+            returnText += key + ": " + val + "\r\n";
         }
         returnText += "\r\n";
         return returnText;
