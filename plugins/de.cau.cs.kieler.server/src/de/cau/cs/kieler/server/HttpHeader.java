@@ -26,7 +26,7 @@ public class HttpHeader {
 
     String statusKey = "http/1.1";
     String statusVal = "200 ok";
-    String serverKey = "server:";
+    String serverKey = "server";
     String serverVal = "";
     String urlKey = "url";
     String urlVal = "";
