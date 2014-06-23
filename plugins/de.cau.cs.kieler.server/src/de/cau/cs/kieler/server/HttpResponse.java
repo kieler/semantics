@@ -23,9 +23,7 @@ import java.util.Hashtable;
  * @kieler.rating 2014-06-08 proposed yellow
  *
  */
-public class HttpResponse {
+public class HttpResponse extends HttpMessage {
     
-    public byte[] body;
-    public HttpHeader header;
 
 }

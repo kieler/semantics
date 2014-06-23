@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.server;
 
-import java.util.Hashtable;
 
 /**
  * HttpRequest implements a response that is used in a HttpServer implementation.
@@ -23,9 +22,6 @@ import java.util.Hashtable;
  * @kieler.rating 2014-06-08 proposed yellow
  *
  */
-public class HttpRequest {
+public class HttpRequest extends HttpMessage {
 
-    public byte[] body;
-    public HttpHeader  header;
-    
 }

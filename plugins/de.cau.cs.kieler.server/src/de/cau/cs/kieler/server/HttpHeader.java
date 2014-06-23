@@ -28,10 +28,14 @@ public class HttpHeader {
     String statusVal = "200 OK";
     String serverKey = "Server: ";
     String serverVal = "";
+    String urlKey = "URL";
+    String urlVal = "";
     String contentLengthKey = "Content-Length";
-    String contentTypeKey = "Content-Length";
+    String contentTypeKey = "Content-Type";
     String contentLengthVal = "";
     String contentTypeVal = " text/html";
+    
+    HttpQuery queryString = new HttpQuery();
     
     ArrayList<String> keys = new ArrayList<String>();
     ArrayList<String> vals = new ArrayList<String>();
@@ -154,6 +158,45 @@ public class HttpHeader {
     }
 
     //-------------------------------------------------------------------------
+
+    /**
+     * Sets the URL.
+     *
+     * @param serverName the new server name
+     */
+    public void setURL(String url) {
+        urlVal = url;
+        queryString = new HttpQuery(urlVal);
+    }
+
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * Gets the URL.
+     *
+     */
+    public String getURL() {
+        String encoded = queryString.getEncodedString();
+        
+        String prior = urlVal;
+        int i = prior.indexOf("?");
+        if (i >= 0) {
+            prior = prior.substring(0, i);
+        }
+        String after = prior + encoded;
+        
+        return after;
+    }
+    
+    //-------------------------------------------------------------------------
+    
+    public HttpQuery getQuery() {
+        return queryString;
+    }
+
+    //-------------------------------------------------------------------------
+    
     
     /**
      * Sets the content length.
@@ -185,13 +228,16 @@ public class HttpHeader {
         if (key.equals(contentTypeKey)) {
             return -2;
         }
+        if (key.equals(urlKey)) {
+            return -2;
+        }
         for (int c = 0; c < keys.size(); c++) {
             String searchKey = keys.get(c);
             if (searchKey.equals(key)) {
                 return c;
             }
         }
-        return 0;
+        return -1;
     }
     
     //-------------------------------------------------------------------------
@@ -215,6 +261,9 @@ public class HttpHeader {
         if (key.equals(contentTypeKey)) {
             return contentTypeVal;
         }
+        if (key.equals(urlKey)) {
+            return urlVal;
+        }
         for (int c = 0; c < keys.size(); c++) {
             String searchKey = keys.get(c);
             if (searchKey.equals(key)) {
@@ -236,18 +285,26 @@ public class HttpHeader {
         int index = getHeaderIndex(key);
         if (index == -2) {
             if (key.equals(serverKey)) {
-                serverVal = value;
+                setServerName(value);
             }
             if (key.equals(statusKey)) {
-                statusVal = value;
+                setStatus(value);
             }
             if (key.equals(contentLengthKey)) {
-                contentLengthVal = value;
+                int valueInt = 0;
+                try {
+                    valueInt = Integer.parseInt(value);
+                } catch(Exception e) {
+                }
+                setContentLength(valueInt);
             }
             if (key.equals(contentTypeKey)) {
-                contentTypeVal = value;
+                setType(value);
             }
-        } else if (index == 0) {
+            if (key.equals(urlKey)) {
+                setURL(value);
+            }
+        } else if (index == -1) {
             // new
             keys.add(key);
             vals.add(value);
@@ -268,15 +325,14 @@ public class HttpHeader {
         returnText += this.statusKey + " " + this.statusVal + "\r\n";
         returnText += this.serverKey + " " + this.serverVal + "\r\n";
         returnText += this.contentTypeKey + " " + this.contentTypeVal + "\r\n";
-        returnText += this.contentLengthKey + " " + this.contentLengthKey + "\r\n";
+        returnText += this.contentLengthKey + " " + this.contentLengthVal + "\r\n";
+        returnText += this.urlKey + " " + this.urlVal + "\r\n";
         for (int c = 0; c < keys.size(); c++) {
             String key = keys.get(c);
             String val = vals.get(c);
             returnText += key + " " + val + "\r\n";
         }
         returnText += "\r\n";
-        returnText += this.statusKey + " " + this.statusVal + "\r\n";
-        returnText += this.statusKey + " " + this.statusVal + "\r\n";
         return returnText;
     }
 

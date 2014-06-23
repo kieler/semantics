@@ -318,20 +318,26 @@ public abstract class HttpServer extends Job {
                 HttpRequest request = new HttpRequest();
                 request.header = this.httpParser.getHeader();
                 request.body = this.httpParser.body;
+                if (request.body == null) {
+                    request.body = "".getBytes();
+                }
 
                 // Main work is done in the derived HttpServer.handleRequest() method
                 HttpResponse response = this.httpServer.handleRequest(request);
 
-                // "In HTTP, it SHOULD be sent whenever the message's length
-                // can be determined prior to being transferred" rfc2616
-                int Length = response.body.length;
+                if (response != null) {
+                    // "In HTTP, it SHOULD be sent whenever the message's length
+                    // can be determined prior to being transferred" rfc2616
+                    int Length = response.body.length;
 
-                System.out.println("Writing Response ...");
-                // output this response to client
+                    System.out.println("Writing Response ...");
+                    // output this response to client
 
-                this.to_client.write(response.header.toString());
-                this.to_client.flush();
-                this.connection.getOutputStream().write(response.body);
+                    this.to_client.write(response.header.toString());
+                    this.to_client.flush();
+                    this.connection.getOutputStream().write(response.body);
+                }
+                
                 this.to_client.flush();
                 this.to_client.close();
                 this.connection.close();
