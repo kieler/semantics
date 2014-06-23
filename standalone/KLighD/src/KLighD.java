@@ -43,8 +43,8 @@ import java.util.Map.Entry;
  * @kieler.design 2014-06-08 proposed
  * @kieler.rating 2014-06-08 proposed yellow
  * 
- *                Example Call: C:\DATA\KEPLER\KLighD\bin>cat ../ABRO.sct | java
- *                KLighD localhost:4444 -f abro.sct -s 1 -r png -o mode.png
+ *                Example Call: C:\DATA\KEPLER\KLighD\bin>cat ../ABRO.sct | java KLighD
+ *                localhost:4444 -f abro.sct -s 1 -r png -o mode.png
  * 
  */
 public class KLighD {
@@ -72,10 +72,8 @@ public class KLighD {
                             + "Example 1:\n"
                             + "  cat <FILE.sct> | java -jar KLighD.jar localhost:4444 -r png -s 3 > model.png\n"
                             + "Example 2:\n"
-                            + "  java -jar KLighD.jar 4444 -f FILE.sct -o model.png \n"
-                            + "\n"
-                            + "Options:\n"
-                            + "-f <filename> : Use a specific input file\n"
+                            + "  java -jar KLighD.jar 4444 -f FILE.sct -o model.png \n" + "\n"
+                            + "Options:\n" + "-f <filename> : Use a specific input file\n"
                             + "-i <filename> : Include additional input files\n"
                             + "-o <filename> : Use a specific output file\n"
                             + "-r            : Render as png or svg, default is png\n"
@@ -104,7 +102,7 @@ public class KLighD {
                 port = 4444;
             }
         }
-        
+
         String render = "png";
         String scale = "1";
 
@@ -140,7 +138,7 @@ public class KLighD {
                         c++;
                     }
                 }
-            } 
+            }
 
         }
 
@@ -152,21 +150,19 @@ public class KLighD {
         // System.out.println("strict: " + strict);
         // System.out.println("transformations: " + transformations);
 
-        
         ArrayList<String> models = new ArrayList<String>();
-        
+
         String model = readInputModel(inputFile);
         models.add(model);
 
         for (String includeFile : includeFiles) {
             String includedModel = readInputModel(includeFile);
-            //model += "\n\n" + includedModel;
+            // model += "\n\n" + includedModel;
             models.add(includedModel);
         }
         // System.out.println("model: " + model);
 
-        RenderResult renderResult =
-                remoteRender(host, port, outputFile, render, scale, models);
+        RenderResult renderResult = remoteRender(host, port, outputFile, render, scale, models);
 
         if (outputFile == null || outputFile.trim().equals("")) {
             try {
@@ -283,89 +279,86 @@ public class KLighD {
             String render, String scale, ArrayList<String> models) {
         RenderResult result = new RenderResult(new byte[0], "");
 
-        String options = render + ":" + scale ;
+        String options = render + ":" + scale;
 
         try {
-            
-            
-            String query = "model=" +  URLEncoder.encode(models.get(0));
+
+            String query = "model=" + URLEncoder.encode(models.get(0));
             if (models.size() > 1) {
                 for (int c = 1; c < models.size(); c++) {
-                    query += "&include" + (c-1) + "=" + URLEncoder.encode(models.get(1));
+                    query += "&include" + (c - 1) + "=" + URLEncoder.encode(models.get(1));
                 }
             }
             query += "&scale=" + scale;
 
-            
-            String urlString = "http://"+ host + ":" + port + "?" + query;
-            //System.out.println(urlString);
-            
+            String urlString = "http://" + host + ":" + port + "?" + query;
+            // System.out.println(urlString);
+
             URL url = new URL(urlString);
-            
+
             URLConnection yc = url.openConnection();
 
             int len = yc.getContentLength();
-            
-            //System.out.println("Len = " + len);
-            
-            
-//            Map<String, List<String>> fields = yc.getHeaderFields();
-//            for (Entry<String, List<String>> field : fields.entrySet()) {
-//                String key = field.getKey();
-//                String val = "";
-//                for (String value : field.getValue()) {
-//                    if (!val.equals("")) {
-//                        val += ", ";
-//                    }
-//                    val += value;
-//                }
-//                System.out.println(key + "=" + val);
-//            }
-            
-            BufferedReader in = new BufferedReader(
-                                    new InputStreamReader(
-                                    yc.getInputStream()));
-            
+
+            // System.out.println("Len = " + len);
+
+            // Map<String, List<String>> fields = yc.getHeaderFields();
+            // for (Entry<String, List<String>> field : fields.entrySet()) {
+            // String key = field.getKey();
+            // String val = "";
+            // for (String value : field.getValue()) {
+            // if (!val.equals("")) {
+            // val += ", ";
+            // }
+            // val += value;
+            // }
+            // System.out.println(key + "=" + val);
+            // }
+
+            // BufferedReader in = new BufferedReader(
+            // new InputStreamReader(
+            // yc.getInputStream()));
+
+            InputStream in = yc.getInputStream();
+
             byte[] bytes = new byte[len];
-            
-            yc.getInputStream().read(bytes, 0, len);
-            
+
+            in.read(bytes); //, 0, len);
+
             String resultString = "";
-            
-//            String inputLine;
-//
-//            while ((inputLine = in.readLine()) != null) {
-//                resultString += inputLine;
-//            }
-            in.close();
-            
-            
+
+            // String inputLine;
+            //
+            // while ((inputLine = in.readLine()) != null) {
+            // resultString += inputLine;
+            // }
+            yc.getInputStream().close();
+
             result.model = bytes;
 
-//            RenderResult result = new RenderResult(modelResult,  null);
-            
-            
-//            
-//            TCPClient client = new KLighD.TCPClient(host, port);
-//            client.sndMessage(options + "\n");
-//            
-//            String header = "";
-//            for (String model : models) {
-//                if (header.length() > 0) {
-//                    header += ":";
-//                }
-//                header += model.split("\n").length + "";
-//            }
-//            header += "\n";
-//            client.sndMessage(header);
-//            
-//            for (String model : models) {
-//                client.sndMessage(model);
-//            }
-//
-//            result = client.rcvCompilationResult();
-//
-//            client.close();
+            // RenderResult result = new RenderResult(modelResult, null);
+
+            //
+            // TCPClient client = new KLighD.TCPClient(host, port);
+            // client.sndMessage(options + "\n");
+            //
+            // String header = "";
+            // for (String model : models) {
+            // if (header.length() > 0) {
+            // header += ":";
+            // }
+            // header += model.split("\n").length + "";
+            // }
+            // header += "\n";
+            // client.sndMessage(header);
+            //
+            // for (String model : models) {
+            // client.sndMessage(model);
+            // }
+            //
+            // result = client.rcvCompilationResult();
+            //
+            // client.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -390,82 +383,82 @@ public class KLighD {
 
     // -------------------------------------------------------------------------
 
-//    /**
-//     * The internal Class TCPClient.
-//     */
-//    static private class TCPClient {
-//        Socket socket = null;
-//
-//        public TCPClient(String host, int port) throws IOException {
-//            socket = new Socket(host, port);
-//        }
-//
-//        void sndMessage(String msg) throws IOException {
-//            OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
-//            PrintWriter printWriter = new PrintWriter(out);
-//            printWriter.print(msg);
-//            printWriter.flush();
-//            out.flush();
-//        }
-//
-//        RenderResult rcvCompilationResult() throws IOException {
-//            int bufferSize = socket.getReceiveBufferSize();
-//            InputStream in = socket.getInputStream();
-//            //BufferedReader bufferedReader = new BufferedReader(in);
-//
-//            int len = in.read();
-////            while (true) {
-////                char c = (char) 
-////                if (c == '\n') {
-////                    break;
-////                }
-////                len += c;
-////            }
-////            int lenInteger = 0;
-////            try {
-////                lenInteger = Integer.parseInt(len);
-////            } catch(Exception e) {
-////            }
-//            
-//            ArrayList<Byte> model = new ArrayList<Byte>();
-//            byte[] bytes = new byte[bufferSize];
-//            int count;
-//            while ((count = in.read(bytes)) > 0) {
-//                for (byte data : bytes) {
-//                    model.add(data);
-//                    count--;
-//                    if (count == 0) {
-//                        break;
-//                    }
-//                }
-//                //bos.write(bytes, 0, count);
-//            }
-//            
-//            byte[] returnModel = new byte[model.size()];
-//            int c = 0;
-//            for (Byte data : model) {
-//                returnModel[c] = data;
-//                System.out.println(c  + ", " + len + ", " + ((int)returnModel[c]));
-//                c++;
-//            }
-//            
-//            String error = "";
-////            int c = 0;
-////            while (len > 0) {
-////                model[c] = (byte) in.read();
-////                System.out.println(c  + ", " + len + ", " + ((int)model[c]));
-////                c++;
-////                len--;
-////            }
-//
-//            return new RenderResult(returnModel, error);
-//        }
-//
-//        void close() throws IOException {
-//            socket.close();
-//        }
-//
-//    }
+    // /**
+    // * The internal Class TCPClient.
+    // */
+    // static private class TCPClient {
+    // Socket socket = null;
+    //
+    // public TCPClient(String host, int port) throws IOException {
+    // socket = new Socket(host, port);
+    // }
+    //
+    // void sndMessage(String msg) throws IOException {
+    // OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
+    // PrintWriter printWriter = new PrintWriter(out);
+    // printWriter.print(msg);
+    // printWriter.flush();
+    // out.flush();
+    // }
+    //
+    // RenderResult rcvCompilationResult() throws IOException {
+    // int bufferSize = socket.getReceiveBufferSize();
+    // InputStream in = socket.getInputStream();
+    // //BufferedReader bufferedReader = new BufferedReader(in);
+    //
+    // int len = in.read();
+    // // while (true) {
+    // // char c = (char)
+    // // if (c == '\n') {
+    // // break;
+    // // }
+    // // len += c;
+    // // }
+    // // int lenInteger = 0;
+    // // try {
+    // // lenInteger = Integer.parseInt(len);
+    // // } catch(Exception e) {
+    // // }
+    //
+    // ArrayList<Byte> model = new ArrayList<Byte>();
+    // byte[] bytes = new byte[bufferSize];
+    // int count;
+    // while ((count = in.read(bytes)) > 0) {
+    // for (byte data : bytes) {
+    // model.add(data);
+    // count--;
+    // if (count == 0) {
+    // break;
+    // }
+    // }
+    // //bos.write(bytes, 0, count);
+    // }
+    //
+    // byte[] returnModel = new byte[model.size()];
+    // int c = 0;
+    // for (Byte data : model) {
+    // returnModel[c] = data;
+    // System.out.println(c + ", " + len + ", " + ((int)returnModel[c]));
+    // c++;
+    // }
+    //
+    // String error = "";
+    // // int c = 0;
+    // // while (len > 0) {
+    // // model[c] = (byte) in.read();
+    // // System.out.println(c + ", " + len + ", " + ((int)model[c]));
+    // // c++;
+    // // len--;
+    // // }
+    //
+    // return new RenderResult(returnModel, error);
+    // }
+    //
+    // void close() throws IOException {
+    // socket.close();
+    // }
+    //
+    // }
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------

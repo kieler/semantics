@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.klighd.server;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 //import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
@@ -148,6 +149,13 @@ public class KlighdServer extends HttpServer {
                 }
             }
             debug("Model rendered");
+            
+            
+            try {
+                outputStreamParam.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             byte[] serializedRenderedModel = null;
             if (renderingResult != null && renderingResult.getCode() == IStatus.OK) {
