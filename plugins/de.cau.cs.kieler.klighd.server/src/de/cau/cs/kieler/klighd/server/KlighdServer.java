@@ -70,8 +70,8 @@ public class KlighdServer extends HttpServer {
     protected HttpResponse handleRequest(HttpRequest request) {
 
         String render = "png";
-        String scale = "3";
-        int scaleInteger = 3;
+        String scale = "1";
+        int scaleInteger = 1;
 
         debug("Transformations read");
 
@@ -81,7 +81,14 @@ public class KlighdServer extends HttpServer {
         HttpQuery query = header.getQuery();
 
         // Check the query
-        if (query.getValue("Submit").trim().equals("Compile")) {
+        if (query.getValue("model").length() > 0) {
+
+            // Parse options
+            scale = query.getValue("scale");
+            try {
+                scaleInteger = Integer.parseInt(scale);
+            } catch (Exception e) {
+            }
 
             // Read all models in "model" and "include1", "include2", ...
             ArrayList<String> models = new ArrayList<String>();
@@ -123,7 +130,7 @@ public class KlighdServer extends HttpServer {
             final IProperty<Integer> property = IOffscreenRenderer.IMAGE_SCALE;
             final KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
             properties.setProperty(property, scaleInteger);
-                    
+
             renderingDone = false;
             Display defaultDisplay = Display.getDefault();
             defaultDisplay.asyncExec(new Runnable() {
@@ -156,7 +163,6 @@ public class KlighdServer extends HttpServer {
             }
             debug("Model serialized");
 
-
             HttpHeader responseHeader = new HttpHeader();
             responseHeader.setServerName("KIELER Compiler Server");
             responseHeader.setContentLength(serializedRenderedModel.length);
@@ -165,15 +171,15 @@ public class KlighdServer extends HttpServer {
             HttpResponse response = new HttpResponse();
             response.setHeader(responseHeader);
             response.setBody(serializedRenderedModel);
-            
-//            String responeBody = "Huhu";
-//            HttpHeader responseHeader = new HttpHeader();
-//            responseHeader.setServerName("KIELER Compiler Server");
-//            responseHeader.setContentLength(responeBody.getBytes().length);
-//            responseHeader.setStatusOk();
-//            HttpResponse response = new HttpResponse();
-//            response.setHeader(responseHeader);
-//            response.setBody(responeBody);
+
+            // String responeBody = "Huhu";
+            // HttpHeader responseHeader = new HttpHeader();
+            // responseHeader.setServerName("KIELER Compiler Server");
+            // responseHeader.setContentLength(responeBody.getBytes().length);
+            // responseHeader.setStatusOk();
+            // HttpResponse response = new HttpResponse();
+            // response.setHeader(responseHeader);
+            // response.setBody(responeBody);
 
             return response;
         }

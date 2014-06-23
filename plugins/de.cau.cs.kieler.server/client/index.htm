@@ -1,0 +1,159 @@
+<style type="text/css">
+<!--
+.Stil1 {
+	font-size: xx-large;
+	font-weight: bold;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+.Stil3 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: xx-large;}
+.Stil4 {color: #0000FF}
+-->
+</style>
+
+<script>
+
+
+function setResultText() {
+    var image = document.getElementById("resultImageDiv");
+    var text = document.getElementById("resultTextDiv");
+	text.style.display="block";
+	image.style.display="none";
+	compile();
+//	alert("setResultText" + image + text);
+}
+
+function setResultImage() {
+//	alert("setResultImage");
+    var image = document.getElementById("resultImageDiv");
+    var text = document.getElementById("resultTextDiv");
+	image.style.display="block";
+	text.style.display="none";
+	compile();
+}
+
+function compile() {
+    var outputText = document.getElementById("outputText");
+    if(outputText.checked) {
+		compileText();
+	} 
+	else {
+		compileImage();
+	}
+}
+
+function compileText()
+{
+}
+
+
+function compileImage()
+{
+    var image = document.getElementById("resultImage");
+    if(image.complete) {
+	    var model = document.getElementById("model")
+	    var transformations = document.getElementById("transformations")
+	    var scale = document.getElementById("scale")
+        var new_image = new Image();
+        //set up the new image
+        new_image.id = "resultImage";
+		var imageUrl = "http://localhost:4444/?model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&scale=" + encodeURIComponent(scale.value);
+        new_image.src = imageUrl;
+        // insert new image and remove old
+        image.parentNode.insertBefore(new_image, image);
+        image.parentNode.removeChild(image);
+    }
+    setTimeout(updateImage, 1000);
+}
+</script>
+
+<div align="center">
+  <p><img src="sccharts.png" width="512" height="150" /></p>
+  <p><span class="Stil3">Sequentially Constructive Charts - SCCharts</span><span class="Stil1"><br />
+      <span class="Stil4">ONLINE COMPILER</span></span></p>
+    <table width="300" border="2" cellspacing="5">
+      <tr>
+        <th valign="top" scope="row">1. SCChart  </th>
+        <td><label>
+          <textarea name="model" cols="70" rows="25" id="model">
+@HVLayout
+scchart ABRO {
+  input bool A;
+  input bool B;
+  input bool R;
+  output bool O = false;
+
+  region Main:
+
+  initial state ABO {
+
+    initial state WaitAB {
+
+      region HandleA:
+
+      initial state WA
+      --> DA with A;
+
+      final state DA;
+
+      region HandleB:
+
+      initial state WB
+      --> DB with B;
+
+      final state DB;
+    }
+    >-> Done with / O = true;
+
+    state Done;
+  }
+  o-> ABO with R;
+}
+</textarea>
+        </label></td>
+		<td rowspan="3">
+		<div id="resultImageDiv" style="font:24px bold; display: none">
+        <img src="xxx" name="resultImage" id="resultImage" /></div>
+		<div id="resultTextDiv" style="font:24px bold; display: none">
+          <textarea name="resultText" cols="70" rows="25" id="resultText">
+          </textarea>
+		  </div>
+       </td>
+      </tr>
+      <tr>
+        <th valign="top" scope="row">2. Compile Transformations  </th>
+        <td><label>
+          <input name="transformations" type="text" id="transformations" size="100" value="ABORT"/>
+        </label></td>
+      </tr>
+      <tr>
+        <th valign="top" scope="row"><p>3. Other Options </p>        </th>
+        <td><p>
+          <label>
+            <input type="radio" name="output" value="text" id="outputText" onclick="setResultText();" />
+            textual output </label>
+          <br />
+          <label>
+            <input type="radio" name="output" value="graph" id="outputImage" onclick="setResultImage();" />
+            graphical  </label>
+          output, 
+          <label>scale:
+          <select name="scale" id="scale">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+          </label>
+          <br />
+        </p></td>
+      </tr>
+      <tr>
+        <th colspan="2" scope="row"><label>
+        <input type="submit" name="Submit" value=" Compile " onclick="compile();" />
+        </label></th>
+      </tr>
+    </table>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</div>
