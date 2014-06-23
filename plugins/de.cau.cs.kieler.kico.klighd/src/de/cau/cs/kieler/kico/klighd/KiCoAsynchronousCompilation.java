@@ -94,12 +94,6 @@ public class KiCoAsynchronousCompilation extends Job {
      */
     protected IStatus run(final IProgressMonitor monitor) {
         try {
-            monitor.beginTask("whoop", 5000);
-            for (int i = 0; i < 5000; i++) {
-                Thread.sleep(1);
-                monitor.worked(1);
-            }
-
             // compile
             result =
                     KielerCompiler.compile(transformations.getSelectionString(),
