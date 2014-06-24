@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
        "http://www.w3.org/TR/html4/loose.dtd"><head>
-<title>KIELER SCCharts Compiler - Sequentially Constructive Charts - KIELER Compiler - KiCo </title>	   
+<title>KIELER SCCharts Compiler - Sequentially Constructive Charts - KIELER Compiler - KiCo </title>
 <meta http-equiv="expires" content="0">
 <style type="text/css">
 <!--
@@ -65,7 +65,7 @@ function compile() {
     if(outputText.checked) {
 		doUpdateImage = false;
 		compileText();
-	} 
+	}
 	else {
 		doUpdateImage = true;
 		compileText();
@@ -97,12 +97,12 @@ function compileText() {
 		  } else {
 		  	  clearErrors();
 		  }
-		  
+
 		  if (doUpdateImage) {
 		  		updateImage();
 	      }
 		}
-	}	
+	}
 	xmlhttp.open('GET', resultUrl, true);
 	xmlhttp.send();
 }
@@ -129,20 +129,20 @@ function updateImage() {
         // insert new image and remove old
         image.parentNode.insertBefore(new_image, image);
         image.parentNode.removeChild(image);
-		
+
 		new_image.onload = function() {
 			var size = document.getElementById("size");
-			var width = new_image.naturalWidth; 
+			var width = new_image.naturalWidth;
 			var height = new_image.naturalHeight;
 			new_image.width = width/size.value;
 			new_image.height = height/size.value;
 	    }
-		//var width = new_image.naturalWidth; 
+		//var width = new_image.naturalWidth;
 		//var height = new_image.naturalHeight;
 		//alert(width + "," + height);
 		//new_image.width = "50%";
 		//new_image.height = "50%";
-		
+
     }
 }
 
@@ -199,9 +199,9 @@ scchart ABRO {
             <tr>
               <th valign="top" scope="row"><div align="right" class="Stil8">2. Compile Transformations </div></th>
               <td><label>
-			  <div class="input-w"  style="width: auto"> 
+			  <div class="input-w"  style="width: auto">
                 <input name="transformations" type="text" id="transformations" size="94" value="ABORT" style="width: 100%"/>
-			  </div>			  
+			  </div>
               </label></td>
             </tr>
             <tr>
@@ -211,9 +211,9 @@ scchart ABRO {
                 <span class="Stil8">
                 <input name="strict" type="checkbox" id="strict" value="true" onclick="compile();">
                 Strict</span></label>
-                <span class="Stil8 Stil10"><br>  
+                <span class="Stil8 Stil10"><br>
                 <label>
-                <input name="verbose" type="checkbox" id="verbose" value="true" onclick="compile();"> 
+                <input name="verbose" type="checkbox" id="verbose" value="true" onclick="compile();">
                 Verbose                </label>
                 </span></p>
                 <p>
@@ -226,7 +226,7 @@ scchart ABRO {
                   <img src="model.png" alt=" " width="11" height="14" />                Graphical output <BR>
                 <BR>
 &nbsp; 	&nbsp; 	 	&nbsp; Quality: </label>
-                
+
                   <label></label>
                   <label></label>
                                     </span>
@@ -239,17 +239,17 @@ scchart ABRO {
                     <option>4</option>
                     <option>5</option>
                   </select>
-                  , Size: 
+                  , Size:
                   <select name="size" id="size" onchange="compile();">
                     <option value="1">100%</option>
                     <option value="1.5">75%</option>
                     <option value="2">50%</option>
                     <option value="4">25%</option>
                     <option value="10">10%</option>
-                  </select> 
+                  </select>
                   </span><br>
                   <br>
-                <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Show/Hide Advanced Options</a></span></p>
+                <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Advanced Options</a></span></p>
 		<div id="advancedOptions" style="font:24px bold; display: none">
 		<span class="Stil8 Stil10">
                 <table width="370" border="0" cellspacing="5">
@@ -267,7 +267,7 @@ scchart ABRO {
                     <th scope="row"><div align="right">Refresh-Time:</div></th>
                     <td><input name="refreshTime" type="text" id="refreshTime" size="30" value="2000"></td>
                   </tr>
-                </table>  </span>              
+                </table>  </span>
 				</div></td>
             </tr>
             <tr>
@@ -276,18 +276,18 @@ scchart ABRO {
                   <input type="submit" name="Submit" value=" Compile / Update " onclick="compile();" />
               </div></th>
             </tr>
-          </table>          
+          </table>
           <p><br />
           </p></td>
         <td  valign="top">
-		
+
           <table width="300" border="0" cellspacing="10">
             <tr><td>
-		
+
 		<div id="resultErrorDiv" style="font:24px bold; display: none">
           <textarea name="resultError" cols="70" rows="4" id="resultError" readonly=true style="background-color: #FF0000"></textarea>
 		  <br>
-		 </div>		
+		 </div>
 		<div id="resultImageDiv" style="font:24px bold; display: none">
         <img src="xxx" name="resultImage" id="resultImage"/></div>
 		<div id="resultTextDiv" style="font:24px bold; display: none">
@@ -296,8 +296,8 @@ scchart ABRO {
 		  </td>
       </tr>
     </table>
-		  
-		  
+
+
 		  </td>
       </tr>
     </table>
