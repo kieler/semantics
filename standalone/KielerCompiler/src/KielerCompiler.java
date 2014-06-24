@@ -159,7 +159,7 @@ public class KielerCompiler {
                 remoteCompile(host, port, outputFile, verbose, strict, models, transformations);
 
         if (outputFile == null || outputFile.trim().equals("")) {
-            System.out.println(compilationResult.model);
+            System.out.println(new String(compilationResult.model));
         } else {
             writeOutputModel(outputFile, compilationResult.model);
         }
