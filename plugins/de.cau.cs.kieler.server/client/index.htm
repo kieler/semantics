@@ -136,10 +136,10 @@ function updateImage() {
   <p><img src="sccharts.png" width="512" height="150" /></p>
   <p><span class="Stil3">Sequentially Constructive Charts - SCCharts</span><span class="Stil1"><br />
       <span class="Stil4">ONLINE COMPILER</span></span></p>
-    <table width="300" border="0" cellspacing="5">
+    <table width="300" border="0" cellspacing="0">
       <tr>
         <td colspan="2" valign="top" scope="row"><label></label>
-          <table width="300" border="0" cellspacing="5">
+          <table width="300" border="0" cellspacing="10">
             <tr>
               <th valign="top" scope="row"><div align="right">1. SCChart </div></th>
               <td valign="top"><label>
@@ -197,7 +197,7 @@ scchart ABRO {
                 <label> <br>
                   <input type="radio" name="output" value="graph" id="outputImage" onclick="setResultImage();" />
                 graphical output <BR><BR>
-                 	&nbsp; 	&nbsp; 	 	&nbsp; quality:                </label>
+               	  &nbsp; 	&nbsp; 	 	&nbsp; quality:                </label>
                 
                   <label></label>
                 <label></label>
@@ -228,6 +228,10 @@ scchart ABRO {
           </table>          <p><br />
           </p></td>
         <td  valign="top">
+		
+          <table width="300" border="0" cellspacing="10">
+            <tr><td>
+		
 		<div id="resultErrorDiv" style="font:24px bold; display: none">
           <textarea name="resultError" cols="70" rows="4" id="resultError" readonly=true style="background-color: #FF0000"></textarea>
 		  <br>
@@ -236,7 +240,13 @@ scchart ABRO {
         <img src="xxx" name="resultImage" id="resultImage"/></div>
 		<div id="resultTextDiv" style="font:24px bold; display: none">
           <textarea name="resultText" cols="70" rows="25" id="resultText" readonly=true style="background-color: #CCCCCC"></textarea>
-		  </div></td>
+		  </div>
+		  </td>
+      </tr>
+    </table>
+		  
+		  
+		  </td>
       </tr>
     </table>
   <p>&nbsp;</p>
