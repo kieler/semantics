@@ -278,7 +278,7 @@ public class KielerCompiler {
                     query += "&include" + (c - 1) + "=" + URLEncoder.encode(models.get(1));
                 }
             }
-            query += "&verbose=" + verbose + "&strict=" + strict;
+            query += "&verbose=" + verbose + "&strict=" + strict + "&transformations=" + transformations;
 
             String urlString = "http://" + host + ":" + port + "?" + query;
             // System.out.println(urlString);
