@@ -74,6 +74,7 @@ function compileImage()
     }
     setTimeout(updateImage, 1000);
 }
+
 </script>
 
 <div align="center">
@@ -84,7 +85,7 @@ function compileImage()
       <tr>
         <th valign="top" scope="row"><div align="right">1. SCChart  </div></th>
         <td><label>
-          <textarea name="model" cols="70" rows="25" id="model">
+          <textarea name="model" cols="70" rows="25" id="model" onchange="compile();">
 @HVLayout
 scchart ABRO {
   input bool A;
@@ -125,8 +126,7 @@ scchart ABRO {
         <img src="xxx" name="resultImage" id="resultImage" /></div>
 		<div id="resultTextDiv" style="font:24px bold; display: none">
           <textarea name="resultText" cols="70" rows="25" id="resultText" readonly=true style="background-color: #CCCCCC">compiling...</textarea>
-		  </div>
-       </td>
+		  </div>       </td>
       </tr>
       <tr>
         <th valign="top" scope="row"><div align="right">2. Compile Transformations  </div></th>
@@ -155,11 +155,31 @@ scchart ABRO {
         </p></td>
       </tr>
       <tr>
-        <th colspan="2" scope="row"><label>
-        <input type="submit" name="Submit" value=" Compile " onclick="compile();" />
-        </label></th>
+        <th scope="row"><label></label></th>
+        <th scope="row"><div align="left">
+          <input type="submit" name="Submit" value=" Compile / Update " onclick="compile();" />
+        </div></th>
       </tr>
     </table>
   <p>&nbsp;</p>
   <p>&nbsp;</p>
 </div>
+
+<script>
+var myVar=setInterval(function(){compile()},2000);
+
+var area = document.getElementById("model");
+if (area.addEventListener) {
+  area.addEventListener('input', function() {
+    // event handling code for sane browsers
+	window.clearInterval(myVar);
+	myVar=setInterval(function(){compile()},2000);
+  }, false);
+} else if (area.attachEvent) {
+  area.attachEvent('onpropertychange', function() {
+    // IE-specific event handling code
+	window.clearInterval(myVar);
+	myVar=setInterval(function(){compile()},2000);
+  });
+}
+</script>
