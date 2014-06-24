@@ -121,8 +121,6 @@ public class KlighdServer extends HttpServer {
             }
             debug("Model parsed");
 
-            KiCoPlugin.resetLastError();
-
             // Render model
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             final EObject mainModelParam = mainModel;
@@ -158,6 +156,7 @@ public class KlighdServer extends HttpServer {
             }
 
             byte[] serializedRenderedModel = null;
+            String errors = "";
             if (renderingResult != null && renderingResult.getCode() == IStatus.OK) {
                 // everything ok, return output stream
                 serializedRenderedModel = outputStream.toByteArray();
@@ -167,7 +166,8 @@ public class KlighdServer extends HttpServer {
                     serializedRenderedModelString +=
                             getErrorMessage(renderingResult.getException());
                 }
-                serializedRenderedModel = serializedRenderedModelString.getBytes();
+                serializedRenderedModel = "".getBytes();
+                errors = serializedRenderedModelString;
             }
             debug("Model serialized");
 
@@ -176,6 +176,9 @@ public class KlighdServer extends HttpServer {
             responseHeader.setTypeImagePng();
             HttpResponse response = new HttpResponse();
             response.setHeader(responseHeader);
+            if (errors.length() > 0) {
+                responseHeader.setHeaderField("render-error", errors);
+            }
             response.setBody(serializedRenderedModel);
 
             // String responeBody = "Huhu";

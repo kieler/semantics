@@ -288,6 +288,9 @@ public class KLighD {
             URL url = new URL(urlString);
             URLConnection yc = url.openConnection();
 
+            String errors = yc.getHeaderField("Render-error");
+            result.error = errors;
+            
             int len = yc.getContentLength();
             InputStream in = yc.getInputStream();
 

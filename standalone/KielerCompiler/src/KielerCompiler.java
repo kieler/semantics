@@ -285,6 +285,9 @@ public class KielerCompiler {
 
             URL url = new URL(urlString);
             URLConnection yc = url.openConnection();
+            
+            String errors = yc.getHeaderField("Compile-error");
+            result.error = errors;
 
             int len = yc.getContentLength();
             InputStream in = yc.getInputStream();
