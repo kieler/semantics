@@ -50,6 +50,8 @@ var doUpdateImage = false;
 
 function compile() {
 	window.clearInterval(compileTimer);
+	resultText.value = "Compiling, please wait...";
+	clearErrors();
     var outputText = document.getElementById("outputText");
     if(outputText.checked) {
 		doUpdateImage = false;
@@ -61,11 +63,8 @@ function compile() {
 	}
 }
 
-function compileText()
-{
+function compileText() {
 	var resultUrl = "http://localhost:5555/?model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose=0&strict=0"; // + "#" + new Date().getTime();
-
-	resultText.value = "Compiling, please wait...";
 
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange=function() {
@@ -80,10 +79,7 @@ function compileText()
 	  	  	  resultErrorDiv.style.display="block";
 			  resultError.value = errorMsg;
 		  } else {
-			  var resultError = document.getElementById("resultError");
-			  var resultErrorDiv = document.getElementById("resultErrorDiv");
-	  	  	  resultErrorDiv.style.display="none";
-			  resultError.value = "";
+		  	  clearErrors();
 		  }
 		  
 		  if (doUpdateImage) {
@@ -95,9 +91,15 @@ function compileText()
 	xmlhttp.send();
 }
 
+function clearErrors() {
+			  var resultError = document.getElementById("resultError");
+			  var resultErrorDiv = document.getElementById("resultErrorDiv");
+	  	  	  resultErrorDiv.style.display="none";
+			  resultError.value = "";
+}
 
-function updateImage()
-{
+
+function updateImage() {
     var image = document.getElementById("resultImage");
     if(image.complete) {
 	    var model = document.getElementById("model")
