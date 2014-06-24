@@ -72,6 +72,10 @@ function compile() {
 	}
 }
 
+function replaceAll(inputStr, findStr, replaceStr) {
+  return inputStr.split(findStr).join(replaceStr);
+}
+
 function compileText() {
     var strict = document.getElementById("strict").checked;
     var verbose = document.getElementById("verbose").checked;
@@ -89,7 +93,7 @@ function compileText() {
 			  var resultError = document.getElementById("resultError");
 			  var resultErrorDiv = document.getElementById("resultErrorDiv");
 	  	  	  resultErrorDiv.style.display="block";
-			  resultError.value = errorMsg;
+			  resultError.value = replaceAll(decodeURIComponent(errorMsg), "+", " ");
 		  } else {
 		  	  clearErrors();
 		  }

@@ -30,6 +30,7 @@ import de.cau.cs.kieler.server.HttpQuery;
 import de.cau.cs.kieler.server.HttpRequest;
 import de.cau.cs.kieler.server.HttpResponse;
 import de.cau.cs.kieler.server.HttpServer;
+import de.cau.cs.kieler.server.HttpUtils;
 
 /**
  * This class implements to KIELER Compiler TCP Server that runs as an Eclipse Job. Typically it
@@ -160,7 +161,7 @@ public class KiCoServer extends HttpServer {
             HttpResponse response = new HttpResponse();
             response.setHeader(responseHeader);
             if (lastError.length() > 0) {
-                responseHeader.setHeaderField("compile-error", lastError);
+                responseHeader.setHeaderField("compile-error", HttpUtils.encodeURL(lastError));
             }
 
             response.setBody(serializedCompiledModel);

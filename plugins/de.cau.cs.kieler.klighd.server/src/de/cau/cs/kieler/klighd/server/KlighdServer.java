@@ -34,6 +34,7 @@ import de.cau.cs.kieler.server.HttpQuery;
 import de.cau.cs.kieler.server.HttpRequest;
 import de.cau.cs.kieler.server.HttpResponse;
 import de.cau.cs.kieler.server.HttpServer;
+import de.cau.cs.kieler.server.HttpUtils;
 
 /**
  * This class implements to KIELER KLighD TCP Server that runs as an Eclipse Job. Typically it uses
@@ -177,7 +178,7 @@ public class KlighdServer extends HttpServer {
             HttpResponse response = new HttpResponse();
             response.setHeader(responseHeader);
             if (errors.length() > 0) {
-                responseHeader.setHeaderField("render-error", errors);
+                responseHeader.setHeaderField("render-error", HttpUtils.encodeURL(errors));
             }
             response.setBody(serializedRenderedModel);
 
