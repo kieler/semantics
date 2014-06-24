@@ -155,6 +155,7 @@ public class KiCoServer extends HttpServer {
             responseHeader.setStatusOk();
             responseHeader.setTypeTextPlain();
             responseHeader.setHeaderField("Access-Control-Allow-Origin", "*");
+            responseHeader.setHeaderField("Access-Control-Expose-Headers", "*");
             HttpResponse response = new HttpResponse();
             response.setHeader(responseHeader);
             if (lastError.length() > 0) {
