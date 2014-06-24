@@ -72,6 +72,19 @@ function compileText()
   		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 	      var resultText = document.getElementById("resultText");
    		  resultText.value = xmlhttp.responseText;
+
+		  var errorMsg = xmlhttp.getResponseHeader("compile-error");
+		  if (errorMsg != null) {
+			  var resultError = document.getElementById("resultError");
+			  var resultErrorDiv = document.getElementById("resultErrorDiv");
+	  	  	  resultErrorDiv.style.display="block";
+			  resultError.value = errorMsg;
+		  } else {
+			  var resultError = document.getElementById("resultError");
+			  var resultErrorDiv = document.getElementById("resultErrorDiv");
+	  	  	  resultErrorDiv.style.display="none";
+			  resultError.value = "";
+		  }
 		  
 		  if (doUpdateImage) {
 		  		updateImage();
@@ -213,6 +226,10 @@ scchart ABRO {
           </table>          <p><br />
           </p></td>
         <td  valign="top">
+		<div id="resultErrorDiv" style="font:24px bold; display: none">
+          <textarea name="resultError" cols="70" rows="4" id="resultError" readonly=true style="background-color: #FF0000"></textarea>
+		  <br>
+		 </div>		
 		<div id="resultImageDiv" style="font:24px bold; display: none">
         <img src="xxx" name="resultImage" id="resultImage"/></div>
 		<div id="resultTextDiv" style="font:24px bold; display: none">
