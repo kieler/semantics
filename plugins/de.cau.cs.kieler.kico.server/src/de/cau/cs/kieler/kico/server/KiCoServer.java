@@ -69,14 +69,14 @@ public class KiCoServer extends HttpServer {
         debug("Server started");
 
         HttpHeader header = request.header();
-        //String body = request.bodyAsText();
+        // String body = request.bodyAsText();
 
         HttpQuery query = header.getQuery();
 
         // Check the query
         if (query.getValue("model").length() > 0) {
 
-            // Parse options        
+            // Parse options
             boolean verbose = false;
             boolean strict = false;
             String verboseString = query.getValue("verbose");
@@ -86,8 +86,7 @@ public class KiCoServer extends HttpServer {
                 verbose = true;
             }
             String strictString = query.getValue("strict");
-            if (strictString.toLowerCase().equals("true")
-                    || strictString.toLowerCase().equals("t")
+            if (strictString.toLowerCase().equals("true") || strictString.toLowerCase().equals("t")
                     || strictString.toLowerCase().equals("1")) {
                 strict = true;
             }
@@ -125,47 +124,45 @@ public class KiCoServer extends HttpServer {
             KiCoPlugin.resetLastError();
             context.setVerboseMode(verbose);
             context.setPrerequirements(!strict);
-            
-             // process the model
-             CompilationResult compilationResult =
-             KielerCompiler.compile(context);
-             debug("Model compiled");
-            
-             boolean majorError = (compilationResult.getIntermediateResults().size() <= 1);
-             Object compiledModel = compilationResult.getObject();
-            
-             String serializedCompiledModel = "";
-             if (compiledModel != null) {
-             serializedCompiledModel = compiledModel.toString();
-             if (compiledModel instanceof EObject) {
-             serializedCompiledModel = KiCoUtil.serialize((EObject) compiledModel, context);
-             }
-             debug("Model serialized");
-             }
-             if (majorError) {
-             serializedCompiledModel = "";
-             }
-            
-             // answer with compiled & serialized model
-             String lastError = KiCoPlugin.getLastError();
-             if (lastError != null) {
-                 debug("Errors serialized");
-             } else {
-                 lastError = "";
-                 debug("No errors to serialize");
-             }
 
-             
-             HttpHeader responseHeader = new HttpHeader();
-             responseHeader.setStatusOk();
-             responseHeader.setTypeTextPlain();
-             HttpResponse response = new HttpResponse();
-             response.setHeader(responseHeader);
-             if (lastError.length() > 0) {
-                 responseHeader.setHeaderField("compile-error", lastError);
-             }
-             
-             response.setBody(serializedCompiledModel);
+            // process the model
+            CompilationResult compilationResult = KielerCompiler.compile(context);
+            debug("Model compiled");
+
+            boolean majorError = (compilationResult.getIntermediateResults().size() <= 1);
+            Object compiledModel = compilationResult.getObject();
+
+            String serializedCompiledModel = "";
+            if (compiledModel != null) {
+                serializedCompiledModel = compiledModel.toString();
+                if (compiledModel instanceof EObject) {
+                    serializedCompiledModel = KiCoUtil.serialize((EObject) compiledModel, context);
+                }
+                debug("Model serialized");
+            }
+            if (majorError) {
+                serializedCompiledModel = "";
+            }
+
+            // answer with compiled & serialized model
+            String lastError = KiCoPlugin.getLastError();
+            if (lastError != null) {
+                debug("Errors serialized");
+            } else {
+                lastError = "";
+                debug("No errors to serialize");
+            }
+
+            HttpHeader responseHeader = new HttpHeader();
+            responseHeader.setStatusOk();
+            responseHeader.setTypeTextPlain();
+            HttpResponse response = new HttpResponse();
+            response.setHeader(responseHeader);
+            if (lastError.length() > 0) {
+                responseHeader.setHeaderField("compile-error", lastError);
+            }
+
+            response.setBody(serializedCompiledModel);
 
             return response;
         }
