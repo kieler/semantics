@@ -172,7 +172,6 @@ public class KlighdServer extends HttpServer {
             debug("Model serialized");
 
             HttpHeader responseHeader = new HttpHeader();
-            responseHeader.setServerName("KIELER Compiler Server");
             responseHeader.setStatusOk();
             responseHeader.setTypeImagePng();
             HttpResponse response = new HttpResponse();
