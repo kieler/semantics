@@ -23,6 +23,8 @@
 function setResultText() {
     var scale = document.getElementById("scale");
 	scale.disabled = true;
+    var size = document.getElementById("size");
+	size.disabled = true;
     var image = document.getElementById("resultImageDiv");
     var text = document.getElementById("resultTextDiv");
 	text.style.display="block";
@@ -34,6 +36,8 @@ function setResultText() {
 function setResultImage() {
     var scale = document.getElementById("scale");
 	scale.disabled = false;
+    var size = document.getElementById("size");
+	size.disabled = false;
 //	alert("setResultImage");
     var image = document.getElementById("resultImageDiv");
     var text = document.getElementById("resultTextDiv");
@@ -96,10 +100,11 @@ function updateImage()
         image.parentNode.removeChild(image);
 		
 		new_image.onload = function() {
+			var size = document.getElementById("size");
 			var width = new_image.naturalWidth; 
 			var height = new_image.naturalHeight;
-			new_image.width = width/3;
-			new_image.height = height/3;
+			new_image.width = width/size.value;
+			new_image.height = height/size.value;
 	    }
 		//var width = new_image.naturalWidth; 
 		//var height = new_image.naturalHeight;
@@ -118,7 +123,7 @@ function updateImage()
       <span class="Stil4">ONLINE COMPILER</span></span></p>
     <table width="300" border="0" cellspacing="5">
       <tr>
-        <th colspan="2" valign="top" scope="row"><label></label>
+        <td colspan="2" valign="top" scope="row"><label></label>
           <table width="300" border="0" cellspacing="5">
             <tr>
               <th valign="top" scope="row"><div align="right">1. SCChart </div></th>
@@ -174,7 +179,7 @@ scchart ABRO {
                   textual output </label>
                   <label> <br>
                   <input type="radio" name="output" value="graph" id="outputImage" onclick="setResultImage();" />
-                  graphical output, scale:
+                  graphical output, quality:
                   </label>
                 
                   <label></label>
@@ -188,7 +193,13 @@ scchart ABRO {
                     <option>4</option>
                     <option>5</option>
                   </select>
-                  <br />
+                  , size: <select name="size" id="size" onchange="compile();">
+                    <option value="1">100%</option>
+                    <option value="1.5">75%</option>
+                    <option value="2">50%</option>
+                    <option value="4">25%</option>
+                    <option value="10">10%</option>
+                  </select> <br />
               </p></td>
             </tr>
             <tr>
@@ -198,7 +209,7 @@ scchart ABRO {
               </div></th>
             </tr>
           </table>          <p><br />
-          </p></th>
+          </p></td>
         <td  valign="top">
 		<div id="resultImageDiv" style="font:24px bold; display: none">
         <img src="xxx" name="resultImage" id="resultImage"/></div>
