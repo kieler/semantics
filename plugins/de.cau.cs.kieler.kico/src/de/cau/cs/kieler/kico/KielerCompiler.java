@@ -228,7 +228,7 @@ public class KielerCompiler {
                 if (alternative && !dependencyReferenced && !groupReferenced) {
                     if (transformationDummy.reverseDependencies.size() == 0) {
                         toBeDeleted = transformationDummy;
-                        // System.out.println("REMOVE " + transformationDummy.id);
+                         System.out.println("REMOVE " + transformationDummy.id);
                         found = true;
                         break;
                     }
@@ -238,8 +238,8 @@ public class KielerCompiler {
                 context.getGraph().remove(toBeDeleted);
                 for (TransformationDummy transformationDummy : context.getGraph()) {
                     if (transformationDummy.reverseDependencies.contains(toBeDeleted)) {
-                        // System.out.println("REMOVE " + toBeDeleted.id + " from "
-                        // + transformationDummy.id);
+                         System.out.println("REMOVE " + toBeDeleted.id + " from "
+                         + transformationDummy.id);
                         transformationDummy.reverseDependencies.remove(toBeDeleted);
                     }
                 }
@@ -742,7 +742,7 @@ public class KielerCompiler {
     private static void calculatePreRequirements(KielerCompilerContext context) {
         // 1. build graph (with initially requested transformation IDs as a tie
         // breaker for alternative groups)
-        context.buildGraph();
+        context.buildGraph(context.getSelectedTransformationIDs());
 
         // 2. eliminate unused alternative paths
         cleanupImpossibleAlternatives(context);
@@ -858,7 +858,7 @@ public class KielerCompiler {
 
         // 1. build graph (with initially requested transformation IDs as a tie
         // breaker for alternative groups)
-        context.buildGraph();
+        context.buildGraph(context.getSelectedTransformationIDs());
 
         // 2. eliminate unused alternative paths
         cleanupImpossibleAlternatives(context);
