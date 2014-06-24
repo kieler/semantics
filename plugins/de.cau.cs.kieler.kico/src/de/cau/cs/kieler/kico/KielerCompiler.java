@@ -20,11 +20,8 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
-// TODO: Auto-generated Javadoc
 /**
  * This is the main class of the Kieler Compiler (KiCo) Project that aims to provide an
  * infrastructure for compiling via consecutive modal transformations.
@@ -849,9 +846,6 @@ public class KielerCompiler {
             return context.getCompilationResult();
         }
 
-        Resource r2 = transformationEObject.eResource();
-        ResourceSet r3 = r2.getResourceSet();
-        
         // If not inplace then produce a copy of the input EObject
         if (!context.isInplace()) {
             EObject copiedObject = EcoreUtil.copy(transformationEObject);
