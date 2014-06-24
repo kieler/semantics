@@ -66,7 +66,7 @@ function compileImage()
         var new_image = new Image();
         //set up the new image
         new_image.id = "resultImage";
-		var imageUrl = "http://localhost:4444/?model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&scale=" + encodeURIComponent(scale.value);
+		var imageUrl = "http://localhost:4444/?model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&scale=" + encodeURIComponent(scale.value) + "#" + new Date().getTime();
         new_image.src = imageUrl;
         // insert new image and remove old
         image.parentNode.insertBefore(new_image, image);

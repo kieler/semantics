@@ -28,7 +28,7 @@ import de.cau.cs.kieler.kico.server.KiCoServerPlugin;
 import org.eclipse.swt.widgets.Link;
 
 /**
- * The dialog window for controlling the TCP server, i.e., starting, stopping and changing its port.
+ * The dialog window for controlling the HTTP server, i.e., starting, stopping and changing its port.
  *
  * @author cmot
  * @kieler.design 2014-06-08 proposed
@@ -83,7 +83,7 @@ public class KiCoServerDialog extends Dialog {
     private void createContents() {
         shlDdd = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
         shlDdd.setSize(326, 224);
-        shlDdd.setText("KIELER Compiler TCP Server");
+        shlDdd.setText("KIELER Compiler HTTP Server");
 
         Composite composite = new Composite(shlDdd, SWT.BORDER);
         composite.setBounds(10, 10, 300, 151);

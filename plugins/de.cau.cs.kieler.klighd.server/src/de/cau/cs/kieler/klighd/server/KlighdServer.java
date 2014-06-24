@@ -58,7 +58,7 @@ public class KlighdServer extends HttpServer {
      * Instantiates a new klighd server.
      */
     public KlighdServer() {
-        super(KlighdServerPlugin.loadPort(), "KIELER KLighD TCP Server ("
+        super(KlighdServerPlugin.loadPort(), "KIELER KLighD HTTP Server ("
                 + KlighdServerPlugin.loadPort() + ")");
     }
 
@@ -77,7 +77,7 @@ public class KlighdServer extends HttpServer {
         debug("Transformations read");
 
         HttpHeader header = request.header();
-        String body = request.bodyAsText();
+        //String body = request.bodyAsText();
 
         HttpQuery query = header.getQuery();
 
