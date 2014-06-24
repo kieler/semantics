@@ -53,6 +53,9 @@
     <module>de.cau.cs.kieler.kico.ui</module>
     <module>de.cau.cs.kieler.kico.server</module>
     <module>de.cau.cs.kieler.kico.server.ui</module>
+    <module>de.cau.cs.kieler.server</module>
+    <module>de.cau.cs.kieler.klighd.server</module>
+    <module>de.cau.cs.kieler.klighd.server.ui</module>
     <module>de.cau.cs.kieler.kex.ui</module>
     <module>de.cau.cs.kieler.s</module>
     <module>de.cau.cs.kieler.s.sc</module>

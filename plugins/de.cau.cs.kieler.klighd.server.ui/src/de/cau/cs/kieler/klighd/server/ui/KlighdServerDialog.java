@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.server.ui;
+package de.cau.cs.kieler.klighd.server.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import de.cau.cs.kieler.kico.server.KiCoServerPlugin;
+import de.cau.cs.kieler.klighd.server.KlighdServerPlugin;
 import org.eclipse.swt.widgets.Link;
 
 /**
@@ -35,13 +35,13 @@ import org.eclipse.swt.widgets.Link;
  * @kieler.rating 2014-06-08 proposed yellow
  *
  */
-public class KiCoServerDialog extends Dialog {
+public class KlighdServerDialog extends Dialog {
 
     protected Object result;
     protected Shell shlDdd;
     private Text text;
     private Button button;
-    static KiCoServerDialog instance;
+    static KlighdServerDialog instance;
 
     /**
      * Create the dialog.
@@ -49,7 +49,7 @@ public class KiCoServerDialog extends Dialog {
      * @param parent
      * @param style
      */
-    public KiCoServerDialog(Shell parent, int style) {
+    public KlighdServerDialog(Shell parent, int style) {
         super(parent, style);
         setText("SWT Dialog");
         instance = this;
@@ -64,8 +64,8 @@ public class KiCoServerDialog extends Dialog {
         createContents();
         shlDdd.open();
 
-        text.setText(KiCoServerPlugin.loadPort() + "");
-        button.setSelection(KiCoServerPlugin.loadEnabled());
+        text.setText(KlighdServerPlugin.loadPort() + "");
+        button.setSelection(KlighdServerPlugin.loadEnabled());
 
         shlDdd.layout();
         Display display = getParent().getDisplay();
@@ -83,7 +83,7 @@ public class KiCoServerDialog extends Dialog {
     private void createContents() {
         shlDdd = new Shell(getParent(), SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
         shlDdd.setSize(326, 224);
-        shlDdd.setText("KIELER Compiler HTTP Server");
+        shlDdd.setText("KIELER KLighD HTTP Server");
 
         Composite composite = new Composite(shlDdd, SWT.BORDER);
         composite.setBounds(10, 10, 300, 151);
@@ -101,7 +101,7 @@ public class KiCoServerDialog extends Dialog {
 
         Link link = new Link(composite, SWT.NONE);
         link.setBounds(27, 105, 259, 32);
-        link.setText("<a>http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Compiler+Console</a>");
+        link.setText("<a>http://rtsys.informatik.uni-kiel.de/confluence/pages/viewpage.action?pageId=328115</a>");
 
         CLabel lblMoreInformation = new CLabel(composite, SWT.NONE);
         lblMoreInformation.setText("More Information:");
@@ -111,20 +111,20 @@ public class KiCoServerDialog extends Dialog {
         btnOk.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                KiCoServerPlugin.saveEnabled(button.getSelection());
-                int port = 5555;
+                KlighdServerPlugin.saveEnabled(button.getSelection());
+                int port = 4444;
                 try {
                     port = Integer.parseInt(text.getText());
                 } catch (Exception ee) {
-                    port = 5555;
+                    port = 4444;
                 }
-                KiCoServerPlugin.savePort(port);
+                KlighdServerPlugin.savePort(port);
 
-                if (KiCoServerPlugin.loadEnabled()) {
-                    KiCoServerPlugin.stopServer();
-                    KiCoServerPlugin.startServer(false);
+                if (KlighdServerPlugin.loadEnabled()) {
+                    KlighdServerPlugin.stopServer();
+                    KlighdServerPlugin.startServer(false);
                 } else {
-                    KiCoServerPlugin.stopServer();
+                    KlighdServerPlugin.stopServer();
                 }
                 shlDdd.close();
             }
