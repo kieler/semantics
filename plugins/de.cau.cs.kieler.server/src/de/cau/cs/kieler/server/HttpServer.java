@@ -1,36 +1,16 @@
-// Internet Communication, WS 2007/08, Serie 3 Aufgabe 2
-// Maximilian Gravert #589482, Christian Motika, #702133
-//
-//-------------------------------------------------------------------------------
-
-/**
- * Aufgabe 2
- * =========
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
- * Das Programm besteht aus der Klasse THttpServer. Dieser nimmt die
- * Anfragen in seiner Start()-Methode wie �blich innerhalb einer nicht
- * terminierenden while-Schleife entgegen und beantwortet sie nebenl�ufig
- * durch entsprechend neue Instanzen von THandleConnection.
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * THandleConnection erzeugt nun einen neuen THttpParser der den Request-
- * Header parsen soll. Der Parsevorgang wird in der Run()-Methode durch
- * den Aufruf von parseRequest() durchgef�hrt. 
+ * Copyright 2014 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
  * 
- * Nach dem Parsen wird die Template-Datei eingelesen (die in einem
- * systemweit verf�gbaren Verzeichnis liegen mu� (z.B. "c:\", bzw eines
- * das im PFAD steht).
- * 
- * Beim Einlesen der Template-Datei werden bereits die entsprechenden TAGS
- * in jener durch die geparsten Werte aus der Hashtable ersetzt.
- * 
- * Schlie�lich wird der generierte Inhalt mit einem eigenen Response-Header
- * versehen und an den z.B. Browser zur�ckgesendet. 
- * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  */
-
-// ACHTUNG: "TemplateDoc"- und "TemplateRow"-Konstanten anpassen an absolutes
-// Verzeichnis wo sich "template_document.htm" und "template_tablerow.htm" 
-// befinden.
 
 package de.cau.cs.kieler.server;
 
@@ -308,12 +288,12 @@ public abstract class HttpServer extends Job {
             // now read http requests from client until it disconnects
             // while (true) {
             try {
-                System.out.println("Parsing ...");
+                //System.out.println("Parsing ...");
 
                 // parse next request from client
                 this.httpParser.parseRequestResponse();
 
-                System.out.println("Generating Response ...");
+                //System.out.println("Generating Response ...");
 
                 HttpRequest request = new HttpRequest();
                 request.header = this.httpParser.getHeader();
@@ -336,10 +316,10 @@ public abstract class HttpServer extends Job {
                     // Set server name automatically
                     response.header.setServerName(serverName);
                     
-                    System.out.println("Writing Response ...");
+                    //System.out.println("Writing Response ...");
                     // output this response to client
                     
-                    System.out.println(response.header.toString());
+                    //System.out.println(response.header.toString());
                     
                     this.to_client.write(response.header.toString());
                     this.to_client.flush();
@@ -350,7 +330,7 @@ public abstract class HttpServer extends Job {
                 this.to_client.close();
                 this.connection.close();
 
-                System.out.println("Connection Closed.");
+                //System.out.println("Connection Closed.");
 
             } catch (Exception e) {
                 e.printStackTrace();
