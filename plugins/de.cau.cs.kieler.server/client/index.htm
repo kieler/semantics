@@ -13,8 +13,9 @@
 }
 .Stil3 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: xx-large;}
 .Stil4 {color: #0000FF}
+.Stil7 {font-weight: bold}
 -->
-</style>
+       </style>
 
 <script>
 
@@ -41,22 +42,44 @@ function setResultImage() {
 	compile();
 }
 
+var doUpdateImage = false;
+
 function compile() {
+	window.clearInterval(compileTimer);
     var outputText = document.getElementById("outputText");
     if(outputText.checked) {
+		doUpdateImage = false;
 		compileText();
 	} 
 	else {
-		compileImage();
+		doUpdateImage = true;
+		compileText();
 	}
 }
 
 function compileText()
 {
+	var resultUrl = "http://localhost:5555/?model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose=0&strict=0"; // + "#" + new Date().getTime();
+
+	resultText.value = "Compiling, please wait...";
+
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function() {
+  		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+	      var resultText = document.getElementById("resultText");
+   		  resultText.value = xmlhttp.responseText;
+		  
+		  if (doUpdateImage) {
+		  		updateImage();
+	      }
+		}
+	}	
+	xmlhttp.open('GET', resultUrl, true);
+	xmlhttp.send();
 }
 
 
-function compileImage()
+function updateImage()
 {
     var image = document.getElementById("resultImage");
     if(image.complete) {
@@ -66,13 +89,25 @@ function compileImage()
         var new_image = new Image();
         //set up the new image
         new_image.id = "resultImage";
-		var imageUrl = "http://localhost:4444/?model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&scale=" + encodeURIComponent(scale.value) + "#" + new Date().getTime();
+		var imageUrl = "http://localhost:4444/?model="+encodeURIComponent(resultText.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&scale=" + encodeURIComponent(scale.value) + "#" + new Date().getTime();
         new_image.src = imageUrl;
         // insert new image and remove old
         image.parentNode.insertBefore(new_image, image);
         image.parentNode.removeChild(image);
+		
+		new_image.onload = function() {
+			var width = new_image.naturalWidth; 
+			var height = new_image.naturalHeight;
+			new_image.width = width/3;
+			new_image.height = height/3;
+	    }
+		//var width = new_image.naturalWidth; 
+		//var height = new_image.naturalHeight;
+		//alert(width + "," + height);
+		//new_image.width = "50%";
+		//new_image.height = "50%";
+		
     }
-    setTimeout(updateImage, 1000);
 }
 
 </script>
@@ -83,9 +118,12 @@ function compileImage()
       <span class="Stil4">ONLINE COMPILER</span></span></p>
     <table width="300" border="0" cellspacing="5">
       <tr>
-        <th valign="top" scope="row"><div align="right">1. SCChart  </div></th>
-        <td><label>
-          <textarea name="model" cols="70" rows="25" id="model" onchange="compile();">
+        <th colspan="2" valign="top" scope="row"><label></label>
+          <table width="300" border="0" cellspacing="5">
+            <tr>
+              <th valign="top" scope="row"><div align="right">1. SCChart </div></th>
+              <td valign="top"><label>
+                <textarea name="model" cols="70" rows="25" id="model" onchange="compile();">
 @HVLayout
 scchart ABRO {
   input bool A;
@@ -119,46 +157,54 @@ scchart ABRO {
   }
   o-> ABO with R;
 }
-</textarea>
-        </label></td>
-		<td rowspan="3"  valign="top">
+            </textarea>
+              </label></td>
+            </tr>
+            <tr>
+              <th valign="top" scope="row"><div align="right">2. Compile Transformations </div></th>
+              <td><label>
+                <input name="transformations" type="text" id="transformations" size="94" value="ABORT" />
+              </label></td>
+            </tr>
+            <tr>
+              <th valign="top" scope="row"><p align="right">3. Other Options </p></th>
+              <td align="left"><p>
+                  <label>
+                  <input type="radio" name="output" value="text" id="outputText" onclick="setResultText();" />
+                  textual output </label>
+                  <label> <br>
+                  <input type="radio" name="output" value="graph" id="outputImage" onclick="setResultImage();" />
+                  graphical output, scale:
+                  </label>
+                
+                  <label></label>
+                <label></label>
+                  <span class="Stil7">                  </span>
+                  <label> </label>
+                  <select name="scale" id="scale" onchange="compile();">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                  <br />
+              </p></td>
+            </tr>
+            <tr>
+              <th scope="row"><label></label></th>
+              <th scope="row"><div align="left">
+                  <input type="submit" name="Submit" value=" Compile / Update " onclick="compile();" />
+              </div></th>
+            </tr>
+          </table>          <p><br />
+          </p></th>
+        <td  valign="top">
 		<div id="resultImageDiv" style="font:24px bold; display: none">
-        <img src="xxx" name="resultImage" id="resultImage" /></div>
+        <img src="xxx" name="resultImage" id="resultImage"/></div>
 		<div id="resultTextDiv" style="font:24px bold; display: none">
-          <textarea name="resultText" cols="70" rows="25" id="resultText" readonly=true style="background-color: #CCCCCC">compiling...</textarea>
-		  </div>       </td>
-      </tr>
-      <tr>
-        <th valign="top" scope="row"><div align="right">2. Compile Transformations  </div></th>
-        <td><label>
-          <input name="transformations" type="text" id="transformations" size="94" value="ABORT" />
-        </label></td>
-      </tr>
-      <tr>
-        <th valign="top" scope="row"><p align="right">3. Other Options </p>        </th>
-        <td><p>
-			<label>
-            <input type="radio" name="output" value="text" id="outputText" onclick="setResultText();" />
-            textual output </label>
-          <br />
-		  <label>
-            <input type="radio" name="output" value="graph" id="outputImage" onclick="setResultImage();" />
-            graphical output, scale:  </label>
-          <select name="scale" id="scale" onchange="compile();">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
-          <br />
-        </p></td>
-      </tr>
-      <tr>
-        <th scope="row"><label></label></th>
-        <th scope="row"><div align="left">
-          <input type="submit" name="Submit" value=" Compile / Update " onclick="compile();" />
-        </div></th>
+          <textarea name="resultText" cols="70" rows="25" id="resultText" readonly=true style="background-color: #CCCCCC"></textarea>
+		  </div></td>
       </tr>
     </table>
   <p>&nbsp;</p>
@@ -166,20 +212,37 @@ scchart ABRO {
 </div>
 
 <script>
-var myVar=setInterval(function(){compile()},2000);
+var compileTimer=setInterval(function(){compile()},2000);
 
 var area = document.getElementById("model");
 if (area.addEventListener) {
   area.addEventListener('input', function() {
     // event handling code for sane browsers
-	window.clearInterval(myVar);
-	myVar=setInterval(function(){compile()},2000);
+	window.clearInterval(compileTimer);
+	compileTimer=setInterval(function(){compile()},2000);
   }, false);
 } else if (area.attachEvent) {
   area.attachEvent('onpropertychange', function() {
     // IE-specific event handling code
-	window.clearInterval(myVar);
-	myVar=setInterval(function(){compile()},2000);
+	window.clearInterval(compileTimer);
+	compileTimer=setInterval(function(){compile()},2000);
   });
 }
+
+
+var area = document.getElementById("transformations");
+if (area.addEventListener) {
+  area.addEventListener('input', function() {
+    // event handling code for sane browsers
+	window.clearInterval(compileTimer);
+	compileTimer=setInterval(function(){compile()},2000);
+  }, false);
+} else if (area.attachEvent) {
+  area.attachEvent('onpropertychange', function() {
+    // IE-specific event handling code
+	window.clearInterval(compileTimer);
+	compileTimer=setInterval(function(){compile()},2000);
+  });
+}
+
 </script>

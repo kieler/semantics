@@ -108,9 +108,11 @@ public class KiCoServer extends HttpServer {
             }
             debug("Models read");
 
+            String transformationIDs = query.getValue("transformations");
+            
             // Parse models
             EObject mainModel = null;
-            KielerCompilerContext context = new KielerCompilerContext("", mainModel);
+            KielerCompilerContext context = new KielerCompilerContext(transformationIDs, mainModel);
             for (int i = models.size() - 1; i >= 0; i--) {
                 boolean isMainModel = (i == 0);
                 String model = models.get(i);
@@ -129,7 +131,6 @@ public class KiCoServer extends HttpServer {
             CompilationResult compilationResult = KielerCompiler.compile(context);
             debug("Model compiled");
 
-            boolean majorError = (compilationResult.getIntermediateResults().size() <= 1);
             Object compiledModel = compilationResult.getObject();
 
             String serializedCompiledModel = "";
@@ -139,9 +140,6 @@ public class KiCoServer extends HttpServer {
                     serializedCompiledModel = KiCoUtil.serialize((EObject) compiledModel, context);
                 }
                 debug("Model serialized");
-            }
-            if (majorError) {
-                serializedCompiledModel = "";
             }
 
             // answer with compiled & serialized model
@@ -156,6 +154,7 @@ public class KiCoServer extends HttpServer {
             HttpHeader responseHeader = new HttpHeader();
             responseHeader.setStatusOk();
             responseHeader.setTypeTextPlain();
+            responseHeader.setHeaderField("Access-Control-Allow-Origin", "*");
             HttpResponse response = new HttpResponse();
             response.setHeader(responseHeader);
             if (lastError.length() > 0) {

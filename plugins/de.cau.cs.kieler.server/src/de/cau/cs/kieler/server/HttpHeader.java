@@ -24,7 +24,7 @@ import java.util.ArrayList;
  */
 public class HttpHeader {
 
-    String statusKey = "http/1.1";
+    String statusKey = "http/1.0";
     String statusVal = "200 ok";
     String serverKey = "server";
     String serverVal = "";
