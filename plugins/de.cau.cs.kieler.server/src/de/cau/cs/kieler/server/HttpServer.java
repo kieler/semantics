@@ -329,10 +329,10 @@ public abstract class HttpServer extends Job {
                     // "In HTTP, it SHOULD be sent whenever the message's length
                     // can be determined prior to being transferred" rfc2616
                     int Length = response.body.length;
+                    response.header.setContentLength(Length);
 
                     System.out.println("Writing Response ...");
                     // output this response to client
-
                     
                     System.out.println(response.header.toString());
                     

@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.server;
 
-import java.util.Hashtable;
 
 /**
  * HttpRequest implements a request that is used in a HttpServer implementation.

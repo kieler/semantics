@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.server;
 
-import java.util.Hashtable;
 
 /**
  * HttpRequest implements a request or response message that is used in a HttpServer implementation.
@@ -28,34 +27,82 @@ public class HttpMessage {
     protected byte[] body;
     protected HttpHeader header;
     
+    //-------------------------------------------------------------------------
+    
+    /**
+     * Instantiates a new http message.
+     */
     public HttpMessage() {
         header = new HttpHeader();
         body = "".getBytes();
     }
 
+    //-------------------------------------------------------------------------
+
+    /**
+     * Body as String text.
+     *
+     * @return the string
+     */
     public String bodyAsText() {
         String str = new String(body);
         return str;
     }
 
+    //-------------------------------------------------------------------------
+    
+    /**
+     * Sets the body as a String.
+     *
+     * @param text the new body
+     */
     public void setBody(String text) {
         body = text.getBytes();
     }
     
+    //-------------------------------------------------------------------------
+
+    /**
+     * Sets the body as byte Array.
+     *
+     * @param body the new body
+     */
     public void setBody(byte[] body) {
         this.body = body; 
     }
 
+    //-------------------------------------------------------------------------
+
+    /**
+     * Body as byte Array.
+     *
+     * @return the byte[]
+     */
     public byte[] body() {
         return body;
     }
     
+    //-------------------------------------------------------------------------
+
+    /**
+     * Header with all header fields including the URL and query string.
+     *
+     * @return the http header
+     */
     public HttpHeader header() {
         return header;
     }
+
+    //-------------------------------------------------------------------------
     
+    /**
+     * Sets the header with all header fields.
+     *
+     * @param header the new header
+     */
     public void setHeader(HttpHeader header) {
         this.header = header;
     }
     
+    //-------------------------------------------------------------------------
 }

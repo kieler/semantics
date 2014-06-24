@@ -13,11 +13,10 @@
  */
 package de.cau.cs.kieler.server;
 
-import java.net.URLDecoder;
 import java.util.ArrayList;
 
 /**
- * Implementation of a Query String.
+ * Implementation of a HTTP Query String decoded into keys and values.
  * 
  * @author cmot
  * @kieler.design 2014-06-08 proposed
