@@ -1,4 +1,10 @@
-<style type="text/css">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+       "http://www.w3.org/TR/html4/loose.dtd"><head>
+<title>KIELER SCCharts Compiler - Sequentially Constructive Charts - KIELER Compiler - KiCo </title>	   
+<meta http-equiv="expires" content="0">
+</head>
+
+	   <style type="text/css">
 <!--
 .Stil1 {
 	font-size: xx-large;
@@ -14,6 +20,8 @@
 
 
 function setResultText() {
+    var scale = document.getElementById("scale");
+	scale.disabled = true;
     var image = document.getElementById("resultImageDiv");
     var text = document.getElementById("resultTextDiv");
 	text.style.display="block";
@@ -23,6 +31,8 @@ function setResultText() {
 }
 
 function setResultImage() {
+    var scale = document.getElementById("scale");
+	scale.disabled = false;
 //	alert("setResultImage");
     var image = document.getElementById("resultImageDiv");
     var text = document.getElementById("resultTextDiv");
@@ -70,9 +80,9 @@ function compileImage()
   <p><img src="sccharts.png" width="512" height="150" /></p>
   <p><span class="Stil3">Sequentially Constructive Charts - SCCharts</span><span class="Stil1"><br />
       <span class="Stil4">ONLINE COMPILER</span></span></p>
-    <table width="300" border="2" cellspacing="5">
+    <table width="300" border="0" cellspacing="5">
       <tr>
-        <th valign="top" scope="row">1. SCChart  </th>
+        <th valign="top" scope="row"><div align="right">1. SCChart  </div></th>
         <td><label>
           <textarea name="model" cols="70" rows="25" id="model">
 @HVLayout
@@ -110,41 +120,37 @@ scchart ABRO {
 }
 </textarea>
         </label></td>
-		<td rowspan="3">
+		<td rowspan="3"  valign="top">
 		<div id="resultImageDiv" style="font:24px bold; display: none">
         <img src="xxx" name="resultImage" id="resultImage" /></div>
 		<div id="resultTextDiv" style="font:24px bold; display: none">
-          <textarea name="resultText" cols="70" rows="25" id="resultText">
-          </textarea>
+          <textarea name="resultText" cols="70" rows="25" id="resultText" readonly=true style="background-color: #CCCCCC">compiling...</textarea>
 		  </div>
        </td>
       </tr>
       <tr>
-        <th valign="top" scope="row">2. Compile Transformations  </th>
+        <th valign="top" scope="row"><div align="right">2. Compile Transformations  </div></th>
         <td><label>
-          <input name="transformations" type="text" id="transformations" size="100" value="ABORT"/>
+          <input name="transformations" type="text" id="transformations" size="94" value="ABORT" />
         </label></td>
       </tr>
       <tr>
-        <th valign="top" scope="row"><p>3. Other Options </p>        </th>
+        <th valign="top" scope="row"><p align="right">3. Other Options </p>        </th>
         <td><p>
-          <label>
+			<label>
             <input type="radio" name="output" value="text" id="outputText" onclick="setResultText();" />
             textual output </label>
           <br />
-          <label>
+		  <label>
             <input type="radio" name="output" value="graph" id="outputImage" onclick="setResultImage();" />
-            graphical  </label>
-          output, 
-          <label>scale:
-          <select name="scale" id="scale">
+            graphical output, scale:  </label>
+          <select name="scale" id="scale" onchange="compile();">
             <option>1</option>
             <option>2</option>
             <option>3</option>
             <option>4</option>
             <option>5</option>
           </select>
-          </label>
           <br />
         </p></td>
       </tr>
