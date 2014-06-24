@@ -246,7 +246,7 @@ public abstract class HttpServer extends Job {
     // ======================================================================
     // ========================================================================
 
-    private class HandleConnection implements Runnable {
+    private class HandleConnection  implements Runnable {
 
         Socket connection; // !< connection of this instant
         InputStream from_client; // !< stream to read input from
