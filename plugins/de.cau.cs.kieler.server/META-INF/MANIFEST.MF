@@ -8,3 +8,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: de.cau.cs.kieler.server
 Require-Bundle: org.eclipse.core.runtime
 Bundle-ActivationPolicy: lazy
+Bundle-Activator: de.cau.cs.kieler.server.KielerServerPlugin
