@@ -121,7 +121,7 @@ class BasicBlockTransformation extends AbstractModelTransformation {
         scgbb.createBasicBlocks(scgbb.nodes.head, 0)
         
         val time = (System.currentTimeMillis - timestamp) as float
-        System.out.println("Basic Block transformation finished (time used: "+(time / 1000)+"s).")    
+        System.out.println("Basic Block transformation finished (time elapsed: "+(time / 1000)+"s).")    
         
         // Return the SCG with basic block data.
         scgbb

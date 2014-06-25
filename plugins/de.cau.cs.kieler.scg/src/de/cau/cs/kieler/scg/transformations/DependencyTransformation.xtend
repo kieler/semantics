@@ -135,14 +135,14 @@ class DependencyTransformation extends AbstractModelTransformation {
         ]
         
         var time = (System.currentTimeMillis - timestamp) as float
-        System.out.println("Preparation for dependency analysis finished (time used: "+(time / 1000)+"s).")  
+        System.out.println("Preparation for dependency analysis finished (time elapsed: "+(time / 1000)+"s).")  
         
         for(node : assignments) {
         	 node.createDependencies(assignments, conditionals, scgdep) 
       	 }
 
         time = (System.currentTimeMillis - timestamp) as float
-        System.out.println("Dependency analysis finished (time used overall: "+(time / 1000)+"s).")  
+        System.out.println("Dependency analysis finished (overall time elapsed: "+(time / 1000)+"s).")  
         
         // Return the SCG with dependency data.
         scgdep

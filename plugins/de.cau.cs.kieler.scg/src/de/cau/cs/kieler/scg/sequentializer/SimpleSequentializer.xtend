@@ -125,7 +125,7 @@ class SimpleSequentializer extends AbstractSequentializer {
         ]
         
         var time = (System.currentTimeMillis - timestamp) as float
-        System.out.println("Preparation for sequentialization finished (time used: "+(time / 1000)+"s).")          
+        System.out.println("Preparation for sequentialization finished (time elapsed: "+(time / 1000)+"s).")          
         
 		// Create the entry node, a control flow for the entry node, add the node.
         val entry = ScgFactory::eINSTANCE.createEntry
@@ -142,7 +142,7 @@ class SimpleSequentializer extends AbstractSequentializer {
         scg.nodes.add(exit)
         
         time = (System.currentTimeMillis - timestamp) as float
-        System.out.println("Sequentialization finished (time used overall: "+(time / 1000)+"s).")  
+        System.out.println("Sequentialization finished (overall time elapsed: "+(time / 1000)+"s).")  
                 
         // Return the SCG.
         scg     	
