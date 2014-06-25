@@ -1,0 +1,354 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+       "http://www.w3.org/TR/html4/loose.dtd"><head>
+<title>KIELER SCCharts Compiler - Sequentially Constructive Charts - KIELER Compiler - KiCo </title>
+<meta http-equiv="expires" content="0">
+<style type="text/css">
+<!--
+.Stil8 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: small;
+}
+-->
+</style>
+</head>
+
+	   <style type="text/css">
+<!--
+.Stil1 {
+	font-size: xx-large;
+	font-weight: bold;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+.Stil3 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: xx-large;}
+.Stil4 {color: #0000FF}
+.Stil10 {font-size: small}
+.Stil12 {font-size: x-small}
+-->
+       </style>
+
+<script>
+
+
+function setResultText() {
+    var scale = document.getElementById("scale");
+	scale.disabled = true;
+    var size = document.getElementById("size");
+	size.disabled = true;
+    var image = document.getElementById("resultImageDiv");
+    var text = document.getElementById("resultTextDiv");
+	text.style.display="block";
+	image.style.display="none";
+	compile();
+//	alert("setResultText" + image + text);
+}
+
+function setResultImage() {
+    var scale = document.getElementById("scale");
+	scale.disabled = false;
+    var size = document.getElementById("size");
+	size.disabled = false;
+//	alert("setResultImage");
+    var image = document.getElementById("resultImageDiv");
+    var text = document.getElementById("resultTextDiv");
+	image.style.display="block";
+	text.style.display="none";
+	compile();
+}
+
+var doUpdateImage = false;
+
+function compile() {
+	window.clearInterval(compileTimer);
+	resultText.value = "Compiling, please wait...";
+	clearErrors();
+    var outputText = document.getElementById("outputText");
+    if(outputText.checked) {
+		doUpdateImage = false;
+		compileText();
+	}
+	else {
+		doUpdateImage = true;
+		compileText();
+	}
+}
+
+function replaceAll(inputStr, findStr, replaceStr) {
+  return inputStr.split(findStr).join(replaceStr);
+}
+
+function compileText() {
+    var strict = document.getElementById("strict").checked;
+    var verbose = document.getElementById("verbose").checked;
+
+	var resultUrl =  document.getElementById("KiCoURL").value + "/?model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
+
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function() {
+  		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+	      var resultText = document.getElementById("resultText");
+   		  resultText.value = xmlhttp.responseText;
+
+		  var errorMsg = xmlhttp.getResponseHeader("compile-error");
+		  if (errorMsg != null) {
+			  var resultError = document.getElementById("resultError");
+			  var resultErrorDiv = document.getElementById("resultErrorDiv");
+	  	  	  resultErrorDiv.style.display="block";
+			  resultError.value = replaceAll(decodeURIComponent(errorMsg), "+", " ");
+		  } else {
+		  	  clearErrors();
+		  }
+
+		  if (doUpdateImage) {
+		  		updateImage();
+	      }
+		}
+	}
+	xmlhttp.open('GET', resultUrl, true);
+	xmlhttp.send();
+}
+
+function clearErrors() {
+			  var resultError = document.getElementById("resultError");
+			  var resultErrorDiv = document.getElementById("resultErrorDiv");
+	  	  	  resultErrorDiv.style.display="none";
+			  resultError.value = "";
+}
+
+
+function updateImage() {
+    var image = document.getElementById("resultImage");
+    if(image.complete) {
+	    var model = document.getElementById("model")
+	    var transformations = document.getElementById("transformations")
+	    var scale = document.getElementById("scale")
+        var new_image = new Image();
+        //set up the new image
+        new_image.id = "resultImage";
+		var imageUrl = document.getElementById("KLighDURL").value + "/?model="+encodeURIComponent(resultText.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&scale=" + encodeURIComponent(scale.value) + "#" + new Date().getTime();
+        new_image.src = imageUrl;
+        // insert new image and remove old
+        image.parentNode.insertBefore(new_image, image);
+        image.parentNode.removeChild(image);
+
+		new_image.onload = function() {
+			var size = document.getElementById("size");
+			var width = new_image.naturalWidth;
+			var height = new_image.naturalHeight;
+			new_image.width = width/size.value;
+			new_image.height = height/size.value;
+	    }
+		//var width = new_image.naturalWidth;
+		//var height = new_image.naturalHeight;
+		//alert(width + "," + height);
+		//new_image.width = "50%";
+		//new_image.height = "50%";
+
+    }
+}
+
+</script>
+
+<div align="center">
+  <p><img src="sccharts.png" width="512" height="150" /></p>
+  <p><span class="Stil3">Sequentially Constructive Charts - SCCharts</span><span class="Stil1"><br />
+      <span class="Stil4">ONLINE COMPILER</span></span></p>
+    <table width="300" border="0" cellspacing="0">
+      <tr>
+        <td colspan="2" valign="top" scope="row"><label></label>
+          <table width="300" border="0" cellspacing="10">
+            <tr>
+              <th valign="top" scope="row"><div align="right" class="Stil8">1. SCChart </div></th>
+              <td valign="top"><label>
+                <textarea name="model" cols="70" rows="25" id="model" onchange="compile();">
+@HVLayout
+scchart ABRO {
+  input bool A;
+  input bool B;
+  input bool R;
+  output bool O = false;
+
+  region Main:
+
+  initial state ABO {
+
+    initial state WaitAB {
+
+      region HandleA:
+
+      initial state WA
+      --> DA with A;
+
+      final state DA;
+
+      region HandleB:
+
+      initial state WB
+      --> DB with B;
+
+      final state DB;
+    }
+    >-> Done with / O = true;
+
+    state Done;
+  }
+  o-> ABO with R;
+}
+            </textarea>
+              </label></td>
+            </tr>
+            <tr>
+              <th valign="top" scope="row"><div align="right" class="Stil8">2. Compile Transformations </div></th>
+              <td><label>
+			  <div class="input-w"  style="width: auto">
+                <input name="transformations" type="text" id="transformations" size="94" value="ABORT" style="width: 100%"/>
+			  </div>
+              </label></td>
+            </tr>
+            <tr>
+              <th valign="top" scope="row"><p align="right" class="Stil8">3. Other Options </p></th>
+              <td align="left"><p>
+                <label>
+                <span class="Stil8">
+                <input name="strict" type="checkbox" id="strict" value="true" onclick="compile();">
+                Strict</span></label>
+                <span class="Stil8 Stil10"><br>
+                <label>
+                <input name="verbose" type="checkbox" id="verbose" value="true" onclick="compile();">
+                Verbose                </label>
+                </span></p>
+                <p>
+                  <span class="Stil8 Stil10">
+                  <label>
+                  <input type="radio" name="output" value="text" id="outputText" onclick="setResultText();" />
+                  <img src="text.png" alt=" " width="11" height="14" />                  Textual output </label>
+                  <label> <br>
+                  <input type="radio" name="output" value="graph" id="outputImage" onclick="setResultImage();" />
+                  <img src="model.png" alt=" " width="11" height="14" />                Graphical output <BR>
+                <BR>
+&nbsp; 	&nbsp; 	 	&nbsp; Quality: </label>
+
+                  <label></label>
+                  <label></label>
+                                    </span>
+                  <span class="Stil8 Stil10">
+                  <label> </label>
+                  <select name="scale" id="scale" onchange="compile();">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                  , Size:
+                  <select name="size" id="size" onchange="compile();">
+                    <option value="1">100%</option>
+                    <option value="1.5">75%</option>
+                    <option value="2">50%</option>
+                    <option value="4">25%</option>
+                    <option value="10">10%</option>
+                  </select>
+                  </span><br>
+                  <br>
+                <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Advanced Options</a></span></p>
+		<div id="advancedOptions" style="font:24px bold; display: none">
+		<span class="Stil8 Stil10">
+                <table width="370" border="0" cellspacing="5">
+                  <tr>
+                    <th width="200" scope="row"><div align="right">KielerCompiler URL: </div></th>
+                    <td width="200"><label>
+                      <input name="KiCoURL" type="text" id="KiCoURL" size="30" value="http://localhost:5555">
+                    </label></td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><div align="right">KLighD URL: </div></th>
+                    <td><input name="KLighDURL" type="text" id="KLighDURL" size="30" value="http://localhost:4444"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><div align="right">Refresh-Time:</div></th>
+                    <td><input name="refreshTime" type="text" id="refreshTime" size="30" value="2000"></td>
+                  </tr>
+                </table>  </span>
+				</div></td>
+            </tr>
+            <tr>
+              <th scope="row"><label></label></th>
+              <th scope="row"><div align="left">
+                  <input type="submit" name="Submit" value=" Compile / Update " onclick="compile();" />
+              </div></th>
+            </tr>
+          </table>
+          <p><br />
+          </p></td>
+        <td  valign="top">
+
+          <table width="300" border="0" cellspacing="10">
+            <tr><td>
+
+		<div id="resultErrorDiv" style="font:24px bold; display: none">
+          <textarea name="resultError" cols="70" rows="4" id="resultError" readonly=true style="background-color: #FF0000"></textarea>
+		  <br>
+		 </div>
+		<div id="resultImageDiv" style="font:24px bold; display: none">
+        <img src="xxx" name="resultImage" id="resultImage"/></div>
+		<div id="resultTextDiv" style="font:24px bold; display: none">
+          <textarea name="resultText" cols="70" rows="25" id="resultText" readonly=true style="background-color: #CCCCCC"></textarea>
+		  </div>
+		  </td>
+      </tr>
+    </table>
+
+
+		  </td>
+      </tr>
+    </table>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</div>
+
+<script>
+
+var advancedShown = false;
+function toggleAdvanced() {
+  advancedShown = !advancedShown;
+  if (advancedShown) {
+	document.getElementById('advancedOptions').style.display='block';
+  }
+  else {
+	document.getElementById('advancedOptions').style.display='none';
+  }
+}
+
+var compileTimer=setInterval(function(){compile()},document.getElementById("refreshTime").value);
+
+var area = document.getElementById("model");
+if (area.addEventListener) {
+  area.addEventListener('input', function() {
+    // event handling code for sane browsers
+	window.clearInterval(compileTimer);
+	compileTimer=setInterval(function(){compile()},document.getElementById("refreshTime").value);
+  }, false);
+} else if (area.attachEvent) {
+  area.attachEvent('onpropertychange', function() {
+    // IE-specific event handling code
+	window.clearInterval(compileTimer);
+	compileTimer=setInterval(function(){compile()},document.getElementById("refreshTime").value);
+  });
+}
+
+
+var area = document.getElementById("transformations");
+if (area.addEventListener) {
+  area.addEventListener('input', function() {
+    // event handling code for sane browsers
+	window.clearInterval(compileTimer);
+	compileTimer=setInterval(function(){compile()},document.getElementById("refreshTime").value);
+  }, false);
+} else if (area.attachEvent) {
+  area.attachEvent('onpropertychange', function() {
+    // IE-specific event handling code
+	window.clearInterval(compileTimer);
+	compileTimer=setInterval(function(){compile()},document.getElementById("refreshTime").value);
+  });
+}
+
+</script>
