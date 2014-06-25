@@ -23,6 +23,8 @@
 .Stil4 {color: #0000FF}
 .Stil10 {font-size: small}
 .Stil12 {font-size: x-small}
+.Stil14 {font-size: x-small; font-family: Verdana, Arial, Helvetica, sans-serif; }
+.Stil15 {font-size: xx-small}
 -->
        </style>
 
@@ -197,11 +199,13 @@ scchart ABRO {
               </label></td>
             </tr>
             <tr>
-              <th valign="top" scope="row"><div align="right" class="Stil8">2. Compile Transformations </div></th>
+              <th valign="top" scope="row"><div align="right" class="Stil8">2. Compile Transformations<br />
+                  <span class="Stil15">(comma separated)</span></div></th>
               <td><label>
 			  <div class="input-w"  style="width: auto">
                 <input name="transformations" type="text" id="transformations" size="94" value="ABORT" style="width: 100%"/>
-			  </div>
+                <br />
+                <span class="Stil14">Examples: ABORT, INITIALIZATION, ENTRY, CORE, SCG, SCGRAPH, CODEGENERATION</span>			  </div>
               </label></td>
             </tr>
             <tr>
