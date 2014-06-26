@@ -30,7 +30,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 
 import com.google.common.collect.Lists;
 
-import de.cau.cs.kieler.core.kivi.KiViPlugin;
+import de.cau.cs.kieler.kico.klighd.KiCoKLighDPlugin;
 
 /**
  * Use this class to listen to part changes of any opened part in the workbench.
@@ -104,7 +104,7 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
         } catch (IllegalStateException exception) {
             // the workbench is not present yet
             StatusManager.getManager().handle(
-                    new Status(Status.ERROR, KiViPlugin.PLUGIN_ID,
+                    new Status(Status.ERROR, KiCoKLighDPlugin.PLUGIN_ID,
                             "Unable to register a global part adapter.", exception));
         }
     }
