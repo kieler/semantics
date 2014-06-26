@@ -32,9 +32,11 @@ import de.cau.cs.kieler.sccharts.For;
 import de.cau.cs.kieler.sccharts.FunctionCallEffect;
 import de.cau.cs.kieler.sccharts.InputNode;
 import de.cau.cs.kieler.sccharts.OutputNode;
+import de.cau.cs.kieler.sccharts.Receiver;
 import de.cau.cs.kieler.sccharts.ReferencedNode;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
+import de.cau.cs.kieler.sccharts.Sender;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.SuspendAction;
 import de.cau.cs.kieler.sccharts.TextEffect;
@@ -423,6 +425,12 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 					return; 
 				}
 				else break;
+			case SCChartsPackage.RECEIVER:
+				if(context == grammarAccess.getReceiverRule()) {
+					sequence_Receiver(context, (Receiver) semanticObject); 
+					return; 
+				}
+				else break;
 			case SCChartsPackage.REFERENCED_NODE:
 				if(context == grammarAccess.getNodeRule() ||
 				   context == grammarAccess.getReferencedNodeRule()) {
@@ -437,6 +445,12 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				}
 				else if(context == grammarAccess.getSingleRegionRule()) {
 					sequence_SingleRegion(context, (Region) semanticObject); 
+					return; 
+				}
+				else break;
+			case SCChartsPackage.SENDER:
+				if(context == grammarAccess.getSenderRule()) {
+					sequence_Sender(context, (Sender) semanticObject); 
 					return; 
 				}
 				else break;
@@ -562,7 +576,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (id=ID label=STRING? expression=Expression)
+	 *     (id=ID label=STRING? senders+=Sender?)
 	 */
 	protected void sequence_InputNode(EObject context, InputNode semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -580,7 +594,16 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (id=ID label=STRING? referencedScope=[State|ID])
+	 *     (node=[Node|ID] valuedObject=[ValuedObject|ID])
+	 */
+	protected void sequence_Receiver(EObject context, Receiver semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (id=ID label=STRING? referencedScope=[State|ID] senders+=Sender*)
 	 */
 	protected void sequence_ReferencedNode(EObject context, ReferencedNode semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -621,6 +644,15 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *     )
 	 */
 	protected void sequence_SCChart(EObject context, SCChart semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (expression=Expression receivers+=Receiver)
+	 */
+	protected void sequence_Sender(EObject context, Sender semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
