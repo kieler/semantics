@@ -64,9 +64,9 @@ class SCGModelComparator extends AbstractModelComparator {
 		if (eObject instanceof SCGraph) {
 			val scg = eObject as SCGraph
 		
-			modelInfo.typeGroupCount = scg.typeGroups.size
+			modelInfo.typeGroupCount = scg.declarations.size
 			modelInfo.valuedObjectCount = 0
-			scg.typeGroups.forEach[ modelInfo.valuedObjectCount = modelInfo.valuedObjectCount + it.valuedObjects.size ]
+			scg.declarations.forEach[ modelInfo.valuedObjectCount = modelInfo.valuedObjectCount + it.valuedObjects.size ]
 			modelInfo.nodeCount = scg.nodes.size
 			modelInfo.controlFlowCount = scg.eAllContents.filter(typeof(ControlFlow)).size
 			modelInfo.dependencyCount = scg.eAllContents.filter(typeof(Dependency)).size
