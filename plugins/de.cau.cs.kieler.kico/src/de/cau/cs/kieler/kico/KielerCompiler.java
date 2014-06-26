@@ -938,7 +938,7 @@ public class KielerCompiler {
                             } else {
                                 // in this case we CANNOT do any further transformation calls
                                 // which require the return value of doTransform to be an EObject
-                                context.generatePostponedErrors();
+                                context.processPostponedErrors();
                                 return context.getCompilationResult();
                             }
                         }
@@ -946,7 +946,7 @@ public class KielerCompiler {
                 }
             }
         }
-        context.generatePostponedErrors();
+        context.processPostponedErrors();
         return context.getCompilationResult();
     }
 

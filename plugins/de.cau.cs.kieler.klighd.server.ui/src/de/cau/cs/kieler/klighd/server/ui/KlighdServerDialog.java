@@ -100,8 +100,8 @@ public class KlighdServerDialog extends Dialog {
         text.setBounds(116, 43, 76, 19);
 
         Link link = new Link(composite, SWT.NONE);
-        link.setBounds(27, 105, 259, 32);
-        link.setText("<a>http://rtsys.informatik.uni-kiel.de/confluence/pages/viewpage.action?pageId=328115</a>");
+        link.setBounds(27, 95, 259, 42);
+        link.setText("<a>http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+KLighD+Console+Diagram+Rendering</a>");
 
         CLabel lblMoreInformation = new CLabel(composite, SWT.NONE);
         lblMoreInformation.setText("More Information:");

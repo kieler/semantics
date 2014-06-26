@@ -65,9 +65,6 @@ public class KiCoPlugin extends Plugin {
     /** The no error output. */
     private boolean forceNoErrorOutput = false;
 
-    /** The last error. */
-    private static String lastError = null;
-
     // -------------------------------------------------------------------------
 
     /**
@@ -467,24 +464,6 @@ public class KiCoPlugin extends Plugin {
 
     public void showError(final String textMessage, final String pluginID,
             final Exception exception, final boolean silent) {
-        if (KiCoPlugin.lastError != null && KiCoPlugin.lastError.length() > 0) {
-            KiCoPlugin.lastError += ",\n";
-        } else {
-            KiCoPlugin.lastError = "";
-        }
-        if (pluginID != null) {
-            KiCoPlugin.lastError += pluginID + ": ";
-        }
-        if (textMessage != null) {
-            KiCoPlugin.lastError += textMessage;
-        }
-        if (exception != null) {
-            KiCoPlugin.lastError += " (" + exception.getClass().getName() + ")";
-            String errorMessage = getErrorMessage(exception);
-            if (errorMessage != null) {
-                KiCoPlugin.lastError += " " + errorMessage;
-            }
-        }
         if (isForceNoErrorOutput()) {
             return;
         }
@@ -560,7 +539,8 @@ public class KiCoPlugin extends Plugin {
      * @return the last error
      */
     public static String getLastError() {
-        return lastError;
+        //TODO: 
+        return "";//lastError;
     }
 
     // -------------------------------------------------------------------------
@@ -570,7 +550,8 @@ public class KiCoPlugin extends Plugin {
      * 
      */
     public static void resetLastError() {
-        KiCoPlugin.lastError = null;
+        //TODO: 
+        //KiCoPlugin.lastError = null;
     }
 
     // -------------------------------------------------------------------------
