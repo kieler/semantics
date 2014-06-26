@@ -122,13 +122,13 @@ public interface SclPackage extends EPackage
   int PROGRAM__NAME = STATEMENT_SEQUENCE_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
+   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROGRAM__TYPE_GROUPS = STATEMENT_SEQUENCE_FEATURE_COUNT + 2;
+  int PROGRAM__DECLARATIONS = STATEMENT_SEQUENCE_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Program</em>' class.
@@ -326,13 +326,13 @@ public interface SclPackage extends EPackage
   int CONDITIONAL__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
+   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONDITIONAL__TYPE_GROUPS = INSTRUCTION_FEATURE_COUNT + 2;
+  int CONDITIONAL__DECLARATIONS = INSTRUCTION_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Else Statements</b></em>' containment reference list.
@@ -475,13 +475,13 @@ public interface SclPackage extends EPackage
   int STATEMENT_SCOPE__STATEMENTS = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Type Groups</b></em>' containment reference list.
+   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATEMENT_SCOPE__TYPE_GROUPS = INSTRUCTION_FEATURE_COUNT + 1;
+  int STATEMENT_SCOPE__DECLARATIONS = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Statement Scope</em>' class.
@@ -526,15 +526,15 @@ public interface SclPackage extends EPackage
   EAttribute getProgram_Name();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Program#getTypeGroups <em>Type Groups</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Program#getDeclarations <em>Declarations</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Type Groups</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Program#getTypeGroups()
+   * @return the meta object for the containment reference list '<em>Declarations</em>'.
+   * @see de.cau.cs.kieler.scl.scl.Program#getDeclarations()
    * @see #getProgram()
    * @generated
    */
-  EReference getProgram_TypeGroups();
+  EReference getProgram_Declarations();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.scl.scl.Statement <em>Statement</em>}'.
@@ -663,15 +663,15 @@ public interface SclPackage extends EPackage
   EReference getConditional_Expression();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Conditional#getTypeGroups <em>Type Groups</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Conditional#getDeclarations <em>Declarations</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Type Groups</em>'.
-   * @see de.cau.cs.kieler.scl.scl.Conditional#getTypeGroups()
+   * @return the meta object for the containment reference list '<em>Declarations</em>'.
+   * @see de.cau.cs.kieler.scl.scl.Conditional#getDeclarations()
    * @see #getConditional()
    * @generated
    */
-  EReference getConditional_TypeGroups();
+  EReference getConditional_Declarations();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.Conditional#getElseStatements <em>Else Statements</em>}'.
@@ -778,15 +778,15 @@ public interface SclPackage extends EPackage
   EClass getStatementScope();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.StatementScope#getTypeGroups <em>Type Groups</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scl.scl.StatementScope#getDeclarations <em>Declarations</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Type Groups</em>'.
-   * @see de.cau.cs.kieler.scl.scl.StatementScope#getTypeGroups()
+   * @return the meta object for the containment reference list '<em>Declarations</em>'.
+   * @see de.cau.cs.kieler.scl.scl.StatementScope#getDeclarations()
    * @see #getStatementScope()
    * @generated
    */
-  EReference getStatementScope_TypeGroups();
+  EReference getStatementScope_Declarations();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -838,12 +838,12 @@ public interface SclPackage extends EPackage
     EAttribute PROGRAM__NAME = eINSTANCE.getProgram_Name();
 
     /**
-     * The meta object literal for the '<em><b>Type Groups</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Declarations</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PROGRAM__TYPE_GROUPS = eINSTANCE.getProgram_TypeGroups();
+    EReference PROGRAM__DECLARATIONS = eINSTANCE.getProgram_Declarations();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.scl.scl.impl.StatementImpl <em>Statement</em>}' class.
@@ -954,12 +954,12 @@ public interface SclPackage extends EPackage
     EReference CONDITIONAL__EXPRESSION = eINSTANCE.getConditional_Expression();
 
     /**
-     * The meta object literal for the '<em><b>Type Groups</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Declarations</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference CONDITIONAL__TYPE_GROUPS = eINSTANCE.getConditional_TypeGroups();
+    EReference CONDITIONAL__DECLARATIONS = eINSTANCE.getConditional_Declarations();
 
     /**
      * The meta object literal for the '<em><b>Else Statements</b></em>' containment reference list feature.
@@ -1054,12 +1054,12 @@ public interface SclPackage extends EPackage
     EClass STATEMENT_SCOPE = eINSTANCE.getStatementScope();
 
     /**
-     * The meta object literal for the '<em><b>Type Groups</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Declarations</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference STATEMENT_SCOPE__TYPE_GROUPS = eINSTANCE.getStatementScope_TypeGroups();
+    EReference STATEMENT_SCOPE__DECLARATIONS = eINSTANCE.getStatementScope_Declarations();
 
   }
 

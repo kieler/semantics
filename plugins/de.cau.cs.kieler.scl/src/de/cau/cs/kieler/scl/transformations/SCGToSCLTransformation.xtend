@@ -76,13 +76,14 @@ class SCGToSCLTransformation {
         scl.name = 'M' + scg.hashCode.toString
                   
         // ... and copy declarations.
-        for(typeGroup : scg.typeGroups) {
-            val newTypeGroup = createTypeGroupWOValuedObjects(typeGroup)
-            for (valuedObject : typeGroup.valuedObjects) {
-            	val newValuedObject = createValuedObject(newTypeGroup, valuedObject.name)
+        for(declaration : scg.declarations) {
+            val newDeclaration = createDeclaration(declaration)
+            for (valuedObject : declaration.valuedObjects) {
+            	val newValuedObject = createValuedObject(valuedObject.name)
+            	newDeclaration.valuedObjects += newValuedObject
 	            valuedObjectMapping.put(valuedObject, newValuedObject)
             }
-            scl.typeGroups += newTypeGroup 
+            scl.declarations += newDeclaration 
         }
         
         scg.transform(scl)

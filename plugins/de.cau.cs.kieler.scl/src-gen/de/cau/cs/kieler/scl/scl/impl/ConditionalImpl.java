@@ -2,8 +2,8 @@
  */
 package de.cau.cs.kieler.scl.scl.impl;
 
+import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.SclPackage;
@@ -34,7 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getStatements <em>Statements</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getTypeGroups <em>Type Groups</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getElseStatements <em>Else Statements</em>}</li>
  * </ul>
  * </p>
@@ -64,14 +64,14 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
   protected Expression expression;
 
   /**
-   * The cached value of the '{@link #getTypeGroups() <em>Type Groups</em>}' containment reference list.
+   * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getTypeGroups()
+   * @see #getDeclarations()
    * @generated
    * @ordered
    */
-  protected EList<TypeGroup> typeGroups;
+  protected EList<Declaration> declarations;
 
   /**
    * The cached value of the '{@link #getElseStatements() <em>Else Statements</em>}' containment reference list.
@@ -171,13 +171,13 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<TypeGroup> getTypeGroups()
+  public EList<Declaration> getDeclarations()
   {
-    if (typeGroups == null)
+    if (declarations == null)
     {
-      typeGroups = new EObjectContainmentEList<TypeGroup>(TypeGroup.class, this, SclPackage.CONDITIONAL__TYPE_GROUPS);
+      declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, SclPackage.CONDITIONAL__DECLARATIONS);
     }
-    return typeGroups;
+    return declarations;
   }
 
   /**
@@ -208,8 +208,8 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
       case SclPackage.CONDITIONAL__EXPRESSION:
         return basicSetExpression(null, msgs);
-      case SclPackage.CONDITIONAL__TYPE_GROUPS:
-        return ((InternalEList<?>)getTypeGroups()).basicRemove(otherEnd, msgs);
+      case SclPackage.CONDITIONAL__DECLARATIONS:
+        return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
       case SclPackage.CONDITIONAL__ELSE_STATEMENTS:
         return ((InternalEList<?>)getElseStatements()).basicRemove(otherEnd, msgs);
     }
@@ -230,8 +230,8 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         return getStatements();
       case SclPackage.CONDITIONAL__EXPRESSION:
         return getExpression();
-      case SclPackage.CONDITIONAL__TYPE_GROUPS:
-        return getTypeGroups();
+      case SclPackage.CONDITIONAL__DECLARATIONS:
+        return getDeclarations();
       case SclPackage.CONDITIONAL__ELSE_STATEMENTS:
         return getElseStatements();
     }
@@ -256,9 +256,9 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
       case SclPackage.CONDITIONAL__EXPRESSION:
         setExpression((Expression)newValue);
         return;
-      case SclPackage.CONDITIONAL__TYPE_GROUPS:
-        getTypeGroups().clear();
-        getTypeGroups().addAll((Collection<? extends TypeGroup>)newValue);
+      case SclPackage.CONDITIONAL__DECLARATIONS:
+        getDeclarations().clear();
+        getDeclarations().addAll((Collection<? extends Declaration>)newValue);
         return;
       case SclPackage.CONDITIONAL__ELSE_STATEMENTS:
         getElseStatements().clear();
@@ -284,8 +284,8 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
       case SclPackage.CONDITIONAL__EXPRESSION:
         setExpression((Expression)null);
         return;
-      case SclPackage.CONDITIONAL__TYPE_GROUPS:
-        getTypeGroups().clear();
+      case SclPackage.CONDITIONAL__DECLARATIONS:
+        getDeclarations().clear();
         return;
       case SclPackage.CONDITIONAL__ELSE_STATEMENTS:
         getElseStatements().clear();
@@ -308,8 +308,8 @@ public class ConditionalImpl extends InstructionImpl implements Conditional
         return statements != null && !statements.isEmpty();
       case SclPackage.CONDITIONAL__EXPRESSION:
         return expression != null;
-      case SclPackage.CONDITIONAL__TYPE_GROUPS:
-        return typeGroups != null && !typeGroups.isEmpty();
+      case SclPackage.CONDITIONAL__DECLARATIONS:
+        return declarations != null && !declarations.isEmpty();
       case SclPackage.CONDITIONAL__ELSE_STATEMENTS:
         return elseStatements != null && !elseStatements.isEmpty();
     }

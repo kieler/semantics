@@ -14,7 +14,7 @@ generate scl "http://kieler.cs.cau.de/scl/scl"
 Program:
 	(annotations+=Annotation)*
     'module' name = ID
-    (typeGroups+=TypeGroup)*
+    (declarations+=Declaration)*
     '{'
         (
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
@@ -23,9 +23,9 @@ Program:
     '}' 
 ;
 
-TypeGroup returns kexpressions::TypeGroup:
+Declaration returns kexpressions::Declaration:
     (annotations+=Annotation)*
-	(constant?='const')?
+	(const?='const')?
     (input?='input')?
     (output?='output')?
     (static?='static')?
@@ -70,13 +70,13 @@ Assignment:
 
 Conditional:
     'if' expression = Expression 'then'
-        (typeGroups+=TypeGroup)*
+        (declarations+=Declaration)*
         (
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
             (statements +=  InstructionStatement statements += EmptyStatement*)?
          )
      ('else'
-        (typeGroups+=TypeGroup)*
+        (declarations+=Declaration)*
         (
             ((elseStatements += InstructionStatement';') | elseStatements += EmptyStatement)*
             (elseStatements +=  InstructionStatement elseStatements += EmptyStatement*)?
@@ -117,7 +117,7 @@ Pause:
 StatementScope:
     {StatementScope}
     '{'
-        (typeGroups+=TypeGroup)*
+        (declarations+=Declaration)*
         (
             ((statements += InstructionStatement';') | statements += EmptyStatement)*
             (statements +=  InstructionStatement statements += EmptyStatement*)?
