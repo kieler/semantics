@@ -369,7 +369,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                 it.lineWidth = 1;
                 //FIXME: hacky workaround
                 it.addText("[-]" + getSpacedOut(transformationDummy.label, 2) + " ") => [
-                    it.foreground = "darkGray".color
+                    it.foreground = "dimGray".color
 //                    it.foreground = "white".color
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
@@ -389,7 +389,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
                 it.lineWidth = 1;
                 //FIXME: hacky workaround
                 it.addText("[+]" + getSpacedOut(transformationDummy.label, 2) + " ") => [
-                    it.foreground = "darkGray".color
+                    it.foreground = "dimGray".color
 //                    it.foreground = "white".color
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
