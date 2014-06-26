@@ -76,7 +76,7 @@ public class ReceiverItemProvider
             super.getPropertyDescriptors(object);
 
             addValuedObjectPropertyDescriptor(object);
-            addSenderPropertyDescriptor(object);
+            addNodePropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -104,19 +104,19 @@ public class ReceiverItemProvider
     }
 
     /**
-     * This adds a property descriptor for the Sender feature.
+     * This adds a property descriptor for the Node feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addSenderPropertyDescriptor(Object object) {
+    protected void addNodePropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_Receiver_sender_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Receiver_sender_feature", "_UI_Receiver_type"),
-                 SCChartsPackage.Literals.RECEIVER__SENDER,
+                 getString("_UI_Receiver_node_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Receiver_node_feature", "_UI_Receiver_type"),
+                 SCChartsPackage.Literals.RECEIVER__NODE,
                  true,
                  false,
                  true,

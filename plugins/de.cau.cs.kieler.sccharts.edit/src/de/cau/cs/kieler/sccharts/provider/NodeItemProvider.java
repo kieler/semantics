@@ -145,7 +145,6 @@ public class NodeItemProvider
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
             childrenFeatures.add(SCChartsPackage.Literals.NODE__SENDERS);
-            childrenFeatures.add(SCChartsPackage.Literals.NODE__RECEIVERS);
         }
         return childrenFeatures;
     }
@@ -205,7 +204,6 @@ public class NodeItemProvider
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
             case SCChartsPackage.NODE__SENDERS:
-            case SCChartsPackage.NODE__RECEIVERS:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -227,11 +225,6 @@ public class NodeItemProvider
             (createChildParameter
                 (SCChartsPackage.Literals.NODE__SENDERS,
                  SCChartsFactory.eINSTANCE.createSender()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.NODE__RECEIVERS,
-                 SCChartsFactory.eINSTANCE.createReceiver()));
     }
 
     /**

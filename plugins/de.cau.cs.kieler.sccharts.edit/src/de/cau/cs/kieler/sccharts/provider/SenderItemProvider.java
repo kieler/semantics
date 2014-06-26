@@ -80,31 +80,8 @@ public class SenderItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addReceiversPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
-    }
-
-    /**
-     * This adds a property descriptor for the Receivers feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addReceiversPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_Sender_receivers_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Sender_receivers_feature", "_UI_Sender_type"),
-                 SCChartsPackage.Literals.SENDER__RECEIVERS,
-                 true,
-                 false,
-                 true,
-                 null,
-                 null,
-                 null));
     }
 
     /**
@@ -120,6 +97,7 @@ public class SenderItemProvider
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
             childrenFeatures.add(SCChartsPackage.Literals.SENDER__EXPRESSION);
+            childrenFeatures.add(SCChartsPackage.Literals.SENDER__RECEIVERS);
         }
         return childrenFeatures;
     }
@@ -172,6 +150,7 @@ public class SenderItemProvider
 
         switch (notification.getFeatureID(Sender.class)) {
             case SCChartsPackage.SENDER__EXPRESSION:
+            case SCChartsPackage.SENDER__RECEIVERS:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -243,6 +222,11 @@ public class SenderItemProvider
             (createChildParameter
                 (SCChartsPackage.Literals.SENDER__EXPRESSION,
                  KExpressionsFactory.eINSTANCE.createFunctionCall()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.SENDER__RECEIVERS,
+                 SCChartsFactory.eINSTANCE.createReceiver()));
     }
 
     /**
