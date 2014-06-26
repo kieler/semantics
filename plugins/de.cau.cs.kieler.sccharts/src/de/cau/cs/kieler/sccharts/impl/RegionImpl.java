@@ -42,13 +42,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.RegionImpl#getStates <em>States</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.RegionImpl#getParentState <em>Parent State</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class RegionImpl extends ScopeImpl implements Region {
+public class RegionImpl extends ConcurrencyImpl implements Region {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -102,57 +101,12 @@ public class RegionImpl extends ScopeImpl implements Region {
      * <!-- end-user-doc -->
      * @generated
      */
-    public State getParentState() {
-        if (eContainerFeatureID() != SCChartsPackage.REGION__PARENT_STATE) return null;
-        return (State)eInternalContainer();
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public NotificationChain basicSetParentState(State newParentState, NotificationChain msgs) {
-        msgs = eBasicSetContainer((InternalEObject)newParentState, SCChartsPackage.REGION__PARENT_STATE, msgs);
-        return msgs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setParentState(State newParentState) {
-        if (newParentState != eInternalContainer() || (eContainerFeatureID() != SCChartsPackage.REGION__PARENT_STATE && newParentState != null)) {
-            if (EcoreUtil.isAncestor(this, newParentState))
-                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-            NotificationChain msgs = null;
-            if (eInternalContainer() != null)
-                msgs = eBasicRemoveFromContainer(msgs);
-            if (newParentState != null)
-                msgs = ((InternalEObject)newParentState).eInverseAdd(this, SCChartsPackage.STATE__REGIONS, State.class, msgs);
-            msgs = basicSetParentState(newParentState, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.REGION__PARENT_STATE, newParentState, newParentState));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case SCChartsPackage.REGION__STATES:
                 return ((InternalEList<InternalEObject>)(InternalEList<?>)getStates()).basicAdd(otherEnd, msgs);
-            case SCChartsPackage.REGION__PARENT_STATE:
-                if (eInternalContainer() != null)
-                    msgs = eBasicRemoveFromContainer(msgs);
-                return basicSetParentState((State)otherEnd, msgs);
         }
         return super.eInverseAdd(otherEnd, featureID, msgs);
     }
@@ -167,24 +121,8 @@ public class RegionImpl extends ScopeImpl implements Region {
         switch (featureID) {
             case SCChartsPackage.REGION__STATES:
                 return ((InternalEList<?>)getStates()).basicRemove(otherEnd, msgs);
-            case SCChartsPackage.REGION__PARENT_STATE:
-                return basicSetParentState(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-        switch (eContainerFeatureID()) {
-            case SCChartsPackage.REGION__PARENT_STATE:
-                return eInternalContainer().eInverseRemove(this, SCChartsPackage.STATE__REGIONS, State.class, msgs);
-        }
-        return super.eBasicRemoveFromContainerFeature(msgs);
     }
 
     /**
@@ -197,8 +135,6 @@ public class RegionImpl extends ScopeImpl implements Region {
         switch (featureID) {
             case SCChartsPackage.REGION__STATES:
                 return getStates();
-            case SCChartsPackage.REGION__PARENT_STATE:
-                return getParentState();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -216,9 +152,6 @@ public class RegionImpl extends ScopeImpl implements Region {
                 getStates().clear();
                 getStates().addAll((Collection<? extends State>)newValue);
                 return;
-            case SCChartsPackage.REGION__PARENT_STATE:
-                setParentState((State)newValue);
-                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -234,9 +167,6 @@ public class RegionImpl extends ScopeImpl implements Region {
             case SCChartsPackage.REGION__STATES:
                 getStates().clear();
                 return;
-            case SCChartsPackage.REGION__PARENT_STATE:
-                setParentState((State)null);
-                return;
         }
         super.eUnset(featureID);
     }
@@ -251,8 +181,6 @@ public class RegionImpl extends ScopeImpl implements Region {
         switch (featureID) {
             case SCChartsPackage.REGION__STATES:
                 return states != null && !states.isEmpty();
-            case SCChartsPackage.REGION__PARENT_STATE:
-                return getParentState() != null;
         }
         return super.eIsSet(featureID);
     }

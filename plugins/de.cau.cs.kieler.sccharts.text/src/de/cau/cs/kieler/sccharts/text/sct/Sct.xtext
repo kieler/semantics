@@ -23,6 +23,20 @@ SingleRegion returns sccharts::Region:
       (declarations+=Declaration)*
      )?
     (states+=State)*;
+    
+
+// ---------------------------------------------------------------------------------------------------
+
+SingleDataflow returns sccharts::Dataflow:
+    {sccharts::Dataflow}
+    (
+      (annotations += Annotation)*
+      'dataflow' (id=ID)? (label=STRING)? ('['for=For']')?  ':'
+      (declarations+=Declaration)*
+     )?
+    (nodes+=Node)*;
+    
+    
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -39,6 +53,16 @@ Region returns sccharts::Region:
     'region' (id=ID)? (label=STRING)? ('['for=For']')? ':'
       (declarations+=Declaration)*
     (states+=State)+;
+
+
+// ---------------------------------------------------------------------------------------------------
+
+Dataflow returns sccharts::Dataflow:
+    {sccharts::Dataflow}
+    (annotations += Annotation)*
+    'dataflow' (id=ID)? (label=STRING)? ('['for=For']')? ':'
+      (declarations+=Declaration)*
+    (nodes+=Node)+;
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -59,7 +83,8 @@ SCChart:
             (declarations+=Declaration |
              localActions+=LocalAction)*
             (
-             (regions+=SingleRegion)(regions+=Region)*
+             ((concurrencies+=SingleRegion)(concurrencies+=Region)*|
+             (concurrencies+=SingleDataflow)(concurrencies+=Dataflow)*)
              )?
             )
           '}') 
@@ -100,13 +125,47 @@ State returns sccharts::State:
             (declarations+=Declaration |
              localActions+=LocalAction)*
             (
-             (regions+=SingleRegion)(regions+=Region)*
+             ((concurrencies+=SingleRegion)(concurrencies+=Region)*|
+             (concurrencies+=SingleDataflow)(concurrencies+=Dataflow)*)
              )?
             )
           '}') 
      )?
      // The semicolon is mandatory for the backtracking!
     (outgoingTransitions+=Transition)* ';';
+
+
+Node returns sccharts::Node:
+    InputNode | OutputNode | ReferencedNode
+;
+
+InputNode returns sccharts::InputNode:
+    {sccharts::InputNode}
+    'input node' (id=ID) (label=STRING)? ':'
+    senders += Sender 
+;
+
+OutputNode returns sccharts::OutputNode:
+    'output node' (id=ID) (label=STRING)? ':'
+    valuedObject = [kexpressions::ValuedObject] 
+;
+
+ReferencedNode returns sccharts::ReferencedNode:
+    'node' (id=ID) (label=STRING)? ':'
+    referencedScope = [sccharts::State|ID] 
+    (senders += Sender)*
+;
+
+
+Sender returns sccharts::Sender:
+    {sccharts::Sender}
+    expression = Expression
+    ('-->' receivers += Receiver) 
+;
+
+Receiver returns sccharts::Receiver:
+    node = [sccharts::Node|ID] '.' valuedObject = [kexpressions::ValuedObject]
+;
 
     
 // ---------------------------------------------------------------------------------------------------
@@ -182,6 +241,10 @@ Binding returns sccharts::Binding:
 	'to' 
 	actual = [kexpressions::ValuedObject|ID]
 ;
+
+
+// ---------------------------------------------------------------------------------------------------
+
 
 // ---------------------------------------------------------------------------------------------------
 

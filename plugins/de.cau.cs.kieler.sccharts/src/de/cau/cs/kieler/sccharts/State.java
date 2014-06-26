@@ -42,7 +42,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.State#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.State#getRegions <em>Regions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.State#getConcurrencies <em>Concurrencies</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.State#getParentRegion <em>Parent Region</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.State#isInitial <em>Initial</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.State#isFinal <em>Final</em>}</li>
@@ -93,22 +93,22 @@ public interface State extends Scope {
     void setType(StateType value);
 
     /**
-     * Returns the value of the '<em><b>Regions</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.sccharts.Region}.
-     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.Region#getParentState <em>Parent State</em>}'.
+     * Returns the value of the '<em><b>Concurrencies</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.sccharts.Concurrency}.
+     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.Concurrency#getParentState <em>Parent State</em>}'.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Regions</em>' containment reference list isn't clear,
+     * If the meaning of the '<em>Concurrencies</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Regions</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_Regions()
-     * @see de.cau.cs.kieler.sccharts.Region#getParentState
+     * @return the value of the '<em>Concurrencies</em>' containment reference list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getState_Concurrencies()
+     * @see de.cau.cs.kieler.sccharts.Concurrency#getParentState
      * @model opposite="parentState" containment="true"
      * @generated
      */
-    EList<Region> getRegions();
+    EList<Concurrency> getConcurrencies();
 
     /**
      * Returns the value of the '<em><b>Parent Region</b></em>' container reference.

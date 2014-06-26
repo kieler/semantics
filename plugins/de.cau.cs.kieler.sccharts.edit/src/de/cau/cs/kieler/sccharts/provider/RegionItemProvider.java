@@ -41,7 +41,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class RegionItemProvider
-    extends ScopeItemProvider
+    extends ConcurrencyItemProvider
     implements
         IEditingDomainItemProvider,
         IStructuredItemContentProvider,

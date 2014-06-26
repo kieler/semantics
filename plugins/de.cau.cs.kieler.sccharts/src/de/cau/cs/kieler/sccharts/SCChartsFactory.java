@@ -76,6 +76,69 @@ public interface SCChartsFactory extends EFactory {
     Region createRegion();
 
     /**
+     * Returns a new object of class '<em>Node</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Node</em>'.
+     * @generated
+     */
+    Node createNode();
+
+    /**
+     * Returns a new object of class '<em>Input Node</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Input Node</em>'.
+     * @generated
+     */
+    InputNode createInputNode();
+
+    /**
+     * Returns a new object of class '<em>Referenced Node</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Referenced Node</em>'.
+     * @generated
+     */
+    ReferencedNode createReferencedNode();
+
+    /**
+     * Returns a new object of class '<em>Output Node</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Output Node</em>'.
+     * @generated
+     */
+    OutputNode createOutputNode();
+
+    /**
+     * Returns a new object of class '<em>Dataflow</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Dataflow</em>'.
+     * @generated
+     */
+    Dataflow createDataflow();
+
+    /**
+     * Returns a new object of class '<em>Sender</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Sender</em>'.
+     * @generated
+     */
+    Sender createSender();
+
+    /**
+     * Returns a new object of class '<em>Receiver</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Receiver</em>'.
+     * @generated
+     */
+    Receiver createReceiver();
+
+    /**
      * Returns a new object of class '<em>Binding</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -92,6 +155,15 @@ public interface SCChartsFactory extends EFactory {
      * @generated
      */
     State createState();
+
+    /**
+     * Returns a new object of class '<em>Concurrency</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Concurrency</em>'.
+     * @generated
+     */
+    Concurrency createConcurrency();
 
     /**
      * Returns a new object of class '<em>Transition</em>'.

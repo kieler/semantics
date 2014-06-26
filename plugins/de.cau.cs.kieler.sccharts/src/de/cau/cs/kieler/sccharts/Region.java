@@ -35,7 +35,6 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.Region#getStates <em>States</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Region#getParentState <em>Parent State</em>}</li>
  * </ul>
  * </p>
  *
@@ -43,7 +42,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Region extends Scope {
+public interface Region extends Concurrency {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -68,33 +67,5 @@ public interface Region extends Scope {
      * @generated
      */
     EList<State> getStates();
-
-    /**
-     * Returns the value of the '<em><b>Parent State</b></em>' container reference.
-     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.State#getRegions <em>Regions</em>}'.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Parent State</em>' container reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Parent State</em>' container reference.
-     * @see #setParentState(State)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getRegion_ParentState()
-     * @see de.cau.cs.kieler.sccharts.State#getRegions
-     * @model opposite="regions" transient="false"
-     * @generated
-     */
-    State getParentState();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Region#getParentState <em>Parent State</em>}' container reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Parent State</em>' container reference.
-     * @see #getParentState()
-     * @generated
-     */
-    void setParentState(State value);
 
 } // Region

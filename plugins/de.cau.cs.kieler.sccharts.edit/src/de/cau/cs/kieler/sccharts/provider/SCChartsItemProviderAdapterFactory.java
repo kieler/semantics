@@ -182,6 +182,167 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Node} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected NodeItemProvider nodeItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Node}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createNodeAdapter() {
+        if (nodeItemProvider == null) {
+            nodeItemProvider = new NodeItemProvider(this);
+        }
+
+        return nodeItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.InputNode} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected InputNodeItemProvider inputNodeItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.InputNode}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createInputNodeAdapter() {
+        if (inputNodeItemProvider == null) {
+            inputNodeItemProvider = new InputNodeItemProvider(this);
+        }
+
+        return inputNodeItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.ReferencedNode} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ReferencedNodeItemProvider referencedNodeItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.ReferencedNode}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createReferencedNodeAdapter() {
+        if (referencedNodeItemProvider == null) {
+            referencedNodeItemProvider = new ReferencedNodeItemProvider(this);
+        }
+
+        return referencedNodeItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.OutputNode} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected OutputNodeItemProvider outputNodeItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.OutputNode}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createOutputNodeAdapter() {
+        if (outputNodeItemProvider == null) {
+            outputNodeItemProvider = new OutputNodeItemProvider(this);
+        }
+
+        return outputNodeItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Dataflow} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected DataflowItemProvider dataflowItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Dataflow}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createDataflowAdapter() {
+        if (dataflowItemProvider == null) {
+            dataflowItemProvider = new DataflowItemProvider(this);
+        }
+
+        return dataflowItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Sender} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected SenderItemProvider senderItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Sender}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createSenderAdapter() {
+        if (senderItemProvider == null) {
+            senderItemProvider = new SenderItemProvider(this);
+        }
+
+        return senderItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Receiver} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ReceiverItemProvider receiverItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Receiver}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createReceiverAdapter() {
+        if (receiverItemProvider == null) {
+            receiverItemProvider = new ReceiverItemProvider(this);
+        }
+
+        return receiverItemProvider;
+    }
+
+    /**
      * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Binding} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -225,6 +386,29 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
         }
 
         return stateItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Concurrency} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ConcurrencyItemProvider concurrencyItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Concurrency}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createConcurrencyAdapter() {
+        if (concurrencyItemProvider == null) {
+            concurrencyItemProvider = new ConcurrencyItemProvider(this);
+        }
+
+        return concurrencyItemProvider;
     }
 
     /**
@@ -514,7 +698,15 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
         if (assignmentItemProvider != null) assignmentItemProvider.dispose();
         if (emissionItemProvider != null) emissionItemProvider.dispose();
         if (stateItemProvider != null) stateItemProvider.dispose();
+        if (concurrencyItemProvider != null) concurrencyItemProvider.dispose();
         if (regionItemProvider != null) regionItemProvider.dispose();
+        if (nodeItemProvider != null) nodeItemProvider.dispose();
+        if (inputNodeItemProvider != null) inputNodeItemProvider.dispose();
+        if (referencedNodeItemProvider != null) referencedNodeItemProvider.dispose();
+        if (outputNodeItemProvider != null) outputNodeItemProvider.dispose();
+        if (dataflowItemProvider != null) dataflowItemProvider.dispose();
+        if (senderItemProvider != null) senderItemProvider.dispose();
+        if (receiverItemProvider != null) receiverItemProvider.dispose();
         if (bindingItemProvider != null) bindingItemProvider.dispose();
         if (transitionItemProvider != null) transitionItemProvider.dispose();
         if (textEffectItemProvider != null) textEffectItemProvider.dispose();

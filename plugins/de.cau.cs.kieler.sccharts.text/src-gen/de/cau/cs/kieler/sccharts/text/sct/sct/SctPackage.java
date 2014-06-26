@@ -150,13 +150,13 @@ public interface SctPackage extends EPackage
   int SC_CHART__TYPE = SCChartsPackage.STATE__TYPE;
 
   /**
-   * The feature id for the '<em><b>Regions</b></em>' containment reference list.
+   * The feature id for the '<em><b>Concurrencies</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SC_CHART__REGIONS = SCChartsPackage.STATE__REGIONS;
+  int SC_CHART__CONCURRENCIES = SCChartsPackage.STATE__CONCURRENCIES;
 
   /**
    * The feature id for the '<em><b>Parent Region</b></em>' container reference.

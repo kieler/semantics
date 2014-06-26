@@ -23,12 +23,16 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.sccharts.Assignment;
 import de.cau.cs.kieler.sccharts.Binding;
+import de.cau.cs.kieler.sccharts.Dataflow;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.Emission;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.For;
 import de.cau.cs.kieler.sccharts.FunctionCallEffect;
+import de.cau.cs.kieler.sccharts.InputNode;
+import de.cau.cs.kieler.sccharts.OutputNode;
+import de.cau.cs.kieler.sccharts.ReferencedNode;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
@@ -354,6 +358,16 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 					return; 
 				}
 				else break;
+			case SCChartsPackage.DATAFLOW:
+				if(context == grammarAccess.getDataflowRule()) {
+					sequence_Dataflow(context, (Dataflow) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getSingleDataflowRule()) {
+					sequence_SingleDataflow(context, (Dataflow) semanticObject); 
+					return; 
+				}
+				else break;
 			case SCChartsPackage.DURING_ACTION:
 				if(context == grammarAccess.getDuringActionRule() ||
 				   context == grammarAccess.getLocalActionRule()) {
@@ -392,6 +406,27 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				if(context == grammarAccess.getEffectRule() ||
 				   context == grammarAccess.getFunctionCallEffectRule()) {
 					sequence_FunctionCallEffect(context, (FunctionCallEffect) semanticObject); 
+					return; 
+				}
+				else break;
+			case SCChartsPackage.INPUT_NODE:
+				if(context == grammarAccess.getInputNodeRule() ||
+				   context == grammarAccess.getNodeRule()) {
+					sequence_InputNode(context, (InputNode) semanticObject); 
+					return; 
+				}
+				else break;
+			case SCChartsPackage.OUTPUT_NODE:
+				if(context == grammarAccess.getNodeRule() ||
+				   context == grammarAccess.getOutputNodeRule()) {
+					sequence_OutputNode(context, (OutputNode) semanticObject); 
+					return; 
+				}
+				else break;
+			case SCChartsPackage.REFERENCED_NODE:
+				if(context == grammarAccess.getNodeRule() ||
+				   context == grammarAccess.getReferencedNodeRule()) {
+					sequence_ReferencedNode(context, (ReferencedNode) semanticObject); 
 					return; 
 				}
 				else break;
@@ -463,6 +498,22 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
+	 *         id=ID? 
+	 *         label=STRING? 
+	 *         for=For? 
+	 *         declarations+=Declaration* 
+	 *         nodes+=Node+
+	 *     )
+	 */
+	protected void sequence_Dataflow(EObject context, Dataflow semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
 	 *         (
 	 *             (
 	 *                 extern?='extern'? 
@@ -511,6 +562,33 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
+	 *     (id=ID label=STRING? expression=Expression)
+	 */
+	protected void sequence_InputNode(EObject context, InputNode semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (id=ID label=STRING? valuedObject=[ValuedObject|ID])
+	 */
+	protected void sequence_OutputNode(EObject context, OutputNode semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (id=ID label=STRING? referencedScope=[State|ID])
+	 */
+	protected void sequence_ReferencedNode(EObject context, ReferencedNode semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         id=ID? 
@@ -535,11 +613,23 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         label=STRING? 
 	 *         (
 	 *             (referencedScope=[State|ID] (bindings+=Binding bindings+=Binding*)?) | 
-	 *             ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion regions+=Region*)?)
+	 *             (
+	 *                 (declarations+=Declaration | localActions+=LocalAction)* 
+	 *                 ((concurrencies+=SingleRegion concurrencies+=Region*) | (concurrencies+=SingleDataflow concurrencies+=Dataflow*))?
+	 *             )
 	 *         )?
 	 *     )
 	 */
 	protected void sequence_SCChart(EObject context, SCChart semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     ((annotations+=Annotation* id=ID? label=STRING? for=For? declarations+=Declaration*)? nodes+=Node*)
+	 */
+	protected void sequence_SingleDataflow(EObject context, Dataflow semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -563,7 +653,10 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         label=STRING? 
 	 *         (
 	 *             (referencedScope=[State|ID] (bindings+=Binding bindings+=Binding*)?) | 
-	 *             ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion regions+=Region*)?)
+	 *             (
+	 *                 (declarations+=Declaration | localActions+=LocalAction)* 
+	 *                 ((concurrencies+=SingleRegion concurrencies+=Region*) | (concurrencies+=SingleDataflow concurrencies+=Dataflow*))?
+	 *             )
 	 *         )? 
 	 *         outgoingTransitions+=Transition*
 	 *     )

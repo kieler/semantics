@@ -46,6 +46,8 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.sccharts.Binding
+import de.cau.cs.kieler.sccharts.Dataflow
+import de.cau.cs.kieler.sccharts.Concurrency
 
 /**
  * SCCharts Extensions.
@@ -71,6 +73,26 @@ class SCChartsExtension {
     // Create an immutable list copy
     def ImmutableList<Object> immutableCopy(Iterable<Object> object) {
         ImmutableList::copyOf(object)
+    }
+
+//    def Region getRegions(Concurrency concurrency) {
+//        concurrency as Region
+//    }
+    
+//    def List<Controlflow> getControlflows(State state) {
+//        state.regions.filter(typeof(Controlflow)).toList
+//    }
+    
+    def List<Region> getRegions(State state) {
+        state.concurrencies.filter(typeof(Region)).toList
+    }
+
+//    def List<Dataflow> getDataflows(State state) {
+//        state.regions.filter(typeof(Dataflow)).toList
+//    }
+    
+    def List<Dataflow> getDataflows(State state) {
+        state.concurrencies.filter(typeof(Dataflow)).toList
     }
 
     //====== GENERAL MODEL ELEMENTS =====
@@ -417,16 +439,16 @@ class SCChartsExtension {
 
     //========== REGIONS ===========
     def Region createRegion(String id) {
-        val region = SCChartsFactory::eINSTANCE.createRegion();
-        region.setId(id)
-        region.setLabel("")
-        region
+        val controlflow = SCChartsFactory::eINSTANCE.createRegion();
+        controlflow.setId(id)
+        controlflow.setLabel("")
+        controlflow
     }
 
     def Region createRegion(State state, String id) {
-        val region = createRegion(id)
-        state.regions.add(region)
-        region
+        createRegion(id) => [
+            state.regions.add(it)
+        ]
     }
 
     def Region setLabel2(Region region, String label) {

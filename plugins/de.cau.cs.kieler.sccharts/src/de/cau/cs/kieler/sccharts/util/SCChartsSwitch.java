@@ -125,11 +125,72 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case SCChartsPackage.CONCURRENCY: {
+                Concurrency concurrency = (Concurrency)theEObject;
+                T result = caseConcurrency(concurrency);
+                if (result == null) result = caseScope(concurrency);
+                if (result == null) result = caseAnnotatable(concurrency);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case SCChartsPackage.REGION: {
                 Region region = (Region)theEObject;
                 T result = caseRegion(region);
+                if (result == null) result = caseConcurrency(region);
                 if (result == null) result = caseScope(region);
                 if (result == null) result = caseAnnotatable(region);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.NODE: {
+                Node node = (Node)theEObject;
+                T result = caseNode(node);
+                if (result == null) result = caseAnnotatable(node);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.INPUT_NODE: {
+                InputNode inputNode = (InputNode)theEObject;
+                T result = caseInputNode(inputNode);
+                if (result == null) result = caseNode(inputNode);
+                if (result == null) result = caseAnnotatable(inputNode);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.REFERENCED_NODE: {
+                ReferencedNode referencedNode = (ReferencedNode)theEObject;
+                T result = caseReferencedNode(referencedNode);
+                if (result == null) result = caseNode(referencedNode);
+                if (result == null) result = caseAnnotatable(referencedNode);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.OUTPUT_NODE: {
+                OutputNode outputNode = (OutputNode)theEObject;
+                T result = caseOutputNode(outputNode);
+                if (result == null) result = caseNode(outputNode);
+                if (result == null) result = caseAnnotatable(outputNode);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.DATAFLOW: {
+                Dataflow dataflow = (Dataflow)theEObject;
+                T result = caseDataflow(dataflow);
+                if (result == null) result = caseConcurrency(dataflow);
+                if (result == null) result = caseScope(dataflow);
+                if (result == null) result = caseAnnotatable(dataflow);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.SENDER: {
+                Sender sender = (Sender)theEObject;
+                T result = caseSender(sender);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.RECEIVER: {
+                Receiver receiver = (Receiver)theEObject;
+                T result = caseReceiver(receiver);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -303,6 +364,111 @@ public class SCChartsSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Node</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Node</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseNode(Node object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Input Node</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Input Node</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseInputNode(InputNode object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Referenced Node</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Referenced Node</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseReferencedNode(ReferencedNode object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Output Node</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Output Node</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseOutputNode(OutputNode object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Dataflow</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Dataflow</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDataflow(Dataflow object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Sender</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Sender</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSender(Sender object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Receiver</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Receiver</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseReceiver(Receiver object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Binding</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -329,6 +495,21 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseState(State object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Concurrency</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Concurrency</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseConcurrency(Concurrency object) {
         return null;
     }
 

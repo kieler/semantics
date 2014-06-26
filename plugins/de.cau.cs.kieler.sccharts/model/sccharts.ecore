@@ -47,8 +47,8 @@
       <details key="documentation" value="A State is the main entity in a SyncChart. States are located in a {@link Region}.&#xA;A SyncChart itself is represented by a top-level root Region that contains&#xA;exactly one root State. Every State may contain multiple parallel Regions&#xA;whereas a Region contains multiple States. This allows nested State&#xA;machines with parallelism.&#xA;&lt;p>&#xA;A State may be initial or final or both. An initial State is the entry State of a Region.&#xA;sccharts may only have one initial State per Region. A final State indcates that&#xA;its parent Region has terminated and nothing needs to be done in that Region&#xA;and its parent State may be left via a normal termination transition.&#xA;&lt;p>&#xA;A State is also a Scope and hence may carry an interface declaration and is&#xA;identified by id and label.&#xA;&lt;p>&#xA;States have a type to indicate different properties of States. See {@link StateType}."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//StateType"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="regions" upperBound="-1"
-        eType="#//Region" containment="true" eOpposite="#//Region/parentState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="concurrencies" upperBound="-1"
+        eType="#//Concurrency" containment="true" eOpposite="#//Concurrency/parentState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentRegion" eType="#//Region"
         eOpposite="#//Region/states"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="initial" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -58,14 +58,56 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="incomingTransitions" upperBound="-1"
         eType="#//Transition" eOpposite="#//Transition/targetState"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Region" eSuperTypes="#//Scope">
+  <eClassifiers xsi:type="ecore:EClass" name="Concurrency" eSuperTypes="#//Scope">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentState" eType="#//State"
+        eOpposite="#//State/concurrencies"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Region" eSuperTypes="#//Concurrency">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="Regions represent a parallelism in sccharts. A {@link State} may contain&#xA;multiple Regions and each Region may contain multiple States. The Regions&#xA;are then logically executed in parallel. A SyncChart gets represented by one root Region &#xA;that contains exactly one root State.&#xA;&lt;p>&#xA;A Region is a {@link Scope} and therefore gets identified by label and id&#xA;and carries an interface declaration. Hence a Region may declare&#xA;local signals or variables."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="states" upperBound="-1"
         eType="#//State" containment="true" eOpposite="#//State/parentRegion"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parentState" eType="#//State"
-        eOpposite="#//State/regions"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotatable">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Regions represent a parallelism in sccharts. A {@link State} may contain&#xA;multiple Regions and each Region may contain multiple States. The Regions&#xA;are then logically executed in parallel. A SyncChart gets represented by one root Region &#xA;that contains exactly one root State.&#xA;&lt;p>&#xA;A Region is a {@link Scope} and therefore gets identified by label and id&#xA;and carries an interface declaration. Hence a Region may declare&#xA;local signals or variables."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="senders" upperBound="-1"
+        eType="#//Sender" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InputNode" eSuperTypes="#//Node">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ReferencedNode" eSuperTypes="#//Node">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referencedScope" eType="#//Scope"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OutputNode" eSuperTypes="#//Node">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Dataflow" eSuperTypes="#//Concurrency">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Regions represent a parallelism in sccharts. A {@link State} may contain&#xA;multiple Regions and each Region may contain multiple States. The Regions&#xA;are then logically executed in parallel. A SyncChart gets represented by one root Region &#xA;that contains exactly one root State.&#xA;&lt;p>&#xA;A Region is a {@link Scope} and therefore gets identified by label and id&#xA;and carries an interface declaration. Hence a Region may declare&#xA;local signals or variables."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
+        eType="#//Node" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Sender">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="receivers" upperBound="-1"
+        eType="#//Receiver" containment="true" eOpposite="#//Receiver/sender"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Receiver">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sender" lowerBound="1"
+        eType="#//Sender" eOpposite="#//Sender/receivers"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="node" lowerBound="1" eType="#//Node"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Binding" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotatable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="formal" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>

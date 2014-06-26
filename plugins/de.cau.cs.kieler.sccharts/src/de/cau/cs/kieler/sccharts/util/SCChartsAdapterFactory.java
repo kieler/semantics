@@ -112,8 +112,40 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createStateAdapter();
             }
             @Override
+            public Adapter caseConcurrency(Concurrency object) {
+                return createConcurrencyAdapter();
+            }
+            @Override
             public Adapter caseRegion(Region object) {
                 return createRegionAdapter();
+            }
+            @Override
+            public Adapter caseNode(Node object) {
+                return createNodeAdapter();
+            }
+            @Override
+            public Adapter caseInputNode(InputNode object) {
+                return createInputNodeAdapter();
+            }
+            @Override
+            public Adapter caseReferencedNode(ReferencedNode object) {
+                return createReferencedNodeAdapter();
+            }
+            @Override
+            public Adapter caseOutputNode(OutputNode object) {
+                return createOutputNodeAdapter();
+            }
+            @Override
+            public Adapter caseDataflow(Dataflow object) {
+                return createDataflowAdapter();
+            }
+            @Override
+            public Adapter caseSender(Sender object) {
+                return createSenderAdapter();
+            }
+            @Override
+            public Adapter caseReceiver(Receiver object) {
+                return createReceiverAdapter();
             }
             @Override
             public Adapter caseBinding(Binding object) {
@@ -266,6 +298,104 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Node <em>Node</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.Node
+     * @generated
+     */
+    public Adapter createNodeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.InputNode <em>Input Node</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.InputNode
+     * @generated
+     */
+    public Adapter createInputNodeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.ReferencedNode <em>Referenced Node</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.ReferencedNode
+     * @generated
+     */
+    public Adapter createReferencedNodeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.OutputNode <em>Output Node</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.OutputNode
+     * @generated
+     */
+    public Adapter createOutputNodeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Dataflow <em>Dataflow</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.Dataflow
+     * @generated
+     */
+    public Adapter createDataflowAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Sender <em>Sender</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.Sender
+     * @generated
+     */
+    public Adapter createSenderAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Receiver <em>Receiver</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.Receiver
+     * @generated
+     */
+    public Adapter createReceiverAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Binding <em>Binding</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -290,6 +420,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createStateAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Concurrency <em>Concurrency</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.Concurrency
+     * @generated
+     */
+    public Adapter createConcurrencyAdapter() {
         return null;
     }
 

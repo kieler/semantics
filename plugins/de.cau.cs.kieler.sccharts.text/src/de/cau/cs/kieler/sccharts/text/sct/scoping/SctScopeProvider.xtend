@@ -113,7 +113,8 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
         val l = <IEObjectDescription>newLinkedList
         val m = new HashSet<String>
         var String key = null
-        for (State s : ((trans.eContainer().eContainer()) as Region).getStates) {
+        val region = (trans.eContainer().eContainer()) as Region
+        for (State s : region.states) {
             key = s.getId();
             if (m.contains(key)) {
                 key = s.getId()

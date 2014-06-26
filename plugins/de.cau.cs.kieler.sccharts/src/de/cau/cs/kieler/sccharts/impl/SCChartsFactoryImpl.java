@@ -79,7 +79,15 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.ASSIGNMENT: return createAssignment();
             case SCChartsPackage.EMISSION: return createEmission();
             case SCChartsPackage.STATE: return createState();
+            case SCChartsPackage.CONCURRENCY: return createConcurrency();
             case SCChartsPackage.REGION: return createRegion();
+            case SCChartsPackage.NODE: return createNode();
+            case SCChartsPackage.INPUT_NODE: return createInputNode();
+            case SCChartsPackage.REFERENCED_NODE: return createReferencedNode();
+            case SCChartsPackage.OUTPUT_NODE: return createOutputNode();
+            case SCChartsPackage.DATAFLOW: return createDataflow();
+            case SCChartsPackage.SENDER: return createSender();
+            case SCChartsPackage.RECEIVER: return createReceiver();
             case SCChartsPackage.BINDING: return createBinding();
             case SCChartsPackage.TRANSITION: return createTransition();
             case SCChartsPackage.TEXT_EFFECT: return createTextEffect();
@@ -181,6 +189,76 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    public Node createNode() {
+        NodeImpl node = new NodeImpl();
+        return node;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public InputNode createInputNode() {
+        InputNodeImpl inputNode = new InputNodeImpl();
+        return inputNode;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ReferencedNode createReferencedNode() {
+        ReferencedNodeImpl referencedNode = new ReferencedNodeImpl();
+        return referencedNode;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public OutputNode createOutputNode() {
+        OutputNodeImpl outputNode = new OutputNodeImpl();
+        return outputNode;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Dataflow createDataflow() {
+        DataflowImpl dataflow = new DataflowImpl();
+        return dataflow;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Sender createSender() {
+        SenderImpl sender = new SenderImpl();
+        return sender;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Receiver createReceiver() {
+        ReceiverImpl receiver = new ReceiverImpl();
+        return receiver;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public Binding createBinding() {
         BindingImpl binding = new BindingImpl();
         return binding;
@@ -194,6 +272,16 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     public State createState() {
         StateImpl state = new StateImpl();
         return state;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Concurrency createConcurrency() {
+        ConcurrencyImpl concurrency = new ConcurrencyImpl();
+        return concurrency;
     }
 
     /**

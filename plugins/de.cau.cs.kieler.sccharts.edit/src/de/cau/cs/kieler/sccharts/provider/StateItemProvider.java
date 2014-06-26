@@ -186,7 +186,7 @@ public class StateItemProvider
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
-            childrenFeatures.add(SCChartsPackage.Literals.STATE__REGIONS);
+            childrenFeatures.add(SCChartsPackage.Literals.STATE__CONCURRENCIES);
             childrenFeatures.add(SCChartsPackage.Literals.STATE__OUTGOING_TRANSITIONS);
         }
         return childrenFeatures;
@@ -247,7 +247,7 @@ public class StateItemProvider
             case SCChartsPackage.STATE__FINAL:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
-            case SCChartsPackage.STATE__REGIONS:
+            case SCChartsPackage.STATE__CONCURRENCIES:
             case SCChartsPackage.STATE__OUTGOING_TRANSITIONS:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
@@ -268,8 +268,18 @@ public class StateItemProvider
 
         newChildDescriptors.add
             (createChildParameter
-                (SCChartsPackage.Literals.STATE__REGIONS,
+                (SCChartsPackage.Literals.STATE__CONCURRENCIES,
+                 SCChartsFactory.eINSTANCE.createConcurrency()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.STATE__CONCURRENCIES,
                  SCChartsFactory.eINSTANCE.createRegion()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.STATE__CONCURRENCIES,
+                 SCChartsFactory.eINSTANCE.createDataflow()));
 
         newChildDescriptors.add
             (createChildParameter

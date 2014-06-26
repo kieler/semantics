@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
+import de.cau.cs.kieler.sccharts.Concurrency;
 import de.cau.cs.kieler.sccharts.For;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
@@ -45,7 +46,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getRegions <em>Regions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getConcurrencies <em>Concurrencies</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getParentRegion <em>Parent Region</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#isInitial <em>Initial</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#isFinal <em>Final</em>}</li>
@@ -85,14 +86,14 @@ public class StateImpl extends ScopeImpl implements State {
     protected StateType type = TYPE_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getRegions() <em>Regions</em>}' containment reference list.
+     * The cached value of the '{@link #getConcurrencies() <em>Concurrencies</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getRegions()
+     * @see #getConcurrencies()
      * @generated
      * @ordered
      */
-    protected EList<Region> regions;
+    protected EList<Concurrency> concurrencies;
 
     /**
      * The default value of the '{@link #isInitial() <em>Initial</em>}' attribute.
@@ -199,11 +200,11 @@ public class StateImpl extends ScopeImpl implements State {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Region> getRegions() {
-        if (regions == null) {
-            regions = new EObjectContainmentWithInverseEList<Region>(Region.class, this, SCChartsPackage.STATE__REGIONS, SCChartsPackage.REGION__PARENT_STATE);
+    public EList<Concurrency> getConcurrencies() {
+        if (concurrencies == null) {
+            concurrencies = new EObjectContainmentWithInverseEList<Concurrency>(Concurrency.class, this, SCChartsPackage.STATE__CONCURRENCIES, SCChartsPackage.CONCURRENCY__PARENT_STATE);
         }
-        return regions;
+        return concurrencies;
     }
 
     /**
@@ -322,8 +323,8 @@ public class StateImpl extends ScopeImpl implements State {
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case SCChartsPackage.STATE__REGIONS:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getRegions()).basicAdd(otherEnd, msgs);
+            case SCChartsPackage.STATE__CONCURRENCIES:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getConcurrencies()).basicAdd(otherEnd, msgs);
             case SCChartsPackage.STATE__PARENT_REGION:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
@@ -344,8 +345,8 @@ public class StateImpl extends ScopeImpl implements State {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case SCChartsPackage.STATE__REGIONS:
-                return ((InternalEList<?>)getRegions()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.STATE__CONCURRENCIES:
+                return ((InternalEList<?>)getConcurrencies()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.STATE__PARENT_REGION:
                 return basicSetParentRegion(null, msgs);
             case SCChartsPackage.STATE__OUTGOING_TRANSITIONS:
@@ -380,8 +381,8 @@ public class StateImpl extends ScopeImpl implements State {
         switch (featureID) {
             case SCChartsPackage.STATE__TYPE:
                 return getType();
-            case SCChartsPackage.STATE__REGIONS:
-                return getRegions();
+            case SCChartsPackage.STATE__CONCURRENCIES:
+                return getConcurrencies();
             case SCChartsPackage.STATE__PARENT_REGION:
                 return getParentRegion();
             case SCChartsPackage.STATE__INITIAL:
@@ -408,9 +409,9 @@ public class StateImpl extends ScopeImpl implements State {
             case SCChartsPackage.STATE__TYPE:
                 setType((StateType)newValue);
                 return;
-            case SCChartsPackage.STATE__REGIONS:
-                getRegions().clear();
-                getRegions().addAll((Collection<? extends Region>)newValue);
+            case SCChartsPackage.STATE__CONCURRENCIES:
+                getConcurrencies().clear();
+                getConcurrencies().addAll((Collection<? extends Concurrency>)newValue);
                 return;
             case SCChartsPackage.STATE__PARENT_REGION:
                 setParentRegion((Region)newValue);
@@ -444,8 +445,8 @@ public class StateImpl extends ScopeImpl implements State {
             case SCChartsPackage.STATE__TYPE:
                 setType(TYPE_EDEFAULT);
                 return;
-            case SCChartsPackage.STATE__REGIONS:
-                getRegions().clear();
+            case SCChartsPackage.STATE__CONCURRENCIES:
+                getConcurrencies().clear();
                 return;
             case SCChartsPackage.STATE__PARENT_REGION:
                 setParentRegion((Region)null);
@@ -476,8 +477,8 @@ public class StateImpl extends ScopeImpl implements State {
         switch (featureID) {
             case SCChartsPackage.STATE__TYPE:
                 return type != TYPE_EDEFAULT;
-            case SCChartsPackage.STATE__REGIONS:
-                return regions != null && !regions.isEmpty();
+            case SCChartsPackage.STATE__CONCURRENCIES:
+                return concurrencies != null && !concurrencies.isEmpty();
             case SCChartsPackage.STATE__PARENT_REGION:
                 return getParentRegion() != null;
             case SCChartsPackage.STATE__INITIAL:
