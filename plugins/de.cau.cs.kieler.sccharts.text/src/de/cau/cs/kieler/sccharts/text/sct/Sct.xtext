@@ -142,15 +142,17 @@ Node returns sccharts::Node:
 InputNode returns sccharts::InputNode:
     {sccharts::InputNode}
     'input node' (id=ID) (label=STRING)? ':'
-    (senders += Sender)? ';' 
+    (senders += Sender) ';' 
 ;
 
 OutputNode returns sccharts::OutputNode:
+    {sccharts::OutputNode}
     'output node' (id=ID) (label=STRING)? ':'
     valuedObject = [kexpressions::ValuedObject] ';' 
 ;
 
 ReferencedNode returns sccharts::ReferencedNode:
+    {sccharts::ReferencedNode}
     'node' (id=ID) (label=STRING)? ':'
     referencedScope = [sccharts::State|ID] 
     (senders += Sender)* ';'
@@ -160,10 +162,11 @@ ReferencedNode returns sccharts::ReferencedNode:
 Sender returns sccharts::Sender:
     {sccharts::Sender}
     expression = Expression
-    ('-->' receivers += Receiver) 
+    ('-->' receivers += Receiver)*
 ;
 
 Receiver returns sccharts::Receiver:
+    {sccharts::Receiver}
     node = [sccharts::Node|ID] '.' valuedObject = [kexpressions::ValuedObject]
 ;
 

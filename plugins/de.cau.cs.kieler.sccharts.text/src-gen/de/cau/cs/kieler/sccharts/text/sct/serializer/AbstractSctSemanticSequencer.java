@@ -576,7 +576,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (id=ID label=STRING? senders+=Sender?)
+	 *     (id=ID label=STRING? senders+=Sender)
 	 */
 	protected void sequence_InputNode(EObject context, InputNode semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -650,7 +650,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (expression=Expression receivers+=Receiver)
+	 *     (expression=Expression receivers+=Receiver*)
 	 */
 	protected void sequence_Sender(EObject context, Sender semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
