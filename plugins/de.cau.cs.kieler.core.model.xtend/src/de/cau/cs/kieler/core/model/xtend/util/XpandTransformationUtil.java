@@ -35,7 +35,6 @@ import org.eclipse.xpand2.Generator;
 import org.eclipse.xpand2.output.Outlet;
 import org.eclipse.xpand2.output.PostProcessor;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
-import org.eclipse.xtend.util.stdlib.ExtIssueReporter;
 
 import de.cau.cs.kieler.core.model.m2m.TransformException;
 import de.cau.cs.kieler.core.model.util.MonitoredOperation;
@@ -155,12 +154,12 @@ public final class XpandTransformationUtil {
         // register Issues component that allows to pass informations,
         // warnings or errors
         // back to the application
-        ExtIssueReporter issueReporter = new ExtIssueReporter();
+//        ExtIssueReporter issueReporter = new ExtIssueReporter();
         Issues issues = new org.eclipse.emf.mwe.core.issues.IssuesImpl();
         M2MProgressMonitor m2mMonitor = new M2MProgressMonitor(monitor, 2);
 
         workflow.addComponent(emfReader);
-        workflow.addComponent(issueReporter);
+//        workflow.addComponent(issueReporter);
         workflow.addComponent(xpandComponent);
 
         // workflow.invoke(wfx, (ProgressMonitor)monitor.subTask(80),

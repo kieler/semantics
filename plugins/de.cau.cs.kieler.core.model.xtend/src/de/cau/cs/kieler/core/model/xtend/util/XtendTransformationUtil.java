@@ -43,7 +43,6 @@ import org.eclipse.xtend.expression.ExecutionContextImpl;
 import org.eclipse.xtend.expression.Variable;
 import org.eclipse.xtend.typesystem.emf.EcoreUtil2;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
-import org.eclipse.xtend.util.stdlib.ExtIssueReporter;
 
 import de.cau.cs.kieler.core.model.m2m.TransformException;
 import de.cau.cs.kieler.core.model.util.MonitoredOperation;
@@ -121,7 +120,7 @@ public final class XtendTransformationUtil {
 
         // COMPONENT 2: Issue Reporter
         // Allows to pass information, warnings or errors back to the application
-        ExtIssueReporter issueReporter = new ExtIssueReporter();
+//        ExtIssueReporter issueReporter = new ExtIssueReporter();
         Issues issues = new org.eclipse.emf.mwe.core.issues.IssuesImpl();
         M2MProgressMonitor m2mMonitor = new M2MProgressMonitor(monitor, 2);
 
@@ -153,7 +152,7 @@ public final class XtendTransformationUtil {
 
         // Set up the workflow's components
         workflow.addComponent(emfReader);
-        workflow.addComponent(issueReporter);
+//        workflow.addComponent(issueReporter);
         workflow.addComponent(xtendComponent);
         if (workflowHook != null) {
             workflow.addComponent(workflowHook);
