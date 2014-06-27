@@ -70,7 +70,24 @@ public abstract class HttpServer extends Job {
 
     /**
      * Handle a special online request and return a green image iff the server is up and running.
-     * This way we can check with the following code, iff the server is up.
+     * This way we can check with the following code, iff the server is up:
+     *          
+     * \<img id="onlinecheck" src="http://www.mydomain.com/red.png" width="11" height="11"\>
+     *           
+     * \<script\>          
+     * function testOnlineStatus(redAndGreenImageId, serverURL) {          
+     *          var testImage = new Image();
+     *          testImage.src = serverURL + "/?online=1#" + new Date().getTime();
+     *          
+     *          testImage.onload = function() {
+     *                  if (testImage.height > 0) {
+     *                          var redAndGreenImage = document.getElementById(redAndGreenImageId);
+     *                          redAndGreenImage.src = "http://www.sccharts.com/green.png";
+     *                  }
+     *          }
+     * }
+     * testOnlineStatus("onlinecheck", "http://www.mydomain.com:5555");
+     * \</script\>    
      * 
      * @param request
      *            the request

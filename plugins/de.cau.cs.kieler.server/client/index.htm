@@ -24,8 +24,8 @@
 .Stil10 {font-size: small}
 .Stil12 {font-size: x-small}
 .Stil13 {font-size: xx-small}
-.Stil14 {font-family: Verdana, Arial, Helvetica, sans-serif}
 .Stil15 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; }
+.Stil18 {font-size: xx-small; font-weight: bold; }
 -->
        </style>
 
@@ -187,6 +187,32 @@ function clearErrors() {
 }
 
 
+
+
+
+function testOnlineStatus(redAndGreenImageId, serverURL) {
+       var redAndGreenImage = document.getElementById(redAndGreenImageId);
+	   var testImage = new Image();
+	   testImage.src = serverURL + "/?online=1#" + new Date().getTime();
+	   
+		testImage.onload = function() {
+			if (testImage.height > 0) {
+			    var redAndGreenImage = document.getElementById(redAndGreenImageId);
+	            //alert(testImage.height + ":" + testImage.src + ":" + redAndGreenImage);
+				redAndGreenImage.src = "http://www.sccharts.com/green.png";
+			}
+	    }
+}
+
+function testAllOnlineStatus() {
+	testOnlineStatus("onlineserver1", "http://www.sccharts.com:5556");
+	testOnlineStatus("onlineserver2", "http://www.sccharts.com:5555");
+	testOnlineStatus("onlinelocalhost", "http://localhost:5555");
+}
+
+testAllOnlineStatus();
+
+
 function updateImage() {
     var image = document.getElementById("resultImage");
     if(image.complete) {
@@ -327,24 +353,24 @@ scchart ABRO {
                   </span><br>
                   <br>
                 <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Advanced Options</a></span></p>
-<table width="535" border="0" cellspacing="5">
+<table width="564" border="0" cellspacing="5">
                       <tr>
-                        <td width="91" valign="top" scope="row"><span class="Stil8">
+                        <td width="127" valign="top" scope="row"><span class="Stil8">
                           <label>
                         <a name="server"></a>
                         <input type="radio" name="config" value="server1" id="radio" checked="true" onclick="setConfig(1);" />
-                        Server 1</label>
-                        </span></td>
-                        <td width="91" valign="top"><span class="Stil8">
+                        Server1</label>
+                          <img id="onlineserver1" src="http://www.sccharts.com/red.png" width="11" height="11"></span></td>
+                        <td width="104" valign="top"><span class="Stil8">
                           <label>
                         <input type="radio" name="config" value="server2" id="radio2" onclick="setConfig(2);" />
-                        Server 2</label>
+                        Server2 <img id="onlineserver2" src="http://www.sccharts.com/red.png" width="11" height="11"></label>
                         </span></td>
-                        <td width="327"><span class="Stil8">
+                        <td width="307"><span class="Stil8">
                           <label>
                         <input type="radio" name="config" value="localhost" id="radio3" onclick="setConfig(3);" />
-                        Local Host <br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(KIELER must run locally, see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Compiler+Console">here</a> and <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+KLighD+Console+Diagram+Rendering">here</a>) </label>
+                          Local Host <img id="onlinelocalhost" src="http://www.sccharts.com/red.png" width="11" height="11"><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run locally, see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Compiler+Console">here</a> and <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+KLighD+Console+Diagram+Rendering">here</a>)</span></label>
                         </span></td>
                       </tr>
                 </table>
