@@ -15,6 +15,7 @@
 package de.cau.cs.kieler.server;
 
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
@@ -50,7 +51,7 @@ public abstract class HttpServer extends Job {
 
     /** The debug flag. */
     protected boolean debug = false;
-    
+
     /** The server name. */
     protected String serverName = "";
 
@@ -64,6 +65,50 @@ public abstract class HttpServer extends Job {
      * @return the byte[]
      */
     abstract protected HttpResponse handleRequest(HttpRequest request);
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Handle a special online request and return a green image iff the server is up and running.
+     * This way we can check with the following code, iff the server is up.
+     * 
+     * @param request
+     *            the request
+     * @return the http response
+     */
+    protected HttpResponse handleRequestOnline(HttpRequest request) {
+        HttpHeader header = request.header();
+        HttpQuery query = header.getQuery();
+        if (query.getValue("online").length() > 0) {
+            try {
+                InputStream is =
+                        KielerServerPlugin.getInstance().getBundle()
+                                .getResource("client/green.png").openStream();
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                int reads = is.read();
+                while (reads != -1) {
+                    baos.write(reads);
+                    reads = is.read();
+                }
+
+                byte[] bytes = baos.toByteArray();
+
+                HttpHeader responseHeader = new HttpHeader();
+                responseHeader.setStatusOk();
+                responseHeader.setTypeImagePng();
+                HttpResponse response = new HttpResponse();
+                response.setHeader(responseHeader);
+                response.setBody(bytes);
+
+                return response;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return null;
+    }
 
     // -------------------------------------------------------------------------
 
@@ -91,35 +136,35 @@ public abstract class HttpServer extends Job {
         debug("Server created");
     }
 
-
     // ----------------------------------------------------------------------
-    
+
     /**
      * Gets the server name.
-     *
+     * 
      * @return the server name
      */
     public String getServerName() {
         return serverName;
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
      * Sets the server name.
-     *
-     * @param serverName the new server name
+     * 
+     * @param serverName
+     *            the new server name
      */
     public void setServerName(String serverName) {
         debug("Server name set:" + serverName);
         this.serverName = serverName;
     }
-    
+
     // -------------------------------------------------------------------------
-    
+
     /**
      * Output debug text.
-     *
+     * 
      * @param text
      *            the text
      */
@@ -133,7 +178,7 @@ public abstract class HttpServer extends Job {
 
     /**
      * Sets the debug.
-     *
+     * 
      * @param debug
      *            the new debug
      */
@@ -172,8 +217,9 @@ public abstract class HttpServer extends Job {
 
     /**
      * Gets the error stack trace.
-     *
-     * @param t the t
+     * 
+     * @param t
+     *            the t
      * @return the error message
      */
     protected final String getErrorMessage(Throwable t) {
@@ -203,14 +249,13 @@ public abstract class HttpServer extends Job {
 
         socket = null;
         aborted = false;
-        
-        debug("Server enabled: " + isEnabled());
 
+        debug("Server enabled: " + isEnabled());
 
         while (isEnabled() && !aborted) {
             debug("Server loop");
             try {
-                
+
                 // if no socket then create a new listening server socket
                 if (socket == null) {
                     debug("No socket. Creating socket.");
@@ -221,7 +266,7 @@ public abstract class HttpServer extends Job {
                         e1.printStackTrace();
                     }
                 }
-                
+
                 if (socket != null) {
                     debug("Server listen socket present");
                     // wait for a connection
@@ -246,7 +291,7 @@ public abstract class HttpServer extends Job {
     // ======================================================================
     // ========================================================================
 
-    private class HandleConnection  implements Runnable {
+    private class HandleConnection implements Runnable {
 
         Socket connection; // !< connection of this instant
         InputStream from_client; // !< stream to read input from
@@ -288,12 +333,12 @@ public abstract class HttpServer extends Job {
             // now read http requests from client until it disconnects
             // while (true) {
             try {
-                //System.out.println("Parsing ...");
+                // System.out.println("Parsing ...");
 
                 // parse next request from client
                 this.httpParser.parseRequestResponse();
 
-                //System.out.println("Generating Response ...");
+                // System.out.println("Generating Response ...");
 
                 HttpRequest request = new HttpRequest();
                 request.header = this.httpParser.getHeader();
@@ -302,35 +347,39 @@ public abstract class HttpServer extends Job {
                     request.body = "".getBytes();
                 }
 
-                // Main work is done in the derived HttpServer.handleRequest() method
-                HttpResponse response = this.httpServer.handleRequest(request);
+                // First try the "online-check" request
+                HttpResponse response = handleRequestOnline(request);
+                if (response == null) {
+                    // Main work is done in the derived HttpServer.handleRequest() method
+                    response = this.httpServer.handleRequest(request);
+                }
 
                 if (response != null) {
                     // "In HTTP, it SHOULD be sent whenever the message's length
                     // can be determined prior to being transferred" rfc2616
-                    
+
                     // Set body length automatically
                     int Length = response.body.length;
                     response.header.setContentLength(Length);
 
                     // Set server name automatically
                     response.header.setServerName(serverName);
-                    
-                    //System.out.println("Writing Response ...");
+
+                    // System.out.println("Writing Response ...");
                     // output this response to client
-                    
-                    //System.out.println(response.header.toString());
-                    
+
+                    // System.out.println(response.header.toString());
+
                     this.to_client.write(response.header.toString());
                     this.to_client.flush();
                     this.connection.getOutputStream().write(response.body);
                 }
-                
+
                 this.to_client.flush();
                 this.to_client.close();
                 this.connection.close();
 
-                //System.out.println("Connection Closed.");
+                // System.out.println("Connection Closed.");
 
             } catch (Exception e) {
                 e.printStackTrace();

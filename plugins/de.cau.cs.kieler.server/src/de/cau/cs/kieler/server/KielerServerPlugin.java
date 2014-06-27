@@ -39,6 +39,7 @@ public class KielerServerPlugin extends Plugin {
          * The constructor
          */
         public KielerServerPlugin() {
+            plugin = this;
         }
 
         // -------------------------------------------------------------------------
