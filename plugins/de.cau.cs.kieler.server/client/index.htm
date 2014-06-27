@@ -26,6 +26,7 @@
 .Stil13 {font-size: xx-small}
 .Stil15 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: x-small; }
 .Stil18 {font-size: xx-small; font-weight: bold; }
+.Stil20 {color: #999999}
 -->
        </style>
 
@@ -59,13 +60,24 @@ var windowContent = "<img src='http://www.sccharts.com/transformations.jpg' alt=
   <area shape='rect' coords='10,39,142,53' href='javascript:void(0)' onClick='document.getElementById(\"transformations\").value=\"EXPANSIONS\"'/>\
   <area shape='rect' coords='170,41,387,55' href='javascript:void(0)' onClick='document.getElementById(\"transformations\").value=\"SYNCCHARTS\"'/>\
 </map>\
-<input name='transformations' type='hidden' id='transformations' size='94' value='' style='width: 100%' />";
+<input name='transformations' type='hidden' id='transformations' size='94' value='' style='width: 100%' />\
+<br />\
+    <span style='font-family: Verdana, Arial, Helvetica, sans-serif;\
+	font-size: x-small'>Click on the transformation that you like to add to the list of applied compilation transformations.</span> </div>";
 
 var mywindow;
 function openSelectWindow() {
+  try {
+		if (!mywindow.closed) {
+			 mywindow.focus();
+			return;
+		}
+	}catch(e) {
+  }
   transformationsTimer=setInterval(function(){updateTransformations()},500);
-  mywindow = window.open("", "selectWindow", "width=950,height=260, resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no");
+  mywindow = window.open("", "selectWindow", "width=950,height=270, resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no");
   mywindow.document.write(windowContent);
+  
   mywindow.focus();
 }
 
@@ -150,7 +162,7 @@ function replaceAll(inputStr, findStr, replaceStr) {
 
 function compileText() {
     var strict = document.getElementById("strict").checked;
-    var verbose = document.getElementById("verbose").checked;
+    var verbose = 0;//document.getElementById("verbose").checked;
 
 	var resultUrl =  document.getElementById("KiCoURL").value + "/?model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
 
@@ -254,7 +266,10 @@ function updateImage() {
         <td colspan="2" valign="top" scope="row"><label></label>
           <table width="300" border="0" cellspacing="10">
             <tr>
-              <th valign="top" scope="row"><div align="right" class="Stil8">1. SCChart </div></th>
+              <th valign="top" scope="row"><div align="right" class="Stil8">
+                <p>1. Textual SCChart (SCT)<br>
+                <span class="Stil12">                (see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/SCT+-+Textual+Description+Language+for+SCCharts" target="_blank">here</a>) </span></p>
+                </div></th>
               <td valign="top"><label>
                 <textarea name="model" cols="70" rows="25" id="model" onchange="compile();">
 @HVLayout
@@ -295,14 +310,14 @@ scchart ABRO {
             </tr>
             <tr>
               <th valign="top" scope="row"><div align="right" class="Stil8">2. Compile Transformations<br />
-                <span class="Stil15 Stil13">(comma separated)</span></div></th>
+                <span class="Stil15 Stil13 Stil13">(comma separated)</span></div></th>
               <td><label>
 			  <div class="input-w"  style="width: auto">
                 <p>
                   <input name="transformations" type="text" id="transformations" size="94" value="ABORT" style="width: 100%"/>
+                  <span class="Stil15">Examples: ABORT, INITIALIZATION, ENTRY, SCG, SCGRAPH, CODEGENERATION</span><input type="submit" name="selectTransformations" value="Select Transformations ..." onClick="openSelectWindow()" />
                 </p>
-                <p><a href="#" onClick="openSelectWindow()"><img src="http://www.sccharts.com/transformations2.jpg"></a></p>
-			  </div>
+                </div>
               </label></td>
             </tr>
             <tr>
@@ -312,10 +327,8 @@ scchart ABRO {
                 <span class="Stil8">
                 <input name="strict" type="checkbox" id="strict" value="true" onclick="compile();">
                 Strict</span></label>
-                <span class="Stil8 Stil10"><br>
-                <label>
-                <input name="verbose" type="checkbox" id="verbose" value="true" onclick="compile();">
-                Verbose                </label>
+                <span class="Stil8 Stil10">(only apply the listed transformations)
+                <label></label>
                 </span></p>
                 <p>
                   <span class="Stil8 Stil10">
@@ -326,7 +339,7 @@ scchart ABRO {
                   <input type="radio" name="output" value="graph" id="outputImage" onclick="setResultImage();" />
                   <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" />                Graphical output <BR>
                 <BR>
-&nbsp; 	&nbsp; 	 	&nbsp; Quality: </label>
+&nbsp; 	&nbsp; 	 	&nbsp; Image Quality: </label>
 
                   <label></label>
                   <label></label>
@@ -354,19 +367,23 @@ scchart ABRO {
 <table width="327" border="0" cellspacing="5">
                       <tr>
                         <td width="315" valign="top" scope="row"><span class="Stil8">
+                        <label>
+                          <input type="radio" name="config" value="server0" id="radio0" disabled="disabled" />
+                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver3"> <span class="Stil20">Main Server (available shortly)</span></label>
+                          <br>
                           <label>
                         <a name="server"></a>
                         <input type="radio" name="config" value="server1" id="radio" checked="true" onclick="setConfig(1);" />
-                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1">                        Server1</label>
+                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1">                        Backup Server 1</label>
                           <br>
                           <label>
                           <input type="radio" name="config" value="server2" id="radio2" onclick="setConfig(2);" />
-                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2"> Server2</label>
+                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2"> Backup Server 2</label>
                           <br>
                           <label>
-                          <input type="radio" name="config" value="localhost" id="radio3" onclick="setConfig(3);" />
+                          <input type="radio" name="config" value="localhost" id="radio4" onclick="setConfig(3);" />
                           <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhost"> Local Host <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run&nbsp;locally, see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Compiler+Console">here</a> and <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+KLighD+Console+Diagram+Rendering">here</a>)</span></label>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run&nbsp;locally, see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Compiler+Console" target="_blank">here</a> and <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+KLighD+Console+Diagram+Rendering" target="_blank">here</a>)</span></label>
 </span><span class="Stil8">
                       <label></label>
                         </span><span class="Stil8">
