@@ -44,6 +44,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.NodeImpl#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.NodeImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.NodeImpl#getSenders <em>Senders</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.NodeImpl#getReceivers <em>Receivers</em>}</li>
  * </ul>
  * </p>
  *
@@ -51,245 +52,344 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class NodeImpl extends AnnotatableImpl implements Node {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-     * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getId()
-     * @generated
-     * @ordered
-     */
+	 * @see #getId()
+	 * @generated
+	 * @ordered
+	 */
     protected static final String ID_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getId()
-     * @generated
-     * @ordered
-     */
+	 * @see #getId()
+	 * @generated
+	 * @ordered
+	 */
     protected String id = ID_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getLabel()
-     * @generated
-     * @ordered
-     */
+	 * @see #getLabel()
+	 * @generated
+	 * @ordered
+	 */
     protected static final String LABEL_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getLabel()
-     * @generated
-     * @ordered
-     */
+	 * @see #getLabel()
+	 * @generated
+	 * @ordered
+	 */
     protected String label = LABEL_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getSenders() <em>Senders</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getSenders() <em>Senders</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getSenders()
-     * @generated
-     * @ordered
-     */
+	 * @see #getSenders()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<Sender> senders;
 
     /**
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getReceivers() <em>Receivers</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getReceivers()
+	 * @generated
+	 * @ordered
+	 */
+	protected Receiver receivers;
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected NodeImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return SCChartsPackage.Literals.NODE;
-    }
+		return SCChartsPackage.Literals.NODE;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String getId() {
-        return id;
-    }
+		return id;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setId(String newId) {
-        String oldId = id;
-        id = newId;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.NODE__ID, oldId, id));
-    }
+		String oldId = id;
+		id = newId;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.NODE__ID, oldId, id));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String getLabel() {
-        return label;
-    }
+		return label;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setLabel(String newLabel) {
-        String oldLabel = label;
-        label = newLabel;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.NODE__LABEL, oldLabel, label));
-    }
+		String oldLabel = label;
+		label = newLabel;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.NODE__LABEL, oldLabel, label));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<Sender> getSenders() {
-        if (senders == null) {
-            senders = new EObjectContainmentEList<Sender>(Sender.class, this, SCChartsPackage.NODE__SENDERS);
-        }
-        return senders;
-    }
+		if (senders == null) {
+			senders = new EObjectContainmentEList<Sender>(Sender.class, this, SCChartsPackage.NODE__SENDERS);
+		}
+		return senders;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Receiver getReceivers() {
+		if (receivers != null && receivers.eIsProxy()) {
+			InternalEObject oldReceivers = (InternalEObject)receivers;
+			receivers = (Receiver)eResolveProxy(oldReceivers);
+			if (receivers != oldReceivers) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.NODE__RECEIVERS, oldReceivers, receivers));
+			}
+		}
+		return receivers;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Receiver basicGetReceivers() {
+		return receivers;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetReceivers(Receiver newReceivers, NotificationChain msgs) {
+		Receiver oldReceivers = receivers;
+		receivers = newReceivers;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.NODE__RECEIVERS, oldReceivers, newReceivers);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setReceivers(Receiver newReceivers) {
+		if (newReceivers != receivers) {
+			NotificationChain msgs = null;
+			if (receivers != null)
+				msgs = ((InternalEObject)receivers).eInverseRemove(this, SCChartsPackage.RECEIVER__NODE, Receiver.class, msgs);
+			if (newReceivers != null)
+				msgs = ((InternalEObject)newReceivers).eInverseAdd(this, SCChartsPackage.RECEIVER__NODE, Receiver.class, msgs);
+			msgs = basicSetReceivers(newReceivers, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.NODE__RECEIVERS, newReceivers, newReceivers));
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case SCChartsPackage.NODE__RECEIVERS:
+				if (receivers != null)
+					msgs = ((InternalEObject)receivers).eInverseRemove(this, SCChartsPackage.RECEIVER__NODE, Receiver.class, msgs);
+				return basicSetReceivers((Receiver)otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case SCChartsPackage.NODE__SENDERS:
-                return ((InternalEList<?>)getSenders()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case SCChartsPackage.NODE__SENDERS:
+				return ((InternalEList<?>)getSenders()).basicRemove(otherEnd, msgs);
+			case SCChartsPackage.NODE__RECEIVERS:
+				return basicSetReceivers(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case SCChartsPackage.NODE__ID:
-                return getId();
-            case SCChartsPackage.NODE__LABEL:
-                return getLabel();
-            case SCChartsPackage.NODE__SENDERS:
-                return getSenders();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case SCChartsPackage.NODE__ID:
+				return getId();
+			case SCChartsPackage.NODE__LABEL:
+				return getLabel();
+			case SCChartsPackage.NODE__SENDERS:
+				return getSenders();
+			case SCChartsPackage.NODE__RECEIVERS:
+				if (resolve) return getReceivers();
+				return basicGetReceivers();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case SCChartsPackage.NODE__ID:
-                setId((String)newValue);
-                return;
-            case SCChartsPackage.NODE__LABEL:
-                setLabel((String)newValue);
-                return;
-            case SCChartsPackage.NODE__SENDERS:
-                getSenders().clear();
-                getSenders().addAll((Collection<? extends Sender>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case SCChartsPackage.NODE__ID:
+				setId((String)newValue);
+				return;
+			case SCChartsPackage.NODE__LABEL:
+				setLabel((String)newValue);
+				return;
+			case SCChartsPackage.NODE__SENDERS:
+				getSenders().clear();
+				getSenders().addAll((Collection<? extends Sender>)newValue);
+				return;
+			case SCChartsPackage.NODE__RECEIVERS:
+				setReceivers((Receiver)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case SCChartsPackage.NODE__ID:
-                setId(ID_EDEFAULT);
-                return;
-            case SCChartsPackage.NODE__LABEL:
-                setLabel(LABEL_EDEFAULT);
-                return;
-            case SCChartsPackage.NODE__SENDERS:
-                getSenders().clear();
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case SCChartsPackage.NODE__ID:
+				setId(ID_EDEFAULT);
+				return;
+			case SCChartsPackage.NODE__LABEL:
+				setLabel(LABEL_EDEFAULT);
+				return;
+			case SCChartsPackage.NODE__SENDERS:
+				getSenders().clear();
+				return;
+			case SCChartsPackage.NODE__RECEIVERS:
+				setReceivers((Receiver)null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case SCChartsPackage.NODE__ID:
-                return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-            case SCChartsPackage.NODE__LABEL:
-                return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
-            case SCChartsPackage.NODE__SENDERS:
-                return senders != null && !senders.isEmpty();
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case SCChartsPackage.NODE__ID:
+				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case SCChartsPackage.NODE__LABEL:
+				return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
+			case SCChartsPackage.NODE__SENDERS:
+				return senders != null && !senders.isEmpty();
+			case SCChartsPackage.NODE__RECEIVERS:
+				return receivers != null;
+		}
+		return super.eIsSet(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+		if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (id: ");
-        result.append(id);
-        result.append(", label: ");
-        result.append(label);
-        result.append(')');
-        return result.toString();
-    }
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (id: ");
+		result.append(id);
+		result.append(", label: ");
+		result.append(label);
+		result.append(')');
+		return result.toString();
+	}
 
 } //NodeImpl

@@ -44,28 +44,28 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Region extends Concurrency {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-     * Returns the value of the '<em><b>States</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.sccharts.State}.
-     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.State#getParentRegion <em>Parent Region</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>States</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.sccharts.State}.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.State#getParentRegion <em>Parent Region</em>}'.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>States</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>States</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getRegion_States()
-     * @see de.cau.cs.kieler.sccharts.State#getParentRegion
-     * @model opposite="parentRegion" containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>States</em>' containment reference list.
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getRegion_States()
+	 * @see de.cau.cs.kieler.sccharts.State#getParentRegion
+	 * @model opposite="parentRegion" containment="true"
+	 * @generated
+	 */
     EList<State> getStates();
 
 } // Region

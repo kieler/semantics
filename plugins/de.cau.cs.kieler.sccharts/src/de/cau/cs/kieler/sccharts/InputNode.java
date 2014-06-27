@@ -33,36 +33,36 @@ import de.cau.cs.kieler.core.kexpressions.Expression;
  */
 public interface InputNode extends Node {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-     * Returns the value of the '<em><b>Expression</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Expression</em>' containment reference.
-     * @see #setExpression(Expression)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getInputNode_Expression()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Expression</em>' containment reference.
+	 * @see #setExpression(Expression)
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getInputNode_Expression()
+	 * @model containment="true"
+	 * @generated
+	 */
     Expression getExpression();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.InputNode#getExpression <em>Expression</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.InputNode#getExpression <em>Expression</em>}' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Expression</em>' containment reference.
-     * @see #getExpression()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Expression</em>' containment reference.
+	 * @see #getExpression()
+	 * @generated
+	 */
     void setExpression(Expression value);
 
 } // InputNode

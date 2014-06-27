@@ -39,6 +39,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.sccharts.Node#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Node#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Node#getSenders <em>Senders</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Node#getReceivers <em>Receivers</em>}</li>
  * </ul>
  * </p>
  *
@@ -48,78 +49,106 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Node extends Annotatable {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-     * Returns the value of the '<em><b>Id</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Id</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Id</em>' attribute.
-     * @see #setId(String)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getNode_Id()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Id</em>' attribute.
+	 * @see #setId(String)
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getNode_Id()
+	 * @model
+	 * @generated
+	 */
     String getId();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Node#getId <em>Id</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Node#getId <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Id</em>' attribute.
-     * @see #getId()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Id</em>' attribute.
+	 * @see #getId()
+	 * @generated
+	 */
     void setId(String value);
 
     /**
-     * Returns the value of the '<em><b>Label</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Label</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Label</em>' attribute.
-     * @see #setLabel(String)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getNode_Label()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Label</em>' attribute.
+	 * @see #setLabel(String)
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getNode_Label()
+	 * @model
+	 * @generated
+	 */
     String getLabel();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Node#getLabel <em>Label</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Node#getLabel <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Label</em>' attribute.
-     * @see #getLabel()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Label</em>' attribute.
+	 * @see #getLabel()
+	 * @generated
+	 */
     void setLabel(String value);
 
     /**
-     * Returns the value of the '<em><b>Senders</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.sccharts.Sender}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Senders</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.sccharts.Sender}.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Senders</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Senders</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getNode_Senders()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Senders</em>' containment reference list.
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getNode_Senders()
+	 * @model containment="true"
+	 * @generated
+	 */
     EList<Sender> getSenders();
+
+				/**
+	 * Returns the value of the '<em><b>Receivers</b></em>' reference.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.Receiver#getNode <em>Node</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Receivers</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Receivers</em>' reference.
+	 * @see #setReceivers(Receiver)
+	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getNode_Receivers()
+	 * @see de.cau.cs.kieler.sccharts.Receiver#getNode
+	 * @model opposite="node"
+	 * @generated
+	 */
+	Receiver getReceivers();
+
+				/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Node#getReceivers <em>Receivers</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Receivers</em>' reference.
+	 * @see #getReceivers()
+	 * @generated
+	 */
+	void setReceivers(Receiver value);
 
 } // Node
