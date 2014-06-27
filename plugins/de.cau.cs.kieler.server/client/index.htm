@@ -191,14 +191,12 @@ function clearErrors() {
 
 
 function testOnlineStatus(redAndGreenImageId, serverURL) {
-       var redAndGreenImage = document.getElementById(redAndGreenImageId);
 	   var testImage = new Image();
 	   testImage.src = serverURL + "/?online=1#" + new Date().getTime();
 	   
-		testImage.onload = function() {
+  	   testImage.onload = function() {
 			if (testImage.height > 0) {
 			    var redAndGreenImage = document.getElementById(redAndGreenImageId);
-	            //alert(testImage.height + ":" + testImage.src + ":" + redAndGreenImage);
 				redAndGreenImage.src = "http://www.sccharts.com/green.png";
 			}
 	    }
@@ -353,24 +351,26 @@ scchart ABRO {
                   </span><br>
                   <br>
                 <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Advanced Options</a></span></p>
-<table width="564" border="0" cellspacing="5">
+<table width="327" border="0" cellspacing="5">
                       <tr>
-                        <td width="127" valign="top" scope="row"><span class="Stil8">
+                        <td width="315" valign="top" scope="row"><span class="Stil8">
                           <label>
                         <a name="server"></a>
                         <input type="radio" name="config" value="server1" id="radio" checked="true" onclick="setConfig(1);" />
-                        Server1</label>
-                          <img id="onlineserver1" src="http://www.sccharts.com/red.png" width="11" height="11"></span></td>
-                        <td width="104" valign="top"><span class="Stil8">
+                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1">                        Server1</label>
+                          <br>
                           <label>
-                        <input type="radio" name="config" value="server2" id="radio2" onclick="setConfig(2);" />
-                        Server2 <img id="onlineserver2" src="http://www.sccharts.com/red.png" width="11" height="11"></label>
-                        </span></td>
-                        <td width="307"><span class="Stil8">
+                          <input type="radio" name="config" value="server2" id="radio2" onclick="setConfig(2);" />
+                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2"> Server2</label>
+                          <br>
                           <label>
-                        <input type="radio" name="config" value="localhost" id="radio3" onclick="setConfig(3);" />
-                          Local Host <img id="onlinelocalhost" src="http://www.sccharts.com/red.png" width="11" height="11"><br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run locally, see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Compiler+Console">here</a> and <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+KLighD+Console+Diagram+Rendering">here</a>)</span></label>
+                          <input type="radio" name="config" value="localhost" id="radio3" onclick="setConfig(3);" />
+                          <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhost"> Local Host <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run&nbsp;locally, see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Compiler+Console">here</a> and <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+KLighD+Console+Diagram+Rendering">here</a>)</span></label>
+</span><span class="Stil8">
+                      <label></label>
+                        </span><span class="Stil8">
+                          <label></label>
                         </span></td>
                       </tr>
                 </table>
