@@ -39,12 +39,13 @@ public class SctParser extends AbstractContentAssistParser {
 				{
 					put(grammarAccess.getSCChartAccess().getAlternatives_6(), "rule__SCChart__Alternatives_6");
 					put(grammarAccess.getSCChartAccess().getAlternatives_6_1_1_0(), "rule__SCChart__Alternatives_6_1_1_0");
-					put(grammarAccess.getSCChartAccess().getAlternatives_6_1_1_1(), "rule__SCChart__Alternatives_6_1_1_1");
+					put(grammarAccess.getSCChartAccess().getAlternatives_6_1_1_1_0(), "rule__SCChart__Alternatives_6_1_1_1_0");
+					put(grammarAccess.getConcurrencyAccess().getAlternatives(), "rule__Concurrency__Alternatives");
 					put(grammarAccess.getImportDeclAccess().getAlternatives_1(), "rule__ImportDecl__Alternatives_1");
 					put(grammarAccess.getStateAccess().getAlternatives_1(), "rule__State__Alternatives_1");
 					put(grammarAccess.getStateAccess().getAlternatives_6(), "rule__State__Alternatives_6");
 					put(grammarAccess.getStateAccess().getAlternatives_6_1_1_0(), "rule__State__Alternatives_6_1_1_0");
-					put(grammarAccess.getStateAccess().getAlternatives_6_1_1_1(), "rule__State__Alternatives_6_1_1_1");
+					put(grammarAccess.getStateAccess().getAlternatives_6_1_1_1_0(), "rule__State__Alternatives_6_1_1_1_0");
 					put(grammarAccess.getNodeAccess().getAlternatives(), "rule__Node__Alternatives");
 					put(grammarAccess.getLocalActionAccess().getAlternatives(), "rule__LocalAction__Alternatives");
 					put(grammarAccess.getTransitionAccess().getAlternatives_1(), "rule__Transition__Alternatives_1");
@@ -95,8 +96,7 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSCChartAccess().getGroup_6_0_2_2(), "rule__SCChart__Group_6_0_2_2__0");
 					put(grammarAccess.getSCChartAccess().getGroup_6_1(), "rule__SCChart__Group_6_1__0");
 					put(grammarAccess.getSCChartAccess().getGroup_6_1_1(), "rule__SCChart__Group_6_1_1__0");
-					put(grammarAccess.getSCChartAccess().getGroup_6_1_1_1_0(), "rule__SCChart__Group_6_1_1_1_0__0");
-					put(grammarAccess.getSCChartAccess().getGroup_6_1_1_1_1(), "rule__SCChart__Group_6_1_1_1_1__0");
+					put(grammarAccess.getSCChartAccess().getGroup_6_1_1_1(), "rule__SCChart__Group_6_1_1_1__0");
 					put(grammarAccess.getImportDeclAccess().getGroup(), "rule__ImportDecl__Group__0");
 					put(grammarAccess.getQualifiedNameAccess().getGroup(), "rule__QualifiedName__Group__0");
 					put(grammarAccess.getQualifiedNameAccess().getGroup_1(), "rule__QualifiedName__Group_1__0");
@@ -109,8 +109,7 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getGroup_6_0_2_2(), "rule__State__Group_6_0_2_2__0");
 					put(grammarAccess.getStateAccess().getGroup_6_1(), "rule__State__Group_6_1__0");
 					put(grammarAccess.getStateAccess().getGroup_6_1_1(), "rule__State__Group_6_1_1__0");
-					put(grammarAccess.getStateAccess().getGroup_6_1_1_1_0(), "rule__State__Group_6_1_1_1_0__0");
-					put(grammarAccess.getStateAccess().getGroup_6_1_1_1_1(), "rule__State__Group_6_1_1_1_1__0");
+					put(grammarAccess.getStateAccess().getGroup_6_1_1_1(), "rule__State__Group_6_1_1_1__0");
 					put(grammarAccess.getInputNodeAccess().getGroup(), "rule__InputNode__Group__0");
 					put(grammarAccess.getOutputNodeAccess().getGroup(), "rule__OutputNode__Group__0");
 					put(grammarAccess.getReferencedNodeAccess().getGroup(), "rule__ReferencedNode__Group__0");
@@ -231,8 +230,7 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSCChartAccess().getLocalActionsAssignment_6_1_1_0_1(), "rule__SCChart__LocalActionsAssignment_6_1_1_0_1");
 					put(grammarAccess.getSCChartAccess().getConcurrenciesAssignment_6_1_1_1_0_0(), "rule__SCChart__ConcurrenciesAssignment_6_1_1_1_0_0");
 					put(grammarAccess.getSCChartAccess().getConcurrenciesAssignment_6_1_1_1_0_1(), "rule__SCChart__ConcurrenciesAssignment_6_1_1_1_0_1");
-					put(grammarAccess.getSCChartAccess().getConcurrenciesAssignment_6_1_1_1_1_0(), "rule__SCChart__ConcurrenciesAssignment_6_1_1_1_1_0");
-					put(grammarAccess.getSCChartAccess().getConcurrenciesAssignment_6_1_1_1_1_1(), "rule__SCChart__ConcurrenciesAssignment_6_1_1_1_1_1");
+					put(grammarAccess.getSCChartAccess().getConcurrenciesAssignment_6_1_1_1_1(), "rule__SCChart__ConcurrenciesAssignment_6_1_1_1_1");
 					put(grammarAccess.getImportDeclAccess().getImportedTypeAssignment_1_0(), "rule__ImportDecl__ImportedTypeAssignment_1_0");
 					put(grammarAccess.getImportDeclAccess().getImportedNamespaceAssignment_1_1(), "rule__ImportDecl__ImportedNamespaceAssignment_1_1");
 					put(grammarAccess.getStateAccess().getAnnotationsAssignment_0(), "rule__State__AnnotationsAssignment_0");
@@ -250,8 +248,7 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getLocalActionsAssignment_6_1_1_0_1(), "rule__State__LocalActionsAssignment_6_1_1_0_1");
 					put(grammarAccess.getStateAccess().getConcurrenciesAssignment_6_1_1_1_0_0(), "rule__State__ConcurrenciesAssignment_6_1_1_1_0_0");
 					put(grammarAccess.getStateAccess().getConcurrenciesAssignment_6_1_1_1_0_1(), "rule__State__ConcurrenciesAssignment_6_1_1_1_0_1");
-					put(grammarAccess.getStateAccess().getConcurrenciesAssignment_6_1_1_1_1_0(), "rule__State__ConcurrenciesAssignment_6_1_1_1_1_0");
-					put(grammarAccess.getStateAccess().getConcurrenciesAssignment_6_1_1_1_1_1(), "rule__State__ConcurrenciesAssignment_6_1_1_1_1_1");
+					put(grammarAccess.getStateAccess().getConcurrenciesAssignment_6_1_1_1_1(), "rule__State__ConcurrenciesAssignment_6_1_1_1_1");
 					put(grammarAccess.getStateAccess().getOutgoingTransitionsAssignment_7(), "rule__State__OutgoingTransitionsAssignment_7");
 					put(grammarAccess.getInputNodeAccess().getIdAssignment_2(), "rule__InputNode__IdAssignment_2");
 					put(grammarAccess.getInputNodeAccess().getLabelAssignment_3(), "rule__InputNode__LabelAssignment_3");

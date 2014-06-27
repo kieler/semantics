@@ -83,12 +83,19 @@ SCChart:
             (declarations+=Declaration |
              localActions+=LocalAction)*
             (
-             ((concurrencies+=SingleRegion)(concurrencies+=Region)*|
-             (concurrencies+=SingleDataflow)(concurrencies+=Dataflow)*)
+//                (concurrencies+=SingleRegion)|
+//             	(concurrencies+=SingleDataflow)|
+//             	(concurrencies+=Concurrency)*
+//				(concurrencies+=SingleRegion)(concurrencies+=Region)*
+				(concurrencies+=SingleRegion|concurrencies+=SingleDataflow)(concurrencies+=Concurrency)*
              )?
             )
           '}') 
      )?
+;
+
+Concurrency returns sccharts::Concurrency:
+	Region | Dataflow	
 ;
 
 ImportDecl: 
@@ -125,13 +132,15 @@ State returns sccharts::State:
             (declarations+=Declaration |
              localActions+=LocalAction)*
             (
-             ((concurrencies+=SingleRegion)(concurrencies+=Region)*|
-             (concurrencies+=SingleDataflow)(concurrencies+=Dataflow)*)
-             )?
+//                (concurrencies+=SingleRegion)|
+//             	(concurrencies+=SingleDataflow)|
+//             	(concurrencies+=Concurrency)*
+				(concurrencies+=SingleRegion|concurrencies+=SingleDataflow)(concurrencies+=Concurrency)*
+             )
             )
           '}') 
      )?
-     // The semicolon is mandatory for the backtracking!
+     // The semicolon is mandatory for backtracking!
     (outgoingTransitions+=Transition)* ';';
 
 

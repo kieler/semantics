@@ -361,7 +361,8 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				}
 				else break;
 			case SCChartsPackage.DATAFLOW:
-				if(context == grammarAccess.getDataflowRule()) {
+				if(context == grammarAccess.getConcurrencyRule() ||
+				   context == grammarAccess.getDataflowRule()) {
 					sequence_Dataflow(context, (Dataflow) semanticObject); 
 					return; 
 				}
@@ -439,7 +440,8 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				}
 				else break;
 			case SCChartsPackage.REGION:
-				if(context == grammarAccess.getRegionRule()) {
+				if(context == grammarAccess.getConcurrencyRule() ||
+				   context == grammarAccess.getRegionRule()) {
 					sequence_Region(context, (Region) semanticObject); 
 					return; 
 				}
@@ -638,7 +640,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *             (referencedScope=[State|ID] (bindings+=Binding bindings+=Binding*)?) | 
 	 *             (
 	 *                 (declarations+=Declaration | localActions+=LocalAction)* 
-	 *                 ((concurrencies+=SingleRegion concurrencies+=Region*) | (concurrencies+=SingleDataflow concurrencies+=Dataflow*))?
+	 *                 ((concurrencies+=SingleRegion | concurrencies+=SingleDataflow) concurrencies+=Concurrency*)?
 	 *             )
 	 *         )?
 	 *     )
@@ -687,7 +689,8 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *             (referencedScope=[State|ID] (bindings+=Binding bindings+=Binding*)?) | 
 	 *             (
 	 *                 (declarations+=Declaration | localActions+=LocalAction)* 
-	 *                 ((concurrencies+=SingleRegion concurrencies+=Region*) | (concurrencies+=SingleDataflow concurrencies+=Dataflow*))?
+	 *                 (concurrencies+=SingleRegion | concurrencies+=SingleDataflow) 
+	 *                 concurrencies+=Concurrency*
 	 *             )
 	 *         )? 
 	 *         outgoingTransitions+=Transition*
