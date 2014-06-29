@@ -1,5 +1,4 @@
-/*
- * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+/*  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
@@ -69,6 +68,26 @@ import org.eclipse.xtext.serializer.ISerializer
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import com.google.inject.Inject
+import de.cau.cs.kieler.sccharts.Dataflow
+import de.cau.cs.kieler.sccharts.Node
+import de.cau.cs.kieler.kiml.options.PortConstraints
+import de.cau.cs.kieler.core.kgraph.KPort
+import de.cau.cs.kieler.core.krendering.extensions.KPortExtensions
+import de.cau.cs.kieler.kiml.options.PortSide
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.sccharts.InputNode
+import de.cau.cs.kieler.kiml.options.NodeLabelPlacement
+import de.cau.cs.kieler.kiml.options.PortLabelPlacement
+import de.cau.cs.kieler.sccharts.OutputNode
+import de.cau.cs.kieler.sccharts.ReferencedNode
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.sccharts.Sender
+import de.cau.cs.kieler.sccharts.Receiver
+
+import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
+import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
+import de.cau.cs.kieler.klay.layered.properties.Properties
+import de.cau.cs.kieler.klay.layered.properties.Properties
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
@@ -96,6 +115,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
 
     @Inject
     extension KLabelExtensions
+
+    @Inject
+    extension KPortExtensions
 
     @Inject
     extension KRenderingExtensions
@@ -179,6 +201,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
     private static val KColor DARKGRAY = RENDERING_FACTORY.createKColor() => [it.red = 60; it.green = 60; it.blue = 60];
 
     private static val String ANNOTATION_LABELBREAK = "break"
+    
+    private static val int MINIMALNODEWIDTH = 40
+    private static val int MINIMALNODEHEIGHT = 40
 
     // -------------------------------------------------------------------------
     // The Main entry transform function   
@@ -268,10 +293,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
     def boolean hasNoRegionsWithStates(State state) {
         return (state.regions == null || state.regions.size == 0 || state.eAllContents.filter(typeof(State)).size == 0)
     }
+    
+    def boolean hasNoDataflows(State state) {
+    	return (state.dataflows == null || state.dataflows.size == 0)
+    }
 
     // Tells if the state needs a macro state rendering because of regions or declarations.
     def boolean hasRegionsOrDeclarations(State state) {
-        val returnValue = (!state.hasNoRegionsWithStates ||
+        val returnValue = (!state.hasNoRegionsWithStates || !state.hasNoDataflows || 
             (!state.localActions.nullOrEmpty && SHOW_STATE_ACTIONS.booleanValue) ||
             (!state.valuedObjects.nullOrEmpty && SHOW_SIGNAL_DECLARATIONS.booleanValue))
         return returnValue
@@ -673,6 +702,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             if (!s.hasNoRegionsWithStates) {
                 for (r : s.regions)
                     node.children += r.translate;
+                for (d : s.dataflows)
+                	node.children += d.translate
             }
             if (s.isReferencedState) 
                 figure => [
@@ -841,4 +872,231 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
     }
 
 // -------------------------------------------------------------------------
+
+
+
+    // -------------------------------------------------------------------------
+    // Transform a region
+    public def dispatch KNode translate(Dataflow d) {
+        val dNode = d.createNode().putToLookUpWith(d) => [ node |
+            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
+            node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
+            node.addLayoutParam(LayoutOptions::DIRECTION, Direction::RIGHT)
+            node.addLayoutParam(Properties::THOROUGHNESS, 100)
+            node.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::BRANDES_KOEPF)
+            
+            val senders = <Sender> newArrayList
+            for (n : d.nodes) {
+                node.children += n.translate;
+                senders += n.senders
+            }
+            for (s : senders) {
+            	s.translateSender
+            }
+            var regionLabelVar = d.label
+            val regionLabel = regionLabelVar
+            node.addRectangle() => [
+                it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
+                it.setBackgroundGradient("#dff".color, SCCHARTSGRAY.copy, 90);
+                it.setSurroundingSpace(2, 0);
+                it.invisible = false;
+                it.foreground = "gray".color
+                it.lineWidth = 1;
+                it.addText("[-]" + if(d.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(d) => [
+                    it.foreground = "dimGray".color
+                    it.fontSize = 10
+                    it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
+                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                ];
+                if (true) {
+                    it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
+                }
+            ];
+            node.addRectangle() => [
+                it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
+                it.setBackgroundGradient("white".color, SCCHARTSGRAY, 90);
+                it.setSurroundingSpace(4, 0);
+                it.invisible = false;
+                it.foreground = "gray".color
+                it.lineWidth = 1;
+                it.addText("[+]" + if(d.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(d) => [
+                    it.foreground = "dimGray".color
+                    it.fontSize = 10
+                    it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
+                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                ];
+                if (true) {
+                    it.addRectangle().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).invisible = true;
+                }
+            ]
+        ];
+        
+        return dNode
+    }
+    
+    // -------------------------------------------------------------------------
+    // Transform a region
+    public def dispatch KNode translate(Node n) {
+        val nNode = n.createNode().putToLookUpWith(n) => [ node |
+            node.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT)
+        ]
+        val rectangle = nNode.addRectangle() => [
+//                it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
+//	            var regionLabelVar = n.label
+//    	        val regionLabel = regionLabelVar
+                it.setBackgroundGradient("#fff".color, SCCHARTSGRAY, 90);
+                it.setSurroundingSpace(0, 0);
+                it.invisible = false;
+                it.foreground = "black".color
+                it.lineWidth = 2;
+//                it.addText(if(n.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(n) => [
+//                    it.foreground = "black".color
+//                    it.fontSize = 6
+//                    it.setSurroundingSpace(4, 0, 2, 0)
+//                    it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
+//                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+//                ];
+//                if (true) {
+//                    it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
+//                }
+            ];
+//            node.addRectangle() => [
+//                it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
+//                it.setBackgroundGradient("white".color, SCCHARTSGRAY, 90);
+//                it.setSurroundingSpace(4, 0);
+//                it.invisible = false;
+//                it.foreground = "gray".color
+//                it.lineWidth = 1;
+//                it.addText("[+]" + if(d.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(d) => [
+//                    it.foreground = "dimGray".color
+//                    it.fontSize = 10
+//                    it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
+//                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+//                ];
+//                if (true) {
+//                    it.addRectangle().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).invisible = true;
+//                }
+//            ]
+//        ];
+		nNode.addLayoutParam(LayoutOptions::NODE_LABEL_PLACEMENT, NodeLabelPlacement::insideTopCenter)
+		nNode.addLayoutParam(LayoutOptions::PORT_LABEL_PLACEMENT, PortLabelPlacement::INSIDE)
+        nNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
+ 		nNode.createLabel(nNode).configureInsideTopCenteredNodeLabel(
+                        if(n.label.nullOrEmpty) "" else " " + n.label,
+                        6,
+                        KlighdConstants::DEFAULT_FONT_NAME
+                    )      
+                      
+        if (n instanceof InputNode) {
+        	val in = (n as InputNode)
+        	nNode.addPort(in.senders.head.expression, PortSide::EAST); 
+        }
+        
+        else if (n instanceof OutputNode) {
+        	val out = (n as OutputNode) 
+        	nNode.addPort(out.valuedObject.reference, PortSide::WEST);
+        }
+        
+        else if (n instanceof ReferencedNode) {
+        	val ref = (n as ReferencedNode)
+        	ref.referencedScope.declarations.filter[it.input].forEach[valuedObjects.forEach[
+        		nNode.addPort(it.reference, PortSide::WEST)
+        	]]
+        	ref.referencedScope.declarations.filter[it.output].forEach[valuedObjects.forEach[
+        		nNode.addPort(it.reference, PortSide::EAST)
+        	]]
+        }
+        
+        return nNode
+    }    
+    
+    // -------------------------------------------------------------------------
+    // -- Helper: Ports 
+    // -------------------------------------------------------------------------
+    def KPort addPort(KNode node, String text, float x, float y, int size, PortSide side) {
+        node.createPort(text) => [
+            it.addLayoutParam(LayoutOptions::PORT_SIDE, side);
+//            it.setPortPos(x, y)
+            it.setPortSize(size, size)
+//            it.addRectangle.invisible = true;
+            node.ports += it
+        ]
+    }
+        
+    def KPort addPort(KNode node, Expression expression, float x, float y, int size, PortSide side) {
+    	var text = ""
+    	var Object obj = null
+    	if (expression instanceof ValuedObjectReference) {
+    		text = (expression as ValuedObjectReference).valuedObject.name
+    		obj = (expression as ValuedObjectReference).valuedObject
+        } else {
+    		text = serializer.serialize(expression.copy)
+    		obj = expression
+  		}
+    	val textf = text
+        node.createPort(obj) => [
+            it.addLayoutParam(LayoutOptions::PORT_SIDE, side);
+            it.setPortSize(size, size)
+            it.createLabel(it).configureOutsideBottomLeftNodeLabel(
+                        textf,
+                        6,
+                        KlighdConstants::DEFAULT_FONT_NAME
+                    )
+            node.ports += it
+        ]    
+    }    
+
+    def KPort addPort(KNode node, Expression expression, PortSide side) {
+    	node.addPort(expression, 0, 0, 2, side)
+    }    
+    
+    def translateSender(Sender s) {
+    	val nNode = s.eContainer as Node
+    	
+    	for(r : s.receivers) {
+    		s.translateReceiver(r, nNode)
+    	}
+  	}
+  	
+    def KEdge translateReceiver(Sender s, Receiver r, Node n) {
+    	val sNode = s.eContainer as Node
+    	val rNode = r.node
+    	val sPort = sNode.node.getPort(s.expression.portMap)
+    	var Object recPort = null
+    	if (r.node instanceof OutputNode) {
+    		recPort = (r.node as OutputNode).valuedObject.reference.portMap
+    	} else {
+    		recPort = r.valuedObject.reference.portMap
+   		}
+    	val rPort = rNode.node.getPort(recPort) 
+        val sEdge = s.createEdge().putToLookUpWith(s) => [ edge |
+            edge.source = sNode.node;
+            edge.target = rNode.node;
+            edge.sourcePort = sPort;
+            edge.targetPort = rPort;
+            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+            edge.addPolyline(2) => [
+                // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
+                it.addArrowDecorator() => [
+                ];
+            ];
+        ];
+        
+        return sEdge
+    }
+    
+    def Object portMap(Expression expression) {
+		var Object obj = null
+  		if (expression instanceof ValuedObjectReference) {
+    		obj = (expression as ValuedObjectReference).valuedObject
+        } else {
+    		obj = expression
+  		}
+  		obj
+	}
+    
+    
 }
+
+
+
