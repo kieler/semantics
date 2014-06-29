@@ -118,6 +118,7 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSenderAccess().getGroup(), "rule__Sender__Group__0");
 					put(grammarAccess.getSenderAccess().getGroup_2(), "rule__Sender__Group_2__0");
 					put(grammarAccess.getReceiverAccess().getGroup(), "rule__Receiver__Group__0");
+					put(grammarAccess.getReceiverAccess().getGroup_2(), "rule__Receiver__Group_2__0");
 					put(grammarAccess.getTransitionAccess().getGroup(), "rule__Transition__Group__0");
 					put(grammarAccess.getTransitionAccess().getGroup_3(), "rule__Transition__Group_3__0");
 					put(grammarAccess.getTransitionAccess().getGroup_3_3_0(), "rule__Transition__Group_3_3_0__0");
@@ -267,7 +268,7 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSenderAccess().getExpressionAssignment_1(), "rule__Sender__ExpressionAssignment_1");
 					put(grammarAccess.getSenderAccess().getReceiversAssignment_2_1(), "rule__Sender__ReceiversAssignment_2_1");
 					put(grammarAccess.getReceiverAccess().getNodeAssignment_1(), "rule__Receiver__NodeAssignment_1");
-					put(grammarAccess.getReceiverAccess().getValuedObjectAssignment_3(), "rule__Receiver__ValuedObjectAssignment_3");
+					put(grammarAccess.getReceiverAccess().getValuedObjectAssignment_2_1(), "rule__Receiver__ValuedObjectAssignment_2_1");
 					put(grammarAccess.getTransitionAccess().getAnnotationsAssignment_0(), "rule__Transition__AnnotationsAssignment_0");
 					put(grammarAccess.getTransitionAccess().getTypeAssignment_1_0(), "rule__Transition__TypeAssignment_1_0");
 					put(grammarAccess.getTransitionAccess().getTypeAssignment_1_1(), "rule__Transition__TypeAssignment_1_1");

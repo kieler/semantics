@@ -600,7 +600,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (node=[Node|ID] valuedObject=[ValuedObject|ID])
+	 *     (node=[Node|ID] valuedObject=[ValuedObject|ID]?)
 	 */
 	protected void sequence_Receiver(EObject context, Receiver semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

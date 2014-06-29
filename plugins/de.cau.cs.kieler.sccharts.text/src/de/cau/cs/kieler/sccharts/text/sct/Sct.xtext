@@ -182,7 +182,7 @@ Sender returns sccharts::Sender:
 
 Receiver returns sccharts::Receiver:
     {sccharts::Receiver}
-    node = [sccharts::Node|ID] '.' valuedObject = [kexpressions::ValuedObject]
+    node = [sccharts::Node|ID] ('.' valuedObject = [kexpressions::ValuedObject])?
 ;
 
     

@@ -1363,16 +1363,17 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNodeAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cNodeNodeCrossReference_1_0 = (CrossReference)cNodeAssignment_1.eContents().get(0);
 		private final RuleCall cNodeNodeIDTerminalRuleCall_1_0_1 = (RuleCall)cNodeNodeCrossReference_1_0.eContents().get(1);
-		private final Keyword cFullStopKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cValuedObjectAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final CrossReference cValuedObjectValuedObjectCrossReference_3_0 = (CrossReference)cValuedObjectAssignment_3.eContents().get(0);
-		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_3_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_3_0.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cFullStopKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cValuedObjectAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final CrossReference cValuedObjectValuedObjectCrossReference_2_1_0 = (CrossReference)cValuedObjectAssignment_2_1.eContents().get(0);
+		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_2_1_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_2_1_0.eContents().get(1);
 		
 		//Receiver returns sccharts::Receiver:
-		//	{sccharts::Receiver} node=[sccharts::Node] "." valuedObject=[kexpressions::ValuedObject];
+		//	{sccharts::Receiver} node=[sccharts::Node] ("." valuedObject=[kexpressions::ValuedObject])?;
 		public ParserRule getRule() { return rule; }
 
-		//{sccharts::Receiver} node=[sccharts::Node] "." valuedObject=[kexpressions::ValuedObject]
+		//{sccharts::Receiver} node=[sccharts::Node] ("." valuedObject=[kexpressions::ValuedObject])?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::Receiver}
@@ -1387,17 +1388,20 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNodeNodeIDTerminalRuleCall_1_0_1() { return cNodeNodeIDTerminalRuleCall_1_0_1; }
 
+		//("." valuedObject=[kexpressions::ValuedObject])?
+		public Group getGroup_2() { return cGroup_2; }
+
 		//"."
-		public Keyword getFullStopKeyword_2() { return cFullStopKeyword_2; }
+		public Keyword getFullStopKeyword_2_0() { return cFullStopKeyword_2_0; }
 
 		//valuedObject=[kexpressions::ValuedObject]
-		public Assignment getValuedObjectAssignment_3() { return cValuedObjectAssignment_3; }
+		public Assignment getValuedObjectAssignment_2_1() { return cValuedObjectAssignment_2_1; }
 
 		//[kexpressions::ValuedObject]
-		public CrossReference getValuedObjectValuedObjectCrossReference_3_0() { return cValuedObjectValuedObjectCrossReference_3_0; }
+		public CrossReference getValuedObjectValuedObjectCrossReference_2_1_0() { return cValuedObjectValuedObjectCrossReference_2_1_0; }
 
 		//ID
-		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_3_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_3_0_1; }
+		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_2_1_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_2_1_0_1; }
 	}
 
 	public class LocalActionElements extends AbstractParserRuleElementFinder {
@@ -2365,7 +2369,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Receiver returns sccharts::Receiver:
-	//	{sccharts::Receiver} node=[sccharts::Node] "." valuedObject=[kexpressions::ValuedObject];
+	//	{sccharts::Receiver} node=[sccharts::Node] ("." valuedObject=[kexpressions::ValuedObject])?;
 	public ReceiverElements getReceiverAccess() {
 		return (pReceiver != null) ? pReceiver : (pReceiver = new ReceiverElements());
 	}

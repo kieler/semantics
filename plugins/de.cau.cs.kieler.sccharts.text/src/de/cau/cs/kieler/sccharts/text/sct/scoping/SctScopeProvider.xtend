@@ -32,6 +32,9 @@ import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.xtext.scoping.impl.SimpleScope
+import de.cau.cs.kieler.sccharts.Sender
+import de.cau.cs.kieler.sccharts.ReferencedNode
+import de.cau.cs.kieler.sccharts.Receiver
 
 /**
  * This class implements to scoping for referencedScope (used in KiCoUtil.parse()) and for binding (used in the sct Xtext editor).
@@ -72,6 +75,57 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
             }
         }
         return IScope.NULLSCOPE;
+    }
+    
+    public def IScope referencedNode_SenderScope(EObject context, EReference reference) {
+        var EObject theContext = context;
+
+        val obj = theContext.eGet(pack.referencedNode_ReferencedScope, true);
+        if (!isProxy(obj)) {
+            val refScope = obj as Scope
+
+            val voIterable = <ValuedObject>newArrayList
+            refScope.declarations.forEach[
+            	if (it.output) voIterable += valuedObjects
+            ]
+
+            return Scopes.scopeFor(voIterable);
+        } else {
+            return IScope.NULLSCOPE;
+        }
+    }
+    
+    public def IScope scope_ValuedObjectReference_valuedObject(EObject context, EReference reference) {
+		if (context instanceof ReferencedNode) {
+			return referencedNode_SenderScope(context, reference)
+		}
+        return null;
+    }    
+    
+    public def IScope scope_Receiver_valuedObject(EObject context, EReference reference) {
+    	val superScope = super.getScope(context.eContainer, reference)
+    	
+        if (context instanceof Receiver) {
+        	if ((context as Receiver).node instanceof ReferencedNode) {
+	        	var EObject theContext = (context as Receiver).node as ReferencedNode
+        		val obj = theContext.eGet(pack.referencedNode_ReferencedScope, true);
+        		if (!isProxy(obj)) {
+            		val refScope = obj as Scope
+
+            		val voIterable = <ValuedObject>newArrayList
+            		refScope.declarations.forEach[
+            			if (it.input) voIterable += valuedObjects
+            		]
+
+            		return Scopes.scopeFor(voIterable);
+        		} else {
+            		return superScope;
+        		}
+       		} else {
+       			return superScope
+       		}
+   		}
+   		return null
     }
     
     public def IScope scope_Scope_referencedScope(EObject context, EReference reference) {

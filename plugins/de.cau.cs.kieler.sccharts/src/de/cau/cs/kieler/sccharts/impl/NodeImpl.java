@@ -222,49 +222,11 @@ public class NodeImpl extends AnnotatableImpl implements Node {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetReceivers(Receiver newReceivers, NotificationChain msgs) {
+	public void setReceivers(Receiver newReceivers) {
 		Receiver oldReceivers = receivers;
 		receivers = newReceivers;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.NODE__RECEIVERS, oldReceivers, newReceivers);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setReceivers(Receiver newReceivers) {
-		if (newReceivers != receivers) {
-			NotificationChain msgs = null;
-			if (receivers != null)
-				msgs = ((InternalEObject)receivers).eInverseRemove(this, SCChartsPackage.RECEIVER__NODE, Receiver.class, msgs);
-			if (newReceivers != null)
-				msgs = ((InternalEObject)newReceivers).eInverseAdd(this, SCChartsPackage.RECEIVER__NODE, Receiver.class, msgs);
-			msgs = basicSetReceivers(newReceivers, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.NODE__RECEIVERS, newReceivers, newReceivers));
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case SCChartsPackage.NODE__RECEIVERS:
-				if (receivers != null)
-					msgs = ((InternalEObject)receivers).eInverseRemove(this, SCChartsPackage.RECEIVER__NODE, Receiver.class, msgs);
-				return basicSetReceivers((Receiver)otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.NODE__RECEIVERS, oldReceivers, receivers));
 	}
 
 				/**
@@ -277,8 +239,6 @@ public class NodeImpl extends AnnotatableImpl implements Node {
 		switch (featureID) {
 			case SCChartsPackage.NODE__SENDERS:
 				return ((InternalEList<?>)getSenders()).basicRemove(otherEnd, msgs);
-			case SCChartsPackage.NODE__RECEIVERS:
-				return basicSetReceivers(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}

@@ -2181,9 +2181,9 @@ ruleReceiver returns [EObject current=null]
 	}
 
 )
-)	otherlv_2='.' 
+)(	otherlv_2='.' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getReceiverAccess().getFullStopKeyword_2());
+    	newLeafNode(otherlv_2, grammarAccess.getReceiverAccess().getFullStopKeyword_2_0());
     }
 (
 (
@@ -2197,11 +2197,11 @@ ruleReceiver returns [EObject current=null]
         }
 	otherlv_3=RULE_ID
 	{
-		newLeafNode(otherlv_3, grammarAccess.getReceiverAccess().getValuedObjectValuedObjectCrossReference_3_0()); 
+		newLeafNode(otherlv_3, grammarAccess.getReceiverAccess().getValuedObjectValuedObjectCrossReference_2_1_0()); 
 	}
 
 )
-))
+))?)
 ;
 
 

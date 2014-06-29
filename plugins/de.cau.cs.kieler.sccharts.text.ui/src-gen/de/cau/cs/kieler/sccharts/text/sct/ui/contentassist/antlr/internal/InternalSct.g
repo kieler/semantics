@@ -8239,7 +8239,6 @@ rule__Receiver__Group__2
     }
 :
 	rule__Receiver__Group__2__Impl
-	rule__Receiver__Group__3
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -8251,11 +8250,9 @@ rule__Receiver__Group__2__Impl
     }
 :
 (
-{ before(grammarAccess.getReceiverAccess().getFullStopKeyword_2()); }
-
-	'.' 
-
-{ after(grammarAccess.getReceiverAccess().getFullStopKeyword_2()); }
+{ before(grammarAccess.getReceiverAccess().getGroup_2()); }
+(rule__Receiver__Group_2__0)?
+{ after(grammarAccess.getReceiverAccess().getGroup_2()); }
 )
 
 ;
@@ -8264,26 +8261,35 @@ finally {
 }
 
 
-rule__Receiver__Group__3
+
+
+
+
+
+
+rule__Receiver__Group_2__0
     @init {
 		int stackSize = keepStackSize();
     }
 :
-	rule__Receiver__Group__3__Impl
+	rule__Receiver__Group_2__0__Impl
+	rule__Receiver__Group_2__1
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Receiver__Group__3__Impl
+rule__Receiver__Group_2__0__Impl
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getReceiverAccess().getValuedObjectAssignment_3()); }
-(rule__Receiver__ValuedObjectAssignment_3)
-{ after(grammarAccess.getReceiverAccess().getValuedObjectAssignment_3()); }
+{ before(grammarAccess.getReceiverAccess().getFullStopKeyword_2_0()); }
+
+	'.' 
+
+{ after(grammarAccess.getReceiverAccess().getFullStopKeyword_2_0()); }
 )
 
 ;
@@ -8292,8 +8298,32 @@ finally {
 }
 
 
+rule__Receiver__Group_2__1
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__Receiver__Group_2__1__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
 
+rule__Receiver__Group_2__1__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getReceiverAccess().getValuedObjectAssignment_2_1()); }
+(rule__Receiver__ValuedObjectAssignment_2_1)
+{ after(grammarAccess.getReceiverAccess().getValuedObjectAssignment_2_1()); }
+)
 
+;
+finally {
+	restoreStackSize(stackSize);
+}
 
 
 
@@ -16814,18 +16844,18 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Receiver__ValuedObjectAssignment_3
+rule__Receiver__ValuedObjectAssignment_2_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getReceiverAccess().getValuedObjectValuedObjectCrossReference_3_0()); }
+{ before(grammarAccess.getReceiverAccess().getValuedObjectValuedObjectCrossReference_2_1_0()); }
 (
-{ before(grammarAccess.getReceiverAccess().getValuedObjectValuedObjectIDTerminalRuleCall_3_0_1()); }
-	RULE_ID{ after(grammarAccess.getReceiverAccess().getValuedObjectValuedObjectIDTerminalRuleCall_3_0_1()); }
+{ before(grammarAccess.getReceiverAccess().getValuedObjectValuedObjectIDTerminalRuleCall_2_1_0_1()); }
+	RULE_ID{ after(grammarAccess.getReceiverAccess().getValuedObjectValuedObjectIDTerminalRuleCall_2_1_0_1()); }
 )
-{ after(grammarAccess.getReceiverAccess().getValuedObjectValuedObjectCrossReference_3_0()); }
+{ after(grammarAccess.getReceiverAccess().getValuedObjectValuedObjectCrossReference_2_1_0()); }
 )
 
 ;

@@ -54,7 +54,7 @@ public interface Receiver extends EObject {
 	 * @return the value of the '<em>Valued Object</em>' reference.
 	 * @see #setValuedObject(ValuedObject)
 	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getReceiver_ValuedObject()
-	 * @model required="true"
+	 * @model
 	 * @generated
 	 */
     ValuedObject getValuedObject();
@@ -99,7 +99,6 @@ public interface Receiver extends EObject {
 
     /**
 	 * Returns the value of the '<em><b>Node</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.Node#getReceivers <em>Receivers</em>}'.
 	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Node</em>' reference isn't clear,
@@ -109,8 +108,7 @@ public interface Receiver extends EObject {
 	 * @return the value of the '<em>Node</em>' reference.
 	 * @see #setNode(Node)
 	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getReceiver_Node()
-	 * @see de.cau.cs.kieler.sccharts.Node#getReceivers
-	 * @model opposite="receivers" required="true"
+	 * @model required="true"
 	 * @generated
 	 */
     Node getNode();

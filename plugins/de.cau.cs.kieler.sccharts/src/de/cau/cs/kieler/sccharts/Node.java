@@ -125,7 +125,6 @@ public interface Node extends Annotatable {
 
 				/**
 	 * Returns the value of the '<em><b>Receivers</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.Receiver#getNode <em>Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Receivers</em>' reference isn't clear,
@@ -135,8 +134,7 @@ public interface Node extends Annotatable {
 	 * @return the value of the '<em>Receivers</em>' reference.
 	 * @see #setReceivers(Receiver)
 	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getNode_Receivers()
-	 * @see de.cau.cs.kieler.sccharts.Receiver#getNode
-	 * @model opposite="node"
+	 * @model
 	 * @generated
 	 */
 	Receiver getReceivers();

@@ -199,36 +199,14 @@ public class ReceiverImpl extends EObjectImpl implements Receiver {
 
     /**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetNode(Node newNode, NotificationChain msgs) {
-		Node oldNode = node;
-		node = newNode;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.RECEIVER__NODE, oldNode, newNode);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
     public void setNode(Node newNode) {
-		if (newNode != node) {
-			NotificationChain msgs = null;
-			if (node != null)
-				msgs = ((InternalEObject)node).eInverseRemove(this, SCChartsPackage.NODE__RECEIVERS, Node.class, msgs);
-			if (newNode != null)
-				msgs = ((InternalEObject)newNode).eInverseAdd(this, SCChartsPackage.NODE__RECEIVERS, Node.class, msgs);
-			msgs = basicSetNode(newNode, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.RECEIVER__NODE, newNode, newNode));
+		Node oldNode = node;
+		node = newNode;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.RECEIVER__NODE, oldNode, node));
 	}
 
     /**
@@ -243,10 +221,6 @@ public class ReceiverImpl extends EObjectImpl implements Receiver {
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetSender((Sender)otherEnd, msgs);
-			case SCChartsPackage.RECEIVER__NODE:
-				if (node != null)
-					msgs = ((InternalEObject)node).eInverseRemove(this, SCChartsPackage.NODE__RECEIVERS, Node.class, msgs);
-				return basicSetNode((Node)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -261,8 +235,6 @@ public class ReceiverImpl extends EObjectImpl implements Receiver {
 		switch (featureID) {
 			case SCChartsPackage.RECEIVER__SENDER:
 				return basicSetSender(null, msgs);
-			case SCChartsPackage.RECEIVER__NODE:
-				return basicSetNode(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
