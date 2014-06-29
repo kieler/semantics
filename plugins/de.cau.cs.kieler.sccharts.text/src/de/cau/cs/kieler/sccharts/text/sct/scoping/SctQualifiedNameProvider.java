@@ -30,6 +30,7 @@ import com.google.common.base.Function;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
+import de.cau.cs.kieler.sccharts.Node;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.Scope;
 
@@ -58,7 +59,7 @@ public class SctQualifiedNameProvider extends DefaultDeclarativeQualifiedNamePro
 
     private Function<EObject, String> resolver = new Function<EObject, String>() {
         public String apply(EObject input) {
-            if (input instanceof Scope || input instanceof Region) {
+            if (input instanceof Scope || input instanceof Region || input instanceof Node) {
                 return idResolver.apply(input);
             } else {
                 return nameResolver.apply(input);

@@ -451,7 +451,11 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				}
 				else break;
 			case SCChartsPackage.SENDER:
-				if(context == grammarAccess.getSenderRule()) {
+				if(context == grammarAccess.getSenderInputRule()) {
+					sequence_SenderInput(context, (Sender) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getSenderRule()) {
 					sequence_Sender(context, (Sender) semanticObject); 
 					return; 
 				}
@@ -578,7 +582,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (id=ID label=STRING? senders+=Sender)
+	 *     (id=ID label=STRING? senders+=SenderInput)
 	 */
 	protected void sequence_InputNode(EObject context, InputNode semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -653,6 +657,15 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	/**
 	 * Constraint:
 	 *     (expression=Expression receivers+=Receiver*)
+	 */
+	protected void sequence_SenderInput(EObject context, Sender semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (expression=ValuedObjectReference receivers+=Receiver*)
 	 */
 	protected void sequence_Sender(EObject context, Sender semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
