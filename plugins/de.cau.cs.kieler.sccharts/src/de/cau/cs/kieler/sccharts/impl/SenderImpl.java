@@ -52,205 +52,205 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class SenderImpl extends EObjectImpl implements Sender {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-	 * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getExpression()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getExpression()
+     * @generated
+     * @ordered
+     */
     protected Expression expression;
 
     /**
-	 * The cached value of the '{@link #getReceivers() <em>Receivers</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getReceivers() <em>Receivers</em>}' containment reference list.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getReceivers()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getReceivers()
+     * @generated
+     * @ordered
+     */
     protected EList<Receiver> receivers;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected SenderImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return SCChartsPackage.Literals.SENDER;
-	}
+        return SCChartsPackage.Literals.SENDER;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Expression getExpression() {
-		return expression;
-	}
+        return expression;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
-		Expression oldExpression = expression;
-		expression = newExpression;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.SENDER__EXPRESSION, oldExpression, newExpression);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
+        Expression oldExpression = expression;
+        expression = newExpression;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.SENDER__EXPRESSION, oldExpression, newExpression);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setExpression(Expression newExpression) {
-		if (newExpression != expression) {
-			NotificationChain msgs = null;
-			if (expression != null)
-				msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SENDER__EXPRESSION, null, msgs);
-			if (newExpression != null)
-				msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SENDER__EXPRESSION, null, msgs);
-			msgs = basicSetExpression(newExpression, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SENDER__EXPRESSION, newExpression, newExpression));
-	}
+        if (newExpression != expression) {
+            NotificationChain msgs = null;
+            if (expression != null)
+                msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SENDER__EXPRESSION, null, msgs);
+            if (newExpression != null)
+                msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.SENDER__EXPRESSION, null, msgs);
+            msgs = basicSetExpression(newExpression, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.SENDER__EXPRESSION, newExpression, newExpression));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EList<Receiver> getReceivers() {
-		if (receivers == null) {
-			receivers = new EObjectContainmentWithInverseEList<Receiver>(Receiver.class, this, SCChartsPackage.SENDER__RECEIVERS, SCChartsPackage.RECEIVER__SENDER);
-		}
-		return receivers;
-	}
+        if (receivers == null) {
+            receivers = new EObjectContainmentWithInverseEList<Receiver>(Receiver.class, this, SCChartsPackage.SENDER__RECEIVERS, SCChartsPackage.RECEIVER__SENDER);
+        }
+        return receivers;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case SCChartsPackage.SENDER__RECEIVERS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getReceivers()).basicAdd(otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case SCChartsPackage.SENDER__RECEIVERS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getReceivers()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case SCChartsPackage.SENDER__EXPRESSION:
-				return basicSetExpression(null, msgs);
-			case SCChartsPackage.SENDER__RECEIVERS:
-				return ((InternalEList<?>)getReceivers()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case SCChartsPackage.SENDER__EXPRESSION:
+                return basicSetExpression(null, msgs);
+            case SCChartsPackage.SENDER__RECEIVERS:
+                return ((InternalEList<?>)getReceivers()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case SCChartsPackage.SENDER__EXPRESSION:
-				return getExpression();
-			case SCChartsPackage.SENDER__RECEIVERS:
-				return getReceivers();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case SCChartsPackage.SENDER__EXPRESSION:
+                return getExpression();
+            case SCChartsPackage.SENDER__RECEIVERS:
+                return getReceivers();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case SCChartsPackage.SENDER__EXPRESSION:
-				setExpression((Expression)newValue);
-				return;
-			case SCChartsPackage.SENDER__RECEIVERS:
-				getReceivers().clear();
-				getReceivers().addAll((Collection<? extends Receiver>)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case SCChartsPackage.SENDER__EXPRESSION:
+                setExpression((Expression)newValue);
+                return;
+            case SCChartsPackage.SENDER__RECEIVERS:
+                getReceivers().clear();
+                getReceivers().addAll((Collection<? extends Receiver>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case SCChartsPackage.SENDER__EXPRESSION:
-				setExpression((Expression)null);
-				return;
-			case SCChartsPackage.SENDER__RECEIVERS:
-				getReceivers().clear();
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case SCChartsPackage.SENDER__EXPRESSION:
+                setExpression((Expression)null);
+                return;
+            case SCChartsPackage.SENDER__RECEIVERS:
+                getReceivers().clear();
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case SCChartsPackage.SENDER__EXPRESSION:
-				return expression != null;
-			case SCChartsPackage.SENDER__RECEIVERS:
-				return receivers != null && !receivers.isEmpty();
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case SCChartsPackage.SENDER__EXPRESSION:
+                return expression != null;
+            case SCChartsPackage.SENDER__RECEIVERS:
+                return receivers != null && !receivers.isEmpty();
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //SenderImpl

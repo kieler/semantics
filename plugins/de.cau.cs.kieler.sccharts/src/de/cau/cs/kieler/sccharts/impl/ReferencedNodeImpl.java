@@ -39,136 +39,136 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class ReferencedNodeImpl extends NodeImpl implements ReferencedNode {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-	 * The cached value of the '{@link #getReferencedScope() <em>Referenced Scope</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getReferencedScope() <em>Referenced Scope</em>}' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getReferencedScope()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getReferencedScope()
+     * @generated
+     * @ordered
+     */
     protected Scope referencedScope;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected ReferencedNodeImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return SCChartsPackage.Literals.REFERENCED_NODE;
-	}
+        return SCChartsPackage.Literals.REFERENCED_NODE;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Scope getReferencedScope() {
-		if (referencedScope != null && referencedScope.eIsProxy()) {
-			InternalEObject oldReferencedScope = (InternalEObject)referencedScope;
-			referencedScope = (Scope)eResolveProxy(oldReferencedScope);
-			if (referencedScope != oldReferencedScope) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.REFERENCED_NODE__REFERENCED_SCOPE, oldReferencedScope, referencedScope));
-			}
-		}
-		return referencedScope;
-	}
+        if (referencedScope != null && referencedScope.eIsProxy()) {
+            InternalEObject oldReferencedScope = (InternalEObject)referencedScope;
+            referencedScope = (Scope)eResolveProxy(oldReferencedScope);
+            if (referencedScope != oldReferencedScope) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.REFERENCED_NODE__REFERENCED_SCOPE, oldReferencedScope, referencedScope));
+            }
+        }
+        return referencedScope;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Scope basicGetReferencedScope() {
-		return referencedScope;
-	}
+        return referencedScope;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setReferencedScope(Scope newReferencedScope) {
-		Scope oldReferencedScope = referencedScope;
-		referencedScope = newReferencedScope;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.REFERENCED_NODE__REFERENCED_SCOPE, oldReferencedScope, referencedScope));
-	}
+        Scope oldReferencedScope = referencedScope;
+        referencedScope = newReferencedScope;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.REFERENCED_NODE__REFERENCED_SCOPE, oldReferencedScope, referencedScope));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case SCChartsPackage.REFERENCED_NODE__REFERENCED_SCOPE:
-				if (resolve) return getReferencedScope();
-				return basicGetReferencedScope();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case SCChartsPackage.REFERENCED_NODE__REFERENCED_SCOPE:
+                if (resolve) return getReferencedScope();
+                return basicGetReferencedScope();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case SCChartsPackage.REFERENCED_NODE__REFERENCED_SCOPE:
-				setReferencedScope((Scope)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case SCChartsPackage.REFERENCED_NODE__REFERENCED_SCOPE:
+                setReferencedScope((Scope)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case SCChartsPackage.REFERENCED_NODE__REFERENCED_SCOPE:
-				setReferencedScope((Scope)null);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case SCChartsPackage.REFERENCED_NODE__REFERENCED_SCOPE:
+                setReferencedScope((Scope)null);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case SCChartsPackage.REFERENCED_NODE__REFERENCED_SCOPE:
-				return referencedScope != null;
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case SCChartsPackage.REFERENCED_NODE__REFERENCED_SCOPE:
+                return referencedScope != null;
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //ReferencedNodeImpl

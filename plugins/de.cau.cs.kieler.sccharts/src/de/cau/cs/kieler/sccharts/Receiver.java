@@ -37,90 +37,90 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Receiver extends EObject {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2013 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-	 * Returns the value of the '<em><b>Valued Object</b></em>' reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Valued Object</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Valued Object</em>' reference.
-	 * @see #setValuedObject(ValuedObject)
-	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getReceiver_ValuedObject()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Valued Object</em>' reference.
+     * @see #setValuedObject(ValuedObject)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getReceiver_ValuedObject()
+     * @model
+     * @generated
+     */
     ValuedObject getValuedObject();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Receiver#getValuedObject <em>Valued Object</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Receiver#getValuedObject <em>Valued Object</em>}' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Valued Object</em>' reference.
-	 * @see #getValuedObject()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Valued Object</em>' reference.
+     * @see #getValuedObject()
+     * @generated
+     */
     void setValuedObject(ValuedObject value);
 
     /**
-	 * Returns the value of the '<em><b>Sender</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.Sender#getReceivers <em>Receivers</em>}'.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Sender</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.Sender#getReceivers <em>Receivers</em>}'.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Sender</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Sender</em>' container reference.
-	 * @see #setSender(Sender)
-	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getReceiver_Sender()
-	 * @see de.cau.cs.kieler.sccharts.Sender#getReceivers
-	 * @model opposite="receivers" required="true" transient="false"
-	 * @generated
-	 */
+     * @return the value of the '<em>Sender</em>' container reference.
+     * @see #setSender(Sender)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getReceiver_Sender()
+     * @see de.cau.cs.kieler.sccharts.Sender#getReceivers
+     * @model opposite="receivers" required="true" transient="false"
+     * @generated
+     */
     Sender getSender();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Receiver#getSender <em>Sender</em>}' container reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Receiver#getSender <em>Sender</em>}' container reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Sender</em>' container reference.
-	 * @see #getSender()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Sender</em>' container reference.
+     * @see #getSender()
+     * @generated
+     */
     void setSender(Sender value);
 
     /**
-	 * Returns the value of the '<em><b>Node</b></em>' reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Node</b></em>' reference.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Node</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Node</em>' reference.
-	 * @see #setNode(Node)
-	 * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getReceiver_Node()
-	 * @model required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Node</em>' reference.
+     * @see #setNode(Node)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getReceiver_Node()
+     * @model required="true"
+     * @generated
+     */
     Node getNode();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Receiver#getNode <em>Node</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Receiver#getNode <em>Node</em>}' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Node</em>' reference.
-	 * @see #getNode()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Node</em>' reference.
+     * @see #getNode()
+     * @generated
+     */
     void setNode(Node value);
 
 } // Receiver
