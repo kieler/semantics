@@ -151,6 +151,8 @@ function compile() {
 		compileText();
 	}
 	else {
+		// first disable current compile image
+		progressImage();
 		doUpdateImage = true;
 		compileText();
 	}
@@ -165,6 +167,7 @@ function compileText() {
     var verbose = 0;//document.getElementById("verbose").checked;
 
 	var resultUrl =  document.getElementById("KiCoURL").value + "/?model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
+    document.getElementById("lastCompilerCall").value = resultUrl;
 
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange=function() {
@@ -222,6 +225,19 @@ function testAllOnlineStatus() {
 
 testAllOnlineStatus();
 
+function progressImage() {
+    var image = document.getElementById("resultImage");
+    if(image.complete) {
+        var new_image = new Image();
+        new_image.id = "resultImage";
+		var imageUrl = "http://www.sccharts.com/progress.gif";
+        new_image.src = imageUrl;
+		new_image.width = 252;
+		new_image.height = 252;
+        image.parentNode.insertBefore(new_image, image);
+        image.parentNode.removeChild(image);
+    }
+}
 
 function updateImage() {
     var image = document.getElementById("resultImage");
@@ -229,16 +245,23 @@ function updateImage() {
 	    var model = document.getElementById("model")
 	    var transformations = document.getElementById("transformations")
 	    var scale = document.getElementById("scale")
+		var outputImageSVG = document.getElementById("outputImageSVG").checked;
+		var render = "png";
+		if (outputImageSVG) {
+				render = "svg";
+		}
         var new_image = new Image();
         //set up the new image
         new_image.id = "resultImage";
-		var imageUrl = document.getElementById("KLighDURL").value + "/?model="+encodeURIComponent(resultText.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&scale=" + encodeURIComponent(scale.value) + "#" + new Date().getTime();
+		var imageUrl = document.getElementById("KLighDURL").value + "/?model="+encodeURIComponent(resultText.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&render="+render+"&scale=" + encodeURIComponent(scale.value) + "#" + new Date().getTime();
+		document.getElementById("lastRenderCall").value = imageUrl;
         new_image.src = imageUrl;
-        // insert new image and remove old
-        image.parentNode.insertBefore(new_image, image);
-        image.parentNode.removeChild(image);
 
 		new_image.onload = function() {
+        	// insert new image and remove old
+    	    image.parentNode.insertBefore(new_image, image);
+	        image.parentNode.removeChild(image);
+
 			var size = document.getElementById("size");
 			var width = new_image.naturalWidth;
 			var height = new_image.naturalHeight;
@@ -268,7 +291,7 @@ function updateImage() {
             <tr>
               <th valign="top" scope="row"><div align="right" class="Stil8">
                 <p>1. Textual SCChart (SCT)<br>
-                <span class="Stil12">                (see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/SCT+-+Textual+Description+Language+for+SCCharts" target="_blank">here</a>) </span></p>
+                <span class="Stil12">                (see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Textual+SCCharts+Language+SCT" target="_blank">here</a>) </span></p>
                 </div></th>
               <td valign="top"><label>
                 <textarea name="model" cols="70" rows="25" id="model" onchange="compile();">
@@ -336,8 +359,11 @@ scchart ABRO {
                   <input name="output" type="radio" id="outputText" onclick="setResultText();" value="text" checked />
                   <img src="http://www.sccharts.com/text.png" alt=" " width="11" height="14" />                  Textual output </label>
                   <label> <br>
-                  <input type="radio" name="output" value="graph" id="outputImage" onclick="setResultImage();" />
-                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" />                Graphical output <BR>
+                  <input name="output" type="radio" id="outputImageSVG" onclick="setResultImage();" value="text" checked />
+                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" />                  Graphical output (SVG)</label>
+                  <label> <br>
+                  <input type="radio" name="output" value="graph" id="outputImagePNG" onclick="setResultImage();" />
+                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" />                Graphical output (PNG)<BR>
                 <BR>
 &nbsp; 	&nbsp; 	 	&nbsp; Image Quality: </label>
 
@@ -346,7 +372,7 @@ scchart ABRO {
                   </span>
                   <span class="Stil8 Stil10">
                   <label> </label>
-                  <select name="scale" id="scale" onchange="compile();">
+                  <select name="scale" id="scale" disabled="disabled" onchange="compile();">
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -354,7 +380,7 @@ scchart ABRO {
                     <option>5</option>
                   </select>
                   , Size:
-                  <select name="size" id="size" onchange="compile();">
+                  <select name="size" id="size" disabled="disabled" onchange="compile();">
                     <option value="1">100%</option>
                     <option value="1.5">75%</option>
                     <option value="2">50%</option>
@@ -363,6 +389,7 @@ scchart ABRO {
                   </select>
                   </span><br>
                   <br>
+                 <a name="server"></a>
                 <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Advanced Options</a></span></p>
 <table width="327" border="0" cellspacing="5">
                       <tr>
@@ -372,7 +399,6 @@ scchart ABRO {
                         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver3"> <span class="Stil20">Main Server <span class="Stil12">(fastest, available shortly)</span></span></label>
                           <br>
                           <label>
-                        <a name="server"></a>
                         <input type="radio" name="config" value="server1" id="radio" checked="true" onclick="setConfig(1);" />
                         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1">                        Backup Server 1</label>
                           <span class="Stil12">(faster)</span><br>
@@ -409,6 +435,14 @@ scchart ABRO {
                     <th scope="row"><div align="right">Refresh-Time:</div></th>
                     <td><input name="refreshTime" type="text" id="refreshTime" size="30" value="2000"></td>
                   </tr>
+                  <tr>
+                    <th scope="row"><div align="right">Last Compiler Call:</div></th>
+                    <td><input name="lastCompilerCall" type="text" id="lastCompilerCall" readonly="true" size="30" value="" style="background-color: #CCCCCC"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><div align="right">Last Render Call:</div></th>
+                    <td><input name="lastRenderCall" type="text" id="lastRenderCall" readonly="true" size="30" value="" style="background-color: #CCCCCC"></td>
+                  </tr>
                 </table>  
 		</span></div></td>
             </tr>
@@ -427,7 +461,7 @@ scchart ABRO {
             <tr><td>
 
 		<div id="resultErrorDiv" style="font:24px bold; display: none">
-          <textarea name="resultError" cols="70" rows="4" id="resultError" readonly=true style="background-color: #FF0000"></textarea>
+          <textarea name="resultError" cols="70" rows="4" id="resultError" readonly=true style="background-color: #FF8888"></textarea>
 		  <br>
 		 </div>
 		<div id="resultImageDiv" style="font:24px bold; display: none">

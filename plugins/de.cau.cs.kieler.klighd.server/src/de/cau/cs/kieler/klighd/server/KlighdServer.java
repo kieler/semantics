@@ -179,7 +179,12 @@ public class KlighdServer extends HttpServer {
 
             HttpHeader responseHeader = new HttpHeader();
             responseHeader.setStatusOk();
-            responseHeader.setTypeImagePng();
+            
+            if (render.equals("svg")) {
+                responseHeader.setTypeImageSvg();
+            } else {
+                responseHeader.setTypeImagePng();
+            }
             HttpResponse response = new HttpResponse();
             response.setHeader(responseHeader);
             if (errors.length() > 0) {
