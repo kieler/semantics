@@ -281,6 +281,7 @@ public class KLighD {
                 }
             }
             query += "&scale=" + scale;
+            query += "&render=" + render;
 
             String urlString = "http://" + host + ":" + port + "?" + query;
             // System.out.println(urlString);
@@ -290,12 +291,12 @@ public class KLighD {
 
             String errors = yc.getHeaderField("Render-error");
             result.error = errors;
-            
+
             int len = yc.getContentLength();
             InputStream in = yc.getInputStream();
 
             byte[] bytes = new byte[len];
-            in.read(bytes); 
+            in.read(bytes);
 
             yc.getInputStream().close();
             result.model = bytes;

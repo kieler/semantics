@@ -1088,8 +1088,8 @@ class SCChartsExtension {
     		}
 
     		else if (obj instanceof Binding) {
-    			if ((obj as Binding).formal == valuedObject) (obj as Binding).formal == replacement
-    			if ((obj as Binding).actual == valuedObject) (obj as Binding).actual == replacement
+    			if ((obj as Binding).formal == valuedObject) (obj as Binding).formal = replacement
+    			if ((obj as Binding).actual == valuedObject) (obj as Binding).actual = replacement
     		}
     		
     	}
