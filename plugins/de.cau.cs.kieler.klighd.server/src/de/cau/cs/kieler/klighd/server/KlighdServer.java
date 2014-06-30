@@ -27,6 +27,7 @@ import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.klighd.IOffscreenRenderer;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
+import de.cau.cs.kieler.klighd.piccolo.export.SVGOffscreenRenderer;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.server.HttpHeader;
 import de.cau.cs.kieler.server.HttpQuery;
@@ -132,10 +133,10 @@ public class KlighdServer extends HttpServer {
             final EObject mainModelParam = mainModel;
             final String renderParam = render;
             final ByteArrayOutputStream outputStreamParam = outputStream;
-            final IProperty<Integer> property = IOffscreenRenderer.IMAGE_SCALE;
-            final KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
-            properties.setProperty(property, scaleInteger);
-
+            final KlighdSynthesisProperties properties = KlighdSynthesisProperties.create()
+                    .setProperty2(SVGOffscreenRenderer.GENERATOR,
+                            "de.cau.cs.kieler.klighd.piccolo.svggen.freeHEP")
+                    .setProperty2(IOffscreenRenderer.IMAGE_SCALE, scaleInteger);
             renderingDone = false;
             Display defaultDisplay = Display.getDefault();
             defaultDisplay.asyncExec(new Runnable() {
