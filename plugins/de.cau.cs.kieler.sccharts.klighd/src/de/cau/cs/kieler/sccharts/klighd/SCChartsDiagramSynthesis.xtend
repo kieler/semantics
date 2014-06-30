@@ -702,6 +702,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             if (!s.hasNoRegionsWithStates) {
                 for (r : s.regions)
                     node.children += r.translate;
+            }
+            if (!s.hasNoDataflows) {
                 for (d : s.dataflows)
                 	node.children += d.translate
             }
@@ -897,7 +899,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             val regionLabel = regionLabelVar
             node.addRectangle() => [
                 it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
-                it.setBackgroundGradient("#dff".color, SCCHARTSGRAY.copy, 90);
+                it.setBackgroundGradient("#dff".color, "#fff".color, 90);
                 it.setSurroundingSpace(2, 0);
                 it.invisible = false;
                 it.foreground = "gray".color
