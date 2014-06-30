@@ -103,7 +103,7 @@ public class HttpHeader {
     //-------------------------------------------------------------------------
 
     public void setTypeImageSvg() {
-        contentTypeVal = "image/svg";
+        contentTypeVal = "image/svg+xml";
     }
 
     //-------------------------------------------------------------------------

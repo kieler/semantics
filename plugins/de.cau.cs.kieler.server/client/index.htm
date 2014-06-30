@@ -151,6 +151,8 @@ function compile() {
 		compileText();
 	}
 	else {
+		// first disable current compile image
+		progressImage();
 		doUpdateImage = true;
 		compileText();
 	}
@@ -165,6 +167,7 @@ function compileText() {
     var verbose = 0;//document.getElementById("verbose").checked;
 
 	var resultUrl =  document.getElementById("KiCoURL").value + "/?model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
+    document.getElementById("lastCompilerCall").value = resultUrl;
 
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange=function() {
@@ -222,6 +225,19 @@ function testAllOnlineStatus() {
 
 testAllOnlineStatus();
 
+function progressImage() {
+    var image = document.getElementById("resultImage");
+    if(image.complete) {
+        var new_image = new Image();
+        new_image.id = "resultImage";
+		var imageUrl = "http://www.sccharts.com/progress.gif";
+        new_image.src = imageUrl;
+		new_image.width = 252;
+		new_image.height = 252;
+        image.parentNode.insertBefore(new_image, image);
+        image.parentNode.removeChild(image);
+    }
+}
 
 function updateImage() {
     var image = document.getElementById("resultImage");
@@ -229,16 +245,23 @@ function updateImage() {
 	    var model = document.getElementById("model")
 	    var transformations = document.getElementById("transformations")
 	    var scale = document.getElementById("scale")
+		var outputImageSVG = document.getElementById("outputImageSVG").checked;
+		var render = "png";
+		if (outputImageSVG) {
+				render = "svg";
+		}
         var new_image = new Image();
         //set up the new image
         new_image.id = "resultImage";
-		var imageUrl = document.getElementById("KLighDURL").value + "/?model="+encodeURIComponent(resultText.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&scale=" + encodeURIComponent(scale.value) + "#" + new Date().getTime();
+		var imageUrl = document.getElementById("KLighDURL").value + "/?model="+encodeURIComponent(resultText.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&render="+render+"&scale=" + encodeURIComponent(scale.value) + "#" + new Date().getTime();
+		document.getElementById("lastRenderCall").value = imageUrl;
         new_image.src = imageUrl;
-        // insert new image and remove old
-        image.parentNode.insertBefore(new_image, image);
-        image.parentNode.removeChild(image);
 
 		new_image.onload = function() {
+        	// insert new image and remove old
+    	    image.parentNode.insertBefore(new_image, image);
+	        image.parentNode.removeChild(image);
+
 			var size = document.getElementById("size");
 			var width = new_image.naturalWidth;
 			var height = new_image.naturalHeight;
@@ -268,7 +291,7 @@ function updateImage() {
             <tr>
               <th valign="top" scope="row"><div align="right" class="Stil8">
                 <p>1. Textual SCChart (SCT)<br>
-                <span class="Stil12">                (see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/SCT+-+Textual+Description+Language+for+SCCharts" target="_blank">here</a>) </span></p>
+                <span class="Stil12">                (see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Textual+SCCharts+Language+SCT" target="_blank">here</a>) </span></p>
                 </div></th>
               <td valign="top"><label>
                 <textarea name="model" cols="70" rows="25" id="model" onchange="compile();">
@@ -321,50 +344,84 @@ scchart ABRO {
               </label></td>
             </tr>
             <tr>
-              <th valign="top" scope="row"><p align="right" class="Stil8">3. Other Options </p></th>
+              <th valign="top" scope="row"><span class="Stil8">3. Other Options</span></th>
               <td align="left"><p>
-                <label>
-                <span class="Stil8">
-                <input name="strict" type="checkbox" id="strict" value="true" onclick="compile();">
-                Strict</span></label>
+                <label><span class="Stil8">
+                  <input name="strict" type="checkbox" id="strict" value="true" onclick="compile();">
+                  Strict</span></label>
                 <span class="Stil8 Stil10">(only apply the listed transformations)
-                <label></label>
-                </span></p>
-                <p>
-                  <span class="Stil8 Stil10">
+                  <label></label>
+              </span></p>
+                <p> <span class="Stil8 Stil10">
                   <label>
                   <input name="output" type="radio" id="outputText" onclick="setResultText();" value="text" checked />
-                  <img src="http://www.sccharts.com/text.png" alt=" " width="11" height="14" />                  Textual output </label>
+                  <img src="http://www.sccharts.com/text.png" alt=" " width="11" height="14" /> Textual output </label>
                   <label> <br>
-                  <input type="radio" name="output" value="graph" id="outputImage" onclick="setResultImage();" />
-                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" />                Graphical output <BR>
-                <BR>
-&nbsp; 	&nbsp; 	 	&nbsp; Image Quality: </label>
-
+                  <input name="output" type="radio" id="outputImageSVG" onclick="setResultImage();" value="text" />
+                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> Graphical output (SVG)</label>
+                  <label> <br>
+                  <input type="radio" name="output" value="graph" id="outputImagePNG" onclick="setResultImage();" />
+                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> Graphical output (PNG)<BR>
+                  <BR>
+  &nbsp; 	&nbsp; 	 	&nbsp; Image Quality: </label>
                   <label></label>
                   <label></label>
-                  </span>
-                  <span class="Stil8 Stil10">
+                  </span> <span class="Stil8 Stil10">
                   <label> </label>
-                  <select name="scale" id="scale" onchange="compile();">
+                  <select name="scale" id="scale" disabled="disabled" onchange="compile();">
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
                     <option>4</option>
                     <option>5</option>
                   </select>
-                  , Size:
-                  <select name="size" id="size" onchange="compile();">
-                    <option value="1">100%</option>
-                    <option value="1.5">75%</option>
-                    <option value="2">50%</option>
-                    <option value="4">25%</option>
-                    <option value="10">10%</option>
-                  </select>
+                    , Size:
+  <select name="size" id="size" disabled="disabled" onchange="compile();">
+    <option value="1">100%</option>
+    <option value="1.5">75%</option>
+    <option value="2">50%</option>
+    <option value="4">25%</option>
+    <option value="10">10%</option>
+  </select>
                   </span><br>
                   <br>
-                <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Advanced Options</a></span></p>
-<table width="327" border="0" cellspacing="5">
+                  <a name="server"></a> <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Advanced Options</a></span></p>
+				  
+		<div id="advancedOptions" style="font:24px bold; display: none">
+		<span class="Stil8 Stil10">
+                <table width="370" border="0" cellspacing="5">
+                  <tr>
+                    <th width="200" scope="row"><div align="right">KielerCompiler URL: </div></th>
+                    <td width="200"><label>
+                      <input name="KiCoURL" type="text" id="KiCoURL" size="30" value="http://www.sccharts.com:5556">
+                    </label></td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><div align="right">KLighD URL: </div></th>
+                    <td><input name="KLighDURL" type="text" id="KLighDURL" size="30" value="http://www.sccharts.com:4445"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><div align="right">Refresh-Time:</div></th>
+                    <td><input name="refreshTime" type="text" id="refreshTime" size="30" value="2000"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><div align="right">Last Compiler Call:</div></th>
+                    <td><input name="lastCompilerCall" type="text" id="lastCompilerCall" readonly="true" size="30" value="" style="background-color: #CCCCCC"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><div align="right">Last Render Call:</div></th>
+                    <td><input name="lastRenderCall" type="text" id="lastRenderCall" readonly="true" size="30" value="" style="background-color: #CCCCCC"></td>
+                  </tr>
+                </table>  
+		</span></div>
+					  </td>
+            </tr>
+            <tr>
+              <th valign="top" scope="row"><p align="right" class="Stil8">4. Server </p></th>
+              <td align="left"><p>
+                <label></label>
+              </p>
+                <table width="327" border="0" cellspacing="5">
                       <tr>
                         <td width="315" valign="top" scope="row"><span class="Stil8">
                         <label>
@@ -372,7 +429,6 @@ scchart ABRO {
                         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver3"> <span class="Stil20">Main Server <span class="Stil12">(fastest, available shortly)</span></span></label>
                           <br>
                           <label>
-                        <a name="server"></a>
                         <input type="radio" name="config" value="server1" id="radio" checked="true" onclick="setConfig(1);" />
                         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1">                        Backup Server 1</label>
                           <span class="Stil12">(faster)</span><br>
@@ -391,26 +447,7 @@ scchart ABRO {
                         </span></td>
                       </tr>
                 </table>
-					
-		<div id="advancedOptions" style="font:24px bold; display: none">
-		<span class="Stil8 Stil10">
-                <table width="370" border="0" cellspacing="5">
-                  <tr>
-                    <th width="200" scope="row"><div align="right">KielerCompiler URL: </div></th>
-                    <td width="200"><label>
-                      <input name="KiCoURL" type="text" id="KiCoURL" size="30" value="http://www.sccharts.com:5556">
-                    </label></td>
-                  </tr>
-                  <tr>
-                    <th scope="row"><div align="right">KLighD URL: </div></th>
-                    <td><input name="KLighDURL" type="text" id="KLighDURL" size="30" value="http://www.sccharts.com:4445"></td>
-                  </tr>
-                  <tr>
-                    <th scope="row"><div align="right">Refresh-Time:</div></th>
-                    <td><input name="refreshTime" type="text" id="refreshTime" size="30" value="2000"></td>
-                  </tr>
-                </table>  
-		</span></div></td>
+					</td>
             </tr>
             <tr>
               <th scope="row"><label></label></th>
@@ -427,7 +464,7 @@ scchart ABRO {
             <tr><td>
 
 		<div id="resultErrorDiv" style="font:24px bold; display: none">
-          <textarea name="resultError" cols="70" rows="4" id="resultError" readonly=true style="background-color: #FF0000"></textarea>
+          <textarea name="resultError" cols="70" rows="4" id="resultError" readonly=true style="background-color: #FF8888"></textarea>
 		  <br>
 		 </div>
 		<div id="resultImageDiv" style="font:24px bold; display: none">

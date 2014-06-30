@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.widgets.Display;
 
 import de.cau.cs.kieler.core.properties.IProperty;
-import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.klighd.IOffscreenRenderer;
@@ -92,6 +91,12 @@ public class KlighdServer extends HttpServer {
             } catch (Exception e) {
             }
 
+            String render2 = query.getValue("render");
+            if (render2.equals("svg")) {
+                // if this is a valid value (other than the default png) then change it
+                render = render2; 
+            }
+            
             // Read all models in "model" and "include1", "include2", ...
             ArrayList<String> models = new ArrayList<String>();
             String mainModelString = query.getValue("model");
@@ -174,7 +179,12 @@ public class KlighdServer extends HttpServer {
 
             HttpHeader responseHeader = new HttpHeader();
             responseHeader.setStatusOk();
-            responseHeader.setTypeImagePng();
+            
+            if (render.equals("svg")) {
+                responseHeader.setTypeImageSvg();
+            } else {
+                responseHeader.setTypeImagePng();
+            }
             HttpResponse response = new HttpResponse();
             response.setHeader(responseHeader);
             if (errors.length() > 0) {
