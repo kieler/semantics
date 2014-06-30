@@ -885,7 +885,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
             node.addLayoutParam(LayoutOptions::DIRECTION, Direction::RIGHT)
             node.addLayoutParam(Properties::THOROUGHNESS, 100)
-            node.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::BRANDES_KOEPF)
+            node.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::LINEAR_SEGMENTS)
             
             val senders = <Sender> newArrayList
             for (n : d.nodes) {
@@ -899,7 +899,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             val regionLabel = regionLabelVar
             node.addRectangle() => [
                 it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
-                it.setBackgroundGradient("#dff".color, "#fff".color, 90);
+                it.setBackgroundGradient("#fff".color, "#fff".color, 90);
                 it.setSurroundingSpace(2, 0);
                 it.invisible = false;
                 it.foreground = "gray".color
@@ -950,7 +950,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 it.setSurroundingSpace(0, 0);
                 it.invisible = false;
                 it.foreground = "black".color
-                it.lineWidth = 2;
+                it.lineWidth = 1;
 //                it.addText(if(n.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(n) => [
 //                    it.foreground = "black".color
 //                    it.fontSize = 6
@@ -980,6 +980,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
 //                }
 //            ]
 //        ];
+
+            if (SHOW_SHADOW.booleanValue) {
+                rectangle.shadow = "black".color;
+                rectangle.shadow.XOffset = 4;
+                rectangle.shadow.YOffset = 4;
+            }
+            
 		nNode.addLayoutParam(LayoutOptions::NODE_LABEL_PLACEMENT, NodeLabelPlacement::insideTopCenter)
 		nNode.addLayoutParam(LayoutOptions::PORT_LABEL_PLACEMENT, PortLabelPlacement::INSIDE)
         nNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
@@ -1071,13 +1078,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
     		recPort = r.valuedObject.reference.portMap
    		}
     	val rPort = rNode.node.getPort(recPort) 
-        val sEdge = s.createEdge().putToLookUpWith(s) => [ edge |
+        val sEdge = s.createEdge(r).putToLookUpWith(s) => [ edge |
             edge.source = sNode.node;
             edge.target = rNode.node;
             edge.sourcePort = sPort;
             edge.targetPort = rPort;
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-            edge.addPolyline(2) => [
+            edge.addRoundedBendsPolyline(4, 1) => [
                 // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
                 it.addArrowDecorator() => [
                 ];
