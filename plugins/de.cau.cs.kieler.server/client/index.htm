@@ -344,33 +344,29 @@ scchart ABRO {
               </label></td>
             </tr>
             <tr>
-              <th valign="top" scope="row"><p align="right" class="Stil8">3. Other Options </p></th>
+              <th valign="top" scope="row"><span class="Stil8">3. Other Options</span></th>
               <td align="left"><p>
-                <label>
-                <span class="Stil8">
-                <input name="strict" type="checkbox" id="strict" value="true" onclick="compile();">
-                Strict</span></label>
+                <label><span class="Stil8">
+                  <input name="strict" type="checkbox" id="strict" value="true" onclick="compile();">
+                  Strict</span></label>
                 <span class="Stil8 Stil10">(only apply the listed transformations)
-                <label></label>
-                </span></p>
-                <p>
-                  <span class="Stil8 Stil10">
+                  <label></label>
+              </span></p>
+                <p> <span class="Stil8 Stil10">
                   <label>
                   <input name="output" type="radio" id="outputText" onclick="setResultText();" value="text" checked />
-                  <img src="http://www.sccharts.com/text.png" alt=" " width="11" height="14" />                  Textual output </label>
+                  <img src="http://www.sccharts.com/text.png" alt=" " width="11" height="14" /> Textual output </label>
                   <label> <br>
                   <input name="output" type="radio" id="outputImageSVG" onclick="setResultImage();" value="text" />
-                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" />                  Graphical output (SVG)</label>
+                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> Graphical output (SVG)</label>
                   <label> <br>
                   <input type="radio" name="output" value="graph" id="outputImagePNG" onclick="setResultImage();" />
-                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" />                Graphical output (PNG)<BR>
-                <BR>
-&nbsp; 	&nbsp; 	 	&nbsp; Image Quality: </label>
-
+                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> Graphical output (PNG)<BR>
+                  <BR>
+  &nbsp; 	&nbsp; 	 	&nbsp; Image Quality: </label>
                   <label></label>
                   <label></label>
-                  </span>
-                  <span class="Stil8 Stil10">
+                  </span> <span class="Stil8 Stil10">
                   <label> </label>
                   <select name="scale" id="scale" disabled="disabled" onchange="compile();">
                     <option>1</option>
@@ -379,45 +375,18 @@ scchart ABRO {
                     <option>4</option>
                     <option>5</option>
                   </select>
-                  , Size:
-                  <select name="size" id="size" disabled="disabled" onchange="compile();">
-                    <option value="1">100%</option>
-                    <option value="1.5">75%</option>
-                    <option value="2">50%</option>
-                    <option value="4">25%</option>
-                    <option value="10">10%</option>
-                  </select>
+                    , Size:
+  <select name="size" id="size" disabled="disabled" onchange="compile();">
+    <option value="1">100%</option>
+    <option value="1.5">75%</option>
+    <option value="2">50%</option>
+    <option value="4">25%</option>
+    <option value="10">10%</option>
+  </select>
                   </span><br>
                   <br>
-                 <a name="server"></a>
-                <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Advanced Options</a></span></p>
-<table width="327" border="0" cellspacing="5">
-                      <tr>
-                        <td width="315" valign="top" scope="row"><span class="Stil8">
-                        <label>
-                          <input type="radio" name="config" value="server0" id="radio0" disabled="disabled" />
-                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver3"> <span class="Stil20">Main Server <span class="Stil12">(fastest, available shortly)</span></span></label>
-                          <br>
-                          <label>
-                        <input type="radio" name="config" value="server1" id="radio" checked="true" onclick="setConfig(1);" />
-                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1">                        Backup Server 1</label>
-                          <span class="Stil12">(faster)</span><br>
-                          <label>
-                          <input type="radio" name="config" value="server2" id="radio2" onclick="setConfig(2);" />
-                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2"> Backup Server 2</label>
-                          <span class="Stil12">(slower)</span><br>
-                          <label>
-                          <input type="radio" name="config" value="localhost" id="radio4" onclick="setConfig(3);" />
-                          <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhost"> Local Host <span class="Stil12">(fastest)</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run&nbsp;locally, see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Compiler+Console" target="_blank">here</a> and <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+KLighD+Console+Diagram+Rendering" target="_blank">here</a>)</span></label>
-</span><span class="Stil8">
-                      <label></label>
-                        </span><span class="Stil8">
-                          <label></label>
-                        </span></td>
-                      </tr>
-                </table>
-					
+                  <a name="server"></a> <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Advanced Options</a></span></p>
+				  
 		<div id="advancedOptions" style="font:24px bold; display: none">
 		<span class="Stil8 Stil10">
                 <table width="370" border="0" cellspacing="5">
@@ -444,7 +413,41 @@ scchart ABRO {
                     <td><input name="lastRenderCall" type="text" id="lastRenderCall" readonly="true" size="30" value="" style="background-color: #CCCCCC"></td>
                   </tr>
                 </table>  
-		</span></div></td>
+		</span></div>
+					  </td>
+            </tr>
+            <tr>
+              <th valign="top" scope="row"><p align="right" class="Stil8">4. Server </p></th>
+              <td align="left"><p>
+                <label></label>
+              </p>
+                <table width="327" border="0" cellspacing="5">
+                      <tr>
+                        <td width="315" valign="top" scope="row"><span class="Stil8">
+                        <label>
+                          <input type="radio" name="config" value="server0" id="radio0" disabled="disabled" />
+                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver3"> <span class="Stil20">Main Server <span class="Stil12">(fastest, available shortly)</span></span></label>
+                          <br>
+                          <label>
+                        <input type="radio" name="config" value="server1" id="radio" checked="true" onclick="setConfig(1);" />
+                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1">                        Backup Server 1</label>
+                          <span class="Stil12">(faster)</span><br>
+                          <label>
+                          <input type="radio" name="config" value="server2" id="radio2" onclick="setConfig(2);" />
+                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2"> Backup Server 2</label>
+                          <span class="Stil12">(slower)</span><br>
+                          <label>
+                          <input type="radio" name="config" value="localhost" id="radio4" onclick="setConfig(3);" />
+                          <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhost"> Local Host <span class="Stil12">(fastest)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run&nbsp;locally, see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Compiler+Console" target="_blank">here</a> and <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+KLighD+Console+Diagram+Rendering" target="_blank">here</a>)</span></label>
+</span><span class="Stil8">
+                      <label></label>
+                        </span><span class="Stil8">
+                          <label></label>
+                        </span></td>
+                      </tr>
+                </table>
+					</td>
             </tr>
             <tr>
               <th scope="row"><label></label></th>
