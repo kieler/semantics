@@ -54,6 +54,12 @@ public abstract class HttpServer extends Job {
 
     /** The server name. */
     protected String serverName = "";
+    
+    /** The error cnt. */
+    protected int errorCnt = 0;
+    
+    /** The maxerrors. */
+    protected final int MAX_ERRORS = 100; 
 
     // -------------------------------------------------------------------------
 
@@ -266,10 +272,11 @@ public abstract class HttpServer extends Job {
 
         socket = null;
         aborted = false;
+        errorCnt = 0;
 
         debug("Server enabled: " + isEnabled());
 
-        while (isEnabled() && !aborted) {
+        while (isEnabled() && !aborted && errorCnt < MAX_ERRORS) {
             debug("Server loop");
             try {
 
@@ -279,7 +286,9 @@ public abstract class HttpServer extends Job {
                     try {
                         socket = new ServerSocket(this.listenPort, 10);
                         debug("Server listen socket established");
+                        errorCnt = 0;
                     } catch (IOException e1) {
+                        errorCnt++;
                         e1.printStackTrace();
                     }
                 }
@@ -294,9 +303,11 @@ public abstract class HttpServer extends Job {
                     // handle connection concurrently
                     (new Thread(new HandleConnection(connection, this))).start();
                     debug("Server async handling started");
+                    errorCnt = 0;
                 }
 
             } catch (Exception e) {
+                errorCnt++;
                 debug("Server IO error: " + getErrorMessage(e));
             }
         }// end while loop forever
