@@ -258,6 +258,7 @@ function testOnlineStatus(redAndGreenImageId, serverURL) {
 }
 
 function testAllOnlineStatus() {
+	testOnlineStatus("onlineserver0", "http://compile.sccharts.com");
 	testOnlineStatus("onlineserver1", "http://www.sccharts.com:5556");
 	testOnlineStatus("onlineserver2", "http://www.sccharts.com:5555");
 	testOnlineStatus("onlinelocalhost", "http://localhost:5555");
@@ -466,11 +467,11 @@ scchart ABRO {
                       <tr>
                         <td width="315" valign="top" scope="row"><span class="Stil8">
                         <label>
-                          <input type="radio" name="config" value="server0" id="radio0" disabled="disabled" />
-                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver3"> <span class="Stil20">Main Server <span class="Stil12">(fastest, available shortly)</span></span></label>
+                          <input type="radio" name="config" value="server0" id="radio0"  onclick="setConfig(0);"/>
+                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0"> Main Server <span class="Stil12">(fastest)</span></label>
                           <br>
                           <label>
-                        <input type="radio" name="config" value="server1" id="radio" checked="true" onclick="setConfig(1);" />
+                        <input type="radio" name="config" value="server1" id="radio" checked="true"  onclick="setConfig(1);" />
                         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1">                        Backup Server 1</label>
                           <span class="Stil12">(faster)</span><br>
                           <label>
@@ -540,7 +541,11 @@ function toggleAdvanced() {
 
 
 function setConfig(i) {
-	if (i == 1) {
+	if (i == 0) {
+		document.getElementById("KiCoURL").value = "http://compile.sccharts.com";
+		document.getElementById("KLighDURL").value = "http://render.sccharts.com";
+	}
+	else if (i == 1) {
 		document.getElementById("KiCoURL").value = "http://www.sccharts.com:5556";
 		document.getElementById("KLighDURL").value = "http://www.sccharts.com:4445";
 	}
