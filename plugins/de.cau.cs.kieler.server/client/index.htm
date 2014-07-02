@@ -258,10 +258,14 @@ function testOnlineStatus(redAndGreenImageId, serverURL) {
 }
 
 function testAllOnlineStatus() {
-	testOnlineStatus("onlineserver0", "http://compile.sccharts.com");
-	testOnlineStatus("onlineserver1", "http://www.sccharts.com:5556");
-	testOnlineStatus("onlineserver2", "http://www.sccharts.com:5555");
-	testOnlineStatus("onlinelocalhost", "http://localhost:5555");
+	testOnlineStatus("onlineserver0a", "http://compile.sccharts.com");
+	testOnlineStatus("onlineserver1a", "http://www.sccharts.com:5556");
+	testOnlineStatus("onlineserver2a", "http://www.sccharts.com:5555");
+	testOnlineStatus("onlinelocalhosta", "http://localhost:5555");
+	testOnlineStatus("onlineserver0b", "http://render.sccharts.com");
+	testOnlineStatus("onlineserver1b", "http://www.sccharts.com:4445");
+	testOnlineStatus("onlineserver2b", "http://www.sccharts.com:4444");
+	testOnlineStatus("onlinelocalhostb", "http://localhost:4444");
 }
 
 testAllOnlineStatus();
@@ -439,7 +443,7 @@ scchart ABRO {
                     </label></td>
                   </tr>
                   <tr>
-                    <th scope="row"><div align="right">KLighD URL: </div></th>
+                    <th scope="row"><div align="right">KLighD Render URL: </div></th>
                     <td><input name="KLighDURL" type="text" id="KLighDURL" size="30" value="http://www.sccharts.com:4445"></td>
                   </tr>
                   <tr>
@@ -459,7 +463,7 @@ scchart ABRO {
 					  </td>
             </tr>
             <tr>
-              <th valign="top" scope="row"><p align="right" class="Stil8">4. Server </p></th>
+              <th valign="top" scope="row"><p align="right" class="Stil8">4. Server </p><span class="Stil15 Stil13 Stil13">(Compile/Render)</span></th>
               <td align="left"><p>
                 <label></label>
               </p>
@@ -468,19 +472,19 @@ scchart ABRO {
                         <td width="315" valign="top" scope="row"><span class="Stil8">
                         <label>
                           <input type="radio" name="config" value="server0" id="radio0"  onclick="setConfig(0);"/>
-                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0"> Main Server <span class="Stil12">(fastest)</span></label>
+                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0b"> Main Server <span class="Stil12">(fastest)</span></label>
                           <br>
                           <label>
                         <input type="radio" name="config" value="server1" id="radio" checked="true"  onclick="setConfig(1);" />
-                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1">                        Backup Server 1</label>
+                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1b">                        Backup Server 1</label>
                           <span class="Stil12">(faster)</span><br>
                           <label>
                           <input type="radio" name="config" value="server2" id="radio2" onclick="setConfig(2);" />
-                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2"> Backup Server 2</label>
+                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2b"> Backup Server 2</label>
                           <span class="Stil12">(slower)</span><br>
                           <label>
                           <input type="radio" name="config" value="localhost" id="radio4" onclick="setConfig(3);" />
-                          <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhost"> Local Host <span class="Stil12">(fastest)</span><br>
+                          <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhosta"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhostb"> Local Host <span class="Stil12">(fastest)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run&nbsp;locally, see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Compiler+Console" target="_blank">here</a> and <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+KLighD+Console+Diagram+Rendering" target="_blank">here</a>)</span></label>
 </span><span class="Stil8">
                       <label></label>
