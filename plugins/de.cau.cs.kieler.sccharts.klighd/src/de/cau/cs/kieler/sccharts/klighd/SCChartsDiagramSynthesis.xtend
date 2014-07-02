@@ -940,13 +940,23 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
     // Transform a region
     public def dispatch KNode translate(Node n) {
         val nNode = n.createNode().putToLookUpWith(n) => [ node |
-            node.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT)
+//            node.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT)
         ]
-        val rectangle = nNode.addRectangle() => [
+        var KContainerRendering figure = null
+        if (n instanceof InputNode) {
+        	figure = nNode.addPolygon.createInputNodeShape
+        	nNode.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
+      	} 
+        else if (n instanceof OutputNode) {
+        	figure = nNode.addPolygon.createOutputNodeShape
+        	nNode.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
+        } else {
+        	nNode.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT)
+        	figure = nNode.addRectangle() => [
 //                it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
 //	            var regionLabelVar = n.label
 //    	        val regionLabel = regionLabelVar
-                it.setBackgroundGradient("#fff".color, SCCHARTSGRAY, 90);
+                it.setBackgroundGradient("#ff8".color, "#ff8".color, 90);
                 it.setSurroundingSpace(0, 0);
                 it.invisible = false;
                 it.foreground = "black".color
@@ -980,33 +990,39 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
 //                }
 //            ]
 //        ];
+		}
 
-            if (SHOW_SHADOW.booleanValue) {
-                rectangle.shadow = "black".color;
-                rectangle.shadow.XOffset = 4;
-                rectangle.shadow.YOffset = 4;
-            }
+        if (SHOW_SHADOW.booleanValue) {
+            figure.shadow = "black".color;
+            figure.shadow.XOffset = 4;
+            figure.shadow.YOffset = 4;
+        }
             
 		nNode.addLayoutParam(LayoutOptions::NODE_LABEL_PLACEMENT, NodeLabelPlacement::insideTopCenter)
 		nNode.addLayoutParam(LayoutOptions::PORT_LABEL_PLACEMENT, PortLabelPlacement::INSIDE)
         nNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
- 		nNode.createLabel(nNode).configureInsideTopCenteredNodeLabel(
-                        if(n.label.nullOrEmpty) "" else " " + n.label,
-                        6,
-                        KlighdConstants::DEFAULT_FONT_NAME
-                    )      
                       
         if (n instanceof InputNode) {
         	val in = (n as InputNode)
-        	nNode.addPort(in.senders.head.expression, PortSide::EAST); 
+        	nNode.addPort(in.senders.head.expression, PortSide::EAST) => [
+        		addLayoutParam(LayoutOptions::OFFSET, -2.0f)
+        	]
         }
         
         else if (n instanceof OutputNode) {
         	val out = (n as OutputNode) 
-        	nNode.addPort(out.valuedObject.reference, PortSide::WEST);
+        	nNode.addPort(out.valuedObject.reference, PortSide::WEST) => [
+        		addLayoutParam(LayoutOptions::OFFSET, -2.0f)
+        	]
         }
         
         else if (n instanceof ReferencedNode) {
+ 			nNode.createLabel(nNode).configureInsideTopCenteredNodeLabel(
+                        if(n.label.nullOrEmpty) "" else " " + n.label,
+                        6,
+                        KlighdConstants::DEFAULT_FONT_NAME
+                    )
+                          
         	val ref = (n as ReferencedNode)
         	ref.referencedScope.declarations.filter[it.input].forEach[valuedObjects.forEach[
         		nNode.addPort(it.reference, PortSide::WEST)
@@ -1104,6 +1120,29 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
   		obj
 	}
     
+    def KPolygon createInputNodeShape(KPolygon poly) {
+        poly => [
+            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.0f);
+            it.points += createKPosition(LEFT,  0, 0.75f, TOP,  0, 0.0f);
+            it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0.5f);
+            it.points += createKPosition(LEFT,  0, 0.75f, TOP,  0, 1.0f);
+            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 1.0f);
+            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.0f);
+            it.background = "white".color
+        ];
+    }  
+
+    def KPolygon createOutputNodeShape(KPolygon poly) {
+        poly => [
+            it.points += createKPosition(LEFT,  0, 0.25f, TOP,  0, 0);
+            it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 0);
+            it.points += createKPosition(LEFT,  0, 1.0f, TOP,  0, 1.0f);
+            it.points += createKPosition(LEFT,  0, 0.25f, TOP,  0, 1.0f);
+            it.points += createKPosition(LEFT,  0, 0.0f, TOP,  0, 0.5f);
+            it.points += createKPosition(LEFT,  0, 0.25f, TOP,  0, 0);
+            it.background = "white".color
+        ];
+    }  
     
 }
 
