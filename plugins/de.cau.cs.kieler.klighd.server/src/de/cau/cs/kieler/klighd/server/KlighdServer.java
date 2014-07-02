@@ -78,10 +78,10 @@ public class KlighdServer extends HttpServer {
         debug("Transformations read");
 
         HttpHeader header = request.header();
-        //String body = request.bodyAsText();
+        // String body = request.bodyAsText();
 
         HttpQuery query = header.getQuery();
-        
+
         // Check the query
         if (query.getValue("model").length() > 0) {
 
@@ -95,9 +95,9 @@ public class KlighdServer extends HttpServer {
             String render2 = query.getValue("render");
             if (render2.equals("svg")) {
                 // if this is a valid value (other than the default png) then change it
-                render = render2; 
+                render = render2;
             }
-            
+
             // Read all models in "model" and "include1", "include2", ...
             ArrayList<String> models = new ArrayList<String>();
             String mainModelString = query.getValue("model");
@@ -133,29 +133,29 @@ public class KlighdServer extends HttpServer {
             final EObject mainModelParam = mainModel;
             final String renderParam = render;
             final ByteArrayOutputStream outputStreamParam = outputStream;
-            final KlighdSynthesisProperties properties = KlighdSynthesisProperties.create()
-                    .setProperty2(SVGOffscreenRenderer.GENERATOR,
-                            "de.cau.cs.kieler.klighd.piccolo.svggen.freeHEP")
-                    .setProperty2(IOffscreenRenderer.IMAGE_SCALE, scaleInteger);
+            final KlighdSynthesisProperties properties =
+                    KlighdSynthesisProperties
+                            .create()
+                            .setProperty2(SVGOffscreenRenderer.GENERATOR,
+                                    "de.cau.cs.kieler.klighd.piccolo.svggen.freeHEP")
+                            .setProperty2(IOffscreenRenderer.IMAGE_SCALE, scaleInteger);
             renderingDone = false;
-            Display defaultDisplay = Display.getDefault();
-            defaultDisplay.asyncExec(new Runnable() {
-                public void run() {
-                    renderingResult =
-                            LightDiagramServices.renderOffScreen(mainModelParam, renderParam,
-                                    outputStreamParam, properties);
-                    renderingDone = true;
-                }
-            });
+            renderingResult =
+                    LightDiagramServices.renderOffScreen(mainModelParam, renderParam,
+                            outputStreamParam, properties);
+            renderingDone = true;
             while (!renderingDone) {
                 try {
                     Thread.sleep(100);
+                    if (!renderingDone) {
+                        Thread.sleep(900);
+                        System.out.print(".");
+                    }
                 } catch (InterruptedException e) {
                 }
             }
             debug("Model rendered");
-            
-            
+
             try {
                 outputStreamParam.flush();
             } catch (IOException e) {
@@ -167,6 +167,8 @@ public class KlighdServer extends HttpServer {
             if (renderingResult != null && renderingResult.getCode() == IStatus.OK) {
                 // everything ok, return output stream
                 serializedRenderedModel = outputStream.toByteArray();
+                // String bla = new String(serializedRenderedModel);
+                // System.out.println(bla);
             } else {
                 String serializedRenderedModelString = "Generation of diagram failed: ";
                 if (renderingResult != null && renderingResult.getException() != null) {
@@ -180,7 +182,7 @@ public class KlighdServer extends HttpServer {
 
             HttpHeader responseHeader = new HttpHeader();
             responseHeader.setStatusOk();
-            
+
             if (render.equals("svg")) {
                 responseHeader.setTypeImageSvg();
             } else {
