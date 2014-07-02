@@ -139,21 +139,9 @@ public class KlighdServer extends HttpServer {
                             .setProperty2(SVGOffscreenRenderer.GENERATOR,
                                     "de.cau.cs.kieler.klighd.piccolo.svggen.freeHEP")
                             .setProperty2(IOffscreenRenderer.IMAGE_SCALE, scaleInteger);
-            renderingDone = false;
             renderingResult =
                     LightDiagramServices.renderOffScreen(mainModelParam, renderParam,
                             outputStreamParam, properties);
-            renderingDone = true;
-            while (!renderingDone) {
-                try {
-                    Thread.sleep(100);
-                    if (!renderingDone) {
-                        Thread.sleep(900);
-                        System.out.print(".");
-                    }
-                } catch (InterruptedException e) {
-                }
-            }
             debug("Model rendered");
 
             try {
