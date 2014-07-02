@@ -20,9 +20,7 @@ import java.util.ArrayList;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.swt.widgets.Display;
 
-import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.klighd.IOffscreenRenderer;

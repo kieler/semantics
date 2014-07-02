@@ -16,8 +16,6 @@ package de.cau.cs.kieler.klighd.server;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.osgi.framework.BundleContext;
 import org.osgi.service.prefs.BackingStoreException;
 
 import com.google.inject.Guice;
@@ -35,7 +33,7 @@ import com.google.inject.Guice;
  * @kieler.design 2014-06-08 proposed
  * @kieler.rating 2014-06-08 proposed yellow
  */
-public class KlighdServerPlugin extends AbstractUIPlugin {
+public class KlighdServerPlugin extends Plugin {
 
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.klighd.server"; //$NON-NLS-1$
@@ -52,7 +50,6 @@ public class KlighdServerPlugin extends AbstractUIPlugin {
      * The constructor
      */
     public KlighdServerPlugin() {
-        plugin = this;
     }
 
     // -------------------------------------------------------------------------
@@ -179,31 +176,6 @@ public class KlighdServerPlugin extends AbstractUIPlugin {
             KlighdServerPlugin.getServer().abort();
         }
         KlighdServerPlugin.setServer(null);
-    }
-
-    // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-     */
-    public void start(BundleContext context) throws Exception {
-        super.start(context);
-        plugin = this;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-     */
-    public void stop(BundleContext context) throws Exception {
-        plugin = null;
-        super.stop(context);
     }
 
     // -------------------------------------------------------------------------
