@@ -3,6 +3,7 @@
 <plugin>
    <extension
          id="headless"
+         name="KielerCompiler HTTP Server"
          point="org.eclipse.core.runtime.applications">
       <application
             cardinality="singleton-global"
