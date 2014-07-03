@@ -166,29 +166,33 @@ class Reference {
     	val wireMapping = <Node, ValuedObject> newHashMap
     	val nodeMapping = <Node, State> newHashMap
     	val valuedObjectMapping = <ValuedObject, ValuedObject> newHashMap
-    	var Scope lastState = null
+//    	var Scope lastState = null
     	for(dataflow : dataflows.immutableCopy) {
     		val parentState = dataflow.eContainer as State
     		
-    		val rRegion = parentState.createRegion("_"+dataflow.id) => [ label = dataflow.label]
-			
+    		var regionCounter = 0;
 			var idCounter = 0
     		for(rn : dataflow.nodes.filter(typeof(ReferencedNode))) {
-    			val newState = rRegion.createState("_"+rn.ID+idCounter) => [ label = rn.label ]
+                val rRegion = parentState.createRegion("_"+dataflow.id+regionCounter) 
+                rRegion.label = dataflow.label + regionCounter
+    			val newState = rRegion.createState("_"+rn.ID+idCounter) 
+    			newState.label = rn.label + idCounter 
+    			regionCounter = regionCounter + 1
     			idCounter = idCounter + 1
+    			newState.setInitial
     			newState.referencedScope = rn.referencedScope
     			
     			nodeMapping.put(rn, newState)
     			
-    			if (lastState == null) {
-    				newState.setInitial
-    			} else {
-    				(lastState as State).createTransitionTo(newState).setImmediate
-    			}
-    			
-    			lastState = newState
+//    			if (lastState == null) {
+//    				newState.setInitial
+//    			} else {
+//    				(lastState as State).createTransitionTo(newState).setImmediate
+//    			}
+//    			
+//    			lastState = newState
     		}
-    		(lastState as State).createTransitionTo(rRegion.states.get(0))
+//    		(lastState as State).createTransitionTo(rRegion.states.get(0))
     		
     		var wireCounter = 0
     		val senders = dataflow.eAllContents.filter(typeof(Sender)).toList

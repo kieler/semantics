@@ -890,7 +890,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
             node.addLayoutParam(LayoutOptions::DIRECTION, Direction::RIGHT)
             node.addLayoutParam(Properties::THOROUGHNESS, 100)
-            node.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::LINEAR_SEGMENTS)
+            node.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::BRANDES_KOEPF)
             
             val senders = <Sender> newArrayList
             for (n : d.nodes) {
@@ -990,7 +990,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             
 		nNode.addLayoutParam(LayoutOptions::NODE_LABEL_PLACEMENT, NodeLabelPlacement::insideTopCenter)
 		nNode.addLayoutParam(LayoutOptions::PORT_LABEL_PLACEMENT, PortLabelPlacement::INSIDE)
-        nNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE);
+        nNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER);
                       
         if (n instanceof InputNode) {
         	val in = (n as InputNode)
