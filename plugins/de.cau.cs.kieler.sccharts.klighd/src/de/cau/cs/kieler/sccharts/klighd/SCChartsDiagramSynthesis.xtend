@@ -88,6 +88,11 @@ import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
 import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
 import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klay.layered.properties.Properties
+import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.runtime.Path
+import javax.imageio.ImageIO
+import org.eclipse.core.internal.resources.File
+import org.eclipse.core.runtime.URIUtil
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
@@ -952,44 +957,29 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
         	nNode.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
         } else {
         	nNode.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT)
-        	figure = nNode.addRectangle() => [
-//                it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
-//	            var regionLabelVar = n.label
-//    	        val regionLabel = regionLabelVar
-                it.setBackgroundGradient("#ff8".color, "#ff8".color, 90);
-                it.setSurroundingSpace(0, 0);
-                it.invisible = false;
-                it.foreground = "black".color
-                it.lineWidth = 1;
-//                it.addText(if(n.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(n) => [
-//                    it.foreground = "black".color
-//                    it.fontSize = 6
-//                    it.setSurroundingSpace(4, 0, 2, 0)
-//                    it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
-//                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-//                ];
-//                if (true) {
-//                    it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
-//                }
-            ];
-//            node.addRectangle() => [
-//                it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
-//                it.setBackgroundGradient("white".color, SCCHARTSGRAY, 90);
-//                it.setSurroundingSpace(4, 0);
-//                it.invisible = false;
-//                it.foreground = "gray".color
-//                it.lineWidth = 1;
-//                it.addText("[+]" + if(d.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(d) => [
-//                    it.foreground = "dimGray".color
-//                    it.fontSize = 10
-//                    it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
-//                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-//                ];
-//                if (true) {
-//                    it.addRectangle().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).invisible = true;
-//                }
-//            ]
-//        ];
+        	
+//        	val rNode = (n as ReferencedNode)
+//        	val resource = rNode.referencedScope.eResource
+//        	val uri = resource.URI
+//        	val imageURI = uri.trimFileExtension().appendFileExtension("png");
+//        	System.out.println(imageURI)
+//        	val myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+//        	val file = myWorkspaceRoot.getFile(new Path(imageURI.toPlatformString(true)))
+//        	if (file.exists) {
+//        		System.out.println(file)
+////        		val img = (file.toString)
+//				val url = URIUtil.toURL(URIUtil.fromString(imageURI.toString))
+//				val image = ImageIO.read(url) 
+//    			figure = nNode.addRectangle.addImage(image)    	
+//      		} else {
+        		figure = nNode.addRectangle() => [
+                	it.setBackgroundGradient("#ff8".color, "#ff8".color, 90);
+                	it.setSurroundingSpace(0, 0);
+            	    it.invisible = false;
+        	        it.foreground = "black".color
+    	            it.lineWidth = 1;
+	            ]
+//            }
 		}
 
         if (SHOW_SHADOW.booleanValue) {

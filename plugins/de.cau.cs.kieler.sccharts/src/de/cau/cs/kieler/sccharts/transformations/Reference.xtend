@@ -25,6 +25,14 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.sccharts.Binding
+import de.cau.cs.kieler.sccharts.Dataflow
+import de.cau.cs.kieler.sccharts.ReferencedNode
+import de.cau.cs.kieler.sccharts.Sender
+import de.cau.cs.kieler.sccharts.InputNode
+import de.cau.cs.kieler.sccharts.Node
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.sccharts.OutputNode
+import de.cau.cs.kieler.sccharts.SCChartsFactory
 
 /**
  * SCCharts Reference Transformation.
@@ -55,7 +63,8 @@ class Reference {
     // ...
     def State transform(State rootState) {
         val targetRootState = rootState.fixAllPriorities;
-
+		
+		targetRootState.transformDataflows
         // Traverse all referenced states
         targetRootState.allContainedStates.filter[ referencedState ].toList.immutableCopy.forEach[
             transformReference(targetRootState)
@@ -148,6 +157,83 @@ class Reference {
         newState.allContainedStates.filter[ referencedState ].toList.immutableCopy.forEach[
             transformReference(newState)
         ]     
+    }
+    
+    def transformDataflows(State state) {
+    	val dataflows = <Dataflow> newArrayList
+    	state.getAllStates.forEach[ dataflows += concurrencies.filter(typeof(Dataflow))]
+    	
+    	val wireMapping = <Node, ValuedObject> newHashMap
+    	val nodeMapping = <Node, State> newHashMap
+    	val valuedObjectMapping = <ValuedObject, ValuedObject> newHashMap
+    	var Scope lastState = null
+    	for(dataflow : dataflows.immutableCopy) {
+    		val parentState = dataflow.eContainer as State
+    		
+    		val rRegion = parentState.createRegion("_"+dataflow.id) => [ label = dataflow.label]
+			
+			var idCounter = 0
+    		for(rn : dataflow.nodes.filter(typeof(ReferencedNode))) {
+    			val newState = rRegion.createState("_"+rn.ID+idCounter) => [ label = rn.label ]
+    			idCounter = idCounter + 1
+    			newState.referencedScope = rn.referencedScope
+    			
+    			nodeMapping.put(rn, newState)
+    			
+    			if (lastState == null) {
+    				newState.setInitial
+    			} else {
+    				(lastState as State).createTransitionTo(newState).setImmediate
+    			}
+    			
+    			lastState = newState
+    		}
+    		(lastState as State).createTransitionTo(rRegion.states.get(0))
+    		
+    		var wireCounter = 0
+    		val senders = dataflow.eAllContents.filter(typeof(Sender)).toList
+    		for(sender : senders) {
+    			val senderParent = sender.eContainer as Node
+    			
+    			for(receiver : sender.receivers) {
+   					val newBinding = SCChartsFactory::eINSTANCE.createBinding
+    				if (receiver.node instanceof OutputNode) {
+    					val rState = nodeMapping.get(senderParent as Node)
+    					newBinding.formal = (receiver.node as OutputNode).valuedObject
+    					newBinding.actual = (sender.expression as ValuedObjectReference).valuedObject
+    					rState.bindings += newBinding
+//    					valuedObjectMapping.put(newBinding.actual, newBinding.formal)
+    				} else {
+    					if (senderParent instanceof InputNode) {
+    						val rState = nodeMapping.get(receiver.node as ReferencedNode)
+    						newBinding.formal = receiver.valuedObject
+    						newBinding.actual = (sender.expression as ValuedObjectReference).valuedObject
+	    					rState.bindings += newBinding
+    					} else {
+    						val wire = state.createVariable("_wire"+wireCounter).setTypeBool
+    						wireCounter = wireCounter + 1
+    						
+    						val sState = nodeMapping.get(senderParent as Node)
+    						newBinding.formal = (sender.expression as ValuedObjectReference).valuedObject
+    						newBinding.actual = wire
+	    					sState.bindings += newBinding
+    					
+    						val newBinding2 = SCChartsFactory::eINSTANCE.createBinding
+    						val rState = nodeMapping.get(receiver.node as ReferencedNode)
+    						newBinding2.formal = receiver.valuedObject
+    						newBinding2.actual = wire
+	    					rState.bindings += newBinding2
+    					}
+    				}
+    			}
+    		}
+    		    		
+    		dataflow.remove
+    	}
+    	
+    	for(r : state.regions.immutableCopy) {
+    		if (r.states.size == 0) r.remove
+    	}
     }
 
 }

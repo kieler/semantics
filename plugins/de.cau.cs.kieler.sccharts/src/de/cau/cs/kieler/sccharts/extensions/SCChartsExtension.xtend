@@ -447,7 +447,7 @@ class SCChartsExtension {
 
     def Region createRegion(State state, String id) {
         createRegion(id) => [
-            state.regions.add(it)
+            state.concurrencies.add(it)
         ]
     }
 
@@ -1123,7 +1123,7 @@ class SCChartsExtension {
     		newState.type = state.type
     		newState.initial = state.initial
     		newState.^final = state.^final
-    		newState.regions += state.regions.copyAll
+    		newState.concurrencies += state.concurrencies.copyAll
     		newState.outgoingTransitions += state.outgoingTransitions.copyAll
     		newState.incomingTransitions += state.incomingTransitions.copyAll
     		newState.localActions += state.localActions.copyAll
