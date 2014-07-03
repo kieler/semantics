@@ -199,8 +199,8 @@ class Reference {
    					val newBinding = SCChartsFactory::eINSTANCE.createBinding
     				if (receiver.node instanceof OutputNode) {
     					val rState = nodeMapping.get(senderParent as Node)
-    					newBinding.formal = (receiver.node as OutputNode).valuedObject
-    					newBinding.actual = (sender.expression as ValuedObjectReference).valuedObject
+    					newBinding.actual = (receiver.node as OutputNode).valuedObject
+    					newBinding.formal = (sender.expression as ValuedObjectReference).valuedObject
     					rState.bindings += newBinding
 //    					valuedObjectMapping.put(newBinding.actual, newBinding.formal)
     				} else {
