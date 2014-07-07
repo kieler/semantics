@@ -216,6 +216,8 @@ public class CompilationResult {
 
             if (allWarnings != null) {
                 allWarnings += ", ";
+            } else {
+                allWarnings = "";
             }
             allWarnings += getErrorMessage(e);
 
@@ -239,6 +241,8 @@ public class CompilationResult {
 
             if (allErrors != null) {
                 allErrors += ", ";
+            } else {
+                allErrors = "";
             }
             allErrors += getErrorMessage(e);
 
@@ -258,7 +262,7 @@ public class CompilationResult {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * @return the allErrors
      */
@@ -276,5 +280,5 @@ public class CompilationResult {
     }
 
     // -------------------------------------------------------------------------
-    
+
 }
