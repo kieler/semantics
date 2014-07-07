@@ -918,7 +918,7 @@ public class KielerCompiler {
                             transformationID = transformation.getId();
                             object = transformation.doTransform(transformedObject);
                         } catch (Exception exception) {
-                            context.addPostponedError(transformationID, exception); 
+                            context.getCompilationResult().addPostponedError(transformationID, exception); 
                         }
 
                         if (object != null) {
@@ -927,7 +927,7 @@ public class KielerCompiler {
                             // then clear all possibly previous errors
                             if (context.getCompilationResult().getIntermediateResults().size() <= 1
                                     && !context.isVerboseMode()) {
-                                context.resetPostponedErrors();
+                                context.getCompilationResult().resetPostponedErrors();
                             }
 
                             // Add to compilation result
@@ -938,7 +938,7 @@ public class KielerCompiler {
                             } else {
                                 // in this case we CANNOT do any further transformation calls
                                 // which require the return value of doTransform to be an EObject
-                                context.processPostponedErrors();
+                                context.getCompilationResult().processPostponedErrors();
                                 return context.getCompilationResult();
                             }
                         }
@@ -946,7 +946,8 @@ public class KielerCompiler {
                 }
             }
         }
-        context.processPostponedErrors();
+        context.getCompilationResult().processPostponedWarnings();
+        context.getCompilationResult().processPostponedErrors();
         return context.getCompilationResult();
     }
 

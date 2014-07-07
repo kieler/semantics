@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.kico;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +32,29 @@ import org.eclipse.emf.ecore.EObject;
  */
 public class CompilationResult {
 
+    /** The executed transformations. */
     private List<String> transformations = new ArrayList<String>();
 
+    /** The intermediate results. */
     private List<Object> intermediateResults = new ArrayList<Object>();
+
+    /** The postponed error list transformation id. */
+    private ArrayList<String> postponedErrorsTransformationID = new ArrayList<String>();
+
+    /** The postponed error list exception. */
+    private ArrayList<Exception> postponedErrors = new ArrayList<Exception>();
+
+    /** The postponed error list transformation id. */
+    private ArrayList<String> postponedWarningsTransformationID = new ArrayList<String>();
+
+    /** The postponed error list exception. */
+    private ArrayList<Exception> postponedWarnings = new ArrayList<Exception>();
+
+    /** All last/occurred errors processed for this compilation. */
+    private static String allErrors = null;
+
+    /** All last/occurred warnings processed for this compilation. */
+    private static String allWarnings = null;
 
     // -------------------------------------------------------------------------
 
@@ -128,6 +150,111 @@ public class CompilationResult {
             return (String) lastResult;
         }
         return null;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Adds the postponed error.
+     * 
+     * @param transformationID
+     *            the transformation ID
+     * @param exception
+     *            the exception
+     */
+    public void addPostponedError(String transformationID, Exception exception) {
+        this.postponedErrorsTransformationID.add(transformationID);
+        this.postponedErrors.add(exception);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Adds the postponed warning.
+     * 
+     * @param transformationID
+     *            the transformation ID
+     * @param exception
+     *            the exception
+     */
+    public void addPostponedWarning(String transformationID, Exception exception) {
+        this.postponedWarningsTransformationID.add(transformationID);
+        this.postponedWarnings.add(exception);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Reset all postponed warnings.
+     */
+    public void resetPostponedWarnings() {
+        this.postponedWarningsTransformationID.clear();
+        this.postponedWarnings.clear();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Reset all postponed errors.
+     */
+    public void resetPostponedErrors() {
+        this.postponedErrorsTransformationID.clear();
+        this.postponedErrors.clear();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Process all postponed warnings and put them to the warnings log also building the resulting
+     * warning String.
+     * 
+     */
+    public void processPostponedWarnings() {
+        for (int c = 0; c < postponedWarningsTransformationID.size(); c++) {
+            String transformationID = postponedWarningsTransformationID.get(c);
+            Exception e = postponedWarnings.get(c);
+
+            if (allWarnings != null) {
+                allWarnings += ", ";
+            }
+            allWarnings += getErrorMessage(e);
+
+            KiCoPlugin.getInstance().showWarning(
+                    "An warning occurred while calling transformation with the ID '"
+                            + transformationID + "'.", KiCoPlugin.PLUGIN_ID, e, true);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Process all postponed errors and put them to the error log also building the resulting error
+     * String.
+     * 
+     */
+    public void processPostponedErrors() {
+        for (int c = 0; c < postponedErrorsTransformationID.size(); c++) {
+            String transformationID = postponedErrorsTransformationID.get(c);
+            Exception e = postponedErrors.get(c);
+
+            if (allErrors != null) {
+                allErrors += ", ";
+            }
+            allErrors += getErrorMessage(e);
+
+            KiCoPlugin.getInstance().showError(
+                    "An error occurred while calling transformation with the ID '"
+                            + transformationID + "'.", KiCoPlugin.PLUGIN_ID, e, true);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    private String getErrorMessage(Throwable t) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        t.printStackTrace(pw);
+        return sw.toString(); // stack trace as a string
     }
 
     // -------------------------------------------------------------------------
