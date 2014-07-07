@@ -36,7 +36,18 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPropertyListener;
@@ -63,8 +74,11 @@ import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelWrapper;
 import de.cau.cs.kieler.kico.ui.KiCoSelection;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
+import de.cau.cs.kieler.klighd.IViewer;
+import de.cau.cs.kieler.klighd.KlighdConstants;
 import de.cau.cs.kieler.klighd.KlighdPlugin;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
+import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KlighdCanvas;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 
@@ -118,6 +132,10 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     /** The icon for pin selection button. */
     private static final ImageDescriptor ICON_PIN = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.klighd", "icons/KiCoModelViewIconPin.png");
+    
+    /** The icon for closing windows. */
+    private static final ImageDescriptor ICON_CLOSE = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "org.eclipse.ui", "icons/full/elcl16/remove.gif");
 
     // ACTIONS
     /** The action for toggling side-by-side display mode. */
@@ -185,6 +203,8 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     // Visual
     
     private Composite viewComposite = null;
+    
+    private Composite warningMessageContainer = null;
 
     // -- Constructor and Initialization
     // -------------------------------------------------------------------------
@@ -1036,8 +1056,20 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             // enable synchronous selection between diagram and editor
             if (editorContext != null && !isErrorModel) {
                 this.getViewer().getViewContext().setSourceWorkbenchPart(editorContext);
-            }      
-            
+            }
+
+            //dispose warning message composite if necessary
+            if (warningMessageContainer != null) {
+                if (!warningMessageContainer.isDisposed()) {
+                    warningMessageContainer.dispose();
+                }
+                warningMessageContainer = null;
+            }
+            //show warnings
+            if (compilationResult != null && compilationResult.getAllWarnings() != null) {
+                addWarningComposite(this.getViewer(), compilationResult.getAllWarnings());
+            }
+
         } catch (Exception e) {
             if (!isErrorModel) {
                 updateDiagram(new KiCoErrorModel("Displaying diagram failed!", e), true, editorContext, null, null, true);
@@ -1060,6 +1092,52 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 lastException = (Exception) status.getException();
             }
         }
+    }
+    
+    /**
+     * Shows warning text in klighd canvas
+     * @param viewer
+     * @param allWarnings
+     */
+    private void addWarningComposite(IViewer<?> viewer, String allWarnings) {
+        final KlighdCanvas canvas = (KlighdCanvas) viewer.getControl();
+        warningMessageContainer = new Composite(canvas, SWT.NONE);
+
+        final Color orange = new Color(canvas.getDisplay(), new RGB(255, 165, 0));
+        warningMessageContainer.setBackground(orange);
+
+        final Button close = new Button(warningMessageContainer, SWT.PUSH | SWT.FLAT );
+        final Image closeImage = ICON_CLOSE.createImage();
+        close.setImage(closeImage);
+        //close.setBackground(orange);
+        close.setToolTipText("Close warnings");
+        //close action
+        close.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(final SelectionEvent e) {
+                warningMessageContainer.dispose();
+            }
+        });
+
+        final Label warningLabel = new Label(warningMessageContainer, SWT.NONE);
+        warningLabel.setText(allWarnings);
+
+        warningMessageContainer.setLocation(0, 0);
+        warningMessageContainer.setLayout(new RowLayout());
+        
+        //update composite
+        warningMessageContainer.pack();
+        canvas.layout(true, true);
+
+        //cleanup on dispose
+        warningMessageContainer.addDisposeListener(new DisposeListener() {
+
+            public void widgetDisposed(DisposeEvent e) {
+                orange.dispose();
+                closeImage.dispose();
+            }
+        });
     }
 
 }
