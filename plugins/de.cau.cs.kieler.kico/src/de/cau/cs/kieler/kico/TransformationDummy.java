@@ -56,7 +56,6 @@ public class TransformationDummy {
     }
 
     public boolean isAlternative() {
-//        return (alternatives.size() > 0);
         if (isGroup() && ((TransformationGroup) transformation).isAlternatives()) {
             return true;
         }

@@ -92,8 +92,10 @@ public class CompleteSCGraphModelFileHandler extends AbstractConvertModelHandler
                 transformed = transformation1.transform(transformed);
             if (!(transformed instanceof SCGraphBB)) 
                 transformed = transformation2.transform(transformed);
-            if (!(transformed instanceof SCGraphSched)) 
-                transformed = transformation3.transform(transformed);
+            if (!(transformed instanceof SCGraphSched)) { 
+                //TODO: remove file handler
+                transformed = transformation3.transform(transformed, null);
+            }
             transformed = transformation4.transform(transformed);
         } 
         return transformed;

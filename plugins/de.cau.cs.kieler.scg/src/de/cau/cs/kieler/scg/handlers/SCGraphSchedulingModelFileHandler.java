@@ -31,9 +31,9 @@ import de.cau.cs.kieler.scg.schedulers.SimpleScheduler;
 
 /**
  * Handler for menu contributions
- *
+ * 
  * @author ssm
- * @kieler.design 2014-01-08 proposed 
+ * @kieler.design 2014-01-08 proposed
  * @kieler.rating 2014-01-08 proposed yellow
  */
 public class SCGraphSchedulingModelFileHandler extends AbstractConvertModelHandler {
@@ -46,7 +46,7 @@ public class SCGraphSchedulingModelFileHandler extends AbstractConvertModelHandl
             "de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation.HybridScheduler";
 
     private static Injector injector = new SctStandaloneSetup()
-        .createInjectorAndDoEMFRegistration();
+            .createInjectorAndDoEMFRegistration();
 
     /**
      * {@inheritDoc}
@@ -67,7 +67,7 @@ public class SCGraphSchedulingModelFileHandler extends AbstractConvertModelHandl
     public String getDiagramEditorID() {
         return SCGPlugin.EDITOR_ID;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -75,23 +75,24 @@ public class SCGraphSchedulingModelFileHandler extends AbstractConvertModelHandl
     protected Object transform(EObject model, ExecutionEvent event, ISelection selection) {
         String commandString = event.getCommand().getId().toString();
         EObject transformed = null;
-       
+
         transformed = model;
         if (commandString.equals(SCGSCHED_TRANSFORMATION)) {
-            AbstractScheduler scheduler =
-            		Guice.createInjector().getInstance(SimpleScheduler.class);
-            transformed = scheduler.schedule((SCGraph) model);
-        } 
+            AbstractScheduler scheduler = Guice.createInjector().getInstance(SimpleScheduler.class);
+            // TODO: remove file handler
+            transformed = scheduler.schedule((SCGraph) model, null);
+        }
         if (commandString.equals(SCGSCHED_TRANSFORMATION_CLUSTERSCHEDULER)) {
             AbstractScheduler scheduler =
-            		Guice.createInjector().getInstance(ClusterScheduler.class);
-            transformed = scheduler.schedule((SCGraph) model);
-        } 
+                    Guice.createInjector().getInstance(ClusterScheduler.class);
+            // TODO: remove file handler
+            transformed = scheduler.schedule((SCGraph) model, null);
+        }
         if (commandString.equals(SCGSCHED_TRANSFORMATION_HYBRIDSCHEDULER)) {
-            AbstractScheduler scheduler =
-            		Guice.createInjector().getInstance(HybridScheduler.class);
-            transformed = scheduler.schedule((SCGraph) model);
-        } 
+            AbstractScheduler scheduler = Guice.createInjector().getInstance(HybridScheduler.class);
+            // TODO: remove file handler
+            transformed = scheduler.schedule((SCGraph) model, null);
+        }
         return transformed;
     }
 

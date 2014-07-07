@@ -24,6 +24,8 @@ import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scgsched.Schedule
+import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.kico.Transformation
 
 /** 
  * This class is part of the SCG transformation chain. In particular a scheduler performs additional 
@@ -54,7 +56,7 @@ import de.cau.cs.kieler.scgsched.Schedule
  * @kieler.design 2013-11-27 proposed 
  * @kieler.rating 2013-11-27 proposed yellow
  */
-abstract class AbstractScheduler extends AbstractModelTransformation {
+abstract class AbstractScheduler extends Transformation {
 
 	/** Inject the SCG transformation extensions. */
     @Inject
@@ -88,7 +90,7 @@ abstract class AbstractScheduler extends AbstractModelTransformation {
      * @return Returns an updated SCGSched model.
      * @abstract
      */
-    protected abstract def SCGraphSched build(SCGraphSched scg);
+    protected abstract def SCGraphSched build(SCGraphSched scg, KielerCompilerContext context);
     
     protected abstract def SchedulingConstraints orderSchedulingBlocks(SCGraphSched scg);
     
@@ -96,8 +98,8 @@ abstract class AbstractScheduler extends AbstractModelTransformation {
     
     protected abstract def boolean createSchedule(SCGraphSched scg, Schedule schedule, SchedulingConstraints constraints);
     
-    override transform(EObject eObject) {
-		return schedule(eObject as SCGraph)
+    override transform(EObject eObject, KielerCompilerContext context) {
+		return schedule(eObject as SCGraph, context)
 	}
     
     /**
@@ -110,11 +112,11 @@ abstract class AbstractScheduler extends AbstractModelTransformation {
      * 			the SCG (of arbitrary SCG class type)
      * @return Returns a fully (in sense of the transformation chain) updated SCG.
      */
-    public def SCGraph schedule(SCGraph scg) {
+    public def SCGraph schedule(SCGraph scg, KielerCompilerContext context) {
     	// Use the transformation extensions to enrich the SCG with all information.
     	// Afterwards, invoke the analyses and build the schedule.
     	// Eventually, return the SCG with performed optimizations.
-        build(((scg.upgradeAll(true) as SCGraphSched) as SCGraphSched).analyze).optimize
+        build(((scg.upgradeAll(true) as SCGraphSched) as SCGraphSched).analyze, context).optimize
     }    
     
     /**
