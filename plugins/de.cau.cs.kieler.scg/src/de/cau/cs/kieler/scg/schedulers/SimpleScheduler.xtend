@@ -44,6 +44,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import java.util.HashMap
 import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.kico.KielerCompilerException
 
 /** 
  * This class is part of the SCG transformation chain. In particular a scheduler performs additional 
@@ -330,7 +331,7 @@ class SimpleScheduler extends AbstractScheduler {
         // and add the scheduling information to the graph.
         if (!schedulable) {
             if (context != null) {
-                context.getCompilationResult().addPostponedWarning(getId(), new Exception("The SCG is NOT ASC-schedulable!"));
+                context.getCompilationResult().addPostponedWarning(new KielerCompilerException(getId(), "The SCG is NOT ASC-schedulable!"));
             }
             System::out.println("The SCG is NOT ASC-schedulable!")
             scg.setUnschedulable(true)            

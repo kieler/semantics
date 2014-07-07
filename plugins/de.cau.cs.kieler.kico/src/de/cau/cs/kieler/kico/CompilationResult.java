@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.kico;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,16 +37,10 @@ public class CompilationResult {
     private List<Object> intermediateResults = new ArrayList<Object>();
 
     /** The postponed error list transformation id. */
-    private ArrayList<String> postponedErrorsTransformationID = new ArrayList<String>();
-
-    /** The postponed error list exception. */
-    private ArrayList<Exception> postponedErrors = new ArrayList<Exception>();
+    private ArrayList<KielerCompilerException> postponedErrors = new ArrayList<KielerCompilerException>();
 
     /** The postponed error list transformation id. */
-    private ArrayList<String> postponedWarningsTransformationID = new ArrayList<String>();
-
-    /** The postponed error list exception. */
-    private ArrayList<Exception> postponedWarnings = new ArrayList<Exception>();
+    private ArrayList<KielerCompilerException> postponedWarnings = new ArrayList<KielerCompilerException>();
 
     /** All last/occurred errors processed for this compilation. */
     private String allErrors = null;
@@ -156,14 +148,10 @@ public class CompilationResult {
 
     /**
      * Adds the postponed error.
-     * 
-     * @param transformationID
-     *            the transformation ID
-     * @param exception
-     *            the exception
+     *
+     * @param exception the KielerCompilerException
      */
-    public void addPostponedError(String transformationID, Exception exception) {
-        this.postponedErrorsTransformationID.add(transformationID);
+    public void addPostponedError(KielerCompilerException exception) {
         this.postponedErrors.add(exception);
     }
 
@@ -171,14 +159,10 @@ public class CompilationResult {
 
     /**
      * Adds the postponed warning.
-     * 
-     * @param transformationID
-     *            the transformation ID
-     * @param exception
-     *            the exception
+     *
+     * @param exception the KielerCompilerException
      */
-    public void addPostponedWarning(String transformationID, Exception exception) {
-        this.postponedWarningsTransformationID.add(transformationID);
+    public void addPostponedWarning(KielerCompilerException exception) {
         this.postponedWarnings.add(exception);
     }
 
@@ -188,7 +172,6 @@ public class CompilationResult {
      * Reset all postponed warnings.
      */
     public void resetPostponedWarnings() {
-        this.postponedWarningsTransformationID.clear();
         this.postponedWarnings.clear();
     }
 
@@ -198,7 +181,6 @@ public class CompilationResult {
      * Reset all postponed errors.
      */
     public void resetPostponedErrors() {
-        this.postponedErrorsTransformationID.clear();
         this.postponedErrors.clear();
     }
 
@@ -210,20 +192,19 @@ public class CompilationResult {
      * 
      */
     public void processPostponedWarnings() {
-        for (int c = 0; c < postponedWarningsTransformationID.size(); c++) {
-            String transformationID = postponedWarningsTransformationID.get(c);
-            Exception e = postponedWarnings.get(c);
+        for (KielerCompilerException exception :  postponedWarnings) {
+            String transformationID = exception.getTransformationID();
 
             if (allWarnings != null) {
                 allWarnings += ", ";
             } else {
                 allWarnings = "";
             }
-            allWarnings += getErrorMessage(e);
+            allWarnings += exception.getErrorMessage();
 
             KiCoPlugin.getInstance().showWarning(
                     "An warning occurred while calling transformation with the ID '"
-                            + transformationID + "'.", KiCoPlugin.PLUGIN_ID, e, true);
+                            + transformationID + "'.", KiCoPlugin.PLUGIN_ID, exception, true);
         }
     }
 
@@ -235,30 +216,20 @@ public class CompilationResult {
      * 
      */
     public void processPostponedErrors() {
-        for (int c = 0; c < postponedErrorsTransformationID.size(); c++) {
-            String transformationID = postponedErrorsTransformationID.get(c);
-            Exception e = postponedErrors.get(c);
+        for (KielerCompilerException exception :  postponedErrors) {
+            String transformationID = exception.getTransformationID();
 
             if (allErrors != null) {
                 allErrors += ", ";
             } else {
                 allErrors = "";
             }
-            allErrors += getErrorMessage(e);
+            allErrors += exception.getErrorMessage();
 
             KiCoPlugin.getInstance().showError(
                     "An error occurred while calling transformation with the ID '"
-                            + transformationID + "'.", KiCoPlugin.PLUGIN_ID, e, true);
+                            + transformationID + "'.", KiCoPlugin.PLUGIN_ID, exception, true);
         }
-    }
-
-    // -------------------------------------------------------------------------
-
-    private String getErrorMessage(Throwable t) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        t.printStackTrace(pw);
-        return sw.toString(); // stack trace as a string
     }
 
     // -------------------------------------------------------------------------
