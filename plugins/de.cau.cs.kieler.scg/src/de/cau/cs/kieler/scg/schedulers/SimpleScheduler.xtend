@@ -43,6 +43,7 @@ import java.util.List
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import java.util.HashMap
 import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
+import de.cau.cs.kieler.kico.KielerCompilerContext
 
 /** 
  * This class is part of the SCG transformation chain. In particular a scheduler performs additional 
@@ -299,7 +300,7 @@ class SimpleScheduler extends AbstractScheduler {
 	 * 			the source SCG
 	 * @return Returns the enriched SCG model.
 	 */
-    override protected SCGraphSched build(SCGraphSched scg) {
+    override protected SCGraphSched build(SCGraphSched scg, KielerCompilerContext context) {
     	// Create a new schedule using the scgsched factory.
         val schedule = ScgschedFactory::eINSTANCE.createSchedule
         
@@ -328,6 +329,9 @@ class SimpleScheduler extends AbstractScheduler {
         // Print out results on the console
         // and add the scheduling information to the graph.
         if (!schedulable) {
+            if (context != null) {
+                context.getCompilationResult().addPostponedWarning(getId(), new Exception("The SCG is NOT ASC-schedulable!"));
+            }
             System::out.println("The SCG is NOT ASC-schedulable!")
             scg.setUnschedulable(true)            
             scg.schedules.add(schedule)
