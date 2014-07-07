@@ -916,7 +916,7 @@ public class KielerCompiler {
                         Object object = null;
                         try {
                             transformationID = transformation.getId();
-                            object = transformation.doTransform(transformedObject);
+                            object = transformation.doTransform(transformedObject, context);
                         } catch (Exception exception) {
                             context.getCompilationResult().addPostponedError(transformationID, exception); 
                         }

@@ -51,10 +51,10 @@ public class CompilationResult {
     private ArrayList<Exception> postponedWarnings = new ArrayList<Exception>();
 
     /** All last/occurred errors processed for this compilation. */
-    private static String allErrors = null;
+    private String allErrors = null;
 
     /** All last/occurred warnings processed for this compilation. */
-    private static String allWarnings = null;
+    private String allWarnings = null;
 
     // -------------------------------------------------------------------------
 
@@ -258,5 +258,23 @@ public class CompilationResult {
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * @return the allErrors
+     */
+    public String getAllErrors() {
+        return allErrors;
+    }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * @return the allWarnings
+     */
+    public String getAllWarnings() {
+        return allWarnings;
+    }
+
+    // -------------------------------------------------------------------------
+    
 }
