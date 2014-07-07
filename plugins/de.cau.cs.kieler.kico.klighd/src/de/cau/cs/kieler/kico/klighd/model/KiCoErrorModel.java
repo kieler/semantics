@@ -13,6 +13,9 @@
  */
 package de.cau.cs.kieler.kico.klighd.model;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 /**
  * Model of KiCoModelView to represent errors and exceptions
  * 
@@ -22,16 +25,27 @@ package de.cau.cs.kieler.kico.klighd.model;
 public class KiCoErrorModel {
 
     private final String message;
-    private final Exception exception;    
+    private final String details;    
 
     /**
      * Constructs a error model given message
      * @param message error message
      */
     public KiCoErrorModel(String message) {
-        this(message, null);
+        this.message = message;
+        this.details = null;
     }
 
+    /**
+     * Constructs a error model given message and details
+     * @param message error message
+     * @param details
+     */
+    public KiCoErrorModel(String message, String details) {
+        this.message = message;
+        this.details = details;
+    }
+    
     /**
      * Constructs a error model given message and exception
      * @param message error message
@@ -39,7 +53,11 @@ public class KiCoErrorModel {
      */
     public KiCoErrorModel(String message, Exception exception) {
         this.message = message;
-        this.exception = exception;
+     // Print stack trace into string
+        StringWriter traceReader = new StringWriter();
+        exception.printStackTrace(new PrintWriter(traceReader));
+        String exceptionTrace = traceReader.toString();
+        this.details = exceptionTrace;
     }
 
     /**
@@ -52,8 +70,8 @@ public class KiCoErrorModel {
     /**
      * @return the exception
      */
-    public Exception getException() {
-        return exception;
+    public String getDeatails() {
+        return details;
     }
     
     

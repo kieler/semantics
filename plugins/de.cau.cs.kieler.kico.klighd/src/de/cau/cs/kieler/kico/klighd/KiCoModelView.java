@@ -35,6 +35,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
@@ -891,9 +892,11 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                     }
 
                     if (showProgress) {// if not the fast case
-                        currentCompilation.showProgress(viewComposite);
+                        if (this.getViewer() != null) {
+                            currentCompilation.showProgress(this.getViewer());
+                        }
                         currentCompilation.setUpdateModelView(true);
-                        //return;
+                        // return;
                     } else { // directly take result and suppress additional update
                         currentModel = currentCompilation.getModel();
                         currentCompilationResult = currentCompilation.getCompilationResult();
@@ -971,13 +974,17 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     
     /**
      * Updates displayed diagram in this view in a dedicated job.
-     */  
-    private void updateDiagram(final Object model, final boolean modelTypeChanged, final IEditorPart editorContext){
-        new UIJob("Updating ModelView " + (editorContext != null ? "[ "+editorContext.getTitle()+" ]" : "")) {                  
+     */
+    private void updateDiagram(final Object model, final boolean modelTypeChanged,
+            final IEditorPart editorContext) {
+        final CompilationResult compilationResult = currentCompilationResult;
+        final KiCoAsynchronousCompilation compilation = currentCompilation;
+        new UIJob("Updating ModelView "
+                + (editorContext != null ? "[ " + editorContext.getTitle() + " ]" : "")) {
 
             @Override
             public IStatus runInUIThread(IProgressMonitor monitor) {
-                updateDiagram(model, modelTypeChanged, editorContext, false);
+                updateDiagram(model, modelTypeChanged, editorContext, compilationResult, compilation, false);
                 return Status.OK_STATUS;
             }
         }.schedule();
@@ -989,7 +996,8 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * Updates displayed diagram in this view. Initializes this view if necessary.
      */
     private void updateDiagram(final Object model, boolean modelTypeChanged,
-            final IEditorPart editorContext, boolean isErrorModel) {
+            final IEditorPart editorContext, final CompilationResult compilationResult,
+            final KiCoAsynchronousCompilation compilation, boolean isErrorModel) {
         try {
             if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
                 // if viewer or context does not exist always init view
@@ -1012,8 +1020,8 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             }
 
             // stop listening
-            Platform.removeLogListener(this);
-
+            Platform.removeLogListener(this);  
+            
             // check is update was successful
             if (lastException != null) {
                 throw lastException;
@@ -1028,10 +1036,11 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             // enable synchronous selection between diagram and editor
             if (editorContext != null && !isErrorModel) {
                 this.getViewer().getViewContext().setSourceWorkbenchPart(editorContext);
-            }
+            }      
+            
         } catch (Exception e) {
             if (!isErrorModel) {
-                updateDiagram(new KiCoErrorModel("Displaying diagram failed!", e), true, editorContext, true);
+                updateDiagram(new KiCoErrorModel("Displaying diagram failed!", e), true, editorContext, null, null, true);
             }
         } finally {
             Platform.removeLogListener(this);
