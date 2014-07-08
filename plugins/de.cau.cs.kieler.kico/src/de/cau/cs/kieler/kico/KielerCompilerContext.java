@@ -72,6 +72,9 @@ public class KielerCompilerContext {
     /** The progress monitor. A progress monitor is optional and by default is set to null. */
     private IProgressMonitor monitor = null;
 
+    /** The progress monitor for the currently called transformation. */
+    private KielerCompilerProgressMonitor currentTransformationProgressMonitor = null;
+
     // -------------------------------------------------------------------------
 
     /**
@@ -574,8 +577,8 @@ public class KielerCompilerContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the progress monitor. A progress monitor is optional therefore this method may return
-     * null if there exists no progress monitor to be used.
+     * Gets the main overall progress monitor. A progress monitor is optional therefore this method
+     * may return null if there exists no progress monitor to be used.
      * 
      * @return the monitor
      */
@@ -586,13 +589,42 @@ public class KielerCompilerContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the progress monitor. A progress monitor is optional and by default is set to null.
+     * Sets the main overall progress monitor. A progress monitor is optional and by default is set
+     * to null.
      * 
      * @param monitor
      *            the monitor to set
      */
     public void setProgressMonitor(IProgressMonitor monitor) {
         this.monitor = monitor;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the progress monitor for the currently called transformation. This may be used by
+     * transformations to give the status of their current work using
+     * getCurrentTransformationProgressMonitor().setPercentDone(int percent).
+     * 
+     * @return the currentTransformationProgressMonitor
+     */
+    public KielerCompilerProgressMonitor getCurrentTransformationProgressMonitor() {
+        return currentTransformationProgressMonitor;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the progress monitor for the currently called transformation. This is internally used by
+     * the KielerCompiler to pass a new sub progress monitor (KielerCompilerProgressMonitor) for
+     * each transformation step.
+     * 
+     * @param currentTransformationProgressMonitor
+     *            the currentTransformationProgressMonitor to set
+     */
+    public void setCurrentTransformationProgressMonitor(
+            KielerCompilerProgressMonitor currentTransformationProgressMonitor) {
+        this.currentTransformationProgressMonitor = currentTransformationProgressMonitor;
     }
 
     // -------------------------------------------------------------------------

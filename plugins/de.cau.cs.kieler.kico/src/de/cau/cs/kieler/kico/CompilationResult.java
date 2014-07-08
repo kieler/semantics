@@ -50,6 +50,12 @@ public class CompilationResult {
     /** All last/occurred warnings processed for this compilation. */
     private String allWarnings = null;
 
+    /**
+     * Indicates that the compilation is done and no further compilation steps are needed or
+     * possible.
+     */
+    private boolean currentTransformationdone = false;
+
     // -------------------------------------------------------------------------
 
     /**
@@ -278,6 +284,29 @@ public class CompilationResult {
      */
     public ArrayList<KielerCompilerException> getPostponedWarnings() {
         return postponedWarnings;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Internally used to check if the current compilation step is complete.
+     * 
+     * @return the done
+     */
+    public boolean isCurrentTransformationDone() {
+        return currentTransformationdone;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Internally used to set when the current compilation step is complete. Do NOT use this method.
+     * 
+     * @param done
+     *            the done to set
+     */
+    public void setCurrentTransformationDone(boolean done) {
+        this.currentTransformationdone = done;
     }
 
     // -------------------------------------------------------------------------
