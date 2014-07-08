@@ -19,8 +19,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+
+import com.google.common.base.Joiner;
 
 /**
  * This is the main class of the Kieler Compiler (KiCo) Project that aims to provide an
@@ -228,7 +231,7 @@ public class KielerCompiler {
                 if (alternative && !dependencyReferenced && !groupReferenced) {
                     if (transformationDummy.reverseDependencies.size() == 0) {
                         toBeDeleted = transformationDummy;
-                         System.out.println("REMOVE " + transformationDummy.id);
+                        System.out.println("REMOVE " + transformationDummy.id);
                         found = true;
                         break;
                     }
@@ -238,8 +241,8 @@ public class KielerCompiler {
                 context.getGraph().remove(toBeDeleted);
                 for (TransformationDummy transformationDummy : context.getGraph()) {
                     if (transformationDummy.reverseDependencies.contains(toBeDeleted)) {
-                         System.out.println("REMOVE " + toBeDeleted.id + " from "
-                         + transformationDummy.id);
+                        System.out.println("REMOVE " + toBeDeleted.id + " from "
+                                + transformationDummy.id);
                         transformationDummy.reverseDependencies.remove(toBeDeleted);
                     }
                 }
@@ -832,6 +835,10 @@ public class KielerCompiler {
 
     /**
      * Advanced internally used KIELER Compiler compile method on a given context.
+     * 
+     * @param context
+     *            the context
+     * @return the compilation result
      */
     public static CompilationResult compile(KielerCompilerContext context) {
         updateMapping(DEBUG);
@@ -839,10 +846,9 @@ public class KielerCompiler {
         // as this is a compile run, the following MUST be set
         EObject transformationEObject = context.getTransformationObject();
         if (transformationEObject == null) {
-            KiCoPlugin
-            .getInstance()
-            .showError(
-                    "No model was supplied for this compilation run! Aborting compilation.", KiCoPlugin.PLUGIN_ID, null, true);
+            KiCoPlugin.getInstance().showError(
+                    "No model was supplied for this compilation run! Aborting compilation.",
+                    KiCoPlugin.PLUGIN_ID, null, true);
             return context.getCompilationResult();
         }
 
@@ -850,7 +856,7 @@ public class KielerCompiler {
         if (!context.isInplace()) {
             EObject copiedObject = EcoreUtil.copy(transformationEObject);
             // replace intermediate object
-            context.getCompilationResult().getIntermediateResults().clear(); 
+            context.getCompilationResult().getIntermediateResults().clear();
             context.getCompilationResult().getIntermediateResults().add(copiedObject);
             // makd the new copy the transformedObject
             transformationEObject = copiedObject;
@@ -887,16 +893,33 @@ public class KielerCompiler {
         eliminateGroupIds(context, true);
 
         List<String> compilationTransformationIDs = context.getCompilationTransformationIDs();
-        
+
+        // The progress monitor is optional and may be null!
+        IProgressMonitor monitor = context.getProgressMonitor();
+        if (monitor != null) {
+            monitor.beginTask(
+                    "Transforming: " + Joiner.on(", ").join(compilationTransformationIDs),
+                    compilationTransformationIDs.size());
+        }
+
         // This will be the current instance of the transformed model, initially it is the
         // transformationEObject from the context
         EObject transformedObject = transformationEObject;
-        
+
         for (String compilationTransformationID : compilationTransformationIDs) {
             Transformation transformation = getTransformation(compilationTransformationID);
-
+            
+            if (monitor != null) {
+                monitor.subTask(transformation.getName());
+                
+                if (monitor.isCanceled()) {
+                    break;
+                }
+            }
+            
             if (transformation != null) {
-                context.getCompilationResult().getTransformations().add(compilationTransformationID);
+                context.getCompilationResult().getTransformations()
+                        .add(compilationTransformationID);
 
                 // If the requested TransformationID
                 if (transformation.getId().equals(compilationTransformationID)) {
@@ -918,7 +941,8 @@ public class KielerCompiler {
                             transformationID = transformation.getId();
                             object = transformation.doTransform(transformedObject, context);
                         } catch (Exception exception) {
-                            context.getCompilationResult().addPostponedError(new KielerCompilerException(transformationID, exception)); 
+                            context.getCompilationResult().addPostponedError(
+                                    new KielerCompilerException(transformationID, exception));
                         }
 
                         if (object != null) {
@@ -946,6 +970,7 @@ public class KielerCompiler {
                 }
             }
         }
+        
         context.getCompilationResult().processPostponedWarnings();
         context.getCompilationResult().processPostponedErrors();
         return context.getCompilationResult();
