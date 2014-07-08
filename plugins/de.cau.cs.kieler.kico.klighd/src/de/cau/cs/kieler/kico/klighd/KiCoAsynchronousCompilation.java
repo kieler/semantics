@@ -20,6 +20,8 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.progress.UIJob;
 
@@ -31,7 +33,9 @@ import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoMessageModel;
 import de.cau.cs.kieler.kico.ui.KiCoSelection;
+import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.KlighdConstants;
+import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KlighdCanvas;
 
 /**
  * This Job start an asynchronous Compilation
@@ -103,22 +107,16 @@ public class KiCoAsynchronousCompilation extends Job {
             context.setProgressMonitor(monitor);
             result = KielerCompiler.compile(context);
 
-// TODO: deprecated code part, please check and remove            
-//            // compile
-//            result =
-//                    KielerCompiler.compile(transformations.getSelectionString(),
-//                            (EObject) sourceModel, transformations.isAdvanced(), false);
-
             if (monitor.isCanceled()) {
                 return Status.CANCEL_STATUS;
             }
 
-            // TODO when cmot finished error piping
             // check result
-            // if (result.getLastError()) {
-            // throw lastException;
-            // } else
-            if (result == null || (result.getEObject() == null && result.getString() == null)) {
+            if (!result.getPostponedErrors().isEmpty()) {
+                model = new KiCoErrorModel("Compilation Error!", result.getPostponedErrors().get(0).getMessage(), result.getAllErrors());
+                updateModelView();
+                return new Status(Status.INFO, KiCoKLighDPlugin.PLUGIN_ID, result.getAllErrors());
+            } else if (result == null || (result.getEObject() == null && result.getString() == null)) {
                 throw new NullPointerException(
                         "Compilation produced no result. Internal compilation error.");
             }
@@ -143,7 +141,7 @@ public class KiCoAsynchronousCompilation extends Job {
             }
             model = new KiCoErrorModel("Compilation Error!", e);
             updateModelView();
-            return new Status(Status.ERROR, KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(),
+            return new Status(Status.WARNING, KiCoKLighDPlugin.PLUGIN_ID, e.getMessage(),
                     e.getCause());
         }
         // TODO hide progress
@@ -203,22 +201,31 @@ public class KiCoAsynchronousCompilation extends Job {
     /**
      * Causes additional progressbars to show up ion model view.
      */
-    public void showProgress(Composite parent) {
-        if (!showsProgress && !hasFinishedCompilation()) {
-            Composite progressContainer = new Composite(parent, SWT.NONE);
-            addProgressComponents(progressContainer);
-            progressContainer.pack();
-            parent.layout(true, true);
-            showsProgress = true;
-        }
+    public void showProgress(IViewer<?> viewer) {
+        //if (!showsProgress && !hasFinishedCompilation()) {
+        // final KlighdCanvas canvas = (KlighdCanvas) viewer.getControl();
+        //
+        // Composite progressContainer = new Composite(canvas, SWT.NONE);
+        //
+        // addProgressComponents(progressContainer);
+        // progressContainer.setLocation(1,1);
+        // progressContainer.setLayout(new RowLayout());
+        // progressContainer.pack();
+        // canvas.layout(true, true);
+        //
+        // showsProgress = true;
+        //}
     }
 
     /**
      * @param progressContainer
      */
     private void addProgressComponents(Composite parent) {
-        final Color white = new Color(parent.getDisplay(), KlighdConstants.WHITE);
-        parent.setBackground(white);
+        // TODO dispose color
+        // final Color white = new Color(parent.getDisplay(), KlighdConstants.WHITE);
+        // parent.setBackground(white);
+        // final Button zoomToFitBtn = new Button(parent, SWT.TOGGLE | SWT.FLAT);
+        // zoomToFitBtn.setText("test");
     }
 
     /**

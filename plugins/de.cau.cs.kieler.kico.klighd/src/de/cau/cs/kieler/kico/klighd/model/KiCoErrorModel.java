@@ -13,33 +13,70 @@
  */
 package de.cau.cs.kieler.kico.klighd.model;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 /**
  * Model of KiCoModelView to represent errors and exceptions
  * 
  * @author als
- *
+ * 
  */
 public class KiCoErrorModel {
 
     private final String message;
-    private final Exception exception;    
+    private final String reason;
+    private final String stacktrace;
 
     /**
      * Constructs a error model given message
-     * @param message error message
+     * 
+     * @param message
+     *            error message
      */
     public KiCoErrorModel(String message) {
-        this(message, null);
+        this.message = message;
+        this.stacktrace = null;
+        this.reason = "Unkown";
+    }
+
+    /**
+     * Constructs a error model given message and details
+     * 
+     * @param message
+     *            error message
+     * @param reason
+     * @param stacktrace
+     */
+    public KiCoErrorModel(String message, String reason, String stacktrace) {
+        this.message = message;
+        this.stacktrace = stacktrace;
+        if (reason == null) {
+            this.reason = "Unkown";
+        } else {
+            this.reason = reason;
+        }
     }
 
     /**
      * Constructs a error model given message and exception
-     * @param message error message
+     * 
+     * @param message
+     *            error message
      * @param exception
      */
     public KiCoErrorModel(String message, Exception exception) {
         this.message = message;
-        this.exception = exception;
+        // Print stack trace into string
+        StringWriter traceReader = new StringWriter();
+        exception.printStackTrace(new PrintWriter(traceReader));
+        String exceptionTrace = traceReader.toString();
+        this.stacktrace = exceptionTrace;
+        if(exception.getMessage() == null || exception.getMessage().isEmpty()){
+            this.reason = exception.toString();
+        }else{
+            this.reason = exception.getMessage();
+        }
     }
 
     /**
@@ -52,10 +89,14 @@ public class KiCoErrorModel {
     /**
      * @return the exception
      */
-    public Exception getException() {
-        return exception;
+    public String getStackTrace() {
+        return stacktrace;
     }
-    
-    
 
+    /**
+     * @return the reason
+     */
+    public String getReason() {
+        return reason;
+    }
 }

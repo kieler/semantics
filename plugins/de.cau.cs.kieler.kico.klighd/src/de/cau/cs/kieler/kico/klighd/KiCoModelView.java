@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.kico.klighd;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.WeakHashMap;
 
 import org.eclipse.core.resources.IFile;
@@ -35,7 +37,17 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPropertyListener;
@@ -51,10 +63,14 @@ import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.util.StringInputStream;
 
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Maps;
+
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KiCoPlugin;
+import de.cau.cs.kieler.kico.KielerCompilerException;
 import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoMessageModel;
@@ -62,10 +78,16 @@ import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelWrapper;
 import de.cau.cs.kieler.kico.ui.KiCoSelection;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
+import de.cau.cs.kieler.klighd.IViewer;
+import de.cau.cs.kieler.klighd.KlighdDataManager;
 import de.cau.cs.kieler.klighd.KlighdPlugin;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
+import de.cau.cs.kieler.klighd.SynthesisOption;
+import de.cau.cs.kieler.klighd.ViewContext;
+import de.cau.cs.kieler.klighd.internal.ISynthesis;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 
 /**
  * Singleton instance of DiagramViewPart to display any model
@@ -117,6 +139,10 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     /** The icon for pin selection button. */
     private static final ImageDescriptor ICON_PIN = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.klighd", "icons/KiCoModelViewIconPin.png");
+    
+    /** The icon for closing windows. */
+    private static final ImageDescriptor ICON_CLOSE = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "org.eclipse.ui", "icons/full/elcl16/remove.gif");
 
     // ACTIONS
     /** The action for toggling side-by-side display mode. */
@@ -169,6 +195,9 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * compiled
      */
     private CompilationResult currentCompilationResult = null;
+    
+    /** Stores saved selection of synthesis options according to their model type */ 
+    private HashMap<ISynthesis, HashMap<SynthesisOption,Object>> recentSynthesisOptions = Maps.newHashMap();
 
     // Editor
 
@@ -179,11 +208,12 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     private WeakHashMap<IEditorPart, IFile> lastSavedFiles = new WeakHashMap<IEditorPart, IFile>();
 
     // Error handling
+    
     private Exception lastException = null;
     
     // Visual
     
-    private Composite viewComposite = null;
+    private Composite warningMessageContainer = null;
 
     // -- Constructor and Initialization
     // -------------------------------------------------------------------------
@@ -248,7 +278,6 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      */
     public void createPartControl(final Composite parent) {
         super.createPartControl(parent);
-        viewComposite = parent;
 
         IActionBars bars = getViewSite().getActionBars();
         IToolBarManager toolBarManager = bars.getToolBarManager();
@@ -891,9 +920,11 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                     }
 
                     if (showProgress) {// if not the fast case
-                        currentCompilation.showProgress(viewComposite);
+                        if (this.getViewer() != null) {
+                            currentCompilation.showProgress(this.getViewer());
+                        }
                         currentCompilation.setUpdateModelView(true);
-                        //return;
+                        // return;
                     } else { // directly take result and suppress additional update
                         currentModel = currentCompilation.getModel();
                         currentCompilationResult = currentCompilation.getCompilationResult();
@@ -971,13 +1002,17 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     
     /**
      * Updates displayed diagram in this view in a dedicated job.
-     */  
-    private void updateDiagram(final Object model, final boolean modelTypeChanged, final IEditorPart editorContext){
-        new UIJob("Updating ModelView " + (editorContext != null ? "[ "+editorContext.getTitle()+" ]" : "")) {                  
+     */
+    private void updateDiagram(final Object model, final boolean modelTypeChanged,
+            final IEditorPart editorContext) {
+        final CompilationResult compilationResult = currentCompilationResult;
+        final KiCoAsynchronousCompilation compilation = currentCompilation;
+        new UIJob("Updating ModelView "
+                + (editorContext != null ? "[ " + editorContext.getTitle() + " ]" : "")) {
 
             @Override
             public IStatus runInUIThread(IProgressMonitor monitor) {
-                updateDiagram(model, modelTypeChanged, editorContext, false);
+                updateDiagram(model, modelTypeChanged, editorContext, compilationResult, compilation, false);
                 return Status.OK_STATUS;
             }
         }.schedule();
@@ -989,11 +1024,15 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * Updates displayed diagram in this view. Initializes this view if necessary.
      */
     private void updateDiagram(final Object model, boolean modelTypeChanged,
-            final IEditorPart editorContext, boolean isErrorModel) {
+            final IEditorPart editorContext, final CompilationResult compilationResult,
+            final KiCoAsynchronousCompilation compilation, boolean isErrorModel) {
         try {
+            ViewContext vc = null;
             if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
                 // if viewer or context does not exist always init view
                 modelTypeChanged = true;
+            }else{
+                vc = this.getViewer().getViewContext();
             }
 
             // listen for internal klighd errors
@@ -1002,18 +1041,46 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
             // Update diagram
             if (modelTypeChanged) {
+                //save previous synthesis options to restore later
+                KlighdSynthesisProperties properties = new KlighdSynthesisProperties();  
+                if (vc != null) {
+                    ISynthesis synthesis = vc.getDiagramSynthesis();
+                    if (synthesis != null) {
+                        List<SynthesisOption> options = vc.getDisplayedSynthesisOptions();
+                        if (!options.isEmpty()) {
+                            HashMap<SynthesisOption, Object> optionsMap;
+                            if (recentSynthesisOptions.containsKey(synthesis)) {
+                                optionsMap = recentSynthesisOptions.get(synthesis);
+                            } else {
+                                optionsMap = Maps.newHashMap();
+                                recentSynthesisOptions.put(synthesis, optionsMap);
+                            }
+                            for (SynthesisOption option : options) {
+                                optionsMap.put(option, vc.getOptionValue(option));
+                            }
+                        }
+                    }
+                }
+                
+                //get save options to restore
+                ISynthesis synthesis = Iterables.getFirst(KlighdDataManager.getInstance().getAvailableSyntheses(model.getClass()), null);
+                if(synthesis != null && recentSynthesisOptions.containsKey(synthesis)){
+                    properties.configureSynthesisOptionValues(recentSynthesisOptions.get(synthesis));
+                }
+                
                 // the (re)initialization case
-                DiagramViewManager.initializeView(this, model, null, null);
+                DiagramViewManager.initializeView(this, model, null, properties);
                 // reset layout to resolve KISEMA-905
                 resetLayoutConfig();
+                
             } else {
                 // update case (keeps options and sidebar)
                 DiagramViewManager.updateView(this.getViewer().getViewContext(), model);
             }
 
             // stop listening
-            Platform.removeLogListener(this);
-
+            Platform.removeLogListener(this);  
+            
             // check is update was successful
             if (lastException != null) {
                 throw lastException;
@@ -1029,9 +1096,27 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             if (editorContext != null && !isErrorModel) {
                 this.getViewer().getViewContext().setSourceWorkbenchPart(editorContext);
             }
+
+            //dispose warning message composite if necessary
+            if (warningMessageContainer != null) {
+                if (!warningMessageContainer.isDisposed()) {
+                    warningMessageContainer.dispose();
+                }
+                warningMessageContainer = null;
+            }
+            //show warnings
+            if (compilationResult != null && !compilationResult.getPostponedWarnings().isEmpty()) {
+                StringBuilder warnings = new StringBuilder();
+                for (KielerCompilerException warning : compilationResult.getPostponedWarnings()) {
+                    warnings.append(warning.getMessage()).append("\n");
+                }
+                warnings.setLength(warnings.length() - 1);
+                addWarningComposite(this.getViewer(), warnings.toString());
+            }
+
         } catch (Exception e) {
             if (!isErrorModel) {
-                updateDiagram(new KiCoErrorModel("Displaying diagram failed!", e), true, editorContext, true);
+                updateDiagram(new KiCoErrorModel("Displaying diagram failed!", e), true, editorContext, null, null, true);
             }
         } finally {
             Platform.removeLogListener(this);
@@ -1051,6 +1136,53 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 lastException = (Exception) status.getException();
             }
         }
+    }
+    
+    /**
+     * Shows warning text in klighd canvas
+     * @param viewer
+     * @param allWarnings
+     */
+    private void addWarningComposite(IViewer<?> viewer, String allWarnings) {
+        final Composite canvas = (Composite) viewer.getControl();
+        warningMessageContainer = new Composite(canvas, SWT.NONE);
+
+        final Color orange = new Color(canvas.getDisplay(), new RGB(255, 165, 0));
+        warningMessageContainer.setBackground(orange);
+
+        final Label close = new Label(warningMessageContainer, SWT.NONE);
+        final Image closeImage = ICON_CLOSE.createImage();
+        close.setBackground(orange);
+        close.setImage(closeImage);
+        //close.setBackground(orange);
+        close.setToolTipText("Close warnings");
+        //close action
+        close.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseUp(final MouseEvent event) {
+                warningMessageContainer.dispose();
+            }
+        });
+
+        final Label warningLabel = new Label(warningMessageContainer, SWT.NO_BACKGROUND);
+        warningLabel.setBackground(orange);
+        warningLabel.setText(allWarnings);
+
+        warningMessageContainer.setLocation(0, 0);
+        warningMessageContainer.setLayout(new RowLayout());
+        
+        //update composite
+        warningMessageContainer.pack();
+        canvas.layout(true, true);
+
+        //cleanup on dispose
+        warningMessageContainer.addDisposeListener(new DisposeListener() {
+
+            public void widgetDisposed(DisposeEvent e) {
+                orange.dispose();
+                closeImage.dispose();
+            }
+        });
     }
 
 }
