@@ -25,6 +25,7 @@ import org.eclipse.ui.progress.UIJob;
 
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
+import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.klighd.KiCoModelView.ChangeEvent;
 import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
@@ -94,10 +95,19 @@ public class KiCoAsynchronousCompilation extends Job {
      */
     protected IStatus run(final IProgressMonitor monitor) {
         try {
-            // compile
-            result =
-                    KielerCompiler.compile(transformations.getSelectionString(),
-                            (EObject) sourceModel, transformations.isAdvanced(), false);
+            // compile with progress monitor
+            KielerCompilerContext context =
+                    new KielerCompilerContext(transformations.getSelectionString(), (EObject) sourceModel);
+            context.setPrerequirements(transformations.isAdvanced());
+            context.setInplace(false);
+            context.setProgressMonitor(monitor);
+            result = KielerCompiler.compile(context);
+
+// TODO: deprecated code part, please check and remove            
+//            // compile
+//            result =
+//                    KielerCompiler.compile(transformations.getSelectionString(),
+//                            (EObject) sourceModel, transformations.isAdvanced(), false);
 
             if (monitor.isCanceled()) {
                 return Status.CANCEL_STATUS;

@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
@@ -67,6 +68,9 @@ public class KielerCompilerContext {
 
     /** The flag to do all transformations inplace and NOT on a copy. */
     private boolean inplace = false;
+
+    /** The progress monitor. A progress monitor is optional and by default is set to null. */
+    private IProgressMonitor monitor = null;
 
     // -------------------------------------------------------------------------
 
@@ -565,6 +569,30 @@ public class KielerCompilerContext {
                 getCompilationResult().getIntermediateResults().add(0, eObject);
             }
         }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the progress monitor. A progress monitor is optional therefore this method may return
+     * null if there exists no progress monitor to be used.
+     * 
+     * @return the monitor
+     */
+    public IProgressMonitor getProgressMonitor() {
+        return monitor;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the progress monitor. A progress monitor is optional and by default is set to null.
+     * 
+     * @param monitor
+     *            the monitor to set
+     */
+    public void setProgressMonitor(IProgressMonitor monitor) {
+        this.monitor = monitor;
     }
 
     // -------------------------------------------------------------------------
