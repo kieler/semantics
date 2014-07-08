@@ -17,18 +17,22 @@ import java.util.Map;
 
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * The non-gui server application for KlighdServer.
  * 
- * Start the sever: kieler -application de.cau.cs.kieler.klighd.server.headless -noExit -p 4444 Start
- * the sever with console log: kieler -application de.cau.cs.kieler.klighd.server.headless -consoleLog
- * -noExit --port 4444
+ * Start the sever: kieler -application de.cau.cs.kieler.klighd.server.headless -noExit -p 4444
+ * Start the sever with console log: kieler -application de.cau.cs.kieler.klighd.server.headless
+ * -consoleLog -noExit --port 4444
  * 
  * -application will tell eclipse which application to start. You might omit this if you want to run
  * the default application you exported. It makes sense for RCPs with multiple applications though.
  * -consoleLog opens a dedicated eclipse console and should be well known already. -noExit will keep
  * eclipse running even if our application finished. It keeps the console open to examine output.
+ * 
+ * For Console Logging on Linux: /home/layout/kielercompiler/kieler/kieler -application
+ * de.cau.cs.kieler.klighd.server.headless -noExit -p 4444 --debug -consoleLog &
  * 
  * @author cmot
  * @kieler.design 2014-04-08 proposed
@@ -76,7 +80,20 @@ public class KlighdServerApplication implements IApplication {
         KlighdServerPlugin.saveEnabled(true);
         System.out.println("Starting KLighD TCP Server at port " + KlighdServerPlugin.loadPort());
         KlighdServerPlugin.startServer(debug);
-        return null;
+
+        // We need the following code to ensure that a GUI is created and dispatched which is needed
+        // for rendering PNG (or other bitmap) renderings, there a Shell is needed
+        // (BitmapOffscreenRenderer.java of KLighD)
+        while (true) {
+            try {
+                Display.getDefault().readAndDispatch();
+                Thread.sleep(100);
+            } catch (final InterruptedException e) {
+                // nothing
+            }
+        }
+
+        // return IApplication.EXIT_OK;
     }
 
     // -------------------------------------------------------------------------

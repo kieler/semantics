@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.kico;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
@@ -453,15 +451,6 @@ public class KiCoPlugin extends Plugin {
      * @param silent
      *            the silent tag indicates that only logging occurs, no message dialog is displayed
      */
-    // StatusAdapter statusAdapter;
-
-    private String getErrorMessage(Throwable t) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        t.printStackTrace(pw);
-        return sw.toString(); // stack trace as a string
-    }
-
     public void showError(final String textMessage, final String pluginID,
             final Exception exception, final boolean silent) {
         if (isForceNoErrorOutput()) {

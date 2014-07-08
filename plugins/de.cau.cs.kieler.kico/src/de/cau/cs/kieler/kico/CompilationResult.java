@@ -30,9 +30,25 @@ import org.eclipse.emf.ecore.EObject;
  */
 public class CompilationResult {
 
+    /** The executed transformations. */
     private List<String> transformations = new ArrayList<String>();
 
+    /** The intermediate results. */
     private List<Object> intermediateResults = new ArrayList<Object>();
+
+    /** The postponed error list transformation id. */
+    private ArrayList<KielerCompilerException> postponedErrors =
+            new ArrayList<KielerCompilerException>();
+
+    /** The postponed error list transformation id. */
+    private ArrayList<KielerCompilerException> postponedWarnings =
+            new ArrayList<KielerCompilerException>();
+
+    /** All last/occurred errors processed for this compilation. */
+    private String allErrors = null;
+
+    /** All last/occurred warnings processed for this compilation. */
+    private String allWarnings = null;
 
     // -------------------------------------------------------------------------
 
@@ -128,6 +144,140 @@ public class CompilationResult {
             return (String) lastResult;
         }
         return null;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Adds the postponed error.
+     * 
+     * @param exception
+     *            the KielerCompilerException
+     */
+    public void addPostponedError(KielerCompilerException exception) {
+        this.postponedErrors.add(exception);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Adds the postponed warning.
+     * 
+     * @param exception
+     *            the KielerCompilerException
+     */
+    public void addPostponedWarning(KielerCompilerException exception) {
+        this.postponedWarnings.add(exception);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Reset all postponed warnings.
+     */
+    public void resetPostponedWarnings() {
+        this.postponedWarnings.clear();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Reset all postponed errors.
+     */
+    public void resetPostponedErrors() {
+        this.postponedErrors.clear();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Process all postponed warnings and put them to the warnings log also building the resulting
+     * warning String.
+     * 
+     */
+    public void processPostponedWarnings() {
+        for (KielerCompilerException exception : postponedWarnings) {
+            String transformationID = exception.getTransformationID();
+
+            if (allWarnings != null) {
+                allWarnings += ", ";
+            } else {
+                allWarnings = "";
+            }
+            allWarnings += exception.getStackTraceString();
+
+            KiCoPlugin.getInstance().showWarning(
+                    "An warning occurred while calling transformation with the ID '"
+                            + transformationID + "'.", KiCoPlugin.PLUGIN_ID, exception, true);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Process all postponed errors and put them to the error log also building the resulting error
+     * String.
+     * 
+     */
+    public void processPostponedErrors() {
+        for (KielerCompilerException exception : postponedErrors) {
+            String transformationID = exception.getTransformationID();
+
+            if (allErrors != null) {
+                allErrors += ", ";
+            } else {
+                allErrors = "";
+            }
+            allErrors += exception.getStackTraceString();
+
+            KiCoPlugin.getInstance().showError(
+                    "An error occurred while calling transformation with the ID '"
+                            + transformationID + "'.", KiCoPlugin.PLUGIN_ID, exception, true);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the all errors.
+     * 
+     * @return the allErrors
+     */
+    public String getAllErrors() {
+        return allErrors;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the all warnings.
+     * 
+     * @return the allWarnings
+     */
+    public String getAllWarnings() {
+        return allWarnings;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the postponed errors.
+     * 
+     * @return the postponedErrors
+     */
+    public ArrayList<KielerCompilerException> getPostponedErrors() {
+        return postponedErrors;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the postponed warnings.
+     * 
+     * @return the postponedWarnings
+     */
+    public ArrayList<KielerCompilerException> getPostponedWarnings() {
+        return postponedWarnings;
     }
 
     // -------------------------------------------------------------------------

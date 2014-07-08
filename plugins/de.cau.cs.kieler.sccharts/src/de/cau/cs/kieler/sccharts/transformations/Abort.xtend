@@ -152,7 +152,9 @@ class Abort {
                                 strongAbort.setTrigger(strongAbortTrigger.copy)
                             }
                             if (weakAbortTrigger != null) {
-                                val weakAbort = innerState.createTransitionTo(abortedState)
+// The following line is responsible for KISEMA 925 to fail                                 
+//                                val weakAbort = innerState.createTransitionTo(abortedState) 
+                                val weakAbort = innerState.createTransitionTo(abortedState, 0)
                                 weakAbort.setTrigger(weakAbortTrigger.copy)
                             }
                         }
@@ -236,8 +238,12 @@ class Abort {
         val targetRootState = rootState.copy.fixAllPriorities;
 
         // Traverse all states
+        var done = false;
         for (targetState : targetRootState.getAllContainedStates) {
-            targetState.transformAbortDefault(targetRootState);
+            if (!done) {
+                targetState.transformAbortDefault(targetRootState);
+            }
+    //        done = true;
         }
         targetRootState.fixAllTextualOrdersByPriorities;
     }
@@ -343,7 +349,9 @@ class Abort {
                                 strongAbort.setTrigger(strongAbortTrigger.copy)
                             }
                             if (weakAbortTrigger != null) {
-                                val weakAbort = innerState.createTransitionTo(abortedState)
+// The following line is responsible for KISEMA 925 to fail                                 
+//                                val weakAbort = innerState.createTransitionTo(abortedState) 
+                                val weakAbort = innerState.createTransitionTo(abortedState, 0)
                                 weakAbort.setTrigger(weakAbortTrigger.copy)
                             }
                         }
