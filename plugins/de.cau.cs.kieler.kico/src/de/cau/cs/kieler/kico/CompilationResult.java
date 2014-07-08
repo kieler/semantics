@@ -37,10 +37,12 @@ public class CompilationResult {
     private List<Object> intermediateResults = new ArrayList<Object>();
 
     /** The postponed error list transformation id. */
-    private ArrayList<KielerCompilerException> postponedErrors = new ArrayList<KielerCompilerException>();
+    private ArrayList<KielerCompilerException> postponedErrors =
+            new ArrayList<KielerCompilerException>();
 
     /** The postponed error list transformation id. */
-    private ArrayList<KielerCompilerException> postponedWarnings = new ArrayList<KielerCompilerException>();
+    private ArrayList<KielerCompilerException> postponedWarnings =
+            new ArrayList<KielerCompilerException>();
 
     /** All last/occurred errors processed for this compilation. */
     private String allErrors = null;
@@ -148,8 +150,9 @@ public class CompilationResult {
 
     /**
      * Adds the postponed error.
-     *
-     * @param exception the KielerCompilerException
+     * 
+     * @param exception
+     *            the KielerCompilerException
      */
     public void addPostponedError(KielerCompilerException exception) {
         this.postponedErrors.add(exception);
@@ -159,8 +162,9 @@ public class CompilationResult {
 
     /**
      * Adds the postponed warning.
-     *
-     * @param exception the KielerCompilerException
+     * 
+     * @param exception
+     *            the KielerCompilerException
      */
     public void addPostponedWarning(KielerCompilerException exception) {
         this.postponedWarnings.add(exception);
@@ -192,7 +196,7 @@ public class CompilationResult {
      * 
      */
     public void processPostponedWarnings() {
-        for (KielerCompilerException exception :  postponedWarnings) {
+        for (KielerCompilerException exception : postponedWarnings) {
             String transformationID = exception.getTransformationID();
 
             if (allWarnings != null) {
@@ -200,7 +204,7 @@ public class CompilationResult {
             } else {
                 allWarnings = "";
             }
-            allWarnings += exception.getErrorMessage();
+            allWarnings += exception.getStackTraceString();
 
             KiCoPlugin.getInstance().showWarning(
                     "An warning occurred while calling transformation with the ID '"
@@ -216,7 +220,7 @@ public class CompilationResult {
      * 
      */
     public void processPostponedErrors() {
-        for (KielerCompilerException exception :  postponedErrors) {
+        for (KielerCompilerException exception : postponedErrors) {
             String transformationID = exception.getTransformationID();
 
             if (allErrors != null) {
@@ -224,7 +228,7 @@ public class CompilationResult {
             } else {
                 allErrors = "";
             }
-            allErrors += exception.getErrorMessage();
+            allErrors += exception.getStackTraceString();
 
             KiCoPlugin.getInstance().showError(
                     "An error occurred while calling transformation with the ID '"
@@ -235,6 +239,8 @@ public class CompilationResult {
     // -------------------------------------------------------------------------
 
     /**
+     * Gets the all errors.
+     * 
      * @return the allErrors
      */
     public String getAllErrors() {
@@ -244,10 +250,34 @@ public class CompilationResult {
     // -------------------------------------------------------------------------
 
     /**
+     * Gets the all warnings.
+     * 
      * @return the allWarnings
      */
     public String getAllWarnings() {
         return allWarnings;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the postponed errors.
+     * 
+     * @return the postponedErrors
+     */
+    public ArrayList<KielerCompilerException> getPostponedErrors() {
+        return postponedErrors;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the postponed warnings.
+     * 
+     * @return the postponedWarnings
+     */
+    public ArrayList<KielerCompilerException> getPostponedWarnings() {
+        return postponedWarnings;
     }
 
     // -------------------------------------------------------------------------

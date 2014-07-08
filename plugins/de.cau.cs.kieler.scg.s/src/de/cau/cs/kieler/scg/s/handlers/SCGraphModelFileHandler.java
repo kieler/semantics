@@ -99,7 +99,7 @@ public class SCGraphModelFileHandler extends AbstractConvertModelHandler {
                 if (!(transformed instanceof SCGraphBB)) 
                     transformed = transformation2.transform(transformed);
                 if (!(transformed instanceof SCGraphSched)) 
-                    transformed = transformation3.transform(transformed);            
+                    transformed = transformation3.transform(transformed, null);            
                 transformed = transformation4.transform(transformed);
             }
             
