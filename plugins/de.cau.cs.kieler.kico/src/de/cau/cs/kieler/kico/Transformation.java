@@ -72,6 +72,12 @@ public abstract class Transformation {
         } else {
             transformMethod = transformationMethod;
         }
+        if (transformMethod == null) {
+            throw (new RuntimeException("The declared transformation method '" + method
+                    + "' of transformation '" + id
+                    + "' was not found. If you declared a method you must not extend the "
+                    + "Transformation abstract class at the same time."));
+        }
         Class<?>[] classArray = transformMethod.getParameterTypes();
         if (classArray.length > 0) {
             return classArray[0];

@@ -102,6 +102,22 @@ public class KiCoPlugin extends Plugin {
     // -------------------------------------------------------------------------
 
     /**
+     * Checks if is isKielerCompilerContext.
+     * 
+     * @param clazz
+     *            the clazz
+     * @return true, if is e object
+     */
+    private static boolean isKielerCompilerContext(Class<?> clazz) {
+        if (KielerCompilerContext.class.isAssignableFrom(clazz)) {
+            return true;
+        }
+        return false;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Gets the guice instance.
      * 
      * @param object
@@ -129,9 +145,19 @@ public class KiCoPlugin extends Plugin {
             String providedMethodName = providedMethod.getName();
             Class<?>[] parameterTypes = providedMethod.getParameterTypes();
             if (providedMethodName.equals(method)) {
+                // Case where signature is 'method(EObject eObject)'
                 if (parameterTypes.length == 1) {
                     Class<?> parameterType = parameterTypes[0];
                     if (isEObject(parameterType)) {
+                        return providedMethod;
+                    }
+                }
+                // Case where signature is 'method(EObject eObject, KielerCompilerContext
+                // kielerCompilerContext)'
+                if (parameterTypes.length == 2) {
+                    Class<?> parameterType1 = parameterTypes[0];
+                    Class<?> parameterType2 = parameterTypes[1];
+                    if (isEObject(parameterType1) && isKielerCompilerContext(parameterType2)) {
                         return providedMethod;
                     }
                 }
@@ -204,7 +230,8 @@ public class KiCoPlugin extends Plugin {
                         }
                     }
 
-                } else if (transformationInstance instanceof Transformation) {
+                } else if (transformationInstance instanceof Transformation
+                        && (method == null || method.trim().length() == 0)) {
                     // The specified class is a Transformation, use it directly
                     transformation =
                             (Transformation) transformations[i].createExecutableExtension("class");
@@ -528,8 +555,8 @@ public class KiCoPlugin extends Plugin {
      * @return the last error
      */
     public static String getLastError() {
-        //TODO: 
-        return "";//lastError;
+        // TODO:
+        return "";// lastError;
     }
 
     // -------------------------------------------------------------------------
@@ -539,8 +566,8 @@ public class KiCoPlugin extends Plugin {
      * 
      */
     public static void resetLastError() {
-        //TODO: 
-        //KiCoPlugin.lastError = null;
+        // TODO:
+        // KiCoPlugin.lastError = null;
     }
 
     // -------------------------------------------------------------------------
