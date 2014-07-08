@@ -25,70 +25,72 @@ import java.io.StringWriter;
  * 
  */
 public class KielerCompilerException extends Exception {
-    
+
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -2363146434608966197L;
-    
+
     /** The transformation id that caused the exception. */
     private String transformationID;
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Instantiates a new kieler compiler exception.
-     *
-     * @param transformationID the transformation id
+     * 
+     * @param transformationID
+     *            the transformation id
      */
     public KielerCompilerException(String transformationID, String errorMessage) {
         super(errorMessage);
         this.transformationID = transformationID;
     }
-    
+
     // -------------------------------------------------------------------------
-    
+
     /**
      * Instantiates a new kieler compiler exception.
-     *
-     * @param transformationID the transformation id
+     * 
+     * @param transformationID
+     *            the transformation id
      */
     public KielerCompilerException(String transformationID, Exception exception) {
         super(exception.getMessage(), exception.getCause());
         this.setStackTrace(exception.getStackTrace());
         this.transformationID = transformationID;
     }
-    
+
     // -------------------------------------------------------------------------
-    
 
     /**
      * Gets the transformation id of the transformation that caused the exception.
-     *
+     * 
      * @return the transformation id
      */
     public String getTransformationID() {
         return transformationID;
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the exception as a string.
-     *
-     * @return the transformation id
+     * Gets the stack trace as a string.
+     * 
+     * @return the stack trace
      */
-    public String getErrorMessage() {
-        return KielerCompilerException.getErrorMessage(this);
+    public String getStackTraceString() {
+        return KielerCompilerException.getStackTraceString(this);
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the error message of an exception as a string.
-     *
-     * @param t the t
-     * @return the error message
+     * Gets the stack trace of an exception as a string.
+     * 
+     * @param t
+     *            the t
+     * @return the error stack trace
      */
-    public static String getErrorMessage(Throwable t) {
+    public static String getStackTraceString(Throwable t) {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         t.printStackTrace(pw);
