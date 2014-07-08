@@ -107,12 +107,6 @@ public class KiCoAsynchronousCompilation extends Job {
             context.setProgressMonitor(monitor);
             result = KielerCompiler.compile(context);
 
-// TODO: deprecated code part, please check and remove            
-//            // compile
-//            result =
-//                    KielerCompiler.compile(transformations.getSelectionString(),
-//                            (EObject) sourceModel, transformations.isAdvanced(), false);
-
             if (monitor.isCanceled()) {
                 return Status.CANCEL_STATUS;
             }
