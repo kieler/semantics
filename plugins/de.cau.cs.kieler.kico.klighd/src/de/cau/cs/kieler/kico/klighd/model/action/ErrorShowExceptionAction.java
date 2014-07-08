@@ -40,14 +40,11 @@ public class ErrorShowExceptionAction implements IAction {
         if (inputModel instanceof KiCoErrorModel) {
             KiCoErrorModel errorModel = (KiCoErrorModel) inputModel;
             // if exception present show in error dialog
-            if (errorModel.getDeatails() != null) {
-                String reason = errorModel.getDeatails();
-                if (reason.contains("\n")) {
-                    reason = reason.substring(0, reason.indexOf("\n"));
-                }
+            if (errorModel.getStackTrace() != null) {
+                String reason = errorModel.getReason();                
                 final Status status =
                         new Status(IStatus.INFO, ID, reason,
-                                new Exception(errorModel.getDeatails()));
+                                new Exception(errorModel.getStackTrace()));
                 ErrorDialog errorDialog =
                         new ErrorDialog(context.getViewContext().getDiagramWorkbenchPart()
                                 .getSite().getShell(), errorModel.getMessage(),

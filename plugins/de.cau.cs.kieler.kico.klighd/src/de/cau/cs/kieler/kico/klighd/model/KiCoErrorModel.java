@@ -20,44 +20,63 @@ import java.io.StringWriter;
  * Model of KiCoModelView to represent errors and exceptions
  * 
  * @author als
- *
+ * 
  */
 public class KiCoErrorModel {
 
     private final String message;
-    private final String details;    
+    private final String reason;
+    private final String stacktrace;
 
     /**
      * Constructs a error model given message
-     * @param message error message
+     * 
+     * @param message
+     *            error message
      */
     public KiCoErrorModel(String message) {
         this.message = message;
-        this.details = null;
+        this.stacktrace = null;
+        this.reason = "Unkown";
     }
 
     /**
      * Constructs a error model given message and details
-     * @param message error message
-     * @param details
+     * 
+     * @param message
+     *            error message
+     * @param reason
+     * @param stacktrace
      */
-    public KiCoErrorModel(String message, String details) {
+    public KiCoErrorModel(String message, String reason, String stacktrace) {
         this.message = message;
-        this.details = details;
+        this.stacktrace = stacktrace;
+        if (reason == null) {
+            this.reason = "Unkown";
+        } else {
+            this.reason = reason;
+        }
     }
-    
+
     /**
      * Constructs a error model given message and exception
-     * @param message error message
+     * 
+     * @param message
+     *            error message
      * @param exception
      */
     public KiCoErrorModel(String message, Exception exception) {
         this.message = message;
-     // Print stack trace into string
+        // Print stack trace into string
         StringWriter traceReader = new StringWriter();
         exception.printStackTrace(new PrintWriter(traceReader));
         String exceptionTrace = traceReader.toString();
-        this.details = exceptionTrace;
+        this.stacktrace = exceptionTrace;
+        if(exception.getMessage() == null || exception.getMessage().isEmpty()){
+            this.reason = exception.toString();
+        }else{
+            this.reason = exception.getMessage();
+        }
     }
 
     /**
@@ -70,10 +89,14 @@ public class KiCoErrorModel {
     /**
      * @return the exception
      */
-    public String getDeatails() {
-        return details;
+    public String getStackTrace() {
+        return stacktrace;
     }
-    
-    
 
+    /**
+     * @return the reason
+     */
+    public String getReason() {
+        return reason;
+    }
 }

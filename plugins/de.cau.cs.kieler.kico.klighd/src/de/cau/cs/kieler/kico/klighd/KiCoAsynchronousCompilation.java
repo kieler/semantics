@@ -108,8 +108,8 @@ public class KiCoAsynchronousCompilation extends Job {
             }
 
             // check result
-            if (result.getAllErrors() != null) {
-                model = new KiCoErrorModel("Compilation Error!", result.getAllErrors());
+            if (!result.getPostponedErrors().isEmpty()) {
+                model = new KiCoErrorModel("Compilation Error!", result.getPostponedErrors().get(0).getMessage(), result.getAllErrors());
                 updateModelView();
                 return new Status(Status.INFO, KiCoKLighDPlugin.PLUGIN_ID, result.getAllErrors());
             } else if (result == null || (result.getEObject() == null && result.getString() == null)) {
