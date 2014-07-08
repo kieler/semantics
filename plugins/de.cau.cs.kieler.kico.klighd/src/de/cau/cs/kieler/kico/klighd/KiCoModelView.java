@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.kico.klighd;
 
+import java.io.BufferedWriter;
 import java.util.WeakHashMap;
 
 import org.eclipse.core.resources.IFile;
@@ -67,6 +68,7 @@ import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KiCoPlugin;
+import de.cau.cs.kieler.kico.KielerCompilerException;
 import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoMessageModel;
@@ -1066,8 +1068,13 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 warningMessageContainer = null;
             }
             //show warnings
-            if (compilationResult != null && compilationResult.getAllWarnings() != null) {
-                addWarningComposite(this.getViewer(), compilationResult.getAllWarnings());
+            if (compilationResult != null && !compilationResult.getPostponedWarnings().isEmpty()) {
+                StringBuilder warnings = new StringBuilder();
+                for (KielerCompilerException warning : compilationResult.getPostponedWarnings()) {
+                    warnings.append(warning.getMessage()).append("\n");
+                }
+                warnings.setLength(warnings.length() - 1);
+                addWarningComposite(this.getViewer(), warnings.toString());
             }
 
         } catch (Exception e) {
@@ -1106,7 +1113,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
         final Color orange = new Color(canvas.getDisplay(), new RGB(255, 165, 0));
         warningMessageContainer.setBackground(orange);
 
-        final Button close = new Button(warningMessageContainer, SWT.PUSH | SWT.FLAT );
+        final Button close = new Button(warningMessageContainer, SWT.PUSH | SWT.FLAT);
         final Image closeImage = ICON_CLOSE.createImage();
         close.setImage(closeImage);
         //close.setBackground(orange);
