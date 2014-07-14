@@ -527,7 +527,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                     val ktext = it.addText(" " + s.label + prioritySpace).putToLookUpWith(s) => [
                         it.fontSize = 11;
                         it.setFontBold(true);
-                        it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
+                        if (PAPER_BW.booleanValue) {
+                            it.setGridPlacementData().from(LEFT, 10, 0, TOP, 9f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
+                        } else {
+                            it.setGridPlacementData().from(LEFT, 9, 0, TOP, 9f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
+                        }
                     ];
                     if (priorityToShow.length > 0) {
                         val estimatedWidth = PlacementUtil.estimateTextSize(ktext).width
