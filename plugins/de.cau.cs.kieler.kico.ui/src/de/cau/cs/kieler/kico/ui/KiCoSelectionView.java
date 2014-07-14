@@ -266,7 +266,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         for (String transformationID : selectedList) {
             if (transformationID.startsWith("!")) {
                 transformationID = transformationID.substring(1);
-                if (transformationID.equals(transformationDummyID)) {
+                if (transformationID.equals(transformationDummyID.replace("!", ""))) {
                     return true;
                 }
             }
@@ -444,6 +444,8 @@ public class KiCoSelectionView extends DiagramViewPart {
         if (context != null) {
             for (TransformationDummy transformationDummy : context.getGraph()) {
                 if (transformationDummy.id.equals(transformationID)) {
+                    return transformationDummy;
+                } else if (transformationDummy.id.equals(transformationID.replace("!", ""))) {
                     return transformationDummy;
                 }
             }
