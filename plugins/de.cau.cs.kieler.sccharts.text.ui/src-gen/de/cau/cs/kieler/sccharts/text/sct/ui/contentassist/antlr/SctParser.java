@@ -107,6 +107,7 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTransitionAccess().getGroup_3_3_0_0_0(), "rule__Transition__Group_3_3_0_0_0__0");
 					put(grammarAccess.getTransitionAccess().getGroup_3_3_0_1(), "rule__Transition__Group_3_3_0_1__0");
 					put(grammarAccess.getTransitionAccess().getGroup_3_3_0_1_2(), "rule__Transition__Group_3_3_0_1_2__0");
+					put(grammarAccess.getTransitionAccess().getGroup_3_3_1(), "rule__Transition__Group_3_3_1__0");
 					put(grammarAccess.getDeclarationAccess().getGroup(), "rule__Declaration__Group__0");
 					put(grammarAccess.getDeclarationAccess().getGroup_1_0(), "rule__Declaration__Group_1_0__0");
 					put(grammarAccess.getDeclarationAccess().getGroup_1_0_5_0(), "rule__Declaration__Group_1_0_5_0__0");
@@ -232,7 +233,7 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTransitionAccess().getTriggerAssignment_3_3_0_0_0_2(), "rule__Transition__TriggerAssignment_3_3_0_0_0_2");
 					put(grammarAccess.getTransitionAccess().getEffectsAssignment_3_3_0_1_1(), "rule__Transition__EffectsAssignment_3_3_0_1_1");
 					put(grammarAccess.getTransitionAccess().getEffectsAssignment_3_3_0_1_2_1(), "rule__Transition__EffectsAssignment_3_3_0_1_2_1");
-					put(grammarAccess.getTransitionAccess().getLabelAssignment_3_3_1(), "rule__Transition__LabelAssignment_3_3_1");
+					put(grammarAccess.getTransitionAccess().getLabelAssignment_3_3_1_1(), "rule__Transition__LabelAssignment_3_3_1_1");
 					put(grammarAccess.getDeclarationAccess().getAnnotationsAssignment_0(), "rule__Declaration__AnnotationsAssignment_0");
 					put(grammarAccess.getDeclarationAccess().getExternAssignment_1_0_0(), "rule__Declaration__ExternAssignment_1_0_0");
 					put(grammarAccess.getDeclarationAccess().getStaticAssignment_1_0_1(), "rule__Declaration__StaticAssignment_1_0_1");

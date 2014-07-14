@@ -1541,11 +1541,15 @@ ruleTransition returns [EObject current=null]
 
 )
 ))*)?)
-    |(
+    |(	otherlv_16='with' 
+    {
+    	newLeafNode(otherlv_16, grammarAccess.getTransitionAccess().getWithKeyword_3_3_1_0());
+    }
 (
-		lv_label_16_0=RULE_STRING
+(
+		lv_label_17_0=RULE_STRING
 		{
-			newLeafNode(lv_label_16_0, grammarAccess.getTransitionAccess().getLabelSTRINGTerminalRuleCall_3_3_1_0()); 
+			newLeafNode(lv_label_17_0, grammarAccess.getTransitionAccess().getLabelSTRINGTerminalRuleCall_3_3_1_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1554,12 +1558,12 @@ ruleTransition returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"label",
-        		lv_label_16_0, 
+        		lv_label_17_0, 
         		"STRING");
 	    }
 
 )
-))?)?)
+)))?)?)
 ;
 
 

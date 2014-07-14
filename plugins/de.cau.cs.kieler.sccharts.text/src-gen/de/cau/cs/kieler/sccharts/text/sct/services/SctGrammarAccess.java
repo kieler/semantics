@@ -61,11 +61,13 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		// SingleRegion
 		//returns sccharts::Region:
 		//	{sccharts::Region} (annotations+=Annotation* "region" id=ID? label=STRING? ("[" for=For "]")? ":"
-		//	declarations+=Declaration*)? states+=State*;
+		//	declarations+=Declaration*)? //      (bodyText+=TextualCode)* 
+		// states+=State*;
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::Region} (annotations+=Annotation* "region" id=ID? label=STRING? ("[" for=For "]")? ":"
-		//declarations+=Declaration*)? states+=State*
+		//declarations+=Declaration*)? //      (bodyText+=TextualCode)* 
+		// states+=State*
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::Region}
@@ -599,13 +601,15 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//	annotations+=Annotation* (initial?="initial" final?="final"? | final?="final" initial?="initial"?)? type=StateType?
 		//	"state" id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
 		//	bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion
-		//	regions+=Region*)?) "}")? outgoingTransitions+=Transition* ";";
+		//	regions+=Region*)?) "}")? // The semicolon is mandatory for the backtracking!
+		// outgoingTransitions+=Transition* ";";
 		public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* (initial?="initial" final?="final"? | final?="final" initial?="initial"?)? type=StateType?
 		//"state" id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
 		//bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion
-		//regions+=Region*)?) "}")? outgoingTransitions+=Transition* ";"
+		//regions+=Region*)?) "}")? // The semicolon is mandatory for the backtracking!
+		// outgoingTransitions+=Transition* ";"
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -833,8 +837,10 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_3_3_0_1_2_0 = (Keyword)cGroup_3_3_0_1_2.eContents().get(0);
 		private final Assignment cEffectsAssignment_3_3_0_1_2_1 = (Assignment)cGroup_3_3_0_1_2.eContents().get(1);
 		private final RuleCall cEffectsEffectParserRuleCall_3_3_0_1_2_1_0 = (RuleCall)cEffectsAssignment_3_3_0_1_2_1.eContents().get(0);
-		private final Assignment cLabelAssignment_3_3_1 = (Assignment)cAlternatives_3_3.eContents().get(1);
-		private final RuleCall cLabelSTRINGTerminalRuleCall_3_3_1_0 = (RuleCall)cLabelAssignment_3_3_1.eContents().get(0);
+		private final Group cGroup_3_3_1 = (Group)cAlternatives_3_3.eContents().get(1);
+		private final Keyword cWithKeyword_3_3_1_0 = (Keyword)cGroup_3_3_1.eContents().get(0);
+		private final Assignment cLabelAssignment_3_3_1_1 = (Assignment)cGroup_3_3_1.eContents().get(1);
+		private final RuleCall cLabelSTRINGTerminalRuleCall_3_3_1_1_0 = (RuleCall)cLabelAssignment_3_3_1_1.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
 		// Transition
@@ -843,14 +849,14 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//	//	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
 		// (immediate?="immediate"?
 		//	deferred?="deferred"? history=HistoryType? (("with" delay=INT? trigger=BoolExpression | "with")? (("/" | "do")
-		//	effects+=Effect (";" effects+=Effect)*)? | label=STRING)?)?;
+		//	effects+=Effect (";" effects+=Effect)*)? | "with" label=STRING)?)?;
 		public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* (type=TransitionTypeLegacy | type=TransitionType) targetState=[sccharts::State]
 		////	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
 		// (immediate?="immediate"?
 		//deferred?="deferred"? history=HistoryType? (("with" delay=INT? trigger=BoolExpression | "with")? (("/" | "do")
-		//effects+=Effect (";" effects+=Effect)*)? | label=STRING)?)?
+		//effects+=Effect (";" effects+=Effect)*)? | "with" label=STRING)?)?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -884,7 +890,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getTargetStateStateIDTerminalRuleCall_2_0_1() { return cTargetStateStateIDTerminalRuleCall_2_0_1; }
 
 		//(immediate?="immediate"? deferred?="deferred"? history=HistoryType? (("with" delay=INT? trigger=BoolExpression |
-		//"with")? (("/" | "do") effects+=Effect (";" effects+=Effect)*)? | label=STRING)?)?
+		//"with")? (("/" | "do") effects+=Effect (";" effects+=Effect)*)? | "with" label=STRING)?)?
 		public Group getGroup_3() { return cGroup_3; }
 
 		//immediate?="immediate"?
@@ -905,7 +911,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//HistoryType
 		public RuleCall getHistoryHistoryTypeEnumRuleCall_3_2_0() { return cHistoryHistoryTypeEnumRuleCall_3_2_0; }
 
-		//(("with" delay=INT? trigger=BoolExpression | "with")? (("/" | "do") effects+=Effect (";" effects+=Effect)*)? |
+		//(("with" delay=INT? trigger=BoolExpression | "with")? (("/" | "do") effects+=Effect (";" effects+=Effect)*)? | "with"
 		//label=STRING)?
 		public Alternatives getAlternatives_3_3() { return cAlternatives_3_3; }
 
@@ -966,11 +972,17 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//Effect
 		public RuleCall getEffectsEffectParserRuleCall_3_3_0_1_2_1_0() { return cEffectsEffectParserRuleCall_3_3_0_1_2_1_0; }
 
+		//"with" label=STRING
+		public Group getGroup_3_3_1() { return cGroup_3_3_1; }
+
+		//"with"
+		public Keyword getWithKeyword_3_3_1_0() { return cWithKeyword_3_3_1_0; }
+
 		//label=STRING
-		public Assignment getLabelAssignment_3_3_1() { return cLabelAssignment_3_3_1; }
+		public Assignment getLabelAssignment_3_3_1_1() { return cLabelAssignment_3_3_1_1; }
 
 		//STRING
-		public RuleCall getLabelSTRINGTerminalRuleCall_3_3_1_0() { return cLabelSTRINGTerminalRuleCall_3_3_1_0; }
+		public RuleCall getLabelSTRINGTerminalRuleCall_3_3_1_1_0() { return cLabelSTRINGTerminalRuleCall_3_3_1_1_0; }
 	}
 
 	public class DeclarationElements extends AbstractParserRuleElementFinder {
@@ -1514,7 +1526,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	// SingleRegion
 	//returns sccharts::Region:
 	//	{sccharts::Region} (annotations+=Annotation* "region" id=ID? label=STRING? ("[" for=For "]")? ":"
-	//	declarations+=Declaration*)? states+=State*;
+	//	declarations+=Declaration*)? //      (bodyText+=TextualCode)* 
+	// states+=State*;
 	public SingleRegionElements getSingleRegionAccess() {
 		return (pSingleRegion != null) ? pSingleRegion : (pSingleRegion = new SingleRegionElements());
 	}
@@ -1597,7 +1610,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//	annotations+=Annotation* (initial?="initial" final?="final"? | final?="final" initial?="initial"?)? type=StateType?
 	//	"state" id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
 	//	bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion
-	//	regions+=Region*)?) "}")? outgoingTransitions+=Transition* ";";
+	//	regions+=Region*)?) "}")? // The semicolon is mandatory for the backtracking!
+	// outgoingTransitions+=Transition* ";";
 	public StateElements getStateAccess() {
 		return (pState != null) ? pState : (pState = new StateElements());
 	}
@@ -1625,7 +1639,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//	//	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
 	// (immediate?="immediate"?
 	//	deferred?="deferred"? history=HistoryType? (("with" delay=INT? trigger=BoolExpression | "with")? (("/" | "do")
-	//	effects+=Effect (";" effects+=Effect)*)? | label=STRING)?)?;
+	//	effects+=Effect (";" effects+=Effect)*)? | "with" label=STRING)?)?;
 	public TransitionElements getTransitionAccess() {
 		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
 	}

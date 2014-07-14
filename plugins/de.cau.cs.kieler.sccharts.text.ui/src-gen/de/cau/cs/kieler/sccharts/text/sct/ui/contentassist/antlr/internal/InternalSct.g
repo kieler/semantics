@@ -2207,9 +2207,9 @@ rule__Transition__Alternatives_3_3
 )
 
     |(
-{ before(grammarAccess.getTransitionAccess().getLabelAssignment_3_3_1()); }
-(rule__Transition__LabelAssignment_3_3_1)
-{ after(grammarAccess.getTransitionAccess().getLabelAssignment_3_3_1()); }
+{ before(grammarAccess.getTransitionAccess().getGroup_3_3_1()); }
+(rule__Transition__Group_3_3_1__0)
+{ after(grammarAccess.getTransitionAccess().getGroup_3_3_1()); }
 )
 
 ;
@@ -6463,6 +6463,69 @@ rule__Transition__Group_3_3_0_1_2__1__Impl
 { before(grammarAccess.getTransitionAccess().getEffectsAssignment_3_3_0_1_2_1()); }
 (rule__Transition__EffectsAssignment_3_3_0_1_2_1)
 { after(grammarAccess.getTransitionAccess().getEffectsAssignment_3_3_0_1_2_1()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+
+
+
+
+rule__Transition__Group_3_3_1__0
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__Transition__Group_3_3_1__0__Impl
+	rule__Transition__Group_3_3_1__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Transition__Group_3_3_1__0__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getTransitionAccess().getWithKeyword_3_3_1_0()); }
+
+	'with' 
+
+{ after(grammarAccess.getTransitionAccess().getWithKeyword_3_3_1_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__Transition__Group_3_3_1__1
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+	rule__Transition__Group_3_3_1__1__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Transition__Group_3_3_1__1__Impl
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getTransitionAccess().getLabelAssignment_3_3_1_1()); }
+(rule__Transition__LabelAssignment_3_3_1_1)
+{ after(grammarAccess.getTransitionAccess().getLabelAssignment_3_3_1_1()); }
 )
 
 ;
@@ -14171,14 +14234,14 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__Transition__LabelAssignment_3_3_1
+rule__Transition__LabelAssignment_3_3_1_1
     @init {
 		int stackSize = keepStackSize();
     }
 :
 (
-{ before(grammarAccess.getTransitionAccess().getLabelSTRINGTerminalRuleCall_3_3_1_0()); }
-	RULE_STRING{ after(grammarAccess.getTransitionAccess().getLabelSTRINGTerminalRuleCall_3_3_1_0()); }
+{ before(grammarAccess.getTransitionAccess().getLabelSTRINGTerminalRuleCall_3_3_1_1_0()); }
+	RULE_STRING{ after(grammarAccess.getTransitionAccess().getLabelSTRINGTerminalRuleCall_3_3_1_1_0()); }
 )
 
 ;
