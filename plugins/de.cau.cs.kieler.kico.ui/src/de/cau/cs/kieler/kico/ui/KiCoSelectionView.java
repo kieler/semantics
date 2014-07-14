@@ -468,10 +468,12 @@ public class KiCoSelectionView extends DiagramViewPart {
                     resolveTransformationDummy(requiredTransformationID,
                             KiCoSelectionView.getActiveEditorID());
             if (requiredTransformationDummy != null) {
-                KiCoKlighdAction.setLabelColor(requiredTransformationDummy, context,
-                        KiCoDiagramSynthesis.BLACK, KiCoDiagramSynthesis.BLUE1);
-                KiCoKlighdAction.setStateColor(requiredTransformationDummy, context,
-                        KiCoDiagramSynthesis.BLUE1, KiCoDiagramSynthesis.BLUE2);
+                if (!isSelectedTransformationDisabled(requiredTransformationID, editorID)) {
+                    KiCoKlighdAction.setLabelColor(requiredTransformationDummy, context,
+                            KiCoDiagramSynthesis.BLACK, KiCoDiagramSynthesis.BLUE1);
+                    KiCoKlighdAction.setStateColor(requiredTransformationDummy, context,
+                            KiCoDiagramSynthesis.BLUE1, KiCoDiagramSynthesis.BLUE2);
+                }
             }
         }
 
@@ -494,10 +496,12 @@ public class KiCoSelectionView extends DiagramViewPart {
                 TransformationDummy requiredTransformationDummy =
                         resolveTransformationDummy(requiredTransformationID, editorID);
                 if (requiredTransformationDummy != null) {
-                    KiCoKlighdAction.setLabelColor(requiredTransformationDummy, context,
-                            KiCoDiagramSynthesis.WHITE, KiCoDiagramSynthesis.BLUE3b);
-                    KiCoKlighdAction.setStateColor(requiredTransformationDummy, context,
-                            KiCoDiagramSynthesis.BLUE3b, KiCoDiagramSynthesis.BLUE3b);
+                    if (!isSelectedTransformationDisabled(requiredTransformationID, editorID)) {
+                        KiCoKlighdAction.setLabelColor(requiredTransformationDummy, context,
+                                KiCoDiagramSynthesis.WHITE, KiCoDiagramSynthesis.BLUE3b);
+                        KiCoKlighdAction.setStateColor(requiredTransformationDummy, context,
+                                KiCoDiagramSynthesis.BLUE3b, KiCoDiagramSynthesis.BLUE3b);
+                    }
                 }
             }
         }
@@ -536,10 +540,10 @@ public class KiCoSelectionView extends DiagramViewPart {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Gets the all transformations.
-     *
+     * 
      * @return the all transformations
      */
     public static List<TransformationDummy> getAllTransformations(int editorID) {
@@ -608,7 +612,6 @@ public class KiCoSelectionView extends DiagramViewPart {
         }
     }
 
-    
     // -------------------------------------------------------------------------
 
     /**
@@ -617,7 +620,8 @@ public class KiCoSelectionView extends DiagramViewPart {
      * @param editorID
      *            the editor id
      */
-    public static void addSelectedTransformationVisualization(int editorID, List<String> transformationDummyIDs) {
+    public static void addSelectedTransformationVisualization(int editorID,
+            List<String> transformationDummyIDs) {
         ViewContext context = instance.getViewer().getViewContext();
         for (String selectedTransformationID : transformationDummyIDs) {
             TransformationDummy selectedTransformationDummy =
@@ -630,7 +634,8 @@ public class KiCoSelectionView extends DiagramViewPart {
                         KiCoDiagramSynthesis.BLUE3, KiCoDiagramSynthesis.BLUE4);
             }
         }
-    }    
+    }
+
     // -------------------------------------------------------------------------
 
     /**
@@ -654,10 +659,12 @@ public class KiCoSelectionView extends DiagramViewPart {
                         allExpanded = false;
                         if (allExpanded) {
                             actionExpandAllToggle.setImageDescriptor(ICON_COLLAPSEALL);
-                            actionExpandAllToggle.setToolTipText("Collapse all expanded transformation groups.");
+                            actionExpandAllToggle
+                                    .setToolTipText("Collapse all expanded transformation groups.");
                         } else {
                             actionExpandAllToggle.setImageDescriptor(ICON_EXPANDALL);
-                            actionExpandAllToggle.setToolTipText("Expand all collapsed transformation groups.");
+                            actionExpandAllToggle
+                                    .setToolTipText("Expand all collapsed transformation groups.");
                         }
 
                         lastEditor = partName;
@@ -741,8 +748,8 @@ public class KiCoSelectionView extends DiagramViewPart {
                                     KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                                     "de.cau.cs.kieler.kico.ui.klighd.diagramFlatSynthesis");
                         }
-                        
-                        //Hide zoom buttons
+
+                        // Hide zoom buttons
                         properties.setProperty(
                                 KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
                                 ZoomConfigButtonsHandling.HIDE);
@@ -995,7 +1002,8 @@ public class KiCoSelectionView extends DiagramViewPart {
                 }
                 int activeEditorID = getActiveEditorID();
                 if (allSelected) {
-                    List<TransformationDummy> allTransformations = getAllTransformations(activeEditorID);
+                    List<TransformationDummy> allTransformations =
+                            getAllTransformations(activeEditorID);
                     List<String> allTransformationIDs = new ArrayList<String>();
                     for (TransformationDummy transformationDummy : allTransformations) {
                         allTransformationIDs.add(transformationDummy.id);
@@ -1005,14 +1013,14 @@ public class KiCoSelectionView extends DiagramViewPart {
                             getSelectedTransformations(activeEditorID);
                     for (String transformationID : allTransformationIDs) {
                         addSelectedTransformation(transformationID,
-                                selectedAndExcludedTransformations, true);                        
+                                selectedAndExcludedTransformations, true);
                     }
                 } else {
                     List<String> selectedAndExcludedTransformations =
                             getSelectedTransformations(activeEditorID);
                     removeSelectedTransformationVisualization(activeEditorID);
-                    
-                    while(selectedAndExcludedTransformations.size() > 0) {
+
+                    while (selectedAndExcludedTransformations.size() > 0) {
                         String transformationID = selectedAndExcludedTransformations.get(0);
                         removeSelectedTransformation(transformationID, activeEditorID);
                     }
@@ -1046,10 +1054,12 @@ public class KiCoSelectionView extends DiagramViewPart {
                 allExpanded = !allExpanded;
                 if (allExpanded) {
                     actionExpandAllToggle.setImageDescriptor(ICON_COLLAPSEALL);
-                    actionExpandAllToggle.setToolTipText("Collapse all expanded transformation groups.");
+                    actionExpandAllToggle
+                            .setToolTipText("Collapse all expanded transformation groups.");
                 } else {
                     actionExpandAllToggle.setImageDescriptor(ICON_EXPANDALL);
-                    actionExpandAllToggle.setToolTipText("Expand all collapsed transformation groups.");
+                    actionExpandAllToggle
+                            .setToolTipText("Expand all collapsed transformation groups.");
                 }
 
                 if (allExpanded) {
@@ -1207,7 +1217,8 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static void updateActiveTransformationsProperty() {
         KiCoSelection currentSelection =
                 new KiCoSelection(getActiveEditorID(),
-                        selectedTransformations.get(getActiveEditorID()), requiredTransformations.get(getActiveEditorID()), advancedMode);
+                        selectedTransformations.get(getActiveEditorID()),
+                        requiredTransformations.get(getActiveEditorID()), advancedMode);
         selectionEventManger.fireSelectionChangeEvent(currentSelection);
     }
 
