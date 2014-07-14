@@ -121,6 +121,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
     // -------------------------------------------------------------------------
     // Transformation options   
     // CORE TRANSFORMATIONS
+    private static val SynthesisOption PAPER_BW = SynthesisOption::createCheckOption("Black/White (Paper)",
+        false);
+        
     private static val SynthesisOption SHOW_SIGNAL_DECLARATIONS = SynthesisOption::createCheckOption("Declarations",
         true);
 
@@ -145,7 +148,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
 
     override public getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER,
-            SHOW_REFERENCEEXPANSION, SHOW_SHADOW);
+            SHOW_REFERENCEEXPANSION, SHOW_SHADOW, PAPER_BW);
     }
 
     override public getDisplayedLayoutOptions() {
@@ -365,11 +368,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             }
             val connector = s.type == StateType::CONNECTOR;
             val cornerRadius = if(connector) 7 else if(!s.hasRegionsOrDeclarations && !s.referencedState) 17 else 8;
-            val lineWidth = if(s.isInitial) 3 else 1;
+            var lineWidth = if(s.isInitial) 3 else 1;
+            if (PAPER_BW.booleanValue) {
+                lineWidth = lineWidth + 1;
+            }
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;
             figure.lineWidth = lineWidth;
-            figure.foreground = if(s.isInitial || s.isFinal) "black".color else "gray".color
-            if (SHOW_SHADOW.booleanValue && !connector) {
+            figure.foreground = if(s.isInitial || s.isFinal || PAPER_BW.booleanValue) "black".color else "gray".color
+            if (!PAPER_BW.booleanValue && SHOW_SHADOW.booleanValue && !connector) {
                 figure.shadow = "black".color;
                 figure.shadow.XOffset = 4;
                 figure.shadow.YOffset = 4;
@@ -400,8 +406,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                     it.styleRef = figure;
                     if (s.referencedState) 
                         it.background.alpha = 0
-                    else 
-                        it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
+                    else {
+                        if (!PAPER_BW.booleanValue) {
+                            it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
+                        }
+                    }
                     it.shadow = null
                     it.lineWidth = if(s.isInitial) 1 else 1;
                     it.setAreaPlacementData().from(LEFT, offset, 0, TOP, offset, 0).to(RIGHT, offset, 0, BOTTOM, offset,
@@ -409,7 +418,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 ]
             else
                 figure => [
-                    it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
+                    if (!PAPER_BW.booleanValue) {
+                        it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
+                    } else {
+                        if (s.hasInnerStatesOrRegions) {
+                            it.setBackground(SCCHARTSGRAY.copy);
+                        }
+                    }
                 ]
                 
              ) => [
