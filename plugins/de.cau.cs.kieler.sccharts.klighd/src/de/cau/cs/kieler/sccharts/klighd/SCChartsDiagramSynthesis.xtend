@@ -329,6 +329,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             parent.addText(split + word) => [
                 if (word.keyword) {
                     it.setForeground(KEYWORD.copy)
+                    if (PAPER_BW.booleanValue) {
+                        it.setForeground("black".color)    
+                    }
                     it.setFontBold(true)
                 }
                 it.putToLookUpWith(lookup)
@@ -340,6 +343,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             parent.addText(remainingText2) => [
                 if (remainingText2.keyword) {
                     it.setForeground(KEYWORD.copy)
+                    if (PAPER_BW.booleanValue) {
+                        it.setForeground("black".color)    
+                    }
                     it.setFontBold(true)
                 }
                 it.putToLookUpWith(lookup)
@@ -793,6 +799,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
         return line.addEllipse() => [
             it.lineWidth = 1;
             it.background = "red".color
+            if (PAPER_BW.booleanValue) {
+                it.background = "gray".color
+            }
             it.setDecoratorPlacementData(10, 10, 4, 0, false);
         ];
     }
@@ -801,6 +810,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
         return line.addEllipse() => [
             it.lineWidth = 1;
             it.background = "red".color
+            if (PAPER_BW.booleanValue) {
+                it.background = "gray".color
+            }
             it.setDecoratorPlacementData(10, 10, -4 + offset, 1, false);
         ];
     }
@@ -809,6 +821,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
         return line.drawTriangle() => [
             it.lineWidth = 1;
             it.background = "green".color
+            if (PAPER_BW.booleanValue) {
+                it.background = "gray".color
+            }
             it.setDecoratorPlacementData(11, 11, 5, 0, true);
         ];
     }
