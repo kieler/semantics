@@ -86,7 +86,7 @@ class Abort {
             val outgoingTransitions = state.outgoingTransitions.immutableCopy
             val regions = state.regions.immutableCopy
 
-            if (stateHasUntransformedAborts || stateHasUntransformedTransitions) {
+            if (stateHasUntransformedAborts) {
                 val ctrlRegion = state.createRegion(GENERATED_PREFIX + "Ctrl").uniqueName
                 val runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueName
                 val doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
@@ -255,9 +255,12 @@ class Abort {
     //    }
     def void transformAbortDefault(State state, State targetRootState) {
 
+        // this for example could be several terminations, in this case we do not need the FULL abort transformation
+        // and can only combine the terminations (using one termination and a connector node)
         val stateHasUntransformedTransitions = ((state.outgoingTransitions.size > 1) || ((state.outgoingTransitions.
             size == 1) && (!(state.outgoingTransitions.filter[typeTermination].filter[trigger == null].size == 1))))
 
+        // in this case we need the FULL abort transformation
         val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))
 
         //        if (state.hierarchical && stateHasUntransformedAborts && state.label != "WaitAandB") {
@@ -268,7 +271,7 @@ class Abort {
             val outgoingTransitions = state.outgoingTransitions.immutableCopy
             val regions = state.regions.immutableCopy
 
-            if (stateHasUntransformedAborts || stateHasUntransformedTransitions) {
+            if (stateHasUntransformedAborts) {
                 val ctrlRegion = state.createRegion(GENERATED_PREFIX + "Ctrl").uniqueName
                 val runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueName
                 val doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
