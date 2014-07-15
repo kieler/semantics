@@ -24,18 +24,15 @@ import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scgbb.BasicBlock
-import de.cau.cs.kieler.scgbb.SCGraphBB
-import de.cau.cs.kieler.scgbb.SchedulingBlock
-import de.cau.cs.kieler.scgsched.ScgschedFactory
-import de.cau.cs.kieler.scgsched.Schedule
+import de.cau.cs.kieler.scg.BasicBlock
+import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.Schedule
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.scgsched.Analysis
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Assignment
@@ -581,6 +578,12 @@ class SCGExtensions {
         }
         null
     }   
+    
+    def List<SchedulingBlock> schedulingBlocks(SCGraph scg) {
+        <SchedulingBlock> newArrayList => [ sb |
+            scg.basicBlocks.forEach[ sb += it.schedulingBlocks ]
+        ]
+    }
 
 	/** 
 	 * Retrieves the scheduling block containing a given node.
@@ -591,24 +594,11 @@ class SCGExtensions {
 	 */
     def SchedulingBlock schedulingBlock(Node node) {
         val scg = node.graph
-        if (!(scg instanceof SCGraphBB)) return null
         var SchedulingBlock myBlock = null
-        for (block : scg.eAllContents.toList.filter(typeof(SchedulingBlock))) {
+        for (block : scg.schedulingBlocks ) {
             if (block.nodes.contains(node)) { myBlock = block }
         }
         myBlock
-    }
-
-	/** 
-	 * Returns a list of all scheduling blocks of an SCG.
-	 * 
-	 * @param scg
-	 * 			the SCG in question
-	 * @return Returns a list of all scheduling blocks of the given SCG. May return null.
-	 */   
-    def List<SchedulingBlock> allSchedulingBlocks(SCGraph scg) {
-        if (!(scg instanceof SCGraphBB)) return null
-        scg.eAllContents.toList.filter(typeof(SchedulingBlock)).toList
     }
    
     /**
@@ -660,12 +650,12 @@ class SCGExtensions {
      * 			a list of objects associated with a particular analysis
      * @return Returns an analysis structure.
      */
-    def Analysis createAnalysis(String idString, List<EObject> eObjects) {
-    	ScgschedFactory::eINSTANCE.createAnalysis => [
-    		id = idString
-    		objectReferences += eObjects
-    	]
-    }
+//    def Analysis createAnalysis(String idString, List<EObject> eObjects) {
+//    	ScgschedFactory::eINSTANCE.createAnalysis => [
+//    		id = idString
+//    		objectReferences += eObjects
+//    	]
+//    }
 
 
     // -------------------------------------------------------------------------
