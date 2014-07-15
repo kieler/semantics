@@ -27,16 +27,14 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import de.cau.cs.kieler.scgdep.AssignmentDep
-import de.cau.cs.kieler.scgdep.Dependency
-import de.cau.cs.kieler.scgdep.SCGraphDep
-import de.cau.cs.kieler.scgdep.ScgdepFactory
+import de.cau.cs.kieler.scg.Dependency
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.ScgFactory
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -67,16 +65,13 @@ class DependencyTransformation extends AbstractModelTransformation {
     /** Inject SCG extensions. */    
     @Inject
     extension SCGExtensions
-    /** Inject SCG copy extensions. */  
-    @Inject
-    extension SCGCopyExtensions
     
     @Inject
     extension KExpressionsExtension
     
     private val threadNodeList = new HashMap<Node, List<Entry>>
     private val ancestorForkCache = new HashMap<Node, List<Fork>>
-    private val relativeWriterCache = new HashMap<AssignmentDep, Boolean>
+    private val relativeWriterCache = new HashMap<Assignment, Boolean>
     
     // -------------------------------------------------------------------------
     // -- Transformation method
@@ -94,14 +89,7 @@ class DependencyTransformation extends AbstractModelTransformation {
      * 			the originating source scg
      * @return Returns a copy of the scg enriched with dependency information.
      */   
-    def SCGraphDep transformSCGToSCGDEP(SCGraph scg) {
-        // Create new SCGDEP with the appropriate Scgdep factory.
-        val scgdep = ScgdepFactory::eINSTANCE.createSCGraphDep()
-        
-        // Since we want to preserve the standard SCG data, we use the SCG copy extensions to copy the SCG.          
-        // The SCG cop extensions will replace all assignment nodes with corresponding assignmentdep nodes.
-        scg.copySCG(scgdep)
-        
+    def SCGraph transformSCGToSCGDEP(SCGraph scg) {
         // Finally, add all dependencies. Therefore, search all assignmentdep nodes and create their 
         // dependency information. The data is automatically stored in the SCG by the createDependencies
         // function.
@@ -110,17 +98,17 @@ class DependencyTransformation extends AbstractModelTransformation {
         ancestorForkCache.clear
         
         val timestamp = System.currentTimeMillis
-        val allAssignments = scgdep.nodes.filter(typeof(AssignmentDep))  
+        val allAssignments = scg.nodes.filter(typeof(Assignment))  
         val assignments = allAssignments.filter[ valuedObject != null || assignment instanceof FunctionCall ].toList.immutableCopy
-        val conditionals = scgdep.nodes.filter(typeof(Conditional)).filter[ condition != null ].toList.immutableCopy
+        val conditionals = scg.nodes.filter(typeof(Conditional)).filter[ condition != null ].toList.immutableCopy
 
         assignments.forEach[ 
             relativeWriterCache.put(it, it.isRelativeWriter)
         ]
         
-        scgdep.nodes.filter(typeof(Entry)).forEach[ entry |
+        scg.nodes.filter(typeof(Entry)).forEach[ entry |
         	entry.getThreadNodes.forEach[ node |
-        		if ((node instanceof AssignmentDep) || (node instanceof Conditional)) {
+        		if ((node instanceof Assignment) || (node instanceof Conditional)) {
             	    if (!threadNodeList.containsKey(node)) {
             	        var entryNodes = new LinkedList<Entry>();
             	        entryNodes.add(entry);
@@ -138,14 +126,14 @@ class DependencyTransformation extends AbstractModelTransformation {
         System.out.println("Preparation for dependency analysis finished (time elapsed: "+(time / 1000)+"s).")  
         
         for(node : assignments) {
-        	 node.createDependencies(assignments, conditionals, scgdep) 
+        	 node.createDependencies(assignments, conditionals, scg) 
       	 }
 
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Dependency analysis finished (overall time elapsed: "+(time / 1000)+"s).")  
         
         // Return the SCG with dependency data.
-        scgdep
+        scg
     }   
     
     
@@ -161,10 +149,10 @@ class DependencyTransformation extends AbstractModelTransformation {
      * 			the assignment node in question
      * @return Returns the given assignment for further processing.
      */
-    private def AssignmentDep createDependencies(AssignmentDep assignment, 
-        List<AssignmentDep> assignments,
+    private def Assignment createDependencies(Assignment assignment, 
+        List<Assignment> assignments,
         List<Conditional> conditionals,
-        SCGraphDep scg
+        SCGraph scg
     ) {
         // Cache own absolute/relative state.
         val iAmAbsoluteWriter = !relativeWriterCache.get(assignment)
@@ -179,17 +167,17 @@ class DependencyTransformation extends AbstractModelTransformation {
                     // The Scgdep factory is used to create the appropriate depenency.
                     val isRelW = relativeWriterCache.get(node)
                     if (iAmAbsoluteWriter && isRelW) {
-                        dependency = ScgdepFactory::eINSTANCE.createAbsoluteWrite_RelativeWrite                        
+                        dependency = ScgFactory::eINSTANCE.createAbsoluteWrite_RelativeWrite                        
                     } else 
                     if (iAmAbsoluteWriter && !isRelW) {
-                        dependency = ScgdepFactory::eINSTANCE.createWrite_Write       
+                        dependency = ScgFactory::eINSTANCE.createWrite_Write       
                     }
                 } else
                 // Otherwise, check if the assignment reads the variable and add the dependency
                 // if necessary.
                 if (node.isReader(assignment)) {
-                    if (iAmAbsoluteWriter) dependency = ScgdepFactory::eINSTANCE.createAbsoluteWrite_Read
-                    else dependency = ScgdepFactory::eINSTANCE.createRelativeWrite_Read    
+                    if (iAmAbsoluteWriter) dependency = ScgFactory::eINSTANCE.createAbsoluteWrite_Read
+                    else dependency = ScgFactory::eINSTANCE.createRelativeWrite_Read    
                 }
                 // If a dependency was created, add the target, the concurrency state and update the 
                 // assignment.
@@ -207,8 +195,8 @@ class DependencyTransformation extends AbstractModelTransformation {
         conditionals.forEach[ node |
             var Dependency dependency = null
             if (node.isReader(assignment)) {
-                if (iAmAbsoluteWriter) dependency = ScgdepFactory::eINSTANCE.createAbsoluteWrite_Read
-                else dependency = ScgdepFactory::eINSTANCE.createRelativeWrite_Read    
+                if (iAmAbsoluteWriter) dependency = ScgFactory::eINSTANCE.createAbsoluteWrite_Read
+                else dependency = ScgFactory::eINSTANCE.createRelativeWrite_Read    
             }
             if (dependency != null) {
                 dependency.target = node;
@@ -232,7 +220,7 @@ class DependencyTransformation extends AbstractModelTransformation {
      * 
      * @TODO make this function more robust w.r.t. absolute writes in OperatorExpressions.
      */
-    private def boolean isRelativeWriter(AssignmentDep assignment) {
+    private def boolean isRelativeWriter(Assignment assignment) {
     	// Returns true if the assignment in the assignment node is an OperatorExpression
     	// and accesses the same ValuedObject as the assignment is writing to.
     	if (assignment instanceof FunctionCall) return false
@@ -251,7 +239,7 @@ class DependencyTransformation extends AbstractModelTransformation {
      * 			the valuedObject in question
      * @return returns to if the given expression reads the given object.
      */
-    private def boolean isReader(Expression expression, AssignmentDep asg2) {
+    private def boolean isReader(Expression expression, Assignment asg2) {
         if (expression instanceof ValuedObjectReference) {
             return isSameScalar((expression as ValuedObjectReference), asg2)
         } else {
@@ -260,7 +248,7 @@ class DependencyTransformation extends AbstractModelTransformation {
         }
     }
     
-    private def boolean isReader(AssignmentDep asg1, AssignmentDep asg2) {
+    private def boolean isReader(Assignment asg1, Assignment asg2) {
     	// Returns true if the ValuedObject is referenced directly in the expression or
     	// if the object is part of a more complex expression.
     	if (asg1.assignment == null || asg2.assignment == null) return false
@@ -274,7 +262,7 @@ class DependencyTransformation extends AbstractModelTransformation {
         }
     }
         
-    private def boolean isReader(Conditional cond, AssignmentDep asg2) {
+    private def boolean isReader(Conditional cond, Assignment asg2) {
     	// Returns true if the ValuedObject is referenced directly in the expression or
     	// if the object is part of a more complex expression.
         if (asg2.assignment == null) return false
@@ -345,7 +333,7 @@ class DependencyTransformation extends AbstractModelTransformation {
      * 			the second assignment for the confluence test
      * @return Returns true if the two assignments are confluent.
      */
-    private def boolean areConfluent(AssignmentDep asg1, AssignmentDep asg2) {
+    private def boolean areConfluent(Assignment asg1, Assignment asg2) {
     	// If both assignments assign boolean values, check them.
         if (asg1.assignment instanceof BoolValue && asg2.assignment instanceof BoolValue &&
             (asg1.assignment as BoolValue).value == (asg2.assignment as BoolValue).value
@@ -363,7 +351,7 @@ class DependencyTransformation extends AbstractModelTransformation {
         false
     }
     
-    private def boolean isSameScalar(AssignmentDep asg1, AssignmentDep asg2) {
+    private def boolean isSameScalar(Assignment asg1, Assignment asg2) {
         if (asg1.assignment instanceof FunctionCall && !(asg2.assignment instanceof FunctionCall)) {
             return asg2.isSameScalar(asg1)
         }
@@ -395,7 +383,7 @@ class DependencyTransformation extends AbstractModelTransformation {
     	true
     }
     
-    private def boolean isSameScalar(ValuedObjectReference vor1, AssignmentDep asg2) {
+    private def boolean isSameScalar(ValuedObjectReference vor1, Assignment asg2) {
         if (asg2.assignment instanceof FunctionCall) {
             for(par : (asg2.assignment as FunctionCall).parameters) {
                 val refs = par.expression.getAllReferences
