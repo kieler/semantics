@@ -15,6 +15,7 @@ package de.cau.cs.kieler.scg.provider;
 
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
+
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.ScgPackage;
@@ -44,7 +45,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * @generated
  */
-public class SCGraphItemProvider
+public class SCGraphItemProvider 
     extends ItemProviderAdapter
     implements
         IEditingDomainItemProvider,
@@ -91,6 +92,8 @@ public class SCGraphItemProvider
             super.getChildrenFeatures(object);
             childrenFeatures.add(ScgPackage.Literals.SC_GRAPH__NODES);
             childrenFeatures.add(ScgPackage.Literals.SC_GRAPH__DECLARATIONS);
+            childrenFeatures.add(ScgPackage.Literals.SC_GRAPH__BASIC_BLOCKS);
+            childrenFeatures.add(ScgPackage.Literals.SC_GRAPH__SCHEDULES);
         }
         return childrenFeatures;
     }
@@ -129,6 +132,7 @@ public class SCGraphItemProvider
     public String getText(Object object) {
         return getString("_UI_SCGraph_type");
     }
+    
 
     /**
      * This handles model notifications by calling {@link #updateChildren} to update any cached
@@ -144,6 +148,8 @@ public class SCGraphItemProvider
         switch (notification.getFeatureID(SCGraph.class)) {
             case ScgPackage.SC_GRAPH__NODES:
             case ScgPackage.SC_GRAPH__DECLARATIONS:
+            case ScgPackage.SC_GRAPH__BASIC_BLOCKS:
+            case ScgPackage.SC_GRAPH__SCHEDULES:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -210,6 +216,16 @@ public class SCGraphItemProvider
             (createChildParameter
                 (ScgPackage.Literals.SC_GRAPH__DECLARATIONS,
                  KExpressionsFactory.eINSTANCE.createDeclaration()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.SC_GRAPH__BASIC_BLOCKS,
+                 ScgFactory.eINSTANCE.createBasicBlock()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.SC_GRAPH__SCHEDULES,
+                 ScgFactory.eINSTANCE.createSchedule()));
     }
 
     /**

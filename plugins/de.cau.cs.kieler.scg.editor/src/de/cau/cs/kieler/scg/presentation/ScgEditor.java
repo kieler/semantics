@@ -170,6 +170,7 @@ import de.cau.cs.kieler.scg.provider.ScgItemProviderAdapterFactory;
 import de.cau.cs.kieler.core.annotations.provider.AnnotationsItemProviderAdapterFactory;
 
 import de.cau.cs.kieler.core.kexpressions.provider.KExpressionsItemProviderAdapterFactory;
+
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 
 

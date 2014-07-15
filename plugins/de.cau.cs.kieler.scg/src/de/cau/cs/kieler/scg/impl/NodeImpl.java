@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getIncoming <em>Incoming</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#isIsInitial <em>Is Initial</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getDependencies <em>Dependencies</em>}</li>
  * </ul>
  * </p>
  *
@@ -67,6 +69,16 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * @ordered
      */
     protected boolean isInitial = IS_INITIAL_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getDependencies()
+     * @generated
+     * @ordered
+     */
+    protected EList<Link> dependencies;
 
     /**
      * <!-- begin-user-doc -->
@@ -125,6 +137,18 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<Link> getDependencies() {
+        if (dependencies == null) {
+            dependencies = new EObjectContainmentEList<Link>(Link.class, this, ScgPackage.NODE__DEPENDENCIES);
+        }
+        return dependencies;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -145,6 +169,8 @@ public class NodeImpl extends AnnotatableImpl implements Node {
         switch (featureID) {
             case ScgPackage.NODE__INCOMING:
                 return ((InternalEList<?>)getIncoming()).basicRemove(otherEnd, msgs);
+            case ScgPackage.NODE__DEPENDENCIES:
+                return ((InternalEList<?>)getDependencies()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -161,6 +187,8 @@ public class NodeImpl extends AnnotatableImpl implements Node {
                 return getIncoming();
             case ScgPackage.NODE__IS_INITIAL:
                 return isIsInitial();
+            case ScgPackage.NODE__DEPENDENCIES:
+                return getDependencies();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -181,6 +209,10 @@ public class NodeImpl extends AnnotatableImpl implements Node {
             case ScgPackage.NODE__IS_INITIAL:
                 setIsInitial((Boolean)newValue);
                 return;
+            case ScgPackage.NODE__DEPENDENCIES:
+                getDependencies().clear();
+                getDependencies().addAll((Collection<? extends Link>)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -199,6 +231,9 @@ public class NodeImpl extends AnnotatableImpl implements Node {
             case ScgPackage.NODE__IS_INITIAL:
                 setIsInitial(IS_INITIAL_EDEFAULT);
                 return;
+            case ScgPackage.NODE__DEPENDENCIES:
+                getDependencies().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -215,6 +250,8 @@ public class NodeImpl extends AnnotatableImpl implements Node {
                 return incoming != null && !incoming.isEmpty();
             case ScgPackage.NODE__IS_INITIAL:
                 return isInitial != IS_INITIAL_EDEFAULT;
+            case ScgPackage.NODE__DEPENDENCIES:
+                return dependencies != null && !dependencies.isEmpty();
         }
         return super.eIsSet(featureID);
     }

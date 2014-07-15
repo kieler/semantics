@@ -16,6 +16,7 @@ package de.cau.cs.kieler.scg.provider;
 import de.cau.cs.kieler.core.annotations.provider.AnnotationsEditPlugin;
 
 import de.cau.cs.kieler.core.kexpressions.provider.KExpressionsEditPlugin;
+
 import org.eclipse.emf.common.EMFPlugin;
 
 import org.eclipse.emf.common.util.ResourceLocator;
