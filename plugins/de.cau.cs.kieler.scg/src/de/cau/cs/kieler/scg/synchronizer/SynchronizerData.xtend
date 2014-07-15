@@ -16,12 +16,12 @@ package de.cau.cs.kieler.scg.synchronizer
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.util.Pair
-import de.cau.cs.kieler.scgbb.SchedulingBlock
-import de.cau.cs.kieler.scgsched.GuardExpression
-import de.cau.cs.kieler.scgsched.ScgschedFactory
+import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.GuardExpression
 import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.ScgFactory
 
 /**
  * The {@code SynchronizerData} class comprises members for the data mandatory to 
@@ -51,7 +51,7 @@ class SynchronizerData {
      * guardExpression holds the actual expression of the synchronizer. It can be modified or used directly 
      * by the scheduler.
      */
-    public var GuardExpression guardExpression = ScgschedFactory::eINSTANCE.createGuardExpression
+    public var GuardExpression guardExpression = ScgFactory::eINSTANCE.createGuardExpression
     
     @Property
     HashMap<Node, ValuedObject> threadMapping = new HashMap<Node, ValuedObject>

@@ -665,12 +665,12 @@ public interface ScgPackage extends EPackage {
 	int ASSIGNMENT__INDICES = NODE_FEATURE_COUNT + 3;
 
     /**
-    * The number of structural features of the '<em>Assignment</em>' class.
-    * <!-- begin-user-doc -->
+     * The number of structural features of the '<em>Assignment</em>' class.
+     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
+     * @generated
+     * @ordered
+     */
    int ASSIGNMENT_FEATURE_COUNT = NODE_FEATURE_COUNT + 4;
 
     /**
@@ -1939,6 +1939,52 @@ public interface ScgPackage extends EPackage {
     int SCHEDULE_OPERATION_COUNT = 0;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.GuardExpressionImpl <em>Guard Expression</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scg.impl.GuardExpressionImpl
+     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getGuardExpression()
+     * @generated
+     */
+    int GUARD_EXPRESSION = 21;
+
+    /**
+     * The feature id for the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GUARD_EXPRESSION__VALUED_OBJECT = 0;
+
+    /**
+     * The feature id for the '<em><b>Expression</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GUARD_EXPRESSION__EXPRESSION = 1;
+
+    /**
+     * The number of structural features of the '<em>Guard Expression</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GUARD_EXPRESSION_FEATURE_COUNT = 2;
+
+    /**
+     * The number of operations of the '<em>Guard Expression</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GUARD_EXPRESSION_OPERATION_COUNT = 0;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.BlockType <em>Block Type</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1946,7 +1992,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getBlockType()
      * @generated
      */
-    int BLOCK_TYPE = 21;
+    int BLOCK_TYPE = 22;
 
 
     /**
@@ -2600,6 +2646,38 @@ public interface ScgPackage extends EPackage {
     EReference getSchedule_SchedulingBlocks();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.GuardExpression <em>Guard Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Guard Expression</em>'.
+     * @see de.cau.cs.kieler.scg.GuardExpression
+     * @generated
+     */
+    EClass getGuardExpression();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.scg.GuardExpression#getValuedObject <em>Valued Object</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Valued Object</em>'.
+     * @see de.cau.cs.kieler.scg.GuardExpression#getValuedObject()
+     * @see #getGuardExpression()
+     * @generated
+     */
+    EReference getGuardExpression_ValuedObject();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.scg.GuardExpression#getExpression <em>Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Expression</em>'.
+     * @see de.cau.cs.kieler.scg.GuardExpression#getExpression()
+     * @see #getGuardExpression()
+     * @generated
+     */
+    EReference getGuardExpression_Expression();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.scg.BlockType <em>Block Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3161,6 +3239,32 @@ public interface ScgPackage extends EPackage {
          * @generated
          */
         EReference SCHEDULE__SCHEDULING_BLOCKS = eINSTANCE.getSchedule_SchedulingBlocks();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.GuardExpressionImpl <em>Guard Expression</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scg.impl.GuardExpressionImpl
+         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getGuardExpression()
+         * @generated
+         */
+        EClass GUARD_EXPRESSION = eINSTANCE.getGuardExpression();
+
+        /**
+         * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference GUARD_EXPRESSION__VALUED_OBJECT = eINSTANCE.getGuardExpression_ValuedObject();
+
+        /**
+         * The meta object literal for the '<em><b>Expression</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference GUARD_EXPRESSION__EXPRESSION = eINSTANCE.getGuardExpression_Expression();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.BlockType <em>Block Type</em>}' enum.

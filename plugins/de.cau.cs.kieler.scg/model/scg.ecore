@@ -120,4 +120,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="schedulingBlocks" upperBound="-1"
         eType="#//SchedulingBlock"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GuardExpression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ValuedObject" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"/>
+  </eClassifiers>
 </ecore:EPackage>

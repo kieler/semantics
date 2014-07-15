@@ -18,6 +18,7 @@ import de.cau.cs.kieler.scg.Depth;
 import de.cau.cs.kieler.scg.Entry;
 import de.cau.cs.kieler.scg.Exit;
 import de.cau.cs.kieler.scg.Fork;
+import de.cau.cs.kieler.scg.GuardExpression;
 import de.cau.cs.kieler.scg.Join;
 import de.cau.cs.kieler.scg.Link;
 import de.cau.cs.kieler.scg.Node;
@@ -192,6 +193,13 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * @generated
      */
     private EClass scheduleEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass guardExpressionEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -818,6 +826,33 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getGuardExpression() {
+        return guardExpressionEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getGuardExpression_ValuedObject() {
+        return (EReference)guardExpressionEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getGuardExpression_Expression() {
+        return (EReference)guardExpressionEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EEnum getBlockType() {
         return blockTypeEEnum;
     }
@@ -931,6 +966,10 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         scheduleEClass = createEClass(SCHEDULE);
         createEReference(scheduleEClass, SCHEDULE__SCHEDULING_BLOCKS);
+
+        guardExpressionEClass = createEClass(GUARD_EXPRESSION);
+        createEReference(guardExpressionEClass, GUARD_EXPRESSION__VALUED_OBJECT);
+        createEReference(guardExpressionEClass, GUARD_EXPRESSION__EXPRESSION);
 
         // Create enums
         blockTypeEEnum = createEEnum(BLOCK_TYPE);
@@ -1067,6 +1106,10 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         initEClass(scheduleEClass, Schedule.class, "Schedule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getSchedule_SchedulingBlocks(), this.getSchedulingBlock(), null, "schedulingBlocks", null, 0, -1, Schedule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(guardExpressionEClass, GuardExpression.class, "GuardExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getGuardExpression_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "ValuedObject", null, 0, 1, GuardExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getGuardExpression_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, GuardExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(blockTypeEEnum, BlockType.class, "BlockType");

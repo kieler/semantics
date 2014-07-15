@@ -16,7 +16,7 @@ package de.cau.cs.kieler.scg.synchronizer
 import de.cau.cs.kieler.scg.Join
 import java.util.Map
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scgbb.SchedulingBlock
+import de.cau.cs.kieler.scg.SchedulingBlock
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
 
