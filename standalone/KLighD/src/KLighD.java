@@ -296,7 +296,18 @@ public class KLighD {
             InputStream in = yc.getInputStream();
 
             byte[] bytes = new byte[len];
-            in.read(bytes);
+            byte[] buffer = new byte[len];
+            int leftBytes = len;
+            int pos = 0;
+            while (leftBytes > 0) {
+                int readBytes = in.read(buffer);
+                leftBytes = leftBytes - readBytes;
+                // copy buffer to bytes
+                for (int c = 0; c < readBytes; c++) {
+                    bytes[c+pos] = buffer[c]; 
+                }
+                pos = pos + readBytes;
+            }
 
             yc.getInputStream().close();
             result.model = bytes;
