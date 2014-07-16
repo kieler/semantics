@@ -1967,13 +1967,22 @@ public interface ScgPackage extends EPackage {
     int GUARD_EXPRESSION__EXPRESSION = 1;
 
     /**
+     * The feature id for the '<em><b>Empty Expressions</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GUARD_EXPRESSION__EMPTY_EXPRESSIONS = 2;
+
+    /**
      * The number of structural features of the '<em>Guard Expression</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int GUARD_EXPRESSION_FEATURE_COUNT = 2;
+    int GUARD_EXPRESSION_FEATURE_COUNT = 3;
 
     /**
      * The number of operations of the '<em>Guard Expression</em>' class.
@@ -1985,6 +1994,61 @@ public interface ScgPackage extends EPackage {
     int GUARD_EXPRESSION_OPERATION_COUNT = 0;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.EmptyExpressionImpl <em>Empty Expression</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scg.impl.EmptyExpressionImpl
+     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getEmptyExpression()
+     * @generated
+     */
+    int EMPTY_EXPRESSION = 22;
+
+    /**
+     * The feature id for the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EMPTY_EXPRESSION__VALUED_OBJECT = 0;
+
+    /**
+     * The feature id for the '<em><b>Thread Exit Object</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EMPTY_EXPRESSION__THREAD_EXIT_OBJECT = 1;
+
+    /**
+     * The feature id for the '<em><b>Expression</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EMPTY_EXPRESSION__EXPRESSION = 2;
+
+    /**
+     * The number of structural features of the '<em>Empty Expression</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EMPTY_EXPRESSION_FEATURE_COUNT = 3;
+
+    /**
+     * The number of operations of the '<em>Empty Expression</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EMPTY_EXPRESSION_OPERATION_COUNT = 0;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.BlockType <em>Block Type</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1992,7 +2056,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getBlockType()
      * @generated
      */
-    int BLOCK_TYPE = 22;
+    int BLOCK_TYPE = 23;
 
 
     /**
@@ -2678,6 +2742,60 @@ public interface ScgPackage extends EPackage {
     EReference getGuardExpression_Expression();
 
     /**
+     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scg.GuardExpression#getEmptyExpressions <em>Empty Expressions</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference list '<em>Empty Expressions</em>'.
+     * @see de.cau.cs.kieler.scg.GuardExpression#getEmptyExpressions()
+     * @see #getGuardExpression()
+     * @generated
+     */
+    EReference getGuardExpression_EmptyExpressions();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.EmptyExpression <em>Empty Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Empty Expression</em>'.
+     * @see de.cau.cs.kieler.scg.EmptyExpression
+     * @generated
+     */
+    EClass getEmptyExpression();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.scg.EmptyExpression#getValuedObject <em>Valued Object</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Valued Object</em>'.
+     * @see de.cau.cs.kieler.scg.EmptyExpression#getValuedObject()
+     * @see #getEmptyExpression()
+     * @generated
+     */
+    EReference getEmptyExpression_ValuedObject();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.scg.EmptyExpression#getThreadExitObject <em>Thread Exit Object</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Thread Exit Object</em>'.
+     * @see de.cau.cs.kieler.scg.EmptyExpression#getThreadExitObject()
+     * @see #getEmptyExpression()
+     * @generated
+     */
+    EReference getEmptyExpression_ThreadExitObject();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.scg.EmptyExpression#getExpression <em>Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Expression</em>'.
+     * @see de.cau.cs.kieler.scg.EmptyExpression#getExpression()
+     * @see #getEmptyExpression()
+     * @generated
+     */
+    EReference getEmptyExpression_Expression();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.scg.BlockType <em>Block Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3265,6 +3383,48 @@ public interface ScgPackage extends EPackage {
          * @generated
          */
         EReference GUARD_EXPRESSION__EXPRESSION = eINSTANCE.getGuardExpression_Expression();
+
+        /**
+         * The meta object literal for the '<em><b>Empty Expressions</b></em>' reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference GUARD_EXPRESSION__EMPTY_EXPRESSIONS = eINSTANCE.getGuardExpression_EmptyExpressions();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.EmptyExpressionImpl <em>Empty Expression</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scg.impl.EmptyExpressionImpl
+         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getEmptyExpression()
+         * @generated
+         */
+        EClass EMPTY_EXPRESSION = eINSTANCE.getEmptyExpression();
+
+        /**
+         * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference EMPTY_EXPRESSION__VALUED_OBJECT = eINSTANCE.getEmptyExpression_ValuedObject();
+
+        /**
+         * The meta object literal for the '<em><b>Thread Exit Object</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference EMPTY_EXPRESSION__THREAD_EXIT_OBJECT = eINSTANCE.getEmptyExpression_ThreadExitObject();
+
+        /**
+         * The meta object literal for the '<em><b>Expression</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference EMPTY_EXPRESSION__EXPRESSION = eINSTANCE.getEmptyExpression_Expression();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.BlockType <em>Block Type</em>}' enum.

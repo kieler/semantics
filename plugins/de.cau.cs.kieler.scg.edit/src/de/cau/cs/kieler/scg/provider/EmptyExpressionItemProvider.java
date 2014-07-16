@@ -34,12 +34,12 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.scg.GuardExpression} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.scg.EmptyExpression} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class GuardExpressionItemProvider 
+public class EmptyExpressionItemProvider 
     extends ItemProviderAdapter
     implements
         IEditingDomainItemProvider,
@@ -53,7 +53,7 @@ public class GuardExpressionItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    public GuardExpressionItemProvider(AdapterFactory adapterFactory) {
+    public EmptyExpressionItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -69,8 +69,8 @@ public class GuardExpressionItemProvider
             super.getPropertyDescriptors(object);
 
             addValuedObjectPropertyDescriptor(object);
+            addThreadExitObjectPropertyDescriptor(object);
             addExpressionPropertyDescriptor(object);
-            addEmptyExpressionsPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -86,9 +86,31 @@ public class GuardExpressionItemProvider
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_GuardExpression_valuedObject_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_GuardExpression_valuedObject_feature", "_UI_GuardExpression_type"),
-                 ScgPackage.Literals.GUARD_EXPRESSION__VALUED_OBJECT,
+                 getString("_UI_EmptyExpression_valuedObject_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_EmptyExpression_valuedObject_feature", "_UI_EmptyExpression_type"),
+                 ScgPackage.Literals.EMPTY_EXPRESSION__VALUED_OBJECT,
+                 true,
+                 false,
+                 true,
+                 null,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Thread Exit Object feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addThreadExitObjectPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_EmptyExpression_threadExitObject_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_EmptyExpression_threadExitObject_feature", "_UI_EmptyExpression_type"),
+                 ScgPackage.Literals.EMPTY_EXPRESSION__THREAD_EXIT_OBJECT,
                  true,
                  false,
                  true,
@@ -108,9 +130,9 @@ public class GuardExpressionItemProvider
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_GuardExpression_expression_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_GuardExpression_expression_feature", "_UI_GuardExpression_type"),
-                 ScgPackage.Literals.GUARD_EXPRESSION__EXPRESSION,
+                 getString("_UI_EmptyExpression_expression_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_EmptyExpression_expression_feature", "_UI_EmptyExpression_type"),
+                 ScgPackage.Literals.EMPTY_EXPRESSION__EXPRESSION,
                  true,
                  false,
                  true,
@@ -120,36 +142,14 @@ public class GuardExpressionItemProvider
     }
 
     /**
-     * This adds a property descriptor for the Empty Expressions feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addEmptyExpressionsPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_GuardExpression_emptyExpressions_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_GuardExpression_emptyExpressions_feature", "_UI_GuardExpression_type"),
-                 ScgPackage.Literals.GUARD_EXPRESSION__EMPTY_EXPRESSIONS,
-                 true,
-                 false,
-                 true,
-                 null,
-                 null,
-                 null));
-    }
-
-    /**
-     * This returns GuardExpression.gif.
+     * This returns EmptyExpression.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/GuardExpression"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/EmptyExpression"));
     }
 
     /**
@@ -160,7 +160,7 @@ public class GuardExpressionItemProvider
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_GuardExpression_type");
+        return getString("_UI_EmptyExpression_type");
     }
     
 

@@ -169,6 +169,10 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
                 return createGuardExpressionAdapter();
             }
             @Override
+            public Adapter caseEmptyExpression(EmptyExpression object) {
+                return createEmptyExpressionAdapter();
+            }
+            @Override
             public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
             }
@@ -497,6 +501,20 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createGuardExpressionAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.EmptyExpression <em>Empty Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.EmptyExpression
+     * @generated
+     */
+    public Adapter createEmptyExpressionAdapter() {
         return null;
     }
 

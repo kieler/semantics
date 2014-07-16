@@ -15,6 +15,7 @@ import de.cau.cs.kieler.scg.Conditional;
 import de.cau.cs.kieler.scg.ControlFlow;
 import de.cau.cs.kieler.scg.Dependency;
 import de.cau.cs.kieler.scg.Depth;
+import de.cau.cs.kieler.scg.EmptyExpression;
 import de.cau.cs.kieler.scg.Entry;
 import de.cau.cs.kieler.scg.Exit;
 import de.cau.cs.kieler.scg.Fork;
@@ -200,6 +201,13 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * @generated
      */
     private EClass guardExpressionEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass emptyExpressionEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -853,6 +861,51 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getGuardExpression_EmptyExpressions() {
+        return (EReference)guardExpressionEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getEmptyExpression() {
+        return emptyExpressionEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getEmptyExpression_ValuedObject() {
+        return (EReference)emptyExpressionEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getEmptyExpression_ThreadExitObject() {
+        return (EReference)emptyExpressionEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getEmptyExpression_Expression() {
+        return (EReference)emptyExpressionEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EEnum getBlockType() {
         return blockTypeEEnum;
     }
@@ -970,6 +1023,12 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         guardExpressionEClass = createEClass(GUARD_EXPRESSION);
         createEReference(guardExpressionEClass, GUARD_EXPRESSION__VALUED_OBJECT);
         createEReference(guardExpressionEClass, GUARD_EXPRESSION__EXPRESSION);
+        createEReference(guardExpressionEClass, GUARD_EXPRESSION__EMPTY_EXPRESSIONS);
+
+        emptyExpressionEClass = createEClass(EMPTY_EXPRESSION);
+        createEReference(emptyExpressionEClass, EMPTY_EXPRESSION__VALUED_OBJECT);
+        createEReference(emptyExpressionEClass, EMPTY_EXPRESSION__THREAD_EXIT_OBJECT);
+        createEReference(emptyExpressionEClass, EMPTY_EXPRESSION__EXPRESSION);
 
         // Create enums
         blockTypeEEnum = createEEnum(BLOCK_TYPE);
@@ -1108,8 +1167,14 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         initEReference(getSchedule_SchedulingBlocks(), this.getSchedulingBlock(), null, "schedulingBlocks", null, 0, -1, Schedule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(guardExpressionEClass, GuardExpression.class, "GuardExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getGuardExpression_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "ValuedObject", null, 0, 1, GuardExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getGuardExpression_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 0, 1, GuardExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getGuardExpression_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, GuardExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getGuardExpression_EmptyExpressions(), this.getEmptyExpression(), null, "emptyExpressions", null, 0, -1, GuardExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(emptyExpressionEClass, EmptyExpression.class, "EmptyExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getEmptyExpression_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 0, 1, EmptyExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getEmptyExpression_ThreadExitObject(), theKExpressionsPackage.getValuedObject(), null, "threadExitObject", null, 0, 1, EmptyExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getEmptyExpression_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, EmptyExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(blockTypeEEnum, BlockType.class, "BlockType");

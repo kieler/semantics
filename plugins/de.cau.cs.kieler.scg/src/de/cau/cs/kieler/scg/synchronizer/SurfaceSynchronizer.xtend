@@ -23,9 +23,8 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import de.cau.cs.kieler.scgsched.ScgschedFactory
+import de.cau.cs.kieler.scg.ScgFactory
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -68,11 +67,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
     /** Inject SCG extensions. */    
     @Inject
     extension SCGExtensions
-    
-	/** Inject SCG copy extensions. */  
-    @Inject
-    extension SCGCopyExtensions
-    
+   
     private val OPERATOREXPRESSION_DEPTHLIMIT = 16
     private val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8
 
@@ -111,7 +106,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         
         // The valued object of the GuardExpression of the synchronizer is the guard of the
         // scheduling block of the join node. 
-        data.guardExpression.valuedObject = joinSB.guard
+        data.guardExpression.valuedObject = joinSB.basicBlock.guard
 
 		// Create a new expression that determines if at least on thread exits in this tick instance.
 		// At first this simple scheduler assumes that the fork node spawns more than one thread.
@@ -143,9 +138,9 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
             	 * SynchronizerData structure since the object has to be added to the list of 
             	 * valued objects in the SCG. 
             	 */
-      			val emptyExp = ScgschedFactory::eINSTANCE.createEmptyExpression  
+      			val emptyExp = ScgFactory::eINSTANCE.createEmptyExpression  
       			emptyExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
-      			emptyExp.valuedObject.name = exitSB.guard.name + '_e' + exitNodeCount
+      			emptyExp.valuedObject.name = exitSB.basicBlock.guard.name + '_e' + exitNodeCount
 //      			emptyExp.valuedObject.type = ValueType::BOOL
       			data.valuedObjects.add(emptyExp.valuedObject)
 
@@ -161,19 +156,19 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 	            	val subExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
     	        	subExpression.setOperator(OperatorType::OR)
 //        	    	threadSurfaces.forEach[subExpression.subExpressions.add(it.schedulingBlock.guard.reference)]
-                    threadSurfaces.forEach[subExpression.subExpressions.add(it.getCachedSchedulingBlock.basicBlock.guards.head.reference)]
+                    threadSurfaces.forEach[subExpression.subExpressions.add(it.getCachedSchedulingBlock.basicBlock.guard.reference)]
 	            	expression.subExpressions.add(subExpression)
             	} else {
             		// Otherwise, add a reference to the surface block directly.
 //                    expression.subExpressions.add(threadSurfaces.head.schedulingBlock.guard.reference)
-                    expression.subExpressions.add(threadSurfaces.head.getCachedSchedulingBlock.basicBlock.guards.head.reference)
+                    expression.subExpressions.add(threadSurfaces.head.getCachedSchedulingBlock.basicBlock.guard.reference)
             	}
             	// Add the newly created expression to the empty expression and link the thread exit object field
             	// to the guard of the exit node. This enables further processors to identify the block responsible
             	// for the creation of the empty expression. 
             	emptyExp.expression = expression
 //            	emptyExp.threadExitObject = exitSB.guard
-                emptyExp.threadExitObject = exitSB.basicBlock.guards.head
+                emptyExp.threadExitObject = exitSB.basicBlock.guard
             
             	// Subsequently, add the newly created empty expression to the list of empty expressions
             	// in the guard expression of the synchronizer.
@@ -183,7 +178,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
            	// For each exit node, add the guard of the scheduling block of the exit node to the termination expression.
            	// At least one thread must be exited in this tick to trigger the synchronizer.
 //            terminationExpr.subExpressions.add(exitSB.guard.reference)
-            terminationExpr.subExpressions.add(exitSB.basicBlock.guards.head.reference)
+            terminationExpr.subExpressions.add(exitSB.basicBlock.guard.reference)
         }
 
 		/**
@@ -240,7 +235,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
                     val depth = opExp.subExpressions.size
                     if (depth > OPERATOREXPRESSION_DEPTHLIMIT) {
                         ok = false
-                        val emptyExp = ScgschedFactory::eINSTANCE.createEmptyExpression  
+                        val emptyExp = ScgFactory::eINSTANCE.createEmptyExpression  
                         emptyExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
                         emptyExp.valuedObject.name = empty.valuedObject.name + "_fix"
                         data.valuedObjects.add(emptyExp.valuedObject)
@@ -267,7 +262,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
             val sExp = data.guardExpression.expression as OperatorExpression
             var fixcnt = 0
             while(sExp.subExpressions.size > OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER) {
-                val eExp = ScgschedFactory::eINSTANCE.createEmptyExpression  
+                val eExp = ScgFactory::eINSTANCE.createEmptyExpression  
                 eExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
                 eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
                 data.valuedObjects.add(eExp.valuedObject)
@@ -286,7 +281,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
             
             val OperatorExpression tExp = sExp.subExpressions.last as OperatorExpression            
             while(tExp.subExpressions.size > OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER) {
-                val eExp = ScgschedFactory::eINSTANCE.createEmptyExpression  
+                val eExp = ScgFactory::eINSTANCE.createEmptyExpression  
                 eExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
                 eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
                 data.valuedObjects.add(eExp.valuedObject)

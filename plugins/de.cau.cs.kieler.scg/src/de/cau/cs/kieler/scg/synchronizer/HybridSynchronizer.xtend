@@ -84,10 +84,10 @@ class HybridSynchronizer extends AbstractSynchronizer {
 
         // The valued object of the GuardExpression of the synchronizer is the guard of the
         // scheduling block of the join node. 
-        data.guardExpression.valuedObject = joinSB.guard
+        data.guardExpression.valuedObject = joinSB.basicBlock.guard
 
         
-        val forkVar = createValuedObject(forkSB.guard.name + FORKVARSUFFIX)
+        val forkVar = createValuedObject(forkSB.basicBlock.guard.name + FORKVARSUFFIX)
         data.valuedObjects.add(forkVar)
         data.addAdditionalAssignment(forkSB, forkVar, TRUE)
         data.addAdditionalAssignment(joinSB, forkVar, FALSE)
@@ -102,7 +102,7 @@ class HybridSynchronizer extends AbstractSynchronizer {
         	val exitSB = exit.schedulingBlock 
         	exitNodes.add(exit)
 //        	val exitVar = createValuedObject(exitSB.guard.name + EXITVARSUFFIX)
-            val exitVar = createValuedObject(exitSB.basicBlock.guards.head.name + EXITVARSUFFIX)
+            val exitVar = createValuedObject(exitSB.basicBlock.guard.name + EXITVARSUFFIX)
         	data.valuedObjects.add(exitVar)
         	data.addAdditionalAssignment(forkSB, exitVar, TRUE)
         	data.addAdditionalAssignment(exitSB, exitVar, FALSE)

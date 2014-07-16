@@ -16,6 +16,7 @@ package de.cau.cs.kieler.scg;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -28,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.GuardExpression#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.GuardExpression#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.GuardExpression#getEmptyExpressions <em>Empty Expressions</em>}</li>
  * </ul>
  * </p>
  *
@@ -87,5 +89,21 @@ public interface GuardExpression extends EObject {
      * @generated
      */
     void setExpression(Expression value);
+
+    /**
+     * Returns the value of the '<em><b>Empty Expressions</b></em>' reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.scg.EmptyExpression}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Empty Expressions</em>' reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Empty Expressions</em>' reference list.
+     * @see de.cau.cs.kieler.scg.ScgPackage#getGuardExpression_EmptyExpressions()
+     * @model
+     * @generated
+     */
+    EList<EmptyExpression> getEmptyExpressions();
 
 } // GuardExpression
