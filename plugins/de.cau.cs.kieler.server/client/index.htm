@@ -36,6 +36,11 @@ if (top.location.href != "http://rtsys.informatik.uni-kiel.de/confluence/display
 	top.location.href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Online+Compiler"
 }
 
+var compileServerName = new Array("onlineserver0a",              "onlineserver1a",               "onlineserver2a",               "onlinelocalhosta");
+var compileServerURL  = new Array("http://compile.sccharts.com", "http://www.sccharts.com:5556", "http://www.sccharts.com:5555", "http://localhost:5555");
+
+var renderServerName  = new Array("onlineserver0b",             "onlineserver1b",               "onlineserver2b",               "onlinelocalhostb");
+var renderServerURL   = new Array("http://render.sccharts.com", "http://www.sccharts.com:4445", "http://www.sccharts.com:4444", "http://localhost:4444");
 
 //function processEvent(e) {
 //  alert('Parent got (from ' + e.origin + '): ' + e.data);
@@ -242,9 +247,31 @@ function clearErrors() {
 }
 
 
+// Set the config fields and check the radio button for the selected server (manually or by updateSelectedServer method)
+function setConfig(i) {
+	if ((i > 3)||(i < 0)) {
+		// default is local host
+		i = 3;
+	}
+	document.getElementById("radio"+i).checked = true;
+	document.getElementById("KiCoURL").value = compileServerURL[i];
+	document.getElementById("KLighDURL").value =  renderServerURL[i];
+	compile();
+}
 
 
 
+var isOnline = {};
+// On page load: Find & select the first server where compile AND render is online in order: 0. main, 1. backup1, 2. backup2, 3. localhost
+function updateSelectedServer() {
+   for (var c = 0; c < 4; c++) {
+        if (isOnline[compileServerName[c]] == true && isOnline[renderServerName[c]] == true) {
+			setConfig(c);
+		}
+   }
+}
+
+// Test the online status of a specific server
 function testOnlineStatus(redAndGreenImageId, serverURL) {
 	   var testImage = new Image();
 	   testImage.src = serverURL + "/?online=1#" + new Date().getTime();
@@ -253,21 +280,19 @@ function testOnlineStatus(redAndGreenImageId, serverURL) {
 			if (testImage.height > 0) {
 			    var redAndGreenImage = document.getElementById(redAndGreenImageId);
 				redAndGreenImage.src = "http://www.sccharts.com/green.png";
+				isOnline[redAndGreenImageId] = true;
+				updateSelectedServer();
 			}
 	    }
 }
 
+// On page load: Test the online status of all servers
 function testAllOnlineStatus() {
-	testOnlineStatus("onlineserver0a", "http://compile.sccharts.com");
-	testOnlineStatus("onlineserver1a", "http://www.sccharts.com:5556");
-	testOnlineStatus("onlineserver2a", "http://www.sccharts.com:5555");
-	testOnlineStatus("onlinelocalhosta", "http://localhost:5555");
-	testOnlineStatus("onlineserver0b", "http://render.sccharts.com");
-	testOnlineStatus("onlineserver1b", "http://www.sccharts.com:4445");
-	testOnlineStatus("onlineserver2b", "http://www.sccharts.com:4444");
-	testOnlineStatus("onlinelocalhostb", "http://localhost:4444");
+   for (var c = 0; c < 4; c++) {
+		testOnlineStatus(compileServerName[c], compileServerURL[c]);
+		testOnlineStatus(renderServerName[c], renderServerURL[c]);
+   }
 }
-
 testAllOnlineStatus();
 
 function progressImage() {
@@ -475,7 +500,7 @@ scchart ABRO {
                         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0b"> Main Server <span class="Stil12">(fastest)</span></label>
                           <br>
                           <label>
-                        <input type="radio" name="config" value="server1" id="radio" checked="true"  onclick="setConfig(1);" />
+                        <input type="radio" name="config" value="server1" id="radio1" checked="true"  onclick="setConfig(1);" />
                         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1b">                        Backup Server 1</label>
                           <span class="Stil12">(faster)</span><br>
                           <label>
@@ -483,7 +508,7 @@ scchart ABRO {
                         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2b"> Backup Server 2</label>
                           <span class="Stil12">(slower)</span><br>
                           <label>
-                          <input type="radio" name="config" value="localhost" id="radio4" onclick="setConfig(3);" />
+                          <input type="radio" name="config" value="localhost" id="radio3" onclick="setConfig(3);" />
                           <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhosta"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhostb"> Local Host <span class="Stil12">(fastest)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run&nbsp;locally, see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Compiler+Console" target="_blank">here</a> and <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+KLighD+Console+Diagram+Rendering" target="_blank">here</a>)</span></label>
 </span><span class="Stil8">
@@ -543,26 +568,6 @@ function toggleAdvanced() {
   }
 }
 
-
-function setConfig(i) {
-	if (i == 0) {
-		document.getElementById("KiCoURL").value = "http://compile.sccharts.com";
-		document.getElementById("KLighDURL").value = "http://render.sccharts.com";
-	}
-	else if (i == 1) {
-		document.getElementById("KiCoURL").value = "http://www.sccharts.com:5556";
-		document.getElementById("KLighDURL").value = "http://www.sccharts.com:4445";
-	}
-	else if (i == 2) {
-		document.getElementById("KiCoURL").value = "http://www.sccharts.com:5555";
-		document.getElementById("KLighDURL").value = "http://www.sccharts.com:4444";
-	}
-	else {
-		document.getElementById("KiCoURL").value = "http://localhost:5555";
-		document.getElementById("KLighDURL").value = "http://localhost:4444";
-	}
-	compile();
-}
 
 
 
