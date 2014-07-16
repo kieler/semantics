@@ -16,7 +16,7 @@ package de.cau.cs.kieler.scg.sequentializer
 import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scgsched.SCGraphSched
+
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -41,9 +41,9 @@ import de.cau.cs.kieler.scgsched.SCGraphSched
 abstract class AbstractSequentializer extends AbstractModelTransformation {
 	
 	override transform(EObject eObject) {
-		sequentialize(eObject as SCGraphSched)
+		sequentialize(eObject as SCGraph)
 	}
 	
-	abstract def SCGraph sequentialize(SCGraphSched scg)
+	abstract def SCGraph sequentialize(SCGraph scg)
 	
 }

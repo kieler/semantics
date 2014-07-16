@@ -19,18 +19,14 @@ import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
-import de.cau.cs.kieler.scgsched.AssignmentAddition
-import de.cau.cs.kieler.scgsched.ConditionalAddition
-import de.cau.cs.kieler.scgsched.GuardExpression
-import de.cau.cs.kieler.scgsched.SCGraphSched
-import de.cau.cs.kieler.scgsched.Schedule
+import de.cau.cs.kieler.scg.GuardExpression
+import de.cau.cs.kieler.scg.Schedule
 import java.util.HashMap
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scgbb.BasicBlock
+import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.optimizer.CopyPropagation
 import com.google.inject.Guiceimport de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
@@ -67,10 +63,6 @@ class SimpleSequentializer extends AbstractSequentializer {
      
     /** Inject SCG copy extensions. */  
     @Inject 
-    extension SCGCopyExtensions	
-
-    /** Inject SCG copy extensions. */  
-    @Inject 
     extension KExpressionsExtension	
 
     
@@ -78,7 +70,7 @@ class SimpleSequentializer extends AbstractSequentializer {
     // -- Globals
     // -------------------------------------------------------------------------
            
-    private val AdditionalConditionals = new HashMap<ConditionalAddition, Conditional>         
+//    private val AdditionalConditionals = new HashMap<ConditionalAddition, Conditional>         
     
     private val guardExpressionCache = new HashMap<ValuedObject, GuardExpression>   
            
