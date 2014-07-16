@@ -14,16 +14,14 @@
 package de.cau.cs.kieler.scg.schedulers
 
 import de.cau.cs.kieler.scg.schedulers.ClusterScheduler
-import de.cau.cs.kieler.scgsched.SCGraphSched
-import de.cau.cs.kieler.scgsched.Schedule
-import de.cau.cs.kieler.scgsched.GuardExpression
-import de.cau.cs.kieler.scgbb.SchedulingBlock
+import de.cau.cs.kieler.scg.Schedule
+import de.cau.cs.kieler.scg.GuardExpression
+import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.synchronizer.HybridSynchronizer
 import com.google.inject.Guice
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.synchronizer.SynchronizerData
-import de.cau.cs.kieler.scgsched.ScgschedFactory
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.Node
@@ -72,7 +70,7 @@ class HybridScheduler extends ClusterScheduler {
     
     private val HashMap<Node, ValuedObject> threadMapping = new HashMap<Node, ValuedObject>
 	
-    protected override boolean createSchedule(SCGraphSched scg, Schedule schedule, SchedulingConstraints constraints) {
+    protected override boolean createSchedule(SCGraph scg, Schedule schedule, SchedulingConstraints constraints) {
 		super.createSchedule(scg, schedule, constraints) => [
 		    schedule.createConditionalAlteration(scg)
 		]
@@ -95,56 +93,56 @@ class HybridScheduler extends ClusterScheduler {
 		    this.threadMapping.put(it, joinData.threadMapping.get(it))
 		]
 		
-		joinData.createSynchronizerAlteration(scg as SCGraphSched).guardExpression
+		joinData.createSynchronizerAlteration(scg).guardExpression
     }
     
-    protected def SynchronizerData createSynchronizerAlteration(SynchronizerData synchronizerData, SCGraphSched scg) {
-    	synchronizerData => [ data |
-    		data.additionalAssignmentBlocks.forEach [ block |
-				data.getAdditionalAssignments(block).forEach[ dataPair |
-		    		ScgschedFactory::eINSTANCE.createAssignmentAddition => [
-    					valuedObject = dataPair.first
-    					expression = dataPair.second
-    					
-    					if (block.nodes.head instanceof Join) {
-    						position = (block.nodes.head as Join) 	
-    					} else {
-    						position = block.nodes.last
-    					}
-    					
-    					scg.alterations.add(it)
-    				]
-    			]
-    		]
-    	]
+    protected def SynchronizerData createSynchronizerAlteration(SynchronizerData synchronizerData, SCGraph scg) {
+//    	synchronizerData => [ data |
+//    		data.additionalAssignmentBlocks.forEach [ block |
+//				data.getAdditionalAssignments(block).forEach[ dataPair |
+//		    		ScgschedFactory::eINSTANCE.createAssignmentAddition => [
+//    					valuedObject = dataPair.first
+//    					expression = dataPair.second
+//    					
+//    					if (block.nodes.head instanceof Join) {
+//    						position = (block.nodes.head as Join) 	
+//    					} else {
+//    						position = block.nodes.last
+//    					}
+//    					
+//    					scg.alterations.add(it)
+//    				]
+//    			]
+//    		]
+//    	]
     }
     
-    protected def Schedule createConditionalAlteration(Schedule schedule, SCGraphSched scg) {
-        var Node actualThreadEntry = null
-        val accList = <SchedulingBlock> newArrayList 
-        
-        for(s : schedule.schedulingBlocks) {
-            var threadEntry = s.nodes.head.threadEntryNode 
-            if (threadEntry != actualThreadEntry) {
-                if (actualThreadEntry != null) {
-                    val conditionNode = actualThreadEntry
-                    ScgschedFactory::eINSTANCE.createConditionalAddition => [
-                        beforeNode = accList.head.nodes.head
-                        untilNode = accList.last.nodes.last
-                        condition = threadMapping.get(conditionNode).reference
-                        
-                        scg.alterations.add(it)
-                    ]                    
-                }
-                accList.clear
-                actualThreadEntry = threadEntry
-                accList.add(s)
-            } 
-            else {
-                accList.add(s)    
-            }
-        }
-        schedule
+    protected def Schedule createConditionalAlteration(Schedule schedule, SCGraph scg) {
+//        var Node actualThreadEntry = null
+//        val accList = <SchedulingBlock> newArrayList 
+//        
+//        for(s : schedule.schedulingBlocks) {
+//            var threadEntry = s.nodes.head.threadEntryNode 
+//            if (threadEntry != actualThreadEntry) {
+//                if (actualThreadEntry != null) {
+//                    val conditionNode = actualThreadEntry
+//                    ScgschedFactory::eINSTANCE.createConditionalAddition => [
+//                        beforeNode = accList.head.nodes.head
+//                        untilNode = accList.last.nodes.last
+//                        condition = threadMapping.get(conditionNode).reference
+//                        
+//                        scg.alterations.add(it)
+//                    ]                    
+//                }
+//                accList.clear
+//                actualThreadEntry = threadEntry
+//                accList.add(s)
+//            } 
+//            else {
+//                accList.add(s)    
+//            }
+//        }
+//        schedule
     }
 	
 }

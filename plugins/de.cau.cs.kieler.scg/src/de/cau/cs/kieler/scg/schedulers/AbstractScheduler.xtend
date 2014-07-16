@@ -15,15 +15,13 @@ package de.cau.cs.kieler.scg.schedulers
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.extensions.SCGTransformationExtensions
-import de.cau.cs.kieler.scgsched.SCGraphSched
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.analyzer.AnalyzerData
 import de.cau.cs.kieler.scg.analyzer.GenericAnalyzerResult
 import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.scgsched.Schedule
+import de.cau.cs.kieler.scg.Schedule
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.Transformation
 
@@ -58,10 +56,6 @@ import de.cau.cs.kieler.kico.Transformation
  */
 abstract class AbstractScheduler extends Transformation {
 
-	/** Inject the SCG transformation extensions. */
-    @Inject
-    extension SCGTransformationExtensions
-    
     /** 
      * Override this method to add you analyzes.
      * 
@@ -70,7 +64,7 @@ abstract class AbstractScheduler extends Transformation {
      * @return Returns an updated SCGSched model.
      * @abstract
      */
-    protected abstract def SCGraphSched analyze(SCGraphSched scg);
+    protected abstract def SCGraph analyze(SCGraph scg);
     
     /** 
      * Override this method to add your optimizations.
@@ -80,7 +74,7 @@ abstract class AbstractScheduler extends Transformation {
      * @return Returns an updated SCGSched model.
      * @abstract 
      */
-    protected abstract def SCGraphSched optimize(SCGraphSched scg);
+    protected abstract def SCGraph optimize(SCGraph scg);
     
     /** 
      * Override this method to build your schedule.
@@ -90,13 +84,13 @@ abstract class AbstractScheduler extends Transformation {
      * @return Returns an updated SCGSched model.
      * @abstract
      */
-    protected abstract def SCGraphSched build(SCGraphSched scg, KielerCompilerContext context);
+    protected abstract def SCGraph build(SCGraph scg, KielerCompilerContext context);
     
-    protected abstract def SchedulingConstraints orderSchedulingBlocks(SCGraphSched scg);
+    protected abstract def SchedulingConstraints orderSchedulingBlocks(SCGraph scg);
     
-    protected abstract def ValuedObject createGOSignal(SCGraphSched scg);
+    protected abstract def ValuedObject createGOSignal(SCGraph scg);
     
-    protected abstract def boolean createSchedule(SCGraphSched scg, Schedule schedule, SchedulingConstraints constraints);
+    protected abstract def boolean createSchedule(SCGraph scg, Schedule schedule, SchedulingConstraints constraints);
     
     override transform(EObject eObject, KielerCompilerContext context) {
 		return schedule(eObject as SCGraph, context)
@@ -116,7 +110,7 @@ abstract class AbstractScheduler extends Transformation {
     	// Use the transformation extensions to enrich the SCG with all information.
     	// Afterwards, invoke the analyses and build the schedule.
     	// Eventually, return the SCG with performed optimizations.
-        build(((scg.upgradeAll(true) as SCGraphSched) as SCGraphSched).analyze, context).optimize
+        build(scg.analyze, context).optimize
     }    
     
     /**
@@ -128,10 +122,10 @@ abstract class AbstractScheduler extends Transformation {
      * 			the SCG model
      * @return Returns the analyzer data structure.
      */
-    protected def AnalyzerData copyAllAnalyses(AnalyzerData analyzerData, SCGraphSched scg) {
-    	analyzerData.getResults(GenericAnalyzerResult).forEach[
-    		it.analyses.forEach[scg.analyses.add(it.copy)]
-    	]
-    	analyzerData
+    protected def AnalyzerData copyAllAnalyses(AnalyzerData analyzerData, SCGraph scg) {
+//    	analyzerData.getResults(GenericAnalyzerResult).forEach[
+//    		it.analyses.forEach[scg.analyses.add(it.copy)]
+//    	]
+//    	analyzerData
     }
 }

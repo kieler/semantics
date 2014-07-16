@@ -14,17 +14,17 @@
 package de.cau.cs.kieler.scg.schedulers
 
 import de.cau.cs.kieler.scg.schedulers.SimpleScheduler
-import de.cau.cs.kieler.scgsched.SCGraphSched
-import de.cau.cs.kieler.scgbb.SchedulingBlock
+import de.cau.cs.kieler.scg.SchedulingBlock
 import java.util.List
 import de.cau.cs.kieler.scg.Fork
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scgsched.Schedule
+import de.cau.cs.kieler.scg.Schedule
 import com.google.common.collect.ImmutableList
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scgdep.Dependency
+import de.cau.cs.kieler.scg.Dependency
+import de.cau.cs.kieler.scg.SCGraph
 
 /** 
  * This class is part of the SCG transformation chain. In particular a scheduler performs additional 
@@ -81,7 +81,7 @@ class ClusterScheduler extends SimpleScheduler {
 			size
 		}
 	
-	    protected override SchedulingConstraints orderSchedulingBlocks(SCGraphSched scg) {
+	    protected override SchedulingConstraints orderSchedulingBlocks(SCGraph scg) {
 	    	val constraints = super.orderSchedulingBlocks(scg)
 	    	val marked = <SchedulingBlock> newArrayList
 	    	val clusters = <List<SchedulingBlock>> newArrayList
@@ -113,7 +113,7 @@ class ClusterScheduler extends SimpleScheduler {
     protected def int topologicalClusterPlacement(SchedulingBlock schedulingBlock, 
         int clusterPos, 
         List<SchedulingBlock> schedulingBlocks, Schedule schedule, 
-        SchedulingConstraints constraints, List<SchedulingBlock> visited, SCGraphSched scg
+        SchedulingConstraints constraints, List<SchedulingBlock> visited, SCGraph scg
     ) {
         var placed = 0 as int
         if (!visited.contains(schedulingBlock)) {
@@ -126,7 +126,7 @@ class ClusterScheduler extends SimpleScheduler {
             }
             for(dep : schedulingBlock.dependencies) {
                 if (dep.concurrent && !dep.confluent) {
-                    if (scg.analyses.filter[ id == interleavedAssignmentAnalyzerId ].filter[ objectReferences.contains(dep) ].empty)
+//                    if (scg.analyses.filter[ id == interleavedAssignmentAnalyzerId ].filter[ objectReferences.contains(dep) ].empty)
                         if (schedulingBlocks.contains((dep.eContainer as Node).schedulingBlock)) 
                         (dep.eContainer as Node).schedulingBlock.topologicalClusterPlacement(clusterPos, schedulingBlocks, schedule, constraints, visited, scg) 
                 }
@@ -134,7 +134,8 @@ class ClusterScheduler extends SimpleScheduler {
             
             if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg)) {
                 schedule.schedulingBlocks.add(schedulingBlock)
-                scg.guards += schedulingBlock.createGuardExpression(schedule, scg)
+                // TODO: Revamp guards
+                // scg.guards += schedulingBlock.createGuardExpression(schedule, scg)
 //                schedulingBlocks.remove(schedulingBlock)
                 constraints.schedulingBlockClusters.get(clusterPos).remove(schedulingBlock)
                 placed = placed + 1
@@ -145,7 +146,7 @@ class ClusterScheduler extends SimpleScheduler {
     }	
 	
 	
-    protected override boolean createSchedule(SCGraphSched scg, Schedule schedule, SchedulingConstraints constraints) {
+    protected override boolean createSchedule(SCGraph scg, Schedule schedule, SchedulingConstraints constraints) {
         // fixpoint is set to true if an iteration cannot set any remaining blocks.
         var fixpoint  = false
         
