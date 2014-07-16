@@ -262,11 +262,13 @@ function setConfig(i) {
 
 
 var isOnline = {};
-// On page load: Find & select the first server where compile AND render is online in order: 0. main, 1. backup1, 2. backup2, 3. localhost
+// On page load: Find & select the first server where compile AND render is online in order: 1. local host (3), 2. main, 3. backup1, 4. backup2
 function updateSelectedServer() {
+   var serverOrder = new Array(3,0,1,2);
    for (var c = 0; c < 4; c++) {
-        if (isOnline[compileServerName[c]] == true && isOnline[renderServerName[c]] == true) {
-			setConfig(c);
+        if (isOnline[compileServerName[serverOrder[c]]] == true && isOnline[renderServerName[serverOrder[c]]] == true) {
+			setConfig(serverOrder[c]);
+			return;
 		}
    }
 }
