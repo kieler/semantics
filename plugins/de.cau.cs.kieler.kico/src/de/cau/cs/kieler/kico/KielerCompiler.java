@@ -921,7 +921,7 @@ public class KielerCompiler {
             context.getCompilationResult().setCurrentTransformationDone(false);
 
             doneWork++;
-            
+
             // Possibly async call to perform the transformation (in a new Eclipse job)
             performTransformationTask(transformedObject, transformation, context, doneWork,
                     totalWork);
@@ -1010,21 +1010,20 @@ public class KielerCompiler {
                                 + handledParameterType.isInstance(transformedObject) + " )");
                     }
                     if (handledParameterType.isInstance(transformedObject)) {
-                        
+
                         KielerCompilerProgressMonitor subMonitor = null;
                         if (monitor == null) {
-                            subMonitor =
-                                    new KielerCompilerProgressMonitor(new NullProgressMonitor(), 100);
-                        } else {
-                            subMonitor =
-                                    new KielerCompilerProgressMonitor(monitor, 100);
+                            monitor = new NullProgressMonitor();
                         }
+                        subMonitor = new KielerCompilerProgressMonitor(monitor, 100);
                         // Set the sub monitor for this transformation
                         context.setCurrentTransformationProgressMonitor(subMonitor);
-                        //Each subMonitor can use 0 - 100 % / work units
-                        performTransformation(transformedObject, transformation, context, subMonitor);
+                        // Each subMonitor can use 0 - 100 % / work units
+                        performTransformation(transformedObject, transformation, context,
+                                subMonitor);
                         context.getCompilationResult().setCurrentTransformationDone(true);
-                        // Increment the main monitor with 100%-x% percent, where x% is the number of
+                        // Increment the main monitor with 100%-x% percent, where x% is the number
+                        // of
                         // work in % already added by the subMonitor
                         int additional = 100 - subMonitor.getPercentDone();
                         monitor.worked(additional);
@@ -1051,15 +1050,15 @@ public class KielerCompiler {
             final Transformation transformation, final KielerCompilerContext context,
             final KielerCompilerProgressMonitor subMonitor) {
 
-//        for (int c = 0; c < 100; c ++) {
-//            subMonitor.setPercentDone(c);
-//            // TODO: remove
-//            try {
-//                Thread.sleep(1);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
+        // for (int c = 0; c < 100; c ++) {
+        // subMonitor.setPercentDone(c);
+        // // TODO: remove
+        // try {
+        // Thread.sleep(1);
+        // } catch (InterruptedException e) {
+        // e.printStackTrace();
+        // }
+        // }
 
         String transformationID = "unknown";
         Object object = null;
