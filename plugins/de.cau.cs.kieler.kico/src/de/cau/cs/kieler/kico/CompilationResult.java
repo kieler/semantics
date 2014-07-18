@@ -139,8 +139,8 @@ public class CompilationResult {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the last transformation result as an EObject. Returns null if there is no transformation
-     * result at all or if the last transformation result is not an EObject.
+     * Gets the last transformation result as String. Returns null if there is no transformation
+     * result at all or if the last transformation result is not String.
      * 
      * @return the String
      */
