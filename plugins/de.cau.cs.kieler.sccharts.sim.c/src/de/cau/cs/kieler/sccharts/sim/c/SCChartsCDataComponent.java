@@ -50,6 +50,7 @@ import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.s.extensions.SExtension;
 import de.cau.cs.kieler.s.s.Program;
+import de.cau.cs.kieler.sc.CExecution;
 import de.cau.cs.kieler.sc.SCExecution;
 import de.cau.cs.kieler.sc.SCPlugin;
 import de.cau.cs.kieler.sccharts.Region;
@@ -117,8 +118,8 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     /** The Constant KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS. */
     private static final String KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS = "CODEGENERATION";
     
-    /** The SC execution object for concurrent execution. */
-    private SCExecution scExecution = null;
+    /** The C execution object for concurrent execution. */
+    private CExecution cExecution = null;
 
     /** The list of output signals. */
     private LinkedList<String> outputSignalList = null;
@@ -239,9 +240,9 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     // -------------------------------------------------------------------------
 
     public void wrapup() throws KiemInitializationException {
-        if (scExecution != null) {
+        if (cExecution != null) {
             // Do not delete the executable, maybe it can be used again
-            scExecution.stopExecution(false);
+            cExecution.stopExecution(false);
         }
     }
 
@@ -260,12 +261,12 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the SC execution.
+     * Gets the C execution.
      * 
-     * @return the sC execution
+     * @return the C execution
      */
-    public SCExecution getSCExecution() {
-        return scExecution;
+    public CExecution getCExecution() {
+        return cExecution;
     }
 
     // -------------------------------------------------------------------------
@@ -303,9 +304,9 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     @Override
     public JSONObject doProvideInitialVariables() throws KiemInitializationException {
         // start execution of compiled program
-        if (scExecution.isCompiled()) {
+        if (cExecution.isCompiled()) {
             try {
-                scExecution.startExecution();
+                cExecution.startExecution();
             } catch (IOException e) {
                 throw new KiemInitializationException(
                         "SCCharts could not be started sucessfully.\n\n", true, e);
@@ -315,7 +316,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                     true, null);
         }
 
-        if (!scExecution.isStarted()) {
+        if (!cExecution.isStarted()) {
             throw new KiemInitializationException(
                     "Error running SCCharts. Compiled simulation does not exist.\n", true, null);
         }
@@ -445,16 +446,20 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             String includePath = getBundlePath("templates");
             System.out.println(includePath);
             // Compile
-//            scExecution = new SCExecution(outputFolder, benchmark);
-//            LinkedList<String> generatedSCFiles = new LinkedList<String>();
-//            generatedSCFiles.add(scOutputString);
-//            scExecution.setDebug(debugConsole);
-//            scExecution.setScl(scl);
-//            scExecution.compile(generatedSCFiles, modelName);
+            cExecution = new CExecution(outputFolder, false);
+            LinkedList<String> generatedSCFiles = new LinkedList<String>();
+            generatedSCFiles.add(outputFileSimulation);
+            //generatedSCFiles.add(outputFileSCChart);
+            generatedSCFiles.add("-I " + includePath);
+            String modelName = myModel.getId();
+            cExecution.compile(generatedSCFiles, modelName);
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);
         } catch (IOException e) {
+            throw new KiemInitializationException("Error compiling S program:\n\n "
+                    + e.getMessage() + "\n\n" + compile, true, e);
+        } catch (InterruptedException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);
         }
@@ -494,7 +499,7 @@ private static void writeOutputModel(String outputFile, byte[] model) {
         StringBuffer activeStatementsBuf = new StringBuffer();
         List<DebugData> activeStatementList = new LinkedList<DebugData>();
 
-        if (scExecution == null || !scExecution.isStarted()) {
+        if (cExecution == null || !cExecution.isStarted()) {
             throw new KiemExecutionException("No S simulation is running", true, null);
         }
 

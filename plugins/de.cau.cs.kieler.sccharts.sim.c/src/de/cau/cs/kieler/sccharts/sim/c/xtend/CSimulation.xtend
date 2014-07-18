@@ -67,7 +67,7 @@ class CSimulation {
 
 	#include "cJSON.c"
 	
-    #include "scchart.c"
+	#include "scchart.c"
 
 	cJSON* output = 0;
 	''' 
@@ -116,9 +116,9 @@ void readInputs() {
 void writeOutputs() {
     cJSON* value;;
 	«FOR output : scchart.getValuedObjects().filter(e|e.isOutput)»
-           value = cJSON_CreateObject();
-           cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(«output.name»));
-           cJSON_AddItemToObject(output, "«output.name»", value);
+	value = cJSON_CreateObject();
+	cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(«output.name»));
+	cJSON_AddItemToObject(output, "«output.name»", value);
     «ENDFOR»
 }'''
    }
