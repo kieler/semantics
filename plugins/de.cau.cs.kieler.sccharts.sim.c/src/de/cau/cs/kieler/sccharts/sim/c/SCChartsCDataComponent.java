@@ -56,6 +56,7 @@ import de.cau.cs.kieler.sc.SCPlugin;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulation;
+import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -114,10 +115,11 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     /** The Constant KIEM_PROPERTY_COMPILETRANSFORMATIONS. */
     private static final int KIEM_PROPERTY_COMPILETRANSFORMATIONS = 5;
     /** The Constant KIEM_PROPERTY_NAME_COMPILETRANSFORMATIONS. */
-    private static final String KIEM_PROPERTY_NAME_COMPILETRANSFORMATIONS = "Compile Transformations";
+    private static final String KIEM_PROPERTY_NAME_COMPILETRANSFORMATIONS =
+            "Compile Transformations";
     /** The Constant KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS. */
     private static final String KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS = "CODEGENERATION";
-    
+
     /** The C execution object for concurrent execution. */
     private CExecution cExecution = null;
 
@@ -166,9 +168,11 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         properties[KIEM_PROPERTY_FULLDEBUGMODE] =
                 new KiemProperty(KIEM_PROPERTY_NAME_FULLDEBUGMODE, true);
         properties[KIEM_PROPERTY_DEBUGTRANSFORMATIONS] =
-                new KiemProperty(KIEM_PROPERTY_NAME_DEBUGTRANSFORMATIONS, KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONS);
+                new KiemProperty(KIEM_PROPERTY_NAME_DEBUGTRANSFORMATIONS,
+                        KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONS);
         properties[KIEM_PROPERTY_COMPILETRANSFORMATIONS] =
-                new KiemProperty(KIEM_PROPERTY_NAME_COMPILETRANSFORMATIONS, KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS);
+                new KiemProperty(KIEM_PROPERTY_NAME_COMPILETRANSFORMATIONS,
+                        KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS);
         // properties[KIEM_PROPERTY_BENCHMARK] = new KiemProperty(KIEM_PROPERTY_NAME_BENCHMARK,
         // false);
         // properties[KIEM_PROPERTY_RUNTIMEDEBUGCONSOLE] = new KiemProperty(
@@ -226,13 +230,13 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     }
 
     // -------------------------------------------------------------------------
-    
+
     public String getDataComponentId() {
         return "de.cau.cs.kieler.sccharts.sim.c";
     }
 
     // -------------------------------------------------------------------------
-    
+
     public void initialize() throws KiemInitializationException {
         computedTick = 1;
     }
@@ -270,11 +274,12 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Gets the bundle path.
-     *
-     * @param subDirectory the sub directory
+     * 
+     * @param subDirectory
+     *            the sub directory
      * @return the bundle path
      */
     private String getBundlePath(String subDirectory) {
@@ -282,7 +287,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
         URL url = null;
         try {
-             url = FileLocator.toFileURL(FileLocator.find(bundle, new Path(subDirectory), null));
+            url = FileLocator.toFileURL(FileLocator.find(bundle, new Path(subDirectory), null));
         } catch (IOException e2) {
             e2.printStackTrace();
         }
@@ -295,7 +300,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         }
         return bundleLocation;
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -340,10 +345,10 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                         String signalName = valuedObject.getName();
                         if (signalName.startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
                             outputStateList.add(signalName);
-                        } else if (signalName.startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                        } else if (signalName
+                                .startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                             outputTransitionList.add(signalName);
-                        }
-                        else {
+                        } else {
                             if (kExpressionExtension.isSignal(valuedObject)) {
                                 res.accumulate(signalName, JSONSignalValues.newValue(false));
                                 outputSignalList.add(signalName);
@@ -371,11 +376,11 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             throws KiemInitializationException {
         doModel2ModelTransform(monitor, (State) this.getModelRootElement(),
                 this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE + KIEM_PROPERTY_DIFF]
-                        .getValueAsBoolean());        
+                        .getValueAsBoolean());
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * {@inheritDoc}
      */
@@ -402,7 +407,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             // an active Editor
             URI sOutput = URI.createURI("");
             URI scOutput = URI.createURI("");
-                      
+
             // By default there is no additional transformation necessary
             Program transformedProgram = null;
 
@@ -411,29 +416,33 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             URI input = URI.createPlatformResourceURI(inputPathString.replace("%20", " "), true);
             sOutput = URI.createURI(input.toString());
 
-            String transformations = this.getProperties()[KIEM_PROPERTY_COMPILETRANSFORMATIONS + KIEM_PROPERTY_DIFF]
-                    .getValue();
-            
+            String transformations =
+                    this.getProperties()[KIEM_PROPERTY_COMPILETRANSFORMATIONS + KIEM_PROPERTY_DIFF]
+                            .getValue();
+
             // If 'Full Debug Mode' is turned on then the user also wants to have
             // states and transitions visualized.
             // Hence some pre-processing is needed and done by the
             // an addition model transformation
             if (debug) {
-                transformations = this.getProperties()[KIEM_PROPERTY_DEBUGTRANSFORMATIONS + KIEM_PROPERTY_DIFF]
-                        .getValue() + ", " + transformations;
+                transformations =
+                        this.getProperties()[KIEM_PROPERTY_DEBUGTRANSFORMATIONS
+                                + KIEM_PROPERTY_DIFF].getValue()
+                                + ", " + transformations;
             }
 
             // Compile the SCChart to C code
-            CompilationResult compilationResult = KielerCompiler.compile(transformations, this.myModel, true, false);
+            CompilationResult compilationResult =
+                    KielerCompiler.compile(transformations, this.myModel, true, false);
             String cSCChart = compilationResult.getString();
-            
+
             // Generate Simulation wrapper C code
             CSimulation transform = Guice.createInjector().getInstance(CSimulation.class);
             String cSimulation = transform.transform(this.myModel, "10000").toString();
 
             // Set a random output folder for the compiled files
             String outputFolder = KiemUtil.generateRandomTempOutputFolder();
-            
+
             String fileNameSCChart = "scchart.c";
             String outputFileSCChart = outputFolder + fileNameSCChart;
             writeOutputModel(outputFileSCChart, cSCChart.getBytes());
@@ -441,15 +450,14 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             String fileNameSimulation = "simulation.c";
             String outputFileSimulation = outputFolder + fileNameSimulation;
             writeOutputModel(outputFileSimulation, cSimulation.getBytes());
-            
-            
+
             String includePath = getBundlePath("templates");
             System.out.println(includePath);
             // Compile
             cExecution = new CExecution(outputFolder, false);
             LinkedList<String> generatedSCFiles = new LinkedList<String>();
             generatedSCFiles.add(outputFileSimulation);
-            //generatedSCFiles.add(outputFileSCChart);
+            // generatedSCFiles.add(outputFileSCChart);
             generatedSCFiles.add("-I " + includePath);
             String modelName = myModel.getId();
             cExecution.compile(generatedSCFiles, modelName);
@@ -465,42 +473,111 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         }
     }
 
-// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-/**
- * Write output model to file.
- * 
- * @param outputFile
- *            the output file
- * @param modelAsText
- *            the model as text
- */
-private static void writeOutputModel(String outputFile, byte[] model) {
-    FileOutputStream out;
-    try {
-        out = new FileOutputStream(outputFile);
-        out.write(model);
-        out.close();
-    } catch (FileNotFoundException e) {
-        e.printStackTrace();
-    } catch (IOException e) {
-        e.printStackTrace();
+    /**
+     * Write output model to file.
+     * 
+     * @param outputFile
+     *            the output file
+     * @param modelAsText
+     *            the model as text
+     */
+    private static void writeOutputModel(String outputFile, byte[] model) {
+        FileOutputStream out;
+        try {
+            out = new FileOutputStream(outputFile);
+            out.write(model);
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-}
+
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-    
+
     public JSONObject doStep(JSONObject jSONObject) throws KiemExecutionException {
         // The return object to construct
         JSONObject returnObj = new JSONObject();
 
+        boolean debugConsole = false;
+
         // Collect active statements
-        String activeStatements = "";
-        StringBuffer activeStatementsBuf = new StringBuffer();
-        List<DebugData> activeStatementList = new LinkedList<DebugData>();
+        // String activeStatements = "";
+        // StringBuffer activeStatementsBuf = new StringBuffer();
+        // List<DebugData> activeStatementList = new LinkedList<DebugData>();
 
         if (cExecution == null || !cExecution.isStarted()) {
             throw new KiemExecutionException("No S simulation is running", true, null);
+        }
+
+        try {
+            String out = jSONObject.toString();
+            System.out.println("> " + out);
+            cExecution.getInterfaceToExecution().write(out + "\n");
+            cExecution.getInterfaceToExecution().flush();
+            while (cExecution.getInterfaceError().ready()) {
+                // Error output, if any
+                System.out.print(cExecution.getInterfaceError().read());
+            }
+
+            String receivedMessage = cExecution.getInterfaceFromExecution().readLine();
+
+            System.out.println("< " + receivedMessage);
+            // if (debugConsole) {
+            // printConsole("==============| TICK " + computedTick++ + " |==============");
+            // while (!receivedMessage.startsWith("{\"")) {
+            // printConsole(receivedMessage);
+            // receivedMessage = scExecution.getInterfaceFromExecution().readLine();
+            // }
+            // printConsole("\n");
+            // }
+
+            if (receivedMessage != null) {
+                JSONObject output = new JSONObject(receivedMessage);
+                JSONArray outputArray = output.names();
+
+                if (outputArray != null) {
+                    // First add auxiliary signals
+                    for (int i = 0; i < outputArray.length(); i++) {
+                        String outputName = outputArray.getString(i);
+
+                        if (output.get(outputName) instanceof JSONObject) {
+
+                            JSONObject valuedObject = output.getJSONObject(outputName);
+                            Object value = ((JSONObject) valuedObject).get("value"); 
+
+                            boolean present = false;
+                            if (value instanceof Boolean) {
+                                present = (Boolean) value;
+                            } else if (value instanceof Integer) {
+                                present = ((Integer) value) != 0;
+                            }
+
+                            returnObj.accumulate(outputName,
+                                    JSONSignalValues.newValue(value, present));
+                        }
+
+                    }
+                }
+            }
+
+            // // Finally accumulate all active Statements (activeStatements)
+            // // under the statementName
+            // String statementName =
+            // this.getProperties()[KIEM_PROPERTY_STATEMENTNAME + KIEM_PROPERTY_DIFF]
+            // .getValue();
+            // returnObj.accumulate(statementName, activeStatements);
+
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            cExecution.stopExecution(false);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            cExecution.stopExecution(false);
         }
 
         return returnObj;
