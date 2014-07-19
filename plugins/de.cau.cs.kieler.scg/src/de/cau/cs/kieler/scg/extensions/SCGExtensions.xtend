@@ -73,6 +73,15 @@ class SCGExtensions {
     /** Valued object mapping */
     private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>    
 
+
+	def boolean hasBasicBlockData(SCGraph scg) {
+		scg.basicBlocks.size > 0
+	}
+	
+	def boolean hasSchedulingData(SCGraph scg) {
+		scg.schedules.size > 0
+	}
+
     // -------------------------------------------------------------------------
     // -- Valued object handling
     // -------------------------------------------------------------------------
@@ -756,6 +765,8 @@ class SCGExtensions {
     def isNull(EObject eObject) {
         eObject == null
     }
+    
+    
 }
 
 

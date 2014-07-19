@@ -58,19 +58,15 @@ import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.klighd.analyzer.AnalysesVisualization
-import de.cau.cs.kieler.scgbb.BasicBlock
-import de.cau.cs.kieler.scgbb.SCGraphBB
-import de.cau.cs.kieler.scgbb.SchedulingBlock
-import de.cau.cs.kieler.scgdep.AbsoluteWrite_Read
-import de.cau.cs.kieler.scgdep.AbsoluteWrite_RelativeWrite
-import de.cau.cs.kieler.scgdep.Dependency
-import de.cau.cs.kieler.scgdep.RelativeWrite_Read
-import de.cau.cs.kieler.scgdep.SCGraphDep
-import de.cau.cs.kieler.scgdep.Write_Write
-import de.cau.cs.kieler.scgsched.SCGraphSched
+import de.cau.cs.kieler.scg.BasicBlock
+import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.AbsoluteWrite_Read
+import de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite
+import de.cau.cs.kieler.scg.Dependency
+import de.cau.cs.kieler.scg.RelativeWrite_Read
+import de.cau.cs.kieler.scg.Write_Write
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
@@ -84,7 +80,6 @@ import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
-import de.cau.cs.kieler.scgdep.AssignmentDep
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -162,10 +157,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     /** Inject SCG extensions. */
     @Inject
     extension SCGExtensions
-
-    /** Inject SCG copy extensions. */
-    @Inject
-    extension SCGCopyExtensions
 
     /** Inject analysis extensions. */
     @Inject
@@ -453,9 +444,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 
                 // If the dependency edges shall be layouted as well, they must be drawn before any 
                 // hierarchy management. The hierarchy methods break edges in half and connect them via a port.
-                if (scg instanceof SCGraphDep && SHOW_DEPENDENCIES.booleanValue && LAYOUT_DEPENDENCIES.booleanValue) {
-                    if (it instanceof AssignmentDep) {
-                        (it as AssignmentDep).dependencies.forEach[ (it as Dependency).synthesizeDependency ]
+                if (scg instanceof SCGraph && SHOW_DEPENDENCIES.booleanValue && LAYOUT_DEPENDENCIES.booleanValue) {
+                    if (it instanceof Assignment) {
+                        (it as Assignment).dependencies.forEach[ (it as Dependency).synthesizeDependency ]
                     }
                 }
             ]
@@ -475,16 +466,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     ]]
             }
             // Draw basic blocks if present.
-            if(scg instanceof SCGraphBB) (scg as SCGraphBB).synthesizeBasicBlocks
+            if (scg.basicBlocks.size>0) scg.synthesizeBasicBlocks
             
             // If dependency edge are drawn plain (without layout), draw them after the hierarchy management.
-            if (scg instanceof SCGraphDep && SHOW_DEPENDENCIES.booleanValue && !LAYOUT_DEPENDENCIES.booleanValue) {
-                scg.nodes.filter(AssignmentDep).forEach[
-                    (it as AssignmentDep).dependencies.forEach[ (it as Dependency).synthesizeDependency ]
+            if (SHOW_DEPENDENCIES.booleanValue && !LAYOUT_DEPENDENCIES.booleanValue) {
+                scg.nodes.filter(Assignment).forEach[
+                    it.dependencies.forEach[ (it as Dependency).synthesizeDependency ]
                 ]
             }
             // Draw analysis visualization if present.
-            if(scg instanceof SCGraphSched) (scg as SCGraphSched).synthesizeAnalyses
+//            if(scg instanceof SCGraphSched) (scg as SCGraphSched).synthesizeAnalyses
         ]
     }
 
@@ -933,9 +924,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
                 it.lineStyle = LineStyle::SOLID
                 it.addArrowDecorator
-                if ((controlFlow.eContainer as Node).graph instanceof SCGraphSched && SHOW_SCHEDULINGPATH.booleanValue)
-                    it.foreground = SCHEDULING_CONTROLFLOWEDGE.copy
-                else
+//                if ((controlFlow.eContainer as Node).graph instanceof SCGraphSched && SHOW_SCHEDULINGPATH.booleanValue)
+//                    it.foreground = SCHEDULING_CONTROLFLOWEDGE.copy
+//                else
                     it.foreground = STANDARD_CONTROLFLOWEDGE.copy
                 it.foreground.propagateToChildren = true
             ]
@@ -1124,7 +1115,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
      * 			the SCG containing the basic block information
      * @return Returns nothing.
      */
-    private def void synthesizeBasicBlocks(SCGraphBB scg) {
+    private def void synthesizeBasicBlocks(SCGraph scg) {
 
         val schedulingBlockMapping = new HashMap<SchedulingBlock, KNode>
 
@@ -1136,7 +1127,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK)
                 bbContainerList.put(bb, bbContainer)
 //                val bbName = serializer.serialize(bb.guards.head.reference)
-                val bbName = bb.guards.head.reference.valuedObject.name
+                val bbName = bb.guard.reference.valuedObject.name
                 bbContainer.addOutsideTopLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
             }
             if (SHOW_SCHEDULINGBLOCKS.booleanValue)
@@ -1144,15 +1135,15 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK)
                     schedulingBlockMapping.put(schedulingBlock, sbContainer)
 //                    val sbName = serializer.serialize(schedulingBlock.guard.reference)
-                     val sbName = schedulingBlock.guard.reference.valuedObject.name
+                     val sbName = schedulingBlock.basicBlock.guard.reference.valuedObject.name
                     sbContainer.addOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER
                 }
         }
 
-        if (scg instanceof SCGraphSched && SHOW_SCHEDULINGPATH.booleanValue) {
+        if (scg.hasSchedulingData && SHOW_SCHEDULINGPATH.booleanValue) {
             var Node source = null
             var Node target = null
-            for (node : (scg as SCGraphSched).getSchedules.head.scheduleNodes) {
+            for (node : scg.schedules.head.scheduleNodes) {
                 target = node
                 if (target != null && source != null) {
 
@@ -1180,19 +1171,21 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
 
             // not schedulable blocks!
-            if (SHOW_SCHEDULINGBLOCKS.booleanValue && (scg as SCGraphSched).unschedulable) {
-                val usBlocks = scg.allSchedulingBlocks()
-                (scg as SCGraphSched).getSchedules.head.getSchedulingBlocks.forEach[usBlocks.remove(it)]
-                usBlocks.forEach [
-                    val node = schedulingBlockMapping.get(it)
-                    node.getData(typeof(KRoundedRectangle)) => [
-                        it.lineStyle = LineStyle::SOLID
-                        it.foreground = SCHEDULING_NOTSCHEDULABLE.copy
-                    ]
-                    node.KRendering.background = SCHEDULING_NOTSCHEDULABLE.copy
-                    node.KRendering.background.alpha = 128
-                ]
-            }
+            // TODO: draw not scheduled blocks
+            
+//            if (SHOW_SCHEDULINGBLOCKS.booleanValue && (scg as SCGraphSched).unschedulable) {
+//                val usBlocks = scg.allSchedulingBlocks()
+//                (scg as SCGraphSched).getSchedules.head.getSchedulingBlocks.forEach[usBlocks.remove(it)]
+//                usBlocks.forEach [
+//                    val node = schedulingBlockMapping.get(it)
+//                    node.getData(typeof(KRoundedRectangle)) => [
+//                        it.lineStyle = LineStyle::SOLID
+//                        it.foreground = SCHEDULING_NOTSCHEDULABLE.copy
+//                    ]
+//                    node.KRendering.background = SCHEDULING_NOTSCHEDULABLE.copy
+//                    node.KRendering.background.alpha = 128
+//                ]
+//            }
         }
     }
 
@@ -1204,11 +1197,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
      * 			the scg containing additional visualization data
      * @return Returns nothing.
      */
-    private def void synthesizeAnalyses(SCGraphSched scg) {
+    private def void synthesizeAnalyses(SCGraph scg) {
 
         // val AnalysesVisualization analysesVisualization = Guice.createInjector().getInstance(typeof(AnalysesVisualization))
-        if(!SHOW_POTENTIALPROBLEMS.booleanValue) return;
-        scg.analyses.forEach[visualize(it, this)]
+//        if(!SHOW_POTENTIALPROBLEMS.booleanValue) return;
+//        scg.analyses.forEach[visualize(it, this)]
     }
 
     // -------------------------------------------------------------------------
