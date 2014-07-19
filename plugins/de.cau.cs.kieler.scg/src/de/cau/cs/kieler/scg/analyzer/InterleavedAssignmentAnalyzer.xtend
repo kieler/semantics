@@ -13,14 +13,12 @@
  */
 package de.cau.cs.kieler.scg.analyzer
 
-import de.cau.cs.kieler.scg.analyzer.AbstractAnalyzer
-import de.cau.cs.kieler.scgdep.Write_Write
-import de.cau.cs.kieler.scg.Node
 import com.google.inject.Inject
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scgsched.ScgschedFactory
+import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.Write_Write
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
 
 /**
  * @author ssm
@@ -59,11 +57,11 @@ class InterleavedAssignmentAnalyzer extends AbstractAnalyzer {
                 }
                 
                 if (isSimpleFlow && assignment1Tick != assignment2Tick) {
-                    val analysis = ScgschedFactory::eINSTANCE.createAnalysis => [
-                        id = getAnalysisId
-                        objectReferences += dependency                        
-                    ]
-                    result.addAnalysis(analysis)
+//                    val analysis = ScgschedFactory::eINSTANCE.createAnalysis => [
+//                        id = getAnalysisId
+//                        objectReferences += dependency                        
+//                    ]
+//                    result.addAnalysis(analysis)
                 }
             }
         ]
