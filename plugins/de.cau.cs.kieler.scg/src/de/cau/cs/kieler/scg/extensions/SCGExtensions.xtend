@@ -38,6 +38,9 @@ import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.Declaration
+import java.util.HashMap
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -66,6 +69,9 @@ class SCGExtensions {
     extension KExpressionsExtension
     
     private int MAX_CONTROLFLOW_ACCUMULATION = 100;
+    
+    /** Valued object mapping */
+    private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>    
 
     // -------------------------------------------------------------------------
     // -- Valued object handling
@@ -116,6 +122,49 @@ class SCGExtensions {
    		}
    		return null
     }
+    
+    public def void copyDeclarations(SCGraph source, SCGraph target) {
+    	for (declaration : source.declarations) {
+    		val newDeclaration = createDeclaration(declaration)
+    		declaration.valuedObjects.forEach[ copyValuedObject(newDeclaration) ]
+    		target.declarations += newDeclaration
+    	}
+	}     
+    
+    public def void copyValuedObject(ValuedObject sourceObject, Declaration targetDeclaration) {
+        val newValuedObject = sourceObject.copy
+        targetDeclaration.valuedObjects += newValuedObject
+        valuedObjectMapping.put(sourceObject, newValuedObject)
+    }    
+    
+    def ValuedObject getValuedObjectCopy(ValuedObject valuedObject) {
+        valuedObjectMapping.get(valuedObject)
+    }    
+    
+    def ValuedObject addToValuedObjectMapping(ValuedObject source, ValuedObject target) {
+		valuedObjectMapping.put(source, target)
+		target    	
+    }    
+    
+    def Expression copySCGExpression(Expression expression) {
+    	// Use the ecore utils to copy the expression. 
+        val newExpression = expression.copy
+        
+        if (newExpression instanceof ValuedObjectReference) {
+	        // If it is a single object reference, simply replace the reference with the object of the target SCG.
+            (newExpression as ValuedObjectReference).valuedObject = 
+                (expression as ValuedObjectReference).valuedObject.getValuedObjectCopy                    
+        } else {
+        	// Otherwise, query all references in the expression and replace the object with the new copy
+        	// in the target SCG.
+        	if (newExpression != null)
+                newExpression.eAllContents.filter(typeof(ValuedObjectReference)).
+            	   forEach[ valuedObject = valuedObject.getValuedObjectCopy ]        
+        }
+        
+        // Return the new expression.
+        newExpression
+    }    
 
 
     // -------------------------------------------------------------------------
