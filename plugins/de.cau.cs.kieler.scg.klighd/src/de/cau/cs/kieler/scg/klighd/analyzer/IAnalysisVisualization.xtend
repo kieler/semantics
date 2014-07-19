@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.scg.klighd.analyzer
 
 import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
-import de.cau.cs.kieler.scgsched.Analysis
 
 /**
  * The IAnalyzerVisualization interface provides an interface for the visualization of a particular analyzer.
@@ -29,5 +28,5 @@ import de.cau.cs.kieler.scgsched.Analysis
  */
 
 interface IAnalysisVisualization {
-	def Analysis visualize(Analysis anaysis, SCGraphDiagramSynthesis synthesis)
+//	def Analysis visualize(Analysis anaysis, SCGraphDiagramSynthesis synthesis)
 }

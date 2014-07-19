@@ -15,7 +15,6 @@
 
 import com.google.inject.Guice
 import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
-import de.cau.cs.kieler.scgsched.Analysis
 
 /**
  * The AnalyzerVisualization class provides an interface for the visualization of a particular analyzer.
@@ -45,17 +44,18 @@ class AnalysesVisualization {
 	 * 			the instance of the SCG klighd synthesis
 	 * @return Returns the analysis.
 	 */	
-	def Analysis visualize(Analysis analysis, SCGraphDiagramSynthesis synthesis) {
-		
-		var String className = analysis.getId + VISUALIZATIONCLASSSUFFIX
-		
-		try {
-			val clazz = Class::forName(ANALYZERVISUALIZATIONPACKAGE + "." + className)
-			val IAnalysisVisualization analysisVis = Guice.createInjector().getInstance(clazz) as IAnalysisVisualization
-			analysisVis.visualize(analysis, synthesis)
-		} catch (ClassNotFoundException exception) {
-		}
 
-		analysis		 
-	}
+//	def Analysis visualize(Analysis analysis, SCGraphDiagramSynthesis synthesis) {
+//		
+//		var String className = analysis.getId + VISUALIZATIONCLASSSUFFIX
+//		
+//		try {
+//			val clazz = Class::forName(ANALYZERVISUALIZATIONPACKAGE + "." + className)
+//			val IAnalysisVisualization analysisVis = Guice.createInjector().getInstance(clazz) as IAnalysisVisualization
+//			analysisVis.visualize(analysis, synthesis)
+//		} catch (ClassNotFoundException exception) {
+//		}
+//
+//		analysis		 
+//	}
 }
