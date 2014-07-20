@@ -73,6 +73,9 @@ public class KiCoServer extends HttpServer {
         // String body = request.bodyAsText();
 
         HttpQuery query = header.getQuery();
+        
+        String bodyAsString = new String(request.body());
+        System.out.println(bodyAsString);
 
         // Check the query
         if (query.getValue("model").length() > 0) {
@@ -171,7 +174,7 @@ public class KiCoServer extends HttpServer {
             if (lastWarning.length() > 0) {
                 responseHeader.setHeaderField("compile-warning", HttpUtils.encodeURL(lastWarning));
             }
-            response.setBody(serializedCompiledModel);
+            response.setBody(serializedCompiledModel, false);
 
             return response;
         }

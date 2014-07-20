@@ -179,7 +179,7 @@ public class KlighdServer extends HttpServer {
             if (errors.length() > 0) {
                 responseHeader.setHeaderField("render-error", HttpUtils.encodeURL(errors));
             }
-            response.setBody(serializedRenderedModel);
+            response.setBody(serializedRenderedModel, false);
 
             // String responeBody = "Huhu";
             // HttpHeader responseHeader = new HttpHeader();
