@@ -144,7 +144,7 @@ public class KiCoServer extends HttpServer {
 
             // answer with compiled & serialized model
             String lastError = compilationResult.getAllErrors();
-            String lastWarnings = compilationResult.getAllWarnings();
+            String lastWarning = compilationResult.getAllWarnings();
             if (lastError != null) {
                 debug("Errors serialized:");
                 debug(lastError);
@@ -152,8 +152,8 @@ public class KiCoServer extends HttpServer {
                 lastError = "";
                 debug("No errors to serialize");
             }
-            if (lastWarnings != null) {
-                debug(lastWarnings);
+            if (lastWarning != null) {
+                debug(lastWarning);
             }
 
             HttpHeader responseHeader = new HttpHeader();
@@ -168,6 +168,9 @@ public class KiCoServer extends HttpServer {
                 responseHeader.setHeaderField("compile-error", HttpUtils.encodeURL(lastError));
             }
 
+            if (lastWarning.length() > 0) {
+                responseHeader.setHeaderField("compile-warning", HttpUtils.encodeURL(lastWarning));
+            }
             response.setBody(serializedCompiledModel);
 
             return response;
