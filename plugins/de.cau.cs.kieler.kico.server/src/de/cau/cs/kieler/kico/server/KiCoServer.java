@@ -124,7 +124,6 @@ public class KiCoServer extends HttpServer {
             }
             debug("Model parsed");
 
-            KiCoPlugin.resetLastError();
             context.setVerboseMode(verbose);
             context.setPrerequirements(!strict);
 
@@ -144,12 +143,17 @@ public class KiCoServer extends HttpServer {
             }
 
             // answer with compiled & serialized model
-            String lastError = KiCoPlugin.getLastError();
+            String lastError = compilationResult.getAllErrors();
+            String lastWarnings = compilationResult.getAllWarnings();
             if (lastError != null) {
-                debug("Errors serialized");
+                debug("Errors serialized:");
+                debug(lastError);
             } else {
                 lastError = "";
                 debug("No errors to serialize");
+            }
+            if (lastWarnings != null) {
+                debug(lastWarnings);
             }
 
             HttpHeader responseHeader = new HttpHeader();
