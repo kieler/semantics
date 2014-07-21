@@ -79,6 +79,9 @@ public class KlighdServer extends HttpServer {
         // String body = request.bodyAsText();
 
         HttpQuery query = header.getQuery();
+        if (request.header().isMethodPOST()) {
+            query = request.body().getFormQueryData();
+        }
 
         // Check the query
         if (query.getValue("model").length() > 0) {

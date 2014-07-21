@@ -308,7 +308,7 @@ public class HttpParser {
 
                 // read everything we can!
                 int i;
-                while ((i = this.stream.read()) != -1) {
+                while (((i = this.stream.read()) != -1) && (bytecounter < contentlength-1)) {
                     buffer[bytecounter++] = (byte) i;
                 }
 

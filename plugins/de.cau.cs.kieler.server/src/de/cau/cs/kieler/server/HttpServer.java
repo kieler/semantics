@@ -371,8 +371,8 @@ public abstract class HttpServer extends Job {
                 HttpRequest request = new HttpRequest();
                 request.header = this.httpParser.getHeader();
                 
-                boolean isFormData = request.header.isFormQueryData();
-                request.body.setData(this.httpParser.body, isFormData);
+                boolean isMethodPOST = request.header.isMethodPOST();
+                request.body.setData(this.httpParser.body, isMethodPOST);
 
                 // First try the "online-check" request
                 HttpResponse response = handleRequestOnline(request);
@@ -400,6 +400,7 @@ public abstract class HttpServer extends Job {
                     this.to_client.write(response.header.toString());
                     this.to_client.flush();
                     this.connection.getOutputStream().write(response.body.getData());
+//                    this.connection.getOutputStream().write("OK".getBytes());
                 }
 
                 this.to_client.flush();

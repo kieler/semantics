@@ -78,8 +78,19 @@ public class HttpMessage {
      *
      * @return the byte[]
      */
-    public byte[] body() {
+    public byte[] bodyData() {
         return body.getData();
+    }
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * Get the body.
+     *
+     * @return the byte[]
+     */
+    public HttpBody body() {
+        return body;
     }
     
     //-------------------------------------------------------------------------

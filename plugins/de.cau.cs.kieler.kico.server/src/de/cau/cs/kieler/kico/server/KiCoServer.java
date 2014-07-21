@@ -72,10 +72,14 @@ public class KiCoServer extends HttpServer {
         HttpHeader header = request.header();
         // String body = request.bodyAsText();
 
-        HttpQuery query = header.getQuery();
-        
-        String bodyAsString = new String(request.body());
+        String bodyAsString = request.bodyAsText();
         System.out.println(bodyAsString);
+
+        HttpQuery query = header.getQuery();
+        if (request.header().isMethodPOST()) {
+            query = request.body().getFormQueryData();
+        }
+        
 
         // Check the query
         if (query.getValue("model").length() > 0) {
@@ -157,6 +161,8 @@ public class KiCoServer extends HttpServer {
             }
             if (lastWarning != null) {
                 debug(lastWarning);
+            } else {
+                lastWarning = "";
             }
 
             HttpHeader responseHeader = new HttpHeader();

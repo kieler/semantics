@@ -29,6 +29,9 @@ public class HttpHeader {
     public static final String CONTENT_LENGTH_KEY = "content-length";
     public static final String CONTENT_TYPE_KEY = "content-type";
     public static final String URL_KEY = "url";
+    public static final String METHOD_KEY = "method";
+    public static final String METHOD_POST = "post";
+    public static final String METHOD_GET = "get";
 
     private String statusVal = "200 ok";
     private String serverVal = "";
@@ -134,6 +137,37 @@ public class HttpHeader {
     // -------------------------------------------------------------------------
 
     /**
+     * Sets the method post.
+     */
+    public void setMethodPOST() {
+        this.setHeaderField(HttpHeader.METHOD_KEY, HttpHeader.METHOD_POST);
+    }
+
+    // -------------------------------------------------------------------------
+
+
+    /**
+     * Sets the method get.
+     */
+    public void setMethodGET() {
+        this.setHeaderField(HttpHeader.METHOD_KEY, HttpHeader.METHOD_GET);
+    }
+
+    // -------------------------------------------------------------------------
+    
+    public boolean isMethodPOST() {
+        return this.getHeader(HttpHeader.METHOD_KEY).toLowerCase().equals(HttpHeader.METHOD_POST);
+    }
+
+    // -------------------------------------------------------------------------
+    
+    public boolean isMethodGET() {
+        return (!isMethodPOST());
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Sets the type.
      * 
      * @param type
@@ -226,7 +260,7 @@ public class HttpHeader {
      */
     public boolean isFormQueryData() {
         boolean isFormData =
-                getHeader(HttpHeader.CONTENT_TYPE_KEY).equals("application/x-www-form-urlencoded");
+                getHeader(HttpHeader.CONTENT_TYPE_KEY).startsWith("application/x-www-form-urlencoded");
         return isFormData;
     }
 

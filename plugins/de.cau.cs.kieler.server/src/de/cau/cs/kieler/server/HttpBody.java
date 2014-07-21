@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.server;
 
-import java.util.ArrayList;
-
 /**
  * HttpBody
  * 
@@ -25,9 +23,6 @@ import java.util.ArrayList;
 public class HttpBody {
 
     HttpQuery queryString = new HttpQuery();
-
-    ArrayList<String> keys = new ArrayList<String>();
-    ArrayList<String> vals = new ArrayList<String>();
 
     private byte[] data = "".getBytes();
 
@@ -99,7 +94,10 @@ public class HttpBody {
      * @return the data
      */
     public String getDataAsString() {
-        return new String(data);
+        if (data != null) {
+            return new String(data);
+        }
+        return "";
     }
 
     // -------------------------------------------------------------------------
@@ -120,9 +118,9 @@ public class HttpBody {
      * @param data the data
      * @param isFormData the is form data
      */
-    public void setData(byte[] data, boolean isFormData) {
+    public void setData(byte[] data, boolean isMethodPOST) {
         this.data = data;
-        if (isFormData) {
+        if (isMethodPOST) {
             parseBodyAsFormQueryData();
         }
     }
