@@ -32,9 +32,9 @@
 
 <script>
 
-//if (top.location.href != "http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Online+Compiler") {
-//	top.location.href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Online+Compiler"
-//}
+if (top.location.href != "http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Online+Compiler") {
+	top.location.href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Online+Compiler"
+}
 
 var compileServerName = new Array("onlineserver0a",              "onlineserver1a",               "onlineserver2a",               "onlinelocalhosta");
 var compileServerURL  = new Array("http://compile.sccharts.com", "http://www.sccharts.com:5556", "http://www.sccharts.com:5555", "http://localhost:5555");
@@ -117,7 +117,7 @@ function openSelectWindow() {
   transformationsTimer=setInterval(function(){updateTransformations()},500);
   mywindow = window.open("", "selectWindow", "width=950,height=270, resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no");
   mywindow.document.write(windowContent);
-
+  
   mywindow.focus();
 }
 
@@ -208,18 +208,10 @@ function replaceAll(inputStr, findStr, replaceStr) {
 }
 
 function compileText() {
-	//var data = new FormData();
-	//data.append('model', model.value);
-	//data.append('transformations', transformations.value);
-	//data.append('verbose', verbose);
-	//data.append('strict', strict);
-
     var strict = document.getElementById("strict").checked;
     var verbose = 0;//document.getElementById("verbose").checked;
 
-	//var resultUrl =  document.getElementById("KiCoURL").value + "/?model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
-	var resultUrl =  document.getElementById("KiCoURL").value;
-	var data =  "model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
+	var resultUrl =  document.getElementById("KiCoURL").value + "/?model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
     document.getElementById("lastCompilerCall").value = resultUrl;
 
 	var xmlhttp = new XMLHttpRequest();
@@ -243,9 +235,8 @@ function compileText() {
 	      }
 		}
 	}
-	xmlhttp.open('POST', resultUrl, true);
-	xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	xmlhttp.send(data);
+	xmlhttp.open('GET', resultUrl, true);
+	xmlhttp.send();
 }
 
 function clearErrors() {
@@ -286,7 +277,7 @@ function updateSelectedServer() {
 function testOnlineStatus(redAndGreenImageId, serverURL) {
 	   var testImage = new Image();
 	   testImage.src = serverURL + "/?online=1#" + new Date().getTime();
-
+	   
   	   testImage.onload = function() {
 			if (testImage.height > 0) {
 			    var redAndGreenImage = document.getElementById(redAndGreenImageId);
@@ -328,48 +319,35 @@ function updateImage() {
 	    var scale = document.getElementById("scale")
 		var outputImageSVG = document.getElementById("outputImageSVG").checked;
 		var render = "png";
-		var imageFormat = "png";
 		if (outputImageSVG) {
 				render = "svg";
-				imageFormat = "svg+xml";
 		}
-
-		var imageUrl = document.getElementById("KLighDURL").value
-		var data = "encoding=base64&model="+encodeURIComponent(resultText.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&render="+render+"&scale=" + encodeURIComponent(scale.value); // + "#" + new Date().getTime();
+        var new_image = new Image();
+        //set up the new image
+        new_image.id = "resultImage";
+		var imageUrl = document.getElementById("KLighDURL").value + "/?model="+encodeURIComponent(resultText.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&render="+render+"&scale=" + encodeURIComponent(scale.value) + "#" + new Date().getTime();
 		document.getElementById("lastRenderCall").value = imageUrl;
+        new_image.src = imageUrl;
 
-		var xmlhttp = new XMLHttpRequest();
-		xmlhttp.onreadystatechange=function() {
-	  		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-		      var new_image = new Image();
-		      new_image.id = "resultImage";
+		new_image.onload = function() {
+        	// insert new image and remove old
+    	    image.parentNode.insertBefore(new_image, image);
+	        image.parentNode.removeChild(image);
 
- 	  	 	  var response = xmlhttp.responseText;
-//		      new_image.src  = "data:image/png;base64," + response + "";
-//		      new_image.src  = "data:image/svg+xml;base64," + response + "";
-		      new_image.src  = "data:image/"+imageFormat+";base64," + response + "";
+			var size = document.getElementById("size");
+			var width = new_image.naturalWidth;
+			var height = new_image.naturalHeight;
+			new_image.width = width/size.value;
+			new_image.height = height/size.value;
+	    }
+		//var width = new_image.naturalWidth;
+		//var height = new_image.naturalHeight;
+		//alert(width + "," + height);
+		//new_image.width = "50%";
+		//new_image.height = "50%";
 
-		   	  // insert new image and remove old
-    	      image.parentNode.insertBefore(new_image, image);
-	          image.parentNode.removeChild(image);
-
-			  new_image.onload = function() {
-	   			  var size = document.getElementById("size");
-				  var width = new_image.naturalWidth;
-				  var height = new_image.naturalHeight;
-				  new_image.width = width/size.value;
-				  new_image.height = height/size.value;
-	    	  }
-			}
-
-		}
-		xmlhttp.open('POST', imageUrl, true);
-		xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-		xmlhttp.send(data);
-	}
+    }
 }
-
-
 
 </script>
 
@@ -481,7 +459,7 @@ scchart ABRO {
                   </span><br>
                   <br>
                   <a name="server"></a> <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Advanced Options</a></span></p>
-
+				  
 		<div id="advancedOptions" style="font:24px bold; display: none">
 		<span class="Stil8 Stil10">
                 <table width="370" border="0" cellspacing="5">
@@ -507,7 +485,7 @@ scchart ABRO {
                     <th scope="row"><div align="right">Last Render Call:</div></th>
                     <td><input name="lastRenderCall" type="text" id="lastRenderCall" readonly="true" size="30" value="" style="background-color: #CCCCCC"></td>
                   </tr>
-                </table>
+                </table>  
 		</span></div>
 					  </td>
             </tr>

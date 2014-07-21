@@ -182,7 +182,20 @@ public class KlighdServer extends HttpServer {
             if (errors.length() > 0) {
                 responseHeader.setHeaderField("render-error", HttpUtils.encodeURL(errors));
             }
+            
+            responseHeader.setHeaderField("Access-Control-Allow-Origin", "*");
+            responseHeader.setHeaderField("Access-Control-Expose-Headers", "compile-error,compile-warning");
+            
+            if (query.getValue("encoding").toLowerCase().equals("base64")) {
+                responseHeader.setHeaderField("Content-Transfer-Encoding", "base64");
+                serializedRenderedModel = (HttpUtils.encodeBase64(serializedRenderedModel)).getBytes();
+            } 
+              
+            responseHeader.setContentLength(serializedRenderedModel.length);
             response.setBody(serializedRenderedModel, false);
+
+            System.out.println(responseHeader.toString());
+            System.out.println(new String(serializedRenderedModel));
 
             // String responeBody = "Huhu";
             // HttpHeader responseHeader = new HttpHeader();
