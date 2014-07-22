@@ -470,6 +470,13 @@
             method="transform"
             name="BasicBlocks">
       </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.transformations.BasicBlockTransformationSCplus"
+            dependencies="SCGSCHEDGROUP"
+            id="SCGBBSCPLUS"
+            method="transform"
+            name="BasicBlocksSCplus">
+      </transformationMethod>
       <transformationGroup
             alternatives="true"
             id="SCGBBGROUP"
@@ -495,6 +502,20 @@
             id="SCGSEQ"
             method="sequentialize"
             name="Sequentializer">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.schedulers.ClusterScheduler"
+            dependencies="SCGSEQ"
+            id="SCGSCHEDCLUSTER"
+            method="schedule"
+            name="Cluster Scheduler">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.schedulers.HybridScheduler"
+            dependencies="SCGSEQ"
+            id="SCGSCHEDHYBRID"
+            method="schedule"
+            name="Hybrid Scheduler">
       </transformationMethod>
    </extension>
 
