@@ -72,7 +72,11 @@ class During {
                 mainState.regions.add(region)
             }
             val termTransition = mainState.createTransitionTo(mainRegion.createState(GENERATED_PREFIX + "Term").setFinal)
-            termTransition.setTypeTermination
+            // Set type to termination ONLY iff source state is SUPERstate!
+            if (mainState.hasInnerActions || mainState.hasInnerStatesOrRegions) {
+                termTransition.setTypeTermination
+            }
+            termTransition.setImmediate(true)
             termTransition.addEffect(term.assign(TRUE))
 
             // Create the body of the dummy state - containing the during action
