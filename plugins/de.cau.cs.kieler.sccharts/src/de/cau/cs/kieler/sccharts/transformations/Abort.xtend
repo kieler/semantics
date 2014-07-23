@@ -268,7 +268,7 @@ class Abort {
 
             // Remember all outgoing transitions and regions
             val outgoingTransitions = state.outgoingTransitions.immutableCopy
-            val regions = state.regions.immutableCopy
+            val regions = state.regions.toList.immutableCopy
 
             if (stateHasUntransformedAborts) {
                 val ctrlRegion = state.createRegion(GENERATED_PREFIX + "Ctrl").uniqueName
