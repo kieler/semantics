@@ -77,7 +77,7 @@ public class KiCoUtil {
      *            the model
      * @return the string
      */
-    public static String serialize(EObject model, KielerCompilerContext context) {
+    public static String serialize(EObject model, KielerCompilerContext context, boolean updateMainResource) {
         String num = (model.hashCode() + "").replace("-", "");
 
         String returnText = "";
@@ -97,9 +97,16 @@ public class KiCoUtil {
                     XtextResourceSet newResourceSet = provider.get(XtextResourceSet.class);
                     // newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
                     resourceSet = newResourceSet;
+                    if (context != null) {
+                        // save the resource set for possibly next resources
+                        context.setModelResourceSet(resourceSet);
+                   }
                 }
 
-                Resource res = resourceSet.createResource(uri);
+                Resource res = resourceSet.getResource(uri, false);
+                if (res == null) {
+                    res = resourceSet.createResource(uri);                    
+                }
 
                 done = false;
                 try {
@@ -108,6 +115,9 @@ public class KiCoUtil {
                     res.save(outputStream, getSaveOptions());
                     returnText = outputStream.toString();
                     done = true;
+                    if (updateMainResource) {
+                          context.setMainResource(res);
+                    }
                 } catch (Exception e) {
                     // e.printStackTrace();
                 }
@@ -148,7 +158,7 @@ public class KiCoUtil {
      * 
      * @return Save options
      */
-    protected static Map<String, String> getSaveOptions() {
+    public static Map<String, String> getSaveOptions() {
         Map<String, String> saveOptions = new HashMap<String, String>();
         saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8");
         saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED,

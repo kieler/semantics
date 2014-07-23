@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
@@ -40,6 +41,9 @@ public class KielerCompilerContext {
 
     /** The resource set of all models for a compile run. */
     private ResourceSet modelResourceSet = null;
+
+    /** The main resource for a compile run. */
+    private Resource mainResource = null;
 
     /** The originally selected transformation IDs. */
     private List<String> selectedTransformationIDs = new ArrayList<String>();
@@ -68,6 +72,12 @@ public class KielerCompilerContext {
 
     /** The flag to do all transformations inplace and NOT on a copy. */
     private boolean inplace = false;
+
+    /**
+     * The flag to create a dummy resource if no resource is present (e.g. because inplace ==
+     * false).
+     */
+    private boolean dummyResource = false;
 
     /** The progress monitor. A progress monitor is optional and by default is set to null. */
     private IProgressMonitor monitor = null;
@@ -231,7 +241,7 @@ public class KielerCompilerContext {
 
     // -------------------------------------------------------------------------
     /**
-     * Gets the included model resource.
+     * Sets the included model resource.
      * 
      * @param includedModel
      *            the included model
@@ -239,6 +249,29 @@ public class KielerCompilerContext {
      */
     public void setModelResourceSet(ResourceSet resourceSet) {
         this.modelResourceSet = resourceSet;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the main model resource if one exists.
+     * 
+     * @return the main model resource
+     */
+    public Resource getMainResource() {
+        return this.mainResource;
+    }
+
+    // -------------------------------------------------------------------------
+    /**
+     * Sets the included model resource.
+     * 
+     * @param includedModel
+     *            the included model
+     * @return the included model resource
+     */
+    public void setMainResource(Resource resource) {
+        this.mainResource = resource;
     }
 
     // -------------------------------------------------------------------------
@@ -481,6 +514,29 @@ public class KielerCompilerContext {
      */
     public void setPrerequirements(boolean prerequirements) {
         this.prerequirements = prerequirements;
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Checks if dummy resource flag is set to true.
+     * 
+     * @return true, if is inplace
+     */
+    public boolean isCreateDummyResource() {
+        return this.dummyResource;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the dummy resource flag to true or false.
+     * 
+     * @param dummyResource
+     *            the new dummyResource flag
+     */
+    public void setCreateDummyResource(boolean dummyResource) {
+        this.dummyResource = dummyResource;
     }
 
     // -------------------------------------------------------------------------

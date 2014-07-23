@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.kico;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitorAdapter;
 
@@ -848,7 +850,7 @@ public class KielerCompiler {
      */
     public static CompilationResult compile(KielerCompilerContext context) {
         updateMapping(DEBUG);
-
+        
         // as this is a compile run, the following MUST be set
         EObject transformationEObject = context.getTransformationObject();
         if (transformationEObject == null) {
@@ -858,13 +860,19 @@ public class KielerCompiler {
             return context.getCompilationResult();
         }
 
+        
+        // Set the main resource
+        if (context.getMainResource() == null) {
+            context.setMainResource(transformationEObject.eResource());
+        }
+
         // If not inplace then produce a copy of the input EObject
         if (!context.isInplace()) {
             EObject copiedObject = EcoreUtil.copy(transformationEObject);
             // replace intermediate object
             context.getCompilationResult().getIntermediateResults().clear();
             context.getCompilationResult().getIntermediateResults().add(copiedObject);
-            // makd the new copy the transformedObject
+            // make the new copy the transformedObject
             transformationEObject = copiedObject;
         }
 
@@ -1064,6 +1072,25 @@ public class KielerCompiler {
         Object object = null;
         try {
             transformationID = transformation.getId();
+            Resource res = transformedObject.eResource();
+            if (context.isCreateDummyResource()) {
+                // If we should create a dummy resource then save it after each successful transformation step
+                if (res == null) {
+                    // create a dummy resource by calling serialization (this creates a dummy resource on the fly)
+                    String discard = KiCoUtil.serialize(transformedObject, context, true);
+//                    System.out.println(discard);
+                }
+                res = context.getMainResource();
+//                if (res != null) {
+//                    try {
+//                        res.save(KiCoUtil.getSaveOptions());
+//                    } catch (IOException e) {
+//                        // ignore errors
+//                    }
+//                }
+            }
+            
+            
             object = transformation.doTransform(transformedObject, context);
         } catch (Exception exception) {
             context.getCompilationResult().addPostponedError(
