@@ -295,9 +295,10 @@ class SCChartsExtension {
     def Region uniqueName(Region region) {
         val originalId = region.id
         var String newName = region.uniqueNameHelper(originalId)
-        if (newName != originalId) {
+        if (originalId != newName) {
+            region.setId(newName)
             region.setLabel2(newName)
-        } 
+        }
         region
     }
 
