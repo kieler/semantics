@@ -20,5 +20,29 @@
          </editor>
       </executionFile>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <transformationMethod
+            class="de.cau.cs.kieler.sccharts.sim.c.xtend.SimulationVisualization"
+            dependencies="DURING"
+            id="SCCHARTS_SIMULATION_VISUALIZATION"
+            method="transformVisualization"
+            name="Visualization">
+      </transformationMethod>
+      <transformationGroup
+            alternatives="true"
+            id="SCCHARTS_SIMULATION"
+            isCategory="false"
+            isFeatureGroup="false"
+            name="SSCharts Simulation"
+            transformations="SCCHARTS_SIMULATION_NO_VISUALIZATION, SCCHARTS_SIMULATION_VISUALIZATION">
+      </transformationGroup>
+      <transformationMethod
+            class="de.cau.cs.kieler.sccharts.sim.c.xtend.SimulationVisualization"
+            id="SCCHARTS_SIMULATION_NO_VISUALIZATION"
+            method="transformNoVisualization"
+            name="No Visualization">
+      </transformationMethod>
+   </extension>
 
 </plugin>

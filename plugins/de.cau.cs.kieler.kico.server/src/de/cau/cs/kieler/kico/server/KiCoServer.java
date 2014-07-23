@@ -133,6 +133,7 @@ public class KiCoServer extends HttpServer {
 
             context.setVerboseMode(verbose);
             context.setPrerequirements(!strict);
+            context.setMainResource(mainModel.eResource());
 
             // process the model
             CompilationResult compilationResult = KielerCompiler.compile(context);
@@ -144,7 +145,7 @@ public class KiCoServer extends HttpServer {
             if (compiledModel != null) {
                 serializedCompiledModel = compiledModel.toString();
                 if (compiledModel instanceof EObject) {
-                    serializedCompiledModel = KiCoUtil.serialize((EObject) compiledModel, context);
+                    serializedCompiledModel = KiCoUtil.serialize((EObject) compiledModel, context, false);
                 }
                 debug("Model serialized");
             }

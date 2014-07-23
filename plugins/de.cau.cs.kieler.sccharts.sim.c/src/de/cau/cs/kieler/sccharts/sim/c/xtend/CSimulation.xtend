@@ -103,6 +103,9 @@ void readInputs() {
             else if (value != NULL && value->type) {
                 «valuedObject.name»  = value->valueint;
             }
+            else {
+                «valuedObject.name» = 0;
+            }
     }   
     «ENDFOR»
 }'''

@@ -47,7 +47,9 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension;
 import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.kico.CompilationResult;
+import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompiler;
+import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.s.extensions.SExtension;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.sc.CExecution;
@@ -83,7 +85,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     /** The dirty indicator is used to notice editor changes and set the dirty flag accordingly. */
     private int dirtyIndicator = 0;
 
-    private static final int KIEM_PROPERTY_MAX = 6;
+    private static final int KIEM_PROPERTY_MAX = 7;
 
     private static final int KIEM_PROPERTY_STATENAME = 0;
     private static final String KIEM_PROPERTY_NAME_STATENAME = "State Name";
@@ -110,15 +112,23 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     /** The Constant KIEM_PROPERTY_NAME_DEBUGTRANSFORMATIONS. */
     private static final String KIEM_PROPERTY_NAME_DEBUGTRANSFORMATIONS = "Debug Transformations";
     /** The Constant KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONSS. */
-    private static final String KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONS = "SCCHARTSSIMULATION";
+    private static final String KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONS = "SCCHARTS_SIMULATION_VISUALIZATION";
 
-    /** The Constant KIEM_PROPERTY_COMPILETRANSFORMATIONS. */
-    private static final int KIEM_PROPERTY_COMPILETRANSFORMATIONS = 5;
-    /** The Constant KIEM_PROPERTY_NAME_COMPILETRANSFORMATIONS. */
-    private static final String KIEM_PROPERTY_NAME_COMPILETRANSFORMATIONS =
-            "Compile Transformations";
+    /** The Constant KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS. */
+    private static final int KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS = 5;
+    /** The Constant KIEM_PROPERTY_NAME_HIGHLEVELTRANSFORMATIONS. */
+    private static final String KIEM_PROPERTY_NAME_HIGHLEVELTRANSFORMATIONS =
+            "High Level Transformations";
     /** The Constant KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS. */
-    private static final String KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS = "CODEGENERATION";
+    private static final String KIEM_PROPERTY_DEFAULT_HIGHLEVELTRANSFORMATIONS = "CORE";
+
+    /** The Constant KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS. */
+    private static final int KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS = 6;
+    /** The Constant KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS. */
+    private static final String KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS =
+            "Low Level Transformations";
+    /** The Constant KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS. */
+    private static final String KIEM_PROPERTY_DEFAULT_LOWLEVELTRANSFORMATIONS = "CODEGENERATION";
 
     /** The C execution object for concurrent execution. */
     private CExecution cExecution = null;
@@ -170,9 +180,12 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         properties[KIEM_PROPERTY_DEBUGTRANSFORMATIONS] =
                 new KiemProperty(KIEM_PROPERTY_NAME_DEBUGTRANSFORMATIONS,
                         KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONS);
-        properties[KIEM_PROPERTY_COMPILETRANSFORMATIONS] =
-                new KiemProperty(KIEM_PROPERTY_NAME_COMPILETRANSFORMATIONS,
-                        KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS);
+        properties[KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS] =
+                new KiemProperty(KIEM_PROPERTY_NAME_HIGHLEVELTRANSFORMATIONS,
+                        KIEM_PROPERTY_DEFAULT_HIGHLEVELTRANSFORMATIONS);
+        properties[KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS] =
+                new KiemProperty(KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS,
+                        KIEM_PROPERTY_DEFAULT_LOWLEVELTRANSFORMATIONS);
         // properties[KIEM_PROPERTY_BENCHMARK] = new KiemProperty(KIEM_PROPERTY_NAME_BENCHMARK,
         // false);
         // properties[KIEM_PROPERTY_RUNTIMEDEBUGCONSOLE] = new KiemProperty(
@@ -416,36 +429,61 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             URI input = URI.createPlatformResourceURI(inputPathString.replace("%20", " "), true);
             sOutput = URI.createURI(input.toString());
 
-            String transformations =
-                    this.getProperties()[KIEM_PROPERTY_COMPILETRANSFORMATIONS + KIEM_PROPERTY_DIFF]
+            String highLevelTransformations =
+                    this.getProperties()[KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS
+                            + KIEM_PROPERTY_DIFF].getValue();
+            String lowLevelTransformations =
+                    this.getProperties()[KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS + KIEM_PROPERTY_DIFF]
                             .getValue();
 
             // If 'Full Debug Mode' is turned on then the user also wants to have
             // states and transitions visualized.
             // Hence some pre-processing is needed and done by the
             // an addition model transformation
+            String debugTransformations =
+                    this.getProperties()[KIEM_PROPERTY_DEBUGTRANSFORMATIONS + KIEM_PROPERTY_DIFF]
+                            .getValue();
             if (debug) {
-                transformations =
-                        this.getProperties()[KIEM_PROPERTY_DEBUGTRANSFORMATIONS
-                                + KIEM_PROPERTY_DIFF].getValue()
-                                + ", " + transformations;
+                highLevelTransformations = debugTransformations + ", " + highLevelTransformations;
             }
 
             // Compile the SCChart to C code
-            CompilationResult compilationResult =
-                    KielerCompiler.compile(transformations, this.myModel, true, false);
-            String cSCChart = compilationResult.getString();
+            EObject extendedSCChart = this.myModel;
+
+            KielerCompilerContext highLevelContext =
+                    new KielerCompilerContext(highLevelTransformations, extendedSCChart);
+            highLevelContext.setCreateDummyResource(true);
+            highLevelContext.setInplace(false);
+            highLevelContext.setPrerequirements(true);
+            CompilationResult highLeveleCompilationResult =
+                    KielerCompiler.compile(highLevelContext);
+
+            // The following should be a state
+            State coreSCChart = (State) highLeveleCompilationResult.getEObject();
+
+            String coreSSChartText = KiCoUtil.serialize(coreSCChart, highLevelContext, false);
+            writeOutputModel("D:\\sschart.sct", coreSSChartText.getBytes());
+            // System.out.println(coreSSChartText);
+
+            KielerCompilerContext lowLevelContext =
+                    new KielerCompilerContext(lowLevelTransformations, coreSCChart);
+            lowLevelContext.setCreateDummyResource(true);
+            lowLevelContext.setInplace(false);
+            lowLevelContext.setPrerequirements(true);
+            CompilationResult lowLevelCompilationResult = KielerCompiler.compile(lowLevelContext);
+
+            String cSCChartCCode = lowLevelCompilationResult.getString();
 
             // Generate Simulation wrapper C code
             CSimulation transform = Guice.createInjector().getInstance(CSimulation.class);
-            String cSimulation = transform.transform(this.myModel, "10000").toString();
+            String cSimulation = transform.transform(coreSCChart, "10000").toString();
 
             // Set a random output folder for the compiled files
             String outputFolder = KiemUtil.generateRandomTempOutputFolder();
 
             String fileNameSCChart = "scchart.c";
             String outputFileSCChart = outputFolder + fileNameSCChart;
-            writeOutputModel(outputFileSCChart, cSCChart.getBytes());
+            writeOutputModel(outputFileSCChart, cSCChartCCode.getBytes());
 
             String fileNameSimulation = "simulation.c";
             String outputFileSimulation = outputFolder + fileNameSimulation;
@@ -548,7 +586,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                         if (output.get(outputName) instanceof JSONObject) {
 
                             JSONObject valuedObject = output.getJSONObject(outputName);
-                            Object value = ((JSONObject) valuedObject).get("value"); 
+                            Object value = ((JSONObject) valuedObject).get("value");
 
                             boolean present = false;
                             if (value instanceof Boolean) {
