@@ -234,7 +234,7 @@ class Abort {
     //-------------------------------------------------------------------------
     // Transforming Aborts.
     def State transform(State rootState) {
-        val targetRootState = rootState.copy.fixAllPriorities;
+        val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
         var done = false;

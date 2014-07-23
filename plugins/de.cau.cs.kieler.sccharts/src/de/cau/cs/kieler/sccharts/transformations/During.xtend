@@ -44,7 +44,7 @@ class During {
     //-------------------------------------------------------------------------
     // Transforming During Actions.
     def State transform(State rootState) {
-        val targetRootRegion = rootState.copy.fixAllPriorities;
+        val targetRootRegion = rootState.fixAllPriorities;
 
         // Traverse all states
         for (targetState : targetRootRegion.getAllStates) {
