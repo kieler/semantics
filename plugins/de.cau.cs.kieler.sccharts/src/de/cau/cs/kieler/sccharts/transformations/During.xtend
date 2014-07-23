@@ -78,19 +78,25 @@ class During {
             // Create the body of the dummy state - containing the during action
             // For every during action: Create a region
             for (duringAction : state.duringActions.immutableCopy) {
+                val immediateDuringAction = duringAction.isImmediate
                 val region = state.createRegion(GENERATED_PREFIX + "During").uniqueName
                 val initialState = region.createInitialState(GENERATED_PREFIX + "I")
-                val middleState = region.createState(GENERATED_PREFIX + "S").setTypeConnector
+                val middleState = region.createState(GENERATED_PREFIX + "S");
+                if (!immediateDuringAction) {
+                    // Only set this as a connector if it is not an immediate during action!
+                    // Otherwise we like to rest here!
+                    middleState.setTypeConnector
+                }
                 val finalState = region.createFinalState(GENERATED_PREFIX + "F")
                 val transition1 = initialState.createTransitionTo(middleState)
                 transition1.setDelay(duringAction.delay);
-                transition1.setImmediate(duringAction.isImmediate);
+                transition1.setImmediate(immediateDuringAction);
                 transition1.setTrigger(duringAction.trigger.copy);
                 for (action : duringAction.effects) {
                     transition1.addEffect(action.copy);
                 }
                 val transition2 = middleState.createTransitionTo(initialState)
-                transition2.setImmediate(!duringAction.isImmediate);
+                transition2.setImmediate(!immediateDuringAction);
                 var Transition transition3
                 if (duringAction.immediate) {
                     transition3 = middleState.createImmediateTransitionTo(finalState)
