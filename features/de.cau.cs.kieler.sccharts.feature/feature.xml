@@ -271,18 +271,11 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.model.gmf"
+         id="de.cau.cs.kieler.core.model.xtext"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>
-
-   <!-- <plugin
-         id="de.cau.cs.kieler.core.model.xtend"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/> -->
+         unpack="false"/>		 
 
    <plugin
          id="de.cau.cs.kieler.kev"
@@ -609,13 +602,6 @@ litigation.
 
    <plugin
          id="org.json"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.core.model.xtext"
          download-size="0"
          install-size="0"
          version="0.0.0"
