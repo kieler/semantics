@@ -257,15 +257,18 @@ class SCChartsExtension {
             return true
         }
         val notFoundOtherValuedObjectInState = state.valuedObjects.filter[it != valuedObject && name == newName].size == 0
-        val parentRegion = state.parentRegion
-        var notFoundInParents = true
-        if (parentRegion != null) {
-            notFoundInParents = valuedObject.uniqueNameTest(state.parentRegion.parentState, newName)
-        }
-        return notFoundOtherValuedObjectInState && notFoundInParents
+        return notFoundOtherValuedObjectInState
     }
     def private dispatch boolean uniqueNameTest(ValuedObject valuedObject, String newName) {
-        valuedObject.uniqueNameTest((valuedObject.getEContainer as State), newName)
+        val state = (valuedObject.getEContainer as State);
+        val rootState = state.getRootState
+        var notFound = valuedObject.uniqueNameTest(rootState, newName)
+        for (innerState : rootState.allContainedStates) {
+            if (notFound && !valuedObject.uniqueNameTest(innerState, newName)) {
+                notFound = false
+            }
+        }
+        notFound
     }
     def private dispatch boolean uniqueNameTest(EObject eObject, String newName) {
         false

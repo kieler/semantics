@@ -133,7 +133,7 @@ class SimulationVisualization {
 
     // New visualization of active states with immediate during actions
     def void transformSimulationVisualizationState(State state, State targetRootState, String UID) {
-        if (!state.isRootState) {
+        if (!state.isRootState && !state.final) {
             val active = targetRootState.createVariable(UID).setTypeBool.setIsOutput.uniqueName
             
             // Add during action - TRUE iff this state is active

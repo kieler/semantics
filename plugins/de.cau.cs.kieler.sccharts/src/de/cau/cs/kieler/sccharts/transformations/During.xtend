@@ -62,23 +62,10 @@ class During {
         // Add a loop back to the initial state of the added region.
         // In case the during action is immediate, the looping transition is non-immediate.
         // In case the during action is non-immediate, the looping transition is immediate.
+        
+        // MODIFICATION 26.07.2014: Do during BEFORE abort transformation,
+        // benefit: do not need to handle terminations of concurrent regions any more!
         if (state.duringActions != null && state.duringActions.size > 0) {
-            val term = state.createVariable(GENERATED_PREFIX + "term").setTypeBool.uniqueName
-            term.setInitialValue(FALSE)
-
-            val mainRegion = state.createRegion(GENERATED_PREFIX + "Main").uniqueName
-            val mainState = mainRegion.createState(GENERATED_PREFIX + "Main").setInitial
-            for (region : state.regions.filter(e|e != mainRegion).toList.immutableCopy) {
-                mainState.regions.add(region)
-            }
-            val termTransition = mainState.createTransitionTo(mainRegion.createState(GENERATED_PREFIX + "Term").setFinal)
-            // Set type to termination ONLY iff source state is SUPERstate!
-            if (mainState.hasInnerActions || mainState.hasInnerStatesOrRegions) {
-                termTransition.setTypeTermination
-            }
-            termTransition.setImmediate(true)
-            termTransition.addEffect(term.assign(TRUE))
-
             // Create the body of the dummy state - containing the during action
             // For every during action: Create a region
             for (duringAction : state.duringActions.immutableCopy) {
@@ -91,7 +78,6 @@ class During {
                     // Otherwise we like to rest here!
                     middleState.setTypeConnector
                 }
-                val finalState = region.createFinalState(GENERATED_PREFIX + "F")
                 val transition1 = initialState.createTransitionTo(middleState)
                 transition1.setDelay(duringAction.delay);
                 transition1.setImmediate(immediateDuringAction);
@@ -101,14 +87,6 @@ class During {
                 }
                 val transition2 = middleState.createTransitionTo(initialState)
                 transition2.setImmediate(!immediateDuringAction);
-                var Transition transition3
-                if (duringAction.immediate) {
-                    transition3 = middleState.createImmediateTransitionTo(finalState)
-                } else {
-                    transition3 = initialState.createImmediateTransitionTo(finalState)
-                }
-                transition3.setTrigger(term.reference)
-                transition3.setHighestPriority
 
                 // After transforming during actions, erase them
                 state.localActions.remove(duringAction)
