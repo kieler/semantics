@@ -81,11 +81,12 @@ class Abort {
         if ((state.hasInnerStatesOrRegions || state.hasInnerActions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
             val transitionTriggerVariableMapping = new HashMap<Transition, ValuedObject>
 
-            // Remember all outgoing transitions and regions
+            // Remember all outgoing transitions and regions (important: do not consider regions without inner states! => regions2)
             val outgoingTransitions = state.outgoingTransitions.immutableCopy
-            val regions = state.regions.immutableCopy
+            val regions = state.regions2.immutableCopy
 
-            if (stateHasUntransformedAborts) {
+            // .. || stateHasUntransformedTransitions : for conditional terminations!
+            if (stateHasUntransformedAborts || stateHasUntransformedTransitions) {
                 val ctrlRegion = state.createRegion(GENERATED_PREFIX + "Ctrl").uniqueName
                 val runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueName
                 val doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
@@ -158,6 +159,10 @@ class Abort {
                             }
                         }
                     }
+                }
+                
+                if (terminationTrigger == null) {
+                    terminationTrigger = TRUE;
                 }
 
                 for (transition : outgoingTransitions) {
@@ -266,11 +271,12 @@ class Abort {
         if ((state.hasInnerStatesOrRegions || state.hasInnerActions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
             val transitionTriggerVariableMapping = new HashMap<Transition, ValuedObject>
 
-            // Remember all outgoing transitions and regions
+            // Remember all outgoing transitions and regions (important: do not consider regions without inner states! => regions2)
             val outgoingTransitions = state.outgoingTransitions.immutableCopy
-            val regions = state.regions.toList.immutableCopy
+            val regions = state.regions2.toList.immutableCopy
 
-            if (stateHasUntransformedAborts) {
+            // .. || stateHasUntransformedTransitions : for conditional terminations!
+            if (stateHasUntransformedAborts || stateHasUntransformedTransitions) {
                 val ctrlRegion = state.createRegion(GENERATED_PREFIX + "Ctrl").uniqueName
                 val runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueName
                 val doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
@@ -358,6 +364,10 @@ class Abort {
                             }
                         }
                     }
+                }
+                
+                if (terminationTrigger == null) {
+                    terminationTrigger = TRUE;
                 }
 
                 for (transition : outgoingTransitions) {

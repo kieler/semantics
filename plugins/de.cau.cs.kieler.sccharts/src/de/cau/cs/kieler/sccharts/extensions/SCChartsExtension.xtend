@@ -187,12 +187,12 @@ class SCChartsExtension {
          SCChartsFactory::eINSTANCE.createState
     }
 
-//    // Gets the list of non-empty regions
-//    def List<Region> getRegions2(State state) {
-//        val list2 = state.regions.filter(e | e.allContainedStates.size == 0).toList
-//        val list = state.regions.filter(e | e.allContainedStates.size > 0).toList
-//        list
-//    }
+    // Gets the list of non-empty regions
+    def List<Region> getRegions2(State state) {
+        val list2 = state.regions.filter(e | e.allContainedStates.size == 0).toList
+        val list = state.regions.filter(e | e.allContainedStates.size > 0).toList
+        list
+    }
     
     //========== TRANSITIONS ===========
     
@@ -426,7 +426,7 @@ class SCChartsExtension {
     def Region createRegion(String id) {
         val region = SCChartsFactory::eINSTANCE.createRegion();
         region.setId(id)
-        region.setLabel("")
+        region.setLabel(id)
         region
     }
 
