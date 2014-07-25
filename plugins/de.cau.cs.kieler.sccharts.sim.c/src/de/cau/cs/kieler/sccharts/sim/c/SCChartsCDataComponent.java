@@ -596,17 +596,21 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                             }
 
                             if (outputName.startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
-                                if (activeStatesBuf.length() > 0) {
-                                    activeStatesBuf.append(",");
+                                if (present) {
+                                    if (activeStatesBuf.length() > 0) {
+                                        activeStatesBuf.append(",");
+                                    }
+                                    String activeStateName = outputName.substring(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_STATE.length());
+                                    activeStatesBuf.append(activeStateName);
                                 }
-                                String activeStateName = outputName.substring(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_STATE.length());
-                                activeStatesBuf.append(activeStateName);
                             } else if (outputName.startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
-                                if (activeTransitionsBuf.length() > 0) {
-                                    activeTransitionsBuf.append(",");
+                                if (present) {
+                                    if (activeTransitionsBuf.length() > 0) {
+                                        activeTransitionsBuf.append(",");
+                                    }
+                                    String activeTransitionName = outputName.substring(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION.length());
+                                    activeTransitionsBuf.append(activeTransitionName);
                                 }
-                                String activeTransitionName = outputName.substring(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION.length());
-                                activeTransitionsBuf.append(activeTransitionName);
                             }
                             else {
                                 returnObj.accumulate(outputName,
