@@ -189,10 +189,10 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         if (diagramEditor == null) {
             return;
         }
-        // !!!//
-        // if (StateActivityTrigger.getInstance() != null) {
-        // StateActivityTrigger.getInstance().synchronizedStep(null, null, diagramEditor);
-        // }
+        hightLightStates(new ArrayList<EObject>());
+        hightLightTransitions(new ArrayList<EObject>());
+        // Necessary to remove scaling!
+        LightDiagramServices.layoutDiagram(viewContext);
         wrapupDone = true;
     }
 
@@ -421,6 +421,8 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
                 for (KNode k : notHighlightedStates) {
+                    System.out.println("REMOVE");
+                    viewContext.getViewer().scale(k, 1f);
                     KRendering ren = k.getData(KRendering.class);
                     if (Iterables.any(ren.getStyles(), filter)) {
                         Iterables.removeIf(ren.getStyles(), filter);
@@ -429,9 +431,9 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                             Iterables.removeIf(t.getStyles(), filter);
                         }
                     }
-                    viewContext.getViewer().scale(k, 1f);
                     if (expanded.contains(k)) {
                         viewContext.getViewer().collapse(k);
+                        expanded.remove(k);
                     }
                 }
             }
@@ -454,6 +456,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                 ren.getStyles().add(EcoreUtil.copy(style1));
                 Display.getDefault().syncExec(new Runnable() {
                     public void run() {
+                        System.out.println("ADD");
                         viewContext.getViewer().scale(viewElementState, 1.5f);
                         for (KNode r : viewElementState.getChildren()) {
                             if (!viewContext.getViewer().isExpanded(r)) {
