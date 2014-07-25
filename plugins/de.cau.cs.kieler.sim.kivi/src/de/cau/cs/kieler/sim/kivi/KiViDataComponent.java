@@ -42,10 +42,13 @@ import de.cau.cs.kieler.core.krendering.Colors;
 import de.cau.cs.kieler.core.krendering.KBackground;
 import de.cau.cs.kieler.core.krendering.KColor;
 import de.cau.cs.kieler.core.krendering.KContainerRendering;
+import de.cau.cs.kieler.core.krendering.KForeground;
 import de.cau.cs.kieler.core.krendering.KRendering;
 import de.cau.cs.kieler.core.krendering.KRenderingFactory;
+import de.cau.cs.kieler.core.krendering.KRoundedRectangle;
 import de.cau.cs.kieler.core.krendering.KStyle;
 import de.cau.cs.kieler.core.krendering.KText;
+import de.cau.cs.kieler.core.krendering.impl.KRoundedRectangleImpl;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.kico.klighd.KiCoModelView;
@@ -394,20 +397,22 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
             return style.getProperty(HIGHLIGHTING_MARKER) == KiViDataComponent.this;
         }
     };
+    private Predicate<KStyle> redFilter = new Predicate<KStyle>() {
+        public boolean apply(final KStyle style) {
+            return (style instanceof KForeground);
+        }
+    };
 
     // --------------------------------------------------------------------------
 
     private void hightLightStates(List<EObject> currentStatesAndTransitions) {
         List<KNode> currentStates = Lists.newArrayList();
-        List<KText> currentStateLabels = Lists.newArrayList();
 
         // Calculate NEW highlighting
         for (EObject eObject : currentStatesAndTransitions) {
             final KNode viewElementState = viewContext.getTargetElement(eObject, KNode.class);
-            final KText viewElementStateLabel = viewContext.getTargetElement(eObject, KText.class);
             if (viewElementState != null) {
                 currentStates.add(viewElementState);
-                currentStateLabels.add(viewElementStateLabel);
             }
         }
 
@@ -429,7 +434,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                         Iterables.removeIf(ren.getStyles(), filter);
                         for (KText t : Iterables2.toIterable(Iterators.filter(ren.eAllContents(),
                                 KText.class))) {
-                            Iterables.removeIf(t.getStyles(), filter);
+                            Iterables.removeIf(t.getStyles(), redFilter);
                         }
                     }
                     if (expanded.contains(k)) {
@@ -448,6 +453,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         style1.setPropagateToChildren(true);
         KStyle style2 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
         style2.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);
+        KStyle style3 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
 
         for (final KNode viewElementState : currentStates) {
             final KContainerRendering ren = viewElementState.getData(KContainerRendering.class);
@@ -455,9 +461,17 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
             if (!flagged) {
                 ren.getStyles().add(EcoreUtil.copy(style2));
                 ren.getStyles().add(EcoreUtil.copy(style1));
+                
+                final KRoundedRectangle kRoundedRectangle = viewElementState.getData(KRoundedRectangleImpl.class);
+                for (KText viewElementStateLabel : Iterables2.toIterable(Iterators.filter(ren.eAllContents(),
+                        KText.class))) {
+                    viewElementStateLabel.getStyles().add(EcoreUtil.copy(style3));
+                    
+                }
+                
                 Display.getDefault().syncExec(new Runnable() {
                     public void run() {
-                        viewContext.getViewer().scale(viewElementState, 1.5f);
+                        viewContext.getViewer().scale(viewElementState, 1.0f);
                         for (KNode r : viewElementState.getChildren()) {
                             if (!viewContext.getViewer().isExpanded(r)) {
                                 viewContext.getViewer().expand(r);
@@ -469,12 +483,6 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                 });
             }
         }
-        for (final KText viewElementStateLabel : currentStateLabels) {
-            final boolean flagged = Iterables.any(viewElementStateLabel.getStyles(), filter);
-            if (!flagged) {
-                viewElementStateLabel.getStyles().add(EcoreUtil.copy(style2));
-            }
-        }
 
     }
 
@@ -482,16 +490,12 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
 
     private void hightLightTransitions(List<EObject> currentStatesAndTransitions) {
         List<KEdge> currentTransitions = Lists.newArrayList();
-        List<KLabel> currentTransitionLabels = Lists.newArrayList();
 
         // Calculate NEW highlighting
         for (EObject eObject : currentStatesAndTransitions) {
             final KEdge viewElementTransition = viewContext.getTargetElement(eObject, KEdge.class);
-            final KLabel viewElementTransitionLabel =
-                    viewContext.getTargetElement(eObject, KLabel.class);
             if (viewElementTransition != null) {
                 currentTransitions.add(viewElementTransition);
-                currentTransitionLabels.add(viewElementTransitionLabel);
             }
         }
 
@@ -516,12 +520,10 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                     KRendering ren = k.getData(KRendering.class);
                     if (Iterables.any(ren.getStyles(), filter)) {
                         Iterables.removeIf(ren.getStyles(), filter);
-                    }
-                    if (k.getLabels().size() > 0) {
-                        KLabel label = k.getLabels().get(0);
-                        KText ren2 = label.getData(KText.class);
-                        if (Iterables.any(ren2.getStyles(), filter)) {
-                            Iterables.removeIf(ren2.getStyles(), filter);
+                        if (k.getLabels().size() > 0) {
+                            KLabel label = k.getLabels().get(0);
+                            KText ren2 = label.getData(KText.class);
+                            Iterables.removeIf(ren2.getStyles(), redFilter);
                         }
                     }
                 }
@@ -533,7 +535,6 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         style2.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);
         style2.setPropagateToChildren(true);
         final KStyle style3 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
-        style3.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);
 
         for (final KEdge viewElementTransition : currentTransitions) {
             Display.getDefault().syncExec(new Runnable() {
@@ -543,17 +544,12 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                     final boolean flagged = Iterables.any(ren.getStyles(), filter);
                     if (!flagged) {
                         ren.getStyles().add(style2);
+                        final KLabel label = viewElementTransition.getLabels().get(0);
+                        final KText ren2 = label.getData(KText.class);
+                        ren2.getStyles().add(EcoreUtil.copy(style3));
                     }
                 }
             });
-        }
-        for (KLabel viewElementTransitionLabel : currentTransitionLabels) {
-            final KText ren = viewElementTransitionLabel.getData(KText.class);
-            final boolean flagged = Iterables.any(ren.getStyles(), filter);
-            if (!flagged) {
-                viewElementTransitionLabel.getData(KText.class).getStyles()
-                        .add(EcoreUtil.copy(style3));
-            }
         }
 
     }
