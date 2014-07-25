@@ -34,7 +34,9 @@ import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 
 import de.cau.cs.kieler.core.kgraph.KEdge;
+import de.cau.cs.kieler.core.kgraph.KGraphElement;
 import de.cau.cs.kieler.core.kgraph.KLabel;
+import de.cau.cs.kieler.core.kgraph.KLabeledGraphElement;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.krendering.Colors;
 import de.cau.cs.kieler.core.krendering.KBackground;
@@ -421,7 +423,6 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
                 for (KNode k : notHighlightedStates) {
-                    System.out.println("REMOVE");
                     viewContext.getViewer().scale(k, 1f);
                     KRendering ren = k.getData(KRendering.class);
                     if (Iterables.any(ren.getStyles(), filter)) {
@@ -456,7 +457,6 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                 ren.getStyles().add(EcoreUtil.copy(style1));
                 Display.getDefault().syncExec(new Runnable() {
                     public void run() {
-                        System.out.println("ADD");
                         viewContext.getViewer().scale(viewElementState, 1.5f);
                         for (KNode r : viewElementState.getChildren()) {
                             if (!viewContext.getViewer().isExpanded(r)) {
@@ -497,10 +497,16 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
 
         // Remove new highlighted from ALL elements to get NOT highlighted
         @SuppressWarnings("unchecked")
-        final List<? extends KEdge> notHighlightedEdges =
-                (List<? extends KEdge>) Lists
+        final List<KEdge> notHighlightedEdges = new ArrayList<KEdge>();
+        final List<? extends KNode> allNodes =
+                (List<? extends KNode>) Lists
                         .newArrayList(de.cau.cs.kieler.klighd.util.ModelingUtil
-                                .eAllContentsOfType2(viewContext.getViewModel(), KEdge.class));
+                                .eAllContentsOfType2(viewContext.getViewModel(), KNode.class));
+        for (KNode kNode : allNodes) {
+            for (KEdge kEdge : kNode.getOutgoingEdges()) {
+                notHighlightedEdges.add(kEdge);
+            }
+        }
         notHighlightedEdges.removeAll(currentTransitions);
 
         // Remove highlighting for NOT highlighted elements
@@ -510,9 +516,12 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                     KRendering ren = k.getData(KRendering.class);
                     if (Iterables.any(ren.getStyles(), filter)) {
                         Iterables.removeIf(ren.getStyles(), filter);
-                        for (KText t : Iterables2.toIterable(Iterators.filter(ren.eAllContents(),
-                                KText.class))) {
-                            Iterables.removeIf(t.getStyles(), filter);
+                    }
+                    if (k.getLabels().size() > 0) {
+                        KLabel label = k.getLabels().get(0);
+                        KText ren2 = label.getData(KText.class);
+                        if (Iterables.any(ren2.getStyles(), filter)) {
+                            Iterables.removeIf(ren2.getStyles(), filter);
                         }
                     }
                 }
@@ -523,6 +532,8 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         final KStyle style2 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
         style2.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);
         style2.setPropagateToChildren(true);
+        final KStyle style3 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
+        style3.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);
 
         for (final KEdge viewElementTransition : currentTransitions) {
             Display.getDefault().syncExec(new Runnable() {
@@ -541,7 +552,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
             final boolean flagged = Iterables.any(ren.getStyles(), filter);
             if (!flagged) {
                 viewElementTransitionLabel.getData(KText.class).getStyles()
-                        .add(EcoreUtil.copy(style2));
+                        .add(EcoreUtil.copy(style3));
             }
         }
 
