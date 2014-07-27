@@ -461,14 +461,15 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
             if (!flagged) {
                 ren.getStyles().add(EcoreUtil.copy(style2));
                 ren.getStyles().add(EcoreUtil.copy(style1));
-                
-                final KRoundedRectangle kRoundedRectangle = viewElementState.getData(KRoundedRectangleImpl.class);
-                for (KText viewElementStateLabel : Iterables2.toIterable(Iterators.filter(ren.eAllContents(),
-                        KText.class))) {
+
+                final KRoundedRectangle kRoundedRectangle =
+                        viewElementState.getData(KRoundedRectangleImpl.class);
+                for (KText viewElementStateLabel : Iterables2.toIterable(Iterators.filter(
+                        ren.eAllContents(), KText.class))) {
                     viewElementStateLabel.getStyles().add(EcoreUtil.copy(style3));
-                    
+
                 }
-                
+
                 Display.getDefault().syncExec(new Runnable() {
                     public void run() {
                         viewContext.getViewer().scale(viewElementState, 1.0f);
@@ -537,16 +538,21 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         final KStyle style3 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
 
         for (final KEdge viewElementTransition : currentTransitions) {
+            final KContainerRendering ren =
+                    viewElementTransition.getData(KContainerRendering.class);
             Display.getDefault().syncExec(new Runnable() {
                 public void run() {
-                    final KContainerRendering ren =
-                            viewElementTransition.getData(KContainerRendering.class);
                     final boolean flagged = Iterables.any(ren.getStyles(), filter);
                     if (!flagged) {
-                        ren.getStyles().add(style2);
-                        final KLabel label = viewElementTransition.getLabels().get(0);
-                        final KText ren2 = label.getData(KText.class);
-                        ren2.getStyles().add(EcoreUtil.copy(style3));
+                        ren.getStyles().add(EcoreUtil.copy(style2));
+                        List<KLabel> labels = viewElementTransition.getLabels();
+                        if (labels != null && labels.size() > 0) {
+                            final KLabel label = labels.get(0);
+                            if (label != null) {
+                                final KText ren2 = label.getData(KText.class);
+                                ren2.getStyles().add(EcoreUtil.copy(style3));
+                            }
+                        }
                     }
                 }
             });
