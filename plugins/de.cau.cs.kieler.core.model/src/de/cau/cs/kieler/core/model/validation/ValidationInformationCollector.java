@@ -26,13 +26,14 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.jface.action.Action;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.core.kivi.listeners.GlobalPartAdapter;
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
+import de.cau.cs.kieler.core.model.adapter.GlobalPartAdapter;
 
 /**
  * This class is responsible for gathering the data contributed through the
@@ -41,7 +42,7 @@ import de.cau.cs.kieler.core.model.CoreModelPlugin;
  * @author soh
  * @kieler.ignore We'd like to get rid of this.
  */
-public class ValidationInformationCollector implements IStartup, IPartListener {
+public class ValidationInformationCollector implements IStartup, IPartListener2 {
 
     /** The map for mapping ePackage IDs to ePackage nsURIs. */
     private static Map<String, String> ePackages = new HashMap<String, String>();
@@ -86,7 +87,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
             }
         }
 
-        new GlobalPartAdapter(this);
+        new GlobalPartAdapter(this, false);
     }
 
     /**
@@ -233,35 +234,41 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
                 check.name, check.tooltip, check.isEnabledByDefault);
     }
 
+
     /**
      * {@inheritDoc}
      */
-    public void partBroughtToTop(final IWorkbenchPart part) {
+    @Override
+    public void partActivated(IWorkbenchPartReference partRef) {
     }
 
     /**
      * {@inheritDoc}
      */
-    public void partClosed(final IWorkbenchPart part) {
+    @Override
+    public void partBroughtToTop(IWorkbenchPartReference partRef) {
     }
 
     /**
      * {@inheritDoc}
      */
-    public void partDeactivated(final IWorkbenchPart part) {
+    @Override
+    public void partClosed(IWorkbenchPartReference partRef) {
     }
 
     /**
      * {@inheritDoc}
      */
-    public void partActivated(final IWorkbenchPart part) {
-
+    @Override
+    public void partDeactivated(IWorkbenchPartReference partRef) {
     }
 
     /**
      * {@inheritDoc}
      */
-    public void partOpened(final IWorkbenchPart workbenchPart) {
+    @Override
+    public void partOpened(IWorkbenchPartReference partRef) {
+        IWorkbenchPart workbenchPart = partRef.getPart(false);
         if (workbenchPart instanceof IEditorPart) {
 
             for (String key : validateActions.keySet()) {
@@ -290,6 +297,28 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
             }
         }
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void partHidden(IWorkbenchPartReference partRef) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void partVisible(IWorkbenchPartReference partRef) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void partInputChanged(IWorkbenchPartReference partRef) {
+    }
+
 
     /**
      * Validate a given editor.
