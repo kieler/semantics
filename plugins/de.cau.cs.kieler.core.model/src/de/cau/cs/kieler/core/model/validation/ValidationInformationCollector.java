@@ -40,6 +40,7 @@ import de.cau.cs.kieler.core.model.adapter.GlobalPartAdapter;
  * extension point.
  * 
  * @author soh
+ * @author als
  * @kieler.ignore We'd like to get rid of this.
  */
 public class ValidationInformationCollector implements IStartup, IPartListener2 {
@@ -238,35 +239,30 @@ public class ValidationInformationCollector implements IStartup, IPartListener2 
     /**
      * {@inheritDoc}
      */
-    @Override
     public void partActivated(IWorkbenchPartReference partRef) {
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
     public void partBroughtToTop(IWorkbenchPartReference partRef) {
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
     public void partClosed(IWorkbenchPartReference partRef) {
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
     public void partDeactivated(IWorkbenchPartReference partRef) {
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
     public void partOpened(IWorkbenchPartReference partRef) {
         IWorkbenchPart workbenchPart = partRef.getPart(false);
         if (workbenchPart instanceof IEditorPart) {
@@ -301,21 +297,18 @@ public class ValidationInformationCollector implements IStartup, IPartListener2 
     /**
      * {@inheritDoc}
      */
-    @Override
     public void partHidden(IWorkbenchPartReference partRef) {
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
     public void partVisible(IWorkbenchPartReference partRef) {
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
     public void partInputChanged(IWorkbenchPartReference partRef) {
     }
 
