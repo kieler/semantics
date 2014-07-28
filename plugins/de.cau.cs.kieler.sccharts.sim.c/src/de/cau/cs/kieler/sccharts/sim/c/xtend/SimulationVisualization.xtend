@@ -98,7 +98,7 @@ class SimulationVisualization {
             val originalTransitionURIFragment = res.getURIFragment(originalTransition);
             val transitionUID = AUXILIARY_VARIABLE_TAG_TRANSITION +
                 originalTransitionURIFragment.hashCode.toString().replace("-", "M");
-            targetTransition.transformSimulationVisualizationTransition(targetRootState, transitionUID);
+//            targetTransition.transformSimulationVisualizationTransition(targetRootState, transitionUID);
         }
 
         // Traverse all states
@@ -127,25 +127,32 @@ class SimulationVisualization {
             // Add during action - FALSE otherwise
             val duringAction2 = targetRootState.createDuringAction
             duringAction2.setImmediate(true)
-            duringAction2.setTrigger(TRUE)
+            //duringAction2.setTrigger(TRUE)
             duringAction2.addAssignment(active.assign(FALSE));
     }
 
     // New visualization of active states with immediate during actions
     def void transformSimulationVisualizationState(State state, State targetRootState, String UID) {
-        if (!state.isRootState && !state.final) {
+        if (!state.isRootState) {
             val active = targetRootState.createVariable(UID).setTypeBool.setIsOutput.uniqueName
             
-            // Add during action - TRUE iff this state is active
-            val duringAction = state.createDuringAction
-            duringAction.setImmediate(true)
-            duringAction.setTrigger(TRUE)
-            duringAction.addEffect(active.assignRelative(TRUE));     
+            if (!state.final) {
+                // Add during action - TRUE iff this state is active
+                val duringAction = state.createDuringAction
+                duringAction.setImmediate(true)
+                //duringAction.setTrigger(TRUE)
+                duringAction.addEffect(active.assignRelative(TRUE));     
+            } else {
+                // Add entry action - TRUE iff this final state is entered
+                val entryAction = state.createEntryAction
+                //duringAction.setTrigger(TRUE)
+                entryAction.addEffect(active.assignRelative(TRUE));     
+            }
             
             // Add during action - FALSE otherwise
             val duringAction2 = targetRootState.createDuringAction
             duringAction2.setImmediate(true)
-            duringAction2.setTrigger(TRUE)
+            //duringAction2.setTrigger(TRUE)
             duringAction2.addAssignment(active.assign(FALSE));
         }
     }
