@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.sccharts.feature"
       label="KIELER SCCharts"
-      version="0.1.0.qualifier"
+      version="0.1.1.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel"
       plugin="de.cau.cs.kieler.sccharts">
 
@@ -275,7 +275,7 @@ litigation.
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>		 
+         unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.kev"
@@ -305,7 +305,7 @@ litigation.
          version="0.0.0"
          unpack="false"/>
 
-		 <plugin
+   <plugin
          id="de.cau.cs.kieler.kico.klighd"
          download-size="0"
          install-size="0"
@@ -591,14 +591,13 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
 
    <plugin
          id="de.cau.cs.kieler.scg.c"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>         
+         unpack="false"/>
 
    <plugin
          id="org.json"
