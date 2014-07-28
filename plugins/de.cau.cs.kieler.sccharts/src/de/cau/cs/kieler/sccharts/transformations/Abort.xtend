@@ -51,8 +51,12 @@ class Abort {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
+        var done = false;
         for (targetState : targetRootState.getAllContainedStates) {
-            targetState.transformAbortAlternative(targetRootState);
+            if (!done) {
+                targetState.transformAbortAlternative(targetRootState);
+            }
+            //done = true;
         }
         targetRootState.fixAllTextualOrdersByPriorities;
     }
@@ -247,9 +251,9 @@ class Abort {
             if (!done) {
                 targetState.transformAbortDefault(targetRootState);
             }
-    //        done = true;
+           //done = true;
         }
-        targetRootState.fixAllTextualOrdersByPriorities;
+        targetRootState//.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states 
@@ -261,8 +265,13 @@ class Abort {
 
         // this for example could be several terminations, in this case we do not need the FULL abort transformation
         // and can only combine the terminations (using one termination and a connector node)
-        val stateHasUntransformedTransitions = ((state.outgoingTransitions.size > 1) || ((state.outgoingTransitions.
-            size == 1) && (!(state.outgoingTransitions.filter[typeTermination].filter[trigger == null].size == 1))))
+        val stateHasUntransformedTransitions = ((state.outgoingTransitions.size > 1) || 
+            ( (state.outgoingTransitions.size == 1) 
+              && ((!(state.outgoingTransitions.filter[typeTermination].filter[trigger == null].size == 1))
+//                  ||
+//                  !state.hasInnerActions && !state.hasInnerStatesOrRegions 
+              ))
+            )
 
         // in this case we need the FULL abort transformation
         val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))

@@ -544,9 +544,9 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         boolean debugConsole = false;
 
         // Collect active statements
-        // String activeStatements = "";
-        // StringBuffer activeStatementsBuf = new StringBuffer();
-        // List<DebugData> activeStatementList = new LinkedList<DebugData>();
+         StringBuffer activeStatesBuf = new StringBuffer();
+         StringBuffer activeTransitionsBuf = new StringBuffer();
+         //List<DebugData> activeStatesList = new LinkedList<DebugData>();
 
         if (cExecution == null || !cExecution.isStarted()) {
             throw new KiemExecutionException("No S simulation is running", true, null);
@@ -595,20 +595,48 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                                 present = ((Integer) value) != 0;
                             }
 
-                            returnObj.accumulate(outputName,
-                                    JSONSignalValues.newValue(value, present));
+                            if (outputName.startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
+                                if (present) {
+                                    if (activeStatesBuf.length() > 0) {
+                                        activeStatesBuf.append(",");
+                                    }
+                                    String activeStateName = outputName.substring(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_STATE.length());
+                                    activeStatesBuf.append(activeStateName);
+                                }
+                            } else if (outputName.startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                                if (present) {
+                                    if (activeTransitionsBuf.length() > 0) {
+                                        activeTransitionsBuf.append(",");
+                                    }
+                                    String activeTransitionName = outputName.substring(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION.length());
+                                    activeTransitionsBuf.append(activeTransitionName);
+                                }
+                            }
+                            else {
+                                returnObj.accumulate(outputName,
+                                        JSONSignalValues.newValue(value, present));
+                            }
                         }
 
                     }
                 }
             }
 
-            // // Finally accumulate all active Statements (activeStatements)
-            // // under the statementName
-            // String statementName =
-            // this.getProperties()[KIEM_PROPERTY_STATEMENTNAME + KIEM_PROPERTY_DIFF]
-            // .getValue();
-            // returnObj.accumulate(statementName, activeStatements);
+            // Finally accumulate all active Statements (activeStatements)
+            // under the statementName
+            String activeStates = "";
+            String activeTransitions = "";
+            activeStates = activeStatesBuf.toString();
+            activeTransitions = activeTransitionsBuf.toString();
+
+            String activeStatesName =
+             this.getProperties()[KIEM_PROPERTY_STATENAME + KIEM_PROPERTY_DIFF]
+             .getValue();
+             String activeTransitionsName =
+             this.getProperties()[KIEM_PROPERTY_TRANSITIONNAME + KIEM_PROPERTY_DIFF]
+             .getValue();
+             returnObj.accumulate(activeStatesName, activeStates);
+             returnObj.accumulate(activeTransitionsName, activeTransitions);
 
         } catch (IOException e) {
             System.err.println(e.getMessage());
