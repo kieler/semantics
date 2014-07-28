@@ -98,7 +98,7 @@ class SimulationVisualization {
             val originalTransitionURIFragment = res.getURIFragment(originalTransition);
             val transitionUID = AUXILIARY_VARIABLE_TAG_TRANSITION +
                 originalTransitionURIFragment.hashCode.toString().replace("-", "M");
-//            targetTransition.transformSimulationVisualizationTransition(targetRootState, transitionUID);
+            targetTransition.transformSimulationVisualizationTransition(targetRootState, transitionUID);
         }
 
         // Traverse all states

@@ -79,7 +79,7 @@ class During {
             // If the state has outgoing terminations, we need to finalize the during
             // actions in case we end the states over these transitions
             if (hasOutgoingTerminations) {
-               //state.transformDuringEx(targetRootRegion)
+               state.transformDuringEx(targetRootRegion)
             } else {
                state.transformDuringSimple(targetRootRegion)
             }
