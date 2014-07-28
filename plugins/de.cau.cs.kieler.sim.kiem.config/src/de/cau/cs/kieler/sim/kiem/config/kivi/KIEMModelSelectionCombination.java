@@ -32,7 +32,7 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
-import de.cau.cs.kieler.core.model.triggers.PartTrigger.PartState;
+import de.cau.cs.kieler.core.kivi.triggers.PartTrigger.PartState;
 import de.cau.cs.kieler.core.model.xtext.util.XtextModelingUtil;
 import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;

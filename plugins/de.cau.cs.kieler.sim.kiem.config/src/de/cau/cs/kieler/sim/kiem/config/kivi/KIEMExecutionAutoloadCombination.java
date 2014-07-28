@@ -18,7 +18,7 @@ import java.util.List;
 import org.eclipse.ui.IEditorSite;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
-import de.cau.cs.kieler.core.model.triggers.PartTrigger.PartState;
+import de.cau.cs.kieler.core.kivi.triggers.PartTrigger.PartState;
 import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;

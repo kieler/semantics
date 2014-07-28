@@ -11,8 +11,9 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.klighd.listener;
+package de.cau.cs.kieler.core.model.adapter;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.runtime.Status;
@@ -28,9 +29,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import com.google.common.collect.Lists;
-
-import de.cau.cs.kieler.kico.klighd.KiCoKLighDPlugin;
+import de.cau.cs.kieler.core.model.CoreModelPlugin;
 
 /**
  * Use this class to listen to part changes of any opened part in the workbench.
@@ -52,9 +51,9 @@ import de.cau.cs.kieler.kico.klighd.KiCoKLighDPlugin;
 public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartListener2 {
 
     /** Holds all currently known workbench windows this instance is registered to as listener. */
-    private List<IWorkbenchWindow> windows = Lists.newLinkedList();
+    private List<IWorkbenchWindow> windows = new LinkedList<IWorkbenchWindow>();
     /** Holds all currently known workbench pages this instance is registered to as listener. */
-    private List<IWorkbenchPage> pages = Lists.newLinkedList();
+    private List<IWorkbenchPage> pages = new LinkedList<IWorkbenchPage>();
 
     /** Either the listener to which the part events are delegated, or null. */
     private IPartListener2 delegateListener;
@@ -104,7 +103,7 @@ public class GlobalPartAdapter implements IWindowListener, IPageListener, IPartL
         } catch (IllegalStateException exception) {
             // the workbench is not present yet
             StatusManager.getManager().handle(
-                    new Status(Status.ERROR, KiCoKLighDPlugin.PLUGIN_ID,
+                    new Status(Status.ERROR, CoreModelPlugin.PLUGIN_ID,
                             "Unable to register a global part adapter.", exception));
         }
     }
