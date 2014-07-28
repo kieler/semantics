@@ -51,8 +51,12 @@ class Abort {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
+        var done = false;
         for (targetState : targetRootState.getAllContainedStates) {
-            targetState.transformAbortAlternative(targetRootState);
+            if (!done) {
+                targetState.transformAbortAlternative(targetRootState);
+            }
+            done = true;
         }
         targetRootState.fixAllTextualOrdersByPriorities;
     }
@@ -247,9 +251,9 @@ class Abort {
             if (!done) {
                 targetState.transformAbortDefault(targetRootState);
             }
-    //        done = true;
+           done = true;
         }
-        targetRootState.fixAllTextualOrdersByPriorities;
+        targetRootState//.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states 
