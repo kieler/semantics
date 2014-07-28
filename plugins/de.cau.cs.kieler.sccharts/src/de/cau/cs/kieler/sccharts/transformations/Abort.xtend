@@ -56,7 +56,7 @@ class Abort {
             if (!done) {
                 targetState.transformAbortAlternative(targetRootState);
             }
-            done = true;
+            //done = true;
         }
         targetRootState.fixAllTextualOrdersByPriorities;
     }
@@ -251,7 +251,7 @@ class Abort {
             if (!done) {
                 targetState.transformAbortDefault(targetRootState);
             }
-           done = true;
+           //done = true;
         }
         targetRootState//.fixAllTextualOrdersByPriorities;
     }
