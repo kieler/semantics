@@ -194,21 +194,19 @@ class SimpleSequentializer extends AbstractSequentializer {
     	val nextFlows = <ControlFlow> newArrayList
     	nextFlows.add(controlFlow)
     	
-    	val processedBlockGuards = <BasicBlock> newArrayList
+    	val processedBlockGuards = <SchedulingBlock> newArrayList
     	
     	// For each scheduling block in the schedule iterate.
     	for (sb : schedule.schedulingBlocks) {
-    	    
-    	    val basicBlock = sb.basicBlock
     	    
     		/**
     		 * Each scheduling block references a guard. Each guard results in an assignment. 
     		 * Create it and copy the corresponding object.
     		 */
-            if (!processedBlockGuards.contains(basicBlock)) {
+            if (!processedBlockGuards.contains(sb)) {
         		val newAssignment = ScgFactory::eINSTANCE.createAssignment
                 newAssignment.valuedObject = sb.guard.getValuedObjectCopy
-                processedBlockGuards.add(basicBlock)
+                processedBlockGuards.add(sb)
 
 		  	   /**
     			 * For each guard a guard expression exists.
