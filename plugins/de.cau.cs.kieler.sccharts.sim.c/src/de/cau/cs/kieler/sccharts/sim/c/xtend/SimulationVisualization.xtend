@@ -121,19 +121,25 @@ class SimulationVisualization {
     def void transformSimulationVisualizationTransition(Transition transition, State targetRootState, String UID) {
             val active = targetRootState.createVariable(UID).setTypeBool.setIsOutput.uniqueName
             
-//            // Add action - TRUE iff this transition is taken
-//            transition.addAssignment(active.assignRelative(TRUE));
-//            
-//            // Add during action - FALSE otherwise
-//            val duringAction2 = targetRootState.createDuringAction
-//            duringAction2.setImmediate(true)
-//            //duringAction2.setTrigger(TRUE)
-//            duringAction2.addAssignment(active.assign(FALSE));
+            // Add action - TRUE iff this transition is taken
+            transition.addAssignment(active.assignRelative(TRUE));
+            
+            // Add during action - FALSE otherwise
+            val duringAction2 = targetRootState.createDuringAction
+            duringAction2.setImmediate(true)
+            //duringAction2.setTrigger(TRUE)
+            duringAction2.addAssignment(active.assign(FALSE));
     }
+
+    // TEMPORARY DISABLED //
+    //   remove "&& !state.hasInnerStatesOrRegions" in the future, problematic is this for self loop aborts
+    //   of super states which create immediate self termination transitions and inner watcher (that will
+    //   NOT terminate instantaneously. But currently this (pontentially instant. loops) cannot be handled
+    //   by the SCG scheduler. So we disable these constructs for now.  
 
     // New visualization of active states with immediate during actions
     def void transformSimulationVisualizationState(State state, State targetRootState, String UID) {
-        if (!state.isRootState) {
+        if (!state.isRootState && !state.hasInnerStatesOrRegions) {
             val active = targetRootState.createVariable(UID).setTypeBool.setIsOutput.uniqueName
             
             if (!state.final) {
@@ -143,10 +149,10 @@ class SimulationVisualization {
                 //duringAction.setTrigger(TRUE)
                 duringAction.addEffect(active.assignRelative(TRUE));     
             } else {
-//                // Add entry action - TRUE iff this final state is entered
-//                val entryAction = state.createEntryAction
-//                //duringAction.setTrigger(TRUE)
-//                entryAction.addEffect(active.assignRelative(TRUE));     
+                // Add entry action - TRUE iff this final state is entered
+                val entryAction = state.createEntryAction
+                //duringAction.setTrigger(TRUE)
+                entryAction.addEffect(active.assignRelative(TRUE));     
             }
             
             // Add during action - FALSE otherwise

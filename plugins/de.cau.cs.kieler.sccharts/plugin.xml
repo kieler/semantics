@@ -936,7 +936,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.During"
-            dependencies="ABORT"
+            dependencies="COMPLEXFINALSTATE"
             id="DURING"
             method="transform"
             name="During">
