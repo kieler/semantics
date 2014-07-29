@@ -33,8 +33,8 @@ public class KIEMCombinationManager implements IStartup, IPartListener2 {
 
     /** Global Listener Adapter. */
     private GlobalPartAdapter adapter;
-    private final KIEMExecutionAutoloadCombination autoload = new KIEMExecutionAutoloadCombination();
-    private final KIEMModelSelectionCombination selection = new KIEMModelSelectionCombination();
+    private KIEMExecutionAutoloadCombination autoload;
+    private KIEMModelSelectionCombination selection;
 
     // -- STARTUP
     // -------------------------------------------------------------------------
@@ -43,7 +43,9 @@ public class KIEMCombinationManager implements IStartup, IPartListener2 {
      * {@inheritDoc}
      */
     public void earlyStartup() {
-        adapter = new GlobalPartAdapter(this, true);
+        autoload = new KIEMExecutionAutoloadCombination();
+        selection = new KIEMModelSelectionCombination();
+        adapter = new GlobalPartAdapter(this, true);        
     }
 
     // -- LISTENER
