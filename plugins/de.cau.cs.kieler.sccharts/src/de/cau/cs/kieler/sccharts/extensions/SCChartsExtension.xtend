@@ -187,7 +187,13 @@ class SCChartsExtension {
          SCChartsFactory::eINSTANCE.createState
     }
 
-
+    // Gets the list of non-empty regions
+    def List<Region> getRegions2(State state) {
+        val list2 = state.regions.filter(e | e.allContainedStates.size == 0).toList
+        val list = state.regions.filter(e | e.allContainedStates.size > 0).toList
+        list
+    }
+    
     //========== TRANSITIONS ===========
     
     def Transition setTypeTermination(Transition transition) {
@@ -251,15 +257,18 @@ class SCChartsExtension {
             return true
         }
         val notFoundOtherValuedObjectInState = state.valuedObjects.filter[it != valuedObject && name == newName].size == 0
-        val parentRegion = state.parentRegion
-        var notFoundInParents = true
-        if (parentRegion != null) {
-            notFoundInParents = valuedObject.uniqueNameTest(state.parentRegion.parentState, newName)
-        }
-        return notFoundOtherValuedObjectInState && notFoundInParents
+        return notFoundOtherValuedObjectInState
     }
     def private dispatch boolean uniqueNameTest(ValuedObject valuedObject, String newName) {
-        valuedObject.uniqueNameTest((valuedObject.getEContainer as State), newName)
+        val state = (valuedObject.getEContainer as State);
+        val rootState = state.getRootState
+        var notFound = valuedObject.uniqueNameTest(rootState, newName)
+        for (innerState : rootState.allContainedStates) {
+            if (notFound && !valuedObject.uniqueNameTest(innerState, newName)) {
+                notFound = false
+            }
+        }
+        notFound
     }
     def private dispatch boolean uniqueNameTest(EObject eObject, String newName) {
         false
@@ -295,9 +304,10 @@ class SCChartsExtension {
     def Region uniqueName(Region region) {
         val originalId = region.id
         var String newName = region.uniqueNameHelper(originalId)
-        if (newName != originalId) {
+        if (originalId != newName) {
+            region.setId(newName)
             region.setLabel2(newName)
-        } 
+        }
         region
     }
 
@@ -419,12 +429,17 @@ class SCChartsExtension {
     def Region createRegion(String id) {
         val region = SCChartsFactory::eINSTANCE.createRegion();
         region.setId(id)
-        region.setLabel("")
+        region.setLabel(id)
         region
     }
 
     def Region createRegion(State state, String id) {
         val region = createRegion(id)
+        // ATTENTION: if this is the first region and there already is an IMPLICIT region
+        // e.g. because of inner actions, then return THIS region only!
+        if (state.regions.size == 1 && state.regions.get(0).allContainedStates.size == 0) {
+            return state.regions.get(0)
+        }
         state.regions.add(region)
         region
     }
@@ -538,6 +553,16 @@ class SCChartsExtension {
         }
         state
     }
+
+//    def State fixAllEmptyRegions(State rootState) {
+//        val regions = rootState.allContainedRegions.filter(e | e.allContainedStates == 0).toList.immutableCopy
+//        for (region : regions) {
+//            val parent = region.parentState
+//            parent.regions.remove(region)
+//        }
+//        rootState
+//    }
+
 
     def State fixAllTextualOrdersByPriorities(State state) {
         for (containedState : state.allContainedStates) {

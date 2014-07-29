@@ -72,7 +72,14 @@ public class KiCoServer extends HttpServer {
         HttpHeader header = request.header();
         // String body = request.bodyAsText();
 
+        String bodyAsString = request.bodyAsText();
+        System.out.println(bodyAsString);
+
         HttpQuery query = header.getQuery();
+        if (request.header().isMethodPOST()) {
+            query = request.body().getFormQueryData();
+        }
+        
 
         // Check the query
         if (query.getValue("model").length() > 0) {
@@ -124,9 +131,9 @@ public class KiCoServer extends HttpServer {
             }
             debug("Model parsed");
 
-            KiCoPlugin.resetLastError();
             context.setVerboseMode(verbose);
             context.setPrerequirements(!strict);
+            context.setMainResource(mainModel.eResource());
 
             // process the model
             CompilationResult compilationResult = KielerCompiler.compile(context);
@@ -138,18 +145,25 @@ public class KiCoServer extends HttpServer {
             if (compiledModel != null) {
                 serializedCompiledModel = compiledModel.toString();
                 if (compiledModel instanceof EObject) {
-                    serializedCompiledModel = KiCoUtil.serialize((EObject) compiledModel, context);
+                    serializedCompiledModel = KiCoUtil.serialize((EObject) compiledModel, context, false);
                 }
                 debug("Model serialized");
             }
 
             // answer with compiled & serialized model
-            String lastError = KiCoPlugin.getLastError();
+            String lastError = compilationResult.getAllErrors();
+            String lastWarning = compilationResult.getAllWarnings();
             if (lastError != null) {
-                debug("Errors serialized");
+                debug("Errors serialized:");
+                debug(lastError);
             } else {
                 lastError = "";
                 debug("No errors to serialize");
+            }
+            if (lastWarning != null) {
+                debug(lastWarning);
+            } else {
+                lastWarning = "";
             }
 
             HttpHeader responseHeader = new HttpHeader();
@@ -164,7 +178,10 @@ public class KiCoServer extends HttpServer {
                 responseHeader.setHeaderField("compile-error", HttpUtils.encodeURL(lastError));
             }
 
-            response.setBody(serializedCompiledModel);
+            if (lastWarning.length() > 0) {
+                responseHeader.setHeaderField("compile-warning", HttpUtils.encodeURL(lastWarning));
+            }
+            response.setBody(serializedCompiledModel, false);
 
             return response;
         }

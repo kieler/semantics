@@ -49,7 +49,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
-import org.eclipse.xtend.util.stdlib.CloningExtensions;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -788,7 +787,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             // Make Esterel Interface declaration consistent
             InterfaceDeclarationFix interfaceDeclarationFix = Guice.createInjector().getInstance(
                     InterfaceDeclarationFix.class);
-            Program fixedTransformedProgram = (Program) CloningExtensions.clone(transformedProgram);
+            Program fixedTransformedProgram = (Program) EcoreUtil.copy(transformedProgram);
             interfaceDeclarationFix.fix(fixedTransformedProgram);
             System.out.println("M2M 11");
 

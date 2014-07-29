@@ -915,12 +915,12 @@
             alternatives="true"
             id="ABORT"
             name="Abort"
-            transformations="ABORTDEFAULT, ABORTALTERNATIVE">
+            transformations="ABORTALTERNATIVE, ABORTDEFAULT">
       </transformationGroup>
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Abort"
-            dependencies="EXIT, DURING"
+            dependencies="EXIT, INITIALIZATION"
             id="ABORTDEFAULT"
             method="transform"
             name="Abort Default">
@@ -928,7 +928,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Abort"
-            dependencies="EXIT, DURING"
+            dependencies="EXIT, INITIALIZATION"
             id="ABORTALTERNATIVE"
             method="transformAbortAlternative"
             name="Abort Alternative">
@@ -936,7 +936,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.During"
-            dependencies="INITIALIZATION"
+            dependencies="COMPLEXFINALSTATE"
             id="DURING"
             method="transform"
             name="During">

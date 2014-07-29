@@ -64,7 +64,9 @@ public class KLighD {
                             + "Example 1:\n"
                             + "  cat <FILE.sct> | java -jar KLighD.jar localhost:4444 -r png -s 3 > model.png\n"
                             + "Example 2:\n"
-                            + "  java -jar KLighD.jar 4444 -f FILE.sct -o model.png \n" + "\n"
+                            + "  java -jar KLighD.jar 4444 -f FILE.sct -o model.png \n"
+                            + "Example 3:\n"
+                            + "  java -jar KLighD.jar render.sccharts.com -f FILE.sct -o model.png \n" + "\n"
                             + "Options:\n" + "-f <filename> : Use a specific input file\n"
                             + "-i <filename> : Include additional input files\n"
                             + "-o <filename> : Use a specific output file\n"
@@ -82,16 +84,22 @@ public class KLighD {
             } catch (Exception e) {
             }
         } else {
-            try {
-                port = Integer.parseInt(hostAndPort[0]);
-            } catch (Exception e) {
+            if (hostAndPort[0].toLowerCase().equals("render.sccharts.com")) {
+                host = "render.sccharts.com";
+                port = 80;
             }
-            if (port > 0) {
-                // if only the port was specified, assume localhost
-                host = "localhost";
-            } else {
-                // if only the hostname was specified, assume 5555 as the standard port
-                port = 4444;
+            else {
+                try {
+                    port = Integer.parseInt(hostAndPort[0]);
+                } catch (Exception e) {
+                }
+                if (port > 0) {
+                    // if only the port was specified, assume localhost
+                    host = "localhost";
+                } else {
+                    // if only the hostname was specified, assume 4444 as the standard port
+                    port = 4444;
+                }
             }
         }
 
@@ -296,7 +304,18 @@ public class KLighD {
             InputStream in = yc.getInputStream();
 
             byte[] bytes = new byte[len];
-            in.read(bytes);
+            byte[] buffer = new byte[len];
+            int leftBytes = len;
+            int pos = 0;
+            while (leftBytes > 0) {
+                int readBytes = in.read(buffer);
+                leftBytes = leftBytes - readBytes;
+                // copy buffer to bytes
+                for (int c = 0; c < readBytes; c++) {
+                    bytes[c+pos] = buffer[c]; 
+                }
+                pos = pos + readBytes;
+            }
 
             yc.getInputStream().close();
             result.model = bytes;

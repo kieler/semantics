@@ -122,7 +122,7 @@ public abstract class HttpServer extends Job {
                 responseHeader.setTypeImagePng();
                 HttpResponse response = new HttpResponse();
                 response.setHeader(responseHeader);
-                response.setBody(bytes);
+                response.setBody(bytes, false);
 
                 return response;
             } catch (IOException e) {
@@ -370,10 +370,9 @@ public abstract class HttpServer extends Job {
 
                 HttpRequest request = new HttpRequest();
                 request.header = this.httpParser.getHeader();
-                request.body = this.httpParser.body;
-                if (request.body == null) {
-                    request.body = "".getBytes();
-                }
+                
+                boolean isMethodPOST = request.header.isMethodPOST();
+                request.body.setData(this.httpParser.body, isMethodPOST);
 
                 // First try the "online-check" request
                 HttpResponse response = handleRequestOnline(request);
@@ -387,7 +386,7 @@ public abstract class HttpServer extends Job {
                     // can be determined prior to being transferred" rfc2616
 
                     // Set body length automatically
-                    int Length = response.body.length;
+                    int Length = response.body.getData().length;
                     response.header.setContentLength(Length);
 
                     // Set server name automatically
@@ -400,7 +399,8 @@ public abstract class HttpServer extends Job {
 
                     this.to_client.write(response.header.toString());
                     this.to_client.flush();
-                    this.connection.getOutputStream().write(response.body);
+                    this.connection.getOutputStream().write(response.body.getData());
+//                    this.connection.getOutputStream().write("OK".getBytes());
                 }
 
                 this.to_client.flush();

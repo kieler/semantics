@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.kico;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitorAdapter;
 
@@ -848,7 +850,7 @@ public class KielerCompiler {
      */
     public static CompilationResult compile(KielerCompilerContext context) {
         updateMapping(DEBUG);
-
+        
         // as this is a compile run, the following MUST be set
         EObject transformationEObject = context.getTransformationObject();
         if (transformationEObject == null) {
@@ -858,13 +860,19 @@ public class KielerCompiler {
             return context.getCompilationResult();
         }
 
+        
+        // Set the main resource
+        if (context.getMainResource() == null) {
+            context.setMainResource(transformationEObject.eResource());
+        }
+
         // If not inplace then produce a copy of the input EObject
         if (!context.isInplace()) {
             EObject copiedObject = EcoreUtil.copy(transformationEObject);
             // replace intermediate object
             context.getCompilationResult().getIntermediateResults().clear();
             context.getCompilationResult().getIntermediateResults().add(copiedObject);
-            // makd the new copy the transformedObject
+            // make the new copy the transformedObject
             transformationEObject = copiedObject;
         }
 
@@ -921,7 +929,7 @@ public class KielerCompiler {
             context.getCompilationResult().setCurrentTransformationDone(false);
 
             doneWork++;
-            
+
             // Possibly async call to perform the transformation (in a new Eclipse job)
             performTransformationTask(transformedObject, transformation, context, doneWork,
                     totalWork);
@@ -1010,21 +1018,20 @@ public class KielerCompiler {
                                 + handledParameterType.isInstance(transformedObject) + " )");
                     }
                     if (handledParameterType.isInstance(transformedObject)) {
-                        
+
                         KielerCompilerProgressMonitor subMonitor = null;
                         if (monitor == null) {
-                            subMonitor =
-                                    new KielerCompilerProgressMonitor(new NullProgressMonitor(), 100);
-                        } else {
-                            subMonitor =
-                                    new KielerCompilerProgressMonitor(monitor, 100);
+                            monitor = new NullProgressMonitor();
                         }
+                        subMonitor = new KielerCompilerProgressMonitor(monitor, 100);
                         // Set the sub monitor for this transformation
                         context.setCurrentTransformationProgressMonitor(subMonitor);
-                        //Each subMonitor can use 0 - 100 % / work units
-                        performTransformation(transformedObject, transformation, context, subMonitor);
+                        // Each subMonitor can use 0 - 100 % / work units
+                        performTransformation(transformedObject, transformation, context,
+                                subMonitor);
                         context.getCompilationResult().setCurrentTransformationDone(true);
-                        // Increment the main monitor with 100%-x% percent, where x% is the number of
+                        // Increment the main monitor with 100%-x% percent, where x% is the number
+                        // of
                         // work in % already added by the subMonitor
                         int additional = 100 - subMonitor.getPercentDone();
                         monitor.worked(additional);
@@ -1051,20 +1058,39 @@ public class KielerCompiler {
             final Transformation transformation, final KielerCompilerContext context,
             final KielerCompilerProgressMonitor subMonitor) {
 
-//        for (int c = 0; c < 100; c ++) {
-//            subMonitor.setPercentDone(c);
-//            // TODO: remove
-//            try {
-//                Thread.sleep(1);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
+        // for (int c = 0; c < 100; c ++) {
+        // subMonitor.setPercentDone(c);
+        // // TODO: remove
+        // try {
+        // Thread.sleep(1);
+        // } catch (InterruptedException e) {
+        // e.printStackTrace();
+        // }
+        // }
 
         String transformationID = "unknown";
         Object object = null;
         try {
             transformationID = transformation.getId();
+            Resource res = transformedObject.eResource();
+            if (context.isCreateDummyResource()) {
+                // If we should create a dummy resource then save it after each successful transformation step
+                if (res == null) {
+                    // create a dummy resource by calling serialization (this creates a dummy resource on the fly)
+                    String discard = KiCoUtil.serialize(transformedObject, context, true);
+//                    System.out.println(discard);
+                }
+                res = context.getMainResource();
+//                if (res != null) {
+//                    try {
+//                        res.save(KiCoUtil.getSaveOptions());
+//                    } catch (IOException e) {
+//                        // ignore errors
+//                    }
+//                }
+            }
+            
+            
             object = transformation.doTransform(transformedObject, context);
         } catch (Exception exception) {
             context.getCompilationResult().addPostponedError(

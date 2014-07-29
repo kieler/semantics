@@ -24,7 +24,7 @@ package de.cau.cs.kieler.server;
  */
 public class HttpMessage {
 
-    protected byte[] body;
+    protected HttpBody body;
     protected HttpHeader header;
     
     //-------------------------------------------------------------------------
@@ -34,7 +34,7 @@ public class HttpMessage {
      */
     public HttpMessage() {
         header = new HttpHeader();
-        body = "".getBytes();
+        body = new HttpBody();
     }
 
     //-------------------------------------------------------------------------
@@ -45,7 +45,7 @@ public class HttpMessage {
      * @return the string
      */
     public String bodyAsText() {
-        String str = new String(body);
+        String str = body.getDataAsString();
         return str;
     }
 
@@ -56,8 +56,8 @@ public class HttpMessage {
      *
      * @param text the new body
      */
-    public void setBody(String text) {
-        body = text.getBytes();
+    public void setBody(String text, boolean isFormData) {
+        body.setData(text.getBytes(), isFormData);
     }
     
     //-------------------------------------------------------------------------
@@ -67,8 +67,8 @@ public class HttpMessage {
      *
      * @param body the new body
      */
-    public void setBody(byte[] body) {
-        this.body = body; 
+    public void setBody(byte[] body, boolean isFormData) {
+        this.body.setData(body, isFormData);
     }
 
     //-------------------------------------------------------------------------
@@ -78,7 +78,18 @@ public class HttpMessage {
      *
      * @return the byte[]
      */
-    public byte[] body() {
+    public byte[] bodyData() {
+        return body.getData();
+    }
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * Get the body.
+     *
+     * @return the byte[]
+     */
+    public HttpBody body() {
         return body;
     }
     

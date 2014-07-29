@@ -32,9 +32,8 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
-import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
-import de.cau.cs.kieler.core.model.triggers.PartTrigger.PartState;
-import de.cau.cs.kieler.core.model.xtext.util.XtextModelingUtil;
+import de.cau.cs.kieler.core.kivi.triggers.PartTrigger.PartState;
+import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
 import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
@@ -208,9 +207,11 @@ public class KIEMModelSelectionCombination extends AbstractCombination implement
      */
     protected EObject getInputModelEObject(final IEditorPart editorPart) {
         EObject model = null;
-        if (editorPart instanceof DiagramEditor) {
-            model = GmfModelingUtil.getModelFromGmfEditor((DiagramEditor) editorPart);
-        } else if (editorPart instanceof XtextEditor) {
+        // removed gmf dependency, 24.07., ssm
+//        if (editorPart instanceof DiagramEditor) {
+//            model = GmfModelingUtil.getModelFromGmfEditor((DiagramEditor) editorPart);
+//        } else 
+        if (editorPart instanceof XtextEditor) {
             boolean ignoreDirtyEditor = true;
             model = XtextModelingUtil.getModelFromXtextEditor((XtextEditor) editorPart,
                     ignoreDirtyEditor);

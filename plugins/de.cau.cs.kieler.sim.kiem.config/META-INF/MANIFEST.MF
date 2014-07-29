@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Execution Manager Configuration
 Bundle-SymbolicName: de.cau.cs.kieler.sim.kiem.config;singleton:=true
-Bundle-Version: 0.5.2.qualifier
+Bundle-Version: 0.5.3.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.kiem.config.KiemConfigurationPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
@@ -19,9 +19,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtext.ui;bundle-version="2.1.0",
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.core.kivi,
- de.cau.cs.kieler.core.model,
- de.cau.cs.kieler.core.model.gmf,
- de.cau.cs.kieler.core.model.xtext
+ de.cau.cs.kieler.core.model
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sim.kiem.config,

@@ -552,6 +552,7 @@ public class KiCoPlugin extends Plugin {
     /**
      * Gets the last error.
      * 
+     * @deprecated Use the method getAllErrors()  of the compilation result, this method will only return null.
      * @return the last error
      */
     public static String getLastError() {
@@ -563,6 +564,8 @@ public class KiCoPlugin extends Plugin {
 
     /**
      * Resets the last error.
+     * 
+     * @deprecated Use the method getAllErrors()  of the compilation result, this method will do nothing.
      * 
      */
     public static void resetLastError() {

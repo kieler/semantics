@@ -31,7 +31,7 @@
       <command
             categoryId="org.eclipse.ui.category.file"
             defaultHandler="de.cau.cs.kieler.core.model.handlers.ConvertModelHandler"
-            id="de.cau.cs.kieler.core.model.convert"
+            id="de.cau.cs.kieler.core.model.convert.text"
             name="Convert to Textual">
          <commandParameter
                id="de.cau.cs.kieler.convert.targetExtension"

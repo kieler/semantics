@@ -40,16 +40,16 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-import de.cau.cs.kieler.core.model.xtext.util.XtextModelingUtil;
+import de.cau.cs.kieler.core.model.adapter.GlobalPartAdapter;
+import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
 import de.cau.cs.kieler.kico.klighd.KiCoModelView.ChangeEvent;
-import de.cau.cs.kieler.kico.klighd.listener.GlobalPartAdapter;
 import de.cau.cs.kieler.kico.ui.KiCoSelection;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager.KiCoSelectionChangeEventListerner;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionView;
 import de.cau.cs.kieler.klighd.KlighdDataManager;
 
 /**
- * Observes Workspace and manages KiCoModelViews
+ * Observes workspace and manages KiCoModelViews
  * 
  * @author als
  * 

@@ -32,10 +32,15 @@
 
 <script>
 
-if (top.location.href != "http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Online+Compiler") {
-	top.location.href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Online+Compiler"
-}
+//if (top.location.href != "http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Online+Compiler") {
+//	top.location.href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Online+Compiler"
+//}
 
+var compileServerName = new Array("onlineserver0a",              "onlineserver1a",               "onlineserver2a",               "onlinelocalhosta");
+var compileServerURL  = new Array("http://compile.sccharts.com", "http://www.sccharts.com:5556", "http://www.sccharts.com:5555", "http://localhost:5555");
+
+var renderServerName  = new Array("onlineserver0b",             "onlineserver1b",               "onlineserver2b",               "onlinelocalhostb");
+var renderServerURL   = new Array("http://render.sccharts.com", "http://www.sccharts.com:4445", "http://www.sccharts.com:4444", "http://localhost:4444");
 
 //function processEvent(e) {
 //  alert('Parent got (from ' + e.origin + '): ' + e.data);
@@ -112,7 +117,7 @@ function openSelectWindow() {
   transformationsTimer=setInterval(function(){updateTransformations()},500);
   mywindow = window.open("", "selectWindow", "width=950,height=270, resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no");
   mywindow.document.write(windowContent);
-  
+
   mywindow.focus();
 }
 
@@ -203,10 +208,18 @@ function replaceAll(inputStr, findStr, replaceStr) {
 }
 
 function compileText() {
+	//var data = new FormData();
+	//data.append('model', model.value);
+	//data.append('transformations', transformations.value);
+	//data.append('verbose', verbose);
+	//data.append('strict', strict);
+
     var strict = document.getElementById("strict").checked;
     var verbose = 0;//document.getElementById("verbose").checked;
 
-	var resultUrl =  document.getElementById("KiCoURL").value + "/?model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
+	//var resultUrl =  document.getElementById("KiCoURL").value + "/?model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
+	var resultUrl =  document.getElementById("KiCoURL").value;
+	var data =  "model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
     document.getElementById("lastCompilerCall").value = resultUrl;
 
 	var xmlhttp = new XMLHttpRequest();
@@ -230,8 +243,9 @@ function compileText() {
 	      }
 		}
 	}
-	xmlhttp.open('GET', resultUrl, true);
-	xmlhttp.send();
+	xmlhttp.open('POST', resultUrl, true);
+	xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	xmlhttp.send(data);
 }
 
 function clearErrors() {
@@ -242,32 +256,54 @@ function clearErrors() {
 }
 
 
+// Set the config fields and check the radio button for the selected server (manually or by updateSelectedServer method)
+function setConfig(i) {
+	if ((i > 3)||(i < 0)) {
+		// default is local host
+		i = 3;
+	}
+	document.getElementById("radio"+i).checked = true;
+	document.getElementById("KiCoURL").value = compileServerURL[i];
+	document.getElementById("KLighDURL").value =  renderServerURL[i];
+	compile();
+}
 
 
 
+var isOnline = {};
+// On page load: Find & select the first server where compile AND render is online in order: 1. local host (3), 2. main, 3. backup1, 4. backup2
+function updateSelectedServer() {
+   var serverOrder = new Array(3,0,1,2);
+   for (var c = 0; c < 4; c++) {
+        if (isOnline[compileServerName[serverOrder[c]]] == true && isOnline[renderServerName[serverOrder[c]]] == true) {
+			setConfig(serverOrder[c]);
+			return;
+		}
+   }
+}
+
+// Test the online status of a specific server
 function testOnlineStatus(redAndGreenImageId, serverURL) {
 	   var testImage = new Image();
 	   testImage.src = serverURL + "/?online=1#" + new Date().getTime();
-	   
+
   	   testImage.onload = function() {
 			if (testImage.height > 0) {
 			    var redAndGreenImage = document.getElementById(redAndGreenImageId);
 				redAndGreenImage.src = "http://www.sccharts.com/green.png";
+				isOnline[redAndGreenImageId] = true;
+				updateSelectedServer();
 			}
 	    }
 }
 
+// On page load: Test the online status of all servers
 function testAllOnlineStatus() {
-	testOnlineStatus("onlineserver0a", "http://compile.sccharts.com");
-	testOnlineStatus("onlineserver1a", "http://www.sccharts.com:5556");
-	testOnlineStatus("onlineserver2a", "http://www.sccharts.com:5555");
-	testOnlineStatus("onlinelocalhosta", "http://localhost:5555");
-	testOnlineStatus("onlineserver0b", "http://render.sccharts.com");
-	testOnlineStatus("onlineserver1b", "http://www.sccharts.com:4445");
-	testOnlineStatus("onlineserver2b", "http://www.sccharts.com:4444");
-	testOnlineStatus("onlinelocalhostb", "http://localhost:4444");
+   for (var c = 0; c < 4; c++) {
+		testOnlineStatus(compileServerName[c], compileServerURL[c]);
+		testOnlineStatus(renderServerName[c], renderServerURL[c]);
+   }
 }
-
 testAllOnlineStatus();
 
 function progressImage() {
@@ -292,35 +328,48 @@ function updateImage() {
 	    var scale = document.getElementById("scale")
 		var outputImageSVG = document.getElementById("outputImageSVG").checked;
 		var render = "png";
+		var imageFormat = "png";
 		if (outputImageSVG) {
 				render = "svg";
+				imageFormat = "svg+xml";
 		}
-        var new_image = new Image();
-        //set up the new image
-        new_image.id = "resultImage";
-		var imageUrl = document.getElementById("KLighDURL").value + "/?model="+encodeURIComponent(resultText.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&render="+render+"&scale=" + encodeURIComponent(scale.value) + "#" + new Date().getTime();
+
+		var imageUrl = document.getElementById("KLighDURL").value
+		var data = "encoding=base64&model="+encodeURIComponent(resultText.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&render="+render+"&scale=" + encodeURIComponent(scale.value); // + "#" + new Date().getTime();
 		document.getElementById("lastRenderCall").value = imageUrl;
-        new_image.src = imageUrl;
 
-		new_image.onload = function() {
-        	// insert new image and remove old
-    	    image.parentNode.insertBefore(new_image, image);
-	        image.parentNode.removeChild(image);
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange=function() {
+	  		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+		      var new_image = new Image();
+		      new_image.id = "resultImage";
 
-			var size = document.getElementById("size");
-			var width = new_image.naturalWidth;
-			var height = new_image.naturalHeight;
-			new_image.width = width/size.value;
-			new_image.height = height/size.value;
-	    }
-		//var width = new_image.naturalWidth;
-		//var height = new_image.naturalHeight;
-		//alert(width + "," + height);
-		//new_image.width = "50%";
-		//new_image.height = "50%";
+ 	  	 	  var response = xmlhttp.responseText;
+//		      new_image.src  = "data:image/png;base64," + response + "";
+//		      new_image.src  = "data:image/svg+xml;base64," + response + "";
+		      new_image.src  = "data:image/"+imageFormat+";base64," + response + "";
 
-    }
+		   	  // insert new image and remove old
+    	      image.parentNode.insertBefore(new_image, image);
+	          image.parentNode.removeChild(image);
+
+			  new_image.onload = function() {
+	   			  var size = document.getElementById("size");
+				  var width = new_image.naturalWidth;
+				  var height = new_image.naturalHeight;
+				  new_image.width = width/size.value;
+				  new_image.height = height/size.value;
+	    	  }
+			}
+
+		}
+		xmlhttp.open('POST', imageUrl, true);
+		xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		xmlhttp.send(data);
+	}
 }
+
+
 
 </script>
 
@@ -432,7 +481,7 @@ scchart ABRO {
                   </span><br>
                   <br>
                   <a name="server"></a> <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Advanced Options</a></span></p>
-				  
+
 		<div id="advancedOptions" style="font:24px bold; display: none">
 		<span class="Stil8 Stil10">
                 <table width="370" border="0" cellspacing="5">
@@ -458,7 +507,7 @@ scchart ABRO {
                     <th scope="row"><div align="right">Last Render Call:</div></th>
                     <td><input name="lastRenderCall" type="text" id="lastRenderCall" readonly="true" size="30" value="" style="background-color: #CCCCCC"></td>
                   </tr>
-                </table>  
+                </table>
 		</span></div>
 					  </td>
             </tr>
@@ -475,7 +524,7 @@ scchart ABRO {
                         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0b"> Main Server <span class="Stil12">(fastest)</span></label>
                           <br>
                           <label>
-                        <input type="radio" name="config" value="server1" id="radio" checked="true"  onclick="setConfig(1);" />
+                        <input type="radio" name="config" value="server1" id="radio1" checked="true"  onclick="setConfig(1);" />
                         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1b">                        Backup Server 1</label>
                           <span class="Stil12">(faster)</span><br>
                           <label>
@@ -483,7 +532,7 @@ scchart ABRO {
                         <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2b"> Backup Server 2</label>
                           <span class="Stil12">(slower)</span><br>
                           <label>
-                          <input type="radio" name="config" value="localhost" id="radio4" onclick="setConfig(3);" />
+                          <input type="radio" name="config" value="localhost" id="radio3" onclick="setConfig(3);" />
                           <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhosta"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhostb"> Local Host <span class="Stil12">(fastest)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run&nbsp;locally, see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Compiler+Console" target="_blank">here</a> and <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+KLighD+Console+Diagram+Rendering" target="_blank">here</a>)</span></label>
 </span><span class="Stil8">
@@ -543,26 +592,6 @@ function toggleAdvanced() {
   }
 }
 
-
-function setConfig(i) {
-	if (i == 0) {
-		document.getElementById("KiCoURL").value = "http://compile.sccharts.com";
-		document.getElementById("KLighDURL").value = "http://render.sccharts.com";
-	}
-	else if (i == 1) {
-		document.getElementById("KiCoURL").value = "http://www.sccharts.com:5556";
-		document.getElementById("KLighDURL").value = "http://www.sccharts.com:4445";
-	}
-	else if (i == 2) {
-		document.getElementById("KiCoURL").value = "http://www.sccharts.com:5555";
-		document.getElementById("KLighDURL").value = "http://www.sccharts.com:4444";
-	}
-	else {
-		document.getElementById("KiCoURL").value = "http://localhost:5555";
-		document.getElementById("KLighDURL").value = "http://localhost:4444";
-	}
-	compile();
-}
 
 
 
