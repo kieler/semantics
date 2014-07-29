@@ -97,6 +97,7 @@ class BasicBlockTransformationSCplus extends BasicBlockTransformation {
                 // Create a new scheduling block, add all incoming dependencies of the node to the block for caching purposes
                 // and store a reference of the guard.
                 block = ScgFactory::eINSTANCE.createSchedulingBlock()
+                block.guard = sbGuard
                 block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))
             }
             // Add the node to the scheduling block.

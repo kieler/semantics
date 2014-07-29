@@ -76,7 +76,11 @@ class SCGKExpressionsScopeProvider extends KExpressionsScopeProvider {
   		val scopeObjects = <ValuedObject> newLinkedList
   		scopeObjects.addAll(valuedObjects)
     	if (parent instanceof SCGraph) {
-    		(parent as SCGraph).getBasicBlocks.forEach[scopeObjects += it.guard ]
+    		(parent as SCGraph).getBasicBlocks.forEach[
+    		    schedulingBlocks.forEach[
+                    scopeObjects += guard
+    		    ]
+    		]
     	}
         Scopes.scopeFor(scopeObjects)
     }

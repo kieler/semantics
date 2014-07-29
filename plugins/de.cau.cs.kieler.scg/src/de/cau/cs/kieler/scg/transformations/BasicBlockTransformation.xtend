@@ -372,7 +372,7 @@ class BasicBlockTransformation extends AbstractModelTransformation {
         ValuedObject guard
     ) {
     	// Create a new list of scheduling blocks.
-        val schedulingBlocks = <SchedulingBlock> newLinkedList
+        val schedulingBlocks = <SchedulingBlock> newArrayList
         
         // Set the variables of the actual block to null to mark the first iteration.
         var SchedulingBlock block = null
@@ -399,7 +399,6 @@ class BasicBlockTransformation extends AbstractModelTransformation {
 			        } else {
         				sbGuard.name = guard.name + (96 + schedulingBlocks.size + 1) as char
        				}
-        			block.guard = sbGuard
                     
         			// ALWAYS use the guard of the basic block
 //        			guard = basicBlock.guard
@@ -407,6 +406,7 @@ class BasicBlockTransformation extends AbstractModelTransformation {
                 // Create a new scheduling block, add all incoming dependencies of the node to the block for caching purposes
                 // and store a reference of the guard.
                 block = ScgFactory::eINSTANCE.createSchedulingBlock()
+                block.guard = sbGuard
                 block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))
             }
             // Add the node to the scheduling block.
