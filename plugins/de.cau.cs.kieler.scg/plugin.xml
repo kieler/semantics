@@ -66,31 +66,31 @@
             name="Basic Blocks"
             transformations="SCGBB, SCGBBSCPLUS">
       </transformationGroup>
-      <transformationMethod
-            class="de.cau.cs.kieler.scg.schedulers.SimpleScheduler"
-            dependencies="SCGSEQ"
-            id="SCGSCHEDSIMPLE"
-            method="schedule"
-            name="Simple">
-      </transformationMethod>
       <transformationGroup
             alternatives="true"
             id="SCGSCHEDGROUP"
             name="Scheduler"
-            transformations="SCGSCHEDSIMPLE, SCGSCHEDCLUSTER, SCGSCHEDHYBRID">
+            transformations="SCGSCHEDSIMPLE, SCGSCHEDTHREADAWARE">
       </transformationGroup>
       <transformationMethod
+            class="de.cau.cs.kieler.scg.schedulers.SimpleScheduler"
+            dependencies="SCGSEQGROUP"
+            id="SCGSCHEDSIMPLE"
+            method="schedule"
+            name="Simple">
+      </transformationMethod>
+      <transformationMethod
             class="de.cau.cs.kieler.scg.schedulers.ThreadAwareScheduler"
-            dependencies="SCGSEQ"
+            dependencies="SCGSEQGROUP"
             id="SCGSCHEDTHREADAWARE"
             method="schedule"
             name="Thread Aware">
       </transformationMethod>
       <transformationGroup
             alternatives="true"
-            id="SCGSCHEDGROUP"
-            name="Scheduler"
-            transformations="SCGSCHEDSIMPLE, SCGSCHEDCLUSTER, SCGSCHEDHYBRID">
+            id="SCGSEQGROUP"
+            name="Sequentializer"
+            transformations="SCGSEQSIMPLE, SCGSEQHYBRID">
       </transformationGroup>
       <transformationMethod
             class="de.cau.cs.kieler.scg.sequentializer.SimpleSequentializer"
@@ -103,7 +103,7 @@
             class="de.cau.cs.kieler.scg.sequentializer.HybridSequentializer"
             dependencies="CODEGENERATION"
             id="SCGSEQHYBRID"
-            method="schedule"
+            method="sequentialize"
             name="Hybrid">
       </transformationMethod>
    </extension>
