@@ -55,7 +55,7 @@ import de.cau.cs.kieler.scg.SCGraph
  * @kieler.design 2014-01-18 proposed 
  * @kieler.rating 2014-01-18 proposed yellow
  */
-class ClusterScheduler extends SimpleScheduler {
+class ThreadAwareScheduler extends SimpleScheduler {
 	
 		@Inject
 		extension SCGExtensions
