@@ -89,7 +89,6 @@ class BasicBlockTransformationSCplus extends BasicBlockTransformation {
                     } else {
                         sbGuard.name = guard.name + (96 + schedulingBlocks.size + 1) as char
                     }
-                    block.guard = sbGuard
                     
                     // ALWAYS use the guard of the basic block
 //                  guard = basicBlock.guard
