@@ -40,16 +40,16 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-import de.cau.cs.kieler.core.model.xtext.util.XtextModelingUtil;
+import de.cau.cs.kieler.core.model.adapter.GlobalPartAdapter;
+import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
 import de.cau.cs.kieler.kico.klighd.KiCoModelView.ChangeEvent;
-import de.cau.cs.kieler.kico.klighd.listener.GlobalPartAdapter;
 import de.cau.cs.kieler.kico.ui.KiCoSelection;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager.KiCoSelectionChangeEventListerner;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionView;
 import de.cau.cs.kieler.klighd.KlighdDataManager;
 
 /**
- * Observes Workspace and manages KiCoModelViews
+ * Observes workspace and manages KiCoModelViews
  * 
  * @author als
  * 
@@ -67,7 +67,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
      * Standard Constructor
      */
     public KiCoModelViewManager() {
-        super(KiCoModelViewManager.class.getName());
+        super(jobName);
         if (instance == null) {
             instance = this;
         } else {
@@ -84,6 +84,9 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
 
     // -- ATTRIBUTES
     // -------------------------------------------------------------------------
+    
+    /** Name of this class used for Jobs  */
+    private static final String jobName = "KIELER ModelView Manager";
 
     /** Global Listener Adapter */
     private GlobalPartAdapter adapter;
@@ -152,7 +155,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
                     if (modelView.isPrimaryView()
                             && modelView.getSite().getPage().getActiveEditor() != null) {
                         // update to active editor (delayed to prevent klighd init errors)
-                        new UIJob("Init" + KiCoModelView.class.getName()) {
+                        new UIJob(jobName) {
 
                             @Override
                             public IStatus runInUIThread(IProgressMonitor monitor) {
@@ -193,15 +196,20 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
                             new Predicate<KiCoModelView>() {
 
                                 public boolean apply(KiCoModelView view) {
-                                    return view.getActiveEditor() == ((IEditorPart) part)
-                                            && !view.isPrimaryView();
+                                    return view.getActiveEditor() == ((IEditorPart) part);
                                 }
                             }))) {
                         // close view if eclipse is not shutting down
                         // Thus open model views will be restored after restart
                         if (!PlatformUI.getWorkbench().isClosing()) {
-                            modelView.setActiveEditor(null);
-                            modelView.getSite().getPage().hideView(modelView);
+                            if (modelView.isPrimaryView()) {
+                                if(editors.isEmpty()){
+                                    modelView.setActiveEditor(null);
+                                }
+                            } else {
+                                modelView.setActiveEditor(null);
+                                modelView.getSite().getPage().hideView(modelView);
+                            }
                         }
                     }
                 } else if (kicoSelections.contains(part)) {

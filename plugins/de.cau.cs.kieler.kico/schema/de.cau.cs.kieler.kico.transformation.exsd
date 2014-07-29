@@ -136,20 +136,6 @@ dep1, dep2, dep3
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="isCategory" type="boolean" use="default" value="false">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="isFeatureGroup" type="boolean" use="default" value="false">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
       </complexType>
    </element>
 

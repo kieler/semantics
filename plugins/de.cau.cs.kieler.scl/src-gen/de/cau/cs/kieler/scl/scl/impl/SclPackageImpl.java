@@ -228,7 +228,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getProgram_TypeGroups()
+  public EReference getProgram_Declarations()
   {
     return (EReference)programEClass.getEStructuralFeatures().get(2);
   }
@@ -358,7 +358,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getConditional_TypeGroups()
+  public EReference getConditional_Declarations()
   {
     return (EReference)conditionalEClass.getEStructuralFeatures().get(1);
   }
@@ -468,7 +468,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getStatementScope_TypeGroups()
+  public EReference getStatementScope_Declarations()
   {
     return (EReference)statementScopeEClass.getEStructuralFeatures().get(0);
   }
@@ -506,7 +506,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     programEClass = createEClass(PROGRAM);
     createEReference(programEClass, PROGRAM__ANNOTATIONS);
     createEAttribute(programEClass, PROGRAM__NAME);
-    createEReference(programEClass, PROGRAM__TYPE_GROUPS);
+    createEReference(programEClass, PROGRAM__DECLARATIONS);
 
     statementEClass = createEClass(STATEMENT);
     createEReference(statementEClass, STATEMENT__ANNOTATIONS);
@@ -525,7 +525,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
 
     conditionalEClass = createEClass(CONDITIONAL);
     createEReference(conditionalEClass, CONDITIONAL__EXPRESSION);
-    createEReference(conditionalEClass, CONDITIONAL__TYPE_GROUPS);
+    createEReference(conditionalEClass, CONDITIONAL__DECLARATIONS);
     createEReference(conditionalEClass, CONDITIONAL__ELSE_STATEMENTS);
 
     gotoEClass = createEClass(GOTO);
@@ -542,7 +542,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     pauseEClass = createEClass(PAUSE);
 
     statementScopeEClass = createEClass(STATEMENT_SCOPE);
-    createEReference(statementScopeEClass, STATEMENT_SCOPE__TYPE_GROUPS);
+    createEReference(statementScopeEClass, STATEMENT_SCOPE__DECLARATIONS);
   }
 
   /**
@@ -595,7 +595,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEClass(programEClass, Program.class, "Program", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getProgram_Annotations(), theAnnotationsPackage.getAnnotation(), null, "annotations", null, 0, -1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getProgram_Name(), ecorePackage.getEString(), "name", null, 0, 1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getProgram_TypeGroups(), theKExpressionsPackage.getTypeGroup(), null, "typeGroups", null, 0, -1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getProgram_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(statementEClass, Statement.class, "Statement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getStatement_Annotations(), theAnnotationsPackage.getAnnotation(), null, "annotations", null, 0, -1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -614,7 +614,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
 
     initEClass(conditionalEClass, Conditional.class, "Conditional", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getConditional_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getConditional_TypeGroups(), theKExpressionsPackage.getTypeGroup(), null, "typeGroups", null, 0, -1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConditional_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConditional_ElseStatements(), this.getStatement(), null, "elseStatements", null, 0, -1, Conditional.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(gotoEClass, Goto.class, "Goto", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -631,7 +631,7 @@ public class SclPackageImpl extends EPackageImpl implements SclPackage
     initEClass(pauseEClass, Pause.class, "Pause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(statementScopeEClass, StatementScope.class, "StatementScope", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getStatementScope_TypeGroups(), theKExpressionsPackage.getTypeGroup(), null, "typeGroups", null, 0, -1, StatementScope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatementScope_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, StatementScope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

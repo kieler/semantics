@@ -89,13 +89,14 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
         val scg = ScgFactory::eINSTANCE.createSCGraph
                   
         // ... and copy declarations.
-        for(typeGroup : scl.typeGroups) {
-            val newTypeGroup = createTypeGroupWOValuedObjects(typeGroup)
-            for (valuedObject : typeGroup.valuedObjects) {
-            	val newValuedObject = createValuedObject(newTypeGroup, valuedObject.name)
+        for(declaration : scl.declarations) {
+            val newDeclaration = createDeclaration(declaration)
+            for (valuedObject : declaration.valuedObjects) {
+            	val newValuedObject = createValuedObject(valuedObject.name)
+            	newDeclaration.valuedObjects += newValuedObject
 	            valuedObjectMapping.put(valuedObject, newValuedObject)
             }
-            scg.typeGroups += newTypeGroup 
+            scg.declarations += newDeclaration
         }
         
         scl.transform(scg, null)

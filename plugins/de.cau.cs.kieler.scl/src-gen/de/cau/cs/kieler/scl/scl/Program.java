@@ -4,7 +4,7 @@ package de.cau.cs.kieler.scl.scl;
 
 import de.cau.cs.kieler.core.annotations.Annotation;
 
-import de.cau.cs.kieler.core.kexpressions.TypeGroup;
+import de.cau.cs.kieler.core.kexpressions.Declaration;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -18,7 +18,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.Program#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.Program#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.Program#getTypeGroups <em>Type Groups</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.Program#getDeclarations <em>Declarations</em>}</li>
  * </ul>
  * </p>
  *
@@ -71,19 +71,19 @@ public interface Program extends StatementSequence
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Type Groups</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.TypeGroup}.
+   * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Type Groups</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Type Groups</em>' containment reference list.
-   * @see de.cau.cs.kieler.scl.scl.SclPackage#getProgram_TypeGroups()
+   * @return the value of the '<em>Declarations</em>' containment reference list.
+   * @see de.cau.cs.kieler.scl.scl.SclPackage#getProgram_Declarations()
    * @model containment="true"
    * @generated
    */
-  EList<TypeGroup> getTypeGroups();
+  EList<Declaration> getDeclarations();
 
 } // Program

@@ -27,8 +27,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cModuleKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
-		private final Assignment cTypeGroupsAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cTypeGroupsTypeGroupParserRuleCall_3_0 = (RuleCall)cTypeGroupsAssignment_3.eContents().get(0);
+		private final Assignment cDeclarationsAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cDeclarationsDeclarationParserRuleCall_3_0 = (RuleCall)cDeclarationsAssignment_3.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
 		private final Alternatives cAlternatives_5_0 = (Alternatives)cGroup_5.eContents().get(0);
@@ -46,11 +46,11 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//Program:
-		//	annotations+=Annotation* "module" name=ID typeGroups+=TypeGroup* "{" ((statements+=InstructionStatement ";" |
+		//	annotations+=Annotation* "module" name=ID declarations+=Declaration* "{" ((statements+=InstructionStatement ";" |
 		//	statements+=EmptyStatement)* (statements+=InstructionStatement statements+=EmptyStatement*)?) "}";
 		public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* "module" name=ID typeGroups+=TypeGroup* "{" ((statements+=InstructionStatement ";" |
+		//annotations+=Annotation* "module" name=ID declarations+=Declaration* "{" ((statements+=InstructionStatement ";" |
 		//statements+=EmptyStatement)* (statements+=InstructionStatement statements+=EmptyStatement*)?) "}"
 		public Group getGroup() { return cGroup; }
 
@@ -69,11 +69,11 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
 
-		//typeGroups+=TypeGroup*
-		public Assignment getTypeGroupsAssignment_3() { return cTypeGroupsAssignment_3; }
+		//declarations+=Declaration*
+		public Assignment getDeclarationsAssignment_3() { return cDeclarationsAssignment_3; }
 
-		//TypeGroup
-		public RuleCall getTypeGroupsTypeGroupParserRuleCall_3_0() { return cTypeGroupsTypeGroupParserRuleCall_3_0; }
+		//Declaration
+		public RuleCall getDeclarationsDeclarationParserRuleCall_3_0() { return cDeclarationsDeclarationParserRuleCall_3_0; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_4() { return cLeftCurlyBracketKeyword_4; }
@@ -122,13 +122,13 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getRightCurlyBracketKeyword_6() { return cRightCurlyBracketKeyword_6; }
 	}
 
-	public class TypeGroupElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TypeGroup");
+	public class DeclarationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Declaration");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
-		private final Assignment cConstantAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cConstantConstKeyword_1_0 = (Keyword)cConstantAssignment_1.eContents().get(0);
+		private final Assignment cConstAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cConstConstKeyword_1_0 = (Keyword)cConstAssignment_1.eContents().get(0);
 		private final Assignment cInputAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final Keyword cInputInputKeyword_2_0 = (Keyword)cInputAssignment_2.eContents().get(0);
 		private final Assignment cOutputAssignment_3 = (Assignment)cGroup.eContents().get(3);
@@ -147,12 +147,12 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_8_1_0 = (RuleCall)cValuedObjectsAssignment_8_1.eContents().get(0);
 		private final Keyword cSemicolonKeyword_9 = (Keyword)cGroup.eContents().get(9);
 		
-		//TypeGroup returns kexpressions::TypeGroup:
-		//	annotations+=Annotation* constant?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
+		//Declaration returns kexpressions::Declaration:
+		//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
 		//	type=ValueType valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
 		public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* constant?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
+		//annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
 		//type=ValueType valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";"
 		public Group getGroup() { return cGroup; }
 
@@ -162,11 +162,11 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
-		//constant?="const"?
-		public Assignment getConstantAssignment_1() { return cConstantAssignment_1; }
+		//const?="const"?
+		public Assignment getConstAssignment_1() { return cConstAssignment_1; }
 
 		//"const"
-		public Keyword getConstantConstKeyword_1_0() { return cConstantConstKeyword_1_0; }
+		public Keyword getConstConstKeyword_1_0() { return cConstConstKeyword_1_0; }
 
 		//input?="input"?
 		public Assignment getInputAssignment_2() { return cInputAssignment_2; }
@@ -469,8 +469,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cExpressionAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cExpressionExpressionParserRuleCall_1_0 = (RuleCall)cExpressionAssignment_1.eContents().get(0);
 		private final Keyword cThenKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cTypeGroupsAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cTypeGroupsTypeGroupParserRuleCall_3_0 = (RuleCall)cTypeGroupsAssignment_3.eContents().get(0);
+		private final Assignment cDeclarationsAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cDeclarationsDeclarationParserRuleCall_3_0 = (RuleCall)cDeclarationsAssignment_3.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Alternatives cAlternatives_4_0 = (Alternatives)cGroup_4.eContents().get(0);
 		private final Group cGroup_4_0_0 = (Group)cAlternatives_4_0.eContents().get(0);
@@ -486,8 +486,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatementsEmptyStatementParserRuleCall_4_1_1_0 = (RuleCall)cStatementsAssignment_4_1_1.eContents().get(0);
 		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
 		private final Keyword cElseKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Assignment cTypeGroupsAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
-		private final RuleCall cTypeGroupsTypeGroupParserRuleCall_5_1_0 = (RuleCall)cTypeGroupsAssignment_5_1.eContents().get(0);
+		private final Assignment cDeclarationsAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cDeclarationsDeclarationParserRuleCall_5_1_0 = (RuleCall)cDeclarationsAssignment_5_1.eContents().get(0);
 		private final Group cGroup_5_2 = (Group)cGroup_5.eContents().get(2);
 		private final Alternatives cAlternatives_5_2_0 = (Alternatives)cGroup_5_2.eContents().get(0);
 		private final Group cGroup_5_2_0_0 = (Group)cAlternatives_5_2_0.eContents().get(0);
@@ -504,15 +504,15 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cEndKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//Conditional:
-		//	"if" expression=Expression "then" typeGroups+=TypeGroup* ((statements+=InstructionStatement ";" |
+		//	"if" expression=Expression "then" declarations+=Declaration* ((statements+=InstructionStatement ";" |
 		//	statements+=EmptyStatement)* (statements+=InstructionStatement statements+=EmptyStatement*)?) ("else"
-		//	typeGroups+=TypeGroup* ((elseStatements+=InstructionStatement ";" | elseStatements+=EmptyStatement)*
+		//	declarations+=Declaration* ((elseStatements+=InstructionStatement ";" | elseStatements+=EmptyStatement)*
 		//	(elseStatements+=InstructionStatement elseStatements+=EmptyStatement*)?))? "end";
 		public ParserRule getRule() { return rule; }
 
-		//"if" expression=Expression "then" typeGroups+=TypeGroup* ((statements+=InstructionStatement ";" |
+		//"if" expression=Expression "then" declarations+=Declaration* ((statements+=InstructionStatement ";" |
 		//statements+=EmptyStatement)* (statements+=InstructionStatement statements+=EmptyStatement*)?) ("else"
-		//typeGroups+=TypeGroup* ((elseStatements+=InstructionStatement ";" | elseStatements+=EmptyStatement)*
+		//declarations+=Declaration* ((elseStatements+=InstructionStatement ";" | elseStatements+=EmptyStatement)*
 		//(elseStatements+=InstructionStatement elseStatements+=EmptyStatement*)?))? "end"
 		public Group getGroup() { return cGroup; }
 
@@ -528,11 +528,11 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//"then"
 		public Keyword getThenKeyword_2() { return cThenKeyword_2; }
 
-		//typeGroups+=TypeGroup*
-		public Assignment getTypeGroupsAssignment_3() { return cTypeGroupsAssignment_3; }
+		//declarations+=Declaration*
+		public Assignment getDeclarationsAssignment_3() { return cDeclarationsAssignment_3; }
 
-		//TypeGroup
-		public RuleCall getTypeGroupsTypeGroupParserRuleCall_3_0() { return cTypeGroupsTypeGroupParserRuleCall_3_0; }
+		//Declaration
+		public RuleCall getDeclarationsDeclarationParserRuleCall_3_0() { return cDeclarationsDeclarationParserRuleCall_3_0; }
 
 		//(statements+=InstructionStatement ";" | statements+=EmptyStatement)* (statements+=InstructionStatement
 		//statements+=EmptyStatement*)?
@@ -574,18 +574,18 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//EmptyStatement
 		public RuleCall getStatementsEmptyStatementParserRuleCall_4_1_1_0() { return cStatementsEmptyStatementParserRuleCall_4_1_1_0; }
 
-		//("else" typeGroups+=TypeGroup* ((elseStatements+=InstructionStatement ";" | elseStatements+=EmptyStatement)*
+		//("else" declarations+=Declaration* ((elseStatements+=InstructionStatement ";" | elseStatements+=EmptyStatement)*
 		//(elseStatements+=InstructionStatement elseStatements+=EmptyStatement*)?))?
 		public Group getGroup_5() { return cGroup_5; }
 
 		//"else"
 		public Keyword getElseKeyword_5_0() { return cElseKeyword_5_0; }
 
-		//typeGroups+=TypeGroup*
-		public Assignment getTypeGroupsAssignment_5_1() { return cTypeGroupsAssignment_5_1; }
+		//declarations+=Declaration*
+		public Assignment getDeclarationsAssignment_5_1() { return cDeclarationsAssignment_5_1; }
 
-		//TypeGroup
-		public RuleCall getTypeGroupsTypeGroupParserRuleCall_5_1_0() { return cTypeGroupsTypeGroupParserRuleCall_5_1_0; }
+		//Declaration
+		public RuleCall getDeclarationsDeclarationParserRuleCall_5_1_0() { return cDeclarationsDeclarationParserRuleCall_5_1_0; }
 
 		//(elseStatements+=InstructionStatement ";" | elseStatements+=EmptyStatement)* (elseStatements+=InstructionStatement
 		//elseStatements+=EmptyStatement*)?
@@ -827,8 +827,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cStatementScopeAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cTypeGroupsAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cTypeGroupsTypeGroupParserRuleCall_2_0 = (RuleCall)cTypeGroupsAssignment_2.eContents().get(0);
+		private final Assignment cDeclarationsAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cDeclarationsDeclarationParserRuleCall_2_0 = (RuleCall)cDeclarationsAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Alternatives cAlternatives_3_0 = (Alternatives)cGroup_3.eContents().get(0);
 		private final Group cGroup_3_0_0 = (Group)cAlternatives_3_0.eContents().get(0);
@@ -845,11 +845,11 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//StatementScope:
-		//	{StatementScope} "{" typeGroups+=TypeGroup* ((statements+=InstructionStatement ";" | statements+=EmptyStatement)*
+		//	{StatementScope} "{" declarations+=Declaration* ((statements+=InstructionStatement ";" | statements+=EmptyStatement)*
 		//	(statements+=InstructionStatement statements+=EmptyStatement*)?) "}";
 		public ParserRule getRule() { return rule; }
 
-		//{StatementScope} "{" typeGroups+=TypeGroup* ((statements+=InstructionStatement ";" | statements+=EmptyStatement)*
+		//{StatementScope} "{" declarations+=Declaration* ((statements+=InstructionStatement ";" | statements+=EmptyStatement)*
 		//(statements+=InstructionStatement statements+=EmptyStatement*)?) "}"
 		public Group getGroup() { return cGroup; }
 
@@ -859,11 +859,11 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
 
-		//typeGroups+=TypeGroup*
-		public Assignment getTypeGroupsAssignment_2() { return cTypeGroupsAssignment_2; }
+		//declarations+=Declaration*
+		public Assignment getDeclarationsAssignment_2() { return cDeclarationsAssignment_2; }
 
-		//TypeGroup
-		public RuleCall getTypeGroupsTypeGroupParserRuleCall_2_0() { return cTypeGroupsTypeGroupParserRuleCall_2_0; }
+		//Declaration
+		public RuleCall getDeclarationsDeclarationParserRuleCall_2_0() { return cDeclarationsDeclarationParserRuleCall_2_0; }
 
 		//(statements+=InstructionStatement ";" | statements+=EmptyStatement)* (statements+=InstructionStatement
 		//statements+=EmptyStatement*)?
@@ -911,7 +911,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
 	private ProgramElements pProgram;
-	private TypeGroupElements pTypeGroup;
+	private DeclarationElements pDeclaration;
 	private ValuedObjectElements pValuedObject;
 	private StatementElements pStatement;
 	private EmptyStatementElements pEmptyStatement;
@@ -965,7 +965,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Program:
-	//	annotations+=Annotation* "module" name=ID typeGroups+=TypeGroup* "{" ((statements+=InstructionStatement ";" |
+	//	annotations+=Annotation* "module" name=ID declarations+=Declaration* "{" ((statements+=InstructionStatement ";" |
 	//	statements+=EmptyStatement)* (statements+=InstructionStatement statements+=EmptyStatement*)?) "}";
 	public ProgramElements getProgramAccess() {
 		return (pProgram != null) ? pProgram : (pProgram = new ProgramElements());
@@ -975,15 +975,15 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		return getProgramAccess().getRule();
 	}
 
-	//TypeGroup returns kexpressions::TypeGroup:
-	//	annotations+=Annotation* constant?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
+	//Declaration returns kexpressions::Declaration:
+	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
 	//	type=ValueType valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";";
-	public TypeGroupElements getTypeGroupAccess() {
-		return (pTypeGroup != null) ? pTypeGroup : (pTypeGroup = new TypeGroupElements());
+	public DeclarationElements getDeclarationAccess() {
+		return (pDeclaration != null) ? pDeclaration : (pDeclaration = new DeclarationElements());
 	}
 	
-	public ParserRule getTypeGroupRule() {
-		return getTypeGroupAccess().getRule();
+	public ParserRule getDeclarationRule() {
+		return getDeclarationAccess().getRule();
 	}
 
 	//ValuedObject returns kexpressions::ValuedObject:
@@ -1047,9 +1047,9 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Conditional:
-	//	"if" expression=Expression "then" typeGroups+=TypeGroup* ((statements+=InstructionStatement ";" |
+	//	"if" expression=Expression "then" declarations+=Declaration* ((statements+=InstructionStatement ";" |
 	//	statements+=EmptyStatement)* (statements+=InstructionStatement statements+=EmptyStatement*)?) ("else"
-	//	typeGroups+=TypeGroup* ((elseStatements+=InstructionStatement ";" | elseStatements+=EmptyStatement)*
+	//	declarations+=Declaration* ((elseStatements+=InstructionStatement ";" | elseStatements+=EmptyStatement)*
 	//	(elseStatements+=InstructionStatement elseStatements+=EmptyStatement*)?))? "end";
 	public ConditionalElements getConditionalAccess() {
 		return (pConditional != null) ? pConditional : (pConditional = new ConditionalElements());
@@ -1111,7 +1111,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//StatementScope:
-	//	{StatementScope} "{" typeGroups+=TypeGroup* ((statements+=InstructionStatement ";" | statements+=EmptyStatement)*
+	//	{StatementScope} "{" declarations+=Declaration* ((statements+=InstructionStatement ";" | statements+=EmptyStatement)*
 	//	(statements+=InstructionStatement statements+=EmptyStatement*)?) "}";
 	public StatementScopeElements getStatementScopeAccess() {
 		return (pStatementScope != null) ? pStatementScope : (pStatementScope = new StatementScopeElements());
@@ -1288,7 +1288,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AtomicExpression returns Expression:
-	//	BoolValue | ValuedObjectTestExpression | "(" BoolExpression ")" | TextExpression;
+	//	BoolValue | ValuedObjectTestExpression | "(" BoolExpression ")" | FunctionCall | TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaKExpressions.getAtomicExpressionAccess();
 	}
@@ -1321,13 +1321,33 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: A, varB
 	//ValuedObjectReference:
-	//	valuedObject=[ValuedObject] ("[" cardinalities+=Expression "]")*;
+	//	valuedObject=[ValuedObject] ("[" indices+=Expression "]")*;
 	public KExpressionsGrammarAccess.ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
 		return gaKExpressions.getValuedObjectReferenceAccess();
 	}
 	
 	public ParserRule getValuedObjectReferenceRule() {
 		return getValuedObjectReferenceAccess().getRule();
+	}
+
+	//FunctionCall:
+	//	"<" functionName=ID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")")? ">";
+	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
+		return gaKExpressions.getFunctionCallAccess();
+	}
+	
+	public ParserRule getFunctionCallRule() {
+		return getFunctionCallAccess().getRule();
+	}
+
+	//Parameter:
+	//	callByReference?="&"? expression=Expression;
+	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
+		return gaKExpressions.getParameterAccess();
+	}
+	
+	public ParserRule getParameterRule() {
+		return getParameterAccess().getRule();
 	}
 
 	//// Example: 'printf(...)'

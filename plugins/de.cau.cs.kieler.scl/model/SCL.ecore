@@ -6,8 +6,8 @@
         eType="ecore:EClass ../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotation"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="typeGroups" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//TypeGroup"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Declaration"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Statement">
@@ -31,8 +31,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Conditional" eSuperTypes="#//Instruction #//StatementSequence">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="typeGroups" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//TypeGroup"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Declaration"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="elseStatements" upperBound="-1"
         eType="#//Statement" containment="true"/>
@@ -51,8 +51,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Pause" eSuperTypes="#//Instruction"/>
   <eClassifiers xsi:type="ecore:EClass" name="StatementScope" eSuperTypes="#//Instruction #//StatementSequence">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="typeGroups" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//TypeGroup"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Declaration"
         containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

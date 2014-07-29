@@ -15,12 +15,14 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.Socket;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 /**
@@ -65,6 +67,8 @@ public class KielerCompiler {
                             + "  cat <FILE.sct> | java -jar KielerCompiler.jar localhost:5555 EXTENDED CORE > code.c\n"
                             + "Example 2:\n"
                             + "  java -jar KielerCompiler.jar 5555 -f FILE.sct -o code.c CODEGENERATION \n"
+                            + "Example 3:\n"
+                            + "  java -jar KielerCompiler.jar compile.sccharts.com -f FILE.sct -o code.c CODEGENERATION \n"
                             + "\n"
                             + "Options:\n"
                             + "-f <filename> : Use a specific input file\n"
@@ -84,16 +88,22 @@ public class KielerCompiler {
             } catch (Exception e) {
             }
         } else {
-            try {
-                port = Integer.parseInt(hostAndPort[0]);
-            } catch (Exception e) {
+            if (hostAndPort[0].toLowerCase().equals("compile.sccharts.com")) {
+                host = "compile.sccharts.com";
+                port = 80;
             }
-            if (port > 0) {
-                // if only the port was specified, assume localhost
-                host = "localhost";
-            } else {
-                // if only the hostname was specified, assume 5555 as the standard port
-                port = 5555;
+            else {
+                try {
+                    port = Integer.parseInt(hostAndPort[0]);
+                } catch (Exception e) {
+                }
+                if (port > 0) {
+                    // if only the port was specified, assume localhost
+                    host = "localhost";
+                } else {
+                    // if only the hostname was specified, assume 5555 as the standard port
+                    port = 5555;
+                }
             }
         }
 
@@ -141,15 +151,14 @@ public class KielerCompiler {
         // System.out.println("strict: " + strict);
         // System.out.println("transformations: " + transformations);
 
-        
         ArrayList<String> models = new ArrayList<String>();
-        
+
         String model = readInputModel(inputFile);
         models.add(model);
 
         for (String includeFile : includeFiles) {
             String includedModel = readInputModel(includeFile);
-            //model += "\n\n" + includedModel;
+            // model += "\n\n" + includedModel;
             models.add(includedModel);
         }
         // System.out.println("model: " + model);
@@ -158,15 +167,15 @@ public class KielerCompiler {
                 remoteCompile(host, port, outputFile, verbose, strict, models, transformations);
 
         if (outputFile == null || outputFile.trim().equals("")) {
-            System.out.println(compilationResult.model);
+            System.out.println(new String(compilationResult.model));
         } else {
             writeOutputModel(outputFile, compilationResult.model);
         }
         if (compilationResult.error != null && compilationResult.error.length() > 0) {
-            if (verbose || compilationResult.model.length() == 0) {
+            if (verbose || compilationResult.model.length == 0) {
                 System.out.println(compilationResult.error);
             }
-            if (compilationResult.model.length() == 0) {
+            if (compilationResult.model.length == 0) {
                 System.exit(1);
             }
         }
@@ -236,13 +245,15 @@ public class KielerCompiler {
      * @param modelAsText
      *            the model as text
      */
-    private static void writeOutputModel(String outputFile, String model) {
-        PrintWriter out;
+    private static void writeOutputModel(String outputFile, byte[] model) {
+        FileOutputStream out;
         try {
-            out = new PrintWriter(outputFile);
-            out.println(model);
+            out = new FileOutputStream(outputFile);
+            out.write(model);
             out.close();
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -262,39 +273,50 @@ public class KielerCompiler {
      *            the transformations
      * @return the string
      */
+    @SuppressWarnings("deprecation")
     public static CompilationResult remoteCompile(String host, int port, String outputFile,
             boolean verbose, boolean strict, ArrayList<String> models, String transformations) {
-        CompilationResult result = new CompilationResult("", "");
-
-        String options = "";
-        if (verbose) {
-            options += "v";
-        }
-        if (strict) {
-            options += "s";
-        }
+        CompilationResult result = new CompilationResult(new byte[0], "");
 
         try {
-            TCPClient client = new KielerCompiler.TCPClient(host, port);
-            client.sndMessage(transformations + "\n");
-            
-            String header = "";
-            for (String model : models) {
-                if (header.length() > 0) {
-                    header += ":";
+
+            String query = "model=" + URLEncoder.encode(models.get(0));
+            if (models.size() > 1) {
+                for (int c = 1; c < models.size(); c++) {
+                    query += "&include" + (c - 1) + "=" + URLEncoder.encode(models.get(1));
                 }
-                header += model.split("\n").length + "";
             }
-            header += options + "\n";
-            client.sndMessage(header);
+            query += "&verbose=" + verbose + "&strict=" + strict + "&transformations=" + transformations;
+
+            String urlString = "http://" + host + ":" + port + "?" + query;
+            // System.out.println(urlString);
+
+            URL url = new URL(urlString);
+            URLConnection yc = url.openConnection();
             
-            for (String model : models) {
-                client.sndMessage(model + "\n");
+            String errors = yc.getHeaderField("Compile-error");
+            result.error = errors;
+
+            int len = yc.getContentLength();
+            InputStream in = yc.getInputStream();
+
+            byte[] bytes = new byte[len];
+            byte[] buffer = new byte[len];
+            int leftBytes = len;
+            int pos = 0;
+            while (leftBytes > 0) {
+                int readBytes = in.read(buffer);
+                leftBytes = leftBytes - readBytes;
+                // copy buffer to bytes
+                for (int c = 0; c < readBytes; c++) {
+                    bytes[c+pos] = buffer[c]; 
+                }
+                pos = pos + readBytes;
             }
 
-            result = client.rcvCompilationResult();
+            yc.getInputStream().close();
+            result.model = bytes;
 
-            client.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -308,78 +330,15 @@ public class KielerCompiler {
      * The Class CompilationResult.
      */
     static private class CompilationResult {
-        public String model;
+        public byte[] model;
         public String error;
 
-        CompilationResult(String model, String error) {
+        CompilationResult(byte[] model, String error) {
             this.model = model;
             this.error = error;
         }
     }
 
-    // -------------------------------------------------------------------------
-
-    /**
-     * The internal Class TCPClient.
-     */
-    static private class TCPClient {
-        Socket socket = null;
-
-        public TCPClient(String host, int port) throws IOException {
-            socket = new Socket(host, port);
-        }
-
-        void sndMessage(String msg) throws IOException {
-            OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream());
-            PrintWriter printWriter = new PrintWriter(out);
-            printWriter.print(msg);
-            printWriter.flush();
-            out.flush();
-        }
-
-        CompilationResult rcvCompilationResult() throws IOException {
-            InputStreamReader in = new InputStreamReader(socket.getInputStream());
-            BufferedReader bufferedReader = new BufferedReader(in);
-
-            String[] linesArray = bufferedReader.readLine().split(":");
-            int linesModel = Integer.parseInt(linesArray[0]);
-            int linesError = 0;
-            if (linesArray.length > 1) {
-                linesError = Integer.parseInt(linesArray[1]);
-            }
-
-            String model = "";
-            String error = "";
-            String s;
-            while (linesModel > 0) {
-                s = bufferedReader.readLine();
-                // System.out.println("M" + linesModel + ". " + s);
-                linesModel--;
-                if (!model.equals("")) {
-                    model += "\n";
-                }
-                model += s;
-            }
-            while (linesError > 0) {
-                s = bufferedReader.readLine();
-                // System.out.println("E" + linesError + ". " + s);
-                linesError--;
-                if (!error.equals("")) {
-                    error += "\n";
-                }
-                error += s;
-            }
-
-            return new CompilationResult(model, error);
-        }
-
-        void close() throws IOException {
-            socket.close();
-        }
-
-    }
-
-    // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
 }

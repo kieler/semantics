@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.kico;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
@@ -65,9 +63,6 @@ public class KiCoPlugin extends Plugin {
     /** The no error output. */
     private boolean forceNoErrorOutput = false;
 
-    /** The last error. */
-    private static String lastError = null;
-
     // -------------------------------------------------------------------------
 
     /**
@@ -107,6 +102,22 @@ public class KiCoPlugin extends Plugin {
     // -------------------------------------------------------------------------
 
     /**
+     * Checks if is isKielerCompilerContext.
+     * 
+     * @param clazz
+     *            the clazz
+     * @return true, if is e object
+     */
+    private static boolean isKielerCompilerContext(Class<?> clazz) {
+        if (KielerCompilerContext.class.isAssignableFrom(clazz)) {
+            return true;
+        }
+        return false;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Gets the guice instance.
      * 
      * @param object
@@ -134,9 +145,19 @@ public class KiCoPlugin extends Plugin {
             String providedMethodName = providedMethod.getName();
             Class<?>[] parameterTypes = providedMethod.getParameterTypes();
             if (providedMethodName.equals(method)) {
+                // Case where signature is 'method(EObject eObject)'
                 if (parameterTypes.length == 1) {
                     Class<?> parameterType = parameterTypes[0];
                     if (isEObject(parameterType)) {
+                        return providedMethod;
+                    }
+                }
+                // Case where signature is 'method(EObject eObject, KielerCompilerContext
+                // kielerCompilerContext)'
+                if (parameterTypes.length == 2) {
+                    Class<?> parameterType1 = parameterTypes[0];
+                    Class<?> parameterType2 = parameterTypes[1];
+                    if (isEObject(parameterType1) && isKielerCompilerContext(parameterType2)) {
                         return providedMethod;
                     }
                 }
@@ -209,7 +230,8 @@ public class KiCoPlugin extends Plugin {
                         }
                     }
 
-                } else if (transformationInstance instanceof Transformation) {
+                } else if (transformationInstance instanceof Transformation
+                        && (method == null || method.trim().length() == 0)) {
                     // The specified class is a Transformation, use it directly
                     transformation =
                             (Transformation) transformations[i].createExecutableExtension("class");
@@ -456,35 +478,8 @@ public class KiCoPlugin extends Plugin {
      * @param silent
      *            the silent tag indicates that only logging occurs, no message dialog is displayed
      */
-    // StatusAdapter statusAdapter;
-
-    private String getErrorMessage(Throwable t) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        t.printStackTrace(pw);
-        return sw.toString(); // stack trace as a string
-    }
-
     public void showError(final String textMessage, final String pluginID,
             final Exception exception, final boolean silent) {
-        if (KiCoPlugin.lastError != null && KiCoPlugin.lastError.length() > 0) {
-            KiCoPlugin.lastError += ",\n";
-        } else {
-            KiCoPlugin.lastError = "";
-        }
-        if (pluginID != null) {
-            KiCoPlugin.lastError += pluginID + ": ";
-        }
-        if (textMessage != null) {
-            KiCoPlugin.lastError += textMessage;
-        }
-        if (exception != null) {
-            KiCoPlugin.lastError += " (" + exception.getClass().getName() + ")";
-            String errorMessage = getErrorMessage(exception);
-            if (errorMessage != null) {
-                KiCoPlugin.lastError += " " + errorMessage;
-            }
-        }
         if (isForceNoErrorOutput()) {
             return;
         }
@@ -557,10 +552,12 @@ public class KiCoPlugin extends Plugin {
     /**
      * Gets the last error.
      * 
+     * @deprecated Use the method getAllErrors()  of the compilation result, this method will only return null.
      * @return the last error
      */
     public static String getLastError() {
-        return lastError;
+        // TODO:
+        return "";// lastError;
     }
 
     // -------------------------------------------------------------------------
@@ -568,9 +565,12 @@ public class KiCoPlugin extends Plugin {
     /**
      * Resets the last error.
      * 
+     * @deprecated Use the method getAllErrors()  of the compilation result, this method will do nothing.
+     * 
      */
     public static void resetLastError() {
-        KiCoPlugin.lastError = null;
+        // TODO:
+        // KiCoPlugin.lastError = null;
     }
 
     // -------------------------------------------------------------------------

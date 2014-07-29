@@ -83,6 +83,8 @@ import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.FunctionCall
+import de.cau.cs.kieler.scgdep.AssignmentDep
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -391,7 +393,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         scopeProvider.parent = model;
 
         // Invoke the synthesis.
-        return model.synthesize();
+        val timestamp = System.currentTimeMillis
+        val newModel = model.synthesize();
+        var time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("SCG synthesis finished (time elapsed: "+(time / 1000)+"s).")  
+        
+        return newModel
     }
 
     // -------------------------------------------------------------------------
@@ -419,7 +426,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             node.addLayoutParam(Properties::THOROUGHNESS, 100)
             node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
             // Synthesize all children             
-            scg.nodes.forEach[node.children += synthesize]
+            for (n : scg.nodes) { 
+                if (n instanceof Surface) { node.children += n.synthesize }
+                if (n instanceof Assignment) { node.children += n.synthesize }
+                if (n instanceof Entry) { node.children += n.synthesize }
+                if (n instanceof Exit) { node.children += n.synthesize }
+                if (n instanceof Join) { node.children += n.synthesize }
+                if (n instanceof Depth) { node.children += n.synthesize }
+                if (n instanceof Fork) { node.children += n.synthesize }
+                if (n instanceof Conditional) { node.children += n.synthesize }
+            }
             // For each node transform the control flow edges.
             // This must be done after all nodes have been created.
             scg.nodes.forEach [
@@ -434,12 +450,15 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     (it as Conditional).then?.synthesizeControlFlow(SCGPORTID_OUTGOING_THEN)
                     (it as Conditional).^else.synthesizeControlFlow(SCGPORTID_OUTGOING_ELSE)
                 }
+                
+                // If the dependency edges shall be layouted as well, they must be drawn before any 
+                // hierarchy management. The hierarchy methods break edges in half and connect them via a port.
+                if (scg instanceof SCGraphDep && SHOW_DEPENDENCIES.booleanValue && LAYOUT_DEPENDENCIES.booleanValue) {
+                    if (it instanceof AssignmentDep) {
+                        (it as AssignmentDep).dependencies.forEach[ (it as Dependency).synthesizeDependency ]
+                    }
+                }
             ]
-            // If the dependency edges shall be layouted as well, they must be drawn before any 
-            // hierarchy management. The hierarchy methods break edges in half and connect them via a port.
-            if (scg instanceof SCGraphDep && SHOW_DEPENDENCIES.booleanValue && LAYOUT_DEPENDENCIES.booleanValue) {
-                scg.eAllContents.filter(Dependency).forEach[synthesizeDependency]
-            }
             // Apply any hierarchy if the corresponding option is set. Since layout of edges between nodes
             // in different hierarchies is not supported, the synthesis splits these edges at the hierarchy
             // border and connects them via a port. Thus, a kind of pseudo hierarchical edge layout is archived. 
@@ -457,9 +476,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
             // Draw basic blocks if present.
             if(scg instanceof SCGraphBB) (scg as SCGraphBB).synthesizeBasicBlocks
+            
             // If dependency edge are drawn plain (without layout), draw them after the hierarchy management.
-            if (scg instanceof SCGraphDep && SHOW_DEPENDENCIES.booleanValue && !LAYOUT_DEPENDENCIES.booleanValue)
-                scg.eAllContents.filter(Dependency).forEach[synthesizeDependency]
+            if (scg instanceof SCGraphDep && SHOW_DEPENDENCIES.booleanValue && !LAYOUT_DEPENDENCIES.booleanValue) {
+                scg.nodes.filter(AssignmentDep).forEach[
+                    (it as AssignmentDep).dependencies.forEach[ (it as Dependency).synthesizeDependency ]
+                ]
+            }
             // Draw analysis visualization if present.
             if(scg instanceof SCGraphSched) (scg as SCGraphSched).synthesizeAnalyses
         ]
@@ -493,7 +516,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 // Serialize the assignment
                 // Additionally, remove unnecessary parenthesis and add spacing in line breaks.
                 if (assignment.valuedObject != null && assignment.assignment != null) {
-                    var assignmentText = serializer.serialize(assignment.assignment.copy.fix).removeParenthesis
+                    var assignmentText = serializer.serialize(assignment.assignment.copy.fix) //.removeParenthesis
                     var valuedObjectName = assignment.valuedObject.name
                     if (!assignment.indices.nullOrEmpty) {
                         valuedObjectName = valuedObjectName + serializer.serializeIndices(assignment.indices)
@@ -512,6 +535,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 } else if (assignment.assignment instanceof TextExpression) {
                     // added by cmot (9.3.14)
                     it.addText(assignment.assignment.getTextExpressionString).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0)
+                } else if (assignment.assignment instanceof FunctionCall) {
+                    var assignmentText = serializer.serialize(assignment.assignment.copy.fix) //.removeParenthesis
+                    it.addText(assignmentText).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0)
                 }
             ]
             // Add ports for control-flow and dependency routing.
@@ -546,7 +572,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 // Serialize the condition in the conditional
                 if (conditional.condition != null)
                     node.KContainerRendering.addText(
-                        serializer.serialize(conditional.condition.copy.fix).removeParenthesis).setAreaPlacementData.
+//                        serializer.serialize(conditional.condition.copy.fix).removeParenthesis).setAreaPlacementData.
+                        serializer.serialize(conditional.condition.copy.fix)).setAreaPlacementData.
                         from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0).putToLookUpWith(conditional)
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
             ]
@@ -1108,14 +1135,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 bb.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
                 val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK)
                 bbContainerList.put(bb, bbContainer)
-                val bbName = serializer.serialize(bb.guards.head.reference)
+//                val bbName = serializer.serialize(bb.guards.head.reference)
+                val bbName = bb.guards.head.reference.valuedObject.name
                 bbContainer.addOutsideTopLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
             }
             if (SHOW_SCHEDULINGBLOCKS.booleanValue)
                 for (schedulingBlock : bb.schedulingBlocks) {
                     val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK)
                     schedulingBlockMapping.put(schedulingBlock, sbContainer)
-                    val sbName = serializer.serialize(schedulingBlock.guard.reference)
+//                    val sbName = serializer.serialize(schedulingBlock.guard.reference)
+                     val sbName = schedulingBlock.guard.reference.valuedObject.name
                     sbContainer.addOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER
                 }
         }

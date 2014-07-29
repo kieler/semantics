@@ -31,22 +31,22 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  */
 public class AlterationImpl extends MinimalEObjectImpl.Container implements Alteration {
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	protected AlterationImpl() {
-		super();
-	}
+        super();
+    }
 
 	/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	@Override
 	protected EClass eStaticClass() {
-		return ScgschedPackage.Literals.ALTERATION;
-	}
+        return ScgschedPackage.Literals.ALTERATION;
+    }
 
 } //AlterationImpl

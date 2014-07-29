@@ -198,6 +198,11 @@ public class AssignmentItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SCChartsPackage.Literals.ASSIGNMENT__EXPRESSION,
+                 SCChartsFactory.eINSTANCE.createFunctionCallEffect()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.ASSIGNMENT__EXPRESSION,
                  KExpressionsFactory.eINSTANCE.createExpression()));
 
         newChildDescriptors.add
@@ -234,6 +239,11 @@ public class AssignmentItemProvider
             (createChildParameter
                 (SCChartsPackage.Literals.ASSIGNMENT__EXPRESSION,
                  KExpressionsFactory.eINSTANCE.createTextExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.ASSIGNMENT__EXPRESSION,
+                 KExpressionsFactory.eINSTANCE.createFunctionCall()));
 
         newChildDescriptors.add
             (createChildParameter
@@ -243,6 +253,11 @@ public class AssignmentItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SCChartsPackage.Literals.ASSIGNMENT__INDICES,
+                 SCChartsFactory.eINSTANCE.createFunctionCallEffect()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.ASSIGNMENT__INDICES,
                  KExpressionsFactory.eINSTANCE.createExpression()));
 
         newChildDescriptors.add
@@ -279,6 +294,11 @@ public class AssignmentItemProvider
             (createChildParameter
                 (SCChartsPackage.Literals.ASSIGNMENT__INDICES,
                  KExpressionsFactory.eINSTANCE.createTextExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.ASSIGNMENT__INDICES,
+                 KExpressionsFactory.eINSTANCE.createFunctionCall()));
     }
 
 				/**

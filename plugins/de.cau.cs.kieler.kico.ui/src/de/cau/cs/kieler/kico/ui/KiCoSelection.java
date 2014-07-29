@@ -25,6 +25,9 @@ import java.util.List;
  * 
  */
 public class KiCoSelection {
+
+    public static final KiCoSelection EMPTY_SELECTION = new KiCoSelection(0, null, null, false);
+
     /** Hash value of related editor */
     private final int editorID;
     /** List of selected transformations. */
@@ -44,19 +47,30 @@ public class KiCoSelection {
      * @param advancedMode
      *            Indicates if compiler should run in advanced mode
      */
-    public KiCoSelection(int editorID, List<String> selection, boolean advanced) {
-        super();
+    public KiCoSelection(int editorID, List<String> selection, List<String> implicitSelection,
+            boolean advanced) {
         this.editorID = editorID;
-        this.selection = new LinkedList<String>(selection);
+        if (selection != null) {
+            this.selection = new LinkedList<String>(selection);
+        } else {
+            this.selection = new LinkedList<String>();
+        }
         this.advanced = advanced;
         // calculate ID
-        if (selection.isEmpty()) {
+        if (this.selection.isEmpty()) {
             this.id = 0;
         } else {
             int calculatedID = advanced ? 1 : 0;
-            for (String string : selection) {
+            for (String string : this.selection) {
                 if (string != null) {
                     calculatedID += string.hashCode();
+                }
+            }
+            if (implicitSelection != null && !implicitSelection.isEmpty()) {
+                for (String string : implicitSelection) {
+                    if (string != null) {
+                        calculatedID += string.hashCode();
+                    }
                 }
             }
             this.id = calculatedID;
@@ -83,6 +97,25 @@ public class KiCoSelection {
     }
 
     /**
+     * List of selected transformations as string.
+     * 
+     * @return the selection
+     */
+    public String getSelectionString() {
+        if (selection.isEmpty()) {
+            return "";
+        } else {
+            StringBuilder builder = new StringBuilder();
+            for (String str : selection) {
+                builder.append(str);
+                builder.append(',');
+            }
+            builder.setLength(builder.length() - 1);
+            return builder.toString();
+        }
+    }
+
+    /**
      * Indicates if compiler should run in advanced mode
      * 
      * @return the advanced mode
@@ -90,7 +123,7 @@ public class KiCoSelection {
     public boolean isAdvanced() {
         return advanced;
     }
-    
+
     /**
      * @return if nothing is selected
      */

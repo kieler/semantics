@@ -810,6 +810,43 @@ public interface SCChartsPackage extends EPackage {
     int TEXT_EFFECT_FEATURE_COUNT = KExpressionsPackage.TEXT_EXPRESSION_FEATURE_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.FunctionCallEffectImpl <em>Function Call Effect</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.FunctionCallEffectImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getFunctionCallEffect()
+     * @generated
+     */
+    int FUNCTION_CALL_EFFECT = 10;
+
+    /**
+     * The feature id for the '<em><b>Function Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FUNCTION_CALL_EFFECT__FUNCTION_NAME = KExpressionsPackage.FUNCTION_CALL__FUNCTION_NAME;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FUNCTION_CALL_EFFECT__PARAMETERS = KExpressionsPackage.FUNCTION_CALL__PARAMETERS;
+
+    /**
+     * The number of structural features of the '<em>Function Call Effect</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FUNCTION_CALL_EFFECT_FEATURE_COUNT = KExpressionsPackage.FUNCTION_CALL_FEATURE_COUNT + 0;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.LocalActionImpl <em>Local Action</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -817,7 +854,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getLocalAction()
      * @generated
      */
-    int LOCAL_ACTION = 10;
+    int LOCAL_ACTION = 11;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -890,7 +927,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEntryAction()
      * @generated
      */
-    int ENTRY_ACTION = 11;
+    int ENTRY_ACTION = 12;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -963,7 +1000,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDuringAction()
      * @generated
      */
-    int DURING_ACTION = 12;
+    int DURING_ACTION = 13;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1036,7 +1073,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getExitAction()
      * @generated
      */
-    int EXIT_ACTION = 13;
+    int EXIT_ACTION = 14;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1109,7 +1146,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSuspendAction()
      * @generated
      */
-    int SUSPEND_ACTION = 14;
+    int SUSPEND_ACTION = 15;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1191,7 +1228,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getFor()
      * @generated
      */
-    int FOR = 15;
+    int FOR = 16;
 
     /**
      * The feature id for the '<em><b>Loop Variable</b></em>' reference.
@@ -1246,7 +1283,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getStateType()
      * @generated
      */
-    int STATE_TYPE = 16;
+    int STATE_TYPE = 17;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.TransitionType <em>Transition Type</em>}' enum.
@@ -1256,7 +1293,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransitionType()
      * @generated
      */
-    int TRANSITION_TYPE = 17;
+    int TRANSITION_TYPE = 18;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
@@ -1266,7 +1303,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
      * @generated
      */
-    int HISTORY_TYPE = 18;
+    int HISTORY_TYPE = 19;
 
     /**
      * The meta object id for the '<em>Parsable</em>' data type.
@@ -1276,7 +1313,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getParsable()
      * @generated
      */
-    int PARSABLE = 19;
+    int PARSABLE = 20;
 
 
     /**
@@ -1752,6 +1789,16 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EClass getTextEffect();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.FunctionCallEffect <em>Function Call Effect</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Function Call Effect</em>'.
+     * @see de.cau.cs.kieler.sccharts.FunctionCallEffect
+     * @generated
+     */
+    EClass getFunctionCallEffect();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.LocalAction <em>Local Action</em>}'.
@@ -2302,6 +2349,16 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EClass TEXT_EFFECT = eINSTANCE.getTextEffect();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.FunctionCallEffectImpl <em>Function Call Effect</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.FunctionCallEffectImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getFunctionCallEffect()
+         * @generated
+         */
+        EClass FUNCTION_CALL_EFFECT = eINSTANCE.getFunctionCallEffect();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.LocalActionImpl <em>Local Action</em>}' class.

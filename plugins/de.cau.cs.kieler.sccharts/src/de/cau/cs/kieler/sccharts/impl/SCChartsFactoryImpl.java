@@ -83,6 +83,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.BINDING: return createBinding();
             case SCChartsPackage.TRANSITION: return createTransition();
             case SCChartsPackage.TEXT_EFFECT: return createTextEffect();
+            case SCChartsPackage.FUNCTION_CALL_EFFECT: return createFunctionCallEffect();
             case SCChartsPackage.ENTRY_ACTION: return createEntryAction();
             case SCChartsPackage.DURING_ACTION: return createDuringAction();
             case SCChartsPackage.EXIT_ACTION: return createExitAction();
@@ -213,6 +214,16 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     public TextEffect createTextEffect() {
         TextEffectImpl textEffect = new TextEffectImpl();
         return textEffect;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public FunctionCallEffect createFunctionCallEffect() {
+        FunctionCallEffectImpl functionCallEffect = new FunctionCallEffectImpl();
+        return functionCallEffect;
     }
 
     /**

@@ -210,6 +210,11 @@ public class ValuedObjectReferenceItemProvider
             (createChildParameter
                 (KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__INDICES,
                  KExpressionsFactory.eINSTANCE.createTextExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__INDICES,
+                 KExpressionsFactory.eINSTANCE.createFunctionCall()));
     }
 
 }

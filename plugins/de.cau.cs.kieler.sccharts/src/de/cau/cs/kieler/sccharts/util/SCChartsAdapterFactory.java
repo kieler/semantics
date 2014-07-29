@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sccharts.util;
 import de.cau.cs.kieler.core.annotations.Annotatable;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.FunctionCall;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 
 import de.cau.cs.kieler.sccharts.*;
@@ -131,6 +132,10 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createTextEffectAdapter();
             }
             @Override
+            public Adapter caseFunctionCallEffect(FunctionCallEffect object) {
+                return createFunctionCallEffectAdapter();
+            }
+            @Override
             public Adapter caseLocalAction(LocalAction object) {
                 return createLocalActionAdapter();
             }
@@ -165,6 +170,10 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseTextExpression(TextExpression object) {
                 return createTextExpressionAdapter();
+            }
+            @Override
+            public Adapter caseFunctionCall(FunctionCall object) {
+                return createFunctionCallAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -327,6 +336,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.FunctionCallEffect <em>Function Call Effect</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.FunctionCallEffect
+     * @generated
+     */
+    public Adapter createFunctionCallEffectAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.LocalAction <em>Local Action</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -449,6 +472,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createTextExpressionAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.FunctionCall <em>Function Call</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.core.kexpressions.FunctionCall
+     * @generated
+     */
+    public Adapter createFunctionCallAdapter() {
         return null;
     }
 

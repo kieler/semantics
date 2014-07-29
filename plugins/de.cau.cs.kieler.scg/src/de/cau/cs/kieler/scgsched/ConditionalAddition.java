@@ -36,81 +36,81 @@ import de.cau.cs.kieler.scg.Node;
  */
 public interface ConditionalAddition extends Alteration {
 	/**
-	 * Returns the value of the '<em><b>Before Node</b></em>' reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Before Node</b></em>' reference.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Before Node</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Before Node</em>' reference.
-	 * @see #setBeforeNode(Node)
-	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getConditionalAddition_BeforeNode()
-	 * @model required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Before Node</em>' reference.
+     * @see #setBeforeNode(Node)
+     * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getConditionalAddition_BeforeNode()
+     * @model required="true"
+     * @generated
+     */
 	Node getBeforeNode();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.ConditionalAddition#getBeforeNode <em>Before Node</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.scgsched.ConditionalAddition#getBeforeNode <em>Before Node</em>}' reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Before Node</em>' reference.
-	 * @see #getBeforeNode()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Before Node</em>' reference.
+     * @see #getBeforeNode()
+     * @generated
+     */
 	void setBeforeNode(Node value);
 
 	/**
-	 * Returns the value of the '<em><b>Until Node</b></em>' reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Until Node</b></em>' reference.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Until Node</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Until Node</em>' reference.
-	 * @see #setUntilNode(Node)
-	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getConditionalAddition_UntilNode()
-	 * @model required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Until Node</em>' reference.
+     * @see #setUntilNode(Node)
+     * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getConditionalAddition_UntilNode()
+     * @model required="true"
+     * @generated
+     */
 	Node getUntilNode();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.ConditionalAddition#getUntilNode <em>Until Node</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.scgsched.ConditionalAddition#getUntilNode <em>Until Node</em>}' reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Until Node</em>' reference.
-	 * @see #getUntilNode()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Until Node</em>' reference.
+     * @see #getUntilNode()
+     * @generated
+     */
 	void setUntilNode(Node value);
 
 	/**
-	 * Returns the value of the '<em><b>Condition</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Condition</b></em>' containment reference.
+     * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Condition</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Condition</em>' containment reference.
-	 * @see #setCondition(Expression)
-	 * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getConditionalAddition_Condition()
-	 * @model containment="true" required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Condition</em>' containment reference.
+     * @see #setCondition(Expression)
+     * @see de.cau.cs.kieler.scgsched.ScgschedPackage#getConditionalAddition_Condition()
+     * @model containment="true" required="true"
+     * @generated
+     */
 	Expression getCondition();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scgsched.ConditionalAddition#getCondition <em>Condition</em>}' containment reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.scgsched.ConditionalAddition#getCondition <em>Condition</em>}' containment reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Condition</em>' containment reference.
-	 * @see #getCondition()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Condition</em>' containment reference.
+     * @see #getCondition()
+     * @generated
+     */
 	void setCondition(Expression value);
 
 } // ConditionalAddition

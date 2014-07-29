@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.sccharts.feature"
       label="KIELER SCCharts"
-      version="0.1.0.qualifier"
+      version="0.1.1.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel"
       plugin="de.cau.cs.kieler.sccharts">
 
@@ -224,6 +224,7 @@ litigation.
       <import feature="org.eclipse.xtext.ui" version="2.4.2" match="greaterOrEqual"/>
       <import feature="de.cau.cs.kieler.kiml.graphviz.feature" version="0.7.0" match="greaterOrEqual"/>
       <import feature="de.cau.cs.kieler.klighd.feature" version="0.2.0" match="greaterOrEqual"/>
+      <import feature="de.cau.cs.kieler.klighd.freehep.feature" version="0.1.0" match="greaterOrEqual"/>
       <import plugin="com.google.guava" version="10.0.0" match="greaterOrEqual"/>
    </requires>
 
@@ -270,18 +271,11 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.model.gmf"
+         id="de.cau.cs.kieler.core.model.xtext"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
-   <!-- <plugin
-         id="de.cau.cs.kieler.core.model.xtend"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/> -->
 
    <plugin
          id="de.cau.cs.kieler.kev"
@@ -311,7 +305,7 @@ litigation.
          version="0.0.0"
          unpack="false"/>
 
-		 <plugin
+   <plugin
          id="de.cau.cs.kieler.kico.klighd"
          download-size="0"
          install-size="0"
@@ -326,14 +320,35 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.kico.web"
+         id="de.cau.cs.kieler.kico.server"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.kico.web.ui"
+         id="de.cau.cs.kieler.kico.server.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.server"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.klighd.server"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.klighd.server.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -576,24 +591,16 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
 
    <plugin
          id="de.cau.cs.kieler.scg.c"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>         
-
-   <plugin
-         id="org.json"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.model.xtext"
+         id="org.json"
          download-size="0"
          install-size="0"
          version="0.0.0"

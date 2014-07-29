@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="de.cau.cs.kieler.klighd.server.ui.commands.category"
+            name="KIELER KLighD Server">
+      </category>
+      <command
+            categoryId="de.cau.cs.kieler.klighd.server.ui.commands.category"
+            id="de.cau.cs.kieler.klighd.server.ui.commands.enableCommand"
+            name="Enable KIELER KLighD Server">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.cau.cs.kieler.klighd.server.ui.KlighdServerButtonHandler"
+            commandId="de.cau.cs.kieler.klighd.server.ui.commands.enableCommand">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="de.cau.cs.kieler.klighd.server.ui.toolbars.enableToolbar">
+            <command
+                  commandId="de.cau.cs.kieler.klighd.server.ui.commands.enableCommand"
+                  icon="icons/KlighdViewIcon.png"
+                  id="de.cau.cs.kieler.klighd.server.ui.toolbars.enableCommand"
+                  tooltip="KIELER KLighD Server">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="de.cau.cs.kieler.klighd.server.ui.KlighdServerStartup">
+      </startup>
+   </extension>
+
+
+</plugin>

@@ -22,23 +22,15 @@ import java.util.Map;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.Resource.Factory;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
-//import org.eclipse.xtext.resource.XtextResource;
-//import org.eclipse.xtext.resource.XtextResourceSet;
-
-
-
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;
-
 
 /**
  * This class is a collection of utility methods for handling models in/with KiCo.
@@ -50,14 +42,9 @@ import com.google.inject.Inject;
  */
 public class KiCoUtil {
 
-    
-//    /** The reg is necessary to find serializer or parser for Xtext models. */
+    /** The reg is necessary to find serializer or parser for Xtext models. */
     @Inject
     IResourceServiceProvider.Registry regXtext;
-    
-//    final static Resource.Factory.Registry regXMI = Resource.Factory.Registry.INSTANCE;//getExtensionToFactoryMap();
-    
-//    final static IResourceServiceProvider.Registry regXtext = IResourceServiceProvider.Registry.INSTANCE; //.getResourceServiceProvider(
 
     private static KiCoUtil instance = null;
 
@@ -79,8 +66,7 @@ public class KiCoUtil {
 
     // -------------------------------------------------------------------------
 
-
-// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
      * Serialize the EObject (if the compilation result is not plain text (String)). This is
@@ -91,41 +77,49 @@ public class KiCoUtil {
      *            the model
      * @return the string
      */
-    public static String serialize(EObject model, KielerCompilerContext context) {
+    public static String serialize(EObject model, KielerCompilerContext context, boolean updateMainResource) {
+        String num = (model.hashCode() + "").replace("-", "");
+
         String returnText = "";
         boolean done = false;
         try {
 
-            for (String ext :  getRegXtext().getExtensionToFactoryMap().keySet()) {
-                URI uri = URI.createURI("dummy:/inmemory." + ext);
-//                Factory provider = regXMI.getFactory(uri);
-//                Resource res = provider.createResource(uri);
-                
+            for (String ext : getRegXtext().getExtensionToFactoryMap().keySet()) {
+                URI uri = URI.createURI("dummy:/inmemory." + num + "." + ext);
+
                 ResourceSet resourceSet = null;
                 if (context != null) {
                     resourceSet = context.getModelResourceSet();
                 }
                 if (resourceSet == null) {
-                    IResourceServiceProvider provider =  getRegXtext().getResourceServiceProvider(uri);
+                    IResourceServiceProvider provider =
+                            getRegXtext().getResourceServiceProvider(uri);
                     XtextResourceSet newResourceSet = provider.get(XtextResourceSet.class);
-                    //newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
+                    // newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
                     resourceSet = newResourceSet;
+                    if (context != null) {
+                        // save the resource set for possibly next resources
+                        context.setModelResourceSet(resourceSet);
+                   }
                 }
 
-                Resource res = resourceSet.createResource(uri);
+                Resource res = resourceSet.getResource(uri, false);
+                if (res == null) {
+                    res = resourceSet.createResource(uri);                    
+                }
 
                 done = false;
                 try {
-//                    returnText = getSerializer().serialize(model);
-//                    returnText = getSerializer().serialize(model.get(0), new OutputStreamWriter(outputStream, getEncoding()), saveOptions);
-                    
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                     res.getContents().add(model);
                     res.save(outputStream, getSaveOptions());
                     returnText = outputStream.toString();
                     done = true;
+                    if (updateMainResource) {
+                          context.setMainResource(res);
+                    }
                 } catch (Exception e) {
-                    //e.printStackTrace();
+                    // e.printStackTrace();
                 }
 
                 if (done) {
@@ -164,7 +158,7 @@ public class KiCoUtil {
      * 
      * @return Save options
      */
-    protected static Map<String, String> getSaveOptions() {
+    public static Map<String, String> getSaveOptions() {
         Map<String, String> saveOptions = new HashMap<String, String>();
         saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8");
         saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED,
@@ -177,9 +171,11 @@ public class KiCoUtil {
     /**
      * Parse the model provided as a serialized String. This is implemented by finding the first
      * suitable XtextResourceProvider that is able to parse the model to an EObject.
-     *
-     * @param text the text
-     * @param context the context may be null, otherwise the resource is added to the context
+     * 
+     * @param text
+     *            the text
+     * @param context
+     *            the context may be null, otherwise the resource is added to the context
      * @return the e object
      */
     public static EObject parse(String text, KielerCompilerContext context, boolean mainModel) {
@@ -202,42 +198,30 @@ public class KiCoUtil {
             try {
 
                 for (String ext : getRegXtext().getExtensionToFactoryMap().keySet()) {
-                    String num = (text.hashCode() + "").replace("-","");
-                    
-                    //URI uri = URI.createURI("platform:/resource/dummy." + num + "." + ext);
-                   URI uri = URI.createURI("dummy:/inmemory." + num + "." + ext);
-                    //Factory provider = regXMI.getFactory(uri);
-                    //Resource res = provider.createResource(uri);
-                    
+                    String num = (text.hashCode() + "").replace("-", "");
+
+                    URI uri = URI.createURI("dummy:/inmemory." + num + "." + ext);
+
                     ResourceSet resourceSet = null;
                     if (context != null) {
                         resourceSet = context.getModelResourceSet();
                     }
                     if (resourceSet == null) {
-                      IResourceServiceProvider provider = getRegXtext().getResourceServiceProvider(uri);
-                      XtextResourceSet newResourceSet = provider.get(XtextResourceSet.class);
-                      //newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
-                      resourceSet = newResourceSet;
+                        IResourceServiceProvider provider =
+                                getRegXtext().getResourceServiceProvider(uri);
+                        XtextResourceSet newResourceSet = provider.get(XtextResourceSet.class);
+                        newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL,
+                                Boolean.FALSE);
+                        resourceSet = newResourceSet;
                     }
-                    
+
                     Resource res = resourceSet.createResource(uri);
 
                     done = false;
                     try {
                         InputStream in = new ByteArrayInputStream(text.getBytes());// StandardCharsets.UTF_8));
-                        //res.load(in, null);
-//                        for (EObject otherModel : KielerCompiler.getIncludedModels()) {
-//                            Resource otherRes = KielerCompiler.getIncludedModelResource(otherModel);
-//                            resourceSet.getResources().add(otherRes);
-//                        }
                         res.load(in, resourceSet.getLoadOptions());
                         returnEObject = res.getContents().get(0);
-                        Resource r2 = returnEObject.eResource();
-                        System.out.println(r2.toString());
-                        ResourceSet r3 = r2.getResourceSet();
-                        System.out.println(r3.toString());
-                        EcoreUtil.resolveAll(resourceSet);
-                        //res.save(getSaveOptions());
                         if (context != null) {
                             if (!mainModel) {
                                 context.addIncludedModel(returnEObject);
@@ -249,14 +233,14 @@ public class KiCoUtil {
                         }
                         done = true;
                     } catch (Exception e) {
-                        //e.printStackTrace();
+                        // e.printStackTrace();
                     }
 
                     if (done) {
                         break;
                     }
                 }
-                
+
             } catch (Exception e) {
                 String text2 = "";
                 if (text != null) {

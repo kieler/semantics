@@ -17,7 +17,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
@@ -52,8 +51,12 @@ class Abort {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
+        var done = false;
         for (targetState : targetRootState.getAllContainedStates) {
-            targetState.transformAbortAlternative(targetRootState);
+            if (!done) {
+                targetState.transformAbortAlternative(targetRootState);
+            }
+            //done = true;
         }
         targetRootState.fixAllTextualOrdersByPriorities;
     }
@@ -82,10 +85,11 @@ class Abort {
         if ((state.hasInnerStatesOrRegions || state.hasInnerActions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
             val transitionTriggerVariableMapping = new HashMap<Transition, ValuedObject>
 
-            // Remember all outgoing transitions and regions
+            // Remember all outgoing transitions and regions (important: do not consider regions without inner states! => regions2)
             val outgoingTransitions = state.outgoingTransitions.immutableCopy
-            val regions = state.regions.immutableCopy
+            val regions = state.regions2.immutableCopy
 
+            // .. || stateHasUntransformedTransitions : for conditional terminations!
             if (stateHasUntransformedAborts || stateHasUntransformedTransitions) {
                 val ctrlRegion = state.createRegion(GENERATED_PREFIX + "Ctrl").uniqueName
                 val runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueName
@@ -152,11 +156,17 @@ class Abort {
                                 strongAbort.setTrigger(strongAbortTrigger.copy)
                             }
                             if (weakAbortTrigger != null) {
-                                val weakAbort = innerState.createTransitionTo(abortedState)
+// The following line is responsible for KISEMA 925 to fail                                 
+//                                val weakAbort = innerState.createTransitionTo(abortedState) 
+                                val weakAbort = innerState.createTransitionTo(abortedState, 0)
                                 weakAbort.setTrigger(weakAbortTrigger.copy)
                             }
                         }
                     }
+                }
+                
+                if (terminationTrigger == null) {
+                    terminationTrigger = TRUE;
                 }
 
                 for (transition : outgoingTransitions) {
@@ -233,13 +243,17 @@ class Abort {
     //-------------------------------------------------------------------------
     // Transforming Aborts.
     def State transform(State rootState) {
-        val targetRootState = rootState.copy.fixAllPriorities;
+        val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
+        var done = false;
         for (targetState : targetRootState.getAllContainedStates) {
-            targetState.transformAbortDefault(targetRootState);
+            if (!done) {
+                targetState.transformAbortDefault(targetRootState);
+            }
+           //done = true;
         }
-        targetRootState.fixAllTextualOrdersByPriorities;
+        targetRootState//.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states 
@@ -249,19 +263,28 @@ class Abort {
     //    }
     def void transformAbortDefault(State state, State targetRootState) {
 
-        val stateHasUntransformedTransitions = ((state.outgoingTransitions.size > 1) || ((state.outgoingTransitions.
-            size == 1) && (!(state.outgoingTransitions.filter[typeTermination].filter[trigger == null].size == 1))))
+        // this for example could be several terminations, in this case we do not need the FULL abort transformation
+        // and can only combine the terminations (using one termination and a connector node)
+        val stateHasUntransformedTransitions = ((state.outgoingTransitions.size > 1) || 
+            ( (state.outgoingTransitions.size == 1) 
+              && ((!(state.outgoingTransitions.filter[typeTermination].filter[trigger == null].size == 1))
+//                  ||
+//                  !state.hasInnerActions && !state.hasInnerStatesOrRegions 
+              ))
+            )
 
+        // in this case we need the FULL abort transformation
         val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))
 
         //        if (state.hierarchical && stateHasUntransformedAborts && state.label != "WaitAandB") {
         if ((state.hasInnerStatesOrRegions || state.hasInnerActions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
             val transitionTriggerVariableMapping = new HashMap<Transition, ValuedObject>
 
-            // Remember all outgoing transitions and regions
+            // Remember all outgoing transitions and regions (important: do not consider regions without inner states! => regions2)
             val outgoingTransitions = state.outgoingTransitions.immutableCopy
-            val regions = state.regions.immutableCopy
+            val regions = state.regions2.toList.immutableCopy
 
+            // .. || stateHasUntransformedTransitions : for conditional terminations!
             if (stateHasUntransformedAborts || stateHasUntransformedTransitions) {
                 val ctrlRegion = state.createRegion(GENERATED_PREFIX + "Ctrl").uniqueName
                 val runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueName
@@ -343,11 +366,17 @@ class Abort {
                                 strongAbort.setTrigger(strongAbortTrigger.copy)
                             }
                             if (weakAbortTrigger != null) {
-                                val weakAbort = innerState.createTransitionTo(abortedState)
+// The following line is responsible for KISEMA 925 to fail                                 
+//                                val weakAbort = innerState.createTransitionTo(abortedState) 
+                                val weakAbort = innerState.createTransitionTo(abortedState, 0)
                                 weakAbort.setTrigger(weakAbortTrigger.copy)
                             }
                         }
                     }
+                }
+                
+                if (terminationTrigger == null) {
+                    terminationTrigger = TRUE;
                 }
 
                 for (transition : outgoingTransitions) {

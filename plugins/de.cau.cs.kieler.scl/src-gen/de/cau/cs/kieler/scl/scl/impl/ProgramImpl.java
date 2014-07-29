@@ -4,7 +4,7 @@ package de.cau.cs.kieler.scl.scl.impl;
 
 import de.cau.cs.kieler.core.annotations.Annotation;
 
-import de.cau.cs.kieler.core.kexpressions.TypeGroup;
+import de.cau.cs.kieler.core.kexpressions.Declaration;
 
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.SclPackage;
@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getTypeGroups <em>Type Groups</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getDeclarations <em>Declarations</em>}</li>
  * </ul>
  * </p>
  *
@@ -72,14 +72,14 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getTypeGroups() <em>Type Groups</em>}' containment reference list.
+   * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getTypeGroups()
+   * @see #getDeclarations()
    * @generated
    * @ordered
    */
-  protected EList<TypeGroup> typeGroups;
+  protected EList<Declaration> declarations;
 
   /**
    * <!-- begin-user-doc -->
@@ -144,13 +144,13 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<TypeGroup> getTypeGroups()
+  public EList<Declaration> getDeclarations()
   {
-    if (typeGroups == null)
+    if (declarations == null)
     {
-      typeGroups = new EObjectContainmentEList<TypeGroup>(TypeGroup.class, this, SclPackage.PROGRAM__TYPE_GROUPS);
+      declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, SclPackage.PROGRAM__DECLARATIONS);
     }
-    return typeGroups;
+    return declarations;
   }
 
   /**
@@ -165,8 +165,8 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
     {
       case SclPackage.PROGRAM__ANNOTATIONS:
         return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
-      case SclPackage.PROGRAM__TYPE_GROUPS:
-        return ((InternalEList<?>)getTypeGroups()).basicRemove(otherEnd, msgs);
+      case SclPackage.PROGRAM__DECLARATIONS:
+        return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -185,8 +185,8 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
         return getAnnotations();
       case SclPackage.PROGRAM__NAME:
         return getName();
-      case SclPackage.PROGRAM__TYPE_GROUPS:
-        return getTypeGroups();
+      case SclPackage.PROGRAM__DECLARATIONS:
+        return getDeclarations();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -209,9 +209,9 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
       case SclPackage.PROGRAM__NAME:
         setName((String)newValue);
         return;
-      case SclPackage.PROGRAM__TYPE_GROUPS:
-        getTypeGroups().clear();
-        getTypeGroups().addAll((Collection<? extends TypeGroup>)newValue);
+      case SclPackage.PROGRAM__DECLARATIONS:
+        getDeclarations().clear();
+        getDeclarations().addAll((Collection<? extends Declaration>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -233,8 +233,8 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
       case SclPackage.PROGRAM__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case SclPackage.PROGRAM__TYPE_GROUPS:
-        getTypeGroups().clear();
+      case SclPackage.PROGRAM__DECLARATIONS:
+        getDeclarations().clear();
         return;
     }
     super.eUnset(featureID);
@@ -254,8 +254,8 @@ public class ProgramImpl extends StatementSequenceImpl implements Program
         return annotations != null && !annotations.isEmpty();
       case SclPackage.PROGRAM__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case SclPackage.PROGRAM__TYPE_GROUPS:
-        return typeGroups != null && !typeGroups.isEmpty();
+      case SclPackage.PROGRAM__DECLARATIONS:
+        return declarations != null && !declarations.isEmpty();
     }
     return super.eIsSet(featureID);
   }

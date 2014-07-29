@@ -121,6 +121,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
     // -------------------------------------------------------------------------
     // Transformation options   
     // CORE TRANSFORMATIONS
+    private static val SynthesisOption PAPER_BW = SynthesisOption::createCheckOption("Black/White (Paper)",
+        false);
+        
     private static val SynthesisOption SHOW_SIGNAL_DECLARATIONS = SynthesisOption::createCheckOption("Declarations",
         true);
 
@@ -145,7 +148,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
 
     override public getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER,
-            SHOW_REFERENCEEXPANSION, SHOW_SHADOW);
+            SHOW_REFERENCEEXPANSION, SHOW_SHADOW, PAPER_BW);
     }
 
     override public getDisplayedLayoutOptions() {
@@ -233,7 +236,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 it.foreground = "gray".color
                 it.lineWidth = 1;
                 it.addText("[-]" + if(r.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(r) => [
-                    it.foreground = "darkGray".color
+                    it.foreground = "dimGray".color
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
@@ -250,7 +253,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 it.foreground = "gray".color
                 it.lineWidth = 1;
                 it.addText("[+]" + if(r.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(r) => [
-                    it.foreground = "darkGray".color
+                    it.foreground = "dimGray".color
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
@@ -305,7 +308,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             (text == "exit") || (text == "signal") || (text == "int") || (text == "bool") ||
             (text == "float") || (text == "unsigned") || (text == "immediate") || (text == "input") ||
             (text == "output") || (text == "pre") || (text == "val") || (text == "combine") || (text == "static") || 
-            (text == "const")
+            (text == "const") || (text == "extern")
     }
 
     // Get a list of words of a text String parsed by a regular expression.
@@ -326,6 +329,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             parent.addText(split + word) => [
                 if (word.keyword) {
                     it.setForeground(KEYWORD.copy)
+                    if (PAPER_BW.booleanValue) {
+                        it.setForeground("black".color)    
+                    }
                     it.setFontBold(true)
                 }
                 it.putToLookUpWith(lookup)
@@ -337,6 +343,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             parent.addText(remainingText2) => [
                 if (remainingText2.keyword) {
                     it.setForeground(KEYWORD.copy)
+                    if (PAPER_BW.booleanValue) {
+                        it.setForeground("black".color)    
+                    }
                     it.setFontBold(true)
                 }
                 it.putToLookUpWith(lookup)
@@ -365,11 +374,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             }
             val connector = s.type == StateType::CONNECTOR;
             val cornerRadius = if(connector) 7 else if(!s.hasRegionsOrDeclarations && !s.referencedState) 17 else 8;
-            val lineWidth = if(s.isInitial) 3 else 1;
+            var lineWidth = if(s.isInitial) 3 else 1;
+            if (PAPER_BW.booleanValue) {
+                lineWidth = lineWidth + 1;
+            }
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;
             figure.lineWidth = lineWidth;
-            figure.foreground = if(s.isInitial || s.isFinal) "black".color else "gray".color
-            if (SHOW_SHADOW.booleanValue && !connector) {
+            figure.foreground = if(s.isInitial || s.isFinal || PAPER_BW.booleanValue) "black".color else "gray".color
+            if (!PAPER_BW.booleanValue && SHOW_SHADOW.booleanValue && !connector) {
                 figure.shadow = "black".color;
                 figure.shadow.XOffset = 4;
                 figure.shadow.YOffset = 4;
@@ -400,8 +412,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                     it.styleRef = figure;
                     if (s.referencedState) 
                         it.background.alpha = 0
-                    else 
-                        it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
+                    else {
+                        if (!PAPER_BW.booleanValue) {
+                            it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
+                        }
+                    }
                     it.shadow = null
                     it.lineWidth = if(s.isInitial) 1 else 1;
                     it.setAreaPlacementData().from(LEFT, offset, 0, TOP, offset, 0).to(RIGHT, offset, 0, BOTTOM, offset,
@@ -409,7 +424,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 ]
             else
                 figure => [
-                    it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
+                    if (!PAPER_BW.booleanValue) {
+                        it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
+                    } else {
+                        if (s.hasInnerStatesOrRegions) {
+                            it.setBackground(SCCHARTSGRAY.copy);
+                        }
+                    }
                 ]
                 
              ) => [
@@ -506,7 +527,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                     val ktext = it.addText(" " + s.label + prioritySpace).putToLookUpWith(s) => [
                         it.fontSize = 11;
                         it.setFontBold(true);
-                        it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
+                        if (PAPER_BW.booleanValue) {
+                            it.setGridPlacementData().from(LEFT, 10, 0, TOP, 9f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
+                        } else {
+                            it.setGridPlacementData().from(LEFT, 9, 0, TOP, 9f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
+                        }
                     ];
                     if (priorityToShow.length > 0) {
                         val estimatedWidth = PlacementUtil.estimateTextSize(ktext).width
@@ -581,6 +606,15 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                                 if (tg.type != ValueType::PURE) {
                                     type = tg.type.literal.toLowerCase + " "
                                 }
+                                if (tg.isExtern) {
+                                    declaration = declaration + "extern ";
+                                }
+                                if (tg.isStatic) {
+                                    declaration = declaration + "static ";
+                                }
+                                if (tg.isConst) {
+                                    declaration = declaration + "const ";
+                                }
                                 if (tg.isInput) {
                                     declaration = declaration + "input ";
                                 }
@@ -589,12 +623,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                                 }
                                 if (tg.isSignal) {
                                     declaration = declaration + "signal ";
-                                }
-                                if (tg.isStatic) {
-                                    declaration = declaration + "static ";
-                                }
-                                if (tg.isConst) {
-                                    declaration = declaration + "const ";
                                 }
                                 if (!declaration.equals("")) {
                                     declaration = declaration.trim + " "
@@ -677,7 +705,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 ]
             if (s.referencedState && SHOW_REFERENCEEXPANSION.booleanValue) {
                 for (r : (s.referencedScope as State).regions) {
-                    val synthesis = delegate.get() as SCChartsDiagramSynthesis;
+                    val synthesis = delegate.get();
                     synthesis.use(usedContext)
                     node.children += synthesis.translate(r) => [
                         it.setLayoutOption(KlighdProperties::EXPAND, false);
@@ -689,8 +717,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
         ]
     }
     
-    @com.google.inject.Inject
-    Provider<AbstractDiagramSynthesis<?>> delegate;
+    @Inject
+    Provider<DelegateSCChartsDiagramSynthesis> delegate;
 
     // -------------------------------------------------------------------------
     // Translate a transition
@@ -775,6 +803,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
         return line.addEllipse() => [
             it.lineWidth = 1;
             it.background = "red".color
+            if (PAPER_BW.booleanValue) {
+                it.background = "gray".color
+            }
             it.setDecoratorPlacementData(10, 10, 4, 0, false);
         ];
     }
@@ -783,6 +814,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
         return line.addEllipse() => [
             it.lineWidth = 1;
             it.background = "red".color
+            if (PAPER_BW.booleanValue) {
+                it.background = "gray".color
+            }
             it.setDecoratorPlacementData(10, 10, -4 + offset, 1, false);
         ];
     }
@@ -791,6 +825,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
         return line.drawTriangle() => [
             it.lineWidth = 1;
             it.background = "green".color
+            if (PAPER_BW.booleanValue) {
+                it.background = "gray".color
+            }
             it.setDecoratorPlacementData(11, 11, 5, 0, true);
         ];
     }
@@ -838,4 +875,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
     }
 
 // -------------------------------------------------------------------------
+
+}
+
+@ViewSynthesisShared
+class DelegateSCChartsDiagramSynthesis extends SCChartsDiagramSynthesis {
 }

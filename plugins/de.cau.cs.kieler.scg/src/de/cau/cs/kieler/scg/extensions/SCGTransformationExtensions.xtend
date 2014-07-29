@@ -159,7 +159,8 @@ class SCGTransformationExtensions {
 	 */
     def SCGraph upgrade(SCGraphBB scg, boolean doTransformation, AbstractScheduler scheduler) {
     	if (doTransformation) {
-			return scheduler.schedule(scg)			    		
+            //TODO: remove null
+			return scheduler.schedule(scg, null)			    		
     	} else {
 	        val scgsched = ScgschedFactory::eINSTANCE.createSCGraphSched
    		    scg.copySCG(scgsched)

@@ -2,8 +2,8 @@
  */
 package de.cau.cs.kieler.scl.scl;
 
+import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.TypeGroup;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -16,7 +16,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.Conditional#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scl.scl.Conditional#getTypeGroups <em>Type Groups</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scl.scl.Conditional#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.Conditional#getElseStatements <em>Else Statements</em>}</li>
  * </ul>
  * </p>
@@ -54,20 +54,20 @@ public interface Conditional extends Instruction, StatementSequence
   void setExpression(Expression value);
 
   /**
-   * Returns the value of the '<em><b>Type Groups</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.TypeGroup}.
+   * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Type Groups</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Type Groups</em>' containment reference list.
-   * @see de.cau.cs.kieler.scl.scl.SclPackage#getConditional_TypeGroups()
+   * @return the value of the '<em>Declarations</em>' containment reference list.
+   * @see de.cau.cs.kieler.scl.scl.SclPackage#getConditional_Declarations()
    * @model containment="true"
    * @generated
    */
-  EList<TypeGroup> getTypeGroups();
+  EList<Declaration> getDeclarations();
 
   /**
    * Returns the value of the '<em><b>Else Statements</b></em>' containment reference list.

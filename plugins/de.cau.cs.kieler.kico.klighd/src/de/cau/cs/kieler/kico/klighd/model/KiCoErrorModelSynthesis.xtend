@@ -29,7 +29,7 @@ import javax.inject.Inject
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 /**
- * Diagram synthesis of a KiCoModelChain.
+ * Diagram synthesis of a KiCoErrorModel.
  * 
  * @author als
  *
@@ -92,7 +92,7 @@ class KiCoErrorModelSynthesis extends AbstractDiagramSynthesis<KiCoErrorModel> {
                     //message
                     it.addText(errorModel.message) => [
                         it.fontSize = 12;
-                        if (errorModel.exception != null) {
+                        if (errorModel.stackTrace != null) {
                             it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
                         } else {
                             it.setGridPlacementData().from(LEFT, 8, 0, TOP, 4, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
@@ -100,7 +100,7 @@ class KiCoErrorModelSynthesis extends AbstractDiagramSynthesis<KiCoErrorModel> {
                         it.suppressSelectability;
                     ]
                     //link to exception if available
-                    if (errorModel.exception != null) {
+                    if (errorModel.stackTrace != null) {
                         it.addText("[Show Exception]") => [
                             it.foreground = "blue".color
                             it.fontSize = 9
