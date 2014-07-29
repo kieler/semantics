@@ -78,8 +78,6 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
             case ScgPackage.SCHEDULING_BLOCK: return createSchedulingBlock();
             case ScgPackage.PREDECESSOR: return createPredecessor();
             case ScgPackage.SCHEDULE: return createSchedule();
-            case ScgPackage.GUARD_EXPRESSION: return createGuardExpression();
-            case ScgPackage.EMPTY_EXPRESSION: return createEmptyExpression();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -323,26 +321,6 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
     public Schedule createSchedule() {
         ScheduleImpl schedule = new ScheduleImpl();
         return schedule;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public GuardExpression createGuardExpression() {
-        GuardExpressionImpl guardExpression = new GuardExpressionImpl();
-        return guardExpression;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EmptyExpression createEmptyExpression() {
-        EmptyExpressionImpl emptyExpression = new EmptyExpressionImpl();
-        return emptyExpression;
     }
 
     /**

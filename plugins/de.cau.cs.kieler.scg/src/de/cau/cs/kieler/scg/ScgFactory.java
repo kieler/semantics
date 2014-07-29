@@ -222,24 +222,6 @@ public interface ScgFactory extends EFactory {
     Schedule createSchedule();
 
     /**
-     * Returns a new object of class '<em>Guard Expression</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Guard Expression</em>'.
-     * @generated
-     */
-    GuardExpression createGuardExpression();
-
-    /**
-     * Returns a new object of class '<em>Empty Expression</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Empty Expression</em>'.
-     * @generated
-     */
-    EmptyExpression createEmptyExpression();
-
-    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

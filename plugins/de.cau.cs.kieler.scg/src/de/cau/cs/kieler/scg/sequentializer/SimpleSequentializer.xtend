@@ -24,7 +24,6 @@ import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.BlockType
 import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scg.GuardExpression
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Predecessor
@@ -434,14 +433,14 @@ class SimpleSequentializer extends AbstractSequentializer {
     }
     
     protected def GuardExpression createGoBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
-        ScgFactory::eINSTANCE.createGuardExpression => [
+        new GuardExpression => [
             valuedObject = schedulingBlock.basicBlock.guard
             expression = scg.findValuedObjectByName(GOGUARDNAME).reference
         ]
     }
     
     protected def GuardExpression createDepthBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
-        ScgFactory::eINSTANCE.createGuardExpression => [
+        new GuardExpression => [
             valuedObject = schedulingBlock.basicBlock.guard
             expression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
                 setOperator(OperatorType::PRE)
@@ -469,7 +468,7 @@ class SimpleSequentializer extends AbstractSequentializer {
     protected def GuardExpression createStandardBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
         val basicBlock = schedulingBlock.basicBlock
         
-        ScgFactory::eINSTANCE.createGuardExpression => [
+        new GuardExpression => [
             valuedObject = schedulingBlock.basicBlock.guard
             // If there are more than one predecessor, create an operator expression and connect them via OR.
             if (basicBlock.predecessors.size>1) {
@@ -502,7 +501,7 @@ class SimpleSequentializer extends AbstractSequentializer {
     }
     
     protected def GuardExpression createSubsequentSchedulingBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
-        ScgFactory::eINSTANCE.createGuardExpression => [
+        new GuardExpression => [
             valuedObject = schedulingBlock.basicBlock.guard
             expression = schedulingBlock.basicBlock.schedulingBlocks.head.basicBlock.guard.reference
         ]

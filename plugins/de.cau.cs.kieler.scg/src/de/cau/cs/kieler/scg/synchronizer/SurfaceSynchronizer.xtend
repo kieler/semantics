@@ -25,6 +25,7 @@ import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.sequentializer.EmptyExpression
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -138,7 +139,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
             	 * SynchronizerData structure since the object has to be added to the list of 
             	 * valued objects in the SCG. 
             	 */
-      			val emptyExp = ScgFactory::eINSTANCE.createEmptyExpression  
+      			val emptyExp = new EmptyExpression()  
       			emptyExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
       			emptyExp.valuedObject.name = exitSB.basicBlock.guard.name + '_e' + exitNodeCount
 //      			emptyExp.valuedObject.type = ValueType::BOOL
@@ -235,7 +236,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
                     val depth = opExp.subExpressions.size
                     if (depth > OPERATOREXPRESSION_DEPTHLIMIT) {
                         ok = false
-                        val emptyExp = ScgFactory::eINSTANCE.createEmptyExpression  
+                        val emptyExp = new EmptyExpression()  
                         emptyExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
                         emptyExp.valuedObject.name = empty.valuedObject.name + "_fix"
                         data.valuedObjects.add(emptyExp.valuedObject)
@@ -262,7 +263,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
             val sExp = data.guardExpression.expression as OperatorExpression
             var fixcnt = 0
             while(sExp.subExpressions.size > OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER) {
-                val eExp = ScgFactory::eINSTANCE.createEmptyExpression  
+                val eExp = new EmptyExpression()  
                 eExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
                 eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
                 data.valuedObjects.add(eExp.valuedObject)
@@ -281,7 +282,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
             
             val OperatorExpression tExp = sExp.subExpressions.last as OperatorExpression            
             while(tExp.subExpressions.size > OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER) {
-                val eExp = ScgFactory::eINSTANCE.createEmptyExpression  
+                val eExp = new EmptyExpression()  
                 eExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
                 eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
                 data.valuedObjects.add(eExp.valuedObject)
