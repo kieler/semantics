@@ -120,11 +120,8 @@ class SimpleSequentializer extends AbstractSequentializer {
          * basic blocks.
          */
         scgSched.copyDeclarations(scg)
-//TODO: CHECK IF CORRECT        
-//        val guardTypeGroup = createTypeGroup.setTypeBool => [ scg.typeGroups += it ]
         scgSched.basicBlocks.forEach[
             val newGuard = scg.createValuedObject(it.guard.name).setTypeBool
-//      		it.addToValuedObjectMapping(newGuard)
         ]
         
 //        guardExpressionCache.clear
@@ -151,24 +148,25 @@ class SimpleSequentializer extends AbstractSequentializer {
         System.out.println("Preparation for sequentialization finished (time elapsed: "+(time / 1000)+"s).")          
         
 		// Create the entry node, a control flow for the entry node, add the node.
+		val newSCG = ScgFactory::eINSTANCE.createSCGraph
         val entry = ScgFactory::eINSTANCE.createEntry
     	val entryFlow = ScgFactory::eINSTANCE.createControlFlow
     	entry.next = entryFlow
-        scg.nodes.add(entry)
+        newSCG.nodes.add(entry)
         
         // Now, call the worker method. It returns the last control flows which have to be connected to the exit node.
-        val exitFlows = scgSched.schedules.head.transformSchedule(scg, entryFlow)
+        val exitFlows = scgSched.schedules.head.transformSchedule(newSCG, entryFlow)
         
         // Create an exit node and connect the control flow. Add the node.
         val exit = ScgFactory::eINSTANCE.createExit
         exitFlows.forEach[it.target = exit]
-        scg.nodes.add(exit)
+        newSCG.nodes.add(exit)
         
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Sequentialization finished (overall time elapsed: "+(time / 1000)+"s).")  
                 
         // Return the SCG.
-        scg     	
+        newSCG     	
     }
     
     /**
