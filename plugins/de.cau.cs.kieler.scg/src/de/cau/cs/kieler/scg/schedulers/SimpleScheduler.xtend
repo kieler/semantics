@@ -123,12 +123,14 @@ class SimpleScheduler extends AbstractScheduler {
 		interleavedAssignmentAnalyzerId = assignmentAnalyzer.analysisId
 		
 		// The results are gathered in the analyzer data structure, persisted in the SCG and returned to the caller.
-		if (scg.nodes.size <= ANALYZER_NODE_LIMIT)
-		    assignmentAnalyzer.analyze(loopAnalyzer.analyze(scg)).copyAllAnalyses(scg).SCG as SCGraph
-		else {
-		    System.out.println("SCG too big for experimental analyses. Skipping...")
-		    scg
-        }
+//		TODO: deactivated
+//		if (scg.nodes.size <= ANALYZER_NODE_LIMIT)
+//		    assignmentAnalyzer.analyze(loopAnalyzer.analyze(scg)).copyAllAnalyses(scg).SCG as SCGraph
+//		else {
+//		    System.out.println("SCG too big for experimental analyses. Skipping...")
+//		    scg
+//        }
+        scg
     }    
     
     /**
