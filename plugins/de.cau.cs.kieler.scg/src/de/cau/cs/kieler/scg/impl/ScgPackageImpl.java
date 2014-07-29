@@ -688,7 +688,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getBasicBlock_Guard() {
+    public EReference getBasicBlock_Predecessors() {
         return (EReference)basicBlockEClass.getEStructuralFeatures().get(1);
     }
 
@@ -697,17 +697,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getBasicBlock_Predecessors() {
-        return (EReference)basicBlockEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EAttribute getBasicBlock_GoBlock() {
-        return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(3);
+        return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -716,7 +707,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * @generated
      */
     public EAttribute getBasicBlock_DeadBlock() {
-        return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(4);
+        return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -725,7 +716,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * @generated
      */
     public EAttribute getBasicBlock_BlockType() {
-        return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(5);
+        return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -734,7 +725,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * @generated
      */
     public EReference getBasicBlock_PreGuard() {
-        return (EReference)basicBlockEClass.getEStructuralFeatures().get(6);
+        return (EReference)basicBlockEClass.getEStructuralFeatures().get(5);
     }
 
     /**
@@ -762,6 +753,15 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      */
     public EReference getSchedulingBlock_Dependencies() {
         return (EReference)schedulingBlockEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getSchedulingBlock_Guard() {
+        return (EReference)schedulingBlockEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -910,7 +910,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         basicBlockEClass = createEClass(BASIC_BLOCK);
         createEReference(basicBlockEClass, BASIC_BLOCK__SCHEDULING_BLOCKS);
-        createEReference(basicBlockEClass, BASIC_BLOCK__GUARD);
         createEReference(basicBlockEClass, BASIC_BLOCK__PREDECESSORS);
         createEAttribute(basicBlockEClass, BASIC_BLOCK__GO_BLOCK);
         createEAttribute(basicBlockEClass, BASIC_BLOCK__DEAD_BLOCK);
@@ -920,6 +919,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         schedulingBlockEClass = createEClass(SCHEDULING_BLOCK);
         createEReference(schedulingBlockEClass, SCHEDULING_BLOCK__NODES);
         createEReference(schedulingBlockEClass, SCHEDULING_BLOCK__DEPENDENCIES);
+        createEReference(schedulingBlockEClass, SCHEDULING_BLOCK__GUARD);
 
         predecessorEClass = createEClass(PREDECESSOR);
         createEReference(predecessorEClass, PREDECESSOR__BASIC_BLOCK);
@@ -1046,7 +1046,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         initEClass(basicBlockEClass, BasicBlock.class, "BasicBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getBasicBlock_SchedulingBlocks(), this.getSchedulingBlock(), null, "schedulingBlocks", null, 0, -1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getBasicBlock_Guard(), theKExpressionsPackage.getValuedObject(), null, "guard", null, 1, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getBasicBlock_Predecessors(), this.getPredecessor(), null, "predecessors", null, 0, -1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getBasicBlock_GoBlock(), ecorePackage.getEBoolean(), "goBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getBasicBlock_DeadBlock(), ecorePackage.getEBoolean(), "deadBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1056,6 +1055,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         initEClass(schedulingBlockEClass, SchedulingBlock.class, "SchedulingBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getSchedulingBlock_Nodes(), this.getNode(), null, "nodes", null, 0, -1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSchedulingBlock_Dependencies(), this.getDependency(), null, "dependencies", null, 0, -1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getSchedulingBlock_Guard(), theKExpressionsPackage.getValuedObject(), null, "guard", null, 1, 1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(predecessorEClass, Predecessor.class, "Predecessor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getPredecessor_BasicBlock(), this.getBasicBlock(), null, "basicBlock", null, 1, 1, Predecessor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

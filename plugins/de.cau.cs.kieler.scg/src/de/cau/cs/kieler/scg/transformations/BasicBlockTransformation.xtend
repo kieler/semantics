@@ -36,6 +36,7 @@ import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
 import org.eclipse.emf.ecore.EObjectimport java.util.HashMap
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.core.kexpressions.ValueType
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -71,11 +72,11 @@ class BasicBlockTransformation extends AbstractModelTransformation {
     // -- Constants
     // -------------------------------------------------------------------------
     /** The prefix of each guard. */
-    protected val String GUARDPREFIX = "guard"
+    protected val String GUARDPREFIX = "g"
     
     
-    private val processedNodes = <Node> newArrayList
-    private val basicBlockNodeMapping = new HashMap<Node, BasicBlock>
+    protected val processedNodes = <Node> newArrayList
+    protected val basicBlockNodeMapping = new HashMap<Node, BasicBlock>
     
     // -------------------------------------------------------------------------
     // -- Transformation method
@@ -336,16 +337,16 @@ class BasicBlockTransformation extends AbstractModelTransformation {
          */ 
         if (schedulingBlock.nodes.head instanceof Depth) { 
         	basicBlock.blockType = BlockType::DEPTH
-        	basicBlock.preGuard = predecessorBlocks.head.guard
+        	basicBlock.preGuard = predecessorBlocks.head.schedulingBlocks.head.guard
         	predecessorBlocks.clear
         }
         /** If the block begins with a join node, mark the block as synchronizer block. */
         if (schedulingBlock.nodes.head instanceof Join) { basicBlock.blockType = BlockType::SYNCHRONIZER }
  
  		// Add the guard object.
-        basicBlock.guard = guard
+//        basicBlock.guard = guard
         // Add all scheduling blocks as described in the introduction of this function.
-        basicBlock.schedulingBlocks.addAll(schedulingBlock.splitSchedulingBlock(basicBlock))
+        basicBlock.schedulingBlocks.addAll(schedulingBlock.splitSchedulingBlock(basicBlock, guard))
         // Add all predecessors. To do this createPredecessors creates a list with predecessor objects.
         basicBlock.predecessors.addAll(predecessorBlocks.createPredecessors(basicBlock))
         // Add the newly created basic block to the SCG...
@@ -367,13 +368,15 @@ class BasicBlockTransformation extends AbstractModelTransformation {
      * 			the basic block the scheduling block will belong to
      * @return Returns a list of scheduling blocks which will at least contain one block.
      */
-    protected def List<SchedulingBlock> splitSchedulingBlock(SchedulingBlock schedulingBlock, BasicBlock basicBlock) {
+    protected def List<SchedulingBlock> splitSchedulingBlock(SchedulingBlock schedulingBlock, BasicBlock basicBlock, 
+        ValuedObject guard
+    ) {
     	// Create a new list of scheduling blocks.
         val schedulingBlocks = <SchedulingBlock> newLinkedList
         
         // Set the variables of the actual block to null to mark the first iteration.
         var SchedulingBlock block = null
-//        var ValuedObject guard = null
+        var ValuedObject sbGuard = null
         
         // Examine each node of the original scheduling block.
         for (node : schedulingBlock.nodes) {
@@ -383,25 +386,24 @@ class BasicBlockTransformation extends AbstractModelTransformation {
             ) {
             	// ... add the block if it is not the first.
                 if (block != null) schedulingBlocks.add(block)
-//                if (guard == null) {
+                if (sbGuard == null) {
                 	// If it is the first block, re-use the guard of the basic block.
-//                	guard = basicBlock.guard
-//                } else {
-//                	// Otherwise, create a new guard and add it to the list of guards in the basic block. 
-//                	// It must be present in the list of the basic block because this list is the containment 
-//                	// of the guards in the metamodel. The information is later used to serialize the guard names. 
-//			        guard = KExpressionsFactory::eINSTANCE.createValuedObject
-//			        if (schedulingBlocks.size>25) {
-//        				guard.name = basicBlock.guards.head.name + "z" + (schedulingBlocks.size - 25) 
-//			        } else {
-//        				guard.name = basicBlock.guards.head.name + (96 + schedulingBlocks.size + 1) as char
-//       				}
-////        			guard.type = ValueType::BOOL
-//        			basicBlock.guards.add(guard)
+                	sbGuard = guard
+                } else {
+                	// Otherwise, create a new guard and add it to the list of guards in the basic block. 
+                	// It must be present in the list of the basic block because this list is the containment 
+                	// of the guards in the metamodel. The information is later used to serialize the guard names. 
+			        sbGuard = KExpressionsFactory::eINSTANCE.createValuedObject
+			        if (schedulingBlocks.size>25) {
+        				sbGuard.name = guard.name + "z" + (schedulingBlocks.size - 25) 
+			        } else {
+        				sbGuard.name = guard.name + (96 + schedulingBlocks.size + 1) as char
+       				}
+        			block.guard = sbGuard
                     
         			// ALWAYS use the guard of the basic block
 //        			guard = basicBlock.guard
-//                }
+                }
                 // Create a new scheduling block, add all incoming dependencies of the node to the block for caching purposes
                 // and store a reference of the guard.
                 block = ScgFactory::eINSTANCE.createSchedulingBlock()

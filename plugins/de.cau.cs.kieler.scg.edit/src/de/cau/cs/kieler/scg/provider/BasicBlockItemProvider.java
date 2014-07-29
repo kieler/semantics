@@ -14,22 +14,15 @@
 package de.cau.cs.kieler.scg.provider;
 
 
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
-
 import de.cau.cs.kieler.scg.BasicBlock;
 import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.ScgPackage;
-
 import java.util.Collection;
 import java.util.List;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -185,7 +178,6 @@ public class BasicBlockItemProvider
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
             childrenFeatures.add(ScgPackage.Literals.BASIC_BLOCK__SCHEDULING_BLOCKS);
-            childrenFeatures.add(ScgPackage.Literals.BASIC_BLOCK__GUARD);
             childrenFeatures.add(ScgPackage.Literals.BASIC_BLOCK__PREDECESSORS);
         }
         return childrenFeatures;
@@ -246,7 +238,6 @@ public class BasicBlockItemProvider
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
             case ScgPackage.BASIC_BLOCK__SCHEDULING_BLOCKS:
-            case ScgPackage.BASIC_BLOCK__GUARD:
             case ScgPackage.BASIC_BLOCK__PREDECESSORS:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
@@ -269,11 +260,6 @@ public class BasicBlockItemProvider
             (createChildParameter
                 (ScgPackage.Literals.BASIC_BLOCK__SCHEDULING_BLOCKS,
                  ScgFactory.eINSTANCE.createSchedulingBlock()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ScgPackage.Literals.BASIC_BLOCK__GUARD,
-                 KExpressionsFactory.eINSTANCE.createValuedObject()));
 
         newChildDescriptors.add
             (createChildParameter

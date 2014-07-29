@@ -1738,22 +1738,13 @@ public interface ScgPackage extends EPackage {
     int BASIC_BLOCK__SCHEDULING_BLOCKS = 0;
 
     /**
-     * The feature id for the '<em><b>Guard</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int BASIC_BLOCK__GUARD = 1;
-
-    /**
      * The feature id for the '<em><b>Predecessors</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int BASIC_BLOCK__PREDECESSORS = 2;
+    int BASIC_BLOCK__PREDECESSORS = 1;
 
     /**
      * The feature id for the '<em><b>Go Block</b></em>' attribute.
@@ -1762,7 +1753,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASIC_BLOCK__GO_BLOCK = 3;
+    int BASIC_BLOCK__GO_BLOCK = 2;
 
     /**
      * The feature id for the '<em><b>Dead Block</b></em>' attribute.
@@ -1771,7 +1762,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASIC_BLOCK__DEAD_BLOCK = 4;
+    int BASIC_BLOCK__DEAD_BLOCK = 3;
 
     /**
      * The feature id for the '<em><b>Block Type</b></em>' attribute.
@@ -1780,7 +1771,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASIC_BLOCK__BLOCK_TYPE = 5;
+    int BASIC_BLOCK__BLOCK_TYPE = 4;
 
     /**
      * The feature id for the '<em><b>Pre Guard</b></em>' reference.
@@ -1789,7 +1780,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASIC_BLOCK__PRE_GUARD = 6;
+    int BASIC_BLOCK__PRE_GUARD = 5;
 
     /**
      * The number of structural features of the '<em>Basic Block</em>' class.
@@ -1798,7 +1789,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASIC_BLOCK_FEATURE_COUNT = 7;
+    int BASIC_BLOCK_FEATURE_COUNT = 6;
 
     /**
      * The number of operations of the '<em>Basic Block</em>' class.
@@ -1838,13 +1829,22 @@ public interface ScgPackage extends EPackage {
     int SCHEDULING_BLOCK__DEPENDENCIES = 1;
 
     /**
+     * The feature id for the '<em><b>Guard</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULING_BLOCK__GUARD = 2;
+
+    /**
      * The number of structural features of the '<em>Scheduling Block</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCHEDULING_BLOCK_FEATURE_COUNT = 2;
+    int SCHEDULING_BLOCK_FEATURE_COUNT = 3;
 
     /**
      * The number of operations of the '<em>Scheduling Block</em>' class.
@@ -2449,17 +2449,6 @@ public interface ScgPackage extends EPackage {
     EReference getBasicBlock_SchedulingBlocks();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scg.BasicBlock#getGuard <em>Guard</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Guard</em>'.
-     * @see de.cau.cs.kieler.scg.BasicBlock#getGuard()
-     * @see #getBasicBlock()
-     * @generated
-     */
-    EReference getBasicBlock_Guard();
-
-    /**
      * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scg.BasicBlock#getPredecessors <em>Predecessors</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2545,6 +2534,17 @@ public interface ScgPackage extends EPackage {
      * @generated
      */
     EReference getSchedulingBlock_Dependencies();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scg.SchedulingBlock#getGuard <em>Guard</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Guard</em>'.
+     * @see de.cau.cs.kieler.scg.SchedulingBlock#getGuard()
+     * @see #getSchedulingBlock()
+     * @generated
+     */
+    EReference getSchedulingBlock_Guard();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Predecessor <em>Predecessor</em>}'.
@@ -3045,14 +3045,6 @@ public interface ScgPackage extends EPackage {
         EReference BASIC_BLOCK__SCHEDULING_BLOCKS = eINSTANCE.getBasicBlock_SchedulingBlocks();
 
         /**
-         * The meta object literal for the '<em><b>Guard</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference BASIC_BLOCK__GUARD = eINSTANCE.getBasicBlock_Guard();
-
-        /**
          * The meta object literal for the '<em><b>Predecessors</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3117,6 +3109,14 @@ public interface ScgPackage extends EPackage {
          * @generated
          */
         EReference SCHEDULING_BLOCK__DEPENDENCIES = eINSTANCE.getSchedulingBlock_Dependencies();
+
+        /**
+         * The meta object literal for the '<em><b>Guard</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference SCHEDULING_BLOCK__GUARD = eINSTANCE.getSchedulingBlock_Guard();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.PredecessorImpl <em>Predecessor</em>}' class.
