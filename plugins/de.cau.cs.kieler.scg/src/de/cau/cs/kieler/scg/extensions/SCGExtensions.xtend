@@ -696,6 +696,12 @@ class SCGExtensions {
         nodeList
     }
     
+    def List<SchedulingBlock> getAllSchedulingBlocks(SCGraph scg) {
+        <SchedulingBlock> newArrayList => [ list | 
+            scg.basicBlocks.forEach[ list += schedulingBlocks ]
+        ]
+    }
+    
 
     // -------------------------------------------------------------------------
     // -- Scheduling problem management
