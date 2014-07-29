@@ -367,7 +367,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
 
                 }
 
-                LightDiagramServices.layoutDiagram(viewContext);
+                // LightDiagramServices.layoutDiagram(viewContext);
 
                 // !!!//
                 // if (StateActivityTrigger.getInstance() != null) {
@@ -446,32 +446,32 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         });
 
         // Add highlighting for NEW highlighted elements
-        KBackground style1 =
+        final KBackground style1 =
                 KRenderingFactory.eINSTANCE.createKBackground()
                         .setColorsAlphasGradientAngleCopiedFrom(STYLE1);
         style1.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);
         style1.setPropagateToChildren(true);
-        KStyle style2 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
+        final KStyle style2 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
         style2.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);
-        KStyle style3 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
+        final KStyle style3 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
 
         for (final KNode viewElementState : currentStates) {
             final KContainerRendering ren = viewElementState.getData(KContainerRendering.class);
             final boolean flagged = Iterables.any(ren.getStyles(), filter);
             if (!flagged) {
-                ren.getStyles().add(EcoreUtil.copy(style2));
-                ren.getStyles().add(EcoreUtil.copy(style1));
-
                 final KRoundedRectangle kRoundedRectangle =
                         viewElementState.getData(KRoundedRectangleImpl.class);
-                for (KText viewElementStateLabel : Iterables2.toIterable(Iterators.filter(
-                        ren.eAllContents(), KText.class))) {
-                    viewElementStateLabel.getStyles().add(EcoreUtil.copy(style3));
-
-                }
 
                 Display.getDefault().syncExec(new Runnable() {
                     public void run() {
+                        for (KText viewElementStateLabel : Iterables2.toIterable(Iterators.filter(
+                                ren.eAllContents(), KText.class))) {
+                            viewElementStateLabel.getStyles().add(EcoreUtil.copy(style3));
+
+                        }
+                        ren.getStyles().add(EcoreUtil.copy(style2));
+                        ren.getStyles().add(EcoreUtil.copy(style1));
+
                         viewContext.getViewer().scale(viewElementState, 1.0f);
                         for (KNode r : viewElementState.getChildren()) {
                             if (!viewContext.getViewer().isExpanded(r)) {
@@ -537,11 +537,13 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         style2.setPropagateToChildren(true);
         final KStyle style3 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
 
-        for (final KEdge viewElementTransition : currentTransitions) {
-            final KContainerRendering ren =
-                    viewElementTransition.getData(KContainerRendering.class);
-            Display.getDefault().syncExec(new Runnable() {
-                public void run() {
+        final List<KEdge> currentTransitionsCopy = currentTransitions;
+
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                for (final KEdge viewElementTransition : currentTransitionsCopy) {
+                    final KContainerRendering ren =
+                            viewElementTransition.getData(KContainerRendering.class);
                     final boolean flagged = Iterables.any(ren.getStyles(), filter);
                     if (!flagged) {
                         ren.getStyles().add(EcoreUtil.copy(style2));
@@ -555,8 +557,8 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                         }
                     }
                 }
-            });
-        }
+            }
+        });
 
     }
 
