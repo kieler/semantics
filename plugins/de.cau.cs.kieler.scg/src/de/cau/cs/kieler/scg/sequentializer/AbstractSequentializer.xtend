@@ -16,7 +16,10 @@ package de.cau.cs.kieler.scg.sequentializer
 import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scg.SCGraph
-
+import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -39,11 +42,46 @@ import de.cau.cs.kieler.scg.SCGraph
  */
 
 abstract class AbstractSequentializer extends AbstractModelTransformation {
+    
+    /** Inject KExpression extensions. */
+    @Inject
+    extension KExpressionsExtension
+    
+    /** Inject SCG extensions. */    
+    @Inject
+    extension SCGExtensions        
+    
+    // -------------------------------------------------------------------------
+    // -- Constants 
+    // -------------------------------------------------------------------------
+    
+    /** Name of the go signal. */
+    protected static val String GOGUARDNAME = "_GO"
+    
+    // -------------------------------------------------------------------------
+    // -- Sequentializer 
+    // -------------------------------------------------------------------------            
 	
 	override transform(EObject eObject) {
 		sequentialize(eObject as SCGraph)
-	}
+	}	
 	
 	abstract def SCGraph sequentialize(SCGraph scg)
+	
+    protected def ValuedObject createGOSignal(SCGraph scg) {
+        /**
+         * To form (circuit like) guard expression a GO signal must be created.  
+         * It is needed in the guard expression of blocks that are active
+         * when the program starts.
+         */
+         
+        // Create a new signal using the kexpression factory for the GO signal.
+        // Don't forget to add it to the SCG.
+//TODO: CHECK IF CORRECT        
+        scg.createValuedObject(GOGUARDNAME).setTypeBool
+//        createVariableInBoolTypeGroup(GOGUARDNAME) => [
+//          scg.typeGroups += it.typeGroup
+//        ]
+    }	
 	
 }
