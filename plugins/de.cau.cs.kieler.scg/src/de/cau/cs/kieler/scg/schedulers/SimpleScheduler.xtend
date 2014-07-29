@@ -16,33 +16,20 @@
 import com.google.common.collect.ImmutableList
 import com.google.inject.Guice
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.analyzer.InterleavedAssignmentAnalyzer
-import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopAnalyzer
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
-import de.cau.cs.kieler.scg.synchronizer.SurfaceSynchronizer
-import de.cau.cs.kieler.scg.BasicBlock
-import de.cau.cs.kieler.scg.BlockType
-import de.cau.cs.kieler.scg.Predecessor
-import de.cau.cs.kieler.scg.SchedulingBlock
-import de.cau.cs.kieler.scg.GuardExpression
-import de.cau.cs.kieler.scg.Schedule
-import java.util.List
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import java.util.HashMap
-import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.KielerCompilerException
+import de.cau.cs.kieler.scg.BasicBlock
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.Schedule
+import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.analyzer.InterleavedAssignmentAnalyzer
+import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopAnalyzer
+import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import java.util.HashMap
+import java.util.List
 
 /** 
  * This class is part of the SCG transformation chain. In particular a scheduler performs additional 
@@ -87,17 +74,6 @@ class SimpleScheduler extends AbstractScheduler {
     @Inject
     extension SCGCacheExtensions    
     
-    /** Inject KExpression extensions. */
-    @Inject
-    extension KExpressionsExtension
-    
-    
-    // -------------------------------------------------------------------------
-    // -- Constants 
-    // -------------------------------------------------------------------------
-    
-    /** Name of the go signal. */
-    protected static val String GOGUARDNAME = "_GO"
     
     // -------------------------------------------------------------------------
     // -- Globals 
@@ -114,9 +90,7 @@ class SimpleScheduler extends AbstractScheduler {
     private val List<SchedulingBlock> TSVISITED = <SchedulingBlock> newArrayList; 
     private val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
     
-    private val predecessorTwinCache = new HashMap<Predecessor, Predecessor>
-    private val predecessorBBCache = new HashMap<BasicBlock, List<Predecessor>>    
-    private val predecessorSBCache = new HashMap<Predecessor, List<SchedulingBlock>>
+
     
     // -------------------------------------------------------------------------
     // -- Scheduler 
@@ -181,22 +155,6 @@ class SimpleScheduler extends AbstractScheduler {
         new SchedulingConstraints => [
         	it.schedulingBlocks = schedulingBlocks
         ]    
-    }
-    
-    protected override ValuedObject createGOSignal(SCGraph scg) {
-        /**
-         * To form (circuit like) guard expression a GO signal must be created.  
-         * It is needed in the guard expression of blocks that are active
-         * when the program starts.
-         */
-         
-        // Create a new signal using the kexpression factory for the GO signal.
-        // Don't forget to add it to the SCG.
-//TODO: CHECK IF CORRECT        
-        scg.createValuedObject(GOGUARDNAME).setTypeBool
-//        createVariableInBoolTypeGroup(GOGUARDNAME) => [
-//        	scg.typeGroups += it.typeGroup
-//        ]
     }
     
     protected def boolean isPlaceable(SchedulingBlock schedulingBlock, List<SchedulingBlock> remainingBlocks, 
@@ -304,20 +262,7 @@ class SimpleScheduler extends AbstractScheduler {
     	// Create a new schedule using the scgsched factory.
         val schedule = ScgFactory::eINSTANCE.createSchedule
         
-        scg.createGOSignal
-        
-        val basicBlocks = scg.eAllContents.filter(typeof(BasicBlock)).toList
-        scg.eAllContents => [ all |
-            val predecessors = all.filter(typeof(Predecessor))
-            predecessors.forEach[ p |
-                if (p.basicBlock.blockType == BlockType::TRUEBRANCH) {
-                    p.cacheTwin(basicBlocks)
-                } 
-                else if (p.basicBlock.blockType == BlockType::ELSEBRANCH) {
-                    p.cacheTwin(basicBlocks)
-                }
-            ]
-        ]    
+ 
         
         // Create and fill a list for all scheduling blocks.
         val schedulingConstraints = scg.orderSchedulingBlocks
@@ -345,243 +290,5 @@ class SimpleScheduler extends AbstractScheduler {
         scg
     }
     
-    /**
-     * createGuardExpression creates an expression for a guard of a specific scheduling block.
-     * 
-     * @param schedulingBlock
-     * 			the scheduling block in question.
-     * @param scg
-     * 			the SCG
-     * @return Returns the guard expression.
-     * @throws UnsupportedSCGException 
-     * 		Throws an UnsupportedSCGException if a standard guarded block has no predecessor information.
-     */
-    protected def GuardExpression createGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
-    	var GuardExpression gExpr
-    	
-    	// Query the basic block of the scheduling block.
-    	val basicBlock = schedulingBlock.basicBlock
-    	
-    	/** 
-    	 * If the scheduling block is the first scheduling block in the basic block,
-    	 * create an appropriate expression for the activity state of this guard.
-    	 * A more accurate description of the interconnectivity between the activity states
-    	 * of the basic blocks can be found in rtsys:ssm-dt, 2013.
-    	 */
-    	 
-		// Is the scheduling block the first scheduling block of the basic block?
-    	if (basicBlock.schedulingBlocks.head == schedulingBlock) {
-    		if (basicBlock.goBlock) {
-    			/**
-    			 * If the basic block is a GO block, meaning it should be active when the programs starts,
-    			 * add a reference to the GO signal as expression for the guard.
-    			 */
-    			gExpr = schedulingBlock.createGoBlockGuardExpression(schedule, scg)
-    		} 
-    		else if (basicBlock.blockType == BlockType::DEPTH) {
-    			/**
-    			 * If the basic block is a depth block, meaning it is delayed in its execution,
-    			 * add a pre operator expression as expression for the guard.
-    			 */
-    			gExpr = schedulingBlock.createDepthBlockGuardExpression(schedule, scg)
-    		}
-    		else if (basicBlock.blockType == BlockType::SYNCHRONIZER) {
-    			/**
-    			 * If the basic block is a surface block, meaning it is responsible for joining concurrent threads,
-    			 * invoke a synchronizer. The synchronizer will create the guard expression for this node.
-    			 * Additionally, the synchronizer may create new valued objects mandatory for the expression.
-    			 * These must be added to the graph in order to be serializable later on. 
-    			 */
-				gExpr = schedulingBlock.createSynchronizerBlockGuardExpression(schedule, scg)	
-			} else {
-				/**
-				 * If the block is neither of them, it solely depends on the activity states of previous basic blocks.
-				 * At least one block must be active to activate the current block. Therefore, connect all guards
-				 * of the predecessors with OR expressions.
-				 */
-				gExpr = schedulingBlock.createStandardBlockGuardExpression(schedule, scg)				
-			}
-		} else {
-			/**
-			 * If the scheduling block is not the first scheduling block in the basic block, it is active 
-			 * if and only if its basic block, and in this case the first scheduling block of the basic block,
-			 * is active but possibly at a later stage in the net list. Add a reference of the guard of the first
-			 * scheduling block as expression.
-			 * 
-			 * HINT: There were some concerns that the expression would maybe evaluate differently at a later stage in 
-			 * the net list and that the whole expression must be re-evaluated at that particular point of time.
-			 * However, due to the rules valid for the basic block and scheduling block creation, this scenario 
-			 * cannot occur. A difference of guard evaluation with respect to data dependencies can only occur 
-			 * between conditional nodes but conditional nodes force the create of new basic blocks after their execution.
-			 * Therefore, there will always be a new basic block with a new guard expression in this scenario.
-			 */
-			gExpr = schedulingBlock.createSubsequentSchedulingBlockGuardExpression(schedule, scg)
-		}
-		    	
-		// Return the expression
-    	gExpr
-    }
-    
-    protected def GuardExpression createGoBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
-    	ScgFactory::eINSTANCE.createGuardExpression => [
-    		valuedObject = schedulingBlock.basicBlock.guard
-    		expression = scg.findValuedObjectByName(GOGUARDNAME).reference
-    	]
-    }
-    
-    protected def GuardExpression createDepthBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
-    	ScgFactory::eINSTANCE.createGuardExpression => [
-    		valuedObject = schedulingBlock.basicBlock.guard
-    		expression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-    			setOperator(OperatorType::PRE)
-    			subExpressions.add(schedulingBlock.basicBlock.preGuard.reference)
-   			]
-    	]
-    }
-    
-    protected def GuardExpression createSynchronizerBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
-		// The simple scheduler uses the SurfaceSynchronizer. 
-		// The result of the synchronizer is stored in the synchronizerData class joinData.
-		val SurfaceSynchronizer synchronizer = Guice.createInjector().getInstance(typeof(SurfaceSynchronizer))
-		synchronizer.setSchedulingCache(schedulingBlockCache)
-		val joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join)
-
-		// Add additional valued objects to the SCG and use the guard expression of the synchronizer as it is.
-//TODO: CHECK IF CORRECT        
-//      scg.typeGroups += createTypeGroup(joinData.valuedObjects).setTypeBool
-        for (valuedObject : joinData.valuedObjects) {
-            scg.addValuedObject(valuedObject.setTypeBool)
-        }
-    	joinData.guardExpression
-    }
-    
-    protected def GuardExpression createStandardBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
-    	val basicBlock = schedulingBlock.basicBlock
-    	
-    	ScgFactory::eINSTANCE.createGuardExpression => [
-    		valuedObject = schedulingBlock.basicBlock.guard
-			// If there are more than one predecessor, create an operator expression and connect them via OR.
-			if (basicBlock.predecessors.size>1) {
-				// Create OR operator expression via kexpressions factory.
-				val expr = KExpressionsFactory::eINSTANCE.createOperatorExpression
-				expr.setOperator(OperatorType::OR)
-					
-				// For each predecessor add its expression to the sub expressions list of the operator expression.
-				basicBlock.predecessors.forEach[ expr.subExpressions += it.predecessorExpression(schedule, scg) ]
-				expression = expr
-			} 
-			// If it is exactly one predecessor, we can use its expression directly.
-			else if (basicBlock.predecessors.size == 1) {
-				expression = basicBlock.predecessors.head.predecessorExpression(schedule, scg)
-			} 
-			else 
-			{
-				/**
-				 * If we reach this point, the basic block contains no predecessor information but is not marked as go block.
-				 * This is not supported by this scheduler: throw an exception. 
-				 */
-                if (!basicBlock.deadBlock) {
-				    throw new UnsupportedSCGException("Cannot handle standard guard without predecessor information!")
-			    } else {
-                    expression = FALSE  
-			    }
-				    
-			}    	
-    	]
-    }
-    
-    protected def GuardExpression createSubsequentSchedulingBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
-    	ScgFactory::eINSTANCE.createGuardExpression => [
-    		valuedObject = schedulingBlock.basicBlock.guard
-	    	expression = schedulingBlock.basicBlock.schedulingBlocks.head.basicBlock.guard.reference
-    	]
-    }
-    
-    /**
-     * PredecessorExpression forms a single expression with respect to the predecessor,
-     * meaning that the expression is a reference to the guard of the predecessor and
-     * combined with the (negated) expression of a condition in the case of a 
-     * conditional predecessor.
-     *  
-     * @param predecessor
-     * 			The predecessor in question.
-     * @return Returns the expression for this predecessor.
-     * @throws UnsupportedSCGException
-     * 		Throws an UnsupportedSCGException if the predecessor does not contain sufficient information to form the expression.
-     */
-    protected def Expression predecessorExpression(Predecessor predecessor, Schedule schedule, SCGraph scg) {
-    	// Return a solely reference as expression if the predecessor is not a conditional
-    	if (predecessor.basicBlock.blockType == BlockType::NORMAL) {
-    		return predecessor.basicBlock.guard.reference
-    	}
-    	// If we are in the true branch of the predecessor, combine the predecessor guard reference with
-    	// the condition of the conditional and return the expression.
-    	else if (predecessor.basicBlock.blockType == BlockType::TRUEBRANCH) {
-   			val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-   			expression.setOperator(OperatorType::AND)
-   			expression.subExpressions += predecessor.basicBlock.guard.reference
-   			expression.subExpressions += predecessor.conditional.condition.copy
-   			
-   			// Conditional branches are mutual exclusive. Since the other branch may modify the condition 
-   			// make sure the subsequent branch will not evaluate to true if the first one was already taken.
-   			val twin = predecessor.getSchedulingBlockTwin(BlockType::ELSEBRANCH, schedule, scg)
-   			if (schedule.schedulingBlocks.contains(twin)) {
-   				expression.subExpressions.add(0, twin.basicBlock.guard.reference.negate)
-   			} 
-   			
-   			return expression.fix
-   		}
-    	// If we are in the true branch of the predecessor, combine the predecessor guard reference with
-    	// the negated condition of the conditional and return the expression.
-   		else if (predecessor.basicBlock.blockType == BlockType::ELSEBRANCH) {
-   			val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-   			expression.setOperator(OperatorType::AND)
-   			expression.subExpressions += predecessor.basicBlock.guard.reference
-   			expression.subExpressions += predecessor.conditional.condition.copy.negate
-
-   			// Conditional branches are mutual exclusive. Since the other branch may modify the condition 
-   			// make sure the subsequent branch will not evaluate to true if the first one was already taken.
-   			val twin = predecessor.getSchedulingBlockTwin(BlockType::TRUEBRANCH, schedule, scg)
-   			if (schedule.schedulingBlocks.contains(twin)) {
-   				expression.subExpressions.add(0, twin.basicBlock.guard.reference.negate)
-   			} 
-
-   			return expression.fix
-   		}
-    		
-    	throw new UnsupportedSCGException("Cannot create predecessor expression without predecessor block type information.")
-    }
-    
-    protected def SchedulingBlock getSchedulingBlockTwin(Predecessor predecessor, BlockType blockType, Schedule schedule, SCGraph scg) {
-//    	val predecessorTwin = scg.eAllContents.filter(typeof(Predecessor)).filter[ it.getBasicBlock == predecessor.basicBlock && it.blockType == blockType].head
-//    	scg.eAllContents.filter(typeof(SchedulingBlock)).filter[ it.basicBlock.predecessors.contains(predecessorTwin) ].head
-        val twin = predecessorTwinCache.get(predecessor)
-//        twin.basicBlock.schedulingBlocks.head
-        predecessorSBCache.get(twin).head
-    }
-
-    private def cacheTwin(Predecessor predecessor, List<BasicBlock> basicBlocks) {
-        val bb = predecessor.basicBlock
-        var predList = predecessorBBCache.get(bb)
-        if (predList == null) {
-            predList = <Predecessor> newArrayList => [ add(predecessor) ]
-            predecessorBBCache.put(bb, predList)
-        } else {
-            val fPred = predList.get(0)
-            predList.add(predecessor)
-            predecessorTwinCache.put(fPred, predecessor)
-            predecessorTwinCache.put(predecessor, fPred)
-            
-            val sbList1 = <SchedulingBlock> newArrayList
-//            bb.schedulingBlocks.forEach[ sbList1 += it ]
-            sbList1 += basicBlocks.filter[ it.predecessors.contains(fPred) ].head.schedulingBlocks.head
-            predecessorSBCache.put(fPred, sbList1)
-            
-            val sbList2 = <SchedulingBlock> newArrayList
-//            bb.schedulingBlocks.forEach[ sbList2 += it ]
-            sbList2 += basicBlocks.filter[ it.predecessors.contains(predecessor) ].head.schedulingBlocks.head
-            predecessorSBCache.put(predecessor, sbList2)
-        }
-    }
 
 }

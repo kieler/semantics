@@ -88,8 +88,6 @@ abstract class AbstractScheduler extends Transformation {
     
     protected abstract def SchedulingConstraints orderSchedulingBlocks(SCGraph scg);
     
-    protected abstract def ValuedObject createGOSignal(SCGraph scg);
-    
     protected abstract def boolean createSchedule(SCGraph scg, Schedule schedule, SchedulingConstraints constraints);
     
     override transform(EObject eObject, KielerCompilerContext context) {
