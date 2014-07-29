@@ -107,9 +107,6 @@
          point="org.eclipse.ui.startup">
       <startup
             class="de.cau.cs.kieler.core.model.validation.ValidationInformationCollector"></startup>
-      <startup
-            class="de.cau.cs.kieler.core.model.util.ModelErrorHandler">
-      </startup>
    </extension>
 
 </plugin>
