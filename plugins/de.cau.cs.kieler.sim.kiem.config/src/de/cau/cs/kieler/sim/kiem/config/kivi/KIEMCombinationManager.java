@@ -18,6 +18,8 @@ import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IWorkbenchPartReference;
 
 import de.cau.cs.kieler.core.model.adapter.GlobalPartAdapter;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.config.KiemConfigurationPlugin;
 
 /**
  * Observes all parts and triggers execution of combination. 
@@ -43,6 +45,7 @@ public class KIEMCombinationManager implements IStartup, IPartListener2 {
      * {@inheritDoc}
      */
     public void earlyStartup() {
+        KiemPlugin.getDefault();
         autoload = new KIEMExecutionAutoloadCombination();
         selection = new KIEMModelSelectionCombination();
         adapter = new GlobalPartAdapter(this, true);        
