@@ -27,6 +27,6 @@
   </build>
   <groupId>de.cau.cs.kieler</groupId>
   <artifactId>de.cau.cs.kieler.esterel.cec.macosx.x86</artifactId>
-  <version>0.1.2-SNAPSHOT</version>
+  <version>0.1.3-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 </project>

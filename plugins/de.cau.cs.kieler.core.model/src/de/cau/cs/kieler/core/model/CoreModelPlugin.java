@@ -25,7 +25,6 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.core.model.util.GenericErrorHandler;
-import de.cau.cs.kieler.core.model.util.ModelErrorHandler;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -41,9 +40,6 @@ public class CoreModelPlugin extends AbstractUIPlugin {
 
     /** The shared instance. **/
     private static CoreModelPlugin plugin;
-
-    /** The model error handler. */
-    private ModelErrorHandler errorHandler;
 
     /** Logging instance. **/
     private ILog logger;
@@ -63,7 +59,6 @@ public class CoreModelPlugin extends AbstractUIPlugin {
         super.start(context);
         plugin = this;
         logger = getLog();
-        GraphicalFrameworkService.start();
     }
 
     /**
@@ -71,7 +66,6 @@ public class CoreModelPlugin extends AbstractUIPlugin {
      */
     @Override
     public void stop(final BundleContext context) throws Exception {
-        removeErrorListener();
         plugin = null;
         super.stop(context);
     }
@@ -146,27 +140,4 @@ public class CoreModelPlugin extends AbstractUIPlugin {
         return null;
     }
 
-    /**
-     * Add the KIELER error handler to the generic error handler.
-     */
-    public void addErrorListener() {
-        errorHandler = new ModelErrorHandler();
-        GenericErrorHandler handler = getGenericErrorHandler();
-        if (handler != null) {
-            handler.addListener(errorHandler);
-        }
-    }
-
-    /**
-     * Remove the KIELER error handler from the generic error handler.
-     */
-    public void removeErrorListener() {
-        if (errorHandler != null) {
-            GenericErrorHandler handler = getGenericErrorHandler();
-            if (handler != null) {
-                handler.removeListener(errorHandler);
-            }
-            errorHandler = null;
-        }
-    }
 }

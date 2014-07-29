@@ -34,9 +34,8 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0",
  de.cau.cs.kieler.sccharts.text,
  de.cau.cs.kieler.sccharts.text.ui,
  de.cau.cs.kieler.scg,
- de.cau.cs.kieler.core.kivi,
  de.cau.cs.kieler.klighd,
- de.cau.cs.kieler.klighd.kivi,
  de.cau.cs.kieler.klighd.xtext,
  de.cau.cs.kieler.scl;bundle-version="0.2.0",
- de.cau.cs.kieler.scg.klighd
+ de.cau.cs.kieler.scg.klighd,
+ de.cau.cs.kieler.kico;bundle-version="0.1.0"

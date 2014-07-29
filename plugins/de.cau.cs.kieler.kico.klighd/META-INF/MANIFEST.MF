@@ -20,7 +20,6 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.klighd.xtext,
  de.cau.cs.kieler.kico.ui;bundle-version="0.1.0",
  de.cau.cs.kieler.core.model;bundle-version="0.7.2",
- de.cau.cs.kieler.core.model.xtext;bundle-version="0.3.2",
  de.cau.cs.kieler.kiml.ui,
  de.cau.cs.kieler.klighd.piccolo
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
