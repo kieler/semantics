@@ -260,6 +260,10 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
                                                     && view.isPrimaryView();
                                         }
                                     }), null);
+                    if(primaryView != null && primaryView.isDisposed()){
+                        modelViews.remove(primaryView);
+                        primaryView = null;
+                    }
                     // update or open new view
                     if (primaryView != null) {
                         primaryView.setActiveEditor(editor);
