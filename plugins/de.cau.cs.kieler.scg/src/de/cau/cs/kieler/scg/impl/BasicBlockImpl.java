@@ -14,26 +14,19 @@
 package de.cau.cs.kieler.scg.impl;
 
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
-
 import de.cau.cs.kieler.scg.BasicBlock;
-import de.cau.cs.kieler.scg.BlockType;
+import de.cau.cs.kieler.scg.BranchType;
 import de.cau.cs.kieler.scg.Predecessor;
 import de.cau.cs.kieler.scg.ScgPackage;
 import de.cau.cs.kieler.scg.SchedulingBlock;
-
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -47,8 +40,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#getSchedulingBlocks <em>Scheduling Blocks</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#getPredecessors <em>Predecessors</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#isGoBlock <em>Go Block</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#isDepthBlock <em>Depth Block</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#isSynchronizerBlock <em>Synchronizer Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#isDeadBlock <em>Dead Block</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#getBlockType <em>Block Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#getBranchType <em>Branch Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#getPreGuard <em>Pre Guard</em>}</li>
  * </ul>
  * </p>
@@ -97,6 +92,46 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
     protected boolean goBlock = GO_BLOCK_EDEFAULT;
 
     /**
+     * The default value of the '{@link #isDepthBlock() <em>Depth Block</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isDepthBlock()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean DEPTH_BLOCK_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isDepthBlock() <em>Depth Block</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isDepthBlock()
+     * @generated
+     * @ordered
+     */
+    protected boolean depthBlock = DEPTH_BLOCK_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isSynchronizerBlock() <em>Synchronizer Block</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSynchronizerBlock()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean SYNCHRONIZER_BLOCK_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isSynchronizerBlock() <em>Synchronizer Block</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSynchronizerBlock()
+     * @generated
+     * @ordered
+     */
+    protected boolean synchronizerBlock = SYNCHRONIZER_BLOCK_EDEFAULT;
+
+    /**
      * The default value of the '{@link #isDeadBlock() <em>Dead Block</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -117,24 +152,24 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
     protected boolean deadBlock = DEAD_BLOCK_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getBlockType() <em>Block Type</em>}' attribute.
+     * The default value of the '{@link #getBranchType() <em>Branch Type</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getBlockType()
+     * @see #getBranchType()
      * @generated
      * @ordered
      */
-    protected static final BlockType BLOCK_TYPE_EDEFAULT = BlockType.NORMAL;
+    protected static final BranchType BRANCH_TYPE_EDEFAULT = BranchType.NORMAL;
 
     /**
-     * The cached value of the '{@link #getBlockType() <em>Block Type</em>}' attribute.
+     * The cached value of the '{@link #getBranchType() <em>Branch Type</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getBlockType()
+     * @see #getBranchType()
      * @generated
      * @ordered
      */
-    protected BlockType blockType = BLOCK_TYPE_EDEFAULT;
+    protected BranchType branchType = BRANCH_TYPE_EDEFAULT;
 
     /**
      * The cached value of the '{@link #getPreGuard() <em>Pre Guard</em>}' reference.
@@ -215,6 +250,48 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isDepthBlock() {
+        return depthBlock;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setDepthBlock(boolean newDepthBlock) {
+        boolean oldDepthBlock = depthBlock;
+        depthBlock = newDepthBlock;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.BASIC_BLOCK__DEPTH_BLOCK, oldDepthBlock, depthBlock));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isSynchronizerBlock() {
+        return synchronizerBlock;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setSynchronizerBlock(boolean newSynchronizerBlock) {
+        boolean oldSynchronizerBlock = synchronizerBlock;
+        synchronizerBlock = newSynchronizerBlock;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.BASIC_BLOCK__SYNCHRONIZER_BLOCK, oldSynchronizerBlock, synchronizerBlock));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public boolean isDeadBlock() {
         return deadBlock;
     }
@@ -236,8 +313,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
-    public BlockType getBlockType() {
-        return blockType;
+    public BranchType getBranchType() {
+        return branchType;
     }
 
     /**
@@ -245,11 +322,11 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setBlockType(BlockType newBlockType) {
-        BlockType oldBlockType = blockType;
-        blockType = newBlockType == null ? BLOCK_TYPE_EDEFAULT : newBlockType;
+    public void setBranchType(BranchType newBranchType) {
+        BranchType oldBranchType = branchType;
+        branchType = newBranchType == null ? BRANCH_TYPE_EDEFAULT : newBranchType;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.BASIC_BLOCK__BLOCK_TYPE, oldBlockType, blockType));
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.BASIC_BLOCK__BRANCH_TYPE, oldBranchType, branchType));
     }
 
     /**
@@ -320,10 +397,14 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
                 return getPredecessors();
             case ScgPackage.BASIC_BLOCK__GO_BLOCK:
                 return isGoBlock();
+            case ScgPackage.BASIC_BLOCK__DEPTH_BLOCK:
+                return isDepthBlock();
+            case ScgPackage.BASIC_BLOCK__SYNCHRONIZER_BLOCK:
+                return isSynchronizerBlock();
             case ScgPackage.BASIC_BLOCK__DEAD_BLOCK:
                 return isDeadBlock();
-            case ScgPackage.BASIC_BLOCK__BLOCK_TYPE:
-                return getBlockType();
+            case ScgPackage.BASIC_BLOCK__BRANCH_TYPE:
+                return getBranchType();
             case ScgPackage.BASIC_BLOCK__PRE_GUARD:
                 if (resolve) return getPreGuard();
                 return basicGetPreGuard();
@@ -351,11 +432,17 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
             case ScgPackage.BASIC_BLOCK__GO_BLOCK:
                 setGoBlock((Boolean)newValue);
                 return;
+            case ScgPackage.BASIC_BLOCK__DEPTH_BLOCK:
+                setDepthBlock((Boolean)newValue);
+                return;
+            case ScgPackage.BASIC_BLOCK__SYNCHRONIZER_BLOCK:
+                setSynchronizerBlock((Boolean)newValue);
+                return;
             case ScgPackage.BASIC_BLOCK__DEAD_BLOCK:
                 setDeadBlock((Boolean)newValue);
                 return;
-            case ScgPackage.BASIC_BLOCK__BLOCK_TYPE:
-                setBlockType((BlockType)newValue);
+            case ScgPackage.BASIC_BLOCK__BRANCH_TYPE:
+                setBranchType((BranchType)newValue);
                 return;
             case ScgPackage.BASIC_BLOCK__PRE_GUARD:
                 setPreGuard((ValuedObject)newValue);
@@ -381,11 +468,17 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
             case ScgPackage.BASIC_BLOCK__GO_BLOCK:
                 setGoBlock(GO_BLOCK_EDEFAULT);
                 return;
+            case ScgPackage.BASIC_BLOCK__DEPTH_BLOCK:
+                setDepthBlock(DEPTH_BLOCK_EDEFAULT);
+                return;
+            case ScgPackage.BASIC_BLOCK__SYNCHRONIZER_BLOCK:
+                setSynchronizerBlock(SYNCHRONIZER_BLOCK_EDEFAULT);
+                return;
             case ScgPackage.BASIC_BLOCK__DEAD_BLOCK:
                 setDeadBlock(DEAD_BLOCK_EDEFAULT);
                 return;
-            case ScgPackage.BASIC_BLOCK__BLOCK_TYPE:
-                setBlockType(BLOCK_TYPE_EDEFAULT);
+            case ScgPackage.BASIC_BLOCK__BRANCH_TYPE:
+                setBranchType(BRANCH_TYPE_EDEFAULT);
                 return;
             case ScgPackage.BASIC_BLOCK__PRE_GUARD:
                 setPreGuard((ValuedObject)null);
@@ -408,10 +501,14 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
                 return predecessors != null && !predecessors.isEmpty();
             case ScgPackage.BASIC_BLOCK__GO_BLOCK:
                 return goBlock != GO_BLOCK_EDEFAULT;
+            case ScgPackage.BASIC_BLOCK__DEPTH_BLOCK:
+                return depthBlock != DEPTH_BLOCK_EDEFAULT;
+            case ScgPackage.BASIC_BLOCK__SYNCHRONIZER_BLOCK:
+                return synchronizerBlock != SYNCHRONIZER_BLOCK_EDEFAULT;
             case ScgPackage.BASIC_BLOCK__DEAD_BLOCK:
                 return deadBlock != DEAD_BLOCK_EDEFAULT;
-            case ScgPackage.BASIC_BLOCK__BLOCK_TYPE:
-                return blockType != BLOCK_TYPE_EDEFAULT;
+            case ScgPackage.BASIC_BLOCK__BRANCH_TYPE:
+                return branchType != BRANCH_TYPE_EDEFAULT;
             case ScgPackage.BASIC_BLOCK__PRE_GUARD:
                 return preGuard != null;
         }
@@ -430,10 +527,14 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (goBlock: ");
         result.append(goBlock);
+        result.append(", depthBlock: ");
+        result.append(depthBlock);
+        result.append(", synchronizerBlock: ");
+        result.append(synchronizerBlock);
         result.append(", deadBlock: ");
         result.append(deadBlock);
-        result.append(", blockType: ");
-        result.append(blockType);
+        result.append(", branchType: ");
+        result.append(branchType);
         result.append(')');
         return result.toString();
     }

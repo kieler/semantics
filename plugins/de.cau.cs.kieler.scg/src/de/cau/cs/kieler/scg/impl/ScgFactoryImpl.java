@@ -91,8 +91,8 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
     @Override
     public Object createFromString(EDataType eDataType, String initialValue) {
         switch (eDataType.getClassifierID()) {
-            case ScgPackage.BLOCK_TYPE:
-                return createBlockTypeFromString(eDataType, initialValue);
+            case ScgPackage.BRANCH_TYPE:
+                return createBranchTypeFromString(eDataType, initialValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -106,8 +106,8 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
     @Override
     public String convertToString(EDataType eDataType, Object instanceValue) {
         switch (eDataType.getClassifierID()) {
-            case ScgPackage.BLOCK_TYPE:
-                return convertBlockTypeToString(eDataType, instanceValue);
+            case ScgPackage.BRANCH_TYPE:
+                return convertBranchTypeToString(eDataType, instanceValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -328,8 +328,8 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public BlockType createBlockTypeFromString(EDataType eDataType, String initialValue) {
-        BlockType result = BlockType.get(initialValue);
+    public BranchType createBranchTypeFromString(EDataType eDataType, String initialValue) {
+        BranchType result = BranchType.get(initialValue);
         if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
         return result;
     }
@@ -339,7 +339,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String convertBlockTypeToString(EDataType eDataType, Object instanceValue) {
+    public String convertBranchTypeToString(EDataType eDataType, Object instanceValue) {
         return instanceValue == null ? null : instanceValue.toString();
     }
 

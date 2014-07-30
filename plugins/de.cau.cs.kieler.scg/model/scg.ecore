@@ -92,8 +92,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="predecessors" upperBound="-1"
         eType="#//Predecessor" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="goBlock" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="depthBlock" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="synchronizerBlock" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="deadBlock" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="blockType" eType="#//BlockType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="branchType" eType="#//BranchType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="preGuard" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SchedulingBlock">
@@ -104,12 +106,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="guard" lowerBound="1" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="BlockType">
+  <eClassifiers xsi:type="ecore:EEnum" name="BranchType">
     <eLiterals name="NORMAL"/>
-    <eLiterals name="DEPTH" value="1"/>
-    <eLiterals name="TRUEBRANCH" value="2"/>
-    <eLiterals name="ELSEBRANCH" value="3"/>
-    <eLiterals name="SYNCHRONIZER" value="4"/>
+    <eLiterals name="TRUEBRANCH" value="1"/>
+    <eLiterals name="ELSEBRANCH" value="2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Predecessor">
     <eStructuralFeatures xsi:type="ecore:EReference" name="basicBlock" lowerBound="1"

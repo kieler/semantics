@@ -70,8 +70,10 @@ public class BasicBlockItemProvider
             super.getPropertyDescriptors(object);
 
             addGoBlockPropertyDescriptor(object);
+            addDepthBlockPropertyDescriptor(object);
+            addSynchronizerBlockPropertyDescriptor(object);
             addDeadBlockPropertyDescriptor(object);
-            addBlockTypePropertyDescriptor(object);
+            addBranchTypePropertyDescriptor(object);
             addPreGuardPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
@@ -91,6 +93,50 @@ public class BasicBlockItemProvider
                  getString("_UI_BasicBlock_goBlock_feature"),
                  getString("_UI_PropertyDescriptor_description", "_UI_BasicBlock_goBlock_feature", "_UI_BasicBlock_type"),
                  ScgPackage.Literals.BASIC_BLOCK__GO_BLOCK,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Depth Block feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addDepthBlockPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_BasicBlock_depthBlock_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_BasicBlock_depthBlock_feature", "_UI_BasicBlock_type"),
+                 ScgPackage.Literals.BASIC_BLOCK__DEPTH_BLOCK,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Synchronizer Block feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addSynchronizerBlockPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_BasicBlock_synchronizerBlock_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_BasicBlock_synchronizerBlock_feature", "_UI_BasicBlock_type"),
+                 ScgPackage.Literals.BASIC_BLOCK__SYNCHRONIZER_BLOCK,
                  true,
                  false,
                  false,
@@ -122,19 +168,19 @@ public class BasicBlockItemProvider
     }
 
     /**
-     * This adds a property descriptor for the Block Type feature.
+     * This adds a property descriptor for the Branch Type feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addBlockTypePropertyDescriptor(Object object) {
+    protected void addBranchTypePropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_BasicBlock_blockType_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_BasicBlock_blockType_feature", "_UI_BasicBlock_type"),
-                 ScgPackage.Literals.BASIC_BLOCK__BLOCK_TYPE,
+                 getString("_UI_BasicBlock_branchType_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_BasicBlock_branchType_feature", "_UI_BasicBlock_type"),
+                 ScgPackage.Literals.BASIC_BLOCK__BRANCH_TYPE,
                  true,
                  false,
                  false,
@@ -233,8 +279,10 @@ public class BasicBlockItemProvider
 
         switch (notification.getFeatureID(BasicBlock.class)) {
             case ScgPackage.BASIC_BLOCK__GO_BLOCK:
+            case ScgPackage.BASIC_BLOCK__DEPTH_BLOCK:
+            case ScgPackage.BASIC_BLOCK__SYNCHRONIZER_BLOCK:
             case ScgPackage.BASIC_BLOCK__DEAD_BLOCK:
-            case ScgPackage.BASIC_BLOCK__BLOCK_TYPE:
+            case ScgPackage.BASIC_BLOCK__BRANCH_TYPE:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
             case ScgPackage.BASIC_BLOCK__SCHEDULING_BLOCKS:

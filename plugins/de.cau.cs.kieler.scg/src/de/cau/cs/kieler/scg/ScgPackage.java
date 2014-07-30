@@ -1756,22 +1756,40 @@ public interface ScgPackage extends EPackage {
     int BASIC_BLOCK__GO_BLOCK = 2;
 
     /**
+     * The feature id for the '<em><b>Depth Block</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BASIC_BLOCK__DEPTH_BLOCK = 3;
+
+    /**
+     * The feature id for the '<em><b>Synchronizer Block</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int BASIC_BLOCK__SYNCHRONIZER_BLOCK = 4;
+
+    /**
      * The feature id for the '<em><b>Dead Block</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int BASIC_BLOCK__DEAD_BLOCK = 3;
+    int BASIC_BLOCK__DEAD_BLOCK = 5;
 
     /**
-     * The feature id for the '<em><b>Block Type</b></em>' attribute.
+     * The feature id for the '<em><b>Branch Type</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int BASIC_BLOCK__BLOCK_TYPE = 4;
+    int BASIC_BLOCK__BRANCH_TYPE = 6;
 
     /**
      * The feature id for the '<em><b>Pre Guard</b></em>' reference.
@@ -1780,7 +1798,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASIC_BLOCK__PRE_GUARD = 5;
+    int BASIC_BLOCK__PRE_GUARD = 7;
 
     /**
      * The number of structural features of the '<em>Basic Block</em>' class.
@@ -1789,7 +1807,7 @@ public interface ScgPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASIC_BLOCK_FEATURE_COUNT = 6;
+    int BASIC_BLOCK_FEATURE_COUNT = 8;
 
     /**
      * The number of operations of the '<em>Basic Block</em>' class.
@@ -1939,15 +1957,14 @@ public interface ScgPackage extends EPackage {
     int SCHEDULE_OPERATION_COUNT = 0;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.scg.BlockType <em>Block Type</em>}' enum.
+     * The meta object id for the '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scg.BlockType
-     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getBlockType()
+     * @see de.cau.cs.kieler.scg.BranchType
+     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getBranchType()
      * @generated
      */
-    int BLOCK_TYPE = 21;
-
+    int BRANCH_TYPE = 21;
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Node <em>Node</em>}'.
@@ -2471,6 +2488,28 @@ public interface ScgPackage extends EPackage {
     EAttribute getBasicBlock_GoBlock();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.BasicBlock#isDepthBlock <em>Depth Block</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Depth Block</em>'.
+     * @see de.cau.cs.kieler.scg.BasicBlock#isDepthBlock()
+     * @see #getBasicBlock()
+     * @generated
+     */
+    EAttribute getBasicBlock_DepthBlock();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.BasicBlock#isSynchronizerBlock <em>Synchronizer Block</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Synchronizer Block</em>'.
+     * @see de.cau.cs.kieler.scg.BasicBlock#isSynchronizerBlock()
+     * @see #getBasicBlock()
+     * @generated
+     */
+    EAttribute getBasicBlock_SynchronizerBlock();
+
+    /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.BasicBlock#isDeadBlock <em>Dead Block</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2482,15 +2521,15 @@ public interface ScgPackage extends EPackage {
     EAttribute getBasicBlock_DeadBlock();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.BasicBlock#getBlockType <em>Block Type</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.BasicBlock#getBranchType <em>Branch Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Block Type</em>'.
-     * @see de.cau.cs.kieler.scg.BasicBlock#getBlockType()
+     * @return the meta object for the attribute '<em>Branch Type</em>'.
+     * @see de.cau.cs.kieler.scg.BasicBlock#getBranchType()
      * @see #getBasicBlock()
      * @generated
      */
-    EAttribute getBasicBlock_BlockType();
+    EAttribute getBasicBlock_BranchType();
 
     /**
      * Returns the meta object for the reference '{@link de.cau.cs.kieler.scg.BasicBlock#getPreGuard <em>Pre Guard</em>}'.
@@ -2600,14 +2639,14 @@ public interface ScgPackage extends EPackage {
     EReference getSchedule_SchedulingBlocks();
 
     /**
-     * Returns the meta object for enum '{@link de.cau.cs.kieler.scg.BlockType <em>Block Type</em>}'.
+     * Returns the meta object for enum '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for enum '<em>Block Type</em>'.
-     * @see de.cau.cs.kieler.scg.BlockType
+     * @return the meta object for enum '<em>Branch Type</em>'.
+     * @see de.cau.cs.kieler.scg.BranchType
      * @generated
      */
-    EEnum getBlockType();
+    EEnum getBranchType();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -3061,6 +3100,22 @@ public interface ScgPackage extends EPackage {
         EAttribute BASIC_BLOCK__GO_BLOCK = eINSTANCE.getBasicBlock_GoBlock();
 
         /**
+         * The meta object literal for the '<em><b>Depth Block</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute BASIC_BLOCK__DEPTH_BLOCK = eINSTANCE.getBasicBlock_DepthBlock();
+
+        /**
+         * The meta object literal for the '<em><b>Synchronizer Block</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute BASIC_BLOCK__SYNCHRONIZER_BLOCK = eINSTANCE.getBasicBlock_SynchronizerBlock();
+
+        /**
          * The meta object literal for the '<em><b>Dead Block</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3069,12 +3124,12 @@ public interface ScgPackage extends EPackage {
         EAttribute BASIC_BLOCK__DEAD_BLOCK = eINSTANCE.getBasicBlock_DeadBlock();
 
         /**
-         * The meta object literal for the '<em><b>Block Type</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Branch Type</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute BASIC_BLOCK__BLOCK_TYPE = eINSTANCE.getBasicBlock_BlockType();
+        EAttribute BASIC_BLOCK__BRANCH_TYPE = eINSTANCE.getBasicBlock_BranchType();
 
         /**
          * The meta object literal for the '<em><b>Pre Guard</b></em>' reference feature.
@@ -3163,14 +3218,14 @@ public interface ScgPackage extends EPackage {
         EReference SCHEDULE__SCHEDULING_BLOCKS = eINSTANCE.getSchedule_SchedulingBlocks();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.scg.BlockType <em>Block Type</em>}' enum.
+         * The meta object literal for the '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}' enum.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.scg.BlockType
-         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getBlockType()
+         * @see de.cau.cs.kieler.scg.BranchType
+         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getBranchType()
          * @generated
          */
-        EEnum BLOCK_TYPE = eINSTANCE.getBlockType();
+        EEnum BRANCH_TYPE = eINSTANCE.getBranchType();
 
     }
 

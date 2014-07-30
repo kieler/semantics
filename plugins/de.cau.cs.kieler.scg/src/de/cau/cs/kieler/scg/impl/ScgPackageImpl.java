@@ -8,7 +8,7 @@ import de.cau.cs.kieler.scg.AbsoluteWrite_Read;
 import de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite;
 import de.cau.cs.kieler.scg.Assignment;
 import de.cau.cs.kieler.scg.BasicBlock;
-import de.cau.cs.kieler.scg.BlockType;
+import de.cau.cs.kieler.scg.BranchType;
 import de.cau.cs.kieler.scg.Conditional;
 import de.cau.cs.kieler.scg.ControlFlow;
 import de.cau.cs.kieler.scg.Dependency;
@@ -194,7 +194,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    private EEnum blockTypeEEnum = null;
+    private EEnum branchTypeEEnum = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -706,7 +706,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getBasicBlock_DeadBlock() {
+    public EAttribute getBasicBlock_DepthBlock() {
         return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(3);
     }
 
@@ -715,7 +715,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getBasicBlock_BlockType() {
+    public EAttribute getBasicBlock_SynchronizerBlock() {
         return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(4);
     }
 
@@ -724,8 +724,26 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getBasicBlock_DeadBlock() {
+        return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getBasicBlock_BranchType() {
+        return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(6);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EReference getBasicBlock_PreGuard() {
-        return (EReference)basicBlockEClass.getEStructuralFeatures().get(5);
+        return (EReference)basicBlockEClass.getEStructuralFeatures().get(7);
     }
 
     /**
@@ -814,8 +832,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EEnum getBlockType() {
-        return blockTypeEEnum;
+    public EEnum getBranchType() {
+        return branchTypeEEnum;
     }
 
     /**
@@ -912,8 +930,10 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         createEReference(basicBlockEClass, BASIC_BLOCK__SCHEDULING_BLOCKS);
         createEReference(basicBlockEClass, BASIC_BLOCK__PREDECESSORS);
         createEAttribute(basicBlockEClass, BASIC_BLOCK__GO_BLOCK);
+        createEAttribute(basicBlockEClass, BASIC_BLOCK__DEPTH_BLOCK);
+        createEAttribute(basicBlockEClass, BASIC_BLOCK__SYNCHRONIZER_BLOCK);
         createEAttribute(basicBlockEClass, BASIC_BLOCK__DEAD_BLOCK);
-        createEAttribute(basicBlockEClass, BASIC_BLOCK__BLOCK_TYPE);
+        createEAttribute(basicBlockEClass, BASIC_BLOCK__BRANCH_TYPE);
         createEReference(basicBlockEClass, BASIC_BLOCK__PRE_GUARD);
 
         schedulingBlockEClass = createEClass(SCHEDULING_BLOCK);
@@ -929,7 +949,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         createEReference(scheduleEClass, SCHEDULE__SCHEDULING_BLOCKS);
 
         // Create enums
-        blockTypeEEnum = createEEnum(BLOCK_TYPE);
+        branchTypeEEnum = createEEnum(BRANCH_TYPE);
     }
 
     /**
@@ -1048,8 +1068,10 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         initEReference(getBasicBlock_SchedulingBlocks(), this.getSchedulingBlock(), null, "schedulingBlocks", null, 0, -1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getBasicBlock_Predecessors(), this.getPredecessor(), null, "predecessors", null, 0, -1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getBasicBlock_GoBlock(), ecorePackage.getEBoolean(), "goBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getBasicBlock_DepthBlock(), ecorePackage.getEBoolean(), "depthBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getBasicBlock_SynchronizerBlock(), ecorePackage.getEBoolean(), "synchronizerBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getBasicBlock_DeadBlock(), ecorePackage.getEBoolean(), "deadBlock", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getBasicBlock_BlockType(), this.getBlockType(), "blockType", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getBasicBlock_BranchType(), this.getBranchType(), "branchType", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getBasicBlock_PreGuard(), theKExpressionsPackage.getValuedObject(), null, "preGuard", null, 0, 1, BasicBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(schedulingBlockEClass, SchedulingBlock.class, "SchedulingBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1065,12 +1087,10 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         initEReference(getSchedule_SchedulingBlocks(), this.getSchedulingBlock(), null, "schedulingBlocks", null, 0, -1, Schedule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
-        initEEnum(blockTypeEEnum, BlockType.class, "BlockType");
-        addEEnumLiteral(blockTypeEEnum, BlockType.NORMAL);
-        addEEnumLiteral(blockTypeEEnum, BlockType.DEPTH);
-        addEEnumLiteral(blockTypeEEnum, BlockType.TRUEBRANCH);
-        addEEnumLiteral(blockTypeEEnum, BlockType.ELSEBRANCH);
-        addEEnumLiteral(blockTypeEEnum, BlockType.SYNCHRONIZER);
+        initEEnum(branchTypeEEnum, BranchType.class, "BranchType");
+        addEEnumLiteral(branchTypeEEnum, BranchType.NORMAL);
+        addEEnumLiteral(branchTypeEEnum, BranchType.TRUEBRANCH);
+        addEEnumLiteral(branchTypeEEnum, BranchType.ELSEBRANCH);
 
         // Create resource
         createResource(eNS_URI);

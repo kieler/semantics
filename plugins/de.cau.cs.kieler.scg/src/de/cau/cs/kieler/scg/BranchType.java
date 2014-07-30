@@ -21,14 +21,14 @@ import org.eclipse.emf.common.util.Enumerator;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>Block Type</b></em>',
+ * A representation of the literals of the enumeration '<em><b>Branch Type</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
- * @see de.cau.cs.kieler.scg.ScgPackage#getBlockType()
+ * @see de.cau.cs.kieler.scg.ScgPackage#getBranchType()
  * @model
  * @generated
  */
-public enum BlockType implements Enumerator {
+public enum BranchType implements Enumerator {
     /**
      * The '<em><b>NORMAL</b></em>' literal object.
      * <!-- begin-user-doc -->
@@ -40,16 +40,6 @@ public enum BlockType implements Enumerator {
     NORMAL(0, "NORMAL", "NORMAL"),
 
     /**
-     * The '<em><b>DEPTH</b></em>' literal object.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #DEPTH_VALUE
-     * @generated
-     * @ordered
-     */
-    DEPTH(1, "DEPTH", "DEPTH"),
-
-    /**
      * The '<em><b>TRUEBRANCH</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -57,7 +47,7 @@ public enum BlockType implements Enumerator {
      * @generated
      * @ordered
      */
-    TRUEBRANCH(2, "TRUEBRANCH", "TRUEBRANCH"),
+    TRUEBRANCH(1, "TRUEBRANCH", "TRUEBRANCH"),
 
     /**
      * The '<em><b>ELSEBRANCH</b></em>' literal object.
@@ -67,17 +57,7 @@ public enum BlockType implements Enumerator {
      * @generated
      * @ordered
      */
-    ELSEBRANCH(3, "ELSEBRANCH", "ELSEBRANCH"),
-
-    /**
-     * The '<em><b>SYNCHRONIZER</b></em>' literal object.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #SYNCHRONIZER_VALUE
-     * @generated
-     * @ordered
-     */
-    SYNCHRONIZER(4, "SYNCHRONIZER", "SYNCHRONIZER");
+    ELSEBRANCH(2, "ELSEBRANCH", "ELSEBRANCH");
 
     /**
      * The '<em><b>NORMAL</b></em>' literal value.
@@ -95,21 +75,6 @@ public enum BlockType implements Enumerator {
     public static final int NORMAL_VALUE = 0;
 
     /**
-     * The '<em><b>DEPTH</b></em>' literal value.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>DEPTH</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @see #DEPTH
-     * @model
-     * @generated
-     * @ordered
-     */
-    public static final int DEPTH_VALUE = 1;
-
-    /**
      * The '<em><b>TRUEBRANCH</b></em>' literal value.
      * <!-- begin-user-doc -->
      * <p>
@@ -122,7 +87,7 @@ public enum BlockType implements Enumerator {
      * @generated
      * @ordered
      */
-    public static final int TRUEBRANCH_VALUE = 2;
+    public static final int TRUEBRANCH_VALUE = 1;
 
     /**
      * The '<em><b>ELSEBRANCH</b></em>' literal value.
@@ -137,55 +102,38 @@ public enum BlockType implements Enumerator {
      * @generated
      * @ordered
      */
-    public static final int ELSEBRANCH_VALUE = 3;
+    public static final int ELSEBRANCH_VALUE = 2;
 
     /**
-     * The '<em><b>SYNCHRONIZER</b></em>' literal value.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>SYNCHRONIZER</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @see #SYNCHRONIZER
-     * @model
-     * @generated
-     * @ordered
-     */
-    public static final int SYNCHRONIZER_VALUE = 4;
-
-    /**
-     * An array of all the '<em><b>Block Type</b></em>' enumerators.
+     * An array of all the '<em><b>Branch Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    private static final BlockType[] VALUES_ARRAY =
-        new BlockType[] {
+    private static final BranchType[] VALUES_ARRAY =
+        new BranchType[] {
             NORMAL,
-            DEPTH,
             TRUEBRANCH,
             ELSEBRANCH,
-            SYNCHRONIZER,
         };
 
     /**
-     * A public read-only list of all the '<em><b>Block Type</b></em>' enumerators.
+     * A public read-only list of all the '<em><b>Branch Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public static final List<BlockType> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
+    public static final List<BranchType> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
     /**
-     * Returns the '<em><b>Block Type</b></em>' literal with the specified literal value.
+     * Returns the '<em><b>Branch Type</b></em>' literal with the specified literal value.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public static BlockType get(String literal) {
+    public static BranchType get(String literal) {
         for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-            BlockType result = VALUES_ARRAY[i];
+            BranchType result = VALUES_ARRAY[i];
             if (result.toString().equals(literal)) {
                 return result;
             }
@@ -194,14 +142,14 @@ public enum BlockType implements Enumerator {
     }
 
     /**
-     * Returns the '<em><b>Block Type</b></em>' literal with the specified name.
+     * Returns the '<em><b>Branch Type</b></em>' literal with the specified name.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public static BlockType getByName(String name) {
+    public static BranchType getByName(String name) {
         for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-            BlockType result = VALUES_ARRAY[i];
+            BranchType result = VALUES_ARRAY[i];
             if (result.getName().equals(name)) {
                 return result;
             }
@@ -210,18 +158,16 @@ public enum BlockType implements Enumerator {
     }
 
     /**
-     * Returns the '<em><b>Block Type</b></em>' literal with the specified integer value.
+     * Returns the '<em><b>Branch Type</b></em>' literal with the specified integer value.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public static BlockType get(int value) {
+    public static BranchType get(int value) {
         switch (value) {
             case NORMAL_VALUE: return NORMAL;
-            case DEPTH_VALUE: return DEPTH;
             case TRUEBRANCH_VALUE: return TRUEBRANCH;
             case ELSEBRANCH_VALUE: return ELSEBRANCH;
-            case SYNCHRONIZER_VALUE: return SYNCHRONIZER;
         }
         return null;
     }
@@ -253,7 +199,7 @@ public enum BlockType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
-    private BlockType(int value, String name, String literal) {
+    private BranchType(int value, String name, String literal) {
         this.value = value;
         this.name = name;
         this.literal = literal;
@@ -297,4 +243,4 @@ public enum BlockType implements Enumerator {
         return literal;
     }
     
-} //BlockType
+} //BranchType

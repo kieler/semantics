@@ -26,7 +26,6 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.BasicBlock
-import de.cau.cs.kieler.scg.BlockType
 import de.cau.cs.kieler.scg.Predecessor
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.Dependency
@@ -36,7 +35,6 @@ import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
 import org.eclipse.emf.ecore.EObjectimport java.util.HashMap
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.core.kexpressions.ValueType
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -336,12 +334,12 @@ class BasicBlockTransformation extends AbstractModelTransformation {
          * does not rely on them in the actual tick instance.
          */ 
         if (schedulingBlock.nodes.head instanceof Depth) { 
-        	basicBlock.blockType = BlockType::DEPTH
+        	basicBlock.depthBlock = true
         	basicBlock.preGuard = predecessorBlocks.head.schedulingBlocks.head.guard
         	predecessorBlocks.clear
         }
         /** If the block begins with a join node, mark the block as synchronizer block. */
-        if (schedulingBlock.nodes.head instanceof Join) { basicBlock.blockType = BlockType::SYNCHRONIZER }
+        if (schedulingBlock.nodes.head instanceof Join) { basicBlock.synchronizerBlock = true }
  
  		// Add the guard object.
 //        basicBlock.guard = guard

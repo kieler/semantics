@@ -30,8 +30,10 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#getSchedulingBlocks <em>Scheduling Blocks</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#getPredecessors <em>Predecessors</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#isGoBlock <em>Go Block</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#isDepthBlock <em>Depth Block</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#isSynchronizerBlock <em>Synchronizer Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#isDeadBlock <em>Dead Block</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#getBlockType <em>Block Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#getBranchType <em>Branch Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#getPreGuard <em>Pre Guard</em>}</li>
  * </ul>
  * </p>
@@ -100,6 +102,58 @@ public interface BasicBlock extends EObject {
     void setGoBlock(boolean value);
 
     /**
+     * Returns the value of the '<em><b>Depth Block</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Depth Block</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Depth Block</em>' attribute.
+     * @see #setDepthBlock(boolean)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getBasicBlock_DepthBlock()
+     * @model
+     * @generated
+     */
+    boolean isDepthBlock();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.BasicBlock#isDepthBlock <em>Depth Block</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Depth Block</em>' attribute.
+     * @see #isDepthBlock()
+     * @generated
+     */
+    void setDepthBlock(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Synchronizer Block</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Synchronizer Block</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Synchronizer Block</em>' attribute.
+     * @see #setSynchronizerBlock(boolean)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getBasicBlock_SynchronizerBlock()
+     * @model
+     * @generated
+     */
+    boolean isSynchronizerBlock();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.BasicBlock#isSynchronizerBlock <em>Synchronizer Block</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Synchronizer Block</em>' attribute.
+     * @see #isSynchronizerBlock()
+     * @generated
+     */
+    void setSynchronizerBlock(boolean value);
+
+    /**
      * Returns the value of the '<em><b>Dead Block</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <p>
@@ -126,33 +180,33 @@ public interface BasicBlock extends EObject {
     void setDeadBlock(boolean value);
 
     /**
-     * Returns the value of the '<em><b>Block Type</b></em>' attribute.
-     * The literals are from the enumeration {@link de.cau.cs.kieler.scg.BlockType}.
+     * Returns the value of the '<em><b>Branch Type</b></em>' attribute.
+     * The literals are from the enumeration {@link de.cau.cs.kieler.scg.BranchType}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Block Type</em>' attribute isn't clear,
+     * If the meaning of the '<em>Branch Type</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Block Type</em>' attribute.
-     * @see de.cau.cs.kieler.scg.BlockType
-     * @see #setBlockType(BlockType)
-     * @see de.cau.cs.kieler.scg.ScgPackage#getBasicBlock_BlockType()
+     * @return the value of the '<em>Branch Type</em>' attribute.
+     * @see de.cau.cs.kieler.scg.BranchType
+     * @see #setBranchType(BranchType)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getBasicBlock_BranchType()
      * @model
      * @generated
      */
-    BlockType getBlockType();
+    BranchType getBranchType();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.scg.BasicBlock#getBlockType <em>Block Type</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.BasicBlock#getBranchType <em>Branch Type</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Block Type</em>' attribute.
-     * @see de.cau.cs.kieler.scg.BlockType
-     * @see #getBlockType()
+     * @param value the new value of the '<em>Branch Type</em>' attribute.
+     * @see de.cau.cs.kieler.scg.BranchType
+     * @see #getBranchType()
      * @generated
      */
-    void setBlockType(BlockType value);
+    void setBranchType(BranchType value);
 
     /**
      * Returns the value of the '<em><b>Pre Guard</b></em>' reference.
