@@ -31,6 +31,8 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
  * Diagram synthesis of a KiCoMessageModel.
  * 
  * @author als
+ * @kieler.design 2014-07-30 proposed
+ * @kieler.rating 2014-07-30 proposed yellow
  *
  */
 class KiCoMessageModelSynthesis extends AbstractDiagramSynthesis<KiCoMessageModel> {

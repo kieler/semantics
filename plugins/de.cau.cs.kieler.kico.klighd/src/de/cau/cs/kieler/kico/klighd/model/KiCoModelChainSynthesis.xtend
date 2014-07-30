@@ -42,6 +42,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * Diagram synthesis of a KiCoModelChain.
  * 
  * @author als
+ * @kieler.design 2014-07-30 proposed
+ * @kieler.rating 2014-07-30 proposed yellow
  *
  */
 class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {

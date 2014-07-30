@@ -24,6 +24,8 @@ import de.cau.cs.kieler.klighd.IAction;
  * Action to open a ErrorDialog to show additional exception information of KiCoErrorModel.
  * 
  * @author als
+ * @kieler.design 2014-07-30 proposed
+ * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
 public class ErrorShowExceptionAction implements IAction {

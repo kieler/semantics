@@ -28,6 +28,8 @@ import org.eclipse.ui.IStorageEditorInput;
  * should be persisted 'Save as' option should be used.
  * 
  * @author als
+ * @kieler.design 2014-07-30 proposed
+ * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
 public class StringBasedEditorInput implements IStorageEditorInput {
