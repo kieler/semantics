@@ -121,7 +121,8 @@ class SimpleSequentializer extends AbstractSequentializer {
         scg.copyDeclarations(newSCG)
         scg.basicBlocks.forEach[
             schedulingBlocks.forEach[
-                newSCG.createValuedObject(it.guard.name).setTypeBool
+                val vo = newSCG.createValuedObject(it.guard.name).setTypeBool
+                it.guard.addToValuedObjectMapping(vo)
             ]
         ]
         
@@ -230,7 +231,7 @@ class SimpleSequentializer extends AbstractSequentializer {
     				    nextFlows.add(nextFlow)
     			    ]
     			    // Then, copy the expression of the guard to the newly created assignment.
-    			    newAssignment.assignment = guardExpression.expression.copySCGExpression
+    			    newAssignment.assignment = TRUE// guardExpression.expression.copySCGExpression
     		    } else {
     			// A guard is missing! Throw an exception.
     			throw new UnsupportedSCGException("The guard expression is missing! [guard: "+sb.guard.toString+"]")
@@ -295,7 +296,8 @@ class SimpleSequentializer extends AbstractSequentializer {
     
     def Assignment copySCGNode(Assignment node, SCGraph target) {
     	val assignment = ScgFactory::eINSTANCE.createAssignment
-        assignment.assignment = node.assignment.copySCGExpression
+        assignment.assignment = TRUE 
+//        node.assignment.copySCGExpression
         assignment.valuedObject = node.valuedObject.getValuedObjectCopy;
         for(index : node.indices) {	assignment.indices += index.copySCGExpression }
         assignment

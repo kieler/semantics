@@ -219,7 +219,6 @@ public class ConditionalItemProvider extends NodeItemProvider {
         Object childObject = child;
 
         boolean qualify =
-            childFeature == ScgPackage.Literals.NODE__DEPENDENCIES ||
             childFeature == ScgPackage.Literals.CONDITIONAL__THEN ||
             childFeature == ScgPackage.Literals.CONDITIONAL__ELSE;
 

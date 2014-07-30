@@ -82,7 +82,7 @@ public interface Node extends Annotatable {
 
     /**
      * Returns the value of the '<em><b>Dependencies</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.scg.Link}.
+     * The list contents are of type {@link de.cau.cs.kieler.scg.Dependency}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Dependencies</em>' containment reference list isn't clear,
@@ -94,6 +94,6 @@ public interface Node extends Annotatable {
      * @model containment="true"
      * @generated
      */
-    EList<Link> getDependencies();
+    EList<Dependency> getDependencies();
 
 } // Node

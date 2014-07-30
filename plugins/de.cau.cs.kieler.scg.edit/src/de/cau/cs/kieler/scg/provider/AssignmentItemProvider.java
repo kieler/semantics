@@ -283,8 +283,6 @@ public class AssignmentItemProvider extends NodeItemProvider {
         Object childObject = child;
 
         boolean qualify =
-            childFeature == ScgPackage.Literals.NODE__DEPENDENCIES ||
-            childFeature == ScgPackage.Literals.ASSIGNMENT__NEXT ||
             childFeature == ScgPackage.Literals.ASSIGNMENT__ASSIGNMENT ||
             childFeature == ScgPackage.Literals.ASSIGNMENT__INDICES;
 

@@ -4,6 +4,7 @@ package de.cau.cs.kieler.scg.impl;
 
 import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
 
+import de.cau.cs.kieler.scg.Dependency;
 import de.cau.cs.kieler.scg.Link;
 import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scg.ScgPackage;
@@ -78,7 +79,7 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * @generated
      * @ordered
      */
-    protected EList<Link> dependencies;
+    protected EList<Dependency> dependencies;
 
     /**
      * <!-- begin-user-doc -->
@@ -137,9 +138,9 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Link> getDependencies() {
+    public EList<Dependency> getDependencies() {
         if (dependencies == null) {
-            dependencies = new EObjectContainmentEList<Link>(Link.class, this, ScgPackage.NODE__DEPENDENCIES);
+            dependencies = new EObjectContainmentEList<Dependency>(Dependency.class, this, ScgPackage.NODE__DEPENDENCIES);
         }
         return dependencies;
     }
@@ -211,7 +212,7 @@ public class NodeImpl extends AnnotatableImpl implements Node {
                 return;
             case ScgPackage.NODE__DEPENDENCIES:
                 getDependencies().clear();
-                getDependencies().addAll((Collection<? extends Link>)newValue);
+                getDependencies().addAll((Collection<? extends Dependency>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
