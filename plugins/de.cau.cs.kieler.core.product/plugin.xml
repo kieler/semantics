@@ -73,7 +73,7 @@
             class="de.cau.cs.kieler.core.product.ModelingPerspective"
             icon="icons/foerde-logo-16.gif"
             id="de.cau.cs.kieler.Modeling"
-            name="KIELER Modeling">
+            name="SCCharts Modeling">
       </perspective>
    </extension>
    <extension
