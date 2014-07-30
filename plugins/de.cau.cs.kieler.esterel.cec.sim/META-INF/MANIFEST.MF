@@ -5,25 +5,13 @@ Bundle-SymbolicName: de.cau.cs.kieler.esterel.cec.sim;singleton:=true
 Bundle-Version: 0.1.5.qualifier
 Bundle-Activator: de.cau.cs.kieler.esterel.cec.sim.EsterelCECSimPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
-Require-Bundle: org.eclipse.gmf.runtime.diagram.ui,
- org.eclipse.xtext;bundle-version="0.7.2",
- org.eclipse.emf.edit.ui,
- org.json;bundle-version="0.1.0",
- org.eclipse.ui.editors,
- org.eclipse.ui.ide,
- org.eclipse.xtext.ui,
+Require-Bundle: org.eclipse.xtext.ui,
  org.eclipse.xtext.xbase;bundle-version="2.1.0",
- org.apache.log4j;bundle-version="1.2.15",
  org.eclipse.xtend2.lib;bundle-version="2.2.1",
- de.cau.cs.kieler.sim.kiem,
- de.cau.cs.kieler.core,
  de.cau.cs.kieler.esterel.cec,
- de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.sim.kiem.ui.datacomponent,
  de.cau.cs.kieler.esterel,
  de.cau.cs.kieler.sim.signals,
- de.cau.cs.kieler.esterel.ui,
- de.cau.cs.kieler.esterel.kexpressions;bundle-version="0.4.1",
  de.cau.cs.kieler.esterel.kexpressions.ui;bundle-version="0.4.1"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy

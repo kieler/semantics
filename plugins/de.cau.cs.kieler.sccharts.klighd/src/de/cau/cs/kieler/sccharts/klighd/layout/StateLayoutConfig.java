@@ -64,9 +64,6 @@ public class StateLayoutConfig extends SemanticLayoutConfig{
             }
         }
         if (semanticElem instanceof Region) {
-            if (layoutOption.equals(LayoutOptions.SPACING)) {
-                return 20f;
-            }
             if (layoutOption.equals(LayoutOptions.ALGORITHM)) {
                 return "de.cau.cs.kieler.graphviz.dot";
             }

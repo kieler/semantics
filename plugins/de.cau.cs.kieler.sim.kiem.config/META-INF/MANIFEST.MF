@@ -5,7 +5,7 @@ Bundle-SymbolicName: de.cau.cs.kieler.sim.kiem.config;singleton:=true
 Bundle-Version: 0.5.3.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.kiem.config.KiemConfigurationPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
-Require-Bundle: org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.4.0";visibility:=reexport,
+Require-Bundle: org.eclipse.ui.ide,
  org.eclipse.xtext.ui;bundle-version="2.1.0",
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.core.model
@@ -18,4 +18,3 @@ Export-Package: de.cau.cs.kieler.sim.kiem.config,
  de.cau.cs.kieler.sim.kiem.config.managers,
  de.cau.cs.kieler.sim.kiem.config.preferences,
  de.cau.cs.kieler.sim.kiem.config.ui
-Import-Package: org.eclipse.ui.part
