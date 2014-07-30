@@ -15,10 +15,11 @@ package de.cau.cs.kieler.sim.kiem.config.kivi;
 
 import java.util.List;
 
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartReference;
 
-import de.cau.cs.kieler.core.kivi.AbstractCombination;
-import de.cau.cs.kieler.core.kivi.triggers.PartTrigger.PartState;
 import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
@@ -41,7 +42,7 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  * @kieler.rating 2012-10-08 proposed yellow cmot
  * 
  */
-public class KIEMExecutionAutoloadCombination extends AbstractCombination implements IKiemEventListener {
+public class KIEMExecutionAutoloadCombination implements IKiemEventListener {
 
     private static String lastValidEditorId = null;
 
@@ -83,7 +84,7 @@ public class KIEMExecutionAutoloadCombination extends AbstractCombination implem
      *
      * @param partState the part state
      */
-    public void execute(final PartState partState) {
+    public void execute(final IWorkbenchPartReference partRef) {
         // to prevent UI thread deadlocks (editorIsActivePart) because during initialization
         // components may require UI access, do not execution at this point
         if (KiemPlugin.getDefault().isInitializingExecution()) {
@@ -91,17 +92,17 @@ public class KIEMExecutionAutoloadCombination extends AbstractCombination implem
         }
 
         // if currently active editor is also the active part
-        if (partState != null && partState.getEditorPart() != null) {
+        IWorkbenchPart part = partRef.getPart(false);
+        if (part != null && part instanceof IEditorPart) {
 
             // this is a special editor and we do'nt want to adjust kiem when it is loaded
-            if (partState.getEditorPart() instanceof KiemProxyEditor) {
+            if (part instanceof KiemProxyEditor) {
                 return;
             }
 
             // if no execution is running or is about to run
             if (!(KiemPlugin.getDefault().isInitializingExecution() || KiemPlugin.getDefault()
                     .getExecution() != null)) {
-
                 autoloadExecutionSchedule();
             }
         }

@@ -253,7 +253,7 @@ class Abort {
             }
            //done = true;
         }
-        targetRootState//.fixAllTextualOrdersByPriorities;
+        targetRootState.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states 
