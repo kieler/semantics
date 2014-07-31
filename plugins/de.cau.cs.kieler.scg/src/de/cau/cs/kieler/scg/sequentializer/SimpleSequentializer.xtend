@@ -204,8 +204,7 @@ class SimpleSequentializer extends AbstractSequentializer {
     		 * Create it and copy the corresponding object.
     		 */
             if (!processedBlockGuards.contains(sb)) {
-        		val newAssignment = ScgFactory::eINSTANCE.createAssignment
-                newAssignment.valuedObject = sb.guard.getValuedObjectCopy
+
                 processedBlockGuards.add(sb)
 
 		  	   /**
@@ -215,42 +214,7 @@ class SimpleSequentializer extends AbstractSequentializer {
 			     * Otherwise, it is possible that the guard expression houses empty expressions for a synchronizer. Add them as well.
 			     */    		
     			// Retrieve the guard expression from the scheduling information.
-        		var guardExpression = createGuardExpression(sb, schedule, scg) 
-//        		guardExpressionCache.get(sb.guard)
-    		
-        		if (guardExpression != null && guardExpression.expression != null) {
-    			
-    	   		    // Create an assigment for each empty expression and connect the control flow appropriately.
-    			    guardExpression.emptyExpressions.forEach[
-                        val vo = scg.createValuedObject(it.valuedObject.name).setTypeBool
-                        it.valuedObject.addToValuedObjectMapping(vo)    			        
-    				    val eeAssignment = ScgFactory::eINSTANCE.createAssignment
-    				    eeAssignment.valuedObject = it.valuedObject.getValuedObjectCopy
-    				    eeAssignment.assignment = it.expression.copySCGExpression
-    				    scg.nodes.add(eeAssignment)
-		    		    nextFlows.forEach[it.target = eeAssignment]
-		    		    nextFlows.clear		    		
-		    		    val nextFlow = ScgFactory::eINSTANCE.createControlFlow
-    				    eeAssignment.next = nextFlow
-    				    nextFlows.add(nextFlow)
-    			    ]
-    			    // Then, copy the expression of the guard to the newly created assignment.
-    			    newAssignment.assignment = guardExpression.expression.copySCGExpression
-    		    } else {
-    			// A guard is missing! Throw an exception.
-    			throw new UnsupportedSCGException("The guard expression is missing! [guard: "+sb.guard.toString+"]")
-    		}
-    		// Connect all control flows to the new assignment and clear the list.
-    		nextFlows.forEach[ target = newAssignment ]
-    		nextFlows.clear
-    		
-    		// Create a new control flow and take the assignment node as source.
-    		val nextFlow = ScgFactory::eINSTANCE.createControlFlow
-    		newAssignment.next = nextFlow
-    		nextFlows.add(nextFlow)
-    		
-    		// Add the assignment to the SCG.
-    		scg.nodes.add(newAssignment)
+        		createAndAddGuardExpression(sb, nextFlows, schedule, scg) 
     		}
     		
     		/**
@@ -305,6 +269,26 @@ class SimpleSequentializer extends AbstractSequentializer {
         assignment.valuedObject = node.valuedObject.getValuedObjectCopy;
         for(index : node.indices) {	assignment.indices += index.copySCGExpression }
         assignment
+    } 
+    
+    protected def addGuardExpression(Assignment assignment, GuardExpression guardExpression, 
+        List<ControlFlow> nextFlows, SCGraph scg
+    ) {
+        guardExpression.emptyExpressions.forEach[
+            val vo = scg.createValuedObject(it.valuedObject.name).setTypeBool
+            it.valuedObject.addToValuedObjectMapping(vo)                        
+            val eeAssignment = ScgFactory::eINSTANCE.createAssignment
+            eeAssignment.valuedObject = it.valuedObject.getValuedObjectCopy
+            eeAssignment.assignment = it.expression.copySCGExpression
+            scg.nodes.add(eeAssignment)
+            nextFlows.forEach[it.target = eeAssignment]
+            nextFlows.clear                 
+            val nextFlow = ScgFactory::eINSTANCE.createControlFlow
+            eeAssignment.next = nextFlow
+            nextFlows.add(nextFlow)
+        ]
+        // Then, copy the expression of the guard to the newly created assignment.
+        assignment.assignment = guardExpression.expression.copySCGExpression    
     }    
     
     
@@ -320,11 +304,16 @@ class SimpleSequentializer extends AbstractSequentializer {
      * @throws UnsupportedSCGException 
      *      Throws an UnsupportedSCGException if a standard guarded block has no predecessor information.
      */
-    protected def GuardExpression createGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
+    protected def void createAndAddGuardExpression(SchedulingBlock schedulingBlock, 
+        List<ControlFlow> nextFlows, Schedule schedule, SCGraph scg
+    ) {
         var GuardExpression gExpr
         
         // Query the basic block of the scheduling block.
         val basicBlock = schedulingBlock.basicBlock
+        
+        val assignment = ScgFactory::eINSTANCE.createAssignment
+        assignment.valuedObject = schedulingBlock.guard.getValuedObjectCopy        
         
         /** 
          * If the scheduling block is the first scheduling block in the basic block,
@@ -340,14 +329,14 @@ class SimpleSequentializer extends AbstractSequentializer {
                  * If the basic block is a GO block, meaning it should be active when the programs starts,
                  * add a reference to the GO signal as expression for the guard.
                  */
-                gExpr = schedulingBlock.createGoBlockGuardExpression(schedule, scg)
+                 schedulingBlock.handleGoBlockGuardExpression(assignment, nextFlows, schedule, scg)
             } 
             else if (basicBlock.depthBlock) {
                 /**
                  * If the basic block is a depth block, meaning it is delayed in its execution,
                  * add a pre operator expression as expression for the guard.
                  */
-                gExpr = schedulingBlock.createDepthBlockGuardExpression(schedule, scg)
+                schedulingBlock.handleDepthBlockGuardExpression(assignment, nextFlows, schedule, scg)
             }
             else if (basicBlock.synchronizerBlock) {
                 /**
@@ -356,14 +345,14 @@ class SimpleSequentializer extends AbstractSequentializer {
                  * Additionally, the synchronizer may create new valued objects mandatory for the expression.
                  * These must be added to the graph in order to be serializable later on. 
                  */
-                gExpr = schedulingBlock.createSynchronizerBlockGuardExpression(schedule, scg)   
+                schedulingBlock.handleSynchronizerBlockGuardExpression(assignment, nextFlows, schedule, scg)   
             } else {
                 /**
                  * If the block is neither of them, it solely depends on the activity states of previous basic blocks.
                  * At least one block must be active to activate the current block. Therefore, connect all guards
                  * of the predecessors with OR expressions.
                  */
-                gExpr = schedulingBlock.createStandardBlockGuardExpression(schedule, scg)               
+                schedulingBlock.handleStandardBlockGuardExpression(assignment, nextFlows, schedule, scg)               
             }
         } else {
             /**
@@ -379,11 +368,30 @@ class SimpleSequentializer extends AbstractSequentializer {
              * between conditional nodes but conditional nodes force the create of new basic blocks after their execution.
              * Therefore, there will always be a new basic block with a new guard expression in this scenario.
              */
-            gExpr = schedulingBlock.createSubsequentSchedulingBlockGuardExpression(schedule, scg)
+            schedulingBlock.handleSubsequentSchedulingBlockGuardExpression(assignment, nextFlows, schedule, scg)
         }
                 
-        // Return the expression
-        gExpr
+        // Connect all control flows to the new assignment and clear the list.
+        nextFlows.forEach[ target = assignment ]
+        nextFlows.clear
+            
+        // Create a new control flow and take the assignment node as source.
+        val nextFlow = ScgFactory::eINSTANCE.createControlFlow
+        assignment.next = nextFlow
+        nextFlows.add(nextFlow)
+            
+        // Add the assignment to the SCG.
+        scg.nodes.add(assignment)
+    }
+    
+    
+    // --- CREATE GUARDS: GO BLOCK 
+    
+    protected def handleGoBlockGuardExpression(SchedulingBlock schedulingBlock, Assignment assignment,  
+        List<ControlFlow> nextFlows, Schedule schedule, SCGraph scg
+    ) {
+        val gExpr = schedulingBlock.createGoBlockGuardExpression(schedule, scg)
+        assignment.addGuardExpression(gExpr, nextFlows, scg)       
     }
     
     protected def GuardExpression createGoBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
@@ -391,6 +399,16 @@ class SimpleSequentializer extends AbstractSequentializer {
             valuedObject = schedulingBlock.guard
             expression = scg.findValuedObjectByName(GOGUARDNAME).reference
         ]
+    }
+    
+
+    // --- CREATE GUARDS: DEPTH BLOCK 
+
+    protected def handleDepthBlockGuardExpression(SchedulingBlock schedulingBlock, Assignment assignment,  
+        List<ControlFlow> nextFlows, Schedule schedule, SCGraph scg
+    ) {
+        val gExpr = schedulingBlock.createDepthBlockGuardExpression(schedule, scg)
+        assignment.addGuardExpression(gExpr, nextFlows, scg)       
     }
     
     protected def GuardExpression createDepthBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
@@ -402,6 +420,16 @@ class SimpleSequentializer extends AbstractSequentializer {
             ]
         ]
     }
+
+
+    // --- CREATE GUARDS: SYNCHRONIZER BLOCK 
+
+    protected def handleSynchronizerBlockGuardExpression(SchedulingBlock schedulingBlock, Assignment assignment,  
+        List<ControlFlow> nextFlows, Schedule schedule, SCGraph scg
+    ) {
+        val gExpr = schedulingBlock.createSynchronizerBlockGuardExpression(schedule, scg)
+        assignment.addGuardExpression(gExpr, nextFlows, scg)       
+    }
     
     protected def GuardExpression createSynchronizerBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
         // The simple scheduler uses the SurfaceSynchronizer. 
@@ -410,13 +438,17 @@ class SimpleSequentializer extends AbstractSequentializer {
         synchronizer.setSchedulingCache(schedulingBlockCache)
         val joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join)
 
-        // Add additional valued objects to the SCG and use the guard expression of the synchronizer as it is.
-//TODO: CHECK IF CORRECT        
-//      scg.typeGroups += createTypeGroup(joinData.valuedObjects).setTypeBool
-//        for (valuedObject : joinData.valuedObjects) {
-//            scg.addValuedObject(valuedObject.setTypeBool)
-//        }
         joinData.guardExpression
+    }
+    
+    
+    // --- CREATE GUARDS: STANDARD BLOCK 
+
+    protected def handleStandardBlockGuardExpression(SchedulingBlock schedulingBlock, Assignment assignment,  
+        List<ControlFlow> nextFlows, Schedule schedule, SCGraph scg
+    ) {
+        val gExpr = schedulingBlock.createStandardBlockGuardExpression(schedule, scg)
+        assignment.addGuardExpression(gExpr, nextFlows, scg)       
     }
     
     protected def GuardExpression createStandardBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
@@ -453,6 +485,17 @@ class SimpleSequentializer extends AbstractSequentializer {
         }
         gExpr       
     }
+
+
+    // --- CREATE GUARDS: SUBSEQUENT SCHEDULING BLOCK 
+
+    protected def handleSubsequentSchedulingBlockGuardExpression(SchedulingBlock schedulingBlock, Assignment assignment,  
+        List<ControlFlow> nextFlows, Schedule schedule, SCGraph scg
+    ) {
+        val gExpr = schedulingBlock.createSubsequentSchedulingBlockGuardExpression(schedule, scg)
+        assignment.addGuardExpression(gExpr, nextFlows, scg)       
+    }
+
     
     protected def GuardExpression createSubsequentSchedulingBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
         new GuardExpression => [
