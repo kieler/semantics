@@ -125,6 +125,8 @@ class SimpleSequentializer extends AbstractSequentializer {
                 it.guard.addToValuedObjectMapping(vo)
             ]
         ]
+        val vo = newSCG.createGOSignal
+        vo.addToValuedObjectMapping(vo)
         
 //        guardExpressionCache.clear
 //        scgSched.basicBlocks.map[guard].forEach[guard |
@@ -220,6 +222,8 @@ class SimpleSequentializer extends AbstractSequentializer {
     			
     	   		    // Create an assigment for each empty expression and connect the control flow appropriately.
     			    guardExpression.emptyExpressions.forEach[
+                        val vo = scg.createValuedObject(it.valuedObject.name).setTypeBool
+                        it.valuedObject.addToValuedObjectMapping(vo)    			        
     				    val eeAssignment = ScgFactory::eINSTANCE.createAssignment
     				    eeAssignment.valuedObject = it.valuedObject.getValuedObjectCopy
     				    eeAssignment.assignment = it.expression.copySCGExpression
@@ -231,7 +235,7 @@ class SimpleSequentializer extends AbstractSequentializer {
     				    nextFlows.add(nextFlow)
     			    ]
     			    // Then, copy the expression of the guard to the newly created assignment.
-    			    newAssignment.assignment = TRUE// guardExpression.expression.copySCGExpression
+    			    newAssignment.assignment = guardExpression.expression.copySCGExpression
     		    } else {
     			// A guard is missing! Throw an exception.
     			throw new UnsupportedSCGException("The guard expression is missing! [guard: "+sb.guard.toString+"]")
@@ -409,9 +413,9 @@ class SimpleSequentializer extends AbstractSequentializer {
         // Add additional valued objects to the SCG and use the guard expression of the synchronizer as it is.
 //TODO: CHECK IF CORRECT        
 //      scg.typeGroups += createTypeGroup(joinData.valuedObjects).setTypeBool
-        for (valuedObject : joinData.valuedObjects) {
-            scg.addValuedObject(valuedObject.setTypeBool)
-        }
+//        for (valuedObject : joinData.valuedObjects) {
+//            scg.addValuedObject(valuedObject.setTypeBool)
+//        }
         joinData.guardExpression
     }
     
