@@ -13,16 +13,19 @@
  */
 package de.cau.cs.kieler.sim.kiem.config.kivi;
 
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IStartup;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartConstants;
 import org.eclipse.ui.IWorkbenchPartReference;
 
 import de.cau.cs.kieler.core.model.adapter.GlobalPartAdapter;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
-import de.cau.cs.kieler.sim.kiem.config.KiemConfigurationPlugin;
 
 /**
- * Observes all parts and triggers execution of combination. 
+ * Observes all parts and triggers execution of combination.
  * <p>
  * Replaces KiVi plugin behavior
  * 
@@ -31,12 +34,13 @@ import de.cau.cs.kieler.sim.kiem.config.KiemConfigurationPlugin;
  * @kieler.rating 2014-07-29 proposed yellow
  * 
  */
-public class KIEMCombinationManager implements IStartup, IPartListener2 {
+public class KIEMCombinationManager implements IStartup, IPartListener2, IPropertyListener {
 
     /** Global Listener Adapter. */
     private GlobalPartAdapter adapter;
     private KIEMExecutionAutoloadCombination autoload;
     private KIEMModelSelectionCombination selection;
+    private IWorkbenchPartReference activePart;
 
     // -- STARTUP
     // -------------------------------------------------------------------------
@@ -48,7 +52,7 @@ public class KIEMCombinationManager implements IStartup, IPartListener2 {
         KiemPlugin.getDefault();
         autoload = new KIEMExecutionAutoloadCombination();
         selection = new KIEMModelSelectionCombination();
-        adapter = new GlobalPartAdapter(this, true);        
+        adapter = new GlobalPartAdapter(this, true);
     }
 
     // -- LISTENER
@@ -58,6 +62,14 @@ public class KIEMCombinationManager implements IStartup, IPartListener2 {
      * {@inheritDoc}
      */
     public void partActivated(IWorkbenchPartReference partRef) {
+        if(activePart == null){
+            activePart = partRef;
+            partRef.addPropertyListener(this);
+        }else{
+            activePart.removePropertyListener(this);
+            activePart = partRef;
+            partRef.addPropertyListener(this);
+        }
         selection.execute(partRef);
         autoload.execute(partRef);
     }
@@ -102,6 +114,17 @@ public class KIEMCombinationManager implements IStartup, IPartListener2 {
      * {@inheritDoc}
      */
     public void partInputChanged(IWorkbenchPartReference partRef) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void propertyChanged(Object source, int propId) {
+        if (propId == IWorkbenchPartConstants.PROP_DIRTY && source instanceof IEditorPart
+                && !((IEditorPart) source).isDirty()) {
+            // dirty flag changed and editor is not dirty -> saved
+            selection.execute(((IWorkbenchPart) source).getSite().getPage().getReference((IWorkbenchPart) source));
+        }
     }
 
 }
