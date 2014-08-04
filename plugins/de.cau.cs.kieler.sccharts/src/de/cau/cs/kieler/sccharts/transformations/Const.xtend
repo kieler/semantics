@@ -57,13 +57,13 @@ class Const {
         var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetTransition : targetRootState.getAllStates.immutableCopy) {
-            targetTransition.transformConst(targetRootState);
+        for (states : targetRootState.getAllStates.immutableCopy) {
+            states.transformConst
         }
         targetRootState;
     }
 
-    def void transformConst(State state, State targetRootState) {
+    def void transformConst(State state) {
         val constObjects = state.valuedObjects.filter[
         	isConst && initialValue != null
         ].toList
