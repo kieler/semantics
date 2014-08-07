@@ -290,6 +290,24 @@ class SCChartsExtension {
         return newName
     }
     
+    def private String uniqueNameHelperCached(EObject eObject, String originalId, List<String> uniqueNameCache) {
+        var String newName = null
+        var c = 1
+        if (!uniqueNameCache.contains(originalId)) {
+        	uniqueNameCache.add(originalId)
+            return originalId
+        }
+        while (newName == null) {
+            c = c + 1
+            val tmpNewName = originalId + c
+            if (!uniqueNameCache.contains(tmpNewName)) {
+                newName = tmpNewName
+            } 
+        }
+        uniqueNameCache.add(newName)
+        return newName
+    }
+    
 
     def State uniqueName(State state) {
         val originalId = state.id
@@ -314,6 +332,15 @@ class SCChartsExtension {
      def ValuedObject uniqueName(ValuedObject valuedObject) {
         val originalId = valuedObject.name
         var String newName = valuedObject.uniqueNameHelper(originalId)
+        if (newName != originalId) {
+             valuedObject.setName(newName)
+        } 
+        valuedObject
+    }
+
+     def ValuedObject uniqueNameCached(ValuedObject valuedObject, List<String> uniqueNameCache) {
+        val originalId = valuedObject.name
+        var String newName = valuedObject.uniqueNameHelperCached(originalId, uniqueNameCache)
         if (newName != originalId) {
              valuedObject.setName(newName)
         } 
@@ -448,9 +475,16 @@ class SCChartsExtension {
         region.setLabel(label)
         region
     }
+    
+    def boolean regionsNotEmpty(State state) {
+   	  for(r:state.regions){
+   	  	if (r.states.size>0) return true
+   	  }
+   	  false
+   }
 
     def boolean hasInnerStatesOrRegions(State state) {
-        return ((state.regions != null && state.regions.size != 0 && state.eAllContents.filter(typeof(State)).size > 0))
+        return ((state.regions != null && state.regions.size != 0 && state.regionsNotEmpty))
     }
 
     // These are actions that expand to INNER content like during or exit actions.
@@ -904,8 +938,8 @@ class SCChartsExtension {
     //--  F I X   F O R   T E R M I N A T I O N S   / W    E F F E C T S     --
     //-------------------------------------------------------------------------
     // This fixes termination transitions that have effects
-    def State fixTerminationWithEffects(State rootState) {
-        val terminationTransitions = rootState.allContainedTransitions.filter[type == TransitionType::TERMINATION].filter[!effects.nullOrEmpty]
+    def State fixTerminationWithEffects(State rootState, List<Transition> transitionList) {
+        val terminationTransitions = transitionList.filter[type == TransitionType::TERMINATION].filter[!effects.nullOrEmpty].toList
         
         for (terminationTransition : terminationTransitions) {
             val originalSource = terminationTransition.sourceState
@@ -926,8 +960,8 @@ class SCChartsExtension {
     //--                F I X   F O R   H A L T   S T A T E S                --
     //-------------------------------------------------------------------------
     // This fixes halt states and adds an explicit delayed self transition
-    def State fixPossibleHaltStates(State rootState) {
-        val haltStates = rootState.allContainedStates.filter[!hasInnerStatesOrRegions && outgoingTransitions.nullOrEmpty && !final]
+    def State fixPossibleHaltStates(State rootState, List<State> stateList) {
+        val haltStates = stateList.filter[!hasInnerStatesOrRegions && outgoingTransitions.nullOrEmpty && !final]
         
         for (haltState : haltStates) {
             haltState.createTransitionTo(haltState)
@@ -983,14 +1017,12 @@ class SCChartsExtension {
     //--               L O C A L   V A L U E D O B J E C T S                 --
     //-------------------------------------------------------------------------
     
-    def State transformLocalValuedObject(State rootState) {
-        val targetRootState = rootState.copy;
-
+    def State transformLocalValuedObject(State rootState, List<State> stateList) {
         // Traverse all states
-        for (targetState : targetRootState.getAllContainedStates) {
-            targetState.transformExposeLocalValuedObject(targetRootState, false);
+        for (targetState : stateList) {
+            targetState.transformExposeLocalValuedObject(rootState, false);
         }
-        targetRootState;
+        rootState;
     }
     
     // Traverse all states and transform possible local valuedObjects.
@@ -1025,6 +1057,54 @@ class SCChartsExtension {
                     localValuedObject.setName(newValuedObjectName)
                 } else {
                     localValuedObject.uniqueName
+                }
+                
+            }
+        } // end if local valuedObjects present
+
+    }
+    
+    def State transformLocalValuedObjectCached(State rootState, List<State> stateList, List<String> uniqueNameCache) {
+        // Traverse all states
+        for (targetState : stateList) {
+            targetState.transformExposeLocalValuedObjectCached(rootState, false, uniqueNameCache);
+        }
+        rootState;
+    }
+
+    
+    // Traverse all states and transform possible local valuedObjects.
+    def void transformExposeLocalValuedObjectCached(State state, State targetRootState, boolean expose, List<String> uniqueNameCache) {
+
+        // EXPOSE LOCAL SIGNALS: For every local valuedObject create a global valuedObject
+        // and wherever the local valuedObject is emitted, also emit the new global 
+        // valuedObject.
+        // Name the new global valuedObjects according to the local valuedObject's hierarchy. 
+        // Exclude the top level state
+        if (state == targetRootState) {
+            return;
+        }
+
+        // There are local valuedObjects, raise them
+        if (state.valuedObjects != null && state.valuedObjects.size > 0) {
+            val hierarchicalStateName = state.getHierarchicalName("LOCAL");
+
+            for (ValuedObject localValuedObject : ImmutableList::copyOf(state.valuedObjects)) {
+                val newValuedObjectName = hierarchicalStateName + "_" + localValuedObject.name
+                
+                // Possibly expose
+                if (expose) {
+                    localValuedObject.setIsOutput
+                }
+
+                // Relocate
+                targetRootState.valuedObjects.add(localValuedObject)
+                
+                // Rename
+                if (expose) {
+                    localValuedObject.setName(newValuedObjectName)
+                } else {
+                    localValuedObject.uniqueNameCached(uniqueNameCache)
                 }
                 
             }
