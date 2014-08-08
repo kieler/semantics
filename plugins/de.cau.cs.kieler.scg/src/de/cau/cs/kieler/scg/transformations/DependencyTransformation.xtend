@@ -146,7 +146,8 @@ class DependencyTransformation extends AbstractModelTransformation {
         }
         
         assignments.forEach[ a |
-        	val vors = a.assignment.eAllContents.filter(typeof(ValuedObjectReference))
+        	val vors = a.assignment.eAllContents.filter(typeof(ValuedObjectReference)).toList
+        	if (a.assignment instanceof ValuedObjectReference) vors += a.assignment as ValuedObjectReference
         	val vos = <ValuedObject> newArrayList => [ v | vors.forEach[ v+= it.valuedObject ]; v += a.valuedObject ]
         	vos.forEach[ vo | 
         		val vocl = valuedObjectCache.get(vo)
@@ -161,7 +162,8 @@ class DependencyTransformation extends AbstractModelTransformation {
         System.out.println("Preparation for dependency: assignment VO cache (time elapsed: "+(time / 1000)+"s).")  
 
         conditionals.forEach[ c |
-        	val vors = c.condition.eAllContents.filter(typeof(ValuedObjectReference))
+        	val vors = c.condition.eAllContents.filter(typeof(ValuedObjectReference)).toList
+        	if (c.condition instanceof ValuedObjectReference) vors += c.condition as ValuedObjectReference
         	val vos = <ValuedObject> newArrayList => [ v | vors.forEach[ v+= it.valuedObject ] ]
         	vos.forEach[ vo | 
         		val vocl = valuedObjectCache.get(vo)
