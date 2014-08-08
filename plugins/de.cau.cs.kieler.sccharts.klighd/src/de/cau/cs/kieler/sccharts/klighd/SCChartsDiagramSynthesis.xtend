@@ -708,7 +708,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                     val synthesis = delegate.get();
                     synthesis.use(usedContext)
                     node.children += synthesis.translate(r) => [
-                        it.setLayoutOption(KlighdProperties::EXPAND, false);
+//                        it.setLayoutOption(KlighdProperties::EXPAND, false);
                     ];
                 }
             }
