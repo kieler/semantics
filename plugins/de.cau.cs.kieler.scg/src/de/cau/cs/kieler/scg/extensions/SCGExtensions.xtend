@@ -147,7 +147,14 @@ class SCGExtensions {
     }    
     
     def ValuedObject getValuedObjectCopy(ValuedObject valuedObject) {
-        valuedObjectMapping.get(valuedObject)
+        if (valuedObject == null) {
+            throw new Exception("Valued Object is already null!")
+        }
+        val vo = valuedObjectMapping.get(valuedObject)
+        if (vo == null) {
+            throw new Exception("Valued Object not found! ["+valuedObject.name+"]")
+        }
+        vo
     }    
     
     def ValuedObject addToValuedObjectMapping(ValuedObject source, ValuedObject target) {

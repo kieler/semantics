@@ -42,6 +42,7 @@ class Abort {
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
 
+    private val nameCache = <String> newArrayList("_term")
     
     //-------------------------------------------------------------------------
     //--   A B O R T   A L T E R N A T I V E  T R A N S F O R M A T I O N    --
@@ -91,9 +92,9 @@ class Abort {
 
             // .. || stateHasUntransformedTransitions : for conditional terminations!
             if (stateHasUntransformedAborts || stateHasUntransformedTransitions) {
-                val ctrlRegion = state.createRegion(GENERATED_PREFIX + "Ctrl").uniqueName
-                val runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueName
-                val doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
+                val ctrlRegion = state.createRegion(GENERATED_PREFIX + "Ctrl").uniqueNameCached(nameCache)
+                val runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueNameCached(nameCache)
+                val doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueNameCached(nameCache)
 
                 // Build up weak and strong abort triggers
                 var Expression strongAbortTrigger = null;
@@ -102,7 +103,7 @@ class Abort {
 
                     // Create a new _transitionTrigger valuedObject
                     val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
-                        GENERATED_PREFIX + "trig").setTypeBool.uniqueName
+                        GENERATED_PREFIX + "trig").setTypeBool.uniqueNameCached(nameCache)
                     state.createEntryAction.addEffect(transitionTriggerVariable.assign(FALSE))
                     transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
                     if (transition.typeStrongAbort) {
@@ -122,11 +123,11 @@ class Abort {
                 // also to the terminationTrigger
                 for (region : regions) {
                     if (terminationHandlingNeeded) {
-                        val mainRegion = state.createRegion(GENERATED_PREFIX + "Main").uniqueName
-                        val mainState = mainRegion.createInitialState(GENERATED_PREFIX + "Main").uniqueName
+                        val mainRegion = state.createRegion(GENERATED_PREFIX + "Main").uniqueNameCached(nameCache)
+                        val mainState = mainRegion.createInitialState(GENERATED_PREFIX + "Main").uniqueNameCached(nameCache)
                         mainState.regions.add(region)
-                        val termState = mainRegion.createFinalState(GENERATED_PREFIX + "Term").uniqueName
-                        val termVariable = state.createVariable(GENERATED_PREFIX + "term").setTypeBool.uniqueName
+                        val termState = mainRegion.createFinalState(GENERATED_PREFIX + "Term").uniqueNameCached(nameCache)
+                        val termVariable = state.createVariable(GENERATED_PREFIX + "termV").setTypeBool.uniqueNameCached(nameCache)
                         mainState.createTransitionTo(termState).addEffect(termVariable.assign(TRUE)).setTypeTermination
                         if (terminationTrigger != null) {
                             terminationTrigger = terminationTrigger.and(termVariable.reference)
@@ -137,7 +138,7 @@ class Abort {
                     }
 
                     // Inside every region create a _Aborted
-                    val abortedState = region.retrieveFinalState(GENERATED_PREFIX + "Aborted").uniqueName
+                    val abortedState = region.retrieveFinalState(GENERATED_PREFIX + "Aborted").uniqueNameCached(nameCache)
                     for (innerState : region.states.filter[!final]) {
                         if (innerState != abortedState) {
                             if (strongAbortTrigger != null) {
@@ -197,7 +198,7 @@ class Abort {
             }
 
             // Create a single outgoing normal termination to a new connector state
-            val outgoingConnectorState = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueName.
+            val outgoingConnectorState = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueNameCached(nameCache).
                 setTypeConnector
             state.createTransitionTo(outgoingConnectorState).setTypeTermination
 
