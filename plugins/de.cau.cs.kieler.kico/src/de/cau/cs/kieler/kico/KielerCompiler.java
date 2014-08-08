@@ -1013,9 +1013,10 @@ public class KielerCompiler {
                 if (handledParameterType != null) {
                     if (DEBUG) {
                         System.out.println("PERFORM TRANSFORMATION: " + compilationTransformationID
-                                + " ( is " + parameterType.getName() + " handled by "
-                                + handledParameterType.getName() + "? "
-                                + handledParameterType.isInstance(transformedObject) + " )");
+//                                + " ( is " + parameterType.getName() + " handled by "
+//                                + handledParameterType.getName() + "? "
+//                                + handledParameterType.isInstance(transformedObject) + " )"
+                                );
                     }
                     if (handledParameterType.isInstance(transformedObject)) {
 
