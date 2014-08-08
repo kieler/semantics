@@ -268,9 +268,9 @@ class SimpleSequentializer extends AbstractSequentializer {
     
     def Assignment copySCGNode(Assignment node, SCGraph target) {
     	val assignment = ScgFactory::eINSTANCE.createAssignment
-        assignment.assignment = TRUE 
-//        node.assignment.copySCGExpression
-        assignment.valuedObject = node.valuedObject.getValuedObjectCopy;
+//        assignment.assignment = TRUE 
+        assignment.assignment = node.assignment.copySCGExpression
+        assignment.valuedObject = node.valuedObject.getValuedObjectCopyWNULL;
         for(index : node.indices) {	assignment.indices += index.copySCGExpression }
         assignment
     } 
