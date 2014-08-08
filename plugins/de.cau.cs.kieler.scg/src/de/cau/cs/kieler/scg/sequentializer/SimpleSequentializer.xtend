@@ -39,6 +39,7 @@ import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.BranchType
+import de.cau.cs.kieler.core.kexpressions.ValueType
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -118,11 +119,18 @@ class SimpleSequentializer extends AbstractSequentializer {
          * basic blocks.
          */
         val newSCG = ScgFactory::eINSTANCE.createSCGraph
+		val predecessors = <Predecessor> newArrayList
+		val basicBlocks = <BasicBlock> newArrayList
         scg.copyDeclarations(newSCG)
+       	val guardDeclaration = createDeclaration=>[ setType(ValueType::BOOL) ]
+       	newSCG.declarations += guardDeclaration
         scg.basicBlocks.forEach[
+        	basicBlocks += it
+        	predecessors += it.predecessors
             schedulingBlocks.forEach[
-                val vo = newSCG.createValuedObject(it.guard.name).setTypeBool
+                val vo = createValuedObject(it.guard.name) => [ guardDeclaration.valuedObjects += it ]
                 it.guard.addToValuedObjectMapping(vo)
+        		it.nodes.forEach[ node | schedulingBlockCache.put(node, it) ]
             ]
         ]
         val vo = newSCG.createGOSignal
@@ -133,20 +141,16 @@ class SimpleSequentializer extends AbstractSequentializer {
 //        	guardExpressionCache.put(guard.valuedObject, guard)
 //        ]
 
-        val basicBlocks = scg.eAllContents.filter(typeof(BasicBlock)).toList
-        scg.eAllContents => [ all |
-            val predecessors = all.filter(typeof(Predecessor))
-            predecessors.forEach[ p |
-                if (p.basicBlock.branchType == BranchType::TRUEBRANCH) {
-                    p.cacheTwin(basicBlocks)
-                } 
-                else if (p.basicBlock.branchType == BranchType::ELSEBRANCH) {
-                    p.cacheTwin(basicBlocks)
-                }
-            ]
-        ]   
+        predecessors.forEach[ p |
+            if (p.basicBlock.branchType == BranchType::TRUEBRANCH) {
+                p.cacheTwin(basicBlocks)
+            } 
+            else if (p.basicBlock.branchType == BranchType::ELSEBRANCH) {
+                p.cacheTwin(basicBlocks)
+            }
+        ]
         
-        scg.createSchedulingBlockCache(schedulingBlockCache)
+//        scg.createSchedulingBlockCache(schedulingBlockCache)
         
         var time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Preparation for sequentialization finished (time elapsed: "+(time / 1000)+"s).")          

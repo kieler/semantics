@@ -184,7 +184,7 @@ class BasicBlockTransformation extends AbstractModelTransformation {
             return newIndex;
         }
         
-        if (scg.basicBlocks.size % 5000 == 0) {
+        if (scg.basicBlocks.size % 10000 == 0) {
             System.out.println("Basic Blocks: " + scg.basicBlocks.size + " with " + processedNodes.size + " nodes")
         }
         
