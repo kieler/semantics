@@ -35,6 +35,8 @@ import java.util.List
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.scg.ControlFlow
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -72,6 +74,7 @@ class DependencyTransformation extends AbstractModelTransformation {
     private val threadNodeList = new HashMap<Node, List<Entry>>
     private val ancestorForkCache = new HashMap<Node, List<Fork>>
     private val relativeWriterCache = new HashMap<Assignment, Boolean>
+    private val valuedObjectCache = new HashMap<ValuedObject, List<Node>> 
     
     // -------------------------------------------------------------------------
     // -- Transformation method
@@ -96,18 +99,27 @@ class DependencyTransformation extends AbstractModelTransformation {
         threadNodeList.clear
         relativeWriterCache.clear
         ancestorForkCache.clear
+        valuedObjectCache.clear
         
         val timestamp = System.currentTimeMillis
         val allAssignments = scg.nodes.filter(typeof(Assignment))  
         val assignments = allAssignments.filter[ valuedObject != null || assignment instanceof FunctionCall ].toList.immutableCopy
         val conditionals = scg.nodes.filter(typeof(Conditional)).filter[ condition != null ].toList.immutableCopy
+        var time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("Preparation for dependency: Nodes (time elapsed: "+(time / 1000)+"s).")  
 
         assignments.forEach[ 
             relativeWriterCache.put(it, it.isRelativeWriter)
         ]
+        time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("Preparation for dependency: Relative writer (time elapsed: "+(time / 1000)+"s).")  
         
-        scg.nodes.filter(typeof(Entry)).forEach[ entry |
-        	entry.getThreadNodes.forEach[ node |
+        val threadNodeMap = getAllThreadNodes(scg.nodes.head as Entry)
+        for(entry : threadNodeMap.keySet) {
+        	var Fork fork = null
+        	if (entry.incoming.size>0) fork = (entry.incoming.filter(ControlFlow).head.eContainer as Fork)
+        	val finalFork = fork
+        	threadNodeMap.get(entry).forEach[ node |
         		if ((node instanceof Assignment) || (node instanceof Conditional)) {
             	    if (!threadNodeList.containsKey(node)) {
             	        var entryNodes = new LinkedList<Entry>();
@@ -118,16 +130,78 @@ class DependencyTransformation extends AbstractModelTransformation {
                         entryNodes.add(entry);
                         threadNodeList.put(node, entryNodes);
                     }
+                    
+                    if (finalFork != null) {
+                    	val ancestorForks = ancestorForkCache.get(node)
+                    	if (ancestorForks == null) {
+                    		ancestorForkCache.put(node, <Fork> newArrayList(finalFork))
+                    	} else {
+  							if (!ancestorForks.contains(finalFork)) {
+  								ancestorForks.add(finalFork)
+  							}                   	
+                    	}
+                   	}
 	           	}
         	]
+        }
+        
+        assignments.forEach[ a |
+        	val vors = a.assignment.eAllContents.filter(typeof(ValuedObjectReference))
+        	val vos = <ValuedObject> newArrayList => [ v | vors.forEach[ v+= it.valuedObject ]; v += a.valuedObject ]
+        	vos.forEach[ vo | 
+        		val vocl = valuedObjectCache.get(vo)
+        		if (vocl == null) {
+        			valuedObjectCache.put(vo, <Node> newArrayList(a))
+        		} else {
+        			vocl += a	
+        		}
+        	] 
         ]
+        time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("Preparation for dependency: assignment VO cache (time elapsed: "+(time / 1000)+"s).")  
+
+        conditionals.forEach[ c |
+        	val vors = c.condition.eAllContents.filter(typeof(ValuedObjectReference))
+        	val vos = <ValuedObject> newArrayList => [ v | vors.forEach[ v+= it.valuedObject ] ]
+        	vos.forEach[ vo | 
+        		val vocl = valuedObjectCache.get(vo)
+        		if (vocl == null) {
+        			valuedObjectCache.put(vo, <Node> newArrayList(c))
+        		} else {
+        			vocl += c	
+        		}
+        	] 
+        ]
+        time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("Preparation for dependency: conditional VO cache (time elapsed: "+(time / 1000)+"s).")  
         
-        var time = (System.currentTimeMillis - timestamp) as float
-        System.out.println("Preparation for dependency analysis finished (time elapsed: "+(time / 1000)+"s).")  
+        val VOCacheSize = valuedObjectCache.keySet.size
+
+        time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("Preparation for dependency analysis finished (time elapsed: "+(time / 1000)+"s) "
+        	+"(assignments: "+assignments.size+", conditionals: "+conditionals.size+", VO cache: "+VOCacheSize+").")  
         
-        for(node : assignments) {
-        	 node.createDependencies(assignments, conditionals, scg) 
+
+        var i = 0
+        for(vo : valuedObjectCache.keySet) {
+        	val nodeList = valuedObjectCache.get(vo)
+        	val assignmentList = nodeList.filter(typeof(Assignment)).toList
+        	val conditionalList = nodeList.filter(typeof(Conditional)).toList
+        	for (assignment : assignmentList) {
+	        	assignment.createDependencies(assignmentList, conditionalList, scg) 
+        	}
+        	i = i + 1
+        	if (i % 100 == 0) System.out.print("o")
       	 }
+      	 System.out.println("o")
+        
+//        var i = 0
+//        for(node : assignments) {
+//        	node.createDependencies(assignments, conditionals, scg) 
+//        	i = i + 1
+//        	if (i % 1000 == 0) System.out.print("o")
+//      	 }
+//      	 System.out.println("o")
 
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Dependency analysis finished (overall time elapsed: "+(time / 1000)+"s).")  

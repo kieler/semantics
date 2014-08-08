@@ -41,6 +41,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import java.util.HashMap
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import java.util.Map
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -485,7 +486,101 @@ class SCGExtensions {
         // Add the exit node and return.
         returnList.add(exit)
         returnList
+    }
+    
+    /**
+     * Retrieves all of nodes of a thread. In the SCG sense a thread starts at its 
+     * entry node and ends at its exit node. Hence, each thread is identified by
+     * its entry node and the successors of a fork node (retrievable via
+     * {@link #getAllNext(Node)}) are the entry nodes of each thread of that fork node.
+     * 
+     * @param entry
+     * 			the entry node of the thread
+     * @return Returns a list of nodes of the given thread. 
+     */
+    def Map<Entry, List<Node>> getAllThreadNodes (Entry entry) {
+    	// Create a new list of nodes and 
+    	// a list of control flows that mark paths within the thread.
+    	val returnMap = <Entry, List<Node>> newHashMap
+        val List<Node> nodeList = <Node> newLinkedList
+        val List<ControlFlow> controlFlows = <ControlFlow> newLinkedList
+        
+        // Add the entry node itself and retrieve the exit of the thread
+        // with aid of the opposite relation in the entry node. 
+        returnMap.put(entry, nodeList)
+        val exit = entry.exit
+        
+        // If the exit node follows the entry node directly, exit here.
+        if (entry.next.target == exit) {
+	        nodeList.add(exit)
+    	    return returnMap
+        }
+        
+        // Now, follow the control flow until the exit node is reached 
+        // and add each node that is not already in the node list.
+        controlFlows.addAll(entry.allNext)
+        while(!controlFlows.empty) {
+        	// Next node is the first target in the control flow list.
+            var nextNode = controlFlows.head.target
+            
+            // Remove this control flow.
+            controlFlows.remove(0)
+            
+            // Add the node if its not already contained.
+            if (!nodeList.contains(nextNode)) nodeList.add(nextNode);
+            
+            if (nextNode instanceof Entry) {
+            	val nNMap = (nextNode as Entry).getAllThreadNodes
+            	for(k : nNMap.keySet) {
+            		val nNNodeList = nNMap.get(k)
+            		returnMap.put(k, nNNodeList)
+            		nodeList.addAll(nNNodeList)
+            	}
+            	nextNode = (nextNode as Entry).exit
+            	if (!nodeList.contains(nextNode)) nodeList.add(nextNode);
+            }
+            
+            if (nextNode instanceof Surface) {
+	            // Since surface node do not have extra control flows to their 
+    	        // corresponding depth, set the next node manually.
+                nextNode = (nextNode as Surface).depth
+                if (!nodeList.contains(nextNode)) nodeList.add(nextNode);                                
+            }
+            
+            // Now, add all succeeding control flow provided 
+            //   - that the flow is not already included in the flow list
+            //   - the target of the flow is not already processed
+            //   - and the target of the flow is not the exit node.  
+            if (nextNode != null)
+            nextNode.allNext.filter[ 
+            	(!nodeList.contains(it.target)) && 
+            	(!controlFlows.contains(it)) && 
+                (!it.target.equals(exit)) ] 
+                	=> [ controlFlows.addAll(it) ]
+        }
+        
+        // Reverse search outgoing from the exit node
+        controlFlows.addAll(exit.allPrevious)
+        while(!controlFlows.empty) {
+            var nextNode = controlFlows.head.eContainer as Node
+            controlFlows.remove(0)
+            if (!nodeList.contains(nextNode)) nodeList.add(nextNode)
+            if (nextNode instanceof Depth) {
+                nextNode = (nextNode as Depth).surface
+                if (!nodeList.contains(nextNode)) nodeList.add(nextNode)
+            }
+            if (nextNode != null)
+            nextNode.allPrevious.filter[ 
+                (!nodeList.contains(it.eContainer)) && 
+                (!controlFlows.contains(it)) ] 
+                    => [ controlFlows.addAll(it) ]
+        }
+        
+        // Add the exit node and return.
+        nodeList.add(exit)
+        returnMap
     }   
+       
     
    /** 
     * Finds the immediate entry node of a node.

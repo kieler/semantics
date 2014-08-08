@@ -215,10 +215,10 @@ class SimpleScheduler extends AbstractScheduler {
                 schedulingBlocks.remove(schedulingBlock)
                 placed = placed + 1
                 PROGRESS_PLACED = PROGRESS_PLACED + 1
-                if (PROGRESS_PLACED % 100 == 0) {
+                if (PROGRESS_PLACED % 1000 == 0) {
                     System.out.print("o");
                 }
-                if (PROGRESS_PLACED % 1000 == 0) {
+                if (PROGRESS_PLACED % 20000 == 0) {
                     System.out.println("");
                 }
             }
