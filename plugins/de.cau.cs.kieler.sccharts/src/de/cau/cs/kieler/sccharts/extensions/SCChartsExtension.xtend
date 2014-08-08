@@ -189,8 +189,9 @@ class SCChartsExtension {
 
     // Gets the list of non-empty regions
     def List<Region> getRegions2(State state) {
-        val list2 = state.regions.filter(e | e.allContainedStates.size == 0).toList
-        val list = state.regions.filter(e | e.allContainedStates.size > 0).toList
+//        val list2 = state.regions.filter(e | e.allContainedStates.size == 0).toList
+//        val list = state.regions.filter(e | e.allContainedStates.size > 0).toList
+        val list = state.regions.filter(e | e.notEmpty ).toList
         list
     }
     
@@ -319,9 +320,30 @@ class SCChartsExtension {
         state
     }
 
+    def State uniqueNameCached(State state, List<String> uniqueNameCache) {
+        val originalId = state.id
+        var String newName = state.uniqueNameHelperCached(originalId, uniqueNameCache)
+        if (newName != originalId) {
+            state.setId(newName)
+            state.setLabel2(newName)
+        } 
+        state
+    }
+
+
     def Region uniqueName(Region region) {
         val originalId = region.id
         var String newName = region.uniqueNameHelper(originalId)
+        if (originalId != newName) {
+            region.setId(newName)
+            region.setLabel2(newName)
+        }
+        region
+    }
+    
+    def Region uniqueNameCached(Region region, List<String> uniquieNameCache) {
+        val originalId = region.id
+        var String newName = region.uniqueNameHelperCached(originalId, uniquieNameCache)
         if (originalId != newName) {
             region.setId(newName)
             region.setLabel2(newName)
@@ -481,7 +503,11 @@ class SCChartsExtension {
    	  	if (r.states.size>0) return true
    	  }
    	  false
-   }
+    }
+    
+    def boolean notEmpty(Region region) {
+      region.states.size>0
+   }    
 
     def boolean hasInnerStatesOrRegions(State state) {
         return ((state.regions != null && state.regions.size != 0 && state.regionsNotEmpty))
