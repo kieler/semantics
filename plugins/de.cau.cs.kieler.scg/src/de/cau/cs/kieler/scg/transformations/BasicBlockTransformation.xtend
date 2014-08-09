@@ -35,6 +35,7 @@ import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
 import org.eclipse.emf.ecore.EObjectimport java.util.HashMap
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.BranchType
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather important information 
@@ -432,7 +433,7 @@ class BasicBlockTransformation extends AbstractModelTransformation {
     	val predecessors = <Predecessor> newArrayList
     	
     	// Process each predecessor basic block.
-    	basicBlocks.forEach[bb|
+    	for(bb : basicBlocks) {
     		// Create a new predecessor object and set its basic block.
     		if (bb != null) {
     		    val predecessor = ScgFactory::eINSTANCE.createPredecessor => [ basicBlock = bb ]
@@ -448,9 +449,9 @@ class BasicBlockTransformation extends AbstractModelTransformation {
        			    * branch of the conditional and add this information to the predecessor object. 
        			    */
        			    if (target.schedulingBlocks.head.nodes.head == (lastNode as Conditional).then.target) {
-//        			    predecessor.blockType =  BlockType::TRUEBRANCH
+						predecessor.branchType = BranchType::TRUEBRANCH
        			    } else {
-//        			    predecessor.blockType =  BlockType::ELSEBRANCH
+       			    	predecessor.branchType = BranchType::ELSEBRANCH
        			    }
                     predecessor.conditional = lastNode as Conditional
                 }
@@ -458,7 +459,7 @@ class BasicBlockTransformation extends AbstractModelTransformation {
                 // Add the predecessor to the predecessors list.
                 predecessors.add(predecessor)
             }
-    	]
+    	}
     	
     	// Return the list.
     	predecessors

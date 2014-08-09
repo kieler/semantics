@@ -119,14 +119,14 @@ class SimpleSequentializer extends AbstractSequentializer {
          * basic blocks.
          */
         val newSCG = ScgFactory::eINSTANCE.createSCGraph
-		val predecessors = <Predecessor> newArrayList
-		val basicBlocks = <BasicBlock> newArrayList
+		val predecessorList = <Predecessor> newArrayList
+		val basicBlockList = <BasicBlock> newArrayList
         scg.copyDeclarations(newSCG)
        	val guardDeclaration = createDeclaration=>[ setType(ValueType::BOOL) ]
        	newSCG.declarations += guardDeclaration
         scg.basicBlocks.forEach[
-        	basicBlocks += it
-        	predecessors += it.predecessors
+        	basicBlockList += it
+        	predecessorList += it.predecessors
             schedulingBlocks.forEach[
                 val vo = createValuedObject(it.guard.name) => [ guardDeclaration.valuedObjects += it ]
                 it.guard.addToValuedObjectMapping(vo)
@@ -141,12 +141,12 @@ class SimpleSequentializer extends AbstractSequentializer {
 //        	guardExpressionCache.put(guard.valuedObject, guard)
 //        ]
 
-        predecessors.forEach[ p |
-            if (p.basicBlock.branchType == BranchType::TRUEBRANCH) {
-                p.cacheTwin(basicBlocks)
+        predecessorList.forEach[ p |
+            if (p.branchType == BranchType::TRUEBRANCH) {
+                p.cacheTwin(basicBlockList)
             } 
-            else if (p.basicBlock.branchType == BranchType::ELSEBRANCH) {
-                p.cacheTwin(basicBlocks)
+            else if (p.branchType == BranchType::ELSEBRANCH) {
+                p.cacheTwin(basicBlockList)
             }
         ]
         
@@ -522,12 +522,12 @@ class SimpleSequentializer extends AbstractSequentializer {
      */
     protected def Expression predecessorExpression(Predecessor predecessor, Schedule schedule, SCGraph scg) {
         // Return a solely reference as expression if the predecessor is not a conditional
-        if (predecessor.basicBlock.branchType == BranchType::NORMAL) {
+        if (predecessor.branchType == BranchType::NORMAL) {
             return predecessor.basicBlock.schedulingBlocks.head.guard.reference
         }
         // If we are in the true branch of the predecessor, combine the predecessor guard reference with
         // the condition of the conditional and return the expression.
-        else if (predecessor.basicBlock.branchType == BranchType::TRUEBRANCH) {
+        else if (predecessor.branchType == BranchType::TRUEBRANCH) {
             val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
             expression.setOperator(OperatorType::AND)
             expression.subExpressions += predecessor.basicBlock.schedulingBlocks.head.guard.reference
@@ -544,7 +544,7 @@ class SimpleSequentializer extends AbstractSequentializer {
         }
         // If we are in the true branch of the predecessor, combine the predecessor guard reference with
         // the negated condition of the conditional and return the expression.
-        else if (predecessor.basicBlock.branchType == BranchType::ELSEBRANCH) {
+        else if (predecessor.branchType == BranchType::ELSEBRANCH) {
             val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
             expression.setOperator(OperatorType::AND)
             expression.subExpressions += predecessor.basicBlock.schedulingBlocks.head.guard.reference

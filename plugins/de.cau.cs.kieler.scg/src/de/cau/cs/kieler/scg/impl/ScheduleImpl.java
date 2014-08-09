@@ -42,104 +42,104 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  */
 public class ScheduleImpl extends MinimalEObjectImpl.Container implements Schedule {
     /**
-     * The cached value of the '{@link #getSchedulingBlocks() <em>Scheduling Blocks</em>}' reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getSchedulingBlocks() <em>Scheduling Blocks</em>}' reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getSchedulingBlocks()
-     * @generated
-     * @ordered
-     */
+	 * @see #getSchedulingBlocks()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<SchedulingBlock> schedulingBlocks;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ScheduleImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return ScgPackage.Literals.SCHEDULE;
-    }
+		return ScgPackage.Literals.SCHEDULE;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<SchedulingBlock> getSchedulingBlocks() {
-        if (schedulingBlocks == null) {
-            schedulingBlocks = new EObjectResolvingEList<SchedulingBlock>(SchedulingBlock.class, this, ScgPackage.SCHEDULE__SCHEDULING_BLOCKS);
-        }
-        return schedulingBlocks;
-    }
+		if (schedulingBlocks == null) {
+			schedulingBlocks = new EObjectResolvingEList<SchedulingBlock>(SchedulingBlock.class, this, ScgPackage.SCHEDULE__SCHEDULING_BLOCKS);
+		}
+		return schedulingBlocks;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case ScgPackage.SCHEDULE__SCHEDULING_BLOCKS:
-                return getSchedulingBlocks();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case ScgPackage.SCHEDULE__SCHEDULING_BLOCKS:
+				return getSchedulingBlocks();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case ScgPackage.SCHEDULE__SCHEDULING_BLOCKS:
-                getSchedulingBlocks().clear();
-                getSchedulingBlocks().addAll((Collection<? extends SchedulingBlock>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case ScgPackage.SCHEDULE__SCHEDULING_BLOCKS:
+				getSchedulingBlocks().clear();
+				getSchedulingBlocks().addAll((Collection<? extends SchedulingBlock>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case ScgPackage.SCHEDULE__SCHEDULING_BLOCKS:
-                getSchedulingBlocks().clear();
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case ScgPackage.SCHEDULE__SCHEDULING_BLOCKS:
+				getSchedulingBlocks().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case ScgPackage.SCHEDULE__SCHEDULING_BLOCKS:
-                return schedulingBlocks != null && !schedulingBlocks.isEmpty();
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case ScgPackage.SCHEDULE__SCHEDULING_BLOCKS:
+				return schedulingBlocks != null && !schedulingBlocks.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //ScheduleImpl
