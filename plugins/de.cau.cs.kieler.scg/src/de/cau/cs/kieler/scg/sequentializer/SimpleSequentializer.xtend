@@ -93,6 +93,7 @@ class SimpleSequentializer extends AbstractSequentializer {
     protected val predecessorTwinCache = new HashMap<Predecessor, Predecessor>
     protected val predecessorBBCache = new HashMap<BasicBlock, List<Predecessor>>    
     protected val predecessorSBCache = new HashMap<Predecessor, List<SchedulingBlock>>
+    protected val predecessorTwinMark = <SchedulingBlock> newLinkedList
                
     // -------------------------------------------------------------------------
     // -- Transformation method
@@ -472,12 +473,12 @@ class SimpleSequentializer extends AbstractSequentializer {
             expr.setOperator(OperatorType::OR)
                     
             // For each predecessor add its expression to the sub expressions list of the operator expression.
-            basicBlock.predecessors.forEach[ expr.subExpressions += it.predecessorExpression(schedule, scg) ]
+            basicBlock.predecessors.forEach[ expr.subExpressions += it.predecessorExpression(schedulingBlock, schedule, scg) ]
             gExpr.expression = expr
         } 
         // If it is exactly one predecessor, we can use its expression directly.
         else if (basicBlock.predecessors.size == 1) {
-            gExpr.expression = basicBlock.predecessors.head.predecessorExpression(schedule, scg)
+            gExpr.expression = basicBlock.predecessors.head.predecessorExpression(schedulingBlock, schedule, scg)
         } 
         else 
         {
@@ -524,7 +525,7 @@ class SimpleSequentializer extends AbstractSequentializer {
      * @throws UnsupportedSCGException
      *      Throws an UnsupportedSCGException if the predecessor does not contain sufficient information to form the expression.
      */
-    protected def Expression predecessorExpression(Predecessor predecessor, Schedule schedule, SCGraph scg) {
+    protected def Expression predecessorExpression(Predecessor predecessor, SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
         // Return a solely reference as expression if the predecessor is not a conditional
         if (predecessor.branchType == BranchType::NORMAL) {
             return predecessor.basicBlock.schedulingBlocks.head.guard.reference
@@ -540,9 +541,10 @@ class SimpleSequentializer extends AbstractSequentializer {
             // Conditional branches are mutual exclusive. Since the other branch may modify the condition 
             // make sure the subsequent branch will not evaluate to true if the first one was already taken.
             val twin = predecessor.getSchedulingBlockTwin(BranchType::ELSEBRANCH, schedule, scg)
-            if (schedule.schedulingBlocks.contains(twin)) {
+            if (schedule.schedulingBlocks.contains(twin) && predecessorTwinMark.contains(twin)) {
                 expression.subExpressions.add(0, twin.guard.reference.negate)
             } 
+            predecessorTwinMark.add(schedulingBlock)
             
             return expression.fix
         }
@@ -557,9 +559,10 @@ class SimpleSequentializer extends AbstractSequentializer {
             // Conditional branches are mutual exclusive. Since the other branch may modify the condition 
             // make sure the subsequent branch will not evaluate to true if the first one was already taken.
             val twin = predecessor.getSchedulingBlockTwin(BranchType::TRUEBRANCH, schedule, scg)
-            if (schedule.schedulingBlocks.contains(twin)) {
+            if (schedule.schedulingBlocks.contains(twin) && predecessorTwinMark.contains(twin)) {
                 expression.subExpressions.add(0, twin.guard.reference.negate)
             } 
+            predecessorTwinMark.add(schedulingBlock)
 
             return expression.fix
         }
