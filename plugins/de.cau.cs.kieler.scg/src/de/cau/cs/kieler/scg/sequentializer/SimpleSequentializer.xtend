@@ -141,6 +141,10 @@ class SimpleSequentializer extends AbstractSequentializer {
 //        	guardExpressionCache.put(guard.valuedObject, guard)
 //        ]
 
+        var time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("Preparation for sequentialization: caches finished (time elapsed: "+(time / 1000)+"s).")          
+
+
         predecessorList.forEach[ p |
             if (p.branchType == BranchType::TRUEBRANCH) {
                 p.cacheTwin(basicBlockList)
@@ -152,7 +156,7 @@ class SimpleSequentializer extends AbstractSequentializer {
         
 //        scg.createSchedulingBlockCache(schedulingBlockCache)
         
-        var time = (System.currentTimeMillis - timestamp) as float
+        time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Preparation for sequentialization finished (time elapsed: "+(time / 1000)+"s).")          
         
 		// Create the entry node, a control flow for the entry node, add the node.
@@ -583,14 +587,19 @@ class SimpleSequentializer extends AbstractSequentializer {
             predecessorTwinCache.put(fPred, predecessor)
             predecessorTwinCache.put(predecessor, fPred)
             
+            
             val sbList1 = <SchedulingBlock> newArrayList
 //            bb.schedulingBlocks.forEach[ sbList1 += it ]
-            sbList1 += basicBlocks.filter[ it.predecessors.contains(fPred) ].head.schedulingBlocks.head
+//            sbList1 += basicBlocks.filter[ it.predecessors.contains(fPred) ].head.schedulingBlocks.head
+            val basicBlock1 = fPred.eContainer as BasicBlock
+            sbList1 += basicBlock1.schedulingBlocks.head
             predecessorSBCache.put(fPred, sbList1)
             
             val sbList2 = <SchedulingBlock> newArrayList
 //            bb.schedulingBlocks.forEach[ sbList2 += it ]
-            sbList2 += basicBlocks.filter[ it.predecessors.contains(predecessor) ].head.schedulingBlocks.head
+//            sbList2 += basicBlocks.filter[ it.predecessors.contains(predecessor) ].head.schedulingBlocks.head
+            val basicBlock2 = predecessor.eContainer as BasicBlock
+            sbList2 += basicBlock2.schedulingBlocks.head
             predecessorSBCache.put(predecessor, sbList2)
         }
     }
