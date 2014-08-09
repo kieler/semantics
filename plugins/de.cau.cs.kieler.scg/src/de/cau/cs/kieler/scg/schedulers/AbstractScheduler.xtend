@@ -24,6 +24,8 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.Schedule
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.scg.SchedulingBlock
+import java.util.List
 
 /** 
  * This class is part of the SCG transformation chain. In particular a scheduler performs additional 
@@ -88,7 +90,7 @@ abstract class AbstractScheduler extends Transformation {
     
     protected abstract def SchedulingConstraints orderSchedulingBlocks(SCGraph scg);
     
-    protected abstract def boolean createSchedule(SCGraph scg, Schedule schedule, SchedulingConstraints constraints);
+    protected abstract def boolean createSchedule(SCGraph scg, List<SchedulingBlock> schedule, SchedulingConstraints constraints);
     
     override transform(EObject eObject, KielerCompilerContext context) {
 		return schedule(eObject as SCGraph, context)

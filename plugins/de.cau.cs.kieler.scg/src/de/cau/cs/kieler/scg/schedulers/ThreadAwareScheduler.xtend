@@ -112,7 +112,7 @@ class ThreadAwareScheduler extends SimpleScheduler {
 	
     protected def int topologicalClusterPlacement(SchedulingBlock schedulingBlock, 
         int clusterPos, 
-        List<SchedulingBlock> schedulingBlocks, Schedule schedule, 
+        List<SchedulingBlock> schedulingBlocks, List<SchedulingBlock> schedule, 
         SchedulingConstraints constraints, List<SchedulingBlock> visited, SCGraph scg
     ) {
         var placed = 0 as int
@@ -133,7 +133,7 @@ class ThreadAwareScheduler extends SimpleScheduler {
             }
             
             if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg)) {
-                schedule.schedulingBlocks.add(schedulingBlock)
+                schedule.add(schedulingBlock)
                 // TODO: Revamp guards
                 // scg.guards += schedulingBlock.createGuardExpression(schedule, scg)
 //                schedulingBlocks.remove(schedulingBlock)
@@ -146,7 +146,7 @@ class ThreadAwareScheduler extends SimpleScheduler {
     }	
 	
 	
-    protected override boolean createSchedule(SCGraph scg, Schedule schedule, SchedulingConstraints constraints) {
+    protected override boolean createSchedule(SCGraph scg, List<SchedulingBlock> schedule, SchedulingConstraints constraints) {
         // fixpoint is set to true if an iteration cannot set any remaining blocks.
         var fixpoint  = false
         

@@ -87,7 +87,7 @@ class SimpleScheduler extends AbstractScheduler {
     private var PROGRESS_SCGSIZE = 0;
     private var PROGRESS_PLACED = 0;
     
-    private val List<SchedulingBlock> TSVISITED = <SchedulingBlock> newArrayList; 
+    private val tsVisited = <SchedulingBlock, Boolean> newHashMap 
     private val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
     
 
@@ -160,7 +160,7 @@ class SimpleScheduler extends AbstractScheduler {
     }
     
     protected def boolean isPlaceable(SchedulingBlock schedulingBlock, List<SchedulingBlock> remainingBlocks, 
-    	Schedule schedule, SCGraph scg
+    	List<SchedulingBlock> schedule, SCGraph scg
     ) {
        	// Assume all preconditions are met and query parent basic block.
         val parentBB = schedulingBlock.eContainer as BasicBlock
@@ -170,7 +170,7 @@ class SimpleScheduler extends AbstractScheduler {
             for(sb : pred.basicBlock.schedulingBlocks){
            	// If any scheduling block of that basic block is not already in our schedule,
            	// the precondition test fails. Set placeable to false.
-	            if (!schedule.schedulingBlocks.contains(sb)) { return false }
+	            if (!schedule.contains(sb)) { return false }
             }
         }
                 
@@ -181,7 +181,7 @@ class SimpleScheduler extends AbstractScheduler {
            	// If the interleaved assignment analyzer marked this dependency as interleaving, ignore it.
 //    	       	if (scg.analyses.filter[ id == interleavedAssignmentAnalyzerId ].filter[ objectReferences.contains(dep) ].empty) 
 					val sb = schedulingBlockCache.get(dep.eContainer as Node)
-	    	      	if (!schedule.schedulingBlocks.contains(sb)) { return false }
+	    	      	if (!schedule.contains(sb)) { return false }
             }
     	}
     	
@@ -189,30 +189,32 @@ class SimpleScheduler extends AbstractScheduler {
     }
     
     protected def int topologicalPlacement(SchedulingBlock schedulingBlock, 
-        List<SchedulingBlock> schedulingBlocks, Schedule schedule, 
+        List<SchedulingBlock> schedulingBlocks, List<SchedulingBlock> schedule, 
         SchedulingConstraints constraints, SCGraph scg
     ) {
         var placed = 0 as int
-        if (!TSVISITED.contains(schedulingBlock)) {
-            TSVISITED.add(schedulingBlock)
+        if (tsVisited.get(schedulingBlock) == null) {
+            tsVisited.put(schedulingBlock, true)
             for(pred : schedulingBlock.basicBlock.predecessors) {
                 for (sb : pred.basicBlock.schedulingBlocks) {
-                    sb.topologicalPlacement(schedulingBlocks, schedule, constraints, scg)
+                	if (tsVisited.get(sb) == null)
+                   		 sb.topologicalPlacement(schedulingBlocks, schedule, constraints, scg)
                 }
             }
             for(dep : schedulingBlock.dependencies) {
                 if (dep.concurrent && !dep.confluent) {
 //                    if (scg.analyses.filter[ id == interleavedAssignmentAnalyzerId ].filter[ objectReferences.contains(dep) ].empty) 
 						val sb = schedulingBlockCache.get(dep.eContainer as Node)
-                        sb.topologicalPlacement(schedulingBlocks, schedule, constraints, scg) 
+						if (tsVisited.get(sb) == null)
+                       	    sb.topologicalPlacement(schedulingBlocks, schedule, constraints, scg) 
                 }
             }
             
-            if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg) && !schedule.schedulingBlocks.contains(schedulingBlock)) {
-                schedule.schedulingBlocks.add(schedulingBlock)
+//            if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg) && !schedule.schedulingBlocks.contains(schedulingBlock)) {
+                schedule.add(schedulingBlock)
                 // TODO: Revamp guards
                 // scg.guards += schedulingBlock.createGuardExpression(schedule, scg)
-                schedulingBlocks.remove(schedulingBlock)
+//                schedulingBlocks.remove(schedulingBlock)
                 placed = placed + 1
                 PROGRESS_PLACED = PROGRESS_PLACED + 1
                 if (PROGRESS_PLACED % 1000 == 0) {
@@ -221,13 +223,13 @@ class SimpleScheduler extends AbstractScheduler {
                 if (PROGRESS_PLACED % 20000 == 0) {
                     System.out.println("");
                 }
-            }
+//            }
         } 
         
         placed
     }
     
-    protected override boolean createSchedule(SCGraph scg, Schedule schedule, SchedulingConstraints constraints) {
+    protected override boolean createSchedule(SCGraph scg, List<SchedulingBlock> schedule, SchedulingConstraints constraints) {
 
         val schedulingBlocks = <SchedulingBlock> newArrayList => [ it.addAll(constraints.schedulingBlocks) ]
         
@@ -236,13 +238,14 @@ class SimpleScheduler extends AbstractScheduler {
         PROGRESS_SCGSIZE = schedulingBlocksCopy.size
         PROGRESS_PLACED = 0
         System.out.println("Scheduling "+PROGRESS_SCGSIZE+" scheduling blocks...")
-        TSVISITED.clear
+        tsVisited.clear
         
         for (sb : schedulingBlocksCopy) {
-            sb.topologicalPlacement(schedulingBlocks, schedule, constraints, scg)
+        	if (tsVisited.get(sb) == null)
+                sb.topologicalPlacement(schedulingBlocks, schedule, constraints, scg)
         }
         
-        schedule.schedulingBlocks.size == schedulingBlocksCopy.size
+        schedule.size == schedulingBlocksCopy.size
     }
 	
 
@@ -271,7 +274,9 @@ class SimpleScheduler extends AbstractScheduler {
         
         scg.createSchedulingBlockCache(schedulingBlockCache)
         
-        val schedulable = scg.createSchedule(schedule, schedulingConstraints)
+        val sbList = <SchedulingBlock> newLinkedList
+        val schedulable = scg.createSchedule(sbList, schedulingConstraints)
+        schedule.schedulingBlocks += sbList
         
         // Print out results on the console
         // and add the scheduling information to the graph.
