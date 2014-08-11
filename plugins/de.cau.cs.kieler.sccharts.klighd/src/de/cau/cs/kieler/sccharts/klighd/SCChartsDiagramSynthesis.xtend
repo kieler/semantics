@@ -421,7 +421,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 ]
             else if (s.isFinal)
                 figure.addRoundedRectangle(cornerRadius, cornerRadius) => [
-                    it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50);
+                    it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.30);
                     // re-configure the outer rounded rectangle
                     val offset = figure.lineWidthValue + if(s.isInitial) 1 else 2;
                     figure.setCornerSize(offset + cornerRadius, offset + cornerRadius)
@@ -512,7 +512,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 if (s.hasRegionsOrDeclarations(valuedObjectCache) || s.referencedState) {
                     
                     if (s.hasNoRegionsWithStates) 
-                        figure.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.025);
+                        figure.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.075);
                     // Get a smaller window-title-bare if this a macro state 
                     if (!s.label.empty)
                         it.addRectangle => [
@@ -526,7 +526,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                                 text = text + ' @ ' + (s.referencedScope as State).label
                             val ktext = it.addText("   " + text + prioritySpace + " ").putToLookUpWith(s) => [
                                 it.fontSize = 11;
-                                it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.34);
+                                it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.49);
                                ];
                             if (priorityToShow.length > 0) {
                                 val estimatedWidth = PlacementUtil.estimateTextSize(ktext).width
@@ -544,10 +544,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                             }
                         ];
                 } else {
-                    figure.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.5);
+                    figure.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.20);
                     // For simple states we want a larger area 
                     val ktext = it.addText(" " + s.label + prioritySpace).putToLookUpWith(s) => [
-                        it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50);
+                        it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.40);
                         it.fontSize = 11;
                         it.setFontBold(true);
                         if (PAPER_BW.booleanValue) {
@@ -571,50 +571,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                         ]
                     }
                 }
-                // TODO: Make use of the new type groups and organize visualization accordingly!
-                //                if (SHOW_SIGNAL_DECLARATIONS.booleanValue) {
-                //                    for (sig : s.declarations.valuedObjects) {
-                //                        it.addRectangle => [
-                //                            it.invisible = true;
-                //                            it.addRectangle => [
-                //                                it.invisible = true;
-                //                                it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0,
-                //                                    0);
-                //                                scopeProvider.parent = s;
-                //                                var declaration = "";
-                //                                var type = "";
-                //                                var init = "";
-                //                                var combine = "";
-                //                                if (sig.type != ValueType::PURE) {
-                //                                    type = sig.type.literal.toLowerCase + " "
-                //                                }
-                //                                if (sig.combineOperator != null && sig.combineOperator != CombineOperator::NONE) {
-                //                                    combine = " combine " + sig.combineOperator.literal.toLowerCase
-                //                                }
-                //                                if (sig.initialValue != null) {
-                //                                    init = " = " + serializer.serialize(sig.initialValue.copy)
-                //                                }
-                //                                if (sig.isInput) {
-                //                                    declaration = declaration + "input ";
-                //                                }
-                //                                if (sig.isOutput) {
-                //                                    declaration = declaration + "output "
-                //                                }
-                //                                if (sig.isSignal) {
-                //                                    declaration = declaration + "signal ";
-                //                                }
-                //                                if (sig.isStatic) {
-                //                                    declaration = declaration + "static ";
-                //                                }
-                //                                if (!declaration.equals("")) {
-                //                                    declaration = declaration.trim + " "
-                //                                }
-                //                                it.printHighlightedText(declaration + type + sig.name + init + combine, sig)
-                //                            ];
-                //                        ];
-                //                    }
-                //
-                //                }
                 if (SHOW_SIGNAL_DECLARATIONS.booleanValue) {
                     for (tg : s.declarations) {
                         it.addRectangle => [
@@ -751,7 +707,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             edge.source = t.sourceState.node;
             edge.target = t.targetState.node;
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-            edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.07);
+            edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.11);
             edge.addSpline(2) => [
                 // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
                 if (t.isImmediate2) {
