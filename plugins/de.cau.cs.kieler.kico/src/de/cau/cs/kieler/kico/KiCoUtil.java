@@ -102,6 +102,7 @@ public class KiCoUtil {
             if (specificExtension.getSecond()) {
                 extensionKeyList.clear();
             } else {
+                extensionKeyList.clear();
                 extensionKeyList.add(0, specificExtension.getFirst());
             }
         }
