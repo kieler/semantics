@@ -385,6 +385,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
         // Invoke the synthesis.
         val timestamp = System.currentTimeMillis
+        System.out.println("Started SCG synthesis...")
         val newModel = model.synthesize();
         var time = (System.currentTimeMillis - timestamp) as float
         System.out.println("SCG synthesis finished (time elapsed: "+(time / 1000)+"s).")  

@@ -69,6 +69,7 @@ import org.eclipse.xtext.serializer.ISerializer
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
@@ -182,6 +183,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
     private static val KColor DARKGRAY = RENDERING_FACTORY.createKColor() => [it.red = 60; it.green = 60; it.blue = 60];
 
     private static val String ANNOTATION_LABELBREAK = "break"
+    
+    private var regionCounter = 0
 
     // -------------------------------------------------------------------------
     // The Main entry transform function   
@@ -195,17 +198,25 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
         //        transformed = KielerCompiler.compile(transformations, transformed, KiCoSelectionView.advancedMode) as Region
         //        // ---------
 //        return transformed.translate();
-
-        return createNode() => [
+		val timestamp = System.currentTimeMillis
+		System.out.println("Started SCCharts synthesis...")
+        val rootNode = createNode() => [
             addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot") 
             addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES)
             children += model.translate
         ] 
+        var time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("SCCharts synthesis finished (time elapsed: "+(time / 1000)+"s).")
+        
+        return rootNode
     }
 
     // -------------------------------------------------------------------------
     // Transform a region
     public def dispatch KNode translate(Region r) {
+    	regionCounter = regionCounter + 1
+    	if (regionCounter % 100 == 0) System.out.print("r")
+    	if (regionCounter % 2000 == 0) System.out.println("")
         return r.createNode().putToLookUpWith(r) => [ node |
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot")
             node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES)
@@ -241,7 +252,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
-                if (!r.allContainedStates.nullOrEmpty) {
+                if (!r.notEmpty) {
+//                if (!r.allContainedStates.nullOrEmpty) {
                     it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
                 }
             ];
@@ -258,25 +270,25 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
-                if (!r.allContainedStates.nullOrEmpty) {
+                if (!r.notEmpty) {
                     it.addRectangle().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).invisible = true;
                 }
             ]
-        ];
+        ]
     }
 
     // -------------------------------------------------------------------------
     // Helper functions
     // Returns true if the state has no regions that contain any further states.
     def boolean hasNoRegionsWithStates(State state) {
-        return (state.regions == null || state.regions.size == 0 || state.eAllContents.filter(typeof(State)).size == 0)
+        return (state.regions == null || state.regions.size == 0 || !state.regionsNotEmpty)
     }
 
     // Tells if the state needs a macro state rendering because of regions or declarations.
-    def boolean hasRegionsOrDeclarations(State state) {
+    def boolean hasRegionsOrDeclarations(State state, List<ValuedObject> valuedObjectCache) {
         val returnValue = (!state.hasNoRegionsWithStates ||
             (!state.localActions.nullOrEmpty && SHOW_STATE_ACTIONS.booleanValue) ||
-            (!state.valuedObjects.nullOrEmpty && SHOW_SIGNAL_DECLARATIONS.booleanValue))
+            (!valuedObjectCache.nullOrEmpty && SHOW_SIGNAL_DECLARATIONS.booleanValue))
         return returnValue
     }
 
@@ -368,6 +380,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 dependencyGraph = s.getRootState.getDependencyGraph
             }
         }
+        
+        val valuedObjectCache = s.getAllValuedObjects
 
         return s.createNode().putToLookUpWith(s) => [ node |
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box")
@@ -376,7 +390,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 node.setParent(node.parent)
             }
             val connector = s.type == StateType::CONNECTOR;
-            val cornerRadius = if(connector) 7 else if(!s.hasRegionsOrDeclarations && !s.referencedState) 17 else 8;
+            val cornerRadius = if(connector) 7 else if(!s.hasRegionsOrDeclarations(valuedObjectCache) && !s.referencedState) 17 else 8;
             var lineWidth = if(s.isInitial) 3 else 1;
             if (PAPER_BW.booleanValue) {
                 lineWidth = lineWidth + 1;
@@ -446,7 +460,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                     return;
                 }
                 //                it.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
-                if (s.hasRegionsOrDeclarations || s.isReferencedState) {
+                if (s.hasRegionsOrDeclarations(valuedObjectCache) || s.isReferencedState) {
                     it.setGridPlacement(1);
                 }
                 var priority = ""
@@ -495,7 +509,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 }
                 val priorityToShow = priority
                 val prioritySpace = if(priorityToShow.length > 0) "  " else " "
-                if (s.hasRegionsOrDeclarations || s.referencedState) {
+                if (s.hasRegionsOrDeclarations(valuedObjectCache) || s.referencedState) {
                     
                     if (s.hasNoRegionsWithStates) 
                         figure.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.025);
@@ -697,7 +711,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
 //                        ];
 //                    }
                 }
-                if (s.hasRegionsOrDeclarations || s.referencedState) {
+                if (s.hasRegionsOrDeclarations(valuedObjectCache) || s.referencedState) {
                     it.addChildArea().setGridPlacementData() => [
                         from(LEFT, 3, 0, TOP, 3, 0).to(RIGHT, 3, 0, BOTTOM, 3, 0)
                         minCellHeight = 5;

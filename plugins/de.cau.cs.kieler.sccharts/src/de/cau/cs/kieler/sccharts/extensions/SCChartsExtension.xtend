@@ -121,6 +121,12 @@ class SCChartsExtension {
     def List<Assignment> getAllContainedAssignments(Action action) {
         action.eAllContents().filter(typeof(Assignment)).toList();
     }
+    
+    def getAllValuedObjects(State state) {
+    	<ValuedObject> newLinkedList => [ ll |
+    		state.declarations.forEach[ d | d.valuedObjects.forEach [ ll += it ]]
+    	]
+    }
 
     // Return the list of pure signals of a state.
     def List<ValuedObject> getPureSignals(State state) {
