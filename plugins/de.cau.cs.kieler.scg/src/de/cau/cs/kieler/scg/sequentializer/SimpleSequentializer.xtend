@@ -84,6 +84,8 @@ class SimpleSequentializer extends AbstractSequentializer {
     // -- Globals
     // -------------------------------------------------------------------------
            
+    private val ELISTDEBUG = true           
+           
 //    private val AdditionalConditionals = new HashMap<ConditionalAddition, Conditional>         
     
     protected val guardExpressionCache = new HashMap<ValuedObject, GuardExpression>   
@@ -129,7 +131,8 @@ class SimpleSequentializer extends AbstractSequentializer {
         	basicBlockList += it
         	predecessorList += it.predecessors
             schedulingBlocks.forEach[
-                val vo = createValuedObject(it.guard.name) => [ guardDeclaration.valuedObjects += it ]
+                val vo = createValuedObject(it.guard.name) 
+                    => [ guardDeclaration.valuedObjects += it ]
                 it.guard.addToValuedObjectMapping(vo)
         		it.nodes.forEach[ node | schedulingBlockCache.put(node, it) ]
             ]
@@ -247,7 +250,8 @@ class SimpleSequentializer extends AbstractSequentializer {
     			nextFlows.clear
     			
     			// Add the conditional.
-    			nodeCache.add(conditional)
+    			if (ELISTDEBUG) scg.nodes += conditional else
+    			  nodeCache.add(conditional)
     			
     			// Now, use the SCG copy extensions to copy the assignment and connect them appropriately
     			// in the true branch of the conditional.
@@ -255,7 +259,8 @@ class SimpleSequentializer extends AbstractSequentializer {
     			for (assignment : sb.nodes.filter(typeof(Assignment))) {
     				val Assignment cAssignment = assignment.copySCGNode(scg) as Assignment
     				nextCFlow.target = cAssignment
-    				nodeCache.add(cAssignment)
+                    if (ELISTDEBUG) scg.nodes += cAssignment else
+    				  nodeCache.add(cAssignment)
     				nextCFlow = ScgFactory::eINSTANCE.createControlFlow
     				cAssignment.next = nextCFlow
     			}
@@ -292,7 +297,8 @@ class SimpleSequentializer extends AbstractSequentializer {
             val eeAssignment = ScgFactory::eINSTANCE.createAssignment
             eeAssignment.valuedObject = it.valuedObject.getValuedObjectCopy
             eeAssignment.assignment = it.expression.copySCGExpression
-            nodeCache.add(eeAssignment)
+            if (ELISTDEBUG) scg.nodes += eeAssignment else
+              nodeCache.add(eeAssignment)
             nextFlows.forEach[it.target = eeAssignment]
             nextFlows.clear                 
             val nextFlow = ScgFactory::eINSTANCE.createControlFlow
@@ -393,7 +399,8 @@ class SimpleSequentializer extends AbstractSequentializer {
         nextFlows.add(nextFlow)
             
         // Add the assignment to the SCG.
-        nodeCache.add(assignment)
+        if (ELISTDEBUG) scg.nodes += assignment else
+          nodeCache.add(assignment)
     }
     
     

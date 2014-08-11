@@ -79,6 +79,8 @@ class SimpleScheduler extends AbstractScheduler {
     // -- Globals 
     // -------------------------------------------------------------------------
     
+    private val boolean ELISTDEBUG = false
+    
     /** Storage space for the interleaved assignment analyzer id. */
     protected var String interleavedAssignmentAnalyzerId = ""
     
@@ -282,10 +284,13 @@ class SimpleScheduler extends AbstractScheduler {
         System.out.println("Scheduling "+PROGRESS_SCGSIZE+" scheduling blocks...")
         tsVisited.clear
         
+        val timestamp = System.currentTimeMillis          
         for (sb : schedulingBlocksCopy) {
         	if (tsVisited.get(sb) == null)
                 sb.topologicalPlacement(schedulingBlocks, schedule, constraints, scg)
         }
+        val time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("Scheduling finished (time elapsed: "+(time / 1000)+"s).")              
         
         schedule.size == schedulingBlocksCopy.size
     }
@@ -339,7 +344,12 @@ class SimpleScheduler extends AbstractScheduler {
         scg.createSchedulingBlockCache(schedulingBlockCache)
         
         val sbList = <SchedulingBlock> newLinkedList
-        val schedulable = scg.createSchedule(sbList, schedulingConstraints)
+        var boolean schedulable
+        if (ELISTDEBUG) {
+            schedulable = scg.createScheduleTest(schedule, schedulingConstraints)
+        } else {
+            schedulable = scg.createSchedule(sbList, schedulingConstraints)
+        }
         schedule.schedulingBlocks += sbList
         
         // Print out results on the console
