@@ -87,14 +87,16 @@ class SCGToSTransformation {
             name = "Tick"
             sProgram.states += it
         ]
+        val instructionCache = <Instruction> newLinkedList
         
 		nodeList += scg.nodes.head
 		
 		while(!nodeList.empty) {
 			val node = nodeList.head
 			nodeList.remove(0)
-			node.transform(tickState.instructions)
+			node.transform(instructionCache)
 		}
+		tickState.instructions += instructionCache
 		
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("S transformation finished (time used overall: "+(time / 1000)+"s).")  
@@ -131,7 +133,7 @@ class SCGToSTransformation {
     	    instructions += sAssignment
     	}
 	    
-	    if (assignment.next != null) assignment.next.target.transform(instructions)
+	    if (assignment.next != null) nodeList += assignment.next.target
 	}
 	
 	private def dispatch void transform(Conditional conditional, List<Instruction> instructions) {
@@ -141,7 +143,7 @@ class SCGToSTransformation {
         sIf.expression = conditional.condition.copyExpression
         instructions += sIf
         
-        if (conditional.^else != null) conditional.^else.target.transform(instructions)     
+        if (conditional.^else != null) nodeList += conditional.^else.target     
         if (conditional.then != null) conditional.then.target.transform(sIf.instructions)        
 	}
 	
