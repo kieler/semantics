@@ -17,7 +17,9 @@ import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.SuspendAction;
 
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EClass;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
@@ -50,6 +52,7 @@ public class SuspendActionImpl extends LocalActionImpl implements SuspendAction 
      * @ordered
      */
     protected static final boolean WEAK_EDEFAULT = false;
+
     /**
      * The cached value of the '{@link #isWeak() <em>Weak</em>}' attribute.
      * <!-- begin-user-doc -->

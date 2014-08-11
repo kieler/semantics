@@ -42,7 +42,7 @@ Workflow {
 			fragment = grammarAccess.GrammarAccessFragment {}
 			
 			// generates Java API for the generated EPackages
-			// fragment = ecore.EcoreGeneratorFragment { referencedGenModels = "platform:/resource/de.cau.cs.kieler.sccharts/model/sccharts.genmodel" }
+			fragment = ecore.EMFGeneratorFragment {} //referencedGenModels = "platform:/resource/de.cau.cs.kieler.sccharts/model/sccharts.genmodel" }
 			
 			// the serialization component
 			// Old serializer			
@@ -71,13 +71,13 @@ Workflow {
             }
             
 			// scoping and exporting API
-			fragment = scoping.ImportURIScopingFragment {}
+			// fragment = scoping.ImportURIScopingFragment {}
             // fragment = exporting.SimpleNamesFragment {} -- chsch: seems to be abolished in 3.7.1
 			
 			// scoping and exporting API 
 			
-			// fragment = scoping.ImportNamespacesScopingFragment {}
-			// fragment = exporting.QualifiedNamesFragment {}
+			fragment = scoping.ImportNamespacesScopingFragment {}
+			fragment = exporting.QualifiedNamesFragment {}
 
 
 			// formatter API 
@@ -101,7 +101,8 @@ Workflow {
 				}
 			}
 
-			//fragment = builder.BuilderIntegrationFragment {}
+            // This fragment introduces the registration of the NatureAddingCallback. 
+			fragment = builder.BuilderIntegrationFragment {}
 
 			// project wizard (optional) 
 			

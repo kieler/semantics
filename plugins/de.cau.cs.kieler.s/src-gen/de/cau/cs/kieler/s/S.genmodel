@@ -10,13 +10,13 @@
     <genClasses ecoreClass="S.ecore#//Program">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//Program/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//Program/priority"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Program/valuedObjects"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Program/declarations"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//Program/globalHostCodeInstruction"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Program/states"/>
     </genClasses>
     <genClasses ecoreClass="S.ecore#//State">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//State/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//State/valuedObjects"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//State/declarations"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//State/instructions"/>
     </genClasses>
     <genClasses ecoreClass="S.ecore#//HostCodeInstruction">
@@ -25,6 +25,7 @@
     <genClasses ecoreClass="S.ecore#//Instruction"/>
     <genClasses ecoreClass="S.ecore#//Assignment">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Assignment/variable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Assignment/indices"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Assignment/expression"/>
     </genClasses>
     <genClasses ecoreClass="S.ecore#//Prio">

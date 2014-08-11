@@ -40,6 +40,12 @@ import de.cau.cs.kieler.s.s.Fork
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Halt
 import de.cau.cs.kieler.s.s.Prio
+import org.eclipse.emf.common.util.EList
+import java.util.ArrayList
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import com.google.inject.Inject
+import de.cau.cs.kieler.s.s.HostCodeInstruction
+import de.cau.cs.kieler.core.kexpressions.TextExpression
 
 /**
  * S Extensions. 
@@ -49,6 +55,10 @@ import de.cau.cs.kieler.s.s.Prio
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class SExtension { 
+    
+    @Inject
+    extension KExpressionsExtension
+    
 
     // This prefix is used for namings of all generated signals, states and regions
     static final String GENERATED_PREFIX = "_"
@@ -156,6 +166,22 @@ class SExtension {
         emitInstruction.setSignal(valuedObject)
         emitInstruction
     }
+
+    // Create host code instruction.
+    def HostCodeInstruction createHostCode(String hostCodeString) {
+        val hostCodeInstruction = SFactory::eINSTANCE.createHostCodeInstruction
+//        hostCodeInstruction.setHostCode(createTextExpression => [ text = hostCodeString ])
+        hostCodeInstruction.setHostCode("'" + hostCodeString + "'")
+        hostCodeInstruction
+    }
+
+    // Create host code instruction.
+//    def HostCodeInstruction createHostCode(TextExpression hostCode) {
+//        val hostCodeInstruction = SFactory::eINSTANCE.createHostCodeInstruction
+////        hostCodeInstruction.setHostCode(hostCode)
+////        hostCodeInstruction.setHostCode("'" + hostCodeString + "'")
+//        hostCodeInstruction
+//    }
     
     // Create a valued emission.
     def Emit createEmit(ValuedObject valuedObject, Expression expression) {

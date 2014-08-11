@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.xtext.validation.ComposedChecks;
 
-@ComposedChecks(validators= {org.eclipse.xtext.validation.ImportUriValidator.class})
 public class AbstractSJavaValidator extends de.cau.cs.kieler.core.kexpressions.validation.KExpressionsJavaValidator {
 
 	@Override

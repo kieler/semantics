@@ -9,6 +9,7 @@ import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.scg.SCGTransformation;
 import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
 import de.cau.cs.kieler.scg.SCGPlugin;
@@ -55,7 +56,7 @@ public class SCChartsModelFileHandler extends AbstractConvertModelHandler {
         // refactored model).
         transformed = model;
         if (commandString.equals(SCG_TRANSFORMATION)) {
-            transformed = transformation.transformSCG((Region) model);
+            transformed = transformation.transformSCG((State) model);
         } 
         return transformed;
     }
@@ -70,7 +71,7 @@ public class SCChartsModelFileHandler extends AbstractConvertModelHandler {
 
     protected boolean doOpenEditor(final Object modelObject, final ExecutionEvent event,
             final ISelection selection) {
-        return true;
+        return false;
     }
 
     // -------------------------------------------------------------------------

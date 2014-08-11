@@ -182,26 +182,26 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Substitution} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Binding} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected SubstitutionItemProvider substitutionItemProvider;
+    protected BindingItemProvider bindingItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Substitution}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Binding}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
-    public Adapter createSubstitutionAdapter() {
-        if (substitutionItemProvider == null) {
-            substitutionItemProvider = new SubstitutionItemProvider(this);
+    public Adapter createBindingAdapter() {
+        if (bindingItemProvider == null) {
+            bindingItemProvider = new BindingItemProvider(this);
         }
 
-        return substitutionItemProvider;
+        return bindingItemProvider;
     }
 
     /**
@@ -271,6 +271,29 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
         }
 
         return textEffectItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.FunctionCallEffect} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected FunctionCallEffectItemProvider functionCallEffectItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.FunctionCallEffect}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createFunctionCallEffectAdapter() {
+        if (functionCallEffectItemProvider == null) {
+            functionCallEffectItemProvider = new FunctionCallEffectItemProvider(this);
+        }
+
+        return functionCallEffectItemProvider;
     }
 
     /**
@@ -363,6 +386,29 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
         }
 
         return suspendActionItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.For} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ForItemProvider forItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.For}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createForAdapter() {
+        if (forItemProvider == null) {
+            forItemProvider = new ForItemProvider(this);
+        }
+
+        return forItemProvider;
     }
 
     /**
@@ -467,15 +513,17 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
         if (actionItemProvider != null) actionItemProvider.dispose();
         if (assignmentItemProvider != null) assignmentItemProvider.dispose();
         if (emissionItemProvider != null) emissionItemProvider.dispose();
-        if (regionItemProvider != null) regionItemProvider.dispose();
-        if (substitutionItemProvider != null) substitutionItemProvider.dispose();
         if (stateItemProvider != null) stateItemProvider.dispose();
+        if (regionItemProvider != null) regionItemProvider.dispose();
+        if (bindingItemProvider != null) bindingItemProvider.dispose();
         if (transitionItemProvider != null) transitionItemProvider.dispose();
         if (textEffectItemProvider != null) textEffectItemProvider.dispose();
+        if (functionCallEffectItemProvider != null) functionCallEffectItemProvider.dispose();
         if (entryActionItemProvider != null) entryActionItemProvider.dispose();
         if (duringActionItemProvider != null) duringActionItemProvider.dispose();
         if (exitActionItemProvider != null) exitActionItemProvider.dispose();
         if (suspendActionItemProvider != null) suspendActionItemProvider.dispose();
+        if (forItemProvider != null) forItemProvider.dispose();
     }
 
 }

@@ -17,11 +17,10 @@ import com.google.inject.Singleton
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.scoping.KExpressionsScopeProvider
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scgbb.SCGraphBB
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.IScope
-import org.eclipse.xtext.scoping.Scopes
+import org.eclipse.xtext.scoping.Scopesimport java.util.List
 
 /** 
  * Specialized SCG KExpression scope provider
@@ -37,6 +36,7 @@ import org.eclipse.xtext.scoping.Scopes
 class SCGKExpressionsScopeProvider extends KExpressionsScopeProvider {
 
     private SCGraph parent;
+    private List<ValuedObject> valuedObjects = <ValuedObject> newArrayList;
 
     /**
      * Since all declarations are stored in the parent SCG, set parent to the SCGraph.
@@ -47,6 +47,10 @@ class SCGKExpressionsScopeProvider extends KExpressionsScopeProvider {
      */
     def void setParent(SCGraph theParent) {
         parent = theParent;
+        valuedObjects.clear;
+        for(tg : parent.declarations) {
+        	valuedObjects.addAll(tg.valuedObjects)
+        }
     }
     
 	/**
@@ -57,7 +61,7 @@ class SCGKExpressionsScopeProvider extends KExpressionsScopeProvider {
 	 * @return Returns the scope of the valued objects stored in the parent object.
 	 */
     def IScope scope_ValuedObject(EObject context, EReference reference) {
-        Scopes.scopeFor(parent.getValuedObjects())
+        Scopes.scopeFor(valuedObjects)
     }
 
     /**
@@ -70,11 +74,27 @@ class SCGKExpressionsScopeProvider extends KExpressionsScopeProvider {
      */
     def IScope scope_ValuedObjectReference_valuedObject(EObject context, EReference reference) {
   		val scopeObjects = <ValuedObject> newLinkedList
-  		scopeObjects.addAll(parent.getValuedObjects)
-    	if (parent instanceof SCGraphBB) {
-    		(parent as SCGraphBB).basicBlocks.forEach[scopeObjects.addAll(it.guards)]
+  		scopeObjects.addAll(valuedObjects)
+    	if (parent instanceof SCGraph) {
+    		(parent as SCGraph).getBasicBlocks.forEach[
+    		    schedulingBlocks.forEach[
+                    scopeObjects += guard
+    		    ]
+    		]
     	}
         Scopes.scopeFor(scopeObjects)
+    }
+    
+    def IScope scope_Expression(EObject context, EReference reference) {
+        Scopes.scopeFor(valuedObjects)
+    }
+
+    def IScope scope_IntValue(EObject context, EReference reference) {
+        Scopes.scopeFor(valuedObjects)
+    }
+    
+     def IScope scope_FunctionCall(EObject context, EReference reference) {
+        Scopes.scopeFor(valuedObjects)
     }
 
 }

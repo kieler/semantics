@@ -14,13 +14,12 @@
 package de.cau.cs.kieler.scg.test
 
 import de.cau.cs.kieler.core.model.test.AbstractModelComparator
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scgdep.Dependency
-import de.cau.cs.kieler.scgbb.BasicBlock
-import de.cau.cs.kieler.scgbb.SchedulingBlock
-import de.cau.cs.kieler.scgsched.Schedule
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.BasicBlock
+import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.Dependency
+import org.eclipse.emf.ecore.EObject
 
 /**
  * Derived comparator class to compare two SCG models.
@@ -45,6 +44,7 @@ class SCGModelComparator extends AbstractModelComparator {
 		val modelInfo1 = eObject1.gatherInformation as SCGModelInformation
 		val modelInfo2 = eObject2.gatherInformation as SCGModelInformation
 		
+		(modelInfo1.typeGroupCount == modelInfo2.typeGroupCount) && 
 		(modelInfo1.valuedObjectCount == modelInfo2.valuedObjectCount) && 
 		(modelInfo1.nodeCount == modelInfo2.nodeCount) && 
 		(modelInfo1.controlFlowCount == modelInfo2.controlFlowCount) && 
@@ -64,7 +64,9 @@ class SCGModelComparator extends AbstractModelComparator {
 		if (eObject instanceof SCGraph) {
 			val scg = eObject as SCGraph
 		
-			modelInfo.valuedObjectCount = scg.valuedObjects.size
+			modelInfo.typeGroupCount = scg.declarations.size
+			modelInfo.valuedObjectCount = 0
+			scg.declarations.forEach[ modelInfo.valuedObjectCount = modelInfo.valuedObjectCount + it.valuedObjects.size ]
 			modelInfo.nodeCount = scg.nodes.size
 			modelInfo.controlFlowCount = scg.eAllContents.filter(typeof(ControlFlow)).size
 			modelInfo.dependencyCount = scg.eAllContents.filter(typeof(Dependency)).size

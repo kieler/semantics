@@ -26,6 +26,10 @@ import de.cau.cs.kieler.core.model.test.AbstractModelInformation
  */
 class SCGModelInformation extends AbstractModelInformation {
 
+    /** Count of type groups */
+	@Property 
+	int typeGroupCount = 0
+	
     /** Count of valued objects */
 	@Property 
 	int valuedObjectCount = 0

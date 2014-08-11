@@ -80,5 +80,12 @@
             contributorClass="de.cau.cs.kieler.scgdep.presentation.ScgdepActionBarContributor">
       </editor>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.ui.transformation">
+      <editor
+            editor="de.cau.cs.kieler.scg.presentation.ScgEditorID"
+            transformations="SCGRAPH, SCG, SCGDEP, SCGBB, SCGBBSCPLUS, SCGSCHEDSIMPLE, SCGSCHEDTHREADAWARE, SCGSEQHYBRID, SCGSEQSIMPLE, SCGSEQGROUP, SCGBBGROUP, SCGSCHEDGROUP,CODEGENERATION, SCG2C">
+      </editor>
+   </extension>
 
 </plugin>

@@ -14,9 +14,6 @@
 package de.cau.cs.kieler.sccharts.provider;
 
 
-import de.cau.cs.kieler.core.annotations.AnnotationsFactory;
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-
 import de.cau.cs.kieler.core.annotations.provider.AnnotatableItemProvider;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
@@ -89,7 +86,7 @@ public class ScopeItemProvider
 
             addIdPropertyDescriptor(object);
             addLabelPropertyDescriptor(object);
-            addBodyReferencePropertyDescriptor(object);
+            addReferencedScopePropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -139,19 +136,19 @@ public class ScopeItemProvider
     }
 
     /**
-     * This adds a property descriptor for the Body Reference feature.
+     * This adds a property descriptor for the Referenced Scope feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addBodyReferencePropertyDescriptor(Object object) {
+    protected void addReferencedScopePropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_Scope_bodyReference_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Scope_bodyReference_feature", "_UI_Scope_type"),
-                 SCChartsPackage.Literals.SCOPE__BODY_REFERENCE,
+                 getString("_UI_Scope_referencedScope_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Scope_referencedScope_feature", "_UI_Scope_type"),
+                 SCChartsPackage.Literals.SCOPE__REFERENCED_SCOPE,
                  true,
                  false,
                  true,
@@ -172,11 +169,10 @@ public class ScopeItemProvider
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
-            childrenFeatures.add(SCChartsPackage.Literals.SCOPE__VALUED_OBJECTS);
             childrenFeatures.add(SCChartsPackage.Literals.SCOPE__LOCAL_ACTIONS);
-            childrenFeatures.add(SCChartsPackage.Literals.SCOPE__BODY_CONTENTS);
-            childrenFeatures.add(SCChartsPackage.Literals.SCOPE__BODY_TEXT);
-            childrenFeatures.add(SCChartsPackage.Literals.SCOPE__RENAMINGS);
+            childrenFeatures.add(SCChartsPackage.Literals.SCOPE__BINDINGS);
+            childrenFeatures.add(SCChartsPackage.Literals.SCOPE__DECLARATIONS);
+            childrenFeatures.add(SCChartsPackage.Literals.SCOPE__FOR);
         }
         return childrenFeatures;
     }
@@ -224,11 +220,10 @@ public class ScopeItemProvider
             case SCChartsPackage.SCOPE__LABEL:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
-            case SCChartsPackage.SCOPE__VALUED_OBJECTS:
             case SCChartsPackage.SCOPE__LOCAL_ACTIONS:
-            case SCChartsPackage.SCOPE__BODY_CONTENTS:
-            case SCChartsPackage.SCOPE__BODY_TEXT:
-            case SCChartsPackage.SCOPE__RENAMINGS:
+            case SCChartsPackage.SCOPE__BINDINGS:
+            case SCChartsPackage.SCOPE__DECLARATIONS:
+            case SCChartsPackage.SCOPE__FOR:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -248,11 +243,6 @@ public class ScopeItemProvider
 
         newChildDescriptors.add
             (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__VALUED_OBJECTS,
-                 KExpressionsFactory.eINSTANCE.createValuedObject()));
-
-        newChildDescriptors.add
-            (createChildParameter
                 (SCChartsPackage.Literals.SCOPE__LOCAL_ACTIONS,
                  SCChartsFactory.eINSTANCE.createEntryAction()));
 
@@ -273,195 +263,18 @@ public class ScopeItemProvider
 
         newChildDescriptors.add
             (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 SCChartsFactory.eINSTANCE.createAction()));
+                (SCChartsPackage.Literals.SCOPE__BINDINGS,
+                 SCChartsFactory.eINSTANCE.createBinding()));
 
         newChildDescriptors.add
             (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 SCChartsFactory.eINSTANCE.createAssignment()));
+                (SCChartsPackage.Literals.SCOPE__DECLARATIONS,
+                 KExpressionsFactory.eINSTANCE.createDeclaration()));
 
         newChildDescriptors.add
             (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 SCChartsFactory.eINSTANCE.createEmission()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 SCChartsFactory.eINSTANCE.createRegion()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 SCChartsFactory.eINSTANCE.createSubstitution()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 SCChartsFactory.eINSTANCE.createState()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 SCChartsFactory.eINSTANCE.createTransition()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 SCChartsFactory.eINSTANCE.createTextEffect()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 SCChartsFactory.eINSTANCE.createEntryAction()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 SCChartsFactory.eINSTANCE.createDuringAction()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 SCChartsFactory.eINSTANCE.createExitAction()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 SCChartsFactory.eINSTANCE.createSuspendAction()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 AnnotationsFactory.eINSTANCE.createAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 AnnotationsFactory.eINSTANCE.createStringAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 AnnotationsFactory.eINSTANCE.createReferenceAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 AnnotationsFactory.eINSTANCE.createBooleanAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 AnnotationsFactory.eINSTANCE.createIntAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 AnnotationsFactory.eINSTANCE.createFloatAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 AnnotationsFactory.eINSTANCE.createContainmentAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 AnnotationsFactory.eINSTANCE.createImportAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 AnnotationsFactory.eINSTANCE.createTypedStringAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createValuedObject()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createIntValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createFloatValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createBoolValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createOperatorExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 KExpressionsFactory.eINSTANCE.createTextExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_TEXT,
-                 SCChartsFactory.eINSTANCE.createTextEffect()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__BODY_TEXT,
-                 KExpressionsFactory.eINSTANCE.createTextExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SCChartsPackage.Literals.SCOPE__RENAMINGS,
-                 SCChartsFactory.eINSTANCE.createSubstitution()));
-    }
-
-    /**
-     * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
-        Object childFeature = feature;
-        Object childObject = child;
-
-        boolean qualify =
-            childFeature == AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__BODY_CONTENTS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__VALUED_OBJECTS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__LOCAL_ACTIONS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__RENAMINGS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__BODY_TEXT;
-
-        if (qualify) {
-            return getString
-                ("_UI_CreateChild_text2",
-                 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
-        }
-        return super.getCreateChildText(owner, feature, child, selection);
+                (SCChartsPackage.Literals.SCOPE__FOR,
+                 SCChartsFactory.eINSTANCE.createFor()));
     }
 
     /**

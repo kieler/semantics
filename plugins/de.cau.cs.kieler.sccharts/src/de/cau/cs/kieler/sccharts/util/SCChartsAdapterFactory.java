@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sccharts.util;
 import de.cau.cs.kieler.core.annotations.Annotatable;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.FunctionCall;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 
 import de.cau.cs.kieler.sccharts.*;
@@ -107,16 +108,16 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createEmissionAdapter();
             }
             @Override
+            public Adapter caseState(State object) {
+                return createStateAdapter();
+            }
+            @Override
             public Adapter caseRegion(Region object) {
                 return createRegionAdapter();
             }
             @Override
-            public Adapter caseSubstitution(Substitution object) {
-                return createSubstitutionAdapter();
-            }
-            @Override
-            public Adapter caseState(State object) {
-                return createStateAdapter();
+            public Adapter caseBinding(Binding object) {
+                return createBindingAdapter();
             }
             @Override
             public Adapter caseTransition(Transition object) {
@@ -129,6 +130,10 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseTextEffect(TextEffect object) {
                 return createTextEffectAdapter();
+            }
+            @Override
+            public Adapter caseFunctionCallEffect(FunctionCallEffect object) {
+                return createFunctionCallEffectAdapter();
             }
             @Override
             public Adapter caseLocalAction(LocalAction object) {
@@ -151,6 +156,10 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createSuspendActionAdapter();
             }
             @Override
+            public Adapter caseFor(For object) {
+                return createForAdapter();
+            }
+            @Override
             public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
             }
@@ -161,6 +170,10 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseTextExpression(TextExpression object) {
                 return createTextExpressionAdapter();
+            }
+            @Override
+            public Adapter caseFunctionCall(FunctionCall object) {
+                return createFunctionCallAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -253,16 +266,16 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Substitution <em>Substitution</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Binding <em>Binding</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.Substitution
+     * @see de.cau.cs.kieler.sccharts.Binding
      * @generated
      */
-    public Adapter createSubstitutionAdapter() {
+    public Adapter createBindingAdapter() {
         return null;
     }
 
@@ -319,6 +332,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createTextEffectAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.FunctionCallEffect <em>Function Call Effect</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.FunctionCallEffect
+     * @generated
+     */
+    public Adapter createFunctionCallEffectAdapter() {
         return null;
     }
 
@@ -393,6 +420,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.For <em>For</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.For
+     * @generated
+     */
+    public Adapter createForAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.Annotatable <em>Annotatable</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -431,6 +472,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createTextExpressionAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.FunctionCall <em>Function Call</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.core.kexpressions.FunctionCall
+     * @generated
+     */
+    public Adapter createFunctionCallAdapter() {
         return null;
     }
 

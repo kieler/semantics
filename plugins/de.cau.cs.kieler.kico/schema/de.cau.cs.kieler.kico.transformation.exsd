@@ -1,0 +1,200 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="de.cau.cs.kieler.kico" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appinfo>
+         <meta.schema plugin="de.cau.cs.kieler.kico" id="de.cau.cs.kieler.kico.transformation" name="KIELER Compiler Transformation"/>
+      </appinfo>
+      <documentation>
+         &lt;BR&gt;&lt;BR&gt;
+&lt;B&gt;
+FOR AN UPDATED VERSION OF THIS DESCRIPTION AND ADDITIONAL INFORMATION PLEASE SEE:
+&lt;a href=&quot;http://www.informatik.uni-kiel.de/rtsys/kieler/&quot;&gt;http://www.informatik.uni-kiel.de/rtsys/kieler/&lt;/a&gt;
+&lt;/B&gt;
+&lt;BR&gt;&lt;BR&gt;
+
+This extension point allowes the contribution of a compiler transformation to the KIELER project.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="0" maxOccurs="unbounded">
+            <element ref="transformationMethod" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="transformationClass" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="transformationGroup" minOccurs="0" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="transformationClass">
+      <annotation>
+         <documentation>
+            A class file that implements an interface declaring a transform() method, an id() method, a name(), and a dependencies() method.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The implementing class for this specific transformations. It must satisfy the interface ITransformation.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.kico.Transformation:de.cau.cs.kieler.kico.ITransformation"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="transformationMethod">
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The implementing class for this or a bunch of transformations.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="method" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The method that implements the transform interface, e.g.:
+myTransform
+In the provided class there must be a method of type EObject myTransform(EObject eObject)
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  A unique id of this transformation that is also used by other transformations to reference it.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  The optional name of the transformation. If nothing is provided the id will be taken inplace of the name.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="dependencies" type="string">
+            <annotation>
+               <documentation>
+                  Optional dependencies as comma seperated values, e.g.:
+dep1, dep2, dep3
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="transformationGroup">
+      <complexType>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  A unique id of this transformation group that is also used by other transformations to reference it.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="transformations" type="string" use="required">
+            <annotation>
+               <documentation>
+                  Dependencies for this group must be given as comma seperated values, e.g.:
+dep1, dep2, dep3
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  The optional name of the transformation group. If nothing is provided the id will be taken inplace of the name.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="alternatives" type="boolean">
+            <annotation>
+               <documentation>
+                  When selected this group specifies alternatives only. When this group is referenced, the first transformation is selected if not any other transformation from this group is already in the list of selected transformations. This is an advanced feature.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="since"/>
+      </appinfo>
+      <documentation>
+         0.9.0
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="examples"/>
+      </appinfo>
+      <documentation>
+         No examples yet.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="apiinfo"/>
+      </appinfo>
+      <documentation>
+         See KIELER website (Description).
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="implementation"/>
+      </appinfo>
+      <documentation>
+         n/a
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="copyright"/>
+      </appinfo>
+      <documentation>
+         &lt;BR&gt;
+ KIELER - Kiel Integrated Environment for Layout Eclipse RichClient&lt;BR&gt;
+&lt;BR&gt;
+ http://www.informatik.uni-kiel.de/rtsys/kieler/&lt;BR&gt;
+&lt;BR&gt; 
+ Copyright 2014 by&lt;BR&gt;
+ + Christian-Albrechts-University of Kiel&lt;BR&gt;
+   + Department of Computer Science&lt;BR&gt;
+     + Real-Time and Embedded Systems Group&lt;BR&gt;
+&lt;BR&gt; 
+This code is provided under the terms of the Eclipse Public License (EPL).&lt;BR&gt;
+See the file epl-v10.html for the license text.&lt;BR&gt;
+&lt;BR&gt;
+&lt;BR&gt;
+      </documentation>
+   </annotation>
+
+</schema>

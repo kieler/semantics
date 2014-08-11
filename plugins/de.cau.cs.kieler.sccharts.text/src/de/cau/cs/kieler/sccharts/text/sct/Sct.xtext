@@ -5,18 +5,13 @@ import "http://kieler.cs.cau.de/annotations" as annotations
 import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions 
 import "http://kieler.cs.cau.de/sccharts/0.1.0" as sccharts
 
+generate sct "http://kieler.cs.cau.de/sccharts/textual/0.1.0"
+
 // ---------------------------------------------------------------------------------------------------
 
-RootRegion returns sccharts::Region:
-	{sccharts::Region}
-    (annotations+=ImportAnnotation)*
-    (
-      (annotations += Annotation)*
-      'region' id=ID (label=STRING)? ':'
-      (valuedObjects+=ValuedObject)*
-      (bodyText+=TextualCode)* 
-     )?
-    (states+=SCChart)*;
+Root returns sccharts::State:
+    SCChart
+;
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -24,38 +19,46 @@ SingleRegion returns sccharts::Region:
 	{sccharts::Region}
     (
       (annotations += Annotation)*
-      'region' (id=ID)? (label=STRING)? ':'
-      (valuedObjects+=ValuedObject)*
-      (bodyText+=TextualCode)*
+      'region' (id=ID)? (label=STRING)? ('['for=For']')?  ':'
+      (declarations+=Declaration)*
+//      (bodyText+=TextualCode)* 
      )?
     (states+=State)*;
+
+// ---------------------------------------------------------------------------------------------------
+
+For returns sccharts::For:
+    {sccharts::For}
+    valuedObject=ValuedObject '=' from=INT '..' to=INT 
+;
 
 // ---------------------------------------------------------------------------------------------------
 
 Region returns sccharts::Region:
 	{sccharts::Region}
     (annotations += Annotation)*
-    'region' (id=ID)? (label=STRING)? ':'
-    (valuedObjects+=ValuedObject)*
-    (bodyText+=TextualCode)* 
+    'region' (id=ID)? (label=STRING)? ('['for=For']')? ':'
+      (declarations+=Declaration)*
     (states+=State)+;
 
 // ---------------------------------------------------------------------------------------------------
 
-SCChart returns sccharts::State:
+SCChart:
+    ('package' name = QualifiedName)?
+    imports += ImportDecl*
+    
     (annotations += Annotation)*
-    (type=StateType)? ('scchart') (id=ID) (label=STRING)?
+    ('scchart') (id=ID) (label=STRING)?
   
     (
-      ('@' bodyReference = [sccharts::State|ID]
-        ('[' renamings+= Substitution (',' renamings+= Substitution)* ']')?
+      ('references' referencedScope = [sccharts::State|ID]
+        ('bind' bindings += Binding (',' bindings += Binding)*)?
        )
      | 
       ('{'
           (
-            (valuedObjects+=ValuedObject |
+            (declarations+=Declaration |
              localActions+=LocalAction)*
-            (bodyText += TextualCode)*
             (
              (regions+=SingleRegion)(regions+=Region)*
              )?
@@ -63,6 +66,18 @@ SCChart returns sccharts::State:
           '}') 
      )?
 ;
+
+ImportDecl: 
+    'import' 
+        (importedType=[sccharts::State|QualifiedName] 
+        | importedNamespace=QualifiedNameWithWildcard)
+;
+
+QualifiedName:
+  ID ('.' ID)*;
+
+QualifiedNameWithWildcard :
+    QualifiedName  '.' '*';
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -77,21 +92,21 @@ State returns sccharts::State:
     (type=StateType)? ('state') (id=ID) (label=STRING)?
   
     (
-      ('@' bodyReference = [sccharts::State|ID]
-        ('[' renamings+= Substitution (',' renamings+= Substitution)* ']')?
+      ('references' referencedScope = [sccharts::State|ID]
+        ('bind' bindings += Binding (',' bindings += Binding)*)?
        )
      | 
       ('{'
           (
-            (valuedObjects+=ValuedObject |
+            (declarations+=Declaration |
              localActions+=LocalAction)*
-            (bodyText += TextualCode)*
             (
              (regions+=SingleRegion)(regions+=Region)*
              )?
             )
           '}') 
      )?
+     // The semicolon is mandatory for the backtracking!
     (outgoingTransitions+=Transition)* ';';
 
     
@@ -105,31 +120,55 @@ LocalAction returns sccharts::LocalAction:
 
 Transition returns sccharts::Transition:
     (annotations += Annotation)*
-    type=TransitionType targetState=[sccharts::State|ID] 
+    (type=TransitionTypeLegacy | type=TransitionType) 
+    targetState=[sccharts::State|ID] 
 //	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
-	( (immediate?='immediate')? (deferred?='deferred')? (history=HistoryType)?  ('with'
+	( (immediate?='immediate')? (deferred?='deferred')? (history=HistoryType)?  (
 	 (
-	   ( (delay=INT)? (trigger=BoolExpression)? ('/' effects+=Effect (';'effects+=Effect)*)? )
+	   ((('with' (delay=INT)? trigger=BoolExpression)|'with')? (('/'|'do') effects+=Effect (';'effects+=Effect)*)? )
 	  |
-	   ( label=STRING )
+	   ( 'with' label=STRING )
 	  )
 	 )?)? 	
 	;
 
 // ---------------------------------------------------------------------------------------------------
 
-ValuedObject returns kexpressions::ValuedObject:
+Declaration returns kexpressions::Declaration:
     (annotations+=Annotation)*
-    (input?='input')?
-    (output?='output')?
-    (static?='static')?
-    (signal?='signal')?
-    (type = ValueType)?
-    name=ID ('=' initialValue=Expression)?
+    (
+        ((extern?='extern')?
+        (static?='static')?
+	    (const?='const')?
+        (input?='input')?
+        (output?='output')?
+        (
+            ((signal?='signal')? type = ValueType)
+            |
+            (signal?='signal')
+        ))
+        |
+        ((extern?='extern')
+        (static?='static')?
+        (const?='const')?
+        (input?='input')?
+        (output?='output')?        
+        (signal?='signal')? 
+        (type = ValueType)?)
+    )
+    valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'?
+;
+
+// ---------------------------------------------------------------------------------------------------
+
+ValuedObject returns kexpressions::ValuedObject:
+    name=ID
+    ('[' cardinalities+=INT ']')* 
+    ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
-    )? ';' ;
-
+    )?
+;
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -138,8 +177,12 @@ TextualCode returns kexpressions::TextExpression:
 
 // ---------------------------------------------------------------------------------------------------
 
-Substitution returns sccharts::Substitution:
-	actual = ID '/' formal = ID;
+Binding returns sccharts::Binding:
+    (annotations+=Annotation)*
+	formal = [kexpressions::ValuedObject|ID] 
+	'to' 
+	actual = [kexpressions::ValuedObject|ID]
+;
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -147,7 +190,8 @@ enum StateType returns sccharts::StateType:
 	NORMAL = 'normal' | CONNECTOR = 'connector' | REFERENCE = 'reference' | TEXTUAL = 'textual';
 
 enum TransitionType returns sccharts::TransitionType:
-	WEAKABORT = '-->' | STRONGABORT = 'o->' | TERMINATION = '>->';
-
-
+	WEAKABORT = 'goto' | STRONGABORT = 'abort to' | TERMINATION = 'join to';
+	
+enum TransitionTypeLegacy returns sccharts::TransitionType:
+    WEAKABORT = '-->' | STRONGABORT = 'o->' | TERMINATION = '>->';
 	

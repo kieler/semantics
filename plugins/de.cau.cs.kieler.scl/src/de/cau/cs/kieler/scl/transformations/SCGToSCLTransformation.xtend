@@ -14,30 +14,30 @@
 package de.cau.cs.kieler.scl.transformations
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import de.cau.cs.kieler.scgdep.SCGraphDep
-import de.cau.cs.kieler.scl.scl.Program
-import de.cau.cs.kieler.scl.scl.SclFactory
-import java.util.HashMap
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scl.scl.StatementSequence
-import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.Depth
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
-import java.util.List
-import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
+import de.cau.cs.kieler.scl.scl.Program
+import de.cau.cs.kieler.scl.scl.SclFactory
+import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.scl.StatementSequence
+import java.util.HashMap
+import java.util.List
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 
 /** 
  * SCG to SCL Transformation 
@@ -56,6 +56,9 @@ class SCGToSCLTransformation {
     
     @Inject 
     extension SCLExtensions
+    
+    @Inject
+    extension KExpressionsExtension
          
     // M2M Mapping
 //    private val nodeMapping = new HashMap<Node, Node>
@@ -73,10 +76,14 @@ class SCGToSCLTransformation {
         scl.name = 'M' + scg.hashCode.toString
                   
         // ... and copy declarations.
-        for(valuedObject : scg.valuedObjects) {
-            val newValuedObject = valuedObject.copy
-            scl.valuedObjects.add(newValuedObject)
-            valuedObjectMapping.put(valuedObject, newValuedObject)
+        for(declaration : scg.declarations) {
+            val newDeclaration = createDeclaration(declaration)
+            for (valuedObject : declaration.valuedObjects) {
+            	val newValuedObject = createValuedObject(valuedObject.name)
+            	newDeclaration.valuedObjects += newValuedObject
+	            valuedObjectMapping.put(valuedObject, newValuedObject)
+            }
+            scl.declarations += newDeclaration 
         }
         
         scg.transform(scl)

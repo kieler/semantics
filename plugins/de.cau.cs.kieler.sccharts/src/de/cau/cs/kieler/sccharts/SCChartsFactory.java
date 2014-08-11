@@ -76,13 +76,13 @@ public interface SCChartsFactory extends EFactory {
     Region createRegion();
 
     /**
-     * Returns a new object of class '<em>Substitution</em>'.
+     * Returns a new object of class '<em>Binding</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Substitution</em>'.
+     * @return a new object of class '<em>Binding</em>'.
      * @generated
      */
-    Substitution createSubstitution();
+    Binding createBinding();
 
     /**
      * Returns a new object of class '<em>State</em>'.
@@ -110,6 +110,15 @@ public interface SCChartsFactory extends EFactory {
      * @generated
      */
     TextEffect createTextEffect();
+
+    /**
+     * Returns a new object of class '<em>Function Call Effect</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Function Call Effect</em>'.
+     * @generated
+     */
+    FunctionCallEffect createFunctionCallEffect();
 
     /**
      * Returns a new object of class '<em>Entry Action</em>'.
@@ -146,6 +155,15 @@ public interface SCChartsFactory extends EFactory {
      * @generated
      */
     SuspendAction createSuspendAction();
+
+    /**
+     * Returns a new object of class '<em>For</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>For</em>'.
+     * @generated
+     */
+    For createFor();
 
     /**
      * Returns the package supported by this factory.

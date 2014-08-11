@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.scg.extensions
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.ControlFlow
@@ -23,18 +24,24 @@ import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scgbb.BasicBlock
-import de.cau.cs.kieler.scgbb.SCGraphBB
-import de.cau.cs.kieler.scgbb.SchedulingBlock
-import de.cau.cs.kieler.scgsched.ScgschedFactory
-import de.cau.cs.kieler.scgsched.Schedule
+import de.cau.cs.kieler.scg.BasicBlock
+import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.Schedule
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.scgsched.Analysis
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.Declaration
+import java.util.HashMap
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import java.util.Map
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -58,6 +65,23 @@ import de.cau.cs.kieler.scgsched.Analysis
  * @kieler.rating 2013-08-20 proposed yellow
  */
 class SCGExtensions { 
+    
+    @Inject
+    extension KExpressionsExtension
+    
+    private int MAX_CONTROLFLOW_ACCUMULATION = 100;
+    
+    /** Valued object mapping */
+    private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>    
+
+
+	def boolean hasBasicBlockData(SCGraph scg) {
+		scg.basicBlocks.size > 0
+	}
+	
+	def boolean hasSchedulingData(SCGraph scg) {
+		scg.schedules.size > 0
+	}
 
     // -------------------------------------------------------------------------
     // -- Valued object handling
@@ -70,11 +94,11 @@ class SCGExtensions {
      * 			the name of the valued object
      * @return Returns a new valued object with the given name.
      */
-    def ValuedObject createValuedObject(String valuedObjectName) {
-         KExpressionsFactory::eINSTANCE.createValuedObject => [
-             name = valuedObjectName
-         ]
-    }
+//    def ValuedObject createValuedObject(String valuedObjectName) {
+//         KExpressionsFactory::eINSTANCE.createValuedObject => [
+//             name = valuedObjectName
+//         ]
+//    }
    
     /** 
      * Creates a new ValuedObject in an SCG.
@@ -87,7 +111,7 @@ class SCGExtensions {
      */
     def ValuedObject createValuedObject(SCGraph scg, String valuedObjectName) {
          createValuedObject(valuedObjectName) => [
-             scg.valuedObjects += it
+             scg.valuedObjects.add(it)
          ]
     }
    
@@ -101,9 +125,114 @@ class SCGExtensions {
 	 * @return Returns the (first) valued object with the given name or null.
 	 */
     def ValuedObject findValuedObjectByName(SCGraph scg, String name) {
-    	scg.valuedObjects.filter[it.name == name]?.head
+    	for(tg : scg.declarations) {
+    		for(vo : tg.valuedObjects) {
+    			if (vo.name == name) return vo
+    		}
+   		}
+   		return null
     }
+    
+    public def void copyDeclarations(SCGraph source, SCGraph target) {
+    	for (declaration : source.declarations) {
+    		val newDeclaration = createDeclaration(declaration)
+    		declaration.valuedObjects.forEach[ copyValuedObject(newDeclaration) ]
+    		target.declarations += newDeclaration
+    	}
+	}     
+    
+    public def void copyValuedObject(ValuedObject sourceObject, Declaration targetDeclaration) {
+        val newValuedObject = sourceObject.copy
+        targetDeclaration.valuedObjects += newValuedObject
+        valuedObjectMapping.put(sourceObject, newValuedObject)
+    }    
+    
+    def ValuedObject getValuedObjectCopy(ValuedObject valuedObject) {
+        if (valuedObject == null) {
+            throw new Exception("Valued Object is already null!")
+        }
+        val vo = valuedObjectMapping.get(valuedObject)
+        if (vo == null) {
+            throw new Exception("Valued Object not found! ["+valuedObject.name+"]")
+        }
+        vo
+    }    
 
+    def ValuedObject getValuedObjectCopyWNULL(ValuedObject valuedObject) {
+        if (valuedObject == null) {
+            return null
+        }
+        val vo = valuedObjectMapping.get(valuedObject)
+        if (vo == null) {
+            throw new Exception("Valued Object not found! ["+valuedObject.name+"]")
+        }
+        vo
+    }    
+    
+    def ValuedObject addToValuedObjectMapping(ValuedObject source, ValuedObject target) {
+		valuedObjectMapping.put(source, target)
+		target    	
+    }    
+    
+    def Expression copySCGExpression(Expression expression) {
+    	// Use the ecore utils to copy the expression. 
+        val newExpression = expression.copy
+        
+        if (newExpression instanceof ValuedObjectReference) {
+	        // If it is a single object reference, simply replace the reference with the object of the target SCG.
+            (newExpression as ValuedObjectReference).valuedObject = 
+                (expression as ValuedObjectReference).valuedObject.getValuedObjectCopy                    
+        } else {
+        	// Otherwise, query all references in the expression and replace the object with the new copy
+        	// in the target SCG.
+        	if (newExpression != null)
+                newExpression.eAllContents.filter(typeof(ValuedObjectReference)).
+            	   forEach[ valuedObject = valuedObject.getValuedObjectCopy ]        
+        }
+        
+        // Return the new expression.
+        newExpression
+    }    
+
+
+    // -------------------------------------------------------------------------
+    // -- Control flow creation
+    // -------------------------------------------------------------------------
+    
+	dispatch def ControlFlow createControlFlow(Entry entry) {
+		ScgFactory::eINSTANCE.createControlFlow => [ entry.next = it ]
+	}
+
+	dispatch def ControlFlow createControlFlow(Exit exit) {
+		ScgFactory::eINSTANCE.createControlFlow => [ exit.next = it ]
+	}
+
+	dispatch def ControlFlow createControlFlow(Depth depth) {
+		ScgFactory::eINSTANCE.createControlFlow => [ depth.next = it ]
+	}
+
+	dispatch def ControlFlow createControlFlow(Assignment assignment) {
+		ScgFactory::eINSTANCE.createControlFlow => [ assignment.next = it ]
+	}
+
+	dispatch def ControlFlow createControlFlow(Conditional conditional) {
+		ScgFactory::eINSTANCE.createControlFlow => [ 
+			if (conditional.then == null) conditional.then = it
+			else if (conditional.^else == null) conditional.^else = it
+		]
+	}
+
+	dispatch def ControlFlow createControlFlow(Fork fork) {
+		ScgFactory::eINSTANCE.createControlFlow => [ fork.next += it ]
+	}
+
+	dispatch def ControlFlow createControlFlow(Join join) {
+		ScgFactory::eINSTANCE.createControlFlow => [ join.next = it ]
+	}
+
+	dispatch def ControlFlow createControlFlow(Surface surface) {
+		ScgFactory::eINSTANCE.createControlFlow => [ ]
+	}
 
     // -------------------------------------------------------------------------
     // -- Control flow queries
@@ -161,8 +290,10 @@ class SCGExtensions {
      * @return Returns nothing. 
      */  
     private def void accumulateIndirectControlFlow(ControlFlow next, List<ControlFlow> localFlow, 
-        List<List<ControlFlow>> listOfFlows, Node target, boolean includeTickEdges 
+        List<List<ControlFlow>> listOfFlows, Node target, boolean includeTickEdges, boolean excludeSingleIncoming 
     ) {
+        if (excludeSingleIncoming && next.target.incoming.size<2) return;
+        
     	// Already in the local flow list: loop! Abort.
         if (localFlow.contains(next)) return;
         
@@ -174,16 +305,18 @@ class SCGExtensions {
             return;
         }
         
+        if (localFlow.size == MAX_CONTROLFLOW_ACCUMULATION) return;
+        
         // Otherwise, follow the flow and recursively call this method to proceed on further control flows.
         localFlow.add(next)
         next.target.allNext.forEach[
             val newFlow = <ControlFlow> newArrayList(localFlow)       	    
-            accumulateIndirectControlFlow(newFlow, listOfFlows, target, includeTickEdges)
+            accumulateIndirectControlFlow(newFlow, listOfFlows, target, includeTickEdges, false)
         ]
         
         if (includeTickEdges && next.target instanceof Surface) {
             (next.target as Surface).depth.next.accumulateIndirectControlFlow( 
-                localFlow, listOfFlows, target, includeTickEdges
+                localFlow, listOfFlows, target, includeTickEdges, false
             )
         }
     }
@@ -203,8 +336,14 @@ class SCGExtensions {
 	 */   
     def List<List<ControlFlow>> getIndirectControlFlows(Node source, Node target) {
    	    val pathList = <List<ControlFlow>> newLinkedList
-   	    source.allNext.forEach[ accumulateIndirectControlFlow(newArrayList(), pathList, target, false) ]
+   	    source.allNext.forEach[ accumulateIndirectControlFlow(newArrayList(), pathList, target, false, false) ]
    	    pathList 
+    }
+
+    def List<List<ControlFlow>> getIndirectControlFlowsForLoopDetection(Node source, Node target) {
+        val pathList = <List<ControlFlow>> newLinkedList
+        source.allNext.forEach[ accumulateIndirectControlFlow(newArrayList(), pathList, target, false, true) ]
+        pathList 
     }
     
     /** 
@@ -242,7 +381,7 @@ class SCGExtensions {
      * @return Returns a list of control flow paths containing all instantaneous control flow paths. 
      */
     def List<List<ControlFlow>> getInstantaneousControlFlows(Node source) {
-    	source.getInstantaneousControlFlows(source)
+    	source.getIndirectControlFlowsForLoopDetection(source).filter[ instantaneousFlow ].toList
     }
     
     /**
@@ -271,7 +410,7 @@ class SCGExtensions {
      */   
     def List<List<ControlFlow>> getIndirectControlFlowsBeyondTickBoundaries(Node source, Node target) {
         val pathList = <List<ControlFlow>> newLinkedList
-        source.allNext.forEach[ accumulateIndirectControlFlow(newArrayList(), pathList, target, true) ]
+        source.allNext.forEach[ accumulateIndirectControlFlow(newArrayList(), pathList, target, true, false) ]
         pathList 
     }      
 
@@ -300,9 +439,15 @@ class SCGExtensions {
         returnList.add(entry)
         val exit = entry.exit
         
+        // If the exit node follows the entry node directly, exit here.
+        if (entry.next.target == exit) {
+	        returnList.add(exit)
+    	    return returnList
+        }
+        
         // Now, follow the control flow until the exit node is reached 
         // and add each node that is not already in the node list.
-        controlFlows.addAll(entry.getAllNext)
+        controlFlows.addAll(entry.allNext)
         while(!controlFlows.empty) {
         	// Next node is the first target in the control flow list.
             var nextNode = controlFlows.head.target
@@ -324,17 +469,179 @@ class SCGExtensions {
             //   - that the flow is not already included in the flow list
             //   - the target of the flow is not already processed
             //   - and the target of the flow is not the exit node.  
-            nextNode.getAllNext.filter[ 
+            if (nextNode != null)
+            nextNode.allNext.filter[ 
             	(!returnList.contains(it.target)) && 
             	(!controlFlows.contains(it)) && 
                 (!it.target.equals(exit)) ] 
                 	=> [ controlFlows.addAll(it) ]
         }
         
+        // Reverse search outgoing from the exit node
+        controlFlows.addAll(exit.allPrevious)
+        while(!controlFlows.empty) {
+            var nextNode = controlFlows.head.eContainer as Node
+            controlFlows.remove(0)
+            if (!returnList.contains(nextNode)) returnList.add(nextNode)
+            if (nextNode instanceof Depth) {
+                nextNode = (nextNode as Depth).surface
+                if (!returnList.contains(nextNode)) returnList.add(nextNode)
+            }
+            if (nextNode != null)
+            nextNode.allPrevious.filter[ 
+                (!returnList.contains(it.eContainer)) && 
+                (!controlFlows.contains(it)) ] 
+                    => [ controlFlows.addAll(it) ]
+        }
+        
         // Add the exit node and return.
         returnList.add(exit)
         returnList
-    }    
+    }
+    
+    /**
+     * Retrieves all of nodes of a thread. In the SCG sense a thread starts at its 
+     * entry node and ends at its exit node. Hence, each thread is identified by
+     * its entry node and the successors of a fork node (retrievable via
+     * {@link #getAllNext(Node)}) are the entry nodes of each thread of that fork node.
+     * 
+     * @param entry
+     * 			the entry node of the thread
+     * @return Returns a list of nodes of the given thread. 
+     */
+    def Map<Entry, List<Node>> getAllThreadNodes (Entry entry) {
+    	// Create a new list of nodes and 
+    	// a list of control flows that mark paths within the thread.
+    	val returnMap = <Entry, List<Node>> newHashMap
+        val List<Node> nodeList = <Node> newLinkedList
+        val List<ControlFlow> controlFlows = <ControlFlow> newLinkedList
+        
+        // Add the entry node itself and retrieve the exit of the thread
+        // with aid of the opposite relation in the entry node. 
+        returnMap.put(entry, nodeList)
+        val exit = entry.exit
+        
+        // If the exit node follows the entry node directly, exit here.
+        if (entry.next.target == exit) {
+	        nodeList.add(exit)
+    	    return returnMap
+        }
+        
+        // Now, follow the control flow until the exit node is reached 
+        // and add each node that is not already in the node list.
+        controlFlows.addAll(entry.allNext)
+        while(!controlFlows.empty) {
+        	// Next node is the first target in the control flow list.
+            var nextNode = controlFlows.head.target
+            
+            // Remove this control flow.
+            controlFlows.remove(0)
+            
+            // Add the node if its not already contained.
+            if (!nodeList.contains(nextNode)) nodeList.add(nextNode);
+            
+            if (nextNode instanceof Entry) {
+            	val nNMap = (nextNode as Entry).getAllThreadNodes
+            	for(k : nNMap.keySet) {
+            		val nNNodeList = nNMap.get(k)
+            		returnMap.put(k, nNNodeList)
+            		nodeList.addAll(nNNodeList)
+            	}
+            	nextNode = (nextNode as Entry).exit
+            	if (!nodeList.contains(nextNode)) nodeList.add(nextNode);
+            }
+            
+            if (nextNode instanceof Surface) {
+	            // Since surface node do not have extra control flows to their 
+    	        // corresponding depth, set the next node manually.
+                nextNode = (nextNode as Surface).depth
+                if (!nodeList.contains(nextNode)) nodeList.add(nextNode);                                
+            }
+            
+            // Now, add all succeeding control flow provided 
+            //   - that the flow is not already included in the flow list
+            //   - the target of the flow is not already processed
+            //   - and the target of the flow is not the exit node.  
+            if (nextNode != null)
+            nextNode.allNext.filter[ 
+            	(!nodeList.contains(it.target)) && 
+            	(!controlFlows.contains(it)) && 
+                (!it.target.equals(exit)) ] 
+                	=> [ controlFlows.addAll(it) ]
+        }
+        
+        // Reverse search outgoing from the exit node
+        controlFlows.addAll(exit.allPrevious)
+        while(!controlFlows.empty) {
+            var nextNode = controlFlows.head.eContainer as Node
+            controlFlows.remove(0)
+            if (!nodeList.contains(nextNode)) nodeList.add(nextNode)
+            if (nextNode instanceof Depth) {
+                nextNode = (nextNode as Depth).surface
+                if (!nodeList.contains(nextNode)) nodeList.add(nextNode)
+            }
+            if (nextNode != null)
+            nextNode.allPrevious.filter[ 
+                (!nodeList.contains(it.eContainer)) && 
+                (!controlFlows.contains(it)) ] 
+                    => [ controlFlows.addAll(it) ]
+        }
+        
+        // Add the exit node and return.
+        nodeList.add(exit)
+        returnMap
+    }   
+       
+    
+   /** 
+    * Finds the immediate entry node of a node.
+    * 
+    * @param node
+    *           the node in question
+    * @return Returns the closest entry node.
+    */
+    def Entry getThreadEntry(Node node) {
+        // Create a list for the control flows that will be checked
+        // and a list for all control flows already checked. 
+        val controlFlows = <ControlFlow> newLinkedList
+        val marked = <ControlFlow> newLinkedList
+       
+        // Add all incoming control flows to the list an repeat until the list is empty.
+        controlFlows += node.allPrevious
+        if (node instanceof Depth) controlFlows += (node as Depth).surface.allPrevious
+        while(!controlFlows.empty) {
+            // Check the first control flow and its parent node.
+            var prevNode = controlFlows.head.eContainer as Node
+            
+            // Mark the flow as processed and remove it.
+            marked += controlFlows.head
+            controlFlows.remove(0)
+           
+            if (prevNode instanceof Join) { 
+                // If it is a join, continue at the corresponding fork node.
+                controlFlows += (prevNode as Join).fork.allPrevious
+            }
+            else if (prevNode instanceof Entry) {
+                // If it is a entry node, return it
+                return prevNode as Entry
+            } 
+            else if (prevNode instanceof Depth) {
+                // If it is a depth, continue at the corresponding surface node.
+                controlFlows += (prevNode as Depth).surface.allPrevious
+            } else {
+                // Otherwise, proceed on the control flow path.
+                controlFlows += prevNode.allPrevious           
+            }
+           
+            // If the a newly added control flow is already marked, remove it.
+            marked.forEach[
+                if (controlFlows.contains(it)) controlFlows.remove(it)
+            ]
+        }
+       
+        // Return null if finished without entry
+        return null
+    }     
     
 
    /** 
@@ -352,6 +659,7 @@ class SCGExtensions {
        
         // Add all incoming control flows to the list an repeat until the list is empty.
         controlFlows += node.allPrevious
+        if (node instanceof Depth) controlFlows += (node as Depth).surface.allPrevious
         while(!controlFlows.empty) {
             // Check the first control flow and its parent node.
             var prevNode = controlFlows.head.eContainer as Node
@@ -410,6 +718,18 @@ class SCGExtensions {
     }
 
 
+    def Node getThreadEntryNode(Node node) {
+//        if (node instanceof Exit) return (node as Exit).entry
+        
+        val fork = node.getAncestorFork
+        if (fork == null) return null
+
+        for (ent : fork.allNext.map[target].filter(typeof(Entry))) {
+            if (ent.threadNodes.contains(node)) return ent;
+        }
+        null
+    }
+
     // -------------------------------------------------------------------------
     // -- Block queries
     // -------------------------------------------------------------------------
@@ -429,6 +749,12 @@ class SCGExtensions {
         }
         null
     }   
+    
+    def List<SchedulingBlock> schedulingBlocks(SCGraph scg) {
+        <SchedulingBlock> newArrayList => [ sb |
+            scg.basicBlocks.forEach[ sb += it.schedulingBlocks ]
+        ]
+    }
 
 	/** 
 	 * Retrieves the scheduling block containing a given node.
@@ -439,24 +765,11 @@ class SCGExtensions {
 	 */
     def SchedulingBlock schedulingBlock(Node node) {
         val scg = node.graph
-        if (!(scg instanceof SCGraphBB)) return null
         var SchedulingBlock myBlock = null
-        for (block : scg.eAllContents.toList.filter(typeof(SchedulingBlock))) {
+        for (block : scg.schedulingBlocks ) {
             if (block.nodes.contains(node)) { myBlock = block }
         }
         myBlock
-    }
-
-	/** 
-	 * Returns a list of all scheduling blocks of an SCG.
-	 * 
-	 * @param scg
-	 * 			the SCG in question
-	 * @return Returns a list of all scheduling blocks of the given SCG. May return null.
-	 */   
-    def List<SchedulingBlock> allSchedulingBlocks(SCGraph scg) {
-        if (!(scg instanceof SCGraphBB)) return null
-        scg.eAllContents.toList.filter(typeof(SchedulingBlock)).toList
     }
    
     /**
@@ -496,6 +809,12 @@ class SCGExtensions {
         nodeList
     }
     
+    def List<SchedulingBlock> getAllSchedulingBlocks(SCGraph scg) {
+        <SchedulingBlock> newArrayList => [ list | 
+            scg.basicBlocks.forEach[ list += schedulingBlocks ]
+        ]
+    }
+    
 
     // -------------------------------------------------------------------------
     // -- Scheduling problem management
@@ -508,12 +827,12 @@ class SCGExtensions {
      * 			a list of objects associated with a particular analysis
      * @return Returns an analysis structure.
      */
-    def Analysis createAnalysis(String idString, List<EObject> eObjects) {
-    	ScgschedFactory::eINSTANCE.createAnalysis => [
-    		id = idString
-    		objectReferences += eObjects
-    	]
-    }
+//    def Analysis createAnalysis(String idString, List<EObject> eObjects) {
+//    	ScgschedFactory::eINSTANCE.createAnalysis => [
+//    		id = idString
+//    		objectReferences += eObjects
+//    	]
+//    }
 
 
     // -------------------------------------------------------------------------
@@ -565,6 +884,8 @@ class SCGExtensions {
     def isNull(EObject eObject) {
         eObject == null
     }
+    
+    
 }
 
 

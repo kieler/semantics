@@ -1,0 +1,46 @@
+@HVLayout
+scchart ABRO {
+  input bool A
+  input bool B
+  input bool R
+  output bool O = false region Main :
+
+  initial state ABO {
+
+    initial state WaitAB {
+      region HandleA :
+
+      final state DA
+
+      state _Depth2
+      --> DA immediate with A
+      --> _S4 immediate
+
+      initial state _S4
+      --> _Depth2 region HandleB :
+
+      final state DB
+
+      state _Depth2
+      --> DB immediate with B
+      --> _S4 immediate
+
+      initial state _S4
+      --> _Depth2
+    }
+    >-> _S
+
+    state Done
+
+    state _S
+    --> Done immediate / O = true
+  }
+  --> _S4 immediate
+
+  state _Depth2
+  o-> ABO immediate with R
+  --> _S4 immediate
+
+  state _S4
+  --> _Depth2
+}

@@ -15,7 +15,6 @@
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import de.cau.cs.kieler.scgsched.ScgschedFactory
 
 /** 
  * This class is part of the SCG transformation chain. In particular analyzers are called by the scheduler
@@ -46,7 +45,7 @@ import de.cau.cs.kieler.scgsched.ScgschedFactory
  * @kieler.design 2013-12-02 proposed 
  * @kieler.rating 2013-12-02 proposed yellow
  */
-class PotentialInstantaneousLoopAnalyzer extends AbstractSCGAnalyzer {
+class PotentialInstantaneousLoopAnalyzer extends AbstractAnalyzer {
 	
     // -------------------------------------------------------------------------
     // -- Injections 
@@ -79,13 +78,13 @@ class PotentialInstantaneousLoopAnalyzer extends AbstractSCGAnalyzer {
 		// find potentially instantaneous control flow loops from each node to itself.
 		// For each loop found a new instantaneous loop problem is created.
 		analyzerData.SCG.nodes.forEach[
-			it.instantaneousControlFlows.forEach[ flows |
-				val analysis = ScgschedFactory::eINSTANCE.createAnalysis => [
-    				id = getAnalysisId
-    				objectReferences += flows
-    			]
-				potentialInstantaneousLoopResult.addAnalysis(analysis)
-			]
+//			it.instantaneousControlFlows.forEach[ flows |
+//				val analysis = ScgschedFactory::eINSTANCE.createAnalysis => [
+//    				id = getAnalysisId
+//    				objectReferences += flows
+//    			]
+//				potentialInstantaneousLoopResult.addAnalysis(analysis)
+//			]
 		]
 		
 		// Add the result to the analyzer data and return.

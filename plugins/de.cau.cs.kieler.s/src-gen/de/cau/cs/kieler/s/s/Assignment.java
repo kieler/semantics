@@ -5,6 +5,8 @@ package de.cau.cs.kieler.s.s;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
+import org.eclipse.emf.common.util.EList;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Assignment</b></em>'.
@@ -14,6 +16,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.Assignment#getVariable <em>Variable</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.Assignment#getIndices <em>Indices</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Assignment#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
@@ -49,6 +52,22 @@ public interface Assignment extends Instruction
    * @generated
    */
   void setVariable(ValuedObject value);
+
+  /**
+   * Returns the value of the '<em><b>Indices</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Expression}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Indices</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Indices</em>' containment reference list.
+   * @see de.cau.cs.kieler.s.s.SPackage#getAssignment_Indices()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Expression> getIndices();
 
   /**
    * Returns the value of the '<em><b>Expression</b></em>' containment reference.

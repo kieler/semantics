@@ -167,15 +167,13 @@ class SCCharts2STransformation {
     //--              M A I N   T R A N S F O R M A T I O N                  --
     //-------------------------------------------------------------------------
 
-    def create target : SFactory::eINSTANCE.createProgram() transformS (Region rootRegion) {
-        val rootState = rootRegion.states.head();
-
+    def create target : SFactory::eINSTANCE.createProgram() transformS (State rootState) {
         // Clear traces
         clearStatesMapping
         clearValuedObjectMapping
         
         // Dependency analysis
-        dependencyGraph = rootRegion.dependencyGraph
+        dependencyGraph = rootState.dependencyGraph
         val dependencyStates = dependencyGraph.dependencyNodes
           
         val sortedDependencyStates = dependencyStates.orderSortedStates
@@ -233,7 +231,7 @@ class SCCharts2STransformation {
         val state = dependencyState.getState
         val sState = state.sState
         
-        if (state.hierarchical) {
+        if (state.hasInnerStatesOrRegions) {
             /////////////////////////
             // Handle macro states //
             /////////////////////////
@@ -320,7 +318,7 @@ class SCCharts2STransformation {
             }
 
             // If necessary, insert a prio statement
-            var sourcePriority = state.priority(state.hierarchical)
+            var sourcePriority = state.priority(state.hasInnerStatesOrRegions)
             var targetPriority = transition.targetState.priority
             if (sourcePriority != targetPriority) {
                 // Change priority
@@ -406,11 +404,12 @@ class SCCharts2STransformation {
     }
 
     // Convert SyncChart text effects and add them to an instructions list.
-    def dispatch void convertToSEffect(TextEffect effect, List<Instruction> instructions) {
-        val sHostCode = SFactory::eINSTANCE.createHostCodeInstruction;
-        sHostCode.setHostCode("'" + effect.text + ";'");
-        instructions.add(sHostCode);
-    }
+// FIXME!
+//    def dispatch void convertToSEffect(TextEffect effect, List<Instruction> instructions) {
+//        val sHostCode = SFactory::eINSTANCE.createHostCodeInstruction;
+//        sHostCode.setHostCode("'" + effect.text + ";'");
+//        instructions.add(sHostCode);
+//    }
 
 
 

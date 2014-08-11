@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="headless"
+         name="KielerCompiler HTTP Server"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            cardinality="singleton-global"
+            icon="icons/KiCoViewIcon.png"
+            thread="main"
+            visible="true">
+         <run
+               class="de.cau.cs.kieler.kico.server.KiCoServerApplication">
+         </run>
+      </application>
+   </extension>
+
+</plugin>

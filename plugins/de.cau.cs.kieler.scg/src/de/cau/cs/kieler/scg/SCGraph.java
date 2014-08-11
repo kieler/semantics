@@ -13,9 +13,8 @@
  */
 package de.cau.cs.kieler.scg;
 
-import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.Declaration;
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -27,7 +26,9 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getNodes <em>Nodes</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getValuedObjects <em>Valued Objects</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getDeclarations <em>Declarations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getBasicBlocks <em>Basic Blocks</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getSchedules <em>Schedules</em>}</li>
  * </ul>
  * </p>
  *
@@ -37,35 +38,67 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface SCGraph extends EObject {
     /**
-     * Returns the value of the '<em><b>Nodes</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.scg.Node}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Nodes</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.scg.Node}.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Nodes</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Nodes</em>' containment reference list.
-     * @see de.cau.cs.kieler.scg.ScgPackage#getSCGraph_Nodes()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Nodes</em>' containment reference list.
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getSCGraph_Nodes()
+	 * @model containment="true"
+	 * @generated
+	 */
     EList<Node> getNodes();
 
     /**
-     * Returns the value of the '<em><b>Valued Objects</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Declarations</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Declaration}.
+	 * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Valued Objects</em>' containment reference list isn't clear,
+     * If the meaning of the '<em>Declarations</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Valued Objects</em>' containment reference list.
-     * @see de.cau.cs.kieler.scg.ScgPackage#getSCGraph_ValuedObjects()
-     * @model containment="true"
-     * @generated
-     */
-    EList<ValuedObject> getValuedObjects();
+	 * @return the value of the '<em>Declarations</em>' containment reference list.
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getSCGraph_Declarations()
+	 * @model containment="true"
+	 * @generated
+	 */
+    EList<Declaration> getDeclarations();
+
+    /**
+	 * Returns the value of the '<em><b>Basic Blocks</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.scg.BasicBlock}.
+	 * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Basic Blocks</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+	 * @return the value of the '<em>Basic Blocks</em>' containment reference list.
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getSCGraph_BasicBlocks()
+	 * @model containment="true"
+	 * @generated
+	 */
+    EList<BasicBlock> getBasicBlocks();
+
+    /**
+	 * Returns the value of the '<em><b>Schedules</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.scg.Schedule}.
+	 * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Schedules</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+	 * @return the value of the '<em>Schedules</em>' containment reference list.
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getSCGraph_Schedules()
+	 * @model containment="true"
+	 * @generated
+	 */
+    EList<Schedule> getSchedules();
 
 } // SCGraph

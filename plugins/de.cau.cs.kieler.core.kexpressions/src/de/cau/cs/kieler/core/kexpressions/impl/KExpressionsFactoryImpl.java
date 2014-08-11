@@ -70,6 +70,9 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
             case KExpressionsPackage.BOOL_VALUE: return createBoolValue();
             case KExpressionsPackage.OPERATOR_EXPRESSION: return createOperatorExpression();
             case KExpressionsPackage.TEXT_EXPRESSION: return createTextExpression();
+            case KExpressionsPackage.DECLARATION: return createDeclaration();
+            case KExpressionsPackage.FUNCTION_CALL: return createFunctionCall();
+            case KExpressionsPackage.PARAMETER: return createParameter();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -201,6 +204,36 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     public TextExpression createTextExpression() {
         TextExpressionImpl textExpression = new TextExpressionImpl();
         return textExpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Declaration createDeclaration() {
+        DeclarationImpl declaration = new DeclarationImpl();
+        return declaration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public FunctionCall createFunctionCall() {
+        FunctionCallImpl functionCall = new FunctionCallImpl();
+        return functionCall;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Parameter createParameter() {
+        ParameterImpl parameter = new ParameterImpl();
+        return parameter;
     }
 
     /**

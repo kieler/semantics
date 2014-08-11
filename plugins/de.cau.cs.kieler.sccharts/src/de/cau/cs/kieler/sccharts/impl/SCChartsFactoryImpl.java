@@ -78,15 +78,17 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.ACTION: return createAction();
             case SCChartsPackage.ASSIGNMENT: return createAssignment();
             case SCChartsPackage.EMISSION: return createEmission();
-            case SCChartsPackage.REGION: return createRegion();
-            case SCChartsPackage.SUBSTITUTION: return createSubstitution();
             case SCChartsPackage.STATE: return createState();
+            case SCChartsPackage.REGION: return createRegion();
+            case SCChartsPackage.BINDING: return createBinding();
             case SCChartsPackage.TRANSITION: return createTransition();
             case SCChartsPackage.TEXT_EFFECT: return createTextEffect();
+            case SCChartsPackage.FUNCTION_CALL_EFFECT: return createFunctionCallEffect();
             case SCChartsPackage.ENTRY_ACTION: return createEntryAction();
             case SCChartsPackage.DURING_ACTION: return createDuringAction();
             case SCChartsPackage.EXIT_ACTION: return createExitAction();
             case SCChartsPackage.SUSPEND_ACTION: return createSuspendAction();
+            case SCChartsPackage.FOR: return createFor();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -179,9 +181,9 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    public Substitution createSubstitution() {
-        SubstitutionImpl substitution = new SubstitutionImpl();
-        return substitution;
+    public Binding createBinding() {
+        BindingImpl binding = new BindingImpl();
+        return binding;
     }
 
     /**
@@ -212,6 +214,16 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     public TextEffect createTextEffect() {
         TextEffectImpl textEffect = new TextEffectImpl();
         return textEffect;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public FunctionCallEffect createFunctionCallEffect() {
+        FunctionCallEffectImpl functionCallEffect = new FunctionCallEffectImpl();
+        return functionCallEffect;
     }
 
     /**
@@ -252,6 +264,16 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     public SuspendAction createSuspendAction() {
         SuspendActionImpl suspendAction = new SuspendActionImpl();
         return suspendAction;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public For createFor() {
+        ForImpl for_ = new ForImpl();
+        return for_;
     }
 
     /**

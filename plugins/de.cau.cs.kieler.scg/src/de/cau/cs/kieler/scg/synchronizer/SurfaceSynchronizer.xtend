@@ -13,16 +13,19 @@
  */
  package de.cau.cs.kieler.scg.synchronizer
 
+import com.google.common.collect.ImmutableList
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import de.cau.cs.kieler.scgsched.ScgschedFactory
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.sequentializer.EmptyExpression
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -53,19 +56,21 @@ import de.cau.cs.kieler.scgsched.ScgschedFactory
  * @extends AbstractSCGSynchronizer
  */
 
-class SurfaceSynchronizer extends AbstractSCGSynchronizer {
+class SurfaceSynchronizer extends AbstractSynchronizer {
  
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
     
+    @Inject
+    extension KExpressionsExtension
+    
     /** Inject SCG extensions. */    
     @Inject
     extension SCGExtensions
-    
-	/** Inject SCG copy extensions. */  
-    @Inject
-    extension SCGCopyExtensions
+   
+    private val OPERATOREXPRESSION_DEPTHLIMIT = 16
+    private val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8
 
     // -------------------------------------------------------------------------
     // -- Synchronizer
@@ -93,7 +98,7 @@ class SurfaceSynchronizer extends AbstractSCGSynchronizer {
 		
 		// Since we are working we completely enriched SCGs, we can use the SCG extensions 
 		// to retrieve the scheduling block of the join node in question.
-		val joinSB = join.schedulingBlock
+		val joinSB = join.getCachedSchedulingBlock
 		
 		// Create a new list for all exit nodes of the threads of the fork-join-combination...
         val exitNodes = <Exit> newLinkedList
@@ -117,7 +122,7 @@ class SurfaceSynchronizer extends AbstractSCGSynchronizer {
         for(exit:exitNodes){
         	// Increment the exit node counter and retrieve the scheduling block of the exit node.
         	exitNodeCount = exitNodeCount + 1
-            val exitSB = exit.schedulingBlock
+            val exitSB = exit.getCachedSchedulingBlock
             // This scheduling block is a predecessor of the join node. Add it to the data structure.
             data.predecessors.add(exitSB)
             
@@ -134,10 +139,10 @@ class SurfaceSynchronizer extends AbstractSCGSynchronizer {
             	 * SynchronizerData structure since the object has to be added to the list of 
             	 * valued objects in the SCG. 
             	 */
-      			val emptyExp = ScgschedFactory::eINSTANCE.createEmptyExpression  
+      			val emptyExp = new EmptyExpression()  
       			emptyExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
       			emptyExp.valuedObject.name = exitSB.guard.name + '_e' + exitNodeCount
-      			emptyExp.valuedObject.type = ValueType::BOOL
+//      			emptyExp.valuedObject.type = ValueType::BOOL
       			data.valuedObjects.add(emptyExp.valuedObject)
 
 				/**
@@ -151,17 +156,20 @@ class SurfaceSynchronizer extends AbstractSCGSynchronizer {
             	if (threadSurfaces.size>1) {
 	            	val subExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
     	        	subExpression.setOperator(OperatorType::OR)
-        	    	threadSurfaces.forEach[subExpression.subExpressions.add(it.schedulingBlock.guard.reference)]
+//        	    	threadSurfaces.forEach[subExpression.subExpressions.add(it.schedulingBlock.guard.reference)]
+                    threadSurfaces.forEach[subExpression.subExpressions.add(it.getCachedSchedulingBlock.guard.reference)]
 	            	expression.subExpressions.add(subExpression)
             	} else {
             		// Otherwise, add a reference to the surface block directly.
-            		expression.subExpressions.add(threadSurfaces.head.schedulingBlock.guard.reference)
+//                    expression.subExpressions.add(threadSurfaces.head.schedulingBlock.guard.reference)
+                    expression.subExpressions.add(threadSurfaces.head.getCachedSchedulingBlock.guard.reference)
             	}
             	// Add the newly created expression to the empty expression and link the thread exit object field
             	// to the guard of the exit node. This enables further processors to identify the block responsible
             	// for the creation of the empty expression. 
             	emptyExp.expression = expression
-            	emptyExp.threadExitObject = exitSB.guard
+//            	emptyExp.threadExitObject = exitSB.guard
+                emptyExp.threadExitObject = exitSB.guard
             
             	// Subsequently, add the newly created empty expression to the list of empty expressions
             	// in the guard expression of the synchronizer.
@@ -170,7 +178,8 @@ class SurfaceSynchronizer extends AbstractSCGSynchronizer {
            	
            	// For each exit node, add the guard of the scheduling block of the exit node to the termination expression.
            	// At least one thread must be exited in this tick to trigger the synchronizer.
-        	terminationExpr.subExpressions.add(exitSB.guard.reference)
+//            terminationExpr.subExpressions.add(exitSB.guard.reference)
+            terminationExpr.subExpressions.add(exitSB.guard.reference)
         }
 
 		/**
@@ -180,24 +189,116 @@ class SurfaceSynchronizer extends AbstractSCGSynchronizer {
 		 * Therefore, for each thread a new expression, called thread expression, is created. 
 		 * Finally, the termination expression is added since at least one thread must exit in this tick instance. 
 		 */
-		// Create a new and-operator expression.
-        val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-        expression.setOperator(OperatorType::AND)
+		if (data.guardExpression.emptyExpressions.size > 0) {
+    		// Create a new and-operator expression.
+            val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+            expression.setOperator(OperatorType::AND)
         
-        // Create thread expressions (or-operator expressions) for each thread. 
-        // They include the empty expression - the thread already finished in previous ticks - 
-        // and the threadExitObject - the thread just finished in this tick.
-        data.guardExpression.emptyExpressions.forEach[
-        	val threadExpr = KExpressionsFactory::eINSTANCE.createOperatorExpression
-        	threadExpr.setOperator(OperatorType::OR)
-        	threadExpr.subExpressions.add(it.valuedObject.reference)
-        	threadExpr.subExpressions.add(it.threadExitObject.reference)
-        	expression.subExpressions.add(threadExpr)
-        ]
+            // Create thread expressions (or-operator expressions) for each thread. 
+            // They include the empty expression - the thread already finished in previous ticks - 
+            // and the threadExitObject - the thread just finished in this tick.
+            data.guardExpression.emptyExpressions.forEach[
+        	   val threadExpr = KExpressionsFactory::eINSTANCE.createOperatorExpression
+        	   threadExpr.setOperator(OperatorType::OR)
+        	   threadExpr.subExpressions.add(it.valuedObject.reference)
+        	   threadExpr.subExpressions.add(it.threadExitObject.reference)
+        	   expression.subExpressions.add(threadExpr)
+            ]
+            // Conclusively, add the termination expression - at least one thread must exit this tick.
+            if (terminationExpr.subExpressions.size == 1) {
+                expression.subExpressions.add(terminationExpr.subExpressions.head)        
+            } else {
+                expression.subExpressions.add(terminationExpr)
+            }
+            data.guardExpression.expression = expression
+        } else {
+            // No surface found! Synchronizer exists immediately!
+            data.guardExpression.expression = terminationExpr
+        }
         
-        // Conclusively, add the termination expression - at least one thread must exit this tick.
-        expression.subExpressions.add(terminationExpr)
-        data.guardExpression.expression = expression
+        /** Fix for too long empty expressions. */
+        var ok = false
+        while (!ok) {
+            ok = true
+            val emptyCopy = ImmutableList::copyOf(data.guardExpression.emptyExpressions)
+            for(empty : emptyCopy) {
+                var Expression exp = null
+                if (empty.expression instanceof OperatorExpression) {
+                    if ((empty.expression as OperatorExpression).getOperator == OperatorType::NOT) {
+                        exp = (empty.expression as OperatorExpression).subExpressions.head
+                    } else { 
+                        exp = empty.expression
+                    }
+                }
+                val encapsExp = exp
+                if (encapsExp instanceof OperatorExpression) {
+                    val opExp = encapsExp as OperatorExpression
+                    val depth = opExp.subExpressions.size
+                    if (depth > OPERATOREXPRESSION_DEPTHLIMIT) {
+                        ok = false
+                        val emptyExp = new EmptyExpression()  
+                        emptyExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
+                        emptyExp.valuedObject.name = empty.valuedObject.name + "_fix"
+                        data.valuedObjects.add(emptyExp.valuedObject)
+                        val subExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+                        subExpression.setOperator(OperatorType::OR)
+                        var gd = OPERATOREXPRESSION_DEPTHLIMIT/2
+                        while (gd < depth-1) {
+                            subExpression.subExpressions += opExp.subExpressions.get(OPERATOREXPRESSION_DEPTHLIMIT/2)
+                            gd = gd + 1
+                        }
+                        emptyExp.expression = subExpression;
+                        (encapsExp as OperatorExpression).subExpressions.add(emptyExp.valuedObject.reference) 
+                        data.guardExpression.emptyExpressions.add(0,emptyExp)
+                    }
+                }
+            }
+        }
+        
+        /** Basically, do the same thing for the synchronizer expression. */
+        ok = false
+        if (data.guardExpression.expression instanceof OperatorExpression &&
+            (data.guardExpression.expression as OperatorExpression).operator == OperatorType::AND
+        ) {
+            val sExp = data.guardExpression.expression as OperatorExpression
+            var fixcnt = 0
+            while(sExp.subExpressions.size > OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER) {
+                val eExp = new EmptyExpression()  
+                eExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
+                eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
+                data.valuedObjects.add(eExp.valuedObject)
+                val subExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
+                subExp.setOperator(OperatorType::AND)
+                var gd = OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER/2
+                while (gd > 0) {
+                    subExp.subExpressions += sExp.subExpressions.get(0)
+                    gd = gd - 1
+                }
+                eExp.expression = subExp;
+                sExp.subExpressions.add(0, eExp.valuedObject.reference)
+                data.guardExpression.emptyExpressions.add(eExp)
+                fixcnt = fixcnt + 1
+            }
+            
+            val OperatorExpression tExp = sExp.subExpressions.last as OperatorExpression            
+            while(tExp.subExpressions.size > OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER) {
+                val eExp = new EmptyExpression()  
+                eExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
+                eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
+                data.valuedObjects.add(eExp.valuedObject)
+                val subExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
+                subExp.setOperator(OperatorType::OR)
+                var gd = OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER/2
+                while (gd > 0) {
+                    subExp.subExpressions += tExp.subExpressions.get(0)
+                    gd = gd - 1
+                }
+                eExp.expression = subExp;
+                tExp.subExpressions.add(0, eExp.valuedObject.reference)
+                data.guardExpression.emptyExpressions.add(eExp)
+                fixcnt = fixcnt + 1
+            }
+        }
         
         // Return the gathered data (to the scheduler).
         data 

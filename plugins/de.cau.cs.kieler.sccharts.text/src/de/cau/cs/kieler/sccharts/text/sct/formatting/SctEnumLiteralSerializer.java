@@ -31,7 +31,7 @@ import de.cau.cs.kieler.sccharts.text.sct.SctTransientValueService;
  * Customized {@link IEnumLiteralSerializer}. Realizes the mapping of special terminal symbols to
  * model content. Here, it serves just to drop default values of enumerations.
  *
- * @author chsch
+ * @author chsch ssm
  */
 public class SctEnumLiteralSerializer extends EnumLiteralSerializer {
 
@@ -55,14 +55,15 @@ public class SctEnumLiteralSerializer extends EnumLiteralSerializer {
             Assignment a = (Assignment) ruleCall.eContainer();
 
             // if the feature the assignment is made to is the 'type' feature
-            if (a.getFeature()
-                    .equals(KExpressionsPackage.eINSTANCE.getValuedObject_Type().getName())) {
+// TODO: Is this still relevant?
+//            if (a.getFeature()
+//                    .equals(KExpressionsPackage.eINSTANCE.getValuedObject_Type().getName())) {
 
                 // ask the transientValueService;
                 // note that the return inverse value semantics!
-                return !transientValueService.isTransient(context,
-                        KExpressionsPackage.eINSTANCE.getValuedObject_Type(), -1);
-            }
+//                return !transientValueService.isTransient(context,
+//                        KExpressionsPackage.eINSTANCE.getValuedObject_Type(), -1);
+//            }
         }
 
         // if we have a valuedObject under consideration and are processing the call of a

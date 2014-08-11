@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sccharts.util;
 import de.cau.cs.kieler.core.annotations.Annotatable;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.FunctionCall;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 
 import de.cau.cs.kieler.sccharts.*;
@@ -116,6 +117,14 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case SCChartsPackage.STATE: {
+                State state = (State)theEObject;
+                T result = caseState(state);
+                if (result == null) result = caseScope(state);
+                if (result == null) result = caseAnnotatable(state);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case SCChartsPackage.REGION: {
                 Region region = (Region)theEObject;
                 T result = caseRegion(region);
@@ -124,17 +133,10 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case SCChartsPackage.SUBSTITUTION: {
-                Substitution substitution = (Substitution)theEObject;
-                T result = caseSubstitution(substitution);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.STATE: {
-                State state = (State)theEObject;
-                T result = caseState(state);
-                if (result == null) result = caseScope(state);
-                if (result == null) result = caseAnnotatable(state);
+            case SCChartsPackage.BINDING: {
+                Binding binding = (Binding)theEObject;
+                T result = caseBinding(binding);
+                if (result == null) result = caseAnnotatable(binding);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -159,6 +161,15 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseTextExpression(textEffect);
                 if (result == null) result = caseEffect(textEffect);
                 if (result == null) result = caseExpression(textEffect);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.FUNCTION_CALL_EFFECT: {
+                FunctionCallEffect functionCallEffect = (FunctionCallEffect)theEObject;
+                T result = caseFunctionCallEffect(functionCallEffect);
+                if (result == null) result = caseFunctionCall(functionCallEffect);
+                if (result == null) result = caseEffect(functionCallEffect);
+                if (result == null) result = caseExpression(functionCallEffect);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -203,6 +214,12 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseLocalAction(suspendAction);
                 if (result == null) result = caseAction(suspendAction);
                 if (result == null) result = caseAnnotatable(suspendAction);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.FOR: {
+                For for_ = (For)theEObject;
+                T result = caseFor(for_);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -286,17 +303,17 @@ public class SCChartsSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Substitution</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Binding</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Substitution</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Binding</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseSubstitution(Substitution object) {
+    public T caseBinding(Binding object) {
         return null;
     }
 
@@ -357,6 +374,21 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseTextEffect(TextEffect object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Function Call Effect</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Function Call Effect</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseFunctionCallEffect(FunctionCallEffect object) {
         return null;
     }
 
@@ -436,6 +468,21 @@ public class SCChartsSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>For</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>For</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseFor(For object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Annotatable</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -477,6 +524,21 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseTextExpression(TextExpression object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Function Call</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Function Call</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseFunctionCall(FunctionCall object) {
         return null;
     }
 

@@ -19,13 +19,17 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.Assignment;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,6 +40,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.AssignmentImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.AssignmentImpl#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.AssignmentImpl#getIndices <em>Indices</em>}</li>
  * </ul>
  * </p>
  *
@@ -70,6 +75,16 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
     protected Expression expression;
 
     /**
+     * The cached value of the '{@link #getIndices() <em>Indices</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @see #getIndices()
+     * @generated
+     * @ordered
+     */
+	protected EList<Expression> indices;
+
+				/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -171,6 +186,18 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
 
     /**
      * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EList<Expression> getIndices() {
+        if (indices == null) {
+            indices = new EObjectContainmentEList<Expression>(Expression.class, this, SCChartsPackage.ASSIGNMENT__INDICES);
+        }
+        return indices;
+    }
+
+				/**
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
@@ -179,6 +206,8 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
         switch (featureID) {
             case SCChartsPackage.ASSIGNMENT__EXPRESSION:
                 return basicSetExpression(null, msgs);
+            case SCChartsPackage.ASSIGNMENT__INDICES:
+                return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -196,6 +225,8 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
                 return basicGetValuedObject();
             case SCChartsPackage.ASSIGNMENT__EXPRESSION:
                 return getExpression();
+            case SCChartsPackage.ASSIGNMENT__INDICES:
+                return getIndices();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -205,7 +236,8 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
+    @SuppressWarnings("unchecked")
+				@Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case SCChartsPackage.ASSIGNMENT__VALUED_OBJECT:
@@ -213,6 +245,10 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
                 return;
             case SCChartsPackage.ASSIGNMENT__EXPRESSION:
                 setExpression((Expression)newValue);
+                return;
+            case SCChartsPackage.ASSIGNMENT__INDICES:
+                getIndices().clear();
+                getIndices().addAll((Collection<? extends Expression>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -232,6 +268,9 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
             case SCChartsPackage.ASSIGNMENT__EXPRESSION:
                 setExpression((Expression)null);
                 return;
+            case SCChartsPackage.ASSIGNMENT__INDICES:
+                getIndices().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -248,6 +287,8 @@ public class AssignmentImpl extends EffectImpl implements Assignment {
                 return valuedObject != null;
             case SCChartsPackage.ASSIGNMENT__EXPRESSION:
                 return expression != null;
+            case SCChartsPackage.ASSIGNMENT__INDICES:
+                return indices != null && !indices.isEmpty();
         }
         return super.eIsSet(featureID);
     }

@@ -8,13 +8,20 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.s.s.Assignment;
 import de.cau.cs.kieler.s.s.SPackage;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,6 +31,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl#getVariable <em>Variable</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl#getIndices <em>Indices</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.AssignmentImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
@@ -41,6 +49,16 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * @ordered
    */
   protected ValuedObject variable;
+
+  /**
+   * The cached value of the '{@link #getIndices() <em>Indices</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getIndices()
+   * @generated
+   * @ordered
+   */
+  protected EList<Expression> indices;
 
   /**
    * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
@@ -121,6 +139,20 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Expression> getIndices()
+  {
+    if (indices == null)
+    {
+      indices = new EObjectContainmentEList<Expression>(Expression.class, this, SPackage.ASSIGNMENT__INDICES);
+    }
+    return indices;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public Expression getExpression()
   {
     return expression;
@@ -174,6 +206,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
   {
     switch (featureID)
     {
+      case SPackage.ASSIGNMENT__INDICES:
+        return ((InternalEList<?>)getIndices()).basicRemove(otherEnd, msgs);
       case SPackage.ASSIGNMENT__EXPRESSION:
         return basicSetExpression(null, msgs);
     }
@@ -193,6 +227,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
       case SPackage.ASSIGNMENT__VARIABLE:
         if (resolve) return getVariable();
         return basicGetVariable();
+      case SPackage.ASSIGNMENT__INDICES:
+        return getIndices();
       case SPackage.ASSIGNMENT__EXPRESSION:
         return getExpression();
     }
@@ -204,6 +240,7 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -211,6 +248,10 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
     {
       case SPackage.ASSIGNMENT__VARIABLE:
         setVariable((ValuedObject)newValue);
+        return;
+      case SPackage.ASSIGNMENT__INDICES:
+        getIndices().clear();
+        getIndices().addAll((Collection<? extends Expression>)newValue);
         return;
       case SPackage.ASSIGNMENT__EXPRESSION:
         setExpression((Expression)newValue);
@@ -232,6 +273,9 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
       case SPackage.ASSIGNMENT__VARIABLE:
         setVariable((ValuedObject)null);
         return;
+      case SPackage.ASSIGNMENT__INDICES:
+        getIndices().clear();
+        return;
       case SPackage.ASSIGNMENT__EXPRESSION:
         setExpression((Expression)null);
         return;
@@ -251,6 +295,8 @@ public class AssignmentImpl extends InstructionImpl implements Assignment
     {
       case SPackage.ASSIGNMENT__VARIABLE:
         return variable != null;
+      case SPackage.ASSIGNMENT__INDICES:
+        return indices != null && !indices.isEmpty();
       case SPackage.ASSIGNMENT__EXPRESSION:
         return expression != null;
     }

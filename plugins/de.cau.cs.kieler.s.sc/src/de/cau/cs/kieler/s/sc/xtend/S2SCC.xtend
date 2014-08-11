@@ -13,8 +13,10 @@
  */
  package de.cau.cs.kieler.s.sc.xtend
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
+import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.FloatValue
 import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
@@ -23,7 +25,9 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.s.s.Abort
+import de.cau.cs.kieler.s.s.Assignment
 import de.cau.cs.kieler.s.s.Await
 import de.cau.cs.kieler.s.s.Emit
 import de.cau.cs.kieler.s.s.Fork
@@ -32,15 +36,14 @@ import de.cau.cs.kieler.s.s.HostCodeInstruction
 import de.cau.cs.kieler.s.s.If
 import de.cau.cs.kieler.s.s.Instruction
 import de.cau.cs.kieler.s.s.Join
+import de.cau.cs.kieler.s.s.LocalSignal
 import de.cau.cs.kieler.s.s.Pause
 import de.cau.cs.kieler.s.s.Prio
 import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.s.s.LocalSignal
-import de.cau.cs.kieler.s.s.Assignment
+import de.cau.cs.kieler.s.extensions.SExtension
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -51,11 +54,19 @@ import de.cau.cs.kieler.s.s.Assignment
  */
 class S2SCC { 
     
+    public static String bufferSize;
+    
+    @Inject
+    extension KExpressionsExtension    
+
+    @Inject
+    extension SExtension    
+    
     // General method to create the c simulation interface.
-    def transform (Program program, String outputFolder, String bufferSize) {
+    def transform (Program program) {
        '''
 «/* Generate the C header */»
-       «scHeader(outputFolder, program)»
+       «scHeader(program)»
 
        «/* Signal Reset, Output */»
        «sResetSignals(program)»
@@ -87,7 +98,7 @@ class S2SCC {
    // -------------------------------------------------------------------------   
    
    // Generate the C header.
-   def scHeader(String outputFolderm, Program program) {
+   def scHeader(Program program) {
        '''
     /*****************************************************************************/
     /*                 G E N E R A T E D     S C    C O D E                      */
@@ -191,12 +202,13 @@ class S2SCC {
    
    // Generate signal constants.
    def sSignalConstants(Program program) {
-       val signals = program.getValuedObjects().filter[e|e.isSignal]
+       val valuedObjects = program.getValuedObjects()
+       val signals = valuedObjects.filter[e|e.isSignal]
        if (!signals.nullOrEmpty) {
        '''typedef enum {«FOR signal : signals SEPARATOR ",
  "»«signal.name»«ENDFOR»} signaltype;
        
-       const char *s2signame[] = {«FOR signal : program.getValuedObjects().filter[e|e.isSignal] SEPARATOR ", 
+       const char *s2signame[] = {«FOR signal : signals SEPARATOR ", 
 "»"«signal.name»"«ENDFOR»};'''
        }
        else {
@@ -453,7 +465,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
 
       // Call input functions for each JSON s signal that is present.
    def callInputVariable(ValuedObject variable) {
-       if (!variable.isSignal && variable.input) {
+       if (!variable.isSignal && variable.isInput) {
           return '''
           child = cJSON_GetObjectItem(object, "«variable.name»");
           {
@@ -499,6 +511,10 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(«signal.name»)));
    // Host code without "..."
    def extractCode(String hostCodeString) {
         hostCodeString.substring(1, hostCodeString.length-1);
+   }
+   
+   def extractCode(TextExpression hostCode) {
+        hostCode.text.extractCode
    }
    
    // Expand Host code.

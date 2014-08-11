@@ -111,6 +111,7 @@ AtomicExpression returns Expression:
     BoolValue
     | ValuedObjectTestExpression 
     | '(' BoolExpression ')'
+    | FunctionCall
     | TextExpression
 ;
 
@@ -131,8 +132,16 @@ ValuedObjectTestExpression returns Expression:
 
 // Example: A, varB
 ValuedObjectReference returns ValuedObjectReference:
-	valuedObject=[ValuedObject|ID];
+	valuedObject=[ValuedObject|ID] ('[' indices+=Expression ']')*;
 
+FunctionCall returns FunctionCall:
+    '<' functionName=ID ('(' parameters += Parameter (',' parameters += Parameter)* ')')? '>'
+;
+
+Parameter returns Parameter:
+    (callByReference ?= '&')?
+    expression = Expression
+;
 
 // Example: 'printf(...)'
 TextExpression returns TextExpression:

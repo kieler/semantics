@@ -14,28 +14,32 @@
 package de.cau.cs.kieler.sccharts.text.sct.validation;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.validation.Check;
 
-
-
-
-import org.eclipse.emf.ecore.EPackage;
-
+import de.cau.cs.kieler.core.kexpressions.BoolValue;
+import de.cau.cs.kieler.core.kexpressions.Declaration;
+import de.cau.cs.kieler.core.kexpressions.DoubleValue;
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.FloatValue;
+import de.cau.cs.kieler.core.kexpressions.IntValue;
+import de.cau.cs.kieler.core.kexpressions.TextExpression;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.model.validation.CustomEValidator;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.TransitionType;
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension;
 
 /**
  * SCCharts Validation Rules
  * 
- * @author cmot
+ * @author cmot ssm
  * @kieler.design 2014-01-20 proposed 
  * @kieler.rating 2014-01-20 proposed yellow
  */
@@ -56,6 +60,14 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     public static final String REGION_NO_FINAL_STATE = "Every region should have a final state whenever its parent state has a termination transition";
     public static final String STATE_NOT_REACHABLE = "The state is not reachable";
 
+    public static final String NON_SIGNAL_EMISSION = "Non-signals cannot be used in an emission";
+    public static final String NON_VARIABLE_ASSIGNMENT = "Non-variables cannot be used in an assignment";
+    
+    public static final String ASSIGNMENT_TO_CONST = "You cannot assign a value to a const object";
+    public static final String NO_CONST_LITERAL = "Const objects must be bound to literals";
+    
+    public static final SCChartsExtension sCChartExtension = new SCChartsExtension();
+
     @Override
     protected List<EPackage> getEPackages() {
         List<EPackage> result = new ArrayList<EPackage>();
@@ -75,7 +87,16 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
     public void checkInitialState(final de.cau.cs.kieler.sccharts.Region region) {
         // Do not consider the root region == SCChart
         if (region.getParentState() != null) {
+            // check if parent state has declared any REAL region not only a
+            // dummy region for entry/during/exit actions or suspends
+            de.cau.cs.kieler.sccharts.State parentState = region.getParentState();
             int foundInitial = 0;
+            if ((parentState.getLocalActions().size() > 0) && (parentState.getRegions().size() == 1)
+                    && parentState.getRegions().get(0).getStates().size() == 0
+                    && (parentState.getRegions().get(0).getId() == null
+                        || parentState.getRegions().get(0).getId().equals(""))) {
+                foundInitial = 1;
+            }
             for (de.cau.cs.kieler.sccharts.State state : region.getStates()) {
                 if (state.isInitial()) {
                     foundInitial++;
@@ -128,26 +149,60 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
 
     // -------------------------------------------------------------------------
 
-    // Must ensure not to loop forever when having cycles in the model
-    ArrayList<de.cau.cs.kieler.sccharts.State> visited = new ArrayList<de.cau.cs.kieler.sccharts.State>();
-    
-    private boolean checkReachableStates(final de.cau.cs.kieler.sccharts.State originalState, final de.cau.cs.kieler.sccharts.State state) {
-        if (visited.contains(state)) {
-            return false;
-        }
-        visited.add(state);
-        if (state.isInitial()) {
-            return true;
-        }
-        else {
-            for (Transition transition : state.getIncomingTransitions()) {
-            		if (checkReachableStates(originalState, transition.getSourceState())) {
-                            return true;
-            		}
+    /**
+     * Forbid emissions of non-signals
+     *
+     * @param state the state
+     */
+    @Check
+    public void checkNoBooleanEmissions(final de.cau.cs.kieler.sccharts.Emission emission) {
+        if (emission.getValuedObject() != null && emission.getValuedObject().eContainer() != null && emission.getValuedObject().eContainer() instanceof Declaration) {
+            Declaration declaration = (Declaration) emission.getValuedObject().eContainer();
+            if (!declaration.isSignal()) {
+                error(NON_SIGNAL_EMISSION, emission, null, -1);
             }
-        }
-        return false;
+        } 
     }
+
+    // -------------------------------------------------------------------------    
+
+    /**
+     * Forbid assignments of non-variables
+     *
+     * @param state the state
+     */
+    @Check
+    public void checkNoBooleanEmissions(final de.cau.cs.kieler.sccharts.Assignment assignment) {
+        if (assignment.getValuedObject() != null && assignment.getValuedObject().eContainer() != null && assignment.getValuedObject().eContainer() instanceof Declaration) {
+            Declaration declaration = (Declaration) assignment.getValuedObject().eContainer();
+            if (declaration.isSignal()) {
+                error(NON_VARIABLE_ASSIGNMENT, assignment, null, -1);
+            }
+        } 
+    }
+
+    // -------------------------------------------------------------------------    
+    
+//    // Must ensure not to loop forever when having cycles in the model
+//    ArrayList<de.cau.cs.kieler.sccharts.State> visited = new ArrayList<de.cau.cs.kieler.sccharts.State>();
+//    
+//    private boolean checkReachableStates(final de.cau.cs.kieler.sccharts.State originalState, final de.cau.cs.kieler.sccharts.State state) {
+//        if (visited.contains(state)) {
+//            return false;
+//        }
+//        visited.add(state);
+//        if (state.isInitial()) {
+//            return true;
+//        }
+//        else {
+//            for (Transition transition : state.getIncomingTransitions()) {
+//            		if (checkReachableStates(originalState, transition.getSourceState())) {
+//                            return true;
+//            		}
+//            }
+//        }
+//        return false;
+//    }
 
     // -------------------------------------------------------------------------
 
@@ -158,8 +213,8 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
      */
     @Check
     public void checkReachableStates(final de.cau.cs.kieler.sccharts.State state) {
-        visited.clear();
-        if (state.getParentRegion().getParentState() != null && !checkReachableStates(state, state)) {
+//        visited.clear();
+        if (!sCChartExtension.isStateReachable(state)) {
            warning(STATE_NOT_REACHABLE, state, null, -1);
         }
     }
@@ -245,4 +300,43 @@ public class SctJavaValidator extends AbstractSctJavaValidator implements
             }
         }
     }
+    
+    
+    /**
+     *
+     * @param state the state
+     */
+    @Check
+    public void checkAssignmentToConst(final de.cau.cs.kieler.sccharts.Assignment assignment) {
+    	if (assignment.getValuedObject() != null) {
+    		Declaration declaration = (Declaration) assignment.getValuedObject().eContainer();	
+    		if (declaration.isConst()) {
+    			error(ASSIGNMENT_TO_CONST, assignment, null, -1);
+    		}
+    	}
+    }
+    
+    /**
+    *
+    * @param state the state
+    */
+   @Check
+   public void checkConstBinding(final de.cau.cs.kieler.sccharts.State state) {
+	   for(Declaration declaration : state.getDeclarations()) {
+		   if (declaration.isConst()) {
+			   for (ValuedObject valuedObject : declaration.getValuedObjects()) {
+				   Expression initialValue = valuedObject.getInitialValue();
+				   if (initialValue != null && 
+						   !(initialValue instanceof BoolValue
+						   || initialValue instanceof IntValue
+						   || initialValue instanceof FloatValue
+						   || initialValue instanceof DoubleValue
+						   || initialValue instanceof TextExpression
+						   )) {
+					   error(NO_CONST_LITERAL, valuedObject, null, -1);
+				   }
+			   }
+		   }
+	   }
+   }    
 }

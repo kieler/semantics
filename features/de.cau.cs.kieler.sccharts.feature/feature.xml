@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="de.cau.cs.kieler.sccharts.feature"
-      label="KIELER SCCharts Editing/Simulation/Code Gen"
-      version="0.8.0.qualifier"
+      label="KIELER SCCharts"
+      version="0.1.1.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel"
       plugin="de.cau.cs.kieler.sccharts">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler">
-      KIELER SCCharts feature contains the KIELER SCCharts Textual Editor (*.sct) with automatic KLighD diagram synthesis. SCCharts can be simulated with the Ptolemy II (UC Berkeley) simulation engine (KLePto). Code generation to Synchronous C (SC) or Syncchronous Java (SJ) is also provided.
+      KIELER SCCharts feature contains the KIELER SCCharts Textual Editor (*.sct) with automatic KLighD diagram synthesis. Code generation to Synchronous C (SC) or Syncchronous Java (SJ) is provided.
    </description>
 
    <copyright>
@@ -220,16 +220,11 @@ litigation.
 
    <requires>
       <import feature="org.eclipse.emf" version="2.6.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.emf.compare" version="1.1.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.gmf" version="1.4.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.gmf.runtime.notation" version="1.4.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.xtend" version="1.0.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.xtext.runtime" version="2.1.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.xtext.ui" version="2.1.0" match="greaterOrEqual"/>
-      <import feature="de.cau.cs.kieler.kiml.gmf.feature" version="0.9.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.xtext.runtime" version="2.4.2" match="greaterOrEqual"/>
+      <import feature="org.eclipse.xtext.ui" version="2.4.2" match="greaterOrEqual"/>
       <import feature="de.cau.cs.kieler.kiml.graphviz.feature" version="0.7.0" match="greaterOrEqual"/>
       <import feature="de.cau.cs.kieler.klighd.feature" version="0.2.0" match="greaterOrEqual"/>
-      <import feature="org.ptolemy.feature" version="8.1.0.qualifier"/>
+      <import feature="de.cau.cs.kieler.klighd.freehep.feature" version="0.1.0" match="greaterOrEqual"/>
       <import plugin="com.google.guava" version="10.0.0" match="greaterOrEqual"/>
    </requires>
 
@@ -267,30 +262,9 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="de.cau.cs.kieler.core.model"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.core.model.gmf"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.core.model.xtend"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.karma"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -318,6 +292,62 @@ litigation.
          unpack="false"/>
 
    <plugin
+         id="de.cau.cs.kieler.kico"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.kico.klighd"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.kico.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.kico.server"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.kico.server.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.server"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.klighd.server"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.klighd.server.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="de.cau.cs.kieler.s"
          download-size="0"
          install-size="0"
@@ -337,14 +367,14 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="de.cau.cs.kieler.s.sim.sc"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="de.cau.cs.kieler.s.sim.sj"
          download-size="0"
@@ -372,7 +402,6 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
 
    <plugin
          id="de.cau.cs.kieler.sc"
@@ -446,13 +475,6 @@ litigation.
 
    <plugin
          id="de.cau.cs.kieler.sim.kivi"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.sim.ptolemy"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -562,16 +584,16 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
-         id="org.json"
+         id="de.cau.cs.kieler.scg.c"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.model.xtext"
+         id="org.json"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -665,12 +687,11 @@ litigation.
          download-size="0"
          install-size="0"
          version="0.0.0"/>
-         
+
    <plugin
          id="de.cau.cs.kieler.synccharts"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
-         
 
 </feature>

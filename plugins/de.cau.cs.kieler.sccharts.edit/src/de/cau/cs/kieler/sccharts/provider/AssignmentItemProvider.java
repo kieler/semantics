@@ -119,6 +119,7 @@ public class AssignmentItemProvider
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
             childrenFeatures.add(SCChartsPackage.Literals.ASSIGNMENT__EXPRESSION);
+            childrenFeatures.add(SCChartsPackage.Literals.ASSIGNMENT__INDICES);
         }
         return childrenFeatures;
     }
@@ -171,6 +172,7 @@ public class AssignmentItemProvider
 
         switch (notification.getFeatureID(Assignment.class)) {
             case SCChartsPackage.ASSIGNMENT__EXPRESSION:
+            case SCChartsPackage.ASSIGNMENT__INDICES:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -192,6 +194,11 @@ public class AssignmentItemProvider
             (createChildParameter
                 (SCChartsPackage.Literals.ASSIGNMENT__EXPRESSION,
                  SCChartsFactory.eINSTANCE.createTextEffect()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.ASSIGNMENT__EXPRESSION,
+                 SCChartsFactory.eINSTANCE.createFunctionCallEffect()));
 
         newChildDescriptors.add
             (createChildParameter
@@ -232,6 +239,89 @@ public class AssignmentItemProvider
             (createChildParameter
                 (SCChartsPackage.Literals.ASSIGNMENT__EXPRESSION,
                  KExpressionsFactory.eINSTANCE.createTextExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.ASSIGNMENT__EXPRESSION,
+                 KExpressionsFactory.eINSTANCE.createFunctionCall()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.ASSIGNMENT__INDICES,
+                 SCChartsFactory.eINSTANCE.createTextEffect()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.ASSIGNMENT__INDICES,
+                 SCChartsFactory.eINSTANCE.createFunctionCallEffect()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.ASSIGNMENT__INDICES,
+                 KExpressionsFactory.eINSTANCE.createExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.ASSIGNMENT__INDICES,
+                 KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.ASSIGNMENT__INDICES,
+                 KExpressionsFactory.eINSTANCE.createValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.ASSIGNMENT__INDICES,
+                 KExpressionsFactory.eINSTANCE.createIntValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.ASSIGNMENT__INDICES,
+                 KExpressionsFactory.eINSTANCE.createFloatValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.ASSIGNMENT__INDICES,
+                 KExpressionsFactory.eINSTANCE.createBoolValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.ASSIGNMENT__INDICES,
+                 KExpressionsFactory.eINSTANCE.createOperatorExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.ASSIGNMENT__INDICES,
+                 KExpressionsFactory.eINSTANCE.createTextExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.ASSIGNMENT__INDICES,
+                 KExpressionsFactory.eINSTANCE.createFunctionCall()));
+    }
+
+				/**
+     * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	@Override
+	public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
+        Object childFeature = feature;
+        Object childObject = child;
+
+        boolean qualify =
+            childFeature == SCChartsPackage.Literals.ASSIGNMENT__EXPRESSION ||
+            childFeature == SCChartsPackage.Literals.ASSIGNMENT__INDICES;
+
+        if (qualify) {
+            return getString
+                ("_UI_CreateChild_text2",
+                 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+        }
+        return super.getCreateChildText(owner, feature, child, selection);
     }
 
 }

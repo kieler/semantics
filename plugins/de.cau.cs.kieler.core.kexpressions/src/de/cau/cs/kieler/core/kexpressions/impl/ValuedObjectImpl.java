@@ -14,13 +14,16 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,13 +33,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#isInput <em>Input</em>}</li>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#isOutput <em>Output</em>}</li>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#isStatic <em>Static</em>}</li>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#isSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getCombineOperator <em>Combine Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getInitialValue <em>Initial Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getCardinalities <em>Cardinalities</em>}</li>
  * </ul>
  * </p>
  *
@@ -62,106 +61,6 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
      * @ordered
      */
     protected String name = NAME_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getType()
-     * @generated
-     * @ordered
-     */
-    protected static final ValueType TYPE_EDEFAULT = ValueType.PURE;
-
-    /**
-     * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getType()
-     * @generated
-     * @ordered
-     */
-    protected ValueType type = TYPE_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #isInput() <em>Input</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isInput()
-     * @generated
-     * @ordered
-     */
-    protected static final boolean INPUT_EDEFAULT = false;
-
-    /**
-     * The cached value of the '{@link #isInput() <em>Input</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isInput()
-     * @generated
-     * @ordered
-     */
-    protected boolean input = INPUT_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #isOutput() <em>Output</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isOutput()
-     * @generated
-     * @ordered
-     */
-    protected static final boolean OUTPUT_EDEFAULT = false;
-
-    /**
-     * The cached value of the '{@link #isOutput() <em>Output</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isOutput()
-     * @generated
-     * @ordered
-     */
-    protected boolean output = OUTPUT_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #isStatic() <em>Static</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isStatic()
-     * @generated
-     * @ordered
-     */
-    protected static final boolean STATIC_EDEFAULT = false;
-
-    /**
-     * The cached value of the '{@link #isStatic() <em>Static</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isStatic()
-     * @generated
-     * @ordered
-     */
-    protected boolean static_ = STATIC_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #isSignal() <em>Signal</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isSignal()
-     * @generated
-     * @ordered
-     */
-    protected static final boolean SIGNAL_EDEFAULT = false;
-
-    /**
-     * The cached value of the '{@link #isSignal() <em>Signal</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isSignal()
-     * @generated
-     * @ordered
-     */
-    protected boolean signal = SIGNAL_EDEFAULT;
 
     /**
      * The default value of the '{@link #getCombineOperator() <em>Combine Operator</em>}' attribute.
@@ -194,6 +93,16 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
     protected Expression initialValue;
 
     /**
+     * The cached value of the '{@link #getCardinalities() <em>Cardinalities</em>}' attribute list.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @see #getCardinalities()
+     * @generated
+     * @ordered
+     */
+	protected EList<Integer> cardinalities;
+
+				/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -231,111 +140,6 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
         name = newName;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VALUED_OBJECT__NAME, oldName, name));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ValueType getType() {
-        return type;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setType(ValueType newType) {
-        ValueType oldType = type;
-        type = newType == null ? TYPE_EDEFAULT : newType;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VALUED_OBJECT__TYPE, oldType, type));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public boolean isInput() {
-        return input;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setInput(boolean newInput) {
-        boolean oldInput = input;
-        input = newInput;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VALUED_OBJECT__INPUT, oldInput, input));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public boolean isOutput() {
-        return output;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setOutput(boolean newOutput) {
-        boolean oldOutput = output;
-        output = newOutput;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VALUED_OBJECT__OUTPUT, oldOutput, output));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public boolean isStatic() {
-        return static_;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setStatic(boolean newStatic) {
-        boolean oldStatic = static_;
-        static_ = newStatic;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VALUED_OBJECT__STATIC, oldStatic, static_));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public boolean isSignal() {
-        return signal;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setSignal(boolean newSignal) {
-        boolean oldSignal = signal;
-        signal = newSignal;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VALUED_OBJECT__SIGNAL, oldSignal, signal));
     }
 
     /**
@@ -383,6 +187,18 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
 
     /**
      * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EList<Integer> getCardinalities() {
+        if (cardinalities == null) {
+            cardinalities = new EDataTypeUniqueEList<Integer>(Integer.class, this, KExpressionsPackage.VALUED_OBJECT__CARDINALITIES);
+        }
+        return cardinalities;
+    }
+
+				/**
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
@@ -426,20 +242,12 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
         switch (featureID) {
             case KExpressionsPackage.VALUED_OBJECT__NAME:
                 return getName();
-            case KExpressionsPackage.VALUED_OBJECT__TYPE:
-                return getType();
-            case KExpressionsPackage.VALUED_OBJECT__INPUT:
-                return isInput();
-            case KExpressionsPackage.VALUED_OBJECT__OUTPUT:
-                return isOutput();
-            case KExpressionsPackage.VALUED_OBJECT__STATIC:
-                return isStatic();
-            case KExpressionsPackage.VALUED_OBJECT__SIGNAL:
-                return isSignal();
             case KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR:
                 return getCombineOperator();
             case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
                 return getInitialValue();
+            case KExpressionsPackage.VALUED_OBJECT__CARDINALITIES:
+                return getCardinalities();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -449,32 +257,22 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
+    @SuppressWarnings("unchecked")
+				@Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case KExpressionsPackage.VALUED_OBJECT__NAME:
                 setName((String)newValue);
-                return;
-            case KExpressionsPackage.VALUED_OBJECT__TYPE:
-                setType((ValueType)newValue);
-                return;
-            case KExpressionsPackage.VALUED_OBJECT__INPUT:
-                setInput((Boolean)newValue);
-                return;
-            case KExpressionsPackage.VALUED_OBJECT__OUTPUT:
-                setOutput((Boolean)newValue);
-                return;
-            case KExpressionsPackage.VALUED_OBJECT__STATIC:
-                setStatic((Boolean)newValue);
-                return;
-            case KExpressionsPackage.VALUED_OBJECT__SIGNAL:
-                setSignal((Boolean)newValue);
                 return;
             case KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR:
                 setCombineOperator((CombineOperator)newValue);
                 return;
             case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
                 setInitialValue((Expression)newValue);
+                return;
+            case KExpressionsPackage.VALUED_OBJECT__CARDINALITIES:
+                getCardinalities().clear();
+                getCardinalities().addAll((Collection<? extends Integer>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -491,26 +289,14 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
             case KExpressionsPackage.VALUED_OBJECT__NAME:
                 setName(NAME_EDEFAULT);
                 return;
-            case KExpressionsPackage.VALUED_OBJECT__TYPE:
-                setType(TYPE_EDEFAULT);
-                return;
-            case KExpressionsPackage.VALUED_OBJECT__INPUT:
-                setInput(INPUT_EDEFAULT);
-                return;
-            case KExpressionsPackage.VALUED_OBJECT__OUTPUT:
-                setOutput(OUTPUT_EDEFAULT);
-                return;
-            case KExpressionsPackage.VALUED_OBJECT__STATIC:
-                setStatic(STATIC_EDEFAULT);
-                return;
-            case KExpressionsPackage.VALUED_OBJECT__SIGNAL:
-                setSignal(SIGNAL_EDEFAULT);
-                return;
             case KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR:
                 setCombineOperator(COMBINE_OPERATOR_EDEFAULT);
                 return;
             case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
                 setInitialValue((Expression)null);
+                return;
+            case KExpressionsPackage.VALUED_OBJECT__CARDINALITIES:
+                getCardinalities().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -526,20 +312,12 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
         switch (featureID) {
             case KExpressionsPackage.VALUED_OBJECT__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-            case KExpressionsPackage.VALUED_OBJECT__TYPE:
-                return type != TYPE_EDEFAULT;
-            case KExpressionsPackage.VALUED_OBJECT__INPUT:
-                return input != INPUT_EDEFAULT;
-            case KExpressionsPackage.VALUED_OBJECT__OUTPUT:
-                return output != OUTPUT_EDEFAULT;
-            case KExpressionsPackage.VALUED_OBJECT__STATIC:
-                return static_ != STATIC_EDEFAULT;
-            case KExpressionsPackage.VALUED_OBJECT__SIGNAL:
-                return signal != SIGNAL_EDEFAULT;
             case KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR:
                 return combineOperator != COMBINE_OPERATOR_EDEFAULT;
             case KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
                 return initialValue != null;
+            case KExpressionsPackage.VALUED_OBJECT__CARDINALITIES:
+                return cardinalities != null && !cardinalities.isEmpty();
         }
         return super.eIsSet(featureID);
     }
@@ -556,18 +334,10 @@ public class ValuedObjectImpl extends AnnotatableImpl implements ValuedObject {
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (name: ");
         result.append(name);
-        result.append(", type: ");
-        result.append(type);
-        result.append(", input: ");
-        result.append(input);
-        result.append(", output: ");
-        result.append(output);
-        result.append(", static: ");
-        result.append(static_);
-        result.append(", signal: ");
-        result.append(signal);
         result.append(", combineOperator: ");
         result.append(combineOperator);
+        result.append(", cardinalities: ");
+        result.append(cardinalities);
         result.append(')');
         return result.toString();
     }

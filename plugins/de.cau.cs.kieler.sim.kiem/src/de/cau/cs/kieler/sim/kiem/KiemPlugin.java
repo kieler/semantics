@@ -77,7 +77,8 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 public class KiemPlugin extends AbstractUIPlugin {
 
     /** The Constant DEBUG. */
-    public static final boolean DEBUG = !System.getProperty("java.vm.info", "").contains("sharing");
+    public static final boolean DEBUG = java.lang.management.ManagementFactory.getRuntimeMXBean(). getInputArguments().toString().contains("-agentlib:jdwp");
+//    public static final boolean DEBUG = !System.getProperty("java.vm.info", "").contains("sharing");
 
     /**
      * The Constant AIMED_STEP_DURATION_DEFAULT. Default value of the AimedStepDuration text field
@@ -146,11 +147,11 @@ public class KiemPlugin extends AbstractUIPlugin {
     /** The initialize execution task. */
     private InitializeExecution initializeExecution;
 
+    /** Requested re-run. */
+    private boolean requestedReRun = false;    
     /** The no error output. */
     private boolean forceNoErrorOutput = false;
     
-    /** Requested re-run. */
-    private boolean requestedReRun = false;    
     
     /** The last error. */
     private static String lastError = null;
@@ -196,7 +197,7 @@ public class KiemPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the parent shell that KIEM shoudl use to display user dialogs.
+     * Sets the parent shell that KIEM should use to display user dialogs.
      * 
      * @param parentShellParam
      *            the new shell

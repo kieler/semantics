@@ -13,9 +13,10 @@
  */
  package de.cau.cs.kieler.sccharts.extensions
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.SCChartsPlugin
 import de.cau.cs.kieler.sccharts.State
@@ -26,19 +27,19 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 /**
  * SCCharts Extensions.
  * 
- * @author cmot
+ * @author cmot ssm
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class SCChartsSimulation { 
 
-//    @Inject
-//    extension Extension
+    @Inject
+    extension KExpressionsExtension
     
     //-------------------------------------------------------------------------
     //--         S I M U L A T I O N    V I S U A L I Z A T I O N            --
     //-------------------------------------------------------------------------
-    def Region transform2Simulation (Region rootRegion) {
+    def State transform2Simulation (State rootState) {
           // Transformation of a SyncChart to another SyncChart
           // enriched with additional valuedObjects for each state and
           // each transition.
@@ -75,12 +76,12 @@ class SCChartsSimulation {
           var AUXILIARY_VARIABLE_TAG_TRANSITION = SCChartsPlugin::AUXILIARY_VARIABLE_TAG_TRANSITION
 
           // Clone the complete SyncCharts region 
-          var targetRootRegion = rootRegion.copy;
+          var targetRootRegion = rootState.copy;
 
-          var originalStates = rootRegion.eAllContents().toIterable().filter(typeof(State));
+          var originalStates = rootState.eAllContents().toIterable().filter(typeof(State));
           var targetStates = targetRootRegion.eAllContents().toIterable().filter(typeof(State)).toList();
 
-          var originalTransitions = rootRegion.eAllContents().toIterable().filter(typeof(Transition));
+          var originalTransitions = rootState.eAllContents().toIterable().filter(typeof(Transition));
           var targetTransitions = targetRootRegion.eAllContents().toIterable().filter(typeof(Transition)).toList();
 
           // For every state in the SyncChart do the transformation
@@ -114,7 +115,7 @@ class SCChartsSimulation {
      }     
      
      // Transform a transition as described in 1.
-     def void transformTransition(Transition transition, Region targetRootRegion, String UID) {
+     def void transformTransition(Transition transition, State targetRootState, String UID) {
           // auxiliary valuedObject
           val auxiliaryValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
           val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
@@ -132,12 +133,12 @@ class SCChartsSimulation {
           transition.effects.add(auxiliaryEmission);
 
           // Add auxiliaryValuedObject to first (and only) root region state SyncCharts main interface
-          targetRootRegion.states.get(0).valuedObjects.add(auxiliaryValuedObject);
+          targetRootState.valuedObjects.add(auxiliaryValuedObject);
      }
 
     
      // New visualization of active states with immediate during actions
-     def void transformState(State state, Region targetRootRegion, String UID) {
+     def void transformState(State state, State targetRootState, String UID) {
 //          if (state.isFinal) {
 //               state.setIsFinal(false);
 //               // Final states will be transformed if there is a normal termination with a self loop
@@ -147,7 +148,7 @@ class SCChartsSimulation {
 
           // Do the following only for NON-final states
           // Do the following only for NON-top-most-states
-          if (!state.isFinal && state.parentRegion != targetRootRegion) {
+          if (!state.isFinal && state.parentRegion != targetRootState) {
                // auxiliary valuedObject
                val auxiliaryValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject();
           
@@ -169,7 +170,7 @@ class SCChartsSimulation {
                state.localActions.add(immediateDuringAction);
 
                // Add auxiliaryValuedObject to first (and only) root region state SyncCharts main interface
-               targetRootRegion.states.get(0).valuedObjects.add(auxiliaryValuedObject);
+               targetRootState.valuedObjects.add(auxiliaryValuedObject);
           }
           
      }     

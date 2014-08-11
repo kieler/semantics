@@ -13,6 +13,7 @@
  */
  package de.cau.cs.kieler.s.sj.xtend
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.core.kexpressions.Expression
@@ -43,6 +44,8 @@ import java.util.List
 import de.cau.cs.kieler.s.s.Assignment
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.s.extensions.SExtension
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 
 //import static de.cau.cs.kieler.s.sj.xtend.S2SJ.*
 
@@ -55,6 +58,13 @@ import org.eclipse.emf.ecore.EObject
  */
 class S2SJ { 
     
+    @Inject
+    extension KExpressionsExtension    
+
+    @Inject
+    extension SExtension 
+    
+        
     public static boolean debug = false;
     
     // General method to create the c simulation interface.
@@ -228,10 +238,10 @@ public class ''' + className + ''' extends SJLProgramWithSignals<State> implemen
 
     public void resetOutputSignals() {    
     «FOR valuedObject : program.valuedObjects.filter(e | !e.isInput) SEPARATOR ""»
-        «IF valuedObject.signal»
+        «IF valuedObject.isSignal»
             «valuedObject.name» = false;
         «ENDIF»
-        «IF !valuedObject.signal»
+        «IF !valuedObject.isSignal»
             «valuedObject.name» = 
             «IF valuedObject.initialValue != null»«valuedObject.initialValue.expand»«ENDIF»
             «IF valuedObject.initialValue == null»«valuedObject.defaultInitialValue»«ENDIF»;

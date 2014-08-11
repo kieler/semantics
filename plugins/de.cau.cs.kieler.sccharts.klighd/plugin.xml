@@ -16,40 +16,7 @@
       </diagramSynthesis>
    </extension>
    <extension
-         point="de.cau.cs.kieler.core.kivi.combinations">
-      <combination
-            active="true"
-            class="de.cau.cs.kieler.sccharts.klighd.SCChartsShowDiagramCombination"
-            name="Show SCCharts SCT Diagrams with KLighD">
-      </combination>
-      <combination
-            active="false"
-            class="de.cau.cs.kieler.sccharts.klighd.SCChartsShowDiagramFileCombination"
-            name="Show SCCharts Diagram Files with KLighD">
-      </combination>
-   </extension>
-   <extension
          point="de.cau.cs.kieler.kiml.layoutConfigs">
-      <staticConfig
-            class="de.cau.cs.kieler.sccharts.Region"
-            option="de.cau.cs.kieler.diagramType"
-            value="de.cau.cs.kieler.layout.diagrams.stateMachine">
-      </staticConfig>
-      <staticConfig
-            class="de.cau.cs.kieler.sccharts.State"
-            option="de.cau.cs.kieler.diagramType"
-            value="de.cau.cs.kieler.layout.diagrams.boxes">
-      </staticConfig>
-      <staticConfig
-            class="de.cau.cs.kieler.core.kexpressions.Signal"
-            option="de.cau.cs.kieler.noLayout"
-            value="true">
-      </staticConfig>
-      <staticConfig
-            class="de.cau.cs.kieler.core.kexpressions.Variable"
-            option="de.cau.cs.kieler.noLayout"
-            value="true">
-      </staticConfig>
       <staticConfig
             class="de.cau.cs.kieler.sccharts.State"
             option="de.cau.cs.kieler.spacing"
@@ -101,6 +68,10 @@
       <semanticConfig
             class="de.cau.cs.kieler.sccharts.State"
             config="de.cau.cs.kieler.sccharts.klighd.layout.StateLayoutConfig">
+      </semanticConfig>
+      <semanticConfig
+            class="de.cau.cs.kieler.sccharts.Region"
+            config="de.cau.cs.kieler.sccharts.klighd.layout.RegionLayoutConfig">
       </semanticConfig>
    </extension>
 

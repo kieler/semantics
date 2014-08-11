@@ -18,7 +18,6 @@ import org.osgi.framework.BundleContext;
 
 import com.google.inject.Guice;
 
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation;
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSimulation;
 import de.cau.cs.kieler.sccharts.s.SCCharts2STransformation;
 
@@ -41,13 +40,13 @@ public class SCChartsSimSPlugin extends AbstractUIPlugin {
      * The Constant AUXILIARY_VARIABLE_TAG for a Transition.
      */
     public static final String AUXILIARY_VARIABLE_TAG_TRANSITION
-                           = "oSYNCCHARTSoAUXTRANSo";
+                           = "oSCCHARTSoAUXTRANSo";
 
     /**
      * The Constant AUXILIARY_VARIABLE_TAG for a State.
      */
     public static final String AUXILIARY_VARIABLE_TAG_STATE
-                           = "oSYNCCHARTSoAUXSTATEo";
+                           = "oSCCHARTSoAUXSTATEo";
 
     // -------------------------------------------------------------------------
 

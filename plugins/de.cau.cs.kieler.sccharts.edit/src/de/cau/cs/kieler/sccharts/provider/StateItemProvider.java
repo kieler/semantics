@@ -14,8 +14,6 @@
 package de.cau.cs.kieler.sccharts.provider;
 
 
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-
 import de.cau.cs.kieler.sccharts.SCChartsFactory;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
@@ -277,35 +275,6 @@ public class StateItemProvider
             (createChildParameter
                 (SCChartsPackage.Literals.STATE__OUTGOING_TRANSITIONS,
                  SCChartsFactory.eINSTANCE.createTransition()));
-    }
-
-    /**
-     * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
-        Object childFeature = feature;
-        Object childObject = child;
-
-        boolean qualify =
-            childFeature == AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__BODY_CONTENTS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__VALUED_OBJECTS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__LOCAL_ACTIONS ||
-            childFeature == SCChartsPackage.Literals.STATE__REGIONS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__RENAMINGS ||
-            childFeature == SCChartsPackage.Literals.STATE__OUTGOING_TRANSITIONS ||
-            childFeature == SCChartsPackage.Literals.SCOPE__BODY_TEXT;
-
-        if (qualify) {
-            return getString
-                ("_UI_CreateChild_text2",
-                 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
-        }
-        return super.getCreateChildText(owner, feature, child, selection);
     }
 
 }

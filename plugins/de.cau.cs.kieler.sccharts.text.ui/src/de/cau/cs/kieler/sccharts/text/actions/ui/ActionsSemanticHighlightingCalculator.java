@@ -18,6 +18,7 @@ import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightedPositionAcceptor;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 
 import de.cau.cs.kieler.core.annotations.text.ui.AnnotationsSemanticHighlightingCalculator;
+import de.cau.cs.kieler.core.kexpressions.ui.KExpressionsSemanticHighlightingCalculator;
 
 /**
  * Custom {@link ISemanticHighlightingCalculator} contributing to the Actions editor.
@@ -28,9 +29,9 @@ import de.cau.cs.kieler.core.annotations.text.ui.AnnotationsSemanticHighlighting
  *
  * The Actions specific stuff is used in the KITS-View, a plain actions editor is not provided.
  *
- * @author chsch
+ * @author chsch ssm
  */
-public class ActionsSemanticHighlightingCalculator extends AnnotationsSemanticHighlightingCalculator {
+public class ActionsSemanticHighlightingCalculator extends KExpressionsSemanticHighlightingCalculator {
 
 //    @Inject
 //    private ActionsGrammarAccess g;

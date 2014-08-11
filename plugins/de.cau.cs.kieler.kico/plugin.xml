@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="de.cau.cs.kieler.kico.transformation" name="KIELER Compiler Transformation" schema="schema/de.cau.cs.kieler.kico.transformation.exsd"/>
+
+</plugin>

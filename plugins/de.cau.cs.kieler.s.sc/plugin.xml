@@ -6,8 +6,8 @@
       <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <command
-               commandId="de.cau.cs.kieler.s.sc.genSC"
-               label="Generate SC Code"
+               commandId="de.cau.cs.kieler.s.sc.genC"
+               label="Generate C Code"
                mnemonic="S"
                style="push">
             <visibleWhen>
@@ -30,9 +30,9 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="de.cau.cs.kieler.s.sc.SCGenerator"
-            id="de.cau.cs.kieler.s.sc.genSC"
-            name="genSC">
+            defaultHandler="de.cau.cs.kieler.s.sc.CGenerator"
+            id="de.cau.cs.kieler.s.sc.genC"
+            name="genC">
       </command>
    </extension>
 

@@ -19,8 +19,8 @@ import de.cau.cs.kieler.kiml.LayoutOptionData;
 import de.cau.cs.kieler.kiml.config.SemanticLayoutConfig;
 import de.cau.cs.kieler.kiml.options.Direction;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
-import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.Scope;
+import de.cau.cs.kieler.sccharts.State;
 
 /**
  * A layout configuration that applies alternating horizontal / vertical layout when an
@@ -62,7 +62,7 @@ public class HVLayoutConfig extends SemanticLayoutConfig {
         } else if (scope.eContainer() instanceof Scope) {
             Scope parent = (Scope) scope.eContainer();
             int parentDist = getHVDistance(parent);
-            if (parentDist >= 0 && parent instanceof Region) {
+            if (parentDist >= 0 && parent instanceof State) {
                 return parentDist + 1;
             } else {
                 return parentDist;
@@ -78,7 +78,7 @@ public class HVLayoutConfig extends SemanticLayoutConfig {
         } else if (scope.eContainer() instanceof Scope) {
             Scope parent = (Scope) scope.eContainer();
             int parentDist = getVHDistance(parent);
-            if (parentDist >= 0 && parent instanceof Region) {
+            if (parentDist >= 0 && parent instanceof State) {
                 return parentDist + 1;
             } else {
                 return parentDist;

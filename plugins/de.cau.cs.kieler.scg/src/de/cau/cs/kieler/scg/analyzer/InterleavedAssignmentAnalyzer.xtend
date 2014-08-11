@@ -13,21 +13,19 @@
  */
 package de.cau.cs.kieler.scg.analyzer
 
-import de.cau.cs.kieler.scg.analyzer.AbstractSCGAnalyzer
-import de.cau.cs.kieler.scgdep.Write_Write
-import de.cau.cs.kieler.scg.Node
 import com.google.inject.Inject
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scgsched.ScgschedFactory
+import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.Write_Write
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
 
 /**
  * @author ssm
  * @kieler.design 2014-01-08 proposed 
  * @kieler.rating 2014-01-08 proposed yellow
  */
-class InterleavedAssignmentAnalyzer extends AbstractSCGAnalyzer {
+class InterleavedAssignmentAnalyzer extends AbstractAnalyzer {
     
     @Inject
     extension SCGExtensions
@@ -35,7 +33,7 @@ class InterleavedAssignmentAnalyzer extends AbstractSCGAnalyzer {
     override analyze(AnalyzerData analyzerData) {
         val result = new InterleavedAssignmentResult
         
-        analyzerData.SCG.eAllContents.filter(typeof(Write_Write)).forEach[ dependency |
+        analyzerData.SCG.eAllContents.filter(typeof(Write_Write)).filter[ concurrent && !confluent ].forEach[ dependency |
             val assignment1 = dependency.eContainer as Node
             val assignment2 = dependency.target as Node
             val ancestorFork = assignment1.ancestorFork
@@ -59,11 +57,11 @@ class InterleavedAssignmentAnalyzer extends AbstractSCGAnalyzer {
                 }
                 
                 if (isSimpleFlow && assignment1Tick != assignment2Tick) {
-                    val analysis = ScgschedFactory::eINSTANCE.createAnalysis => [
-                        id = getAnalysisId
-                        objectReferences += dependency                        
-                    ]
-                    result.addAnalysis(analysis)
+//                    val analysis = ScgschedFactory::eINSTANCE.createAnalysis => [
+//                        id = getAnalysisId
+//                        objectReferences += dependency                        
+//                    ]
+//                    result.addAnalysis(analysis)
                 }
             }
         ]
