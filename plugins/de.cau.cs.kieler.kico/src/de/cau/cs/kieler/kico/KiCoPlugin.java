@@ -30,10 +30,12 @@ import org.eclipse.ui.statushandlers.StatusManager;
 
 import com.google.inject.Guice;
 
+import de.cau.cs.kieler.core.util.Pair;
+
 /**
  * The activator class controls the plug-in life cycle.
  * 
- * @author cmot
+ * @author cmot ssm
  * @kieler.design 2014-03-11 proposed
  * @kieler.rating 2014-03-11 proposed yellow
  */
@@ -44,6 +46,7 @@ public class KiCoPlugin extends Plugin {
 
     /** The Constant EXTENSION_POINT_ID. */
     public static final String EXTENSION_POINT_ID = "de.cau.cs.kieler.kico.transformation";
+    public static final String RESOURCE_EXTENSION_POINT_ID = "de.cau.cs.kieler.kico.resourceExtension";
 
     public static final String KICO_MSGDLG_TITLE = "KIELER Compiler";
 
@@ -294,6 +297,36 @@ public class KiCoPlugin extends Plugin {
 
     // -------------------------------------------------------------------------
 
+
+    public HashMap<String, Pair<String, Boolean>> getRegisteredResourceExtensions() {
+        IConfigurationElement[] resourceExtensions =
+                Platform.getExtensionRegistry().getConfigurationElementsFor(RESOURCE_EXTENSION_POINT_ID);
+
+        HashMap<String, Pair<String, Boolean>> resourceExtensionMap = new HashMap<String, Pair<String, Boolean>>();
+
+        for (int i = 0; i < resourceExtensions.length; i++) {
+            try {
+
+                String className = resourceExtensions[i].getAttribute("className");
+                String extension = resourceExtensions[i].getAttribute("extensionName");
+                String isXMI = resourceExtensions[i].getAttribute("isXMI");
+                resourceExtensionMap.put(className, new Pair<String, Boolean>(extension, isXMI.equals("true")));
+
+                if (DEBUG) {
+//                     System.out.println("KiCo loading component: "
+//                       + transformations[i].getContributor().getName() + "::" + id);
+                }
+            } 
+            finally {
+            
+            }
+        }
+
+        return resourceExtensionMap;
+    }
+
+    // -------------------------------------------------------------------------
+    
     /**
      * Sets the parent shell that KIEM should use to display user dialogs.
      * 
