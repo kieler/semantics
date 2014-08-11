@@ -34,13 +34,14 @@ import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions
+import de.cau.cs.kieler.ktm.klighd.mapping.MappingVisualizer
 import de.cau.cs.kieler.ktm.transformationtree.EObjectWrapper
 import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper
 import java.util.List
 import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.ktm.klighd.mapping.MappingVisualizer
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
 /**
  * KLighD visualization for TransformationTrees and EObjectsCollections in ModelWrappers.
@@ -166,7 +167,7 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
             it.setFontItalic(model.transient);
             it.setFontBold(!model.transient);
             it.setGridPlacementData().from(LEFT, 8, 0, TOP, 8, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
-            it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+            it.suppressSelectability;
         ];
 
         //Add selection actions for node in tree
@@ -191,7 +192,7 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
                     it.setFontItalic(model.transient);
                     it.setFontBold(!model.transient);
                     it.invisible = true;
-                    it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+                    it.suppressSelectability;
                 ];
                 it.addText("[Show Model]") => [
                     it.foreground = "blue".color
@@ -276,7 +277,7 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
             it.fontSize = 11;
             it.setFontBold(true);
             it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
-            it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+            it.suppressSelectability;
         ];
 
         //if EObjectWrapper has a referenced eObject and attributes should be displayed list all attributes
@@ -285,7 +286,7 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
                 figure.addText(it.name + ": " + String::valueOf(object.EObject.eGet(it))) => [ //add a text with name and value of the attribute
                     it.fontSize = 9;
                     it.setGridPlacementData().from(LEFT, 5, 0, TOP, 2, 0).to(RIGHT, 5, 0, BOTTOM, 2, 0);
-                    it.setProperty(KlighdProperties::KLIGHD_SELECTION_UNPICKABLE, true);
+                    it.suppressSelectability;
                 ];
             ]
         }
