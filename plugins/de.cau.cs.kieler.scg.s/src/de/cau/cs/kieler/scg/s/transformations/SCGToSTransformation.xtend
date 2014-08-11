@@ -58,7 +58,8 @@ class SCGToSTransformation {
     private static val GOGUARDNAME = "_GO"
     
     private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>
-    private val processedNodes = <Node> newArrayList
+    private val valuedObjectCache = <String, ValuedObject> newHashMap
+    private val processedNodes = <Node, Boolean> newHashMap
     
     private val nodeList = <Node> newArrayList
     
@@ -77,6 +78,7 @@ class SCGToSTransformation {
         	    newValuedObject.applyAttributes(valuedObject)
           		newDeclaration.valuedObjects += newValuedObject
             	valuedObjectMapping.put(valuedObject, newValuedObject)
+            	valuedObjectCache.put(newValuedObject.name, newValuedObject)
         	}
         }
         
@@ -105,7 +107,7 @@ class SCGToSTransformation {
 	}
 	
 	private def dispatch void transform(Entry entry, List<Instruction> instructions) {
-	   processedNodes += entry
+	   processedNodes.put(entry, true)
 	   if (entry.next != null) nodeList += entry.next.target 
 	}
 
@@ -113,8 +115,8 @@ class SCGToSTransformation {
     }
 	
 	private def dispatch void transform(Assignment assignment, List<Instruction> instructions) {
-	    if (processedNodes.contains(assignment)) return;
-        processedNodes += assignment
+	    if (processedNodes.get(assignment) != null) return;
+        processedNodes.put(assignment, true)
         
         if (assignment.valuedObject != null && assignment.assignment != null) {
 	    	val sAssignment = SFactory::eINSTANCE.createAssignment
@@ -137,7 +139,7 @@ class SCGToSTransformation {
 	}
 	
 	private def dispatch void transform(Conditional conditional, List<Instruction> instructions) {
-        processedNodes += conditional
+        processedNodes.put(conditional, true)
         
         val sIf = SFactory::eINSTANCE.createIf
         sIf.expression = conditional.condition.copyExpression
@@ -148,12 +150,7 @@ class SCGToSTransformation {
 	}
 	
 	def ValuedObject findValuedObjectByName(Program s, String name) {
-	    for (valuedObject : s.valuedObjects) {
-	        if (valuedObject.name.equals(name)) {
-	            return valuedObject
-	        }
-	    }
-   		return null
+   		return valuedObjectCache.get(name)
     }    
     
     def ValuedObject getValuedObjectCopy(ValuedObject valuedObject) {
