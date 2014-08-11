@@ -1078,17 +1078,11 @@ public class KielerCompiler {
                 // If we should create a dummy resource then save it after each successful transformation step
                 if (res == null) {
                     // create a dummy resource by calling serialization (this creates a dummy resource on the fly)
-                    String discard = KiCoUtil.serialize(transformedObject, context, true);
-//                    System.out.println(discard);
+// TODO: ssm, temporary disabled
+//                    String discard = KiCoUtil.serialize(transformedObject, context, true);
                 }
-                res = context.getMainResource();
-//                if (res != null) {
-//                    try {
-//                        res.save(KiCoUtil.getSaveOptions());
-//                    } catch (IOException e) {
-//                        // ignore errors
-//                    }
-//                }
+// TODO: ssm, temporary disabled
+//                res = context.getMainResource();
             }
             
             
