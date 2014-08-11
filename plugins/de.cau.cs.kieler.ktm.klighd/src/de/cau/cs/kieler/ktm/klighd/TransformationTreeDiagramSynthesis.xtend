@@ -136,7 +136,7 @@ class TransformationTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelW
                         it.source = trans.source.transformModelWrapperAsChildNode(treeNode);
                         it.target = trans.target.transformModelWrapperAsChildNode(treeNode);
                         it.addPolyline.addArrowDecorator;
-                        it.createLabel.configureCenteralEdgeLabel(trans.transformationID,
+                        it.createLabel.configureCenterEdgeLabel(trans.transformationID,
                             KlighdConstants::DEFAULT_FONT_SIZE,
                             KlighdConstants::DEFAULT_FONT_NAME);
                     ]

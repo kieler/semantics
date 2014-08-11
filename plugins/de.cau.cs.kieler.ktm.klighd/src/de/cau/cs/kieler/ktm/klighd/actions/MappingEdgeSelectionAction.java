@@ -28,6 +28,7 @@ import de.cau.cs.kieler.core.krendering.KPolyline;
 import de.cau.cs.kieler.core.krendering.KRenderingFactory;
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
 import de.cau.cs.kieler.klighd.IAction;
+import de.cau.cs.kieler.klighd.KlighdTreeSelection;
 import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.util.KlighdProperties;
 import de.cau.cs.kieler.ktm.klighd.TransformationTreeDiagramSynthesis;
@@ -78,7 +79,8 @@ public class MappingEdgeSelectionAction implements IAction {
                 final LinkedList<KGraphElement> selectedElements = new LinkedList<KGraphElement>();
                 selectedElements.add(element);
                 // add all KGraphElements in selection
-                for (Object object : context.getContextViewer().getSelection().toList()) {
+                for (Object object : ((KlighdTreeSelection) context.getContextViewer()
+                        .getSelection()).toList()) {
                     if (object instanceof KGraphElement) {
                         selectedElements.add((KGraphElement) object);
                     }
