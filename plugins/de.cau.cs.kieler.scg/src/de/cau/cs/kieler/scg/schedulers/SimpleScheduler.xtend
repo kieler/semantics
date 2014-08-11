@@ -229,6 +229,48 @@ class SimpleScheduler extends AbstractScheduler {
         placed
     }
     
+    protected def int topologicalPlacementTest(SchedulingBlock schedulingBlock, 
+        List<SchedulingBlock> schedulingBlocks, Schedule schedule, 
+        SchedulingConstraints constraints, SCGraph scg
+    ) {
+        var placed = 0 as int
+        if (tsVisited.get(schedulingBlock) == null) {
+            tsVisited.put(schedulingBlock, true)
+            for(pred : schedulingBlock.basicBlock.predecessors) {
+                for (sb : pred.basicBlock.schedulingBlocks) {
+                    if (tsVisited.get(sb) == null)
+                         sb.topologicalPlacementTest(schedulingBlocks, schedule, constraints, scg)
+                }
+            }
+            for(dep : schedulingBlock.dependencies) {
+                if (dep.concurrent && !dep.confluent) {
+//                    if (scg.analyses.filter[ id == interleavedAssignmentAnalyzerId ].filter[ objectReferences.contains(dep) ].empty) 
+                        val sb = schedulingBlockCache.get(dep.eContainer as Node)
+                        if (tsVisited.get(sb) == null)
+                            sb.topologicalPlacementTest(schedulingBlocks, schedule, constraints, scg) 
+                }
+            }
+            
+//            if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg) && !schedule.schedulingBlocks.contains(schedulingBlock)) {
+                schedule.schedulingBlocks.add(schedulingBlock)
+                // TODO: Revamp guards
+                // scg.guards += schedulingBlock.createGuardExpression(schedule, scg)
+//                schedulingBlocks.remove(schedulingBlock)
+                placed = placed + 1
+                PROGRESS_PLACED = PROGRESS_PLACED + 1
+                if (PROGRESS_PLACED % 1000 == 0) {
+                    System.out.print("o");
+                }
+                if (PROGRESS_PLACED % 20000 == 0) {
+                    System.out.println("");
+                }
+//            }
+        } 
+        
+        placed
+    }
+    
+    
     protected override boolean createSchedule(SCGraph scg, List<SchedulingBlock> schedule, SchedulingConstraints constraints) {
 
         val schedulingBlocks = <SchedulingBlock> newArrayList => [ it.addAll(constraints.schedulingBlocks) ]
@@ -247,6 +289,28 @@ class SimpleScheduler extends AbstractScheduler {
         
         schedule.size == schedulingBlocksCopy.size
     }
+    
+    protected def boolean createScheduleTest(SCGraph scg, Schedule schedule, SchedulingConstraints constraints) {
+
+        val schedulingBlocks = <SchedulingBlock> newArrayList => [ it.addAll(constraints.schedulingBlocks) ]
+        
+        val schedulingBlocksCopy = ImmutableList::copyOf(schedulingBlocks)
+        
+        PROGRESS_SCGSIZE = schedulingBlocksCopy.size
+        PROGRESS_PLACED = 0
+        System.out.println("Scheduling "+PROGRESS_SCGSIZE+" scheduling blocks...")
+        tsVisited.clear
+
+        val timestamp = System.currentTimeMillis          
+        for (sb : schedulingBlocksCopy) {
+            if (tsVisited.get(sb) == null)
+                sb.topologicalPlacementTest(schedulingBlocks, schedule, constraints, scg)
+        }
+        val time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("Scheduling finished (time elapsed: "+(time / 1000)+"s).")          
+        
+        schedule.schedulingBlocks.size == schedulingBlocksCopy.size
+    }    
 	
 
 	/**
