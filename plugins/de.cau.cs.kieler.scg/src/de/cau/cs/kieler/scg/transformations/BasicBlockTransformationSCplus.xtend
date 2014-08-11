@@ -101,7 +101,7 @@ class BasicBlockTransformationSCplus extends BasicBlockTransformation {
             }
             // Add the node to the scheduling block.
             block.nodes.add(node)
-            processedNodes.add(node)
+            processedNodes.put(node, true)
         }
         // Finally, add the block to the list, if it is not empty and return the list of blocks.
         if (block != null) schedulingBlocks.add(block)

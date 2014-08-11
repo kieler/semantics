@@ -74,7 +74,7 @@ class BasicBlockTransformation extends AbstractModelTransformation {
     protected val String GUARDPREFIX = "g"
     
     
-    protected val processedNodes = <Node> newArrayList
+    protected val processedNodes = <Node, Boolean> newHashMap
     protected val basicBlockNodeMapping = new HashMap<Node, BasicBlock>
     
     // -------------------------------------------------------------------------
@@ -175,7 +175,7 @@ class BasicBlockTransformation extends AbstractModelTransformation {
         // First of all we have to check if this block has already been checked.
         // Therefore, gather all nodes of all already created basic blocks 
         // and check whether or not the requested node is present.
-        if (processedNodes.contains(rootNode)) {
+        if (processedNodes.get(rootNode) != null) {
         	// If the node has already been processed, add the predecessorList passed by the caller to the basic block
         	// of the node in question. Return afterwards with unmodified index since no new block was created.
         	if (predecessorBlocks != null && predecessorBlocks.size > 0) {
@@ -410,7 +410,7 @@ class BasicBlockTransformation extends AbstractModelTransformation {
             }
             // Add the node to the scheduling block.
             block.nodes.add(node)
-            processedNodes.add(node)
+            processedNodes.put(node, true)
         }
         // Finally, add the block to the list, if it is not empty and return the list of blocks.
         if (block != null) schedulingBlocks.add(block)
