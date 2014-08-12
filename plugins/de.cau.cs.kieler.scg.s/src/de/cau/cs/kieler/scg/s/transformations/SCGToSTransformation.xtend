@@ -61,7 +61,7 @@ class SCGToSTransformation {
     private val valuedObjectCache = <String, ValuedObject> newHashMap
     private val processedNodes = <Node, Boolean> newHashMap
     
-    private val nodeList = <Node> newArrayList
+    private val nodeList = <Node, List<Instruction>> newHashMap
     
 	def Program transformSCGToS(SCGraph scg) {
 		val Program sProgram = SFactory::eINSTANCE.createProgram
@@ -91,12 +91,13 @@ class SCGToSTransformation {
         ]
         val instructionCache = <Instruction> newLinkedList
         
-		nodeList += scg.nodes.head
+		nodeList.put(scg.nodes.head, instructionCache)
 		
 		while(!nodeList.empty) {
-			val node = nodeList.head
-			nodeList.remove(0)
-			node.transform(instructionCache)
+			val node = nodeList.keySet.head
+			val instructionList = nodeList.get(node)
+			node.transform(instructionList)
+			nodeList.remove(node)
 		}
 		tickState.instructions += instructionCache
 		
@@ -108,7 +109,7 @@ class SCGToSTransformation {
 	
 	private def dispatch void transform(Entry entry, List<Instruction> instructions) {
 	   processedNodes.put(entry, true)
-	   if (entry.next != null) nodeList += entry.next.target 
+	   if (entry.next != null) nodeList.put(entry.next.target, instructions) 
 	}
 
     private def dispatch void transform(Exit exit, List<Instruction> instructions) {
@@ -135,7 +136,7 @@ class SCGToSTransformation {
     	    instructions += sAssignment
     	}
 	    
-	    if (assignment.next != null) nodeList += assignment.next.target
+	    if (assignment.next != null) nodeList.put(assignment.next.target, instructions)
 	}
 	
 	private def dispatch void transform(Conditional conditional, List<Instruction> instructions) {
@@ -145,8 +146,10 @@ class SCGToSTransformation {
         sIf.expression = conditional.condition.copyExpression
         instructions += sIf
         
-        if (conditional.^else != null) nodeList += conditional.^else.target     
-        if (conditional.then != null) conditional.then.target.transform(sIf.instructions)        
+        if (conditional.^else != null) nodeList.put(conditional.^else.target, instructions)     
+        if (conditional.then != null) nodeList.put(conditional.then.target, sIf.instructions)
+//        if (conditional.then != null) conditional.then.target.transform(sIf.instructions)        
+//        if (conditional.^else != null) conditional.^else.target.transform(sIf.instructions)     
 	}
 	
 	def ValuedObject findValuedObjectByName(Program s, String name) {
