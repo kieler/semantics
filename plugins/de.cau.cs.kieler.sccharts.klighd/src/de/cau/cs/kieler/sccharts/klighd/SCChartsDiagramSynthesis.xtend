@@ -247,6 +247,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 it.foreground = "gray".color
                 it.lineWidth = 1;
                 it.addText("[-]" + if(r.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(r) => [
+                    it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.40);
                     it.foreground = "dimGray".color
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
@@ -265,6 +266,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 it.foreground = "gray".color
                 it.lineWidth = 1;
                 it.addText("[+]" + if(r.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(r) => [
+                    it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.40);
                     it.foreground = "dimGray".color
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
@@ -402,7 +404,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 figure.shadow = "black".color;
                 figure.shadow.XOffset = 4;
                 figure.shadow.YOffset = 4;
-                figure.shadow.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.75);
             }
             (
             if (connector)
@@ -679,10 +680,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 for (r : s.regions)
                     node.children += r.translate;
             } 
-            if (s.isReferencedState) 
-                figure => [
-                    it.setBackgroundGradient("#fefef0".color, "#e0b0099".color, 90.0f);
-                ]
+            if (s.isReferencedState) {
+                if (!PAPER_BW.booleanValue) {
+                    figure.setBackgroundGradient("#fefef0".color, "#e0b0099".color, 90.0f);
+                } else {
+                    figure.setBackground("#fefef0".color)
+                }
+            } 
             if (s.referencedState && SHOW_REFERENCEEXPANSION.booleanValue) {
                 for (r : (s.referencedScope as State).regions) {
                     val synthesis = delegate.get();
