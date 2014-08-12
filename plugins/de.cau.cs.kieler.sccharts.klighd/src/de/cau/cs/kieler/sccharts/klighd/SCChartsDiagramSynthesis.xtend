@@ -13,9 +13,11 @@
  */
 package de.cau.cs.kieler.sccharts.klighd
 
+import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KNode
@@ -27,6 +29,7 @@ import de.cau.cs.kieler.core.krendering.KPolyline
 import de.cau.cs.kieler.core.krendering.KRectangle
 import de.cau.cs.kieler.core.krendering.KRendering
 import de.cau.cs.kieler.core.krendering.LineStyle
+import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
@@ -43,7 +46,6 @@ import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.microlayout.PlacementUtil
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
-import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.ExitAction
@@ -66,10 +68,8 @@ import javax.inject.Provider
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.krendering.ViewSynthesisShared
-import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
@@ -240,14 +240,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
 //                return;
 //            }
             node.addRectangle() => [
-                it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
+                it.setAsExpandedView;
                 it.setBackgroundGradient("white".color, SCCHARTSGRAY, 90);
                 it.setSurroundingSpace(2, 0);
                 it.invisible = false;
                 it.foreground = "gray".color
                 it.lineWidth = 1;
                 it.addText("[-]" + if(r.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(r) => [
-                    it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.40);
+                    it.lowerVisibilityScaleBound = 0.40f;
                     it.foreground = "dimGray".color
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
@@ -259,14 +259,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 }
             ];
             node.addRectangle() => [
-                it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
+                it.setAsCollapsedView;
                 it.setBackgroundGradient("white".color, SCCHARTSGRAY, 90);
                 it.setSurroundingSpace(4, 0);
                 it.invisible = false;
                 it.foreground = "gray".color
                 it.lineWidth = 1;
                 it.addText("[+]" + if(r.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(r) => [
-                    it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.40);
+                    it.lowerVisibilityScaleBound = 0.40f;
                     it.foreground = "dimGray".color
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
@@ -332,7 +332,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
 
     // Print the highlighted text into a parent and link it to a lookup EObject.
     def KRectangle printHighlightedText(KRectangle parent, String text, EObject lookup) {
-        parent.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.5);
+        parent.lowerVisibilityScaleBound = 0.5f;
         var remainingText = text
         var split = ""
         val words = text.getWords
@@ -342,7 +342,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             split = remainingText.substring(0, index)
             remainingText = remainingText.substring(index + word.length, remainingText.length)
             parent.addText(split + word) => [
-                it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.5);
+                it.lowerVisibilityScaleBound = 0.5f;
                 if (word.keyword) {
                     it.setForeground(KEYWORD.copy)
                     if (PAPER_BW.booleanValue) {
@@ -357,7 +357,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
         val remainingText2 = remainingText
         if (remainingText2.length > 0) {
             parent.addText(remainingText2) => [
-                it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.5);
+                it.lowerVisibilityScaleBound = 0.5f;
                 if (remainingText2.keyword) {
                     it.setForeground(KEYWORD.copy)
                     if (PAPER_BW.booleanValue) {
@@ -422,7 +422,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 ]
             else if (s.isFinal)
                 figure.addRoundedRectangle(cornerRadius, cornerRadius) => [
-                    it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.30);
+                    it.lowerVisibilityScaleBound = 0.30f;
                     // re-configure the outer rounded rectangle
                     val offset = figure.lineWidthValue + if(s.isInitial) 1 else 2;
                     figure.setCornerSize(offset + cornerRadius, offset + cornerRadius)
@@ -513,7 +513,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 if (s.hasRegionsOrDeclarations(valuedObjectCache) || s.referencedState) {
                     
                     if (s.hasNoRegionsWithStates) 
-                        figure.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.075);
+                        figure.lowerVisibilityScaleBound = 0.075f;
                     // Get a smaller window-title-bare if this a macro state 
                     if (!s.label.empty)
                         it.addRectangle => [
@@ -527,7 +527,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                                 text = text + ' @ ' + (s.referencedScope as State).label
                             val ktext = it.addText("   " + text + prioritySpace + " ").putToLookUpWith(s) => [
                                 it.fontSize = 11;
-                                it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.49);
+                                it.lowerVisibilityScaleBound = 0.49f;
                                ];
                             if (priorityToShow.length > 0) {
                                 val estimatedWidth = PlacementUtil.estimateTextSize(ktext).width
@@ -545,10 +545,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                             }
                         ];
                 } else {
-                    figure.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.20);
+                    figure.lowerVisibilityScaleBound = 0.20f;
                     // For simple states we want a larger area 
                     val ktext = it.addText(" " + s.label + prioritySpace).putToLookUpWith(s) => [
-                        it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.40);
+                        it.lowerVisibilityScaleBound = 0.40f;
                         it.fontSize = 11;
                         it.setFontBold(true);
                         if (PAPER_BW.booleanValue) {
@@ -640,7 +640,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                         it.addRectangle => [
                             it.invisible = true;
                             it.addRectangle => [
-                                it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.5);
+                                it.lowerVisibilityScaleBound = 0.5f;
                                 it.invisible = true;
                                 it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0,
                                     0);
@@ -711,7 +711,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             edge.source = t.sourceState.node;
             edge.target = t.targetState.node;
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-            edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.11);
+            edge.lowerVisibilityScaleBound = 0.11f;
             edge.addSpline(2) => [
                 // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
                 if (t.isImmediate2) {
@@ -775,7 +775,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                         KlighdConstants::DEFAULT_FONT_NAME
                     ) => [
                         it.setLayoutOption(LayoutOptions.FONT_SIZE, 13);
-                        it.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.5);
+                        it.lowerVisibilityScaleBound = 0.5f;
                         it.KRendering.setFontBold(true)
                     ]
                 }
