@@ -25,14 +25,14 @@ import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnitTest;
  * @kieler.design 2012-10-08 proposed cmot
  * @kieler.rating 2012-10-08 proposed yellow
  */
-public class SyncChartsSimSAutomatedJUnitTest extends KiemAutomatedJUnitTest {
+public class SCChartsSimSAutomatedJUnitTest extends KiemAutomatedJUnitTest {
 
     /**
      * Instantiates a new simulation test.
      *
      * @param esoFile the ESO file
      */
-    public SyncChartsSimSAutomatedJUnitTest(final IPath esoFile) {
+    public SCChartsSimSAutomatedJUnitTest(final IPath esoFile) {
         super(esoFile);
     }
 
@@ -55,21 +55,21 @@ public class SyncChartsSimSAutomatedJUnitTest extends KiemAutomatedJUnitTest {
      * {@inheritDoc}
      */
     protected String getModelFileExtension() {
-        return "kixs";
+        return "sct";
     }
 
     /**
      * {@inheritDoc}
      */
     protected String getTemporaryWorkspaceFolderName() {
-        return "test-synccharts-s";
+        return "test-sccharts-c";
     }
 
     /**
      * {@inheritDoc}
      */
     protected String getExecutionFileName() {
-        return "synccharts_s_validation_headless.execution";
+        return "sccharts_c_validation_headless.execution";
     }
 
     /**
@@ -77,6 +77,6 @@ public class SyncChartsSimSAutomatedJUnitTest extends KiemAutomatedJUnitTest {
      */
     @Override
     protected IPath getExternalRelativeTestPath() {
-        return new Path("../../../models/synccharts/validation");
+        return new Path("../../../models/sccharts");
     }
 }
