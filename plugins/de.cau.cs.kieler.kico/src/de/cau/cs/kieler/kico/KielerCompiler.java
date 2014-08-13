@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kico;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,17 +20,10 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.mwe.core.monitor.ProgressMonitorAdapter;
-
-import com.google.common.base.Joiner;
 
 /**
  * This is the main class of the Kieler Compiler (KiCo) Project that aims to provide an
@@ -1008,7 +1000,7 @@ public class KielerCompiler {
             if (transformation.getId().equals(compilationTransformationID)) {
                 // If this is an individual
 
-                Class<?> parameterType = transformedObject.getClass();
+//                Class<?> parameterType = transformedObject.getClass();
                 Class<?> handledParameterType = transformation.getParameterType();
                 if (handledParameterType != null) {
                     if (DEBUG) {
@@ -1078,11 +1070,9 @@ public class KielerCompiler {
                 // If we should create a dummy resource then save it after each successful transformation step
                 if (res == null) {
                     // create a dummy resource by calling serialization (this creates a dummy resource on the fly)
-// TODO: ssm, temporary disabled
-//                    String discard = KiCoUtil.serialize(transformedObject, context, true);
+                    String discard = KiCoUtil.serialize(transformedObject, context, true);
                 }
-// TODO: ssm, temporary disabled
-//                res = context.getMainResource();
+                res = context.getMainResource();
             }
             
             

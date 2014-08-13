@@ -452,7 +452,10 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
             KielerCompilerContext highLevelContext =
                     new KielerCompilerContext(highLevelTransformations, extendedSCChart);
-            highLevelContext.setCreateDummyResource(true);
+            
+            // Create a dummy resource ONLY for debug visualization, where we need FragmentURIs
+            highLevelContext.setCreateDummyResource(debug);
+            
             highLevelContext.setInplace(false);
             highLevelContext.setPrerequirements(true);
             CompilationResult highLeveleCompilationResult =
