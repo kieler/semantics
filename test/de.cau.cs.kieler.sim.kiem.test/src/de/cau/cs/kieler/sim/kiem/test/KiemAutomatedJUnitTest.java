@@ -122,7 +122,7 @@ public abstract class KiemAutomatedJUnitTest {
     /** The Apache log4j logger. */
     private static Logger logger = Logger.getLogger(KiemAutomatedJUnitTest.class);
 
-    /** If in strict mode, require an ESO file for all model files and raise an error otehrwise. */
+    /** If in strict mode, require an ESO file for all model files and raise an error otherwise. */
     public static final boolean STRICT_MODE_REQUIRE_ESO_FOR_ALL_MODEL_FILES = false;
 
     // -------------------------------------------------------------------------
