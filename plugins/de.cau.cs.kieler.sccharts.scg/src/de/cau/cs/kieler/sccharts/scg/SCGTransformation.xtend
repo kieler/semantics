@@ -176,6 +176,8 @@ class SCGTransformation {
         System.out.print(" ... ")
         // Clear mappings
         resetMapping
+        stateTypeCache.clear
+        uniqueNameCache.clear        
         // Create a new SCGraph
         val sCGraph = ScgFactory::eINSTANCE.createSCGraph
         // Handle declarations
