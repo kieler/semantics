@@ -61,7 +61,8 @@ class SCGToSTransformation {
     private val valuedObjectCache = <String, ValuedObject> newHashMap
     private val processedNodes = <Node, Boolean> newHashMap
     
-    private val nodeList = <Node, List<Instruction>> newHashMap
+    private val nodeList = <Node> newLinkedList
+    private val nodeInstructionMap = <Node, List<Instruction>> newHashMap
     
 	def Program transformSCGToS(SCGraph scg) {
 		val Program sProgram = SFactory::eINSTANCE.createProgram
@@ -91,13 +92,15 @@ class SCGToSTransformation {
         ]
         val instructionCache = <Instruction> newLinkedList
         
-		nodeList.put(scg.nodes.head, instructionCache)
+        nodeList += scg.nodes.head
+		nodeInstructionMap.put(scg.nodes.head, instructionCache)
 		
 		while(!nodeList.empty) {
-			val node = nodeList.keySet.head
-			val instructionList = nodeList.get(node)
+			val node = nodeList.head
+			val instructionList = nodeInstructionMap.get(node)
 			node.transform(instructionList)
-			nodeList.remove(node)
+			nodeList.remove(0)
+			nodeInstructionMap.remove(node)
 		}
 		tickState.instructions += instructionCache
 		
@@ -108,8 +111,11 @@ class SCGToSTransformation {
 	}
 	
 	private def dispatch void transform(Entry entry, List<Instruction> instructions) {
+       if (processedNodes.get(entry) != null) return;
 	   processedNodes.put(entry, true)
-	   if (entry.next != null) nodeList.put(entry.next.target, instructions) 
+	   if (entry.next != null) {
+	       entry.next.target.addNode(instructions)
+       } 
 	}
 
     private def dispatch void transform(Exit exit, List<Instruction> instructions) {
@@ -136,18 +142,25 @@ class SCGToSTransformation {
     	    instructions += sAssignment
     	}
 	    
-	    if (assignment.next != null) nodeList.put(assignment.next.target, instructions)
+	    if (assignment.next != null) {
+	        assignment.next.target.addNode(instructions)
+        }
 	}
 	
 	private def dispatch void transform(Conditional conditional, List<Instruction> instructions) {
+        if (processedNodes.get(conditional) != null) return;
         processedNodes.put(conditional, true)
         
         val sIf = SFactory::eINSTANCE.createIf
         sIf.expression = conditional.condition.copyExpression
         instructions += sIf
         
-        if (conditional.^else != null) nodeList.put(conditional.^else.target, instructions)     
-        if (conditional.then != null) nodeList.put(conditional.then.target, sIf.instructions)
+        if (conditional.^else != null) {
+            conditional.^else.target.addNode(instructions)
+        }     
+        if (conditional.then != null) {
+            conditional.then.target.addNode(sIf.instructions)
+        }
 //        if (conditional.then != null) conditional.then.target.transform(sIf.instructions)        
 //        if (conditional.^else != null) conditional.^else.target.transform(sIf.instructions)     
 	}
@@ -177,6 +190,11 @@ class SCGToSTransformation {
         
         // Return the new expression.
         newExpression
+    }
+    
+    def addNode(Node node, List<Instruction> instructionList) {
+        nodeList += node
+        nodeInstructionMap.put(node, instructionList)
     }
 	
 }
