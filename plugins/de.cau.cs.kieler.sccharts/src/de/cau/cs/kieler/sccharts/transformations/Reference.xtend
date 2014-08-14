@@ -76,7 +76,9 @@ class Reference {
         	label = state.label
         ]
 
-        for(eObject : newState.eAllContents.toList) {
+        var newStateIterator = newState.eAllContents
+        while(newStateIterator.hasNext) {
+            val eObject = newStateIterator.next
             if (eObject instanceof Assignment 
                 || eObject instanceof ValuedObjectReference 
                 || eObject instanceof TextExpression
