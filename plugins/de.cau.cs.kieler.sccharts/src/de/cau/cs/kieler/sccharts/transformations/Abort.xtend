@@ -50,6 +50,8 @@ class Abort {
     // Transforming Aborts.
     def State transformAbortAlternative(State rootState) {
         val targetRootState = rootState.fixAllPriorities;
+        
+        nameCache.clear
 
         // Traverse all states
         var done = false;
