@@ -89,6 +89,17 @@ class SCChartsExtension {
     def List<State> getAllContainedStates(Scope scope) {
         scope.eAllContents().filter(typeof(State)).toList()
     }
+    
+    def List<State> getAllContainedStates(State state) {
+        <State> newLinkedList => [ l |
+            state.regions.forEach[ r | 
+                r.states.forEach[ s | 
+                    l += s; 
+                    l += s.getAllContainedStates
+                ]
+            ]
+        ]
+    }
 
     // Return the list of all contained States and the root state if the scope is already a state.
     def List<State> getAllStates(Scope scope) {

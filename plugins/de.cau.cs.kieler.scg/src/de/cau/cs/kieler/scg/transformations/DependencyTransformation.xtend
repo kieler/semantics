@@ -157,6 +157,9 @@ class DependencyTransformation extends AbstractModelTransformation {
         			vocl += a	
         		}
         	] 
+        	if (ancestorForkCache.get(a) == null) {
+        	    ancestorForkCache.put(a, <Fork> newArrayList())
+        	}
         ]
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Preparation for dependency: assignment VO cache (time elapsed: "+(time / 1000)+"s).")  
@@ -173,6 +176,9 @@ class DependencyTransformation extends AbstractModelTransformation {
         			vocl += c	
         		}
         	] 
+            if (ancestorForkCache.get(c) == null) {
+                ancestorForkCache.put(c, <Fork> newArrayList())
+            }
         ]
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Preparation for dependency: conditional VO cache (time elapsed: "+(time / 1000)+"s).")  

@@ -94,14 +94,14 @@
       </transformationGroup>
       <transformationMethod
             class="de.cau.cs.kieler.scg.sequentializer.SimpleSequentializer"
-            dependencies="CODEGENERATION"
+            dependencies="SCG2S"
             id="SCGSEQSIMPLE"
             method="sequentialize"
             name="Simple">
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scg.sequentializer.HybridSequentializer"
-            dependencies="CODEGENERATION"
+            dependencies="SCG2S"
             id="SCGSEQHYBRID"
             method="sequentialize"
             name="Hybrid">
