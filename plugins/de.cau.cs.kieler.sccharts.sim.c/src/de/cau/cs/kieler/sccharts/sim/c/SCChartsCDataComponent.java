@@ -464,8 +464,8 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             // The following should be a state
             State coreSCChart = (State) highLeveleCompilationResult.getEObject();
 
-            String coreSSChartText = KiCoUtil.serialize(coreSCChart, highLevelContext, false);
-            writeOutputModel("D:\\sschart.sct", coreSSChartText.getBytes());
+            //String coreSSChartText = KiCoUtil.serialize(coreSCChart, highLevelContext, false);
+            //writeOutputModel("D:\\sschart.sct", coreSSChartText.getBytes());
             // System.out.println(coreSSChartText);
 
             KielerCompilerContext lowLevelContext =
