@@ -201,7 +201,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
 		val timestamp = System.currentTimeMillis
 		System.out.println("Started SCCharts synthesis...")
         val rootNode = createNode() => [
-            addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot") 
+              // ATTENTION: DO NOT use graphiz on outermost root node, this will result in suspicious layout bugs!!!
+//            addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot") 
             addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES)
             children += model.translate
         ] 
