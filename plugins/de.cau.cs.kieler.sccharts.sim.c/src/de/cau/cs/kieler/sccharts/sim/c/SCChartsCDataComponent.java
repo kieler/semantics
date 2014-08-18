@@ -239,7 +239,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         }
         // We conclude at this point that we are not dirty on the level of
         // changes to the diagram
-        return false;
+        return false || (cExecution == null);
     }
 
     // -------------------------------------------------------------------------
