@@ -198,7 +198,7 @@ public class KiCoAsynchronousCompilation extends Job {
     /**
      * Causes additional progressbars to show up ion model view.
      */
-    public void showProgress(IViewer<?> viewer) {
+    public void showProgress(IViewer viewer) {
         //if (!showsProgress && !hasFinishedCompilation()) {
         // final KlighdCanvas canvas = (KlighdCanvas) viewer.getControl();
         //

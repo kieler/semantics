@@ -1145,7 +1145,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * @param viewer
      * @param allWarnings
      */
-    private void addWarningComposite(IViewer<?> viewer, String allWarnings) {
+    private void addWarningComposite(IViewer viewer, String allWarnings) {
         final Composite canvas = (Composite) viewer.getControl();
         warningMessageContainer = new Composite(canvas, SWT.NONE);
 
