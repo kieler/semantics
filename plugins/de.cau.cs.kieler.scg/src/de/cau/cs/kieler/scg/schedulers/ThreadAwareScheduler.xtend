@@ -134,6 +134,7 @@ class ThreadAwareScheduler extends SimpleScheduler {
             
             if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg)) {
                 schedule.add(schedulingBlock)
+                placedBlocks.add(schedulingBlock)
                 // TODO: Revamp guards
                 // scg.guards += schedulingBlock.createGuardExpression(schedule, scg)
 //                schedulingBlocks.remove(schedulingBlock)

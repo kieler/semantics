@@ -92,6 +92,8 @@ class SimpleScheduler extends AbstractScheduler {
     private val tsVisited = <SchedulingBlock, Boolean> newHashMap 
     private val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
     
+    protected val placedBlocks = <SchedulingBlock> newHashSet 
+    
 
     
     // -------------------------------------------------------------------------
@@ -172,7 +174,7 @@ class SimpleScheduler extends AbstractScheduler {
             for(sb : pred.basicBlock.schedulingBlocks){
            	// If any scheduling block of that basic block is not already in our schedule,
            	// the precondition test fails. Set placeable to false.
-	            if (!schedule.contains(sb)) { return false }
+	            if (!placedBlocks.contains(sb)) { return false }
             }
         }
                 
@@ -183,7 +185,7 @@ class SimpleScheduler extends AbstractScheduler {
            	// If the interleaved assignment analyzer marked this dependency as interleaving, ignore it.
 //    	       	if (scg.analyses.filter[ id == interleavedAssignmentAnalyzerId ].filter[ objectReferences.contains(dep) ].empty) 
 					val sb = schedulingBlockCache.get(dep.eContainer as Node)
-	    	      	if (!schedule.contains(sb)) { return false }
+	    	      	if (!placedBlocks.contains(sb)) { return false }
             }
     	}
     	
@@ -212,8 +214,10 @@ class SimpleScheduler extends AbstractScheduler {
                 }
             }
             
-//            if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg) && !schedule.schedulingBlocks.contains(schedulingBlock)) {
+            if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg)) {
                 schedule.add(schedulingBlock)
+                placedBlocks.add(schedulingBlock)
+            }
                 // TODO: Revamp guards
                 // scg.guards += schedulingBlock.createGuardExpression(schedule, scg)
 //                schedulingBlocks.remove(schedulingBlock)
@@ -283,6 +287,7 @@ class SimpleScheduler extends AbstractScheduler {
         PROGRESS_PLACED = 0
         System.out.println("Scheduling "+PROGRESS_SCGSIZE+" scheduling blocks...")
         tsVisited.clear
+        placedBlocks.clear
         
         val timestamp = System.currentTimeMillis          
         for (sb : schedulingBlocksCopy) {
