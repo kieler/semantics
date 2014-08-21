@@ -17,6 +17,7 @@ import org.eclipse.xtext.common.services.DefaultTerminalConverters;
 import org.eclipse.xtext.conversion.IValueConverter;
 import org.eclipse.xtext.conversion.ValueConverter;
 import org.eclipse.xtext.conversion.ValueConverterException;
+import org.eclipse.xtext.conversion.impl.INTValueConverter;
 import org.eclipse.xtext.util.Strings;
 import org.eclipse.xtext.nodemodel.INode;
 
@@ -86,5 +87,21 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
                 return res;
             }
         };
+    }
+    
+    /**
+     * Customized {@link INTValueConverter} accepting negative {@link Integer Integers}.
+     * 
+     * @author aum
+     */
+    public static class ExtendedINTValueConverter extends INTValueConverter {
+        
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected void assertValidValue(final Integer value) {
+            // each value is supported!
+        }
     }
 }
