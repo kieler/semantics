@@ -77,6 +77,7 @@ public class SCChartsSimSAutomatedJUnitTest extends KiemAutomatedJUnitTest {
      */
     @Override
     protected IPath getExternalRelativeTestPath() {
-        return new Path("../../../models/sccharts/validation");
+        return null;
+        //return new Path("../../../models/sccharts/validation");
     }
 }

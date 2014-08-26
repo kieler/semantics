@@ -632,6 +632,12 @@ public abstract class KiemAutomatedJUnitTest {
     private static List<IPath> createLinksForAllExternalTestFiles(final String pluginId,
             final IPath bundleTestPath, final String temporaryWorkspaceFolderName) {
         List<IPath> allFiles = new LinkedList<IPath>();
+        
+        // If no bundleTestPath then return
+        if (bundleTestPath == null) {
+            return allFiles;
+        }
+        
         // If the bundle is not ready then there is no image
         final Bundle bundle = Platform.getBundle(pluginId);
 
