@@ -1025,7 +1025,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * This method should only be invoked by {@link #updateDiagram(Object, boolean, IEditorPart)}<p>
      * Updates displayed diagram in this view. Initializes this view if necessary.
      */
-    private void updateDiagram(final Object model, boolean modelTypeChanged,
+    private void updateDiagram(Object model, boolean modelTypeChanged,
             final IEditorPart editorContext, final CompilationResult compilationResult,
             final KiCoAsynchronousCompilation compilation, boolean isErrorModel) {
         try {
@@ -1040,22 +1040,32 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             // listen for internal klighd errors
             lastException = null;
             Platform.addLogListener(this);
+            
+            //get available synthesis
+            ISynthesis synthesis = Iterables.getFirst(KlighdDataManager.getInstance().getAvailableSyntheses(model.getClass()), null);
+            if(synthesis == null){                
+                KiCoModelChain chain = new KiCoModelChain();
+                chain.getModels().add(new KiCoModelWrapper(model));
+                model = chain;
+            }
 
             // Update diagram
-            if (modelTypeChanged) {
-                //save previous synthesis options to restore later
-                KlighdSynthesisProperties properties = new KlighdSynthesisProperties();  
+            if (modelTypeChanged) { 
+                KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
+                properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, "de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationUpdateStrategy");
+                
+                //save previous synthesis options to restore later  
                 if (vc != null) {
-                    ISynthesis synthesis = vc.getDiagramSynthesis();
-                    if (synthesis != null) {
+                    ISynthesis usedSynthesis = vc.getDiagramSynthesis();
+                    if (usedSynthesis != null) {
                         List<SynthesisOption> options = vc.getDisplayedSynthesisOptions();
                         if (!options.isEmpty()) {
                             HashMap<SynthesisOption, Object> optionsMap;
-                            if (recentSynthesisOptions.containsKey(synthesis)) {
-                                optionsMap = recentSynthesisOptions.get(synthesis);
+                            if (recentSynthesisOptions.containsKey(usedSynthesis)) {
+                                optionsMap = recentSynthesisOptions.get(usedSynthesis);
                             } else {
                                 optionsMap = Maps.newHashMap();
-                                recentSynthesisOptions.put(synthesis, optionsMap);
+                                recentSynthesisOptions.put(usedSynthesis, optionsMap);
                             }
                             for (SynthesisOption option : options) {
                                 optionsMap.put(option, vc.getOptionValue(option));
@@ -1064,8 +1074,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                     }
                 }
                 
-                //get save options to restore
-                ISynthesis synthesis = Iterables.getFirst(KlighdDataManager.getInstance().getAvailableSyntheses(model.getClass()), null);
+                //get save options to restore                
                 if(synthesis != null && recentSynthesisOptions.containsKey(synthesis)){
                     properties.configureSynthesisOptionValues(recentSynthesisOptions.get(synthesis));
                 }
