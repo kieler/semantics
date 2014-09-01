@@ -79,19 +79,19 @@ class DependencyTransformation extends AbstractModelTransformation {
      * The entry node list is mainly used to speed up the efficiency of concurrency tests.
      * In the same manner, ancestorForkCache stores information about ancestor fork nodes.
      */
-    private val threadNodeCache = new HashMap<Node, List<Entry>>    
-    private val ancestorForkCache = new HashMap<Node, List<Fork>>
+    protected val threadNodeCache = new HashMap<Node, List<Entry>>    
+    protected val ancestorForkCache = new HashMap<Node, List<Fork>>
     
     /**
      * relativeWriterCache caches if a specific writer (meaning an assignment) is a relative writer or 
      * not.
      */
-    private val relativeWriterCache = new HashMap<Assignment, Boolean>
+    protected val relativeWriterCache = new HashMap<Assignment, Boolean>
     
     /**
      * valuedObjectCache stores all distinct valued objects and a list of nodes that are using them.
      */
-    private val valuedObjectCache = new HashMap<ValuedObject, List<Node>> 
+    protected val valuedObjectCache = new HashMap<ValuedObject, List<Node>> 
     
     
     // -------------------------------------------------------------------------
