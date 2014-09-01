@@ -7,6 +7,10 @@
             class="de.cau.cs.kieler.sccharts.klighd.SCChartsRegionLineModifier"
             id="de.cau.cs.kieler.sccharts.klighd.regionLineModifier">
       </styleModifier>
+      <action
+            class="de.cau.cs.kieler.sccharts.klighd.SCChartsReferenceExpandAction"
+            id="de.cau.cs.kieler.sccharts.klighd.SCChartsReferenceExpandAction">
+      </action>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
