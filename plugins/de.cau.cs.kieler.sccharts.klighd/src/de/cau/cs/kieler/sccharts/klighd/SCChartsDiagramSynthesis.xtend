@@ -73,6 +73,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
 import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
@@ -123,7 +125,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     extension KExpressionsExtension
     
     @Inject
-    extension KExpressionsSerializeExtension
+    extension SCChartsSerializeExtension
 
     // -------------------------------------------------------------------------
     // Transformation options   
@@ -648,7 +650,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                                     }
                                     var init = ""
                                     if (sig.initialValue != null) {
-                                        init = " = " + serializer.serialize(sig.initialValue.copy)
+                                        init = " = " + sig.initialValue.serialize //serializer.serialize(sig.initialValue.copy)
                                     }
                                     var card = ""
                                     if (sig.cardinalities.size > 0) {
@@ -676,7 +678,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                                 it.invisible = true;
                                 it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0,
                                     0);
-                                var text = serializer.serialize(action.copy);
+                                var text = action.serialize as String//serializer.serialize(action.copy);
                                 text = text.replace("'", "")
                                 if (text.length > 1 && text.substring(text.length - 1, text.length).equals(";")) {
                                     text = text.substring(0, text.length - 1)
@@ -783,7 +785,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 tCopy.setHistory(HistoryType::RESET)
                 tCopy.setImmediate(false)
                 tCopy.annotations.clear // do not serialize copied annotations
-                var String label = serializer.serialize(tCopy)
+                var String label = ""
+                if (tCopy.trigger != null) {
+                    label = label + tCopy.trigger.serialize as String//serializer.serialize(tCopy)
+                }
+
                 label = label.replace("'", "")
 
                 // break labels if they are annotated

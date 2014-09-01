@@ -207,5 +207,9 @@ class KExpressionsSerializeExtension {
    def dispatch CharSequence serialize(String s) {
        s
    }
+   
+   def dispatch CharSequence serialize(Void x) {
+       
+   }
     
 }
