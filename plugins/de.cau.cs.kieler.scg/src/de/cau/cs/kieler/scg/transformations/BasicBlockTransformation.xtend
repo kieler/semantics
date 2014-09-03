@@ -16,26 +16,28 @@ package de.cau.cs.kieler.scg.transformations
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.scg.BasicBlock
+import de.cau.cs.kieler.scg.BranchType
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Predecessor
-import de.cau.cs.kieler.scg.SchedulingBlock
-import de.cau.cs.kieler.scg.Dependency
-import java.util.List
-import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
-import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
-import org.eclipse.emf.ecore.EObjectimport java.util.HashMap
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.BranchType
+import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
+import java.util.HashMap
+import java.util.List
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kico.KielerCompilerContext
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -56,7 +58,7 @@ import de.cau.cs.kieler.scg.BranchType
  * @kieler.rating 2013-10-24 proposed yellow
  */
 
-class BasicBlockTransformation extends AbstractModelTransformation {
+class BasicBlockTransformation extends Transformation {
     
     // -------------------------------------------------------------------------
     // -- Injections 
@@ -92,9 +94,9 @@ class BasicBlockTransformation extends AbstractModelTransformation {
      *          the root element of the input model
      * @return Returns the root element of the transformed model.
      */      
-    override transform(EObject eObject) {
-		return transformSCGDEPToSCGBB(eObject as SCGraph)
-	}
+	override transform(EObject eObject, KielerCompilerContext context) {
+        return transformSCGDEPToSCGBB(eObject as SCGraph)
+    }
     
     /**
      * transformSCGDEPToSCGBB executes the transformation of an SCG with dependency information to an

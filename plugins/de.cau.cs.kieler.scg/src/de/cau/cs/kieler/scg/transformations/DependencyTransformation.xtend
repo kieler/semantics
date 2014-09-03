@@ -19,24 +19,25 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import de.cau.cs.kieler.scg.Dependency
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.kico.KielerCompilerContext
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -57,7 +58,7 @@ import de.cau.cs.kieler.scg.ControlFlow
  * @kieler.rating 2013-10-23 proposed yellow
  */
 
-class DependencyTransformation extends AbstractModelTransformation {
+class DependencyTransformation extends Transformation {
     
     // -------------------------------------------------------------------------
     // -- Injections 
@@ -105,9 +106,10 @@ class DependencyTransformation extends AbstractModelTransformation {
      *          the root element of the input model
      * @return Returns the root element of the transformed model.
      */    
-	override transform(EObject eObject) {
-		return transformSCGToSCGDEP(eObject as SCGraph)
-	}
+	override transform(EObject eObject, KielerCompilerContext context) {
+        return transformSCGToSCGDEP(eObject as SCGraph)
+    }
+	
 
 	
     /**
