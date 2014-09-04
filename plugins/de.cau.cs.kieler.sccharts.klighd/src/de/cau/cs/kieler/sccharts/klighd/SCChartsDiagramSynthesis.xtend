@@ -70,6 +70,11 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
+import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
@@ -79,7 +84,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.rating 2012-10-08 proposed yellow
  */
 @ViewSynthesisShared
-class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
+class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     // -------------------------------------------------------------------------
     // Serialization of actions (state actions and transition labels)   
@@ -118,6 +123,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
 
     @Inject
     extension KExpressionsExtension
+    
+    @Inject
+    extension SCChartsSerializeExtension
 
     // -------------------------------------------------------------------------
     // Transformation options   
@@ -141,7 +149,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
         "Dependencies && priorities", false);
 
     private static val SynthesisOption SHOW_REFERENCEEXPANSION = SynthesisOption::createCheckOption(
-        "Reference Expansion", false);
+        "Reference Expansion", true);
 
     DependencyGraph dependencyGraph = null
 
@@ -188,7 +196,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
 
     // -------------------------------------------------------------------------
     // The Main entry transform function   
-    override transform(SCChart model) {
+    override transform(Scope model) {
 //        var transformed = model;
 
         // Visualization of compiled SCCharts with kico.klighd not here
@@ -198,13 +206,23 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
         //        transformed = KielerCompiler.compile(transformations, transformed, KiCoSelectionView.advancedMode) as Region
         //        // ---------
 //        return transformed.translate();
-		val timestamp = System.currentTimeMillis
-		System.out.println("Started SCCharts synthesis...")
+		
+        val timestamp = System.currentTimeMillis
+        System.out.println("Started SCCharts synthesis...")
+        
+		if (model instanceof Region) {
+		    val region = (model as Region).translate(false)
+		    var time = (System.currentTimeMillis - timestamp) as float
+            System.out.println("SCCharts synthesis (regions) finished (time elapsed: "+(time / 1000)+"s).")
+		    return region
+		}
+		
+		
         val rootNode = createNode() => [
               // ATTENTION: DO NOT use graphiz on outermost root node, this will result in suspicious layout bugs!!!
 //            addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot") 
             addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES)
-            children += model.translate
+            children += (model as State).translate
         ] 
         var time = (System.currentTimeMillis - timestamp) as float
         System.out.println("SCCharts synthesis finished (time elapsed: "+(time / 1000)+"s).")
@@ -214,18 +232,20 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
 
     // -------------------------------------------------------------------------
     // Transform a region
-    public def dispatch KNode translate(Region r) {
+    public def KNode translate(Region r, boolean loadLazy) {
     	regionCounter = regionCounter + 1
     	if (regionCounter % 100 == 0) System.out.print("r")
     	if (regionCounter % 2000 == 0) System.out.println("")
-        return r.createNode().putToLookUpWith(r) => [ node |
+        val regionNode = r.createNode() => [ node |
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot")
             node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES)
-            if (r.states.size > 1) {
-                //node.setLayoutOption(KlighdConstants::EXPAND, false);
-            }
-            for (s : r.states) {
-                node.children += s.translate;
+            if (loadLazy) {
+                node.setLayoutOption(KlighdProperties::EXPAND, false);       
+                     
+            } else {
+                for (s : r.states) {
+                    node.children += s.translate;
+                }
             }
             var regionLabelVar = r.label
             if (r.^for != null) {
@@ -253,6 +273,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                    it.suppressSelectability
                 ];
                 if (!r.empty) {
                     it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
@@ -270,13 +291,25 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                     it.foreground = "dimGray".color
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
-                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                    if (loadLazy) {
+                        it.addDoubleClickAction(SCChartsReferenceExpandAction.ID);
+                    } else {
+                        it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                    }
+                    it.suppressSelectability
                 ];
                 if (!r.empty) {
                     it.addRectangle().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).invisible = true;
                 }
             ]
         ]
+        
+        if (loadLazy) {
+            regionNode.suppressSelectability
+        }
+        regionNode.putToLookUpWith(r)
+        
+        return regionNode
     }
 
     // -------------------------------------------------------------------------
@@ -374,7 +407,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
 
     // -------------------------------------------------------------------------
     // Transform a state    
-    public def dispatch KNode translate(State s) {
+    public def KNode translate(State s) {
         if (SHOW_ORDER.booleanValue || SHOW_DEPENDENCIES.booleanValue) {
             if (dependencyGraph == null) {
 
@@ -616,7 +649,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                                     }
                                     var init = ""
                                     if (sig.initialValue != null) {
-                                        init = " = " + serializer.serialize(sig.initialValue.copy)
+                                        init = " = " + sig.initialValue.serialize //serializer.serialize(sig.initialValue.copy)
                                     }
                                     var card = ""
                                     if (sig.cardinalities.size > 0) {
@@ -644,7 +677,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                                 it.invisible = true;
                                 it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0,
                                     0);
-                                var text = serializer.serialize(action.copy);
+                                var text = action.serialize as String//serializer.serialize(action.copy);
                                 text = text.replace("'", "")
                                 if (text.length > 1 && text.substring(text.length - 1, text.length).equals(";")) {
                                     text = text.substring(0, text.length - 1)
@@ -678,7 +711,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
             ];
             if (!s.hasNoRegionsWithStates) {
                 for (r : s.regions)
-                    node.children += r.translate;
+                    node.children += r.translate(false);
             } 
             if (s.isReferencedState) {
                 if (!PAPER_BW.booleanValue) {
@@ -691,9 +724,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 for (r : (s.referencedScope as State).regions) {
                     val synthesis = delegate.get();
                     synthesis.use(usedContext)
-                    node.children += synthesis.translate(r) => [
-//                        it.setLayoutOption(KlighdProperties::EXPAND, false);
-                    ];
+                    node.children += synthesis.translate(r, true)
                 }
             }
             for (t : s.outgoingTransitions)
@@ -753,7 +784,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<SCChart> {
                 tCopy.setHistory(HistoryType::RESET)
                 tCopy.setImmediate(false)
                 tCopy.annotations.clear // do not serialize copied annotations
-                var String label = serializer.serialize(tCopy)
+                var String label = ""
+                if (tCopy.trigger != null) {
+                    label = label + tCopy.trigger.serialize as String//serializer.serialize(tCopy)
+                }
+
                 label = label.replace("'", "")
 
                 // break labels if they are annotated

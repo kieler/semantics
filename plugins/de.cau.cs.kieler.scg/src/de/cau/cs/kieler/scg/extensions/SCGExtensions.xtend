@@ -500,7 +500,7 @@ class SCGExtensions {
     }
     
     /**
-     * Retrieves all of nodes of a thread. In the SCG sense a thread starts at its 
+     * Retrieves all nodes of a thread. In the SCG sense a thread starts at its 
      * entry node and ends at its exit node. Hence, each thread is identified by
      * its entry node and the successors of a fork node (retrievable via
      * {@link #getAllNext(Node)}) are the entry nodes of each thread of that fork node.
