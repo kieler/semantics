@@ -19,15 +19,25 @@ import de.cau.cs.kieler.sccharts.Effect
 import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.sccharts.Emission
+import de.cau.cs.kieler.sccharts.EntryAction
+import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.sccharts.ExitAction
 
 /**
  * @author ssm
  *
+ * @kieler.design 2014-09-04 proposed ssm
+ * @kieler.rating 2014-09-04 proposed yellow
  */
 class SCChartsSerializeExtension extends KExpressionsSerializeExtension {
     
     def dispatch CharSequence serialize(Assignment assignment) {
         assignment.valuedObject.name + " = " + assignment.expression.serialize
+    }
+    
+    def dispatch CharSequence serialize(Emission emission) {
+        emission.valuedObject.name
     }
    
     def dispatch CharSequence serialize(EList<Effect> effects) {
@@ -43,7 +53,10 @@ class SCChartsSerializeExtension extends KExpressionsSerializeExtension {
     }
     
     def dispatch CharSequence serialize(Transition transition) {
-        var label = transition.trigger.serialize as String
+        var label = ""
+        if (transition.trigger != null) { 
+            label = label + transition.trigger.serialize as String
+        }
         if (!transition.effects.empty) {
             label = label + " / " + transition.effects.serialize
             label = label.trim
@@ -52,7 +65,24 @@ class SCChartsSerializeExtension extends KExpressionsSerializeExtension {
     }
     
     def dispatch CharSequence serialize(Action action) {
-        var label = action.trigger.serialize as String
+        var label = "";
+        if (action.immediate) { 
+            label = label + "immediate ";
+        }
+        if (action instanceof EntryAction) { 
+            label = label + "entry "
+        }
+        else if (action instanceof DuringAction) {
+            label = label + "during "
+        }
+        else if (action instanceof ExitAction) {
+            label = label + "exit "
+        }
+        
+        if (action.trigger != null) {
+            var trigger = action.trigger.serialize as String
+            label = label + trigger;
+        }
         if (!action.effects.empty) {
             label = label + " / " + action.effects.serialize
             label = label.trim

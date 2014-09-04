@@ -785,10 +785,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 tCopy.setHistory(HistoryType::RESET)
                 tCopy.setImmediate(false)
                 tCopy.annotations.clear // do not serialize copied annotations
-                var String label = ""
-                if (tCopy.trigger != null) {
-                    label = label + tCopy.trigger.serialize as String//serializer.serialize(tCopy)
-                }
+                var label = tCopy.serialize as String
+//                 label = label + tCopy.trigger.serialize as String//serializer.serialize(tCopy)
 
                 label = label.replace("'", "")
 
