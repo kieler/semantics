@@ -68,7 +68,7 @@ class SurfaceDepth {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.allStates.forEach[ targetState |
+        targetRootState.allStates.toList.forEach[ targetState |
             targetState.transformSurfaceDepth(targetRootState);
         ]
 
