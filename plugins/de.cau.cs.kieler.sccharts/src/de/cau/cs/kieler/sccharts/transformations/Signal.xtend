@@ -164,6 +164,7 @@ class Signal {
             // Do not do this for only-input-variables.
             if (!presentVariable.isInput) {
                 val duringAction = state.createDuringAction
+                //duringAction.setTrigger(TRUE) (implicit true)
                 duringAction.createAssignment(presentVariable, FALSE)
                 duringAction.setImmediate(true)
             }
