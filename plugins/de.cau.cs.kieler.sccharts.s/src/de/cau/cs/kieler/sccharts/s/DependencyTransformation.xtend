@@ -54,7 +54,7 @@ class DependencyTransformation {
         statesJoin2DependencyNodes = new HashMap<State, DependencyNode>
 
         // Go thru all states and create a dependency representation for it (DepenedencyState)
-        for (state : rootState.allContainedStates) {
+        for (state : rootState.allContainedStates.toIterable) {
             if (state != rootState.getRootState) {
                 val dependencyNode = (new DependencyNode(state)).map(state, false)
                 dependencyNodes.add(dependencyNode)
