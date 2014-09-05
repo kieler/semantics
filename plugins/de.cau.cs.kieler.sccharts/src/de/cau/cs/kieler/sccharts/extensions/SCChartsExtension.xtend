@@ -47,8 +47,8 @@ import java.util.List
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 
+import static extension de.cau.cs.kieler.sccharts.iterators.StateIterator.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import org.eclipse.emf.common.util.TreeIterator
 
 /**
  * SCCharts Extensions.
@@ -106,7 +106,7 @@ class SCChartsExtension {
 
     // Return the list of all contained States.
     def Iterator<State> getAllContainedStates(Scope scope) {
-        scope.eAllContents().filter(typeof(State))
+        scope.sccAllStates; //eAllContents().filter(typeof(State))
     }
     
     def List<State> getAllContainedStates(State state) {
