@@ -110,16 +110,18 @@ class SCChartsExtension {
 //        scope.eAllContents().filter(typeof(State))
     }
     
-    def List<State> getAllContainedStates(State state) {
+    // Returns a list of all contained States.
+    def List<State> getAllContainedStatesList(State state) {
         <State> newLinkedList => [ l |
             state.regions.forEach[ r | 
                 r.states.forEach[ s | 
                     l += s; 
-                    l += s.getAllContainedStates
+                    l += s.getAllContainedStatesList
                 ]
             ]
         ]
     }
+    
 
     // Return the list of all contained States and the root state if the scope is already a state.
     def Iterator<State> getAllStates(Scope scope) {
@@ -281,7 +283,7 @@ class SCChartsExtension {
         val state = (valuedObject.getEContainer as State);
         val rootState = state.getRootState
         var notFound = valuedObject.uniqueNameTest(rootState, newName)
-        for (innerState : rootState.allContainedStates) {
+        for (innerState : rootState.allContainedStatesList) {
             if (notFound && !valuedObject.uniqueNameTest(innerState, newName)) {
                 notFound = false
             }
@@ -621,7 +623,7 @@ class SCChartsExtension {
     }
 
     def State fixAllPriorities(State state) {
-        for (containedState : state.allContainedStates) {
+        for (containedState : state.allContainedStatesList) {
             var prio = 1
             for (transition : containedState.outgoingTransitions) {
                 transition.setPriority(prio)
@@ -642,7 +644,7 @@ class SCChartsExtension {
 
 
     def State fixAllTextualOrdersByPriorities(State state) {
-        for (containedState : state.allContainedStates) {
+        for (containedState : state.allContainedStatesList) {
             val transitions = containedState.outgoingTransitions.sortBy[priority].immutableCopy;
             for (transition : transitions) {
                 containedState.outgoingTransitions.remove(transition)

@@ -36,7 +36,7 @@ class SCChartsOptimization {
     //--     O P T I M I Z E : Immediate Transitions with no Trigger/Effect  --
     //-------------------------------------------------------------------------
     def State optimizeSuperflousImmediateTransitions(State rootState) {
-        var targetStates = rootState.allContainedStates
+        var targetStates = rootState.allContainedStatesList
         for (targetState : targetStates) {
             targetState.optimizeSuperflousImmediateTransitions(rootState);
         }
@@ -70,7 +70,7 @@ class SCChartsOptimization {
     //-------------------------------------------------------------------------
     // Optimize states with two outgoing transitions
     def State optimizeSuperflousConditionalStates(State rootState) {
-        var targetStates = rootState.allContainedStates
+        var targetStates = rootState.allContainedStatesList
         for (targetState : targetStates) {
             targetState.optimizeSuperflousConditionalStates(rootState);
         }

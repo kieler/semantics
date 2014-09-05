@@ -16,9 +16,9 @@ trace:
 tick:
     {tick}
     (input+=signal)*
-    ('%' 'Output' ':' (output+=signal)*)?
+    ('%' (('Output:')|('Output' ':')) (output+=signal)*)?
     (extraInfos+=kvpair)*
-    ('%%' 'Output' ':' (extraInfosOutput+=kvpair)*)?
+    ('%%' (('Output:')|('Output' ':')) (extraInfosOutput+=kvpair)*)?
     ';';
 
 /* From the Xtext documentation:

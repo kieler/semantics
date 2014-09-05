@@ -55,7 +55,7 @@ class Abort {
 
         // Traverse all states
         var done = false;
-        for (targetState : targetRootState.getAllContainedStates) {
+        for (targetState : targetRootState.getAllContainedStatesList) {
             if (!done) {
                 targetState.transformAbortAlternative(targetRootState);
             }
@@ -250,7 +250,7 @@ class Abort {
 
         // Traverse all states
         var done = false;
-        for (targetState : targetRootState.getAllContainedStates) {
+        for (targetState : targetRootState.getAllContainedStatesList) {
             if (!done) {
                 targetState.transformAbortDefault(targetRootState);
             }
@@ -347,7 +347,7 @@ class Abort {
                                     // to a final state.
                                     // This leads to more transitions but avoids more variables.
                                     strongAbort.setTypeTermination
-                                    val allInnerSimpleStates = innerState.allContainedStates.filter[!(hasInnerStatesOrRegions || hasInnerActions)].
+                                    val allInnerSimpleStates = innerState.allContainedStatesList.filter[!(hasInnerStatesOrRegions || hasInnerActions)].
                                         filter[!final]
                                     for (innerSimpleState : allInnerSimpleStates) {
                                         val innerFinalStates = innerSimpleState.parentRegion.states.filter[final]
