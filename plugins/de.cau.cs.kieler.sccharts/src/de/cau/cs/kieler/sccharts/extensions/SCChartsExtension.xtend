@@ -107,6 +107,7 @@ class SCChartsExtension {
     // Return the list of all contained States.
     def Iterator<State> getAllContainedStates(Scope scope) {
         scope.sccAllStates; //eAllContents().filter(typeof(State))
+//        scope.eAllContents().filter(typeof(State))
     }
     
     def List<State> getAllContainedStates(State state) {
