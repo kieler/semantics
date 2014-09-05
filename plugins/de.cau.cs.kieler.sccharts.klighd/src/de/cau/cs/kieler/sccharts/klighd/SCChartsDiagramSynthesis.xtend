@@ -275,7 +275,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                     it.suppressSelectability
                 ];
-                if (!r.empty) {
+                if (!r.notEmpty || !r.label.nullOrEmpty) {
+//                if (!r.allContainedStates.nullOrEmpty) {
                     it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
                 }
             ];
@@ -298,7 +299,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     }
                     it.suppressSelectability
                 ];
-                if (!r.empty) {
+                if (!r.notEmpty) {
                     it.addRectangle().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).invisible = true;
                 }
             ]
@@ -784,10 +785,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 tCopy.setHistory(HistoryType::RESET)
                 tCopy.setImmediate(false)
                 tCopy.annotations.clear // do not serialize copied annotations
-                var String label = ""
-                if (tCopy.trigger != null) {
-                    label = label + tCopy.trigger.serialize as String//serializer.serialize(tCopy)
-                }
+                var label = tCopy.serialize as String
+//                 label = label + tCopy.trigger.serialize as String//serializer.serialize(tCopy)
 
                 label = label.replace("'", "")
 

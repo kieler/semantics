@@ -29,7 +29,10 @@ import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
 
 /**
- * @author J
+ * @author ssm
+ * 
+ * @kieler.design 2014-09-04 proposed ssm
+ * @kieler.rating 2014-09-04 proposed yellow
  *
  */
 class KExpressionsSerializeExtension {
@@ -186,8 +189,8 @@ class KExpressionsSerializeExtension {
 
    // Expand a boolean expression value (true or false).
    def dispatch CharSequence serialize(BoolValue expression) {
-        if (expression.value == true) return "1"
-        return "0"
+        if (expression.value == true) return "true"
+        return "false"
    }
    
     def dispatch CharSequence serialize(FunctionCall functionCall) {
