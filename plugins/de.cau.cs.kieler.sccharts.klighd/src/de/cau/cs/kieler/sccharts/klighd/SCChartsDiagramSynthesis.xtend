@@ -150,6 +150,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     private static val SynthesisOption SHOW_REFERENCEEXPANSION = SynthesisOption::createCheckOption(
         "Reference Expansion", true);
+        
+    private static val SynthesisOption USE_ADAPTIVEZOOM = SynthesisOption::createCheckOption(
+        "Adaptive Zoom", true);        
 
     DependencyGraph dependencyGraph = null
 
@@ -268,7 +271,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 it.foreground = "gray".color
                 it.lineWidth = 1;
                 it.addText("[-]" + if(r.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(r) => [
-                    it.lowerVisibilityScaleBound = 0.40f;
+                    if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.40f;
                     it.foreground = "dimGray".color
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
@@ -288,7 +291,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 it.foreground = "gray".color
                 it.lineWidth = 1;
                 it.addText("[+]" + if(r.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(r) => [
-                    it.lowerVisibilityScaleBound = 0.40f;
+                    if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.40f;
                     it.foreground = "dimGray".color
                     it.fontSize = 10
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
@@ -366,7 +369,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     // Print the highlighted text into a parent and link it to a lookup EObject.
     def KRectangle printHighlightedText(KRectangle parent, String text, EObject lookup) {
-        parent.lowerVisibilityScaleBound = 0.5f;
+        if (USE_ADAPTIVEZOOM.booleanValue) parent.lowerVisibilityScaleBound = 0.5f;
         var remainingText = text
         var split = ""
         val words = text.getWords
@@ -376,7 +379,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             split = remainingText.substring(0, index)
             remainingText = remainingText.substring(index + word.length, remainingText.length)
             parent.addText(split + word) => [
-                it.lowerVisibilityScaleBound = 0.5f;
+                if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.5f;
                 if (word.keyword) {
                     it.setForeground(KEYWORD.copy)
                     if (PAPER_BW.booleanValue) {
@@ -391,7 +394,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         val remainingText2 = remainingText
         if (remainingText2.length > 0) {
             parent.addText(remainingText2) => [
-                it.lowerVisibilityScaleBound = 0.5f;
+                if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.5f;
                 if (remainingText2.keyword) {
                     it.setForeground(KEYWORD.copy)
                     if (PAPER_BW.booleanValue) {
@@ -456,7 +459,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 ]
             else if (s.isFinal)
                 figure.addRoundedRectangle(cornerRadius, cornerRadius) => [
-                    it.lowerVisibilityScaleBound = 0.30f;
+                    if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.30f;
                     // re-configure the outer rounded rectangle
                     val offset = figure.lineWidthValue + if(s.isInitial) 1 else 2;
                     figure.setCornerSize(offset + cornerRadius, offset + cornerRadius)
@@ -547,7 +550,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 if (s.hasRegionsOrDeclarations(valuedObjectCache) || s.referencedState) {
                     
                     if (s.hasNoRegionsWithStates) 
-                        figure.lowerVisibilityScaleBound = 0.075f;
+                        if (USE_ADAPTIVEZOOM.booleanValue) figure.lowerVisibilityScaleBound = 0.075f;
                     // Get a smaller window-title-bare if this a macro state 
                     if (!s.label.empty)
                         it.addRectangle => [
@@ -561,7 +564,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                                 text = text + ' @ ' + (s.referencedScope as State).label
                             val ktext = it.addText("   " + text + prioritySpace + " ").putToLookUpWith(s) => [
                                 it.fontSize = 11;
-                                it.lowerVisibilityScaleBound = 0.49f;
+                                if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.49f;
                                ];
                             if (priorityToShow.length > 0) {
                                 val estimatedWidth = PlacementUtil.estimateTextSize(ktext).width
@@ -579,10 +582,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                             }
                         ];
                 } else {
-                    figure.lowerVisibilityScaleBound = 0.20f;
+                    if (USE_ADAPTIVEZOOM.booleanValue) figure.lowerVisibilityScaleBound = 0.20f;
                     // For simple states we want a larger area 
                     val ktext = it.addText(" " + s.label + prioritySpace).putToLookUpWith(s) => [
-                        it.lowerVisibilityScaleBound = 0.40f;
+                        if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.40f;
                         it.fontSize = 11;
                         it.setFontBold(true);
                         if (PAPER_BW.booleanValue) {
@@ -674,7 +677,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         it.addRectangle => [
                             it.invisible = true;
                             it.addRectangle => [
-                                it.lowerVisibilityScaleBound = 0.5f;
+                                if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.5f;
                                 it.invisible = true;
                                 it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0,
                                     0);
@@ -743,7 +746,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             edge.source = t.sourceState.node;
             edge.target = t.targetState.node;
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-            edge.lowerVisibilityScaleBound = 0.11f;
+            if (USE_ADAPTIVEZOOM.booleanValue) edge.lowerVisibilityScaleBound = 0.11f;
             edge.addSpline(2) => [
                 // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
                 if (t.isImmediate2) {
@@ -809,7 +812,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         KlighdConstants::DEFAULT_FONT_NAME
                     ) => [
                         it.setLayoutOption(LayoutOptions.FONT_SIZE, 13);
-                        it.lowerVisibilityScaleBound = 0.5f;
+                        if (USE_ADAPTIVEZOOM.booleanValue) it.lowerVisibilityScaleBound = 0.5f;
                         it.KRendering.setFontBold(true)
                     ]
                 }
