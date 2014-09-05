@@ -57,9 +57,9 @@ class Pre {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootState.getAllStates) {
+        targetRootState.getAllStates.forEach[ targetState |
             targetState.transformPre(targetRootState);
-        }
+        ]
         targetRootState.fixAllTextualOrdersByPriorities;
     }
 

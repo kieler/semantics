@@ -51,14 +51,14 @@ class Exit {
         val targetRootState = rootState.fixAllPriorities;
 
         // Prepare all states so that each reagion has at most one final state
-        for (targetState : targetRootState.getAllStates) {
+        targetRootState.getAllStates.forEach[ targetState |
             targetState.prepareExit(targetRootState);
-        }
+        ]
 
         // Traverse all states
-        for (targetState : targetRootState.getAllStates) {
+        targetRootState.getAllStates.forEach[ targetState |
             targetState.transformExit(targetRootState);
-        }
+        ]
         targetRootState.fixAllTextualOrdersByPriorities;
     }
 

@@ -51,9 +51,9 @@ class Deferred {
         var targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetTransition : targetRootState.allStates) {
+        targetRootState.allStates.forEach[ targetTransition |
             targetTransition.transformDeferredState;
-        }
+        ]
         targetRootState.fixAllTextualOrdersByPriorities;
     }
 

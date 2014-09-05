@@ -5,14 +5,63 @@
 
 % Output: 
 ;
+
+% Output: 
+;
+B 
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
 A 
 % Output: O(1) 
 ;
 
 % Output: O(1) 
 ;
+
+% Output: O(1) 
+;
+
+% Output: O(1) 
+;
+! reset;
+A B 
+% Output: 
+;
+A B 
+% Output: O(1) 
+;
+A B 
+% Output: O(1) 
+;
+A B 
+% Output: O(1) 
+;
+A B 
+% Output: O(1) 
+;
+A B 
+% Output: O(1) 
+;
+A B 
+% Output: O(1) 
+;
 ! reset;
 A 
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+
 % Output: 
 ;
 
@@ -21,38 +70,6 @@ A
 A 
 % Output: O(1) 
 ;
-! reset;
-B 
-% Output: 
-;
-B 
-% Output: 
-;
-B 
-% Output: 
-;
-B 
-% Output: 
-;
-A B 
-% Output: O(1) 
-;
-B 
-% Output: O(1) 
-;
-B 
-% Output: O(1) 
-;
-! reset;
-A B 
-% Output: 
-;
-A B 
-% Output: O(1) 
-;
-A B 
-% Output: O(1) 
-;
-A B 
+
 % Output: O(1) 
 ;
