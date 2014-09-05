@@ -195,6 +195,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     /** Show potential problems */
     private static val SynthesisOption SHOW_POTENTIALPROBLEMS = SynthesisOption::createCheckOption("Potential problems",
         true);
+        
+    private static val SynthesisOption USE_ADAPTIVEZOOM = SynthesisOption::createCheckOption("Adaptive Zoom", false);
 
     /** Show shadow */
     private static val SynthesisOption SHOW_SHADOW = SynthesisOption::createCheckOption("Shadow", true);
@@ -463,7 +465,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                 if (!regionLabel.nullOrEmpty)
                                     addInsideTopLeftNodeLabel(regionLabel, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
                                         it.foreground = REGIONLABEL;
-                                        it.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70)
+                                        if (USE_ADAPTIVEZOOM.booleanValue) it.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70)
                                     ]
                             ]
                         }
@@ -503,7 +505,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 */
     private def dispatch KNode synthesize(Assignment assignment) {
         return assignment.createNode().putToLookUpWith(assignment) => [ node |
-            node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
+            if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // Straightforward rectangle drawing
             val figure = node.addRoundedRectangle(CORNERRADIUS, CORNERRADIUS, LINEWIDTH).background = "white".color;
             (figure) => [
@@ -528,17 +530,17 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         assignmentStr = assignmentStr.replaceAll("&", "&\n" + KLIGHDSPACER)
                     }
                     it.addText(assignmentStr).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0) => [
-                        it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
+                        if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                     ]
                 } else if (assignment.assignment instanceof TextExpression) {
                     // added by cmot (9.3.14)
                     it.addText(assignment.assignment.getTextExpressionString).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0) => [
-                        it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
+                        if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                     ]
                 } else if (assignment.assignment instanceof FunctionCall) {
                     var assignmentText = serializer.serialize(assignment.assignment.copy.fix) //.removeParenthesis
                     it.addText(assignmentText).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0) => [
-                        it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);    
+                        if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);    
                     ]
                 }
             ]
@@ -567,7 +569,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 */
     private def dispatch KNode synthesize(Conditional conditional) {
         return conditional.createNode().putToLookUpWith(conditional) => [ node |
-            node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
+            if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // Draw a diamond figure for conditionals.
             val figure = node.addPolygon().createDiamondShape()
             figure => [
@@ -578,7 +580,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 //                        serializer.serialize(conditional.condition.copy.fix).removeParenthesis).setAreaPlacementData.
                         serializer.serialize(conditional.condition.copy.fix)).setAreaPlacementData.
                         from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0).putToLookUpWith(conditional) => [
-                            it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
+                            if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                         ]
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
             ]
@@ -626,7 +628,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 */
     private def dispatch KNode synthesize(Surface surface) {
         return surface.createNode().putToLookUpWith(surface) => [ node |
-            node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
+            if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // Draw a surface node...
             var KPolygon figure
             if (topdown) {
@@ -635,7 +637,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                     if (SHOW_CAPTION.booleanValue)
                         node.KContainerRendering.addText("surface").putToLookUpWith(surface) => [
-                            it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
+                            if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                         ]
                     if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
                 ]
@@ -672,7 +674,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 */
     private def dispatch KNode synthesize(Depth depth) {
         return depth.createNode().putToLookUpWith(depth) => [ node |
-            node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
+            if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // If the corresponding option is set to true, depth nodes are placed in the first layer.
             if(ALIGN_TICK_START.booleanValue) node.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
             // Draw a depth figure;
@@ -684,7 +686,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     if (SHOW_CAPTION.booleanValue)
                         node.KContainerRendering.addText("depth").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(
                             RIGHT, 0, 0, BOTTOM, 4, 0).putToLookUpWith(depth) => [
-                                it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
+                                if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                             ]
                     if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
                 ]
@@ -721,7 +723,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 */
     private def dispatch KNode synthesize(Entry entry) {
         return entry.createNode().putToLookUpWith(entry) => [ node |
-            node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
+            if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // If the corresponding option is set to true, exit nodes are placed in the first layer;
             if (ALIGN_ENTRYEXIT_NODES.booleanValue)
                 node.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
@@ -732,7 +734,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 if (SHOW_CAPTION.booleanValue)
                     node.KContainerRendering.addText("entry").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT,
                         0, 0, BOTTOM, 1, 0).putToLookUpWith(entry) => [
-                            it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
+                            if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                         ]
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
             ]
@@ -757,7 +759,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 */
     private def dispatch KNode synthesize(Exit exit) {
         return exit.createNode().putToLookUpWith(exit) => [ node |
-            node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
+            if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // If the corresponding option is set to true, exit nodes are placed in the last layer.
             if (ALIGN_ENTRYEXIT_NODES.booleanValue)
                 node.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::LAST)
@@ -768,7 +770,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 if (SHOW_CAPTION.booleanValue)
                     node.KContainerRendering.addText("exit").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT,
                         0, 0, BOTTOM, 1, 0).putToLookUpWith(exit) => [
-                            it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
+                            if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                         ]
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
             ]
@@ -793,7 +795,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 */
     private def dispatch KNode synthesize(Fork fork) {
         return fork.createNode().putToLookUpWith(fork) => [ node |
-            node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
+            if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // Draw a fork triangle...
             var KPolygon figure
             if (topdown) {
@@ -803,7 +805,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     if (SHOW_CAPTION.booleanValue)
                         node.KContainerRendering.addText("fork").setAreaPlacementData.from(LEFT, 0, 0, TOP, 4, 0).to(
                             RIGHT, 0, 0, BOTTOM, 0, 0).putToLookUpWith(fork) => [
-                                it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
+                                if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                             ]
                     if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
                 ]
@@ -814,7 +816,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     if (SHOW_CAPTION.booleanValue)
                         node.KContainerRendering.addText("fork").setAreaPlacementData.from(LEFT, 2, 0, TOP, 0, 0).to(
                             RIGHT, 0, 0, BOTTOM, 2, 0).putToLookUpWith(fork) => [
-                                it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
+                                if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                             ]
                     if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
                 ]
@@ -841,7 +843,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 */
     private def dispatch KNode synthesize(Join join) {
         return join.createNode().putToLookUpWith(join) => [ node |
-            node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
+            if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // Draw a join triangle...
             var KPolygon figure
             if (topdown) {
@@ -851,7 +853,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     if (SHOW_CAPTION.booleanValue)
                         node.KContainerRendering.addText("join").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(
                             RIGHT, 0, 0, BOTTOM, 10, 0).putToLookUpWith(join) => [
-                                it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
+                                if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                             ]
                     if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
                 ]
@@ -862,7 +864,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     if (SHOW_CAPTION.booleanValue)
                         node.KContainerRendering.addText("join").setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(
                             RIGHT, 0, 0, BOTTOM, 4, 0).putToLookUpWith(join) => [
-                                it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
+                                if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
                             ]
                     if (SHOW_SHADOW.booleanValue) {
                         it.shadow = "black".color;
@@ -899,7 +901,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             edge.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
                 it.lineStyle = LineStyle::DOT;
             ]
-            edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
+            if (USE_ADAPTIVEZOOM.booleanValue) edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
         ]
     }
 
@@ -925,7 +927,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             edge.source = sourceNode
             edge.target = targetNode
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
-            edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50);
+            if (USE_ADAPTIVEZOOM.booleanValue) edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50);
             // If the source is a fork node, create a new port for this control flow and attach it.
             // Otherwise, use the outgoing port identified by the given parameter.
             if (sourceObj instanceof Fork) {
@@ -999,7 +1001,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
         // Draw the dashed dependency edge....
         dependency.createNewEdge().putToLookUpWith(dependency) => [ edge |
-            edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.40);
+            if (USE_ADAPTIVEZOOM.booleanValue) edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.40);
             edge.source = sourceNode
             edge.target = targetNode
             edge.addRoundedBendsPolyline(8, 2) => [
@@ -1065,7 +1067,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         kContainer.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
         kContainer.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
         kContainer.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FREE);
-        kContainer.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.10);
+        if (USE_ADAPTIVEZOOM.booleanValue) kContainer.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.10);
 
         if (nodeGrouping == NODEGROUPING_HIERARCHY) {
 //            kContainer.addLayoutParam(LayoutOptions::SPACING, 25.0f)
@@ -1137,7 +1139,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 it.target = kContainer
                 it.targetPort = kContainer.getPort(portName)
                 it.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
-                it.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
+                if (USE_ADAPTIVEZOOM.booleanValue) it.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
                 it.addRoundedBendsPolyline(8, CONTROLFLOW_THICKNESS.intValue) => [
                     it.lineStyle = ne.KRendering.lineStyleValue
                     it.foreground = ne.KRendering.foreground
