@@ -262,6 +262,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             SHOW_SCHEDULINGBLOCKS,
             SHOW_SCHEDULINGPATH,
             SHOW_POTENTIALPROBLEMS,
+            USE_ADAPTIVEZOOM,
             SHOW_SHADOW,
             HIERARCHY_TRANSPARENCY,
             CONTROLFLOW_THICKNESS,

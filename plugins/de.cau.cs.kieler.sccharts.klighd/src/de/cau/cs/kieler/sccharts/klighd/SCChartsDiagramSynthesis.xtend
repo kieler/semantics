@@ -152,7 +152,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         "Reference Expansion", true);
         
     private static val SynthesisOption USE_ADAPTIVEZOOM = SynthesisOption::createCheckOption(
-        "Adaptive Zoom", true);        
+        "Adaptive Zoom", false);        
 
     DependencyGraph dependencyGraph = null
 
@@ -160,7 +160,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     override public getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER,
-            SHOW_REFERENCEEXPANSION, SHOW_SHADOW, PAPER_BW);
+            SHOW_REFERENCEEXPANSION, USE_ADAPTIVEZOOM, SHOW_SHADOW, PAPER_BW);
     }
 
     override public getDisplayedLayoutOptions() {
