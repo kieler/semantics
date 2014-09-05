@@ -123,7 +123,7 @@ class SCChartsExtension {
     // Return the list of all contained States and the root state if the scope is already a state.
     def Iterator<State> getAllStates(Scope scope) {
     	if (scope instanceof State) {
-            return Iterators.singletonIterator(scope) + scope.getAllContainedStates.iterator
+            return Iterators.singletonIterator(scope as State) + scope.getAllContainedStates
 	    } else {
             return scope.getAllContainedStates
     	}
