@@ -227,9 +227,10 @@ class S2C {
    
    // Generate the  reset function.
    def sResetFunction(Program program) {
-       '''    int reset(){
+       '''    void reset(){
        _GO = 1;
-       «program.resetVariables» 
+       «program.resetVariables»
+       return;
     }
     '''
    }
@@ -238,13 +239,14 @@ class S2C {
    
    // Generate the  tick function.
    def sTickFunction(Program program) {
-       '''    int tick(){
+       '''    void tick(){
        g0 = _GO;
        «FOR state : program.states»
        «state.expand»
        «ENDFOR»
        _GO = 0;
        «program.setPreVariables»
+       return;
     }
     '''
    }
