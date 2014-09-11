@@ -254,8 +254,13 @@ class S2C {
    // -------------------------------------------------------------------------
    
    // Expand a state traversing all instructions of that state.
+   // Special case: Do not generate the tick(named) label!
    def dispatch CharSequence expand(State state) {
-           '''«state.name»: { 
+           '''
+           «IF state.name.toLowerCase != "tick"» 
+             state.name»:
+           «ENDIF»
+           { 
            «FOR instruction : state.instructions»
            «instruction.expand»
            «ENDFOR»
