@@ -758,7 +758,7 @@ class SCChartsExtension {
 
     // Return all EntryAction actions of a state.
     def List<EntryAction> getEntryActions(State state) {
-        state.localActions.filter(typeof(EntryAction)).toList
+       state.localActions.filter(typeof(EntryAction)).toList
     }
 
     // Return all DuringAction actions of a state.

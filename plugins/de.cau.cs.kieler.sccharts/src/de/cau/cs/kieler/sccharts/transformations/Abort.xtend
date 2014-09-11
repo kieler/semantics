@@ -78,7 +78,9 @@ class Abort {
 
     // Traverse all states 
     def void transformAbortAlternative(State state, State targetRootState) {
-
+        // (a) more than one transitions outgoing OR
+        // (b) ONE outgoing transition AND
+        //     + not a termination transition without any trigger
         val stateHasUntransformedTransitions = ((state.outgoingTransitions.size > 1) || ((state.outgoingTransitions.
             size == 1) && (!(state.outgoingTransitions.filter[typeTermination].filter[trigger == null].size == 1))))
 
@@ -129,7 +131,7 @@ class Abort {
                         val mainState = mainRegion.createInitialState(GENERATED_PREFIX + "Main").uniqueNameCached(nameCache)
                         mainState.regions.add(region)
                         val termState = mainRegion.createFinalState(GENERATED_PREFIX + "Term").uniqueNameCached(nameCache)
-                        val termVariable = state.createVariable(GENERATED_PREFIX + "termV").setTypeBool.uniqueNameCached(nameCache)
+                        val termVariable = state.createVariable(GENERATED_PREFIX + "termRegion").setTypeBool.uniqueNameCached(nameCache)
                         mainState.createTransitionTo(termState).addEffect(termVariable.assign(TRUE)).setTypeTermination
                         if (terminationTrigger != null) {
                             terminationTrigger = terminationTrigger.and(termVariable.reference)
