@@ -38,6 +38,7 @@ import java.util.HashMap
 import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -69,11 +70,16 @@ class SimpleSequentializer extends AbstractSequentializer {
          
     @Inject 
     extension KExpressionsExtension	
+    
+    @Inject
+    extension AnnotationsExtensions
 
     
     // -------------------------------------------------------------------------
     // -- Globals
     // -------------------------------------------------------------------------
+    
+    private static val ANNOTATION_SEQUENTIALIZED = "sequentialized" 
     
     protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
 
@@ -108,7 +114,9 @@ class SimpleSequentializer extends AbstractSequentializer {
          * Therefore, we only copy the interface and extend the declaration by the guards of the 
          * basic blocks.
          */
-        val newSCG = ScgFactory::eINSTANCE.createSCGraph
+        val newSCG = ScgFactory::eINSTANCE.createSCGraph => [
+        	annotations += createStringAnnotation(ANNOTATION_SEQUENTIALIZED, "")
+        ]
 		val predecessorList = <Predecessor> newArrayList
 		val basicBlockList = <BasicBlock> newArrayList
         scg.copyDeclarations(newSCG)
