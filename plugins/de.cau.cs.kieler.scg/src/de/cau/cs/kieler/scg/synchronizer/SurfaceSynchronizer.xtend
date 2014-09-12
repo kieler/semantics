@@ -280,23 +280,25 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
                 fixcnt = fixcnt + 1
             }
             
-            val OperatorExpression tExp = sExp.subExpressions.last as OperatorExpression            
-            while(tExp.subExpressions.size > OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER) {
-                val eExp = new EmptyExpression()  
-                eExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
-                eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
-                data.valuedObjects.add(eExp.valuedObject)
-                val subExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
-                subExp.setOperator(OperatorType::OR)
-                var gd = OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER/2
-                while (gd > 0) {
-                    subExp.subExpressions += tExp.subExpressions.get(0)
-                    gd = gd - 1
-                }
-                eExp.expression = subExp;
-                tExp.subExpressions.add(0, eExp.valuedObject.reference)
-                data.guardExpression.emptyExpressions.add(eExp)
-                fixcnt = fixcnt + 1
+            if (sExp.subExpressions.last instanceof OperatorExpression) {
+            	val OperatorExpression tExp = sExp.subExpressions.last as OperatorExpression            
+        	    while(tExp.subExpressions.size > OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER) {
+    	            val eExp = new EmptyExpression()  
+	                eExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
+                	eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
+            	    data.valuedObjects.add(eExp.valuedObject)
+        	        val subExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
+    	            subExp.setOperator(OperatorType::OR)
+	                var gd = OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER/2
+                	while (gd > 0) {
+                    	subExp.subExpressions += tExp.subExpressions.get(0)
+                	    gd = gd - 1
+            	    }
+        	        eExp.expression = subExp;
+    	            tExp.subExpressions.add(0, eExp.valuedObject.reference)
+	                data.guardExpression.emptyExpressions.add(eExp)
+                	fixcnt = fixcnt + 1
+            	}           
             }
         }
         
