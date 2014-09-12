@@ -86,7 +86,7 @@
       </transformationGroup>
    </extension>
    <extension
-         point="de.cau.cs.kieler.kico.resourceExtension">
+         point="de.cau.cs.kieler.kico.extension">
       <ResourceExtensionInformation
             className="SCGraph"
             extensionName="scg"

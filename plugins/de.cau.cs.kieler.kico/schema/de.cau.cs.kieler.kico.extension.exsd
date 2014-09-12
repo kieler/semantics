@@ -3,10 +3,17 @@
 <schema targetNamespace="de.cau.cs.kieler.kico" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="de.cau.cs.kieler.kico" id="de.cau.cs.kieler.kico.resourceExtension" name="KIELER Compiler Resource Extension Information"/>
+         <meta.schema plugin="de.cau.cs.kieler.kico" id="de.cau.cs.kieler.kico.extension" name="KIELER Compiler Resource Extension Information"/>
       </appinfo>
       <documentation>
-         [Enter description of this extension point.]
+         &lt;BR&gt;&lt;BR&gt;
+&lt;B&gt;
+FOR AN UPDATED VERSION OF THIS DESCRIPTION AND ADDITIONAL INFORMATION PLEASE SEE:
+&lt;a href=&quot;http://www.informatik.uni-kiel.de/rtsys/kieler/&quot;&gt;http://www.informatik.uni-kiel.de/rtsys/kieler/&lt;/a&gt;
+&lt;/B&gt;
+&lt;BR&gt;&lt;BR&gt;
+
+This extension point allowes the contribution of a resource extension for serialization to the KIELER project.
       </documentation>
    </annotation>
 
@@ -18,7 +25,7 @@
       </annotation>
       <complexType>
          <sequence minOccurs="0" maxOccurs="unbounded">
-            <element ref="ResourceExtensionInformation"/>
+            <element ref="ExtensionInformation"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -47,7 +54,7 @@
       </complexType>
    </element>
 
-   <element name="ResourceExtensionInformation">
+   <element name="ExtensionInformation">
       <complexType>
          <attribute name="className" type="string" use="required">
             <annotation>
@@ -78,7 +85,7 @@
          <meta.section type="since"/>
       </appinfo>
       <documentation>
-         [Enter the first release in which this extension point appears.]
+         0.11.0
       </documentation>
    </annotation>
 
@@ -87,7 +94,7 @@
          <meta.section type="examples"/>
       </appinfo>
       <documentation>
-         [Enter extension point usage example here.]
+         No examples yet.
       </documentation>
    </annotation>
 
@@ -96,7 +103,7 @@
          <meta.section type="apiinfo"/>
       </appinfo>
       <documentation>
-         [Enter API information here.]
+         See KIELER website (Description).
       </documentation>
    </annotation>
 
@@ -105,9 +112,30 @@
          <meta.section type="implementation"/>
       </appinfo>
       <documentation>
-         [Enter information about supplied implementation of this extension point.]
+         n/a
       </documentation>
    </annotation>
 
+   <annotation>
+      <appinfo>
+         <meta.section type="copyright"/>
+      </appinfo>
+      <documentation>
+         &lt;BR&gt;
+ KIELER - Kiel Integrated Environment for Layout Eclipse RichClient&lt;BR&gt;
+&lt;BR&gt;
+ http://www.informatik.uni-kiel.de/rtsys/kieler/&lt;BR&gt;
+&lt;BR&gt; 
+ Copyright 2014 by&lt;BR&gt;
+ + Christian-Albrechts-University of Kiel&lt;BR&gt;
+   + Department of Computer Science&lt;BR&gt;
+     + Real-Time and Embedded Systems Group&lt;BR&gt;
+&lt;BR&gt; 
+This code is provided under the terms of the Eclipse Public License (EPL).&lt;BR&gt;
+See the file epl-v10.html for the license text.&lt;BR&gt;
+&lt;BR&gt;
+&lt;BR&gt;
+      </documentation>
+   </annotation>
 
 </schema>

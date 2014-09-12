@@ -32,6 +32,7 @@ import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.util.Pair;
 
+// TODO: Auto-generated Javadoc
 /**
  * The activator class controls the plug-in life cycle.
  * 
@@ -45,9 +46,12 @@ public class KiCoPlugin extends Plugin {
     public static final String PLUGIN_ID = "de.cau.cs.kieler.kico"; //$NON-NLS-1$
 
     /** The Constant EXTENSION_POINT_ID. */
-    public static final String EXTENSION_POINT_ID = "de.cau.cs.kieler.kico.transformation";
-    public static final String RESOURCE_EXTENSION_POINT_ID = "de.cau.cs.kieler.kico.resourceExtension";
+    public static final String TRANSFORMATION_EXTENSION_POINT_ID = "de.cau.cs.kieler.kico.transformation";
+    
+    /** The Constant EXTENSION_EXTENSION_POINT_ID. */
+    public static final String EXTENSION_EXTENSION_POINT_ID = "de.cau.cs.kieler.kico.extension";
 
+    /** The Constant KICO_MSGDLG_TITLE. */
     public static final String KICO_MSGDLG_TITLE = "KIELER Compiler";
 
     /** The Constant DEBUG. */
@@ -55,6 +59,9 @@ public class KiCoPlugin extends Plugin {
 
     /** The shared instance. */
     private static KiCoPlugin plugin;
+    
+    /** The resource extension cached. */
+    private static HashMap<String, Pair<String, Boolean>> resourceExtensionCached = null;
 
     /**
      * The parent shell iff a GUI is used. This shell may be used to prompt a save-dialog to save
@@ -69,7 +76,7 @@ public class KiCoPlugin extends Plugin {
     // -------------------------------------------------------------------------
 
     /**
-     * The constructor
+     * The constructor.
      */
     public KiCoPlugin() {
         plugin = this;
@@ -78,8 +85,8 @@ public class KiCoPlugin extends Plugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Returns the shared instance
-     * 
+     * Returns the shared instance.
+     *
      * @return the shared instance
      */
     public static KiCoPlugin getInstance() {
@@ -173,8 +180,8 @@ public class KiCoPlugin extends Plugin {
 
     /**
      * This returns a new the TransformationMap with all registered and loaded plug-ins that extend
-     * the KiCo extension point
-     * 
+     * the KiCo extension point.
+     *
      * @return the TransformationList
      */
     public HashMap<String, Transformation> getRegisteredTransformations() {
@@ -189,7 +196,7 @@ public class KiCoPlugin extends Plugin {
         // System.gc();
         // get the available interfaces and initialize them
         IConfigurationElement[] transformations =
-                Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_POINT_ID);
+                Platform.getExtensionRegistry().getConfigurationElementsFor(TRANSFORMATION_EXTENSION_POINT_ID);
 
         HashMap<String, Transformation> transformationMap =
                 new HashMap<String, Transformation>(transformations.length);
@@ -298,11 +305,22 @@ public class KiCoPlugin extends Plugin {
     // -------------------------------------------------------------------------
 
 
-    public HashMap<String, Pair<String, Boolean>> getRegisteredResourceExtensions() {
+    /**
+     * Gets the registered resource extensions.
+     *
+     * @param forceReload the force reload
+     * @return the registered resource extensions
+     */
+    public HashMap<String, Pair<String, Boolean>> getRegisteredResourceExtensions(boolean forceReload) {
+        
+        if (resourceExtensionCached != null && !forceReload) {
+            return resourceExtensionCached;
+        }
+        
         IConfigurationElement[] resourceExtensions =
-                Platform.getExtensionRegistry().getConfigurationElementsFor(RESOURCE_EXTENSION_POINT_ID);
+                Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_EXTENSION_POINT_ID);
 
-        HashMap<String, Pair<String, Boolean>> resourceExtensionMap = new HashMap<String, Pair<String, Boolean>>();
+        resourceExtensionCached = new HashMap<String, Pair<String, Boolean>>();
 
         for (int i = 0; i < resourceExtensions.length; i++) {
             try {
@@ -310,11 +328,11 @@ public class KiCoPlugin extends Plugin {
                 String className = resourceExtensions[i].getAttribute("className");
                 String extension = resourceExtensions[i].getAttribute("extensionName");
                 String isXMI = resourceExtensions[i].getAttribute("isXMI");
-                resourceExtensionMap.put(className, new Pair<String, Boolean>(extension, isXMI.equals("true")));
+                resourceExtensionCached.put(className, new Pair<String, Boolean>(extension, isXMI.toLowerCase().equals("true")));
 
                 if (DEBUG) {
-//                     System.out.println("KiCo loading component: "
-//                       + transformations[i].getContributor().getName() + "::" + id);
+                     System.out.println("KiCo register resource extension: "
+                       + extension + " for class " + className);
                 }
             } 
             finally {
@@ -322,7 +340,7 @@ public class KiCoPlugin extends Plugin {
             }
         }
 
-        return resourceExtensionMap;
+        return resourceExtensionCached;
     }
 
     // -------------------------------------------------------------------------
@@ -584,9 +602,9 @@ public class KiCoPlugin extends Plugin {
 
     /**
      * Gets the last error.
-     * 
-     * @deprecated Use the method getAllErrors()  of the compilation result, this method will only return null.
+     *
      * @return the last error
+     * @deprecated Use the method getAllErrors()  of the compilation result, this method will only return null.
      */
     public static String getLastError() {
         // TODO:
