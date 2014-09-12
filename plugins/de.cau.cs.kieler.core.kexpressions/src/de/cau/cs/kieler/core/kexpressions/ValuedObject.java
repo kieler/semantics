@@ -38,100 +38,100 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface ValuedObject extends Annotatable {
     /**
-     * Returns the value of the '<em><b>Name</b></em>' attribute.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Name</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Name</em>' attribute.
-     * @see #setName(String)
-     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_Name()
-     * @model required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see #setName(String)
+	 * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_Name()
+	 * @model required="true"
+	 * @generated
+	 */
     String getName();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getName <em>Name</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getName <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Name</em>' attribute.
-     * @see #getName()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Name</em>' attribute.
+	 * @see #getName()
+	 * @generated
+	 */
     void setName(String value);
 
     /**
-     * Returns the value of the '<em><b>Initial Value</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Initial Value</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Initial Value</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Initial Value</em>' containment reference.
-     * @see #setInitialValue(Expression)
-     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_InitialValue()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Initial Value</em>' containment reference.
+	 * @see #setInitialValue(Expression)
+	 * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_InitialValue()
+	 * @model containment="true"
+	 * @generated
+	 */
     Expression getInitialValue();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getInitialValue <em>Initial Value</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getInitialValue <em>Initial Value</em>}' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Initial Value</em>' containment reference.
-     * @see #getInitialValue()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Initial Value</em>' containment reference.
+	 * @see #getInitialValue()
+	 * @generated
+	 */
     void setInitialValue(Expression value);
 
     /**
-     * Returns the value of the '<em><b>Cardinalities</b></em>' attribute list.
-     * The list contents are of type {@link java.lang.Integer}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Cardinalities</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.Integer}.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Cardinalities</em>' attribute list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Cardinalities</em>' attribute list.
-     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_Cardinalities()
-     * @model
-     * @generated
-     */
+	 * @return the value of the '<em>Cardinalities</em>' attribute list.
+	 * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_Cardinalities()
+	 * @model
+	 * @generated
+	 */
 	EList<Integer> getCardinalities();
 
 				/**
-     * Returns the value of the '<em><b>Combine Operator</b></em>' attribute.
-     * The literals are from the enumeration {@link de.cau.cs.kieler.core.kexpressions.CombineOperator}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Combine Operator</b></em>' attribute.
+	 * The literals are from the enumeration {@link de.cau.cs.kieler.core.kexpressions.CombineOperator}.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Combine Operator</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Combine Operator</em>' attribute.
-     * @see de.cau.cs.kieler.core.kexpressions.CombineOperator
-     * @see #setCombineOperator(CombineOperator)
-     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_CombineOperator()
-     * @model required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Combine Operator</em>' attribute.
+	 * @see de.cau.cs.kieler.core.kexpressions.CombineOperator
+	 * @see #setCombineOperator(CombineOperator)
+	 * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject_CombineOperator()
+	 * @model required="true"
+	 * @generated
+	 */
     CombineOperator getCombineOperator();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getCombineOperator <em>Combine Operator</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getCombineOperator <em>Combine Operator</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Combine Operator</em>' attribute.
-     * @see de.cau.cs.kieler.core.kexpressions.CombineOperator
-     * @see #getCombineOperator()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Combine Operator</em>' attribute.
+	 * @see de.cau.cs.kieler.core.kexpressions.CombineOperator
+	 * @see #getCombineOperator()
+	 * @generated
+	 */
     void setCombineOperator(CombineOperator value);
 
 } // ValuedObject
