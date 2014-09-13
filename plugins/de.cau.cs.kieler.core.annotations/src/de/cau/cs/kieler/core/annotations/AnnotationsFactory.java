@@ -25,101 +25,101 @@ import org.eclipse.emf.ecore.EFactory;
  */
 public interface AnnotationsFactory extends EFactory {
     /**
-     * The singleton instance of the factory.
-     * <!-- begin-user-doc -->
+	 * The singleton instance of the factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     AnnotationsFactory eINSTANCE = de.cau.cs.kieler.core.annotations.impl.AnnotationsFactoryImpl.init();
 
     /**
-     * Returns a new object of class '<em>Annotation</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Annotation</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Annotation</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Annotation</em>'.
+	 * @generated
+	 */
     Annotation createAnnotation();
 
     /**
-     * Returns a new object of class '<em>String Annotation</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>String Annotation</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>String Annotation</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>String Annotation</em>'.
+	 * @generated
+	 */
     StringAnnotation createStringAnnotation();
 
     /**
-     * Returns a new object of class '<em>Reference Annotation</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Reference Annotation</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Reference Annotation</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Reference Annotation</em>'.
+	 * @generated
+	 */
     ReferenceAnnotation createReferenceAnnotation();
 
     /**
-     * Returns a new object of class '<em>Boolean Annotation</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Boolean Annotation</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Boolean Annotation</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Boolean Annotation</em>'.
+	 * @generated
+	 */
     BooleanAnnotation createBooleanAnnotation();
 
     /**
-     * Returns a new object of class '<em>Int Annotation</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Int Annotation</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Int Annotation</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Int Annotation</em>'.
+	 * @generated
+	 */
     IntAnnotation createIntAnnotation();
 
     /**
-     * Returns a new object of class '<em>Float Annotation</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Float Annotation</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Float Annotation</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Float Annotation</em>'.
+	 * @generated
+	 */
     FloatAnnotation createFloatAnnotation();
 
     /**
-     * Returns a new object of class '<em>Containment Annotation</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Containment Annotation</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Containment Annotation</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Containment Annotation</em>'.
+	 * @generated
+	 */
     ContainmentAnnotation createContainmentAnnotation();
 
     /**
-     * Returns a new object of class '<em>Import Annotation</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Import Annotation</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Import Annotation</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Import Annotation</em>'.
+	 * @generated
+	 */
     ImportAnnotation createImportAnnotation();
 
     /**
-     * Returns a new object of class '<em>Typed String Annotation</em>'.
-     * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Typed String Annotation</em>'.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Typed String Annotation</em>'.
-     * @generated
-     */
+	 * @return a new object of class '<em>Typed String Annotation</em>'.
+	 * @generated
+	 */
     TypedStringAnnotation createTypedStringAnnotation();
 
     /**
-     * Returns the package supported by this factory.
-     * <!-- begin-user-doc -->
+	 * Returns the package supported by this factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the package supported by this factory.
-     * @generated
-     */
+	 * @return the package supported by this factory.
+	 * @generated
+	 */
     AnnotationsPackage getAnnotationsPackage();
 
 } //AnnotationsFactory

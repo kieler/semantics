@@ -339,6 +339,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     /** Constants for annotations */
     private static val String ANNOTATION_BRANCH = "branch"
     private static val String ANNOTATION_REGIONNAME = "regionName"
+    private static val String ANNOTATION_SEQUENTIALIZED = "sequentialized" 
 
     /** 
 	 * Constants for hierarchical node groups
@@ -370,6 +371,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     /** The selected orientation */
     private int orientation;
+    
+    private int sequentializedSCGCounter = 0
 
     // -------------------------------------------------------------------------
     // -- Main Entry Point 
@@ -420,6 +423,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
             node.addLayoutParam(Properties::THOROUGHNESS, 100)
             node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
+            
             // Synthesize all children             
             for (n : scg.nodes) { 
                 if (n instanceof Surface) { node.children += n.synthesize }
@@ -454,6 +458,31 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     }
                 }
             ]
+            
+            if (scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
+            	sequentializedSCGCounter = 0
+            	val controlFlows = <ControlFlow> newArrayList => [ it += (scg.nodes.head as Entry).next ]
+            	while(!controlFlows.empty) {
+            		val nextNode = controlFlows.head.target
+            		controlFlows.remove(0)
+            		
+            		if (nextNode instanceof Assignment) {
+		            	sequentializedSCGCounter = sequentializedSCGCounter + 1
+        		    	if (sequentializedSCGCounter > 10) {
+            				sequentializedSCGCounter = 0
+//            				nextNode.getNode.addLayoutParam(Properties::LAYER_CONSTRAINT, LayerConstraint::FIRST)
+            			}
+            			controlFlows += (nextNode as Assignment).next
+            		}
+             		else if (nextNode instanceof Conditional) {
+             			controlFlows += (nextNode as Conditional).^else
+             		}
+             		else if (nextNode instanceof Exit) {
+             			controlFlows.clear;
+             		}
+            	}
+            }
+            
             // Apply any hierarchy if the corresponding option is set. Since layout of edges between nodes
             // in different hierarchies is not supported, the synthesis splits these edges at the hierarchy
             // border and connects them via a port. Thus, a kind of pseudo hierarchical edge layout is archived. 
