@@ -112,7 +112,6 @@ class SimulationVisualization {
             targetTransition.transformSimulationVisualizationState(targetRootState, stateUID);
         }
 
-
         targetRootState;
     }
 
