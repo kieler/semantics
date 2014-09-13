@@ -614,7 +614,7 @@ class SCChartsExtension {
     }
 
     def Transition setLowestPriority(Transition transition) {
-        val maxPriority = transition.sourceState.outgoingTransitions.length
+        val maxPriority = transition.sourceState.outgoingTransitions.length+1
         transition.setPriority2(maxPriority).trimPriorities
     }
 
@@ -647,6 +647,7 @@ class SCChartsExtension {
         for (containedState : state.allContainedStatesList) {
             val transitions = containedState.outgoingTransitions.sortBy[priority].immutableCopy;
             for (transition : transitions) {
+                //System.out.println(transition.sourceState.id + "->" + transition.targetState.id + " : " + transition.priority)
                 containedState.outgoingTransitions.remove(transition)
                 containedState.outgoingTransitions.add(transition) 
                 transition.setPriority(0)

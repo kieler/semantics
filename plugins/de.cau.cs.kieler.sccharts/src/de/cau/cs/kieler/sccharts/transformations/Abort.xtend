@@ -159,12 +159,22 @@ class Abort {
                                 }
                                 strongAbort.setPriority(0)
                                 strongAbort.setTrigger(strongAbortTrigger.copy)
+                                strongAbort.setImmediate
                             }
                             if (weakAbortTrigger != null) {
 // The following line is responsible for KISEMA 925 to fail                                 
 //                                val weakAbort = innerState.createTransitionTo(abortedState) 
-                                val weakAbort = innerState.createTransitionTo(abortedState, 0)
+//                                val weakAbort = innerState.createTransitionTo(abortedState, 0)
+                                val weakAbort = innerState.createTransitionTo(abortedState)
                                 weakAbort.setTrigger(weakAbortTrigger.copy)
+                                weakAbort.setLowestPriority;
+                                // MUST be immediate: Otherwise new aborting transition may never be
+                                // taken (e.g., in cyclic behavior like during actions)
+                                //
+                                // Why is the solution to make all new aborting transitions being immediate? The reason for short is that immediate cycles are forbidden and
+                                // once the control rests (which is hence the consequence of forbidding immediate cycles) in one of the states, the new immediate (weak)
+                                // aborting transition will be taken, although it has a lower priority than any other existing transitions.
+                                weakAbort.setImmediate;
                             }
                         }
                     }
