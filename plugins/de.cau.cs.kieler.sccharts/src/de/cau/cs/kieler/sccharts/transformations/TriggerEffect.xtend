@@ -55,27 +55,21 @@ class TriggerEffect {
     def void transformTriggerEffect(Transition transition, State targetRootState) {
 
         // Only apply this to transition that have both, a trigger (or is a termination) and one or more effects 
-        if (((transition.trigger != null || !transition.immediate || transition.typeTermination) &&
-            !transition.effects.nullOrEmpty) || transition.effects.size > 1) {
+        if (
+            ((transition.trigger != null || !transition.immediate || transition.typeTermination) && !transition.effects.nullOrEmpty)
+             || transition.effects.size > 1) {
             val targetState = transition.targetState
             val parentRegion = targetState.parentRegion
             val transitionOriginalTarget = transition.targetState
             var Transition lastTransition = transition
 
-            val firstEffect = transition.effects.head
             for (effect : transition.effects.immutableCopy) {
-
-                // Optimization: Prevent transitions without a trigger
-                if (transition.immediate && transition.trigger == null && firstEffect == effect) {
-                    // skip
-                } else {
                     val effectState = parentRegion.createState(GENERATED_PREFIX + "S")
                     effectState.uniqueName
                     val effectTransition = createImmediateTransition.addEffect(effect)
                     effectTransition.setSourceState(effectState)
                     lastTransition.setTargetState(effectState)
                     lastTransition = effectTransition
-                }
             }
 
             lastTransition.setTargetState(transitionOriginalTarget)
