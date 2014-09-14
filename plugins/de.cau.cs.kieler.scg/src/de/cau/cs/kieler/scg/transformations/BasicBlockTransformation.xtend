@@ -273,7 +273,9 @@ class BasicBlockTransformation extends Transformation {
 				// Subsequently, retrieve all exit nodes that link to the join node and proceed
 				// with the basic block analysis at the corresponding join node.
                 val joinPredecessors = <BasicBlock> newLinkedList
-                node.getAllNext.forEach[joinPredecessors.add((it.target as Entry).exit.basicBlock)]
+                node.getAllNext.forEach[ 
+                	joinPredecessors += basicBlockNodeMapping.get((it.target as Entry).exit) 
+                ]
                 newIndex = scg.createBasicBlocks((node as Fork).join, newIndex, basicBlockCache, joinPredecessors)
                 node = null                
             } else {
