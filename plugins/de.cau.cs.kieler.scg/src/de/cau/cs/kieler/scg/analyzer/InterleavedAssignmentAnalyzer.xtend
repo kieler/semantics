@@ -18,7 +18,8 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Write_Write
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 
 /**
  * @author ssm
@@ -28,7 +29,10 @@ import de.cau.cs.kieler.scg.extensions.SCGExtensions
 class InterleavedAssignmentAnalyzer extends AbstractAnalyzer {
     
     @Inject
-    extension SCGExtensions
+    extension SCGControlFlowExtensions
+    
+    @Inject
+    extension SCGThreadExtensions
     
     override analyze(AnalyzerData analyzerData) {
         val result = new InterleavedAssignmentResult

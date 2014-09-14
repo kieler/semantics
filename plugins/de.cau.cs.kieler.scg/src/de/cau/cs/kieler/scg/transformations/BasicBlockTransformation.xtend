@@ -32,12 +32,12 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import java.util.HashMap
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -65,7 +65,7 @@ class BasicBlockTransformation extends Transformation {
     // -------------------------------------------------------------------------
     
     @Inject
-    extension SCGExtensions
+    extension SCGControlFlowExtensions
          
          
     // -------------------------------------------------------------------------

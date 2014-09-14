@@ -19,8 +19,8 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -47,7 +47,7 @@ abstract class AbstractSequentializer extends Transformation {
     extension KExpressionsExtension
         
     @Inject
-    extension SCGExtensions        
+    extension SCGDeclarationExtensions        
     
     // -------------------------------------------------------------------------
     // -- Constants 

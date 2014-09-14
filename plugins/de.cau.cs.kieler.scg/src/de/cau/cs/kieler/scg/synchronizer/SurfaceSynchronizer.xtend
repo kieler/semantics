@@ -23,9 +23,9 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.sequentializer.EmptyExpression
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -65,9 +65,11 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
     @Inject
     extension KExpressionsExtension
     
-    /** Inject SCG extensions. */    
     @Inject
-    extension SCGExtensions
+    extension SCGControlFlowExtensions
+    
+    @Inject
+    extension SCGThreadExtensions
    
     private val OPERATOREXPRESSION_DEPTHLIMIT = 16
     private val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8

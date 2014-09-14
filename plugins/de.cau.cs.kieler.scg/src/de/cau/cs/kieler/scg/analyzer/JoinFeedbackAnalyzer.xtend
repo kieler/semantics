@@ -16,7 +16,7 @@ package de.cau.cs.kieler.scg.analyzer
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import java.util.List
 
 /** 
@@ -55,10 +55,9 @@ class JoinFeedbackAnalyzer extends AbstractAnalyzer {
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
-    
-    /** Inject SCG extensions. */
+	
     @Inject
-	extension SCGExtensions
+    extension SCGControlFlowExtensions
 
     // -------------------------------------------------------------------------
     // -- Analyzer 

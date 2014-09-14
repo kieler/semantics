@@ -17,7 +17,8 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -54,11 +55,12 @@ class HybridSynchronizer extends AbstractSynchronizer {
     // -- Injections 
     // -------------------------------------------------------------------------
     
-    /** Inject SCG extensions. */    
     @Inject
-    extension SCGExtensions
+    extension SCGCoreExtensions
     
-    /** Inject KExpressions extensions. */
+    @Inject
+    extension SCGControlFlowExtensions
+        
     @Inject
     extension KExpressionsExtension	
 	

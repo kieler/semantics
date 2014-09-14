@@ -31,7 +31,6 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Schedule
 import de.cau.cs.kieler.scg.SchedulingBlock
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import de.cau.cs.kieler.scg.synchronizer.SurfaceSynchronizer
 import java.util.HashMap
@@ -39,6 +38,8 @@ import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -65,8 +66,11 @@ class SimpleSequentializer extends AbstractSequentializer {
     // -- Injections 
     // -------------------------------------------------------------------------
     
+    @Inject
+    extension SCGCoreExtensions
+    
     @Inject 
-    extension SCGExtensions
+    extension SCGDeclarationExtensions
          
     @Inject 
     extension KExpressionsExtension	

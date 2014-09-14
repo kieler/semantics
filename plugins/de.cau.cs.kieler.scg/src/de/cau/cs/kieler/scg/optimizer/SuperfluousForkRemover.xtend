@@ -19,10 +19,10 @@ import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /**
  * 
@@ -39,9 +39,10 @@ import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 
 class SuperfluousForkRemover extends AbstractOptimizer {
     
-    @Inject
-    extension SCGExtensions
     
+    @Inject
+    extension SCGControlFlowExtensions
+        
     override optimize(SCGraph scg) {
     	
     	// Retrieve all forks with only one outgoing control flow.

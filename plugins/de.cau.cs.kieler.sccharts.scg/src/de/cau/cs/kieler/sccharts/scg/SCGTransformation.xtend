@@ -39,7 +39,6 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.IntValue
@@ -54,6 +53,7 @@ import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.Parameter
 import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -71,7 +71,7 @@ class SCGTransformation {
     extension AnnotationsExtensions
 
     @Inject
-    extension SCGExtensions
+    extension SCGDeclarationExtensions
 
     @Inject
     extension SCChartsExtension

@@ -22,7 +22,6 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Schedule
 import de.cau.cs.kieler.scg.SchedulingBlock
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.synchronizer.HybridSynchronizer
 import de.cau.cs.kieler.scg.synchronizer.SynchronizerData
 import java.util.HashMap
@@ -56,9 +55,6 @@ class HybridSequentializer extends SimpleSequentializer {
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
-    
-    @Inject
-    extension SCGExtensions
 
     @Inject
     extension KExpressionsExtension

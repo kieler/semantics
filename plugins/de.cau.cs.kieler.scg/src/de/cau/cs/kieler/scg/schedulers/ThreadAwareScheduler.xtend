@@ -20,9 +20,11 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SchedulingBlock
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import java.util.ArrayList
 import java.util.List
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -48,8 +50,13 @@ class ThreadAwareScheduler extends SimpleScheduler {
     // -------------------------------------------------------------------------
     	
 	@Inject
-	extension SCGExtensions
-		
+	extension SCGCoreExtensions
+	
+    @Inject
+    extension SCGControlFlowExtensions
+    
+    @Inject
+    extension SCGThreadExtensions		
 
     // -------------------------------------------------------------------------
     // -- Scheduler 

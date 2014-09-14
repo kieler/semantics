@@ -22,10 +22,10 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -51,7 +51,7 @@ class SimpleScheduler extends AbstractScheduler {
     // -------------------------------------------------------------------------
      
     @Inject
-    extension SCGExtensions    
+    extension SCGCoreExtensions    
 
     @Inject
     extension SCGCacheExtensions    
@@ -61,7 +61,7 @@ class SimpleScheduler extends AbstractScheduler {
     // -- Globals 
     // -------------------------------------------------------------------------
    
-    private val topologicalSortVisited = <SchedulingBlock> newHashSet 
+    protected val topologicalSortVisited = <SchedulingBlock> newHashSet 
     protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
     protected var int schedulingBlockCount
     

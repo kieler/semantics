@@ -32,12 +32,13 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -65,7 +66,10 @@ class DependencyTransformation extends Transformation {
     // -------------------------------------------------------------------------
        
     @Inject
-    extension SCGExtensions
+    extension SCGControlFlowExtensions
+    
+    @Inject
+    extension SCGThreadExtensions
     
     @Inject
     extension KExpressionsExtension

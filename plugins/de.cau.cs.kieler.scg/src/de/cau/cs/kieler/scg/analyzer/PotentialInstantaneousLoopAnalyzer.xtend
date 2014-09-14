@@ -13,8 +13,6 @@
  */
  package de.cau.cs.kieler.scg.analyzer
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular analyzers are called by the scheduler
@@ -47,13 +45,6 @@ import de.cau.cs.kieler.scg.extensions.SCGExtensions
  */
 class PotentialInstantaneousLoopAnalyzer extends AbstractAnalyzer {
 	
-    // -------------------------------------------------------------------------
-    // -- Injections 
-    // -------------------------------------------------------------------------
-    
-    /** Inject SCG extensions. */
-    @Inject
-	extension SCGExtensions
 	
     // -------------------------------------------------------------------------
     // -- Analyzer 
