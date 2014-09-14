@@ -54,6 +54,7 @@ import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.Parameter
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import java.util.Set
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -80,7 +81,7 @@ class SCGTransformation {
     private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
     private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
     
-    private val stateTypeCache = <State, PatternType> newHashMap
+    private val stateTypeCache = <State, Set<PatternType>> newHashMap
     private val uniqueNameCache = <String> newArrayList
     
     private static val String ANNOTATION_REGIONNAME = "regionName"
@@ -196,12 +197,16 @@ class SCGTransformation {
         stateList.add(rootState)
         
         for(s:stateList) {
-        	if (s.isPause) stateTypeCache.put(s, PatternType::PAUSE)
-        	else if (s.isConditional) stateTypeCache.put(s, PatternType::CONDITIONAL)
-        	else if (s.isAssignment) stateTypeCache.put(s, PatternType::ASSIGNMENT)
-        	else if (s.isFork) stateTypeCache.put(s, PatternType::FORK)
-        	else if (s.isEntry) stateTypeCache.put(s, PatternType::ENTRY)
-        	else if (s.isExit) stateTypeCache.put(s, PatternType::EXIT)
+        	val stateTypeSet = <PatternType> newHashSet
+        	if (s.isPause) stateTypeSet += PatternType::PAUSE
+        	else if (s.isConditional) stateTypeSet += PatternType::CONDITIONAL
+        	else if (s.isAssignment) stateTypeSet += PatternType::ASSIGNMENT
+        	else {
+        	    if (s.isFork) stateTypeSet += PatternType::FORK
+        		if (s.isEntry) stateTypeSet += PatternType::ENTRY
+        	    if (s.isExit) stateTypeSet += PatternType::EXIT
+      	    }
+        	stateTypeCache.put(s, stateTypeSet)
         }
         
         
@@ -243,7 +248,7 @@ class SCGTransformation {
         // ssm, 04.05.2014
     	timestamp = System.currentTimeMillis
         val SuperfluousForkRemover superfluousForkRemover = Guice.createInjector().getInstance(typeof(SuperfluousForkRemover))
-        val scg = superfluousForkRemover.optimize(sCGraph)
+        val scg = sCGraph //superfluousForkRemover.optimize(sCGraph)
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("SCG optimization completed (additional time elapsed: "+(time / 1000)+"s).")
         
@@ -427,14 +432,14 @@ class SCGTransformation {
    // Traverse all states and transform possible local valuedObjects.
    def void transformSCGGenerateNodes(State state, SCGraph sCGraph) {
         //System.out.println("Generate Node for State " + state.id)
-        if (stateTypeCache.get(state) == PatternType::PAUSE) {
+        if (stateTypeCache.get(state).contains(PatternType::PAUSE)) {
             val surface = sCGraph.addSurface
             val depth = sCGraph.addDepth
             surface.setDepth(depth)
             surface.map(state)
             state.map(surface)
         }
-        else if (stateTypeCache.get(state) == PatternType::ASSIGNMENT) {
+        else if (stateTypeCache.get(state).contains(PatternType::ASSIGNMENT)) {
             val assignment = sCGraph.addAssignment
             state.map(assignment)
             val transition = state.outgoingTransitions.get(0)
@@ -464,7 +469,7 @@ class SCGTransformation {
                 assignment.setAssignment((effect as de.cau.cs.kieler.sccharts.FunctionCallEffect).convertToSCGExpression)
             } 
         }
-        else if (stateTypeCache.get(state) == PatternType::CONDITIONAL) {
+        else if (stateTypeCache.get(state).contains(PatternType::CONDITIONAL)) {
             val conditional = sCGraph.addConditional
             state.map(conditional)
             scopeProvider.parent = state
@@ -475,7 +480,7 @@ class SCGTransformation {
             // TODO  Test if this works correct? Was before:  conditional.setCondition(serializer.serialize(transitionCopy))
             conditional.setCondition(transitionCopy.trigger.convertToSCGExpression)
         }
-        else if (stateTypeCache.get(state) == PatternType::FORK) {
+        else if (stateTypeCache.get(state).contains(PatternType::FORK)) {
             val fork = sCGraph.addFork
             val join = sCGraph.addJoin
             fork.setJoin(join)
@@ -486,7 +491,7 @@ class SCGTransformation {
                 region.transformSCGGenerateNodes(sCGraph)
             }
         }
-        else if (stateTypeCache.get(state) == PatternType::EXIT) {
+        else if (stateTypeCache.get(state).contains(PatternType::EXIT)) {
             val exit = sCGraph.addExit
             state.map(exit)
         }
@@ -516,7 +521,7 @@ class SCGTransformation {
    // Traverse all states and transform possible local valuedObjects.
    def void transformSCGConnectNodes(State state, SCGraph sCGraph) {
         //System.out.println("Connect Node for State " + state.id)
-        if (stateTypeCache.get(state) == PatternType::PAUSE) {
+        if (stateTypeCache.get(state).contains(PatternType::PAUSE)) {
             // Connect the depth with the node that belongs to the target of
             // the single delayed transition outgoing from the current state
             val surface = state.mappedSurface
@@ -529,7 +534,7 @@ class SCGTransformation {
                 depth.setNext(controlFlow)    
             }   
         }
-        else if (stateTypeCache.get(state) == PatternType::ASSIGNMENT) {
+        else if (stateTypeCache.get(state).contains(PatternType::ASSIGNMENT)) {
             // Connect the assignment with the node that belongs to the target
             // of the single immediate assignment transition outgoing  from
             // the current state
@@ -542,7 +547,7 @@ class SCGTransformation {
                 assignment.setNext(controlFlow)
             }
         }
-        else if (stateTypeCache.get(state) == PatternType::CONDITIONAL) {
+        else if (stateTypeCache.get(state).contains(PatternType::CONDITIONAL)) {
             // Connect the conditional Then branch with the node that belongs
             // to the target of the single immediate transition with a trigger
             // outgoing  from the current state. Connect the Else branch with the
@@ -563,7 +568,7 @@ class SCGTransformation {
                 conditional.setElse(controlFlowElse)
             }
         }
-        else if (stateTypeCache.get(state) == PatternType::FORK) {
+        else if (stateTypeCache.get(state).contains(PatternType::FORK)) {
             // For all region find the entry node and connect it with the fork. Find the exit node
             // and connect it with the join. Do the recursive call for the regions. Connect
             // the join node with the single normal termination target's node.
@@ -620,7 +625,7 @@ class SCGTransformation {
               	}
             }
         }
-        else if (stateTypeCache.get(state) == PatternType::EXIT) {
+        else if (stateTypeCache.get(state).contains(PatternType::EXIT)) {
             // For a final state connect it's exit node representation with the exit node
             // of the region.
             val nodeExit = state.mappedExit
