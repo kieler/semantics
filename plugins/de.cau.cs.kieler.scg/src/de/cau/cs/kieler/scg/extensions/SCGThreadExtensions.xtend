@@ -369,5 +369,104 @@ class SCGThreadExtensions {
         }
         null
     }
+    
+    
+    
+    private def void accumulateThreadControlFlowsTypes(ControlFlow next, List<ControlFlow> localFlow, 
+    	ThreadPathType type, Map<Entry, ThreadPathType> threadTypes, Entry source
+    ) {
+    	// Already in the local flow list: loop! Abort.
+        if (localFlow.contains(next)) return;
+        
+        // Target node is reached. Add the control flow, 
+        // then add the local flow to the list of flows and return.
+        if (next.target == source.exit) {
+        	localFlow.add(next)
+        	var newType = type
+        	if (type == ThreadPathType::DISCONNECTED) {
+        		newType = ThreadPathType::INSTANTANEOUS
+        	}
+            threadTypes.addToThreadPathTypeMap(source, newType)
+            return;
+        }
+        
+        // Otherwise, follow the flow and recursively call this method to proceed on further control flows.
+        localFlow.add(next)
+        val nextFlows = next.target.allNext
+        if (next.target instanceof Fork) {
+       		val fork = next.target as Fork
+        	var newType = type
+        	val entries = fork.allNext.map[ target ]
+        	for (entry : entries) {
+        		val childMap = (entry as Entry).getThreadControlFlowTypes
+        		threadTypes.putAll(childMap)
+        		newType = threadTypes.get(entry).combineThreadType(newType)
+        	}
+        	fork.join.next.accumulateThreadControlFlowsTypes(
+        		localFlow, newType, threadTypes, source
+        	)
+        } else {
+    	    for (nextFlow : nextFlows) {
+	    	    nextFlow.accumulateThreadControlFlowsTypes(localFlow, type, threadTypes, source)
+           }
+        }
+        
+        if (next.target instanceof Surface) {
+        	val newType = type.combineThreadType(ThreadPathType::DELAYED)
+            (next.target as Surface).depth.next.accumulateThreadControlFlowsTypes( 
+                localFlow, newType, threadTypes, source
+            )
+        }
+    }
+
+    def Map<Entry, ThreadPathType> getThreadControlFlowTypes(Entry source) {
+   	    val threadTypes = <Entry, ThreadPathType> newHashMap => [ put(source, ThreadPathType::DISCONNECTED) ] 
+   	    source.next.accumulateThreadControlFlowsTypes(newArrayList(), ThreadPathType::DISCONNECTED, threadTypes, source) 
+   	    threadTypes 
+    }
+    
+    private def ThreadPathType combineThreadType(ThreadPathType oldType, ThreadPathType type) {
+    	var newType = type
+    	if (oldType == ThreadPathType::DISCONNECTED) {
+    		// Do nothing. Take the new type.
+    	}
+    	else if (oldType == ThreadPathType::INSTANTANEOUS) {
+    		if (type == ThreadPathType::DISCONNECTED) {
+    			newType = oldType
+    		}
+    		else if (type != ThreadPathType::INSTANTANEOUS) {
+    			newType = ThreadPathType::POTENTIAL_INSTANTANEOUS
+    		}
+    	} 
+    	else if (oldType == ThreadPathType::DELAYED) {
+    		if (type == ThreadPathType::DISCONNECTED) {
+    			newType = oldType
+    		}
+    		else if (type != ThreadPathType::DELAYED) {
+    			newType = ThreadPathType::POTENTIAL_INSTANTANEOUS
+    		}
+    	}
+    	else if (oldType == ThreadPathType::POTENTIAL_INSTANTANEOUS) {
+    		newType = ThreadPathType::POTENTIAL_INSTANTANEOUS
+    	}
+    	
+    	newType
+    }
+    
+    private def ThreadPathType addToThreadPathTypeMap(Map<Entry, ThreadPathType> map, Entry node, ThreadPathType type) {
+    	val oldType = map.get(node)
+    	val newType = oldType.combineThreadType(type)
+    	map.put(node, newType)
+    	newType
+    }
+    
+    def toString2(ThreadPathType type) {
+    	if (type == ThreadPathType::DISCONNECTED) return "Disconnected"
+    	if (type == ThreadPathType::DELAYED) return "Delayed"
+    	if (type == ThreadPathType::INSTANTANEOUS) return "Instantaneous"
+    	if (type == ThreadPathType::POTENTIAL_INSTANTANEOUS) return "Potential instantaneous"
+    	return "Unknown"
+    }
+    
 
 }

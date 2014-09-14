@@ -101,8 +101,8 @@ class SCGControlFlowExtensions {
      * 			the node in question
      * @return Returns a list of control flows.
      */
-    def List<ControlFlow> getAllNext (Node node) {
-        node.eContents.filter(typeof(ControlFlow)).toList
+    def Iterable<ControlFlow> getAllNext (Node node) {
+        node.eContents.filter(typeof(ControlFlow))
     }
 
 	/** 
@@ -112,8 +112,8 @@ class SCGControlFlowExtensions {
 	 * 			the node in question
 	 * @return Returns a list of control flows.
 	 */   
-    def List<ControlFlow> getAllPrevious (Node node) {
-        node.incoming.filter(typeof(ControlFlow)).toList
+    def Iterable<ControlFlow> getAllPrevious (Node node) {
+        node.incoming.filter(typeof(ControlFlow))
     }
    
 	/** 
@@ -126,8 +126,8 @@ class SCGControlFlowExtensions {
 	 * 			the target node
 	 * @return Returns a list of control flows.
 	 */
-    def List<ControlFlow> getControlFlows(Node source, Node target) {
-        source.eContents.filter(typeof(ControlFlow)).filter[ it.target==target ].toList
+    def Iterable<ControlFlow> getControlFlows(Node source, Node target) {
+        source.eContents.filter(typeof(ControlFlow)).filter[ it.target==target ]
     }
     
     /**
@@ -210,7 +210,7 @@ class SCGControlFlowExtensions {
      * 			list of control flows
      * @return Returns true if the path is instantaneous.
      */
-    def boolean instantaneousFlow(List<ControlFlow> controlFlows) {
+    def boolean instantaneousFlow(Iterable<ControlFlow> controlFlows) {
         controlFlows.map[ target ].filter(typeof(Depth)).empty
     }    
 
@@ -224,8 +224,8 @@ class SCGControlFlowExtensions {
 	 * @return Returns a list of control flow paths (list of list of control flow) containing
 	 * 			all instantaneous control flow paths.
 	 */
-    def List<List<ControlFlow>> getInstantaneousControlFlows(Node source, Node target) {
-    	source.getIndirectControlFlows(target).filter[ instantaneousFlow ].toList
+    def Iterable<List<ControlFlow>> getInstantaneousControlFlows(Node source, Node target) {
+    	source.getIndirectControlFlows(target).filter[ instantaneousFlow ]
     }
     
     /**
@@ -236,8 +236,8 @@ class SCGControlFlowExtensions {
      * 			the node originating the control flow paths
      * @return Returns a list of control flow paths containing all instantaneous control flow paths. 
      */
-    def List<List<ControlFlow>> getInstantaneousControlFlows(Node source) {
-    	source.getIndirectControlFlowsForLoopDetection(source).filter[ instantaneousFlow ].toList
+    def Iterable<List<ControlFlow>> getInstantaneousControlFlows(Node source) {
+    	source.getIndirectControlFlowsForLoopDetection(source).filter[ instantaneousFlow ]
     }
     
     /**
@@ -247,7 +247,7 @@ class SCGControlFlowExtensions {
      * 			the list of control flow paths
      * @Return Returns true if an instantaneous path exists.
      */
-    def boolean instantaneous(List<List<ControlFlow>> controlFlowsListPath) {
+    def boolean instantaneous(Iterable<List<ControlFlow>> controlFlowsListPath) {
     	!controlFlowsListPath.filter[ instantaneousFlow ].empty
     }
      

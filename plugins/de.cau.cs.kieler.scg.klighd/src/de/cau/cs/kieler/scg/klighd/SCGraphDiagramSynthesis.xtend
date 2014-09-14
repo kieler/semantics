@@ -71,7 +71,6 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Write_Write
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scg.klighd.analyzer.AnalysesVisualization
 import java.util.ArrayList
 import java.util.HashMap
@@ -80,6 +79,10 @@ import javax.inject.Inject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.ThreadPathType
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -156,7 +159,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     /** Inject SCG extensions. */
     @Inject
-    extension SCGExtensions
+    extension SCGCoreExtensions
+    
+    @Inject
+    extension SCGControlFlowExtensions
+
+    @Inject
+    extension SCGThreadExtensions
 
     /** Inject analysis extensions. */
     @Inject
@@ -424,12 +433,22 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             node.addLayoutParam(Properties::THOROUGHNESS, 100)
             node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
             
+            val threadTypes = <Entry, ThreadPathType> newHashMap
+            threadTypes.putAll((scg.nodes.head as Entry).getThreadControlFlowTypes)
+            
             // Synthesize all children             
             for (n : scg.nodes) { 
                 if (n instanceof Surface) { node.children += n.synthesize }
                 if (n instanceof Assignment) { node.children += n.synthesize }
-                if (n instanceof Entry) { node.children += n.synthesize }
-                if (n instanceof Exit) { node.children += n.synthesize }
+                if (n instanceof Entry) { 
+                	node.children += n.synthesize
+//                	if (!threadTypes.containsKey(n as Entry)) {
+//                		threadTypes.putAll((n as Entry).getThreadControlFlowTypes)
+//                	}
+                }
+                if (n instanceof Exit) { 
+                	node.children += n.synthesize
+                }
                 if (n instanceof Join) { node.children += n.synthesize }
                 if (n instanceof Depth) { node.children += n.synthesize }
                 if (n instanceof Fork) { node.children += n.synthesize }
@@ -488,15 +507,21 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // border and connects them via a port. Thus, a kind of pseudo hierarchical edge layout is archived. 
             if (SHOW_HIERARCHY.booleanValue) {
                 scg.nodes.filter(typeof(Fork)).forEach[
-                    allNext.map[target].filter(typeof(Entry)).forEach [
-                        if (it != null) {
-                            val regionLabel = it.getStringAnnotationValue(ANNOTATION_REGIONNAME)
-                            getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY) => [
-                                if (!regionLabel.nullOrEmpty)
-                                    addInsideTopLeftNodeLabel(regionLabel, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
-                                        it.foreground = REGIONLABEL;
+                    allNext.map[target].filter(typeof(Entry)).forEach [ entry |
+                        if (entry != null) {
+                            val regionLabel = entry.getStringAnnotationValue(ANNOTATION_REGIONNAME)
+                            entry.getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY) => [
+                            	var text = ""
+                                if (!regionLabel.nullOrEmpty) text = regionLabel + " - "
+                                val threadPathType = threadTypes.get(entry)
+                                text = text + threadPathType.toString2
+                                
+                                    addInsideTopLeftNodeLabel(text, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
+                                        it.foreground = REGIONLABEL.copy;
                                         if (USE_ADAPTIVEZOOM.booleanValue) it.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70)
                                     ]
+                                    
+                                    
                             ]
                         }
                     ]]

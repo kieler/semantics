@@ -27,7 +27,6 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import java.util.HashMap
 import java.util.List
 
@@ -48,9 +47,6 @@ class SCGToSTransformation {
     
     @Inject
     extension KExpressionsExtension
-    
-    @Inject
-    extension SCGExtensions
 
     @Inject
     extension SExtension

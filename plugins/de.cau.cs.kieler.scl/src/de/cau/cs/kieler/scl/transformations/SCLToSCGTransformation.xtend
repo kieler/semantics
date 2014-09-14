@@ -31,7 +31,7 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
 import de.cau.cs.kieler.scl.scl.EmptyStatement
 import de.cau.cs.kieler.scl.scl.Goto
@@ -57,9 +57,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 // This class contians all mandatory methods for the SCGDEP-to-SCGBB-Transformation.
 class SCLToSCGTransformation extends AbstractModelTransformation {
     
-    // Inject SCG Extensions.    
     @Inject
-    extension SCGExtensions
+    extension SCGControlFlowExtensions
     
     @Inject 
     extension SCLExtensions

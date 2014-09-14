@@ -56,6 +56,10 @@ class SCGCoreExtensions {
     // -- Block queries
     // -------------------------------------------------------------------------
    
+    def boolean hasSchedulingData(SCGraph scg) {
+    	!scg.schedules.empty
+    }
+   
 	/**
 	 * Retrieves the graph that includes a given node.
 	 * 

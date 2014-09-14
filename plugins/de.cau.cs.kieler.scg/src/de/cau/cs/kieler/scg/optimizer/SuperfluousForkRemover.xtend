@@ -57,7 +57,7 @@ class SuperfluousForkRemover extends AbstractOptimizer {
     		val entry = fork.getAllNext.head.target as Entry
     		
     		// Re-route all control flows to the fork node to the target of the entry node's next flow.
-    		val forkPreviousControlflows = fork.allPrevious
+    		val forkPreviousControlflows = fork.allPrevious.toList
     		for (flows : forkPreviousControlflows) {
     			if (entry.next == null) {
     				throw new UnsupportedSCGException("Cannot re-route entry flows without next target. The SCG seems to be broken.")
@@ -67,7 +67,7 @@ class SuperfluousForkRemover extends AbstractOptimizer {
    			}
    			
    			// Re-route all control flows of to the exit node to the target of the join node's next flow.
-   			val exitPreviousControlflows = entry.exit.allPrevious
+   			val exitPreviousControlflows = entry.exit.allPrevious.toList
    			for (flows : exitPreviousControlflows) {
    				if (fork.join.next == null) {
    					throw new UnsupportedSCGException("Cannot re-route join flows without next target. The SCG seems to be broken.")
