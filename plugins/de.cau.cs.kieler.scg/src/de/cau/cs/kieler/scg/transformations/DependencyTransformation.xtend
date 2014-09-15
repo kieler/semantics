@@ -98,6 +98,9 @@ class DependencyTransformation extends Transformation {
      */
     protected val valuedObjectCache = new HashMap<ValuedObject, List<Node>> 
     
+    protected var dependencyCounter = 0
+    protected var concurrentDependencyCounter = 0
+    
     
     // -------------------------------------------------------------------------
     // -- Transformation method
@@ -131,6 +134,9 @@ class DependencyTransformation extends Transformation {
         relativeWriterCache.clear
         ancestorForkCache.clear
         valuedObjectCache.clear
+        dependencyCounter = 0
+        concurrentDependencyCounter = 0
+        
         
         // Timestamp for performance information. Should be moved to the KiCo interface globally.
         val timestamp = System.currentTimeMillis
@@ -160,9 +166,7 @@ class DependencyTransformation extends Transformation {
         	var Fork fork = null
         	if (entry.incoming.size>0) fork = (entry.incoming.filter(ControlFlow).head.eContainer as Fork)
         	val finalFork = fork
-        	System.out.println("ENTRY: " + entry.toString)
         	threadNodeMap.get(entry).forEach[ node |
-        		System.out.println("  -- " + node.toString)
         		if ((node instanceof Assignment) || (node instanceof Conditional)) {
             	    if (!threadNodeCache.containsKey(node)) {
             	        val entryNodes = new LinkedList<Entry>();
@@ -264,6 +268,7 @@ class DependencyTransformation extends Transformation {
 
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Dependency analysis finished (overall time elapsed: "+(time / 1000)+"s).")  
+        System.out.println("Dependencies: " + dependencyCounter + " (concurrent: " + concurrentDependencyCounter + ")")
         
         // Return the SCG with dependency data.
         scg
@@ -319,6 +324,8 @@ class DependencyTransformation extends Transformation {
                     if (assignment.areConcurrent(node)) dependency.concurrent = true
                     if (assignment.areConfluent(node)) dependency.confluent = true
                     assignment.dependencies.add(dependency);
+                    dependencyCounter = dependencyCounter + 1
+                    if (dependency.concurrent) concurrentDependencyCounter = concurrentDependencyCounter + 1
                 }
             }
         ]
@@ -335,6 +342,8 @@ class DependencyTransformation extends Transformation {
                 dependency.target = node;
                 if (assignment.areConcurrent(node)) dependency.concurrent = true
                 assignment.dependencies.add(dependency);
+                dependencyCounter = dependencyCounter + 1
+                if (dependency.concurrent) concurrentDependencyCounter = concurrentDependencyCounter + 1
             }
         ]
         
