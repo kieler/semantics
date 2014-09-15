@@ -23,6 +23,8 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Surface
 import java.util.List
 import java.util.Map
+import java.util.Set
+import de.cau.cs.kieler.scg.Exit
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -149,21 +151,21 @@ class SCGThreadExtensions {
      * 			the entry node of the thread
      * @return Returns a list of nodes of the given thread. 
      */
-    def Map<Entry, List<Node>> getAllThreadNodes (Entry entry) {
+    def Map<Entry, Set<Node>> getAllThreadNodes (Entry entry) {
     	// Create a new list of nodes and 
     	// a list of control flows that mark paths within the thread.
-    	val returnMap = <Entry, List<Node>> newHashMap
-        val List<Node> nodeList = <Node> newLinkedList
-        val List<ControlFlow> controlFlows = <ControlFlow> newLinkedList
+    	val returnMap = <Entry, Set<Node>> newHashMap
+        val nodeSet = <Node> newHashSet
+        val controlFlows = <ControlFlow> newLinkedList
         
         // Add the entry node itself and retrieve the exit of the thread
         // with aid of the opposite relation in the entry node. 
-        returnMap.put(entry, nodeList)
+        returnMap.put(entry, nodeSet)
         val exit = entry.exit
         
         // If the exit node follows the entry node directly, exit here.
         if (entry.next.target == exit) {
-	        nodeList.add(exit)
+	        nodeSet.add(exit)
     	    return returnMap
         }
         
@@ -177,25 +179,24 @@ class SCGThreadExtensions {
             // Remove this control flow.
             controlFlows.remove(0)
             
-            // Add the node if its not already contained.
-            if (!nodeList.contains(nextNode)) nodeList.add(nextNode);
+            nodeSet.add(nextNode);
             
             if (nextNode instanceof Entry) {
             	val nNMap = (nextNode as Entry).getAllThreadNodes
             	for(k : nNMap.keySet) {
             		val nNNodeList = nNMap.get(k)
             		returnMap.put(k, nNNodeList)
-            		nodeList.addAll(nNNodeList)
+            		nodeSet.addAll(nNNodeList)
             	}
             	nextNode = (nextNode as Entry).exit
-            	if (!nodeList.contains(nextNode)) nodeList.add(nextNode);
+            	nodeSet.add(nextNode);
             }
             
             if (nextNode instanceof Surface) {
 	            // Since surface node do not have extra control flows to their 
     	        // corresponding depth, set the next node manually.
                 nextNode = (nextNode as Surface).depth
-                if (!nodeList.contains(nextNode)) nodeList.add(nextNode);                                
+                nodeSet.add(nextNode);                                
             }
             
             // Now, add all succeeding control flow provided 
@@ -204,7 +205,7 @@ class SCGThreadExtensions {
             //   - and the target of the flow is not the exit node.  
             if (nextNode != null)
             nextNode.allNext.filter[ 
-            	(!nodeList.contains(it.target)) && 
+            	(!nodeSet.contains(it.target)) && 
             	(!controlFlows.contains(it)) && 
                 (!it.target.equals(exit)) ] 
                 	=> [ controlFlows.addAll(it) ]
@@ -215,20 +216,27 @@ class SCGThreadExtensions {
         while(!controlFlows.empty) {
             var nextNode = controlFlows.head.eContainer as Node
             controlFlows.remove(0)
-            if (!nodeList.contains(nextNode)) nodeList.add(nextNode)
+            nodeSet.add(nextNode)
+            if (nextNode instanceof Exit) {
+            	// It is not necessary to reverse search the included threads again
+            	// because their reverse search was executed in the previous call also.
+            	// Therefore, proceed directly with the entry node.
+            	nextNode = (nextNode as Exit).entry
+            	nodeSet.add(nextNode);
+            }            
             if (nextNode instanceof Depth) {
                 nextNode = (nextNode as Depth).surface
-                if (!nodeList.contains(nextNode)) nodeList.add(nextNode)
+                nodeSet.add(nextNode)
             }
-            if (nextNode != null)
+            if (nextNode != null && nextNode != exit.entry)
             nextNode.allPrevious.filter[ 
-                (!nodeList.contains(it.eContainer)) && 
+                (!nodeSet.contains(it.eContainer)) && 
                 (!controlFlows.contains(it)) ] 
                     => [ controlFlows.addAll(it) ]
         }
         
         // Add the exit node and return.
-        nodeList.add(exit)
+        nodeSet.add(exit)
         returnMap
     }   
        

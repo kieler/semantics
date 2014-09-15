@@ -154,21 +154,23 @@ class DependencyTransformation extends Transformation {
         // Therefore, we travel through the nodes of each entry node and if its an assignment or a conditional
         // we add the node to the thread node cache. 
         val threadNodeMap = getAllThreadNodes(scg.nodes.head as Entry)
-        for(entry : threadNodeMap.keySet) {
+        val rootEntryNode = scg.nodes.head as Entry
+        for(entry : threadNodeMap.keySet) { 
             // If the entry node has incoming flows, it also has a fork node.
         	var Fork fork = null
         	if (entry.incoming.size>0) fork = (entry.incoming.filter(ControlFlow).head.eContainer as Fork)
         	val finalFork = fork
+        	System.out.println("ENTRY: " + entry.toString)
         	threadNodeMap.get(entry).forEach[ node |
+        		System.out.println("  -- " + node.toString)
         		if ((node instanceof Assignment) || (node instanceof Conditional)) {
             	    if (!threadNodeCache.containsKey(node)) {
-            	        var entryNodes = new LinkedList<Entry>();
+            	        val entryNodes = new LinkedList<Entry>();
             	        entryNodes.add(entry);
                         threadNodeCache.put(node, entryNodes);
                     } else {
-                        var entryNodes = threadNodeCache.get(node);
+                        val entryNodes = threadNodeCache.get(node);
                         entryNodes.add(entry);
-                        threadNodeCache.put(node, entryNodes);
                     }
                     
                     // If present, add the fork to the ancestor fork cache in the same step.
@@ -429,11 +431,13 @@ class DependencyTransformation extends Transformation {
             	// Assume the nodes are concurrent but withdraw this assumption if both nodes
             	// are present in the nodes of a single thread of the fork node.
                 var isConcurrent = true
-                val threadEntries = node.getAllNext
+                val threadEntries = node.getAllNext.map[ target ]
                 for(t : threadEntries) {
-                    if (t.target instanceof Entry 
-                        && threadNodeCache.get(node1).contains((t.target as Entry))
-                        && threadNodeCache.get(node2).contains((t.target as Entry))
+                	val t1Nodes = threadNodeCache.get(node1)
+                	val t2Nodes = threadNodeCache.get(node2)
+                    if (t instanceof Entry 
+                        && t1Nodes.contains(t as Entry)
+                        && t2Nodes.contains(t as Entry)
                     ) isConcurrent = false 
                 }
                 // If they are in separate threads, return true.
