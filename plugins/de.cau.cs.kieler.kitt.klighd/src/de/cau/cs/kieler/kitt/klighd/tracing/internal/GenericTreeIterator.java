@@ -32,7 +32,6 @@ public class GenericTreeIterator<E> extends AbstractTreeIterator<E> {
         this.depthFunction = depthFunction;
     }
 
-
     /**
      * {@inheritDoc}
      */

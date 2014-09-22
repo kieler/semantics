@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kitt.klighd.tracing.internal
 
-import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kgraph.KEdge
@@ -39,14 +38,12 @@ import static extension de.cau.cs.kieler.kitt.klighd.actions.AbstractTracingSele
 import static extension de.cau.cs.kieler.kitt.klighd.tracing.internal.NearestNodeUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.ModelTracingManager.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
-import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import java.util.EventObject
 
 /**
  * @author als
  *
  */
-class TracingVisualizerUtil {
+class TracingVisualizer {
 
     extension KRenderingFactory = KRenderingFactory.eINSTANCE
 
@@ -77,7 +74,7 @@ class TracingVisualizerUtil {
     }
 
     def clearTracing(KNode diagram) {
-        diagram.clearTracingSelection;
+        diagram.hideTracingSelection;
 
         //Hide all edges marked as TRACING_EDGE
         diagram.eAllContentsOfType2(typeof(KNode)).forEach [

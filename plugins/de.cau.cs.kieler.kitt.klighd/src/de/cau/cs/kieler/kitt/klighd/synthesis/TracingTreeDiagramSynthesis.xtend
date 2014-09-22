@@ -188,6 +188,7 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
                     it.foreground = "blue".color
                     it.fontSize = 9
                     it.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                     it.suppressSelectability;
                 ];
             ]
@@ -204,7 +205,8 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
                     it.fontSize = 9
                     //center
                     it.setPointPlacementData(createKPosition(LEFT, 0, 0.5f, TOP, 4, 0), H_CENTRAL, V_TOP, 0, 0, 0, 0);
-                    it.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                    it.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);                    
+                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                     it.suppressSelectability;
                 ];
                 it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 10, 0);

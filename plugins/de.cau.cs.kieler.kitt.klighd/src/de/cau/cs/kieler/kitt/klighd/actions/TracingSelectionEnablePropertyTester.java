@@ -18,8 +18,13 @@ import java.util.List;
 import org.eclipse.core.expressions.PropertyTester;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
+import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties;
+import de.cau.cs.kieler.kitt.tracingtree.ModelWrapper;
+import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
 
 /**
+ * PropertyTester to check if a selected KNode contains appropriate properties for tracing actions
  * 
  * @author als
  * @kieler.design 2014-08-26 proposed
@@ -32,24 +37,38 @@ public class TracingSelectionEnablePropertyTester extends PropertyTester {
     public final String TARGET = "target";
     public final String NONE = "none";
 
+    /**
+     * Standard Constructor
+     */
     public TracingSelectionEnablePropertyTester() {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
         try {
-            KNode node = (KNode)(((List) receiver).get(0));
-            if (property.equals(SOURCE)) {
-                System.out.println("SOURCE");
-                return true;
-            } else if (property.equals(TARGET)) {
-                System.out.println("TARGET");
-                return true;
-            } else if (property.equals(NONE)) {
-                System.out.println("NONO");
-                return true;
+            // Get KNode if menu is in KLighD context
+            KNode node = (KNode) (((List) receiver).get(0));
+            if (node != null) {
+                KLayoutData data = node.getData(KLayoutData.class);
+                if (data != null) {
+                    // check click on node representing a submodel
+                    if (data.getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE)
+                            || data.getProperty(KlighdInternalProperties.MODEL_ELEMEMT) instanceof ModelWrapper) {
+                        // test source menu entry and node is not already marked as target
+                        if (property.equals(NONE)) {
+                            return true;
+                        } else if ((property.equals(SOURCE) || property.equals(TARGET))
+                                && !data.getProperty(TracingProperties.TRACING_TARGET_SELECTION)
+                                && !data.getProperty(TracingProperties.TRACING_SOURCE_SELECTION)) {
+                            return true;
+                        }
+                    }
+                }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            // return false
         }
         return false;
     }

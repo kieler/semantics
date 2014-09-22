@@ -14,9 +14,19 @@
 package de.cau.cs.kieler.kitt.klighd.actions
 
 import de.cau.cs.kieler.core.kgraph.KNode
+import de.cau.cs.kieler.core.krendering.Colors
+import de.cau.cs.kieler.core.krendering.KRendering
+import de.cau.cs.kieler.core.krendering.KRenderingFactory
+import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties
+import de.cau.cs.kieler.kitt.tracingtree.ModelWrapper
 import de.cau.cs.kieler.klighd.IAction
 import de.cau.cs.kieler.klighd.ViewContext
+import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import org.eclipse.emf.ecore.EObject
+
+import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import java.util.EventObject
 
 /**
  * 
@@ -25,18 +35,97 @@ import org.eclipse.emf.ecore.EObject
  * @kieler.rating 2014-08-26 proposed yellow
  */
 abstract class AbstractTracingSelectionAction implements IAction {
-    //TODO call traceAll /trace elemts with force
-    
-    
-    static def clearTracingSelection(KNode diagram) {
-    }
+
+    /** KRenderingFactory to generate KRenderings. */
+    private static val factory = KRenderingFactory.eINSTANCE;
 
     static def showTracingSelection(KNode diagram) {
+        diagram.getModelRootNodes.forEach [
+            val node = it as KNode
+            val data = node.getData(KLayoutData);
+            val highlighting = data.getProperty(TracingProperties.TRACING_SELECTION_HIGHLIGHTING);
+            val isSource = data.getProperty(TracingProperties.TRACING_SOURCE_SELECTION);
+            val isTarget = data.getProperty(TracingProperties.TRACING_TARGET_SELECTION);
+            if (highlighting == null && isSource) {
+
+                //Source selection style
+                data.setProperty(TracingProperties.TRACING_SELECTION_HIGHLIGHTING,
+                    node.getData().filter(KRendering).fold(newLinkedList()) [ list, rendering |
+                        val fg = factory.createKForeground();
+                        val c = factory.createKColor();
+                        c.setColor(Colors.AQUAMARINE);
+                        fg.setColor(c);
+                        rendering.styles.add(fg);
+                        list.add(fg);
+                        return list;
+                    ]);
+            } else if (highlighting == null && isTarget) {
+
+                //Target selection style
+                data.setProperty(TracingProperties.TRACING_SELECTION_HIGHLIGHTING,
+                    node.getData().filter(KRendering).fold(newLinkedList()) [ list, rendering |
+                        val fg = factory.createKForeground();
+                        val c = factory.createKColor();
+                        c.setColor(Colors.VIOLET_RED);
+                        fg.setColor(c);
+                        rendering.styles.add(fg);
+                        list.add(fg);
+                        return list;
+                    ]);
+            } else if (highlighting != null && !isSource && !isTarget) {
+
+                //remove style
+                highlighting.forEach [
+                    (it.eContainer as KRendering).getStyles().remove(it);
+                ];
+                data.setProperty(TracingProperties.TRACING_SELECTION_HIGHLIGHTING, null);
+            }
+        ];
+
+    //TODO maybe fisheye view when both source and target are selected
+    }
+
+    static def hideTracingSelection(KNode diagram) {
+        diagram.getModelRootNodes.forEach [
+            val data = (it as KNode).getData(KLayoutData);
+            val highlighting = data.getProperty(TracingProperties.TRACING_SELECTION_HIGHLIGHTING);
+            if (highlighting != null) {
+                highlighting.forEach [
+                    (it.eContainer as KRendering).getStyles().remove(it);
+                ];
+                data.setProperty(TracingProperties.TRACING_SELECTION_HIGHLIGHTING, null);
+            }
+        ];
     }
 
     static def Pair<EObject, EObject> getTracingSelection(KNode diagram, ViewContext viewContext) {
-        //check for wrapper mapping
-        return null; //TODO Check source target resolve selection //TDOD check in selection if tracing is active
+        val modelNodes = diagram.getModelRootNodes;
+        val sourceModelNode = modelNodes.findFirst [
+            (it as KNode).getData(KLayoutData)?.getProperty(TracingProperties.TRACING_SOURCE_SELECTION);
+        ];
+        val targetModelNode = modelNodes.findFirst [
+            (it as KNode).getData(KLayoutData)?.getProperty(TracingProperties.TRACING_TARGET_SELECTION);
+        ];
+        if (sourceModelNode != null && targetModelNode != null && sourceModelNode != targetModelNode) {
+            val sourceModelObject = viewContext.getSourceElement(sourceModelNode);
+            val targetModelObject = viewContext.getSourceElement(targetModelNode);
+            if (sourceModelObject instanceof EObject && targetModelObject instanceof EObject) {
+                return new Pair(sourceModelObject as EObject, targetModelObject as EObject);
+            }
+        }
+        return null;
     }
-    
+
+    protected static def getModelRootNodes(KNode diagram) {
+        return diagram.eAllContentsOfType2(typeof(KNode)).filter [
+            val data = (it as KNode).getData(KLayoutData);
+            if (data != null) {
+                return data.getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE) ||
+                    data.getProperty(KlighdInternalProperties.MODEL_ELEMEMT) instanceof ModelWrapper;
+            } else {
+                return false;
+            }
+        ].toIterable;
+    }
+
 }

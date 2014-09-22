@@ -13,8 +13,11 @@
  */
 package de.cau.cs.kieler.kitt.klighd.tracing;
 
+import java.util.List;
+
 import org.eclipse.xtext.xbase.lib.Pair;
 
+import de.cau.cs.kieler.core.krendering.KStyle;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption.TracingMode;
@@ -50,8 +53,8 @@ public final class TracingProperties {
                     TracingMode.NO_TRACING);
 
     /**
-     * Marks an edge as a tracing edge when object is not null. Object indicates the origin object pair
-     * in source model which is the source and target element of this edge.
+     * Marks an edge as a tracing edge when object is not null. Object indicates the origin object
+     * pair in source model which is the source and target element of this edge.
      */
     public static final IProperty<Pair<Object, Object>> TRACING_EDGE =
             new Property<Pair<Object, Object>>("de.cau.cs.kieler.kitt.klighd.tracing.edge", null);
@@ -59,17 +62,24 @@ public final class TracingProperties {
     /**
      * Marks an node as selected as source in a tracing resolve selection.
      */
-    public static final IProperty<Boolean> TRACING_SOUCRE_SELECTION = new Property<Boolean>(
-            "de.cau.cs.kieler.kitt.klighd.tracing.select.source", false);
+    public static final IProperty<Boolean> TRACING_SOURCE_SELECTION = new Property<Boolean>(
+            "de.cau.cs.kieler.kitt.klighd.tracing.selection.source", false);
 
     /**
      * Marks an node as selected as target in a tracing resolve selection.
      */
     public static final IProperty<Boolean> TRACING_TARGET_SELECTION = new Property<Boolean>(
-            "de.cau.cs.kieler.kitt.klighd.tracing.select.target", false);
+            "de.cau.cs.kieler.kitt.klighd.tracing.selection.target", false);
 
     /**
-     * Contains applied
+     * Holds the highlighting for a selected element.
+     */
+    public static final IProperty<List<? extends KStyle>> TRACING_SELECTION_HIGHLIGHTING =
+            new Property<List<? extends KStyle>>(
+                    "de.cau.cs.kieler.kitt.klighd.tracing.selection.highlighting", null);
+
+    /**
+     * Contains applied mappings.
      */
     public static final IProperty<InternalTraceMap> TRACING_MAP = new Property<InternalTraceMap>(
             "de.cau.cs.kieler.kitt.klighd.tracing.map", null);

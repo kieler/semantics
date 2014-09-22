@@ -75,57 +75,64 @@
       <menuContribution
             allPopups="false"
             locationURI="popup:org.eclipse.ui.popup.any?before=additions">
-         <command
-               commandId="de.cau.cs.kieler.klighd.ui.actionExecution"
-               id="de.cau.cs.kieler.kitt.klighd.menu.select.source"
-               label="TRACING: Select as source model"
-               style="push"
-               tooltip="Select the underlying model element as source model of a direct tracing.">
-            <parameter
-                  name="de.cau.cs.kieler.klighd.ui.action"
-                  value="de.cau.cs.kieler.kitt.klighd.action.select.source">
-            </parameter>
-            <visibleWhen
-                  checkEnabled="false">
-               <reference
-                     definitionId="de.cau.cs.kieler.kitt.klighd.enable.select.source">
-               </reference>
-            </visibleWhen>
-         </command>
-         <command
-               commandId="de.cau.cs.kieler.klighd.ui.actionExecution"
-               id="de.cau.cs.kieler.kitt.klighd.menu.select.target"
-               label="TRACING: Select as target model"
-               style="push"
-               tooltip="Select the underlying model element as target model of a direct tracing.">
-            <parameter
-                  name="de.cau.cs.kieler.klighd.ui.action"
-                  value="de.cau.cs.kieler.kitt.klighd.action.select.target">
-            </parameter>
-            <visibleWhen
-                  checkEnabled="false">
-               <reference
-                     definitionId="de.cau.cs.kieler.kitt.klighd.enable.select.target">
-               </reference>
-            </visibleWhen>
-         </command>
-         <command
-               commandId="de.cau.cs.kieler.klighd.ui.actionExecution"
-               id="de.cau.cs.kieler.kitt.klighd.menu.select.none"
-               label="TRACING: Deselect models"
-               style="push"
-               tooltip="Deselect both source and traget model of the direct tracing.">
-            <parameter
-                  name="de.cau.cs.kieler.klighd.ui.action"
-                  value="de.cau.cs.kieler.kitt.klighd.action.select.none">
-            </parameter>
-            <visibleWhen
-                  checkEnabled="false">
-               <reference
-                     definitionId="de.cau.cs.kieler.kitt.klighd.enable.select.none">
-               </reference>
-            </visibleWhen>
-         </command>
+         <menu
+               id="de.cau.cs.kieler.klighd.ui.menu.group"
+               label="Tracing">
+            <command
+                   commandId="de.cau.cs.kieler.klighd.ui.actionExecution"
+                   id="de.cau.cs.kieler.kitt.klighd.menu.select.source"
+                   label="Select as source model"
+                   style="push"
+                   tooltip="Select the underlying model element as source model of a direct tracing.">
+                <parameter
+                      name="de.cau.cs.kieler.klighd.ui.action"
+                      value="de.cau.cs.kieler.kitt.klighd.action.select.source">
+                </parameter>
+                <visibleWhen
+                      checkEnabled="false">
+                   <reference
+                         definitionId="de.cau.cs.kieler.kitt.klighd.enable.select.source">
+                   </reference>
+                </visibleWhen>
+             </command>
+             <command
+                   commandId="de.cau.cs.kieler.klighd.ui.actionExecution"
+                   id="de.cau.cs.kieler.kitt.klighd.menu.select.target"
+                   label="Select as target model"
+                   style="push"
+                   tooltip="Select the underlying model element as target model of a direct tracing.">
+                <parameter
+                      name="de.cau.cs.kieler.klighd.ui.action"
+                      value="de.cau.cs.kieler.kitt.klighd.action.select.target">
+                </parameter>
+                <visibleWhen
+                      checkEnabled="false">
+                   <reference
+                         definitionId="de.cau.cs.kieler.kitt.klighd.enable.select.target">
+                   </reference>
+                </visibleWhen>
+             </command>
+             <command
+                   commandId="de.cau.cs.kieler.klighd.ui.actionExecution"
+                   id="de.cau.cs.kieler.kitt.klighd.menu.select.none"
+                   label="Remove selection"
+                   style="push"
+                   tooltip="Deselect both source and traget model of the direct tracing.">
+                <parameter
+                      name="de.cau.cs.kieler.klighd.ui.action"
+                      value="de.cau.cs.kieler.kitt.klighd.action.select.none">
+                </parameter>
+                <visibleWhen
+                      checkEnabled="false">
+                   <reference
+                         definitionId="de.cau.cs.kieler.kitt.klighd.enable.select.none">
+                   </reference>
+                </visibleWhen>
+             </command>
+             <visibleWhen
+                   checkEnabled="true">
+             </visibleWhen>
+         </menu>
       </menuContribution>
    </extension>
    <extension
