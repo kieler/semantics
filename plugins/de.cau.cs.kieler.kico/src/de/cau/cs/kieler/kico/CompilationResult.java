@@ -26,7 +26,7 @@ import de.cau.cs.kieler.core.util.Pair;
  * and all processed transformation IDs. By convention the first intermediate result should always
  * be the source model.
  * 
- * @author cmot
+ * @author cmot ssm
  * @kieler.design 2014-05-21 proposed
  * @kieler.rating 2014-05-21 proposed yellow
  * 
@@ -40,11 +40,11 @@ public class CompilationResult {
     private List<Object> intermediateResults = new ArrayList<Object>();
 
     /** The postponed error list transformation id. */
-    private ArrayList<KielerCompilerException> postponedErrors =
+    private List<KielerCompilerException> postponedErrors =
             new ArrayList<KielerCompilerException>();
 
     /** The postponed error list transformation id. */
-    private ArrayList<KielerCompilerException> postponedWarnings =
+    private List<KielerCompilerException> postponedWarnings =
             new ArrayList<KielerCompilerException>();
 
     /** All last/occurred errors processed for this compilation. */
@@ -52,6 +52,10 @@ public class CompilationResult {
 
     /** All last/occurred warnings processed for this compilation. */
     private String allWarnings = null;
+    
+    /** Ancillary data. */
+    private List<AbstractKielerCompilerAncillaryData> ancillaryData = 
+            new ArrayList<AbstractKielerCompilerAncillaryData>();
 
     /**
      * Indicates that the compilation is done and no further compilation steps are needed or
@@ -274,7 +278,7 @@ public class CompilationResult {
      * 
      * @return the postponedErrors
      */
-    public ArrayList<KielerCompilerException> getPostponedErrors() {
+    public List<KielerCompilerException> getPostponedErrors() {
         return postponedErrors;
     }
 
@@ -285,7 +289,7 @@ public class CompilationResult {
      * 
      * @return the postponedWarnings
      */
-    public ArrayList<KielerCompilerException> getPostponedWarnings() {
+    public List<KielerCompilerException> getPostponedWarnings() {
         return postponedWarnings;
     }
 
@@ -334,6 +338,20 @@ public class CompilationResult {
             return specificExtension.getFirst();
         }
         return null;
+    }
+
+    /**
+     * @return the ancillaryData
+     */
+    public List<AbstractKielerCompilerAncillaryData> getAncillaryData() {
+        return ancillaryData;
+    }
+
+    /**
+     * @param ancillaryData the ancillaryData to set
+     */
+    public void setAncillaryData(List<AbstractKielerCompilerAncillaryData> ancillaryData) {
+        this.ancillaryData = ancillaryData;
     }
 
     // -------------------------------------------------------------------------
