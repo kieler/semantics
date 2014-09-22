@@ -20,6 +20,7 @@ import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Write_Write
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.SCGraph
 
 /**
  * @author ssm
@@ -34,54 +35,52 @@ class InterleavedAssignmentAnalyzer extends AbstractAnalyzer {
     @Inject
     extension SCGThreadExtensions
     
-    override analyze(AnalyzerData analyzerData) {
-        val result = new InterleavedAssignmentResult
-        
-        analyzerData.SCG.eAllContents.filter(typeof(Write_Write)).filter[ concurrent && !confluent ].forEach[ dependency |
-            val assignment1 = dependency.eContainer as Node
-            val assignment2 = dependency.target as Node
-            val ancestorFork = assignment1.ancestorFork
-            var assignment1Tick = 0
-            var assignment2Tick = 0
-            var isSimpleFlow = true
-            
-            if (ancestorFork != null && ancestorFork == assignment2.ancestorFork) {
-                for (entry: ancestorFork.allNext.map[target]) {
-                    var flows = entry.getIndirectControlFlowsBeyondTickBoundaries((entry as Entry).exit)
-                    if (flows.size != 1) {
-                        isSimpleFlow = false
-                    } else {
-                        var depthCounter = 0
-                        for (node : flows.head.map[target]) {
-                            if (node instanceof Surface) { depthCounter = depthCounter + 1 }
-                            if (node == assignment1) { assignment1Tick = depthCounter }
-                            if (node == assignment2) { assignment2Tick = depthCounter }
-                        }
-                    }
-                }
-                
-                if (isSimpleFlow && assignment1Tick != assignment2Tick) {
-//                    val analysis = ScgschedFactory::eINSTANCE.createAnalysis => [
-//                        id = getAnalysisId
-//                        objectReferences += dependency                        
-//                    ]
-//                    result.addAnalysis(analysis)
-                }
-            }
-        ]
-        
-        analyzerData => [ addResult(result) ]
+    override analyze(SCGraph scg) {
+        throw new UnsupportedOperationException("TODO: auto-generated method stub")
     }
     
-	/**
-	 * Returns the identifier string of this analysis.
-	 * 
-	 * @returns Returns the identifier string of this analysis.
-	 */
-	override getAnalysisId() {
-		return "InterleavedAssignment"
-	}
+    override getAnalysisId() {
+        throw new UnsupportedOperationException("TODO: auto-generated method stub")
+    }
     
+//    override analyze(AnalyzerData analyzerData) {
+//        val result = new InterleavedAssignmentResult
+//        
+//        analyzerData.SCG.eAllContents.filter(typeof(Write_Write)).filter[ concurrent && !confluent ].forEach[ dependency |
+//            val assignment1 = dependency.eContainer as Node
+//            val assignment2 = dependency.target as Node
+//            val ancestorFork = assignment1.ancestorFork
+//            var assignment1Tick = 0
+//            var assignment2Tick = 0
+//            var isSimpleFlow = true
+//            
+//            if (ancestorFork != null && ancestorFork == assignment2.ancestorFork) {
+//                for (entry: ancestorFork.allNext.map[target]) {
+//                    var flows = entry.getIndirectControlFlowsBeyondTickBoundaries((entry as Entry).exit)
+//                    if (flows.size != 1) {
+//                        isSimpleFlow = false
+//                    } else {
+//                        var depthCounter = 0
+//                        for (node : flows.head.map[target]) {
+//                            if (node instanceof Surface) { depthCounter = depthCounter + 1 }
+//                            if (node == assignment1) { assignment1Tick = depthCounter }
+//                            if (node == assignment2) { assignment2Tick = depthCounter }
+//                        }
+//                    }
+//                }
+//                
+//                if (isSimpleFlow && assignment1Tick != assignment2Tick) {
+////                    val analysis = ScgschedFactory::eINSTANCE.createAnalysis => [
+////                        id = getAnalysisId
+////                        objectReferences += dependency                        
+////                    ]
+////                    result.addAnalysis(analysis)
+//                }
+//            }
+//        ]
+//        
+//        analyzerData => [ addResult(result) ]
+//    }
     
 }
 
@@ -94,6 +93,6 @@ class InterleavedAssignmentAnalyzer extends AbstractAnalyzer {
  * @kieler.design 2014-01-08 proposed 
  * @kieler.rating 2014-01-08 proposed yellow
  */
-class InterleavedAssignmentResult extends GenericAnalyzerResult {
+class InterleavedAssignmentResult extends AbstractAnalyzerResult {
 
 }

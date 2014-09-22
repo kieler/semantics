@@ -83,6 +83,10 @@ import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
+import de.cau.cs.kieler.kico.CompilationResult
+import de.cau.cs.kieler.kico.klighd.KiCoKLighDProperties
+import java.util.Set
+import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -336,6 +340,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         [it.red = 128; it.green = 0; it.blue = 253;]
     private static val int SCHEDULING_SCHEDULINGEDGE_ALPHA = 96
 
+    private static val KColor PROBLEM_COLOR = KRenderingFactory::eINSTANCE.createKColor() => 
+        [it.red = 255; it.green = 0; it.blue = 0;]
+    private static val int PROBLEM_WIDTH = 4    
+
     /** Constants for semantic object mapping */
     private static val String SCGPORTID_INCOMING = "incoming"
     private static val String SCGPORTID_OUTGOING = "outgoing"
@@ -378,6 +386,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     // -------------------------------------------------------------------------
     /** The root node */
     private KNode rootNode;
+    
+    private CompilationResult compilationResult;
+    private var Set<Node> PIL_Nodes = <Node> newHashSet
 
     /** The selected orientation */
     private int orientation;
@@ -399,7 +410,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         // Connect the model to the scope provider for the serialization.
         scopeProvider.parent = model;
 
-        // Invoke the synthesis.
+        compilationResult = this.usedContext.getProperty(KiCoKLighDProperties.COMPILATION_RESULT)
+        if (compilationResult != null) {
+            val PILR = compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head
+            if (PILR != null) PIL_Nodes += PILR.criticalNodes
+        }
+
+        // Invoke the synthesis.3
         val timestamp = System.currentTimeMillis
         System.out.println("Started SCG synthesis...")
         val newModel = model.synthesize();
@@ -536,7 +553,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 ]
             }
             // Draw analysis visualization if present.
-//            if(scg instanceof SCGraphSched) (scg as SCGraphSched).synthesizeAnalyses
+            scg.synthesizeAnalyses
         ]
     }
 
@@ -1300,6 +1317,18 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         // val AnalysesVisualization analysesVisualization = Guice.createInjector().getInstance(typeof(AnalysesVisualization))
 //        if(!SHOW_POTENTIALPROBLEMS.booleanValue) return;
 //        scg.analyses.forEach[visualize(it, this)]
+
+        if (PIL_Nodes.empty) return;
+        
+        for (n : PIL_Nodes) {
+            val nextFlows = n.allNext
+            for (flow : nextFlows) {
+                if (PIL_Nodes.contains(flow.target)) {
+                    flow.colorControlFlow(PROBLEM_COLOR.copy)
+                    flow.thickenControlFlow(PROBLEM_WIDTH)
+                } 
+            }
+        }
     }
 
     // -------------------------------------------------------------------------

@@ -54,38 +54,7 @@ abstract class AbstractAnalyzer {
   	 * 			the SCG in question
   	 * @return Returns an SCGAnalyserResult structure for further processing.
   	 */
-    def AnalyzerData analyze(SCGraph scg) {
-    	val analyzerData = new AnalyzerData
-    	analyzerData.SCG = scg
-    	analyze(analyzerData)
-    }
-    
-    /**
-     * Performs an analysis on the provided SCG and node.
-     * 
-     * @param scg
-     * 			the SCG in question
-     * @param node
-     * 	 		the node of the SCG in question
-     * @return Returns an SCGAnalyserResult structure for further processing.
-     */
-    def AnalyzerData analyze(SCGraph scg, Node node) {
-    	val analyzerData = new AnalyzerData
-    	analyzerData.SCG = scg
-    	analyzerData.node = node
-    	analyze(analyzerData)
-    }    
-
-	/**
-	 * Override this method to implement your actual analysis.<br>
-	 * It accepts an SCGAnalyserResult to enable several subsequent analyses on the SCG. 
-	 * 
-	 * @param analyserChain
-	 * 			the input analysis result structure.
-	 * @return Returns an updated analysis result structure. 
-	 * @abstract
-	 */
-    abstract def AnalyzerData analyze(AnalyzerData analyzerData) 
+    abstract def AbstractAnalyzerResult analyze(SCGraph scg)
     
     /**
      * Override this method to add an unique ID string to your analysis.

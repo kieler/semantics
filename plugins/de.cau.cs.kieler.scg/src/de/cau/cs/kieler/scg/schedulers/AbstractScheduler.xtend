@@ -13,19 +13,10 @@
  */
 package de.cau.cs.kieler.scg.schedulers
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.scg.SCGraph
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scg.analyzer.AnalyzerData
-import de.cau.cs.kieler.scg.analyzer.GenericAnalyzerResult
-import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.scg.Schedule
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.Transformation
-import de.cau.cs.kieler.scg.SchedulingBlock
-import java.util.List
+import de.cau.cs.kieler.scg.SCGraph
+import org.eclipse.emf.ecore.EObject
 
 /** 
  * This class is part of the SCG transformation chain. 
