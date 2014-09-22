@@ -155,7 +155,3 @@ class PotentialInstantaneousLoopAnalyzer extends AbstractAnalyzer {
 class PotentialInstantaneousLoopResult extends AbstractAnalyzerResult {
     public var Set<Node> criticalNodes = null
 }
-
-enum NodePathType {
-    UNKNOWN, UNCRITICALLY, UNCERTAIN, INSTANTANEOUS 
-}
