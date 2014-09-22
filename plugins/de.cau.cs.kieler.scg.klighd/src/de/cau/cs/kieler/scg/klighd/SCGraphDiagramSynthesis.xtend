@@ -349,6 +349,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val String ANNOTATION_BRANCH = "branch"
     private static val String ANNOTATION_REGIONNAME = "regionName"
     private static val String ANNOTATION_SEQUENTIALIZED = "sequentialized" 
+    private static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"    
 
     /** 
 	 * Constants for hierarchical node groups
@@ -434,17 +435,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
             
             val threadTypes = <Entry, ThreadPathType> newHashMap
-            threadTypes.putAll((scg.nodes.head as Entry).getThreadControlFlowTypes)
             
             // Synthesize all children             
             for (n : scg.nodes) { 
                 if (n instanceof Surface) { node.children += n.synthesize }
                 if (n instanceof Assignment) { node.children += n.synthesize }
                 if (n instanceof Entry) { 
+                    if (n.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) {
+                        threadTypes.put((n as Entry), n.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2)
+                    }
                 	node.children += n.synthesize
-//                	if (!threadTypes.containsKey(n as Entry)) {
-//                		threadTypes.putAll((n as Entry).getThreadControlFlowTypes)
-//                	}
                 }
                 if (n instanceof Exit) { 
                 	node.children += n.synthesize

@@ -476,5 +476,13 @@ class SCGThreadExtensions {
     	return "Unknown"
     }
     
+    def ThreadPathType fromString2(String string) {
+        if (string == "Disconnected") return ThreadPathType::DISCONNECTED
+        if (string == "Delayed") return ThreadPathType::DELAYED
+        if (string == "Instantaneous") return ThreadPathType::INSTANTANEOUS
+        if (string == "Potential instantaneous") return ThreadPathType::POTENTIAL_INSTANTANEOUS
+        return ThreadPathType::UNKNOWN;
+    }
+    
 
 }

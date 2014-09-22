@@ -55,6 +55,7 @@ import de.cau.cs.kieler.core.kexpressions.Parameter
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import java.util.Set
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -77,6 +78,9 @@ class SCGTransformation {
     @Inject
     extension SCChartsExtension
     
+    @Inject
+    extension SCGThreadExtensions
+    
     private static val Injector i = ActionsStandaloneSetup::doSetup();
     private static val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
     private static val ISerializer serializer = i.getInstance(typeof(ISerializer));
@@ -85,6 +89,7 @@ class SCGTransformation {
     private val uniqueNameCache = <String> newArrayList
     
     private static val String ANNOTATION_REGIONNAME = "regionName"
+    private static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
     
     //-------------------------------------------------------------------------
     //--                         U T I L I T Y                               --
@@ -251,6 +256,12 @@ class SCGTransformation {
         val scg = superfluousForkRemover.optimize(sCGraph)
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("SCG optimization completed (additional time elapsed: "+(time / 1000)+"s).")
+        
+        // SCG thread path types
+        val threadPathTypes = (scg.nodes.head as Entry).getThreadControlFlowTypes
+        for(entry:threadPathTypes.keySet) {
+            entry.addAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
+        } 
         
         scg
     }
