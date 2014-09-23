@@ -47,9 +47,9 @@ class During {
         val targetRootRegion = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootRegion.getAllStates) {
+        targetRootRegion.getAllStates.forEach[ targetState |
             targetState.transformDuring(targetRootRegion);
-        }
+        ]
         targetRootRegion;//.fixAllTextualOrdersByPriorities;
     }
 

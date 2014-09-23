@@ -17,6 +17,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
@@ -31,6 +33,8 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;
+
+import de.cau.cs.kieler.core.util.Pair;
 
 /**
  * This class is a collection of utility methods for handling models in/with KiCo.
@@ -82,9 +86,28 @@ public class KiCoUtil {
 
         String returnText = "";
         boolean done = false;
+        
+        // ssm, 11.08.2014:
+        // Since the testing of all possible extensions may take excessive time when working with large models,
+        // a plugin can register a specific resource extension via extension point. The function will test
+        // the eClass for the registered extensions and will skip the general approach if a corresponding
+        // extension was found.
+        List<String> extensionKeyList = new LinkedList<String>(getRegXtext().getExtensionToFactoryMap().keySet());
+        HashMap<String, Pair<String, Boolean>> resourceExtensionMap = KiCoPlugin.getInstance().getRegisteredResourceExtensions(false);
+        if (KiCoPlugin.DEBUG) {
+            System.out.println("MODEL eCLASS: " + model.eClass().getName());
+        }
+        Pair<String, Boolean> specificExtension = resourceExtensionMap.get(model.eClass().getName());
+        if (specificExtension != null) {
+            extensionKeyList.clear();
+            if (!specificExtension.getSecond()) {
+                extensionKeyList.add(0, specificExtension.getFirst());
+            }
+        }
+        
         try {
 
-            for (String ext : getRegXtext().getExtensionToFactoryMap().keySet()) {
+            for (String ext : extensionKeyList) {
                 URI uri = URI.createURI("dummy:/inmemory." + num + "." + ext);
 
                 ResourceSet resourceSet = null;

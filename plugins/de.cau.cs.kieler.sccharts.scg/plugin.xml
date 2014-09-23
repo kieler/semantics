@@ -85,6 +85,14 @@
             transformations="SCG, SCGDEP, SCGBBGROUP, SCGSCHEDGROUP, SCGSEQGROUP">
       </transformationGroup>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.extension">
+      <ResourceExtensionInformation
+            className="SCGraph"
+            extensionName="scg"
+            isXMI="true">
+      </ResourceExtensionInformation>
+   </extension>
 
 
 </plugin>

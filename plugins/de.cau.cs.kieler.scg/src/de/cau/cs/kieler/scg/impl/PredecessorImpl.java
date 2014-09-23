@@ -18,12 +18,9 @@ import de.cau.cs.kieler.scg.BranchType;
 import de.cau.cs.kieler.scg.Conditional;
 import de.cau.cs.kieler.scg.Predecessor;
 import de.cau.cs.kieler.scg.ScgPackage;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 

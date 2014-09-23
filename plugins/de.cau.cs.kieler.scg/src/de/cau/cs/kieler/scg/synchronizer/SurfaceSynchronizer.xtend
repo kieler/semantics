@@ -23,9 +23,9 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.sequentializer.EmptyExpression
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -65,9 +65,11 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
     @Inject
     extension KExpressionsExtension
     
-    /** Inject SCG extensions. */    
     @Inject
-    extension SCGExtensions
+    extension SCGControlFlowExtensions
+    
+    @Inject
+    extension SCGThreadExtensions
    
     private val OPERATOREXPRESSION_DEPTHLIMIT = 16
     private val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8
@@ -280,23 +282,25 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
                 fixcnt = fixcnt + 1
             }
             
-            val OperatorExpression tExp = sExp.subExpressions.last as OperatorExpression            
-            while(tExp.subExpressions.size > OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER) {
-                val eExp = new EmptyExpression()  
-                eExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
-                eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
-                data.valuedObjects.add(eExp.valuedObject)
-                val subExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
-                subExp.setOperator(OperatorType::OR)
-                var gd = OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER/2
-                while (gd > 0) {
-                    subExp.subExpressions += tExp.subExpressions.get(0)
-                    gd = gd - 1
-                }
-                eExp.expression = subExp;
-                tExp.subExpressions.add(0, eExp.valuedObject.reference)
-                data.guardExpression.emptyExpressions.add(eExp)
-                fixcnt = fixcnt + 1
+            if (sExp.subExpressions.last instanceof OperatorExpression) {
+            	val OperatorExpression tExp = sExp.subExpressions.last as OperatorExpression            
+        	    while(tExp.subExpressions.size > OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER) {
+    	            val eExp = new EmptyExpression()  
+	                eExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
+                	eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
+            	    data.valuedObjects.add(eExp.valuedObject)
+        	        val subExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
+    	            subExp.setOperator(OperatorType::OR)
+	                var gd = OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER/2
+                	while (gd > 0) {
+                    	subExp.subExpressions += tExp.subExpressions.get(0)
+                	    gd = gd - 1
+            	    }
+        	        eExp.expression = subExp;
+    	            tExp.subExpressions.add(0, eExp.valuedObject.reference)
+	                data.guardExpression.emptyExpressions.add(eExp)
+                	fixcnt = fixcnt + 1
+            	}           
             }
         }
         

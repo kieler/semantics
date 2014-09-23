@@ -50,10 +50,12 @@ class Abort {
     // Transforming Aborts.
     def State transformAbortAlternative(State rootState) {
         val targetRootState = rootState.fixAllPriorities;
+        
+        nameCache.clear
 
         // Traverse all states
         var done = false;
-        for (targetState : targetRootState.getAllContainedStates) {
+        for (targetState : targetRootState.getAllContainedStatesList) {
             if (!done) {
                 targetState.transformAbortAlternative(targetRootState);
             }
@@ -76,7 +78,9 @@ class Abort {
 
     // Traverse all states 
     def void transformAbortAlternative(State state, State targetRootState) {
-
+        // (a) more than one transitions outgoing OR
+        // (b) ONE outgoing transition AND
+        //     + not a termination transition without any trigger
         val stateHasUntransformedTransitions = ((state.outgoingTransitions.size > 1) || ((state.outgoingTransitions.
             size == 1) && (!(state.outgoingTransitions.filter[typeTermination].filter[trigger == null].size == 1))))
 
@@ -127,7 +131,7 @@ class Abort {
                         val mainState = mainRegion.createInitialState(GENERATED_PREFIX + "Main").uniqueNameCached(nameCache)
                         mainState.regions.add(region)
                         val termState = mainRegion.createFinalState(GENERATED_PREFIX + "Term").uniqueNameCached(nameCache)
-                        val termVariable = state.createVariable(GENERATED_PREFIX + "termV").setTypeBool.uniqueNameCached(nameCache)
+                        val termVariable = state.createVariable(GENERATED_PREFIX + "termRegion").setTypeBool.uniqueNameCached(nameCache)
                         mainState.createTransitionTo(termState).addEffect(termVariable.assign(TRUE)).setTypeTermination
                         if (terminationTrigger != null) {
                             terminationTrigger = terminationTrigger.and(termVariable.reference)
@@ -155,12 +159,22 @@ class Abort {
                                 }
                                 strongAbort.setPriority(0)
                                 strongAbort.setTrigger(strongAbortTrigger.copy)
+                                strongAbort.setImmediate
                             }
                             if (weakAbortTrigger != null) {
 // The following line is responsible for KISEMA 925 to fail                                 
 //                                val weakAbort = innerState.createTransitionTo(abortedState) 
-                                val weakAbort = innerState.createTransitionTo(abortedState, 0)
+//                                val weakAbort = innerState.createTransitionTo(abortedState, 0)
+                                val weakAbort = innerState.createTransitionTo(abortedState)
                                 weakAbort.setTrigger(weakAbortTrigger.copy)
+                                weakAbort.setLowestPriority;
+                                // MUST be immediate: Otherwise new aborting transition may never be
+                                // taken (e.g., in cyclic behavior like during actions)
+                                //
+                                // Why is the solution to make all new aborting transitions being immediate? The reason for short is that immediate cycles are forbidden and
+                                // once the control rests (which is hence the consequence of forbidding immediate cycles) in one of the states, the new immediate (weak)
+                                // aborting transition will be taken, although it has a lower priority than any other existing transitions.
+                                weakAbort.setImmediate;
                             }
                         }
                     }
@@ -248,7 +262,7 @@ class Abort {
 
         // Traverse all states
         var done = false;
-        for (targetState : targetRootState.getAllContainedStates) {
+        for (targetState : targetRootState.getAllContainedStatesList) {
             if (!done) {
                 targetState.transformAbortDefault(targetRootState);
             }
@@ -345,7 +359,7 @@ class Abort {
                                     // to a final state.
                                     // This leads to more transitions but avoids more variables.
                                     strongAbort.setTypeTermination
-                                    val allInnerSimpleStates = innerState.allContainedStates.filter[!(hasInnerStatesOrRegions || hasInnerActions)].
+                                    val allInnerSimpleStates = innerState.allContainedStatesList.filter[!(hasInnerStatesOrRegions || hasInnerActions)].
                                         filter[!final]
                                     for (innerSimpleState : allInnerSimpleStates) {
                                         val innerFinalStates = innerSimpleState.parentRegion.states.filter[final]

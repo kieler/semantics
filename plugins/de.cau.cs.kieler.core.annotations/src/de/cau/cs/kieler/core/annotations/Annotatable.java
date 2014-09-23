@@ -41,60 +41,60 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Annotatable extends EObject {
     /**
-     * Returns the value of the '<em><b>Annotations</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.annotations.Annotation}.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Annotations</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.core.annotations.Annotation}.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Annotations</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Annotations</em>' containment reference list.
-     * @see de.cau.cs.kieler.core.annotations.AnnotationsPackage#getAnnotatable_Annotations()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Annotations</em>' containment reference list.
+	 * @see de.cau.cs.kieler.core.annotations.AnnotationsPackage#getAnnotatable_Annotations()
+	 * @model containment="true"
+	 * @generated
+	 */
     EList<Annotation> getAnnotations();
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Search an annotation with the given name.
-     * 
-     * @param name the name of the annotation, does not need to be unique
-     * @returns the first annotation that matches the name
-     * <!-- end-model-doc -->
-     * @model required="true"
-     * @generated
-     */
+	 * <!-- begin-model-doc -->
+	 * Search an annotation with the given name.
+	 * 
+	 * @param name the name of the annotation, does not need to be unique
+	 * @returns the first annotation that matches the name
+	 * <!-- end-model-doc -->
+	 * @model required="true"
+	 * @generated
+	 */
     Annotation getAnnotation(String name);
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Search all annotations with the given name.
-     * 
-     * @param name the name of the annotations, does not need to be unique
-     * @returns a list of all annotations that match the name
-     * <!-- end-model-doc -->
-     * @model required="true" many="false"
-     * @generated
-     */
+	 * <!-- begin-model-doc -->
+	 * Search all annotations with the given name.
+	 * 
+	 * @param name the name of the annotations, does not need to be unique
+	 * @returns a list of all annotations that match the name
+	 * <!-- end-model-doc -->
+	 * @model required="true" many="false"
+	 * @generated
+	 */
     EList<Annotation> getAllAnnotations(String name);
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Remove all annotations with the given name.
-     * 
-     * @param name name of the annotations to remove
-     * <!-- end-model-doc -->
-     * @model
-     * @generated
-     */
+	 * <!-- begin-model-doc -->
+	 * Remove all annotations with the given name.
+	 * 
+	 * @param name name of the annotations to remove
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
     void removeAllAnnotations(String name);
 
 } // Annotatable

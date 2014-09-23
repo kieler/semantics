@@ -82,6 +82,7 @@ public class ScgSwitch<T> extends Switch<T> {
 			case ScgPackage.SC_GRAPH: {
 				SCGraph scGraph = (SCGraph)theEObject;
 				T result = caseSCGraph(scGraph);
+				if (result == null) result = caseAnnotatable(scGraph);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

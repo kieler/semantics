@@ -1079,12 +1079,15 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                     properties.configureSynthesisOptionValues(recentSynthesisOptions.get(synthesis));
                 }
                 
+                properties.setProperty(KiCoKLighDProperties.COMPILATION_RESULT, compilationResult);
+                
                 // the (re)initialization case
                 DiagramViewManager.initializeView(this, model, null, properties);
                 // reset layout to resolve KISEMA-905
                 resetLayoutConfig();
                 
             } else {
+                vc.setProperty(KiCoKLighDProperties.COMPILATION_RESULT, compilationResult);
                 // update case (keeps options and sidebar)
                 DiagramViewManager.updateView(this.getViewer().getViewContext(), model);
             }
@@ -1154,7 +1157,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * @param viewer
      * @param allWarnings
      */
-    private void addWarningComposite(IViewer<?> viewer, String allWarnings) {
+    private void addWarningComposite(IViewer viewer, String allWarnings) {
         final Composite canvas = (Composite) viewer.getControl();
         warningMessageContainer = new Composite(canvas, SWT.NONE);
 

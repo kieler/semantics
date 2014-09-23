@@ -18,7 +18,7 @@ import java.util.Map
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SchedulingBlock
 import com.google.inject.Inject
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -52,7 +52,7 @@ abstract class AbstractSynchronizer {
 	
     /** Inject SCG extensions. */    
     @Inject
-    extension SCGExtensions	
+    extension SCGCoreExtensions	
 	
 	protected var Map<Node, SchedulingBlock> schedulingCache = null
    

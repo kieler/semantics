@@ -61,11 +61,15 @@ class ComplexFinalState {
         var targetRootState = rootState.fixAllPriorities;
 
         //Find all possible complex final states
-        val globalComplexFinalStates = targetRootState.getAllStates.filter(
-            e|
-                e.isFinal && (!e.outgoingTransitions.nullOrEmpty || e.allContainedStates.size > 0 ||
-                    e.entryActions.size > 0 || e.duringActions.size > 0 || e.exitActions.size > 0)).toList
-                    
+        val globalFinalStates = targetRootState.getAllStates.filter(
+            e |
+                e.isFinal)
+                
+        val globalComplexFinalStates = globalFinalStates.filter(
+            e |
+                ((!e.outgoingTransitions.nullOrEmpty && e.allContainedStates.size > 0))
+                 || e.entryActions.size > 0 || e.duringActions.size > 0 || e.exitActions.size > 0).toList
+                
         // Traverse all states containing complex final states
         for (targetState : globalComplexFinalStates.map[it.parentRegion.parentState].toList) {
             targetState.transformComplexFinalState(rootState, globalComplexFinalStates);
@@ -78,7 +82,7 @@ class ComplexFinalState {
         //als-7.8> Data optimization: Moved state independent filtering to transform method with one single evaluation improving performance
         //        val complexFinalStates = state.allContainedStates.filter(
         //            e|
-        //                e.parentRegion.parentState == state && e.isFinal && (!e.outgoingTransitions.nullOrEmpty ||
+        //                e.parentRegion.parentState == state && e.isFinal && (!e.outgoingTransitions.nullOrEmpty &&
         //                    e.allContainedStates.size > 0 || e.entryActions.size > 0 || e.duringActions.size > 0 ||
         //                    e.exitActions.size > 0)).toList()
         val complexFinalStates = globalComplexFinalStates.filter[it.parentRegion.parentState == state].toList

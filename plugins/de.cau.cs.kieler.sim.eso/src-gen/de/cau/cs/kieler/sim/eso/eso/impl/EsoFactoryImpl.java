@@ -30,7 +30,7 @@ public class EsoFactoryImpl extends EFactoryImpl implements EsoFactory
   {
     try
     {
-      EsoFactory theEsoFactory = (EsoFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.cau.de/cs/kieler/sim/eso/Eso"); 
+      EsoFactory theEsoFactory = (EsoFactory)EPackage.Registry.INSTANCE.getEFactory(EsoPackage.eNS_URI);
       if (theEsoFactory != null)
       {
         return theEsoFactory;

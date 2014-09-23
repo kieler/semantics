@@ -28,7 +28,6 @@ import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
 import de.cau.cs.kieler.scl.scl.Program
 import de.cau.cs.kieler.scl.scl.SclFactory
@@ -38,6 +37,8 @@ import java.util.HashMap
 import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /** 
  * SCG to SCL Transformation 
@@ -50,9 +51,11 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import de.cau.cs.
 // This class contians all mandatory methods for the SCGDEP-to-SCGBB-Transformation.
 class SCGToSCLTransformation {
     
-    // Inject SCG Extensions.    
     @Inject
-    extension SCGExtensions
+    extension SCGControlFlowExtensions
+
+    @Inject
+    extension SCGThreadExtensions
     
     @Inject 
     extension SCLExtensions

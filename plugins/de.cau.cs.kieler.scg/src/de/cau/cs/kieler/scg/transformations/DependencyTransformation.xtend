@@ -19,32 +19,33 @@ import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import de.cau.cs.kieler.scg.Dependency
+import de.cau.cs.kieler.scg.ScgFactory
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 
 /** 
- * This class is part of the SCG transformation chain. The chain is used to gather important information 
- * about the schedulability of a given SCG. This is done in several key steps. Between two steps the results 
- * are cached in specifically designed metamodels for further processing. At the end of the transformation
- * chain a newly generated (and sequentialized) SCG is returned. <br>
- * You can either call the transformations manually or use the SCG transformation extensions to enrich the
- * SCGs with the desired information.<br>
+ * This class is part of the SCG transformation chain. The chain is used to gather information 
+ * about the schedulability of a given SCG. This is done in several key steps. Contrary to the first 
+ * version of SCGs, there is only one SCG meta-model. In each step the gathered data will be added to 
+ * the model. 
+ * You can either call the transformation manually or use KiCo to perform a series of transformations.
  * <pre>
  * SCG 
  *   |-- Dependency Analysis 	 					<== YOU ARE HERE
@@ -58,31 +59,65 @@ import de.cau.cs.kieler.scg.ControlFlow
  * @kieler.rating 2013-10-23 proposed yellow
  */
 
-class DependencyTransformation extends AbstractModelTransformation {
+class DependencyTransformation extends Transformation {
     
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
-    
-    /** Inject SCG extensions. */    
+       
     @Inject
-    extension SCGExtensions
+    extension SCGControlFlowExtensions
+    
+    @Inject
+    extension SCGThreadExtensions
     
     @Inject
     extension KExpressionsExtension
+
+
+    // -------------------------------------------------------------------------
+    // -- Globals 
+    // -------------------------------------------------------------------------
     
-    private val threadNodeList = new HashMap<Node, List<Entry>>
-    private val ancestorForkCache = new HashMap<Node, List<Fork>>
-    private val relativeWriterCache = new HashMap<Assignment, Boolean>
-    private val valuedObjectCache = new HashMap<ValuedObject, List<Node>> 
+    /** 
+     * threadNodeCache caches the entry nodes a specific node belongs to w.r.t. hierarchy
+     * The entry node list is mainly used to speed up the efficiency of concurrency tests.
+     * In the same manner, ancestorForkCache stores information about ancestor fork nodes.
+     */
+    protected val threadNodeCache = new HashMap<Node, List<Entry>>    
+    protected val ancestorForkCache = new HashMap<Node, List<Fork>>
+    
+    /**
+     * relativeWriterCache caches if a specific writer (meaning an assignment) is a relative writer or 
+     * not.
+     */
+    protected val relativeWriterCache = new HashMap<Assignment, Boolean>
+    
+    /**
+     * valuedObjectCache stores all distinct valued objects and a list of nodes that are using them.
+     */
+    protected val valuedObjectCache = new HashMap<ValuedObject, List<Node>> 
+    
+    protected var dependencyCounter = 0
+    protected var concurrentDependencyCounter = 0
+    
     
     // -------------------------------------------------------------------------
     // -- Transformation method
     // -------------------------------------------------------------------------
-    
-	override transform(EObject eObject) {
-		return transformSCGToSCGDEP(eObject as SCGraph)
-	}
+
+    /** 
+     * Generic model transformation interface.
+     * 
+     * @param eObject
+     *          the root element of the input model
+     * @return Returns the root element of the transformed model.
+     */    
+	override transform(EObject eObject, KielerCompilerContext context) {
+        return transformSCGToSCGDEP(eObject as SCGraph)
+    }
+	
+
 	
     /**
      * transformSCGToSCGDEP executes the transformation from a standard SCG to 
@@ -93,44 +128,56 @@ class DependencyTransformation extends AbstractModelTransformation {
      * @return Returns a copy of the scg enriched with dependency information.
      */   
     def SCGraph transformSCGToSCGDEP(SCGraph scg) {
-        // Finally, add all dependencies. Therefore, search all assignmentdep nodes and create their 
-        // dependency information. The data is automatically stored in the SCG by the createDependencies
-        // function.
-        threadNodeList.clear
+        
+        // Since KiCo may use the transformation instance several times, we must clear the caches manually. 
+        threadNodeCache.clear
         relativeWriterCache.clear
         ancestorForkCache.clear
         valuedObjectCache.clear
+        dependencyCounter = 0
+        concurrentDependencyCounter = 0
         
+        
+        // Timestamp for performance information. Should be moved to the KiCo interface globally.
         val timestamp = System.currentTimeMillis
+        
+        // Generate a data basis for the subsequent analysis. 
         val allAssignments = scg.nodes.filter(typeof(Assignment))  
-        val assignments = allAssignments.filter[ valuedObject != null || assignment instanceof FunctionCall ].toList.immutableCopy
-        val conditionals = scg.nodes.filter(typeof(Conditional)).filter[ condition != null ].toList.immutableCopy
+        val assignments = allAssignments.filter[ valuedObject != null || assignment instanceof FunctionCall ].toList //.immutableCopy
+        val conditionals = scg.nodes.filter(typeof(Conditional)).filter[ condition != null ].toList //.immutableCopy
         var time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Preparation for dependency: Nodes (time elapsed: "+(time / 1000)+"s).")  
 
+        // Generate cache for relative writers.
         assignments.forEach[ 
             relativeWriterCache.put(it, it.isRelativeWriter)
         ]
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Preparation for dependency: Relative writer (time elapsed: "+(time / 1000)+"s).")  
         
+        // Generate thread node cache. 
+        // ThreadNodeMap contains all entry nodes with the nodes in their thread.
+        // Therefore, we travel through the nodes of each entry node and if its an assignment or a conditional
+        // we add the node to the thread node cache. 
         val threadNodeMap = getAllThreadNodes(scg.nodes.head as Entry)
-        for(entry : threadNodeMap.keySet) {
+        val rootEntryNode = scg.nodes.head as Entry
+        for(entry : threadNodeMap.keySet) { 
+            // If the entry node has incoming flows, it also has a fork node.
         	var Fork fork = null
         	if (entry.incoming.size>0) fork = (entry.incoming.filter(ControlFlow).head.eContainer as Fork)
         	val finalFork = fork
         	threadNodeMap.get(entry).forEach[ node |
         		if ((node instanceof Assignment) || (node instanceof Conditional)) {
-            	    if (!threadNodeList.containsKey(node)) {
-            	        var entryNodes = new LinkedList<Entry>();
+            	    if (!threadNodeCache.containsKey(node)) {
+            	        val entryNodes = new LinkedList<Entry>();
             	        entryNodes.add(entry);
-                        threadNodeList.put(node, entryNodes);
+                        threadNodeCache.put(node, entryNodes);
                     } else {
-                        var entryNodes = threadNodeList.get(node);
+                        val entryNodes = threadNodeCache.get(node);
                         entryNodes.add(entry);
-                        threadNodeList.put(node, entryNodes);
                     }
                     
+                    // If present, add the fork to the ancestor fork cache in the same step.
                     if (finalFork != null) {
                     	val ancestorForks = ancestorForkCache.get(node)
                     	if (ancestorForks == null) {
@@ -145,34 +192,53 @@ class DependencyTransformation extends AbstractModelTransformation {
         	]
         }
         
-        assignments.forEach[ a |
-        	val vors = a.assignment.eAllContents.filter(typeof(ValuedObjectReference)).toList
-        	if (a.assignment instanceof ValuedObjectReference) vors += a.assignment as ValuedObjectReference
-        	val vos = <ValuedObject> newArrayList => [ v | vors.forEach[ v+= it.valuedObject ]; v += a.valuedObject ]
-        	vos.forEach[ vo | 
-        		val vocl = valuedObjectCache.get(vo)
-        		if (vocl == null) {
-        			valuedObjectCache.put(vo, <Node> newArrayList(a))
+        // Generate the valued object cache for assignments.
+        assignments.forEach[ assignment |
+        	val references = assignment.assignment.eAllContents.filter(typeof(ValuedObjectReference)).toList
+        	if (assignment.assignment instanceof ValuedObjectReference) {
+        	    references += assignment.assignment as ValuedObjectReference
+       	    }
+        	val valuedObjects = <ValuedObject> newArrayList => [ v | 
+        	    references.forEach[ v += it.valuedObject ]; 
+        	    v += assignment.valuedObject
+        	]
+        	valuedObjects.forEach[ vo | 
+        		val cache = valuedObjectCache.get(vo)
+        		if (cache == null) {
+        			valuedObjectCache.put(vo, <Node> newArrayList(assignment))
         		} else {
-        			vocl += a	
+        			cache += assignment	
         		}
         	] 
+        	// If there is no ancestor fork information for this node, insert an empty list.
+        	if (ancestorForkCache.get(assignment) == null) {
+        	    ancestorForkCache.put(assignment, <Fork> newArrayList())
+        	}
         ]
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Preparation for dependency: assignment VO cache (time elapsed: "+(time / 1000)+"s).")  
 
-        conditionals.forEach[ c |
-        	val vors = c.condition.eAllContents.filter(typeof(ValuedObjectReference)).toList
-        	if (c.condition instanceof ValuedObjectReference) vors += c.condition as ValuedObjectReference
-        	val vos = <ValuedObject> newArrayList => [ v | vors.forEach[ v+= it.valuedObject ] ]
-        	vos.forEach[ vo | 
+        // Generate the valued object cache for conditionals.
+        conditionals.forEach[ conditional |
+        	val references = conditional.condition.eAllContents.filter(typeof(ValuedObjectReference)).toList
+        	if (conditional.condition instanceof ValuedObjectReference) {
+        	    references += conditional.condition as ValuedObjectReference
+      	    }
+        	val valuedObjects = <ValuedObject> newArrayList => [ v | 
+        	    references.forEach[ v += it.valuedObject ]
+        	]
+        	valuedObjects.forEach[ vo | 
         		val vocl = valuedObjectCache.get(vo)
         		if (vocl == null) {
-        			valuedObjectCache.put(vo, <Node> newArrayList(c))
+        			valuedObjectCache.put(vo, <Node> newArrayList(conditional))
         		} else {
-        			vocl += c	
+        			vocl += conditional	
         		}
         	] 
+            // If there is no ancestor fork information for this node, insert an empty list.
+            if (ancestorForkCache.get(conditional) == null) {
+                ancestorForkCache.put(conditional, <Fork> newArrayList())
+            }
         ]
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Preparation for dependency: conditional VO cache (time elapsed: "+(time / 1000)+"s).")  
@@ -184,6 +250,7 @@ class DependencyTransformation extends AbstractModelTransformation {
         	+"(assignments: "+assignments.size+", conditionals: "+conditionals.size+", VO cache: "+VOCacheSize+").")  
         
 
+        // Perform dependency analysis on the nodes of the filtered valued objects. 
         var i = 0
         for(vo : valuedObjectCache.keySet) {
         	val nodeList = valuedObjectCache.get(vo)
@@ -192,21 +259,16 @@ class DependencyTransformation extends AbstractModelTransformation {
         	for (assignment : assignmentList) {
 	        	assignment.createDependencies(assignmentList, conditionalList, scg) 
         	}
+        	
+        	// Console activity output. Should be moved to KiCo in a more generic way. 
         	i = i + 1
         	if (i % 100 == 0) System.out.print("o")
       	 }
       	 System.out.println("o")
-        
-//        var i = 0
-//        for(node : assignments) {
-//        	node.createDependencies(assignments, conditionals, scg) 
-//        	i = i + 1
-//        	if (i % 1000 == 0) System.out.print("o")
-//      	 }
-//      	 System.out.println("o")
 
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Dependency analysis finished (overall time elapsed: "+(time / 1000)+"s).")  
+        System.out.println("Dependencies: " + dependencyCounter + " (concurrent: " + concurrentDependencyCounter + ")")
         
         // Return the SCG with dependency data.
         scg
@@ -262,6 +324,8 @@ class DependencyTransformation extends AbstractModelTransformation {
                     if (assignment.areConcurrent(node)) dependency.concurrent = true
                     if (assignment.areConfluent(node)) dependency.confluent = true
                     assignment.dependencies.add(dependency);
+                    dependencyCounter = dependencyCounter + 1
+                    if (dependency.concurrent) concurrentDependencyCounter = concurrentDependencyCounter + 1
                 }
             }
         ]
@@ -278,6 +342,8 @@ class DependencyTransformation extends AbstractModelTransformation {
                 dependency.target = node;
                 if (assignment.areConcurrent(node)) dependency.concurrent = true
                 assignment.dependencies.add(dependency);
+                dependencyCounter = dependencyCounter + 1
+                if (dependency.concurrent) concurrentDependencyCounter = concurrentDependencyCounter + 1
             }
         ]
         
@@ -374,11 +440,13 @@ class DependencyTransformation extends AbstractModelTransformation {
             	// Assume the nodes are concurrent but withdraw this assumption if both nodes
             	// are present in the nodes of a single thread of the fork node.
                 var isConcurrent = true
-                val threadEntries = node.getAllNext
+                val threadEntries = node.getAllNext.map[ target ]
                 for(t : threadEntries) {
-                    if (t.target instanceof Entry 
-                        && threadNodeList.get(node1).contains((t.target as Entry))
-                        && threadNodeList.get(node2).contains((t.target as Entry))
+                	val t1Nodes = threadNodeCache.get(node1)
+                	val t2Nodes = threadNodeCache.get(node2)
+                    if (t instanceof Entry 
+                        && t1Nodes.contains(t as Entry)
+                        && t2Nodes.contains(t as Entry)
                     ) isConcurrent = false 
                 }
                 // If they are in separate threads, return true.

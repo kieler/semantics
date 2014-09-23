@@ -65,12 +65,12 @@ class SurfaceDepth {
     // be inserted. \code{S} is then marked not to be initial. This is a necessary pre-processing for
     // the above transformation.
     def State transform(State rootState) {
-        var targetRootState = rootState.fixAllPriorities;
+        val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootState.allStates) {
+        targetRootState.allStates.toList.forEach[ targetState |
             targetState.transformSurfaceDepth(targetRootState);
-        }
+        ]
 
         targetRootState.fixAllTextualOrdersByPriorities.optimizeSuperflousConditionalStates.optimizeSuperflousImmediateTransitions.fixDeadCode;
     }

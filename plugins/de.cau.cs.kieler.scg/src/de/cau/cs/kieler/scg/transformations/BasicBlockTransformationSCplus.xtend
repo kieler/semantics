@@ -22,12 +22,11 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 
 /** 
- * This class is part of the SCG transformation chain. The chain is used to gather important information 
- * about the schedulability of a given SCG. This is done in several key steps. Between two steps the results 
- * are cached in specifically designed metamodels for further processing. At the end of the transformation
- * chain a newly generated (and sequentialized) SCG is returned. <br>
- * You can either call the transformations manually or use the SCG transformation extensions to enrich the
- * SCGs with the desired information.<br>
+ * This class is part of the SCG transformation chain. The chain is used to gather information 
+ * about the schedulability of a given SCG. This is done in several key steps. Contrary to the first 
+ * version of SCGs, there is only one SCG meta-model. In each step the gathered data will be added to 
+ * the model. 
+ * You can either call the transformation manually or use KiCo to perform a series of transformations.
  * <pre>
  * SCG 
  *   |-- Dependency Analysis 	 					

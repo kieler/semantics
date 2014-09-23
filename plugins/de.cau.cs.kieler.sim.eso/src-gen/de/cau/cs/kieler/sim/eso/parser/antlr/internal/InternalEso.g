@@ -204,27 +204,32 @@ ruletick returns [EObject current=null]
     {
     	newLeafNode(otherlv_2, grammarAccess.getTickAccess().getPercentSignKeyword_2_0());
     }
-	otherlv_3='Output' 
+(	otherlv_3='Output:' 
     {
-    	newLeafNode(otherlv_3, grammarAccess.getTickAccess().getOutputKeyword_2_1());
+    	newLeafNode(otherlv_3, grammarAccess.getTickAccess().getOutputKeyword_2_1_0());
     }
-	otherlv_4=':' 
+
+    |(	otherlv_4='Output' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getTickAccess().getColonKeyword_2_2());
+    	newLeafNode(otherlv_4, grammarAccess.getTickAccess().getOutputKeyword_2_1_1_0());
     }
-(
+	otherlv_5=':' 
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getTickAccess().getColonKeyword_2_1_1_1());
+    }
+))(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTickAccess().getOutputSignalParserRuleCall_2_3_0()); 
+	        newCompositeNode(grammarAccess.getTickAccess().getOutputSignalParserRuleCall_2_2_0()); 
 	    }
-		lv_output_5_0=rulesignal		{
+		lv_output_6_0=rulesignal		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTickRule());
 	        }
        		add(
        			$current, 
        			"output",
-        		lv_output_5_0, 
+        		lv_output_6_0, 
         		"signal");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -235,52 +240,57 @@ ruletick returns [EObject current=null]
 		{ 
 	        newCompositeNode(grammarAccess.getTickAccess().getExtraInfosKvpairParserRuleCall_3_0()); 
 	    }
-		lv_extraInfos_6_0=rulekvpair		{
+		lv_extraInfos_7_0=rulekvpair		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTickRule());
 	        }
        		add(
        			$current, 
        			"extraInfos",
-        		lv_extraInfos_6_0, 
+        		lv_extraInfos_7_0, 
         		"kvpair");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)*(	otherlv_7='%%' 
+)*(	otherlv_8='%%' 
     {
-    	newLeafNode(otherlv_7, grammarAccess.getTickAccess().getPercentSignPercentSignKeyword_4_0());
+    	newLeafNode(otherlv_8, grammarAccess.getTickAccess().getPercentSignPercentSignKeyword_4_0());
     }
-	otherlv_8='Output' 
+(	otherlv_9='Output:' 
     {
-    	newLeafNode(otherlv_8, grammarAccess.getTickAccess().getOutputKeyword_4_1());
+    	newLeafNode(otherlv_9, grammarAccess.getTickAccess().getOutputKeyword_4_1_0());
     }
-	otherlv_9=':' 
+
+    |(	otherlv_10='Output' 
     {
-    	newLeafNode(otherlv_9, grammarAccess.getTickAccess().getColonKeyword_4_2());
+    	newLeafNode(otherlv_10, grammarAccess.getTickAccess().getOutputKeyword_4_1_1_0());
     }
-(
+	otherlv_11=':' 
+    {
+    	newLeafNode(otherlv_11, grammarAccess.getTickAccess().getColonKeyword_4_1_1_1());
+    }
+))(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getTickAccess().getExtraInfosOutputKvpairParserRuleCall_4_3_0()); 
+	        newCompositeNode(grammarAccess.getTickAccess().getExtraInfosOutputKvpairParserRuleCall_4_2_0()); 
 	    }
-		lv_extraInfosOutput_10_0=rulekvpair		{
+		lv_extraInfosOutput_12_0=rulekvpair		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getTickRule());
 	        }
        		add(
        			$current, 
        			"extraInfosOutput",
-        		lv_extraInfosOutput_10_0, 
+        		lv_extraInfosOutput_12_0, 
         		"kvpair");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)*)?	otherlv_11=';' 
+)*)?	otherlv_13=';' 
     {
-    	newLeafNode(otherlv_11, grammarAccess.getTickAccess().getSemicolonKeyword_5());
+    	newLeafNode(otherlv_13, grammarAccess.getTickAccess().getSemicolonKeyword_5());
     }
 )
 ;

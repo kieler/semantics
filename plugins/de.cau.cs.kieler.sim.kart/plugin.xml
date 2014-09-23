@@ -38,32 +38,10 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
       <executionFile
-            file="execution/synccharts_sc_kart.execution">
-         <editor
-               id="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
-               name="SyncChart Diagram Editor"
-               priority="7">
-         </editor>
-      </executionFile>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
-      <executionFile
             file="execution/esterel_kart.execution">
          <editor
                id="de.cau.cs.kieler.esterel.Esterel"
                name="Esterel Editor"
-               priority="7">
-         </editor>
-      </executionFile>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
-      <executionFile
-            file="execution/synccharts_ptolemy_kart.execution">
-         <editor
-               id="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
-               name="SyncChart Diagram Editor"
                priority="7">
          </editor>
       </executionFile>
@@ -76,17 +54,6 @@
                id="de.cau.cs.kieler.s.S"
                name="S Editor"
                priority="5">
-         </editor>
-      </executionFile>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
-      <executionFile
-            file="execution/synccharts_s_kart.execution">
-         <editor
-               id="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
-               name="SyncChart Diagram Editor"
-               priority="7">
          </editor>
       </executionFile>
    </extension>

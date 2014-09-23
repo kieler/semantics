@@ -268,7 +268,15 @@
       </transformationGroup>
 
       
-   </extension>   
+   </extension>
+     <extension
+           point="de.cau.cs.kieler.kico.extension">
+        <ResourceExtensionInformation
+              className="SCChart"
+              extensionName="sct"
+              isXMI="true">
+        </ResourceExtensionInformation>
+     </extension>   
 
 
 </plugin>

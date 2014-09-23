@@ -14,13 +14,17 @@
 package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.common.collect.ImmutableList
+import com.google.common.collect.Iterators
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Assignment
+import de.cau.cs.kieler.sccharts.Binding
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.Effect
 import de.cau.cs.kieler.sccharts.Emission
@@ -38,14 +42,13 @@ import de.cau.cs.kieler.sccharts.TextEffect
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import java.util.ArrayList
+import java.util.Iterator
 import java.util.List
+import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 
+import static extension de.cau.cs.kieler.sccharts.iterators.StateIterator.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.sccharts.Binding
 
 /**
  * SCCharts Extensions.
@@ -68,11 +71,27 @@ class SCChartsExtension {
     //-------------------------------------------------------------------------
     //--             B A S I C   C R E A T I O N   M E T H O D S             --
     //-------------------------------------------------------------------------
-    // Create an immutable list copy
-    def ImmutableList<Object> immutableCopy(Iterable<Object> object) {
-        ImmutableList::copyOf(object)
+    // Create an immutable copy
+    def <E> ImmutableList<E> immutableCopy(Iterator<E> iterable) {
+        iterable.toList.immutableCopy
     }
+    //def ImmutableList<?> immutableCopy(TreeIterator<?> iterable) {
+    //    iterable.immutableCopy
+    //}
+    def <E> ImmutableList<E> immutableCopy(List<E> list) {
+         ImmutableList::copyOf(list) as ImmutableList<E>
+    }
+    
 
+    def static <T> T convertInstanceOfObject(Object o, Class<T> clazz) {
+    try {
+        return clazz.cast(o);
+    } catch(ClassCastException e) {
+        return null;
+    }
+}    
+    
+    
     //====== GENERAL MODEL ELEMENTS =====
     // Get the single normal termination Transition. Return null if there is 
     // no outgoing normal termination Transition.
@@ -86,15 +105,31 @@ class SCChartsExtension {
     }
 
     // Return the list of all contained States.
-    def List<State> getAllContainedStates(Scope scope) {
-        scope.eAllContents().filter(typeof(State)).toList()
+    def Iterator<State> getAllContainedStates(Scope scope) {
+        scope.sccAllStates; //eAllContents().filter(typeof(State))
+//        scope.eAllContents().filter(typeof(State))
     }
+    
+    // Returns a list of all contained States.
+    def List<State> getAllContainedStatesList(State state) {
+        <State> newLinkedList => [ l |
+            state.regions.forEach[ r | 
+                r.states.forEach[ s | 
+                    l += s; 
+                    l += s.getAllContainedStatesList
+                ]
+            ]
+        ]
+    }
+    
 
     // Return the list of all contained States and the root state if the scope is already a state.
-    def List<State> getAllStates(Scope scope) {
-        scope.getAllContainedStates => [
-        	if (scope instanceof State) it += scope as State
-        ]
+    def Iterator<State> getAllStates(Scope scope) {
+    	if (scope instanceof State) {
+            return Iterators.singletonIterator(scope as State) + scope.getAllContainedStates
+	    } else {
+            return scope.getAllContainedStates
+    	}
     }
 
     // Return the list of all contained Regions.
@@ -120,6 +155,12 @@ class SCChartsExtension {
     // Return the list of contained Assignments.
     def List<Assignment> getAllContainedAssignments(Action action) {
         action.eAllContents().filter(typeof(Assignment)).toList();
+    }
+    
+    def getAllValuedObjects(State state) {
+    	<ValuedObject> newLinkedList => [ ll |
+    		state.declarations.forEach[ d | d.valuedObjects.forEach [ ll += it ]]
+    	]
     }
 
     // Return the list of pure signals of a state.
@@ -147,21 +188,6 @@ class SCChartsExtension {
 // The top-most element is an SCChart which is a State.
 // If necessary, these function should be re-implemented.
 
-//    // Return the root region.
-//    def Region getRootRegion(Region region) {
-//
-//        // Recursively find the root region 
-//        if (region.parentState == null) {
-//            return region;
-//        }
-//        region.parentState.parentRegion.rootRegion;
-//    }
-//
-//    // Return the root region.
-//    def Region getRootRegion(State state) {
-//        state.parentRegion.rootRegion;
-//    }
-
 	def boolean isRootState(State state) {
 		state.parentRegion == null
 	}
@@ -174,14 +200,9 @@ class SCChartsExtension {
     // Return the root state.
     def State getRootState(Region region) {
         // There should exactly be one state in the root region
-//        region.rootRegion.states.get(0)
         region.parentState.getRootState
     }
 
-//    // Return the root state.
-//    def State getRootState(State state) {
-//        state.parentRegion.rootState;
-//    }
     
     def State createSCChart() {
          SCChartsFactory::eINSTANCE.createState
@@ -189,9 +210,7 @@ class SCChartsExtension {
 
     // Gets the list of non-empty regions
     def List<Region> getRegions2(State state) {
-//        val list2 = state.regions.filter(e | e.allContainedStates.size == 0).toList
-//        val list = state.regions.filter(e | e.allContainedStates.size > 0).toList
-        val list = state.regions.filter(e | e.notEmpty ).toList
+        val list = state.regions.filter(e | !e.empty ).toList
         list
     }
     
@@ -264,7 +283,7 @@ class SCChartsExtension {
         val state = (valuedObject.getEContainer as State);
         val rootState = state.getRootState
         var notFound = valuedObject.uniqueNameTest(rootState, newName)
-        for (innerState : rootState.allContainedStates) {
+        for (innerState : rootState.allContainedStatesList) {
             if (notFound && !valuedObject.uniqueNameTest(innerState, newName)) {
                 notFound = false
             }
@@ -505,8 +524,8 @@ class SCChartsExtension {
    	  false
     }
     
-    def boolean notEmpty(Region region) {
-      region.states.size>0
+    def boolean empty(Region region) {
+      region.states.size == 0
    }    
 
     def boolean hasInnerStatesOrRegions(State state) {
@@ -595,7 +614,7 @@ class SCChartsExtension {
     }
 
     def Transition setLowestPriority(Transition transition) {
-        val maxPriority = transition.sourceState.outgoingTransitions.length
+        val maxPriority = transition.sourceState.outgoingTransitions.length+1
         transition.setPriority2(maxPriority).trimPriorities
     }
 
@@ -604,7 +623,7 @@ class SCChartsExtension {
     }
 
     def State fixAllPriorities(State state) {
-        for (containedState : state.allContainedStates) {
+        for (containedState : state.allContainedStatesList) {
             var prio = 1
             for (transition : containedState.outgoingTransitions) {
                 transition.setPriority(prio)
@@ -615,7 +634,7 @@ class SCChartsExtension {
     }
 
 //    def State fixAllEmptyRegions(State rootState) {
-//        val regions = rootState.allContainedRegions.filter(e | e.allContainedStates == 0).toList.immutableCopy
+//        val regions = rootState.allContainedRegions.filter(e | e.allContainedStates == 0).immutableCopy
 //        for (region : regions) {
 //            val parent = region.parentState
 //            parent.regions.remove(region)
@@ -625,11 +644,12 @@ class SCChartsExtension {
 
 
     def State fixAllTextualOrdersByPriorities(State state) {
-        for (containedState : state.allContainedStates) {
-            val transitions = containedState.outgoingTransitions.sortBy[priority].toList.immutableCopy;
+        for (containedState : state.allContainedStatesList) {
+            val transitions = containedState.outgoingTransitions.sortBy[priority].immutableCopy;
             for (transition : transitions) {
+                //System.out.println(transition.sourceState.id + "->" + transition.targetState.id + " : " + transition.priority)
                 containedState.outgoingTransitions.remove(transition)
-                containedState.outgoingTransitions.add(transition)
+                containedState.outgoingTransitions.add(transition) 
                 transition.setPriority(0)
             }
         }
@@ -739,7 +759,7 @@ class SCChartsExtension {
 
     // Return all EntryAction actions of a state.
     def List<EntryAction> getEntryActions(State state) {
-        state.localActions.filter(typeof(EntryAction)).toList
+       state.localActions.filter(typeof(EntryAction)).toList
     }
 
     // Return all DuringAction actions of a state.
@@ -1141,7 +1161,7 @@ class SCChartsExtension {
     // -------------------------------------------------------------------------   
     
     def void replaceAllReferences(Scope scope, ValuedObject valuedObject, Expression expression) {
-    	for(obj : scope.eAllContents.toList.immutableCopy) {
+    	for(obj : scope.eAllContents.immutableCopy) {
     		if (obj instanceof ValuedObjectReference
     			&& (obj as ValuedObjectReference).valuedObject == valuedObject
     		) 
@@ -1152,7 +1172,7 @@ class SCChartsExtension {
     }
 
     def void replaceAllReferencesWithCopy(Scope scope, ValuedObject valuedObject, Expression expression) {
-    	for(obj : scope.eAllContents.toList.immutableCopy) {
+    	for(obj : scope.eAllContents.immutableCopy) {
     		if (obj instanceof ValuedObjectReference
     			&& (obj as ValuedObjectReference).valuedObject == valuedObject
     		) 
@@ -1167,7 +1187,7 @@ class SCChartsExtension {
                                                             e instanceof Assignment ||
                                                             e instanceof Emission ||
                                                             e instanceof Binding
-        ).toList.immutableCopy;
+        ).immutableCopy;
     	for(obj : relevantObjects) {
     		if (obj instanceof ValuedObjectReference
     			&& (obj as ValuedObjectReference).valuedObject == valuedObject

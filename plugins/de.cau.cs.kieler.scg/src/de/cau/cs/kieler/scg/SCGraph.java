@@ -13,9 +13,9 @@
  */
 package de.cau.cs.kieler.scg;
 
+import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface SCGraph extends EObject {
+public interface SCGraph extends Annotatable {
     /**
 	 * Returns the value of the '<em><b>Nodes</b></em>' containment reference list.
 	 * The list contents are of type {@link de.cau.cs.kieler.scg.Node}.

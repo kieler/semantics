@@ -101,7 +101,7 @@ public class KiCoAsynchronousCompilation extends Job {
             context.setPrerequirements(transformations.isAdvanced());
             context.setInplace(false);
             context.setProgressMonitor(monitor);
-            context.setCreateDummyResource(true);
+            context.setCreateDummyResource(false);
             result = KielerCompiler.compile(context);
 
             if (monitor.isCanceled()) {
@@ -198,7 +198,7 @@ public class KiCoAsynchronousCompilation extends Job {
     /**
      * Causes additional progressbars to show up ion model view.
      */
-    public void showProgress(IViewer<?> viewer) {
+    public void showProgress(IViewer viewer) {
         //if (!showsProgress && !hasFinishedCompilation()) {
         // final KlighdCanvas canvas = (KlighdCanvas) viewer.getControl();
         //

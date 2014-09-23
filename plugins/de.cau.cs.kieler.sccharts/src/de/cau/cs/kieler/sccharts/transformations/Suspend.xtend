@@ -53,12 +53,12 @@ class Suspend {
     // (within the disabledExpression) 
     // Transforming Suspends.
     def State transform(State rootState) {
-        var targetRootState = rootState.fixAllPriorities;
+        val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootState.getAllStates) {
+        targetRootState.getAllStates.forEach[ targetState |
             targetState.transformSuspend(targetRootState);
-        }
+        ]
         targetRootState.fixAllTextualOrdersByPriorities;
     }
 

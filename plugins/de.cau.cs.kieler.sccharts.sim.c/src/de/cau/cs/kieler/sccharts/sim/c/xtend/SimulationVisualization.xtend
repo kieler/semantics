@@ -101,17 +101,18 @@ class SimulationVisualization {
             targetTransition.transformSimulationVisualizationTransition(targetRootState, transitionUID);
         }
 
-        // Traverse all states
-        i = 0;
-        val originalStatesList = targetRootState.getAllStates.toList;
-        for (targetTransition : originalStatesList.immutableCopy) {
-            val originalState = originalStatesList.get(i);
-            i = i + 1;
-            val originalStateURIFragment = res.getURIFragment(originalState);
-            val stateUID = AUXILIARY_VARIABLE_TAG_STATE + originalStateURIFragment.hashCode.toString().replace("-", "M");
-            targetTransition.transformSimulationVisualizationState(targetRootState, stateUID);
-        }
+// TEMPORARY DISABLED //
 
+//        // Traverse all states
+//        i = 0;
+//        val originalStatesList = targetRootState.getAllStates.toList;
+//        for (targetTransition : originalStatesList.immutableCopy) {
+//            val originalState = originalStatesList.get(i);
+//            i = i + 1;
+//            val originalStateURIFragment = res.getURIFragment(originalState);
+//            val stateUID = AUXILIARY_VARIABLE_TAG_STATE + originalStateURIFragment.hashCode.toString().replace("-", "M");
+//            targetTransition.transformSimulationVisualizationState(targetRootState, stateUID);
+//        }
 
         targetRootState;
     }

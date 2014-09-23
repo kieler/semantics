@@ -161,13 +161,22 @@ public interface ScgPackage extends EPackage {
     int SC_GRAPH = 0;
 
     /**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SC_GRAPH__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+
+				/**
 	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int SC_GRAPH__NODES = 0;
+    int SC_GRAPH__NODES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
 	 * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -176,7 +185,7 @@ public interface ScgPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-    int SC_GRAPH__DECLARATIONS = 1;
+    int SC_GRAPH__DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
 	 * The feature id for the '<em><b>Basic Blocks</b></em>' containment reference list.
@@ -185,7 +194,7 @@ public interface ScgPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-    int SC_GRAPH__BASIC_BLOCKS = 2;
+    int SC_GRAPH__BASIC_BLOCKS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
 	 * The feature id for the '<em><b>Schedules</b></em>' containment reference list.
@@ -194,7 +203,7 @@ public interface ScgPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-    int SC_GRAPH__SCHEDULES = 3;
+    int SC_GRAPH__SCHEDULES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
 	 * The number of structural features of the '<em>SC Graph</em>' class.
@@ -203,9 +212,36 @@ public interface ScgPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-    int SC_GRAPH_FEATURE_COUNT = 4;
+    int SC_GRAPH_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
+	 * The operation id for the '<em>Get Annotation</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SC_GRAPH___GET_ANNOTATION__STRING = 0;
+
+				/**
+	 * The operation id for the '<em>Get All Annotations</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SC_GRAPH___GET_ALL_ANNOTATIONS__STRING = 0;
+
+				/**
+	 * The operation id for the '<em>Remove All Annotations</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SC_GRAPH___REMOVE_ALL_ANNOTATIONS__STRING = 0;
+
+				/**
 	 * The number of operations of the '<em>SC Graph</em>' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

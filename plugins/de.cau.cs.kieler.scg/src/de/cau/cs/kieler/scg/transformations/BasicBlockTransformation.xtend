@@ -16,34 +16,35 @@ package de.cau.cs.kieler.scg.transformations
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.scg.BasicBlock
+import de.cau.cs.kieler.scg.BranchType
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Predecessor
-import de.cau.cs.kieler.scg.SchedulingBlock
-import de.cau.cs.kieler.scg.Dependency
-import java.util.List
-import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
-import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
-import org.eclipse.emf.ecore.EObjectimport java.util.HashMap
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.BranchType
+import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
+import java.util.HashMap
+import java.util.List
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /** 
- * This class is part of the SCG transformation chain. The chain is used to gather important information 
- * about the schedulability of a given SCG. This is done in several key steps. Between two steps the results 
- * are cached in specifically designed metamodels for further processing. At the end of the transformation
- * chain a newly generated (and sequentialized) SCG is returned. <br>
- * You can either call the transformations manually or use the SCG transformation extensions to enrich the
- * SCGs with the desired information.<br>
+ * This class is part of the SCG transformation chain. The chain is used to gather information 
+ * about the schedulability of a given SCG. This is done in several key steps. Contrary to the first 
+ * version of SCGs, there is only one SCG meta-model. In each step the gathered data will be added to 
+ * the model. 
+ * You can either call the transformation manually or use KiCo to perform a series of transformations.
  * <pre>
  * SCG 
  *   |-- Dependency Analysis 	 					
@@ -57,37 +58,49 @@ import de.cau.cs.kieler.scg.BranchType
  * @kieler.rating 2013-10-24 proposed yellow
  */
 
-class BasicBlockTransformation extends AbstractModelTransformation {
+class BasicBlockTransformation extends Transformation {
     
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
     
-    /** Inject SCG extensions. */    
     @Inject
-    extension SCGExtensions
+    extension SCGControlFlowExtensions
+         
          
     // -------------------------------------------------------------------------
     // -- Constants
     // -------------------------------------------------------------------------
-    /** The prefix of each guard. */
+    
     protected val String GUARDPREFIX = "g"
     
+
+    // -------------------------------------------------------------------------
+    // -- Globals
+    // -------------------------------------------------------------------------
     
-    protected val processedNodes = <Node> newArrayList
+    protected val processedNodes = <Node> newHashSet
     protected val basicBlockNodeMapping = new HashMap<Node, BasicBlock>
+    
     
     // -------------------------------------------------------------------------
     // -- Transformation method
     // -------------------------------------------------------------------------
     
-    override transform(EObject eObject) {
-		return transformSCGDEPToSCGBB(eObject as SCGraph)
-	}
+    /** 
+     * Generic model transformation interface.
+     * 
+     * @param eObject
+     *          the root element of the input model
+     * @return Returns the root element of the transformed model.
+     */      
+	override transform(EObject eObject, KielerCompilerContext context) {
+        return transformSCGDEPToSCGBB(eObject as SCGraph)
+    }
     
     /**
      * transformSCGDEPToSCGBB executes the transformation of an SCG with dependency information to an
-     * SCG eniched with basic block information.
+     * SCG enriched with basic block information.
      * 
      * @param scgdep
      * 			the source SCG
@@ -96,15 +109,22 @@ class BasicBlockTransformation extends AbstractModelTransformation {
      * 			if the first node of the SCG is not an entry node.
      */
     public def SCGraph transformSCGDEPToSCGBB(SCGraph scg) {
+        
+        // Since KiCo may use the transformation instance several times, we must clear the caches manually. 
         processedNodes.clear     
         basicBlockNodeMapping.clear
+        
+        // Timestamp for performance information. Should be moved to the KiCo interface globally.
         System.out.println("Nodes: " + scg.nodes.size)  
         val timestamp = System.currentTimeMillis  
 
         // Create the basic blocks beginning with the first node in the node list.
         // It is expected that this node is an entry node.
         if (!(scg.nodes.head instanceof Entry)) throw new UnsupportedSCGException("The basic block analysis expects an entry node as first node!")
-        scg.createBasicBlocks(scg.nodes.head, 0)
+        
+        val basicBlockCache = <BasicBlock> newLinkedList
+        scg.createBasicBlocks(scg.nodes.head, 0, basicBlockCache)
+        scg.basicBlocks += basicBlockCache
         
         val time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Basic Block transformation finished (time elapsed: "+(time / 1000)+"s).")    
@@ -133,9 +153,9 @@ class BasicBlockTransformation extends AbstractModelTransformation {
      * @return Returns the index of the next guard after processing.<br>
      * 		Effectively, this is the count of guards when returning to the main transformation method.
      */
-     protected def int createBasicBlocks(SCGraph scg, Node rootNode, int guardIndex) {
+     protected def int createBasicBlocks(SCGraph scg, Node rootNode, int guardIndex, List<BasicBlock> basicBlockCache) {
         val predecessorBlocks = <BasicBlock> newLinkedList
-        createBasicBlocks(scg, rootNode, guardIndex, predecessorBlocks)        
+        createBasicBlocks(scg, rootNode, guardIndex, basicBlockCache, predecessorBlocks)        
     }   
         
     /**
@@ -166,7 +186,9 @@ class BasicBlockTransformation extends AbstractModelTransformation {
      * 			list of predecessor basic blocks
      * @return Returns the index of the next guard after processing.
      */       
-    protected def int createBasicBlocks(SCGraph scg, Node rootNode, int guardIndex, List<BasicBlock> predecessorBlocks) {
+    protected def int createBasicBlocks(SCGraph scg, Node rootNode, int guardIndex, List<BasicBlock> basicBlockCache,  
+    	List<BasicBlock> predecessorBlocks
+    ) {
     	// The index must not be final. Copy it to newIndex. 
         var newIndex = guardIndex
         // Do the same with the rootNode.
@@ -185,8 +207,8 @@ class BasicBlockTransformation extends AbstractModelTransformation {
             return newIndex;
         }
         
-        if (scg.basicBlocks.size % 10000 == 0) {
-            System.out.println("Basic Blocks: " + scg.basicBlocks.size + " with " + processedNodes.size + " nodes")
+        if (basicBlockCache.size % 10000 == 0) {
+            System.out.println("Basic Blocks: " + basicBlockCache.size + " with " + processedNodes.size + " nodes")
         }
         
         // Create a new ValuedObject for the guards of the upcoming basic block.
@@ -216,9 +238,9 @@ class BasicBlockTransformation extends AbstractModelTransformation {
             	 * createBasicBlock function for each control flow.<br>
             	 * Afterwards, set the node to null which will ensure the exiting of this function instance.
             	 */
-                val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlocks)
-                newIndex = scg.createBasicBlocks((node as Conditional).then.target, newIndex, newLinkedList(block))
-                newIndex = scg.createBasicBlocks((node as Conditional).getElse.target, newIndex, newLinkedList(block))
+                val block = scg.insertBasicBlock(guard, schedulingBlock, basicBlockCache, predecessorBlocks)
+                newIndex = scg.createBasicBlocks((node as Conditional).then.target, newIndex, basicBlockCache, newLinkedList(block))
+                newIndex = scg.createBasicBlocks((node as Conditional).getElse.target, newIndex, basicBlockCache, newLinkedList(block))
                 node = null
             } else 
             if (node instanceof Surface) {
@@ -227,8 +249,8 @@ class BasicBlockTransformation extends AbstractModelTransformation {
             	 * The next block will start at the corresponding depth node.<br>
             	 * Create the block and proceed recursively with the depth. Then ensure the exiting of this instance.
             	 */
-                val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlocks)
-                newIndex = scg.createBasicBlocks((node as Surface).depth, newIndex, newLinkedList(block))
+                val block = scg.insertBasicBlock(guard, schedulingBlock, basicBlockCache, predecessorBlocks)
+                newIndex = scg.createBasicBlocks((node as Surface).depth, newIndex, basicBlockCache, newLinkedList(block))
                 node = null
             }  else
             if (node instanceof Fork) {
@@ -240,19 +262,21 @@ class BasicBlockTransformation extends AbstractModelTransformation {
             	 * so proceed with the corresponding join node of the fork and leave this instance.<br>
             	 */
             	// Insert the actual block. 
-                val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlocks)
+                val block = scg.insertBasicBlock(guard, schedulingBlock, basicBlockCache, predecessorBlocks)
                 // Call the createBasicBlock method for each control flow.
                 for(flow : node.eAllContents.filter(typeof(ControlFlow)).toList) {
-                    newIndex = scg.createBasicBlocks(flow.target, newIndex, newLinkedList(block))
+                    newIndex = scg.createBasicBlocks(flow.target, newIndex, basicBlockCache, newLinkedList(block))
                     
                     // Make sure the exit node was processed.
-                    newIndex = scg.createBasicBlocks((flow.target as Entry).exit, newIndex, <BasicBlock> newLinkedList)
+                    newIndex = scg.createBasicBlocks((flow.target as Entry).exit, newIndex, basicBlockCache, <BasicBlock> newLinkedList)
                 }
 				// Subsequently, retrieve all exit nodes that link to the join node and proceed
 				// with the basic block analysis at the corresponding join node.
                 val joinPredecessors = <BasicBlock> newLinkedList
-                node.getAllNext.forEach[joinPredecessors.add((it.target as Entry).exit.basicBlock)]
-                newIndex = scg.createBasicBlocks((node as Fork).join, newIndex, joinPredecessors)
+                node.getAllNext.forEach[ 
+                	joinPredecessors += basicBlockNodeMapping.get((it.target as Entry).exit) 
+                ]
+                newIndex = scg.createBasicBlocks((node as Fork).join, newIndex, basicBlockCache, joinPredecessors)
                 node = null                
             } else {
             	/**
@@ -271,7 +295,7 @@ class BasicBlockTransformation extends AbstractModelTransformation {
                 	 * Insert the actual block and do not proceed. The calling fork tree will handle 
                 	 * the other threads and the subsequent join analysis.
                 	 */
-                    scg.insertBasicBlock(guard, schedulingBlock, predecessorBlocks)
+                    scg.insertBasicBlock(guard, schedulingBlock, basicBlockCache, predecessorBlocks)
                     node = null
                 } else
                 if (next != null && next.incoming.filter(typeof(ControlFlow)).size > 1) {
@@ -279,8 +303,8 @@ class BasicBlockTransformation extends AbstractModelTransformation {
                 	 * If the next block has more than one incoming control flow, it starts a new block.
                 	 * Hence, add the actual block and proceed with the next one but exit this instance. 
                 	 */
-                    val block = scg.insertBasicBlock(guard, schedulingBlock, predecessorBlocks)
-                    newIndex = scg.createBasicBlocks(next, newIndex, newLinkedList(block)) 
+                    val block = scg.insertBasicBlock(guard, schedulingBlock, basicBlockCache, predecessorBlocks)
+                    newIndex = scg.createBasicBlocks(next, newIndex, basicBlockCache, newLinkedList(block)) 
                     node = null;
                 } else {
                 	/** None of the basic block criteria fits. Simply proceed with the next node. */
@@ -313,7 +337,7 @@ class BasicBlockTransformation extends AbstractModelTransformation {
      * @return Returns the actual newly generated basic block.
      */     
     protected def BasicBlock insertBasicBlock(SCGraph scg, ValuedObject guard, SchedulingBlock schedulingBlock,
-        List<BasicBlock> predecessorBlocks
+        List<BasicBlock> basicBlockCache, List<BasicBlock> predecessorBlocks
     ) {
     	// Create a new basic block with the Scgbb factory.
         val basicBlock = ScgFactory::eINSTANCE.createBasicBlock
@@ -349,7 +373,7 @@ class BasicBlockTransformation extends AbstractModelTransformation {
         // Add all predecessors. To do this createPredecessors creates a list with predecessor objects.
         basicBlock.predecessors.addAll(predecessorBlocks.createPredecessors(basicBlock))
         // Add the newly created basic block to the SCG...
-        scg.basicBlocks.add(basicBlock)
+        basicBlockCache.add(basicBlock)
         
         basicBlock.schedulingBlocks.forEach[ nodes.forEach[ basicBlockNodeMapping.put(it, basicBlock) ]]
                 

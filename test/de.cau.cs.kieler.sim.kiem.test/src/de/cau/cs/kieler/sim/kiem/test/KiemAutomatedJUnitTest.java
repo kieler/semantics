@@ -34,11 +34,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
@@ -126,7 +122,7 @@ public abstract class KiemAutomatedJUnitTest {
     /** The Apache log4j logger. */
     private static Logger logger = Logger.getLogger(KiemAutomatedJUnitTest.class);
 
-    /** If in strict mode, require an ESO file for all model files and raise an error otehrwise. */
+    /** If in strict mode, require an ESO file for all model files and raise an error otherwise. */
     public static final boolean STRICT_MODE_REQUIRE_ESO_FOR_ALL_MODEL_FILES = false;
 
     // -------------------------------------------------------------------------
@@ -636,6 +632,12 @@ public abstract class KiemAutomatedJUnitTest {
     private static List<IPath> createLinksForAllExternalTestFiles(final String pluginId,
             final IPath bundleTestPath, final String temporaryWorkspaceFolderName) {
         List<IPath> allFiles = new LinkedList<IPath>();
+        
+        // If no bundleTestPath then return
+        if (bundleTestPath == null) {
+            return allFiles;
+        }
+        
         // If the bundle is not ready then there is no image
         final Bundle bundle = Platform.getBundle(pluginId);
 

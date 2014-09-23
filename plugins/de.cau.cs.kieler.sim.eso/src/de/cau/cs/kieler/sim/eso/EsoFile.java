@@ -167,7 +167,7 @@ public class EsoFile implements ITraceProvider {
 
         IResourceFactory resourceFactory = injector.getInstance(IResourceFactory.class);
         // setup.doSetup();
-        URI uri = URI.createURI("de.cau.cs.kieler.sim.esi"); // Activator.PLUGIN_ID);
+        URI uri = URI.createURI("de.cau.cs.kieler.sim.eso"); // Activator.PLUGIN_ID);
         XtextResource resource = (XtextResource) resourceFactory.createResource(uri);
         rs.getResources().add(resource);
 
@@ -188,12 +188,12 @@ public class EsoFile implements ITraceProvider {
         Injector inj = new EsoStandaloneSetup().createInjectorAndDoEMFRegistration();
         IParser parser = inj.getInstance(IParser.class);
         IParseResult parseResult = parser.parse(new InputStreamReader(in));
-        if (parseResult.getSyntaxErrors().iterator().hasNext()) {
-            INode errorElem = parseResult.getSyntaxErrors().iterator().next();
-            throw new KiemInitializationException("Parse error on line " + errorElem.getStartLine()
-                    + " at column " + errorElem.getTotalOffset() + ": "
-                    + parseResult.getSyntaxErrors().iterator().next().getText(), true, null);
-        }
+//        if (parseResult.getSyntaxErrors().iterator().hasNext()) {
+//            INode errorElem = parseResult.getSyntaxErrors().iterator().next();
+//            throw new KiemInitializationException("Parse error on line " + errorElem.getStartLine()
+//                    + " at column " + errorElem.getTotalOffset() + ": "
+//                    + parseResult.getSyntaxErrors().iterator().next().getText(), true, null);
+//        }
         traceList = (tracelist) parseResult.getRootASTElement();
 
         LinkedList<ITrace> res = new LinkedList<ITrace>();

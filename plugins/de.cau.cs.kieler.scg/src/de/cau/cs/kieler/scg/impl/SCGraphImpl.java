@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.scg.impl;
 
+import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.scg.BasicBlock;
 import de.cau.cs.kieler.scg.Node;
@@ -13,7 +14,6 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class SCGraphImpl extends MinimalEObjectImpl.Container implements SCGraph {
+public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
     /**
 	 * The cached value of the '{@link #getNodes() <em>Nodes</em>}' containment reference list.
 	 * <!-- begin-user-doc -->

@@ -24,11 +24,13 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.kico
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.scg,
+ de.cau.cs.kieler.scg.analyzer,
  de.cau.cs.kieler.scg.extensions,
  de.cau.cs.kieler.scg.impl,
  de.cau.cs.kieler.scg.optimizer,
  de.cau.cs.kieler.scg.schedulers,
  de.cau.cs.kieler.scg.sequentializer,
+ de.cau.cs.kieler.scg.synchronizer,
  de.cau.cs.kieler.scg.transformations,
  de.cau.cs.kieler.scg.util
 Bundle-ActivationPolicy: lazy
