@@ -75,7 +75,6 @@ import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoMessageModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
-import de.cau.cs.kieler.kico.klighd.model.KiCoModelWrapper;
 import de.cau.cs.kieler.kico.ui.KiCoSelection;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
 import de.cau.cs.kieler.klighd.IViewer;
@@ -128,16 +127,20 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     /** The icon for saving current model. */
     private static final ImageDescriptor ICON_SAVE = AbstractUIPlugin.imageDescriptorFromPlugin(
             "org.eclipse.ui", "icons/full/etool16/save_edit.gif");
-    /** The icon for toggling side-by-side display mode button. */
+    /** The icon for toggling compile button. */
     private static final ImageDescriptor ICON_COMPILE = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.klighd", "icons/KiCoModelViewIconCompile.png");
-    /** The icon for toggling compile button. */
+    /** The icon for fork view button. */
     private static final ImageDescriptor ICON_FORK = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.klighd", "icons/KiCoModelViewIconDuplicate.png");
-    /** The icon for fork view button. */
+    /** The icon for toggling side-by-side display mode button. */
     private static final ImageDescriptor ICON_SIDE_BY_SIDE = AbstractUIPlugin
             .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.klighd",
                     "icons/KiCoModelViewIconSideBySide.png");
+    /** The icon for toggling chain display mode button. */
+    private static final ImageDescriptor ICON_CHAIN = AbstractUIPlugin
+            .imageDescriptorFromPlugin("de.cau.cs.kieler.kico.klighd",
+                    "icons/KiCoModelViewIconChain.png");
     /** The icon for pin selection button. */
     private static final ImageDescriptor ICON_PIN = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.kico.klighd", "icons/KiCoModelViewIconPin.png");
@@ -151,7 +154,12 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     private Action actionSideBySideToggle;
     /** Flag if side-by-side display mode is active. */
     private boolean displaySideBySide = false;
-
+    
+    /** The action for toggling chain display mode. */
+    private Action actionChainToggle;
+    /** Flag if chain display mode is active. */
+    private boolean displayChain = false;
+    
     /** The action for toggling compile. */
     private Action actionCompileToggle;
     /** Flag if compile mode is active. */
@@ -288,7 +296,8 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
         toolBarManager.add(getActionCompile());
         toolBarManager.add(getActionPin());
         toolBarManager.add(getActionSideBySide());
-
+        toolBarManager.add(getActionChain());
+        
         IMenuManager menu = bars.getMenuManager();
         menu.add(new Separator());
         menu.add(getActionPauseSync());
@@ -454,7 +463,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     }
 
     /**
-     * Gets the action to toggle side-by-side display mode.
+     * Gets the action to toggle side-by-side display mode and chain display mode accordingly.
      * 
      * @return the action
      */
@@ -464,7 +473,11 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
         }
         actionSideBySideToggle = new Action("", IAction.AS_CHECK_BOX) {
             public void run() {
-                displaySideBySide = isChecked();
+                if (isChecked()) {
+                    displaySideBySide = true;
+                    displayChain = false;
+                    actionChainToggle.setChecked(displayChain);
+                }
                 updateModel(ChangeEvent.DISPLAY_MODE);
             }
         };
@@ -474,6 +487,33 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
         actionSideBySideToggle.setImageDescriptor(ICON_SIDE_BY_SIDE);
         actionSideBySideToggle.setChecked(displaySideBySide);
         return actionSideBySideToggle;
+    }
+    
+    /**
+     * Gets the action to toggle chain display mode and side-by-side display mode accordingly.
+     * 
+     * @return the action
+     */
+    private Action getActionChain() {
+        if (actionChainToggle != null) {
+            return actionChainToggle;
+        }
+        actionChainToggle = new Action("", IAction.AS_CHECK_BOX) {
+            public void run() {
+                if (isChecked()) {
+                    displayChain = true;
+                    displaySideBySide = false;
+                    actionSideBySideToggle.setChecked(displaySideBySide);
+                }
+                updateModel(ChangeEvent.DISPLAY_MODE);
+            }
+        };
+        actionChainToggle.setText("Enable tranformation chain display mode");
+        actionChainToggle.setToolTipText("Enable tranformation chain display mode");
+        // actionSideBySideToggle.setToolTipText("Enables side-by-side display mode of compiled and source model.");
+        actionChainToggle.setImageDescriptor(ICON_CHAIN);
+        actionChainToggle.setChecked(displayChain);
+        return actionChainToggle;
     }
 
     /**
@@ -710,6 +750,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 child.actionCompileToggle.setChecked(compileModel);
                 // adopt display mode settings
                 child.displaySideBySide = displaySideBySide;
+                child.displayChain = displayChain;
                 child.actionSideBySideToggle.setChecked(displaySideBySide);
                 // adopt transformation settings
                 child.pinnedTransformations =
@@ -952,10 +993,11 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
             // composite model in given display mode
             if (!noDiagram && displaySideBySide) {
-                KiCoModelChain chain = new KiCoModelChain();
-                chain.getModels().add(new KiCoModelWrapper(sourceModel));
-                chain.getModels().add(new KiCoModelWrapper(currentModel));
-                currentModel = chain;
+                currentModel = new KiCoModelChain(sourceModel, currentModel);
+            } else if (!noDiagram && displayChain && currentCompilationResult != null) {
+                currentModel =
+                        new KiCoModelChain(currentCompilationResult, activeEditor.getTitle(),
+                                transformations);
             }
 
             // Indicates if type of model changed and thus the model view has to reinitialize
@@ -979,7 +1021,6 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             boolean is_buisness_model = true;
             is_buisness_model &= !(currentModel instanceof KiCoErrorModel);
             is_buisness_model &= !(currentModel instanceof KiCoMessageModel);
-            is_buisness_model &= !(currentModel instanceof KiCoCodePlaceHolder);
             
             if (do_update_diagram) {
                 if (noDiagram && is_buisness_model) {
@@ -1043,10 +1084,8 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             
             //get available synthesis
             ISynthesis synthesis = Iterables.getFirst(KlighdDataManager.getInstance().getAvailableSyntheses(model.getClass()), null);
-            if(synthesis == null){                
-                KiCoModelChain chain = new KiCoModelChain();
-                chain.getModels().add(new KiCoModelWrapper(model));
-                model = chain;
+            if(synthesis == null){
+                model = new KiCoModelChain(model);
             }
 
             // Update diagram
