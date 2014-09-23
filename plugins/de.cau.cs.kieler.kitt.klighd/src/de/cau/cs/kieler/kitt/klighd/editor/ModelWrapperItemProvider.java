@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.kitt.klighd.editor;
 
 
-import de.cau.cs.kieler.kitt.klighd.KiTTKLignDPlugin;
+import de.cau.cs.kieler.kitt.klighd.KittKlighdPlugin;
 
 import de.cau.cs.kieler.kitt.tracingtree.ModelWrapper;
 import de.cau.cs.kieler.kitt.tracingtree.TracingTreeFactory;
@@ -266,7 +266,7 @@ public class ModelWrapperItemProvider
      */
     @Override
     public ResourceLocator getResourceLocator() {
-        return KiTTKLignDPlugin.INSTANCE;
+        return KittKlighdPlugin.INSTANCE;
     }
 
 }

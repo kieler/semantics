@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.kitt.klighd.editor;
 
 
-import de.cau.cs.kieler.kitt.klighd.KiTTKLignDPlugin;
+import de.cau.cs.kieler.kitt.klighd.KittKlighdPlugin;
 
 import de.cau.cs.kieler.kitt.tracingtree.EObjectWrapper;
 import de.cau.cs.kieler.kitt.tracingtree.TracingTreePackage;
@@ -240,7 +240,7 @@ public class EObjectWrapperItemProvider
      */
     @Override
     public ResourceLocator getResourceLocator() {
-        return KiTTKLignDPlugin.INSTANCE;
+        return KittKlighdPlugin.INSTANCE;
     }
 
 }

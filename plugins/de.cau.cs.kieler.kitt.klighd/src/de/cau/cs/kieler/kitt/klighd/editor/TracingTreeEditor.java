@@ -167,7 +167,7 @@ import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
 
 import de.cau.cs.kieler.kitt.klighd.editor.TracingTreeItemProviderAdapterFactory;
 
-import de.cau.cs.kieler.kitt.klighd.KiTTKLignDPlugin;
+import de.cau.cs.kieler.kitt.klighd.KittKlighdPlugin;
 
 import org.eclipse.emf.ecore.provider.EcoreItemProviderAdapterFactory;
 
@@ -552,7 +552,7 @@ public class TracingTreeEditor
                     }
                 }
                 catch (CoreException exception) {
-                    KiTTKLignDPlugin.INSTANCE.log(exception);
+                    KittKlighdPlugin.INSTANCE.log(exception);
                 }
             }
         };
@@ -668,7 +668,7 @@ public class TracingTreeEditor
                     showTabs();
                 }
                 catch (PartInitException exception) {
-                    KiTTKLignDPlugin.INSTANCE.log(exception);
+                    KittKlighdPlugin.INSTANCE.log(exception);
                 }
             }
 
@@ -679,7 +679,7 @@ public class TracingTreeEditor
                         markerHelper.createMarkers(diagnostic);
                     }
                     catch (CoreException exception) {
-                        KiTTKLignDPlugin.INSTANCE.log(exception);
+                        KittKlighdPlugin.INSTANCE.log(exception);
                     }
                 }
             }
@@ -1545,7 +1545,7 @@ public class TracingTreeEditor
         catch (Exception exception) {
             // Something went wrong that shouldn't.
             //
-            KiTTKLignDPlugin.INSTANCE.log(exception);
+            KittKlighdPlugin.INSTANCE.log(exception);
         }
         updateProblemIndication = true;
         updateProblemIndication();
@@ -1749,7 +1749,7 @@ public class TracingTreeEditor
      * @generated
      */
     private static String getString(String key) {
-        return KiTTKLignDPlugin.INSTANCE.getString(key);
+        return KittKlighdPlugin.INSTANCE.getString(key);
     }
 
     /**
@@ -1759,7 +1759,7 @@ public class TracingTreeEditor
      * @generated
      */
     private static String getString(String key, Object s1) {
-        return KiTTKLignDPlugin.INSTANCE.getString(key, new Object [] { s1 });
+        return KittKlighdPlugin.INSTANCE.getString(key, new Object [] { s1 });
     }
 
     /**

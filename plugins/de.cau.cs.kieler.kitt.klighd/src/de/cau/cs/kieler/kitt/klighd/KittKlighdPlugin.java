@@ -26,7 +26,7 @@ import org.osgi.framework.BundleContext;
  * @kieler.rating 2014-08-19 proposed yellow
  *
  */
-public class KiTTKLignDPlugin extends EMFPlugin implements BundleActivator {
+public class KittKlighdPlugin extends EMFPlugin implements BundleActivator {
 
     /**
      * <!-- begin-user-doc -->
@@ -41,7 +41,7 @@ public class KiTTKLignDPlugin extends EMFPlugin implements BundleActivator {
      * <!-- end-user-doc -->
      * @generated
      */
-    public static final KiTTKLignDPlugin INSTANCE = new KiTTKLignDPlugin();
+    public static final KittKlighdPlugin INSTANCE = new KittKlighdPlugin();
     
     /**
      * Keep track of the singleton.
@@ -57,7 +57,7 @@ public class KiTTKLignDPlugin extends EMFPlugin implements BundleActivator {
      * <!-- end-user-doc -->
      * @generated
      */
-    public KiTTKLignDPlugin() {
+    public KittKlighdPlugin() {
         super
             (new ResourceLocator [] {
                 EcoreEditPlugin.INSTANCE,

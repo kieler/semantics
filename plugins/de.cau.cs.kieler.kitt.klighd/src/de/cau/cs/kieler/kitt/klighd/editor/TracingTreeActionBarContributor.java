@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.kitt.klighd.editor;
 
-import de.cau.cs.kieler.kitt.klighd.KiTTKLignDPlugin;
+import de.cau.cs.kieler.kitt.klighd.KittKlighdPlugin;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -91,14 +91,14 @@ public class TracingTreeActionBarContributor
      * @generated
      */
     protected IAction showPropertiesViewAction =
-        new Action(KiTTKLignDPlugin.INSTANCE.getString("_UI_ShowPropertiesView_menu_item")) {
+        new Action(KittKlighdPlugin.INSTANCE.getString("_UI_ShowPropertiesView_menu_item")) {
             @Override
             public void run() {
                 try {
                     getPage().showView("org.eclipse.ui.views.PropertySheet");
                 }
                 catch (PartInitException exception) {
-                    KiTTKLignDPlugin.INSTANCE.log(exception);
+                    KittKlighdPlugin.INSTANCE.log(exception);
                 }
             }
         };
@@ -111,7 +111,7 @@ public class TracingTreeActionBarContributor
      * @generated
      */
     protected IAction refreshViewerAction =
-        new Action(KiTTKLignDPlugin.INSTANCE.getString("_UI_RefreshViewer_menu_item")) {
+        new Action(KittKlighdPlugin.INSTANCE.getString("_UI_RefreshViewer_menu_item")) {
             @Override
             public boolean isEnabled() {
                 return activeEditorPart instanceof IViewerProvider;
@@ -198,7 +198,7 @@ public class TracingTreeActionBarContributor
     public void contributeToMenu(IMenuManager menuManager) {
         super.contributeToMenu(menuManager);
 
-        IMenuManager submenuManager = new MenuManager(KiTTKLignDPlugin.INSTANCE.getString("_UI_TracingTreeEditor_menu"), "de.cau.cs.kieler.kitt.tracingtreeMenuID");
+        IMenuManager submenuManager = new MenuManager(KittKlighdPlugin.INSTANCE.getString("_UI_TracingTreeEditor_menu"), "de.cau.cs.kieler.kitt.tracingtreeMenuID");
         menuManager.insertAfter("additions", submenuManager);
         submenuManager.add(new Separator("settings"));
         submenuManager.add(new Separator("actions"));
@@ -207,12 +207,12 @@ public class TracingTreeActionBarContributor
 
         // Prepare for CreateChild item addition or removal.
         //
-        createChildMenuManager = new MenuManager(KiTTKLignDPlugin.INSTANCE.getString("_UI_CreateChild_menu_item"));
+        createChildMenuManager = new MenuManager(KittKlighdPlugin.INSTANCE.getString("_UI_CreateChild_menu_item"));
         submenuManager.insertBefore("additions", createChildMenuManager);
 
         // Prepare for CreateSibling item addition or removal.
         //
-        createSiblingMenuManager = new MenuManager(KiTTKLignDPlugin.INSTANCE.getString("_UI_CreateSibling_menu_item"));
+        createSiblingMenuManager = new MenuManager(KittKlighdPlugin.INSTANCE.getString("_UI_CreateSibling_menu_item"));
         submenuManager.insertBefore("additions", createSiblingMenuManager);
 
         // Force an update because Eclipse hides empty menus now.
@@ -403,11 +403,11 @@ public class TracingTreeActionBarContributor
         super.menuAboutToShow(menuManager);
         MenuManager submenuManager = null;
 
-        submenuManager = new MenuManager(KiTTKLignDPlugin.INSTANCE.getString("_UI_CreateChild_menu_item"));
+        submenuManager = new MenuManager(KittKlighdPlugin.INSTANCE.getString("_UI_CreateChild_menu_item"));
         populateManager(submenuManager, createChildActions, null);
         menuManager.insertBefore("edit", submenuManager);
 
-        submenuManager = new MenuManager(KiTTKLignDPlugin.INSTANCE.getString("_UI_CreateSibling_menu_item"));
+        submenuManager = new MenuManager(KittKlighdPlugin.INSTANCE.getString("_UI_CreateSibling_menu_item"));
         populateManager(submenuManager, createSiblingActions, null);
         menuManager.insertBefore("edit", submenuManager);
     }

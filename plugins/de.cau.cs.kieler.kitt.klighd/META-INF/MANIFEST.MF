@@ -18,6 +18,6 @@ Require-Bundle: com.google.inject,
  de.cau.cs.kieler.klighd.ui,
  de.cau.cs.kieler.klighd.piccolo,
  de.cau.cs.kieler.kitt
-Bundle-Activator: de.cau.cs.kieler.kitt.klighd.KiTTKLignDPlugin
+Bundle-Activator: de.cau.cs.kieler.kitt.klighd.KittKlighdPlugin
 Export-Package: de.cau.cs.kieler.kitt.klighd.tracing,
  de.cau.cs.kieler.kitt.klighd.tracing.internal;x-internal:=true
