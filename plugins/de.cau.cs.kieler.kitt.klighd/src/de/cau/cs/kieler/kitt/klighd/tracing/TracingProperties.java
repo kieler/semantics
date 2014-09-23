@@ -46,7 +46,7 @@ public final class TracingProperties {
             "de.cau.cs.kieler.kitt.klighd.tracing.model_root_node", false);
 
     /**
-     * Indicates Tracing visualization mode of a diagram in its ViewContext
+     * Indicates Tracing visualization mode of a diagram in its ViewContext.
      */
     public static final IProperty<TracingMode> TRACING_VISUALAIZATION_MODE =
             new Property<TracingMode>("de.cau.cs.kieler.kitt.klighd.tracing.mode",
@@ -72,7 +72,7 @@ public final class TracingProperties {
             "de.cau.cs.kieler.kitt.klighd.tracing.selection.target", false);
 
     /**
-     * Holds the highlighting for a selected element.
+     * Holds the highlighting styles for an diagram element.
      */
     public static final IProperty<List<? extends KStyle>> TRACING_SELECTION_HIGHLIGHTING =
             new Property<List<? extends KStyle>>(

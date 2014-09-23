@@ -19,15 +19,21 @@ import org.eclipse.emf.common.util.AbstractTreeIterator;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 
 /**
+ * Generic Version of the EMF TreeIterator which uses a variable depthFunction to determine
+ * iteration successors.
+ * 
  * @author als
- *
+ * @kieler.design 2014-09-23 proposed
+ * @kieler.rating 2014-09-23 proposed yellow
  */
 public class GenericTreeIterator<E> extends AbstractTreeIterator<E> {
     private static final long serialVersionUID = 1L;
 
+    /** successor function */
     private final Function1<Object, Iterator<E>> depthFunction;
-    
-    public GenericTreeIterator(E object, boolean includeRoot, Function1<Object, Iterator<E>> depthFunction) {
+
+    public GenericTreeIterator(E object, boolean includeRoot,
+            Function1<Object, Iterator<E>> depthFunction) {
         super(object, includeRoot);
         this.depthFunction = depthFunction;
     }

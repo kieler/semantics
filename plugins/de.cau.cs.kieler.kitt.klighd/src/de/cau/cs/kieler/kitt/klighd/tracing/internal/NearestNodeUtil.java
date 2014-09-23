@@ -18,11 +18,14 @@ import de.cau.cs.kieler.core.kgraph.KGraphElement;
 import de.cau.cs.kieler.core.kgraph.KLabel;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.kgraph.KPort;
+import de.cau.cs.kieler.core.krendering.KRendering;
 
 /**
- * Serves utility function to calculate the nearest KNode for a KGraphElement.
+ * Serves utility function to calculate the nearest KNode for a KGraphElement or a KRendering.
  * 
  * @author als
+ * @kieler.design 2014-09-23 proposed
+ * @kieler.rating 2014-09-23 proposed yellow
  */
 public final class NearestNodeUtil {
 
@@ -33,17 +36,19 @@ public final class NearestNodeUtil {
     }
 
     /**
-     * Calculates the nearest KNode for a KGraphElement which is the most sensible node to use for
-     * associations.
+     * Calculates the nearest KNode for a KGraphElement or KRendering which is the most sensible
+     * node to use for associations.
      * 
-     * @param element
-     *            element to find node for
+     * @param object
+     *            KGraphElement or KRendering instance
      * @return nearest node or null
      */
-    public static KNode getNearestNode(final Object obj) {
-        if (obj instanceof KGraphElement) {
-            return getNearestNode((KGraphElement) obj, null);
-        } else {
+    public static KNode getNearestNode(final Object object) {
+        if(object instanceof KGraphElement){
+            return getNearestNode((KGraphElement)object, null);
+        }else if(object instanceof KRendering){
+            return getNearestNode(((KRendering)object).eContainer());
+        }else{
             return null;
         }
     }

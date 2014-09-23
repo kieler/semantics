@@ -26,9 +26,12 @@ import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
-import java.util.EventObject
 
 /**
+ * 
+ * Abstract base class for all action handling selection for tracing.
+ * <p>
+ * Also handles highlighting of selected nodes.
  * 
  * @author als
  * @kieler.design 2014-08-26 proposed
@@ -39,6 +42,10 @@ abstract class AbstractTracingSelectionAction implements IAction {
     /** KRenderingFactory to generate KRenderings. */
     private static val factory = KRenderingFactory.eINSTANCE;
 
+    /**
+     * Adds highlighting styles to selected diagram elements.
+     * @param diagram the diagram.
+     */
     static def showTracingSelection(KNode diagram) {
         diagram.getModelRootNodes.forEach [
             val node = it as KNode
@@ -47,10 +54,9 @@ abstract class AbstractTracingSelectionAction implements IAction {
             val isSource = data.getProperty(TracingProperties.TRACING_SOURCE_SELECTION);
             val isTarget = data.getProperty(TracingProperties.TRACING_TARGET_SELECTION);
             if (highlighting == null && isSource) {
-
-                //Source selection style
                 data.setProperty(TracingProperties.TRACING_SELECTION_HIGHLIGHTING,
                     node.getData().filter(KRendering).fold(newLinkedList()) [ list, rendering |
+                        //Source selection style
                         val fg = factory.createKForeground();
                         val c = factory.createKColor();
                         c.setColor(Colors.AQUAMARINE);
@@ -60,10 +66,9 @@ abstract class AbstractTracingSelectionAction implements IAction {
                         return list;
                     ]);
             } else if (highlighting == null && isTarget) {
-
-                //Target selection style
                 data.setProperty(TracingProperties.TRACING_SELECTION_HIGHLIGHTING,
                     node.getData().filter(KRendering).fold(newLinkedList()) [ list, rendering |
+                        //Target selection style
                         val fg = factory.createKForeground();
                         val c = factory.createKColor();
                         c.setColor(Colors.VIOLET_RED);
@@ -73,9 +78,8 @@ abstract class AbstractTracingSelectionAction implements IAction {
                         return list;
                     ]);
             } else if (highlighting != null && !isSource && !isTarget) {
-
-                //remove style
                 highlighting.forEach [
+                    //remove style from its parent
                     (it.eContainer as KRendering).getStyles().remove(it);
                 ];
                 data.setProperty(TracingProperties.TRACING_SELECTION_HIGHLIGHTING, null);
@@ -85,12 +89,18 @@ abstract class AbstractTracingSelectionAction implements IAction {
     //TODO maybe fisheye view when both source and target are selected
     }
 
+    /**
+     * Removed highlighting styles from selected diagram elements.
+     * @param diagram the diagram.
+     */
     static def hideTracingSelection(KNode diagram) {
         diagram.getModelRootNodes.forEach [
             val data = (it as KNode).getData(KLayoutData);
+            //get styles from property
             val highlighting = data.getProperty(TracingProperties.TRACING_SELECTION_HIGHLIGHTING);
             if (highlighting != null) {
                 highlighting.forEach [
+                    //remove style from its parent
                     (it.eContainer as KRendering).getStyles().remove(it);
                 ];
                 data.setProperty(TracingProperties.TRACING_SELECTION_HIGHLIGHTING, null);
@@ -98,15 +108,23 @@ abstract class AbstractTracingSelectionAction implements IAction {
         ];
     }
 
+    /**
+     * Returns the Pair of original models elements selected in the given diagram.
+     * Returns null if not both source and target are selected.
+     * @param diagram the diagram.
+     * @param viewContext the view context of the diagram.
+     * @return selected source target pair or null.
+     */
     static def Pair<EObject, EObject> getTracingSelection(KNode diagram, ViewContext viewContext) {
-        val modelNodes = diagram.getModelRootNodes;
-        val sourceModelNode = modelNodes.findFirst [
+        //get selected nodes
+        val sourceModelNode = diagram.getModelRootNodes.findFirst [
             (it as KNode).getData(KLayoutData)?.getProperty(TracingProperties.TRACING_SOURCE_SELECTION);
         ];
-        val targetModelNode = modelNodes.findFirst [
+        val targetModelNode = diagram.getModelRootNodes.findFirst [
             (it as KNode).getData(KLayoutData)?.getProperty(TracingProperties.TRACING_TARGET_SELECTION);
         ];
         if (sourceModelNode != null && targetModelNode != null && sourceModelNode != targetModelNode) {
+            //map to model elements
             val sourceModelObject = viewContext.getSourceElement(sourceModelNode);
             val targetModelObject = viewContext.getSourceElement(targetModelNode);
             if (sourceModelObject instanceof EObject && targetModelObject instanceof EObject) {
@@ -116,10 +134,16 @@ abstract class AbstractTracingSelectionAction implements IAction {
         return null;
     }
 
+    /**
+     * Returns an Iterable over all node in given diagram representing tracing model root nodes.
+     * @param diagram the diagram.
+     * @return Iterator over diagram nodes.
+     */
     protected static def getModelRootNodes(KNode diagram) {
         return diagram.eAllContentsOfType2(typeof(KNode)).filter [
             val data = (it as KNode).getData(KLayoutData);
             if (data != null) {
+                //ModelRootNodes can be marked with property or are instances of ModelWrapper
                 return data.getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE) ||
                     data.getProperty(KlighdInternalProperties.MODEL_ELEMEMT) instanceof ModelWrapper;
             } else {

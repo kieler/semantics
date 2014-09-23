@@ -15,17 +15,11 @@ package de.cau.cs.kieler.kitt.klighd.tracing.internal;
 
 import java.awt.geom.Point2D;
 
-import com.google.common.collect.Iterables;
-
-import de.cau.cs.kieler.core.kgraph.KGraphElement;
-import de.cau.cs.kieler.kiml.klayoutdata.KEdgeLayout;
-import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
 import de.cau.cs.kieler.klighd.microlayout.Bounds;
 import de.cau.cs.kieler.klighd.piccolo.internal.controller.KlighdPathController;
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KCustomConnectionFigureNode;
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KlighdPath;
 import de.cau.cs.kieler.klighd.piccolo.internal.util.Styles;
-import de.cau.cs.kieler.klighd.util.ModelingUtil;
 
 /**
  * @author als

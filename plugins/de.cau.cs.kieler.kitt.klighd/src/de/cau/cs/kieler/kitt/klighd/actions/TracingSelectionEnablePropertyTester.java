@@ -24,7 +24,7 @@ import de.cau.cs.kieler.kitt.tracingtree.ModelWrapper;
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
 
 /**
- * PropertyTester to check if a selected KNode contains appropriate properties for tracing actions
+ * PropertyTester to check if a selected KNode contains appropriate properties for tracing actions.
  * 
  * @author als
  * @kieler.design 2014-08-26 proposed
@@ -68,7 +68,7 @@ public class TracingSelectionEnablePropertyTester extends PropertyTester {
                 }
             }
         } catch (Exception e) {
-            // return false
+            // fall-through return false
         }
         return false;
     }

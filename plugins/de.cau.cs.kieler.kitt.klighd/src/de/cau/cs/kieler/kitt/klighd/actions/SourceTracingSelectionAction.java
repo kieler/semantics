@@ -23,7 +23,6 @@ import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption.TracingMode;
 import de.cau.cs.kieler.kitt.klighd.update.TracingVisualizationUpdateStrategy;
 import de.cau.cs.kieler.klighd.IKlighdSelection;
-import de.cau.cs.kieler.klighd.IAction.ActionResult;
 
 /**
  * 
