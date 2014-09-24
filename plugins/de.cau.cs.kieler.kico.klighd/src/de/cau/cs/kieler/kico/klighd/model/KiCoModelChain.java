@@ -87,9 +87,11 @@ public class KiCoModelChain {
      * @param transformations
      *            the selected transformations
      */
-    public KiCoModelChain(final CompilationResult compilationResult, final String modelName,
+    public KiCoModelChain(Object sourceModel, final CompilationResult compilationResult, final String modelName,
             KiCoSelection selection) {
         ListIterator<String> trans = compilationResult.getTransformations().listIterator();
+        models.add(sourceModel);
+        collapse.put(sourceModel, false);
         for (Object model : compilationResult.getIntermediateResults()) {
             String nextTrans = trans.hasNext() ? trans.next(): "";
             if (model instanceof String) {
@@ -103,6 +105,7 @@ public class KiCoModelChain {
                 collapse.put(model, true);
             }
         }
+        collapse.put(models.getLast(), false);
         blankMode = false;
     }
 

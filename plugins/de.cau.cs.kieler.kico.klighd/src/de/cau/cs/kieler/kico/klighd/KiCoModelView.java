@@ -996,7 +996,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 currentModel = new KiCoModelChain(sourceModel, currentModel);
             } else if (!noDiagram && displayChain && currentCompilationResult != null) {
                 currentModel =
-                        new KiCoModelChain(currentCompilationResult, activeEditor.getTitle(),
+                        new KiCoModelChain(sourceModel, currentCompilationResult, activeEditor.getTitle(),
                                 transformations);
             }
 
