@@ -22,10 +22,17 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Predecessor
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.sequentializer.EmptyExpression
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.extensions.ThreadPathType
+import de.cau.cs.kieler.scg.sequentializer.EmptyExpression
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import java.util.Map
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -66,13 +73,21 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
     extension KExpressionsExtension
     
     @Inject
+    extension SCGCoreExtensions
+    
+    @Inject
     extension SCGControlFlowExtensions
     
     @Inject
     extension SCGThreadExtensions
+
+    @Inject
+    extension AnnotationsExtensions
    
     private val OPERATOREXPRESSION_DEPTHLIMIT = 16
     private val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8
+
+    public static val SYNCHRONIZER_ID = "de.cau.cs.kieler.scg.synchronizer.surface"
 
     // -------------------------------------------------------------------------
     // -- Synchronizer
@@ -120,8 +135,22 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         // Count the exit nodes. The counter is used for enumerating the empty expressions.        
         var exitNodeCount = 0
         
+        val threadPathTypes = <Exit, ThreadPathType> newHashMap;
+        
+        var delayFound = false
+        for(entry:join.getEntryNodes) {
+            val t = entry.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2 
+            threadPathTypes.put(entry.exit, t)
+            if (t != ThreadPathType::INSTANTANEOUS) {
+                delayFound = true
+            }
+        }
+        
         // Build an empty expression for each exit node.
         for(exit:exitNodes){
+            
+            if (!delayFound || threadPathTypes.get(exit) != ThreadPathType::INSTANTANEOUS) {
+            
         	// Increment the exit node counter and retrieve the scheduling block of the exit node.
         	exitNodeCount = exitNodeCount + 1
             val exitSB = exit.getCachedSchedulingBlock
@@ -182,6 +211,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
            	// At least one thread must be exited in this tick to trigger the synchronizer.
 //            terminationExpr.subExpressions.add(exitSB.guard.reference)
             terminationExpr.subExpressions.add(exitSB.guard.reference)
+        }
         }
 
 		/**
@@ -306,6 +336,41 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         
         // Return the gathered data (to the scheduler).
         data 
+    }
+       
+    override String getId() {
+        return SYNCHRONIZER_ID
+    }
+    
+    override isSynchronizable(Iterable<ThreadPathType> threadPathTypes) {
+        var synchronizable = true
+        
+        for(tpt : threadPathTypes) {
+            if (tpt == ThreadPathType::POTENTIAL_INSTANTANEOUS) synchronizable = false
+        } 
+        
+        synchronizable
+    }
+    
+    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache) {
+        val excludeSet = <Predecessor> newHashSet
+
+        val predecessors = schedulingBlockCache.get(join).basicBlock.predecessors.toSet
+        
+        var delayFound = false
+        for(entry:join.getEntryNodes) {
+            val t = entry.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2 
+            if (t != ThreadPathType::INSTANTANEOUS) {
+                delayFound = true
+            } else {
+                excludeSet += predecessors.filter[ it.basicBlock == schedulingBlockCache.get(entry.exit).basicBlock ]
+            }
+        }
+       
+        if (!delayFound) { 
+            excludeSet.clear
+        }
+        return excludeSet
     }
     
 }

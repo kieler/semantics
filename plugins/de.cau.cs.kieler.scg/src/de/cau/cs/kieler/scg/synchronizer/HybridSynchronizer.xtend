@@ -19,6 +19,11 @@ import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.ThreadPathType
+import de.cau.cs.kieler.scg.Predecessor
+import java.util.Map
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SchedulingBlock
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -68,6 +73,8 @@ class HybridSynchronizer extends AbstractSynchronizer {
     // -- Constants
     // -------------------------------------------------------------------------
     	
+    public static val SYNCHRONIZER_ID = "de.cau.cs.kieler.scg.synchronizer.hybrid"    	
+    	
    	private val String FORKVARSUFFIX = "_F"
    	private val String EXITVARSUFFIX = "_T"
     	
@@ -116,5 +123,17 @@ class HybridSynchronizer extends AbstractSynchronizer {
         
         data		
 	}
+    
+    override isSynchronizable(Iterable<ThreadPathType> threadPathTypes) {
+        throw new UnsupportedOperationException("TODO: auto-generated method stub")
+    }
+    
+    override getId() {
+        return SYNCHRONIZER_ID
+    }
+    
+    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache) {
+        <Predecessor> newHashSet
+    }    
 		
 }
