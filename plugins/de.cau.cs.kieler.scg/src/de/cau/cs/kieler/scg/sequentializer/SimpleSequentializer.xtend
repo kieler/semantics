@@ -13,8 +13,8 @@
  */
 package de.cau.cs.kieler.scg.sequentializer
 
-import com.google.inject.Guice
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorType
@@ -31,15 +31,14 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Schedule
 import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
-import de.cau.cs.kieler.scg.synchronizer.SurfaceSynchronizer
+import de.cau.cs.kieler.scg.synchronizer.SynchronizerSelector
 import java.util.HashMap
 import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
-import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -78,6 +77,8 @@ class SimpleSequentializer extends AbstractSequentializer {
     @Inject
     extension AnnotationsExtensions
 
+    @Inject
+    extension SynchronizerSelector
     
     // -------------------------------------------------------------------------
     // -- Globals
@@ -435,9 +436,8 @@ class SimpleSequentializer extends AbstractSequentializer {
     protected def GuardExpression createSynchronizerBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
         // The simple scheduler uses the SurfaceSynchronizer. 
         // The result of the synchronizer is stored in the synchronizerData class joinData.
-        val SurfaceSynchronizer synchronizer = Guice.createInjector().getInstance(typeof(SurfaceSynchronizer))
-        synchronizer.setSchedulingCache(schedulingBlockCache)
-        val joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join)
+        val synchronizer = (schedulingBlock.nodes.head as Join).getSynchronizer
+        val joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join, schedulingBlockCache)
 
         joinData.guardExpression
     }
