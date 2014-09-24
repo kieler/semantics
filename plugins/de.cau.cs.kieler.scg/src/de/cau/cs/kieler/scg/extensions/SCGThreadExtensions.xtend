@@ -384,7 +384,10 @@ class SCGThreadExtensions {
     	ThreadPathType type, Map<Entry, ThreadPathType> threadTypes, Entry source
     ) {
     	// Already in the local flow list: loop! Abort.
-        if (localFlow.contains(next)) return;
+        if (localFlow.contains(next)) {
+            threadTypes.addToThreadPathTypeMap(source, type)
+            return;
+        }
         
         // Target node is reached. Add the control flow, 
         // then add the local flow to the list of flows and return.
