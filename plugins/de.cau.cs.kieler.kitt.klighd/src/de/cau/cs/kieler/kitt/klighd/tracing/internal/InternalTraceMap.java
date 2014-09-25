@@ -16,11 +16,11 @@ package de.cau.cs.kieler.kitt.klighd.tracing.internal;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EObject;
-
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
+
+import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping;
 
 /**
  * A HashMultimap which also provides a fast reverse mapping.
@@ -35,46 +35,56 @@ import com.google.common.collect.Multimaps;
  */
 public class InternalTraceMap {
 
-    private final HashMultimap<EObject, EObject> mapping = HashMultimap.create(10000, 10);
-    private final HashMultimap<EObject, EObject> rev_mapping = HashMultimap.create(10000, 10);
+    private final HashMultimap<Object, Object> mapping = HashMultimap.create(10000, 10);
+    private final HashMultimap<Object, Object> rmapping = HashMultimap.create(10000, 10);
 
     /**
      * Add a new multimapping to this mapping and its reverse version.
      * @param multimap
      */
-    public void addMapping(Multimap<EObject, EObject> multimap) {
-        for (Entry<EObject, EObject> entry : multimap.entries()) {
+    public void addMapping(Multimap<Object, Object> multimap) {
+        for (Entry<Object, Object> entry : multimap.entries()) {
             mapping.put(entry.getKey(), entry.getValue());
-            rev_mapping.put(entry.getValue(), entry.getKey());
+            rmapping.put(entry.getValue(), entry.getKey());
         }
     }
 
+
+    /**
+     * Add a new tracing mapping to this mapping and its reverse version.
+     * @param multimap
+     */
+    public void addMapping(TracingMapping traceMapping) {
+        mapping.putAll(traceMapping.getMapping());
+        rmapping.putAll(traceMapping.getReverseMapping());
+    }
+    
     /**
      * @return the mapping
      */
-    public Multimap<EObject, EObject> getMapping() {
+    public Multimap<Object, Object> getMapping() {
         return Multimaps.unmodifiableMultimap(mapping);
     }
 
     /**
      * @return the reverse mapping
      */
-    public Multimap<EObject, EObject> getReverseMapping() {
-        return Multimaps.unmodifiableMultimap(rev_mapping);
+    public Multimap<Object, Object> getReverseMapping() {
+        return Multimaps.unmodifiableMultimap(rmapping);
     }
 
     /**
      * @see com.google.common.collect.AbstractSetMultimap#get(java.lang.Object)
      */
-    public Set<EObject> get(EObject key) {
+    public Set<Object> get(Object key) {
         return mapping.get(key);
     }
 
     /**
      * @see com.google.common.collect.AbstractSetMultimap#get(java.lang.Object)
      */
-    public Set<EObject> getReverse(EObject key) {
-        return rev_mapping.get(key);
+    public Set<Object> getReverse(Object key) {
+        return rmapping.get(key);
     }
 
 }

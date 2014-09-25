@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kitt.klighd.actions.AbstractTracingSelectionAction.*
 import static extension de.cau.cs.kieler.kitt.klighd.tracing.internal.NearestNodeUtil.*
-import static extension de.cau.cs.kieler.kitt.tracing.ModelTracingManager.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingManager.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 
 /**
@@ -169,8 +169,7 @@ class TracingVisualizer {
             } else {
                 val mapping = viewContext.getProperty(TracingProperties.TRACING_MAP);
                 if (mapping != null) {
-                    val selectedSourceElementsList = selectedSourceElements.filter[it instanceof EObject].map[
-                        it as EObject].toList;
+                    val selectedSourceElementsList = selectedSourceElements.toList;
                     var children = selectedSourceElementsList;
                     while (!children.empty && visibleEdgesModelOrigin.addAll(children)) {
                         children = children.fold(newLinkedList) [ list, item |
@@ -239,33 +238,34 @@ class TracingVisualizer {
                 val traceMap = new InternalTraceMap();
                 val selection = diagram.getTracingSelection(viewContext);
                 if (selection != null) { //resolve mapping if source target are selected
-                    val mapping = getMapping(selection.key, selection.value)
+                    val mapping = getMapping(selection.key, selection.value);
                     mapping.addTracingEdges(viewContext);
                     traceMap.addMapping(mapping);
                 } else { //dont resolve -> show all
-                    val chain = (tracedModels.head as EObject).tracingChain;
-                    if (!chain.empty) {
+                    val chain = tracedModels.head.tracingChain;
+                    if (!chain.models.empty) {
 
                         //Iterate over all step in the chain apply mappings
-                        val chainIter = chain.listIterator;
+                        val chainIter = chain.models.listIterator;
                         var item = chainIter.next;
                         while (chainIter.hasNext) {
                             var next = chainIter.next;
-                            if (tracedModels.contains(item.key)) {
-                                if (tracedModels.contains(next.key)) {
+                            if (tracedModels.contains(item)) {
+                                if (tracedModels.contains(next)) {
 
                                     //create edges
-                                    item.value.addTracingEdges(viewContext);
-                                    traceMap.addMapping(item.value);
+                                    val mapping = chain.getRawMapping(item, next);
+                                    mapping.mapping.addTracingEdges(viewContext);
+                                    traceMap.addMapping(mapping);
                                 }
                             } else { //if a model in the chain is not represented in the diagram skip it and resolve to next represented one
                                 var loop = true;
                                 while (loop || chainIter.hasNext) {
                                     next = chainIter.next;
-                                    if (tracedModels.contains(next.key)) {
+                                    if (tracedModels.contains(next)) {
 
                                         //create edges
-                                        val mapping = getMapping(item.key, next.key)
+                                        val mapping = getMapping(item, next)
                                         mapping.addTracingEdges(viewContext);
                                         traceMap.addMapping(mapping);
 
@@ -283,7 +283,7 @@ class TracingVisualizer {
         }
     }
 
-    private def addTracingEdges(Multimap<EObject, EObject> mapping, ViewContext viewContext) {
+    private def addTracingEdges(Multimap<Object, Object> mapping, ViewContext viewContext) {
         if (mapping != null && !mapping.empty) {
             mapping.entries.forEach [ entry |
                 viewContext.getTargetElements(entry.key).forEach [ source |
@@ -347,6 +347,8 @@ class TracingVisualizer {
                     it.getData(KLayoutData).setProperty(LayoutOptions.NO_LAYOUT, true);
                     it.getData(KLayoutData).setProperty(TracingProperties.TRACING_EDGE, origin);
                     it.addPolyline => [
+                        it.foreground = KRenderingFactory.eINSTANCE.createKColor() =>
+                            [it.red = 255; it.green = 0; it.blue = 0];
                         it.invisible = true;
                         it.invisible.propagateToChildren = true;
                     ];

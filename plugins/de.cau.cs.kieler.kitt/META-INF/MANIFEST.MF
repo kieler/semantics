@@ -16,6 +16,7 @@ Require-Bundle: org.eclipse.ui,
  com.google.inject
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.kitt.tracing,
+ de.cau.cs.kieler.kitt.tracing.internal;x-friends:="de.cau.cs.kieler.kitt.klighd",
  de.cau.cs.kieler.kitt.tracingtree,
  de.cau.cs.kieler.kitt.tracingtree.impl,
  de.cau.cs.kieler.kitt.tracingtree.util

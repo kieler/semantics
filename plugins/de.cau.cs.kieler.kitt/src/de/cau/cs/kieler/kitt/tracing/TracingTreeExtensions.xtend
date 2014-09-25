@@ -19,6 +19,8 @@ import de.cau.cs.kieler.kitt.tracingtree.EObjectWrapper
 import de.cau.cs.kieler.kitt.tracingtree.ModelTransformation
 import de.cau.cs.kieler.kitt.tracingtree.ModelWrapper
 import de.cau.cs.kieler.kitt.tracingtree.TracingTreeFactory
+import java.io.IOException
+import java.util.Collections
 import java.util.HashMap
 import java.util.HashSet
 import java.util.LinkedList
@@ -33,6 +35,7 @@ import org.eclipse.emf.compare.rcp.EMFCompareRCPPlugin
 import org.eclipse.emf.compare.scope.FilterComparisonScope
 import org.eclipse.emf.compare.utils.UseIdentifiers
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 
 import static com.google.common.base.Preconditions.*
@@ -652,6 +655,35 @@ class TracingTreeExtensions {
 
             return elementMapping;
         }
+    }
+    
+     /**
+     * Saves a TracingTree model into the given resource.
+     * 
+     * @param tracingTree
+     *            the tracing tree root element
+     * @param resource
+     *            the resource to save into
+     * @return true if saving was successful else false
+     */
+    def boolean saveTracingTree(ModelWrapper tracingTree, Resource resource) {
+        if (tracingTree != null) {
+            // Add the model objects to the contents.
+            resource.contents.add(tracingTree);
+            resource.contents.add(tracingTree.rootObject.EObject);
+            tracingTree.succeedingModelWrappers.forEach[
+                resource.contents.add(it.rootObject.EObject);
+            ];
+
+            // Save the contents of the resource to the file system.
+            try {
+                resource.save(Collections.EMPTY_MAP);
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 
     // -------------------------------------------------------------------------

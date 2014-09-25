@@ -29,7 +29,6 @@ import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption
-import de.cau.cs.kieler.kitt.tracing.ModelTracingManager
 import de.cau.cs.kieler.kitt.tracing.TracingTreeExtensions
 import de.cau.cs.kieler.kitt.tracingtree.EObjectWrapper
 import de.cau.cs.kieler.kitt.tracingtree.ModelWrapper
@@ -45,6 +44,7 @@ import javax.inject.Inject
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kitt.tracing.TracingManager
 
 /**
  * KLighD visualization for TraingTrees and EObjectsCollections in ModelWrappers.
@@ -143,7 +143,7 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
         ];
 
         //This is a special case where the model itself is its own tracing
-        ModelTracingManager.activateTracing(model);
+        TracingManager.activateTracing(model);
         return rootNode;
     }
 
