@@ -25,6 +25,7 @@ import java.util.List
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.kico.KielerCompilerContext
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -148,7 +149,8 @@ class ThreadAwareScheduler extends SimpleScheduler {
     }	
 	
 	
-    protected override boolean createSchedule(SCGraph scg, List<SchedulingBlock> schedule, SchedulingConstraints constraints) {
+    protected override boolean createSchedule(SCGraph scg, List<SchedulingBlock> schedule, SchedulingConstraints constraints,
+    	KielerCompilerContext context) {
 
         // fixpoint is set to true if an iteration cannot set any remaining blocks.
         var fixpoint  = false

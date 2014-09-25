@@ -42,11 +42,13 @@ public class GuardExpression {
     private ValuedObject valuedObject;
     private Expression expression;
     private List<EmptyExpression> emptyExpressions;
+    private List<AssignmentExpression> additionalExpressions;
     
     public GuardExpression() {
         valuedObject = null;
         expression = null;
         emptyExpressions = new ArrayList<EmptyExpression>();
+        additionalExpressions = new ArrayList<AssignmentExpression>();
     }
 
     public ValuedObject getValuedObject() {
@@ -71,6 +73,14 @@ public class GuardExpression {
     
     public void addEmptyExpression(EmptyExpression emptyExpression) {
         this.emptyExpressions.add(emptyExpression);
+    }
+    
+    public List<AssignmentExpression> getAdditionalExpressions() {
+        return this.additionalExpressions;
+    }
+    
+    public void addAdditionalExpression(AssignmentExpression assignmentExpression) {
+        this.additionalExpressions.add(assignmentExpression);
     }
 
 } // GuardExpression

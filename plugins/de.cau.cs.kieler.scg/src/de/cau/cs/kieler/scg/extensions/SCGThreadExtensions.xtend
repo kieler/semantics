@@ -239,6 +239,97 @@ class SCGThreadExtensions {
         nodeSet.add(exit)
         returnMap
     }   
+    
+    /**
+     * Retrieves all nodes of a thread. In the SCG sense a thread starts at its 
+     * entry node and ends at its exit node. Hence, each thread is identified by
+     * its entry node and the successors of a fork node (retrievable via
+     * {@link #getAllNext(Node)}) are the entry nodes of each thread of that fork node.
+     * 
+     * @param entry
+     * 			the entry node of the thread
+     * @return Returns a list of nodes of the given thread. 
+     */
+    def Set<Node> getShallowThreadNodes (Entry entry) {
+    	// Create a new list of nodes and 
+    	// a list of control flows that mark paths within the thread.
+        val nodeSet = <Node> newHashSet
+        val controlFlows = <ControlFlow> newLinkedList
+        
+        // Add the entry node itself and retrieve the exit of the thread
+        // with aid of the opposite relation in the entry node. 
+        val exit = entry.exit
+        
+        // If the exit node follows the entry node directly, exit here.
+        if (entry.next.target == exit) {
+	        nodeSet.add(exit)
+    	    return nodeSet
+        }
+        
+        // Now, follow the control flow until the exit node is reached 
+        // and add each node that is not already in the node list.
+        controlFlows.addAll(entry.allNext)
+        while(!controlFlows.empty) {
+        	// Next node is the first target in the control flow list.
+            var nextNode = controlFlows.head.target
+            
+            // Remove this control flow.
+            controlFlows.remove(0)
+            
+            nodeSet.add(nextNode);
+            
+            if (nextNode instanceof Fork) {
+            	nextNode = (nextNode as Fork).join
+            	nodeSet.add(nextNode);
+            }
+            
+            if (nextNode instanceof Surface) {
+	            // Since surface node do not have extra control flows to their 
+    	        // corresponding depth, set the next node manually.
+                nextNode = (nextNode as Surface).depth
+                nodeSet.add(nextNode);                                
+            }
+            
+            // Now, add all succeeding control flow provided 
+            //   - that the flow is not already included in the flow list
+            //   - the target of the flow is not already processed
+            //   - and the target of the flow is not the exit node.  
+            if (nextNode != null)
+            nextNode.allNext.filter[ 
+            	(!nodeSet.contains(it.target)) && 
+            	(!controlFlows.contains(it)) && 
+                (!it.target.equals(exit)) ] 
+                	=> [ controlFlows.addAll(it) ]
+        }
+        
+        // Reverse search outgoing from the exit node
+        controlFlows.addAll(exit.allPrevious)
+        while(!controlFlows.empty) {
+            var nextNode = controlFlows.head.eContainer as Node
+            controlFlows.remove(0)
+            nodeSet.add(nextNode)
+            if (nextNode instanceof Join) {
+            	// It is not necessary to reverse search the included threads again
+            	// because their reverse search was executed in the previous call also.
+            	// Therefore, proceed directly with the entry node.
+            	nextNode = (nextNode as Join).fork
+            	nodeSet.add(nextNode);
+            }            
+            if (nextNode instanceof Depth) {
+                nextNode = (nextNode as Depth).surface
+                nodeSet.add(nextNode)
+            }
+            if (nextNode != null && nextNode != exit.entry)
+            nextNode.allPrevious.filter[ 
+                (!nodeSet.contains(it.eContainer)) && 
+                (!controlFlows.contains(it)) ] 
+                    => [ controlFlows.addAll(it) ]
+        }
+        
+        // Add the exit node and return.
+        nodeSet.add(exit)
+        nodeSet
+    }       
        
     
    /** 

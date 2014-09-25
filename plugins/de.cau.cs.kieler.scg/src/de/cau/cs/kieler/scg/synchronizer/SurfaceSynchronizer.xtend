@@ -33,6 +33,10 @@ import java.util.Map
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.kico.AbstractKielerCompilerAncillaryData
+import java.util.List
+import de.cau.cs.kieler.scg.BasicBlock
+import java.util.Set
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -84,8 +88,8 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
     @Inject
     extension AnnotationsExtensions
    
-    private val OPERATOREXPRESSION_DEPTHLIMIT = 16
-    private val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8
+    protected val OPERATOREXPRESSION_DEPTHLIMIT = 16
+    protected val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8
 
     public static val SYNCHRONIZER_ID = "de.cau.cs.kieler.scg.synchronizer.surface"
 
@@ -370,7 +374,8 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         synchronizable
     }
     
-    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache) {
+    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
+    	List<AbstractKielerCompilerAncillaryData> ancillaryData) {
         val excludeSet = <Predecessor> newHashSet
 
         val predecessors = schedulingBlockCache.get(join).basicBlock.predecessors.toSet
@@ -390,5 +395,9 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         }
         return excludeSet
     }
+    
+	override getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, List<AbstractKielerCompilerAncillaryData> ancillaryData) {
+		<Predecessor> newHashSet
+	}    
     
 }

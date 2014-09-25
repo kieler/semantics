@@ -24,6 +24,8 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.synchronizer.SynchronizerSelector
 import java.util.List
 import java.util.Set
+import java.util.ArrayList
+import de.cau.cs.kieler.kico.KielerCompilerContext
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -58,21 +60,37 @@ class DelayAwareScheduler extends SimpleScheduler {
     // -- Globals 
     // -------------------------------------------------------------------------
     
-    protected def boolean isPlaceable(SchedulingBlock schedulingBlock, List<SchedulingBlock> remainingBlocks, 
-        List<SchedulingBlock> schedule, SCGraph scg, Set<Predecessor> excludeSet
+    protected val predecessorExcludeSet = <Predecessor> newHashSet   
+    protected val predecessorIncludeSets = <BasicBlock, Set<Predecessor>> newHashMap 
+    
+    override def boolean isPlaceable(SchedulingBlock schedulingBlock, List<SchedulingBlock> remainingBlocks, 
+        List<SchedulingBlock> schedule, SCGraph scg
     ) {
         // Assume all preconditions are met and query parent basic block.
         val parentBasicBlock = schedulingBlock.eContainer as BasicBlock
                 
         // For all predecessor blocks check whether they are already processed.
         for(predecessor : parentBasicBlock.predecessors){
-            if (!excludeSet.contains(predecessor)) {
+            if (!predecessorExcludeSet.contains(predecessor)) {
                 for(sBlock : predecessor.basicBlock.schedulingBlocks){
                     // If any scheduling block of that basic block is not already in our schedule,
                     // the precondition test fails. Set placeable to false.
                     if (!placedBlocks.contains(sBlock)) { return false }
                 }
             }
+        }
+        
+        // For all predecessor blocks check whether they are already processed.
+        if (predecessorIncludeSets.containsKey(parentBasicBlock)) {
+	        for(predecessor : predecessorIncludeSets.get(parentBasicBlock)){
+    	        if (!predecessorExcludeSet.contains(predecessor)) {
+        	        for(sBlock : predecessor.basicBlock.schedulingBlocks){
+            	        // If any scheduling block of that basic block is not already in our schedule,
+                	    // the precondition test fails. Set placeable to false.
+                    	if (!placedBlocks.contains(sBlock)) { return false }
+                	}
+            	}
+        	}        
         }
                 
         // Basically, perform the same test for dependency. We cannot create a guard expression 
@@ -95,25 +113,24 @@ class DelayAwareScheduler extends SimpleScheduler {
         if (!topologicalSortVisited.contains(schedulingBlock)) {
             topologicalSortVisited.add(schedulingBlock)
             
-            val excludeSet = <Predecessor> newHashSet
-            
-            // Check synchronizer if corresponding basic block is a synchronizer block
-            if (schedulingBlock.basicBlock.synchronizerBlock) {
-                val join = schedulingBlock.basicBlock.schedulingBlocks.head.nodes.head as Join
-                val synchronizer = join.chooseSynchronizer
-                System.out.println("Using synchronizer " + synchronizer.getId + " for " + join.toString);
-                synchronizer.annotate(join)
-                excludeSet += synchronizer.getExcludedPredecessors(join, schedulingBlockCache)
-            }
-            
             for(predecessor : schedulingBlock.basicBlock.predecessors) {
-                if (!excludeSet.contains(predecessor)) {
+                if (!predecessorExcludeSet.contains(predecessor)) {
                     for (sBlock : predecessor.basicBlock.schedulingBlocks) {
                         if (!topologicalSortVisited.contains(sBlock))
                              sBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, scg)
                     }
                 }
             }
+	        if (predecessorIncludeSets.containsKey(schedulingBlock.basicBlock)) {
+    	        for(predecessor : predecessorIncludeSets.get(schedulingBlock.basicBlock)) {
+        	        if (!predecessorExcludeSet.contains(predecessor)) {
+            	        for (sBlock : predecessor.basicBlock.schedulingBlocks) {
+                	        if (!topologicalSortVisited.contains(sBlock))
+                    	         sBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, scg)
+	                    }
+    	            }
+        	    }
+        	}
             for(dependency : schedulingBlock.dependencies) {
                 if (dependency.concurrent && !dependency.confluent) {
                     val sBlock = schedulingBlockCache.get(dependency.eContainer as Node)
@@ -123,11 +140,41 @@ class DelayAwareScheduler extends SimpleScheduler {
                 }
             }
             
-            if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg, excludeSet)) {
+            if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg)) {
                 schedule.add(schedulingBlock)
                 placedBlocks.add(schedulingBlock)
             }
         } 
     }    
+    
+    override def boolean createSchedule(SCGraph scg, List<SchedulingBlock> schedule, SchedulingConstraints constraints, 
+    	KielerCompilerContext context) {
+
+        val schedulingBlocks = new ArrayList<SchedulingBlock>(schedulingBlockCount)
+        schedulingBlocks.addAll(constraints.schedulingBlocks)
+        
+        topologicalSortVisited.clear
+        placedBlocks.clear
+        predecessorExcludeSet.clear
+
+		for(schedulingBlock : schedulingBlocks.filter[ basicBlock.synchronizerBlock ]) {        
+            val join = schedulingBlock.basicBlock.schedulingBlocks.head.nodes.head as Join
+            val synchronizer = join.chooseSynchronizer
+            System.out.println("Using synchronizer " + synchronizer.getId + " for " + join.toString);
+            synchronizer.annotate(join)
+            
+            predecessorExcludeSet += synchronizer.getExcludedPredecessors(join, schedulingBlockCache, context.compilationResult.ancillaryData)
+            val predecessorIncludeSet = synchronizer.getAdditionalPredecessors(join, schedulingBlockCache, context.compilationResult.ancillaryData)
+            predecessorIncludeSets.put(schedulingBlock.basicBlock, predecessorIncludeSet)
+        }        
+        
+        for (sBlock : schedulingBlocks) {
+        	if (!topologicalSortVisited.contains(sBlock)) {
+                sBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, scg)
+            }
+        }
+        
+        schedule.size == schedulingBlocks.size
+    }
 
 }

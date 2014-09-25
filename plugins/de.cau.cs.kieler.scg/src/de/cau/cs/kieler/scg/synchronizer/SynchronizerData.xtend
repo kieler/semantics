@@ -16,12 +16,12 @@ package de.cau.cs.kieler.scg.synchronizer
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.util.Pair
+import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.sequentializer.GuardExpression
 import java.util.HashMap
 import java.util.List
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.sequentializer.GuardExpression
 
 /**
  * The {@code SynchronizerData} class comprises members for the data mandatory to 
@@ -56,13 +56,16 @@ class SynchronizerData {
     @Property
     HashMap<Node, ValuedObject> threadMapping = new HashMap<Node, ValuedObject>
     
+    @Property
+    Join join
+    
     /**
      * Map of additional assignments with respect to their scheduling blocks.
      * The synchronizer might want to add additional assignments to synchronize threads. 
      * Therefore this field allows storage after their creation so that the scheduler and the
      * sequentializer might use them.
      */
-    private val additionalAssignments = new HashMap<SchedulingBlock, List<de.cau.cs.kieler.core.util.Pair<ValuedObject, Expression>>>
+    private val additionalAssignments = new HashMap<SchedulingBlock, List<Pair<ValuedObject, Expression>>>
     
     
 	public def SynchronizerData addAdditionalAssignment(SchedulingBlock schedulingBlock, 
@@ -77,7 +80,7 @@ class SynchronizerData {
 		this
 	} 
 	
-	public def List<de.cau.cs.kieler.core.util.Pair<ValuedObject, Expression>> getAdditionalAssignments(SchedulingBlock schedulingBlock) {
+	public def List<Pair<ValuedObject, Expression>> getAdditionalAssignments(SchedulingBlock schedulingBlock) {
 		additionalAssignments.get(schedulingBlock)
 	}
 	

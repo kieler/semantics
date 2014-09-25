@@ -24,6 +24,10 @@ import de.cau.cs.kieler.scg.Predecessor
 import java.util.Map
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SchedulingBlock
+import java.util.List
+import de.cau.cs.kieler.kico.AbstractKielerCompilerAncillaryData
+import de.cau.cs.kieler.scg.BasicBlock
+import java.util.Set
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -132,8 +136,14 @@ class HybridSynchronizer extends AbstractSynchronizer {
         return SYNCHRONIZER_ID
     }
     
-    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache) {
+    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache,
+    	List<AbstractKielerCompilerAncillaryData> ancillaryData
+    ) {
         <Predecessor> newHashSet
     }    
+    
+	override getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, List<AbstractKielerCompilerAncillaryData> ancillaryData) {
+		<Predecessor> newHashSet
+	}    
 		
 }

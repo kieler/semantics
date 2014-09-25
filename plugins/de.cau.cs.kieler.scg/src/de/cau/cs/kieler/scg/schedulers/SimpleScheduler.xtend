@@ -147,7 +147,8 @@ class SimpleScheduler extends AbstractScheduler {
     }
     
     
-    protected def boolean createSchedule(SCGraph scg, List<SchedulingBlock> schedule, SchedulingConstraints constraints) {
+    protected def boolean createSchedule(SCGraph scg, List<SchedulingBlock> schedule, SchedulingConstraints constraints,
+    	KielerCompilerContext context) {
 
         val schedulingBlocks = new ArrayList<SchedulingBlock>(schedulingBlockCount)
         schedulingBlocks.addAll(constraints.schedulingBlocks)
@@ -194,7 +195,7 @@ class SimpleScheduler extends AbstractScheduler {
         schedulingBlockCount = scg.createSchedulingBlockCache(schedulingBlockCache)
         
         val sBlockList = <SchedulingBlock> newLinkedList
-        var schedulable = scg.createSchedule(sBlockList, schedulingConstraints)
+        var schedulable = scg.createSchedule(sBlockList, schedulingConstraints, context)
         schedule.schedulingBlocks += sBlockList
         
         // Print out results on the console

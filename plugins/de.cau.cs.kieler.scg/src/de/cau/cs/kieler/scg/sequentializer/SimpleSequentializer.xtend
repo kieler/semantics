@@ -39,6 +39,7 @@ import java.util.HashMap
 import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kico.KielerCompilerContext
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -87,6 +88,7 @@ class SimpleSequentializer extends AbstractSequentializer {
     private static val ANNOTATION_SEQUENTIALIZED = "sequentialized" 
     
     protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
+    protected var KielerCompilerContext compilerContext
 
     /** Caching for predecessors */
     protected val predecessorTwinCache = <Predecessor, Predecessor> newHashMap
@@ -109,9 +111,10 @@ class SimpleSequentializer extends AbstractSequentializer {
      * 			the source SCG with scheduling information
      * @return Returns a sequentialized standard SCG.
      */    
-     override SCGraph sequentialize(SCGraph scg) {
+     override SCGraph sequentialize(SCGraph scg, KielerCompilerContext context) {
 
         val timestamp = System.currentTimeMillis
+        compilerContext = context
           
         /**
          * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 
@@ -286,6 +289,22 @@ class SimpleSequentializer extends AbstractSequentializer {
                 nextControlFlows.add(emptyExpressionAssignment.next)
             ]
         ]
+        
+        // Create additional expressions if present.
+        guardExpression.additionalExpressions.forEach[ additionalExpression |
+            val newValuedObject = scg.createValuedObject(additionalExpression.valuedObject.name).setTypeBool
+            additionalExpression.valuedObject.addToValuedObjectMapping(newValuedObject)
+                                    
+            ScgFactory::eINSTANCE.createAssignment => [ additionalExpressionAssignment |
+                additionalExpressionAssignment.valuedObject = additionalExpression.valuedObject.getValuedObjectCopy
+                additionalExpressionAssignment.assignment = additionalExpression.expression.copySCGExpression
+                nodeCache.add(additionalExpressionAssignment)
+                nextControlFlows.forEach[ target = additionalExpressionAssignment ]
+                nextControlFlows.clear 
+                additionalExpressionAssignment.next = ScgFactory::eINSTANCE.createControlFlow             
+                nextControlFlows.add(additionalExpressionAssignment.next)
+            ]
+        ]        
         // Then, copy the expression of the guard to the newly created assignment.
         assignment.assignment = guardExpression.expression.copySCGExpression    
     }    
@@ -437,7 +456,7 @@ class SimpleSequentializer extends AbstractSequentializer {
         // The simple scheduler uses the SurfaceSynchronizer. 
         // The result of the synchronizer is stored in the synchronizerData class joinData.
         val synchronizer = (schedulingBlock.nodes.head as Join).getSynchronizer
-        val joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join, schedulingBlockCache)
+        val joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join, compilerContext, schedulingBlockCache)
 
         joinData.guardExpression
     }
