@@ -1315,7 +1315,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private def void synthesizeAnalyses(SCGraph scg) {
 
         // val AnalysesVisualization analysesVisualization = Guice.createInjector().getInstance(typeof(AnalysesVisualization))
-//        if(!SHOW_POTENTIALPROBLEMS.booleanValue) return;
+        if(!SHOW_POTENTIALPROBLEMS.booleanValue) return;
 //        scg.analyses.forEach[visualize(it, this)]
 
         if (PIL_Nodes.empty) return;
