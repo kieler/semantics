@@ -165,6 +165,10 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
 				return createScheduleAdapter();
 			}
 			@Override
+			public Adapter caseScheduledBlock(ScheduledBlock object) {
+				return createScheduledBlockAdapter();
+			}
+			@Override
 			public Adapter caseAnnotatable(Annotatable object) {
 				return createAnnotatableAdapter();
 			}
@@ -483,6 +487,20 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
 	}
 
     /**
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.ScheduledBlock <em>Scheduled Block</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.ScheduledBlock
+	 * @generated
+	 */
+	public Adapter createScheduledBlockAdapter() {
+		return null;
+	}
+
+				/**
 	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.Annotatable <em>Annotatable</em>}'.
 	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;

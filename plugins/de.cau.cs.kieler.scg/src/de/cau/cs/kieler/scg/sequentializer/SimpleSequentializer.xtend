@@ -206,7 +206,8 @@ class SimpleSequentializer extends AbstractSequentializer {
     	
     	
     	// For each scheduling block in the schedule iterate.
-    	for (sBlock : schedule.schedulingBlocks) {
+    	for (sBlocks : schedule.scheduledBlocks) {
+    		val sBlock = sBlocks.schedulingBlock
 	  	   /**
    			 * For each guard a guard expression exists.
    		     * Retrieve the expression and test it for null. 

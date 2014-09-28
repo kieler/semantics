@@ -26,6 +26,8 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.scg.ScheduledBlock
+import de.cau.cs.kieler.scg.ScgFactory
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -115,7 +117,7 @@ class ThreadAwareScheduler extends SimpleScheduler {
 	
     protected def int topologicalClusterPlacement(SchedulingBlock schedulingBlock, 
         int clusterPosition, 
-        List<SchedulingBlock> schedulingBlocks, List<SchedulingBlock> schedule, 
+        List<SchedulingBlock> schedulingBlocks, List<ScheduledBlock> schedule, 
         SchedulingConstraints constraints, List<SchedulingBlock> visited, SCGraph scg
     ) {
         var placed = 0
@@ -139,7 +141,10 @@ class ThreadAwareScheduler extends SimpleScheduler {
             }
             
             if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg)) {
-                schedule.add(schedulingBlock)
+            	val scheduledBlock = ScgFactory.eINSTANCE.createScheduledBlock => [
+            		it.schedulingBlock = schedulingBlock
+            	]
+                schedule.add(scheduledBlock)
                 placedBlocks.add(schedulingBlock)
                 constraints.schedulingBlockClusters.get(clusterPosition).remove(schedulingBlock)
                 placed = placed + 1
@@ -149,7 +154,7 @@ class ThreadAwareScheduler extends SimpleScheduler {
     }	
 	
 	
-    protected override boolean createSchedule(SCGraph scg, List<SchedulingBlock> schedule, SchedulingConstraints constraints,
+    protected override boolean createSchedule(SCGraph scg, List<ScheduledBlock> schedule, SchedulingConstraints constraints,
     	KielerCompilerContext context) {
 
         // fixpoint is set to true if an iteration cannot set any remaining blocks.

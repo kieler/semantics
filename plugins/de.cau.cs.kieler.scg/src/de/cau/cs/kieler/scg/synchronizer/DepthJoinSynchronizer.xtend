@@ -104,10 +104,12 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
     
     override isSynchronizable(Iterable<ThreadPathType> threadPathTypes) {
         var synchronizable = false
-        
-        for(tpt : threadPathTypes) {
-            if (tpt == ThreadPathType::DELAYED) synchronizable = true
-        } 
+
+		if ((!threadPathTypes.filter[ it == ThreadPathType::DELAYED ].empty) &&
+			(!threadPathTypes.filter[ it == ThreadPathType::POTENTIAL_INSTANTANEOUS ].empty)
+		) {
+			synchronizable = true
+		}         
         
         synchronizable
     }
@@ -116,37 +118,37 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
     	List<AbstractKielerCompilerAncillaryData> ancillaryData) {
         val excludeSet = <Predecessor> newHashSet
         
-        val pilData = ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
-        val exitNodes = join.allPrevious.map[ eContainer as Exit ]
-      	val joinPredecessors = schedulingBlockCache.get(join).basicBlock.predecessors.toSet
-        
-        for(exit : exitNodes) {
-        	if (pilData.contains(exit)) {
-        		val exitBasicBlock = schedulingBlockCache.get(exit).basicBlock
-        		var Predecessor exitPredecessor = null 
-        		for (jPred : joinPredecessors) {
-        			if (exitBasicBlock == jPred.getBasicBlock) {
-        				exitPredecessor = jPred
-        			}
-        		}
-        		
-	        	val predecessors = exitBasicBlock.predecessors.toSet
-    	    	for(predecessor : predecessors) {
-        			val predecessorNodes = <Node> newArrayList
-        			predecessor.getBasicBlock.schedulingBlocks.forEach[ predecessorNodes += it.nodes ]
-        			var criticalPath = true
-        			for(node : predecessorNodes) {
-        				if (!pilData.contains(node)) {
-        					criticalPath = false
-        				}
-        			}
-        			
-        			if (criticalPath) {
-        				excludeSet += exitPredecessor
-        			}
-        		}
-        	}
-        }
+//        val pilData = ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
+//        val exitNodes = join.allPrevious.map[ eContainer as Exit ]
+//      	val joinPredecessors = schedulingBlockCache.get(join).basicBlock.predecessors.toSet
+//        
+//        for(exit : exitNodes) {
+//        	if (pilData.contains(exit)) {
+//        		val exitBasicBlock = schedulingBlockCache.get(exit).basicBlock
+//        		var Predecessor exitPredecessor = null 
+//        		for (jPred : joinPredecessors) {
+//        			if (exitBasicBlock == jPred.getBasicBlock) {
+//        				exitPredecessor = jPred
+//        			}
+//        		}
+//        		
+//	        	val predecessors = exitBasicBlock.predecessors.toSet
+//    	    	for(predecessor : predecessors) {
+//        			val predecessorNodes = <Node> newArrayList
+//        			predecessor.getBasicBlock.schedulingBlocks.forEach[ predecessorNodes += it.nodes ]
+//        			var criticalPath = true
+//        			for(node : predecessorNodes) {
+//        				if (!pilData.contains(node)) {
+//        					criticalPath = false
+//        				}
+//        			}
+//        			
+//        			if (criticalPath) {
+//        				excludeSet += exitPredecessor
+//        			}
+//        		}
+//        	}
+//        }
         
         return excludeSet
     }
@@ -154,16 +156,16 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
 	override getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, List<AbstractKielerCompilerAncillaryData> ancillaryData) {
 		val includeSet = <Predecessor> newHashSet
 		
-        val exitNodes = join.allPrevious.map[ eContainer as Exit ]
-        
-        for(exit : exitNodes) {
-        	val shallowDepths/*withLochNessMonsters*/ = exit.entry.getShallowThreadNodes.filter(typeof(Depth))
-        	for(depth : shallowDepths) {
-        		val newPredecessor = ScgFactory::eINSTANCE.createPredecessor
-        		newPredecessor.basicBlock = schedulingBlockCache.get(depth).basicBlock
-        		includeSet += newPredecessor
-        	}
-        }
+//        val exitNodes = join.allPrevious.map[ eContainer as Exit ]
+//        
+//        for(exit : exitNodes) {
+//        	val shallowDepths/*withLochNessMonsters*/ = exit.entry.getShallowThreadNodes.filter(typeof(Depth))
+//        	for(depth : shallowDepths) {
+//        		val newPredecessor = ScgFactory::eINSTANCE.createPredecessor
+//        		newPredecessor.basicBlock = schedulingBlockCache.get(depth).basicBlock
+//        		includeSet += newPredecessor
+//        	}
+//        }
         	
         includeSet
 	}    

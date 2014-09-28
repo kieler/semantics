@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.scg.provider;
 
 
-import de.cau.cs.kieler.core.annotations.provider.AnnotatableItemProvider;
 import de.cau.cs.kieler.scg.BasicBlock;
 import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.ScgPackage;
@@ -32,6 +31,7 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -41,7 +41,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class BasicBlockItemProvider 
-    extends AnnotatableItemProvider
+    extends ItemProviderAdapter
     implements
         IEditingDomainItemProvider,
         IStructuredItemContentProvider,
@@ -72,6 +72,7 @@ public class BasicBlockItemProvider
 			addGoBlockPropertyDescriptor(object);
 			addDepthBlockPropertyDescriptor(object);
 			addSynchronizerBlockPropertyDescriptor(object);
+			addEntryBlockPropertyDescriptor(object);
 			addDeadBlockPropertyDescriptor(object);
 			addPreGuardPropertyDescriptor(object);
 		}
@@ -145,6 +146,28 @@ public class BasicBlockItemProvider
 	}
 
     /**
+	 * This adds a property descriptor for the Entry Block feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addEntryBlockPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_BasicBlock_entryBlock_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_BasicBlock_entryBlock_feature", "_UI_BasicBlock_type"),
+				 ScgPackage.Literals.BASIC_BLOCK__ENTRY_BLOCK,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+				/**
 	 * This adds a property descriptor for the Dead Block feature.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -258,6 +281,7 @@ public class BasicBlockItemProvider
 			case ScgPackage.BASIC_BLOCK__GO_BLOCK:
 			case ScgPackage.BASIC_BLOCK__DEPTH_BLOCK:
 			case ScgPackage.BASIC_BLOCK__SYNCHRONIZER_BLOCK:
+			case ScgPackage.BASIC_BLOCK__ENTRY_BLOCK:
 			case ScgPackage.BASIC_BLOCK__DEAD_BLOCK:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;

@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#isGoBlock <em>Go Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#isDepthBlock <em>Depth Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#isSynchronizerBlock <em>Synchronizer Block</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#isEntryBlock <em>Entry Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#isDeadBlock <em>Dead Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#getPreGuard <em>Pre Guard</em>}</li>
  * </ul>
@@ -151,6 +152,32 @@ public interface BasicBlock extends EObject {
     void setSynchronizerBlock(boolean value);
 
     /**
+	 * Returns the value of the '<em><b>Entry Block</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Entry Block</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Entry Block</em>' attribute.
+	 * @see #setEntryBlock(boolean)
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getBasicBlock_EntryBlock()
+	 * @model
+	 * @generated
+	 */
+	boolean isEntryBlock();
+
+				/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.scg.BasicBlock#isEntryBlock <em>Entry Block</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Entry Block</em>' attribute.
+	 * @see #isEntryBlock()
+	 * @generated
+	 */
+	void setEntryBlock(boolean value);
+
+				/**
 	 * Returns the value of the '<em><b>Dead Block</b></em>' attribute.
 	 * <!-- begin-user-doc -->
      * <p>

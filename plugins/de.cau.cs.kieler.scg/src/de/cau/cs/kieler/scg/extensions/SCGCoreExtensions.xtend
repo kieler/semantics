@@ -131,7 +131,7 @@ class SCGCoreExtensions {
 	 */            
     def List<Node> getScheduleNodes(Schedule schedule) {
         val nodeList = <Node> newLinkedList
-        schedule.schedulingBlocks.forEach[ nodes.forEach[nodeList.add(it)] ]
+        schedule.scheduledBlocks.forEach[ nodeList += it.schedulingBlock.nodes ]
         nodeList
     }
     

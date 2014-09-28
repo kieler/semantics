@@ -47,8 +47,8 @@ class SynchronizerSelector {
 
     protected val List<Class<? extends AbstractSynchronizer>> SYNCHRONIZER_LIST = <Class<? extends AbstractSynchronizer>> newArrayList(
         typeof(InstantaneousSynchronizer),
-        typeof(SurfaceSynchronizer),
-        typeof(DepthJoinSynchronizer)
+        typeof(DepthJoinSynchronizer),
+        typeof(SurfaceSynchronizer)
     )
     protected val DEFAULT_SYNCHRONIZER = typeof(SurfaceSynchronizer)
     
@@ -73,7 +73,7 @@ class SynchronizerSelector {
             }
         }
         
-        throw new UnsupportedSCGException("No available synchronizer can handle "+join.toString)
+        return defaultSynchronizer
     }
     
     protected def getEntryNodes(Join join) {

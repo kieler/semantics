@@ -1290,7 +1290,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             
             if (SHOW_SCHEDULINGBLOCKS.booleanValue) {
                 val usBlocks = scg.getAllSchedulingBlocks
-                scg.schedules.head.getSchedulingBlocks.forEach[usBlocks.remove(it)]
+                scg.schedules.head.getScheduledBlocks.forEach[ usBlocks.remove(it.schedulingBlock) ]
                 usBlocks.forEach [
                     val node = schedulingBlockMapping.get(it)
                     node.getData(typeof(KRoundedRectangle)) => [

@@ -1810,13 +1810,22 @@ public interface ScgPackage extends EPackage {
     int BASIC_BLOCK__SYNCHRONIZER_BLOCK = 4;
 
     /**
+	 * The feature id for the '<em><b>Entry Block</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BASIC_BLOCK__ENTRY_BLOCK = 5;
+
+				/**
 	 * The feature id for the '<em><b>Dead Block</b></em>' attribute.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int BASIC_BLOCK__DEAD_BLOCK = 5;
+    int BASIC_BLOCK__DEAD_BLOCK = 6;
 
     /**
 	 * The feature id for the '<em><b>Pre Guard</b></em>' reference.
@@ -1825,7 +1834,7 @@ public interface ScgPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-    int BASIC_BLOCK__PRE_GUARD = 6;
+    int BASIC_BLOCK__PRE_GUARD = 7;
 
     /**
 	 * The number of structural features of the '<em>Basic Block</em>' class.
@@ -1834,7 +1843,7 @@ public interface ScgPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-    int BASIC_BLOCK_FEATURE_COUNT = 7;
+    int BASIC_BLOCK_FEATURE_COUNT = 8;
 
     /**
 	 * The number of operations of the '<em>Basic Block</em>' class.
@@ -1966,15 +1975,15 @@ public interface ScgPackage extends EPackage {
     int SCHEDULE = 20;
 
     /**
-	 * The feature id for the '<em><b>Scheduling Blocks</b></em>' reference list.
+	 * The feature id for the '<em><b>Scheduled Blocks</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int SCHEDULE__SCHEDULING_BLOCKS = 0;
+	int SCHEDULE__SCHEDULED_BLOCKS = 0;
 
-    /**
+				/**
 	 * The number of structural features of the '<em>Schedule</em>' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1993,6 +2002,52 @@ public interface ScgPackage extends EPackage {
     int SCHEDULE_OPERATION_COUNT = 0;
 
     /**
+	 * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ScheduledBlockImpl <em>Scheduled Block</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.cau.cs.kieler.scg.impl.ScheduledBlockImpl
+	 * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getScheduledBlock()
+	 * @generated
+	 */
+	int SCHEDULED_BLOCK = 21;
+
+				/**
+	 * The feature id for the '<em><b>Scheduling Block</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULED_BLOCK__SCHEDULING_BLOCK = 0;
+
+				/**
+	 * The feature id for the '<em><b>Schizophrenic</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULED_BLOCK__SCHIZOPHRENIC = 1;
+
+				/**
+	 * The number of structural features of the '<em>Scheduled Block</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULED_BLOCK_FEATURE_COUNT = 2;
+
+				/**
+	 * The number of operations of the '<em>Scheduled Block</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SCHEDULED_BLOCK_OPERATION_COUNT = 0;
+
+				/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}' enum.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2000,7 +2055,7 @@ public interface ScgPackage extends EPackage {
 	 * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getBranchType()
 	 * @generated
 	 */
-    int BRANCH_TYPE = 21;
+    int BRANCH_TYPE = 22;
 
     /**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Node <em>Node</em>}'.
@@ -2546,6 +2601,17 @@ public interface ScgPackage extends EPackage {
     EAttribute getBasicBlock_SynchronizerBlock();
 
     /**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.BasicBlock#isEntryBlock <em>Entry Block</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Entry Block</em>'.
+	 * @see de.cau.cs.kieler.scg.BasicBlock#isEntryBlock()
+	 * @see #getBasicBlock()
+	 * @generated
+	 */
+	EAttribute getBasicBlock_EntryBlock();
+
+				/**
 	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.BasicBlock#isDeadBlock <em>Dead Block</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2664,17 +2730,49 @@ public interface ScgPackage extends EPackage {
     EClass getSchedule();
 
     /**
-	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scg.Schedule#getSchedulingBlocks <em>Scheduling Blocks</em>}'.
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.scg.Schedule#getScheduledBlocks <em>Scheduled Blocks</em>}'.
 	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Scheduling Blocks</em>'.
-	 * @see de.cau.cs.kieler.scg.Schedule#getSchedulingBlocks()
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Scheduled Blocks</em>'.
+	 * @see de.cau.cs.kieler.scg.Schedule#getScheduledBlocks()
 	 * @see #getSchedule()
 	 * @generated
 	 */
-    EReference getSchedule_SchedulingBlocks();
+	EReference getSchedule_ScheduledBlocks();
 
-    /**
+				/**
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.scg.ScheduledBlock <em>Scheduled Block</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Scheduled Block</em>'.
+	 * @see de.cau.cs.kieler.scg.ScheduledBlock
+	 * @generated
+	 */
+	EClass getScheduledBlock();
+
+				/**
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scg.ScheduledBlock#getSchedulingBlock <em>Scheduling Block</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Scheduling Block</em>'.
+	 * @see de.cau.cs.kieler.scg.ScheduledBlock#getSchedulingBlock()
+	 * @see #getScheduledBlock()
+	 * @generated
+	 */
+	EReference getScheduledBlock_SchedulingBlock();
+
+				/**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.ScheduledBlock#isSchizophrenic <em>Schizophrenic</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Schizophrenic</em>'.
+	 * @see de.cau.cs.kieler.scg.ScheduledBlock#isSchizophrenic()
+	 * @see #getScheduledBlock()
+	 * @generated
+	 */
+	EAttribute getScheduledBlock_Schizophrenic();
+
+				/**
 	 * Returns the meta object for enum '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3152,6 +3250,14 @@ public interface ScgPackage extends EPackage {
         EAttribute BASIC_BLOCK__SYNCHRONIZER_BLOCK = eINSTANCE.getBasicBlock_SynchronizerBlock();
 
         /**
+		 * The meta object literal for the '<em><b>Entry Block</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BASIC_BLOCK__ENTRY_BLOCK = eINSTANCE.getBasicBlock_EntryBlock();
+
+								/**
 		 * The meta object literal for the '<em><b>Dead Block</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3246,14 +3352,40 @@ public interface ScgPackage extends EPackage {
         EClass SCHEDULE = eINSTANCE.getSchedule();
 
         /**
-		 * The meta object literal for the '<em><b>Scheduling Blocks</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Scheduled Blocks</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-        EReference SCHEDULE__SCHEDULING_BLOCKS = eINSTANCE.getSchedule_SchedulingBlocks();
+		EReference SCHEDULE__SCHEDULED_BLOCKS = eINSTANCE.getSchedule_ScheduledBlocks();
 
-        /**
+								/**
+		 * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ScheduledBlockImpl <em>Scheduled Block</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.cau.cs.kieler.scg.impl.ScheduledBlockImpl
+		 * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getScheduledBlock()
+		 * @generated
+		 */
+		EClass SCHEDULED_BLOCK = eINSTANCE.getScheduledBlock();
+
+								/**
+		 * The meta object literal for the '<em><b>Scheduling Block</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SCHEDULED_BLOCK__SCHEDULING_BLOCK = eINSTANCE.getScheduledBlock_SchedulingBlock();
+
+								/**
+		 * The meta object literal for the '<em><b>Schizophrenic</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute SCHEDULED_BLOCK__SCHIZOPHRENIC = eINSTANCE.getScheduledBlock_Schizophrenic();
+
+								/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}' enum.
 		 * <!-- begin-user-doc -->
          * <!-- end-user-doc -->

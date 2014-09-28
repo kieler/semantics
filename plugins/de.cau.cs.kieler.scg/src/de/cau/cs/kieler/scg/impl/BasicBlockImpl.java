@@ -41,6 +41,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#isGoBlock <em>Go Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#isDepthBlock <em>Depth Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#isSynchronizerBlock <em>Synchronizer Block</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#isEntryBlock <em>Entry Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#isDeadBlock <em>Dead Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl#getPreGuard <em>Pre Guard</em>}</li>
  * </ul>
@@ -130,6 +131,26 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
     protected boolean synchronizerBlock = SYNCHRONIZER_BLOCK_EDEFAULT;
 
     /**
+	 * The default value of the '{@link #isEntryBlock() <em>Entry Block</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isEntryBlock()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean ENTRY_BLOCK_EDEFAULT = false;
+
+				/**
+	 * The cached value of the '{@link #isEntryBlock() <em>Entry Block</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isEntryBlock()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean entryBlock = ENTRY_BLOCK_EDEFAULT;
+
+				/**
 	 * The default value of the '{@link #isDeadBlock() <em>Dead Block</em>}' attribute.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -267,6 +288,27 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 
     /**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isEntryBlock() {
+		return entryBlock;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setEntryBlock(boolean newEntryBlock) {
+		boolean oldEntryBlock = entryBlock;
+		entryBlock = newEntryBlock;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.BASIC_BLOCK__ENTRY_BLOCK, oldEntryBlock, entryBlock));
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -358,6 +400,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 				return isDepthBlock();
 			case ScgPackage.BASIC_BLOCK__SYNCHRONIZER_BLOCK:
 				return isSynchronizerBlock();
+			case ScgPackage.BASIC_BLOCK__ENTRY_BLOCK:
+				return isEntryBlock();
 			case ScgPackage.BASIC_BLOCK__DEAD_BLOCK:
 				return isDeadBlock();
 			case ScgPackage.BASIC_BLOCK__PRE_GUARD:
@@ -393,6 +437,9 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 			case ScgPackage.BASIC_BLOCK__SYNCHRONIZER_BLOCK:
 				setSynchronizerBlock((Boolean)newValue);
 				return;
+			case ScgPackage.BASIC_BLOCK__ENTRY_BLOCK:
+				setEntryBlock((Boolean)newValue);
+				return;
 			case ScgPackage.BASIC_BLOCK__DEAD_BLOCK:
 				setDeadBlock((Boolean)newValue);
 				return;
@@ -426,6 +473,9 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 			case ScgPackage.BASIC_BLOCK__SYNCHRONIZER_BLOCK:
 				setSynchronizerBlock(SYNCHRONIZER_BLOCK_EDEFAULT);
 				return;
+			case ScgPackage.BASIC_BLOCK__ENTRY_BLOCK:
+				setEntryBlock(ENTRY_BLOCK_EDEFAULT);
+				return;
 			case ScgPackage.BASIC_BLOCK__DEAD_BLOCK:
 				setDeadBlock(DEAD_BLOCK_EDEFAULT);
 				return;
@@ -454,6 +504,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 				return depthBlock != DEPTH_BLOCK_EDEFAULT;
 			case ScgPackage.BASIC_BLOCK__SYNCHRONIZER_BLOCK:
 				return synchronizerBlock != SYNCHRONIZER_BLOCK_EDEFAULT;
+			case ScgPackage.BASIC_BLOCK__ENTRY_BLOCK:
+				return entryBlock != ENTRY_BLOCK_EDEFAULT;
 			case ScgPackage.BASIC_BLOCK__DEAD_BLOCK:
 				return deadBlock != DEAD_BLOCK_EDEFAULT;
 			case ScgPackage.BASIC_BLOCK__PRE_GUARD:
@@ -478,6 +530,8 @@ public class BasicBlockImpl extends MinimalEObjectImpl.Container implements Basi
 		result.append(depthBlock);
 		result.append(", synchronizerBlock: ");
 		result.append(synchronizerBlock);
+		result.append(", entryBlock: ");
+		result.append(entryBlock);
 		result.append(", deadBlock: ");
 		result.append(deadBlock);
 		result.append(')');
