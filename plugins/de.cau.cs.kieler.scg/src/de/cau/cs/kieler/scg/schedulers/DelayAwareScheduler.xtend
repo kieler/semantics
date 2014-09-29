@@ -90,6 +90,7 @@ class DelayAwareScheduler extends SimpleScheduler {
                     // If any scheduling block of that basic block is not already in our schedule,
                     // the precondition test fails. Set placeable to false.
                     if (!placedBlocks.contains(sBlock) && 
+//                        !(schizophrenic && !schizophrenicBlocks.contains(sBlock)) &&
                         !(schizophrenic && (sBlock.basicBlock.entryBlock || sBlock.isOnCriticalPath(pilData))) &&
                         !(depthJoin && schizophrenicBlocks.contains(sBlock))
                     ) { return false }
@@ -97,21 +98,21 @@ class DelayAwareScheduler extends SimpleScheduler {
 //            }
         }
         
-        // For all predecessor blocks check whether they are already processed.
-        if (predecessorIncludeSets.containsKey(parentBasicBlock)) {
-	        for(predecessor : predecessorIncludeSets.get(parentBasicBlock)){
-    	        if (!predecessorExcludeSet.contains(predecessor)) {
-        	        for(sBlock : predecessor.basicBlock.schedulingBlocks){
-            	        // If any scheduling block of that basic block is not already in our schedule,
-                	    // the precondition test fails. Set placeable to false.
-                    if (!placedBlocks.contains(sBlock) && 
-                        !(schizophrenic && (sBlock.basicBlock.entryBlock || sBlock.isOnCriticalPath(pilData))) &&
-                        !(depthJoin && schizophrenicBlocks.contains(sBlock))
-                    ) { return false }
-                	}
-            	}
-        	}        
-        }
+//        // For all predecessor blocks check whether they are already processed.
+//        if (predecessorIncludeSets.containsKey(parentBasicBlock)) {
+//	        for(predecessor : predecessorIncludeSets.get(parentBasicBlock)){
+//    	        if (!predecessorExcludeSet.contains(predecessor)) {
+//        	        for(sBlock : predecessor.basicBlock.schedulingBlocks){
+//            	        // If any scheduling block of that basic block is not already in our schedule,
+//                	    // the precondition test fails. Set placeable to false.
+//                    if (!placedBlocks.contains(sBlock) && 
+//                        !(schizophrenic && (sBlock.basicBlock.entryBlock || sBlock.isOnCriticalPath(pilData))) &&
+//                        !(depthJoin && schizophrenicBlocks.contains(sBlock))
+//                    ) { return false }
+//                	}
+//            	}
+//        	}        
+//        }
                 
         // Basically, perform the same test for dependency. We cannot create a guard expression 
         // if any block containing a dependency is still in our list.
@@ -141,9 +142,9 @@ class DelayAwareScheduler extends SimpleScheduler {
             System.out.println(" schizophrenic entry block!")
             return
         }
-        if (schizophrenic && !schizophrenicBlocks.contains(schedulingBlock)) {
+        if (schizophrenic && schizophrenicBlocks.contains(schedulingBlock)) {
             System.out.println(" schizophrenic block already exists!")
-//            return
+            return
         }
         
         if (!topologicalSortVisited.contains(schedulingBlock)) {
