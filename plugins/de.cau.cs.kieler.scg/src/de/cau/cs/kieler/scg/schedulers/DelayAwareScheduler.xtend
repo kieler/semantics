@@ -141,6 +141,10 @@ class DelayAwareScheduler extends SimpleScheduler {
             System.out.println(" schizophrenic entry block!")
             return
         }
+        if (schizophrenic && !schizophrenicBlocks.contains(schedulingBlock)) {
+            System.out.println(" schizophrenic block already exists!")
+//            return
+        }
         
         if (!topologicalSortVisited.contains(schedulingBlock)) {
         	if (!schizophrenic) {

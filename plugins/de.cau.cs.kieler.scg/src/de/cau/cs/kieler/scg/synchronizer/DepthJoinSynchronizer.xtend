@@ -40,6 +40,9 @@ import de.cau.cs.kieler.scg.BasicBlock
 import java.util.Set
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -80,7 +83,10 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
     extension KExpressionsExtension
     
     @Inject
-    extension SCGCoreExtensions
+    extension SCGCoreExtensions    
+    
+    @Inject
+    extension SCGDeclarationExtensions
     
     @Inject
     extension SCGControlFlowExtensions
@@ -92,6 +98,8 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
     extension AnnotationsExtensions
    
     public static val SYNCHRONIZER_ID = "de.cau.cs.kieler.scg.synchronizer.depthJoin"
+    
+    public static val SCHIZOPHRENIC_SUFFIX = "_s"
 
     // -------------------------------------------------------------------------
     // -- Synchronizer
@@ -169,19 +177,52 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         	
         includeSet
 	}    
-	
+    
     override protected SynchronizerData build(Join join) {
-        var data = new SynchronizerData()
+        // Create a new SynchronizerData class which holds the data to return.
+        var data = new SynchronizerData() => [ setJoin(join) ]
         
+        // Since we are working we completely enriched SCGs, we can use the SCG extensions 
+        // to retrieve the scheduling block of the join node in question.
         val joinSB = join.getCachedSchedulingBlock
         
-        val exitNodes = join.allPrevious.map[ eContainer as Exit ]
+        val pilData = compilerContext.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
         
+        // The valued object of the GuardExpression of the synchronizer is the guard of the
+        // scheduling block of the join node. 
         data.guardExpression.valuedObject = joinSB.guard
-                
-        data.guardExpression.expression = FALSE
 
-        data 
-    }	
+        // Create a new expression that determines if at least on thread exits in this tick instance.
+        // At first this simple scheduler assumes that the fork node spawns more than one thread.
+        // Hence, we create an or-operator expression. 
+        val terminationExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression => 
+            [ setOperator(OperatorType::OR) ]
+        
+        data.createEmptyExpressions(terminationExpression)
+        data.createGuardExpression(terminationExpression)
+        data.guardExpression.expression = join.graph.fixSchizophrenicExpression(data.guardExpression.expression) 
+        
+        data.fixEmptyExpressions.fixSynchronizerExpression
+    }    
+    
+    protected def Expression fixSchizophrenicExpression(SCGraph scg, Expression expression) {
+        if (expression instanceof ValuedObjectReference) {
+            val vor = (expression as ValuedObjectReference)
+            val newVO = scg.findValuedObjectByName(vor.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
+            if (newVO != null) {
+                vor.valuedObject = newVO 
+            }
+        } else if (expression instanceof OperatorExpression) {
+            val vors = (expression as OperatorExpression).eAllContents.filter(typeof(ValuedObjectReference))
+            for(vor : vors.toIterable) {
+                val newVO = scg.findValuedObjectByName(vor.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
+                if (newVO != null) {
+                    vor.valuedObject = newVO 
+                }
+            }
+        }
+        
+        expression
+    }     
     
 }
