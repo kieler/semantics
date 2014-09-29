@@ -43,6 +43,8 @@ import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -96,6 +98,8 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
 
     @Inject
     extension AnnotationsExtensions
+    
+    public var Declaration schizophrenicDeclaration = null
    
     public static val SYNCHRONIZER_ID = "de.cau.cs.kieler.scg.synchronizer.depthJoin"
     
@@ -177,6 +181,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         	
         includeSet
 	}    
+
     
     override protected SynchronizerData build(Join join) {
         // Create a new SynchronizerData class which holds the data to return.
@@ -200,7 +205,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         
         data.createEmptyExpressions(terminationExpression)
         data.createGuardExpression(terminationExpression)
-        data.guardExpression.expression = join.graph.fixSchizophrenicExpression(data.guardExpression.expression) 
+        //data.guardExpression.expression = join.graph.fixSchizophrenicExpression(data.guardExpression.expression) 
         
         data.fixEmptyExpressions.fixSynchronizerExpression
     }    
@@ -208,14 +213,14 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
     protected def Expression fixSchizophrenicExpression(SCGraph scg, Expression expression) {
         if (expression instanceof ValuedObjectReference) {
             val vor = (expression as ValuedObjectReference)
-            val newVO = scg.findValuedObjectByName(vor.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
+            val newVO = schizophrenicDeclaration.findValuedObjectByName(vor.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
             if (newVO != null) {
                 vor.valuedObject = newVO 
             }
         } else if (expression instanceof OperatorExpression) {
             val vors = (expression as OperatorExpression).eAllContents.filter(typeof(ValuedObjectReference))
             for(vor : vors.toIterable) {
-                val newVO = scg.findValuedObjectByName(vor.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
+                val newVO = schizophrenicDeclaration.findValuedObjectByName(vor.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
                 if (newVO != null) {
                     vor.valuedObject = newVO 
                 }
@@ -223,6 +228,13 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         }
         
         expression
-    }     
+    }   
+    
+    def ValuedObject findValuedObjectByName(Declaration declaration, String name) {
+        for(vo : declaration.valuedObjects) {
+            if (vo.name == name) return vo
+        }
+        return null
+    }  
     
 }

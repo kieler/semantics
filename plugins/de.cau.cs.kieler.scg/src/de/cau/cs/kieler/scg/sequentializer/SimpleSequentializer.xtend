@@ -47,6 +47,7 @@ import java.util.Set
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -398,6 +399,7 @@ class SimpleSequentializer extends AbstractSequentializer {
                  */
                 scheduledBlock.handleSynchronizerBlockGuardExpression(assignment, nextControlFlows, schedule,
                     scg, nodeCache)   
+                assignment.assignment = scg.fixSchizophrenicExpression(assignment.assignment)
             } else {
                 /**
                  * If the block is neither of them, it solely depends on the activity states of previous basic blocks.
@@ -493,6 +495,9 @@ class SimpleSequentializer extends AbstractSequentializer {
         // The result of the synchronizer is stored in the synchronizerData class joinData.
         val synchronizer = (schedulingBlock.nodes.head as Join).getSynchronizer
         System.out.println("Sequentializing join with " + synchronizer.id)
+        if (synchronizer.id == DepthJoinSynchronizer::SYNCHRONIZER_ID) {
+            (synchronizer as DepthJoinSynchronizer).schizophrenicDeclaration = schizoDeclaration
+        }
         val joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join, compilerContext, schedulingBlockCache)
 
         joinData.guardExpression
@@ -516,7 +521,7 @@ class SimpleSequentializer extends AbstractSequentializer {
         
         val relevantPredecessors = <Predecessor> newHashSet
         if (scheduledBlock.schizophrenic) {
-            relevantPredecessors += basicBlock.predecessors.filter[ !basicBlock.entryBlock ]
+            relevantPredecessors += basicBlock.predecessors.filter[ !it.basicBlock.entryBlock ]
         } else {
             relevantPredecessors += basicBlock.predecessors
         }
@@ -662,14 +667,14 @@ class SimpleSequentializer extends AbstractSequentializer {
     protected def Expression fixSchizophrenicExpression(SCGraph scg, Expression expression) {
         if (expression instanceof ValuedObjectReference) {
             val vor = (expression as ValuedObjectReference)
-            val newVO = scg.findValuedObjectByName(vor.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
+            val newVO = schizoDeclaration.findValuedObjectByName(vor.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
             if (newVO != null) {
                 vor.valuedObject = newVO 
             }
         } else if (expression instanceof OperatorExpression) {
             val vors = (expression as OperatorExpression).eAllContents.filter(typeof(ValuedObjectReference))
             for(vor : vors.toIterable) {
-                val newVO = scg.findValuedObjectByName(vor.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
+                val newVO = schizoDeclaration.findValuedObjectByName(vor.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
                 if (newVO != null) {
                     vor.valuedObject = newVO 
                 }
@@ -678,5 +683,12 @@ class SimpleSequentializer extends AbstractSequentializer {
         
         expression
     }   
+    
+    def ValuedObject findValuedObjectByName(Declaration declaration, String name) {
+        for(vo : declaration.valuedObjects) {
+            if (vo.name == name) return vo
+        }
+        return null
+    }    
     
 }
