@@ -22,7 +22,7 @@ import de.cau.cs.kieler.sccharts.State
  * 
  * @author cmot
  */
-class CSimulation { 
+class CSimulationSCChart { 
 
     @Inject
     extension KExpressionsExtension    
