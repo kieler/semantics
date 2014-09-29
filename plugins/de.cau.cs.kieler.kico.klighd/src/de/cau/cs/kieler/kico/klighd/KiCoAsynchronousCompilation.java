@@ -101,7 +101,7 @@ public class KiCoAsynchronousCompilation extends Job {
             context.setPrerequirements(transformations.isAdvanced());
             context.setInplace(false);
             context.setProgressMonitor(monitor);
-            context.setCreateDummyResource(false);
+            context.setCreateDummyResource(true);
             result = KielerCompiler.compile(context);
 
             if (monitor.isCanceled()) {
