@@ -33,6 +33,7 @@ import com.google.inject.Guice
 import de.cau.cs.kieler.kico.KielerCompilerException
 import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
 import de.cau.cs.kieler.scg.ScheduledBlock
+import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -66,6 +67,8 @@ class DelayAwareScheduler extends SimpleScheduler {
     @Inject
     extension SynchronizerSelector
     
+    protected val schizophrenicBlocks = <SchedulingBlock> newHashSet
+    
     // -------------------------------------------------------------------------
     // -- Globals 
     // -------------------------------------------------------------------------
@@ -74,20 +77,24 @@ class DelayAwareScheduler extends SimpleScheduler {
     protected val predecessorIncludeSets = <BasicBlock, Set<Predecessor>> newHashMap 
     
     public def boolean isPlaceable(SchedulingBlock schedulingBlock, List<SchedulingBlock> remainingBlocks, 
-        List<ScheduledBlock> schedule, SCGraph scg, Set<Node> pilData, boolean schizophrenic
+        List<ScheduledBlock> schedule, SCGraph scg, Set<Node> pilData, boolean schizophrenic, boolean depthJoin
     ) {
         // Assume all preconditions are met and query parent basic block.
         val parentBasicBlock = schedulingBlock.eContainer as BasicBlock
-                
+
         // For all predecessor blocks check whether they are already processed.
         for(predecessor : parentBasicBlock.predecessors){
             if (!predecessorExcludeSet.contains(predecessor)) {
-                for(sBlock : predecessor.basicBlock.schedulingBlocks){
+//                for(sBlock : predecessor.basicBlock.schedulingBlocks.last){
+                    val sBlock = predecessor.basicBlock.schedulingBlocks.last
                     // If any scheduling block of that basic block is not already in our schedule,
                     // the precondition test fails. Set placeable to false.
-                    if (!placedBlocks.contains(sBlock)) { return false }
+                    if (!placedBlocks.contains(sBlock) && 
+                        !(schizophrenic && (sBlock.basicBlock.entryBlock || sBlock.isOnCriticalPath(pilData))) &&
+                        !(depthJoin && schizophrenicBlocks.contains(sBlock))
+                    ) { return false }
                 }
-            }
+//            }
         }
         
         // For all predecessor blocks check whether they are already processed.
@@ -97,7 +104,10 @@ class DelayAwareScheduler extends SimpleScheduler {
         	        for(sBlock : predecessor.basicBlock.schedulingBlocks){
             	        // If any scheduling block of that basic block is not already in our schedule,
                 	    // the precondition test fails. Set placeable to false.
-                    	if (!placedBlocks.contains(sBlock)) { return false }
+                    if (!placedBlocks.contains(sBlock) && 
+                        !(schizophrenic && (sBlock.basicBlock.entryBlock || sBlock.isOnCriticalPath(pilData))) &&
+                        !(depthJoin && schizophrenicBlocks.contains(sBlock))
+                    ) { return false }
                 	}
             	}
         	}        
@@ -108,7 +118,11 @@ class DelayAwareScheduler extends SimpleScheduler {
         for(dependency : schedulingBlock.dependencies) {
             if (dependency.concurrent && !dependency.confluent) {
                 val sBlock = schedulingBlockCache.get(dependency.eContainer as Node)
-                if (!placedBlocks.contains(sBlock)) { return false }
+                    if (!placedBlocks.contains(sBlock) && 
+                        !(schizophrenic && (sBlock.basicBlock.entryBlock || sBlock.isOnCriticalPath(pilData))) &&
+                        !(depthJoin && schizophrenicBlocks.contains(sBlock)) &&
+                        !schizophrenicBlocks.contains(sBlock)
+                    ) { return false }
             }
         }
         
@@ -118,17 +132,46 @@ class DelayAwareScheduler extends SimpleScheduler {
     
     public def void topologicalPlacement(SchedulingBlock schedulingBlock, 
         List<SchedulingBlock> schedulingBlocks, List<ScheduledBlock> schedule, 
-        SchedulingConstraints constraints, SCGraph scg, Set<Node> pilData, boolean schizophrenic
+        SchedulingConstraints constraints, SCGraph scg, Set<Node> pilData, boolean schizophrenic,
+        String debugIn
     ) {
+        System.out.print(debugIn + "Scheduling block: " + schedulingBlock.guard.name + ": ")
+        
+        if (schizophrenic && schedulingBlock.basicBlock.entryBlock) {
+            System.out.println(" schizophrenic entry block!")
+            return
+        }
+        
         if (!topologicalSortVisited.contains(schedulingBlock)) {
         	if (!schizophrenic) {
+        	    System.out.println(" scheduling.")
             	topologicalSortVisited.add(schedulingBlock)
+           	} else {
+                System.out.println(" schizophrenic.")
            	}
            	
+           	var depthJoin = false
+            if (schedulingBlock.basicBlock.synchronizerBlock) {
+                val join = schedulingBlock.basicBlock.schedulingBlocks.head.nodes.head as Join
+                val synchronizer = join.synchronizer
+                if (synchronizer.id == DepthJoinSynchronizer::SYNCHRONIZER_ID) {
+                    depthJoin = true
+                }
+            }           	
+           	
+           	val preceedingSchizo = <SchedulingBlock, Boolean> newHashMap
            	val preceedingSchedulingBlocks = <SchedulingBlock> newHashSet
             for(predecessor : schedulingBlock.basicBlock.predecessors) {
                 if (!predecessorExcludeSet.contains(predecessor)) {
-	            	preceedingSchedulingBlocks += predecessor.basicBlock.schedulingBlocks
+//                    if (!schizophrenic) {
+	            	    preceedingSchedulingBlocks += predecessor.basicBlock.schedulingBlocks.last
+//	            	} else {
+//	            	    for(sb : predecessor.basicBlock.schedulingBlocks) {
+//	            	        if (!sb.isOnCriticalPath(pilData)) {
+//	            	            preceedingSchedulingBlocks += sb
+//	            	        }
+//	            	    }
+//	            	}
             	}
            	}
 	        if (predecessorIncludeSets.containsKey(schedulingBlock.basicBlock)) {
@@ -140,27 +183,48 @@ class DelayAwareScheduler extends SimpleScheduler {
            	}
             for(dependency : schedulingBlock.dependencies) {
                 if (dependency.concurrent && !dependency.confluent) {
-                    preceedingSchedulingBlocks += schedulingBlockCache.get(dependency.eContainer as Node)
+                    val sb = schedulingBlockCache.get(dependency.eContainer as Node)
+                    preceedingSchizo.put(sb, true)
+                    preceedingSchedulingBlocks += sb
                 }
             }
+            if (schedulingBlock != schedulingBlock.basicBlock.schedulingBlocks.head) {
+                var index = schedulingBlock.basicBlock.schedulingBlocks.indexOf(schedulingBlock)
+                preceedingSchedulingBlocks += schedulingBlock.basicBlock.schedulingBlocks.get(index - 1)
+            }
+            
+            System.out.print(debugIn + "" + schedulingBlock.guard.name + " needs: ")
+            for(sb : preceedingSchedulingBlocks) {
+                System.out.print(sb.guard.name + " ")
+            }
+            System.out.println("")
                        	
             for (sBlock : preceedingSchedulingBlocks) {
 	            if (!topologicalSortVisited.contains(sBlock)) {
 			        var isSchizophrenic = false
 			        if (!schizophrenic) {
-	        	        sBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, scg, pilData, isSchizophrenic)
+			            
+			            if (depthJoin || 
+			                (preceedingSchizo.containsKey(sBlock) && preceedingSchizo.get(sBlock) == true)
+			                ) {
+		                    if (sBlock.isOnCriticalPath(pilData)) {
+		                        isSchizophrenic = true
+	                        }
+		                }
+			            
+	        	        sBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, scg, pilData, isSchizophrenic, debugIn + "  ")
 				    } else {
 					    if (sBlock.isOnCriticalPath(pilData)) {
 						   	isSchizophrenic = true
 						}
 						if (!sBlock.basicBlock.entryBlock) {
-							sBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, scg, pilData, isSchizophrenic)
+							sBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, scg, pilData, isSchizophrenic, debugIn + "  ")
 						}
 					}
                 }
             }
             
-            if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg, pilData, schizophrenic)) {
+            if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg, pilData, schizophrenic, depthJoin)) {
             	val scheduledBlock = ScgFactory.eINSTANCE.createScheduledBlock => [
             		it.schedulingBlock = schedulingBlock
             		it.schizophrenic = schizophrenic
@@ -168,9 +232,17 @@ class DelayAwareScheduler extends SimpleScheduler {
                 schedule.add(scheduledBlock)
                 if (!schizophrenic) {
                 	placedBlocks.add(schedulingBlock)
+                	System.out.println(debugIn + "-> Scheduled non schizophrenic scheduling block " + schedulingBlock.guard.name)
+              	} else {
+              	    schizophrenicBlocks += schedulingBlock
+                    System.out.println(debugIn + "-> Scheduled schizophrenic scheduling block " + schedulingBlock.guard.name)
               	}
+            } else {
+                System.out.println(debugIn + schedulingBlock.guard.name + " UNPLACEABLE!")
             }
-        } 
+        } else {
+            System.out.println(" already placed.")
+        }
     }    
     
     override def boolean createSchedule(SCGraph scg, List<ScheduledBlock> schedule, SchedulingConstraints constraints, 
@@ -179,9 +251,14 @@ class DelayAwareScheduler extends SimpleScheduler {
         val schedulingBlocks = new ArrayList<SchedulingBlock>(schedulingBlockCount)
         schedulingBlocks.addAll(constraints.schedulingBlocks)
         
+        for(sBlock:schedulingBlocks) {
+            System.out.println(sBlock.guard.name)
+        }
+        
         topologicalSortVisited.clear
         placedBlocks.clear
         predecessorExcludeSet.clear
+        schizophrenicBlocks.clear
         
         val pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
 
@@ -198,11 +275,27 @@ class DelayAwareScheduler extends SimpleScheduler {
         
         for (sBlock : schedulingBlocks) {
         	if (!topologicalSortVisited.contains(sBlock)) {
-                sBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, scg, pilData, false)
+                sBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, scg, pilData, false, "")
             }
         }
         
-        schedule.size == schedulingBlocks.size
+//        if (schedule.size >= schedulingBlocks.size) {
+            System.out.println("  ")
+            System.out.println("  SCHEDULE  ")
+            System.out.println("  --------")
+            System.out.println("  ")
+            
+            for(sBlock : schedule) {
+                System.out.print("  " + sBlock.schedulingBlock.guard.name)
+                if (sBlock.schizophrenic) {
+                    System.out.println("  schizophrenic")
+                } else {
+                    System.out.println("  ")
+                }                
+            }
+//        }
+        
+        schedule.size >= schedulingBlocks.size
     }
 
 	protected def boolean isOnCriticalPath(SchedulingBlock schedulingBlock, Set<Node> pilData) {

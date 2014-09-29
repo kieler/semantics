@@ -364,7 +364,12 @@ class BasicBlockTransformation extends Transformation {
         	predecessorBlocks.clear
         }
         /** If the block begins with a join node, mark the block as synchronizer block. */
-        if (schedulingBlock.nodes.head instanceof Join) { basicBlock.synchronizerBlock = true }
+        if (schedulingBlock.nodes.head instanceof Join) { 
+            basicBlock.synchronizerBlock = true
+        }
+        if (schedulingBlock.nodes.head instanceof Entry) { 
+            basicBlock.entryBlock = true
+        }
  
  		// Add the guard object.
 //        basicBlock.guard = guard
