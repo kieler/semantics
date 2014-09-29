@@ -27,7 +27,7 @@ import de.cau.cs.kieler.s.sc.xtend.S2C
 class SCG2C {
     
         // maximum characters of the c code for which beautifying is enabled
-        final int SMALL_MODEL = 10000; 
+        final int SMALL_MODEL = 100000; 
     
         def String removeEmptyLines(String text) {
             var output = "";
