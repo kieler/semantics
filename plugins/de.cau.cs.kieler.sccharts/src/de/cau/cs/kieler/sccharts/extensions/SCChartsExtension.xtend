@@ -709,12 +709,14 @@ class SCChartsExtension {
     }
     
     // Retrieves the first during action if there is any or returns a new one
-    def DuringAction retrieveDuringAction(State state) {
-        val duringAction = state.duringActions.get(0)
+    def DuringAction retrieveDuringAction(State state, boolean immediate) {
+        val duringAction = state.duringActions.filter(e|e.immediate == immediate).get(0);
         if (duringAction != null) {
             return duringAction
         }
-        state.createDuringAction
+        val newDuringAction = state.createDuringAction
+        newDuringAction.setImmediate(immediate)
+        newDuringAction
     }
 
 
