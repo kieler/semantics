@@ -40,6 +40,13 @@ import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.scg.ScheduledBlock
+import de.cau.cs.kieler.core.kexpressions.Declaration
+import java.util.Set
+import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -95,6 +102,12 @@ class SimpleSequentializer extends AbstractSequentializer {
     protected val predecessorBBCache = <BasicBlock, List<Predecessor>> newHashMap
     protected val predecessorSBCache = <Predecessor, List<SchedulingBlock>> newHashMap
     protected val predecessorTwinMark = <SchedulingBlock> newHashSet
+    
+    public static val SCHIZOPHRENIC_SUFFIX = "_s"
+    protected val schizophrenicGuards = <ValuedObject> newHashSet
+    protected var schizophrenicGuardCounter = 0
+    protected var Declaration schizoDeclaration = null
+    protected var Set<Node> pilData = null
          
                
     // -------------------------------------------------------------------------
@@ -115,6 +128,8 @@ class SimpleSequentializer extends AbstractSequentializer {
 
         val timestamp = System.currentTimeMillis
         compilerContext = context
+        
+        val pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
           
         /**
          * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 
@@ -125,6 +140,7 @@ class SimpleSequentializer extends AbstractSequentializer {
         val newSCG = ScgFactory::eINSTANCE.createSCGraph => [
         	annotations += createStringAnnotation(ANNOTATION_SEQUENTIALIZED, "")
         ]
+        schizoDeclaration = createDeclaration=>[ setType(ValueType::BOOL) ]
 		val predecessorList = <Predecessor> newArrayList
 		val basicBlockList = <BasicBlock> newArrayList
         scg.copyDeclarations(newSCG)
@@ -180,6 +196,7 @@ class SimpleSequentializer extends AbstractSequentializer {
         System.out.println("Sequentialization finished (overall time elapsed: "+(time / 1000)+"s).")  
                 
         // Return the SCG.
+        if (schizoDeclaration.valuedObjects.size > 0) newSCG.declarations += schizoDeclaration
         newSCG     	
     }
     
@@ -206,8 +223,8 @@ class SimpleSequentializer extends AbstractSequentializer {
     	
     	
     	// For each scheduling block in the schedule iterate.
-    	for (sBlocks : schedule.scheduledBlocks) {
-    		val sBlock = sBlocks.schedulingBlock
+    	for (sb : schedule.scheduledBlocks) {
+    		val sBlock = sb.schedulingBlock
 	  	   /**
    			 * For each guard a guard expression exists.
    		     * Retrieve the expression and test it for null. 
@@ -215,7 +232,7 @@ class SimpleSequentializer extends AbstractSequentializer {
 		     * Otherwise, it is possible that the guard expression houses empty expressions for a synchronizer. Add them as well.
 		     */    		
    			// Retrieve the guard expression from the scheduling information.
-       		sBlock.createAndAddGuardExpression(nextControlFlows, schedule, scg, nodeCache) 
+       		sb.createAndAddGuardExpression(nextControlFlows, schedule, scg, nodeCache) 
     		
     		/**
     		 * If the scheduling block includes assignment nodes, they must be executed if the corresponding guard 
@@ -277,7 +294,11 @@ class SimpleSequentializer extends AbstractSequentializer {
     ) {
         // Create empty expressions if present.
         guardExpression.emptyExpressions.forEach[ emptyExpression |
-            val newValuedObject = scg.createValuedObject(emptyExpression.valuedObject.name).setTypeBool
+            var i = 0
+            while(scg.findValuedObjectByName(emptyExpression.valuedObject.name + "_" + i)!=null) {
+                i = i + 1
+            }
+            val newValuedObject = scg.createValuedObject(emptyExpression.valuedObject.name + "_" + i).setTypeBool
             emptyExpression.valuedObject.addToValuedObjectMapping(newValuedObject)
                                     
             ScgFactory::eINSTANCE.createAssignment => [ emptyExpressionAssignment |
@@ -323,15 +344,25 @@ class SimpleSequentializer extends AbstractSequentializer {
      * @throws UnsupportedSCGException 
      *      Throws an UnsupportedSCGException if a standard guarded block has no predecessor information.
      */
-    protected def void createAndAddGuardExpression(SchedulingBlock schedulingBlock, 
+    protected def void createAndAddGuardExpression(ScheduledBlock scheduledBlock, 
         List<ControlFlow> nextControlFlows, Schedule schedule, SCGraph scg, List<Node> nodeCache
     ) {
         
         // Query the basic block of the scheduling block.
-        val basicBlock = schedulingBlock.basicBlock
-        
+        val basicBlock = scheduledBlock.schedulingBlock.basicBlock
+                
         val assignment = ScgFactory::eINSTANCE.createAssignment
-        assignment.valuedObject = schedulingBlock.guard.getValuedObjectCopy        
+        
+        if (!scheduledBlock.schizophrenic) {
+            assignment.valuedObject = scheduledBlock.schedulingBlock.guard.getValuedObjectCopy
+        } else {
+            var ValuedObject vo = scg.findValuedObjectByName(scheduledBlock.schedulingBlock.guard.name + SCHIZOPHRENIC_SUFFIX)
+            if (vo == null) {
+                vo = createValuedObject(scheduledBlock.schedulingBlock.guard.name + SCHIZOPHRENIC_SUFFIX)
+                schizoDeclaration.valuedObjects += vo
+                assignment.valuedObject = vo
+            }
+        }        
         
         /** 
          * If the scheduling block is the first scheduling block in the basic block,
@@ -341,13 +372,13 @@ class SimpleSequentializer extends AbstractSequentializer {
          */
          
         // Is the scheduling block the first scheduling block of the basic block?
-        if (basicBlock.schedulingBlocks.head == schedulingBlock) {
+        if (basicBlock.schedulingBlocks.head == scheduledBlock.schedulingBlock) {
             if (basicBlock.goBlock) {
                 /**
                  * If the basic block is a GO block, meaning it should be active when the programs starts,
                  * add a reference to the GO signal as expression for the guard.
                  */
-                 schedulingBlock.handleGoBlockGuardExpression(assignment, nextControlFlows, schedule, 
+                 scheduledBlock.handleGoBlockGuardExpression(assignment, nextControlFlows, schedule, 
                      scg, nodeCache)
             } 
             else if (basicBlock.depthBlock) {
@@ -355,7 +386,7 @@ class SimpleSequentializer extends AbstractSequentializer {
                  * If the basic block is a depth block, meaning it is delayed in its execution,
                  * add a pre operator expression as expression for the guard.
                  */
-                schedulingBlock.handleDepthBlockGuardExpression(assignment, nextControlFlows, schedule, 
+                scheduledBlock.handleDepthBlockGuardExpression(assignment, nextControlFlows, schedule, 
                     scg, nodeCache)
             }
             else if (basicBlock.synchronizerBlock) {
@@ -365,7 +396,7 @@ class SimpleSequentializer extends AbstractSequentializer {
                  * Additionally, the synchronizer may create new valued objects mandatory for the expression.
                  * These must be added to the graph in order to be serializable later on. 
                  */
-                schedulingBlock.handleSynchronizerBlockGuardExpression(assignment, nextControlFlows, schedule,
+                scheduledBlock.handleSynchronizerBlockGuardExpression(assignment, nextControlFlows, schedule,
                     scg, nodeCache)   
             } else {
                 /**
@@ -373,7 +404,7 @@ class SimpleSequentializer extends AbstractSequentializer {
                  * At least one block must be active to activate the current block. Therefore, connect all guards
                  * of the predecessors with OR expressions.
                  */
-                schedulingBlock.handleStandardBlockGuardExpression(assignment, nextControlFlows, schedule,
+                scheduledBlock.handleStandardBlockGuardExpression(assignment, nextControlFlows, schedule,
                     scg, nodeCache)               
             }
         } else {
@@ -390,7 +421,7 @@ class SimpleSequentializer extends AbstractSequentializer {
              * between conditional nodes but conditional nodes force the create of new basic blocks after their execution.
              * Therefore, there will always be a new basic block with a new guard expression in this scenario.
              */
-            schedulingBlock.handleSubsequentSchedulingBlockGuardExpression(assignment, nextControlFlows, schedule, 
+            scheduledBlock.handleSubsequentSchedulingBlockGuardExpression(assignment, nextControlFlows, schedule, 
                 scg, nodeCache)
         }
                 
@@ -401,6 +432,10 @@ class SimpleSequentializer extends AbstractSequentializer {
         // Create a new control flow and take the assignment node as source.
         assignment.next = ScgFactory::eINSTANCE.createControlFlow
         nextControlFlows.add(assignment.next)
+        
+        if (scheduledBlock.schizophrenic) {
+            assignment.assignment = scg.fixSchizophrenicExpression(assignment.assignment)
+        }
             
         // Add the assignment to the SCG.
         nodeCache.add(assignment)
@@ -409,10 +444,10 @@ class SimpleSequentializer extends AbstractSequentializer {
     
     // --- CREATE GUARDS: GO BLOCK 
     
-    protected def handleGoBlockGuardExpression(SchedulingBlock schedulingBlock, Assignment assignment,  
+    protected def handleGoBlockGuardExpression(ScheduledBlock scheduledBlock, Assignment assignment,  
         List<ControlFlow> nextFlows, Schedule schedule, SCGraph scg, List<Node> nodeCache
     ) {
-        val gExpr = schedulingBlock.createGoBlockGuardExpression(schedule, scg)
+        val gExpr = scheduledBlock.schedulingBlock.createGoBlockGuardExpression(schedule, scg)
         assignment.addGuardExpression(gExpr, nextFlows, scg, nodeCache)       
     }
     
@@ -426,10 +461,10 @@ class SimpleSequentializer extends AbstractSequentializer {
 
     // --- CREATE GUARDS: DEPTH BLOCK 
 
-    protected def handleDepthBlockGuardExpression(SchedulingBlock schedulingBlock, Assignment assignment,  
+    protected def handleDepthBlockGuardExpression(ScheduledBlock scheduledBlock, Assignment assignment,  
         List<ControlFlow> nextFlows, Schedule schedule, SCGraph scg,  List<Node> nodeCache
     ) {
-        val gExpr = schedulingBlock.createDepthBlockGuardExpression(schedule, scg)
+        val gExpr = scheduledBlock.schedulingBlock.createDepthBlockGuardExpression(schedule, scg)
         assignment.addGuardExpression(gExpr, nextFlows, scg, nodeCache)       
     }
     
@@ -446,10 +481,10 @@ class SimpleSequentializer extends AbstractSequentializer {
 
     // --- CREATE GUARDS: SYNCHRONIZER BLOCK 
 
-    protected def handleSynchronizerBlockGuardExpression(SchedulingBlock schedulingBlock, Assignment assignment,  
+    protected def handleSynchronizerBlockGuardExpression(ScheduledBlock scheduledBlock, Assignment assignment,  
         List<ControlFlow> nextFlows, Schedule schedule, SCGraph scg,  List<Node> nodeCache
     ) {
-        val gExpr = schedulingBlock.createSynchronizerBlockGuardExpression(schedule, scg)
+        val gExpr = scheduledBlock.schedulingBlock.createSynchronizerBlockGuardExpression(schedule, scg)
         assignment.addGuardExpression(gExpr, nextFlows, scg, nodeCache)       
     }
     
@@ -457,6 +492,7 @@ class SimpleSequentializer extends AbstractSequentializer {
         // The simple scheduler uses the SurfaceSynchronizer. 
         // The result of the synchronizer is stored in the synchronizerData class joinData.
         val synchronizer = (schedulingBlock.nodes.head as Join).getSynchronizer
+        System.out.println("Sequentializing join with " + synchronizer.id)
         val joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join, compilerContext, schedulingBlockCache)
 
         joinData.guardExpression
@@ -465,32 +501,43 @@ class SimpleSequentializer extends AbstractSequentializer {
     
     // --- CREATE GUARDS: STANDARD BLOCK 
 
-    protected def handleStandardBlockGuardExpression(SchedulingBlock schedulingBlock, Assignment assignment,  
+    protected def handleStandardBlockGuardExpression(ScheduledBlock scheduledBlock, Assignment assignment,  
         List<ControlFlow> nextFlows, Schedule schedule, SCGraph scg,  List<Node> nodeCache
     ) {
-        val gExpr = schedulingBlock.createStandardBlockGuardExpression(schedule, scg)
+        val gExpr = scheduledBlock.createStandardBlockGuardExpression(schedule, scg)
         assignment.addGuardExpression(gExpr, nextFlows, scg, nodeCache)       
     }
     
-    protected def GuardExpression createStandardBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
-        val basicBlock = schedulingBlock.basicBlock
+    protected def GuardExpression createStandardBlockGuardExpression(ScheduledBlock scheduledBlock, Schedule schedule, SCGraph scg) {
+        val basicBlock = scheduledBlock.schedulingBlock.basicBlock
         
         val gExpr = new GuardExpression;
-        gExpr.valuedObject = schedulingBlock.guard
+        gExpr.valuedObject = scheduledBlock.schedulingBlock.guard
+        
+        val relevantPredecessors = <Predecessor> newHashSet
+        if (scheduledBlock.schizophrenic) {
+            relevantPredecessors += basicBlock.predecessors.filter[ !basicBlock.entryBlock ]
+        } else {
+            relevantPredecessors += basicBlock.predecessors
+        }
         
         // If there are more than one predecessor, create an operator expression and connect them via OR.
-        if (basicBlock.predecessors.size>1) {
+        if (relevantPredecessors.size>1) {
             // Create OR operator expression via kexpressions factory.
             val expr = KExpressionsFactory::eINSTANCE.createOperatorExpression
             expr.setOperator(OperatorType::OR)
                     
             // For each predecessor add its expression to the sub expressions list of the operator expression.
-            basicBlock.predecessors.forEach[ expr.subExpressions += it.predecessorExpression(schedulingBlock, schedule, scg) ]
+            relevantPredecessors.forEach[ 
+//                if (!scheduledBlock.schizophrenic || it.basicBlock.entryBlock)
+                    expr.subExpressions += it.predecessorExpression(scheduledBlock.schedulingBlock, schedule, scg)
+            ]
             gExpr.expression = expr
         } 
         // If it is exactly one predecessor, we can use its expression directly.
-        else if (basicBlock.predecessors.size == 1) {
-            gExpr.expression = basicBlock.predecessors.head.predecessorExpression(schedulingBlock, schedule, scg)
+        else if (relevantPredecessors.size == 1) {
+//            if (!scheduledBlock.schizophrenic || basicBlock.predecessors.head.basicBlock.entryBlock)
+                gExpr.expression = relevantPredecessors.head.predecessorExpression(scheduledBlock.schedulingBlock, schedule, scg)
         } 
         else 
         {
@@ -498,7 +545,7 @@ class SimpleSequentializer extends AbstractSequentializer {
             * If we reach this point, the basic block contains no predecessor information but is not marked as go block.
             * This is not supported by this scheduler: throw an exception. 
             */
-            if (!basicBlock.deadBlock) {
+            if (!basicBlock.deadBlock && !scheduledBlock.schizophrenic) {
                 throw new UnsupportedSCGException("Cannot handle standard guard without predecessor information!")
             } else {
                 gExpr.expression = FALSE  
@@ -510,10 +557,10 @@ class SimpleSequentializer extends AbstractSequentializer {
 
     // --- CREATE GUARDS: SUBSEQUENT SCHEDULING BLOCK 
 
-    protected def handleSubsequentSchedulingBlockGuardExpression(SchedulingBlock schedulingBlock, Assignment assignment,  
+    protected def handleSubsequentSchedulingBlockGuardExpression(ScheduledBlock scheduledBlock, Assignment assignment,  
         List<ControlFlow> nextFlows, Schedule schedule, SCGraph scg,  List<Node> nodeCache
     ) {
-        val gExpr = schedulingBlock.createSubsequentSchedulingBlockGuardExpression(schedule, scg)
+        val gExpr = scheduledBlock.schedulingBlock.createSubsequentSchedulingBlockGuardExpression(schedule, scg)
         assignment.addGuardExpression(gExpr, nextFlows, scg, nodeCache)       
     }
 
@@ -611,6 +658,25 @@ class SimpleSequentializer extends AbstractSequentializer {
             predecessorSBCache.put(predecessor, sbList2)
         }
     }
-    
+ 
+    protected def Expression fixSchizophrenicExpression(SCGraph scg, Expression expression) {
+        if (expression instanceof ValuedObjectReference) {
+            val vor = (expression as ValuedObjectReference)
+            val newVO = scg.findValuedObjectByName(vor.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
+            if (newVO != null) {
+                vor.valuedObject = newVO 
+            }
+        } else if (expression instanceof OperatorExpression) {
+            val vors = (expression as OperatorExpression).eAllContents.filter(typeof(ValuedObjectReference))
+            for(vor : vors.toIterable) {
+                val newVO = scg.findValuedObjectByName(vor.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
+                if (newVO != null) {
+                    vor.valuedObject = newVO 
+                }
+            }
+        }
+        
+        expression
+    }   
     
 }

@@ -133,6 +133,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         
 		data.createEmptyExpressions(terminationExpression)
 		data.createGuardExpression(terminationExpression)
+//        data.guardExpression.expression = FALSE
         
 		data.fixEmptyExpressions.fixSynchronizerExpression
     }

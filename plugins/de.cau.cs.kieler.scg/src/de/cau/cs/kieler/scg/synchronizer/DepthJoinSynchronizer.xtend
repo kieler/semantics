@@ -169,5 +169,19 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         	
         includeSet
 	}    
+	
+    override protected SynchronizerData build(Join join) {
+        var data = new SynchronizerData()
+        
+        val joinSB = join.getCachedSchedulingBlock
+        
+        val exitNodes = join.allPrevious.map[ eContainer as Exit ]
+        
+        data.guardExpression.valuedObject = joinSB.guard
+                
+        data.guardExpression.expression = FALSE
+
+        data 
+    }	
     
 }
