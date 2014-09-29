@@ -215,7 +215,7 @@ class Abort {
             val outgoingConnectorState = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueNameCached(nameCache).
                 setTypeConnector
             state.createTransitionTo(outgoingConnectorState).setTypeTermination
-
+            
             for (transition : outgoingTransitions) {
 
                 // Modify the outgoing transition

@@ -4,14 +4,14 @@
    <extension
          point="de.cau.cs.kieler.kico.transformation">
       <transformationMethod
-            class="de.cau.cs.kieler.scg.s.transformations.SCGvS2C"
-            id="SCGvS2C"
+            class="de.cau.cs.kieler.scg.s.transformations.SCG2C"
+            id="SCG2C"
             method="transform"
             name="C Code">
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scg.s.transformations.SCG2S"
-            dependencies="SCGvS2C"
+            dependencies="SCG2C"
             id="SCG2S"
             method="transform"
             name="S Code">
@@ -22,7 +22,7 @@
             isCategory="true"
             isFeatureGroup="false"
             name="Code Generation"
-            transformations="SCGvS2C, SCG2S">
+            transformations="SCG2C, SCG2S">
       </transformationGroup>
    </extension>
 
