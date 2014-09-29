@@ -707,6 +707,16 @@ class SCChartsExtension {
         state.localActions.add(action);
         action
     }
+    
+    // Retrieves the first during action if there is any or returns a new one
+    def DuringAction retrieveDuringAction(State state) {
+        val duringAction = state.duringActions.get(0)
+        if (duringAction != null) {
+            return duringAction
+        }
+        state.createDuringAction
+    }
+
 
     // Create an immediate during action for a state.
     def DuringAction createImmediateDuringAction(State state) {
