@@ -245,6 +245,9 @@ class SimpleSequentializer extends AbstractSequentializer {
     			// Create a conditional and set a reference of the guard as condition.
     			val conditional = ScgFactory::eINSTANCE.createConditional
                 conditional.condition = sBlock.guard.reference.copySCGExpression
+                if (sb.schizophrenic) {
+                    conditional.condition = scg.fixSchizophrenicExpression(conditional.condition)
+                }
     			
     			// Create control flows for the two branches and set the actual control flow to the conditional.
     			conditional.then = ScgFactory::eINSTANCE.createControlFlow
@@ -565,15 +568,15 @@ class SimpleSequentializer extends AbstractSequentializer {
     protected def handleSubsequentSchedulingBlockGuardExpression(ScheduledBlock scheduledBlock, Assignment assignment,  
         List<ControlFlow> nextFlows, Schedule schedule, SCGraph scg,  List<Node> nodeCache
     ) {
-        val gExpr = scheduledBlock.schedulingBlock.createSubsequentSchedulingBlockGuardExpression(schedule, scg)
+        val gExpr = scheduledBlock.createSubsequentSchedulingBlockGuardExpression(schedule, scg)
         assignment.addGuardExpression(gExpr, nextFlows, scg, nodeCache)       
     }
 
     
-    protected def GuardExpression createSubsequentSchedulingBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
+    protected def GuardExpression createSubsequentSchedulingBlockGuardExpression(ScheduledBlock scheduledBlock, Schedule schedule, SCGraph scg) {
         new GuardExpression => [
-            valuedObject = schedulingBlock.guard
-            expression = schedulingBlock.basicBlock.schedulingBlocks.head.guard.reference
+            valuedObject = scheduledBlock.schedulingBlock.guard
+            expression = scheduledBlock.schedulingBlock.basicBlock.schedulingBlocks.head.guard.reference
         ]
     }
     

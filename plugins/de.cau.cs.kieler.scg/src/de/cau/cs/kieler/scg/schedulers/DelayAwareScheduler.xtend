@@ -34,6 +34,7 @@ import de.cau.cs.kieler.kico.KielerCompilerException
 import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
 import de.cau.cs.kieler.scg.ScheduledBlock
 import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -65,7 +66,10 @@ class DelayAwareScheduler extends SimpleScheduler {
     extension SCGCacheExtensions      
        
     @Inject
-    extension SynchronizerSelector
+    extension SynchronizerSelector    
+    
+    @Inject
+    extension AnnotationsExtensions
     
     protected val schizophrenicBlocks = <SchedulingBlock> newHashSet
     
@@ -82,11 +86,20 @@ class DelayAwareScheduler extends SimpleScheduler {
         // Assume all preconditions are met and query parent basic block.
         val parentBasicBlock = schedulingBlock.eContainer as BasicBlock
 
+        val preceedingSchedulingBlocks = <SchedulingBlock> newHashSet
         // For all predecessor blocks check whether they are already processed.
-        for(predecessor : parentBasicBlock.predecessors){
+        if (schedulingBlock != schedulingBlock.basicBlock.schedulingBlocks.head) {
+            var index = schedulingBlock.basicBlock.schedulingBlocks.indexOf(schedulingBlock)
+            preceedingSchedulingBlocks += schedulingBlock.basicBlock.schedulingBlocks.get(index - 1)
+        } else {        
+          for(predecessor : parentBasicBlock.predecessors){
             if (!predecessorExcludeSet.contains(predecessor)) {
 //                for(sBlock : predecessor.basicBlock.schedulingBlocks.last){
                     val sBlock = predecessor.basicBlock.schedulingBlocks.last
+                    preceedingSchedulingBlocks += sBlock
+                }
+            }
+        for(sBlock:preceedingSchedulingBlocks) {        
                     // If any scheduling block of that basic block is not already in our schedule,
                     // the precondition test fails. Set placeable to false.
                     if (!placedBlocks.contains(sBlock) && 
@@ -95,8 +108,8 @@ class DelayAwareScheduler extends SimpleScheduler {
                         !(depthJoin && schizophrenicBlocks.contains(sBlock))
                     ) { return false }
                 }
+            }
 //            }
-        }
         
 //        // For all predecessor blocks check whether they are already processed.
 //        if (predecessorIncludeSets.containsKey(parentBasicBlock)) {
@@ -156,7 +169,9 @@ class DelayAwareScheduler extends SimpleScheduler {
            	}
            	
            	var depthJoin = false
-            if (schedulingBlock.basicBlock.synchronizerBlock) {
+            if (schedulingBlock.basicBlock.synchronizerBlock && 
+                schedulingBlock == schedulingBlock.basicBlock.schedulingBlocks.head
+            ) {
                 val join = schedulingBlock.basicBlock.schedulingBlocks.head.nodes.head as Join
                 val synchronizer = join.synchronizer
                 if (synchronizer.id == DepthJoinSynchronizer::SYNCHRONIZER_ID) {
@@ -166,10 +181,14 @@ class DelayAwareScheduler extends SimpleScheduler {
            	
            	val preceedingSchizo = <SchedulingBlock, Boolean> newHashMap
            	val preceedingSchedulingBlocks = <SchedulingBlock> newHashSet
-            for(predecessor : schedulingBlock.basicBlock.predecessors) {
-                if (!predecessorExcludeSet.contains(predecessor)) {
+            if (schedulingBlock != schedulingBlock.basicBlock.schedulingBlocks.head) {
+                var index = schedulingBlock.basicBlock.schedulingBlocks.indexOf(schedulingBlock)
+                preceedingSchedulingBlocks += schedulingBlock.basicBlock.schedulingBlocks.get(index - 1)
+            } else {
+                for(predecessor : schedulingBlock.basicBlock.predecessors) {
+                    if (!predecessorExcludeSet.contains(predecessor)) {
 //                    if (!schizophrenic) {
-	            	    preceedingSchedulingBlocks += predecessor.basicBlock.schedulingBlocks.last
+	                   	    preceedingSchedulingBlocks += predecessor.basicBlock.schedulingBlocks.last
 //	            	} else {
 //	            	    for(sb : predecessor.basicBlock.schedulingBlocks) {
 //	            	        if (!sb.isOnCriticalPath(pilData)) {
@@ -177,15 +196,16 @@ class DelayAwareScheduler extends SimpleScheduler {
 //	            	        }
 //	            	    }
 //	            	}
-            	}
+                	}
+               	}
            	}
-	        if (predecessorIncludeSets.containsKey(schedulingBlock.basicBlock)) {
-    	        for(predecessor : predecessorIncludeSets.get(schedulingBlock.basicBlock)) {
-        	        if (!predecessorExcludeSet.contains(predecessor)) {
-		            	preceedingSchedulingBlocks += predecessor.basicBlock.schedulingBlocks
-	            	}
-            	}
-           	}
+//	        if (predecessorIncludeSets.containsKey(schedulingBlock.basicBlock)) {
+//    	        for(predecessor : predecessorIncludeSets.get(schedulingBlock.basicBlock)) {
+//        	        if (!predecessorExcludeSet.contains(predecessor)) {
+//		            	preceedingSchedulingBlocks += predecessor.basicBlock.schedulingBlocks
+//	            	}
+//            	}
+//           	}
             for(dependency : schedulingBlock.dependencies) {
                 if (dependency.concurrent && !dependency.confluent) {
                     val sb = schedulingBlockCache.get(dependency.eContainer as Node)
@@ -193,10 +213,7 @@ class DelayAwareScheduler extends SimpleScheduler {
                     preceedingSchedulingBlocks += sb
                 }
             }
-            if (schedulingBlock != schedulingBlock.basicBlock.schedulingBlocks.head) {
-                var index = schedulingBlock.basicBlock.schedulingBlocks.indexOf(schedulingBlock)
-                preceedingSchedulingBlocks += schedulingBlock.basicBlock.schedulingBlocks.get(index - 1)
-            }
+
             
             System.out.print(debugIn + "" + schedulingBlock.guard.name + " needs: ")
             for(sb : preceedingSchedulingBlocks) {
@@ -269,13 +286,15 @@ class DelayAwareScheduler extends SimpleScheduler {
 
 		for(schedulingBlock : schedulingBlocks.filter[ basicBlock.synchronizerBlock ]) {        
             val join = schedulingBlock.basicBlock.schedulingBlocks.head.nodes.head as Join
-            val synchronizer = join.chooseSynchronizer
-            System.out.println("Using synchronizer " + synchronizer.getId + " for " + join.toString);
-            synchronizer.annotate(join)
+            if (!join.hasAnnotation(SynchronizerSelector::ANNOTATION_SELECTEDSYNCHRONIZER)) {
+                val synchronizer = join.chooseSynchronizer
+                System.out.println("Using synchronizer " + synchronizer.getId + " for " + join.toString);
+                synchronizer.annotate(join)
             
-            predecessorExcludeSet += synchronizer.getExcludedPredecessors(join, schedulingBlockCache, context.compilationResult.ancillaryData)
-            val predecessorIncludeSet = synchronizer.getAdditionalPredecessors(join, schedulingBlockCache, context.compilationResult.ancillaryData)
-            predecessorIncludeSets.put(schedulingBlock.basicBlock, predecessorIncludeSet)
+                predecessorExcludeSet += synchronizer.getExcludedPredecessors(join, schedulingBlockCache, context.compilationResult.ancillaryData)
+                val predecessorIncludeSet = synchronizer.getAdditionalPredecessors(join, schedulingBlockCache, context.compilationResult.ancillaryData)
+                predecessorIncludeSets.put(schedulingBlock.basicBlock, predecessorIncludeSet)
+            }
         }        
         
         for (sBlock : schedulingBlocks) {
