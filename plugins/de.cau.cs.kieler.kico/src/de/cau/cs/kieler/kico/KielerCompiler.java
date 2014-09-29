@@ -1027,6 +1027,9 @@ public class KielerCompiler {
                         // work in % already added by the subMonitor
                         int additional = 100 - subMonitor.getPercentDone();
                         monitor.worked(additional);
+                    } else {
+                        // MUST flag this to be finished otherwise
+                        context.getCompilationResult().setCurrentTransformationDone(true);
                     }
                 }
             }
