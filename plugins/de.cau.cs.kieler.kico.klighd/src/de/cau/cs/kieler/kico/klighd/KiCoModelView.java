@@ -1040,7 +1040,6 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             // listen for internal klighd errors
             lastException = null;
             Platform.addLogListener(this);
-
             // Update diagram
             if (modelTypeChanged) {
                 //save previous synthesis options to restore later
@@ -1058,26 +1057,30 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                                 recentSynthesisOptions.put(synthesis, optionsMap);
                             }
                             for (SynthesisOption option : options) {
-                                optionsMap.put(option, vc.getOptionValue(option));
+                                if(synthesis.getDisplayedSynthesisOptions().contains(option)){
+                                    optionsMap.put(option, vc.getOptionValue(option));
+                                }
                             }
                         }
                     }
                 }
-                
-                //get save options to restore
+
+                // get save options to restore
                 ISynthesis synthesis = Iterables.getFirst(KlighdDataManager.getInstance().getAvailableSyntheses(model.getClass()), null);
-                if(synthesis != null && recentSynthesisOptions.containsKey(synthesis)){
+                if (synthesis != null && recentSynthesisOptions.containsKey(synthesis)) {
                     properties.configureSynthesisOptionValues(recentSynthesisOptions.get(synthesis));
                 }
-                
+
+                // Give model synthesis access to the compilation result
                 properties.setProperty(KiCoKLighDProperties.COMPILATION_RESULT, compilationResult);
-                
+
                 // the (re)initialization case
                 DiagramViewManager.initializeView(this, model, null, properties);
                 // reset layout to resolve KISEMA-905
                 resetLayoutConfig();
-                
+
             } else {
+                // Give model synthesis access to the compilation result
                 vc.setProperty(KiCoKLighDProperties.COMPILATION_RESULT, compilationResult);
                 // update case (keeps options and sidebar)
                 DiagramViewManager.updateView(this.getViewer().getViewContext(), model);
