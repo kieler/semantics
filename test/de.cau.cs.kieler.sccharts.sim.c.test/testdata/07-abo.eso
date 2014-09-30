@@ -8,7 +8,16 @@
 
 % Output: 
 ;
-I 
+B 
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+A 
 % Output: O 
 ;
 
@@ -18,15 +27,15 @@ I
 % Output: 
 ;
 ! reset;
-I 
+A 
 % Output: 
 ;
-I 
+A 
 % Output: O 
 ;
-I 
-% Output: O 
+A 
+% Output: 
 ;
-I 
-% Output: O 
+A 
+% Output: 
 ;
