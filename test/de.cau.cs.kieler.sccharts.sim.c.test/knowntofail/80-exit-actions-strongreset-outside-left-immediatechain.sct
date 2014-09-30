@@ -1,0 +1,19 @@
+scchart _80_exit_actions_strongreset_outside_left_immediatechain
+"80-exit-actions-strongreset-outside-left-immediatechain" {
+  output signal O;
+  input signal S;
+  input signal R;
+  input signal BadSignal;
+
+  initial state B {
+
+    initial state C2 "C"
+    --> D with S;
+
+    state D;
+  }
+  o-> PossiblyTransient with R;
+
+  state PossiblyTransient
+  --> B immediate with BadSignal;
+}

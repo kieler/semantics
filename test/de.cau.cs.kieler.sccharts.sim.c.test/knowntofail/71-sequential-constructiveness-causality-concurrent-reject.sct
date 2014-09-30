@@ -1,0 +1,21 @@
+scchart sequentialconstructiveness {
+  output signal S;
+  output signal O;
+  input signal I;
+  signal L;
+
+  initial state A
+  --> B with S / O
+  --> C with I / L;
+
+  state B;
+
+  state C;
+
+  region:
+
+  initial state D
+  --> E with L / S;
+
+  state E;
+}

@@ -1,0 +1,17 @@
+scchart _138_pre_valued_signal "138-pre-valued-signal" {
+  input signal int I;
+  signal int V;
+  output signal int O;
+  output signal int O2;
+
+  initial state A
+  --> B with pre(I) / V(val(I));
+
+  state B
+  --> A with pre(V) / O(val(V));
+
+  region:
+
+  initial state C
+  --> C with pre(V) / O2(val(V));
+}

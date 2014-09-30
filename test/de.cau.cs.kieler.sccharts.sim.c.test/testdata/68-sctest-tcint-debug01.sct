@@ -1,0 +1,49 @@
+scchart Module_tcint_debug01 {
+  output signal R;
+  signal T;
+  input signal haltTrap46;
+
+  state S10 "10";
+
+  final state S6 "6";
+
+  state ParallelStatementList47state {
+
+    region R0:
+
+    initial state init0 "I"
+    --> S20 immediate;
+
+    final state S20 "20";
+
+    region R1:
+
+    initial state init1 "I"
+    --> ParallelStatementList51state immediate with / R;
+
+    state ParallelStatementList51state {
+
+      region R0:
+
+      initial state init2 "I"
+      --> S67 immediate;
+
+      state S67 "67"
+      --> S95 with / T;
+
+      state S95 "95";
+
+      region R1:
+
+      initial state init3 "I"
+      --> S129 immediate;
+
+      final state S129 "129";
+    };
+  }
+  --> S10 immediate with haltTrap46
+  --> S6 immediate with T;
+
+  initial state init4 "I"
+  --> ParallelStatementList47state immediate;
+}

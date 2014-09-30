@@ -1,0 +1,97 @@
+! reset;
+
+% Output: 
+;
+
+% Output: O4 O O2 
+;
+
+% Output: O4 O3 
+;
+
+% Output: O4 O3 
+;
+
+% Output: O4 O3 
+;
+W 
+% Output: O6 O5 O4 O3 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+R 
+% Output: O4 O O2 
+;
+
+% Output: O4 O3 
+;
+
+% Output: O4 O3 
+;
+S 
+% Output: O6 O5 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+W R 
+% Output: O4 O O2 
+;
+
+% Output: O4 O3 
+;
+
+% Output: O4 O3 
+;
+
+% Output: O4 O3 
+;
+W 
+% Output: O6 O5 O4 O3 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+S R 
+% Output: O4 O O2 
+;
+
+% Output: O4 O3 
+;
+
+% Output: O4 O3 
+;
+S R 
+% Output: O6 O5 O4 O O2 
+;
+
+% Output: O4 O3 
+;
+
+% Output: O4 O3 
+;
+W R 
+% Output: O6 O5 O4 O O3 O2 
+;
+
+% Output: O4 O3 
+;
+
+% Output: O4 O3 
+;
+
+% Output: O4 O3 
+;

@@ -1,0 +1,146 @@
+! reset;
+
+% Output:
+;
+A 
+% Output: H
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+B 
+% Output:
+;
+
+% Output:
+;
+D 
+% Output: G H
+;
+! reset;
+
+% Output:
+;
+D 
+% Output: E F
+;
+B 
+% Output:
+;
+! reset;
+
+% Output:
+;
+D 
+% Output: E F
+;
+
+% Output:
+;
+A 
+% Output: H
+;
+! reset;
+
+% Output:
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+A 
+% Output: H
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+B 
+% Output:
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+B 
+% Output:
+;
+D 
+% Output: G H
+;
+! reset;
+
+% Output:
+;
+D 
+% Output: E F
+;
+B 
+% Output:
+;
+! reset;
+
+% Output:
+;
+D 
+% Output: E F
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+D 
+% Output: E F
+;
+A 
+% Output: H
+;
+! reset;
+
+% Output:
+;
+B 
+% Output:
+;
+! reset;
+
+% Output:
+;
+D 
+% Output: E F
+;
+! reset;
+
+% Output:
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+A 
+% Output: H
+;
+! reset;
+
+% Output:
+;
+

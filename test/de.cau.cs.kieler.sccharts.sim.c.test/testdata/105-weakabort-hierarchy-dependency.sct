@@ -1,0 +1,21 @@
+scchart _105_weakabort_hierarchy_dependency "105-weakabort-hierarchy-dependency"
+{
+  input signal I;
+  output signal O;
+  signal L;
+  output signal O2;
+
+  initial state A {
+
+    initial state B {
+
+      initial state C
+      --> D with I / L; O;
+
+      state D;
+    };
+  }
+  --> E with L / O2;
+
+  state E;
+}

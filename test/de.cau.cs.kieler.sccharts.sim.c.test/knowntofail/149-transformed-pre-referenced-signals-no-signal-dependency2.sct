@@ -1,0 +1,43 @@
+scchart _39_pre_referenced_signals_no_signal_dependency
+"39-pre-referenced-signals-no-signal-dependency" {
+  output signal O;
+  input signal I;
+  output signal B;
+  output signal PreB;
+  output signal O2;
+
+  region Region:
+
+  initial state A
+  --> B with I / B;
+
+  state C;
+
+  state EB {
+
+    initial state ib
+    --> fb immediate with !PreB / O;
+
+    state fb;
+
+    region:
+
+    initial state ib
+    --> fb immediate with PreB / O2;
+
+    state fb;
+  }
+  --> C immediate with / B;
+
+  state B
+  --> EB with I;
+
+  region:
+
+  state Pre
+  --> Pre with B / PreB
+  --> NotPre with / PreB;
+
+  initial state NotPre
+  --> Pre with B;
+}

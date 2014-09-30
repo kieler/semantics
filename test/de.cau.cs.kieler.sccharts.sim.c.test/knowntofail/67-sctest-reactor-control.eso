@@ -1,0 +1,107 @@
+! reset;
+
+% Output:
+;
+Start 
+% Output: PullOutRods
+;
+
+% Output:
+;
+OverHeated 
+% Output: PushInRods
+;
+CooledDown Start 
+% Output: PullOutRods
+;
+! reset;
+
+% Output:
+;
+OverHeated 
+% Output: PushInRods
+;
+
+% Output:
+;
+CooledDown 
+% Output:
+;
+
+% Output:
+;
+! reset;
+OverHeated 
+% Output: PushInRods
+;
+! reset;
+
+% Output:
+;
+Start 
+% Output: PullOutRods
+;
+
+% Output:
+;
+! reset;
+
+% Output:
+;
+Start 
+% Output: PullOutRods
+;
+OverHeated 
+% Output: PushInRods
+;
+! reset;
+
+% Output:
+;
+Start 
+% Output: PullOutRods
+;
+! reset;
+OverHeated 
+% Output: PushInRods
+;
+CooledDown Start 
+% Output: PullOutRods
+;
+! reset;
+
+% Output:
+;
+OverHeated 
+% Output: PushInRods
+;
+! reset;
+
+% Output:
+;
+
+% Output:
+;
+! reset;
+OverHeated 
+% Output: PushInRods
+;
+
+% Output:
+;
+! reset;
+OverHeated 
+% Output: PushInRods
+;
+CooledDown 
+% Output:
+;
+! reset;
+OverHeated 
+% Output: PushInRods
+;
+! reset;
+
+% Output:
+;
+

@@ -1,0 +1,20 @@
+scchart NestedAborts {
+  input signal Otrig;
+  input signal Itrig;
+  output signal O;
+  output signal O2;
+
+  initial state Outer {
+
+    initial state Inner1 {
+
+      initial state S;
+    }
+    --> Inner2 with Itrig / O;
+
+    state Inner2;
+  }
+  --> Outer2 with Otrig / O2;
+
+  state Outer2;
+}

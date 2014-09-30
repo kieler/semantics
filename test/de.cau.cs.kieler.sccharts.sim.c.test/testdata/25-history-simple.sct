@@ -1,0 +1,16 @@
+scchart _20_history "20-history" {
+  input signal I;
+  output signal O;
+
+  initial state A {
+
+    initial state C
+    --> B with / O;
+
+    state B;
+  }
+  --> E with I;
+
+  state E
+  --> A with I;
+}

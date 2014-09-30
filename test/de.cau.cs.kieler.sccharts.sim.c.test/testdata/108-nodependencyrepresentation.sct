@@ -1,0 +1,11 @@
+scchart _108_hiearchy_final "108-hiearchy-final" {
+  output signal O;
+
+  initial state A {
+
+    initial state B2 "B"
+    --> F with / O;
+
+    final state F;
+  };
+}

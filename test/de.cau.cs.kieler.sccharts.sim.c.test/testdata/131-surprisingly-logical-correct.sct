@@ -1,0 +1,16 @@
+scchart S0 "logical_correct" {
+  output signal A;
+  output signal B;
+
+  initial state S0 "s1"
+  --> S1 with A / A;
+
+  state S1 "s2";
+
+  region:
+
+  initial state S0 "s3"
+  --> S1 with A & !B / B;
+
+  state S1 "s4";
+}

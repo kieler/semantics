@@ -1,0 +1,26 @@
+scchart Schizo {
+  output signal Son;
+  output signal Soff;
+
+  region _R0:
+
+  initial state S {
+    signal S;
+
+    region _R0:
+
+    initial state S
+    --> S1 immediate with S / Son
+    --> S1 immediate with !S / Soff;
+
+    state S1
+    --> S2 with / S;
+
+    state S2
+    --> S3 immediate with S / Son
+    --> S3 immediate with !S / Soff;
+
+    final state S3;
+  }
+  >-> S;
+}

@@ -1,0 +1,20 @@
+scchart SyncChart {
+  input signal I;
+  output signal O;
+
+  initial state ^normal {
+    signal L;
+
+    initial state s1
+    --> s2 immediate with L / O;
+
+    state s2;
+
+    region:
+
+    initial state s3
+    --> s4 immediate with I / L;
+
+    state s4;
+  };
+}
