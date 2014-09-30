@@ -319,7 +319,7 @@ class DelayAwareScheduler extends SimpleScheduler {
             }
 //        }
         
-        schedule.size >= schedulingBlocks.size
+        schedule.filter[ !schizophrenic ].size == schedulingBlocks.size
     }
 
 	protected def boolean isOnCriticalPath(SchedulingBlock schedulingBlock, Set<Node> pilData) {
