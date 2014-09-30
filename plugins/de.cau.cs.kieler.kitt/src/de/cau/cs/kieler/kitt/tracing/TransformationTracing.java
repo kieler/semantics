@@ -18,6 +18,7 @@ import java.util.HashMap;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import de.cau.cs.kieler.kitt.tracing.internal.TracingChain;
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping;
 
 /**
@@ -29,27 +30,50 @@ public class TransformationTracing {
     private static HashMap<Object, TracingMapping> activeTransformations =
             new HashMap<Object, TracingMapping>(4);
 
-    public static boolean startTransformationTracing(final Object sourceModel,
+    public static boolean startTransformationTracing(final EObject sourceModel) {
+        return startTransformationTracing(sourceModel, null, true);
+    }
+    
+    public static boolean startTransformationTracing(final EObject sourceModel, String name) {
+        return startTransformationTracing(sourceModel, name, true);
+    }
+    
+    public static boolean startTransformationTracing(final EObject sourceModel, final boolean inPlaceTransformation) {
+        return startTransformationTracing(sourceModel, null, inPlaceTransformation);
+    }
+
+    public static boolean startTransformationTracing(final EObject sourceModel, String name,
             final boolean inPlaceTransformation) {
         if (TracingManager.isTracingActivated(sourceModel)) {
-            TracingMapping mapping = null;
             if (inPlaceTransformation) {
-
+                TracingChain tracingChain = TracingManager.getTracingChain(sourceModel);
+                if (tracingChain != null) {
+                    TracingMapping inPlaceMapping = tracingChain.getInPlaceMapping(sourceModel);
+                    TracingMapping tracingMapping = new TracingMapping(inPlaceMapping);
+                    sourceModel.eAdapters().add(tracingMapping);
+                    activeTransformations.put(sourceModel, tracingMapping);
+                }
             } else {
-                mapping = new TracingMapping();
-            }
-            if (mapping != null) {
-                activeTransformations.put(sourceModel, mapping);
+                activeTransformations.put(sourceModel, new TracingMapping());
                 return true;
             }
         }
         return false;
     }
 
-    public static void finishTransformationTracing(final Object sourceModel,
+    public static boolean creationalTransformation(final EObject sourceModel) {
+        if (activeTransformations.containsKey(sourceModel)) {
+            sourceModel.eAdapters().remove(activeTransformations.get(sourceModel));
+            activeTransformations.put(sourceModel, new TracingMapping());
+            return true;
+        }
+        return false;
+    }
+
+    public static void finishTransformationTracing(final EObject sourceModel,
             final Object targetModel) {
         TracingMapping mapping = getMapping(sourceModel);
-        if (mapping != null) {
+        if (mapping != null && sourceModel != null && targetModel != null) {
             TracingManager.addTransformationTrace(sourceModel, targetModel, mapping);
             activeTransformations.remove(sourceModel);
         }
@@ -61,7 +85,7 @@ public class TransformationTracing {
             mapping = activeTransformations.get(modelElement);
             if (mapping == null) {
                 for (TracingMapping map : activeTransformations.values()) {
-                    if (mapping.contains(modelElement)) {
+                    if (map.contains(modelElement)) {
                         mapping = map;
                         break;
                     }

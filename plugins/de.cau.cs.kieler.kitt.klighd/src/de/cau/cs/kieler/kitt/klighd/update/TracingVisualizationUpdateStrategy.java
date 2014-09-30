@@ -111,6 +111,7 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
     public void update(KNode baseModel, KNode newModel, ViewContext viewContext) {
         // Normal behavior
         if (baseModel != newModel) {
+            // Assumption: KGraphElement References stay valid (no copy)
             simpleDelegate.update(baseModel, newModel, viewContext);
         }
 

@@ -33,11 +33,15 @@ import java.util.HashSet
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.core.util.Pair
 
 import static extension de.cau.cs.kieler.kitt.klighd.actions.AbstractTracingSelectionAction.*
 import static extension de.cau.cs.kieler.kitt.klighd.tracing.internal.NearestNodeUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingManager.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import de.cau.cs.kieler.core.krendering.Colors
+import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
+import com.google.common.collect.HashMultimap
 
 /**
  * @author als
@@ -52,6 +56,9 @@ class TracingVisualizer {
 
     @Inject
     extension KRenderingExtensions
+
+    @Inject
+    extension KPolylineExtensions
 
     @Inject
     extension KContainerRenderingExtensions
@@ -81,7 +88,7 @@ class TracingVisualizer {
             (it as KNode).outgoingEdges.filter [
                 it.tracingEdge;
             ].toList.forEach [
-                it.KRendering.invisible = true;
+                it.KRendering.invisible.invisible = true;
             ]
         ]
     }
@@ -106,7 +113,7 @@ class TracingVisualizer {
             (it as KNode).outgoingEdges.filter [
                 it.tracingEdge;
             ].toList.forEach [
-                it.KRendering.invisible = false;
+                it.KRendering.invisible.invisible = false;
             ]
         ];
     }
@@ -194,11 +201,11 @@ class TracingVisualizer {
                 it.tracingEdge;
             ].toList.forEach [
                 if (visibleEdgesModelOrigin.empty) {
-                    it.KRendering.invisible = true;
+                    it.KRendering.invisible.invisible = true;
                 } else {
                     val origin = it.getData(KLayoutData).getProperty(TracingProperties.TRACING_EDGE);
-                    it.KRendering.invisible = !(visibleEdgesModelOrigin.contains(origin.key) &&
-                        visibleEdgesModelOrigin.contains(origin.value));
+                    it.KRendering.invisible.invisible = !(visibleEdgesModelOrigin.contains(origin.first) &&
+                        visibleEdgesModelOrigin.contains(origin.second));
                 }
             ]
         ];
@@ -221,7 +228,7 @@ class TracingVisualizer {
             val tree = viewContext.inputModel as ModelWrapper;
             val selection = diagram.getTracingSelection(viewContext);
             if (selection != null) { //resolve mapping if source target are selected
-                addTracingTreeEdges(selection.key as ModelWrapper, selection.value as ModelWrapper, viewContext);
+                addTracingTreeEdges(selection.first as ModelWrapper, selection.second as ModelWrapper, viewContext);
             } else { //dont resolve -> show all
                 tree.succeedingTransformations.forEach [
                     addTracingTreeEdges(it.source, it.target, viewContext);
@@ -230,19 +237,25 @@ class TracingVisualizer {
         } else { //Other models
 
             //get all traced models contained in this model
-            val tracedModels = diagram.eAllContentsOfType2(typeof(KNode)).filter [
+            val tracedModelMap = diagram.eAllContentsOfType2(typeof(KNode)).filter [
                 (it as KNode).getData(KLayoutData).getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE);
-            ].map[viewContext.getSourceElement(it)].filterNull.filter[it.tracingActivated].toList;
+            ].map[it as KNode].fold(newHashMap()) [ map, node |
+                val model = viewContext.getSourceElement(node);
+                if (model != null && model.tracingActivated) {
+                    map.put(model, node);
+                }
+                return map;
+            ];
 
-            if (!tracedModels.empty) {
+            if (!tracedModelMap.empty) {
                 val traceMap = new InternalTraceMap();
                 val selection = diagram.getTracingSelection(viewContext);
                 if (selection != null) { //resolve mapping if source target are selected
-                    val mapping = getMapping(selection.key, selection.value);
-                    mapping.addTracingEdges(viewContext);
+                    val mapping = getMapping(selection.first, selection.second);
+                    mapping.addTracingEdges(viewContext, tracedModelMap.get(selection.first));
                     traceMap.addMapping(mapping);
                 } else { //dont resolve -> show all
-                    val chain = tracedModels.head.tracingChain;
+                    val chain = tracedModelMap.keySet.head.tracingChain;
                     if (!chain.models.empty) {
 
                         //Iterate over all step in the chain apply mappings
@@ -250,23 +263,23 @@ class TracingVisualizer {
                         var item = chainIter.next;
                         while (chainIter.hasNext) {
                             var next = chainIter.next;
-                            if (tracedModels.contains(item)) {
-                                if (tracedModels.contains(next)) {
+                            if (tracedModelMap.containsKey(item)) {
+                                if (tracedModelMap.containsKey(next)) {
 
                                     //create edges
                                     val mapping = chain.getRawMapping(item, next);
-                                    mapping.mapping.addTracingEdges(viewContext);
+                                    mapping.mapping.addTracingEdges(viewContext, tracedModelMap.get(item));
                                     traceMap.addMapping(mapping);
                                 }
                             } else { //if a model in the chain is not represented in the diagram skip it and resolve to next represented one
                                 var loop = true;
                                 while (loop || chainIter.hasNext) {
                                     next = chainIter.next;
-                                    if (tracedModels.contains(next)) {
+                                    if (tracedModelMap.containsKey(next)) {
 
                                         //create edges
                                         val mapping = getMapping(item, next)
-                                        mapping.addTracingEdges(viewContext);
+                                        mapping.addTracingEdges(viewContext, tracedModelMap.get(item));
                                         traceMap.addMapping(mapping);
 
                                         //end this loop
@@ -283,12 +296,12 @@ class TracingVisualizer {
         }
     }
 
-    private def addTracingEdges(Multimap<Object, Object> mapping, ViewContext viewContext) {
+    private def addTracingEdges(Multimap<Object, Object> mapping, ViewContext viewContext, KNode attachNode) {
         if (mapping != null && !mapping.empty) {
             mapping.entries.forEach [ entry |
                 viewContext.getTargetElements(entry.key).forEach [ source |
                     viewContext.getTargetElements(entry.value).forEach [ target |
-                        createTracingEdge(source, target, new Pair(entry.key, entry.value));
+                        createTracingEdge(source, target, new Pair(entry.key, entry.value), attachNode);
                     ]
                 ]
             ]
@@ -300,16 +313,16 @@ class TracingVisualizer {
             val mapping = source.joinWrapperMappings(target);
             var Map<EObjectWrapper, EObject> _sourceInstanceMap = null;
             var Map<EObjectWrapper, EObject> _targetInstanceMap = null;
-            if (!source.transient && viewContext.getTargetElements(source).findFirst[
-                it instanceof KGraphElement &&
-                    (it as KGraphElement).getData(KLayoutData).getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE)] !=
-                null) {
+            val sourceModelRootNode = viewContext.getTargetElements(source).findFirst[
+                it instanceof KNode &&
+                    (it as KNode).getData(KLayoutData).getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE)] as KNode;
+            val targetModelRootNode = viewContext.getTargetElements(target).findFirst[
+                it instanceof KNode &&
+                    (it as KNode).getData(KLayoutData).getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE)] as KNode;
+            if (!source.transient && sourceModelRootNode != null) {
                 _sourceInstanceMap = source.modelInstanceMapping(source.rootObject.EObject);
             }
-            if (!target.transient && viewContext.getTargetElements(target).findFirst[
-                it instanceof KGraphElement &&
-                    (it as KGraphElement).getData(KLayoutData).getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE)] !=
-                null) {
+            if (!target.transient && targetModelRootNode != null) {
                 _targetInstanceMap = target.modelInstanceMapping(target.rootObject.EObject);
             }
             val sourceInstanceMap = _sourceInstanceMap;
@@ -328,7 +341,8 @@ class TracingVisualizer {
                         }
                     viewContext.getTargetElements(key).forEach [ elementSource |
                         viewContext.getTargetElements(value).forEach [ elementTarget |
-                            createTracingEdge(elementSource, elementTarget, new Pair(key, value));
+                            createTracingEdge(elementSource, elementTarget,
+                                new Pair(key, value), sourceModelRootNode);
                         ]
                     ]
                 ]
@@ -336,32 +350,44 @@ class TracingVisualizer {
         }
     }
 
-    private def createTracingEdge(EObject source, EObject target, Pair<Object, Object> origin) {
-        if (source != null && target != null && origin != null) {
-            val sourceNode = source.nearestNode;
-            val targetNode = target.nearestNode;
-            if (sourceNode != null && targetNode != null) {
-                createEdge => [
-                    it.source = sourceNode;
-                    it.target = targetNode;
-                    it.getData(KLayoutData).setProperty(LayoutOptions.NO_LAYOUT, true);
-                    it.getData(KLayoutData).setProperty(TracingProperties.TRACING_EDGE, origin);
-                    it.addPolyline => [
-                        it.foreground = KRenderingFactory.eINSTANCE.createKColor() =>
-                            [it.red = 255; it.green = 0; it.blue = 0];
+    private def createTracingEdge(EObject source, EObject target, Pair<Object, Object> origin, KNode attachNode) {
+        if (source != null && target != null && origin != null && attachNode != null) {
+            if (source instanceof KGraphElement && target instanceof KGraphElement) {
+                val sourceElem = source as KGraphElement;
+                val targetElem = target as KGraphElement;
+                if (!(sourceElem.getData(KLayoutData).getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE) ||
+                    targetElem.getData(KLayoutData).getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE))) {
+
+                    //Standard Edge
+                    //                createEdge => [
+                    //                    it.source = sourceNode;
+                    //                    it.target = targetNode;
+                    //                    it.getData(KLayoutData).setProperty(LayoutOptions.NO_LAYOUT, true);
+                    //                    it.getData(KLayoutData).setProperty(TracingProperties.TRACING_EDGE, origin);
+                    //                    it.addPolyline => [
+                    //                        it.invisible = true;
+                    //                        it.invisible.propagateToChildren = true;
+                    //                        it.foreground = Colors.RED;
+                    //                        it.addArrowDecorator;
+                    //                    ];
+                    //                ]
+                    //
+                    //Advanced Edge
+                    val edge = createEdge;
+                    edge.source = attachNode;
+                    edge.target = attachNode;
+                    edge.getData(KLayoutData).setProperty(LayoutOptions.NO_LAYOUT, true);
+                    edge.getData(KLayoutData).setProperty(TracingProperties.TRACING_EDGE, origin);
+                    edge.data += createKCustomRendering => [
+                        it.figureObject = new TracingEdgeNode(source, target, attachNode.parent);
                         it.invisible = true;
                         it.invisible.propagateToChildren = true;
+                        it.addPolyline => [
+                            it.foreground = Colors.RED;
+                            it.addArrowDecorator;
+                        ];
                     ];
-                //            edge.data += createKCustomRendering => [
-                //                it.invisible = true;
-                //                it.invisible.propagateToChildren = true;
-                //                it.figureObject = new TracingEdgeNode();
-                //                //it.addPolyline;
-                //                it.setLineWidth(5f)
-                //            //            it.setProperty(SOURCE_ELEMENT, kge);
-                //            //            it.setProperty(TARGET_ELEMENT, kge);
-                //            ];
-                ]
+                }
             }
         }
     }

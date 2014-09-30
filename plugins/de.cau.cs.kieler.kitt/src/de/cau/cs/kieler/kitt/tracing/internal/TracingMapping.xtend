@@ -16,11 +16,13 @@ package de.cau.cs.kieler.kitt.tracing.internal
 import com.google.common.collect.HashMultimap
 import java.util.List
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.util.EContentAdapter
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 
 import static com.google.common.base.Preconditions.*
 
 import static extension com.google.common.collect.Multimaps.*
+import org.eclipse.emf.common.notify.Notification
 
 /**
  * 
@@ -30,7 +32,7 @@ import static extension com.google.common.collect.Multimaps.*
  * @author als
  *
  */
-class TracingMapping {
+class TracingMapping extends EContentAdapter {
 
     /** Internal data-structure for single model transformation. Initial capacity 1000 Entries with 10 Values preventing early rehash */
     private val HashMultimap<Object, Object> mapping = HashMultimap::create(1000, 10);
@@ -213,6 +215,12 @@ class TracingMapping {
         map.putAll(copier.forMap);
 
         return result;
+    }
+        
+    override notifyChanged(Notification notification) {
+        if(notification.eventType == Notification.REMOVE){
+            notification.notifier.unmapAll;
+        }
     }
 
     def getMapping() {

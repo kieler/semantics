@@ -186,7 +186,7 @@ public class TracingManager {
      * @param tracingMapping
      *            transformation mapping produced by transformation.
      */
-    public static void addTransformationTrace(Object sourceModel, Object targetModel,
+    static void addTransformationTrace(Object sourceModel, Object targetModel,
             TracingMapping tracingMapping) {
         Preconditions.checkNotNull(sourceModel);
         Preconditions.checkNotNull(targetModel);

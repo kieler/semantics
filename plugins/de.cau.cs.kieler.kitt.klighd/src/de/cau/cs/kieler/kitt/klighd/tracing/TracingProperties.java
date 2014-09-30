@@ -15,11 +15,10 @@ package de.cau.cs.kieler.kitt.klighd.tracing;
 
 import java.util.List;
 
-import org.eclipse.xtext.xbase.lib.Pair;
-
 import de.cau.cs.kieler.core.krendering.KStyle;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
+import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption.TracingMode;
 import de.cau.cs.kieler.kitt.klighd.tracing.internal.InternalTraceMap;
 
@@ -27,7 +26,7 @@ import de.cau.cs.kieler.kitt.klighd.tracing.internal.InternalTraceMap;
  * Contains Properties for marking tracing diagrams.
  * 
  * @author als
- * @kieler.design 2014-08-19 proposed
+ * @kieler.design 2014-08-19 proposedw
  * @kieler.rating 2014-08-19 proposed yellow
  * 
  */

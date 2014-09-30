@@ -132,6 +132,16 @@ class TracingChain {
         return null;
     }
 
+    def getInPlaceMapping(Object source) {
+        val modelIter = models.listIterator;
+        while (modelIter.hasNext) {
+            if (modelIter.next == source && modelIter.hasPrevious) {
+                return mappings.get(modelIter.previous);
+            }
+        }
+        return null;
+    }
+
     private def joinChain(List<TracingMapping> chain, boolean reverse) {
         if (chain.empty) {
             return emptyMultiMap;
@@ -170,5 +180,5 @@ class TracingChain {
             return mapping;
         }
     }
-    
+
 }

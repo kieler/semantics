@@ -24,6 +24,7 @@ import de.cau.cs.kieler.klighd.IAction
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.core.util.Pair
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 
