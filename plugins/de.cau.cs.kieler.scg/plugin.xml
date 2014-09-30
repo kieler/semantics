@@ -70,7 +70,7 @@
             alternatives="true"
             id="SCGSCHEDGROUP"
             name="Scheduler"
-            transformations="SCGSCHEDSIMPLE, SCGSCHEDDELAYAWARE, SCGSCHEDTHREADAWARE">
+            transformations="SCGSCHEDDELAYAWARE, SCGSCHEDSIMPLE, SCGSCHEDTHREADAWARE">
       </transformationGroup>
       <transformationMethod
             class="de.cau.cs.kieler.scg.schedulers.SimpleScheduler"
