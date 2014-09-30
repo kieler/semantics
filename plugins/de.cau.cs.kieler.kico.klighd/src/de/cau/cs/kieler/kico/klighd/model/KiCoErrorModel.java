@@ -16,7 +16,7 @@ package de.cau.cs.kieler.kico.klighd.model;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import de.cau.cs.kieler.klighd.KlighdPlugin;
+import org.eclipse.core.runtime.Platform;
 
 /**
  * Model of KiCoModelView to represent errors and exceptions
@@ -56,10 +56,16 @@ public class KiCoErrorModel {
         // reason
         String reasonToSet = "Unkown";
         if (reason == null) {
-            if (stacktrace != null && stacktrace.isEmpty()) {
+            // Parse reason from stacktrace
+            if (stacktrace != null && !stacktrace.isEmpty()) {
                 int newline = stacktrace.indexOf('\n');
+                int startReason = stacktrace.indexOf(':');
                 if (newline != -1) {
-                    reasonToSet = stacktrace.substring(0, newline);
+                    if (startReason != -1 && startReason + 2 < newline) {
+                        reasonToSet = stacktrace.substring(startReason + 2, newline);
+                    } else {
+                        reasonToSet = stacktrace.substring(0, newline);
+                    }
                 }
             }
         } else {
@@ -68,10 +74,10 @@ public class KiCoErrorModel {
         this.reason = reasonToSet;
         // stacktrace
         String stacktraceToSet = stacktrace;
-        if (KlighdPlugin.IS_WINDOWS) {
+        if (!Platform.getOS().equals(Platform.OS_WIN32)) {
             // Fix newlines
             String newline = System.getProperty("line.separator");
-            if (newline == null) {
+            if (newline != null) {
                 stacktraceToSet = stacktrace.replaceAll("\n", newline);
             }
         }
