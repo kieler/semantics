@@ -66,6 +66,9 @@ class SCChartsSerializeExtension extends KExpressionsSerializeExtension {
     def dispatch CharSequence serialize(Transition transition) {
         var label = ""
         if (transition.trigger != null) { 
+            if (transition.delay > 1) {
+                label = label + transition.delay.toString + " "
+            }
             label = label + transition.trigger.serialize as String
         }
         if (!transition.effects.empty) {
