@@ -23,6 +23,8 @@ import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.ExitAction
+import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.core.kexpressions.ValueType
 
 /**
  * @author ssm
@@ -37,7 +39,16 @@ class SCChartsSerializeExtension extends KExpressionsSerializeExtension {
     }
     
     def dispatch CharSequence serialize(Emission emission) {
-        emission.valuedObject.name
+        val objectContainer = emission.valuedObject.eContainer
+        if (objectContainer instanceof Declaration) {
+            if ((objectContainer as Declaration).type != ValueType::PURE) {
+                return (emission.valuedObject.name + "(" + emission.newValue.serialize + ")")             
+            } else {
+                return emission.valuedObject.name
+            }
+        } else {
+            return emission.valuedObject.name
+        }
     }
    
     def dispatch CharSequence serialize(EList<Effect> effects) {
