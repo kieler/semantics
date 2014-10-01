@@ -37,7 +37,6 @@ import de.cau.cs.kieler.sccharts.TextEffect;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.text.actions.serializer.ActionsSemanticSequencer;
 import de.cau.cs.kieler.sccharts.text.sct.sct.ImportDecl;
-import de.cau.cs.kieler.sccharts.text.sct.sct.SCChart;
 import de.cau.cs.kieler.sccharts.text.sct.sct.SctPackage;
 import de.cau.cs.kieler.sccharts.text.sct.services.SctGrammarAccess;
 import org.eclipse.emf.ecore.EObject;
@@ -406,7 +405,12 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				}
 				else break;
 			case SCChartsPackage.STATE:
-				if(context == grammarAccess.getStateRule()) {
+				if(context == grammarAccess.getRootRule() ||
+				   context == grammarAccess.getSCChartRule()) {
+					sequence_SCChart(context, (State) semanticObject); 
+					return; 
+				}
+				else if(context == grammarAccess.getStateRule()) {
 					sequence_State(context, (State) semanticObject); 
 					return; 
 				}
@@ -436,13 +440,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 			case SctPackage.IMPORT_DECL:
 				if(context == grammarAccess.getImportDeclRule()) {
 					sequence_ImportDecl(context, (ImportDecl) semanticObject); 
-					return; 
-				}
-				else break;
-			case SctPackage.SC_CHART:
-				if(context == grammarAccess.getRootRule() ||
-				   context == grammarAccess.getSCChartRule()) {
-					sequence_SCChart(context, (SCChart) semanticObject); 
 					return; 
 				}
 				else break;
@@ -528,8 +525,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	/**
 	 * Constraint:
 	 *     (
-	 *         name=QualifiedName? 
-	 *         imports+=ImportDecl* 
 	 *         annotations+=Annotation* 
 	 *         id=ID 
 	 *         label=STRING? 
@@ -539,7 +534,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         )?
 	 *     )
 	 */
-	protected void sequence_SCChart(EObject context, SCChart semanticObject) {
+	protected void sequence_SCChart(EObject context, State semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

@@ -62,7 +62,6 @@ import de.cau.cs.kieler.sccharts.s.DependencyGraph
 import de.cau.cs.kieler.sccharts.s.DependencyTransformation
 import de.cau.cs.kieler.sccharts.text.actions.ActionsStandaloneSetup
 import de.cau.cs.kieler.sccharts.text.actions.scoping.ActionsScopeProvider
-import de.cau.cs.kieler.sccharts.text.sct.sct.SCChart
 import java.util.List
 import javax.inject.Provider
 import org.eclipse.emf.ecore.EObject

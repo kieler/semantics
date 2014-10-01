@@ -43,10 +43,10 @@ Region returns sccharts::Region:
 
 // ---------------------------------------------------------------------------------------------------
 
-SCChart:
-    ('package' name = QualifiedName)?
-    imports += ImportDecl*
-    
+SCChart returns sccharts::State:
+//    ('package' name = QualifiedName)?
+//    imports += ImportDecl*
+//    
     (annotations += Annotation)*
     ('scchart') (id=ID) (label=STRING)?
   
