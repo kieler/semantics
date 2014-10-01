@@ -1,17 +1,17 @@
 scchart SyncChart {
-  output signal O;
-  output signal a;
-  output signal b;
-  output signal c;
-  output signal d;
-  output signal e;
-  output signal f;
-  output signal g;
+  output signal pure O;
+  output signal pure a;
+  output signal pure b;
+  output signal pure c;
+  output signal pure d;
+  output signal pure e;
+  output signal pure f;
+  output signal pure g;
 
   region R2:
 
   initial state T20
-  --> T21 with / a;
+  --> T21 / a;
 
   state T21
   --> T22 immediate with b / c;

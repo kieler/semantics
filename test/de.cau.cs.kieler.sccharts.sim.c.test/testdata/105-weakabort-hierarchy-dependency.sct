@@ -1,9 +1,9 @@
 scchart _105_weakabort_hierarchy_dependency "105-weakabort-hierarchy-dependency"
 {
-  input signal I;
-  output signal O;
-  signal L;
-  output signal O2;
+  input signal pure I;
+  output signal pure O;
+  signal pure L;
+  output signal pure O2;
 
   initial state A {
 

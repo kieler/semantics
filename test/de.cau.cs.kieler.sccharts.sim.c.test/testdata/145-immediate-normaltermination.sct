@@ -1,7 +1,7 @@
 scchart ImmediateNormalTermination {
-  input signal I2;
-  input signal I1;
-  output signal O;
+  input signal pure I2;
+  input signal pure I1;
+  output signal pure O;
 
   state B {
 
@@ -10,7 +10,7 @@ scchart ImmediateNormalTermination {
 
     final state D;
   }
-  >-> E with / O;
+  >-> E / O;
 
   state E;
 

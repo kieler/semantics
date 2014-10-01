@@ -1,8 +1,8 @@
 scchart _81_preemption_basic_test "81-preemption-basic-test" {
-  input signal I;
-  output signal O1;
-  output signal O2;
-  output signal O3;
+  input signal pure I;
+  output signal pure O1;
+  output signal pure O2;
+  output signal pure O3;
 
   initial state A
   --> B;
@@ -10,10 +10,10 @@ scchart _81_preemption_basic_test "81-preemption-basic-test" {
   state B {
 
     initial state C
-    --> D with / O1;
+    --> D / O1;
 
     state D
-    --> C with / O2;
+    --> C / O2;
   }
   o-> E with I / O3;
 

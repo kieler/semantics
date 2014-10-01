@@ -1,8 +1,8 @@
 scchart tcint_debug02 {
-  output signal R;
-  output signal U;
-  input signal D;
-  signal T1;
+  output signal pure R;
+  output signal pure U;
+  input signal pure D;
+  signal pure T1;
 
   region main:
 
@@ -15,8 +15,8 @@ scchart tcint_debug02 {
     region R0:
 
     state Trap48state {
-      signal T2;
-      signal haltTrap48;
+      signal pure T2;
+      signal pure haltTrap48;
 
       region R0:
 
@@ -39,7 +39,7 @@ scchart tcint_debug02 {
         region R1:
 
         initial state init1 "I"
-        --> ParallelStatementList60state immediate with / R;
+        --> ParallelStatementList60state immediate / R;
 
         state ParallelStatementList60state {
 
@@ -49,7 +49,7 @@ scchart tcint_debug02 {
           --> S140 immediate;
 
           state S140 "140"
-          --> S168 with / T1; haltTrap48;
+          --> S168 / T1; haltTrap48;
 
           state S168 "168";
 
@@ -67,7 +67,7 @@ scchart tcint_debug02 {
       initial state init4 "I"
       --> ParallelStatementList49state immediate;
     }
-    >-> S280 with / U;
+    >-> S280 / U;
 
     final state S280 "280";
 

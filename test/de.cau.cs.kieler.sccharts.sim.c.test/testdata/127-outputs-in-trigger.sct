@@ -1,6 +1,6 @@
 scchart S0 "simple" {
-  input signal I;
-  output signal O;
+  input signal pure I;
+  output signal pure O;
 
   state S3 "S1";
 

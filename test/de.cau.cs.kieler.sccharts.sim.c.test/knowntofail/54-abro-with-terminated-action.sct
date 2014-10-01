@@ -1,9 +1,9 @@
 scchart ABRO2 "ABRO" {
-  input signal A;
-  input signal B;
-  input signal R;
-  output signal O;
-  output signal O2;
+  input signal pure A;
+  input signal pure B;
+  input signal pure R;
+  output signal pure O;
+  output signal pure O2;
 
   initial state ABO {
 
@@ -13,6 +13,7 @@ scchart ABRO2 "ABRO" {
       --> dA with A;
 
       final state dA {
+        during / O2;
 
         initial state X
         --> Y;
@@ -29,7 +30,7 @@ scchart ABRO2 "ABRO" {
 
       final state dB;
     }
-    >-> done with / O;
+    >-> done / O;
 
     state done;
   }

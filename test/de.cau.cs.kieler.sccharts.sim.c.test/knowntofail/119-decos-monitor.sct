@@ -1,22 +1,22 @@
 scchart SCU_Monitor {
-  signal INIT_LEFT;
-  signal INIT_RIGHT;
-  input signal RESET;
-  input signal TIMER;
-  input signal DRVCOMMAND;
-  signal DRIVE;
-  signal HOLD1_RDY;
-  signal DRV1_RDY;
-  signal TWOMOT1;
-  signal ONEMOT1;
-  signal HOLD;
-  signal EMERGENCY;
-  input signal FAIL_BRAKE;
-  input signal FAIL_ACTUATOR;
-  input signal EXCEED;
-  input signal EXCEED_A;
-  input signal EXCEED_B;
-  signal abort;
+  signal pure INIT_LEFT;
+  signal pure INIT_RIGHT;
+  input signal pure RESET;
+  input signal pure TIMER;
+  input signal pure DRVCOMMAND;
+  signal pure DRIVE;
+  signal pure HOLD1_RDY;
+  signal pure DRV1_RDY;
+  signal pure TWOMOT1;
+  signal pure ONEMOT1;
+  signal pure HOLD;
+  signal pure EMERGENCY;
+  input signal pure FAIL_BRAKE;
+  input signal pure FAIL_ACTUATOR;
+  input signal pure EXCEED;
+  input signal pure EXCEED_A;
+  input signal pure EXCEED_B;
+  signal pure abort;
 
   region R1:
 
@@ -97,7 +97,7 @@ scchart SCU_Monitor {
 
           final state _S0;
         }
-        >-> activehold with / HOLD1_RDY;
+        >-> activehold / HOLD1_RDY;
 
         state activehold {
 
@@ -121,7 +121,7 @@ scchart SCU_Monitor {
 
           final state cs_breakage;
         }
-        >-> activehold with / EMERGENCY;
+        >-> activehold / EMERGENCY;
       }
       --> drive_mode with DRIVE;
 
@@ -134,7 +134,7 @@ scchart SCU_Monitor {
 
         state C1
         --> one_motor with FAIL_ACTUATOR / ONEMOT1
-        --> two_motors with / TWOMOT1;
+        --> two_motors / TWOMOT1;
 
         state two_motors {
 
@@ -156,7 +156,7 @@ scchart SCU_Monitor {
           final state failure_controller_b_;
 
           state failure_controller_ab_
-          --> failure_controller_ab_ with / EMERGENCY;
+          --> failure_controller_ab_ / EMERGENCY;
 
           state C2
           --> breakage_a_shaft_ppura_
@@ -172,7 +172,7 @@ scchart SCU_Monitor {
           --> cs_jam;
 
           state cs_jam
-          --> cs_jam with / EMERGENCY;
+          --> cs_jam / EMERGENCY;
 
           final state breakage_a_shaft_ppum_;
 
@@ -180,7 +180,7 @@ scchart SCU_Monitor {
 
           final state failure_controller_a;
         }
-        >-> one_motor with / ONEMOT1;
+        >-> one_motor / ONEMOT1;
 
         state one_motor {
 
@@ -216,7 +216,7 @@ scchart SCU_Monitor {
 
           final state break_b_or_cs_or_jam;
         }
-        >-> one_motor with / EMERGENCY;
+        >-> one_motor / EMERGENCY;
       }
       --> hold_mode with HOLD;
     }

@@ -1,14 +1,14 @@
 scchart allTransitions {
-  input signal I1;
-  input signal I2;
-  input signal I3;
-  input signal I4;
-  output signal O;
-  output signal O1;
-  output signal O2;
-  output signal O3;
-  output signal O4;
-  output signal O5;
+  input signal pure I1;
+  input signal pure I2;
+  input signal pure I3;
+  input signal pure I4;
+  output signal pure O;
+  output signal pure O1;
+  output signal pure O2;
+  output signal pure O3;
+  output signal pure O4;
+  output signal pure O5;
 
   region R0:
 
@@ -17,7 +17,7 @@ scchart allTransitions {
     region R0:
 
     initial state S1
-    --> S2 with / O;
+    --> S2 / O;
 
     final state S2;
   }
@@ -25,7 +25,7 @@ scchart allTransitions {
   o-> S6 immediate with I4 / O4
   --> S3 with I1 / O1
   --> S5 immediate with I3 / O3
-  >-> S7 with / O5;
+  >-> S7 / O5;
 
   state S3;
 
@@ -41,5 +41,5 @@ scchart allTransitions {
   --> S0;
 
   initial state S9
-  --> S8 immediate with / O; O1; O2; O3; O4; O5;
+  --> S8 immediate / O; O1; O2; O3; O4; O5;
 }

@@ -1,6 +1,6 @@
 scchart simple {
-  input signal I;
-  output signal O;
+  input signal pure I;
+  output signal pure O;
 
   initial state R {
 
@@ -9,5 +9,5 @@ scchart simple {
 
     final state E;
   }
-  >-> R with / O;
+  >-> R / O;
 }

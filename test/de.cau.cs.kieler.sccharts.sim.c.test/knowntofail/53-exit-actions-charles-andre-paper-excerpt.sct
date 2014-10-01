@@ -1,15 +1,18 @@
 scchart _53_exit_actions_charles_andre_paper_excerpt
 "53-exit-actions-charles-andre-paper-excerpt" {
-  output signal X0;
-  output signal Y0;
-  output signal Y1;
-  input signal b;
-  input signal R;
-  output signal X1;
+  output signal pure X0;
+  output signal pure Y0;
+  output signal pure Y1;
+  input signal pure b;
+  input signal pure R;
+  output signal pure X1;
 
   initial state M0 {
+    exit / Y0;
 
-    initial state M10
+    initial state M10 {
+      exit / Y1;
+    }
     --> _ with b / X1;
 
     state _;

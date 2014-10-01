@@ -1,8 +1,8 @@
 scchart _39_pre_referenced_signals_no_signal_dependency
 "39-pre-referenced-signals-no-signal-dependency" {
-  output signal O;
-  input signal I;
-  output signal O2;
+  output signal pure O;
+  input signal pure I;
+  output signal pure O2;
   output signal int ExitDoneA;
   output signal int ExitDoneB;
 
@@ -20,7 +20,7 @@ scchart _39_pre_referenced_signals_no_signal_dependency
 
     state fa;
   }
-  --> C immediate with / ExitDoneA(1);
+  --> C immediate / ExitDoneA(1);
 
   state EB {
 
@@ -31,5 +31,5 @@ scchart _39_pre_referenced_signals_no_signal_dependency
 
     state fb;
   }
-  --> EA immediate with / ExitDoneB(1);
+  --> EA immediate / ExitDoneB(1);
 }

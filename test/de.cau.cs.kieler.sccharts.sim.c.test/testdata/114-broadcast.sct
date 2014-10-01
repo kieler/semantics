@@ -1,7 +1,7 @@
 scchart SyncChart {
-  signal door;
-  input signal up;
-  output signal out;
+  signal pure door;
+  input signal pure up;
+  output signal pure out;
 
   initial state s1 {
 

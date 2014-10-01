@@ -1,6 +1,6 @@
 scchart _109_local_signal_trap_immediate_no_dependency_representation_initial
 "109-local-signal-trap-immediate-no-dependency-representation-initial" {
-  output signal T;
+  output signal pure T;
 
   region R0:
 
@@ -17,7 +17,7 @@ scchart _109_local_signal_trap_immediate_no_dependency_representation_initial
 
         initial state LL;
       }
-      --> O immediate with / T;
+      --> O immediate / T;
 
       state O;
     };

@@ -1,7 +1,7 @@
 scchart causalityproblem {
-  output signal S;
-  output signal O;
-  input signal I;
+  output signal pure S;
+  output signal pure O;
+  input signal pure I;
 
   initial state Hierarchy {
 

@@ -1,9 +1,9 @@
 scchart _74_concurrent_and_hierarchical_write_dependency_weak_aborted
 "74-concurrent-and-hierarchical-write-dependency-weak-aborted" {
-  output signal O;
-  output signal L;
-  input signal I;
-  output signal O2;
+  output signal pure O;
+  output signal pure L;
+  input signal pure I;
+  output signal pure O2;
 
   initial state A {
 
@@ -12,7 +12,7 @@ scchart _74_concurrent_and_hierarchical_write_dependency_weak_aborted
 
     state C;
   }
-  --> D with / O2;
+  --> D / O2;
 
   state D;
 

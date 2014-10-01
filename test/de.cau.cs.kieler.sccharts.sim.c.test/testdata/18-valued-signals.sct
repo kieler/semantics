@@ -2,14 +2,14 @@ scchart _18_valued_signals "18-valued-signals" {
   output signal int V;
 
   initial state A
-  --> B with / V(2);
+  --> B / V(2);
 
   state B;
 
   region:
 
   initial state C
-  --> D with / V(5);
+  --> D / V(5);
 
   state D;
 }

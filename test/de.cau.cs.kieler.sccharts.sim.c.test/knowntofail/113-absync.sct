@@ -1,10 +1,10 @@
 scchart ABSync {
-  input signal A;
-  input signal B;
-  input signal Reset;
-  signal arm;
-  signal disarm;
-  output signal AB;
+  input signal pure A;
+  input signal pure B;
+  input signal pure Reset;
+  signal pure arm;
+  signal pure disarm;
+  output signal pure AB;
 
   region _R0:
 
@@ -28,7 +28,7 @@ scchart ABSync {
 
       final state dB;
     }
-    >-> done with / AB;
+    >-> done / AB;
 
     state done;
 
@@ -42,7 +42,7 @@ scchart ABSync {
       region _R0:
 
       initial state cnt
-      --> end with 3 / disarm;
+      --> end with 3 true / disarm;
 
       state end;
     };

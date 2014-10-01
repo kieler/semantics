@@ -1,5 +1,5 @@
 scchart _58_hostcode "58-hostcode" {
-  input signal I;
+  input signal pure I;
   output signal int O;
 
   initial state A
@@ -11,5 +11,5 @@ scchart _58_hostcode "58-hostcode" {
   --> C;
 
   state C
-  --> B with / O('Var1');
+  --> B / O('Var1');
 }

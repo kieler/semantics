@@ -1,10 +1,10 @@
 scchart nested_abort_wwa {
-  output signal O1;
-  output signal O2;
-  output signal O3;
-  input signal I;
-  signal W1;
-  signal W2;
+  output signal pure O1;
+  output signal pure O2;
+  output signal pure O3;
+  input signal pure I;
+  signal pure W1;
+  signal pure W2;
 
   region R0:
 
@@ -19,7 +19,7 @@ scchart nested_abort_wwa {
       initial state B {
 
         initial state BB
-        --> BBB immediate with / W1; O1;
+        --> BBB immediate / W1; O1;
 
         state BBB
         --> BB;

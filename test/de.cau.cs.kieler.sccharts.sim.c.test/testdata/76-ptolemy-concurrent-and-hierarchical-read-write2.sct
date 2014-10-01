@@ -1,10 +1,10 @@
 scchart _76ptolemyconcurrecntandhierarchicalreadwrite
 "76ptolemyconcurrecntandhierarchicalreadwrite" {
-  output signal OutA;
-  signal In;
-  output signal Out2;
-  input signal Const;
-  output signal OutB;
+  output signal pure OutA;
+  signal pure In;
+  output signal pure Out2;
+  input signal pure Const;
+  output signal pure OutB;
 
   initial state SeeminglyNonmontonic {
 
@@ -18,11 +18,11 @@ scchart _76ptolemyconcurrecntandhierarchicalreadwrite
       region:
 
       initial state state3
-      --> state4 with / OutB;
+      --> state4 / OutB;
 
       state state4;
     }
-    --> state2 with / Out2;
+    --> state2 / Out2;
 
     state state2;
   };

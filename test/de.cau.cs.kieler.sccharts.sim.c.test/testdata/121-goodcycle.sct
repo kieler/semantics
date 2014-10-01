@@ -1,6 +1,6 @@
 scchart S0 "good_cycle" {
-  output signal A;
-  output signal B;
+  output signal pure A;
+  output signal pure B;
 
   initial state S0 "s1"
   --> S1 with A / B;
@@ -13,7 +13,7 @@ scchart S0 "good_cycle" {
   --> S1 with B;
 
   state S1 "s4"
-  --> S2 with / A;
+  --> S2 / A;
 
   state S2 "s5";
 }

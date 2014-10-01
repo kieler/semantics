@@ -1,5 +1,5 @@
 scchart sequential_concurrent_simple "sequential-concurrent-simple" {
-  output signal S;
+  output signal pure S;
 
   initial state A
   --> B with !S / S;

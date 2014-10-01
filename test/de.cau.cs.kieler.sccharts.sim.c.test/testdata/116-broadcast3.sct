@@ -1,9 +1,9 @@
 scchart SyncChart {
-  input signal I;
-  output signal O;
+  input signal pure I;
+  output signal pure O;
 
   initial state ^normal {
-    signal L;
+    signal pure L;
 
     initial state s1
     --> s2 immediate with L / O;

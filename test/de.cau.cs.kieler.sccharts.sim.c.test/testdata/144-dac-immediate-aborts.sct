@@ -1,7 +1,7 @@
 scchart ImmediateAborts {
-  input signal Otrig;
-  input signal Itrig;
-  output signal O;
+  input signal pure Otrig;
+  input signal pure Itrig;
+  output signal pure O;
 
   state Outer {
 

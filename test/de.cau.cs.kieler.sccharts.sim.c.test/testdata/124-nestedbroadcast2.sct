@@ -1,7 +1,7 @@
 scchart S0 "nested_broadcast" {
-  input signal I;
-  signal L;
-  output signal O;
+  input signal pure I;
+  signal pure L;
+  output signal pure O;
 
   initial state S0 "macro1" {
 

@@ -1,25 +1,25 @@
 scchart WW_button {
-  output signal WATCH_MODE_COMMAND;
-  output signal ENTER_SET_WATCH_MODE_COMMAND;
-  output signal SET_WATCH_COMMAND;
-  output signal NEXT_WATCH_TIME_POSITION_COMMAND;
-  output signal EXIT_SET_WATCH_MODE_COMMAND;
-  output signal TOGGLE_24H_MODE_COMMAND;
-  output signal TOGGLE_CHIME_COMMAND;
-  output signal STOPWATCH_MODE_COMMAND;
-  output signal START_STOP_COMMAND;
-  output signal LAP_COMMAND;
-  output signal ALARM_MODE_COMMAND;
-  output signal ENTER_SET_ALARM_MODE_COMMAND;
-  output signal SET_ALARM_COMMAND;
-  output signal NEXT_ALARM_TIME_POSITION_COMMAND;
-  output signal EXIT_SET_ALARM_MODE_COMMAND;
-  output signal TOGGLE_ALARM_COMMAND;
-  output signal STOP_ALARM_BEEP_COMMAND;
-  input signal UL;
-  input signal UR;
-  input signal LL;
-  input signal LR;
+  output signal pure WATCH_MODE_COMMAND;
+  output signal pure ENTER_SET_WATCH_MODE_COMMAND;
+  output signal pure SET_WATCH_COMMAND;
+  output signal pure NEXT_WATCH_TIME_POSITION_COMMAND;
+  output signal pure EXIT_SET_WATCH_MODE_COMMAND;
+  output signal pure TOGGLE_24H_MODE_COMMAND;
+  output signal pure TOGGLE_CHIME_COMMAND;
+  output signal pure STOPWATCH_MODE_COMMAND;
+  output signal pure START_STOP_COMMAND;
+  output signal pure LAP_COMMAND;
+  output signal pure ALARM_MODE_COMMAND;
+  output signal pure ENTER_SET_ALARM_MODE_COMMAND;
+  output signal pure SET_ALARM_COMMAND;
+  output signal pure NEXT_ALARM_TIME_POSITION_COMMAND;
+  output signal pure EXIT_SET_ALARM_MODE_COMMAND;
+  output signal pure TOGGLE_ALARM_COMMAND;
+  output signal pure STOP_ALARM_BEEP_COMMAND;
+  input signal pure UL;
+  input signal pure UR;
+  input signal pure LL;
+  input signal pure LR;
 
   region main:
 
@@ -34,11 +34,11 @@ scchart WW_button {
     --> S7 immediate;
 
     state S7 "7"
-    --> Trap60state immediate with / WATCH_MODE_COMMAND;
+    --> Trap60state immediate / WATCH_MODE_COMMAND;
 
     state Trap60state {
-      signal WATCH_AND_SET_WATCH_MODE_;
-      signal haltTrap60_;
+      signal pure WATCH_AND_SET_WATCH_MODE_;
+      signal pure haltTrap60_;
 
       region R0:
 
@@ -74,7 +74,7 @@ scchart WW_button {
           --> S107 with LR;
 
           state S107 "107"
-          --> S108 immediate with / TOGGLE_24H_MODE_COMMAND;
+          --> S108 immediate / TOGGLE_24H_MODE_COMMAND;
 
           state S108 "108"
           --> S107 with LR;
@@ -93,7 +93,7 @@ scchart WW_button {
           --> S221 with LL;
 
           state S221 "221"
-          --> S222 immediate with / NEXT_WATCH_TIME_POSITION_COMMAND;
+          --> S222 immediate / NEXT_WATCH_TIME_POSITION_COMMAND;
 
           state S222 "222"
           --> S221 with LL;
@@ -107,7 +107,7 @@ scchart WW_button {
           --> S272 with LR;
 
           state S272 "272"
-          --> S273 immediate with / SET_WATCH_COMMAND;
+          --> S273 immediate / SET_WATCH_COMMAND;
 
           state S273 "273"
           --> S272 with LR;
@@ -121,7 +121,7 @@ scchart WW_button {
       initial state init7 "I"
       --> Loop61state immediate;
     }
-    >-> ParallelStatementList93state with / STOPWATCH_MODE_COMMAND;
+    >-> ParallelStatementList93state / STOPWATCH_MODE_COMMAND;
 
     state ParallelStatementList93state {
 
@@ -134,7 +134,7 @@ scchart WW_button {
       --> S451 with LR;
 
       state S451 "451"
-      --> S452 immediate with / START_STOP_COMMAND;
+      --> S452 immediate / START_STOP_COMMAND;
 
       state S452 "452"
       --> S451 with LR;
@@ -148,7 +148,7 @@ scchart WW_button {
       --> S502 with UR;
 
       state S502 "502"
-      --> S503 immediate with / LAP_COMMAND;
+      --> S503 immediate / LAP_COMMAND;
 
       state S503 "503"
       --> S502 with UR;
@@ -156,8 +156,8 @@ scchart WW_button {
     o-> Trap100state with LL;
 
     state Trap100state {
-      signal ALARM_AND_SET_ALARM_MODE_;
-      signal haltTrap100_;
+      signal pure ALARM_AND_SET_ALARM_MODE_;
+      signal pure haltTrap100_;
 
       region R0:
 
@@ -170,7 +170,7 @@ scchart WW_button {
         region R0:
 
         initial state init10 "I"
-        --> ParallelStatementList108state immediate with / ALARM_MODE_COMMAND;
+        --> ParallelStatementList108state immediate / ALARM_MODE_COMMAND;
 
         state ParallelStatementList108state {
 
@@ -193,7 +193,7 @@ scchart WW_button {
           --> S677 with LR;
 
           state S677 "677"
-          --> S678 immediate with / TOGGLE_CHIME_COMMAND;
+          --> S678 immediate / TOGGLE_CHIME_COMMAND;
 
           state S678 "678"
           --> S677 with LR;
@@ -207,7 +207,7 @@ scchart WW_button {
           --> S728 with UR;
 
           state S728 "728"
-          --> S729 immediate with / TOGGLE_ALARM_COMMAND;
+          --> S729 immediate / TOGGLE_ALARM_COMMAND;
 
           state S729 "729"
           --> S728 with UR;
@@ -226,7 +226,7 @@ scchart WW_button {
           --> S843 with LL;
 
           state S843 "843"
-          --> S844 immediate with / NEXT_ALARM_TIME_POSITION_COMMAND;
+          --> S844 immediate / NEXT_ALARM_TIME_POSITION_COMMAND;
 
           state S844 "844"
           --> S843 with LL;
@@ -240,7 +240,7 @@ scchart WW_button {
           --> S894 with LR;
 
           state S894 "894"
-          --> S895 immediate with / SET_ALARM_COMMAND;
+          --> S895 immediate / SET_ALARM_COMMAND;
 
           state S895 "895"
           --> S894 with LR;
@@ -265,7 +265,7 @@ scchart WW_button {
     --> S1076 with UR;
 
     state S1076 "1076"
-    --> S1077 immediate with / STOP_ALARM_BEEP_COMMAND;
+    --> S1077 immediate / STOP_ALARM_BEEP_COMMAND;
 
     state S1077 "1077"
     --> S1076 with UR;

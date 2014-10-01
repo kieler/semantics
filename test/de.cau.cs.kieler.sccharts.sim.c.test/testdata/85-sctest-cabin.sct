@@ -1,23 +1,23 @@
 scchart Cabin {
-  input signal Stop;
-  input signal CabinStopped;
-  input signal DoorIsOpen;
-  input signal DoorOpen;
-  input signal DoorSensor;
-  input signal DoorIsClosed;
-  input signal DoorClose;
-  input signal TimerExpired;
-  output signal StartOK;
-  output signal OpenDoorMotorOff;
-  output signal OpenDoorMotorOn;
-  output signal StartTimer;
-  output signal CloseDoorMotorOn;
-  output signal CloseDoorMotorOff;
+  input signal pure Stop;
+  input signal pure CabinStopped;
+  input signal pure DoorIsOpen;
+  input signal pure DoorOpen;
+  input signal pure DoorSensor;
+  input signal pure DoorIsClosed;
+  input signal pure DoorClose;
+  input signal pure TimerExpired;
+  output signal pure StartOK;
+  output signal pure OpenDoorMotorOff;
+  output signal pure OpenDoorMotorOn;
+  output signal pure StartTimer;
+  output signal pure CloseDoorMotorOn;
+  output signal pure CloseDoorMotorOff;
 
   region R0:
 
   initial state I
-  --> Open immediate with / OpenDoorMotorOn;
+  --> Open immediate / OpenDoorMotorOn;
 
   state Open
   --> S0 with DoorIsOpen / OpenDoorMotorOff;
@@ -27,7 +27,7 @@ scchart Cabin {
     region R0:
 
     initial state Initial
-    --> S0 immediate with / StartTimer;
+    --> S0 immediate / StartTimer;
 
     state S0
     --> S1 with TimerExpired | DoorClose / CloseDoorMotorOn;
@@ -38,7 +38,7 @@ scchart Cabin {
     final state S2;
   }
   o-> I with DoorOpen | DoorSensor / CloseDoorMotorOff
-  >-> S1 with / CloseDoorMotorOff;
+  >-> S1 / CloseDoorMotorOff;
 
   state S1
   --> S2 with Stop;

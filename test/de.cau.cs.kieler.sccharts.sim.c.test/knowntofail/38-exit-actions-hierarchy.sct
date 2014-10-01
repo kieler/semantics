@@ -1,16 +1,19 @@
 scchart _33_exit_actions_hierarchical "33-exit-actions-hierarchical" {
-  output signal O;
-  input signal I;
-  output signal O2;
-  input signal I2;
-  input signal I3;
-  input signal R;
+  output signal pure O;
+  input signal pure I;
+  output signal pure O2;
+  input signal pure I2;
+  input signal pure I3;
+  input signal pure R;
 
   initial state Reset {
 
     initial state A {
+      exit / O2;
 
-      initial state B3 "B"
+      initial state B3 "B" {
+        exit / O;
+      }
       o-> C2 with I3;
 
       state C2 "C";

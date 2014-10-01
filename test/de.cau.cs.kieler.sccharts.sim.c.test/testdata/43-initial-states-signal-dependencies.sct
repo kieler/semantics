@@ -1,8 +1,8 @@
 scchart _28_exit_actions "28-exit-actions" {
-  output signal O;
-  input signal R;
-  output signal ExitSetC;
-  output signal ExitResetC;
+  output signal pure O;
+  input signal pure R;
+  output signal pure ExitSetC;
+  output signal pure ExitResetC;
 
   initial state hierarchy {
 
@@ -22,11 +22,11 @@ scchart _28_exit_actions "28-exit-actions" {
         state initF;
 
         state dummy
-        --> initF immediate with / ExitResetC;
+        --> initF immediate / ExitResetC;
       }
       --> done immediate;
     }
-    o-> exited with / ExitSetC;
+    o-> exited / ExitSetC;
   }
   o-> hierarchy with R;
 

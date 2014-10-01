@@ -1,13 +1,13 @@
 scchart test {
-  input signal IS;
-  input signal IW;
-  output signal OS;
-  output signal OW;
-  output signal ON;
-  input signal I1;
-  input signal I2;
-  output signal O1;
-  output signal O2;
+  input signal pure IS;
+  input signal pure IW;
+  output signal pure OS;
+  output signal pure OW;
+  output signal pure ON;
+  input signal pure I1;
+  input signal pure I2;
+  output signal pure O1;
+  output signal pure O2;
 
   initial state M {
 
@@ -21,7 +21,7 @@ scchart test {
   }
   o-> S with IS / OS
   --> W with IW / OW
-  >-> N with / ON;
+  >-> N / ON;
 
   state S;
 

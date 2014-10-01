@@ -1,9 +1,9 @@
 scchart Example {
-  input signal S;
-  input signal I;
-  output signal O;
-  signal R;
-  signal A;
+  input signal pure S;
+  input signal pure I;
+  output signal pure O;
+  signal pure R;
+  signal pure A;
 
   initial state A
   --> B with S;
@@ -16,7 +16,7 @@ scchart Example {
     state D {
 
       initial state E
-      --> E with / R;
+      --> E / R;
     }
     --> F immediate with A / O;
 

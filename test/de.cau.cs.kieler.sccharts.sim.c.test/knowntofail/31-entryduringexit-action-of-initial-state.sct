@@ -1,20 +1,27 @@
 scchart _31_entry_action_of_initial_state "31-entry-action-of-initial-state" {
-  output signal O;
-  output signal O2;
-  output signal O3;
-  output signal O4;
-  output signal O5;
-  output signal O6;
-  input signal W;
-  input signal S;
-  input signal R;
+  output signal pure O;
+  output signal pure O2;
+  output signal pure O3;
+  output signal pure O4;
+  output signal pure O5;
+  output signal pure O6;
+  input signal pure W;
+  input signal pure S;
+  input signal pure R;
 
   initial state A
   --> B;
 
   state B {
 
-    initial state C
+    initial state C {
+      entry / O;
+      entry / O2;
+      during / O3;
+      during / O4;
+      exit / O5;
+      exit / O6;
+    }
     --> _2 with W
     o-> _2 with S;
 

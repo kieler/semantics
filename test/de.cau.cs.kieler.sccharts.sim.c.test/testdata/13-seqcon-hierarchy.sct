@@ -1,10 +1,10 @@
 scchart sequential_concurrent_hierarchy "sequential-concurrent-hierarchy" {
-  output signal L1;
-  signal L2;
-  input signal I;
-  input signal E;
-  output signal O1;
-  output signal O2;
+  output signal pure L1;
+  signal pure L2;
+  input signal pure I;
+  input signal pure E;
+  output signal pure O1;
+  output signal pure O2;
 
   initial state G2 "G"
   --> H immediate with L1 / L2;

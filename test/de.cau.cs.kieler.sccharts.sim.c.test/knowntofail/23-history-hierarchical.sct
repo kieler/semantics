@@ -1,24 +1,24 @@
 scchart _22_history_mixed_with_nonhistory "22-history-mixed-with-nonhistory" {
-  output signal O1;
-  output signal O2;
-  output signal O3;
-  input signal RI;
-  input signal HI;
-  input signal RO;
-  input signal HO;
+  output signal pure O1;
+  output signal pure O2;
+  output signal pure O3;
+  input signal pure RI;
+  input signal pure HI;
+  input signal pure RO;
+  input signal pure HO;
 
   initial state A2 {
 
     initial state A {
 
       initial state C
-      --> B with / O1;
+      --> B / O1;
 
       state B
-      --> D with / O2;
+      --> D / O2;
 
       state D
-      --> C with / O3;
+      --> C / O3;
     }
     o-> E with RI
     --> E with HI;

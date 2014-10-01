@@ -1,13 +1,13 @@
 scchart H {
-  input signal I1;
-  output signal S1;
-  output signal S2;
-  output signal O1;
-  input signal I2;
-  output signal O2;
-  input signal I3;
-  output signal O3;
-  output signal S3;
+  input signal pure I1;
+  output signal pure S1;
+  output signal pure S2;
+  output signal pure O1;
+  input signal pure I2;
+  output signal pure O2;
+  input signal pure I3;
+  output signal pure O3;
+  output signal pure S3;
 
   region R1:
 

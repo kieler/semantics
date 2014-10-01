@@ -1,8 +1,8 @@
 scchart _39_pre_referenced_signals_no_signal_dependency
 "39-pre-referenced-signals-no-signal-dependency" {
-  output signal O;
-  input signal I;
-  output signal O2;
+  output signal pure O;
+  input signal pure I;
+  output signal pure O2;
   output signal int ExitDoneB = 0;
   output signal int PreExitDoneB = 0;
   signal int Pre1ExitDoneB = 0;
@@ -20,20 +20,20 @@ scchart _39_pre_referenced_signals_no_signal_dependency
 
     state fb;
   }
-  --> C immediate with / ExitDoneB(1);
+  --> C immediate / ExitDoneB(1);
 
   region PreRegion30761866:
 
   state PRE {
 
     initial state I
-    --> During2Internal30841257 with / PreExitDoneB(val(Pre1ExitDoneB));
+    --> During2Internal30841257 / PreExitDoneB(val(Pre1ExitDoneB));
 
     state During2Internal30841257 "f"
     --> I immediate;
   }
-  --> PreB30761866 with ExitDoneB / Pre2ExitDoneB(val(ExitDoneB))
-  --> NotPre30761866;
+  --> PreB30761866 with ExitDoneB / Pre2ExitDoneB(val(ExitDoneB)) -->
+  NotPre30761866;
 
   initial state NotPre30761866 "NotPre"
   --> PRE with ExitDoneB / Pre1ExitDoneB(val(ExitDoneB));
@@ -43,11 +43,10 @@ scchart _39_pre_referenced_signals_no_signal_dependency
     region DuringDummyRegion16365257:
 
     initial state During1Internal14321552 "i"
-    --> During2Internal14321552 with / PreExitDoneB(val(Pre2ExitDoneB));
+    --> During2Internal14321552 / PreExitDoneB(val(Pre2ExitDoneB));
 
     state During2Internal14321552 "f"
     --> During1Internal14321552 immediate;
   }
-  --> PRE with ExitDoneB / Pre1ExitDoneB(val(ExitDoneB))
-  --> NotPre30761866;
+  --> PRE with ExitDoneB / Pre1ExitDoneB(val(ExitDoneB)) --> NotPre30761866;
 }

@@ -1,10 +1,10 @@
 scchart Module_ReactorControl {
-  output signal PullOutRods;
-  output signal PushInRods;
-  input signal Start;
-  input signal OverHeated;
-  input signal CooledDown;
-  signal unsafe;
+  output signal pure PullOutRods;
+  output signal pure PushInRods;
+  input signal pure Start;
+  input signal pure OverHeated;
+  input signal pure CooledDown;
+  signal pure unsafe;
 
   region main:
 
@@ -56,10 +56,10 @@ scchart Module_ReactorControl {
       region R0:
 
       initial state init5 "I"
-      --> S227 immediate with / unsafe;
+      --> S227 immediate / unsafe;
 
       state S227 "227"
-      --> S227 with / unsafe;
+      --> S227 / unsafe;
     }
     o-> S193 with CooledDown;
   };

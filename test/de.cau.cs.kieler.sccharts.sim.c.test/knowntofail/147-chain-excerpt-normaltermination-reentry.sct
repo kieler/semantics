@@ -1,7 +1,7 @@
 scchart SyncChart {
-  input signal I;
-  output signal O4;
-  output signal O5;
+  input signal pure I;
+  output signal pure O4;
+  output signal pure O5;
 
   region _R0:
 
@@ -18,7 +18,7 @@ scchart SyncChart {
     final state B;
   }
   --> H with I / O4
-  >-> E with / O5;
+  >-> E / O5;
 
   state E;
 }

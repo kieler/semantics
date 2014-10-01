@@ -1,8 +1,8 @@
 scchart NestedAborts {
-  input signal Otrig;
-  input signal Itrig;
-  output signal O;
-  output signal O2;
+  input signal pure Otrig;
+  input signal pure Itrig;
+  output signal pure O;
+  output signal pure O2;
 
   initial state Outer {
 

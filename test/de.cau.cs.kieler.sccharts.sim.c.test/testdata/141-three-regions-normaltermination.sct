@@ -1,5 +1,5 @@
 scchart threeregionsnormaltermination {
-  output signal O;
+  output signal pure O;
 
   initial state M {
 
@@ -22,7 +22,7 @@ scchart threeregionsnormaltermination {
 
     final state B;
   }
-  >-> D with / O;
+  >-> D / O;
 
   state D;
 }

@@ -1,28 +1,30 @@
 scchart _48_suspend_immediate "48-suspend-immediate" {
-  input signal S;
-  input signal R;
-  output signal O;
-  output signal O2;
+  input signal pure S;
+  input signal pure R;
+  output signal pure O;
+  output signal pure O2;
 
   initial state A {
+    suspend S;
 
     initial state B
-    --> C immediate with / O;
+    --> C immediate / O;
 
     state C
-    --> C with / O;
+    --> C / O;
   }
   --> A with R;
 
   region:
 
   initial state A2 {
+    suspend S;
 
     initial state B2
-    --> C2 immediate with / O2;
+    --> C2 immediate / O2;
 
     state C2
-    --> C2 with / O2;
+    --> C2 / O2;
   }
   --> A2 with R;
 }

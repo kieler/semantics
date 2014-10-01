@@ -1,9 +1,9 @@
 scchart ABSWO {
-  input signal A;
-  input signal B;
-  output signal O;
-  input signal W;
-  input signal S;
+  input signal pure A;
+  input signal pure B;
+  output signal pure O;
+  input signal pure W;
+  input signal pure S;
 
   initial state ABO {
 
@@ -25,7 +25,7 @@ scchart ABSWO {
 
       final state dB;
     }
-    >-> done with / O;
+    >-> done / O;
 
     state done;
   }

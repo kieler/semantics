@@ -1,8 +1,8 @@
 scchart ABRO {
-  input signal A;
-  input signal B;
-  input signal R;
-  output signal O;
+  input signal pure A;
+  input signal pure B;
+  input signal pure R;
+  output signal pure O;
 
   region R0:
 
@@ -26,7 +26,7 @@ scchart ABRO {
 
       final state dB;
     }
-    >-> done with / O;
+    >-> done / O;
 
     state done;
   }

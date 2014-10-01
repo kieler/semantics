@@ -1,9 +1,9 @@
 scchart _82_preemption_strong_prio_after_wakeup
 "82-preemption-strong-prio-after-wakeup" {
-  input signal I1;
-  input signal I2;
-  output signal O2;
-  output signal O1;
+  input signal pure I1;
+  input signal pure I2;
+  output signal pure O2;
+  output signal pure O1;
 
   initial state A
   --> G;

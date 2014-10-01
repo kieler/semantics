@@ -1,16 +1,18 @@
 scchart _20_history "20-history" {
-  input signal I;
-  output signal O;
-  input signal R;
-  input signal I2;
-  output signal O2;
+  input signal pure I;
+  output signal pure O;
+  input signal pure R;
+  input signal pure I2;
+  output signal pure O2;
 
   initial state A {
 
     initial state C
     --> B;
 
-    state B
+    state B {
+      exit / O2;
+    }
     --> D immediate with I2 / O;
 
     state D;

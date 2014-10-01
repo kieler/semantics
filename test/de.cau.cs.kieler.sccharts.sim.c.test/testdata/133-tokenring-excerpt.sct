@@ -1,13 +1,13 @@
 scchart S0 "TokenRingArbiter" {
-  output signal T1;
-  output signal T2;
-  input signal InitialToken;
+  output signal pure T1;
+  output signal pure T2;
+  input signal pure InitialToken;
 
   initial state t2
   --> tt2 with T2;
 
   state tt2
-  --> t2 with / T1;
+  --> t2 / T1;
 
   region:
 
@@ -17,6 +17,6 @@ scchart S0 "TokenRingArbiter" {
     --> tt1 with T1 | InitialToken;
 
     state tt1
-    --> t1 with / T2;
+    --> t1 / T2;
   };
 }

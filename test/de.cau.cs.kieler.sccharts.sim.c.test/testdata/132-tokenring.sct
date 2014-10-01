@@ -1,17 +1,17 @@
 scchart S0 "TokenRingArbiter" {
-  signal P1;
-  signal P2;
-  signal P3;
-  output signal T1;
-  output signal T2;
-  output signal T3;
-  input signal R1;
-  input signal R2;
-  input signal R3;
-  output signal G1;
-  output signal G2;
-  output signal G3;
-  input signal InitialToken;
+  signal pure P1;
+  signal pure P2;
+  signal pure P3;
+  output signal pure T1;
+  output signal pure T2;
+  output signal pure T3;
+  input signal pure R1;
+  input signal pure R2;
+  input signal pure R3;
+  output signal pure G1;
+  output signal pure G2;
+  output signal pure G3;
+  input signal pure InitialToken;
 
   initial state S0 "station2" {
 
@@ -25,7 +25,7 @@ scchart S0 "TokenRingArbiter" {
     --> tt2 with T2;
 
     state tt2
-    --> t2 with / T3;
+    --> t2 / T3;
   };
 
   region:
@@ -42,7 +42,7 @@ scchart S0 "TokenRingArbiter" {
     --> tt3 with T3;
 
     state tt3
-    --> t3 with / T1;
+    --> t3 / T1;
   };
 
   region:
@@ -59,6 +59,6 @@ scchart S0 "TokenRingArbiter" {
     --> tt2 with T1 | InitialToken;
 
     state tt2
-    --> t2 with / T2;
+    --> t2 / T2;
   };
 }

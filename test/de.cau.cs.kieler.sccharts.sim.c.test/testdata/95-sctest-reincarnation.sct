@@ -1,11 +1,11 @@
 scchart reincarnation {
-  input signal A;
-  signal gotS;
+  input signal pure A;
+  signal pure gotS;
 
   region R0:
 
   initial state Reincarnation {
-    signal S;
+    signal pure S;
 
     region R0:
 

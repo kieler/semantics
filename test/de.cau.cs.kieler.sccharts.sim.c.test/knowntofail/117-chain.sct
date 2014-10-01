@@ -1,13 +1,13 @@
 scchart SyncChart {
-  input signal I;
-  signal A;
-  signal B;
-  signal C;
-  output signal O1;
-  output signal O2;
-  output signal O3;
-  output signal O4;
-  output signal O5;
+  input signal pure I;
+  signal pure A;
+  signal pure B;
+  signal pure C;
+  output signal pure O1;
+  output signal pure O2;
+  output signal pure O3;
+  output signal pure O4;
+  output signal pure O5;
 
   region _R0:
 
@@ -15,7 +15,7 @@ scchart SyncChart {
   --> _S0;
 
   state _S0 {
-    signal B;
+    signal pure B;
 
     region _R0:
 
@@ -32,7 +32,7 @@ scchart SyncChart {
     final state _S0;
   }
   --> _S0 with I / O4
-  >-> _S1 with / O5;
+  >-> _S1 / O5;
 
   state _S1;
 

@@ -1,7 +1,7 @@
 scchart ^pre {
-  input signal I;
-  output signal O1;
-  output signal O2;
+  input signal pure I;
+  output signal pure O1;
+  output signal pure O2;
 
   region R0:
 

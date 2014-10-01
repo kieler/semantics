@@ -1,6 +1,6 @@
 scchart SyncChart {
-  input signal power;
-  output signal running;
+  input signal pure power;
+  output signal pure running;
 
   initial state off
   --> on with power;
@@ -8,7 +8,7 @@ scchart SyncChart {
   state on {
 
     initial state sustain
-    --> sustain with / running;
+    --> sustain / running;
   }
   o-> off with power;
 }

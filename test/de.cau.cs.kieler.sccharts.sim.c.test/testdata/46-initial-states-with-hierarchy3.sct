@@ -1,15 +1,15 @@
 scchart _46_initial_states_with_hierarchy3 "46-initial-states-with-hierarchy3" {
-  output signal O;
-  output signal ExitSetC;
-  input signal I;
-  input signal I2;
+  output signal pure O;
+  output signal pure ExitSetC;
+  input signal pure I;
+  input signal pure I2;
 
   initial state A {
 
     state BB;
 
     initial state AA
-    --> BB with / ExitSetC;
+    --> BB / ExitSetC;
   }
   --> Z with I
   --> Y with I2;

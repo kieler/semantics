@@ -1,14 +1,18 @@
 scchart filteredsr {
-  input signal S;
-  input signal R;
-  output signal ON;
-  output signal OFF;
+  input signal pure S;
+  input signal pure R;
+  output signal pure ON;
+  output signal pure OFF;
 
   region R0:
 
-  initial state off
+  initial state off {
+    during / OFF;
+  }
   --> on with S & pre(S);
 
-  state on
+  state on {
+    during / ON;
+  }
   --> off with R & pre(R);
 }

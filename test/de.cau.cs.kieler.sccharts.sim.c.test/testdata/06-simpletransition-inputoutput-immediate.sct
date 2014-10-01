@@ -1,6 +1,6 @@
 scchart syncchart {
-  input signal I;
-  output signal O;
+  input signal pure I;
+  output signal pure O;
 
   initial state H {
 
@@ -8,7 +8,7 @@ scchart syncchart {
     --> B with I;
 
     state B
-    --> C immediate with / O;
+    --> C immediate / O;
 
     state C;
   }

@@ -1,8 +1,8 @@
 scchart _50_initial_states_signal_dependencies3
 "50-initial-states-signal-dependencies3" {
-  output signal O;
-  output signal R1;
-  output signal R2;
+  output signal pure O;
+  output signal pure R1;
+  output signal pure R2;
 
   initial state A
   --> B;
@@ -10,7 +10,7 @@ scchart _50_initial_states_signal_dependencies3
   state B {
 
     initial state C
-    --> D immediate with / R1;
+    --> D immediate / R1;
 
     state D;
   };
@@ -30,7 +30,7 @@ scchart _50_initial_states_signal_dependencies3
   state I {
 
     initial state J
-    --> K immediate with / R2;
+    --> K immediate / R2;
 
     state K;
   };

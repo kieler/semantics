@@ -1,8 +1,8 @@
 scchart _155_surfacedepth "155-surfacedepth" {
-  input signal I1;
-  input signal I2;
-  output signal O1;
-  output signal O2;
+  input signal pure I1;
+  input signal pure I2;
+  output signal pure O1;
+  output signal pure O2;
 
   initial state A
   --> B immediate with I1 / O1

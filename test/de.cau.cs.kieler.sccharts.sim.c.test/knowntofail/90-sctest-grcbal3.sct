@@ -1,11 +1,11 @@
 scchart grcbal3 {
-  input signal A;
-  output signal B;
-  output signal C;
-  output signal D;
-  output signal E;
-  output signal T;
-  signal haltTrap39;
+  input signal pure A;
+  output signal pure B;
+  output signal pure C;
+  output signal pure D;
+  output signal pure E;
+  output signal pure T;
+  signal pure haltTrap39;
 
   region R0:
 
@@ -31,7 +31,7 @@ scchart grcbal3 {
     state S1;
 
     state S2
-    --> F0 with / B;
+    --> F0 / B;
 
     final state F0;
 

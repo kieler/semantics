@@ -1,7 +1,7 @@
 scchart _154_count_delays "154-count-delays" {
-  input signal I;
-  output signal O;
-  input signal R;
+  input signal pure I;
+  output signal pure O;
+  input signal pure R;
 
   initial state Resetable {
 

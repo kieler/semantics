@@ -1,14 +1,14 @@
 scchart TRAFFIC_LIGHT {
-  input signal Error;
-  input signal Ok;
-  input signal Sec;
-  signal Pgo;
-  signal Pstop;
-  output signal PG;
-  output signal PR;
-  output signal CG;
-  output signal CR;
-  output signal CY;
+  input signal pure Error;
+  input signal pure Ok;
+  input signal pure Sec;
+  signal pure Pgo;
+  signal pure Pstop;
+  output signal pure PG;
+  output signal pure PR;
+  output signal pure CG;
+  output signal pure CR;
+  output signal pure CY;
 
   region _R0:
 
@@ -16,24 +16,36 @@ scchart TRAFFIC_LIGHT {
 
     region Pedestrian:
 
-    initial state Pred
+    initial state Pred {
+      during / PR;
+    }
     --> Pgreen with Pgo;
 
-    state Pgreen
+    state Pgreen {
+      during / PG;
+    }
     --> Pred with Pstop;
 
     region Car:
 
-    state Cgreen
+    state Cgreen {
+      during / CG;
+    }
     --> Cyellow1 with 5 Sec / Pgo;
 
-    state Cyellow1 "Cyellow"
+    state Cyellow1 "Cyellow" {
+      during / CY;
+    }
     --> Cred2 with Sec;
 
-    initial state Cred2 "Cred"
+    initial state Cred2 "Cred" {
+      during / CR;
+    }
     --> Cyellow with 3 Sec;
 
-    state Cyellow
+    state Cyellow {
+      during / CY;
+    }
     --> Cgreen with Sec / Pstop;
   }
   o-> Error with Error;
@@ -42,11 +54,15 @@ scchart TRAFFIC_LIGHT {
 
     region Pedestrian:
 
-    initial state Pred;
+    initial state Pred {
+      during / PR;
+    };
 
     region Car:
 
-    state Cyellow_on
+    state Cyellow_on {
+      during / CY;
+    }
     --> Cyellow_off with Sec;
 
     initial state Cyellow_off

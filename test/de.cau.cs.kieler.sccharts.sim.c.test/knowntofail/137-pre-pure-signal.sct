@@ -1,8 +1,8 @@
 scchart _137_pre_pure_signal "137-pre-pure-signal" {
-  input signal I;
-  signal L;
-  output signal O;
-  output signal O2;
+  input signal pure I;
+  signal pure L;
+  output signal pure O;
+  output signal pure O2;
 
   initial state A
   --> B with pre(I) / L;

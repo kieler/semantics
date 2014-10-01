@@ -1,8 +1,8 @@
 scchart primeFactor {
-  input signal A;
-  input signal B;
-  input signal C;
-  input signal D;
+  input signal pure A;
+  input signal pure B;
+  input signal pure C;
+  input signal pure D;
   output signal int V = 1;
 
   region R0:
@@ -14,14 +14,12 @@ scchart primeFactor {
     state S2;
 
     state S1
-    --> S1 with A / V(3)
-    --> S2 immediate with B / V(5);
+    --> S1 with A / V(3) --> S2 immediate with B / V(5);
 
     initial state S3
-    --> S1 immediate with / V(2);
+    --> S1 immediate / V(2);
   }
-  --> S0 with C / V(7)
-  --> S3 immediate with D / V(11);
+  --> S0 with C / V(7) --> S3 immediate with D / V(11);
 
   state S3;
 }

@@ -2,7 +2,7 @@ scchart _33_valued_signals_test "33-valued-signals-test" {
   output signal int V = 0;
 
   initial state A
-  --> B with / V(1);
+  --> B / V(1);
 
   state B;
 

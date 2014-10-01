@@ -1,11 +1,11 @@
 scchart Schizo {
-  output signal Son;
-  output signal Soff;
+  output signal pure Son;
+  output signal pure Soff;
 
   region _R0:
 
   initial state S {
-    signal S;
+    signal pure S;
 
     region _R0:
 
@@ -14,7 +14,7 @@ scchart Schizo {
     --> S1 immediate with !S / Soff;
 
     state S1
-    --> S2 with / S;
+    --> S2 / S;
 
     state S2
     --> S3 immediate with S / Son

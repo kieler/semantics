@@ -1,9 +1,9 @@
 scchart instcommhiearchy {
-  signal L1;
-  signal L2;
-  signal L3;
-  input signal I;
-  output signal O;
+  signal pure L1;
+  signal pure L2;
+  signal pure L3;
+  input signal pure I;
+  output signal pure O;
 
   initial state ABC {
 

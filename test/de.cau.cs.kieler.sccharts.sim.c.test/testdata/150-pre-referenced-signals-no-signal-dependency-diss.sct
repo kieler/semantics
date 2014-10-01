@@ -1,7 +1,7 @@
 scchart ^pre {
-  output signal O;
-  input signal I;
-  output signal B;
+  output signal pure O;
+  input signal pure I;
+  output signal pure B;
 
   region Region:
 
@@ -17,7 +17,7 @@ scchart ^pre {
 
     state fb;
   }
-  --> C immediate with / B;
+  --> C immediate / B;
 
   state B
   --> EB with I;

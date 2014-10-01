@@ -1,16 +1,18 @@
 scchart SyncChart {
-  input signal s1;
-  input signal s2;
-  input signal s3;
-  input signal s4;
-  output signal O;
-  output signal OEntry;
-  output signal OInside;
+  input signal pure s1;
+  input signal pure s2;
+  input signal pure s3;
+  input signal pure s4;
+  output signal pure O;
+  output signal pure OEntry;
+  output signal pure OInside;
 
   state H {
+    entry / OEntry;
+    during / OInside;
 
     initial state I
-    --> F immediate with / O;
+    --> F immediate / O;
 
     state F;
   }

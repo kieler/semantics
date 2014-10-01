@@ -1,12 +1,12 @@
 scchart nested_abort_www {
-  output signal E;
-  output signal F;
-  output signal G;
-  output signal H;
-  input signal A;
-  input signal B;
-  input signal C;
-  input signal D;
+  output signal pure E;
+  output signal pure F;
+  output signal pure G;
+  output signal pure H;
+  input signal pure A;
+  input signal pure B;
+  input signal pure C;
+  input signal pure D;
 
   region main:
 
@@ -40,7 +40,7 @@ scchart nested_abort_www {
         final state S78 "78";
       }
       --> S147 with C / F
-      >-> S147 with / F;
+      >-> S147 / F;
 
       final state S176 "176";
 
@@ -56,7 +56,7 @@ scchart nested_abort_www {
     o-> S254 with D / G;
   }
   --> S323 with A / H
-  >-> S323 with / H;
+  >-> S323 / H;
 
   state S323 "323";
 }

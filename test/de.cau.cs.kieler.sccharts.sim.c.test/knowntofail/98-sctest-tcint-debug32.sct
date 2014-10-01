@@ -1,21 +1,21 @@
 scchart tcint_debug32 {
-  output signal P;
-  output signal Q;
-  output signal R;
-  output signal S;
-  output signal T;
-  output signal U;
-  output signal V;
-  output signal W;
-  output signal X;
-  output signal Y;
-  output signal Z;
-  input signal A;
-  input signal B;
-  input signal C;
-  input signal D;
-  input signal E;
-  input signal F;
+  output signal pure P;
+  output signal pure Q;
+  output signal pure R;
+  output signal pure S;
+  output signal pure T;
+  output signal pure U;
+  output signal pure V;
+  output signal pure W;
+  output signal pure X;
+  output signal pure Y;
+  output signal pure Z;
+  input signal pure A;
+  input signal pure B;
+  input signal pure C;
+  input signal pure D;
+  input signal pure E;
+  input signal pure F;
 
   region main:
 
@@ -30,8 +30,8 @@ scchart tcint_debug32 {
     --> Trap54state immediate;
 
     state Trap54state {
-      signal T_;
-      signal haltTrap54_;
+      signal pure T_;
+      signal pure haltTrap54_;
 
       region R0:
 
@@ -71,7 +71,7 @@ scchart tcint_debug32 {
       initial state I
       --> ParallelStatementList55state immediate;
     }
-    >-> S227 with / P;
+    >-> S227 / P;
 
     final state S227 "227";
 
@@ -81,8 +81,8 @@ scchart tcint_debug32 {
     --> Trap73state immediate;
 
     state Trap73state {
-      signal T_747689617;
-      signal haltTrap73_;
+      signal pure T_747689617;
+      signal pure haltTrap73_;
 
       region R0:
 
@@ -104,7 +104,7 @@ scchart tcint_debug32 {
 
         state S306 "306"
         --> S372 immediate with R / W; S; T_747689617
-        --> S372 immediate with / S; T_747689617;
+        --> S372 immediate / S; T_747689617;
 
         region R1:
 
@@ -130,11 +130,11 @@ scchart tcint_debug32 {
 
     state S526 "526"
     --> S549 immediate with P / X
-    --> S549 immediate with / Y;
+    --> S549 immediate / Y;
 
     final state S549 "549";
   }
-  >-> S606 with / Z;
+  >-> S606 / Z;
 
   final state S606 "606";
 }
