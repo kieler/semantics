@@ -383,7 +383,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-
+    
     /**
      * {@inheritDoc}
      */
