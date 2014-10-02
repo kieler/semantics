@@ -195,7 +195,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         
         // The valued object of the GuardExpression of the synchronizer is the guard of the
         // scheduling block of the join node. 
-        data.guardExpression.valuedObject = joinSB.guard
+        data.guardExpression.valuedObject = joinSB.guard.valuedObject
 
         // Create a new expression that determines if at least on thread exits in this tick instance.
         // At first this simple scheduler assumes that the fork node spawns more than one thread.

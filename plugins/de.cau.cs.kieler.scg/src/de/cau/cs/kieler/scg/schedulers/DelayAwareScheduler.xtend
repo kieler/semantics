@@ -149,7 +149,7 @@ class DelayAwareScheduler extends SimpleScheduler {
         SchedulingConstraints constraints, SCGraph scg, Set<Node> pilData, boolean schizophrenic,
         String debugIn
     ) {
-        System.out.print(debugIn + "Scheduling block: " + schedulingBlock.guard.name + ": ")
+        System.out.print(debugIn + "Scheduling block: " + schedulingBlock.guard.valuedObject.name + ": ")
         
         if (schizophrenic && schedulingBlock.basicBlock.entryBlock) {
             System.out.println(" schizophrenic entry block!")
@@ -215,9 +215,9 @@ class DelayAwareScheduler extends SimpleScheduler {
             }
 
             
-            System.out.print(debugIn + "" + schedulingBlock.guard.name + " needs: ")
+            System.out.print(debugIn + "" + schedulingBlock.guard.valuedObject.name + " needs: ")
             for(sb : preceedingSchedulingBlocks) {
-                System.out.print(sb.guard.name + " ")
+                System.out.print(sb.guard.valuedObject.name + " ")
             }
             System.out.println("")
                        	
@@ -254,13 +254,13 @@ class DelayAwareScheduler extends SimpleScheduler {
                 schedule.add(scheduledBlock)
                 if (!schizophrenic) {
                 	placedBlocks.add(schedulingBlock)
-                	System.out.println(debugIn + "-> Scheduled non schizophrenic scheduling block " + schedulingBlock.guard.name)
+                	System.out.println(debugIn + "-> Scheduled non schizophrenic scheduling block " + schedulingBlock.guard.valuedObject.name)
               	} else {
               	    schizophrenicBlocks += schedulingBlock
-                    System.out.println(debugIn + "-> Scheduled schizophrenic scheduling block " + schedulingBlock.guard.name)
+                    System.out.println(debugIn + "-> Scheduled schizophrenic scheduling block " + schedulingBlock.guard.valuedObject.name)
               	}
             } else {
-                System.out.println(debugIn + schedulingBlock.guard.name + " UNPLACEABLE!")
+                System.out.println(debugIn + schedulingBlock.guard.valuedObject.name + " UNPLACEABLE!")
             }
         } else {
             System.out.println(" already placed.")
@@ -274,7 +274,7 @@ class DelayAwareScheduler extends SimpleScheduler {
         schedulingBlocks.addAll(constraints.schedulingBlocks)
         
         for(sBlock:schedulingBlocks) {
-            System.out.println(sBlock.guard.name)
+            System.out.println(sBlock.guard.valuedObject.name)
         }
         
         topologicalSortVisited.clear
@@ -310,7 +310,7 @@ class DelayAwareScheduler extends SimpleScheduler {
             System.out.println("  ")
             
             for(sBlock : schedule) {
-                System.out.print("  " + sBlock.schedulingBlock.guard.name)
+                System.out.print("  " + sBlock.schedulingBlock.guard.valuedObject.name)
                 if (sBlock.schizophrenic) {
                     System.out.println("  schizophrenic")
                 } else {

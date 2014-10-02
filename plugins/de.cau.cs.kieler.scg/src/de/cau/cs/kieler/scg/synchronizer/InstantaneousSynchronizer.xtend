@@ -13,29 +13,18 @@
  */
  package de.cau.cs.kieler.scg.synchronizer
 
-import com.google.common.collect.ImmutableList
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.kico.AbstractKielerCompilerAncillaryData
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.sequentializer.EmptyExpression
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.scg.extensions.ThreadPathType
-import de.cau.cs.kieler.scg.Predecessor
-import java.util.Map
 import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.Predecessor
 import de.cau.cs.kieler.scg.SchedulingBlock
-import de.cau.cs.kieler.kico.AbstractKielerCompilerAncillaryData
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import java.util.List
-import de.cau.cs.kieler.scg.BasicBlock
-import java.util.Set
+import java.util.Map
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -77,12 +66,6 @@ class InstantaneousSynchronizer extends AbstractSynchronizer {
     
     @Inject
     extension SCGControlFlowExtensions
-    
-    @Inject
-    extension SCGThreadExtensions
-   
-    private val OPERATOREXPRESSION_DEPTHLIMIT = 16
-    private val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8
 
     public static val SYNCHRONIZER_ID = "de.cau.cs.kieler.scg.synchronizer.instantaneous"
 
@@ -113,9 +96,9 @@ class InstantaneousSynchronizer extends AbstractSynchronizer {
 		
         val exitNodes = join.allPrevious.map[ eContainer as Exit ]
         
-        data.guardExpression.valuedObject = joinSB.guard
+        data.guardExpression.valuedObject = joinSB.guard.valuedObject
                 
-        data.guardExpression.expression = exitNodes.head.getCachedSchedulingBlock.guard.reference
+        data.guardExpression.expression = exitNodes.head.getCachedSchedulingBlock.guard.valuedObject.reference
 
         data 
     }
