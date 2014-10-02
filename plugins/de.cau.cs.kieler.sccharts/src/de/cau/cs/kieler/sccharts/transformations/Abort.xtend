@@ -47,8 +47,10 @@ class Abort {
     //-------------------------------------------------------------------------
     //--   A B O R T   A L T E R N A T I V E  T R A N S F O R M A T I O N    --
     //-------------------------------------------------------------------------
+    // The new DEFAULT abort transformation, previously transformAbortAlternative.
+    
     // Transforming Aborts.
-    def State transformAbortAlternative(State rootState) {
+    def State transformAbort(State rootState) {
         val targetRootState = rootState.fixAllPriorities;
         
         nameCache.clear
@@ -57,7 +59,7 @@ class Abort {
         var done = false;
         for (targetState : targetRootState.getAllContainedStatesList) {
             if (!done) {
-                targetState.transformAbortAlternative(targetRootState);
+                targetState.transformAbort(targetRootState);
             }
             //done = true;
         }
@@ -77,7 +79,7 @@ class Abort {
     }
 
     // Traverse all states 
-    def void transformAbortAlternative(State state, State targetRootState) {
+    def void transformAbort(State state, State targetRootState) {
         // (a) more than one transitions outgoing OR
         // (b) ONE outgoing transition AND
         //     + not a termination transition without any trigger
@@ -258,18 +260,246 @@ class Abort {
 
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //-------------------------------------------------------------------------
-    //--     A B O R T     D E F A U L T      T R A N S F O R M A T I O N    --
+    //--               A B O R T   A L T E R N A T I V E    N O    W T O     --
     //-------------------------------------------------------------------------
     // Transforming Aborts.
-    def State transform(State rootState) {
+    def State transformAbortNoWTO(State rootState) {
+        val targetRootState = rootState.fixAllPriorities;
+        
+        nameCache.clear
+
+        // Traverse all states
+        var done = false;
+        for (targetState : targetRootState.getAllContainedStatesList) {
+            if (!done) {
+                targetState.transformAbortNoWTO(targetRootState);
+            }
+            //done = true;
+        }
+        targetRootState.fixAllTextualOrdersByPriorities;
+    }
+
+
+    // Traverse all states 
+    def void transformAbortNoWTO(State state, State targetRootState) {
+        // (a) more than one transitions outgoing OR
+        // (b) ONE outgoing transition AND
+        //     + not a termination transition without any trigger
+        val stateHasUntransformedTransitions = ((state.outgoingTransitions.size > 1) || ((state.outgoingTransitions.
+            size == 1) && (!(state.outgoingTransitions.filter[typeTermination].filter[trigger == null].size == 1))))
+
+        val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))
+
+        //        if (state.hierarchical && stateHasUntransformedAborts && state.label != "WaitAandB") {
+        if ((state.hasInnerStatesOrRegions || state.hasInnerActions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
+            val transitionTriggerVariableMapping = new HashMap<Transition, ValuedObject>
+
+            // Remember all outgoing transitions and regions (important: do not consider regions without inner states! => regions2)
+            val outgoingTransitions = state.outgoingTransitions.immutableCopy
+            val regions = state.regions2.immutableCopy
+
+            // .. || stateHasUntransformedTransitions : for conditional terminations!
+            if (stateHasUntransformedAborts || stateHasUntransformedTransitions) {
+                val ctrlRegion = state.createRegion(GENERATED_PREFIX + "Ctrl").uniqueNameCached(nameCache)
+                val runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueNameCached(nameCache)
+                val doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueNameCached(nameCache)
+
+                // Build up weak and strong abort triggers
+                var Expression strongAbortTrigger = null;
+                var Expression weakAbortTrigger = null;
+                var strongAbortImmediate = false;
+                var weakAbortImmediate = false;
+                for (transition : outgoingTransitions) {
+                    if (transition.typeStrongAbort) {
+                        strongAbortTrigger = strongAbortTrigger.or2(transition.trigger.copy)
+                        strongAbortImmediate = strongAbortImmediate || transition.immediate
+                    } else if (transition.typeWeakAbort) {
+                        weakAbortTrigger = weakAbortTrigger.or2(transition.trigger.copy)
+                        weakAbortImmediate = weakAbortImmediate || transition.immediate
+                    }
+                }
+
+                var Expression terminationTrigger;
+
+                // Decides whether a _TERM signal and the necessary _Run, _Done state is needed
+                // OPTIMIZATION
+                val terminationHandlingNeeded = !outgoingTransitions.filter[typeTermination].nullOrEmpty
+
+                // For each region encapsulate it into a _Main state and add a _Term variable
+                // also to the terminationTrigger
+                for (region : regions) {
+                    if (terminationHandlingNeeded) {
+                        val mainRegion = state.createRegion(GENERATED_PREFIX + "Main").uniqueNameCached(nameCache)
+                        val mainState = mainRegion.createInitialState(GENERATED_PREFIX + "Main").uniqueNameCached(nameCache)
+                        mainState.regions.add(region)
+                        val termState = mainRegion.createFinalState(GENERATED_PREFIX + "Term").uniqueNameCached(nameCache)
+                        val termVariable = state.createVariable(GENERATED_PREFIX + "termRegion").setTypeBool.uniqueNameCached(nameCache)
+                        mainState.createTransitionTo(termState).addEffect(termVariable.assign(TRUE)).setTypeTermination
+                        if (terminationTrigger != null) {
+                            terminationTrigger = terminationTrigger.and(termVariable.reference)
+                        } else {
+                            terminationTrigger = termVariable.reference
+                        }
+                        state.createEntryAction.addEffect(termVariable.assign(FALSE))
+                    }
+
+                    // Inside every region create a _Aborted
+                    val abortedState = region.retrieveFinalState(GENERATED_PREFIX + "Aborted").uniqueNameCached(nameCache)
+                    for (innerState : region.states.filter[!final]) {
+                        if (innerState != abortedState) {
+                            if (strongAbortTrigger != null) {
+                                val strongAbort = innerState.createTransitionTo(abortedState, 0)
+                                if (innerState.hasInnerStatesOrRegions || innerState.hasInnerActions) {
+
+                                    // HERE DIFFERENCE TO ABORT2()
+                                    // We mark the transition as strong abort and handle
+                                    // it later when transforming this hierarchical state.
+                                    // This leads to more variables but avoids more transitions.
+                                    strongAbort.setTypeStrongAbort
+
+                                // END OF DIFFERENCE
+                                }
+                                strongAbort.setPriority(0)
+                                strongAbort.setTrigger(strongAbortTrigger.copy)
+                                strongAbort.setImmediate(strongAbortImmediate)
+                            }
+                            if (weakAbortTrigger != null) {
+// The following line is responsible for KISEMA 925 to fail                                 
+//                                val weakAbort = innerState.createTransitionTo(abortedState) 
+//                                val weakAbort = innerState.createTransitionTo(abortedState, 0)
+                                val weakAbort = innerState.createTransitionTo(abortedState)
+                                weakAbort.setTrigger(weakAbortTrigger.copy)
+                                weakAbort.setLowestPriority;
+                                // MUST be immediate: Otherwise new aborting transition may never be
+                                // taken (e.g., in cyclic behavior like during actions)
+                                //
+                                // Why is the solution to make all new aborting transitions being immediate? The reason for short is that immediate cycles are forbidden and
+                                // once the control rests (which is hence the consequence of forbidding immediate cycles) in one of the states, the new immediate (weak)
+                                // aborting transition will be taken, although it has a lower priority than any other existing transitions.
+                                weakAbort.setImmediate(weakAbortImmediate)
+                            }
+                        }
+                    }
+                }
+                
+                if (terminationTrigger == null) {
+                    terminationTrigger = TRUE;
+                }
+
+                for (transition : outgoingTransitions) {
+                    // Create a ctrlTransition in the ctrlRegion
+                    val ctrlTransition = runState.createTransitionTo(doneState)
+                    if (transition.immediate2) {
+                        // if the transition was immediate then set the ctrl transition to be immediate
+                        ctrlTransition.setImmediate(true)
+                    }
+                    
+                    if (transition.typeTermination) {
+                        if (transition.trigger != null) {
+                           ctrlTransition.setTrigger(terminationTrigger.copy.and(transition.trigger.copy))
+                        } else {
+                            ctrlTransition.setTrigger(terminationTrigger.copy)
+                        }
+                    } else {
+                        ctrlTransition.setTrigger(transition.trigger.copy)
+                    }
+                }
+
+            }
+
+            // Create a single outgoing normal termination to a new connector state
+            val outgoingConnectorState = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueNameCached(nameCache).
+                setTypeConnector
+            state.createTransitionTo(outgoingConnectorState).setTypeTermination
+            
+            // Be careful to NOT create a trigger for the LAST (lowest priorized) outgoing transition from a connector, this must
+            // be the DEFAULT transition that has NO trigger ***
+            val defaultTransition = outgoingTransitions.last
+            
+            for (transition : outgoingTransitions) {
+
+                // Modify the outgoing transition
+                transition.setSourceState(outgoingConnectorState)
+
+                if (transition != defaultTransition) {
+                      // Take the original trigger here (before for the actual ABORT in the main region take a copy, also for the watcher take a copy
+                      transition.setTrigger2(transition.trigger)
+                } 
+
+                transition.setTypeWeakAbort
+            }
+
+            // OPTIMIZATION
+            // if the connector has to just one outgoing transition, erase it
+            if (outgoingConnectorState.outgoingTransitions.size == 1) {
+                val transition = outgoingConnectorState.outgoingTransitions.get(0)
+                transition.setImmediate(true)
+                transition.setTypeTermination
+                transition.setTrigger(null)
+                val transitionToDelete = outgoingConnectorState.incomingTransitions.get(0)
+                state.outgoingTransitions.remove(transitionToDelete)
+                state.outgoingTransitions.add(transition)
+                state.parentRegion.states.remove(outgoingConnectorState)
+            }
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //-------------------------------------------------------------------------
+    //--     A B O R T     S P E C I A L      T R A N S F O R M A T I O N    --
+    //-------------------------------------------------------------------------
+    // Previously the ABORT DEFAULT transformation, will not work in
+    // all cases. It tries to replace DEEP the abort trigger, this may fail
+    // if there are weak&strong aborts mixed inside. for abro it works.
+    
+    // Transforming Aborts.
+    def State transformAbortSpecial(State rootState) {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
         var done = false;
         for (targetState : targetRootState.getAllContainedStatesList) {
             if (!done) {
-                targetState.transformAbortDefault(targetRootState);
+                targetState.transformAbortSpecial(targetRootState);
             }
            //done = true;
         }
@@ -281,7 +511,7 @@ class Abort {
     //        // For all normal hierarchical states, add a single connector
     //        // add
     //    }
-    def void transformAbortDefault(State state, State targetRootState) {
+    def void transformAbortSpecial(State state, State targetRootState) {
 
         // this for example could be several terminations, in this case we do not need the FULL abort transformation
         // and can only combine the terminations (using one termination and a connector node)

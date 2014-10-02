@@ -342,6 +342,32 @@ public class KiCoPlugin extends Plugin {
 
         return resourceExtensionCached;
     }
+    
+    /**
+     * Gets the resource extension for an model. Note that for this method to work there must be a
+     * plugin that uses the extension point de.cau.cs.kieler.kico.extension to register a
+     * resource/file extension for a specific class name that is the (intermediate) result of one or
+     * several performed transformations. If no resource extension is registered for the class name
+     * of the intermediateResult given, then null is returned.
+     * 
+     * @param model
+     *            the intermediate result
+     * @return the resource extension
+     */
+    public String getResourceExtension(Object model) {
+        HashMap<String, Pair<String, Boolean>> resourceExtensionMap =
+                KiCoPlugin.getInstance().getRegisteredResourceExtensions(false);
+        Pair<String, Boolean> specificExtension = null;
+        if (model instanceof EObject) {
+            specificExtension = resourceExtensionMap.get(((EObject) model).eClass().getName());
+        } else {
+            specificExtension = resourceExtensionMap.get(model.getClass().getSimpleName());
+        }
+        if (specificExtension != null) {
+            return specificExtension.getFirst();
+        }
+        return null;
+    }
 
     // -------------------------------------------------------------------------
     
