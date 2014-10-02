@@ -13,18 +13,23 @@
  */
 package de.cau.cs.kieler.kitt.klighd.tracing.internal;
 
+import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Iterators;
+import com.google.common.collect.UnmodifiableIterator;
 
+import de.cau.cs.kieler.core.kgraph.KEdge;
 import de.cau.cs.kieler.core.kgraph.KGraphElement;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KCustomConnectionFigureNode;
+import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KEdgeNode;
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KlighdPath;
 import de.cau.cs.kieler.klighd.piccolo.internal.util.Styles;
 import de.cau.cs.kieler.klighd.util.RenderingContextData;
@@ -69,12 +74,22 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode {
         if (source instanceof KGraphElement) {
             KGraphElement sourceElem = (KGraphElement) source;
             PNode sourceNode = RenderingContextData.get(sourceElem).getProperty(REP);
-            add(thePoints[0], sourceNode.getGlobalTranslation());
+            addToPoint(thePoints[0], sourceNode.getGlobalTranslation());
+            if (source instanceof KEdge) {
+                addToPoint(thePoints[0], getAppropiateBendPoint((KEdgeNode) sourceNode));
+            } else {
+                addToPoint(thePoints[0], sourceNode.getFullBoundsReference().getSize(), 0.5);
+            }
         }
         if (target instanceof KGraphElement) {
             KGraphElement targetElem = (KGraphElement) target;
             PNode targetNode = RenderingContextData.get(targetElem).getProperty(REP);
-            add(thePoints[1], targetNode.getGlobalTranslation());
+            addToPoint(thePoints[1], targetNode.getGlobalTranslation());
+            if (target instanceof KEdge) {
+                addToPoint(thePoints[1], getAppropiateBendPoint((KEdgeNode) targetNode));
+            } else {
+                addToPoint(thePoints[1], targetNode.getFullBoundsReference().getSize(), 0.5);
+            }
         }
         // Apply
         if (thePoints[0] != null && thePoints[1] != null) {
@@ -86,15 +101,33 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode {
     }
 
     /**
+     * @param sourceNode
+     * @return
+     */
+    private Point2D getAppropiateBendPoint(KEdgeNode node) {
+        Point2D[] bendPoints = node.getBendPoints();
+        if (bendPoints.length % 2 == 0) {
+            return bendPoints[bendPoints.length / 2];
+        } else {
+            return bendPoints[bendPoints.length / 2 + 1];
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public void applyStyles(Styles styles) {
     }
 
-    private static Point2D add(Point2D first, Point2D second) {
-        first.setLocation(first.getX() + second.getX(), first.getY() + second.getY());
-        return first;
+    private static Point2D addToPoint(Point2D point, Point2D offset) {
+        point.setLocation(point.getX() + offset.getX(), point.getY() + offset.getY());
+        return point;
     }
 
+    private static Point2D addToPoint(Point2D point, Dimension2D offset, double factor) {
+        point.setLocation(point.getX() + (offset.getWidth() * factor),
+                point.getY() + (offset.getHeight() * factor));
+        return point;
+    }
 }
