@@ -402,7 +402,9 @@ class SimpleSequentializer extends AbstractSequentializer {
                  */
                 scheduledBlock.handleSynchronizerBlockGuardExpression(assignment, nextControlFlows, schedule,
                     scg, nodeCache)   
-                assignment.assignment = scg.fixSchizophrenicExpression(assignment.assignment)
+                if (scheduledBlock.schizophrenic) {
+                    assignment.assignment = scg.fixSchizophrenicExpression(assignment.assignment)
+                }
             } else {
                 /**
                  * If the block is neither of them, it solely depends on the activity states of previous basic blocks.

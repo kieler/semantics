@@ -598,8 +598,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     var assignmentStr = valuedObjectName + " = " + assignmentText
                         
                     if (assignmentStr.contains("&") && assignmentStr.indexOf("&") != assignmentStr.lastIndexOf("&")) {
-                        assignmentStr = assignmentStr.replaceAll("=", "=\n" + KLIGHDSPACER)
-                        assignmentStr = assignmentStr.replaceAll("&", "&\n" + KLIGHDSPACER)
+//                        assignmentStr = assignmentStr.replaceAll("=", "=\n" + KLIGHDSPACER)
+//                        assignmentStr = assignmentStr.replaceAll("&", "&\n" + KLIGHDSPACER)
                     }
                     it.addText(assignmentStr).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0) => [
                         if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);

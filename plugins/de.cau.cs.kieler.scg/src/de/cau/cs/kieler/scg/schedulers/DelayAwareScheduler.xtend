@@ -35,6 +35,7 @@ import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
 import de.cau.cs.kieler.scg.ScheduledBlock
 import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -63,6 +64,9 @@ class DelayAwareScheduler extends SimpleScheduler {
     extension SCGCoreExtensions
     
     @Inject
+    extension SCGControlFlowExtensions
+    
+    @Inject
     extension SCGCacheExtensions      
        
     @Inject
@@ -72,6 +76,7 @@ class DelayAwareScheduler extends SimpleScheduler {
     extension AnnotationsExtensions
     
     protected val schizophrenicBlocks = <SchedulingBlock> newHashSet
+    protected val schizophrenicEntry = <SchedulingBlock> newHashSet
     
     // -------------------------------------------------------------------------
     // -- Globals 
@@ -104,7 +109,7 @@ class DelayAwareScheduler extends SimpleScheduler {
                     // the precondition test fails. Set placeable to false.
                     if (!placedBlocks.contains(sBlock) && 
 //                        !(schizophrenic && !schizophrenicBlocks.contains(sBlock)) &&
-                        !(schizophrenic && (sBlock.basicBlock.entryBlock || sBlock.isOnCriticalPath(pilData))) &&
+                        !(schizophrenic && (schizophrenicEntry.contains(sBlock) || sBlock.isOnCriticalPath(pilData))) &&
                         !(depthJoin && schizophrenicBlocks.contains(sBlock))
                     ) { return false }
                 }
@@ -133,7 +138,7 @@ class DelayAwareScheduler extends SimpleScheduler {
             if (dependency.concurrent && !dependency.confluent) {
                 val sBlock = schedulingBlockCache.get(dependency.eContainer as Node)
                     if (!placedBlocks.contains(sBlock) && 
-                        !(schizophrenic && (sBlock.basicBlock.entryBlock || sBlock.isOnCriticalPath(pilData))) &&
+                        !(schizophrenic && (schizophrenicEntry.contains(sBlock) || sBlock.isOnCriticalPath(pilData))) &&
                         !(depthJoin && schizophrenicBlocks.contains(sBlock)) &&
                         !schizophrenicBlocks.contains(sBlock)
                     ) { return false }
@@ -151,7 +156,7 @@ class DelayAwareScheduler extends SimpleScheduler {
     ) {
         System.out.print(debugIn + "Scheduling block: " + schedulingBlock.guard.valuedObject.name + ": ")
         
-        if (schizophrenic && schedulingBlock.basicBlock.entryBlock) {
+        if (schizophrenic && schizophrenicEntry.contains(schedulingBlock)) {
             System.out.println(" schizophrenic entry block!")
             return
         }
@@ -220,6 +225,10 @@ class DelayAwareScheduler extends SimpleScheduler {
                 System.out.print(sb.guard.valuedObject.name + " ")
             }
             System.out.println("")
+            
+            if (schedulingBlock.guard.valuedObject.name == 'g11') {
+                System.out.println("HERE!")
+            }
                        	
             for (sBlock : preceedingSchedulingBlocks) {
 	            if (!topologicalSortVisited.contains(sBlock)) {
@@ -239,7 +248,7 @@ class DelayAwareScheduler extends SimpleScheduler {
 					    if (sBlock.isOnCriticalPath(pilData)) {
 						   	isSchizophrenic = true
 						}
-						if (!sBlock.basicBlock.entryBlock) {
+						if (!schizophrenicEntry.contains(sBlock)) {
 							sBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, scg, pilData, isSchizophrenic, debugIn + "  ")
 						}
 					}
@@ -281,6 +290,7 @@ class DelayAwareScheduler extends SimpleScheduler {
         placedBlocks.clear
         predecessorExcludeSet.clear
         schizophrenicBlocks.clear
+        schizophrenicEntry.clear
         
         val pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
 
@@ -290,6 +300,9 @@ class DelayAwareScheduler extends SimpleScheduler {
                 val synchronizer = join.chooseSynchronizer
                 System.out.println("Using synchronizer " + synchronizer.getId + " for " + join.toString);
                 synchronizer.annotate(join)
+                if (synchronizer.id == DepthJoinSynchronizer::SYNCHRONIZER_ID) {
+                    join.fork.allNext.map[ target ].forEach[ schizophrenicEntry += schedulingBlockCache.get(it) ]
+                }
             
                 predecessorExcludeSet += synchronizer.getExcludedPredecessors(join, schedulingBlockCache, context.compilationResult.ancillaryData)
                 val predecessorIncludeSet = synchronizer.getAdditionalPredecessors(join, schedulingBlockCache, context.compilationResult.ancillaryData)
