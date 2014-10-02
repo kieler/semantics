@@ -272,7 +272,7 @@
      <extension
            point="de.cau.cs.kieler.kico.extension">
         <ResourceExtensionInformation
-              className="SCChart"
+              className="State"
               extensionName="sct"
               isXMI="true">
         </ResourceExtensionInformation>

@@ -680,12 +680,9 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 filename = filename.substring(0, filename.lastIndexOf('.'));
             }
             // Adding file extension
-            HashMap<String, Pair<String, Boolean>> resourceExtensionMap =
-                    KiCoPlugin.getInstance().getRegisteredResourceExtensions(false);
-            Pair<String, Boolean> specificExtension =
-                    resourceExtensionMap.get(currentModel.getClass().getName());
-            if (specificExtension != null) {
-                filename += specificExtension.getFirst();
+            String ext = KiCoPlugin.getInstance().getResourceExtension(currentModel);
+            if (ext != null) {
+                filename += "." + ext;
             }
             return filename;
         }
@@ -946,7 +943,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 } else {// This is not the most recent compilation
                     return;
                 }
-            } else {
+            } else if (!is_transformation_update || transformations_changed) {
                 currentModel = sourceModel;
                 currentCompilationResult = null;
                 // drop any existing compilation
