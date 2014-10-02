@@ -14,7 +14,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.filesystem;bundle-version="1.3.100";visibility:=reexport,
  de.cau.cs.kieler.sim.kart;visibility:=reexport,
  org.apache.log4j;bundle-version="1.2.15";visibility:=reexport,
- de.cau.cs.kieler.semantics.test.common
+ de.cau.cs.kieler.semantics.test.common,
+ org.eclipse.ui.ide,
+ org.eclipse.swt
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.ui.part

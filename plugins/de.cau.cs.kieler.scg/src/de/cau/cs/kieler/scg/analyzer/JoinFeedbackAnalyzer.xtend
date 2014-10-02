@@ -16,8 +16,9 @@ package de.cau.cs.kieler.scg.analyzer
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import java.util.List
+import de.cau.cs.kieler.scg.SCGraph
 
 /** 
 /** 
@@ -55,10 +56,9 @@ class JoinFeedbackAnalyzer extends AbstractAnalyzer {
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
-    
-    /** Inject SCG extensions. */
+	
     @Inject
-	extension SCGExtensions
+    extension SCGControlFlowExtensions
 
     // -------------------------------------------------------------------------
     // -- Analyzer 
@@ -77,39 +77,39 @@ class JoinFeedbackAnalyzer extends AbstractAnalyzer {
 	 * @override
 	 */
 
-	override analyze(AnalyzerData analyzerData) {
-		// If no node or not a join is selected, return the result and exit.
-		if (analyzerData.node == null || !(analyzerData.node instanceof Join)) return analyzerData
-		
-		// Create new result of this analyzer.
-		val result = new JoinFeedbackResult()
-		
-		// Cast our join node and test for instantaneous feedback.
-		val join = analyzerData.node as Join
-		if (join.getIndirectControlFlows(join.fork).instantaneous) {
-			// If an instantaneous feedback was found, set the positive flag and check each thread.
-			result.positive = true
-			val threadEntries = join.fork.getAllNext
-			for(entry : threadEntries) {
-				if ((entry as Entry).getIndirectControlFlows((entry as Entry).exit).instantaneous) {
-					// If a potentially instantaneous control flow between the entry and the exit node of this
-					// thread exists, add the thread to the list of instantaneous threads.
-					result.addInstantaneousThread(entry as Entry)
-				} else {
-					// If no potentially instantaneous control flow between the entry and the exit node of this
-					// thread exists, add the thread to the list of time consuming threads.
-					result.addTimeConsumingThread(entry as Entry)
-				}
-			}
-		} else {
-			// If no instantaneous feedback was found, reset the positive flag.
-			result.positive = false
-		}
-		
-		// Add the result and return.
-		analyzerData.addResult(result)
-		analyzerData  
-	}
+//	override analyze(AnalyzerData analyzerData) {
+//		// If no node or not a join is selected, return the result and exit.
+//		if (analyzerData.node == null || !(analyzerData.node instanceof Join)) return analyzerData
+//		
+//		// Create new result of this analyzer.
+//		val result = new JoinFeedbackResult()
+//		
+//		// Cast our join node and test for instantaneous feedback.
+//		val join = analyzerData.node as Join
+//		if (join.getIndirectControlFlows(join.fork).instantaneous) {
+//			// If an instantaneous feedback was found, set the positive flag and check each thread.
+//			result.positive = true
+//			val threadEntries = join.fork.getAllNext
+//			for(entry : threadEntries) {
+//				if ((entry as Entry).getIndirectControlFlows((entry as Entry).exit).instantaneous) {
+//					// If a potentially instantaneous control flow between the entry and the exit node of this
+//					// thread exists, add the thread to the list of instantaneous threads.
+//					result.addInstantaneousThread(entry as Entry)
+//				} else {
+//					// If no potentially instantaneous control flow between the entry and the exit node of this
+//					// thread exists, add the thread to the list of time consuming threads.
+//					result.addTimeConsumingThread(entry as Entry)
+//				}
+//			}
+//		} else {
+//			// If no instantaneous feedback was found, reset the positive flag.
+//			result.positive = false
+//		}
+//		
+//		// Add the result and return.
+//		analyzerData.addResult(result)
+//		analyzerData  
+//	}
 	
 	/**
 	 * Returns the identifier string of this analysis.
@@ -119,6 +119,10 @@ class JoinFeedbackAnalyzer extends AbstractAnalyzer {
 	override getAnalysisId() {
 		return "JoinFeedback"
 	}
+    
+    override analyze(SCGraph scg) {
+        throw new UnsupportedOperationException("TODO: auto-generated method stub")
+    }
 	
 }
 
@@ -131,7 +135,7 @@ class JoinFeedbackAnalyzer extends AbstractAnalyzer {
  * @kieler.design 2013-12-07 proposed 
  * @kieler.rating 2013-12-07 proposed yellow
  */
-class JoinFeedbackResult extends GenericAnalyzerResult {
+class JoinFeedbackResult extends AbstractAnalyzerResult {
 	
 	/** Storage list for time consuming threads. As usual an entry object identifies the thread. */
 	private var timeConsumingThreads = <Entry> newArrayList

@@ -52,6 +52,8 @@ import de.cau.cs.kieler.klighd.KlighdDataManager;
  * Observes workspace and manages KiCoModelViews
  * 
  * @author als
+ * @kieler.design 2014-07-30 proposed
+ * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
 public class KiCoModelViewManager extends UIJob implements IStartup,
@@ -258,6 +260,10 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
                                                     && view.isPrimaryView();
                                         }
                                     }), null);
+                    if(primaryView != null && primaryView.isDisposed()){
+                        modelViews.remove(primaryView);
+                        primaryView = null;
+                    }
                     // update or open new view
                     if (primaryView != null) {
                         primaryView.setActiveEditor(editor);

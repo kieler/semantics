@@ -18,10 +18,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.progress.UIJob;
 
@@ -34,13 +30,13 @@ import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoMessageModel;
 import de.cau.cs.kieler.kico.ui.KiCoSelection;
 import de.cau.cs.kieler.klighd.IViewer;
-import de.cau.cs.kieler.klighd.KlighdConstants;
-import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KlighdCanvas;
 
 /**
  * This Job start an asynchronous Compilation
  * 
  * @author als
+ * @kieler.design 2014-07-30 proposed
+ * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
 public class KiCoAsynchronousCompilation extends Job {
@@ -105,7 +101,8 @@ public class KiCoAsynchronousCompilation extends Job {
             context.setPrerequirements(transformations.isAdvanced());
             context.setInplace(false);
             context.setProgressMonitor(monitor);
-            context.setCreateDummyResource(true);
+            // Do turn this on ONLY if you temporary want to SEE simulation transformations in KiCo selection view
+            context.setCreateDummyResource(false);
             result = KielerCompiler.compile(context);
 
             if (monitor.isCanceled()) {
@@ -202,7 +199,7 @@ public class KiCoAsynchronousCompilation extends Job {
     /**
      * Causes additional progressbars to show up ion model view.
      */
-    public void showProgress(IViewer<?> viewer) {
+    public void showProgress(IViewer viewer) {
         //if (!showsProgress && !hasFinishedCompilation()) {
         // final KlighdCanvas canvas = (KlighdCanvas) viewer.getControl();
         //

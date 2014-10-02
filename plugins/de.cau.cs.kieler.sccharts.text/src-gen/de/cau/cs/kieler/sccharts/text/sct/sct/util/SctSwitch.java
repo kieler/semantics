@@ -2,11 +2,6 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct.sct.util;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-
-import de.cau.cs.kieler.sccharts.Scope;
-import de.cau.cs.kieler.sccharts.State;
-
 import de.cau.cs.kieler.sccharts.text.sct.sct.*;
 
 import org.eclipse.emf.ecore.EObject;
@@ -77,16 +72,6 @@ public class SctSwitch<T> extends Switch<T>
   {
     switch (classifierID)
     {
-      case SctPackage.SC_CHART:
-      {
-        SCChart scChart = (SCChart)theEObject;
-        T result = caseSCChart(scChart);
-        if (result == null) result = caseState(scChart);
-        if (result == null) result = caseScope(scChart);
-        if (result == null) result = caseAnnotatable(scChart);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case SctPackage.IMPORT_DECL:
       {
         ImportDecl importDecl = (ImportDecl)theEObject;
@@ -96,22 +81,6 @@ public class SctSwitch<T> extends Switch<T>
       }
       default: return defaultCase(theEObject);
     }
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>SC Chart</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>SC Chart</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSCChart(SCChart object)
-  {
-    return null;
   }
 
   /**
@@ -126,54 +95,6 @@ public class SctSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseImportDecl(ImportDecl object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Annotatable</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Annotatable</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseAnnotatable(Annotatable object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Scope</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Scope</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseScope(Scope object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>State</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>State</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseState(State object)
   {
     return null;
   }

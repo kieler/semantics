@@ -14,28 +14,18 @@
 package de.cau.cs.kieler.scg.provider;
 
 
+import de.cau.cs.kieler.core.annotations.provider.AnnotatableItemProvider;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.ScgPackage;
-
 import java.util.Collection;
 import java.util.List;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
-
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -44,14 +34,8 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * @generated
  */
-public class SCGraphItemProvider
-    extends ItemProviderAdapter
-    implements
-        IEditingDomainItemProvider,
-        IStructuredItemContentProvider,
-        ITreeItemContentProvider,
-        IItemLabelProvider,
-        IItemPropertySource {
+public class SCGraphItemProvider 
+    extends AnnotatableItemProvider {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc -->
@@ -91,6 +75,9 @@ public class SCGraphItemProvider
             super.getChildrenFeatures(object);
             childrenFeatures.add(ScgPackage.Literals.SC_GRAPH__NODES);
             childrenFeatures.add(ScgPackage.Literals.SC_GRAPH__DECLARATIONS);
+            childrenFeatures.add(ScgPackage.Literals.SC_GRAPH__BASIC_BLOCKS);
+            childrenFeatures.add(ScgPackage.Literals.SC_GRAPH__SCHEDULES);
+            childrenFeatures.add(ScgPackage.Literals.SC_GRAPH__GUARDS);
         }
         return childrenFeatures;
     }
@@ -129,6 +116,7 @@ public class SCGraphItemProvider
     public String getText(Object object) {
         return getString("_UI_SCGraph_type");
     }
+    
 
     /**
      * This handles model notifications by calling {@link #updateChildren} to update any cached
@@ -144,6 +132,9 @@ public class SCGraphItemProvider
         switch (notification.getFeatureID(SCGraph.class)) {
             case ScgPackage.SC_GRAPH__NODES:
             case ScgPackage.SC_GRAPH__DECLARATIONS:
+            case ScgPackage.SC_GRAPH__BASIC_BLOCKS:
+            case ScgPackage.SC_GRAPH__SCHEDULES:
+            case ScgPackage.SC_GRAPH__GUARDS:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -210,6 +201,21 @@ public class SCGraphItemProvider
             (createChildParameter
                 (ScgPackage.Literals.SC_GRAPH__DECLARATIONS,
                  KExpressionsFactory.eINSTANCE.createDeclaration()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.SC_GRAPH__BASIC_BLOCKS,
+                 ScgFactory.eINSTANCE.createBasicBlock()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.SC_GRAPH__SCHEDULES,
+                 ScgFactory.eINSTANCE.createSchedule()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.SC_GRAPH__GUARDS,
+                 ScgFactory.eINSTANCE.createGuard()));
     }
 
     /**

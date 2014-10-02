@@ -2,11 +2,6 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="sct" nsURI="http://kieler.cs.cau.de/sccharts/textual/0.1.0"
     nsPrefix="sct">
-  <eClassifiers xsi:type="ecore:EClass" name="SCChart" eSuperTypes="../../../de.cau.cs.kieler.sccharts/model/sccharts.ecore#//State">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
-        eType="#//ImportDecl" containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ImportDecl">
     <eStructuralFeatures xsi:type="ecore:EReference" name="importedType" eType="ecore:EClass ../../../de.cau.cs.kieler.sccharts/model/sccharts.ecore#//State"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importedNamespace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

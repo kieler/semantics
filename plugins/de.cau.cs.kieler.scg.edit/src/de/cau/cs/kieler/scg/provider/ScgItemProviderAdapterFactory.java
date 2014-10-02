@@ -83,6 +83,29 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.SCGraph} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected SCGraphItemProvider scGraphItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scg.SCGraph}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createSCGraphAdapter() {
+        if (scGraphItemProvider == null) {
+            scGraphItemProvider = new SCGraphItemProvider(this);
+        }
+
+        return scGraphItemProvider;
+    }
+
+    /**
      * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Node} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -267,29 +290,6 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.SCGraph} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected SCGraphItemProvider scGraphItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.scg.SCGraph}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createSCGraphAdapter() {
-        if (scGraphItemProvider == null) {
-            scGraphItemProvider = new SCGraphItemProvider(this);
-        }
-
-        return scGraphItemProvider;
-    }
-
-    /**
      * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Entry} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -359,6 +359,259 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Dependency} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected DependencyItemProvider dependencyItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scg.Dependency}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createDependencyAdapter() {
+        if (dependencyItemProvider == null) {
+            dependencyItemProvider = new DependencyItemProvider(this);
+        }
+
+        return dependencyItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.AbsoluteWrite_Read} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected AbsoluteWrite_ReadItemProvider absoluteWrite_ReadItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scg.AbsoluteWrite_Read}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createAbsoluteWrite_ReadAdapter() {
+        if (absoluteWrite_ReadItemProvider == null) {
+            absoluteWrite_ReadItemProvider = new AbsoluteWrite_ReadItemProvider(this);
+        }
+
+        return absoluteWrite_ReadItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.RelativeWrite_Read} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected RelativeWrite_ReadItemProvider relativeWrite_ReadItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scg.RelativeWrite_Read}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createRelativeWrite_ReadAdapter() {
+        if (relativeWrite_ReadItemProvider == null) {
+            relativeWrite_ReadItemProvider = new RelativeWrite_ReadItemProvider(this);
+        }
+
+        return relativeWrite_ReadItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected AbsoluteWrite_RelativeWriteItemProvider absoluteWrite_RelativeWriteItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createAbsoluteWrite_RelativeWriteAdapter() {
+        if (absoluteWrite_RelativeWriteItemProvider == null) {
+            absoluteWrite_RelativeWriteItemProvider = new AbsoluteWrite_RelativeWriteItemProvider(this);
+        }
+
+        return absoluteWrite_RelativeWriteItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Write_Write} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected Write_WriteItemProvider write_WriteItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scg.Write_Write}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createWrite_WriteAdapter() {
+        if (write_WriteItemProvider == null) {
+            write_WriteItemProvider = new Write_WriteItemProvider(this);
+        }
+
+        return write_WriteItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.BasicBlock} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected BasicBlockItemProvider basicBlockItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scg.BasicBlock}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createBasicBlockAdapter() {
+        if (basicBlockItemProvider == null) {
+            basicBlockItemProvider = new BasicBlockItemProvider(this);
+        }
+
+        return basicBlockItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.SchedulingBlock} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected SchedulingBlockItemProvider schedulingBlockItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scg.SchedulingBlock}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createSchedulingBlockAdapter() {
+        if (schedulingBlockItemProvider == null) {
+            schedulingBlockItemProvider = new SchedulingBlockItemProvider(this);
+        }
+
+        return schedulingBlockItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Predecessor} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected PredecessorItemProvider predecessorItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scg.Predecessor}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createPredecessorAdapter() {
+        if (predecessorItemProvider == null) {
+            predecessorItemProvider = new PredecessorItemProvider(this);
+        }
+
+        return predecessorItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Schedule} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ScheduleItemProvider scheduleItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scg.Schedule}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createScheduleAdapter() {
+        if (scheduleItemProvider == null) {
+            scheduleItemProvider = new ScheduleItemProvider(this);
+        }
+
+        return scheduleItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.ScheduledBlock} instances.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	protected ScheduledBlockItemProvider scheduledBlockItemProvider;
+
+				/**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scg.ScheduledBlock}.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	@Override
+	public Adapter createScheduledBlockAdapter() {
+        if (scheduledBlockItemProvider == null) {
+            scheduledBlockItemProvider = new ScheduledBlockItemProvider(this);
+        }
+
+        return scheduledBlockItemProvider;
+    }
+
+				/**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Guard} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected GuardItemProvider guardItemProvider;
+
+                /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scg.Guard}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createGuardAdapter() {
+        if (guardItemProvider == null) {
+            guardItemProvider = new GuardItemProvider(this);
+        }
+
+        return guardItemProvider;
+    }
+
+                /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -457,6 +710,7 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
      * @generated
      */
     public void dispose() {
+        if (scGraphItemProvider != null) scGraphItemProvider.dispose();
         if (nodeItemProvider != null) nodeItemProvider.dispose();
         if (conditionalItemProvider != null) conditionalItemProvider.dispose();
         if (surfaceItemProvider != null) surfaceItemProvider.dispose();
@@ -465,10 +719,20 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
         if (forkItemProvider != null) forkItemProvider.dispose();
         if (joinItemProvider != null) joinItemProvider.dispose();
         if (linkItemProvider != null) linkItemProvider.dispose();
-        if (scGraphItemProvider != null) scGraphItemProvider.dispose();
         if (entryItemProvider != null) entryItemProvider.dispose();
         if (exitItemProvider != null) exitItemProvider.dispose();
         if (controlFlowItemProvider != null) controlFlowItemProvider.dispose();
+        if (dependencyItemProvider != null) dependencyItemProvider.dispose();
+        if (absoluteWrite_ReadItemProvider != null) absoluteWrite_ReadItemProvider.dispose();
+        if (relativeWrite_ReadItemProvider != null) relativeWrite_ReadItemProvider.dispose();
+        if (absoluteWrite_RelativeWriteItemProvider != null) absoluteWrite_RelativeWriteItemProvider.dispose();
+        if (write_WriteItemProvider != null) write_WriteItemProvider.dispose();
+        if (basicBlockItemProvider != null) basicBlockItemProvider.dispose();
+        if (schedulingBlockItemProvider != null) schedulingBlockItemProvider.dispose();
+        if (predecessorItemProvider != null) predecessorItemProvider.dispose();
+        if (scheduleItemProvider != null) scheduleItemProvider.dispose();
+        if (scheduledBlockItemProvider != null) scheduledBlockItemProvider.dispose();
+        if (guardItemProvider != null) guardItemProvider.dispose();
     }
 
 }

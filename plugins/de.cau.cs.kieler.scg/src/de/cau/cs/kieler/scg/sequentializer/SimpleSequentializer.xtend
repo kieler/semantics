@@ -14,34 +14,48 @@
 package de.cau.cs.kieler.scg.sequentializer
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.BasicBlock
+import de.cau.cs.kieler.scg.BranchType
 import de.cau.cs.kieler.scg.ControlFlow
+import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.Predecessor
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.scg.extensions.SCGCopyExtensions
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.scg.Schedule
+import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
-import de.cau.cs.kieler.scgsched.AssignmentAddition
-import de.cau.cs.kieler.scgsched.ConditionalAddition
-import de.cau.cs.kieler.scgsched.GuardExpression
-import de.cau.cs.kieler.scgsched.SCGraphSched
-import de.cau.cs.kieler.scgsched.Schedule
+import de.cau.cs.kieler.scg.synchronizer.SynchronizerSelector
 import java.util.HashMap
+import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.scgbb.BasicBlock
-import de.cau.cs.kieler.scg.optimizer.CopyPropagation
-import com.google.inject.Guiceimport de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.scg.ScheduledBlock
+import de.cau.cs.kieler.core.kexpressions.Declaration
+import java.util.Set
+import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
+import de.cau.cs.kieler.scg.synchronizer.SynchronizerData
 
 /** 
- * This class is part of the SCG transformation chain. The chain is used to gather important information 
- * about the schedulability of a given SCG. This is done in several key steps. Between two steps the results 
- * are cached in specifically designed metamodels for further processing. At the end of the transformation
- * chain a newly generated (and sequentialized) SCG is returned. <br>
- * You can either call the transformations manually or use the SCG transformation extensions to enrich the
- * SCGs with the desired information.<br>
+ * This class is part of the SCG transformation chain. The chain is used to gather information 
+ * about the schedulability of a given SCG. This is done in several key steps. Contrary to the first 
+ * version of SCGs, there is only one SCG meta-model. In each step the gathered data will be added to 
+ * the model. 
+ * You can either call the transformation manually or use KiCo to perform a series of transformations.
  * <pre>
  * SCG 
  *   |-- Dependency Analysis 	 					
@@ -61,29 +75,46 @@ class SimpleSequentializer extends AbstractSequentializer {
     // -- Injections 
     // -------------------------------------------------------------------------
     
-    /** Inject SCG extensions. */  
+    @Inject
+    extension SCGCoreExtensions
+    
     @Inject 
-    extension SCGExtensions
-     
-    /** Inject SCG copy extensions. */  
-    @Inject 
-    extension SCGCopyExtensions	
-
-    /** Inject SCG copy extensions. */  
+    extension SCGDeclarationExtensions
+         
     @Inject 
     extension KExpressionsExtension	
+    
+    @Inject
+    extension AnnotationsExtensions
 
+    @Inject
+    extension SynchronizerSelector
     
     // -------------------------------------------------------------------------
     // -- Globals
     // -------------------------------------------------------------------------
-           
-    private val AdditionalConditionals = new HashMap<ConditionalAddition, Conditional>         
     
-    private val guardExpressionCache = new HashMap<ValuedObject, GuardExpression>   
-           
+    private static val ANNOTATION_SEQUENTIALIZED = "sequentialized" 
+    
+    protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
+    protected var KielerCompilerContext compilerContext
+
+    /** Caching for predecessors */
+    protected val predecessorTwinCache = <Predecessor, Predecessor> newHashMap
+    protected val predecessorBBCache = <BasicBlock, List<Predecessor>> newHashMap
+    protected val predecessorSBCache = <Predecessor, List<SchedulingBlock>> newHashMap
+    protected val predecessorTwinMark = <SchedulingBlock> newHashSet
+    
+    public static val SCHIZOPHRENIC_SUFFIX = "_s"
+    protected val schizophrenicGuards = <ValuedObject> newHashSet
+    protected var schizophrenicGuardCounter = 0
+    protected var Declaration schizoDeclaration = null
+    protected var Set<Node> pilData = null
+    protected var SynchronizerData joinData = null
+         
+               
     // -------------------------------------------------------------------------
-    // -- Transformation method
+    // -- Sequentializer
     // -------------------------------------------------------------------------    
       
     /**
@@ -96,11 +127,12 @@ class SimpleSequentializer extends AbstractSequentializer {
      * 			the source SCG with scheduling information
      * @return Returns a sequentialized standard SCG.
      */    
-     override SCGraph sequentialize(SCGraphSched scgSched) {
-        // Create new standard SCG with the Scg factory.
-        val scg = ScgFactory::eINSTANCE.createSCGraph()
-        
+     override SCGraph sequentialize(SCGraph scg, KielerCompilerContext context) {
+
         val timestamp = System.currentTimeMillis
+        compilerContext = context
+        
+        val pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
           
         /**
          * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 
@@ -108,44 +140,67 @@ class SimpleSequentializer extends AbstractSequentializer {
          * Therefore, we only copy the interface and extend the declaration by the guards of the 
          * basic blocks.
          */
-        scgSched.copyDeclarations(scg)
-//TODO: CHECK IF CORRECT        
-//        val guardTypeGroup = createTypeGroup.setTypeBool => [ scg.typeGroups += it ]
-        scgSched.basicBlocks.forEach[
-        	it.guards.forEach[
-                val newGuard = scg.createValuedObject(it.name).setTypeBool
-//        		val newGuard = createValuedObject(guardTypeGroup, it.name)
-        		it.addToValuedObjectMapping(newGuard)
-        	]
+        val newSCG = ScgFactory::eINSTANCE.createSCGraph => [
+        	annotations += createStringAnnotation(ANNOTATION_SEQUENTIALIZED, "")
         ]
-        
-        guardExpressionCache.clear
-        scgSched.guards.forEach[guard |
-        	guardExpressionCache.put(guard.valuedObject, guard)
+        schizoDeclaration = createDeclaration=>[ setType(ValueType::BOOL) ]
+		val predecessorList = <Predecessor> newArrayList
+		val basicBlockList = <BasicBlock> newArrayList
+        scg.copyDeclarations(newSCG)
+       	val guardDeclaration = createDeclaration=>[ setType(ValueType::BOOL) ]
+       	newSCG.declarations += guardDeclaration
+        scg.basicBlocks.forEach[
+        	basicBlockList += it
+        	predecessorList += it.predecessors
+            schedulingBlocks.forEach[
+                val vo = createValuedObject(it.guard.valuedObject.name) 
+                    => [ guardDeclaration.valuedObjects += it ]
+                it.guard.valuedObject.addToValuedObjectMapping(vo)
+                // Create the scheduling cache on the fly.
+        		it.nodes.forEach[ node | schedulingBlockCache.put(node, it) ]
+            ]
         ]
+        val vo = newSCG.createGOSignal
+        vo.addToValuedObjectMapping(vo)
         
         var time = (System.currentTimeMillis - timestamp) as float
+        System.out.println("Preparation for sequentialization: caches finished (time elapsed: "+(time / 1000)+"s).")          
+
+        // Create the predecessor caches for each predecessor.
+        predecessorList.forEach[ p |
+            if (p.branchType == BranchType::TRUEBRANCH) {
+                p.cacheTwin(basicBlockList)
+            } 
+            else if (p.branchType == BranchType::ELSEBRANCH) {
+                p.cacheTwin(basicBlockList)
+            }
+        ]
+        
+        time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Preparation for sequentialization finished (time elapsed: "+(time / 1000)+"s).")          
         
 		// Create the entry node, a control flow for the entry node, add the node.
         val entry = ScgFactory::eINSTANCE.createEntry
-    	val entryFlow = ScgFactory::eINSTANCE.createControlFlow
-    	entry.next = entryFlow
-        scg.nodes.add(entry)
+    	entry.next = ScgFactory::eINSTANCE.createControlFlow
+        newSCG.nodes.add(entry)
         
         // Now, call the worker method. It returns the last control flows which have to be connected to the exit node.
-        val exitFlows = scgSched.schedules.head.transformSchedule(scg, entryFlow)
+        val nodeCache = <Node> newLinkedList
+        val exitControlFlows = scg.schedules.head.transformSchedule(newSCG, entry.next, nodeCache)
         
         // Create an exit node and connect the control flow. Add the node.
         val exit = ScgFactory::eINSTANCE.createExit
-        exitFlows.forEach[it.target = exit]
-        scg.nodes.add(exit)
+        exitControlFlows.forEach[ it.target = exit ]
+        nodeCache.add(exit)
+        
+        newSCG.nodes += nodeCache
         
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Sequentialization finished (overall time elapsed: "+(time / 1000)+"s).")  
                 
         // Return the SCG.
-        scg     	
+        if (schizoDeclaration.valuedObjects.size > 0) newSCG.declarations += schizoDeclaration
+        newSCG     	
     }
     
     /**
@@ -162,162 +217,491 @@ class SimpleSequentializer extends AbstractSequentializer {
      * @throws UnsupportedSCGException
      * 			if no guard expression can be found for a specific guard.
      */
-    protected def transformSchedule(Schedule schedule, SCGraph scg, ControlFlow controlFlow) {
-    	// The source SCG is easily determined as it includes the schedule. Its container is the source SCG.
-    	val scgSched = schedule.eContainer as SCGraphSched
+    protected def transformSchedule(Schedule schedule, SCGraph scg, ControlFlow controlFlow, List<Node> nodeCache) {
     	
     	// Since the last node maybe a conditional node, it is possible to conclude the schedule with more than one
     	// outgoing control flow. Create a list to hold the control flows and add the incoming one.
-    	val nextFlows = <ControlFlow> newArrayList
-    	nextFlows.add(controlFlow)
+    	val nextControlFlows = <ControlFlow> newArrayList
+    	nextControlFlows.add(controlFlow)
     	
-    	val processedBlockGuards = <BasicBlock> newArrayList
     	
     	// For each scheduling block in the schedule iterate.
-    	for (sb : schedule.schedulingBlocks) {
-    	    
-    	    val basicBlock = sb.basicBlock
-    	    
-    	    scgSched.alterations.filter(typeof(ConditionalAddition)).forEach[
-    	        if (sb.nodes.contains(it.beforeNode)) {
-    	            val condadd = ScgFactory::eINSTANCE.createConditional
-    	            condadd.condition = it.condition.copyExpression
-    	            nextFlows.forEach[ target = condadd ]
-    	            nextFlows.clear
-                    condadd.then = ScgFactory::eINSTANCE.createControlFlow => [
-                        nextFlows.add(it)
-                    ]
-                    ScgFactory::eINSTANCE.createControlFlow => [ condadd.^else = it ]
-    	            
-    	            AdditionalConditionals.put(it, condadd)
-    	            scg.nodes.add(condadd)
-    	        }
-    	    ]
-    	    
-    	    
-    		/**
-    		 * Each scheduling block references a guard. Each guard results in an assignment. 
-    		 * Create it and copy the corresponding object.
-    		 */
-//    		if (sb == basicBlock.schedulingBlocks.head) {
-            if (!processedBlockGuards.contains(basicBlock)) {
-    		val newAssignment = ScgFactory::eINSTANCE.createAssignment
-//    		newAssignment.valuedObject = sb.guard.getValuedObjectCopy
-            newAssignment.valuedObject = basicBlock.guards.head.getValuedObjectCopy
-            processedBlockGuards.add(basicBlock)
-
-			/**
-			 * For each guard a guard expression exists.
-			 * Retrieve the expression and test it for null. 
-			 * If the guard expression is null, the scheduler could not create an expression for this guard. This is bad. Perhaps the SCG is erroneous. Throw an exception.
-			 * Otherwise, it is possible that the guard expression houses empty expressions for a synchronizer. Add them as well.
-			 */    		
-			// Retrieve the guard expression from the scheduling information.
-//    		var guardExpression = scgSched.eAllContents.filter(typeof(GuardExpression)).filter[valuedObject == sb.guard].head
-//            var guardExpression = scgSched.eAllContents.filter(typeof(GuardExpression)).filter[valuedObject == basicBlock.guards.head].head
-    		var guardExpression = guardExpressionCache.get(basicBlock.guards.head)
-    		
-    		if (guardExpression != null && guardExpression.expression != null) {
-    			
-    			// Create an assigment for each empty expression and connect the control flow appropriately.
-    			guardExpression.emptyExpressions.forEach[
-    				val eeAssignment = ScgFactory::eINSTANCE.createAssignment
-    				eeAssignment.valuedObject = it.valuedObject.getValuedObjectCopy
-    				eeAssignment.assignment = it.expression.copyExpression
-    				scg.nodes.add(eeAssignment)
-		    		nextFlows.forEach[it.target = eeAssignment]
-		    		nextFlows.clear		    		
-		    		val nextFlow = ScgFactory::eINSTANCE.createControlFlow
-    				eeAssignment.next = nextFlow
-    				nextFlows.add(nextFlow)
-    			]
-    			// Then, copy the expression of the guard to the newly created assignment.
-    			newAssignment.assignment = guardExpression.expression.copyExpression
-    		} else {
-    			// A guard is missing! Throw an exception.
-    			throw new UnsupportedSCGException("The guard expression is missing! [guard: "+sb.guard.toString+"]")
-    		}
-    		// Connect all control flows to the new assignment and clear the list.
-    		nextFlows.forEach[ target = newAssignment ]
-    		nextFlows.clear
-    		
-    		// Create a new control flow and take the assignment node as source.
-    		val nextFlow = ScgFactory::eINSTANCE.createControlFlow
-    		newAssignment.next = nextFlow
-    		nextFlows.add(nextFlow)
-    		
-    		// Add the assignment to the SCG.
-    		scg.nodes.add(newAssignment)
-    		}
+    	for (sb : schedule.scheduledBlocks) {
+    		val sBlock = sb.schedulingBlock
+	  	   /**
+   			 * For each guard a guard expression exists.
+   		     * Retrieve the expression and test it for null. 
+	  	     * If the guard expression is null, the scheduler could not create an expression for this guard. This is bad. Perhaps the SCG is erroneous. Throw an exception.
+		     * Otherwise, it is possible that the guard expression houses empty expressions for a synchronizer. Add them as well.
+		     */    		
+   			// Retrieve the guard expression from the scheduling information.
+       		sb.createAndAddGuardExpression(nextControlFlows, schedule, scg, nodeCache) 
     		
     		/**
-    		 * If the scheduling block includes assignment nodes, they must be executed if the corresponing guard 
+    		 * If the scheduling block includes assignment nodes, they must be executed if the corresponding guard 
     		 * evaluates to true. Therefore, create a conditional for the guard and add the assignment to the
     		 * true branch. They will execute their expression if the guard is active in this tick instance. 
     		 */
-    		val alterations = scgSched.alterations.filter(typeof(AssignmentAddition)).filter[ sb.nodes.contains(it.position) ]
-    		 
-    		if (sb.nodes.filter(typeof(Assignment)).size>0 || alterations.size>0) {
+    		if (sBlock.nodes.filter(typeof(Assignment)).size>0)
+    		{
     			// Create a conditional and set a reference of the guard as condition.
     			val conditional = ScgFactory::eINSTANCE.createConditional
-//                conditional.condition = sb.guard.reference.copyExpression
-                conditional.condition = basicBlock.guards.head.reference.copyExpression
+                conditional.condition = sBlock.guard.valuedObject.reference.copySCGExpression
+                if (sb.schizophrenic) {
+                    conditional.condition = scg.fixSchizophrenicExpression(conditional.condition)
+                }
     			
     			// Create control flows for the two branches and set the actual control flow to the conditional.
     			conditional.then = ScgFactory::eINSTANCE.createControlFlow
     			conditional.^else = ScgFactory::eINSTANCE.createControlFlow
-//    			nextFlows.head.target = conditional
-    			nextFlows.forEach[ target = conditional ]
-    			nextFlows.clear
+    			nextControlFlows.forEach[ target = conditional ]
+    			nextControlFlows.clear
     			
     			// Add the conditional.
-    			scg.nodes.add(conditional)
+                nodeCache.add(conditional)
     			
     			// Now, use the SCG copy extensions to copy the assignment and connect them appropriately
     			// in the true branch of the conditional.
-    			var nextCFlow = conditional.then
-    			for (assignment : sb.nodes.filter(typeof(Assignment))) {
-    				val Assignment cAssignment = assignment.copySCGNode(scg) as Assignment
-    				nextCFlow.target = cAssignment
-    				scg.nodes.add(cAssignment)
-    				nextCFlow = ScgFactory::eINSTANCE.createControlFlow
-    				cAssignment.next = nextCFlow
+    			var nextControlFlow = conditional.then
+    			for (assignment : sBlock.nodes.filter(typeof(Assignment))) {
+    				val Assignment conditionalAssignment = assignment.copySCGNode(scg) as Assignment
+    				nextControlFlow.target = conditionalAssignment
+                    nodeCache.add(conditionalAssignment)
+    				nextControlFlow = ScgFactory::eINSTANCE.createControlFlow
+    				conditionalAssignment.next = nextControlFlow
     			}
-    			nextFlows.add(nextCFlow)
-    			
-	    		// Check if alterations where added to this scheduling block
-    			alterations.forEach[ assadd |
-    				// Create new assignment
-    				ScgFactory::eINSTANCE.createAssignment => [ assignment |
-	    				assignment.valuedObject = assadd.valuedObject.getValuedObjectCopy
-    					assignment.assignment = assadd.expression.copyExpression
-    					scg.nodes.add(assignment)
-	    				nextFlows.forEach[ target = assignment ]
-	    				nextFlows.clear
-	    				assignment.next = ScgFactory::eINSTANCE.createControlFlow => [
-	    					nextFlows.add(it)
-	    				]
-    				]
-	    		]
-    			
+    			nextControlFlows.add(nextControlFlow)
     			
     			// Subsequently, add the last control flow of the true branch and the control flow of the
     			// else branch to the control flow list. These are the new entry flows for the next assignment
     			// or the return value (in which case they will be connected to the exit node by the caller). 
-    			nextFlows.add(conditional.^else)
+    			nextControlFlows.add(conditional.^else)
 
     		}
-    		
-            scgSched.alterations.filter(typeof(ConditionalAddition)).forEach[
-                if (sb.nodes.contains(it.untilNode)) {
-                    nextFlows.add( AdditionalConditionals.get(it).^else )
-                }
-            ]
     		
      	}
     	
     	// Return any remaining control flows for the caller.
-    	nextFlows
+    	nextControlFlows
     }
+    
+    protected def Assignment copySCGNode(Assignment assignment, SCGraph target) {
+    	ScgFactory::eINSTANCE.createAssignment => [
+            it.assignment = assignment.assignment.copySCGExpression
+            it.valuedObject = assignment.valuedObject.getValuedObjectCopyWNULL;
+            for(index : assignment.indices) {	
+                indices += index.copySCGExpression
+            }
+        ]
+    } 
+    
+    protected def Assignment addGuardExpression(Assignment assignment, GuardExpression guardExpression, 
+        List<ControlFlow> nextControlFlows, SCGraph scg, List<Node> nodeCache
+    ) {
+        // Create empty expressions if present.
+        guardExpression.emptyExpressions.forEach[ emptyExpression |
+            var i = 0
+            while(scg.findValuedObjectByName(emptyExpression.valuedObject.name + "_" + i)!=null) {
+                i = i + 1
+            }
+            val newValuedObject = scg.createValuedObject(emptyExpression.valuedObject.name + "_" + i).setTypeBool
+            emptyExpression.valuedObject.addToValuedObjectMapping(newValuedObject)
+                                    
+            ScgFactory::eINSTANCE.createAssignment => [ emptyExpressionAssignment |
+                emptyExpressionAssignment.valuedObject = emptyExpression.valuedObject.getValuedObjectCopy
+                emptyExpressionAssignment.assignment = emptyExpression.expression.copySCGExpression
+                nodeCache.add(emptyExpressionAssignment)
+                nextControlFlows.forEach[ target = emptyExpressionAssignment ]
+                nextControlFlows.clear 
+                emptyExpressionAssignment.next = ScgFactory::eINSTANCE.createControlFlow             
+                nextControlFlows.add(emptyExpressionAssignment.next)
+            ]
+        ]
+        
+        // Create additional expressions if present.
+        guardExpression.additionalExpressions.forEach[ additionalExpression |
+            val newValuedObject = scg.createValuedObject(additionalExpression.valuedObject.name).setTypeBool
+            additionalExpression.valuedObject.addToValuedObjectMapping(newValuedObject)
+                                    
+            ScgFactory::eINSTANCE.createAssignment => [ additionalExpressionAssignment |
+                additionalExpressionAssignment.valuedObject = additionalExpression.valuedObject.getValuedObjectCopy
+                additionalExpressionAssignment.assignment = additionalExpression.expression.copySCGExpression
+                nodeCache.add(additionalExpressionAssignment)
+                nextControlFlows.forEach[ target = additionalExpressionAssignment ]
+                nextControlFlows.clear 
+                additionalExpressionAssignment.next = ScgFactory::eINSTANCE.createControlFlow             
+                nextControlFlows.add(additionalExpressionAssignment.next)
+            ]
+        ]        
+        // Then, copy the expression of the guard to the newly created assignment.
+        assignment.assignment = guardExpression.expression.copySCGExpression    
+        assignment
+    }    
+    
+    
+    
+    /**
+     * createGuardExpression creates an expression for a guard of a specific scheduling block.
+     * 
+     * @param schedulingBlock
+     *          the scheduling block in question.
+     * @param scg
+     *          the SCG
+     * @return Returns the guard expression.
+     * @throws UnsupportedSCGException 
+     *      Throws an UnsupportedSCGException if a standard guarded block has no predecessor information.
+     */
+    protected def void createAndAddGuardExpression(ScheduledBlock scheduledBlock, 
+        List<ControlFlow> nextControlFlows, Schedule schedule, SCGraph scg, List<Node> nodeCache
+    ) {
+        
+        // Query the basic block of the scheduling block.
+        val basicBlock = scheduledBlock.schedulingBlock.basicBlock
+                
+        val assignment = ScgFactory::eINSTANCE.createAssignment
+        
+        if (!scheduledBlock.schizophrenic) {
+            assignment.valuedObject = scheduledBlock.schedulingBlock.guard.valuedObject.getValuedObjectCopy
+        } else {
+            var ValuedObject vo = scg.findValuedObjectByName(scheduledBlock.schedulingBlock.guard.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
+            if (vo == null) {
+                vo = createValuedObject(scheduledBlock.schedulingBlock.guard.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
+                schizoDeclaration.valuedObjects += vo
+                assignment.valuedObject = vo
+            }
+        }        
+        
+        /** 
+         * If the scheduling block is the first scheduling block in the basic block,
+         * create an appropriate expression for the activity state of this guard.
+         * A more accurate description of the interconnectivity between the activity states
+         * of the basic blocks can be found in rtsys:ssm-dt, 2013.
+         */
+         
+        // Is the scheduling block the first scheduling block of the basic block?
+        if (basicBlock.schedulingBlocks.head == scheduledBlock.schedulingBlock) {
+            if (basicBlock.goBlock) {
+                /**
+                 * If the basic block is a GO block, meaning it should be active when the programs starts,
+                 * add a reference to the GO signal as expression for the guard.
+                 */
+                 scheduledBlock.handleGoBlockGuardExpression(assignment, nextControlFlows, schedule, 
+                     scg, nodeCache)
+            } 
+            else if (basicBlock.depthBlock) {
+                /**
+                 * If the basic block is a depth block, meaning it is delayed in its execution,
+                 * add a pre operator expression as expression for the guard.
+                 */
+                scheduledBlock.handleDepthBlockGuardExpression(assignment, nextControlFlows, schedule, 
+                    scg, nodeCache)
+            }
+            else if (basicBlock.synchronizerBlock) {
+                /**
+                 * If the basic block is a surface block, meaning it is responsible for joining concurrent threads,
+                 * invoke a synchronizer. The synchronizer will create the guard expression for this node.
+                 * Additionally, the synchronizer may create new valued objects mandatory for the expression.
+                 * These must be added to the graph in order to be serializable later on. 
+                 */
+                scheduledBlock.handleSynchronizerBlockGuardExpression(assignment, nextControlFlows, schedule,
+                    scg, nodeCache)   
+                
+                if (joinData.synchronizerId == DepthJoinSynchronizer::SYNCHRONIZER_ID) {
+                    assignment.assignment = scg.fixSchizophrenicExpression(assignment.assignment)
+                }
+            } else {
+                /**
+                 * If the block is neither of them, it solely depends on the activity states of previous basic blocks.
+                 * At least one block must be active to activate the current block. Therefore, connect all guards
+                 * of the predecessors with OR expressions.
+                 */
+                scheduledBlock.handleStandardBlockGuardExpression(assignment, nextControlFlows, schedule,
+                    scg, nodeCache)               
+            }
+        } else {
+            /**
+             * If the scheduling block is not the first scheduling block in the basic block, it is active 
+             * if and only if its basic block, and in this case the first scheduling block of the basic block,
+             * is active but possibly at a later stage in the net list. Add a reference of the guard of the first
+             * scheduling block as expression.
+             * 
+             * HINT: There were some concerns that the expression would maybe evaluate differently at a later stage in 
+             * the net list and that the whole expression must be re-evaluated at that particular point of time.
+             * However, due to the rules valid for the basic block and scheduling block creation, this scenario 
+             * cannot occur. A difference of guard evaluation with respect to data dependencies can only occur 
+             * between conditional nodes but conditional nodes force the create of new basic blocks after their execution.
+             * Therefore, there will always be a new basic block with a new guard expression in this scenario.
+             */
+            scheduledBlock.handleSubsequentSchedulingBlockGuardExpression(assignment, nextControlFlows, schedule, 
+                scg, nodeCache)
+        }
+                
+        // Connect all control flows to the new assignment and clear the list.
+        nextControlFlows.forEach[ target = assignment ]
+        nextControlFlows.clear
+            
+        // Create a new control flow and take the assignment node as source.
+        assignment.next = ScgFactory::eINSTANCE.createControlFlow
+        nextControlFlows.add(assignment.next)
+        
+        if (scheduledBlock.schizophrenic) {
+            assignment.assignment = scg.fixSchizophrenicExpression(assignment.assignment)
+        }
+            
+        // Add the assignment to the SCG.
+        nodeCache.add(assignment)
+    }
+    
+    
+    // --- CREATE GUARDS: GO BLOCK 
+    
+    protected def handleGoBlockGuardExpression(ScheduledBlock scheduledBlock, Assignment assignment,  
+        List<ControlFlow> nextFlows, Schedule schedule, SCGraph scg, List<Node> nodeCache
+    ) {
+        val gExpr = scheduledBlock.schedulingBlock.createGoBlockGuardExpression(schedule, scg)
+        assignment.addGuardExpression(gExpr, nextFlows, scg, nodeCache)       
+    }
+    
+    protected def GuardExpression createGoBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
+        new GuardExpression => [
+            valuedObject = schedulingBlock.guard.valuedObject
+            expression = scg.findValuedObjectByName(GOGUARDNAME).reference
+        ]
+    }
+    
+
+    // --- CREATE GUARDS: DEPTH BLOCK 
+
+    protected def handleDepthBlockGuardExpression(ScheduledBlock scheduledBlock, Assignment assignment,  
+        List<ControlFlow> nextFlows, Schedule schedule, SCGraph scg,  List<Node> nodeCache
+    ) {
+        val gExpr = scheduledBlock.schedulingBlock.createDepthBlockGuardExpression(schedule, scg)
+        assignment.addGuardExpression(gExpr, nextFlows, scg, nodeCache)       
+    }
+    
+    protected def GuardExpression createDepthBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
+        new GuardExpression => [
+            valuedObject = schedulingBlock.guard.valuedObject
+            expression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+                setOperator(OperatorType::PRE)
+                subExpressions.add(schedulingBlock.basicBlock.preGuard.reference)
+            ]
+        ]
+    }
+
+
+    // --- CREATE GUARDS: SYNCHRONIZER BLOCK 
+
+    protected def handleSynchronizerBlockGuardExpression(ScheduledBlock scheduledBlock, Assignment assignment,  
+        List<ControlFlow> nextFlows, Schedule schedule, SCGraph scg,  List<Node> nodeCache
+    ) {
+        val gExpr = scheduledBlock.schedulingBlock.createSynchronizerBlockGuardExpression(schedule, scg)
+        assignment.addGuardExpression(gExpr, nextFlows, scg, nodeCache)    
+    }
+    
+    protected def GuardExpression createSynchronizerBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
+        // The simple scheduler uses the SurfaceSynchronizer. 
+        // The result of the synchronizer is stored in the synchronizerData class joinData.
+        val synchronizer = (schedulingBlock.nodes.head as Join).getSynchronizer
+        System.out.println("Sequentializing join with " + synchronizer.id)
+        if (synchronizer.id == DepthJoinSynchronizer::SYNCHRONIZER_ID) {
+            (synchronizer as DepthJoinSynchronizer).schizophrenicDeclaration = schizoDeclaration
+        }
+        joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join, compilerContext, schedulingBlockCache)
+        
+        joinData.guardExpression
+    }
+    
+    
+    // --- CREATE GUARDS: STANDARD BLOCK 
+
+    protected def handleStandardBlockGuardExpression(ScheduledBlock scheduledBlock, Assignment assignment,  
+        List<ControlFlow> nextFlows, Schedule schedule, SCGraph scg,  List<Node> nodeCache
+    ) {
+        val gExpr = scheduledBlock.createStandardBlockGuardExpression(schedule, scg)
+        assignment.addGuardExpression(gExpr, nextFlows, scg, nodeCache)       
+    }
+    
+    protected def GuardExpression createStandardBlockGuardExpression(ScheduledBlock scheduledBlock, Schedule schedule, SCGraph scg) {
+        val basicBlock = scheduledBlock.schedulingBlock.basicBlock
+        
+        val gExpr = new GuardExpression;
+        gExpr.valuedObject = scheduledBlock.schedulingBlock.guard.valuedObject
+        
+        val relevantPredecessors = <Predecessor> newHashSet
+        if (scheduledBlock.schizophrenic) {
+            relevantPredecessors += basicBlock.predecessors.filter[ !it.basicBlock.entryBlock ]
+        } else {
+            relevantPredecessors += basicBlock.predecessors
+        }
+        
+        // If there are more than one predecessor, create an operator expression and connect them via OR.
+        if (relevantPredecessors.size>1) {
+            // Create OR operator expression via kexpressions factory.
+            val expr = KExpressionsFactory::eINSTANCE.createOperatorExpression
+            expr.setOperator(OperatorType::OR)
+                    
+            // For each predecessor add its expression to the sub expressions list of the operator expression.
+            relevantPredecessors.forEach[ 
+//                if (!scheduledBlock.schizophrenic || it.basicBlock.entryBlock)
+                    expr.subExpressions += it.predecessorExpression(scheduledBlock.schedulingBlock, schedule, scg)
+            ]
+            gExpr.expression = expr
+        } 
+        // If it is exactly one predecessor, we can use its expression directly.
+        else if (relevantPredecessors.size == 1) {
+//            if (!scheduledBlock.schizophrenic || basicBlock.predecessors.head.basicBlock.entryBlock)
+                gExpr.expression = relevantPredecessors.head.predecessorExpression(scheduledBlock.schedulingBlock, schedule, scg)
+        } 
+        else 
+        {
+            /**
+            * If we reach this point, the basic block contains no predecessor information but is not marked as go block.
+            * This is not supported by this scheduler: throw an exception. 
+            */
+            if (!basicBlock.deadBlock && !scheduledBlock.schizophrenic) {
+                throw new UnsupportedSCGException("Cannot handle standard guard without predecessor information!")
+            } else {
+                gExpr.expression = FALSE  
+            }
+        }
+        gExpr       
+    }
+
+
+    // --- CREATE GUARDS: SUBSEQUENT SCHEDULING BLOCK 
+
+    protected def handleSubsequentSchedulingBlockGuardExpression(ScheduledBlock scheduledBlock, Assignment assignment,  
+        List<ControlFlow> nextFlows, Schedule schedule, SCGraph scg,  List<Node> nodeCache
+    ) {
+        val gExpr = scheduledBlock.createSubsequentSchedulingBlockGuardExpression(schedule, scg)
+        assignment.addGuardExpression(gExpr, nextFlows, scg, nodeCache)       
+    }
+
+    
+    protected def GuardExpression createSubsequentSchedulingBlockGuardExpression(ScheduledBlock scheduledBlock, Schedule schedule, SCGraph scg) {
+        new GuardExpression => [
+            if (scheduledBlock.schizophrenic && scheduledBlock.schedulingBlock.basicBlock.entryBlock) {
+                expression = FALSE
+            } else {
+                valuedObject = scheduledBlock.schedulingBlock.guard.valuedObject
+                expression = scheduledBlock.schedulingBlock.basicBlock.schedulingBlocks.head.guard.valuedObject.reference
+            }
+        ]
+    }
+    
+    /**
+     * PredecessorExpression forms a single expression with respect to the predecessor,
+     * meaning that the expression is a reference to the guard of the predecessor and
+     * combined with the (negated) expression of a condition in the case of a 
+     * conditional predecessor.
+     *  
+     * @param predecessor
+     *          The predecessor in question.
+     * @return Returns the expression for this predecessor.
+     * @throws UnsupportedSCGException
+     *      Throws an UnsupportedSCGException if the predecessor does not contain sufficient information to form the expression.
+     */
+    protected def Expression predecessorExpression(Predecessor predecessor, SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
+        // Return a solely reference as expression if the predecessor is not a conditional
+        if (predecessor.branchType == BranchType::NORMAL) {
+            return predecessor.basicBlock.schedulingBlocks.head.guard.valuedObject.reference
+        }
+        // If we are in the true branch of the predecessor, combine the predecessor guard reference with
+        // the condition of the conditional and return the expression.
+        else if (predecessor.branchType == BranchType::TRUEBRANCH) {
+            val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+            expression.setOperator(OperatorType::AND)
+            expression.subExpressions += predecessor.basicBlock.schedulingBlocks.head.guard.valuedObject.reference
+            expression.subExpressions += predecessor.conditional.condition.copy
+            
+            // Conditional branches are mutual exclusive. Since the other branch may modify the condition 
+            // make sure the subsequent branch will not evaluate to true if the first one was already taken.
+            val twin = predecessor.getSchedulingBlockTwin(BranchType::ELSEBRANCH, schedule, scg)
+            if (predecessorTwinMark.contains(twin)) {
+                expression.subExpressions.add(0, twin.guard.valuedObject.reference.negate)
+            } 
+            predecessorTwinMark.add(schedulingBlock)
+            
+            return expression.fix
+        }
+        // If we are in the true branch of the predecessor, combine the predecessor guard reference with
+        // the negated condition of the conditional and return the expression.
+        else if (predecessor.branchType == BranchType::ELSEBRANCH) {
+            val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+            expression.setOperator(OperatorType::AND)
+            expression.subExpressions += predecessor.basicBlock.schedulingBlocks.head.guard.valuedObject.reference
+            expression.subExpressions += predecessor.conditional.condition.copy.negate
+
+            // Conditional branches are mutual exclusive. Since the other branch may modify the condition 
+            // make sure the subsequent branch will not evaluate to true if the first one was already taken.
+            val twin = predecessor.getSchedulingBlockTwin(BranchType::TRUEBRANCH, schedule, scg)
+            if (predecessorTwinMark.contains(twin)) {
+                expression.subExpressions.add(0, twin.guard.valuedObject.reference.negate)
+            } 
+            predecessorTwinMark.add(schedulingBlock)
+
+            return expression.fix
+        }
+            
+        throw new UnsupportedSCGException("Cannot create predecessor expression without predecessor block type information.")
+    }
+    
+    protected def SchedulingBlock getSchedulingBlockTwin(Predecessor predecessor, BranchType blockType, Schedule schedule, SCGraph scg) {
+        val twin = predecessorTwinCache.get(predecessor)
+        predecessorSBCache.get(twin).head
+    }
+
+    private def cacheTwin(Predecessor predecessor, List<BasicBlock> basicBlocks) {
+        val bb = predecessor.basicBlock
+        var predList = predecessorBBCache.get(bb)
+        if (predList == null) {
+            predList = <Predecessor> newArrayList => [ add(predecessor) ]
+            predecessorBBCache.put(bb, predList)
+        } else {
+            val fPred = predList.get(0)
+            predList.add(predecessor)
+            predecessorTwinCache.put(fPred, predecessor)
+            predecessorTwinCache.put(predecessor, fPred)
+            
+            
+            val sbList1 = <SchedulingBlock> newArrayList
+            val basicBlock1 = fPred.eContainer as BasicBlock
+            sbList1 += basicBlock1.schedulingBlocks.head
+            predecessorSBCache.put(fPred, sbList1)
+            
+            val sbList2 = <SchedulingBlock> newArrayList
+            val basicBlock2 = predecessor.eContainer as BasicBlock
+            sbList2 += basicBlock2.schedulingBlocks.head
+            predecessorSBCache.put(predecessor, sbList2)
+        }
+    }
+ 
+    protected def Expression fixSchizophrenicExpression(SCGraph scg, Expression expression) {
+        if (expression instanceof ValuedObjectReference) {
+            val vor = (expression as ValuedObjectReference)
+            val newVO = schizoDeclaration.findValuedObjectByName(vor.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
+            if (newVO != null) {
+                vor.valuedObject = newVO 
+            }
+        } else if (expression instanceof OperatorExpression) {
+            val vors = (expression as OperatorExpression).eAllContents.filter(typeof(ValuedObjectReference))
+            for(vor : vors.toIterable) {
+                val newVO = schizoDeclaration.findValuedObjectByName(vor.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
+                if (newVO != null) {
+                    vor.valuedObject = newVO 
+                }
+            }
+        }
+        
+        expression
+    }   
+    
+    def ValuedObject findValuedObjectByName(Declaration declaration, String name) {
+        for(vo : declaration.valuedObjects) {
+            if (vo.name == name) return vo
+        }
+        return null
+    }    
     
 }

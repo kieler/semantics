@@ -42,9 +42,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
-import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
-import org.eclipse.gmf.runtime.diagram.core.services.ViewService;
-import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Display;
@@ -99,15 +96,16 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
         return null;
     }
 
-    /**
-     * 
-     * {@inheritDoc}
-     * 
-     * @return PreferencesHint
-     */
-    protected PreferencesHint getPreferencesHint() {
-        return new PreferencesHint("");
-    }
+// Deprecated GMF stuff
+//    /**
+//     * 
+//     * {@inheritDoc}
+//     * 
+//     * @return PreferencesHint
+//     */
+//    protected PreferencesHint getPreferencesHint() {
+//        return new PreferencesHint("");
+//    }
 
     /**
      * At each selected item this method decides if a diagram must be created. 
@@ -241,22 +239,24 @@ public abstract class AbstractConvertModelHandler extends AbstractHandler {
 
                 // Create Diagram, if necessary
                 // Note: Diagrams created this way are empty
-                Diagram diagram = null;
-                if (doCreateDiagram(transformedModel, event, selection)) {
-                    diagram = ViewService.createDiagram(transformedModel, getDiagramEditorID(),
-                            getPreferencesHint());
-                    
-                    saveRes.getContents().add(transformedModel);
-                    if (diagram != null) {
-                        diagram.setElement(transformedModel);
-                        // Save both the model and the diagram in one resource
-                        saveRes.getContents().add(diagram);
-                    }
-
-                } else {
-                    // Save only the model
-                    saveRes.getContents().add(transformedModel);
-                }
+                
+                // Deprecated GMF diagram code
+                // Diagram diagram = null;
+                // if (doCreateDiagram(transformedModel, event, selection)) {
+                // diagram = ViewService.createDiagram(transformedModel, getDiagramEditorID(),
+                // getPreferencesHint());
+                //
+                // saveRes.getContents().add(transformedModel);
+                // if (diagram != null) {
+                // diagram.setElement(transformedModel);
+                // // Save both the model and the diagram in one resource
+                // saveRes.getContents().add(diagram);
+                // }
+                //
+                // } else {                
+                // Save only the model
+                saveRes.getContents().add(transformedModel);
+                // }
                 saveRes.save(getSaveOptions());
                 setCharset(WorkspaceSynchronizer.getFile(saveRes));
             }

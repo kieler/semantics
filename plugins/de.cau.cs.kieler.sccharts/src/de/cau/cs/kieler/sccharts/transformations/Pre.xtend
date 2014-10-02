@@ -27,6 +27,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import java.util.Iterator
 
 /**
  * SCCharts Pre Transformation.
@@ -45,6 +46,8 @@ class Pre {
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
+    
+    private val nameCache = <String> newArrayList
 
     //-------------------------------------------------------------------------
     //--                        P R E -  O P E R A T O R                     --
@@ -54,29 +57,28 @@ class Pre {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootState.getAllStates) {
+        targetRootState.getAllStates.forEach[ targetState |
             targetState.transformPre(targetRootState);
-        }
+        ]
         targetRootState.fixAllTextualOrdersByPriorities;
     }
 
     // Return a list of Pre Expressions for an action that references the valuedObject
-    def List<OperatorExpression> getPreExpression(Action action, ValuedObject valuedObject) {
+    def Iterator<OperatorExpression> getPreExpression(Action action, ValuedObject valuedObject) {
         val List<OperatorExpression> returnPreExpressions = <OperatorExpression>newLinkedList;
-        val preExpressions = action.eAllContents.filter(typeof(OperatorExpression)).toList().filter(
+        val preExpressions = action.eAllContents.filter(typeof(OperatorExpression)).filter(
             e|
                 (e.operator == OperatorType::PRE) && (e.subExpressions.size() == 1) &&
                     (e.subExpressions.get(0) instanceof ValuedObjectReference) &&
                     ((e.subExpressions.get(0) as ValuedObjectReference).valuedObject == valuedObject)
         );
-        returnPreExpressions.addAll(preExpressions);
-        return returnPreExpressions;
+        preExpressions
     }
 
     // Return a list of Pre Expressions for an action that references the value of a valuedObject
-    def List<OperatorExpression> getPreValExpression(Action action, ValuedObject valuedObject) {
+    def Iterator<OperatorExpression> getPreValExpression(Action action, ValuedObject valuedObject) {
         val List<OperatorExpression> returnPreValExpressions = <OperatorExpression>newLinkedList;
-        val preValExpressions = action.eAllContents.filter(typeof(OperatorExpression)).toList().filter(
+        val preValExpressions = action.eAllContents.filter(typeof(OperatorExpression)).filter(
             e|
                 (e.operator == OperatorType::PRE) && (e.subExpressions.size() == 1) &&
                     (e.subExpressions.get(0) instanceof OperatorExpression) &&
@@ -86,34 +88,33 @@ class Pre {
                         subExpressions.get(0) as OperatorExpression).subExpressions.get(0) as ValuedObjectReference).
                         valuedObject == valuedObject)
         );
-        returnPreValExpressions.addAll(preValExpressions);
-        return returnPreValExpressions;
+        preValExpressions
     }
 
     // Traverse all states that might declare a valuedObject that is used with the PRE operator
     def void transformPre(State state, State targetRootState) {
 
         // Filter all valuedObjects and retrieve those that are referenced
-        val allActions = state.eAllContents.filter(typeof(Action)).toList();
+        val allActions = state.eAllContents.filter(typeof(Action));
         val allPreValuedObjects = state.valuedObjects.filter(
             valuedObject|
                 allActions.filter(
                     action|
-                        action.getPreExpression(valuedObject).size > 0 ||
-                            action.getPreValExpression(valuedObject).size > 0).size > 0);
+                        action.getPreExpression(valuedObject).hasNext ||
+                            action.getPreValExpression(valuedObject).hasNext).hasNext);
 
         for (preValuedObject : ImmutableList::copyOf(allPreValuedObjects)) {
 
             val newPre = state.createValuedObject(GENERATED_PREFIX + "pre" + GENERATED_PREFIX + preValuedObject.name).
-                uniqueName
+                uniqueNameCached(nameCache)
             newPre.applyAttributes(preValuedObject)
             val newAux = state.createValuedObject(GENERATED_PREFIX + "aux" + GENERATED_PREFIX + preValuedObject.name).
-                uniqueName
+                uniqueNameCached(nameCache)
             newAux.applyAttributes(preValuedObject)
 
-            val preRegion = state.createRegion(GENERATED_PREFIX + "Pre").uniqueName
-            val preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueName.setFinal
-            val preWait = preRegion.createFinalState(GENERATED_PREFIX + "Wait").uniqueName
+            val preRegion = state.createRegion(GENERATED_PREFIX + "Pre").uniqueNameCached(nameCache)
+            val preInit = preRegion.createInitialState(GENERATED_PREFIX + "Init").uniqueNameCached(nameCache).setFinal
+            val preWait = preRegion.createFinalState(GENERATED_PREFIX + "Wait").uniqueNameCached(nameCache)
 
             //            val preDone = preRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueName
             val transInitWait = preInit.createImmediateTransitionTo(preWait)
@@ -127,11 +128,13 @@ class Pre {
             //            val transInitDone = preInit.createTransitionTo(preDone)
             // Replace the ComplexExpression Pre(S) by the ValuedObjectReference PreS in all actions            
             // Replace the ComplexExpression Pre(?S) by the OperatorExpression ?PreS in all actions            
-            for (action : allActions) {
+            while (allActions.hasNext) {
+                val action = allActions.next
                 val preExpressions = action.getPreExpression(preValuedObject);
                 val preValExpressions = action.getPreValExpression(preValuedObject);
 
-                for (preExpression : preExpressions) {
+                while (preExpressions.hasNext) {
+                    val preExpression = preExpressions.next
                     val container = preExpression.eContainer;
 
                     if (container instanceof OperatorExpression) {
@@ -146,7 +149,8 @@ class Pre {
                     }
                 }
 
-                for (preValExpression : preValExpressions) {
+                while (preValExpressions.hasNext) {
+                    val preValExpression = preValExpressions.next
                     val container = preValExpression.eContainer;
 
                     if ((!preValExpression.subExpressions.nullOrEmpty) &&

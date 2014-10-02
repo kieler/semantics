@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kico;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,17 +20,10 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.mwe.core.monitor.ProgressMonitorAdapter;
-
-import com.google.common.base.Joiner;
 
 /**
  * This is the main class of the Kieler Compiler (KiCo) Project that aims to provide an
@@ -850,7 +842,7 @@ public class KielerCompiler {
      */
     public static CompilationResult compile(KielerCompilerContext context) {
         updateMapping(DEBUG);
-        
+
         // as this is a compile run, the following MUST be set
         EObject transformationEObject = context.getTransformationObject();
         if (transformationEObject == null) {
@@ -860,7 +852,6 @@ public class KielerCompiler {
             return context.getCompilationResult();
         }
 
-        
         // Set the main resource
         if (context.getMainResource() == null) {
             context.setMainResource(transformationEObject.eResource());
@@ -1008,14 +999,15 @@ public class KielerCompiler {
             if (transformation.getId().equals(compilationTransformationID)) {
                 // If this is an individual
 
-                Class<?> parameterType = transformedObject.getClass();
+                // Class<?> parameterType = transformedObject.getClass();
                 Class<?> handledParameterType = transformation.getParameterType();
                 if (handledParameterType != null) {
                     if (DEBUG) {
                         System.out.println("PERFORM TRANSFORMATION: " + compilationTransformationID
-                                + " ( is " + parameterType.getName() + " handled by "
-                                + handledParameterType.getName() + "? "
-                                + handledParameterType.isInstance(transformedObject) + " )");
+                        // + " ( is " + parameterType.getName() + " handled by "
+                        // + handledParameterType.getName() + "? "
+                        // + handledParameterType.isInstance(transformedObject) + " )"
+                                );
                     }
                     if (handledParameterType.isInstance(transformedObject)) {
 
@@ -1035,6 +1027,9 @@ public class KielerCompiler {
                         // work in % already added by the subMonitor
                         int additional = 100 - subMonitor.getPercentDone();
                         monitor.worked(additional);
+                    } else {
+                        // MUST flag this to be finished otherwise
+                        context.getCompilationResult().setCurrentTransformationDone(true);
                     }
                 }
             }
@@ -1058,39 +1053,23 @@ public class KielerCompiler {
             final Transformation transformation, final KielerCompilerContext context,
             final KielerCompilerProgressMonitor subMonitor) {
 
-        // for (int c = 0; c < 100; c ++) {
-        // subMonitor.setPercentDone(c);
-        // // TODO: remove
-        // try {
-        // Thread.sleep(1);
-        // } catch (InterruptedException e) {
-        // e.printStackTrace();
-        // }
-        // }
-
         String transformationID = "unknown";
         Object object = null;
         try {
             transformationID = transformation.getId();
             Resource res = transformedObject.eResource();
             if (context.isCreateDummyResource()) {
-                // If we should create a dummy resource then save it after each successful transformation step
+                // If we should create a dummy resource then save it after each successful
+                // transformation step
                 if (res == null) {
-                    // create a dummy resource by calling serialization (this creates a dummy resource on the fly)
+                    // Create a dummy resource by calling serialization (this creates a dummy
+                    // resource on the fly)
+                    @SuppressWarnings("unused")
                     String discard = KiCoUtil.serialize(transformedObject, context, true);
-//                    System.out.println(discard);
                 }
                 res = context.getMainResource();
-//                if (res != null) {
-//                    try {
-//                        res.save(KiCoUtil.getSaveOptions());
-//                    } catch (IOException e) {
-//                        // ignore errors
-//                    }
-//                }
             }
-            
-            
+
             object = transformation.doTransform(transformedObject, context);
         } catch (Exception exception) {
             context.getCompilationResult().addPostponedError(

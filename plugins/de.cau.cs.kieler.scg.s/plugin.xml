@@ -2,58 +2,28 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.commands">
-      <category
-            id="de.cau.cs.kieler.scg.s.commands.category"
-            name="SCGToS Category">
-      </category>
-      <command
-            categoryId="de.cau.cs.kieler.scg.s.commands.category"
-            id="de.cau.cs.kieler.scg.commands.SCGToSTransformation"
-            name="SCG: Transform to S tick function">
-      </command>
-   </extension>
-   <extension
-         point="org.eclipse.ui.handlers">
-      <handler
-            class="de.cau.cs.kieler.scg.s.handlers.SCGraphModelFileHandler"
-            commandId="de.cau.cs.kieler.scg.commands.SCGToSTransformation">
-      </handler>
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations?before=de.cau.kieler.scg.menus.AllSCGTransformations">
-         <command
-               commandId="de.cau.cs.kieler.scg.commands.SCGToSTransformation"
-               id="de.cau.cs.kieler.scg.s.menus.STickFunction"
-               label="Transform to S Tick Function"
-               mnemonic="A"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <adapt
-                        type="org.eclipse.core.resources.IFile">
-                     <test
-                           forcePluginActivation="true"
-                           property="org.eclipse.core.resources.extension"
-                           value="scg">
-                     </test>
-                  </adapt>
-               </iterate>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations?after=de.cau.cs.kieler.scg.s.menus.STickFunction">
-         <separator
-               name="de.cau.cs.kieler.scg.separator11"
-               visible="true">
-         </separator>
-      </menuContribution>
+         point="de.cau.cs.kieler.kico.transformation">
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.s.transformations.SCG2C"
+            id="SCG2C"
+            method="transform"
+            name="C Code">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.s.transformations.SCG2S"
+            dependencies="SCG2C"
+            id="SCG2S"
+            method="transform"
+            name="S Code">
+      </transformationMethod>
+      <transformationGroup
+            alternatives="false"
+            id="CODEGENERATION"
+            isCategory="true"
+            isFeatureGroup="false"
+            name="Code Generation"
+            transformations="SCG2C, SCG2S">
+      </transformationGroup>
    </extension>
 
 </plugin>

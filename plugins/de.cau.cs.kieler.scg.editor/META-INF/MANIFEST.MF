@@ -8,11 +8,7 @@ Bundle-Activator: de.cau.cs.kieler.scg.presentation.ScgEditorPlugin$Implementati
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.cau.cs.kieler.scg.presentation,
- de.cau.cs.kieler.scgbb.presentation,
- de.cau.cs.kieler.scgdep.presentation,
- de.cau.cs.kieler.scgsched.presentation,
- de.cau.cs.scg.presentation
+Export-Package: de.cau.cs.kieler.scg.presentation
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources;visibility:=reexport,
  de.cau.cs.kieler.scg.edit;visibility:=reexport,

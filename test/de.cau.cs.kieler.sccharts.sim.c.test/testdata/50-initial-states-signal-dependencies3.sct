@@ -1,0 +1,47 @@
+scchart _50_initial_states_signal_dependencies3
+"50-initial-states-signal-dependencies3" {
+  output signal pure O;
+  output signal pure R1;
+  output signal pure R2;
+
+  initial state A
+  --> B;
+
+  state B {
+
+    initial state C
+    --> D immediate / R1;
+
+    state D;
+  };
+
+  region:
+
+  state M;
+
+  initial state L
+  --> M immediate with R2 / O;
+
+  region:
+
+  state H2 "H"
+  --> I immediate;
+
+  state I {
+
+    initial state J
+    --> K immediate / R2;
+
+    state K;
+  };
+
+  initial state G2 "G"
+  --> H2;
+
+  region:
+
+  state F;
+
+  initial state E
+  --> F immediate with R1 / O;
+}

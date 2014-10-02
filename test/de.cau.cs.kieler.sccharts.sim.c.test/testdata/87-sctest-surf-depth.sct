@@ -1,0 +1,26 @@
+scchart SurfDepth {
+  input signal pure A0;
+  input signal pure B0;
+  input signal pure A1;
+  input signal pure B1;
+  input signal pure C1;
+  output signal pure U0;
+  output signal pure V0;
+  output signal pure U1;
+  output signal pure V1;
+  output signal pure W1;
+
+  region R0:
+
+  initial state S0
+  --> S1 with A0 / U0
+  --> S1 immediate with B0 / V0;
+
+  state S1
+  --> S2 with A1 / U1
+  --> S2 immediate with B1 / V1
+  --> S2 with C1 / W1;
+
+  state S2
+  --> S0;
+}

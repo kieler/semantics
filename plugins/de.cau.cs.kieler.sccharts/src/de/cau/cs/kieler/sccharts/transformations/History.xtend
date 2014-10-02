@@ -22,6 +22,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.ArrayList
 import java.util.List
+import de.cau.cs.kieler.sccharts.Region
 
 /**
  * SCCharts History Transformation.
@@ -51,9 +52,9 @@ class History {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootState.getAllStates) {
+        targetRootState.getAllStates.forEach [ targetState  |
             targetState.transformHistory(targetRootState);
-        }
+        ]
         targetRootState.fixAllTextualOrdersByPriorities;
     }
 
@@ -66,16 +67,16 @@ class History {
 
         if (historyTransitions != null && historyTransitions.size > 0 && state.regions != null && state.regions.size > 0) {
             var int initialValue
-            var List<ValuedObject> stateEnumsAll = new ArrayList
-            var List<ValuedObject> stateEnumsDeep = new ArrayList
+            val List<ValuedObject> stateEnumsAll = new ArrayList
+            val List<ValuedObject> stateEnumsDeep = new ArrayList
 
             val regions = state.regions.immutableCopy
-            var regionsDeep = state.regions.immutableCopy
+            var regionsDeep = state.regions.immutableCopy as List<Region>
             if (!deepHistoryTransitions.nullOrEmpty) {
                 regionsDeep = state.allContainedRegions
             }
 
-            for (region : regionsDeep) {
+            for ( region : regionsDeep.toList) {
                 var counter = 0
                 // FIXME: stateEnum should be static
                 val stateEnum = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + state.id).setTypeInt.

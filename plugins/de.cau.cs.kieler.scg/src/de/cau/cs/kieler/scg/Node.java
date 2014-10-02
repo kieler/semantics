@@ -27,6 +27,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.Node#getIncoming <em>Incoming</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Node#isIsInitial <em>Is Initial</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.Node#getDependencies <em>Dependencies</em>}</li>
  * </ul>
  * </p>
  *
@@ -78,5 +79,21 @@ public interface Node extends Annotatable {
      * @generated
      */
     void setIsInitial(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Dependencies</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.scg.Dependency}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Dependencies</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Dependencies</em>' containment reference list.
+     * @see de.cau.cs.kieler.scg.ScgPackage#getNode_Dependencies()
+     * @model containment="true"
+     * @generated
+     */
+    EList<Dependency> getDependencies();
 
 } // Node

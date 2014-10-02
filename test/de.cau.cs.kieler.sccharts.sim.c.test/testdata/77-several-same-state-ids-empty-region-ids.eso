@@ -1,0 +1,20 @@
+! reset;
+
+% Output: 
+;
+
+% Output: O3 O2 
+;
+
+% Output: 
+;
+! reset;
+I 
+% Output: 
+;
+I 
+% Output: O O3 O2 
+;
+I 
+% Output: 
+;

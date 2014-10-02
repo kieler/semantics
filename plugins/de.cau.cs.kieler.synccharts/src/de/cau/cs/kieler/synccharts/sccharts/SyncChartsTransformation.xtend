@@ -132,10 +132,13 @@ class SyncChartsTransformation {
 
         // Start transformation with the single root state (= the SyncChart)        
         val syncRootState = syncRootRegion.states.get(0)
+        rootState.id = syncRootState.id.correctId
+        
+        
         syncRootState.transform(rootState)
         
         // Now create transitions and actions
-        val syncStates = syncRootState.eAllContents.filter(typeof(State)).toList.immutableCopy
+        val syncStates = syncRootState.eAllContents.filter(typeof(State)).toList
         for (syncState : syncStates) {
             syncState.transformTransitionsAndActions()
         }
@@ -151,6 +154,7 @@ class SyncChartsTransformation {
             val targetState = syncTransition.targetState.state
             val sourceState = syncTransition.sourceState.state
             val transition = sourceState.createTransitionTo(targetState)
+            
             transition.map(syncTransition)
             transition.setDelay(syncTransition.delay)
             transition.setImmediate(syncTransition.isImmediate)
@@ -162,6 +166,10 @@ class SyncChartsTransformation {
                 val synchartsTrigger = syncTransition.trigger
                 val scchartsTrigger = synchartsTrigger.transformExpression;
                 transition.setTrigger(scchartsTrigger)
+            } else {
+                if (transition.delay > 1) {
+                    transition.setTrigger(TRUE)
+                }
             }
             for (syncEffect : syncTransition.effects) {
                   transition.addEffect(syncEffect.transformEffect)
@@ -172,6 +180,29 @@ class SyncChartsTransformation {
             else if (syncTransition.type == TransitionType::STRONGABORT) {
                 transition.setTypeStrongAbort
             }
+        }
+        syncState.transformSuperstateActions
+    }
+    
+    def void transformSuperstateActions(State syncState) {
+        for(action : syncState.entryActions) {
+            val entryAction = syncState.state.createEntryAction
+            if (action.trigger != null) entryAction.trigger = action.trigger.transformExpression
+            action.effects.forEach[ entryAction.effects += it.transformEffect ]
+        }
+        for(action : syncState.innerActions) {
+            val duringAction = syncState.state.createDuringAction
+            if (action.trigger != null) duringAction.trigger = action.trigger.transformExpression
+            action.effects.forEach[ duringAction.effects += it.transformEffect ]
+        }
+        for(action : syncState.exitActions) {
+            val exitAction = syncState.state.createExitAction
+            if (action.trigger != null) exitAction.trigger = action.trigger.transformExpression
+            action.effects.forEach[ exitAction.effects += it.transformEffect ]
+        }
+        if (syncState.suspensionTrigger != null) {
+            val suspendAction = syncState.state.createSuspendAction
+            suspendAction.trigger = syncState.suspensionTrigger.trigger.transformExpression
         }
     }
 
@@ -253,7 +284,7 @@ class SyncChartsTransformation {
             region.setLabel(syncRegion.label)
         }
         for (syncState : syncRegion.states) {
-            syncState.transform(state)
+            syncState.transform(region)
         }
     }
     

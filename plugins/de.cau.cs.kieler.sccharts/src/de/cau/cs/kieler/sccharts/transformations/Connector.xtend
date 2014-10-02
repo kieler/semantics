@@ -39,12 +39,16 @@ class Connector {
     // Turn every connector into a simple state and turn all outgoing 
     // transitions into immediate transitions.
     def State transform(State rootState) {
-        var targetRootState = rootState.fixAllPriorities;
+        val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetTransition : targetRootState.allStates) {
-            targetTransition.transformConnector(targetRootState);
-        }
+        targetRootState.allStates.forEach [targetTransition | 
+             targetTransition.transformConnector(targetRootState);
+        ]
+            
+//        for (targetTransition : targetRootState.allStates) {
+//            targetTransition.transformConnector(targetRootState);
+//        }
 
         targetRootState.fixAllTextualOrdersByPriorities;
     }

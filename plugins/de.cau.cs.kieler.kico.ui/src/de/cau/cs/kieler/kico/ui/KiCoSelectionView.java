@@ -173,7 +173,7 @@ public class KiCoSelectionView extends DiagramViewPart {
      * @param iViewer
      *            the new view context
      */
-    public void setViewContext(final IViewer<?> iViewer) {
+    public void setViewContext(final IViewer iViewer) {
         this.getViewer().getContextViewer().setModel(iViewer);
     }
 
@@ -1118,7 +1118,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                 }
 
                 if (allExpanded) {
-                    final IViewer<?> viewer = thisPart.getViewer();
+                    final IViewer viewer = thisPart.getViewer();
                     for (EObject k : Iterables.filter(
                             Iterables2.toIterable(viewer.getViewContext().getViewModel()
                                     .eAllContents()), new Predicate<EObject>() {

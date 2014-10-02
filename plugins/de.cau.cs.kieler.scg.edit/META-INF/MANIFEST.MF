@@ -8,10 +8,7 @@ Bundle-Activator: de.cau.cs.kieler.scg.provider.ScgEditPlugin$Implementation
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.cau.cs.kieler.scg.provider,
- de.cau.cs.kieler.scgsched.provider,
- de.cau.cs.kieler.scgbb.provider,
- de.cau.cs.kieler.scgdep.provider
+Export-Package: de.cau.cs.kieler.scg.provider
 Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.scg;visibility:=reexport,
  de.cau.cs.kieler.scg.edit;visibility:=reexport,

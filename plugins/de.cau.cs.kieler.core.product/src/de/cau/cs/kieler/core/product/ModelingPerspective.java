@@ -43,6 +43,7 @@ public class ModelingPerspective implements IPerspectiveFactory {
     private static final String VIEW_KIEM = "de.cau.cs.kieler.sim.kiem.view"; //$NON-NLS-1$
     private static final String VIEW_KIEM_TABLE = "de.cau.cs.kieler.sim.table.view"; //$NON-NLS-1$
     private static final String VIEW_KITS = "de.cau.cs.kieler.synccharts.synchronizer.kitsView"; //$NON-NLS-1$
+    private static final String VIEW_KICO = "de.cau.cs.kieler.kico.klighd.view"; //$NON-NLS-1$
 
     /* IDs of New-Wizards */
     private static final String WIZ_SYNCCHART = "de.cau.cs.kieler.synccharts.diagram.part.SyncchartsCreationWizardID"; //$NON-NLS-1$
@@ -135,6 +136,7 @@ public class ModelingPerspective implements IPerspectiveFactory {
         addViewIfExists(bottom, VIEW_KIML_LAYOUT);
         addViewIfExists(bottom, VIEW_KIEM);
         addViewIfExists(bottom, VIEW_KITS);
+        addViewIfExists(bottom, VIEW_KICO);
 
         layout.setEditorAreaVisible(true);
     }

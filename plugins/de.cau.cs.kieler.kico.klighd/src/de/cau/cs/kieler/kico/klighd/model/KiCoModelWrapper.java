@@ -15,6 +15,8 @@ package de.cau.cs.kieler.kico.klighd.model;
 
 /**
  * @author als
+ * @kieler.design 2014-07-30 proposed
+ * @kieler.rating 2014-07-30 proposed yellow
  *
  */
 public class KiCoModelWrapper {

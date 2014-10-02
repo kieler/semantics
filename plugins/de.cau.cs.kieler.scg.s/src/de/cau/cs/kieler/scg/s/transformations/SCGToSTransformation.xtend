@@ -27,7 +27,6 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
 import java.util.HashMap
 import java.util.List
 
@@ -48,9 +47,6 @@ class SCGToSTransformation {
     
     @Inject
     extension KExpressionsExtension
-    
-    @Inject
-    extension SCGExtensions
 
     @Inject
     extension SExtension
@@ -58,9 +54,11 @@ class SCGToSTransformation {
     private static val GOGUARDNAME = "_GO"
     
     private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>
-    private val processedNodes = <Node> newArrayList
+    private val valuedObjectCache = <String, ValuedObject> newHashMap
+    private val processedNodes = <Node, Boolean> newHashMap
     
-    private val nodeList = <Node> newArrayList
+    private val nodeList = <Node> newLinkedList
+    private val nodeInstructionMap = <Node, List<Instruction>> newHashMap
     
 	def Program transformSCGToS(SCGraph scg) {
 		val Program sProgram = SFactory::eINSTANCE.createProgram
@@ -69,18 +67,18 @@ class SCGToSTransformation {
 		
         val timestamp = System.currentTimeMillis
           
-//        for(typeGroup : scg.typeGroups) {
-//            val newTypeGroup = createTypeGroup(typeGroup)
-            for (valuedObject : scg.valuedObjects) {
-//                val newValuedObject = createValuedObject(valuedObject.name).setTypeBool
-                val newValuedObject = valuedObject.copy
-                newValuedObject.applyAttributes(valuedObject)
-            	sProgram.valuedObjects.add(newValuedObject)
-	            valuedObjectMapping.put(valuedObject, newValuedObject)
-            }
-//            sProgram.typeGroups += newTypeGroup 
-//        }		
-				
+        for (declaration : scg.declarations) {
+        	val newDeclaration = createDeclaration => [ setType(declaration.type) ]
+        	sProgram.declarations += newDeclaration
+	        for (valuedObject : declaration.valuedObjects) {
+    	        val newValuedObject = valuedObject.copy
+        	    newValuedObject.applyAttributes(valuedObject)
+          		newDeclaration.valuedObjects += newValuedObject
+            	valuedObjectMapping.put(valuedObject, newValuedObject)
+            	valuedObjectCache.put(newValuedObject.name, newValuedObject)
+        	}
+        }
+        
         var time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Preparation for S transformation finished (time used: "+(time / 1000)+"s).")  
         
@@ -88,14 +86,19 @@ class SCGToSTransformation {
             name = "Tick"
             sProgram.states += it
         ]
+        val instructionCache = <Instruction> newLinkedList
         
-		nodeList += scg.nodes.head
+        nodeList += scg.nodes.head
+		nodeInstructionMap.put(scg.nodes.head, instructionCache)
 		
 		while(!nodeList.empty) {
 			val node = nodeList.head
+			val instructionList = nodeInstructionMap.get(node)
+			node.transform(instructionList)
 			nodeList.remove(0)
-			node.transform(tickState.instructions)
+			nodeInstructionMap.remove(node)
 		}
+		tickState.instructions += instructionCache
 		
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("S transformation finished (time used overall: "+(time / 1000)+"s).")  
@@ -104,16 +107,19 @@ class SCGToSTransformation {
 	}
 	
 	private def dispatch void transform(Entry entry, List<Instruction> instructions) {
-	   processedNodes += entry
-	   if (entry.next != null) nodeList += entry.next.target 
+       if (processedNodes.get(entry) != null) return;
+	   processedNodes.put(entry, true)
+	   if (entry.next != null) {
+	       entry.next.target.addNode(instructions)
+       } 
 	}
 
     private def dispatch void transform(Exit exit, List<Instruction> instructions) {
     }
 	
 	private def dispatch void transform(Assignment assignment, List<Instruction> instructions) {
-	    if (processedNodes.contains(assignment)) return;
-        processedNodes += assignment
+	    if (processedNodes.get(assignment) != null) return;
+        processedNodes.put(assignment, true)
         
         if (assignment.valuedObject != null && assignment.assignment != null) {
 	    	val sAssignment = SFactory::eINSTANCE.createAssignment
@@ -132,27 +138,31 @@ class SCGToSTransformation {
     	    instructions += sAssignment
     	}
 	    
-	    if (assignment.next != null) assignment.next.target.transform(instructions)
+	    if (assignment.next != null) {
+	        assignment.next.target.addNode(instructions)
+        }
 	}
 	
 	private def dispatch void transform(Conditional conditional, List<Instruction> instructions) {
-        processedNodes += conditional
+        if (processedNodes.get(conditional) != null) return;
+        processedNodes.put(conditional, true)
         
         val sIf = SFactory::eINSTANCE.createIf
         sIf.expression = conditional.condition.copyExpression
         instructions += sIf
         
-        if (conditional.^else != null) conditional.^else.target.transform(instructions)     
-        if (conditional.then != null) conditional.then.target.transform(sIf.instructions)        
+        if (conditional.^else != null) {
+            conditional.^else.target.addNode(instructions)
+        }     
+        if (conditional.then != null) {
+            conditional.then.target.addNode(sIf.instructions)
+        }
+//        if (conditional.then != null) conditional.then.target.transform(sIf.instructions)        
+//        if (conditional.^else != null) conditional.^else.target.transform(sIf.instructions)     
 	}
 	
 	def ValuedObject findValuedObjectByName(Program s, String name) {
-	    for (valuedObject : s.valuedObjects) {
-	        if (valuedObject.name.equals(name)) {
-	            return valuedObject
-	        }
-	    }
-   		return null
+   		return valuedObjectCache.get(name)
     }    
     
     def ValuedObject getValuedObjectCopy(ValuedObject valuedObject) {
@@ -176,6 +186,11 @@ class SCGToSTransformation {
         
         // Return the new expression.
         newExpression
+    }
+    
+    def addNode(Node node, List<Instruction> instructionList) {
+        nodeList += node
+        nodeInstructionMap.put(node, instructionList)
     }
 	
 }

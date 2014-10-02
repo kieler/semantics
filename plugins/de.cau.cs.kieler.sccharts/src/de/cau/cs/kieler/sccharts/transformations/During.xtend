@@ -20,7 +20,6 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.kexpressions.Expression
 
 /**
  * SCCharts During Transformation.
@@ -45,17 +44,17 @@ class During {
     //-------------------------------------------------------------------------
     // Transforming During Actions.
     def State transform(State rootState) {
-        val targetRootRegion = rootState.fixAllPriorities;
+        val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootRegion.getAllStates) {
-            targetState.transformDuring(targetRootRegion);
-        }
-        targetRootRegion;//.fixAllTextualOrdersByPriorities;
+        targetRootState.getAllStates.toList.forEach[ targetState |
+            targetState.transformDuring(targetRootState);
+        ]
+        targetRootState;//.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform macro states that have actions to transform
-    def void transformDuring(State state, State targetRootRegion) {
+    def void transformDuring(State state, State targetRootState) {
 
         // DURING ACTIONS : 
         // For each action create a separate region in the state. 
@@ -79,18 +78,17 @@ class During {
             // If the state has outgoing terminations, we need to finalize the during
             // actions in case we end the states over these transitions
             if (hasOutgoingTerminations) {
-               state.transformDuringEx(targetRootRegion)
+               state.transformDuringComplexFinalStates(targetRootState)
             } else {
-               state.transformDuringSimple(targetRootRegion)
+               state.transformDuringSimple(targetRootState)
             }
             
           }
     }
             
-    // Traverse all states and transform macro states that have actions to transform
+    // Traverse all simple states or super states w/o outgoing terminations that have actions to 
+    // transform
     def void transformDuringSimple(State state, State targetRootRegion) {
-            
-            
             
             // Create the body of the dummy state - containing the during action
             // For every during action: Create a region
@@ -120,8 +118,41 @@ class During {
     }
     
     
+    // Traverse all super states with outgoing terminations that have actions to transform. 
+    // This default implementation will create / use a complex final state
+    def void transformDuringComplexFinalStates(State state, State targetRootRegion) {
+            
+            // Create the body of the dummy state - containing the during action
+            // For every during action: Create a region
+            for (duringAction : state.duringActions.immutableCopy) {
+                val immediateDuringAction = duringAction.isImmediate
+                val region = state.createRegion(GENERATED_PREFIX + "During").uniqueName
+                val initialState = region.createInitialState(GENERATED_PREFIX + "I")
+                val finalState = region.createFinalState(GENERATED_PREFIX + "F");
+                val transition1 = initialState.createTransitionTo(finalState)
+                transition1.setDelay(duringAction.delay);
+                transition1.setImmediate(immediateDuringAction);
+                transition1.setTrigger(duringAction.trigger.copy);
+                if (immediateDuringAction) {
+                    for (action : duringAction.effects) {
+                        transition1.addEffect(action.copy);
+                    }
+                }
+                val transition2 = finalState.createTransitionTo(finalState)
+                transition2.setImmediate(false);
+                for (action : duringAction.effects) {
+                    transition2.addEffect(action.copy);
+                }
+
+                // After transforming during actions, erase them
+                state.localActions.remove(duringAction)
+            }
+    }
+        
     
-    // Traverse all states and transform macro states that have actions to transform
+    
+    // Traverse all super states with outgoing terminations that have actions to transform. 
+    // This alternative implementation will create a main region to detect termination
     def void transformDuringEx(State state, State targetRootRegion) {
 
         // DURING ACTIONS : 

@@ -1,0 +1,83 @@
+scchart tcint_debug02 {
+  output signal pure R;
+  output signal pure U;
+  input signal pure D;
+  signal pure T1;
+
+  region main:
+
+  state S10 "10";
+
+  final state S6 "6";
+
+  state StatementList47state {
+
+    region R0:
+
+    state Trap48state {
+      signal pure T2;
+      signal pure haltTrap48;
+
+      region R0:
+
+      state S24 "24";
+
+      final state S20 "20";
+
+      state ParallelStatementList49state {
+
+        region R0:
+
+        initial state init0 "I"
+        --> S54 immediate;
+
+        state S54 "54"
+        --> S83 with D / T2;
+
+        state S83 "83";
+
+        region R1:
+
+        initial state init1 "I"
+        --> ParallelStatementList60state immediate / R;
+
+        state ParallelStatementList60state {
+
+          region R0:
+
+          initial state init2 "I"
+          --> S140 immediate;
+
+          state S140 "140"
+          --> S168 / T1; haltTrap48;
+
+          state S168 "168";
+
+          region R1:
+
+          initial state init3 "I"
+          --> S202 immediate;
+
+          final state S202 "202";
+        };
+      }
+      --> S24 immediate with haltTrap48
+      --> S20 immediate with T2;
+
+      initial state init4 "I"
+      --> ParallelStatementList49state immediate;
+    }
+    >-> S280 / U;
+
+    final state S280 "280";
+
+    initial state init5 "I"
+    --> Trap48state immediate;
+  }
+  --> S10 immediate
+  --> S6 immediate with T1
+  >-> S6;
+
+  initial state init6 "I"
+  --> StatementList47state immediate;
+}

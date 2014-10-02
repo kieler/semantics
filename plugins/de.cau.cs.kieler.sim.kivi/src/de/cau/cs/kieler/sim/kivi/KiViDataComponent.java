@@ -51,6 +51,8 @@ import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.impl.KRoundedRectangleImpl;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
+import de.cau.cs.kieler.kico.KiCoUtil;
+import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.klighd.KiCoModelView;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
 import de.cau.cs.kieler.klighd.ViewContext;
@@ -159,13 +161,20 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                     "Model visualization not shown, cannot visualize simulation.", true, null);
         }
         viewContext = viewPart.getViewer().getViewContext();
-
-        modelRoot = getActiveModel();
-        resource = modelRoot.eResource();
-        if (resource == null) {
-            throw new KiemInitializationException(
-                    "Model is not contained in a resource and cannot be visualized", true, null);
+        
+        Object potentionEObject = viewContext.getInputModel();
+        if (potentionEObject instanceof EObject) {
+            modelRoot = (EObject) potentionEObject;
+        } else {
+            modelRoot = getActiveModel();
         }
+
+        resource = getModelResource(true);
+//        if (resource == null) {
+//            throw new KiemInitializationException(
+//               "Model is not contained in a resource and cannot be visualized", true, null);
+//        }
+        
         stateKey = getProperties()[KIEM_PROPERTY_STATENAME].getValue();
         transitionKey = getProperties()[KIEM_PROPERTY_TRANSITIONNAME].getValue();
         errorStateKey = getProperties()[KIEM_PROPERTY_ERRORSTATENAME].getValue();
@@ -181,7 +190,6 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
             throw new KiemInitializationException(
                     "Can't find wrapper for State Activity Data Component", true, null);
         }
-        refreshEObjectMap();
     }
 
     // --------------------------------------------------------------------------
@@ -246,6 +254,26 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
     }
 
     // --------------------------------------------------------------------------
+    
+    Resource getModelResource(boolean force) {
+        if (resource != null && !force) {
+            return resource;
+        }
+        resource = modelRoot.eResource();
+        if (resource == null) { // || resource.getURI() == null) {
+                // We try to create a dummy resource
+                // Create a dummy resource by calling serialization (this creates a dummy
+                // resource on the fly)
+                 @SuppressWarnings("unused")
+                 KielerCompilerContext context = new KielerCompilerContext("");
+                 String discard = KiCoUtil.serialize(modelRoot, context, true);
+                 resource = context.getMainResource();
+        }
+        refreshEObjectMap();
+        return resource;
+    }
+
+    // --------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -273,7 +301,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                         String[] states = stateString.replaceAll("\\s", "").split(",");
                         for (String state : states) {
                             if (state.length() > 1) {
-                                EObject active = resource.getEObject(state);
+                                EObject active = getModelResource(false).getEObject(state);
                                 if (active == null) {
                                     // try alternative (compact) representation
                                     active = getEObject(state);
@@ -291,7 +319,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                         String[] transitions = transitionString.replaceAll("\\s", "").split(",");
                         for (String transition : transitions) {
                             if (transition.length() > 1) {
-                                EObject active = resource.getEObject(transition);
+                                EObject active = getModelResource(false).getEObject(transition);
                                 if (active == null) {
                                     // try alternative (compact) representation
                                     active = getEObject(transition);
@@ -311,7 +339,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                         String[] states = stateString.replaceAll("\\s", "").split(",");
                         for (String state : states) {
                             if (state.length() > 1) {
-                                EObject errorState = resource.getEObject(state);
+                                EObject errorState = getModelResource(false).getEObject(state);
                                 if (errorState == null) {
                                     // try alternative (compact) representation
                                     errorState = getEObject(state);
@@ -331,7 +359,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                         String[] transitions = transitionString.replaceAll("\\s", "").split(",");
                         for (String transition : transitions) {
                             if (transition.length() > 1) {
-                                EObject errorState = resource.getEObject(transition);
+                                EObject errorState = getModelResource(false).getEObject(transition);
                                 if (errorState == null) {
                                     // try alternative (compact) representation
                                     errorState = getEObject(transition);
@@ -367,7 +395,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
 
                 }
 
-                LightDiagramServices.layoutDiagram(viewContext);
+                // LightDiagramServices.layoutDiagram(viewContext);
 
                 // !!!//
                 // if (StateActivityTrigger.getInstance() != null) {
@@ -446,32 +474,32 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         });
 
         // Add highlighting for NEW highlighted elements
-        KBackground style1 =
+        final KBackground style1 =
                 KRenderingFactory.eINSTANCE.createKBackground()
                         .setColorsAlphasGradientAngleCopiedFrom(STYLE1);
         style1.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);
         style1.setPropagateToChildren(true);
-        KStyle style2 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
+        final KStyle style2 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
         style2.setProperty(HIGHLIGHTING_MARKER, KiViDataComponent.this);
-        KStyle style3 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
+        final KStyle style3 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
 
         for (final KNode viewElementState : currentStates) {
             final KContainerRendering ren = viewElementState.getData(KContainerRendering.class);
             final boolean flagged = Iterables.any(ren.getStyles(), filter);
             if (!flagged) {
-                ren.getStyles().add(EcoreUtil.copy(style2));
-                ren.getStyles().add(EcoreUtil.copy(style1));
-
                 final KRoundedRectangle kRoundedRectangle =
                         viewElementState.getData(KRoundedRectangleImpl.class);
-                for (KText viewElementStateLabel : Iterables2.toIterable(Iterators.filter(
-                        ren.eAllContents(), KText.class))) {
-                    viewElementStateLabel.getStyles().add(EcoreUtil.copy(style3));
-
-                }
 
                 Display.getDefault().syncExec(new Runnable() {
                     public void run() {
+                        for (KText viewElementStateLabel : Iterables2.toIterable(Iterators.filter(
+                                ren.eAllContents(), KText.class))) {
+                            viewElementStateLabel.getStyles().add(EcoreUtil.copy(style3));
+
+                        }
+                        ren.getStyles().add(EcoreUtil.copy(style2));
+                        ren.getStyles().add(EcoreUtil.copy(style1));
+
                         viewContext.getViewer().scale(viewElementState, 1.0f);
                         for (KNode r : viewElementState.getChildren()) {
                             if (!viewContext.getViewer().isExpanded(r)) {
@@ -537,11 +565,13 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         style2.setPropagateToChildren(true);
         final KStyle style3 = KRenderingFactory.eINSTANCE.createKForeground().setColor(Colors.RED);
 
-        for (final KEdge viewElementTransition : currentTransitions) {
-            final KContainerRendering ren =
-                    viewElementTransition.getData(KContainerRendering.class);
-            Display.getDefault().syncExec(new Runnable() {
-                public void run() {
+        final List<KEdge> currentTransitionsCopy = currentTransitions;
+
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                for (final KEdge viewElementTransition : currentTransitionsCopy) {
+                    final KContainerRendering ren =
+                            viewElementTransition.getData(KContainerRendering.class);
                     final boolean flagged = Iterables.any(ren.getStyles(), filter);
                     if (!flagged) {
                         ren.getStyles().add(EcoreUtil.copy(style2));
@@ -555,8 +585,8 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                         }
                     }
                 }
-            });
-        }
+            }
+        });
 
     }
 
@@ -663,9 +693,13 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
      */
     private void refreshEObjectMap(final EObject baseObj) {
         // Add this item
+        if (baseObj.eResource() == null) {
+            resource = getModelResource(true);
+        }
         String baseObjID = this.getEncodedEObjectId(baseObj);
         if (!eObjectMap.containsKey(baseObjID)) {
             eObjectMap.put(baseObjID, baseObj);
+            System.out.println(baseObjID + ":" + baseObj);
 
             // Add all children
             TreeIterator<EObject> treeIterator = baseObj.eAllContents();

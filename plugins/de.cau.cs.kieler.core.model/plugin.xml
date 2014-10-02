@@ -3,16 +3,6 @@
 <plugin>
    <extension-point id="Validation" name="Validation" schema="schema/Validation.exsd"/>
    <extension-point id="graphicalFrameworkBridges" name="Graphical Framework Bridges" schema="schema/graphicalFrameworkBridges.exsd"/>
-   <extension
-         point="org.eclipse.core.expressions.propertyTesters">
-      <propertyTester
-            class="de.cau.cs.kieler.core.model.EditorTester"
-            id="de.cau.cs.kieler.core.model.editorTester"
-            namespace="de.cau.cs.kieler.core.model"
-            properties="activeEditorIsSupported"
-            type="org.eclipse.ui.IEditorPart">
-      </propertyTester>
-   </extension>
       <extension
          point="org.eclipse.ui.commands">
       <command
@@ -38,13 +28,6 @@
                name="Target Extension"
                optional="false">
          </commandParameter>
-      </command>
-            <command
-            categoryId="org.eclipse.ui.category.edit"
-            defaultHandler="de.cau.cs.kieler.core.model.handlers.ZoomToFitHandler"
-            description="Zoom so that the content fits the whole canvas"
-            id="de.cau.cs.kieler.core.model.zoom"
-            name="Zoom to Fit">
       </command>
    </extension>
    <extension
@@ -98,18 +81,11 @@
             </visibleWhen>
          </command>
       </menuContribution>
-      <menuContribution
-            class="de.cau.cs.kieler.core.model.ui.ValidationMenuContributionFactory"
-            locationURI="menu:de.cau.cs.kieler.core.model.validate">
-      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.startup">
       <startup
             class="de.cau.cs.kieler.core.model.validation.ValidationInformationCollector"></startup>
-      <startup
-            class="de.cau.cs.kieler.core.model.util.ModelErrorHandler">
-      </startup>
    </extension>
 
 </plugin>

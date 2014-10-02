@@ -141,6 +141,105 @@ public interface ScgFactory extends EFactory {
     ControlFlow createControlFlow();
 
     /**
+     * Returns a new object of class '<em>Dependency</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Dependency</em>'.
+     * @generated
+     */
+    Dependency createDependency();
+
+    /**
+     * Returns a new object of class '<em>Absolute Write Read</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Absolute Write Read</em>'.
+     * @generated
+     */
+    AbsoluteWrite_Read createAbsoluteWrite_Read();
+
+    /**
+     * Returns a new object of class '<em>Relative Write Read</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Relative Write Read</em>'.
+     * @generated
+     */
+    RelativeWrite_Read createRelativeWrite_Read();
+
+    /**
+     * Returns a new object of class '<em>Absolute Write Relative Write</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Absolute Write Relative Write</em>'.
+     * @generated
+     */
+    AbsoluteWrite_RelativeWrite createAbsoluteWrite_RelativeWrite();
+
+    /**
+     * Returns a new object of class '<em>Write Write</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Write Write</em>'.
+     * @generated
+     */
+    Write_Write createWrite_Write();
+
+    /**
+     * Returns a new object of class '<em>Basic Block</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Basic Block</em>'.
+     * @generated
+     */
+    BasicBlock createBasicBlock();
+
+    /**
+     * Returns a new object of class '<em>Scheduling Block</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Scheduling Block</em>'.
+     * @generated
+     */
+    SchedulingBlock createSchedulingBlock();
+
+    /**
+     * Returns a new object of class '<em>Predecessor</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Predecessor</em>'.
+     * @generated
+     */
+    Predecessor createPredecessor();
+
+    /**
+     * Returns a new object of class '<em>Schedule</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Schedule</em>'.
+     * @generated
+     */
+    Schedule createSchedule();
+
+    /**
+     * Returns a new object of class '<em>Scheduled Block</em>'.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @return a new object of class '<em>Scheduled Block</em>'.
+     * @generated
+     */
+	ScheduledBlock createScheduledBlock();
+
+				/**
+     * Returns a new object of class '<em>Guard</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Guard</em>'.
+     * @generated
+     */
+    Guard createGuard();
+
+                /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

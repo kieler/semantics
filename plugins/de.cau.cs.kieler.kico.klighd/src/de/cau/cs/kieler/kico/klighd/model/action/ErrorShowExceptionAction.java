@@ -24,6 +24,8 @@ import de.cau.cs.kieler.klighd.IAction;
  * Action to open a ErrorDialog to show additional exception information of KiCoErrorModel.
  * 
  * @author als
+ * @kieler.design 2014-07-30 proposed
+ * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
 public class ErrorShowExceptionAction implements IAction {
@@ -41,9 +43,8 @@ public class ErrorShowExceptionAction implements IAction {
             KiCoErrorModel errorModel = (KiCoErrorModel) inputModel;
             // if exception present show in error dialog
             if (errorModel.getStackTrace() != null) {
-                String reason = errorModel.getReason();                
                 final Status status =
-                        new Status(IStatus.INFO, ID, reason,
+                        new Status(IStatus.INFO, ID, errorModel.getReason(),
                                 new Exception(errorModel.getStackTrace()));
                 ErrorDialog errorDialog =
                         new ErrorDialog(context.getViewContext().getDiagramWorkbenchPart()

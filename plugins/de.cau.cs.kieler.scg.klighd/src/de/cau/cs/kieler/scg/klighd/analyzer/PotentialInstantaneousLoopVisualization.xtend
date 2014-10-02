@@ -17,7 +17,6 @@ import de.cau.cs.kieler.core.krendering.KColor
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
-import de.cau.cs.kieler.scgsched.Analysis
 
 /**
  * This class implements the specific visualization modification for potential instantaneous loop problems.
@@ -48,13 +47,13 @@ class PotentialInstantaneousLoopVisualization implements IAnalysisVisualization 
      * @return Returns the analysis.
      * @override  
      */
-	override Analysis visualize(Analysis analysis, SCGraphDiagramSynthesis synthesis) {
-    	analysis => [
-    		objectReferences.forEach [
-   				synthesis.colorControlFlow(it as ControlFlow, PROBLEM_POTENTIALLOOP_COLOR)
-   				synthesis.thickenControlFlow(it as ControlFlow, PROBLEM_POTENTIALLOOP_WIDTH)
-   			]
-   		]
-	}
+//	override Analysis visualize(Analysis analysis, SCGraphDiagramSynthesis synthesis) {
+//    	analysis => [
+//    		objectReferences.forEach [
+//   				synthesis.colorControlFlow(it as ControlFlow, PROBLEM_POTENTIALLOOP_COLOR)
+//   				synthesis.thickenControlFlow(it as ControlFlow, PROBLEM_POTENTIALLOOP_WIDTH)
+//   			]
+//   		]
+//	}
 	
 }

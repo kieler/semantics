@@ -13,9 +13,13 @@
  */
  package de.cau.cs.kieler.scg.analyzer
 
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.Entry
+import java.util.Set
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import com.google.inject.Inject
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
-import de.cau.cs.kieler.scgsched.ScgschedFactory
+import de.cau.cs.kieler.scg.Surface
 
 /** 
  * This class is part of the SCG transformation chain. In particular analyzers are called by the scheduler
@@ -48,59 +52,94 @@ import de.cau.cs.kieler.scgsched.ScgschedFactory
  */
 class PotentialInstantaneousLoopAnalyzer extends AbstractAnalyzer {
 	
-    // -------------------------------------------------------------------------
-    // -- Injections 
-    // -------------------------------------------------------------------------
-    
-    /** Inject SCG extensions. */
-    @Inject
-	extension SCGExtensions
+	@Inject
+	extension SCGControlFlowExtensions
+	
+	private static val ANALYZERID = "de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoop"
 	
     // -------------------------------------------------------------------------
     // -- Analyzer 
     // -------------------------------------------------------------------------
     
-    /**
-	 * This analyzer checks each node of an SCG for potentially instantaneous loops.
-	 * Therefore, it iterates through the nodes and performs a instantaneous check on 
-	 * the control flow. If the node is able to reach itself without consuming time, 
-	 * a potentially instantaneous loop has been found and is added to the list of problems.
-	 * 
-	 * @param analyzerData
-	 * 			the input data for this analysis
-	 * @return Returns the updated analyzer data structure.
-	 * @override
-	 */
-	override analyze(AnalyzerData analyzerData) {
-		// Create a new result for this analyzer.
-		val potentialInstantaneousLoopResult = new PotentialInstantaneousLoopResult
-		
-		// To test for instantaneous loops the analyzer uses the SCG extensions to 
-		// find potentially instantaneous control flow loops from each node to itself.
-		// For each loop found a new instantaneous loop problem is created.
-		analyzerData.SCG.nodes.forEach[
-			it.instantaneousControlFlows.forEach[ flows |
-				val analysis = ScgschedFactory::eINSTANCE.createAnalysis => [
-    				id = getAnalysisId
-    				objectReferences += flows
-    			]
-				potentialInstantaneousLoopResult.addAnalysis(analysis)
-			]
-		]
-		
-		// Add the result to the analyzer data and return.
-		analyzerData.addResult(potentialInstantaneousLoopResult)
-		analyzerData
-	}
-	
 	/**
 	 * Returns the identifier string of this analysis.
 	 * 
 	 * @returns Returns the identifier string of this analysis.
 	 */
 	override getAnalysisId() {
-		return "PotentialInstantaneousLoop"
+		return ANALYZERID
 	}
+	
+	private def boolean checkInstantaneousLoop(Node node, Set<Node> uncriticalPath, Set<Node> uncertainPath) {
+	    val previousNodes = node.allPrevious.map[ eContainer ].toList
+        val nextNodes = node.allNext.map[ target ].toList
+	    
+	    var uncritical = true
+	    for(pn : nextNodes) {
+	        if (!uncriticalPath.contains(pn)) uncritical = false
+	    }
+	    if (node instanceof Surface) { uncritical = true }
+	    if (!uncritical) {
+            uncritical = true
+            for(pn : previousNodes) {
+                if (!uncriticalPath.contains(pn)) uncritical = false
+            }
+	    }
+	    
+	    if (uncritical) {
+            uncriticalPath += node
+	    } else {
+            uncertainPath += node
+	    }
+	    
+	    for(nn : nextNodes) {
+	        if (!uncriticalPath.contains(nn) && !uncertainPath.contains(nn)) {
+  	            nn.checkInstantaneousLoop(uncriticalPath, uncertainPath)
+            }
+	    }
+	    if (!uncritical) {
+	        uncritical = true
+	        for(pn : nextNodes) {
+                if (!uncriticalPath.contains(pn)) uncritical = false
+            }
+            if (!uncritical) {
+                uncritical = true
+                for(pn : previousNodes) {
+                    if (!uncriticalPath.contains(pn)) uncritical = false
+                }
+            }                         
+            if (uncritical) {
+                uncertainPath.remove(node)
+                uncriticalPath += node               
+            }
+	    }
+	    
+	    if (node instanceof Surface) {
+	        val surface = (node as Surface)
+	        if (surface.depth != null && surface.depth.next != null &&
+	            surface.depth.next.target != null) {
+    	        uncriticalPath += (node as Surface).depth;
+    	        if (surface.depth.next.target != surface) {
+    	           (node as Surface).depth.next.target.checkInstantaneousLoop(uncriticalPath, uncertainPath)
+	           }
+	        }
+	    }
+	    
+	    uncritical
+	}
+    
+    override analyze(SCGraph scg) {
+        val result = new PotentialInstantaneousLoopResult()
+        
+        val uncriticalPath = <Node> newHashSet
+        result.criticalNodes = <Node> newHashSet
+        
+        uncriticalPath += scg.nodes.head;
+        
+        (scg.nodes.head as Entry).next.target.checkInstantaneousLoop(uncriticalPath, result.criticalNodes)
+        
+        result
+    }
 	
 }
 
@@ -113,6 +152,6 @@ class PotentialInstantaneousLoopAnalyzer extends AbstractAnalyzer {
  * @kieler.design 2013-12-02 proposed 
  * @kieler.rating 2013-12-02 proposed yellow
  */
-class PotentialInstantaneousLoopResult extends GenericAnalyzerResult {
-
+class PotentialInstantaneousLoopResult extends AbstractAnalyzerResult {
+    public var Set<Node> criticalNodes = null
 }

@@ -26,6 +26,8 @@ import de.cau.cs.kieler.klighd.IAction;
  * Action to open a Editor containing content of KiCoCodePlaceHolder.
  * 
  * @author als
+ * @kieler.design 2014-07-30 proposed
+ * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
 public class OpenCodeInEditorAction implements IAction {

@@ -10,7 +10,8 @@ Require-Bundle: org.eclipse.core.runtime,
  com.google.inject,
  org.eclipse.emf,
  org.eclipse.xtext,
- org.eclipse.ui;resolution:=optional
+ org.eclipse.ui;resolution:=optional,
+ de.cau.cs.kieler.core
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kico

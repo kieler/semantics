@@ -271,13 +271,6 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.model.xtext"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="de.cau.cs.kieler.kev"
          download-size="0"
          install-size="0"
@@ -587,13 +580,6 @@ litigation.
 
    <plugin
          id="de.cau.cs.kieler.scg.s"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.scg.c"
          download-size="0"
          install-size="0"
          version="0.0.0"

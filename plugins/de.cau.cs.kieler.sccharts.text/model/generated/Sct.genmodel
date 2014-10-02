@@ -7,15 +7,15 @@
     editorPluginID="de.cau.cs.kieler.sccharts.text.editor" runtimeVersion="2.9" usedGenPackages="../../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations ../../../de.cau.cs.kieler.sccharts/model/sccharts.genmodel#//sccharts ../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions">
   <genPackages prefix="Sct" basePackage="de.cau.cs.kieler.sccharts.text.sct" disposableProviderFactory="true"
       ecorePackage="Sct.ecore#/">
+    <genClasses ecoreClass="Sct.ecore#//ImportDecl">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sct.ecore#//ImportDecl/importedType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sct.ecore#//ImportDecl/importedNamespace"/>
+    </genClasses>
     <genClasses ecoreClass="Sct.ecore#//SCChart">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sct.ecore#//SCChart/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sct.ecore#//SCChart/imports"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Sct.ecore#//SCChart/declaration"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sct.ecore#//SCChart/package"/>
-    </genClasses>
-    <genClasses ecoreClass="Sct.ecore#//ImportDecl">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Sct.ecore#//ImportDecl/importedType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sct.ecore#//ImportDecl/importedNamespace"/>
     </genClasses>
     <genClasses ecoreClass="Sct.ecore#//TheRootRegion">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Sct.ecore#//TheRootRegion/package"/>

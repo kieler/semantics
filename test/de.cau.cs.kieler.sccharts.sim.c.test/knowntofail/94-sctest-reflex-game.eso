@@ -1,0 +1,33 @@
+! reset;
+% Output:;
+OnOff % Output: GameOver Display;
+% Output: GameOver Display;
+Coin % Output:;
+Ready % Output:;
+Ms % Output: Go;
+% Output: Go;
+% Output: Go;
+Stop % Output: Display;
+% Output: MeasureDone;
+Ms % Output:;
+% Output: GameOver Display;
+
+! reset;
+% Output:;
+OnOff % Output: GameOver Display;
+% Output: GameOver Display;
+Coin % Output:;
+Ready % Output:;
+OnOff % Output:;
+OnOff % Output: GameOver Display;
+
+! reset;
+% Output:;
+OnOff % Output: GameOver Display;
+% Output: GameOver Display;
+Coin % Output:;
+Ready % Output:;
+Ms % Output: Go ReflexTime;
+% Output: Go;
+Ms Stop % Output: Display;
+% Output: MeasureDone;

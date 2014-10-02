@@ -42,7 +42,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
-import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.s.SCCharts2STransformation;
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension;
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSimulation;
@@ -58,7 +58,7 @@ public class SCChartsSSimulationDataComponent extends JSONObjectSimulationDataCo
         IJSONObjectDataComponent {
 
     /** The SyncChart is the considered model to simulate. */
-    private Region myModel = null;
+    private State myModel = null;
 
     /** The Constant NUMBER_OF_TASKS for model transformation and code generation. */
     private static final int NUMBER_OF_TASKS = 10;
@@ -117,7 +117,7 @@ public class SCChartsSSimulationDataComponent extends JSONObjectSimulationDataCo
     @Override
     public boolean checkModelValidation(final EObject rootEObject)
             throws KiemInitializationException {
-        if (!(rootEObject instanceof Region)) {
+        if (!(rootEObject instanceof State)) {
             throw new KiemInitializationException(
                     "SCCharts Simulator can only be used with a SCCharts editor.\n\n", true,
                     null);
@@ -351,7 +351,7 @@ public class SCChartsSSimulationDataComponent extends JSONObjectSimulationDataCo
 
         try {
             // get active editor
-            myModel = (Region) this.getModelRootElement();
+            myModel = (State) this.getModelRootElement();
 
             if (myModel == null) {
                 throw new KiemInitializationException(
@@ -370,7 +370,7 @@ public class SCChartsSSimulationDataComponent extends JSONObjectSimulationDataCo
             URI sCChartOutput = URI.createURI("");
             URI sOutput = URI.createURI("");
             // By default there is not always an additional transformation necessary
-            Region transformedModel = myModel;
+            State transformedModel = myModel;
 
             // Calculate output path for possible S-m2m
             // FileEditorInput editorInput = (FileEditorInput) editorPart.getEditorInput();

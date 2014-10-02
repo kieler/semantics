@@ -5,7 +5,6 @@ package de.cau.cs.kieler.sccharts.text.sct.sct.impl;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 import de.cau.cs.kieler.sccharts.text.sct.sct.ImportDecl;
-import de.cau.cs.kieler.sccharts.text.sct.sct.SCChart;
 import de.cau.cs.kieler.sccharts.text.sct.sct.SctFactory;
 import de.cau.cs.kieler.sccharts.text.sct.sct.SctPackage;
 
@@ -24,13 +23,6 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  */
 public class SctPackageImpl extends EPackageImpl implements SctPackage
 {
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass scChartEClass = null;
-
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -109,36 +101,6 @@ public class SctPackageImpl extends EPackageImpl implements SctPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getSCChart()
-  {
-    return scChartEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getSCChart_Name()
-  {
-    return (EAttribute)scChartEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSCChart_Imports()
-  {
-    return (EReference)scChartEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getImportDecl()
   {
     return importDeclEClass;
@@ -194,10 +156,6 @@ public class SctPackageImpl extends EPackageImpl implements SctPackage
     isCreated = true;
 
     // Create classes and their features
-    scChartEClass = createEClass(SC_CHART);
-    createEAttribute(scChartEClass, SC_CHART__NAME);
-    createEReference(scChartEClass, SC_CHART__IMPORTS);
-
     importDeclEClass = createEClass(IMPORT_DECL);
     createEReference(importDeclEClass, IMPORT_DECL__IMPORTED_TYPE);
     createEAttribute(importDeclEClass, IMPORT_DECL__IMPORTED_NAMESPACE);
@@ -235,13 +193,8 @@ public class SctPackageImpl extends EPackageImpl implements SctPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    scChartEClass.getESuperTypes().add(theSCChartsPackage.getState());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(scChartEClass, SCChart.class, "SCChart", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getSCChart_Name(), ecorePackage.getEString(), "name", null, 0, 1, SCChart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSCChart_Imports(), this.getImportDecl(), null, "imports", null, 0, -1, SCChart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEClass(importDeclEClass, ImportDecl.class, "ImportDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getImportDecl_ImportedType(), theSCChartsPackage.getState(), null, "importedType", null, 0, 1, ImportDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getImportDecl_ImportedNamespace(), ecorePackage.getEString(), "importedNamespace", null, 0, 1, ImportDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

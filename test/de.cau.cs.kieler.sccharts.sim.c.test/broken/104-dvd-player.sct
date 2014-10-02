@@ -1,0 +1,76 @@
+scchart DVDPlayer {
+  input signal pure POWER;
+  input signal pure EJECT;
+  input signal pure PLAY;
+  input signal pure STOP;
+  input signal pure AUDIO;
+  output signal pure off;
+  output signal pure openedtray;
+  output signal pure on;
+  output signal pure closedtray;
+  output signal pure pause;
+  output signal pure playing;
+  output signal pure stop;
+  output signal pure english;
+  output signal pure german;
+  output signal pure french;
+
+  region _R0:
+
+  initial state Off {
+    during / off;
+  }
+  --> On with POWER;
+
+  state On {
+    during / on;
+
+    region _R0:
+
+    initial state OpenedTray {
+      during / openedtray;
+    }
+    --> ClosedTray immediate with EJECT;
+
+    state ClosedTray {
+      during / closedtray;
+
+      region _R0:
+
+      initial state PAUSE {
+        during / pause;
+      }
+      --> Playing with PLAY;
+
+      state Playing {
+        during / playing;
+      }
+      --> Stop with STOP
+      --> PAUSE with PLAY;
+
+      final state Stop {
+        during / stop;
+      }
+      --> Playing with PLAY;
+
+      region _R1:
+
+      initial state English {
+        during / english;
+      }
+      --> German immediate with AUDIO;
+
+      state German {
+        during / german;
+      }
+      --> French with AUDIO;
+
+      state French {
+        during / french;
+      }
+      --> English with AUDIO;
+    }
+    o-> OpenedTray with EJECT;
+  }
+  o-> Off with POWER;
+}

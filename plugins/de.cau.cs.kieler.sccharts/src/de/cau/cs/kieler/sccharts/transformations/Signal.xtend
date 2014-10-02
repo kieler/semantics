@@ -62,9 +62,9 @@ class Signal {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootState.getAllStates) {
+        targetRootState.getAllStates.forEach[ targetState |
             targetState.transformSignal(targetRootState);
-        }
+        ]
         targetRootState.fixAllTextualOrdersByPriorities;
     }
 
@@ -164,6 +164,7 @@ class Signal {
             // Do not do this for only-input-variables.
             if (!presentVariable.isInput) {
                 val duringAction = state.createDuringAction
+                //duringAction.setTrigger(TRUE) (implicit true)
                 duringAction.createAssignment(presentVariable, FALSE)
                 duringAction.setImmediate(true)
             }

@@ -38,423 +38,6 @@
       </package>
    </extension>
    <extension
-         point="org.eclipse.ui.handlers">
-      <handler
-            class="de.cau.cs.kieler.scg.handlers.SCGraphDependencyModelFileHandler"
-            commandId="de.cau.cs.kieler.scg.commands.SCGToSCGDEPTransformation">
-      </handler>
-      <handler
-            class="de.cau.cs.kieler.scg.handlers.SCGraphBasicBlockModelFileHandler"
-            commandId="de.cau.cs.kieler.scg.commands.SCGDEPToSCGBBTransformation">
-      </handler>
-      <handler
-            class="de.cau.cs.kieler.scg.handlers.SCGraphSchedulingModelFileHandler"
-            commandId="de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation">
-      </handler>
-      <handler
-            class="de.cau.cs.kieler.scg.handlers.SequentialSCGraphModelFileHandler"
-            commandId="de.cau.cs.kieler.scg.commands.SCGSchedToSeqSCGTransformation">
-      </handler>
-      <handler
-            class="de.cau.cs.kieler.scg.handlers.CompleteSCGraphModelFileHandler"
-            commandId="de.cau.cs.kieler.scg.commands.AllSCGTransformations">
-      </handler>
-      <handler
-            class="de.cau.cs.kieler.scg.handlers.SCGraphSchedulingModelFileHandler"
-            commandId="de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation.ClusterScheduler">
-      </handler>
-      <handler
-            class="de.cau.cs.kieler.scg.handlers.SCGraphSchedulingModelFileHandler"
-            commandId="de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation.HybridScheduler">
-      </handler>
-      <handler
-            class="de.cau.cs.kieler.scg.handlers.SCGraphBasicBlockModelFileHandler"
-            commandId="de.cau.cs.kieler.scg.commands.BasicBlockTransformationSCplus">
-      </handler>
-      <handler
-            class="de.cau.cs.kieler.scg.handlers.OptimizerModelFileHandler"
-            commandId="de.cau.cs.kieler.scg.commands.optimizer.copyPropagation">
-      </handler>
-      <handler
-            class="de.cau.cs.kieler.scg.handlers.OptimizerModelFileHandler"
-            commandId="de.cau.cs.kieler.scg.commands.optimizer.unreferencedGuardElimination">
-      </handler>
-   </extension>
-   <extension
-         point="org.eclipse.ui.commands">
-      <category
-            id="de.cau.cs.kieler.scg.commands.category"
-            name="SCG Category">
-      </category>
-      <command
-            categoryId="de.cau.cs.kieler.scg.commands.category"
-            id="de.cau.cs.kieler.scg.commands.SCGToSCGDEPTransformation"
-            name="SCG with Dependency Data">
-      </command>
-      <command
-            categoryId="de.cau.cs.kieler.scg.commands.category"
-            id="de.cau.cs.kieler.scg.commands.SCGDEPToSCGBBTransformation"
-            name="SCG with Basic Block Data">
-      </command>
-      <command
-            categoryId="de.cau.cs.kieler.scg.commands.category"
-            id="de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation"
-            name="SCG with Scheduling Data">
-      </command>
-      <command
-            categoryId="de.cau.cs.kieler.scg.commands.category"
-            id="de.cau.cs.kieler.scg.commands.SCGSchedToSeqSCGTransformation"
-            name="Sequentialized SCG">
-      </command>
-      <command
-            id="de.cau.cs.kieler.scg.commands.AllSCGTransformations"
-            name="All SCG Transformations">
-      </command>
-      <command
-            categoryId="de.cau.cs.kieler.scg.commands.category"
-            id="de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation.ClusterScheduler"
-            name="SCG with Scheduling Data (ClusterScheduler)">
-      </command>
-      <command
-            categoryId="de.cau.cs.kieler.scg.commands.category"
-            id="de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation.HybridScheduler"
-            name="SCG with Scheduling Data (HybridScheduler)">
-      </command>
-      <command
-            categoryId="de.cau.cs.kieler.scg.commands.category"
-            id="de.cau.cs.kieler.scg.commands.BasicBlockTransformationSCplus"
-            name="SCG with Basic Block Data (SC+)">
-      </command>
-      <command
-            categoryId="de.cau.cs.kieler.scg.commands.category"
-            id="de.cau.cs.kieler.scg.commands.optimizer.copyPropagation"
-            name="Optimization - Copy Propagation">
-      </command>
-      <command
-            categoryId="de.cau.cs.kieler.scg.commands.category"
-            id="de.cau.cs.kieler.scg.commands.optimizer.unreferencedGuardElimination"
-            name="Optimization - Unreferenced Guard Elimination">
-      </command>
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
-         <menu
-               id="de.cau.cs.kieler.scg.scgtransformations"
-               label="Transform SCG"
-               mnemonic="T">
-            <separator
-                  name="de.cau.cs.kieler.core.ui.separator1"
-                  visible="true">
-            </separator>
-         </menu>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
-         <command
-               commandId="de.cau.cs.kieler.scg.commands.AllSCGTransformations"
-               id="de.cau.kieler.scg.menus.AllSCGTransformations"
-               label="All SCG Transformations"
-               mnemonic="A"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-               <iterate
-                     ifEmpty="false"
-                     operator="or">
-                  <adapt
-                        type="org.eclipse.core.resources.IFile">
-                     <test
-                           forcePluginActivation="true"
-                           property="org.eclipse.core.resources.extension"
-                           value="scg">
-                     </test>
-                  </adapt>
-               </iterate>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
-         <command
-               commandId="de.cau.cs.kieler.scg.commands.AllSCGTransformations"
-               label="All SCG Transformations"
-               mnemonic="A"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-               <iterate
-                     ifEmpty="false"
-                     operator="or">
-                  <adapt
-                        type="org.eclipse.core.resources.IFile">
-                     <test
-                           forcePluginActivation="true"
-                           property="org.eclipse.core.resources.extension"
-                           value="scgdep">
-                     </test>
-                  </adapt>
-               </iterate>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
-         <command
-               commandId="de.cau.cs.kieler.scg.commands.AllSCGTransformations"
-               label="All SCG Transformations"
-               mnemonic="A"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-               <iterate
-                     ifEmpty="false"
-                     operator="or">
-                  <adapt
-                        type="org.eclipse.core.resources.IFile">
-                     <test
-                           forcePluginActivation="true"
-                           property="org.eclipse.core.resources.extension"
-                           value="scgbb">
-                     </test>
-                  </adapt>
-               </iterate>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
-         <separator
-               name="de.cau.cs.kieler.scg.separator1"
-               visible="true">
-         </separator>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
-         <command
-               commandId="de.cau.cs.kieler.scg.commands.SCGToSCGDEPTransformation"
-               label="SCG with Dependency Data"
-               mnemonic="A"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <adapt
-                        type="org.eclipse.core.resources.IFile">
-                     <test
-                           forcePluginActivation="true"
-                           property="org.eclipse.core.resources.extension"
-                           value="scg">
-                     </test>
-                  </adapt>
-               </iterate>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
-         <command
-               commandId="de.cau.cs.kieler.scg.commands.SCGDEPToSCGBBTransformation"
-               label="SCG with Basic Block Data"
-               mnemonic="A"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <adapt
-                        type="org.eclipse.core.resources.IFile">
-                     <test
-                           forcePluginActivation="true"
-                           property="org.eclipse.core.resources.extension"
-                           value="scgdep">
-                     </test>
-                  </adapt>
-               </iterate>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
-         <command
-               commandId="de.cau.cs.kieler.scg.commands.BasicBlockTransformationSCplus"
-               label="SCG with Basic Block Data (SC+)"
-               mnemonic="A"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <adapt
-                        type="org.eclipse.core.resources.IFile">
-                     <test
-                           forcePluginActivation="true"
-                           property="org.eclipse.core.resources.extension"
-                           value="scgdep">
-                     </test>
-                  </adapt>
-               </iterate>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
-         <command
-               commandId="de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation"
-               label="SCG with Scheduling Data"
-               mnemonic="A"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <adapt
-                        type="org.eclipse.core.resources.IFile">
-                     <test
-                           forcePluginActivation="true"
-                           property="org.eclipse.core.resources.extension"
-                           value="scgbb">
-                     </test>
-                  </adapt>
-               </iterate>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
-         <command
-               commandId="de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation.ClusterScheduler"
-               label="SCG with Scheduling Data (ClusterScheduler)"
-               mnemonic="A"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <adapt
-                        type="org.eclipse.core.resources.IFile">
-                     <test
-                           forcePluginActivation="true"
-                           property="org.eclipse.core.resources.extension"
-                           value="scgbb">
-                     </test>
-                  </adapt>
-               </iterate>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
-         <command
-               commandId="de.cau.cs.kieler.scg.commands.SCGBBTToSCGSCHEDSCGraphTransformation.HybridScheduler"
-               label="SCG with Scheduling Data (HybridScheduler)"
-               mnemonic="A"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <adapt
-                        type="org.eclipse.core.resources.IFile">
-                     <test
-                           forcePluginActivation="true"
-                           property="org.eclipse.core.resources.extension"
-                           value="scgbb">
-                     </test>
-                  </adapt>
-               </iterate>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
-         <command
-               commandId="de.cau.cs.kieler.scg.commands.SCGSchedToSeqSCGTransformation"
-               label="Sequentialized SCG"
-               mnemonic="A"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <adapt
-                        type="org.eclipse.core.resources.IFile">
-                     <test
-                           forcePluginActivation="true"
-                           property="org.eclipse.core.resources.extension"
-                           value="scgsched">
-                     </test>
-                  </adapt>
-               </iterate>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
-         <separator
-               name="de.cau.cs.kieler.scg.separator2"
-               visible="true">
-         </separator>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
-         <command
-               commandId="de.cau.cs.kieler.scg.commands.optimizer.copyPropagation"
-               label="Optimization - Copy Propagation"
-               mnemonic="A"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <adapt
-                        type="org.eclipse.core.resources.IFile">
-                     <test
-                           forcePluginActivation="true"
-                           property="org.eclipse.core.resources.extension"
-                           value="scg">
-                     </test>
-                  </adapt>
-               </iterate>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler.scg.scgtransformations">
-         <command
-               commandId="de.cau.cs.kieler.scg.commands.optimizer.unreferencedGuardElimination"
-               label="Optimization - Unreferenced Guard Elimination"
-               mnemonic="A"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <adapt
-                        type="org.eclipse.core.resources.IFile">
-                     <test
-                           forcePluginActivation="true"
-                           property="org.eclipse.core.resources.extension"
-                           value="scg">
-                     </test>
-                  </adapt>
-               </iterate>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-   </extension>
-   <extension
          point="de.cau.cs.kieler.kico.transformation">
       <transformationMethod
             class="de.cau.cs.kieler.scg.transformations.DependencyTransformation"
@@ -483,39 +66,52 @@
             name="Basic Blocks"
             transformations="SCGBB, SCGBBSCPLUS">
       </transformationGroup>
-      <transformationMethod
-            class="de.cau.cs.kieler.scg.schedulers.SimpleScheduler"
-            dependencies="SCGSEQ"
-            id="SCGSCHEDSIMPLE"
-            method="schedule"
-            name="Simple Scheduler">
-      </transformationMethod>
       <transformationGroup
             alternatives="true"
             id="SCGSCHEDGROUP"
             name="Scheduler"
-            transformations="SCGSCHEDSIMPLE, SCGSCHEDCLUSTER, SCGSCHEDHYBRID">
+            transformations="SCGSCHEDDELAYAWARE, SCGSCHEDSIMPLE, SCGSCHEDTHREADAWARE">
+      </transformationGroup>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.schedulers.SimpleScheduler"
+            dependencies="SCGSEQGROUP"
+            id="SCGSCHEDSIMPLE"
+            method="schedule"
+            name="Simple">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.schedulers.DelayAwareScheduler"
+            dependencies="SCGSEQGROUP"
+            id="SCGSCHEDDELAYAWARE"
+            method="schedule"
+            name="Delay Aware">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.schedulers.ThreadAwareScheduler"
+            dependencies="SCGSEQGROUP"
+            id="SCGSCHEDTHREADAWARE"
+            method="schedule"
+            name="Thread Aware">
+      </transformationMethod>
+      <transformationGroup
+            alternatives="true"
+            id="SCGSEQGROUP"
+            name="Sequentializer"
+            transformations="SCGSEQSIMPLE, SCGSEQHYBRID">
       </transformationGroup>
       <transformationMethod
             class="de.cau.cs.kieler.scg.sequentializer.SimpleSequentializer"
-            dependencies="CODEGENERATION"
-            id="SCGSEQ"
+            dependencies="SCG2S"
+            id="SCGSEQSIMPLE"
             method="sequentialize"
-            name="Sequentializer">
+            name="Simple">
       </transformationMethod>
       <transformationMethod
-            class="de.cau.cs.kieler.scg.schedulers.ClusterScheduler"
-            dependencies="SCGSEQ"
-            id="SCGSCHEDCLUSTER"
-            method="schedule"
-            name="Cluster Scheduler">
-      </transformationMethod>
-      <transformationMethod
-            class="de.cau.cs.kieler.scg.schedulers.HybridScheduler"
-            dependencies="SCGSEQ"
-            id="SCGSCHEDHYBRID"
-            method="schedule"
-            name="Hybrid Scheduler">
+            class="de.cau.cs.kieler.scg.sequentializer.HybridSequentializer"
+            dependencies="SCG2S"
+            id="SCGSEQHYBRID"
+            method="sequentialize"
+            name="Hybrid">
       </transformationMethod>
    </extension>
 

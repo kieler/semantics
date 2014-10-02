@@ -19,7 +19,9 @@ Require-Bundle: org.eclipse.ui,
  com.google.inject,
  org.eclipse.xtend.lib,
  com.google.guava,
- org.eclipse.xtext.xbase.lib
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.emf.ecore.xmi,
+ de.cau.cs.kieler.scg
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 

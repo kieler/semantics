@@ -57,7 +57,9 @@ import de.cau.cs.kieler.sc.SCExecution;
 import de.cau.cs.kieler.sc.SCPlugin;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulation;
+import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulationSCChart;
+import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulationSCG;
+import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.sim.benchmark.Benchmark;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
@@ -239,7 +241,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
         }
         // We conclude at this point that we are not dirty on the level of
         // changes to the diagram
-        return false;
+        return false || (cExecution == null);
     }
 
     // -------------------------------------------------------------------------
@@ -381,7 +383,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-
+    
     /**
      * {@inheritDoc}
      */
@@ -399,22 +401,28 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
      */
     public void doModel2ModelTransform(final ProgressMonitorAdapter monitor, final State model,
             final boolean debug) throws KiemInitializationException {
+        
+        System.out.println("1");
         this.myModel = model;
         monitor.begin("SCCharts Simulation", 1);
+        System.out.println("2");
 
         String compile = "";
         try {
 
+            System.out.println("3");
             if (this.myModel == null) {
                 throw new KiemInitializationException(
                         "Cannot simulate active editor using the SCCharts Simulator", true, null);
             }
+            System.out.println("4");
 
-            if (this.getModelRootElement().eResource() == null) {
-                throw new KiemInitializationException(
-                        "The active editor has must be saved in order to simulate the SCChart."
-                                + " Volatile resources cannot be simulated.", true, null);
-            }
+//            if (this.getModelRootElement().eResource() == null) {
+//                throw new KiemInitializationException(
+//                        "The active editor has must be saved in order to simulate the SCChart."
+//                                + " Volatile resources cannot be simulated.", true, null);
+//            }
+            System.out.println("5");
 
             // Make a copy of the S program in case it was from
             // an active Editor
@@ -426,6 +434,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
             // Calculate output path for possible S-m2m
             String inputPathString = this.getModelFilePath().toString();
+            System.out.println("6 " + inputPathString);
             URI input = URI.createPlatformResourceURI(inputPathString.replace("%20", " "), true);
             sOutput = URI.createURI(input.toString());
 
@@ -435,6 +444,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             String lowLevelTransformations =
                     this.getProperties()[KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS + KIEM_PROPERTY_DIFF]
                             .getValue();
+            System.out.println("7");
 
             // If 'Full Debug Mode' is turned on then the user also wants to have
             // states and transitions visualized.
@@ -446,50 +456,76 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             if (debug) {
                 highLevelTransformations = debugTransformations + ", " + highLevelTransformations;
             }
+            System.out.println("8");
 
             // Compile the SCChart to C code
             EObject extendedSCChart = this.myModel;
+            System.out.println("9");
 
             KielerCompilerContext highLevelContext =
                     new KielerCompilerContext(highLevelTransformations, extendedSCChart);
-            highLevelContext.setCreateDummyResource(true);
+            
+            // Create a dummy resource ONLY for debug visualization, where we need FragmentURIs
+            highLevelContext.setCreateDummyResource(debug);
+            
             highLevelContext.setInplace(false);
             highLevelContext.setPrerequirements(true);
+            System.out.println("10");
             CompilationResult highLeveleCompilationResult =
                     KielerCompiler.compile(highLevelContext);
+            System.out.println("11");
 
-            // The following should be a state
-            State coreSCChart = (State) highLeveleCompilationResult.getEObject();
+            // The following should be a state or an SCG
+            EObject stateOrSCG = highLeveleCompilationResult.getEObject();
 
-            String coreSSChartText = KiCoUtil.serialize(coreSCChart, highLevelContext, false);
-            writeOutputModel("D:\\sschart.sct", coreSSChartText.getBytes());
+            //String coreSSChartText = KiCoUtil.serialize(coreSCChart, highLevelContext, false);
+            //writeOutputModel("D:\\sschart.sct", coreSSChartText.getBytes());
             // System.out.println(coreSSChartText);
 
             KielerCompilerContext lowLevelContext =
-                    new KielerCompilerContext(lowLevelTransformations, coreSCChart);
+                    new KielerCompilerContext(lowLevelTransformations, stateOrSCG);
             lowLevelContext.setCreateDummyResource(true);
             lowLevelContext.setInplace(false);
             lowLevelContext.setPrerequirements(true);
+            System.out.println("12");
             CompilationResult lowLevelCompilationResult = KielerCompiler.compile(lowLevelContext);
+            System.out.println("13");
 
             String cSCChartCCode = lowLevelCompilationResult.getString();
+            System.out.println("14 " + cSCChartCCode);
 
             // Generate Simulation wrapper C code
-            CSimulation transform = Guice.createInjector().getInstance(CSimulation.class);
-            String cSimulation = transform.transform(coreSCChart, "10000").toString();
+            String cSimulation = "";
+            if (stateOrSCG instanceof State) {
+                System.out.println("15");
+                CSimulationSCChart cSimulationSCChart = Guice.createInjector().getInstance(CSimulationSCChart.class);
+                System.out.println("16");
+                cSimulation = cSimulationSCChart.transform((State)stateOrSCG, "10000").toString();
+            }
+            else if (stateOrSCG instanceof SCGraph) {
+                System.out.println("15");
+                CSimulationSCG cSimulationSCG = Guice.createInjector().getInstance(CSimulationSCG.class);
+                System.out.println("16");
+                cSimulation = cSimulationSCG.transform((SCGraph)stateOrSCG, "10000").toString();
+            }
+            System.out.println("17 " + cSimulation);
 
             // Set a random output folder for the compiled files
             String outputFolder = KiemUtil.generateRandomTempOutputFolder();
+            System.out.println("18 " + outputFolder);
 
             String fileNameSCChart = "scchart.c";
             String outputFileSCChart = outputFolder + fileNameSCChart;
+            System.out.println("19 " + outputFileSCChart);
             writeOutputModel(outputFileSCChart, cSCChartCCode.getBytes());
 
             String fileNameSimulation = "simulation.c";
             String outputFileSimulation = outputFolder + fileNameSimulation;
+            System.out.println("20 " + outputFileSimulation);
             writeOutputModel(outputFileSimulation, cSimulation.getBytes());
 
             String includePath = getBundlePath("templates");
+            System.out.println("21 " + includePath);
             System.out.println(includePath);
             // Compile
             cExecution = new CExecution(outputFolder, false);

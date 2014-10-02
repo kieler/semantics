@@ -1,0 +1,67 @@
+scchart grcbal3 {
+  input signal pure A;
+  output signal pure B;
+  output signal pure C;
+  output signal pure D;
+  output signal pure E;
+  output signal pure T;
+  signal pure haltTrap39;
+
+  region R0:
+
+  initial state Initial {
+
+    region R0:
+
+    initial state I0
+    --> C01 immediate;
+
+    state C01
+    --> C02 immediate with A / B
+    --> S2 immediate;
+
+    state C02
+    --> C03 immediate with C / D
+    --> C03 immediate;
+
+    state C03
+    --> S1 immediate with E / T
+    --> S2 immediate;
+
+    state S1;
+
+    state S2
+    --> F0 / B;
+
+    final state F0;
+
+    region R1:
+
+    initial state I1
+    --> C1 immediate;
+
+    state C1
+    --> F1 immediate with B / C
+    --> F1 immediate;
+
+    final state F1;
+
+    region R2:
+
+    initial state I2
+    --> C2 immediate;
+
+    state C2
+    --> F2 immediate with D / E
+    --> F2 immediate;
+
+    final state F2;
+  }
+  --> S3 immediate with haltTrap39
+  --> S4 immediate with T
+  >-> S4;
+
+  state S3;
+
+  state S4;
+}

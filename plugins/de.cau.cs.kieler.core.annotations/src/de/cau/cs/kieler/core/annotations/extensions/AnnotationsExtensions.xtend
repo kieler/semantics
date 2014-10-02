@@ -20,8 +20,8 @@ class AnnotationsExtensions {
 			""
 	}
 
-	def public Annotation add(Annotation annotation, String name, String value) {
-		annotation => [ annotations += name.createStringAnnotation(value) ]
+	def public Annotatable addAnnotation(Annotatable source, String name, String value) {
+		source => [ annotations += name.createStringAnnotation(value) ]
 	}
 	
 	def public Annotation createStringAnnotation(String name, String value) {
