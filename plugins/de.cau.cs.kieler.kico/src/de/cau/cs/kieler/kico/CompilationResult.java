@@ -319,28 +319,6 @@ public class CompilationResult {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the resource extension for an intermediate result. Note that for this method to work
-     * there must be a plugin that uses the extension point de.cau.cs.kieler.kico.extension to
-     * register a resource/file extension for a specific class name that is the (intermediate)
-     * result of one or several performed transformations. If no resource extension is registered
-     * for the class name of the intermediateResult given, then null is returned.
-     * 
-     * @param intermediateResult
-     *            the intermediate result
-     * @return the resource extension
-     */
-    public String getResourceExtension(Object intermediateResult) {
-        HashMap<String, Pair<String, Boolean>> resourceExtensionMap =
-                KiCoPlugin.getInstance().getRegisteredResourceExtensions(false);
-        Pair<String, Boolean> specificExtension =
-                resourceExtensionMap.get(intermediateResult.getClass().getName());
-        if (specificExtension != null) {
-            return specificExtension.getFirst();
-        }
-        return null;
-    }
-
-    /**
      * @return the ancillaryData
      */
     public List<AbstractKielerCompilerAncillaryData> getAncillaryData() {
