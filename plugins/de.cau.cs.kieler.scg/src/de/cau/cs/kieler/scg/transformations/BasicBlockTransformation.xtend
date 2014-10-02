@@ -374,7 +374,7 @@ class BasicBlockTransformation extends Transformation {
  		// Add the guard object.
 //        basicBlock.guard = guard
         // Add all scheduling blocks as described in the introduction of this function.
-        basicBlock.schedulingBlocks += nodeList.createSchedulingBlocks(basicBlock, guard)
+        basicBlock.schedulingBlocks += scg.createSchedulingBlocks(nodeList, basicBlock, guard)
         // Add all predecessors. To do this createPredecessors creates a list with predecessor objects.
         basicBlock.predecessors.addAll(predecessorBlocks.createPredecessors(basicBlock))
         // Add the newly created basic block to the SCG...
@@ -396,7 +396,7 @@ class BasicBlockTransformation extends Transformation {
      * 			the basic block the scheduling block will belong to
      * @return Returns a list of scheduling blocks which will at least contain one block.
      */
-    protected def List<SchedulingBlock> createSchedulingBlocks(List<Node> nodeList, BasicBlock basicBlock, 
+    protected def List<SchedulingBlock> createSchedulingBlocks(SCGraph scg, List<Node> nodeList, BasicBlock basicBlock, 
         ValuedObject guard
     ) {
     	// Create a new list of scheduling blocks.
@@ -410,7 +410,7 @@ class BasicBlockTransformation extends Transformation {
         for (node : nodeList) {
         	// In the first iteration or if we have to split the block...
             if (block == null || 
-                (node.incoming.filter(typeof(Dependency)).filter[it.concurrent&&!it.confluent].size > 0)
+                node.schedulingBlockSplitter
             ) {
             	// ... add the block if it is not the first.
                 if (block != null) schedulingBlocks.add(block)
@@ -435,7 +435,7 @@ class BasicBlockTransformation extends Transformation {
                 // and store a reference of the guard.
                 val newGuard = ScgFactory::eINSTANCE.createGuard
                 newGuard.valuedObject = sbGuard;
-                (basicBlock.eContainer as SCGraph).guards += newGuard
+                scg.guards += newGuard
                 
                 block = ScgFactory::eINSTANCE.createSchedulingBlock()
                 block.guard = newGuard
@@ -450,6 +450,10 @@ class BasicBlockTransformation extends Transformation {
         
         schedulingBlocks
     }
+    
+    protected def boolean schedulingBlockSplitter(Node node) {
+        !node.incoming.filter(typeof(Dependency)).filter[ concurrent && !confluent].empty
+    } 
     
     /**
      * Since predecessor blocks may have additional attributes, a predecessors is identified by its own object.
