@@ -48,6 +48,7 @@ import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
+import de.cau.cs.kieler.scg.synchronizer.SynchronizerData
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -109,6 +110,7 @@ class SimpleSequentializer extends AbstractSequentializer {
     protected var schizophrenicGuardCounter = 0
     protected var Declaration schizoDeclaration = null
     protected var Set<Node> pilData = null
+    protected var SynchronizerData joinData = null
          
                
     // -------------------------------------------------------------------------
@@ -293,7 +295,7 @@ class SimpleSequentializer extends AbstractSequentializer {
         ]
     } 
     
-    protected def addGuardExpression(Assignment assignment, GuardExpression guardExpression, 
+    protected def Assignment addGuardExpression(Assignment assignment, GuardExpression guardExpression, 
         List<ControlFlow> nextControlFlows, SCGraph scg, List<Node> nodeCache
     ) {
         // Create empty expressions if present.
@@ -333,6 +335,7 @@ class SimpleSequentializer extends AbstractSequentializer {
         ]        
         // Then, copy the expression of the guard to the newly created assignment.
         assignment.assignment = guardExpression.expression.copySCGExpression    
+        assignment
     }    
     
     
@@ -402,7 +405,8 @@ class SimpleSequentializer extends AbstractSequentializer {
                  */
                 scheduledBlock.handleSynchronizerBlockGuardExpression(assignment, nextControlFlows, schedule,
                     scg, nodeCache)   
-                if (scheduledBlock.schizophrenic) {
+                
+                if (joinData.synchronizerId == DepthJoinSynchronizer::SYNCHRONIZER_ID) {
                     assignment.assignment = scg.fixSchizophrenicExpression(assignment.assignment)
                 }
             } else {
@@ -492,7 +496,7 @@ class SimpleSequentializer extends AbstractSequentializer {
         List<ControlFlow> nextFlows, Schedule schedule, SCGraph scg,  List<Node> nodeCache
     ) {
         val gExpr = scheduledBlock.schedulingBlock.createSynchronizerBlockGuardExpression(schedule, scg)
-        assignment.addGuardExpression(gExpr, nextFlows, scg, nodeCache)       
+        assignment.addGuardExpression(gExpr, nextFlows, scg, nodeCache)    
     }
     
     protected def GuardExpression createSynchronizerBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
@@ -503,8 +507,8 @@ class SimpleSequentializer extends AbstractSequentializer {
         if (synchronizer.id == DepthJoinSynchronizer::SYNCHRONIZER_ID) {
             (synchronizer as DepthJoinSynchronizer).schizophrenicDeclaration = schizoDeclaration
         }
-        val joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join, compilerContext, schedulingBlockCache)
-
+        joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join, compilerContext, schedulingBlockCache)
+        
         joinData.guardExpression
     }
     

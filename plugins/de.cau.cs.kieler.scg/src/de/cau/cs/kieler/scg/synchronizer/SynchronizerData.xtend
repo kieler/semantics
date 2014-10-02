@@ -34,6 +34,10 @@ import java.util.List
  */
 
 class SynchronizerData {
+    
+    @Property
+    String synchronizerId
+    
 	/** List of predecessors of the join node */
 	@Property
     List<SchedulingBlock> predecessors = <SchedulingBlock> newArrayList

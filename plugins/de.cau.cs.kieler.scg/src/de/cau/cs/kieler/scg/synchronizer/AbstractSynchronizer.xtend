@@ -114,7 +114,7 @@ abstract class AbstractSynchronizer {
     public def SynchronizerData synchronize(Join join, KielerCompilerContext context, Map<Node, SchedulingBlock> schedulingBlockCache) {
         schedulingCache = schedulingBlockCache
         compilerContext = context
-        build(join)
+        build(join) => [ synchronizerId = getId ]
     }    
     
     public def boolean isSynchronizable(Join join) {
