@@ -48,8 +48,8 @@ class BasicBlockTransformationSCplus extends BasicBlockTransformation {
     // -- Transformation methods
     // -------------------------------------------------------------------------
     
-    override boolean schedulingBlockSplitter(Node node) {
-        (!node.incoming.filter(typeof(Dependency)).filter[ concurrent && !confluent].empty) ||
+    override boolean schedulingBlockSplitter(Node node, Node lastNode) {
+        super.schedulingBlockSplitter(node, lastNode) ||
         node.eContents.filter(typeof(Dependency)).filter[ concurrent && !confluent ].empty
     } 
     

@@ -405,12 +405,13 @@ class BasicBlockTransformation extends Transformation {
         // Set the variables of the actual block to null to mark the first iteration.
         var SchedulingBlock block = null
         var ValuedObject sbGuard = null
+        var Node lastNode = null
         
         // Examine each node of the original scheduling block.
         for (node : nodeList) {
         	// In the first iteration or if we have to split the block...
             if (block == null || 
-                node.schedulingBlockSplitter
+                node.schedulingBlockSplitter(lastNode)
             ) {
             	// ... add the block if it is not the first.
                 if (block != null) schedulingBlocks.add(block)
@@ -444,6 +445,7 @@ class BasicBlockTransformation extends Transformation {
             // Add the node to the scheduling block.
             block.nodes.add(node)
             processedNodes.add(node)
+            lastNode = node
         }
         // Finally, add the block to the list, if it is not empty and return the list of blocks.
         if (block != null) schedulingBlocks.add(block)
@@ -451,8 +453,9 @@ class BasicBlockTransformation extends Transformation {
         schedulingBlocks
     }
     
-    protected def boolean schedulingBlockSplitter(Node node) {
-        !node.incoming.filter(typeof(Dependency)).filter[ concurrent && !confluent].empty
+    protected def boolean schedulingBlockSplitter(Node node, Node lastNode) {
+        (!node.incoming.filter(typeof(Dependency)).filter[ concurrent && !confluent].empty) ||
+        (lastNode instanceof Entry)
     } 
     
     /**
