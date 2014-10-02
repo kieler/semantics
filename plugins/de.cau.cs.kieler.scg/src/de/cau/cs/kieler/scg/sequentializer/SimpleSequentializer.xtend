@@ -577,8 +577,12 @@ class SimpleSequentializer extends AbstractSequentializer {
     
     protected def GuardExpression createSubsequentSchedulingBlockGuardExpression(ScheduledBlock scheduledBlock, Schedule schedule, SCGraph scg) {
         new GuardExpression => [
-            valuedObject = scheduledBlock.schedulingBlock.guard.valuedObject
-            expression = scheduledBlock.schedulingBlock.basicBlock.schedulingBlocks.head.guard.valuedObject.reference
+            if (scheduledBlock.schizophrenic && scheduledBlock.schedulingBlock.basicBlock.entryBlock) {
+                expression = FALSE
+            } else {
+                valuedObject = scheduledBlock.schedulingBlock.guard.valuedObject
+                expression = scheduledBlock.schedulingBlock.basicBlock.schedulingBlocks.head.guard.valuedObject.reference
+            }
         ]
     }
     
