@@ -51,6 +51,8 @@ import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.impl.KRoundedRectangleImpl;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
+import de.cau.cs.kieler.kico.KiCoUtil;
+import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.klighd.KiCoModelView;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
 import de.cau.cs.kieler.klighd.ViewContext;
@@ -159,12 +161,27 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                     "Model visualization not shown, cannot visualize simulation.", true, null);
         }
         viewContext = viewPart.getViewer().getViewContext();
-
-        modelRoot = getActiveModel();
+        
+        Object potentionEObject = viewContext.getInputModel();
+        if (potentionEObject instanceof EObject) {
+            modelRoot = (EObject) potentionEObject;
+        } else {
+            modelRoot = getActiveModel();
+        }
         resource = modelRoot.eResource();
         if (resource == null) {
-            throw new KiemInitializationException(
-                    "Model is not contained in a resource and cannot be visualized", true, null);
+            try {
+                // We try to create a dummy resource
+                // Create a dummy resource by calling serialization (this creates a dummy
+                // resource on the fly)
+                 @SuppressWarnings("unused")
+                 KielerCompilerContext context = new KielerCompilerContext("");
+                 String discard = KiCoUtil.serialize(modelRoot, context, true);
+                 resource = context.getMainResource();
+            } catch (Exception e) {
+                throw new KiemInitializationException(
+                        "Model is not contained in a resource and cannot be visualized", true, null);
+            }
         }
         stateKey = getProperties()[KIEM_PROPERTY_STATENAME].getValue();
         transitionKey = getProperties()[KIEM_PROPERTY_TRANSITIONNAME].getValue();

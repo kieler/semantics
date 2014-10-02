@@ -417,11 +417,11 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             }
             System.out.println("4");
 
-            if (this.getModelRootElement().eResource() == null) {
-                throw new KiemInitializationException(
-                        "The active editor has must be saved in order to simulate the SCChart."
-                                + " Volatile resources cannot be simulated.", true, null);
-            }
+//            if (this.getModelRootElement().eResource() == null) {
+//                throw new KiemInitializationException(
+//                        "The active editor has must be saved in order to simulate the SCChart."
+//                                + " Volatile resources cannot be simulated.", true, null);
+//            }
             System.out.println("5");
 
             // Make a copy of the S program in case it was from
