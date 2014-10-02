@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.ILogListener;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
@@ -68,6 +69,7 @@ import com.google.common.collect.Maps;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.model.util.ModelUtil;
+import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KielerCompilerException;
@@ -88,6 +90,7 @@ import de.cau.cs.kieler.klighd.internal.ISynthesis;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
  * Singleton instance of DiagramViewPart to display any model
@@ -111,12 +114,13 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
     /** Viewer ID **/
     public static final String ID = "de.cau.cs.kieler.kico.klighd.view";
+    private static final IPath modelViewPath = new Path(ID);
 
     /**
      * Indicates how long this view should wait before starting REAL asynchronous compilation. This
      * timer makes the common case faster (without intermediate model)
      */
-    public static final int waitForAsync = 500;
+    private static final int waitForAsync = 500;
 
     /** Secondary ID of this view. Indicates a non primary view */
     private String secondaryID;
@@ -207,7 +211,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     private IEditorPart activeEditor;
 
     /** Stores all last saved files for active editors */
-    private WeakHashMap<IEditorPart, IFile> lastSavedFiles = new WeakHashMap<IEditorPart, IFile>();
+    private IFile lastSavedFile = null;
 
     // Error handling
     
@@ -216,6 +220,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     // Visual
     
     private Composite warningMessageContainer = null;
+    
 
     // -- Constructor and Initialization
     // -------------------------------------------------------------------------
@@ -601,8 +606,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
             // Configure dialog
 
-            if (lastSavedFiles.containsKey(activeEditor)) {
-                IFile lastSavedFile = lastSavedFiles.get(activeEditor);
+            if (lastSavedFile != null) {
                 IPath path = lastSavedFile.getFullPath();
                 // remove filename
                 path = path.removeLastSegments(1);
@@ -626,7 +630,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 URI uri = URI.createPlatformResourceURI(path.toString(), false);
 
                 // register as last save
-                lastSavedFiles.put(activeEditor, file);
+                lastSavedFile = file;
 
                 // refresh workspace to prevent out of sync with filesystem
                 if (file.exists()) {
@@ -675,12 +679,14 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             if (filename.contains(".")) {
                 filename = filename.substring(0, filename.lastIndexOf('.'));
             }
-            // TODO add correct file extension
-            // if (currentModel instanceof EObject) {
-            // filename = "." + ModelUtil.getFileExtension((EObject) currentModel);
-            // } else if (currentModel instanceof CompilationResult) {
-            // filename = "." + ((CompilationResult) currentModel).getFileExtension();
-            // }
+            // Adding file extension
+            HashMap<String, Pair<String, Boolean>> resourceExtensionMap =
+                    KiCoPlugin.getInstance().getRegisteredResourceExtensions(false);
+            Pair<String, Boolean> specificExtension =
+                    resourceExtensionMap.get(currentModel.getClass().getName());
+            if (specificExtension != null) {
+                filename += specificExtension.getFirst();
+            }
             return filename;
         }
         return "";
@@ -1073,6 +1079,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
                 // Give model synthesis access to the compilation result
                 properties.setProperty(KiCoKLighDProperties.COMPILATION_RESULT, compilationResult);
+                publishCurrentModelInformation(model);
 
                 // the (re)initialization case
                 DiagramViewManager.initializeView(this, model, null, properties);
@@ -1082,6 +1089,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             } else {
                 // Give model synthesis access to the compilation result
                 vc.setProperty(KiCoKLighDProperties.COMPILATION_RESULT, compilationResult);
+                publishCurrentModelInformation(model);
                 // update case (keeps options and sidebar)
                 DiagramViewManager.updateView(this.getViewer().getViewContext(), model);
             }
@@ -1128,6 +1136,28 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             }
         } finally {
             Platform.removeLogListener(this);
+        }
+    }
+
+    /**
+     * Publishes information about the currently displayed model.
+     * 
+     * @param model
+     */
+    private void publishCurrentModelInformation(final Object model) {
+        if (isPrimaryView()) {
+            boolean is_placeholder =
+                    model instanceof KiCoErrorModel || model instanceof KiCoMessageModel
+                            || model instanceof KiCoCodePlaceHolder;
+            boolean is_chain = model instanceof KiCoModelChain;
+            // Inform KIEM about current model
+            if (model != null && !is_placeholder && !is_chain) {
+                KiemPlugin.getOpenedModelRootObjects().put(modelViewPath, (EObject) model);
+                KiemPlugin.setCurrentModelFile(modelViewPath);
+            } else {
+                KiemPlugin.getOpenedModelRootObjects().put(modelViewPath, null);
+                KiemPlugin.setCurrentModelFile(modelViewPath);
+            }
         }
     }
 
