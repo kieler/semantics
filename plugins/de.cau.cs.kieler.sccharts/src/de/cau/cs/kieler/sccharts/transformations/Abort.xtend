@@ -191,9 +191,14 @@ class Abort {
 
                     // Create a ctrlTransition in the ctrlRegion
                     val ctrlTransition = runState.createTransitionTo(doneState)
+                    if (transition.immediate2) {
+                        // if the transition was immediate then set the ctrl transition to be immediate
+                        ctrlTransition.setImmediate(true)
+                    }
+                    
                     if (transition.typeTermination) {
                         if (transition.trigger != null) {
-                            ctrlTransition.setTrigger(terminationTrigger.copy.and(transition.trigger))
+                           ctrlTransition.setTrigger(terminationTrigger.copy.and(transition.trigger))
                         } else {
                             ctrlTransition.setTrigger(terminationTrigger.copy)
                         }
@@ -201,11 +206,6 @@ class Abort {
                         ctrlTransition.setTrigger(transition.trigger)
                     }
 
-                    // ATTENTION: Test for ctrlTransition.immediate2 because transition's trigger has already been moved to ctrlTransition!!!
-                    ctrlTransition.setImmediate(transition.immediate)
-                    if (ctrlTransition.immediate2) {
-                        ctrlTransition.setImmediate(true)
-                    }
                     ctrlTransition.addEffect(transitionTriggerVariable.assign(TRUE))
                 }
 
@@ -216,22 +216,27 @@ class Abort {
                 setTypeConnector
             state.createTransitionTo(outgoingConnectorState).setTypeTermination
             
+            // Be careful to NOT create a trigger for the LAST (lowest priorized) outgoing transition from a connector, this must
+            // be the DEFAULT transition that has NO trigger ***
+            val defaultTransition = outgoingTransitions.last
+            
             for (transition : outgoingTransitions) {
 
                 // Modify the outgoing transition
                 transition.setSourceState(outgoingConnectorState)
 
-                // Get the _transitionTrigger that was created earlier
-                val transitionTriggerVariable = transitionTriggerVariableMapping.get(transition)
-                if (transitionTriggerVariable != null) {
-                    transition.setTrigger2(transitionTriggerVariable.reference)
-                } else {
-
-                    // Fall back to this case when we did not create a trigger variable
-                    // because there where NO strong or weak aborts but one or more triggered
-                    // normal termination transitions.
-                    transition.setTrigger2(transition.trigger)
-                }
+                if (transition != defaultTransition) {
+                  // Get the _transitionTrigger that was created earlier
+                  val transitionTriggerVariable = transitionTriggerVariableMapping.get(transition)
+                  if (transitionTriggerVariable != null) {
+                      transition.setTrigger2(transitionTriggerVariable.reference)
+                  } else {
+                      // Fall back to this case when we did not create a trigger variable
+                      // because there where NO strong or weak aborts but one or more triggered
+                      // normal termination transitions.
+                      transition.setTrigger2(transition.trigger)
+                  }
+                } 
 
                 transition.setTypeWeakAbort
             }
