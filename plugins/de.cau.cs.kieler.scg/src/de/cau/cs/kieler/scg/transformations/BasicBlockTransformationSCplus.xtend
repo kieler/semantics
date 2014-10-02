@@ -20,6 +20,8 @@ import de.cau.cs.kieler.scg.SchedulingBlock
 import java.util.List
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.Node
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -56,7 +58,7 @@ class BasicBlockTransformationSCplus extends BasicBlockTransformation {
      * 			the basic block the scheduling block will belong to
      * @return Returns a list of scheduling blocks which will at least contain one block.
      */
-    override def List<SchedulingBlock> splitSchedulingBlock(SchedulingBlock schedulingBlock, BasicBlock basicBlock, 
+    override def List<SchedulingBlock> createSchedulingBlocks(List<Node> nodeList, BasicBlock basicBlock, 
         ValuedObject guard
     ) {
         // Create a new list of scheduling blocks.
@@ -67,7 +69,7 @@ class BasicBlockTransformationSCplus extends BasicBlockTransformation {
         var ValuedObject sbGuard = null
         
         // Examine each node of the original scheduling block.
-        for (node : schedulingBlock.nodes) {
+        for (node : nodeList) {
             // In the first iteration or if we have to split the block...
             if (block == null || 
                 (node.incoming.filter(typeof(Dependency)).filter[ concurrent&&!confluent ].size > 0) ||
@@ -94,8 +96,12 @@ class BasicBlockTransformationSCplus extends BasicBlockTransformation {
                 }
                 // Create a new scheduling block, add all incoming dependencies of the node to the block for caching purposes
                 // and store a reference of the guard.
+                val newGuard = ScgFactory::eINSTANCE.createGuard
+                newGuard.valuedObject = sbGuard;
+                (basicBlock.eContainer as SCGraph).guards += newGuard
+                
                 block = ScgFactory::eINSTANCE.createSchedulingBlock()
-                block.guard = sbGuard
+                block.guard = newGuard
                 block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))
             }
             // Add the node to the scheduling block.

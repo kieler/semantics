@@ -32,29 +32,29 @@ package de.cau.cs.kieler.core.annotations;
  */
 public interface ImportAnnotation extends Annotation {
     /**
-	 * Returns the value of the '<em><b>Import URI</b></em>' attribute.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Import URI</b></em>' attribute.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Import URI</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Import URI</em>' attribute.
-	 * @see #setImportURI(String)
-	 * @see de.cau.cs.kieler.core.annotations.AnnotationsPackage#getImportAnnotation_ImportURI()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Import URI</em>' attribute.
+     * @see #setImportURI(String)
+     * @see de.cau.cs.kieler.core.annotations.AnnotationsPackage#getImportAnnotation_ImportURI()
+     * @model
+     * @generated
+     */
     String getImportURI();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.core.annotations.ImportAnnotation#getImportURI <em>Import URI</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.core.annotations.ImportAnnotation#getImportURI <em>Import URI</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Import URI</em>' attribute.
-	 * @see #getImportURI()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Import URI</em>' attribute.
+     * @see #getImportURI()
+     * @generated
+     */
     void setImportURI(String value);
 
 } // ImportAnnotation
