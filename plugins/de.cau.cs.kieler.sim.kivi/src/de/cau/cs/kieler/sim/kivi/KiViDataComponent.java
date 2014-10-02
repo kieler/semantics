@@ -168,21 +168,13 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         } else {
             modelRoot = getActiveModel();
         }
-        resource = modelRoot.eResource();
-        if (resource == null) {
-            try {
-                // We try to create a dummy resource
-                // Create a dummy resource by calling serialization (this creates a dummy
-                // resource on the fly)
-                 @SuppressWarnings("unused")
-                 KielerCompilerContext context = new KielerCompilerContext("");
-                 String discard = KiCoUtil.serialize(modelRoot, context, true);
-                 resource = context.getMainResource();
-            } catch (Exception e) {
-                throw new KiemInitializationException(
-                        "Model is not contained in a resource and cannot be visualized", true, null);
-            }
-        }
+
+        resource = getModelResource(true);
+//        if (resource == null) {
+//            throw new KiemInitializationException(
+//               "Model is not contained in a resource and cannot be visualized", true, null);
+//        }
+        
         stateKey = getProperties()[KIEM_PROPERTY_STATENAME].getValue();
         transitionKey = getProperties()[KIEM_PROPERTY_TRANSITIONNAME].getValue();
         errorStateKey = getProperties()[KIEM_PROPERTY_ERRORSTATENAME].getValue();
@@ -198,7 +190,6 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
             throw new KiemInitializationException(
                     "Can't find wrapper for State Activity Data Component", true, null);
         }
-        refreshEObjectMap();
     }
 
     // --------------------------------------------------------------------------
@@ -263,6 +254,26 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
     }
 
     // --------------------------------------------------------------------------
+    
+    Resource getModelResource(boolean force) {
+        if (resource != null && !force) {
+            return resource;
+        }
+        resource = modelRoot.eResource();
+        if (resource == null) { // || resource.getURI() == null) {
+                // We try to create a dummy resource
+                // Create a dummy resource by calling serialization (this creates a dummy
+                // resource on the fly)
+                 @SuppressWarnings("unused")
+                 KielerCompilerContext context = new KielerCompilerContext("");
+                 String discard = KiCoUtil.serialize(modelRoot, context, true);
+                 resource = context.getMainResource();
+        }
+        refreshEObjectMap();
+        return resource;
+    }
+
+    // --------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -290,7 +301,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                         String[] states = stateString.replaceAll("\\s", "").split(",");
                         for (String state : states) {
                             if (state.length() > 1) {
-                                EObject active = resource.getEObject(state);
+                                EObject active = getModelResource(false).getEObject(state);
                                 if (active == null) {
                                     // try alternative (compact) representation
                                     active = getEObject(state);
@@ -308,7 +319,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                         String[] transitions = transitionString.replaceAll("\\s", "").split(",");
                         for (String transition : transitions) {
                             if (transition.length() > 1) {
-                                EObject active = resource.getEObject(transition);
+                                EObject active = getModelResource(false).getEObject(transition);
                                 if (active == null) {
                                     // try alternative (compact) representation
                                     active = getEObject(transition);
@@ -328,7 +339,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                         String[] states = stateString.replaceAll("\\s", "").split(",");
                         for (String state : states) {
                             if (state.length() > 1) {
-                                EObject errorState = resource.getEObject(state);
+                                EObject errorState = getModelResource(false).getEObject(state);
                                 if (errorState == null) {
                                     // try alternative (compact) representation
                                     errorState = getEObject(state);
@@ -348,7 +359,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                         String[] transitions = transitionString.replaceAll("\\s", "").split(",");
                         for (String transition : transitions) {
                             if (transition.length() > 1) {
-                                EObject errorState = resource.getEObject(transition);
+                                EObject errorState = getModelResource(false).getEObject(transition);
                                 if (errorState == null) {
                                     // try alternative (compact) representation
                                     errorState = getEObject(transition);
@@ -682,9 +693,13 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
      */
     private void refreshEObjectMap(final EObject baseObj) {
         // Add this item
+        if (baseObj.eResource() == null) {
+            resource = getModelResource(true);
+        }
         String baseObjID = this.getEncodedEObjectId(baseObj);
         if (!eObjectMap.containsKey(baseObjID)) {
             eObjectMap.put(baseObjID, baseObj);
+            System.out.println(baseObjID + ":" + baseObj);
 
             // Add all children
             TreeIterator<EObject> treeIterator = baseObj.eAllContents();

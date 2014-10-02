@@ -325,17 +325,15 @@ class Abort {
                 // Build up weak and strong abort triggers
                 var Expression strongAbortTrigger = null;
                 var Expression weakAbortTrigger = null;
+                var strongAbortImmediate = false;
+                var weakAbortImmediate = false;
                 for (transition : outgoingTransitions) {
-
-                    // Create a new _transitionTrigger valuedObject
-                    val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
-                        GENERATED_PREFIX + "trig").setTypeBool.uniqueNameCached(nameCache)
-                    state.createEntryAction.addEffect(transitionTriggerVariable.assign(FALSE))
-                    transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
                     if (transition.typeStrongAbort) {
-                        strongAbortTrigger = strongAbortTrigger.or2(transitionTriggerVariable.reference)
+                        strongAbortTrigger = strongAbortTrigger.or2(transition.trigger.copy)
+                        strongAbortImmediate = strongAbortImmediate || transition.immediate
                     } else if (transition.typeWeakAbort) {
-                        weakAbortTrigger = weakAbortTrigger.or2(transitionTriggerVariable.reference)
+                        weakAbortTrigger = weakAbortTrigger.or2(transition.trigger.copy)
+                        weakAbortImmediate = weakAbortImmediate || transition.immediate
                     }
                 }
 
@@ -381,7 +379,7 @@ class Abort {
                                 }
                                 strongAbort.setPriority(0)
                                 strongAbort.setTrigger(strongAbortTrigger.copy)
-                                strongAbort.setImmediate
+                                strongAbort.setImmediate(strongAbortImmediate)
                             }
                             if (weakAbortTrigger != null) {
 // The following line is responsible for KISEMA 925 to fail                                 
@@ -396,7 +394,7 @@ class Abort {
                                 // Why is the solution to make all new aborting transitions being immediate? The reason for short is that immediate cycles are forbidden and
                                 // once the control rests (which is hence the consequence of forbidding immediate cycles) in one of the states, the new immediate (weak)
                                 // aborting transition will be taken, although it has a lower priority than any other existing transitions.
-                                weakAbort.setImmediate;
+                                weakAbort.setImmediate(weakAbortImmediate)
                             }
                         }
                     }
@@ -407,10 +405,6 @@ class Abort {
                 }
 
                 for (transition : outgoingTransitions) {
-
-                    // Get the _transitionTrigger that was created earlier
-                    val transitionTriggerVariable = transitionTriggerVariableMapping.get(transition)
-
                     // Create a ctrlTransition in the ctrlRegion
                     val ctrlTransition = runState.createTransitionTo(doneState)
                     if (transition.immediate2) {
@@ -420,15 +414,13 @@ class Abort {
                     
                     if (transition.typeTermination) {
                         if (transition.trigger != null) {
-                           ctrlTransition.setTrigger(terminationTrigger.copy.and(transition.trigger))
+                           ctrlTransition.setTrigger(terminationTrigger.copy.and(transition.trigger.copy))
                         } else {
                             ctrlTransition.setTrigger(terminationTrigger.copy)
                         }
                     } else {
-                        ctrlTransition.setTrigger(transition.trigger)
+                        ctrlTransition.setTrigger(transition.trigger.copy)
                     }
-
-                    ctrlTransition.addEffect(transitionTriggerVariable.assign(TRUE))
                 }
 
             }
@@ -448,16 +440,8 @@ class Abort {
                 transition.setSourceState(outgoingConnectorState)
 
                 if (transition != defaultTransition) {
-                  // Get the _transitionTrigger that was created earlier
-                  val transitionTriggerVariable = transitionTriggerVariableMapping.get(transition)
-                  if (transitionTriggerVariable != null) {
-                      transition.setTrigger2(transitionTriggerVariable.reference)
-                  } else {
-                      // Fall back to this case when we did not create a trigger variable
-                      // because there where NO strong or weak aborts but one or more triggered
-                      // normal termination transitions.
+                      // Take the original trigger here (before for the actual ABORT in the main region take a copy, also for the watcher take a copy
                       transition.setTrigger2(transition.trigger)
-                  }
                 } 
 
                 transition.setTypeWeakAbort
