@@ -104,9 +104,10 @@ class Abort {
 
                 // Build up weak and strong abort triggers
                 var Expression strongAbortTrigger = null;
+                var strongImmediateTrigger = false;
                 var Expression weakAbortTrigger = null;
+                var weakImmediateTrigger = false;
                 for (transition : outgoingTransitions) {
-
                     // Create a new _transitionTrigger valuedObject
                     val transitionTriggerVariable = state.parentRegion.parentState.createVariable(
                         GENERATED_PREFIX + "trig").setTypeBool.uniqueNameCached(nameCache)
@@ -114,8 +115,10 @@ class Abort {
                     transitionTriggerVariableMapping.put(transition, transitionTriggerVariable)
                     if (transition.typeStrongAbort) {
                         strongAbortTrigger = strongAbortTrigger.or2(transitionTriggerVariable.reference)
+                        strongImmediateTrigger = strongImmediateTrigger || transition.immediate2
                     } else if (transition.typeWeakAbort) {
                         weakAbortTrigger = weakAbortTrigger.or2(transitionTriggerVariable.reference)
+                        weakImmediateTrigger = weakImmediateTrigger || transition.immediate2
                     }
                 }
 
@@ -161,7 +164,7 @@ class Abort {
                                 }
                                 strongAbort.setPriority(0)
                                 strongAbort.setTrigger(strongAbortTrigger.copy)
-                                strongAbort.setImmediate
+                                strongAbort.setImmediate(strongImmediateTrigger)
                             }
                             if (weakAbortTrigger != null) {
 // The following line is responsible for KISEMA 925 to fail                                 
@@ -170,13 +173,11 @@ class Abort {
                                 val weakAbort = innerState.createTransitionTo(abortedState)
                                 weakAbort.setTrigger(weakAbortTrigger.copy)
                                 weakAbort.setLowestPriority;
-                                // MUST be immediate: Otherwise new aborting transition may never be
-                                // taken (e.g., in cyclic behavior like during actions)
-                                //
-                                // Why is the solution to make all new aborting transitions being immediate? The reason for short is that immediate cycles are forbidden and
-                                // once the control rests (which is hence the consequence of forbidding immediate cycles) in one of the states, the new immediate (weak)
-                                // aborting transition will be taken, although it has a lower priority than any other existing transitions.
-                                weakAbort.setImmediate;
+                                
+                                // The following comment seems obsolete
+                                // ?MUST be immediate: Otherwise new aborting transition may never be
+                                // ?taken (e.g., in cyclic behavior like during actions)
+                                weakAbort.setImmediate(weakImmediateTrigger);
                             }
                         }
                     }
