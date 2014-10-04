@@ -308,6 +308,7 @@ class Abort {
 
         val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))
 
+
         //        if (state.hierarchical && stateHasUntransformedAborts && state.label != "WaitAandB") {
         if ((state.hasInnerStatesOrRegions || state.hasInnerActions) && stateHasUntransformedTransitions) { // && state.label != "WaitAB") {
             val transitionTriggerVariableMapping = new HashMap<Transition, ValuedObject>
@@ -316,24 +317,43 @@ class Abort {
             val outgoingTransitions = state.outgoingTransitions.immutableCopy
             val regions = state.regions2.immutableCopy
 
+            // Only create a control region in the WTO case if there is at least one conditional termination
+            // or a delayed termination
+            val notCoreTerminations = outgoingTransitions.filter[e|(e.typeTermination && (!(e.immediate2) || (e.trigger != null)))]
+            val needCtrlRegion = notCoreTerminations.size > 0
+ 
             // .. || stateHasUntransformedTransitions : for conditional terminations!
             if (stateHasUntransformedAborts || stateHasUntransformedTransitions) {
-                val ctrlRegion = state.createRegion(GENERATED_PREFIX + "Ctrl").uniqueNameCached(nameCache)
-                val runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueNameCached(nameCache)
-                val doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueNameCached(nameCache)
+            
+                // Only create a control region in the WTO case if there is at least one conditional termination
+                // or a delayed termination
+                var State doneState
+                var State runState    
+                if (needCtrlRegion) {
+                    val ctrlRegion = state.createRegion(GENERATED_PREFIX + "Ctrl").uniqueNameCached(nameCache)
+                    runState = ctrlRegion.createInitialState(GENERATED_PREFIX + "Run").uniqueNameCached(nameCache)
+                    doneState = ctrlRegion.createFinalState(GENERATED_PREFIX + "Done").uniqueNameCached(nameCache)
+                }
+                
 
                 // Build up weak and strong abort triggers
-                var Expression strongAbortTrigger = null;
-                var Expression weakAbortTrigger = null;
-                var strongAbortImmediate = false;
-                var weakAbortImmediate = false;
+                var Expression strongAbortImmediateTrigger = null;
+                var Expression strongAbortDelayedTrigger = null;
+                var Expression weakAbortImmediateTrigger = null;
+                var Expression weakAbortDelayedTrigger = null;
                 for (transition : outgoingTransitions) {
                     if (transition.typeStrongAbort) {
-                        strongAbortTrigger = strongAbortTrigger.or2(transition.trigger.copy)
-                        strongAbortImmediate = strongAbortImmediate || transition.immediate
+                        if (transition.immediate2) {
+                            strongAbortImmediateTrigger = strongAbortImmediateTrigger.or2(transition.trigger.copy)
+                        }   else {
+                            strongAbortDelayedTrigger = strongAbortDelayedTrigger.or2(transition.trigger.copy)
+                        }                     
                     } else if (transition.typeWeakAbort) {
-                        weakAbortTrigger = weakAbortTrigger.or2(transition.trigger.copy)
-                        weakAbortImmediate = weakAbortImmediate || transition.immediate
+                        if (transition.immediate2) {
+                            weakAbortImmediateTrigger = weakAbortImmediateTrigger.or2(transition.trigger.copy)
+                        } else {
+                            weakAbortDelayedTrigger = weakAbortDelayedTrigger.or2(transition.trigger.copy)
+                        }
                     }
                 }
 
@@ -341,8 +361,8 @@ class Abort {
 
                 // Decides whether a _TERM signal and the necessary _Run, _Done state is needed
                 // OPTIMIZATION
-                val terminationHandlingNeeded = !outgoingTransitions.filter[typeTermination].nullOrEmpty
-
+                val terminationHandlingNeeded = needCtrlRegion
+                
                 // For each region encapsulate it into a _Main state and add a _Term variable
                 // also to the terminationTrigger
                 for (region : regions) {
@@ -365,36 +385,33 @@ class Abort {
                     val abortedState = region.retrieveFinalState(GENERATED_PREFIX + "Aborted").uniqueNameCached(nameCache)
                     for (innerState : region.states.filter[!final]) {
                         if (innerState != abortedState) {
-                            if (strongAbortTrigger != null) {
+                            if (strongAbortImmediateTrigger != null) {
                                 val strongAbort = innerState.createTransitionTo(abortedState, 0)
                                 if (innerState.hasInnerStatesOrRegions || innerState.hasInnerActions) {
-
-                                    // HERE DIFFERENCE TO ABORT2()
-                                    // We mark the transition as strong abort and handle
-                                    // it later when transforming this hierarchical state.
-                                    // This leads to more variables but avoids more transitions.
                                     strongAbort.setTypeStrongAbort
-
-                                // END OF DIFFERENCE
                                 }
                                 strongAbort.setPriority(0)
-                                strongAbort.setTrigger(strongAbortTrigger.copy)
-                                strongAbort.setImmediate(strongAbortImmediate)
+                                strongAbort.setTrigger(strongAbortImmediateTrigger.copy)
+                                strongAbort.setImmediate(true)
                             }
-                            if (weakAbortTrigger != null) {
-// The following line is responsible for KISEMA 925 to fail                                 
-//                                val weakAbort = innerState.createTransitionTo(abortedState) 
-//                                val weakAbort = innerState.createTransitionTo(abortedState, 0)
+                            if (strongAbortDelayedTrigger != null) {
+                                val strongAbort = innerState.createTransitionTo(abortedState, 0)
+                                if (innerState.hasInnerStatesOrRegions || innerState.hasInnerActions) {
+                                    strongAbort.setTypeStrongAbort
+                                }
+                                strongAbort.setPriority(0)
+                                strongAbort.setTrigger(strongAbortDelayedTrigger.copy)
+                            }
+                            if (weakAbortImmediateTrigger != null) {
                                 val weakAbort = innerState.createTransitionTo(abortedState)
-                                weakAbort.setTrigger(weakAbortTrigger.copy)
+                                weakAbort.setTrigger(weakAbortImmediateTrigger.copy)
                                 weakAbort.setLowestPriority;
-                                // MUST be immediate: Otherwise new aborting transition may never be
-                                // taken (e.g., in cyclic behavior like during actions)
-                                //
-                                // Why is the solution to make all new aborting transitions being immediate? The reason for short is that immediate cycles are forbidden and
-                                // once the control rests (which is hence the consequence of forbidding immediate cycles) in one of the states, the new immediate (weak)
-                                // aborting transition will be taken, although it has a lower priority than any other existing transitions.
-                                weakAbort.setImmediate(weakAbortImmediate)
+                                weakAbort.setImmediate(true)
+                            }
+                            if (weakAbortDelayedTrigger != null) {
+                                val weakAbort = innerState.createTransitionTo(abortedState)
+                                weakAbort.setTrigger(weakAbortDelayedTrigger.copy)
+                                weakAbort.setLowestPriority;
                             }
                         }
                     }
@@ -404,22 +421,27 @@ class Abort {
                     terminationTrigger = TRUE;
                 }
 
+                // Only consider termination transitions here, in the WTO version
+                // we do not need a ctrlRegion iff there are no conditional terminations or
+                // delayed terminations
                 for (transition : outgoingTransitions) {
-                    // Create a ctrlTransition in the ctrlRegion
-                    val ctrlTransition = runState.createTransitionTo(doneState)
-                    if (transition.immediate2) {
-                        // if the transition was immediate then set the ctrl transition to be immediate
-                        ctrlTransition.setImmediate(true)
-                    }
-                    
-                    if (transition.typeTermination) {
-                        if (transition.trigger != null) {
-                           ctrlTransition.setTrigger(terminationTrigger.copy.and(transition.trigger.copy))
-                        } else {
-                            ctrlTransition.setTrigger(terminationTrigger.copy)
+                    if (transition.typeTermination && (!(transition.immediate2) || (transition.trigger != null))) {
+                        // Create a ctrlTransition in the ctrlRegion
+                        val ctrlTransition = runState.createTransitionTo(doneState)
+                        if (transition.immediate2) {
+                            // if the transition was immediate then set the ctrl transition to be immediate
+                            ctrlTransition.setImmediate(true)
                         }
-                    } else {
-                        ctrlTransition.setTrigger(transition.trigger.copy)
+                    
+                        if (transition.typeTermination) {
+                            if (transition.trigger != null) {
+                               ctrlTransition.setTrigger(terminationTrigger.copy.and(transition.trigger.copy))
+                            } else {
+                                ctrlTransition.setTrigger(terminationTrigger.copy)
+                            }
+                        } else {
+                            ctrlTransition.setTrigger(transition.trigger.copy)
+                        }
                     }
                 }
 
