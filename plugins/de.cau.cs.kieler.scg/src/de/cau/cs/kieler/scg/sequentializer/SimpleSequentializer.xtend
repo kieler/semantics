@@ -406,7 +406,7 @@ class SimpleSequentializer extends AbstractSequentializer {
                 scheduledBlock.handleSynchronizerBlockGuardExpression(assignment, nextControlFlows, schedule,
                     scg, nodeCache)   
                 
-                if (joinData.synchronizerId == DepthJoinSynchronizer::SYNCHRONIZER_ID &&
+                if (joinData.synchronizerId == DepthJoinSynchronizer::SYNCHRONIZER_ID ||
                 	scheduledBlock.schizophrenic
                 ) {
                     assignment.assignment = scg.fixSchizophrenicExpression(assignment.assignment)
