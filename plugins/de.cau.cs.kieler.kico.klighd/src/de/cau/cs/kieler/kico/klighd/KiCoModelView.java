@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.kico.klighd;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.WeakHashMap;
@@ -209,9 +210,6 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
     /** Active related editor */
     private IEditorPart activeEditor;
-
-    /** Stores all last saved files for active editors */
-    private IFile lastSavedFile = null;
 
     // Error handling
     
@@ -606,13 +604,23 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
             // Configure dialog
 
-            if (lastSavedFile != null) {
-                IPath path = lastSavedFile.getFullPath();
-                // remove filename
-                path = path.removeLastSegments(1);
+            IPath lastDir = null;
+            try {
+                String lastDirString = KiCoKLighDPlugin.getLastDir();
+                lastDir = new Path(lastDirString);
+            } catch(Exception e){
+                lastDir = null;
+            }
+            if (lastDir != null) {
+                IPath path = lastDir;
                 // add new filename
                 path = path.append(filename);
-                saveAsDialog.setOriginalFile(root.getFile(path));
+                try{
+                    saveAsDialog.setOriginalFile(root.getFile(path));
+                } catch(Exception e) {
+                    // In case of any path error
+                    saveAsDialog.setOriginalName(filename);
+                }
             } else {
                 saveAsDialog.setOriginalName(filename);
             }
@@ -630,7 +638,10 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 URI uri = URI.createPlatformResourceURI(path.toString(), false);
 
                 // register as last save
-                lastSavedFile = file;
+                IPath lastPath = file.getFullPath();
+                // remove filename to just store the path
+                lastPath = lastPath.removeLastSegments(1);
+                KiCoKLighDPlugin.setLastDir(lastPath.toString());
 
                 // refresh workspace to prevent out of sync with filesystem
                 if (file.exists()) {
