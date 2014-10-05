@@ -104,7 +104,9 @@ class Abort {
 
                 // Build up weak and strong abort triggers
                 var Expression strongAbortTrigger = null;
-                var strongImmediateTrigger = false;
+                // FIXME: This is a temporary set to TRUE but it should be set to FALSE to help the compiler
+                // currently this breaks a lot of SCGs downstream, we should work on this issue! Email to SSM 5.10.14 
+                var strongImmediateTrigger = true; 
                 var Expression weakAbortTrigger = null;
                 var weakImmediateTrigger = true; // weak aborts need always to be --> immediate AbortComplexityWeak2.sct
                 for (transition : outgoingTransitions) {
