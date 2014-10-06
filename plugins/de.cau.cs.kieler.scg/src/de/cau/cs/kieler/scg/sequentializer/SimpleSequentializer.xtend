@@ -504,14 +504,14 @@ class SimpleSequentializer extends AbstractSequentializer {
     protected def GuardExpression createSynchronizerBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
         // The simple scheduler uses the SurfaceSynchronizer. 
         // The result of the synchronizer is stored in the synchronizerData class joinData.
-        val synchronizer = (schedulingBlock.nodes.head as Join).getSynchronizer
-        System.out.println("Sequentializing join with " + synchronizer.id)
-        if (synchronizer.id == DepthJoinSynchronizer::SYNCHRONIZER_ID) {
-            (synchronizer as DepthJoinSynchronizer).schizophrenicDeclaration = schizoDeclaration
-        }
-        joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join, compilerContext, schedulingBlockCache)
-        
-        joinData.guardExpression
+//        val synchronizer = (schedulingBlock.nodes.head as Join).getSynchronizer
+//        System.out.println("Sequentializing join with " + synchronizer.id)
+//        if (synchronizer.id == DepthJoinSynchronizer::SYNCHRONIZER_ID) {
+//            (synchronizer as DepthJoinSynchronizer).schizophrenicDeclaration = schizoDeclaration
+//        }
+//        joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join, compilerContext, schedulingBlockCache)
+//        
+//        joinData.guardExpression
     }
     
     

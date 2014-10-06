@@ -37,6 +37,8 @@ import de.cau.cs.kieler.kico.AbstractKielerCompilerAncillaryData
 import java.util.List
 import de.cau.cs.kieler.scg.BasicBlock
 import java.util.Set
+import de.cau.cs.kieler.scg.Guard
+import de.cau.cs.kieler.scg.SCGraph
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -113,7 +115,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 	 * @return
 	 * 		Returns a {@code SynchronizerData} class including all mandatory data for the scheduler.
 	 */  
-    override protected SynchronizerData build(Join join) {
+    override protected build(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
     	// Create a new SynchronizerData class which holds the data to return.
         var data = new SynchronizerData() => [ setJoin(join) ]
 		
@@ -375,30 +377,30 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         synchronizable
     }
     
-    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
-    	List<AbstractKielerCompilerAncillaryData> ancillaryData) {
-        val excludeSet = <Predecessor> newHashSet
-
-        val predecessors = schedulingBlockCache.get(join).basicBlock.predecessors.toSet
-        
-        var delayFound = false
-        for(entry:join.getEntryNodes) {
-            val t = entry.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2 
-            if (t != ThreadPathType::INSTANTANEOUS) {
-                delayFound = true
-            } else {
-                excludeSet += predecessors.filter[ it.basicBlock == schedulingBlockCache.get(entry.exit).basicBlock ]
-            }
-        }
-       
-        if (!delayFound) { 
-            excludeSet.clear
-        }
-        return excludeSet
-    }
-    
-	override getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, List<AbstractKielerCompilerAncillaryData> ancillaryData) {
-		<Predecessor> newHashSet
-	}    
+//    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
+//    	List<AbstractKielerCompilerAncillaryData> ancillaryData) {
+//        val excludeSet = <Predecessor> newHashSet
+//
+//        val predecessors = schedulingBlockCache.get(join).basicBlock.predecessors.toSet
+//        
+//        var delayFound = false
+//        for(entry:join.getEntryNodes) {
+//            val t = entry.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2 
+//            if (t != ThreadPathType::INSTANTANEOUS) {
+//                delayFound = true
+//            } else {
+//                excludeSet += predecessors.filter[ it.basicBlock == schedulingBlockCache.get(entry.exit).basicBlock ]
+//            }
+//        }
+//       
+//        if (!delayFound) { 
+//            excludeSet.clear
+//        }
+//        return excludeSet
+//    }
+//    
+//	override getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, List<AbstractKielerCompilerAncillaryData> ancillaryData) {
+//		<Predecessor> newHashSet
+//	}    
     
 }

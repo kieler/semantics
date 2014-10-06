@@ -45,6 +45,7 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.scg.Guard
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -126,10 +127,10 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         synchronizable
     }
     
-    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
-    	List<AbstractKielerCompilerAncillaryData> ancillaryData) {
-        val excludeSet = <Predecessor> newHashSet
-        
+//    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
+//    	List<AbstractKielerCompilerAncillaryData> ancillaryData) {
+//        val excludeSet = <Predecessor> newHashSet
+//        
 //        val pilData = ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
 //        val exitNodes = join.allPrevious.map[ eContainer as Exit ]
 //      	val joinPredecessors = schedulingBlockCache.get(join).basicBlock.predecessors.toSet
@@ -162,11 +163,11 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
 //        	}
 //        }
         
-        return excludeSet
-    }
-    
-	override getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, List<AbstractKielerCompilerAncillaryData> ancillaryData) {
-		val includeSet = <Predecessor> newHashSet
+//        return excludeSet
+//    }
+//    
+//	override getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, List<AbstractKielerCompilerAncillaryData> ancillaryData) {
+//		val includeSet = <Predecessor> newHashSet
 		
 //        val exitNodes = join.allPrevious.map[ eContainer as Exit ]
 //        
@@ -179,11 +180,11 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
 //        	}
 //        }
         	
-        includeSet
-	}    
+//        includeSet
+//	}    
 
     
-    override protected SynchronizerData build(Join join) {
+    override protected build(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
         // Create a new SynchronizerData class which holds the data to return.
         var data = new SynchronizerData() => [ setJoin(join) ]
         

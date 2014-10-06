@@ -30,6 +30,8 @@ import de.cau.cs.kieler.kico.AbstractKielerCompilerAncillaryData
 import java.util.List
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.BasicBlock
+import de.cau.cs.kieler.scg.Guard
+import de.cau.cs.kieler.scg.SCGraph
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -90,15 +92,15 @@ abstract class AbstractSynchronizer {
      * 		data to construct a guard expression for the join node in question.
      * @abstract 
      */
-    protected abstract def SynchronizerData build(Join join);
+    protected abstract def void build(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg);
     
     public abstract def boolean isSynchronizable(Iterable<ThreadPathType> threadPathTypes);
     
-    public abstract def Set<Predecessor> getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
-    	List<AbstractKielerCompilerAncillaryData> ancillaryData);
-    	
-    public abstract def Set<Predecessor> getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
-    	List<AbstractKielerCompilerAncillaryData> ancillaryData);
+//    public abstract def Set<Predecessor> getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
+//    	List<AbstractKielerCompilerAncillaryData> ancillaryData);
+//    	
+//    public abstract def Set<Predecessor> getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
+//    	List<AbstractKielerCompilerAncillaryData> ancillaryData);
     
     public abstract def String getId();
     
@@ -111,10 +113,12 @@ abstract class AbstractSynchronizer {
      * @return Returns a {@code SynchronizerData} class which includes all mandatory 
      * 		data to construct a guard expression for the join node in question.
      */
-    public def SynchronizerData synchronize(Join join, KielerCompilerContext context, Map<Node, SchedulingBlock> schedulingBlockCache) {
+    public def void synchronize(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg, 
+    	KielerCompilerContext context, Map<Node, SchedulingBlock> schedulingBlockCache
+    ) {
         schedulingCache = schedulingBlockCache
         compilerContext = context
-        build(join) => [ synchronizerId = getId ]
+        build(join, guard, schedulingBlock, scg) 
     }    
     
     public def boolean isSynchronizable(Join join) {

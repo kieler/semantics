@@ -304,9 +304,9 @@ class DelayAwareScheduler extends SimpleScheduler {
                     join.fork.allNext.map[ target ].forEach[ schizophrenicEntry += schedulingBlockCache.get(it) ]
                 }
             
-                predecessorExcludeSet += synchronizer.getExcludedPredecessors(join, schedulingBlockCache, context.compilationResult.ancillaryData)
-                val predecessorIncludeSet = synchronizer.getAdditionalPredecessors(join, schedulingBlockCache, context.compilationResult.ancillaryData)
-                predecessorIncludeSets.put(schedulingBlock.basicBlock, predecessorIncludeSet)
+//                predecessorExcludeSet += synchronizer.getExcludedPredecessors(join, schedulingBlockCache, context.compilationResult.ancillaryData)
+//                val predecessorIncludeSet = synchronizer.getAdditionalPredecessors(join, schedulingBlockCache, context.compilationResult.ancillaryData)
+//                predecessorIncludeSets.put(schedulingBlock.basicBlock, predecessorIncludeSet)
             }
         }        
         

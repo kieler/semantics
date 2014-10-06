@@ -303,9 +303,7 @@ class GuardCreator extends AbstractGuardCreator {
         if (synchronizer.id == DepthJoinSynchronizer::SYNCHRONIZER_ID) {
             (synchronizer as DepthJoinSynchronizer).schizophrenicDeclaration = schizoDeclaration
         }
-        joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join, compilerContext, schedulingBlockCache)
-
-		guard.expression        
+        synchronizer.synchronize(schedulingBlock.nodes.head as Join, guard, schedulingBlock, scg, compilerContext, schedulingBlockCache)
     }
     
     
