@@ -52,6 +52,8 @@ import de.cau.cs.kieler.scg.synchronizer.SynchronizerData
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
+import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopAnalyzer
+import com.google.inject.Guice
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -134,6 +136,9 @@ class GuardCreator extends AbstractGuardCreator {
         val timestamp = System.currentTimeMillis
         compilerContext = context
         
+        val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = 
+            Guice.createInjector().getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
+        context.compilationResult.ancillaryData += potentialInstantaneousLoopAnalyzer.analyze(scg)
         val pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
           
         /**
@@ -154,8 +159,9 @@ class GuardCreator extends AbstractGuardCreator {
         schedulingBlockCache.clear
         schedulingBlockGuardCache.clear
         for(basicBlock : scg.basicBlocks) {
+        	predecessorList += basicBlock.predecessors
             for(schedulingBlock: basicBlock.schedulingBlocks) {
-            	schedulingBlocks += schedulingBlocks
+            	schedulingBlocks += schedulingBlock
                 for(node : schedulingBlock.nodes) {
                     schedulingBlockCache.put(node, schedulingBlock)
                     schedulingBlockGuardCache.put(schedulingBlock.guard, schedulingBlock)

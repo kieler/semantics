@@ -29,6 +29,7 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopAnalyzer
 import com.google.inject.Guice
 import de.cau.cs.kieler.scg.ScheduledBlock
+import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -189,9 +190,11 @@ class SimpleScheduler extends AbstractScheduler {
     	// Create a new schedule using the scgsched factory.
         val schedule = ScgFactory::eINSTANCE.createSchedule
         
-        val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = 
-            Guice.createInjector().getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
-        context.compilationResult.ancillaryData += potentialInstantaneousLoopAnalyzer.analyze(scg)
+//        val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = 
+//            Guice.createInjector().getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
+//        context.compilationResult.ancillaryData += potentialInstantaneousLoopAnalyzer.analyze(scg)
+        val pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
+        
 
         // Create and fill a list for all scheduling blocks.
         val schedulingConstraints = scg.orderSchedulingBlocks

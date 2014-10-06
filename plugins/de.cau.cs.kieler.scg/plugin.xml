@@ -48,14 +48,14 @@
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scg.transformations.BasicBlockTransformation"
-            dependencies="SCGSCHEDGROUP"
+            dependencies="SCGGC"
             id="SCGBB"
             method="transform"
             name="BasicBlocks">
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scg.transformations.BasicBlockTransformationSCplus"
-            dependencies="SCGSCHEDGROUP"
+            dependencies="SCGGC"
             id="SCGBBSCPLUS"
             method="transform"
             name="BasicBlocksSCplus">
@@ -66,6 +66,13 @@
             name="Basic Blocks"
             transformations="SCGBB, SCGBBSCPLUS">
       </transformationGroup>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.guardCreation.GuardCreator"
+            dependencies="SCGSCHEDGROUP"
+            id="SCGGC"
+            method="transform"
+            name="Guards">
+      </transformationMethod>
       <transformationGroup
             alternatives="true"
             id="SCGSCHEDGROUP"
