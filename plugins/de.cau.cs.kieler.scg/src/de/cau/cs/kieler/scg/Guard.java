@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.Guard#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Guard#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.Guard#isSchizophrenic <em>Schizophrenic</em>}</li>
  * </ul>
  * </p>
  *
@@ -37,55 +38,81 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Guard extends EObject {
     /**
-     * Returns the value of the '<em><b>Valued Object</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Valued Object</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Valued Object</em>' containment reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Valued Object</em>' containment reference.
-     * @see #setValuedObject(ValuedObject)
-     * @see de.cau.cs.kieler.scg.ScgPackage#getGuard_ValuedObject()
-     * @model containment="true" required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Valued Object</em>' containment reference.
+	 * @see #setValuedObject(ValuedObject)
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getGuard_ValuedObject()
+	 * @model containment="true" required="true"
+	 * @generated
+	 */
     ValuedObject getValuedObject();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.scg.Guard#getValuedObject <em>Valued Object</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.scg.Guard#getValuedObject <em>Valued Object</em>}' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Valued Object</em>' containment reference.
-     * @see #getValuedObject()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Valued Object</em>' containment reference.
+	 * @see #getValuedObject()
+	 * @generated
+	 */
     void setValuedObject(ValuedObject value);
 
     /**
-     * Returns the value of the '<em><b>Expression</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Expression</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Expression</em>' containment reference.
-     * @see #setExpression(Expression)
-     * @see de.cau.cs.kieler.scg.ScgPackage#getGuard_Expression()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Expression</em>' containment reference.
+	 * @see #setExpression(Expression)
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getGuard_Expression()
+	 * @model containment="true"
+	 * @generated
+	 */
     Expression getExpression();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.scg.Guard#getExpression <em>Expression</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.scg.Guard#getExpression <em>Expression</em>}' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Expression</em>' containment reference.
-     * @see #getExpression()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Expression</em>' containment reference.
+	 * @see #getExpression()
+	 * @generated
+	 */
     void setExpression(Expression value);
+
+				/**
+	 * Returns the value of the '<em><b>Schizophrenic</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Schizophrenic</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Schizophrenic</em>' attribute.
+	 * @see #setSchizophrenic(boolean)
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getGuard_Schizophrenic()
+	 * @model
+	 * @generated
+	 */
+	boolean isSchizophrenic();
+
+				/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.scg.Guard#isSchizophrenic <em>Schizophrenic</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Schizophrenic</em>' attribute.
+	 * @see #isSchizophrenic()
+	 * @generated
+	 */
+	void setSchizophrenic(boolean value);
 
 } // Guard

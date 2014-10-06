@@ -37,6 +37,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#isSchizophrenic <em>Schizophrenic</em>}</li>
  * </ul>
  * </p>
  *
@@ -44,212 +45,279 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  */
 public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
     /**
-     * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getValuedObject()
-     * @generated
-     * @ordered
-     */
+	 * @see #getValuedObject()
+	 * @generated
+	 * @ordered
+	 */
     protected ValuedObject valuedObject;
 
     /**
-     * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getExpression()
-     * @generated
-     * @ordered
-     */
+	 * @see #getExpression()
+	 * @generated
+	 * @ordered
+	 */
     protected Expression expression;
 
     /**
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #isSchizophrenic() <em>Schizophrenic</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSchizophrenic()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean SCHIZOPHRENIC_EDEFAULT = false;
+
+				/**
+	 * The cached value of the '{@link #isSchizophrenic() <em>Schizophrenic</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSchizophrenic()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean schizophrenic = SCHIZOPHRENIC_EDEFAULT;
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected GuardImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return ScgPackage.Literals.GUARD;
-    }
+		return ScgPackage.Literals.GUARD;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ValuedObject getValuedObject() {
-        return valuedObject;
-    }
+		return valuedObject;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public NotificationChain basicSetValuedObject(ValuedObject newValuedObject, NotificationChain msgs) {
-        ValuedObject oldValuedObject = valuedObject;
-        valuedObject = newValuedObject;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__VALUED_OBJECT, oldValuedObject, newValuedObject);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
+		ValuedObject oldValuedObject = valuedObject;
+		valuedObject = newValuedObject;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__VALUED_OBJECT, oldValuedObject, newValuedObject);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setValuedObject(ValuedObject newValuedObject) {
-        if (newValuedObject != valuedObject) {
-            NotificationChain msgs = null;
-            if (valuedObject != null)
-                msgs = ((InternalEObject)valuedObject).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.GUARD__VALUED_OBJECT, null, msgs);
-            if (newValuedObject != null)
-                msgs = ((InternalEObject)newValuedObject).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.GUARD__VALUED_OBJECT, null, msgs);
-            msgs = basicSetValuedObject(newValuedObject, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__VALUED_OBJECT, newValuedObject, newValuedObject));
-    }
+		if (newValuedObject != valuedObject) {
+			NotificationChain msgs = null;
+			if (valuedObject != null)
+				msgs = ((InternalEObject)valuedObject).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.GUARD__VALUED_OBJECT, null, msgs);
+			if (newValuedObject != null)
+				msgs = ((InternalEObject)newValuedObject).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.GUARD__VALUED_OBJECT, null, msgs);
+			msgs = basicSetValuedObject(newValuedObject, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__VALUED_OBJECT, newValuedObject, newValuedObject));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Expression getExpression() {
-        return expression;
-    }
+		return expression;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
-        Expression oldExpression = expression;
-        expression = newExpression;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__EXPRESSION, oldExpression, newExpression);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
+		Expression oldExpression = expression;
+		expression = newExpression;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__EXPRESSION, oldExpression, newExpression);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setExpression(Expression newExpression) {
-        if (newExpression != expression) {
-            NotificationChain msgs = null;
-            if (expression != null)
-                msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.GUARD__EXPRESSION, null, msgs);
-            if (newExpression != null)
-                msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.GUARD__EXPRESSION, null, msgs);
-            msgs = basicSetExpression(newExpression, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__EXPRESSION, newExpression, newExpression));
-    }
+		if (newExpression != expression) {
+			NotificationChain msgs = null;
+			if (expression != null)
+				msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ScgPackage.GUARD__EXPRESSION, null, msgs);
+			if (newExpression != null)
+				msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ScgPackage.GUARD__EXPRESSION, null, msgs);
+			msgs = basicSetExpression(newExpression, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__EXPRESSION, newExpression, newExpression));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSchizophrenic() {
+		return schizophrenic;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSchizophrenic(boolean newSchizophrenic) {
+		boolean oldSchizophrenic = schizophrenic;
+		schizophrenic = newSchizophrenic;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__SCHIZOPHRENIC, oldSchizophrenic, schizophrenic));
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case ScgPackage.GUARD__VALUED_OBJECT:
-                return basicSetValuedObject(null, msgs);
-            case ScgPackage.GUARD__EXPRESSION:
-                return basicSetExpression(null, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case ScgPackage.GUARD__VALUED_OBJECT:
+				return basicSetValuedObject(null, msgs);
+			case ScgPackage.GUARD__EXPRESSION:
+				return basicSetExpression(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case ScgPackage.GUARD__VALUED_OBJECT:
-                return getValuedObject();
-            case ScgPackage.GUARD__EXPRESSION:
-                return getExpression();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case ScgPackage.GUARD__VALUED_OBJECT:
+				return getValuedObject();
+			case ScgPackage.GUARD__EXPRESSION:
+				return getExpression();
+			case ScgPackage.GUARD__SCHIZOPHRENIC:
+				return isSchizophrenic();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case ScgPackage.GUARD__VALUED_OBJECT:
-                setValuedObject((ValuedObject)newValue);
-                return;
-            case ScgPackage.GUARD__EXPRESSION:
-                setExpression((Expression)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case ScgPackage.GUARD__VALUED_OBJECT:
+				setValuedObject((ValuedObject)newValue);
+				return;
+			case ScgPackage.GUARD__EXPRESSION:
+				setExpression((Expression)newValue);
+				return;
+			case ScgPackage.GUARD__SCHIZOPHRENIC:
+				setSchizophrenic((Boolean)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case ScgPackage.GUARD__VALUED_OBJECT:
-                setValuedObject((ValuedObject)null);
-                return;
-            case ScgPackage.GUARD__EXPRESSION:
-                setExpression((Expression)null);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case ScgPackage.GUARD__VALUED_OBJECT:
+				setValuedObject((ValuedObject)null);
+				return;
+			case ScgPackage.GUARD__EXPRESSION:
+				setExpression((Expression)null);
+				return;
+			case ScgPackage.GUARD__SCHIZOPHRENIC:
+				setSchizophrenic(SCHIZOPHRENIC_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case ScgPackage.GUARD__VALUED_OBJECT:
-                return valuedObject != null;
-            case ScgPackage.GUARD__EXPRESSION:
-                return expression != null;
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case ScgPackage.GUARD__VALUED_OBJECT:
+				return valuedObject != null;
+			case ScgPackage.GUARD__EXPRESSION:
+				return expression != null;
+			case ScgPackage.GUARD__SCHIZOPHRENIC:
+				return schizophrenic != SCHIZOPHRENIC_EDEFAULT;
+		}
+		return super.eIsSet(featureID);
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (schizophrenic: ");
+		result.append(schizophrenic);
+		result.append(')');
+		return result.toString();
+	}
 
 } //GuardImpl
