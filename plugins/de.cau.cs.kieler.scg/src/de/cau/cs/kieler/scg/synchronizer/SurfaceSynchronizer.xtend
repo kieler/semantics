@@ -39,6 +39,8 @@ import de.cau.cs.kieler.scg.BasicBlock
 import java.util.Set
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -89,6 +91,9 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 
     @Inject
     extension AnnotationsExtensions
+    
+    @Inject
+    extension KExpressionsSerializeExtension
    
     protected val OPERATOREXPRESSION_DEPTHLIMIT = 16
     protected val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8
@@ -125,7 +130,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         
         // The valued object of the GuardExpression of the synchronizer is the guard of the
         // scheduling block of the join node. 
-        data.guardExpression.valuedObject = joinSB.guard.valuedObject
+//        data.guardExpression.valuedObject = joinSB.guard.valuedObject
 
 		// Create a new expression that determines if at least on thread exits in this tick instance.
 		// At first this simple scheduler assumes that the fork node spawns more than one thread.
@@ -138,6 +143,16 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 //        data.guardExpression.expression = FALSE
         
 		data.fixEmptyExpressions.fixSynchronizerExpression
+		
+		guard.expression = data.guardExpression.expression
+		for(emptyExp : data.guardExpression.emptyExpressions) {
+			val newGuard = ScgFactory::eINSTANCE.createGuard
+            newGuard.valuedObject = emptyExp.valuedObject
+            newGuard.expression = emptyExp.expression
+            scg.guards += newGuard
+            
+            System.out.println("Generated NEW guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize)
+		}
     }
     
     protected def SynchronizerData createEmptyExpressions(SynchronizerData data, OperatorExpression terminationExpression) {
