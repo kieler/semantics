@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.scg.Guard#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Guard#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Guard#isSchizophrenic <em>Schizophrenic</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.Guard#getSchedulingBlockLink <em>Scheduling Block Link</em>}</li>
  * </ul>
  * </p>
  *
@@ -114,5 +115,31 @@ public interface Guard extends EObject {
 	 * @generated
 	 */
 	void setSchizophrenic(boolean value);
+
+				/**
+	 * Returns the value of the '<em><b>Scheduling Block Link</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Scheduling Block Link</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Scheduling Block Link</em>' reference.
+	 * @see #setSchedulingBlockLink(SchedulingBlock)
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getGuard_SchedulingBlockLink()
+	 * @model
+	 * @generated
+	 */
+	SchedulingBlock getSchedulingBlockLink();
+
+				/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.scg.Guard#getSchedulingBlockLink <em>Scheduling Block Link</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Scheduling Block Link</em>' reference.
+	 * @see #getSchedulingBlockLink()
+	 * @generated
+	 */
+	void setSchedulingBlockLink(SchedulingBlock value);
 
 } // Guard

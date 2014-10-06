@@ -891,6 +891,15 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
 																/**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGuard_SchedulingBlockLink() {
+		return (EReference)guardEClass.getEStructuralFeatures().get(3);
+	}
+
+																/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -1016,6 +1025,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 		createEReference(guardEClass, GUARD__VALUED_OBJECT);
 		createEReference(guardEClass, GUARD__EXPRESSION);
 		createEAttribute(guardEClass, GUARD__SCHIZOPHRENIC);
+		createEReference(guardEClass, GUARD__SCHEDULING_BLOCK_LINK);
 
 		// Create enums
 		branchTypeEEnum = createEEnum(BRANCH_TYPE);
@@ -1162,6 +1172,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 		initEReference(getGuard_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, Guard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getGuard_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Guard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGuard_Schizophrenic(), ecorePackage.getEBoolean(), "schizophrenic", null, 0, 1, Guard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getGuard_SchedulingBlockLink(), this.getSchedulingBlock(), null, "schedulingBlockLink", null, 0, 1, Guard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(branchTypeEEnum, BranchType.class, "BranchType");

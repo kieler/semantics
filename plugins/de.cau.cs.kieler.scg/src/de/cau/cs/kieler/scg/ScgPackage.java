@@ -1470,13 +1470,22 @@ public interface ScgPackage extends EPackage {
 	int GUARD__SCHIZOPHRENIC = 2;
 
 																/**
+	 * The feature id for the '<em><b>Scheduling Block Link</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUARD__SCHEDULING_BLOCK_LINK = 3;
+
+																/**
 	 * The number of structural features of the '<em>Guard</em>' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int GUARD_FEATURE_COUNT = 3;
+    int GUARD_FEATURE_COUNT = 4;
 
                 /**
 	 * The meta object id for the '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}' enum.
@@ -2226,6 +2235,17 @@ public interface ScgPackage extends EPackage {
 	EAttribute getGuard_Schizophrenic();
 
 																/**
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.scg.Guard#getSchedulingBlockLink <em>Scheduling Block Link</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Scheduling Block Link</em>'.
+	 * @see de.cau.cs.kieler.scg.Guard#getSchedulingBlockLink()
+	 * @see #getGuard()
+	 * @generated
+	 */
+	EReference getGuard_SchedulingBlockLink();
+
+																/**
 	 * Returns the meta object for enum '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2853,6 +2873,14 @@ public interface ScgPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute GUARD__SCHIZOPHRENIC = eINSTANCE.getGuard_Schizophrenic();
+
+																																/**
+		 * The meta object literal for the '<em><b>Scheduling Block Link</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference GUARD__SCHEDULING_BLOCK_LINK = eINSTANCE.getGuard_SchedulingBlockLink();
 
 																																/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}' enum.

@@ -19,6 +19,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.scg.Guard;
 import de.cau.cs.kieler.scg.ScgPackage;
 
+import de.cau.cs.kieler.scg.SchedulingBlock;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -38,6 +39,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#isSchizophrenic <em>Schizophrenic</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getSchedulingBlockLink <em>Scheduling Block Link</em>}</li>
  * </ul>
  * </p>
  *
@@ -83,6 +85,16 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 	 * @ordered
 	 */
 	protected boolean schizophrenic = SCHIZOPHRENIC_EDEFAULT;
+
+				/**
+	 * The cached value of the '{@link #getSchedulingBlockLink() <em>Scheduling Block Link</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSchedulingBlockLink()
+	 * @generated
+	 * @ordered
+	 */
+	protected SchedulingBlock schedulingBlockLink;
 
 				/**
 	 * <!-- begin-user-doc -->
@@ -212,6 +224,44 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 
 				/**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SchedulingBlock getSchedulingBlockLink() {
+		if (schedulingBlockLink != null && schedulingBlockLink.eIsProxy()) {
+			InternalEObject oldSchedulingBlockLink = (InternalEObject)schedulingBlockLink;
+			schedulingBlockLink = (SchedulingBlock)eResolveProxy(oldSchedulingBlockLink);
+			if (schedulingBlockLink != oldSchedulingBlockLink) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.GUARD__SCHEDULING_BLOCK_LINK, oldSchedulingBlockLink, schedulingBlockLink));
+			}
+		}
+		return schedulingBlockLink;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SchedulingBlock basicGetSchedulingBlockLink() {
+		return schedulingBlockLink;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSchedulingBlockLink(SchedulingBlock newSchedulingBlockLink) {
+		SchedulingBlock oldSchedulingBlockLink = schedulingBlockLink;
+		schedulingBlockLink = newSchedulingBlockLink;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__SCHEDULING_BLOCK_LINK, oldSchedulingBlockLink, schedulingBlockLink));
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -240,6 +290,9 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 				return getExpression();
 			case ScgPackage.GUARD__SCHIZOPHRENIC:
 				return isSchizophrenic();
+			case ScgPackage.GUARD__SCHEDULING_BLOCK_LINK:
+				if (resolve) return getSchedulingBlockLink();
+				return basicGetSchedulingBlockLink();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -260,6 +313,9 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 				return;
 			case ScgPackage.GUARD__SCHIZOPHRENIC:
 				setSchizophrenic((Boolean)newValue);
+				return;
+			case ScgPackage.GUARD__SCHEDULING_BLOCK_LINK:
+				setSchedulingBlockLink((SchedulingBlock)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -282,6 +338,9 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 			case ScgPackage.GUARD__SCHIZOPHRENIC:
 				setSchizophrenic(SCHIZOPHRENIC_EDEFAULT);
 				return;
+			case ScgPackage.GUARD__SCHEDULING_BLOCK_LINK:
+				setSchedulingBlockLink((SchedulingBlock)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -300,6 +359,8 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 				return expression != null;
 			case ScgPackage.GUARD__SCHIZOPHRENIC:
 				return schizophrenic != SCHIZOPHRENIC_EDEFAULT;
+			case ScgPackage.GUARD__SCHEDULING_BLOCK_LINK:
+				return schedulingBlockLink != null;
 		}
 		return super.eIsSet(featureID);
 	}

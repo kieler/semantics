@@ -76,6 +76,7 @@ public class GuardItemProvider
 			super.getPropertyDescriptors(object);
 
 			addSchizophrenicPropertyDescriptor(object);
+			addSchedulingBlockLinkPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -98,6 +99,28 @@ public class GuardItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+				/**
+	 * This adds a property descriptor for the Scheduling Block Link feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addSchedulingBlockLinkPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Guard_schedulingBlockLink_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Guard_schedulingBlockLink_feature", "_UI_Guard_type"),
+				 ScgPackage.Literals.GUARD__SCHEDULING_BLOCK_LINK,
+				 true,
+				 false,
+				 true,
+				 null,
 				 null,
 				 null));
 	}

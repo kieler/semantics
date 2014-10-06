@@ -219,7 +219,8 @@ class GuardSequentializer extends AbstractSequentializer {
     	
     	// For each scheduling block in the schedule iterate.
     	for (guard : schedule.guards) {
-    		val sBlock = guardBlockCache.get(guard.valuedObject)
+//    		val sBlock = guardBlockCache.get(guard.valuedObject)
+    		val sBlock = guard.schedulingBlockLink
 	  	   /**
    			 * For each guard a guard expression exists.
    		     * Retrieve the expression and test it for null. 
