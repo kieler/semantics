@@ -75,30 +75,17 @@
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scg.schedulers.GuardScheduler"
-            dependencies="SCGSEQGROUP"
+            dependencies="SCGSEQUENTIALIZE"
             id="SCGSCHEDULE"
             method="schedule"
             name="Scheduling">
       </transformationMethod>
-      <transformationGroup
-            alternatives="true"
-            id="SCGSEQGROUP"
-            name="Sequentializer"
-            transformations="SCGSEQSIMPLE, SCGSEQHYBRID">
-      </transformationGroup>
       <transformationMethod
-            class="de.cau.cs.kieler.scg.sequentializer.SimpleSequentializer"
+            class="de.cau.cs.kieler.scg.sequentializer.GuardSequentializer"
             dependencies="SCG2S"
-            id="SCGSEQSIMPLE"
+            id="SCGSEQUENTIALIZE"
             method="sequentialize"
-            name="Simple">
-      </transformationMethod>
-      <transformationMethod
-            class="de.cau.cs.kieler.scg.sequentializer.HybridSequentializer"
-            dependencies="SCG2S"
-            id="SCGSEQHYBRID"
-            method="sequentialize"
-            name="Hybrid">
+            name="Sequentialize">
       </transformationMethod>
    </extension>
 
