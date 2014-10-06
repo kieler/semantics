@@ -68,37 +68,17 @@
       </transformationGroup>
       <transformationMethod
             class="de.cau.cs.kieler.scg.guardCreation.GuardCreator"
-            dependencies="SCGSCHEDGROUP"
+            dependencies="SCGSCHEDULE"
             id="SCGGC"
             method="transform"
             name="Guards">
       </transformationMethod>
-      <transformationGroup
-            alternatives="true"
-            id="SCGSCHEDGROUP"
-            name="Scheduler"
-            transformations="SCGSCHEDDELAYAWARE, SCGSCHEDSIMPLE, SCGSCHEDTHREADAWARE">
-      </transformationGroup>
       <transformationMethod
-            class="de.cau.cs.kieler.scg.schedulers.SimpleScheduler"
+            class="de.cau.cs.kieler.scg.schedulers.GuardScheduler"
             dependencies="SCGSEQGROUP"
-            id="SCGSCHEDSIMPLE"
+            id="SCGSCHEDULE"
             method="schedule"
-            name="Simple">
-      </transformationMethod>
-      <transformationMethod
-            class="de.cau.cs.kieler.scg.schedulers.DelayAwareScheduler"
-            dependencies="SCGSEQGROUP"
-            id="SCGSCHEDDELAYAWARE"
-            method="schedule"
-            name="Delay Aware">
-      </transformationMethod>
-      <transformationMethod
-            class="de.cau.cs.kieler.scg.schedulers.ThreadAwareScheduler"
-            dependencies="SCGSEQGROUP"
-            id="SCGSCHEDTHREADAWARE"
-            method="schedule"
-            name="Thread Aware">
+            name="Scheduling">
       </transformationMethod>
       <transformationGroup
             alternatives="true"

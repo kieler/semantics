@@ -222,15 +222,6 @@ public interface ScgFactory extends EFactory {
     Schedule createSchedule();
 
     /**
-	 * Returns a new object of class '<em>Scheduled Block</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Scheduled Block</em>'.
-	 * @generated
-	 */
-	ScheduledBlock createScheduledBlock();
-
-				/**
 	 * Returns a new object of class '<em>Guard</em>'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

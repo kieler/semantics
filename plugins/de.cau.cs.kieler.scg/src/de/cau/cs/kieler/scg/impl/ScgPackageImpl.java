@@ -26,7 +26,6 @@ import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.ScgPackage;
 import de.cau.cs.kieler.scg.Schedule;
-import de.cau.cs.kieler.scg.ScheduledBlock;
 import de.cau.cs.kieler.scg.SchedulingBlock;
 import de.cau.cs.kieler.scg.Surface;
 import de.cau.cs.kieler.scg.Write_Write;
@@ -192,13 +191,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
     private EClass scheduleEClass = null;
 
     /**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass scheduledBlockEClass = null;
-
-				/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -857,35 +849,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getSchedule_ScheduledBlocks() {
+	public EReference getSchedule_Guards() {
 		return (EReference)scheduleEClass.getEStructuralFeatures().get(0);
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getScheduledBlock() {
-		return scheduledBlockEClass;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getScheduledBlock_SchedulingBlock() {
-		return (EReference)scheduledBlockEClass.getEStructuralFeatures().get(0);
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getScheduledBlock_Schizophrenic() {
-		return (EAttribute)scheduledBlockEClass.getEStructuralFeatures().get(1);
 	}
 
 				/**
@@ -1045,11 +1010,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 		createEAttribute(predecessorEClass, PREDECESSOR__BRANCH_TYPE);
 
 		scheduleEClass = createEClass(SCHEDULE);
-		createEReference(scheduleEClass, SCHEDULE__SCHEDULED_BLOCKS);
-
-		scheduledBlockEClass = createEClass(SCHEDULED_BLOCK);
-		createEReference(scheduledBlockEClass, SCHEDULED_BLOCK__SCHEDULING_BLOCK);
-		createEAttribute(scheduledBlockEClass, SCHEDULED_BLOCK__SCHIZOPHRENIC);
+		createEReference(scheduleEClass, SCHEDULE__GUARDS);
 
 		guardEClass = createEClass(GUARD);
 		createEReference(guardEClass, GUARD__VALUED_OBJECT);
@@ -1195,11 +1156,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 		initEAttribute(getPredecessor_BranchType(), this.getBranchType(), "branchType", null, 0, 1, Predecessor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(scheduleEClass, Schedule.class, "Schedule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getSchedule_ScheduledBlocks(), this.getScheduledBlock(), null, "scheduledBlocks", null, 0, -1, Schedule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(scheduledBlockEClass, ScheduledBlock.class, "ScheduledBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getScheduledBlock_SchedulingBlock(), this.getSchedulingBlock(), null, "schedulingBlock", null, 0, 1, ScheduledBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getScheduledBlock_Schizophrenic(), ecorePackage.getEBoolean(), "schizophrenic", null, 0, 1, ScheduledBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSchedule_Guards(), this.getGuard(), null, "guards", null, 0, -1, Schedule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(guardEClass, Guard.class, "Guard", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getGuard_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, Guard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

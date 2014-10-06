@@ -30,6 +30,11 @@ import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopAnalyzer
 import com.google.inject.Guice
 import de.cau.cs.kieler.scg.ScheduledBlock
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
+import de.cau.cs.kieler.scg.Guard
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.OperatorType
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -48,7 +53,7 @@ import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
  * @kieler.design 2013-11-27 proposed 
  * @kieler.rating 2013-11-27 proposed yellow
  */
-class SimpleScheduler extends AbstractScheduler {
+class GuardScheduler extends AbstractScheduler {
     
     // -------------------------------------------------------------------------
     // -- Injections 
@@ -65,11 +70,12 @@ class SimpleScheduler extends AbstractScheduler {
     // -- Globals 
     // -------------------------------------------------------------------------
    
-    protected val topologicalSortVisited = <SchedulingBlock> newHashSet 
+    protected val topologicalSortVisited = <Guard> newHashSet 
     protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
     protected var int schedulingBlockCount
     
-    protected val placedBlocks = <SchedulingBlock> newHashSet 
+    protected val placedVOs = <ValuedObject> newHashSet
+    protected val guardCache = <ValuedObject, Guard> newHashMap 
 
     
     // -------------------------------------------------------------------------
@@ -88,86 +94,84 @@ class SimpleScheduler extends AbstractScheduler {
         val schedulingBlocks = <SchedulingBlock> newLinkedList
         scg.basicBlocks.forEach[ schedulingBlocks.addAll(it.schedulingBlocks) ]
         
+        val guardList = <Guard> newArrayList => [ addAll(scg.guards) ]
+        
         new SchedulingConstraints => [
         	it.schedulingBlocks = schedulingBlocks
+        	it.guards = guardList
         ]    
     }
-    
-    protected def boolean isPlaceable(SchedulingBlock schedulingBlock, List<SchedulingBlock> remainingBlocks, 
-    	List<ScheduledBlock> schedule, SCGraph scg
-    ) {
-       	// Assume all preconditions are met and query parent basic block.
-        val parentBasicBlock = schedulingBlock.eContainer as BasicBlock
-                
-        // For all predecessor blocks check whether they are already processed.
-        for(predecessor : parentBasicBlock.predecessors){
-            for(sBlock : predecessor.basicBlock.schedulingBlocks){
-           	// If any scheduling block of that basic block is not already in our schedule,
-           	// the precondition test fails. Set placeable to false.
-	            if (!placedBlocks.contains(sBlock)) { return false }
-            }
-        }
-                
-        // Basically, perform the same test for dependency. We cannot create a guard expression 
-        // if any block containing a dependency is still in our list.
-        for(dependency : schedulingBlock.dependencies) {
-            if (dependency.concurrent && !dependency.confluent) {
-				val sBlock = schedulingBlockCache.get(dependency.eContainer as Node)
-    	      	if (!placedBlocks.contains(sBlock)) { return false }
-            }
-    	}
-    	
-    	return true
-    }
-    
-    protected def void topologicalPlacement(SchedulingBlock schedulingBlock, 
-        List<SchedulingBlock> schedulingBlocks, List<ScheduledBlock> schedule, 
+        
+    protected def void topologicalPlacement(Guard guard, 
+        List<Guard> guards, List<Guard> schedule, 
         SchedulingConstraints constraints, SCGraph scg
     ) {
-        if (!topologicalSortVisited.contains(schedulingBlock)) {
-            topologicalSortVisited.add(schedulingBlock)
-            for(predecessor : schedulingBlock.basicBlock.predecessors) {
-                for (sBlock : predecessor.basicBlock.schedulingBlocks) {
-                	if (!topologicalSortVisited.contains(sBlock))
-                   		 sBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, scg)
-                }
-            }
-            for(dependency : schedulingBlock.dependencies) {
-                if (dependency.concurrent && !dependency.confluent) {
-					val sBlock = schedulingBlockCache.get(dependency.eContainer as Node)
-					if (!topologicalSortVisited.contains(sBlock)) {
-                   	    sBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, scg)
-               	    } 
-                }
-            }
-            
-            if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg)) {
-//            	val scheduledBlock = ScgFactory.eINSTANCE.createScheduledBlock => [
-//            		it.schedulingBlock = schedulingBlock
-//            	]
-//                schedule.add(scheduledBlock)
-                placedBlocks.add(schedulingBlock)
-            }
-        } 
+        if (!topologicalSortVisited.contains(guard)) {
+        	
+        	topologicalSortVisited.add(guard)
+        	
+			val VOR = <ValuedObject> newArrayList
+			
+			if (guard.expression instanceof ValuedObjectReference) {
+				VOR += (guard.expression as ValuedObjectReference).valuedObject	
+			} else {
+				if (guard.expression instanceof OperatorExpression && (guard.expression as OperatorExpression).operator != OperatorType::PRE) {
+					guard.expression.eAllContents.filter(typeof(ValuedObjectReference)).map[ valuedObject ].forEach[ VOR += it ]
+				}
+			}   
+			
+//			System.out.print("Placing guard " + guard.valuedObject.name + ": ")
+//			for(ref : VOR) {
+//				System.out.print(ref.name + " ")
+//			}
+//			System.out.println("")
+			for(ref : VOR) {
+				if (!placedVOs.contains(ref)) {
+//					System.out.println(ref.name + " not placed!")
+					val tpGuard = guardCache.get(ref)
+					tpGuard.topologicalPlacement(guards, schedule, constraints, scg)
+				} 
+			}
+
+			var placeable = true			
+			for(ref : VOR) {
+				if (!placedVOs.contains(ref)) {
+					placeable = false
+				}
+			}			
+			
+			if (placeable) {
+				schedule += guard
+				placedVOs += guard.valuedObject
+				guards -= guard
+			}
+			   	
+        }
+
     }
     
     
-    protected def boolean createSchedule(SCGraph scg, List<ScheduledBlock> schedule, SchedulingConstraints constraints,
+    protected def boolean createSchedule(SCGraph scg, List<Guard> schedule, SchedulingConstraints constraints,
     	KielerCompilerContext context) {
 
-        val schedulingBlocks = new ArrayList<SchedulingBlock>(schedulingBlockCount)
-        schedulingBlocks.addAll(constraints.schedulingBlocks)
+        val guards = new ArrayList<Guard>
+        guards += constraints.guards
+        val guardLoop = new ArrayList<Guard>
+        guardLoop += guards
         
         topologicalSortVisited.clear
-        placedBlocks.clear
         
-        for (sBlock : schedulingBlocks) {
-        	if (!topologicalSortVisited.contains(sBlock)) {
-                sBlock.topologicalPlacement(schedulingBlocks, schedule, constraints, scg)
+        for (guard : guardLoop) {
+        	if (!topologicalSortVisited.contains(guard)) {
+                guard.topologicalPlacement(guards, schedule, constraints, scg)
             }
         }
         
-        schedule.size == schedulingBlocks.size
+        System.out.print("Scheduled guards: ")
+        for (g : schedule) { System.out.print(g.valuedObject.name + " ") }
+        System.out.println("")
+        
+        guards.size == 0
     }
     
 
@@ -189,21 +193,23 @@ class SimpleScheduler extends AbstractScheduler {
 
     	// Create a new schedule using the scgsched factory.
         val schedule = ScgFactory::eINSTANCE.createSchedule
-        
-//        val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = 
-//            Guice.createInjector().getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
-//        context.compilationResult.ancillaryData += potentialInstantaneousLoopAnalyzer.analyze(scg)
-        val pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
-        
 
         // Create and fill a list for all scheduling blocks.
         val schedulingConstraints = scg.orderSchedulingBlocks
         
-        schedulingBlockCount = scg.createSchedulingBlockCache(schedulingBlockCache)
+        placedVOs.clear
+        scg.declarations.forEach[ decl |
+        	placedVOs += decl.valuedObjects
+        ]
         
-        val sBlockList = <ScheduledBlock> newLinkedList
-        var schedulable = scg.createSchedule(sBlockList, schedulingConstraints, context)
-//		schedule.scheduledBlocks += sBlockList
+        guardCache.clear
+        scg.guards.forEach[ g |
+        	guardCache.put(g.valuedObject, g)
+        ]
+        
+        val guardList = <Guard> newLinkedList
+        var schedulable = scg.createSchedule(guardList, schedulingConstraints, context)
+		schedule.guards += guardList
         
         // Print out results on the console
         // and add the scheduling information to the graph.

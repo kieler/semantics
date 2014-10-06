@@ -226,60 +226,60 @@ class SimpleSequentializer extends AbstractSequentializer {
     	
     	
     	// For each scheduling block in the schedule iterate.
-    	for (sb : schedule.scheduledBlocks) {
-    		val sBlock = sb.schedulingBlock
-	  	   /**
-   			 * For each guard a guard expression exists.
-   		     * Retrieve the expression and test it for null. 
-	  	     * If the guard expression is null, the scheduler could not create an expression for this guard. This is bad. Perhaps the SCG is erroneous. Throw an exception.
-		     * Otherwise, it is possible that the guard expression houses empty expressions for a synchronizer. Add them as well.
-		     */    		
-   			// Retrieve the guard expression from the scheduling information.
-       		sb.createAndAddGuardExpression(nextControlFlows, schedule, scg, nodeCache) 
-    		
-    		/**
-    		 * If the scheduling block includes assignment nodes, they must be executed if the corresponding guard 
-    		 * evaluates to true. Therefore, create a conditional for the guard and add the assignment to the
-    		 * true branch. They will execute their expression if the guard is active in this tick instance. 
-    		 */
-    		if (sBlock.nodes.filter(typeof(Assignment)).size>0)
-    		{
-    			// Create a conditional and set a reference of the guard as condition.
-    			val conditional = ScgFactory::eINSTANCE.createConditional
-                conditional.condition = sBlock.guard.valuedObject.reference.copySCGExpression
-                if (sb.schizophrenic) {
-                    conditional.condition = scg.fixSchizophrenicExpression(conditional.condition)
-                }
-    			
-    			// Create control flows for the two branches and set the actual control flow to the conditional.
-    			conditional.then = ScgFactory::eINSTANCE.createControlFlow
-    			conditional.^else = ScgFactory::eINSTANCE.createControlFlow
-    			nextControlFlows.forEach[ target = conditional ]
-    			nextControlFlows.clear
-    			
-    			// Add the conditional.
-                nodeCache.add(conditional)
-    			
-    			// Now, use the SCG copy extensions to copy the assignment and connect them appropriately
-    			// in the true branch of the conditional.
-    			var nextControlFlow = conditional.then
-    			for (assignment : sBlock.nodes.filter(typeof(Assignment))) {
-    				val Assignment conditionalAssignment = assignment.copySCGNode(scg) as Assignment
-    				nextControlFlow.target = conditionalAssignment
-                    nodeCache.add(conditionalAssignment)
-    				nextControlFlow = ScgFactory::eINSTANCE.createControlFlow
-    				conditionalAssignment.next = nextControlFlow
-    			}
-    			nextControlFlows.add(nextControlFlow)
-    			
-    			// Subsequently, add the last control flow of the true branch and the control flow of the
-    			// else branch to the control flow list. These are the new entry flows for the next assignment
-    			// or the return value (in which case they will be connected to the exit node by the caller). 
-    			nextControlFlows.add(conditional.^else)
-
-    		}
-    		
-     	}
+//    	for (sb : schedule.scheduledBlocks) {
+//    		val sBlock = sb.schedulingBlock
+//	  	   /**
+//   			 * For each guard a guard expression exists.
+//   		     * Retrieve the expression and test it for null. 
+//	  	     * If the guard expression is null, the scheduler could not create an expression for this guard. This is bad. Perhaps the SCG is erroneous. Throw an exception.
+//		     * Otherwise, it is possible that the guard expression houses empty expressions for a synchronizer. Add them as well.
+//		     */    		
+//   			// Retrieve the guard expression from the scheduling information.
+//       		sb.createAndAddGuardExpression(nextControlFlows, schedule, scg, nodeCache) 
+//    		
+//    		/**
+//    		 * If the scheduling block includes assignment nodes, they must be executed if the corresponding guard 
+//    		 * evaluates to true. Therefore, create a conditional for the guard and add the assignment to the
+//    		 * true branch. They will execute their expression if the guard is active in this tick instance. 
+//    		 */
+//    		if (sBlock.nodes.filter(typeof(Assignment)).size>0)
+//    		{
+//    			// Create a conditional and set a reference of the guard as condition.
+//    			val conditional = ScgFactory::eINSTANCE.createConditional
+//                conditional.condition = sBlock.guard.valuedObject.reference.copySCGExpression
+//                if (sb.schizophrenic) {
+//                    conditional.condition = scg.fixSchizophrenicExpression(conditional.condition)
+//                }
+//    			
+//    			// Create control flows for the two branches and set the actual control flow to the conditional.
+//    			conditional.then = ScgFactory::eINSTANCE.createControlFlow
+//    			conditional.^else = ScgFactory::eINSTANCE.createControlFlow
+//    			nextControlFlows.forEach[ target = conditional ]
+//    			nextControlFlows.clear
+//    			
+//    			// Add the conditional.
+//                nodeCache.add(conditional)
+//    			
+//    			// Now, use the SCG copy extensions to copy the assignment and connect them appropriately
+//    			// in the true branch of the conditional.
+//    			var nextControlFlow = conditional.then
+//    			for (assignment : sBlock.nodes.filter(typeof(Assignment))) {
+//    				val Assignment conditionalAssignment = assignment.copySCGNode(scg) as Assignment
+//    				nextControlFlow.target = conditionalAssignment
+//                    nodeCache.add(conditionalAssignment)
+//    				nextControlFlow = ScgFactory::eINSTANCE.createControlFlow
+//    				conditionalAssignment.next = nextControlFlow
+//    			}
+//    			nextControlFlows.add(nextControlFlow)
+//    			
+//    			// Subsequently, add the last control flow of the true branch and the control flow of the
+//    			// else branch to the control flow list. These are the new entry flows for the next assignment
+//    			// or the return value (in which case they will be connected to the exit node by the caller). 
+//    			nextControlFlows.add(conditional.^else)
+//
+//    		}
+//    		
+//     	}
     	
     	// Return any remaining control flows for the caller.
     	nextControlFlows
