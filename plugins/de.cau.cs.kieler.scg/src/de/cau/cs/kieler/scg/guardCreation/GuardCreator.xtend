@@ -265,7 +265,8 @@ class GuardCreator extends AbstractGuardCreator {
              */
             guard.createSubsequentSchedulingBlockGuardExpression(schedulingBlock, scg)
         }
-                
+     
+    	System.out.println("Generated guard " + guard.valuedObject.name + " with expression " + guard.expression.serialize)           
     }
     
     
