@@ -38,6 +38,10 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
 import java.util.Set
 import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import java.util.Comparator
+import java.util.Collections
+import java.util.Arrays
+import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -117,12 +121,18 @@ class GuardScheduler extends AbstractScheduler {
         	topologicalSortVisited.add(guard)
         	
 			val VOR = <ValuedObject> newArrayList
+			val lastVOs = <ValuedObject> newArrayList
 			
 			if (guard.expression instanceof ValuedObjectReference) {
 				VOR += (guard.expression as ValuedObjectReference).valuedObject	
 			} else {
 				if (guard.expression instanceof OperatorExpression && (guard.expression as OperatorExpression).operator != OperatorType::PRE) {
 					guard.expression.eAllContents.filter(typeof(ValuedObjectReference)).map[ valuedObject ].forEach[ VOR += it ]
+					for(vo : VOR) {
+						if (vo.name.startsWith(AbstractGuardCreator::CONDITIONAL_EXPRESSION_PREFIX))
+							lastVOs += vo
+					}
+					VOR -= lastVOs
 				}
 			}   
 			
@@ -188,6 +198,14 @@ class GuardScheduler extends AbstractScheduler {
 			}			
 			
 			if (placeable) {
+				
+				for(ref : lastVOs) {
+					if (!placedVOs.contains(ref)) {
+						val tpGuard = guardCache.get(ref)
+						tpGuard.topologicalPlacement(guards, schedule, constraints, scg, indent + "  ")
+					} 
+				}
+				
                 System.out.println(indent + "  " + guard.valuedObject.name + " placed.")
 				schedule += guard
 				placedVOs += guard.valuedObject

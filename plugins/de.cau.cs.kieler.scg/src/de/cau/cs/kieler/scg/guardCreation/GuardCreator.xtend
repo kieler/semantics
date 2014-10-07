@@ -310,6 +310,7 @@ class GuardCreator extends AbstractGuardCreator {
                     ng.createGuardEquation(sb, scg)
                 }
             }
+            scg.handleSchizophrenicConditions(guard.expression)
     	}
     	
     	var volatileText = " "
@@ -366,6 +367,49 @@ class GuardCreator extends AbstractGuardCreator {
             }
         createdGuards
     }    
+    
+    protected def Set<Guard> handleSchizophrenicConditions(SCGraph scg, Expression expression) {
+        val createdGuards = <Guard> newHashSet
+        val vors = <ValuedObjectReference> newHashSet
+        
+        if (expression instanceof ValuedObjectReference) {
+//            vors += expression as ValuedObjectReference
+        } else if (expression instanceof OperatorExpression) {
+            vors += (expression as OperatorExpression).eAllContents.filter(typeof(ValuedObjectReference)).
+            	filter[ it.valuedObject.name.startsWith(CONDITIONAL_EXPRESSION_PREFIX) && !it.valuedObject.name.endsWith(SCHIZOPHRENIC_SUFFIX) ].toSet
+        }
+        
+            // TODO: performance!
+            for(vor : vors) {
+                val originalGuard = scg.guards.filter[ it.valuedObject == vor.valuedObject ].head
+                if (originalGuard != null) {
+                    
+                    val guardExists = newSchizoGuards.filter[ it.valuedObject.name == originalGuard.valuedObject.name + SCHIZOPHRENIC_SUFFIX ].toList
+                    if (guardExists.empty) {
+                        val newValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
+                        newValuedObject.name = originalGuard.valuedObject.name + SCHIZOPHRENIC_SUFFIX
+                    
+                        val newGuard = ScgFactory::eINSTANCE.createGuard
+                        newGuard.valuedObject = newValuedObject
+                        newGuard.schedulingBlockLink = originalGuard.schedulingBlockLink
+                        newGuard.volatile += originalGuard.volatile
+                        newGuard.schizophrenic = true
+                        newGuard.sequentialize = originalGuard.sequentialize
+                       	newGuard.expression = originalGuard.expression.copy
+                        scg.guards += newGuard
+                    
+                        vor.valuedObject = newGuard.valuedObject 
+                    
+                        newSchizoGuards += newGuard
+
+                        System.out.println("Generated NEW _SCHIZOPHRENIC_ guard " + newGuard.valuedObject.name)
+                    } else {
+                        vor.valuedObject = guardExists.head.valuedObject
+                    }
+                }
+            }
+        createdGuards
+    }        
     
    private def boolean isOnCriticalPath(Guard guard, Set<Node> pilData) {
         if (guard.schedulingBlockLink == null) return false
