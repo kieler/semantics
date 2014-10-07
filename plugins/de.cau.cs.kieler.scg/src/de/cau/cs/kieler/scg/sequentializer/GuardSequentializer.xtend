@@ -240,7 +240,7 @@ class GuardSequentializer extends AbstractSequentializer {
     		{
     			// Create a conditional and set a reference of the guard as condition.
     			val conditional = ScgFactory::eINSTANCE.createConditional
-                conditional.condition = sBlock.guard.valuedObject.reference.copySCGExpression
+                conditional.condition = guard.valuedObject.reference.copySCGExpression
 //                if (sb.schizophrenic) {
 //                    conditional.condition = scg.fixSchizophrenicExpression(conditional.condition)
 //                }
