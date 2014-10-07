@@ -141,9 +141,9 @@ class TracingVisualizer {
             if (viewContext.inputModel instanceof ModelWrapper) { //In case of displaying a TracingTree
                 selectedSourceElements.forEach [
                     if (it instanceof EObjectWrapper) {
-
+                        val eow = it as EObjectWrapper;
                         //add tracing children
-                        val children = new GenericTreeIterator(it, true,
+                        val children = new GenericTreeIterator(eow, true,
                             [
                                 val elem = it as EObjectWrapper;
                                 if (!elem.model.targetTransformations.empty) {
@@ -155,7 +155,7 @@ class TracingVisualizer {
                         visibleEdgesModelOrigin.addAll(children);
 
                         //add tracing parents
-                        val parents = new GenericTreeIterator(it, false,
+                        val parents = new GenericTreeIterator(eow, false,
                             [
                                 val elem = it as EObjectWrapper;
                                 if (elem.model.sourceTransformation != null) {
@@ -167,7 +167,7 @@ class TracingVisualizer {
                         visibleEdgesModelOrigin.addAll(parents);
 
                         //add real object if tracing tree is not transient
-                        if (!it.model.transient) {
+                        if (!eow.model.transient) {
                             visibleEdgesModelOrigin.addAll(parents.map[it.EObject].filterNull);
                         }
                     } else {
