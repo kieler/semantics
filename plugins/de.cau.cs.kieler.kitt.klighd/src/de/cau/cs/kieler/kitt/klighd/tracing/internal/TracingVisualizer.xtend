@@ -18,10 +18,13 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KGraphElement
 import de.cau.cs.kieler.core.kgraph.KNode
+import de.cau.cs.kieler.core.krendering.Colors
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties
@@ -29,20 +32,15 @@ import de.cau.cs.kieler.kitt.tracing.TracingTreeExtensions
 import de.cau.cs.kieler.kitt.tracingtree.EObjectWrapper
 import de.cau.cs.kieler.kitt.tracingtree.ModelWrapper
 import de.cau.cs.kieler.klighd.ViewContext
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.HashSet
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.core.util.Pair
 
 import static extension de.cau.cs.kieler.kitt.klighd.actions.AbstractTracingSelectionAction.*
-import static extension de.cau.cs.kieler.kitt.klighd.tracing.internal.NearestNodeUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingManager.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
-import de.cau.cs.kieler.core.krendering.Colors
-import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
-import com.google.common.collect.HashMultimap
-import de.cau.cs.kieler.klighd.util.KlighdProperties
 
 /**
  * @author als
@@ -142,6 +140,7 @@ class TracingVisualizer {
                 selectedSourceElements.forEach [
                     if (it instanceof EObjectWrapper) {
                         val eow = it as EObjectWrapper;
+
                         //add tracing children
                         val children = new GenericTreeIterator(eow, true,
                             [
@@ -345,7 +344,7 @@ class TracingVisualizer {
                     viewContext.getTargetElements(key).forEach [ elementSource |
                         viewContext.getTargetElements(value).forEach [ elementTarget |
                             createTracingEdge(elementSource, elementTarget,
-                                new Pair(key, value), sourceModelRootNode);
+                                new Pair(key as Object, value as Object), sourceModelRootNode);
                         ]
                     ]
                 ]

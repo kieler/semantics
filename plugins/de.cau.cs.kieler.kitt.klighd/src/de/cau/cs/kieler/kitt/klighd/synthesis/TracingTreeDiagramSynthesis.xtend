@@ -45,6 +45,7 @@ import javax.inject.Inject
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kitt.tracing.TracingManager
+import de.cau.cs.kieler.kitt.klighd.actions.MemorizedCollapseExpandAction
 
 /**
  * KLighD visualization for TraingTrees and EObjectsCollections in ModelWrappers.
@@ -172,11 +173,11 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
         //node.setLayoutOption(LayoutOptions::EXPAND_NODES, false);
         node.children += createNode() => [
             it.associateWith(model);
-            it.setLayoutOption(KlighdProperties::EXPAND, false);
+            it.setLayoutOption(KlighdProperties.EXPAND, MemorizedCollapseExpandAction.isExpanded(model, false));
             figure.setGridPlacement(1);
             //Collapse Rectangle
             it.addRectangle() => [
-                it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
+                it.setProperty(KlighdProperties.COLLAPSED_RENDERING, true);
                 it.invisible = true;
                 //This text is only for correct size estimation
                 it.addText(model.modelTypeID) => [
@@ -189,14 +190,14 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
                 it.addText("[Show Model]") => [
                     it.foreground = "blue".color
                     it.fontSize = 9
-                    it.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                    it.addSingleClickAction(MemorizedCollapseExpandAction.ID);
+                    it.addDoubleClickAction(MemorizedCollapseExpandAction.ID);
                     it.suppressSelectability;
                 ];
             ]
             //Expanded Rectangle
             it.addRectangle() => [
-                it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
+                it.setProperty(KlighdProperties.EXPANDED_RENDERING, true);
                 it.setBackground = "white".color;
                 it.setSurroundingSpace(2, 0);
                 it.invisible = false;
@@ -207,8 +208,8 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
                     it.fontSize = 9
                     //center
                     it.setPointPlacementData(createKPosition(LEFT, 0, 0.5f, TOP, 4, 0), H_CENTRAL, V_TOP, 0, 0, 0, 0);
-                    it.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);                    
-                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                    it.addSingleClickAction(MemorizedCollapseExpandAction.ID);                    
+                    it.addDoubleClickAction(MemorizedCollapseExpandAction.ID);
                     it.suppressSelectability;
                 ];
                 it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 10, 0);
@@ -219,7 +220,7 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
                 try {
                     val properties = new KlighdSynthesisProperties();
                     properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID);
-                    subDiagramNode = LightDiagramServices::translateModel(model.rootObject.EObject, usedContext,
+                    subDiagramNode = LightDiagramServices.translateModel(model.rootObject.EObject, usedContext,
                         properties);
                 } catch (Exception e) {
                     //fallback

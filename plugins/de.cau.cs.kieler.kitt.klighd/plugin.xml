@@ -160,6 +160,10 @@
             class="de.cau.cs.kieler.kitt.klighd.actions.TargetTracingSelectionAction"
             id="de.cau.cs.kieler.kitt.klighd.action.select.target">
       </action>
+      <action
+            class="de.cau.cs.kieler.kitt.klighd.actions.MemorizedCollapseExpandAction"
+            id="de.cau.cs.kieler.kitt.klighd.actions.MemorizedCollapseExpandAction">
+      </action>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
