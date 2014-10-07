@@ -35,6 +35,8 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
+import java.util.Set
+import de.cau.cs.kieler.scg.Dependency
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -121,7 +123,7 @@ class GuardScheduler extends AbstractScheduler {
 			}   
 			
 			if (guard.schedulingBlockLink != null) {
-			    val dependencies = guard.schedulingBlockLink.dependencies
+			    val dependencies = guard.schedulingBlockLink.getAllDependencies
 			    if (!dependencies.empty) {
 			        System.out.print(indent + "Guard " + guard.valuedObject.name + " has dependencies: ")
 			        for(dependency : dependencies) {
@@ -256,5 +258,13 @@ class GuardScheduler extends AbstractScheduler {
         scg
     }
     
+    
+    private def Set<Dependency> getAllDependencies(SchedulingBlock schedulingBlock) {
+    	val returnSet = <Dependency> newHashSet;
+    	
+    	(schedulingBlock.eContainer as BasicBlock).schedulingBlocks.forEach[ returnSet += it.dependencies ]
+    	
+    	returnSet
+    }
 
 }
