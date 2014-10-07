@@ -494,14 +494,14 @@ class GuardCreator extends AbstractGuardCreator {
     protected def Expression predecessorExpression(Guard guard, Predecessor predecessor, SchedulingBlock schedulingBlock, SCGraph scg) {
         // Return a solely reference as expression if the predecessor is not a conditional
         if (predecessor.branchType == BranchType::NORMAL) {
-            return predecessor.basicBlock.schedulingBlocks.head.guard.valuedObject.reference
+            return predecessor.basicBlock.schedulingBlocks.last.guard.valuedObject.reference
         }
         // If we are in the true branch of the predecessor, combine the predecessor guard reference with
         // the condition of the conditional and return the expression.
         else if (predecessor.branchType == BranchType::TRUEBRANCH) {
             val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
             expression.setOperator(OperatorType::AND)
-            expression.subExpressions += predecessor.basicBlock.schedulingBlocks.head.guard.valuedObject.reference
+            expression.subExpressions += predecessor.basicBlock.schedulingBlocks.last.guard.valuedObject.reference
             expression.subExpressions += conditionalGuards.get(predecessor.conditional).valuedObject.reference
 
             
@@ -522,7 +522,7 @@ class GuardCreator extends AbstractGuardCreator {
         else if (predecessor.branchType == BranchType::ELSEBRANCH) {
             val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
             expression.setOperator(OperatorType::AND)
-            expression.subExpressions += predecessor.basicBlock.schedulingBlocks.head.guard.valuedObject.reference
+            expression.subExpressions += predecessor.basicBlock.schedulingBlocks.last.guard.valuedObject.reference
             expression.subExpressions += conditionalGuards.get(predecessor.conditional).valuedObject.reference.negate
 
             // Conditional branches are mutual exclusive. Since the other branch may modify the condition 

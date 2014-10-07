@@ -282,7 +282,8 @@ class GuardScheduler extends AbstractScheduler {
     private def Set<Dependency> getAllDependencies(SchedulingBlock schedulingBlock) {
     	val returnSet = <Dependency> newHashSet;
     	
-    	(schedulingBlock.eContainer as BasicBlock).schedulingBlocks.forEach[ returnSet += it.dependencies ]
+    	//(schedulingBlock.eContainer as BasicBlock).schedulingBlocks.forEach[ returnSet += it.dependencies ]
+    	returnSet += schedulingBlock.dependencies
     	
     	returnSet
     }
