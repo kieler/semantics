@@ -298,8 +298,14 @@ class GuardCreator extends AbstractGuardCreator {
     protected def void createSynchronizerBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
         // The simple scheduler uses the SurfaceSynchronizer. 
         // The result of the synchronizer is stored in the synchronizerData class joinData.
-        val synchronizer = (schedulingBlock.nodes.head as Join).getSynchronizer
-        System.out.println("Sequentializing join with " + synchronizer.id)
+        
+        val join = schedulingBlock.nodes.head as Join
+        if (!join.hasAnnotation(SynchronizerSelector::ANNOTATION_SELECTEDSYNCHRONIZER)) {
+            val sync = join.chooseSynchronizer
+            sync.annotate(join)
+        }        
+        val synchronizer = join.getSynchronizer
+        System.out.println("Creating join guard " + guard.valuedObject.name + " with " + synchronizer.id)
         if (synchronizer.id == DepthJoinSynchronizer::SYNCHRONIZER_ID) {
             (synchronizer as DepthJoinSynchronizer).schizophrenicDeclaration = schizoDeclaration
         }
