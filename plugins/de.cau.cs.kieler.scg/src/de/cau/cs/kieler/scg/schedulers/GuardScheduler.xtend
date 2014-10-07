@@ -75,7 +75,7 @@ class GuardScheduler extends AbstractScheduler {
     protected var int schedulingBlockCount
     
     protected val placedVOs = <ValuedObject> newHashSet
-    protected val guardCache = <ValuedObject, Guard> newHashMap 
+    protected val guardCache = <ValuedObject, Guard> newHashMap  
 
     
     // -------------------------------------------------------------------------
@@ -120,6 +120,19 @@ class GuardScheduler extends AbstractScheduler {
 				}
 			}   
 			
+			if (guard.schedulingBlockLink != null) {
+			    val dependencies = guard.schedulingBlockLink.dependencies
+			    if (!dependencies.empty) {
+			        System.out.print("Guard " + guard.valuedObject.name + " has dependencies: ")
+			        for(dependency : dependencies) {
+			            val sb = schedulingBlockCache.get(dependency.eContainer)
+			            System.out.print(sb.guard.valuedObject.name + " ")
+			            VOR += sb.guard.valuedObject
+			        }
+			    }
+                System.out.println("")
+			}
+			
 //			System.out.print("Placing guard " + guard.valuedObject.name + ": ")
 //			for(ref : VOR) {
 //				System.out.print(ref.name + " ")
@@ -127,7 +140,6 @@ class GuardScheduler extends AbstractScheduler {
 //			System.out.println("")
 			for(ref : VOR) {
 				if (!placedVOs.contains(ref)) {
-//					System.out.println(ref.name + " not placed!")
 					val tpGuard = guardCache.get(ref)
 					tpGuard.topologicalPlacement(guards, schedule, constraints, scg)
 				} 
@@ -136,6 +148,7 @@ class GuardScheduler extends AbstractScheduler {
 			var placeable = true			
 			for(ref : VOR) {
 				if (!placedVOs.contains(ref)) {
+                    System.out.println(ref.name + " not placed!")
 					placeable = false
 				}
 			}			
@@ -193,6 +206,9 @@ class GuardScheduler extends AbstractScheduler {
 
     	// Create a new schedule using the scgsched factory.
         val schedule = ScgFactory::eINSTANCE.createSchedule
+        
+        schedulingBlockCache.clear
+        scg.createSchedulingBlockCache(schedulingBlockCache)
 
         // Create and fill a list for all scheduling blocks.
         val schedulingConstraints = scg.orderSchedulingBlocks
