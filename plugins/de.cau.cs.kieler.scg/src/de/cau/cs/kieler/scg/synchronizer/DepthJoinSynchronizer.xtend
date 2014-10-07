@@ -46,6 +46,7 @@ import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.Guard
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -99,6 +100,9 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
 
     @Inject
     extension AnnotationsExtensions
+    
+    @Inject
+    extension KExpressionsSerializeExtension    
     
     public var Declaration schizophrenicDeclaration = null
    
@@ -209,6 +213,16 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         //data.guardExpression.expression = join.graph.fixSchizophrenicExpression(data.guardExpression.expression) 
         
         data.fixEmptyExpressions.fixSynchronizerExpression
+        
+		guard.expression = data.guardExpression.expression
+		for(emptyExp : data.guardExpression.emptyExpressions) {
+			val newGuard = ScgFactory::eINSTANCE.createGuard
+            newGuard.valuedObject = emptyExp.valuedObject
+            newGuard.expression = emptyExp.expression
+            scg.guards += newGuard
+            
+            System.out.println("Generated NEW guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize)
+		}        
     }    
     
     protected def Expression fixSchizophrenicExpression(SCGraph scg, Expression expression) {
