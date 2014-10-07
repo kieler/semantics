@@ -1479,13 +1479,31 @@ public interface ScgPackage extends EPackage {
 	int GUARD__SCHEDULING_BLOCK_LINK = 3;
 
 																/**
+	 * The feature id for the '<em><b>Volatile</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUARD__VOLATILE = 4;
+
+																/**
+	 * The feature id for the '<em><b>Sequentialize</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GUARD__SEQUENTIALIZE = 5;
+
+																/**
 	 * The number of structural features of the '<em>Guard</em>' class.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-    int GUARD_FEATURE_COUNT = 4;
+    int GUARD_FEATURE_COUNT = 6;
 
                 /**
 	 * The meta object id for the '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}' enum.
@@ -2246,6 +2264,28 @@ public interface ScgPackage extends EPackage {
 	EReference getGuard_SchedulingBlockLink();
 
 																/**
+	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scg.Guard#getVolatile <em>Volatile</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Volatile</em>'.
+	 * @see de.cau.cs.kieler.scg.Guard#getVolatile()
+	 * @see #getGuard()
+	 * @generated
+	 */
+	EReference getGuard_Volatile();
+
+																/**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.Guard#isSequentialize <em>Sequentialize</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Sequentialize</em>'.
+	 * @see de.cau.cs.kieler.scg.Guard#isSequentialize()
+	 * @see #getGuard()
+	 * @generated
+	 */
+	EAttribute getGuard_Sequentialize();
+
+																/**
 	 * Returns the meta object for enum '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2881,6 +2921,22 @@ public interface ScgPackage extends EPackage {
 		 * @generated
 		 */
 		EReference GUARD__SCHEDULING_BLOCK_LINK = eINSTANCE.getGuard_SchedulingBlockLink();
+
+																																/**
+		 * The meta object literal for the '<em><b>Volatile</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference GUARD__VOLATILE = eINSTANCE.getGuard_Volatile();
+
+																																/**
+		 * The meta object literal for the '<em><b>Sequentialize</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute GUARD__SEQUENTIALIZE = eINSTANCE.getGuard_Sequentialize();
 
 																																/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}' enum.

@@ -54,6 +54,10 @@ import de.cau.cs.kieler.scg.extensions.SCGCacheExtensions
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopAnalyzer
 import com.google.inject.Guice
+import de.cau.cs.kieler.scg.Fork
+import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.Conditional
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -87,7 +91,7 @@ class GuardCreator extends AbstractGuardCreator {
     extension SCGDeclarationExtensions
          
     @Inject 
-    extension SCGCacheExtensions
+    extension SCGControlFlowExtensions
 
     @Inject 
     extension KExpressionsExtension	
@@ -104,8 +108,6 @@ class GuardCreator extends AbstractGuardCreator {
     // -------------------------------------------------------------------------
     // -- Globals
     // -------------------------------------------------------------------------
-    
-    private static val ANNOTATION_GUARDCREATOR = "guardCreator" 
     
     protected val schedulingBlocks = <SchedulingBlock> newArrayList
     protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
@@ -126,6 +128,8 @@ class GuardCreator extends AbstractGuardCreator {
     protected var SynchronizerData joinData = null
     
     protected val newSchizoGuards = <Guard> newHashSet
+    
+    protected val conditionalGuards = <Conditional, Guard> newHashMap
     
                
     // -------------------------------------------------------------------------
@@ -157,6 +161,7 @@ class GuardCreator extends AbstractGuardCreator {
 		val basicBlockList = <BasicBlock> newArrayList
         scg.createGOSignal
         
+        conditionalGuards.clear
         newSchizoGuards.clear
         schedulingBlocks.clear
         schedulingBlockCache.clear
@@ -183,6 +188,21 @@ class GuardCreator extends AbstractGuardCreator {
             } 
             else if (p.branchType == BranchType::ELSEBRANCH) {
                 p.cacheTwin(basicBlockList)
+            }
+            val conditional = p.conditional
+            if (conditional != null && !conditionalGuards.keySet.contains(conditional)) {
+            	val newVO = KExpressionsFactory::eINSTANCE.createValuedObject
+            	newVO.name = CONDITIONAL_EXPRESSION_PREFIX + p.basicBlock.schedulingBlocks.head.guard.valuedObject.name
+            	
+	            val newGuard = ScgFactory::eINSTANCE.createGuard
+                newGuard.valuedObject = newVO
+                newGuard.expression = conditional.condition.copy
+                newGuard.sequentialize = false
+                newGuard.schedulingBlockLink = p.basicBlock.schedulingBlocks.head
+                scg.guards += newGuard
+                
+                conditionalGuards.put(conditional, newGuard)
+                System.out.println("Generated NEW conditional guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize)
             }
         ]
         
@@ -213,7 +233,10 @@ class GuardCreator extends AbstractGuardCreator {
         // Query the basic block of the scheduling block.
         val basicBlock = schedulingBlock.basicBlock
 
-        if (guard.schizophrenic && basicBlock.entryBlock) {
+        if (guard.schizophrenic && basicBlock.entryBlock && 
+        	((basicBlock.schedulingBlocks.head.nodes.head as Entry).allPrevious.head as Fork).join.getSynchronizer.id 
+        	== DepthJoinSynchronizer::SYNCHRONIZER_ID
+        ) {
             guard.expression = FALSE
         } else {                 
                 
@@ -288,7 +311,15 @@ class GuardCreator extends AbstractGuardCreator {
                 }
             }
     	}
-        System.out.println("Generated guard " + guard.valuedObject.name + " with expression " + guard.expression.serialize)      
+    	
+    	var volatileText = " "
+    	if (!guard.volatile.empty) {
+    		volatileText = volatileText + "and volatiles "
+    		for(volatile : guard.volatile) {
+    			volatileText = volatileText + volatile.name + " "
+    		}
+    	}
+        System.out.println("Generated guard " + guard.valuedObject.name + " with expression " + guard.expression.serialize + volatileText)      
     }
     } // schizo entry
     
@@ -313,13 +344,20 @@ class GuardCreator extends AbstractGuardCreator {
                         val newGuard = ScgFactory::eINSTANCE.createGuard
                         newGuard.valuedObject = newValuedObject
                         newGuard.schedulingBlockLink = originalGuard.schedulingBlockLink
+                        newGuard.volatile += originalGuard.volatile
                         newGuard.schizophrenic = true
+                        newGuard.sequentialize = originalGuard.sequentialize
                         scg.guards += newGuard
                     
                         vor.valuedObject = newGuard.valuedObject 
                     
                         newSchizoGuards += newGuard
-                        createdGuards += newGuard
+
+                        if (!newGuard.sequentialize) {
+                        	newGuard.expression = originalGuard.expression.copy
+                        } else {
+	                        createdGuards += newGuard
+                        }
                         System.out.println("Generated NEW _SCHIZOPHRENIC_ guard " + newGuard.valuedObject.name)
                     } else {
                         vor.valuedObject = guardExists.head.valuedObject
@@ -407,14 +445,14 @@ class GuardCreator extends AbstractGuardCreator {
             // For each predecessor add its expression to the sub expressions list of the operator expression.
             relevantPredecessors.forEach[ 
 //                if (!scheduledBlock.schizophrenic || it.basicBlock.entryBlock)
-                    expr.subExpressions += it.predecessorExpression(schedulingBlock, scg)
+                    expr.subExpressions += guard.predecessorExpression(it, schedulingBlock, scg)
             ]
             guard.expression = expr
         } 
         // If it is exactly one predecessor, we can use its expression directly.
         else if (relevantPredecessors.size == 1) {
 //            if (!scheduledBlock.schizophrenic || basicBlock.predecessors.head.basicBlock.entryBlock)
-                guard.expression = relevantPredecessors.head.predecessorExpression(schedulingBlock, scg)
+                guard.expression = guard.predecessorExpression(relevantPredecessors.head, schedulingBlock, scg)
         } 
         else 
         {
@@ -453,7 +491,7 @@ class GuardCreator extends AbstractGuardCreator {
      * @throws UnsupportedSCGException
      *      Throws an UnsupportedSCGException if the predecessor does not contain sufficient information to form the expression.
      */
-    protected def Expression predecessorExpression(Predecessor predecessor, SchedulingBlock schedulingBlock, SCGraph scg) {
+    protected def Expression predecessorExpression(Guard guard, Predecessor predecessor, SchedulingBlock schedulingBlock, SCGraph scg) {
         // Return a solely reference as expression if the predecessor is not a conditional
         if (predecessor.branchType == BranchType::NORMAL) {
             return predecessor.basicBlock.schedulingBlocks.head.guard.valuedObject.reference
@@ -464,13 +502,16 @@ class GuardCreator extends AbstractGuardCreator {
             val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
             expression.setOperator(OperatorType::AND)
             expression.subExpressions += predecessor.basicBlock.schedulingBlocks.head.guard.valuedObject.reference
-            expression.subExpressions += predecessor.conditional.condition.copy
+            expression.subExpressions += conditionalGuards.get(predecessor.conditional).valuedObject.reference
+
             
             // Conditional branches are mutual exclusive. Since the other branch may modify the condition 
             // make sure the subsequent branch will not evaluate to true if the first one was already taken.
             val twin = predecessor.getSchedulingBlockTwin(BranchType::ELSEBRANCH, scg)
             if (predecessorTwinMark.contains(twin)) {
-//                expression.subExpressions.add(0, twin.guard.valuedObject.reference.negate)
+            	val twinVOR = twin.guard.valuedObject.reference
+            	guard.volatile += twinVOR.valuedObject
+//                expression.subExpressions.add(0, twinVOR.negate)
             } 
             predecessorTwinMark.add(schedulingBlock)
             
@@ -482,13 +523,15 @@ class GuardCreator extends AbstractGuardCreator {
             val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
             expression.setOperator(OperatorType::AND)
             expression.subExpressions += predecessor.basicBlock.schedulingBlocks.head.guard.valuedObject.reference
-            expression.subExpressions += predecessor.conditional.condition.copy.negate
+            expression.subExpressions += conditionalGuards.get(predecessor.conditional).valuedObject.reference.negate
 
             // Conditional branches are mutual exclusive. Since the other branch may modify the condition 
             // make sure the subsequent branch will not evaluate to true if the first one was already taken.
             val twin = predecessor.getSchedulingBlockTwin(BranchType::TRUEBRANCH, scg)
             if (predecessorTwinMark.contains(twin)) {
-//                expression.subExpressions.add(0, twin.guard.valuedObject.reference.negate)
+            	val twinVOR = twin.guard.valuedObject.reference
+            	guard.volatile += twinVOR.valuedObject
+//                expression.subExpressions.add(0, twinVOR.negate)
             } 
             predecessorTwinMark.add(schedulingBlock)
 

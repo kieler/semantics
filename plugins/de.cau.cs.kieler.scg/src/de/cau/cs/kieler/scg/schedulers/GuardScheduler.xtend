@@ -37,6 +37,7 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import java.util.Set
 import de.cau.cs.kieler.scg.Dependency
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -66,6 +67,9 @@ class GuardScheduler extends AbstractScheduler {
 
     @Inject
     extension SCGCacheExtensions    
+    
+    @Inject
+    extension KExpressionsExtension
     
     
     // -------------------------------------------------------------------------
@@ -147,11 +151,22 @@ class GuardScheduler extends AbstractScheduler {
 			    }
 			}
 			
+			if (!guard.volatile.empty) {
+				for(volatile : guard.volatile) {
+//					if (!placedVOs.contains(volatile)) {
+						VOR -= volatile
+						guard.expression = guard.expression.replace(volatile, TRUE)
+//					}						
+				}
+			}
+
 			System.out.print(indent + "Placing guard " + guard.valuedObject.name + ": ")
 			for(ref : VOR) {
 				System.out.print(ref.name + " ")
 			}
 			System.out.println("")
+
+			
 			for(ref : VOR) {
 				if (!placedVOs.contains(ref)) {
 					val tpGuard = guardCache.get(ref)
@@ -162,8 +177,13 @@ class GuardScheduler extends AbstractScheduler {
 			var placeable = true			
 			for(ref : VOR) {
 				if (!placedVOs.contains(ref)) {
-                    System.out.println(indent + ref.name + " not placed!")
-					placeable = false
+//					if (guard.volatile.contains(ref)) {
+//						System.out.println(indent + ref.name + " too volatile... removing.")
+//						guard.expression = guard.expression.replace(ref, TRUE)
+//					} else {
+	                    System.out.println(indent + ref.name + " not placed!")
+						placeable = false
+//					}
 				}
 			}			
 			

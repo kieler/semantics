@@ -900,6 +900,24 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
 																/**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getGuard_Volatile() {
+		return (EReference)guardEClass.getEStructuralFeatures().get(4);
+	}
+
+																/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGuard_Sequentialize() {
+		return (EAttribute)guardEClass.getEStructuralFeatures().get(5);
+	}
+
+																/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -1026,6 +1044,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 		createEReference(guardEClass, GUARD__EXPRESSION);
 		createEAttribute(guardEClass, GUARD__SCHIZOPHRENIC);
 		createEReference(guardEClass, GUARD__SCHEDULING_BLOCK_LINK);
+		createEReference(guardEClass, GUARD__VOLATILE);
+		createEAttribute(guardEClass, GUARD__SEQUENTIALIZE);
 
 		// Create enums
 		branchTypeEEnum = createEEnum(BRANCH_TYPE);
@@ -1173,6 +1193,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 		initEReference(getGuard_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Guard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getGuard_Schizophrenic(), ecorePackage.getEBoolean(), "schizophrenic", null, 0, 1, Guard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getGuard_SchedulingBlockLink(), this.getSchedulingBlock(), null, "schedulingBlockLink", null, 0, 1, Guard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getGuard_Volatile(), theKExpressionsPackage.getValuedObject(), null, "volatile", null, 0, -1, Guard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getGuard_Sequentialize(), ecorePackage.getEBoolean(), "sequentialize", "true", 0, 1, Guard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(branchTypeEEnum, BranchType.class, "BranchType");

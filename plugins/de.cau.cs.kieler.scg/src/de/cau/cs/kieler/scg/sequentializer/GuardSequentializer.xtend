@@ -236,7 +236,7 @@ class GuardSequentializer extends AbstractSequentializer {
     		 * evaluates to true. Therefore, create a conditional for the guard and add the assignment to the
     		 * true branch. They will execute their expression if the guard is active in this tick instance. 
     		 */
-    		if (sBlock != null && sBlock.nodes.filter(typeof(Assignment)).size>0)
+    		if (sBlock != null && guard.sequentialize && sBlock.nodes.filter(typeof(Assignment)).size>0)
     		{
     			// Create a conditional and set a reference of the guard as condition.
     			val conditional = ScgFactory::eINSTANCE.createConditional

@@ -16,6 +16,7 @@ package de.cau.cs.kieler.scg;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -30,6 +31,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.scg.Guard#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Guard#isSchizophrenic <em>Schizophrenic</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Guard#getSchedulingBlockLink <em>Scheduling Block Link</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.Guard#getVolatile <em>Volatile</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.Guard#isSequentialize <em>Sequentialize</em>}</li>
  * </ul>
  * </p>
  *
@@ -141,5 +144,48 @@ public interface Guard extends EObject {
 	 * @generated
 	 */
 	void setSchedulingBlockLink(SchedulingBlock value);
+
+				/**
+	 * Returns the value of the '<em><b>Volatile</b></em>' reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Volatile</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Volatile</em>' reference list.
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getGuard_Volatile()
+	 * @model
+	 * @generated
+	 */
+	EList<ValuedObject> getVolatile();
+
+				/**
+	 * Returns the value of the '<em><b>Sequentialize</b></em>' attribute.
+	 * The default value is <code>"true"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Sequentialize</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Sequentialize</em>' attribute.
+	 * @see #setSequentialize(boolean)
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getGuard_Sequentialize()
+	 * @model default="true"
+	 * @generated
+	 */
+	boolean isSequentialize();
+
+				/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.scg.Guard#isSequentialize <em>Sequentialize</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Sequentialize</em>' attribute.
+	 * @see #isSequentialize()
+	 * @generated
+	 */
+	void setSequentialize(boolean value);
 
 } // Guard

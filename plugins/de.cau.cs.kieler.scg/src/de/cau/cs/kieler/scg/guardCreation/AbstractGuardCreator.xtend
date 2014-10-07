@@ -56,6 +56,10 @@ abstract class AbstractGuardCreator extends Transformation {
     /** Name of the go signal. */
     public static val String GOGUARDNAME = "_GO"
     
+    public static val ANNOTATION_GUARDCREATOR = "guardCreator" 
+    
+    public static val CONDITIONAL_EXPRESSION_PREFIX = "_cond"
+    
     
     // -------------------------------------------------------------------------
     // -- Sequentializer 
