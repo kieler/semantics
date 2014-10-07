@@ -1303,22 +1303,22 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // not schedulable blocks!
             // TODO: draw not scheduled blocks
             
-//            if (SHOW_SCHEDULINGBLOCKS.booleanValue) {
-//                val usBlocks = scg.getAllSchedulingBlocks
-//                scg.schedules.head.getScheduledBlocks.forEach[ 
-//                    if (!it.schizophrenic) 
-//                        usBlocks.remove(it.schedulingBlock)
-//                ]
-//                usBlocks.forEach [
-//                    val node = schedulingBlockMapping.get(it)
-//                    node.getData(typeof(KRoundedRectangle)) => [
-//                        it.lineStyle = LineStyle::SOLID
-//                        it.foreground = SCHEDULING_NOTSCHEDULABLE.copy
-//                    ]
-//                    node.KRendering.background = SCHEDULING_NOTSCHEDULABLE.copy
-//                    node.KRendering.background.alpha = 128
-//                ]
-//            }
+            if (scg.hasSchedulingData && SHOW_SCHEDULINGBLOCKS.booleanValue) {
+                val usBlocks = scg.getAllSchedulingBlocks
+                scg.schedules.head.guards.forEach[ 
+                    if (!it.schizophrenic) 
+                        usBlocks.remove(it.schedulingBlockLink)
+                ]
+                usBlocks.forEach [
+                    val node = schedulingBlockMapping.get(it)
+                    node.getData(typeof(KRoundedRectangle)) => [
+                        it.lineStyle = LineStyle::SOLID
+                        it.foreground = SCHEDULING_NOTSCHEDULABLE.copy
+                    ]
+                    node.KRendering.background = SCHEDULING_NOTSCHEDULABLE.copy
+                    node.KRendering.background.alpha = 128
+                ]
+            }
 //        }
     }
 
