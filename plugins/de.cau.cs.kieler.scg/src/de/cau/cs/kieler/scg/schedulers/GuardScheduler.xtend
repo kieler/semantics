@@ -125,9 +125,11 @@ class GuardScheduler extends AbstractScheduler {
 			    if (!dependencies.empty) {
 			        System.out.print("Guard " + guard.valuedObject.name + " has dependencies: ")
 			        for(dependency : dependencies) {
-			            val sb = schedulingBlockCache.get(dependency.eContainer)
-			            System.out.print(sb.guard.valuedObject.name + " ")
-			            VOR += sb.guard.valuedObject
+			            if (dependency.concurrent && !dependency.confluent) {
+			                val sb = schedulingBlockCache.get(dependency.eContainer)
+			                System.out.print(sb.guard.valuedObject.name + " ")
+			                VOR += sb.guard.valuedObject
+    	                }
 			        }
 			    }
                 System.out.println("")
