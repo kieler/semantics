@@ -188,7 +188,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 	            data.predecessors.add(exitSB)
 	            
 	            // Now, retrieve all surfaces of the actual thread.
-	            val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Surface)).toList
+	            val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Depth)).toList
 	            
 	            // If there are surface, build an empty expression.
 	            if (threadSurfaces.size>0) {
