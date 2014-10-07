@@ -87,6 +87,7 @@ import de.cau.cs.kieler.kico.CompilationResult
 import de.cau.cs.kieler.kico.klighd.KiCoKLighDProperties
 import java.util.Set
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
+import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -1242,16 +1243,30 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK)
                 bbContainerList.put(bb, bbContainer)
 //                val bbName = serializer.serialize(bb.guards.head.reference)
-                val bbName = bb.schedulingBlocks.head.guard.valuedObject.name //reference.valuedObject.name
-                bbContainer.addOutsideTopLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
+                var bbName = bb.schedulingBlocks.head.guard.valuedObject.name //reference.valuedObject.name
+                
+                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
+                	val expText = serializer.serialize(bb.schedulingBlocks.head.guard.expression.copy.fix)	
+//                	expText.createLabel(bbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
+					bbName = bbName + "\n" + expText                	
+                }
+                
+                bbName.createLabel(bbContainer).configureOutsideTopLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER.copy
             }
             if (SHOW_SCHEDULINGBLOCKS.booleanValue)
                 for (schedulingBlock : bb.schedulingBlocks) {
                     val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK)
                     schedulingBlockMapping.put(schedulingBlock, sbContainer)
 //                    val sbName = serializer.serialize(schedulingBlock.guard.reference)
-                     val sbName = schedulingBlock.guard.valuedObject.name //reference.valuedObject.name
-                    sbContainer.addOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER
+                     var sbName = schedulingBlock.guard.valuedObject.name //reference.valuedObject.name
+
+	                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
+    	            	val expText = serializer.serialize(schedulingBlock.guard.expression.copy.fix)	
+//        	        	expText.createLabel(sbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER                	
+						sbName = sbName + "\n" + expText       
+					}
+            	    
+                	sbName.createLabel(sbContainer).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER.copy
                 }
         }
 
