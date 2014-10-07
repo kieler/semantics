@@ -42,6 +42,7 @@ import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import de.cau.cs.kieler.core.krendering.Colors
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import com.google.common.collect.HashMultimap
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 
 /**
  * @author als
@@ -177,20 +178,22 @@ class TracingVisualizer {
                 val mapping = viewContext.getProperty(TracingProperties.TRACING_MAP);
                 if (mapping != null) {
                     val selectedSourceElementsList = selectedSourceElements.toList;
-                    var children = selectedSourceElementsList;
-                    while (!children.empty && visibleEdgesModelOrigin.addAll(children)) {
+                    var children = selectedSourceElementsList; //first add already selected elements
+                    while (!children.empty && visibleEdgesModelOrigin.addAll(children)) { //continue if derived elements exist and are new (changing the set)
                         children = children.fold(newLinkedList) [ list, item |
+                            //derive implicit selected elements from mapping
                             list.addAll(mapping.get(item));
                             list;
                         ];
                     }
                     var parents = selectedSourceElementsList;
-                    while (!parents.empty && visibleEdgesModelOrigin.addAll(parents)) {
+                    do { //this time a do-while because selectedSourceElements already contained
                         parents = parents.fold(newLinkedList) [ list, item |
+                            //derive implicit selected elements from reverse mapping
                             list.addAll(mapping.getReverse(item));
                             list;
                         ];
-                    }
+                    } while (!parents.empty && visibleEdgesModelOrigin.addAll(parents)); //continue if derived elements exist and are new (changing the set)
                 }
             }
         }
@@ -382,6 +385,7 @@ class TracingVisualizer {
                         it.figureObject = new TracingEdgeNode(source, target, attachNode.parent);
                         it.invisible = true;
                         it.invisible.propagateToChildren = true;
+                        it.setProperty(KlighdProperties.NOT_SELECTABLE, true);
                         it.addPolyline => [
                             it.foreground = Colors.RED;
                             it.addArrowDecorator;
