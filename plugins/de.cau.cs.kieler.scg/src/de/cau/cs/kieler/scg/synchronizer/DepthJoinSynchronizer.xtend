@@ -131,63 +131,6 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         synchronizable
     }
     
-//    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
-//    	List<AbstractKielerCompilerAncillaryData> ancillaryData) {
-//        val excludeSet = <Predecessor> newHashSet
-//        
-//        val pilData = ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
-//        val exitNodes = join.allPrevious.map[ eContainer as Exit ]
-//      	val joinPredecessors = schedulingBlockCache.get(join).basicBlock.predecessors.toSet
-//        
-//        for(exit : exitNodes) {
-//        	if (pilData.contains(exit)) {
-//        		val exitBasicBlock = schedulingBlockCache.get(exit).basicBlock
-//        		var Predecessor exitPredecessor = null 
-//        		for (jPred : joinPredecessors) {
-//        			if (exitBasicBlock == jPred.getBasicBlock) {
-//        				exitPredecessor = jPred
-//        			}
-//        		}
-//        		
-//	        	val predecessors = exitBasicBlock.predecessors.toSet
-//    	    	for(predecessor : predecessors) {
-//        			val predecessorNodes = <Node> newArrayList
-//        			predecessor.getBasicBlock.schedulingBlocks.forEach[ predecessorNodes += it.nodes ]
-//        			var criticalPath = true
-//        			for(node : predecessorNodes) {
-//        				if (!pilData.contains(node)) {
-//        					criticalPath = false
-//        				}
-//        			}
-//        			
-//        			if (criticalPath) {
-//        				excludeSet += exitPredecessor
-//        			}
-//        		}
-//        	}
-//        }
-        
-//        return excludeSet
-//    }
-//    
-//	override getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, List<AbstractKielerCompilerAncillaryData> ancillaryData) {
-//		val includeSet = <Predecessor> newHashSet
-		
-//        val exitNodes = join.allPrevious.map[ eContainer as Exit ]
-//        
-//        for(exit : exitNodes) {
-//        	val shallowDepths/*withLochNessMonsters*/ = exit.entry.getShallowThreadNodes.filter(typeof(Depth))
-//        	for(depth : shallowDepths) {
-//        		val newPredecessor = ScgFactory::eINSTANCE.createPredecessor
-//        		newPredecessor.basicBlock = schedulingBlockCache.get(depth).basicBlock
-//        		includeSet += newPredecessor
-//        	}
-//        }
-        	
-//        includeSet
-//	}    
-
-    
     override protected build(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
         // Create a new SynchronizerData class which holds the data to return.
         var data = new SynchronizerData() => [ setJoin(join) ]
@@ -210,7 +153,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         
         data.createEmptyExpressions(terminationExpression)
         data.createGuardExpression(terminationExpression)
-        //data.guardExpression.expression = join.graph.fixSchizophrenicExpression(data.guardExpression.expression) 
+        data.guardExpression.expression = join.graph.fixSchizophrenicExpression(data.guardExpression.expression, pilData) 
         
         data.fixEmptyExpressions.fixSynchronizerExpression
         
@@ -225,19 +168,36 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
 		}        
     }    
     
-    protected def Expression fixSchizophrenicExpression(SCGraph scg, Expression expression) {
+    protected def Expression fixSchizophrenicExpression(SCGraph scg, Expression expression, Set<Node> pilData) {
         if (expression instanceof ValuedObjectReference) {
-            val vor = (expression as ValuedObjectReference)
-            val newVO = schizophrenicDeclaration.findValuedObjectByName(vor.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
-            if (newVO != null) {
-                vor.valuedObject = newVO 
-            }
+            // TODO
         } else if (expression instanceof OperatorExpression) {
+            // TODO: performance!
             val vors = (expression as OperatorExpression).eAllContents.filter(typeof(ValuedObjectReference))
             for(vor : vors.toIterable) {
-                val newVO = schizophrenicDeclaration.findValuedObjectByName(vor.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
-                if (newVO != null) {
-                    vor.valuedObject = newVO 
+                val originalGuard = scg.guards.filter[ it.valuedObject == vor.valuedObject ].head
+                if (originalGuard != null && originalGuard.isOnCriticalPath(pilData)) {
+                    
+                    val guardExists = newGuards.filter[ it.valuedObject.name == originalGuard.valuedObject.name + SCHIZOPHRENIC_SUFFIX ].toList
+                    if (guardExists.empty) {
+                    
+                        val newValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
+                        newValuedObject.name = originalGuard.valuedObject.name + SCHIZOPHRENIC_SUFFIX
+                    
+                        val newGuard = ScgFactory::eINSTANCE.createGuard
+                        newGuard.valuedObject = newValuedObject
+                        newGuard.schedulingBlockLink = originalGuard.schedulingBlockLink
+                        newGuard.schizophrenic = true
+                        scg.guards += newGuard
+                    
+                        vor.valuedObject = newGuard.valuedObject 
+                    
+                        newGuards += newGuard
+                        System.out.println("Generated NEW _SCHIZOPHRENIC_ guard " + newGuard.valuedObject.name)
+                    
+                    } else {
+                        vor.valuedObject = guardExists.head.valuedObject
+                    }
                 }
             }
         }
@@ -250,6 +210,14 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
             if (vo.name == name) return vo
         }
         return null
-    }  
+    } 
+    
+    private def boolean isOnCriticalPath(Guard guard, Set<Node> pilData) {
+        if (guard.schedulingBlockLink == null) return false
+        for(n : guard.schedulingBlockLink.nodes) {
+            if (pilData.contains(n)) return true
+        }
+        return false
+    } 
     
 }

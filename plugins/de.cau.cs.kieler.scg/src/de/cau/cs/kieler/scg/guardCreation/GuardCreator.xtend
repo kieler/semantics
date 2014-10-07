@@ -124,7 +124,9 @@ class GuardCreator extends AbstractGuardCreator {
     protected var Declaration schizoDeclaration = null
     protected var Set<Node> pilData = null
     protected var SynchronizerData joinData = null
-         
+    
+    protected val newSchizoGuards = <Guard> newHashSet
+    
                
     // -------------------------------------------------------------------------
     // -- Guard Creator
@@ -139,7 +141,7 @@ class GuardCreator extends AbstractGuardCreator {
         val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = 
             Guice.createInjector().getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
         context.compilationResult.ancillaryData += potentialInstantaneousLoopAnalyzer.analyze(scg)
-        val pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
+        pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
           
         /**
          * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 
@@ -155,6 +157,7 @@ class GuardCreator extends AbstractGuardCreator {
 		val basicBlockList = <BasicBlock> newArrayList
         scg.createGOSignal
         
+        newSchizoGuards.clear
         schedulingBlocks.clear
         schedulingBlockCache.clear
         schedulingBlockGuardCache.clear
@@ -209,6 +212,10 @@ class GuardCreator extends AbstractGuardCreator {
         
         // Query the basic block of the scheduling block.
         val basicBlock = schedulingBlock.basicBlock
+
+        if (guard.schizophrenic && basicBlock.entryBlock) {
+            guard.expression = FALSE
+        } else {                 
                 
         /** 
          * If the scheduling block is the first scheduling block in the basic block,
@@ -271,9 +278,64 @@ class GuardCreator extends AbstractGuardCreator {
              */
             guard.createSubsequentSchedulingBlockGuardExpression(schedulingBlock, scg)
         }
-     
-    	System.out.println("Generated guard " + guard.valuedObject.name + " with expression " + guard.expression.serialize)           
+    	
+    	if (guard.schizophrenic) {
+    	    val newGuards = scg.handleSchizophrenicExpression(guard.expression, pilData)
+    	    for(ng : newGuards) {
+                val sb = ng.schedulingBlockLink
+                if (sb != null) {
+                    ng.createGuardEquation(sb, scg)
+                }
+            }
+    	}
+        System.out.println("Generated guard " + guard.valuedObject.name + " with expression " + guard.expression.serialize)      
     }
+    } // schizo entry
+    
+    protected def Set<Guard> handleSchizophrenicExpression(SCGraph scg, Expression expression, Set<Node> pilData) {
+        val createdGuards = <Guard> newHashSet
+        val vors = <ValuedObjectReference> newHashSet
+        if (expression instanceof ValuedObjectReference) {
+            vors += expression as ValuedObjectReference
+        } else if (expression instanceof OperatorExpression) {
+            vors += (expression as OperatorExpression).eAllContents.filter(typeof(ValuedObjectReference)).toSet
+        }
+            // TODO: performance!
+            for(vor : vors) {
+                val originalGuard = scg.guards.filter[ it.valuedObject == vor.valuedObject ].head
+                if (originalGuard != null && originalGuard.isOnCriticalPath(pilData)) {
+                    
+                    val guardExists = newSchizoGuards.filter[ it.valuedObject.name == originalGuard.valuedObject.name + SCHIZOPHRENIC_SUFFIX ].toList
+                    if (guardExists.empty) {
+                        val newValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
+                        newValuedObject.name = originalGuard.valuedObject.name + SCHIZOPHRENIC_SUFFIX
+                    
+                        val newGuard = ScgFactory::eINSTANCE.createGuard
+                        newGuard.valuedObject = newValuedObject
+                        newGuard.schedulingBlockLink = originalGuard.schedulingBlockLink
+                        newGuard.schizophrenic = true
+                        scg.guards += newGuard
+                    
+                        vor.valuedObject = newGuard.valuedObject 
+                    
+                        newSchizoGuards += newGuard
+                        createdGuards += newGuard
+                        System.out.println("Generated NEW _SCHIZOPHRENIC_ guard " + newGuard.valuedObject.name)
+                    } else {
+                        vor.valuedObject = guardExists.head.valuedObject
+                    }
+                }
+            }
+        createdGuards
+    }    
+    
+   private def boolean isOnCriticalPath(Guard guard, Set<Node> pilData) {
+        if (guard.schedulingBlockLink == null) return false
+        for(n : guard.schedulingBlockLink.nodes) {
+            if (pilData.contains(n)) return true
+        }
+        return false
+    } 
     
     
     // --- CREATE GUARDS: GO BLOCK 
@@ -306,11 +368,20 @@ class GuardCreator extends AbstractGuardCreator {
         }        
         val synchronizer = join.getSynchronizer
         System.out.println("Creating join guard " + guard.valuedObject.name + " with " + synchronizer.id)
-        if (synchronizer.id == DepthJoinSynchronizer::SYNCHRONIZER_ID) {
-            (synchronizer as DepthJoinSynchronizer).schizophrenicDeclaration = schizoDeclaration
-        }
+//        if (synchronizer.id == DepthJoinSynchronizer::SYNCHRONIZER_ID) {
+//            (synchronizer as DepthJoinSynchronizer).schizophrenicDeclaration = schizoDeclaration
+//        }
         
         synchronizer.synchronize(schedulingBlock.nodes.head as Join, guard, schedulingBlock, scg, compilerContext, schedulingBlockCache)
+        
+        val newGuards = synchronizer.newGuards
+        newSchizoGuards += newGuards
+        for(ng : newGuards) {
+            val sb = ng.schedulingBlockLink
+            if (sb != null) {
+                ng.createGuardEquation(sb, scg)
+            }
+        }
     }
     
     
@@ -399,7 +470,7 @@ class GuardCreator extends AbstractGuardCreator {
             // make sure the subsequent branch will not evaluate to true if the first one was already taken.
             val twin = predecessor.getSchedulingBlockTwin(BranchType::ELSEBRANCH, scg)
             if (predecessorTwinMark.contains(twin)) {
-                expression.subExpressions.add(0, twin.guard.valuedObject.reference.negate)
+//                expression.subExpressions.add(0, twin.guard.valuedObject.reference.negate)
             } 
             predecessorTwinMark.add(schedulingBlock)
             
@@ -417,7 +488,7 @@ class GuardCreator extends AbstractGuardCreator {
             // make sure the subsequent branch will not evaluate to true if the first one was already taken.
             val twin = predecessor.getSchedulingBlockTwin(BranchType::TRUEBRANCH, scg)
             if (predecessorTwinMark.contains(twin)) {
-                expression.subExpressions.add(0, twin.guard.valuedObject.reference.negate)
+//                expression.subExpressions.add(0, twin.guard.valuedObject.reference.negate)
             } 
             predecessorTwinMark.add(schedulingBlock)
 

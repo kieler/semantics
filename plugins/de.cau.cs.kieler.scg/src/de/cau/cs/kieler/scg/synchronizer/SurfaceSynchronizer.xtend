@@ -41,6 +41,7 @@ import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
+import de.cau.cs.kieler.scg.Depth
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -199,6 +200,11 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 	            	 * SynchronizerData structure since the object has to be added to the list of 
 	            	 * valued objects in the SCG. 
 	            	 */
+	            	 val graph = data.join.graph
+	            	while (graph.guardExists(exitSB.guard.valuedObject.name + '_e' + exitNodeCount)) {
+	            	    exitNodeCount = exitNodeCount + 1
+	            	} 
+	            	 
 	      			val emptyExp = new EmptyExpression()  
 	      			emptyExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
 	      			emptyExp.valuedObject.name = exitSB.guard.valuedObject.name + '_e' + exitNodeCount
@@ -390,6 +396,13 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         } 
         
         synchronizable
+    }
+    
+    protected def boolean guardExists(SCGraph scg, String name) {
+        for(g : scg.guards) {
+            if (g.valuedObject.name == name) return true
+        }
+        return false
     }
     
 //    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 

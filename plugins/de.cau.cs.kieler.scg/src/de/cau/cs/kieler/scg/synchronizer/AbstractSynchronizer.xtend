@@ -80,6 +80,8 @@ abstract class AbstractSynchronizer {
 	
 	protected var KielerCompilerContext compilerContext = null
 	protected var Map<Node, SchedulingBlock> schedulingCache = null
+	
+	protected val newGuards = <Guard> newHashSet
    
     /**
      * This function has to be overwritten in the derived class. It is called by the 
@@ -118,6 +120,7 @@ abstract class AbstractSynchronizer {
     ) {
         schedulingCache = schedulingBlockCache
         compilerContext = context
+        newGuards.clear
         build(join, guard, schedulingBlock, scg) 
     }    
     
@@ -137,5 +140,9 @@ abstract class AbstractSynchronizer {
     
     protected def getEntryNodes(Join join) {
         join.allPrevious.map[ eContainer ].filter(typeof(Exit)).map[ entry ]
+    }
+    
+    public def getNewGuards() {
+        return newGuards
     }
 }

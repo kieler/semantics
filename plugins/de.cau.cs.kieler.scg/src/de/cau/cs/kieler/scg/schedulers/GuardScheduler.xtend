@@ -104,7 +104,7 @@ class GuardScheduler extends AbstractScheduler {
         
     protected def void topologicalPlacement(Guard guard, 
         List<Guard> guards, List<Guard> schedule, 
-        SchedulingConstraints constraints, SCGraph scg
+        SchedulingConstraints constraints, SCGraph scg, String indent
     ) {
         if (!topologicalSortVisited.contains(guard)) {
         	
@@ -123,39 +123,50 @@ class GuardScheduler extends AbstractScheduler {
 			if (guard.schedulingBlockLink != null) {
 			    val dependencies = guard.schedulingBlockLink.dependencies
 			    if (!dependencies.empty) {
-			        System.out.print("Guard " + guard.valuedObject.name + " has dependencies: ")
+			        System.out.print(indent + "Guard " + guard.valuedObject.name + " has dependencies: ")
 			        for(dependency : dependencies) {
 			            if (dependency.concurrent && !dependency.confluent) {
 			                val sb = schedulingBlockCache.get(dependency.eContainer)
 			                System.out.print(sb.guard.valuedObject.name + " ")
-			                VOR += sb.guard.valuedObject
+			                
+			                // TODO: VERIFY!
+//			                if (guard.schizophrenic) {
+			                    val schizoGuard = scg.guards.filter[ it.schedulingBlockLink == sb && it.schizophrenic].toList
+			                    if (!schizoGuard.empty) {
+			                        VOR += schizoGuard.head.valuedObject
+                                    System.out.print(" using " + schizoGuard.head.valuedObject.name)			                        
+//			                    }
+			                } else {
+    			                VOR += sb.guard.valuedObject
+  			                }
     	                }
 			        }
+                    System.out.println("")
 			    }
-                System.out.println("")
 			}
 			
-//			System.out.print("Placing guard " + guard.valuedObject.name + ": ")
-//			for(ref : VOR) {
-//				System.out.print(ref.name + " ")
-//			}
-//			System.out.println("")
+			System.out.print(indent + "Placing guard " + guard.valuedObject.name + ": ")
+			for(ref : VOR) {
+				System.out.print(ref.name + " ")
+			}
+			System.out.println("")
 			for(ref : VOR) {
 				if (!placedVOs.contains(ref)) {
 					val tpGuard = guardCache.get(ref)
-					tpGuard.topologicalPlacement(guards, schedule, constraints, scg)
+					tpGuard.topologicalPlacement(guards, schedule, constraints, scg, indent + "  ")
 				} 
 			}
 
 			var placeable = true			
 			for(ref : VOR) {
 				if (!placedVOs.contains(ref)) {
-                    System.out.println(ref.name + " not placed!")
+                    System.out.println(indent + ref.name + " not placed!")
 					placeable = false
 				}
 			}			
 			
 			if (placeable) {
+                System.out.println(indent + "  " + guard.valuedObject.name + " placed.")
 				schedule += guard
 				placedVOs += guard.valuedObject
 				guards -= guard
@@ -178,7 +189,7 @@ class GuardScheduler extends AbstractScheduler {
         
         for (guard : guardLoop) {
         	if (!topologicalSortVisited.contains(guard)) {
-                guard.topologicalPlacement(guards, schedule, constraints, scg)
+                guard.topologicalPlacement(guards, schedule, constraints, scg, "")
             }
         }
         
