@@ -15,19 +15,26 @@ package de.cau.cs.kieler.kitt.klighd.tracing.internal;
 
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.HashSet;
 
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Iterators;
-import com.google.common.collect.UnmodifiableIterator;
 
 import de.cau.cs.kieler.core.kgraph.KEdge;
 import de.cau.cs.kieler.core.kgraph.KGraphElement;
 import de.cau.cs.kieler.core.kgraph.KNode;
+import de.cau.cs.kieler.core.krendering.KInvisibility;
+import de.cau.cs.kieler.core.krendering.KRendering;
+import de.cau.cs.kieler.core.krendering.KRenderingFactory;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
+import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties;
+import de.cau.cs.kieler.klighd.piccolo.internal.nodes.INode;
+import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KChildAreaNode;
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KCustomConnectionFigureNode;
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KEdgeNode;
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KlighdPath;
@@ -40,11 +47,16 @@ import edu.umd.cs.piccolo.PNode;
  * 
  */
 @SuppressWarnings("restriction")
-public class TracingEdgeNode extends KCustomConnectionFigureNode {
+public class TracingEdgeNode extends KCustomConnectionFigureNode implements PropertyChangeListener {
 
     /** the property for the Piccolo2D representation of a node. */
-    static final IProperty<PNode> REP = new Property<PNode>("klighd.piccolo.representation");
+    private static final IProperty<PNode> REP =
+            new Property<PNode>("klighd.piccolo.representation");
     private static final long serialVersionUID = -8894573172549728418L;
+    private final HashSet<PNode> parentNodesWithListener = new HashSet<PNode>();
+    private final HashSet<KChildAreaNode> collapsedParentalChildAreaNodes =
+            new HashSet<KChildAreaNode>();
+    private boolean hide;
     private final EObject source;
     private final EObject target;
     private final KNode attachNode;
@@ -54,10 +66,84 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode {
      */
     public TracingEdgeNode(EObject source, EObject target, KNode attachNode) {
         Preconditions.checkNotNull(source, "Source object is null");
-        Preconditions.checkNotNull(source, "Target object is null");
+        Preconditions.checkNotNull(target, "Target object is null");
+        Preconditions.checkNotNull(attachNode, "Attach node is null");
         this.source = source;
         this.target = target;
         this.attachNode = attachNode;
+        // add listeners to hide edge when source or target container is collapsed
+        addExpandPropertyChangeListeners(source.eContainer());
+        addExpandPropertyChangeListeners(target.eContainer());
+    }
+
+    /**
+     * @param source2
+     */
+    private void addExpandPropertyChangeListeners(final EObject startObject) {
+        KGraphElement startElement;
+        if (startObject instanceof KGraphElement) {
+            startElement = (KGraphElement) startObject;
+        } else if (startObject instanceof KRendering) {
+            // TODO support this
+            throw new IllegalArgumentException("Cannot handle KRendering yet.");
+        } else {
+            return;
+        }
+
+        // add listener to all parent node which can be collapsed
+        PNode currentNode = RenderingContextData.get(startElement).getProperty(REP);
+        while (currentNode != null && !parentNodesWithListener.contains(currentNode)) {
+            if (currentNode instanceof INode) {
+                final KChildAreaNode childAreaNode = ((INode) currentNode).getChildAreaNode();
+                if (childAreaNode != null) {
+                    childAreaNode
+                            .addPropertyChangeListener(KChildAreaNode.PROPERTY_EXPANSION, this);
+                    parentNodesWithListener.add(currentNode);
+                    if (!childAreaNode.isExpanded()) {
+                        collapsedParentalChildAreaNodes.add(childAreaNode);
+                        updateHiding();
+                    }
+                }
+            }
+            currentNode = currentNode.getParent();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void propertyChange(final PropertyChangeEvent event) {
+        KChildAreaNode source = (KChildAreaNode) event.getSource();
+        if ((Boolean) event.getNewValue()) {
+            collapsedParentalChildAreaNodes.remove(source);
+        } else {
+            collapsedParentalChildAreaNodes.add(source);
+        }
+        updateHiding();
+    }
+
+    /**
+     * 
+     */
+    private void updateHiding() {
+        if (this.getRendering() != null) {
+            Iterable<KInvisibility> invisibilites =
+                    Iterables.filter(this.getRendering().getStyles(), KInvisibility.class);
+            KInvisibility invisibility;
+            if (invisibilites.iterator().hasNext()) {
+                invisibility = Iterables.getLast(invisibilites);
+            } else {
+                invisibility = KRenderingFactory.eINSTANCE.createKInvisibility();
+                this.getRendering().getStyles().add(invisibility);
+            }
+            if (!invisibility.isPropagateToChildren()
+                    || invisibility.isInvisible() != (hide || !collapsedParentalChildAreaNodes
+                            .isEmpty())) {
+                invisibility.setProperty(TracingProperties.TRACING_INTERNAL_STYLE, true);
+                invisibility.setPropagateToChildren(true);
+                invisibility.setInvisible(hide || !collapsedParentalChildAreaNodes.isEmpty());
+            }
+        }
     }
 
     /**
@@ -66,8 +152,9 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode {
     @Override
     public void setPoints(Point2D[] points) {
         final Point2D[] thePoints = new Point2D[] { new Point2D.Double(), new Point2D.Double() };
-        if (attachNode != null) {
-            final PNode attachNodeNode = RenderingContextData.get(attachNode).getProperty(REP);
+        if (attachNode.getParent() != null) {
+            final PNode attachNodeNode =
+                    RenderingContextData.get(attachNode.getParent()).getProperty(REP);
             thePoints[0].setLocation(attachNodeNode.getGlobalTranslation());
             thePoints[1].setLocation(attachNodeNode.getGlobalTranslation());
         }
@@ -101,6 +188,19 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void applyStyles(Styles styles) {
+        if (styles.invisibility.getProperty(TracingProperties.TRACING_INTERNAL_STYLE)) {
+            styles.invisibility.setProperty(TracingProperties.TRACING_INTERNAL_STYLE, false);
+        } else {
+            hide = styles.invisibility.isInvisible();
+            updateHiding();
+        }
+    }
+
+    /**
      * @param sourceNode
      * @return
      */
@@ -111,13 +211,6 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode {
         } else {
             return bendPoints[bendPoints.length / 2 + 1];
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void applyStyles(Styles styles) {
     }
 
     private static Point2D addToPoint(Point2D point, Point2D offset) {

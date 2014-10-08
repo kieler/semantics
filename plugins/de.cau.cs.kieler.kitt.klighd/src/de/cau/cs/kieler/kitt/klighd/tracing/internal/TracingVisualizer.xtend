@@ -146,7 +146,7 @@ class TracingVisualizer {
                             [
                                 val elem = it as EObjectWrapper;
                                 if (!elem.model.targetTransformations.empty) {
-                                    elem.children(elem.model.targetTransformations.get(0)).iterator
+                                    elem.children(elem.model.targetTransformations.get(0)).iterator;
                                 } else {
                                     emptyList.iterator;
                                 }
@@ -158,7 +158,7 @@ class TracingVisualizer {
                             [
                                 val elem = it as EObjectWrapper;
                                 if (elem.model.sourceTransformation != null) {
-                                    elem.parents(elem.model.sourceTransformation).iterator
+                                    elem.parents(elem.model.sourceTransformation).iterator;
                                 } else {
                                     emptyList.iterator;
                                 }
@@ -381,7 +381,7 @@ class TracingVisualizer {
                     edge.getData(KLayoutData).setProperty(LayoutOptions.NO_LAYOUT, true);
                     edge.getData(KLayoutData).setProperty(TracingProperties.TRACING_EDGE, origin);
                     edge.data += createKCustomRendering => [
-                        it.figureObject = new TracingEdgeNode(source, target, attachNode.parent);
+                        it.figureObject = new TracingEdgeNode(source, target, attachNode);
                         it.invisible = true;
                         it.invisible.propagateToChildren = true;
                         it.setProperty(KlighdProperties.NOT_SELECTABLE, true);

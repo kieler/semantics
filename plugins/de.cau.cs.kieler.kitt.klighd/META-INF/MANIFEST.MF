@@ -21,4 +21,4 @@ Require-Bundle: com.google.inject,
 Bundle-Activator: de.cau.cs.kieler.kitt.klighd.KittKlighdPlugin
 Export-Package: de.cau.cs.kieler.kitt.klighd.actions,
  de.cau.cs.kieler.kitt.klighd.tracing,
- de.cau.cs.kieler.kitt.klighd.tracing.internal;x-internal:=true
+ de.cau.cs.kieler.kitt.klighd.tracing.internal;x-friends:="de.cau.cs.kieler.kitt.klighd"

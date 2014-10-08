@@ -82,5 +82,11 @@ public final class TracingProperties {
      */
     public static final IProperty<InternalTraceMap> TRACING_MAP = new Property<InternalTraceMap>(
             "de.cau.cs.kieler.kitt.klighd.tracing.map", null);
+    
+    /**
+     * Marks an internal tracing style.
+     */
+    public static final IProperty<Boolean> TRACING_INTERNAL_STYLE = new Property<Boolean>(
+            "de.cau.cs.kieler.kitt.klighd.tracing.internal_style", false);
 
 }
