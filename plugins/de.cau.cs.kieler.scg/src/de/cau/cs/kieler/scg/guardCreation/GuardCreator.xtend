@@ -335,7 +335,10 @@ class GuardCreator extends AbstractGuardCreator {
             // TODO: performance!
             for(vor : vors) {
                 val originalGuard = scg.guards.filter[ it.valuedObject == vor.valuedObject ].head
-                if (originalGuard != null && originalGuard.isOnCriticalPath(pilData)) {
+                if (originalGuard != null && (
+                	originalGuard.isOnCriticalPath(pilData)) ||
+                	(originalGuard.schedulingBlockLink != null && originalGuard.schedulingBlockLink.nodes.last instanceof Conditional)
+                	) {
                     
                     val guardExists = newSchizoGuards.filter[ it.valuedObject.name == originalGuard.valuedObject.name + SCHIZOPHRENIC_SUFFIX ].toList
                     if (guardExists.empty) {
@@ -554,7 +557,7 @@ class GuardCreator extends AbstractGuardCreator {
             val twin = predecessor.getSchedulingBlockTwin(BranchType::ELSEBRANCH, scg)
             if (predecessorTwinMark.contains(twin)) {
             	val twinVOR = twin.guard.valuedObject.reference
-            	guard.volatile += twinVOR.valuedObject
+//            	guard.volatile += twinVOR.valuedObject
 //                expression.subExpressions.add(0, twinVOR.negate)
             } 
             predecessorTwinMark.add(schedulingBlock)
@@ -574,7 +577,7 @@ class GuardCreator extends AbstractGuardCreator {
             val twin = predecessor.getSchedulingBlockTwin(BranchType::TRUEBRANCH, scg)
             if (predecessorTwinMark.contains(twin)) {
             	val twinVOR = twin.guard.valuedObject.reference
-            	guard.volatile += twinVOR.valuedObject
+//            	guard.volatile += twinVOR.valuedObject
 //                expression.subExpressions.add(0, twinVOR.negate)
             } 
             predecessorTwinMark.add(schedulingBlock)
