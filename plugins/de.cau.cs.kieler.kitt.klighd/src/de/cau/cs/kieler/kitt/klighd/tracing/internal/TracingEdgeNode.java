@@ -53,10 +53,10 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
     private static final IProperty<PNode> REP =
             new Property<PNode>("klighd.piccolo.representation");
     private static final long serialVersionUID = -8894573172549728418L;
-    private final HashSet<PNode> parentNodesWithListener = new HashSet<PNode>();
     private final HashSet<KChildAreaNode> collapsedParentalChildAreaNodes =
             new HashSet<KChildAreaNode>();
     private boolean hide;
+    private final KRendering parent;
     private final EObject source;
     private final EObject target;
     private final KNode attachNode;
@@ -64,10 +64,12 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
     /**
      * Constructor.
      */
-    public TracingEdgeNode(EObject source, EObject target, KNode attachNode) {
+    public TracingEdgeNode(KRendering parent, EObject source, EObject target, KNode attachNode) {
+        Preconditions.checkNotNull(parent, "Parent KRendring is null");
         Preconditions.checkNotNull(source, "Source object is null");
         Preconditions.checkNotNull(target, "Target object is null");
         Preconditions.checkNotNull(attachNode, "Attach node is null");
+        this.parent = parent;
         this.source = source;
         this.target = target;
         this.attachNode = attachNode;
@@ -80,32 +82,23 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
      * @param source2
      */
     private void addExpandPropertyChangeListeners(final EObject startObject) {
-        KGraphElement startElement;
-        if (startObject instanceof KGraphElement) {
-            startElement = (KGraphElement) startObject;
-        } else if (startObject instanceof KRendering) {
-            // TODO support this
-            throw new IllegalArgumentException("Cannot handle KRendering yet.");
-        } else {
-            return;
-        }
-
-        // add listener to all parent node which can be collapsed
-        PNode currentNode = RenderingContextData.get(startElement).getProperty(REP);
-        while (currentNode != null && !parentNodesWithListener.contains(currentNode)) {
-            if (currentNode instanceof INode) {
-                final KChildAreaNode childAreaNode = ((INode) currentNode).getChildAreaNode();
+        KNode node = getKNode(startObject);
+        while (node != null) {
+            PNode nodeNode = RenderingContextData.get(node).getProperty(REP);
+            if (nodeNode instanceof INode) {
+                final KChildAreaNode childAreaNode = ((INode) nodeNode).getChildAreaNode();
                 if (childAreaNode != null) {
                     childAreaNode
                             .addPropertyChangeListener(KChildAreaNode.PROPERTY_EXPANSION, this);
-                    parentNodesWithListener.add(currentNode);
                     if (!childAreaNode.isExpanded()) {
                         collapsedParentalChildAreaNodes.add(childAreaNode);
                         updateHiding();
                     }
+                } else {
+                    System.out.println("bububu");
                 }
             }
-            currentNode = currentNode.getParent();
+            node = node.getParent();
         }
     }
 
@@ -126,23 +119,22 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
      * 
      */
     private void updateHiding() {
-        if (this.getRendering() != null) {
-            Iterable<KInvisibility> invisibilites =
-                    Iterables.filter(this.getRendering().getStyles(), KInvisibility.class);
-            KInvisibility invisibility;
-            if (invisibilites.iterator().hasNext()) {
-                invisibility = Iterables.getLast(invisibilites);
-            } else {
-                invisibility = KRenderingFactory.eINSTANCE.createKInvisibility();
-                this.getRendering().getStyles().add(invisibility);
-            }
-            if (!invisibility.isPropagateToChildren()
-                    || invisibility.isInvisible() != (hide || !collapsedParentalChildAreaNodes
-                            .isEmpty())) {
-                invisibility.setProperty(TracingProperties.TRACING_INTERNAL_STYLE, true);
-                invisibility.setPropagateToChildren(true);
-                invisibility.setInvisible(hide || !collapsedParentalChildAreaNodes.isEmpty());
-            }
+        Iterable<KInvisibility> invisibilites =
+                Iterables.filter(parent.getStyles(), KInvisibility.class);
+        KInvisibility invisibility;
+        if (invisibilites.iterator().hasNext()) {
+            invisibility = Iterables.getLast(invisibilites);
+        } else {
+            invisibility = KRenderingFactory.eINSTANCE.createKInvisibility();
+            parent.getStyles().add(invisibility);
+        }
+        if (!invisibility.isPropagateToChildren()) {
+            invisibility.setProperty(TracingProperties.TRACING_INTERNAL_STYLE, true);
+            invisibility.setPropagateToChildren(true);
+        }
+        if (invisibility.isInvisible() != (hide || !collapsedParentalChildAreaNodes.isEmpty())) {
+            invisibility.setProperty(TracingProperties.TRACING_INTERNAL_STYLE, true);
+            invisibility.setInvisible(hide || !collapsedParentalChildAreaNodes.isEmpty());
         }
     }
 
@@ -230,5 +222,15 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
         point.setLocation(point.getX() + (offset.getWidth() * factor),
                 point.getY() + (offset.getHeight() * factor));
         return point;
+    }
+
+    private KNode getKNode(EObject object) {
+        if (object instanceof KNode) {
+            return (KNode) object;
+        } else if (object instanceof KGraphElement || object instanceof KRendering) {
+            return getKNode(object.eContainer());
+        } else {
+            return null;
+        }
     }
 }

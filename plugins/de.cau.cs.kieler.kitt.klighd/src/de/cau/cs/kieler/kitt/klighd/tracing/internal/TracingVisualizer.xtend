@@ -381,14 +381,14 @@ class TracingVisualizer {
                     edge.getData(KLayoutData).setProperty(LayoutOptions.NO_LAYOUT, true);
                     edge.getData(KLayoutData).setProperty(TracingProperties.TRACING_EDGE, origin);
                     edge.data += createKCustomRendering => [
-                        it.figureObject = new TracingEdgeNode(source, target, attachNode);
-                        it.invisible = true;
-                        it.invisible.propagateToChildren = true;
+                        it.figureObject = new TracingEdgeNode(it, source, target, attachNode);
                         it.setProperty(KlighdProperties.NOT_SELECTABLE, true);
                         it.addPolyline => [
                             it.foreground = Colors.RED;
                             it.addArrowDecorator;
                         ];
+                        it.invisible = true;
+                        it.invisible.propagateToChildren = true;
                     ];
                 }
             }
