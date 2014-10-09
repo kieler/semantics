@@ -321,10 +321,10 @@ class TracingVisualizer {
             val targetModelRootNode = viewContext.getTargetElements(target).findFirst[
                 it instanceof KNode &&
                     (it as KNode).getData(KLayoutData).getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE)] as KNode;
-            if (!source.transient && sourceModelRootNode != null) {
+            if (!source.transient && sourceModelRootNode != null && source.rootObject.EObject != null) {
                 _sourceInstanceMap = source.modelInstanceMapping(source.rootObject.EObject);
             }
-            if (!target.transient && targetModelRootNode != null) {
+            if (!target.transient && targetModelRootNode != null && target.rootObject.EObject != null) {
                 _targetInstanceMap = target.modelInstanceMapping(target.rootObject.EObject);
             }
             val sourceInstanceMap = _sourceInstanceMap;

@@ -118,29 +118,24 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
         // add invisible surrounding rectangle to prevent implicit visible one
         rootNode.addInvisibleContainerRendering;
 
-        //create knode with all succeeding nodes from model-root-node
-        rootNode.children += model.createNode() => [ treeNode |
-            // add invisible surrounding rectangle to prevent implicit visible one
-            treeNode.addInvisibleContainerRendering;
-            if (model.targetTransformations.empty) {
+        if (model.targetTransformations.empty) {
 
-                //if no succeeding transformations exists transform only root-node
-                model.transformModelWrapperAsChildNode(treeNode);
-            } else {
+            //if no succeeding transformations exists transform only root-node
+            model.transformModelWrapperAsChildNode(rootNode);
+        } else {
 
-                //iterate over all transformations and create nodes and edges
-                model.succeedingTransformations.forEach [ trans |
-                    trans.createEdge() => [
-                        it.source = trans.source.transformModelWrapperAsChildNode(treeNode);
-                        it.target = trans.target.transformModelWrapperAsChildNode(treeNode);
-                        it.addPolyline.addArrowDecorator;
-                        it.createLabel.configureCenterEdgeLabel(trans.transformationID,
-                            KlighdConstants::DEFAULT_FONT_SIZE,
-                            KlighdConstants::DEFAULT_FONT_NAME);
-                    ]
-                ];
-            }
-        ];
+            //iterate over all transformations and create nodes and edges
+            model.succeedingTransformations.forEach [ trans |
+                trans.createEdge() => [
+                    it.source = trans.source.transformModelWrapperAsChildNode(rootNode);
+                    it.target = trans.target.transformModelWrapperAsChildNode(rootNode);
+                    it.addPolyline.addArrowDecorator;
+                    it.createLabel.configureCenterEdgeLabel(trans.transformationID,
+                        KlighdConstants::DEFAULT_FONT_SIZE,
+                        KlighdConstants::DEFAULT_FONT_NAME);
+                ]
+            ];
+        }
 
         //This is a special case where the model itself is its own tracing
         TracingManager.activateTracing(model);
@@ -168,7 +163,7 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
                     it.setFontItalic(model.transient);
                     it.setFontBold(!model.transient);
                     it.setGridPlacementData().from(LEFT, 8, 0, TOP, 8, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
-                //it.suppressSelectability;
+                    it.suppressSelectability;
                 ];
             }
             it.addText("[Hide]") => [
@@ -199,7 +194,7 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
                     it.setFontItalic(model.transient);
                     it.setFontBold(!model.transient);
                     it.setGridPlacementData().from(LEFT, 8, 0, TOP, 8, 0).to(RIGHT, 8, 0, BOTTOM, 2, 0);
-                //it.suppressSelectability;
+                    it.suppressSelectability;
                 ];
             }
             it.addText("[Show Model]") => [
@@ -235,6 +230,7 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
 
         //Add subdiagram to collapseable child area
         node.children += subDiagramNode;
+        node.setLayoutOption(TracingProperties.TRACED_MODEL_ROOT_NODE, true);
 
         //add child to root once 
         root.children += node;

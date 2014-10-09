@@ -151,39 +151,47 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
      */
     @Override
     public void setPoints(Point2D[] points) {
-        final Point2D[] thePoints = new Point2D[] { new Point2D.Double(), new Point2D.Double() };
-        if (attachNode.getParent() != null) {
-            final PNode attachNodeNode =
-                    RenderingContextData.get(attachNode.getParent()).getProperty(REP);
-            thePoints[0].setLocation(attachNodeNode.getGlobalTranslation());
-            thePoints[1].setLocation(attachNodeNode.getGlobalTranslation());
-        }
-        if (source instanceof KGraphElement) {
-            KGraphElement sourceElem = (KGraphElement) source;
-            PNode sourceNode = RenderingContextData.get(sourceElem).getProperty(REP);
-            addToPoint(thePoints[0], sourceNode.getGlobalTranslation());
-            if (source instanceof KEdge) {
-                addToPoint(thePoints[0], getAppropiateBendPoint((KEdgeNode) sourceNode));
-            } else {
-                addToPoint(thePoints[0], sourceNode.getFullBoundsReference().getSize(), 0.5);
+        try {
+            if (!hide && collapsedParentalChildAreaNodes.isEmpty()) {
+                final Point2D[] thePoints =
+                        new Point2D[] { new Point2D.Double(), new Point2D.Double() };
+                if (attachNode.getParent() != null) {
+                    final PNode attachNodeNode =
+                            RenderingContextData.get(attachNode.getParent()).getProperty(REP);
+                    thePoints[0].setLocation(attachNodeNode.getGlobalTranslation());
+                    thePoints[1].setLocation(attachNodeNode.getGlobalTranslation());
+                }
+                if (source instanceof KGraphElement) {
+                    KGraphElement sourceElem = (KGraphElement) source;
+                    PNode sourceNode = RenderingContextData.get(sourceElem).getProperty(REP);
+                    addToPoint(thePoints[0], sourceNode.getGlobalTranslation());
+                    if (source instanceof KEdge) {
+                        addToPoint(thePoints[0], getAppropiateBendPoint((KEdgeNode) sourceNode));
+                    } else {
+                        addToPoint(thePoints[0], sourceNode.getFullBoundsReference().getSize(), 0.5);
+                    }
+                }
+                if (target instanceof KGraphElement) {
+                    KGraphElement targetElem = (KGraphElement) target;
+                    PNode targetNode = RenderingContextData.get(targetElem).getProperty(REP);
+                    addToPoint(thePoints[1], targetNode.getGlobalTranslation());
+                    if (target instanceof KEdge) {
+                        addToPoint(thePoints[1], getAppropiateBendPoint((KEdgeNode) targetNode));
+                    } else {
+                        addToPoint(thePoints[1], targetNode.getFullBoundsReference().getSize(), 0.5);
+                    }
+                }
+                // Apply
+                if (thePoints[0] != null && thePoints[1] != null) {
+                    for (KlighdPath p : Iterables.filter(this.getChildrenReference(),
+                            KlighdPath.class)) {
+                        p.setPathToPolyline(thePoints);
+                        return;
+                    }
+                }
             }
-        }
-        if (target instanceof KGraphElement) {
-            KGraphElement targetElem = (KGraphElement) target;
-            PNode targetNode = RenderingContextData.get(targetElem).getProperty(REP);
-            addToPoint(thePoints[1], targetNode.getGlobalTranslation());
-            if (target instanceof KEdge) {
-                addToPoint(thePoints[1], getAppropiateBendPoint((KEdgeNode) targetNode));
-            } else {
-                addToPoint(thePoints[1], targetNode.getFullBoundsReference().getSize(), 0.5);
-            }
-        }
-        // Apply
-        if (thePoints[0] != null && thePoints[1] != null) {
-            for (KlighdPath p : Iterables.filter(this.getChildrenReference(), KlighdPath.class)) {
-                p.setPathToPolyline(thePoints);
-                return;
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
