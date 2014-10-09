@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kitt.klighd.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kgraph.KNode
+import de.cau.cs.kieler.core.krendering.Colors
 import de.cau.cs.kieler.core.krendering.KColor
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
@@ -43,7 +44,6 @@ import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import java.util.List
-
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
@@ -84,6 +84,12 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
     extension TracingTreeExtensions
 
     // -------------------------------------------------------------------------
+    // Colors
+    private static val KColor BG_COLOR_1 = RENDERING_FACTORY.createKColor() => [it.color = Colors.CHOCOLATE_1];
+    private static val KColor BG_COLOR_2 = RENDERING_FACTORY.createKColor() => [it.color = Colors.CHOCOLATE_3];
+    private static val KColor SHADOW_COLOR = RENDERING_FACTORY.createKColor() => [it.color = Colors.BLACK];
+
+    // -------------------------------------------------------------------------
     // Display options
     public static val SynthesisOption SHOW_SHADOW = SynthesisOption.createCheckOption("Shadows", true);
     public static val SynthesisOption SHOW_MODELS = SynthesisOption.createCheckOption("Model visualization", true);
@@ -100,13 +106,6 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
             new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 150))
         );
     }
-
-    // -------------------------------------------------------------------------
-    // Some color and pattern constants taken from SCCharts
-    private static val KColor SCCHARTSBLUE1 = RENDERING_FACTORY.createKColor() =>
-        [it.red = 248; it.green = 249; it.blue = 253];
-    private static val KColor SCCHARTSBLUE2 = RENDERING_FACTORY.createKColor() =>
-        [it.red = 205; it.green = 220; it.blue = 243];
 
     // -------------------------------------------------------------------------
     // The Main entry transform function
@@ -154,93 +153,88 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
     private def KNode create node : createNode() transformModelWrapperAsChildNode(ModelWrapper model, KNode root) {
         node.associateWith(model);
 
-        //create and add colored rectangle for this node
-        val figure = node.createFigure;
+        node.setLayoutOption(KlighdProperties::EXPAND,
+            MemorizedCollapseExpandAction.isExpanded(model,
+                (model.sourceTransformation == null || model.targetTransformations.empty)));
 
-        //add textual name of model type, transient models will be shown italic
-        figure.addText(model.modelTypeID).associateWith(model) => [
-            it.fontSize = 11;
-            it.setFontItalic(model.transient);
-            it.setFontBold(!model.transient);
-            it.setGridPlacementData().from(LEFT, 8, 0, TOP, 8, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
-            it.suppressSelectability;
-        ];
-
-        //Add regions for expanded/collapsed child area
-        figure.setGridPlacement(1);
-        figure.addChildArea();
-
-        //node.setLayoutOption(LayoutOptions::EXPAND_NODES, false);
-        node.children += createNode() => [
-            it.associateWith(model);
-            it.setLayoutOption(KlighdProperties.EXPAND, MemorizedCollapseExpandAction.isExpanded(model, false));
-            figure.setGridPlacement(1);
-            //Collapse Rectangle
-            it.addRectangle() => [
-                it.setProperty(KlighdProperties.COLLAPSED_RENDERING, true);
-                it.invisible = true;
-                //This text is only for correct size estimation
-                it.addText(model.modelTypeID) => [
-                    it.fontSize = 11
+        //Expanded Rectangle
+        node.createFigure() => [
+            it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
+            it.setGridPlacement(1);
+            //add textual name of model type, transient models will be shown italic
+            if (model.modelTypeID != null && !model.modelTypeID.empty) {
+                it.addText(model.modelTypeID).associateWith(model) => [
+                    it.fontSize = 11;
                     it.setFontItalic(model.transient);
                     it.setFontBold(!model.transient);
-                    it.invisible = true;
-                    it.suppressSelectability;
+                    it.setGridPlacementData().from(LEFT, 8, 0, TOP, 8, 0).to(RIGHT, 8, 0, BOTTOM, 4, 0);
+                //it.suppressSelectability;
                 ];
-                it.addText("[Show Model]") => [
-                    it.foreground = "blue".color
-                    it.fontSize = 9
-                    it.addSingleClickAction(MemorizedCollapseExpandAction.ID);
-                    it.addDoubleClickAction(MemorizedCollapseExpandAction.ID);
-                    it.suppressSelectability;
-                ];
-            ]
-            //Expanded Rectangle
-            it.addRectangle() => [
-                it.setProperty(KlighdProperties.EXPANDED_RENDERING, true);
+            }
+            it.addText("[Hide]") => [
+                it.foreground = "blue".color
+                it.fontSize = 9
+                //center
+                it.setSurroundingSpaceGrid(4, 0);
+                it.addSingleClickAction(MemorizedCollapseExpandAction.ID);
+                it.addDoubleClickAction(MemorizedCollapseExpandAction.ID);
+            ];
+            it.addRectangle => [
+                it.setGridPlacementData.from(LEFT, 8, 0, TOP, 0, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
                 it.setBackground = "white".color;
-                it.setSurroundingSpace(2, 0);
-                it.invisible = false;
                 it.foreground = "gray".color
                 it.lineWidth = 1;
-                it.addText("[Hide]") => [
-                    it.foreground = "blue".color
-                    it.fontSize = 9
-                    //center
-                    it.setPointPlacementData(createKPosition(LEFT, 0, 0.5f, TOP, 4, 0), H_CENTRAL, V_TOP, 0, 0, 0, 0);
-                    it.addSingleClickAction(MemorizedCollapseExpandAction.ID);                    
-                    it.addDoubleClickAction(MemorizedCollapseExpandAction.ID);
-                    it.suppressSelectability;
-                ];
-                it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 10, 0);
+                it.addChildArea()
             ];
-            //Create subdiagram from referenced model synthesis or fallback to component synthesis
-            var KNode subDiagramNode = null;
-            if (!model.transient && SHOW_MODELS.booleanValue) {
-                try {
-                    val properties = new KlighdSynthesisProperties();
-                    properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID);
-                    subDiagramNode = LightDiagramServices.translateModel(model.rootObject.EObject, usedContext,
-                        properties);
-                } catch (Exception e) {
-                    //fallback
-                }
-            }
-            if (subDiagramNode == null) { //component synthesis
-                subDiagramNode = createNode();
-                subDiagramNode.children += model.modelObjects.map [
-                    it.translateEObjectWrapper;
-                ];
-            } else {
+        ];
 
-                //only if submodel is synthesized with its own synthesis set this parameter to use this mapping
-                node.setLayoutOption(TracingProperties.TRACED_MODEL_ROOT_NODE, true);
+        //Collapse Rectangle
+        node.createFigure() => [
+            it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
+            it.setGridPlacement(1);
+            //add textual name of model type, transient models will be shown italic
+            if (model.modelTypeID != null && !model.modelTypeID.empty) {
+                it.addText(model.modelTypeID).associateWith(model) => [
+                    it.fontSize = 11;
+                    it.setFontItalic(model.transient);
+                    it.setFontBold(!model.transient);
+                    it.setGridPlacementData().from(LEFT, 8, 0, TOP, 8, 0).to(RIGHT, 8, 0, BOTTOM, 2, 0);
+                //it.suppressSelectability;
+                ];
             }
-            // prevent adding of rectangle by adding an invisible own one.
-            subDiagramNode.addRectangle.invisible = true;
-            //Add subdiagram to collapseable child area
-            it.children += subDiagramNode;
-        ]
+            it.addText("[Show Model]") => [
+                it.foreground = "blue".color
+                it.fontSize = 9
+                it.addSingleClickAction(MemorizedCollapseExpandAction.ID);
+                it.addDoubleClickAction(MemorizedCollapseExpandAction.ID);
+                it.setSurroundingSpaceGrid(5, 0);
+            ];
+        ];
+
+        //Create subdiagram from referenced model synthesis or fallback to component synthesis
+        var KNode subDiagramNode = null;
+        if (!model.transient && SHOW_MODELS.booleanValue && model.rootObject.EObject != null) {
+            try {
+                val properties = new KlighdSynthesisProperties();
+                properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID);
+                subDiagramNode = LightDiagramServices.translateModel(model.rootObject.EObject, usedContext,
+                    properties);
+            } catch (Exception e) {
+                //fallback
+            }
+        }
+        if (subDiagramNode == null) { //component synthesis
+            subDiagramNode = createNode();
+            subDiagramNode.children += model.modelObjects.map [
+                it.translateEObjectWrapper;
+            ];
+        }
+
+        // prevent adding of rectangle by adding an invisible own one.
+        subDiagramNode.addRectangle.invisible = true;
+
+        //Add subdiagram to collapseable child area
+        node.children += subDiagramNode;
 
         //add child to root once 
         root.children += node;
@@ -254,6 +248,7 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
 
         //create and add colored rectangle for this node
         val figure = node.createFigure;
+        figure.background = Colors.GRAY_95;
 
         //align all text fields in a column.
         figure.setGridPlacement(1);
@@ -294,21 +289,20 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
     private def createFigure(KNode node) {
 
         //Code taken from SCChartDiagramsynthesis
-        val figure = node.addRoundedRectangle(8, 8, 1).background = "white".color;
+        val figure = node.addRoundedRectangle(8, 8, 1)
         figure.lineWidth = 1;
-        figure.foreground = "gray".color;
-        figure.setBackgroundGradient(SCCHARTSBLUE1.copy, SCCHARTSBLUE2.copy, 90);
+        figure.foreground = Colors.GRAY;
+        figure.setBackgroundGradient(BG_COLOR_1.copy, BG_COLOR_2.copy, 90);
 
         //add shadow if option is activated
         if (SHOW_SHADOW.booleanValue) {
-            figure.shadow = "black".color;
+            figure.shadow = SHADOW_COLOR.copy;
             figure.shadow.XOffset = 4;
             figure.shadow.YOffset = 4;
         }
 
         //minimal node size is necessary if no text will be added
         node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
-
         return figure;
     }
 

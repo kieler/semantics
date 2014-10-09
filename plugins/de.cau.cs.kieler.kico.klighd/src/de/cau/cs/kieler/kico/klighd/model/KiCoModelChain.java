@@ -15,10 +15,7 @@ package de.cau.cs.kieler.kico.klighd.model;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.ListIterator;
-
-import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.ui.KiCoSelection;
@@ -89,17 +86,17 @@ public class KiCoModelChain {
      */
     public KiCoModelChain(Object sourceModel, final CompilationResult compilationResult, final String modelName,
             KiCoSelection selection) {
-        ListIterator<String> trans = compilationResult.getTransformations().listIterator();
+        ListIterator<String> trans = selection.getSelection().listIterator();
         models.add(sourceModel);
         collapse.put(sourceModel, false);
         for (Object model : compilationResult.getIntermediateResults()) {
-            String nextTrans = trans.hasNext() ? trans.next(): "";
             if (model instanceof String) {
                 model = new KiCoCodePlaceHolder(modelName, (String) model);
             } else if(model == null) {
                 model = new KiCoMessageModel("Missing Model");
             }
             if(!models.contains(model)){
+                String nextTrans = trans.hasNext() ? trans.next(): "";
                 tranformations.add(nextTrans);
                 models.add(model);
                 collapse.put(model, true);

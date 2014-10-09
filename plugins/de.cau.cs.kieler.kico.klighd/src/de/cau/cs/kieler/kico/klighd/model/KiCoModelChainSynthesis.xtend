@@ -39,6 +39,7 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import java.util.List
 import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kitt.klighd.actions.MemorizedCollapseExpandAction;
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
@@ -78,9 +79,9 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
     extension KColorExtensions
 
     // -------------------------------------------------------------------------
-    // Some color and pattern constants taken from SCCharts
-    private static val KColor BG_COLOR_1 = RENDERING_FACTORY.createKColor() => [it.color = Colors.CHOCOLATE_2];
+    private static val KColor BG_COLOR_1 = RENDERING_FACTORY.createKColor() => [it.color = Colors.CHOCOLATE_1];
     private static val KColor BG_COLOR_2 = RENDERING_FACTORY.createKColor() => [it.color = Colors.CHOCOLATE_3];
+    private static val KColor SHADOW_COLOR = RENDERING_FACTORY.createKColor() => [it.color = Colors.BLACK];
 
     override public getDisplayedSynthesisOptions() {
         return newLinkedList(TracingSynthesisOption.synthesisOption);
@@ -119,8 +120,8 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
                         it.invisible = chainWrapper.blankMode;
                     ]
                     //if available add label
-                    if (!chainWrapper.blankMode && i < chainWrapper.tranformations.size) {
-                        it.createLabel.configureCenterEdgeLabel(chainWrapper.tranformations.get(i),
+                    if (!chainWrapper.blankMode && i - 1 < chainWrapper.tranformations.size) {
+                        it.createLabel.configureCenterEdgeLabel(chainWrapper.tranformations.get(i - 1),
                             KlighdConstants::DEFAULT_FONT_SIZE,
                             KlighdConstants::DEFAULT_FONT_NAME);
                     }
@@ -133,52 +134,47 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
         return rootNode;
     }
 
-    private def KNode transformModel(KiCoModelChain chainWrapper, Object model) {
+    private def KNode transformModel(KiCoModelChain chain, Object model) {
         val node = createNode.associateWith(model);
-        var subDiagramParentNode = node;
 
         //if label is not null a parent node is created and model diagram is added in collapsed child area
-        if (!chainWrapper.blankMode) {
-            val figure = node.createFigure;
+        if (!chain.blankMode) {
 
-            //Add regions for expanded/collapsed child area
-            figure.addChildArea();
+            node.setLayoutOption(KlighdProperties::EXPAND,
+                MemorizedCollapseExpandAction.isExpanded(model, !chain.collapse.get(model)));
 
-            subDiagramParentNode = createNode() => [
-                it.associateWith(model);
-                it.setLayoutOption(KlighdProperties::EXPAND, !chainWrapper.collapse.get(model));
-                figure.setGridPlacement(1);
-                //Collapse Rectangle
-                it.addRectangle() => [
-                    it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
-                    it.invisible = true;
-                    it.addText("[Show Model]") => [
-                        it.foreground = "blue".color
-                        it.fontSize = 9
-                        it.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-                        it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-                    ];
-                ]
-                //Expanded Rectangle
-                it.addRectangle() => [
-                    it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
+            //Expanded Rectangle
+            node.createFigure() => [
+                it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
+                it.setGridPlacement(1);
+                it.addText("[Hide]") => [
+                    it.foreground = "blue".color
+                    it.fontSize = 9
+                    //center
+                    it.setSurroundingSpaceGrid(5, 0);
+                    it.addSingleClickAction(MemorizedCollapseExpandAction.ID);
+                    it.addDoubleClickAction(MemorizedCollapseExpandAction.ID);
+                ];
+                it.addRectangle => [
+                    it.setGridPlacementData.from(LEFT, 8, 0, TOP, 0, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
                     it.setBackground = "white".color;
-                    it.setSurroundingSpace(2, 0);
-                    it.invisible = false;
                     it.foreground = "gray".color
                     it.lineWidth = 1;
-                    it.addText("[Hide]") => [
-                        it.foreground = "blue".color
-                        it.fontSize = 9
-                        //center
-                        it.setPointPlacementData(createKPosition(LEFT, 0, 0.5f, TOP, 4, 0), H_CENTRAL, V_TOP, 0, 0, 0, 0);
-                        it.addSingleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-                        it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-                    ];
-                    it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 10, 0);
+                    it.addChildArea()
                 ];
             ];
-            node.children += subDiagramParentNode
+
+            //Collapse Rectangle
+            node.createFigure() => [
+                it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
+                it.addText("[Show Model]") => [
+                    it.foreground = "blue".color
+                    it.fontSize = 9
+                    it.addSingleClickAction(MemorizedCollapseExpandAction.ID);
+                    it.addDoubleClickAction(MemorizedCollapseExpandAction.ID);
+                    it.setSurroundingSpace(5, 0);
+                ];
+            ];
         } else {
             node.addInvisibleContainerRendering;
         }
@@ -205,8 +201,8 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
             subDiagramNode.addRectangle.invisible = true;
 
             //Add subdiagram to collapseable child area
-            subDiagramParentNode.children += subDiagramNode;
-            subDiagramParentNode.setLayoutOption(TracingProperties.TRACED_MODEL_ROOT_NODE, true);
+            node.children += subDiagramNode;
+            node.setLayoutOption(TracingProperties.TRACED_MODEL_ROOT_NODE, true);
         }
         return node;
     }
@@ -216,7 +212,7 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
 
         //create and add colored rectangle for this node
         val figure = node.createFigure;
-        figure.background = "white".color;
+        figure.background = Colors.GRAY_95;
 
         //align all text fields in a column.
         figure.setGridPlacement(1);
@@ -246,17 +242,13 @@ class KiCoModelChainSynthesis extends AbstractDiagramSynthesis<KiCoModelChain> {
      * Create and adds colored rectangle for given node.
      */
     private def createFigure(KNode node) {
-
-        //Code taken from SCChartDiagramsynthesis
-        //val figure = node.addRectangle.background = "gray20".color;
-        val figure = node.addRoundedRectangle(8, 8, 1).background = "white".color;
+        val figure = node.addRoundedRectangle(8, 8, 1);
         figure.lineWidth = 1;
-        figure.foreground = "gray".color;
-
+        figure.foreground = Colors.GRAY;
         figure.setBackgroundGradient(BG_COLOR_1.copy, BG_COLOR_2.copy, 90);
 
-        //add shadow if option is activated
-        figure.shadow = "black".color;
+        //add shadow
+        figure.shadow = SHADOW_COLOR.copy;
         figure.shadow.XOffset = 4;
         figure.shadow.YOffset = 4;
 
