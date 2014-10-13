@@ -72,7 +72,7 @@ class BasicBlockTransformation extends Transformation {
     // -- Constants
     // -------------------------------------------------------------------------
     
-    protected val String GUARDPREFIX = "g"
+    public static val String GUARDPREFIX = "g"
     
 
     // -------------------------------------------------------------------------

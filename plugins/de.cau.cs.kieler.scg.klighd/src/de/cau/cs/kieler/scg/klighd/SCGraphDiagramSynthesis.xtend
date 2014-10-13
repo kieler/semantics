@@ -88,6 +88,7 @@ import de.cau.cs.kieler.kico.klighd.KiCoKLighDProperties
 import java.util.Set
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
+import org.eclipse.emf.ecore.EObject
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -528,7 +529,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     allNext.map[target].filter(typeof(Entry)).forEach [ entry |
                         if (entry != null) {
                             val regionLabel = entry.getStringAnnotationValue(ANNOTATION_REGIONNAME)
-                            entry.getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY) => [
+                            entry.getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY, null) => [
                             	var text = ""
                                 if (!regionLabel.nullOrEmpty) text = regionLabel + " - "
                                 val threadPathType = threadTypes.get(entry)
@@ -582,6 +583,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // Straightforward rectangle drawing
             val figure = node.addRoundedRectangle(CORNERRADIUS, CORNERRADIUS, LINEWIDTH).background = "white".color;
             (figure) => [
+                putToLookUpWith(assignment)
                 node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
                 // Serialize the assignment
@@ -1114,7 +1116,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
      * 			the kindof grouping that should be applied.
      * @return Returns the container KNode.
      */
-    private def KNode createHierarchy(List<Node> nodes, int nodeGrouping) {
+    private def KNode createHierarchy(List<Node> nodes, int nodeGrouping, EObject contextObject) {
 
         // Gather mandatory information.
         val firstNode = nodes.head
@@ -1153,7 +1155,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         if (nodeGrouping == NODEGROUPING_BASICBLOCK) {
 //            kContainer.addLayoutParam(LayoutOptions::SPACING, 5.0f)
             kContainer.addRoundedRectangle(1, 1, 1) => [
-                it.lineStyle = LineStyle::SOLID
+                lineStyle = LineStyle::SOLID
+                associateWith(contextObject)
             ]
             kContainer.KRendering.foreground = BASICBLOCKBORDER.copy;
             kContainer.KRendering.foreground.alpha = Math.round(255f)
@@ -1163,7 +1166,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         if (nodeGrouping == NODEGROUPING_SCHEDULINGBLOCK) {
 //            kContainer.addLayoutParam(LayoutOptions::SPACING, 5.0f)
             kContainer.addRoundedRectangle(1, 1, 1) => [
-                it.lineStyle = LineStyle::SOLID
+                lineStyle = LineStyle::SOLID
+                associateWith(contextObject)
             ]
             kContainer.KRendering.foreground = SCHEDULINGBLOCKBORDER.copy;
             kContainer.KRendering.foreground.alpha = Math.round(255f)
@@ -1236,17 +1240,17 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         val schedulingBlockMapping = new HashMap<SchedulingBlock, KNode>
 
         val bbContainerList = new HashMap<BasicBlock, KNode>()
-        for (bb : scg.basicBlocks) {
+        for (basicBlock : scg.basicBlocks) {
             if (SHOW_BASICBLOCKS.booleanValue) {
                 val bbNodes = <Node>newLinkedList
-                bb.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
-                val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK)
-                bbContainerList.put(bb, bbContainer)
+                basicBlock.schedulingBlocks.forEach[bbNodes.addAll(it.nodes)]
+                val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK, basicBlock)
+                bbContainerList.put(basicBlock, bbContainer)
 //                val bbName = serializer.serialize(bb.guards.head.reference)
-                var bbName = bb.schedulingBlocks.head.guard.valuedObject.name //reference.valuedObject.name
+                var bbName = basicBlock.schedulingBlocks.head.guard.valuedObject.name //reference.valuedObject.name
                 
                 if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
-                	val expText = serializer.serialize(bb.schedulingBlocks.head.guard.expression.copy.fix)	
+                	val expText = serializer.serialize(basicBlock.schedulingBlocks.head.guard.expression.copy.fix)	
 //                	expText.createLabel(bbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
 					bbName = bbName + "\n" + expText                	
                 }
@@ -1254,8 +1258,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 bbName.createLabel(bbContainer).configureOutsideTopLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER.copy
             }
             if (SHOW_SCHEDULINGBLOCKS.booleanValue)
-                for (schedulingBlock : bb.schedulingBlocks) {
-                    val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK)
+                for (schedulingBlock : basicBlock.schedulingBlocks) {
+                    val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK, schedulingBlock)
                     schedulingBlockMapping.put(schedulingBlock, sbContainer)
 //                    val sbName = serializer.serialize(schedulingBlock.guard.reference)
                      var sbName = schedulingBlock.guard.valuedObject.name //reference.valuedObject.name
