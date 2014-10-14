@@ -803,7 +803,7 @@ import java.util.List
         }
     }
 
-    // Retrieve a dependency node according to the dependency tupel (weak or strong), if this node cannot
+    // Retrieve a dependency node according to the dependency tuple (weak or strong), if this node cannot
     // be found than create it and add it.
     // This method should not be used directly. Use getNodeWeak, getNodeStrong instead!
     def Node getNodeXXX(Dependencies dependencies, State state, Transition transition, NodeType type) {

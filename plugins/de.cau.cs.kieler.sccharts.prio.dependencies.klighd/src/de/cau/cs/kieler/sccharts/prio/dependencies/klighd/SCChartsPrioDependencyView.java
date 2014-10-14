@@ -166,6 +166,7 @@ public class SCChartsPrioDependencyView extends DiagramViewPart {
         }
     }
 
+    // ------------------------------------------------------------------------
  
     private void updateDiagram(final EObject model) {
         try {
@@ -213,7 +214,7 @@ public class SCChartsPrioDependencyView extends DiagramViewPart {
                 ISynthesis synthesis =
                         Iterables.getFirst(
                                 KlighdDataManager.getInstance().getAvailableSyntheses(
-                                        model.getClass()), null);
+                                        dependencies.getClass()), null);
                 
                 // the (re)initialization case
                 DiagramViewManager.initializeView(this, dependencies, null, properties);
