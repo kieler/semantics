@@ -89,6 +89,11 @@ import java.util.Set
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
 import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
+import de.cau.cs.kieler.core.krendering.Colors
+import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
+import de.cau.cs.kieler.klay.layered.properties.InternalProperties
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -175,7 +180,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     /** Inject analysis extensions. */
     @Inject
-    extension AnalysesVisualization
+    extension SCGDeclarationExtensions
 
     // -------------------------------------------------------------------------
     // -- KlighD Options
@@ -354,6 +359,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val String SCGPORTID_HIERARCHYPORTS = "hierarchyPorts"
     private static val String SCGPORTID_INCOMINGDEPENDENCY = "incomingDependency"
     private static val String SCGPORTID_OUTGOINGDEPENDENCY = "outgoingDependency"
+    private static val String ANNOTATIONRECTANGLE = "caRectangle"
 
     /** Constants for annotations */
     private static val String ANNOTATION_BRANCH = "branch"
@@ -396,6 +402,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private int orientation;
     
     private int sequentializedSCGCounter = 0
+    
+    private SCGraph SCGraph;
 
     // -------------------------------------------------------------------------
     // -- Main Entry Point 
@@ -418,7 +426,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (PILR != null) PIL_Nodes += PILR.criticalNodes
         }
 
-        // Invoke the synthesis.3
+        // Invoke the synthesis.
+        SCGraph = model
         val timestamp = System.currentTimeMillis
         System.out.println("Started SCG synthesis...")
         val newModel = model.synthesize();
@@ -458,7 +467,15 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // Synthesize all children             
             for (n : scg.nodes) { 
                 if (n instanceof Surface) { node.children += n.synthesize }
-                if (n instanceof Assignment) { node.children += n.synthesize }
+                if (n instanceof Assignment) { 
+                    val aNode = n.synthesize
+                    node.children += aNode
+                    if ((n as Assignment).hasAnnotation(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)) {
+                        val bNode = (n as Assignment).synthesizeConditionalAssignmentAnnotation
+                        node.children += bNode
+                        aNode.synthesizeConditionalAssignmentLink(bNode)
+                    }                    
+                }
                 if (n instanceof Entry) { 
                     if (n.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) {
                         threadTypes.put((n as Entry), n.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2)
@@ -626,6 +643,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_OUTGOING, 37, 24, 0, PortSide::SOUTH)
                 node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 47, 0, 1, PortSide::NORTH)
                 node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 47, 24, 0, PortSide::SOUTH)
+                node.addPort("DEBUGPORT", MINIMALWIDTH, MINIMALHEIGHT / 2, 1, PortSide::SOUTH)
             } else {
                 node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 1, PortSide::EAST)
@@ -634,6 +652,51 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             }
         ]
     }
+    
+    private def KNode synthesizeConditionalAssignmentAnnotation(Assignment assignment) {
+        val VOName = assignment.getStringAnnotationValue(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)
+        val VO = SCGraph.findValuedObjectByName(VOName)
+        val kNode = assignment.createNode(VO).putToLookUpWith(VO) => [ node |
+            if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.75)
+            
+            node.addPort("DEBUGPORT", 0, MINIMALHEIGHT / 2, 1, PortSide::SOUTH)
+            
+            node.setLayoutOption(LayoutOptions.COMMENT_BOX, true)
+        ]
+        val figure = kNode.addRectangle().setLineWidth(LINEWIDTH).background = Colors::YELLOW;
+        (figure) => [ 
+            node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT) 
+            
+            val assignmentStr = "false"
+            it.addText(assignmentStr).putToLookUpWith(VO).setSurroundingSpace(4, 0, 2, 0) => [
+                if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.75);
+            ] 
+        ]
+        kNode 
+    }  
+    
+    private def KEdge synthesizeConditionalAssignmentLink(KNode aNode, KNode bNode) {
+        val kEdge = createNewEdge() => [ edge |
+            // Get and set source and target information.
+            var sourceNode = aNode
+            var targetNode = bNode
+            edge.source = sourceNode
+            edge.target = targetNode
+            edge.sourcePort = aNode.getPort("DEBUGPORT")
+            edge.targetPort = bNode.getPort("DEBUGPORT")            
+            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::POLYLINE)
+            if (USE_ADAPTIVEZOOM.booleanValue) edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.75);
+
+            edge.addPolyline(1.0f) => [
+                it.lineStyle = LineStyle::DOT
+                it.foreground = Colors::GRAY
+            ]
+            
+//            edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
+        ]
+        
+        kEdge
+    }    
 
     /**
 	 * This dispatch method is triggered when a conditional must be synthesized.

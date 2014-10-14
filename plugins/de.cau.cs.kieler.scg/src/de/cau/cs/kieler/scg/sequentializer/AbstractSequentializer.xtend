@@ -58,6 +58,8 @@ abstract class AbstractSequentializer extends Transformation {
     
     public static val String ANNOTATION_SEQUENTIALIZED = "sequentialized" 
     
+    public static val String ANNOTATION_CONDITIONALASSIGNMENT = "conditional"
+    
     
     // -------------------------------------------------------------------------
     // -- Sequentializer 
