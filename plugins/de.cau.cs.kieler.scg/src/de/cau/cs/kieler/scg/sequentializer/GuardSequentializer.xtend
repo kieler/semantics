@@ -132,6 +132,10 @@ class GuardSequentializer extends AbstractSequentializer {
      */    
      override SCGraph sequentialize(SCGraph scg, KielerCompilerContext context) {
 
+        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)) {
+            return scg
+        }
+
         val timestamp = System.currentTimeMillis
         compilerContext = context
         

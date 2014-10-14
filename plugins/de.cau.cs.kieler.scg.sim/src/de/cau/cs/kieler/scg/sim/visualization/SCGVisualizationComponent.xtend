@@ -120,8 +120,8 @@ class SCGVisualizationComponent extends JSONObjectDataComponent {
                             
                             annotationMapping.putAll(guardName, context.getTargetElements(node).filter(typeof(KRendering)))
                             
-                            val associatedConditional = node.incoming.filter(typeof(ControlFlow)).head.eContainer as Conditional
-                            annotationMapping.putAll(guardName, context.getTargetElements(associatedConditional).filter(typeof(KRendering)))   
+//                            val associatedConditional = node.incoming.filter(typeof(ControlFlow)).head.eContainer as Conditional
+//                            annotationMapping.putAll(guardName, context.getTargetElements(associatedConditional).filter(typeof(KRendering)))   
                         }
                     }
                 }
@@ -162,7 +162,21 @@ class SCGVisualizationComponent extends JSONObjectDataComponent {
     }
     
     override step(JSONObject jSONObject) throws KiemExecutionException {
-        highlight(<String> newHashSet ("g1", "g2", "g15"))
+        
+        val highlighting = <String> newHashSet
+        for(key : jSONObject.keys.toIterable) {
+            if ((key as String).startsWith(BasicBlockTransformation::GUARDPREFIX)) {
+                val object = jSONObject.get(key)
+                if (object instanceof JSONObject && (object as JSONObject).has("value")) {
+                    val value = (object as JSONObject).get("value")
+                    if ((value as Integer) != 0) {
+                        highlighting += key
+                    }
+                }
+            }
+        }  
+        
+        highlight(highlighting)
         
         jSONObject
     }

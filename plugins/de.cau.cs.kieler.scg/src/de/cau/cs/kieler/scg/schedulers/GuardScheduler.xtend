@@ -42,6 +42,8 @@ import java.util.Comparator
 import java.util.Collections
 import java.util.Arrays
 import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
+import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -74,6 +76,9 @@ class GuardScheduler extends AbstractScheduler {
     
     @Inject
     extension KExpressionsExtension
+    
+    @Inject
+    extension AnnotationsExtensions
     
     
     // -------------------------------------------------------------------------
@@ -256,6 +261,10 @@ class GuardScheduler extends AbstractScheduler {
 	 * @return Returns the enriched SCG model.
 	 */
     override public SCGraph schedule(SCGraph scg, KielerCompilerContext context) {
+
+        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)) {
+            return scg
+        }
 
     	// Create a new schedule using the scgsched factory.
         val schedule = ScgFactory::eINSTANCE.createSchedule

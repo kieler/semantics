@@ -38,6 +38,8 @@ import java.util.List
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -66,6 +68,9 @@ class BasicBlockTransformation extends Transformation {
     
     @Inject
     extension SCGControlFlowExtensions
+    
+    @Inject
+    extension AnnotationsExtensions
          
          
     // -------------------------------------------------------------------------
@@ -109,6 +114,10 @@ class BasicBlockTransformation extends Transformation {
      * 			if the first node of the SCG is not an entry node.
      */
     public def SCGraph transformSCGDEPToSCGBB(SCGraph scg) {
+        
+        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)) {
+            return scg
+        }
         
         // Since KiCo may use the transformation instance several times, we must clear the caches manually. 
         processedNodes.clear     
