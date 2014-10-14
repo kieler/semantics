@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2012 by
+ * Copyright 2014 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -56,20 +56,19 @@ import java.util.List
  * @kieler.rating 2014-10-14 proposed yellow cmot
  * 
  */
- class Synccharts2Dependenies {
+ class SCCharts2Dependenies {
        
     // ================================================================================================
     //==                               T R A V E R S E    S Y N C C H A R T                         ==
     // ================================================================================================
 
     // Main transform method as create extension.
-    def create dependencies : DependencyFactory::eINSTANCE.createDependencies() transform (Region root) {
+    def create dependencies : DependencyFactory::eINSTANCE.createDependencies() transform (State root) {
         dependencies.transform(root);
     }        
     
     // Main transform method for a given dependencies object.
-    def Dependencies transform( Dependencies dependencies, Region root) {
-        var rootState = root.states.head();
+    def Dependencies transform( Dependencies dependencies, State rootState) {
 
         var allStates = rootState.eAllContents.toIterable().filter(typeof(State)).toList;
 
@@ -126,7 +125,7 @@ import java.util.List
         // Therefore we introduce control flow dependencies for outgoing transitions
         // to hierarchical states. If S is hierarchical then there might be a dependency necessary
         // for the strong AND the weak representation of S.
-        for (state : root.getAllStatesAndHandleHiearchyDependency(dependencies)) {
+        for (state : rootState.regions.head.getAllStatesAndHandleHiearchyDependency(dependencies)) {
             dependencies.handleTransitionDependency(state);
             
             var immediateOutgoingTransitions = state.outgoingTransitions.filter(e|e.isImmediate);
