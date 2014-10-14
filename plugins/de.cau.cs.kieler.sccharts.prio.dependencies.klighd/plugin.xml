@@ -9,24 +9,22 @@
       </diagramSynthesis>
    </extension>
    <extension
-         point="de.cau.cs.kieler.core.kivi.combinations">
-      <combination
-            active="true"
-            class="de.cau.cs.kieler.sccharts.prio.dependencies.klighd.xtend.DependencyDiagramSynthesisCombination"
-            name="Visualize chosen Dependency files and SCCharts dependencies">
-      </combination>
-   </extension>
-   <extension
          point="org.eclipse.ui.views">
       <view
             allowMultiple="false"
             category="de.cau.cs.kieler.sim"
-            class="de.cau.cs.kieler.sccharts.prio.dependencies.klighd.ViewPart1"
+            class="de.cau.cs.kieler.sccharts.prio.dependencies.klighd.SCChartsPrioDependencyView"
             icon="icons/dependenciesViewIcon.png"
             id="de.cau.cs.kieler.sccharts.prio.dependencies.klighd.view1"
             name="SCCharts Priority Dependencies"
             restorable="true">
       </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="de.cau.cs.kieler.sccharts.prio.dependencies.klighd.EditorListener">
+      </startup>
    </extension>
 
 </plugin>

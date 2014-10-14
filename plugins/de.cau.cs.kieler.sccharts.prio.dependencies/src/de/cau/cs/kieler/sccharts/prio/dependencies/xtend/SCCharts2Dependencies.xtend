@@ -56,7 +56,7 @@ import java.util.List
  * @kieler.rating 2014-10-14 proposed yellow cmot
  * 
  */
- class SCCharts2Dependenies {
+ class SCCharts2Dependencies {
        
     // ================================================================================================
     //==                               T R A V E R S E    S Y N C C H A R T                         ==
