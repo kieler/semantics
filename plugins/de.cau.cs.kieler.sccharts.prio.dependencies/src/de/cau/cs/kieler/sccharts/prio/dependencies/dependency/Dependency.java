@@ -6,8 +6,7 @@
  */
 package de.cau.cs.kieler.sccharts.prio.dependencies.dependency;
 
-import de.cau.cs.kieler.synccharts.State;
-
+import de.cau.cs.kieler.sccharts.State;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -48,14 +47,14 @@ public interface Dependency extends EObject {
 	/**
      * Sets the value of the '{@link de.cau.cs.kieler.sccharts.prio.dependencies.dependency.Dependency#getTargetState <em>Target State</em>}' reference.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @param value the new value of the '<em>Target State</em>' reference.
      * @see #getTargetState()
      * @generated
      */
-	void setTargetState(State value);
+    void setTargetState(State value);
 
-	/**
+    /**
      * Returns the value of the '<em><b>Source Node</b></em>' reference.
      * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.sccharts.prio.dependencies.dependency.Node#getOutgoingDependencies <em>Outgoing Dependencies</em>}'.
      * <!-- begin-user-doc -->

@@ -6,11 +6,9 @@
  */
 package de.cau.cs.kieler.sccharts.prio.dependencies.dependency;
 
-import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.Transition;
-
+import de.cau.cs.kieler.sccharts.State;
+import de.cau.cs.kieler.sccharts.Transition;
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -84,14 +82,14 @@ public interface Node extends EObject {
 	/**
      * Sets the value of the '{@link de.cau.cs.kieler.sccharts.prio.dependencies.dependency.Node#getTransition <em>Transition</em>}' reference.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @param value the new value of the '<em>Transition</em>' reference.
      * @see #getTransition()
      * @generated
      */
-	void setTransition(Transition value);
+    void setTransition(Transition value);
 
-	/**
+    /**
      * Returns the value of the '<em><b>Priority</b></em>' attribute.
      * <!-- begin-user-doc -->
 	 * <p>
@@ -172,14 +170,14 @@ public interface Node extends EObject {
 	/**
      * Sets the value of the '{@link de.cau.cs.kieler.sccharts.prio.dependencies.dependency.Node#getState <em>State</em>}' reference.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @param value the new value of the '<em>State</em>' reference.
      * @see #getState()
      * @generated
      */
-	void setState(State value);
+    void setState(State value);
 
-	/**
+    /**
      * Returns the value of the '<em><b>Id</b></em>' attribute.
      * <!-- begin-user-doc -->
 	 * <p>

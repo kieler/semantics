@@ -2,7 +2,8 @@
  */
 package de.cau.cs.kieler.sccharts.prio.dependencies.dependency.impl;
 
-import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.sccharts.SCChartsPackage;
+
 
 import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ControlflowDependency;
 import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.Dependencies;
@@ -12,9 +13,9 @@ import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.DependencyPackage;
 import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.HierarchyDependency;
 import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.Node;
 import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.NodeType;
-import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.SignalDependency;
 import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.TransitionDependency;
 
+import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ValuedObjectDependency;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -42,7 +43,7 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass signalDependencyEClass = null;
+    private EClass valuedObjectDependencyEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -133,7 +134,7 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
         isInited = true;
 
         // Initialize simple dependencies
-        SyncchartsPackage.eINSTANCE.eClass();
+        SCChartsPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theDependencyPackage.createPackageContents();
@@ -191,8 +192,8 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getSignalDependency() {
-        return signalDependencyEClass;
+    public EClass getValuedObjectDependency() {
+        return valuedObjectDependencyEClass;
     }
 
     /**
@@ -372,7 +373,7 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
         createEReference(dependencyEClass, DEPENDENCY__SOURCE_NODE);
         createEReference(dependencyEClass, DEPENDENCY__TARGET_NODE);
 
-        signalDependencyEClass = createEClass(SIGNAL_DEPENDENCY);
+        valuedObjectDependencyEClass = createEClass(VALUED_OBJECT_DEPENDENCY);
 
         hierarchyDependencyEClass = createEClass(HIERARCHY_DEPENDENCY);
 
@@ -422,25 +423,25 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
         setNsURI(eNS_URI);
 
         // Obtain other dependent packages
-        SyncchartsPackage theSyncchartsPackage = (SyncchartsPackage)EPackage.Registry.INSTANCE.getEPackage(SyncchartsPackage.eNS_URI);
+        SCChartsPackage theSCChartsPackage = (SCChartsPackage)EPackage.Registry.INSTANCE.getEPackage(SCChartsPackage.eNS_URI);
 
         // Create type parameters
 
         // Set bounds for type parameters
 
         // Add supertypes to classes
-        signalDependencyEClass.getESuperTypes().add(this.getDependency());
+        valuedObjectDependencyEClass.getESuperTypes().add(this.getDependency());
         hierarchyDependencyEClass.getESuperTypes().add(this.getDependency());
         controlflowDependencyEClass.getESuperTypes().add(this.getDependency());
         transitionDependencyEClass.getESuperTypes().add(this.getDependency());
 
         // Initialize classes and features; add operations and parameters
         initEClass(dependencyEClass, Dependency.class, "Dependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getDependency_TargetState(), theSyncchartsPackage.getState(), null, "targetState", null, 0, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDependency_TargetState(), theSCChartsPackage.getState(), null, "targetState", null, 0, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDependency_SourceNode(), this.getNode(), this.getNode_OutgoingDependencies(), "sourceNode", null, 1, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDependency_TargetNode(), this.getNode(), this.getNode_IncomingDependencies(), "targetNode", null, 1, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(signalDependencyEClass, SignalDependency.class, "SignalDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(valuedObjectDependencyEClass, ValuedObjectDependency.class, "ValuedObjectDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(hierarchyDependencyEClass, HierarchyDependency.class, "HierarchyDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -455,11 +456,11 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 
         initEClass(nodeEClass, Node.class, "Node", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getNode_Type(), this.getNodeType(), "type", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getNode_Transition(), theSyncchartsPackage.getTransition(), null, "transition", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getNode_Transition(), theSCChartsPackage.getTransition(), null, "transition", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getNode_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getNode_OutgoingDependencies(), this.getDependency(), this.getDependency_SourceNode(), "outgoingDependencies", null, 0, -1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getNode_IncomingDependencies(), this.getDependency(), this.getDependency_TargetNode(), "incomingDependencies", null, 0, -1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getNode_State(), theSyncchartsPackage.getState(), null, "state", null, 1, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getNode_State(), theSCChartsPackage.getState(), null, "state", null, 1, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getNode_Id(), ecorePackage.getEString(), "id", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals

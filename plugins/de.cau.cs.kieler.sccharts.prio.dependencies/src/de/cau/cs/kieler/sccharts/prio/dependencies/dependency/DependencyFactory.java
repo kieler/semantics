@@ -35,15 +35,15 @@ public interface DependencyFactory extends EFactory {
 	Dependency createDependency();
 
 	/**
-     * Returns a new object of class '<em>Signal Dependency</em>'.
+     * Returns a new object of class '<em>Valued Object Dependency</em>'.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return a new object of class '<em>Signal Dependency</em>'.
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Valued Object Dependency</em>'.
      * @generated
      */
-	SignalDependency createSignalDependency();
+    ValuedObjectDependency createValuedObjectDependency();
 
-	/**
+    /**
      * Returns a new object of class '<em>Hierarchy Dependency</em>'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

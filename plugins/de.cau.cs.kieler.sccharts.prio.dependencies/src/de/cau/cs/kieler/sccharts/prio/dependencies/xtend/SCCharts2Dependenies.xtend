@@ -11,30 +11,30 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.synccharts.codegen.dependencies.xtend
+package de.cau.cs.kieler.sccharts.prio.dependencies.xtend
 
-import de.cau.cs.kieler.core.kexpressions.ComplexExpression
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.Signal
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.synccharts.Emission
-import de.cau.cs.kieler.synccharts.Region
-import de.cau.cs.kieler.synccharts.State
-import de.cau.cs.kieler.synccharts.Transition
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependencies
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyFactory
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.NodeType
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
+import de.cau.cs.kieler.sccharts.Emission
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.Dependencies
+import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.Dependency
+import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.DependencyFactory
+import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.NodeType
+import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.Node
 import java.util.ArrayList
 import java.util.List
-import de.cau.cs.kieler.synccharts.TransitionType
+import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.TransitionDependency
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.ControlflowDependency
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.SignalDependency
+import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.TransitionDependency
+import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ValuedObjectDependency
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ControlflowDependency
 
 /**
  * Build a dependency graph for a SynChart. Consider control flow dependencies (immediate transitions),
@@ -51,10 +51,11 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * 10.09.2012
  * If there is NO outgoing transition at all (final state) that keep the strong abort representation.
  *
+ * This code was last redesigned for SCCharts by cmot on 2014-10-14.
  * 
  * @author cmot
- * @kieler.design 2012-10-08 proposed cmot
- * @kieler.rating 2012-10-08 proposed yellow cmot
+ * @kieler.design 2014-10-14 proposed cmot
+ * @kieler.rating 2014-10-14 proposed yellow cmot
  * 
  */
  class Synccharts2Dependenies {
@@ -104,15 +105,15 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
         }
         
         
-        // Signal dependencies
+        // ValuedObject dependencies
         
-        // Signal dependencies are necessary for control flow dependency optimization
+        // ValuedObject dependencies are necessary for control flow dependency optimization
         // because only relevant control flow dependencies should be added to prevent unnecessary 
         // cycles in the dependency graph. It is necessary to add the signal dependencies BEFORE
         // calculating control flow dependencies.
         var allTransitions = rootState.eAllContents.toIterable().filter(typeof(Transition)).toList;
         for (transition : allTransitions) {
-              dependencies.handleSignalDependency(transition, rootState);
+              dependencies.handleValuedObjectDependency(transition, rootState);
         }        
 
         // Create dependencies between nodes
@@ -443,13 +444,13 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
             for (immediateTarget : immediateTargets) {
                if (immediateTarget.needsDependencyRepresentation) {
                    var dependendNodeS = dependencies.getStrongNode(immediateTarget);
-                   if (dependendNodeS.incomingDependencies.filter(e | e instanceof SignalDependency).size > 0) {
+                   if (dependendNodeS.incomingDependencies.filter(e | e instanceof ValuedObjectDependency).size > 0) {
                        return true;
                    }   
                }
                if (immediateTarget.needsWeakRepresentation) {
                   var dependendNodeW  = dependencies.getWeakNode(immediateTarget);
-                   if (dependendNodeW.incomingDependencies.filter(e | e instanceof SignalDependency).size > 0) {
+                   if (dependendNodeW.incomingDependencies.filter(e | e instanceof ValuedObjectDependency).size > 0) {
                        return true;
                    }   
               }
@@ -578,7 +579,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
     // Create signal dependencies for states emitting signals and other states testing for these signals in triggers of
     // their outgoing transitions.
-    def handleSignalDependency(Dependencies dependencies, Transition transition, State rootState) {
+    def handleValuedObjectDependency(Dependencies dependencies, Transition transition, State rootState) {
                 for (effect : transition.eAllContents().toIterable().filter(typeof(Emission))) {
                     
                     // get other states that test for this signal in out going transition triggers
@@ -588,7 +589,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
                     //
                     // (effect as Emission).signal; == emitted signal
                     //
-                    // Addition: rule out referenced within a PRE operator (done by triggerContainingSignal)
+                    // Addition: rule out referenced within a PRE operator (done by triggerContainingValuedObject)
                     // Addition: immediate emissions of signals hiearchically inside our state must be
                     //           considered. (innerImmediateEmitterStates)
                     //           Example: 43-initial-states-signal-dependencies.kixs, dep Set->init!
@@ -596,7 +597,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
                     var allTransitions = rootState.eAllContents().toIterable().filter(typeof(Transition)).toList;
                     var triggeredTransitions =  allTransitions.filter (e |
                              e.trigger != null &&
-                            e.trigger.triggerContainingSignal((effect as Emission).signal)); 
+                            e.trigger.triggerContainingValuedObject((effect as Emission).valuedObject)); 
                         
                     for (triggeredTransition : triggeredTransitions) {
                         var triggerState = (triggeredTransition as Transition).sourceState;
@@ -604,7 +605,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
                         // Do not consider self-loops
                         if (triggerState != emitterState) {
                             // The normal case
-                            dependencies.handleSignalDependencyHelper(emitterState, triggerState, triggeredTransition, transition, rootState);
+                            dependencies.handleValuedObjectDependencyHelper(emitterState, triggerState, triggeredTransition, transition, rootState);
                         }
 
 //                        // Test case 43-initial-states-signal-dependencies.kixs
@@ -626,14 +627,14 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 //                               if (immediateEmitterState.outgoingTransitions.size == 0) {
 //                                   // States that do not have any outgoing transitions, are represented
 //                                   // by a NULL transition for the dependency node
-//                                   dependencies.handleSignalDependencyHelper(immediateEmitterState, 
+//                                   dependencies.handleValuedObjectDependencyHelper(immediateEmitterState, 
 //                                                                             triggerState, 
 //                                                                             triggeredTransition, 
 //                                                                             null, rootState);
 //                               } else {
 //                                   // For all others take their first transition (ordered by priority, most prio first)
 //                                   var orderedTransitions = immediateEmitterState.outgoingTransitions.filter(e|true).sort(e1, e2 | if (e1.priority > e2.priority) {-1} else {1});
-//                                   dependencies.handleSignalDependencyHelper(immediateEmitterState, 
+//                                   dependencies.handleValuedObjectDependencyHelper(immediateEmitterState, 
 //                                                                             triggerState, 
 //                                                                             triggeredTransition, 
 //                                                                             orderedTransitions.head, 
@@ -644,7 +645,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
                 }
     }
                            
-    def handleSignalDependencyHelper(Dependencies dependencies, State emitterState, State triggerState, Transition triggeredTransition,
+    def handleValuedObjectDependencyHelper(Dependencies dependencies, State emitterState, State triggerState, Transition triggeredTransition,
                                      Transition transition, State rootState) {
                            val emitterNode = dependencies.getStrongNode(emitterState, transition);
                            val triggerNode = dependencies.getStrongNode(triggerState, triggeredTransition);
@@ -663,23 +664,23 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
                                // there should ONLY be a dependency from E2-weak to C-weak!
                                if (!emitterState.isChildOf(triggerState)) {
                                    var emitterNodeW = dependencies.getWeakNode(emitterState, transition);
-                                   dependencies.getSignalDependency(emitterNodeW, triggerNode);
+                                   dependencies.getValuedObjectDependency(emitterNodeW, triggerNode);
                                }
                            }
                            else if (emitterState.needsStrongRepresentation() && (transition.strong || !emitterState.hierarchical) && triggerState.needsStrongRepresentation && (triggeredTransition.strong|| !triggerState.hierarchical)) {
                                // Do not allow iff emitter is child of trigger (test 111)
                                if (!emitterState.isChildOf(triggerState)) {
-                                   dependencies.getSignalDependency(emitterNode, triggerNode);
+                                   dependencies.getValuedObjectDependency(emitterNode, triggerNode);
                                }
                            }
                            else if (emitterState.needsStrongRepresentation()  && (transition.strong || !emitterState.hierarchical) && triggerState.needsWeakRepresentation) {
                                    var triggerNodeW = dependencies.getWeakNode(triggerState, triggeredTransition);
-                                   dependencies.getSignalDependency(emitterNode, triggerNodeW);
+                                   dependencies.getValuedObjectDependency(emitterNode, triggerNodeW);
                            }
                            else if (emitterState.needsWeakRepresentation && triggerState.needsWeakRepresentation) {
                                 var emitterNodeW = dependencies.getWeakNode(emitterState, transition);
                                 var triggerNodeW = dependencies.getWeakNode(triggerState, triggeredTransition);
-                                dependencies.getSignalDependency(emitterNodeW, triggerNodeW);
+                                dependencies.getValuedObjectDependency(emitterNodeW, triggerNodeW);
                            }
     }
     
@@ -690,8 +691,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
     // ======================================================================================================
     
     // Create a new signal dependency.
-    def Dependency getSignalDependency(Dependencies dependencies, Node emitterNode, Node triggerNode) {
-        var newDependency = DependencyFactory::eINSTANCE.createSignalDependency();
+    def Dependency getValuedObjectDependency(Dependencies dependencies, Node emitterNode, Node triggerNode) {
+        var newDependency = DependencyFactory::eINSTANCE.createValuedObjectDependency();
         dependencies.getDependency(triggerNode, emitterNode, newDependency);
     }
 
@@ -736,7 +737,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
             dependencyType = "T";
         } else if (newDependency instanceof ControlflowDependency) {
             dependencyType = "C";
-        } else if (newDependency instanceof SignalDependency) {
+        } else if (newDependency instanceof ValuedObjectDependency) {
             dependencyType = "S";
         }
 //        System::out.println(sourceNode.id + " --[" + dependencyType + "]--> " + targetNode.id);
@@ -917,40 +918,28 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
     }
     
     // Returns true iff the expression is referencing the signal.
-    def dispatch Boolean triggerContainingSignal(Expression trigger, Signal signal) {
+    def dispatch Boolean triggerContainingValuedObject(Expression trigger, ValuedObject signal) {
         return false;
     }
     
     // Returns true iff the operator expression is referencing the signal and it is NOT a
     // PRE operator type.
-    def dispatch Boolean triggerContainingSignal(OperatorExpression trigger, Signal signal) {
+    def dispatch Boolean triggerContainingValuedObject(OperatorExpression trigger, ValuedObject signal) {
         var returnValue = false;
         if (trigger.operator == OperatorType::PRE) {
             // Early return if subexpression are within a PRE => not considering the current tick
             return false;
         }
         for (expression : trigger.subExpressions) {
-            returnValue = returnValue || expression.triggerContainingSignal(signal);
-        }
-        return returnValue;
-    }
-
-    // Returns true iff the complex expression is referencing the signal.
-    def dispatch Boolean triggerContainingSignal(ComplexExpression trigger, Signal signal) {
-        var returnValue = false;
-        for (expression : trigger.subExpressions) {
-            returnValue = returnValue || expression.triggerContainingSignal(signal);
+            returnValue = returnValue || expression.triggerContainingValuedObject(signal);
         }
         return returnValue;
     }
     
     // Returns true iff the object reference is referencing the signal. Rule out references
     // witin a PRE operator. 
-    def dispatch Boolean triggerContainingSignal(ValuedObjectReference trigger, Signal signal) {
+    def dispatch Boolean triggerContainingValuedObject(ValuedObjectReference trigger, ValuedObject signal) {
         var returnValue = trigger.valuedObject == signal;
-        for (expression : trigger.subExpressions) {
-            returnValue = returnValue || expression.triggerContainingSignal(signal);
-        }
         return returnValue;
     }
     

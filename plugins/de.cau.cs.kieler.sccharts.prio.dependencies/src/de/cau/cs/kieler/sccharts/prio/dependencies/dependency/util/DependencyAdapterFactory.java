@@ -76,8 +76,8 @@ public class DependencyAdapterFactory extends AdapterFactoryImpl {
                 return createDependencyAdapter();
             }
             @Override
-            public Adapter caseSignalDependency(SignalDependency object) {
-                return createSignalDependencyAdapter();
+            public Adapter caseValuedObjectDependency(ValuedObjectDependency object) {
+                return createValuedObjectDependencyAdapter();
             }
             @Override
             public Adapter caseHierarchyDependency(HierarchyDependency object) {
@@ -134,20 +134,20 @@ public class DependencyAdapterFactory extends AdapterFactoryImpl {
     }
 
 	/**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.prio.dependencies.dependency.SignalDependency <em>Signal Dependency</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ValuedObjectDependency <em>Valued Object Dependency</em>}'.
      * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.prio.dependencies.dependency.SignalDependency
+     * @see de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ValuedObjectDependency
      * @generated
      */
-	public Adapter createSignalDependencyAdapter() {
+    public Adapter createValuedObjectDependencyAdapter() {
         return null;
     }
 
-	/**
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.prio.dependencies.dependency.HierarchyDependency <em>Hierarchy Dependency</em>}'.
      * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;

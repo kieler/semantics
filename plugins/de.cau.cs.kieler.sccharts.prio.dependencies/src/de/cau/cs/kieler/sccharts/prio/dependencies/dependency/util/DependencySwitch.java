@@ -76,10 +76,10 @@ public class DependencySwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case DependencyPackage.SIGNAL_DEPENDENCY: {
-                SignalDependency signalDependency = (SignalDependency)theEObject;
-                T result = caseSignalDependency(signalDependency);
-                if (result == null) result = caseDependency(signalDependency);
+            case DependencyPackage.VALUED_OBJECT_DEPENDENCY: {
+                ValuedObjectDependency valuedObjectDependency = (ValuedObjectDependency)theEObject;
+                T result = caseValuedObjectDependency(valuedObjectDependency);
+                if (result == null) result = caseDependency(valuedObjectDependency);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -136,21 +136,21 @@ public class DependencySwitch<T> extends Switch<T> {
     }
 
 	/**
-     * Returns the result of interpreting the object as an instance of '<em>Signal Dependency</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Valued Object Dependency</em>'.
      * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Signal Dependency</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Valued Object Dependency</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-	public T caseSignalDependency(SignalDependency object) {
+    public T caseValuedObjectDependency(ValuedObjectDependency object) {
         return null;
     }
 
-	/**
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Hierarchy Dependency</em>'.
      * <!-- begin-user-doc -->
 	 * This implementation returns null;

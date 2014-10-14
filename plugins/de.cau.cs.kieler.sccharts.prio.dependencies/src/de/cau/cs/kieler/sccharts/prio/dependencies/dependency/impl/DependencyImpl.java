@@ -6,20 +6,17 @@
  */
 package de.cau.cs.kieler.sccharts.prio.dependencies.dependency.impl;
 
-import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.sccharts.State;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.Dependency;
 import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.DependencyPackage;
 import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.Node;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -114,17 +111,17 @@ public class DependencyImpl extends EObjectImpl implements Dependency {
 
 	/**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public void setTargetState(State newTargetState) {
+    public void setTargetState(State newTargetState) {
         State oldTargetState = targetState;
         targetState = newTargetState;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, DependencyPackage.DEPENDENCY__TARGET_STATE, oldTargetState, targetState));
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated

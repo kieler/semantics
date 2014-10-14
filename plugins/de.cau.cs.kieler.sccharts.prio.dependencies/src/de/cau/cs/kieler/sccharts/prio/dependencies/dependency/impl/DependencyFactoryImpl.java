@@ -32,7 +32,7 @@ public class DependencyFactoryImpl extends EFactoryImpl implements DependencyFac
      */
 	public static DependencyFactory init() {
         try {
-            DependencyFactory theDependencyFactory = (DependencyFactory)EPackage.Registry.INSTANCE.getEFactory("http://kieler.cs.cau.de/dependency/0.1.0"); 
+            DependencyFactory theDependencyFactory = (DependencyFactory)EPackage.Registry.INSTANCE.getEFactory(DependencyPackage.eNS_URI);
             if (theDependencyFactory != null) {
                 return theDependencyFactory;
             }
@@ -62,7 +62,7 @@ public class DependencyFactoryImpl extends EFactoryImpl implements DependencyFac
 	public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
             case DependencyPackage.DEPENDENCY: return createDependency();
-            case DependencyPackage.SIGNAL_DEPENDENCY: return createSignalDependency();
+            case DependencyPackage.VALUED_OBJECT_DEPENDENCY: return createValuedObjectDependency();
             case DependencyPackage.HIERARCHY_DEPENDENCY: return createHierarchyDependency();
             case DependencyPackage.CONTROLFLOW_DEPENDENCY: return createControlflowDependency();
             case DependencyPackage.TRANSITION_DEPENDENCY: return createTransitionDependency();
@@ -115,15 +115,15 @@ public class DependencyFactoryImpl extends EFactoryImpl implements DependencyFac
 
 	/**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public SignalDependency createSignalDependency() {
-        SignalDependencyImpl signalDependency = new SignalDependencyImpl();
-        return signalDependency;
+    public ValuedObjectDependency createValuedObjectDependency() {
+        ValuedObjectDependencyImpl valuedObjectDependency = new ValuedObjectDependencyImpl();
+        return valuedObjectDependency;
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated

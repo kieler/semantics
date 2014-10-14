@@ -107,52 +107,52 @@ public interface DependencyPackage extends EPackage {
 	int DEPENDENCY_FEATURE_COUNT = 3;
 
 	/**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.prio.dependencies.dependency.impl.SignalDependencyImpl <em>Signal Dependency</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.prio.dependencies.dependency.impl.ValuedObjectDependencyImpl <em>Valued Object Dependency</em>}' class.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.prio.dependencies.dependency.impl.SignalDependencyImpl
-     * @see de.cau.cs.kieler.sccharts.prio.dependencies.dependency.impl.DependencyPackageImpl#getSignalDependency()
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.prio.dependencies.dependency.impl.ValuedObjectDependencyImpl
+     * @see de.cau.cs.kieler.sccharts.prio.dependencies.dependency.impl.DependencyPackageImpl#getValuedObjectDependency()
      * @generated
      */
-	int SIGNAL_DEPENDENCY = 1;
+    int VALUED_OBJECT_DEPENDENCY = 1;
 
-	/**
+    /**
      * The feature id for the '<em><b>Target State</b></em>' reference.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int SIGNAL_DEPENDENCY__TARGET_STATE = DEPENDENCY__TARGET_STATE;
+    int VALUED_OBJECT_DEPENDENCY__TARGET_STATE = DEPENDENCY__TARGET_STATE;
 
-	/**
+    /**
      * The feature id for the '<em><b>Source Node</b></em>' reference.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int SIGNAL_DEPENDENCY__SOURCE_NODE = DEPENDENCY__SOURCE_NODE;
+    int VALUED_OBJECT_DEPENDENCY__SOURCE_NODE = DEPENDENCY__SOURCE_NODE;
 
-	/**
+    /**
      * The feature id for the '<em><b>Target Node</b></em>' reference.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int SIGNAL_DEPENDENCY__TARGET_NODE = DEPENDENCY__TARGET_NODE;
+    int VALUED_OBJECT_DEPENDENCY__TARGET_NODE = DEPENDENCY__TARGET_NODE;
 
-	/**
-     * The number of structural features of the '<em>Signal Dependency</em>' class.
+    /**
+     * The number of structural features of the '<em>Valued Object Dependency</em>' class.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int SIGNAL_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
+    int VALUED_OBJECT_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
 
-	/**
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.prio.dependencies.dependency.impl.HierarchyDependencyImpl <em>Hierarchy Dependency</em>}' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -472,16 +472,16 @@ public interface DependencyPackage extends EPackage {
 	EReference getDependency_TargetNode();
 
 	/**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.prio.dependencies.dependency.SignalDependency <em>Signal Dependency</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ValuedObjectDependency <em>Valued Object Dependency</em>}'.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Signal Dependency</em>'.
-     * @see de.cau.cs.kieler.sccharts.prio.dependencies.dependency.SignalDependency
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Valued Object Dependency</em>'.
+     * @see de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ValuedObjectDependency
      * @generated
      */
-	EClass getSignalDependency();
+    EClass getValuedObjectDependency();
 
-	/**
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.prio.dependencies.dependency.HierarchyDependency <em>Hierarchy Dependency</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -708,16 +708,16 @@ public interface DependencyPackage extends EPackage {
 		EReference DEPENDENCY__TARGET_NODE = eINSTANCE.getDependency_TargetNode();
 
 		/**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.prio.dependencies.dependency.impl.SignalDependencyImpl <em>Signal Dependency</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.prio.dependencies.dependency.impl.ValuedObjectDependencyImpl <em>Valued Object Dependency</em>}' class.
          * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.prio.dependencies.dependency.impl.SignalDependencyImpl
-         * @see de.cau.cs.kieler.sccharts.prio.dependencies.dependency.impl.DependencyPackageImpl#getSignalDependency()
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.prio.dependencies.dependency.impl.ValuedObjectDependencyImpl
+         * @see de.cau.cs.kieler.sccharts.prio.dependencies.dependency.impl.DependencyPackageImpl#getValuedObjectDependency()
          * @generated
          */
-		EClass SIGNAL_DEPENDENCY = eINSTANCE.getSignalDependency();
+        EClass VALUED_OBJECT_DEPENDENCY = eINSTANCE.getValuedObjectDependency();
 
-		/**
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.prio.dependencies.dependency.impl.HierarchyDependencyImpl <em>Hierarchy Dependency</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->

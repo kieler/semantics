@@ -4,7 +4,7 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.sccharts.prio.dependencies/src"
     modelPluginID="de.cau.cs.kieler.sccharts.prio.dependencies" modelName="Dependency"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
-    usedGenPackages="../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions ../../de.cau.cs.kieler.synccharts/model/synccharts.genmodel#//synccharts">
+    usedGenPackages="../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions ../../de.cau.cs.kieler.sccharts/model/sccharts.genmodel#//sccharts">
   <foreignModel>dependency.ecore</foreignModel>
   <genPackages prefix="Dependency" basePackage="de.cau.cs.kieler.sccharts.prio.dependencies"
       disposableProviderFactory="true" ecorePackage="dependency.ecore#/">

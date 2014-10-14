@@ -6,9 +6,10 @@
  */
 package de.cau.cs.kieler.sccharts.prio.dependencies.dependency.impl;
 
-import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.Transition;
 
+
+import de.cau.cs.kieler.sccharts.State;
+import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.Dependency;
 import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.DependencyPackage;
 import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.Node;
@@ -218,17 +219,17 @@ public class NodeImpl extends EObjectImpl implements Node {
 
 	/**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public void setTransition(Transition newTransition) {
+    public void setTransition(Transition newTransition) {
         Transition oldTransition = transition;
         transition = newTransition;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, DependencyPackage.NODE__TRANSITION, oldTransition, transition));
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -301,17 +302,17 @@ public class NodeImpl extends EObjectImpl implements Node {
 
 	/**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	public void setState(State newState) {
+    public void setState(State newState) {
         State oldState = state;
         state = newState;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, DependencyPackage.NODE__STATE, oldState, state));
     }
 
-	/**
+    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
