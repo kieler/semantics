@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER Dependency Visualization
+Bundle-SymbolicName: de.cau.cs.kieler.sccharts.prio.dependencies.klighd;singleton:=true
+Bundle-Version: 0.2.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.sccharts.prio.dependencies.klighd.SCChartsPrioDependenciesKLighDPlugin
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ de.cau.cs.kieler.core.krendering,
+ de.cau.cs.kieler.core.krendering.extensions,
+ de.cau.cs.kieler.core.model,
+ de.cau.cs.kieler.kiml,
+ de.cau.cs.kieler.klighd,
+ org.eclipse.xtend2.lib,
+ com.google.inject,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ de.cau.cs.kieler.sccharts.prio.dependencies,
+ de.cau.cs.kieler.kiml.graphviz.dot,
+ de.cau.cs.kieler.sccharts,
+ de.cau.cs.kieler.klay.layered,
+ de.cau.cs.kieler.klighd.ui,
+ org.eclipse.xtext.ui;bundle-version="2.5.4",
+ de.cau.cs.kieler.kico.klighd
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
