@@ -7,9 +7,8 @@ Bundle-Activator: de.cau.cs.kieler.sccharts.prio.dependencies.klighd.SCChartsPri
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- de.cau.cs.kieler.core.kivi,
  de.cau.cs.kieler.core.krendering,
- de.cau.cs.kieler.core.krendering.extensions;bundle-version="0.1.0",
+ de.cau.cs.kieler.core.krendering.extensions,
  de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.kiml,
  de.cau.cs.kieler.klighd,

@@ -16,5 +16,17 @@
             name="Visualize chosen Dependency files and SCCharts dependencies">
       </combination>
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="de.cau.cs.kieler.sim"
+            class="de.cau.cs.kieler.sccharts.prio.dependencies.klighd.ViewPart1"
+            icon="icons/dependenciesViewIcon.png"
+            id="de.cau.cs.kieler.sccharts.prio.dependencies.klighd.view1"
+            name="SCCharts Priority Dependencies"
+            restorable="true">
+      </view>
+   </extension>
 
 </plugin>
