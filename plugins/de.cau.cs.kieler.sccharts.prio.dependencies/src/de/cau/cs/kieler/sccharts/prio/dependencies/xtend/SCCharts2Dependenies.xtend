@@ -13,33 +13,31 @@
  */
 package de.cau.cs.kieler.sccharts.prio.dependencies.xtend
 
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.TransitionType
+import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ControlflowDependency
 import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.Dependencies
 import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.Dependency
 import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.DependencyFactory
-import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.NodeType
 import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.Node
-import java.util.ArrayList
-import java.util.List
-import de.cau.cs.kieler.sccharts.TransitionType
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.NodeType
 import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.TransitionDependency
 import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ValuedObjectDependency
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ControlflowDependency
+import java.util.ArrayList
+import java.util.List
 
 /**
  * Build a dependency graph for a SynChart. Consider control flow dependencies (immediate transitions),
  * transition dependencies (transition priorities), hierarchy dependencies (hierarchical states) and
- * signal dependencies (emitters and triggers).
+ * valuedObject dependencies (emitters and triggers).
  * 
  * 03.09.2012
  * Necessary optimization because of nondeterministic (sometimes WRONG) choices for priorities:
@@ -109,7 +107,7 @@ import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ControlflowDepende
         
         // ValuedObject dependencies are necessary for control flow dependency optimization
         // because only relevant control flow dependencies should be added to prevent unnecessary 
-        // cycles in the dependency graph. It is necessary to add the signal dependencies BEFORE
+        // cycles in the dependency graph. It is necessary to add the valuedObject dependencies BEFORE
         // calculating control flow dependencies.
         var allTransitions = rootState.eAllContents.toIterable().filter(typeof(Transition)).toList;
         for (transition : allTransitions) {
@@ -436,7 +434,7 @@ import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ControlflowDepende
         if (immediateTargets.filter(e | e.needsDependencyRepresentation).size > 0) {
             
             // if there are immediate transitions reachable with effects
-            // that result in other signal dependencies to the dependency representation 
+            // that result in other valuedObject dependencies to the dependency representation 
             // of this state then return true
             
             // Do not add any such dependencies for test 133
@@ -511,7 +509,7 @@ import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ControlflowDepende
     // For a state get all outer states until reaching a non-initial state that contains it
     // Attention: Take into account ALSO all incoming transitions to the last state,
     // because when taking such a transition, this may result in following the initial
-    // immediate chain (like in test 50-initial-states-signal-dependencies3).
+    // immediate chain (like in test 50-initial-states-valuedObject-dependencies3).
     // The stopAtParent state ensures that we stop at the common parent state, e.g.
     // test case 07-ABO.
     // Test 74-concurrent-and-hierarchical-write-dependency-weak-aborted reveals that
@@ -531,7 +529,7 @@ import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ControlflowDepende
 //               states.addAll(listFromOutSide);
 //            }
 //            else {
-//                // because of 50-initial-states-signal-dependencies3
+//                // because of 50-initial-states-valuedObject-dependencies3
 //                for (transition : outerState.incomingTransitions) {
 //                   states.add(transition.sourceState);
 //                }
@@ -577,22 +575,22 @@ import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ControlflowDepende
 //        return true;
 //    }
 
-    // Create signal dependencies for states emitting signals and other states testing for these signals in triggers of
+    // Create valuedObject dependencies for states emitting valuedObjects and other states testing for these valuedObjects in triggers of
     // their outgoing transitions.
     def handleValuedObjectDependency(Dependencies dependencies, Transition transition, State rootState) {
                 for (effect : transition.eAllContents().toIterable().filter(typeof(Emission))) {
                     
-                    // get other states that test for this signal in out going transition triggers
-                    // (the scope of the signal should be respected because we are
+                    // get other states that test for this valuedObject in out going transition triggers
+                    // (the scope of the valuedObject should be respected because we are
                     // not searching for the NAME but for the object to appear in transition
                     // triggers)
                     //
-                    // (effect as Emission).signal; == emitted signal
+                    // (effect as Emission).valuedObject; == emitted valuedObject
                     //
                     // Addition: rule out referenced within a PRE operator (done by triggerContainingValuedObject)
-                    // Addition: immediate emissions of signals hiearchically inside our state must be
+                    // Addition: immediate emissions of valuedObjects hiearchically inside our state must be
                     //           considered. (innerImmediateEmitterStates)
-                    //           Example: 43-initial-states-signal-dependencies.kixs, dep Set->init!
+                    //           Example: 43-initial-states-valuedObject-dependencies.kixs, dep Set->init!
                     //
                     var allTransitions = rootState.eAllContents().toIterable().filter(typeof(Transition)).toList;
                     var triggeredTransitions =  allTransitions.filter (e |
@@ -608,9 +606,9 @@ import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ControlflowDepende
                             dependencies.handleValuedObjectDependencyHelper(emitterState, triggerState, triggeredTransition, transition, rootState);
                         }
 
-//                        // Test case 43-initial-states-signal-dependencies.kixs
+//                        // Test case 43-initial-states-valuedObject-dependencies.kixs
 //                        // Test case 44-initial-states-with-hierarchy.kixs
-//                        // Test case 49-initial-states-signal-dependencies2.kixs                        
+//                        // Test case 49-initial-states-valuedObject-dependencies2.kixs                        
 //                        var List<State> immediateEmitterStates = <State> newLinkedList;
 //                        // From a higher hierarchy we may also find this emitter (as immediate deep inside)
 //                        if (transition.sourceState.isImmediatelyReachableFromInitialState) {
@@ -690,7 +688,7 @@ import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ControlflowDepende
     // ==                      R E T R I E V E    C R E A T E D    D E P E N D E N C Y                     ==
     // ======================================================================================================
     
-    // Create a new signal dependency.
+    // Create a new valuedObject dependency.
     def Dependency getValuedObjectDependency(Dependencies dependencies, Node emitterNode, Node triggerNode) {
         var newDependency = DependencyFactory::eINSTANCE.createValuedObjectDependency();
         dependencies.getDependency(triggerNode, emitterNode, newDependency);
@@ -917,29 +915,29 @@ import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ControlflowDepende
         if (e1.priority < e2.priority) {-1} else {1}    
     }
     
-    // Returns true iff the expression is referencing the signal.
-    def dispatch Boolean triggerContainingValuedObject(Expression trigger, ValuedObject signal) {
+    // Returns true iff the expression is referencing the valuedObject.
+    def dispatch Boolean triggerContainingValuedObject(Expression trigger, ValuedObject valuedObject) {
         return false;
     }
     
-    // Returns true iff the operator expression is referencing the signal and it is NOT a
+    // Returns true iff the operator expression is referencing the valuedObject and it is NOT a
     // PRE operator type.
-    def dispatch Boolean triggerContainingValuedObject(OperatorExpression trigger, ValuedObject signal) {
+    def dispatch Boolean triggerContainingValuedObject(OperatorExpression trigger, ValuedObject valuedObject) {
         var returnValue = false;
         if (trigger.operator == OperatorType::PRE) {
             // Early return if subexpression are within a PRE => not considering the current tick
             return false;
         }
         for (expression : trigger.subExpressions) {
-            returnValue = returnValue || expression.triggerContainingValuedObject(signal);
+            returnValue = returnValue || expression.triggerContainingValuedObject(valuedObject);
         }
         return returnValue;
     }
     
-    // Returns true iff the object reference is referencing the signal. Rule out references
+    // Returns true iff the object reference is referencing the valuedObject. Rule out references
     // witin a PRE operator. 
-    def dispatch Boolean triggerContainingValuedObject(ValuedObjectReference trigger, ValuedObject signal) {
-        var returnValue = trigger.valuedObject == signal;
+    def dispatch Boolean triggerContainingValuedObject(ValuedObjectReference trigger, ValuedObject valuedObject) {
+        var returnValue = trigger.valuedObject == valuedObject;
         return returnValue;
     }
     
