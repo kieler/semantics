@@ -470,11 +470,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 if (n instanceof Assignment) { 
                     val aNode = n.synthesize
                     node.children += aNode
-                    if ((n as Assignment).hasAnnotation(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)) {
-                        val bNode = (n as Assignment).synthesizeConditionalAssignmentAnnotation
-                        node.children += bNode
-                        aNode.synthesizeConditionalAssignmentLink(bNode)
-                    }                    
+//                    if ((n as Assignment).hasAnnotation(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)) {
+//                        val bNode = (n as Assignment).synthesizeConditionalAssignmentAnnotation
+//                        node.children += bNode
+//                        aNode.synthesizeConditionalAssignmentLink(bNode)
+//                    }                    
                 }
                 if (n instanceof Entry) { 
                     if (n.hasAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE)) {
@@ -654,48 +654,48 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     }
     
     private def KNode synthesizeConditionalAssignmentAnnotation(Assignment assignment) {
-        val VOName = assignment.getStringAnnotationValue(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)
-        val VO = SCGraph.findValuedObjectByName(VOName)
-        val kNode = assignment.createNode(VO).putToLookUpWith(VO) => [ node |
-            if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.75)
-            
-            node.addPort("DEBUGPORT", 0, MINIMALHEIGHT / 2, 1, PortSide::SOUTH)
-            
-            node.setLayoutOption(LayoutOptions.COMMENT_BOX, true)
-        ]
-        val figure = kNode.addRectangle().setLineWidth(LINEWIDTH).background = Colors::YELLOW;
-        (figure) => [ 
-            node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT) 
-            
-            val assignmentStr = "false"
-            it.addText(assignmentStr).putToLookUpWith(VO).setSurroundingSpace(4, 0, 2, 0) => [
-                if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.75);
-            ] 
-        ]
-        kNode 
+//        val VOName = assignment.getStringAnnotationValue(AbstractSequentializer::ANNOTATION_CONDITIONALASSIGNMENT)
+//        val VO = SCGraph.findValuedObjectByName(VOName)
+//        val kNode = assignment.createNode(VO).putToLookUpWith(VO) => [ node |
+//            if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.75)
+//            
+//            node.addPort("DEBUGPORT", 0, MINIMALHEIGHT / 2, 1, PortSide::SOUTH)
+//            
+//            node.setLayoutOption(LayoutOptions.COMMENT_BOX, true)
+//        ]
+//        val figure = kNode.addRectangle().setLineWidth(LINEWIDTH).background = Colors::YELLOW;
+//        (figure) => [ 
+//            node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT) 
+//            
+//            val assignmentStr = "false"
+//            it.addText(assignmentStr).putToLookUpWith(VO).setSurroundingSpace(4, 0, 2, 0) => [
+//                if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.75);
+//            ] 
+//        ]
+//        kNode 
     }  
     
     private def KEdge synthesizeConditionalAssignmentLink(KNode aNode, KNode bNode) {
-        val kEdge = createNewEdge() => [ edge |
-            // Get and set source and target information.
-            var sourceNode = aNode
-            var targetNode = bNode
-            edge.source = sourceNode
-            edge.target = targetNode
-            edge.sourcePort = aNode.getPort("DEBUGPORT")
-            edge.targetPort = bNode.getPort("DEBUGPORT")            
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::POLYLINE)
-            if (USE_ADAPTIVEZOOM.booleanValue) edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.75);
-
-            edge.addPolyline(1.0f) => [
-                it.lineStyle = LineStyle::DOT
-                it.foreground = Colors::GRAY
-            ]
-            
-//            edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
-        ]
-        
-        kEdge
+//        val kEdge = createNewEdge() => [ edge |
+//            // Get and set source and target information.
+//            var sourceNode = aNode
+//            var targetNode = bNode
+//            edge.source = sourceNode
+//            edge.target = targetNode
+//            edge.sourcePort = aNode.getPort("DEBUGPORT")
+//            edge.targetPort = bNode.getPort("DEBUGPORT")            
+//            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::POLYLINE)
+//            if (USE_ADAPTIVEZOOM.booleanValue) edge.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.75);
+//
+//            edge.addPolyline(1.0f) => [
+//                it.lineStyle = LineStyle::DOT
+//                it.foreground = Colors::GRAY
+//            ]
+//            
+////            edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
+//        ]
+//        
+//        kEdge
     }    
 
     /**
@@ -709,8 +709,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         return conditional.createNode().putToLookUpWith(conditional) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // Draw a diamond figure for conditionals.
-            val figure = node.addPolygon().createDiamondShape()
+            val figure = node.addPolygon.createDiamondShape
             figure => [
+                putToLookUpWith(conditional)
                 node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
                 // Serialize the condition in the conditional
                 if (conditional.condition != null)

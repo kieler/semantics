@@ -263,7 +263,7 @@ class GuardSequentializer extends AbstractSequentializer {
                     nodeCache.add(conditionalAssignment)
     				nextControlFlow = ScgFactory::eINSTANCE.createControlFlow
     				conditionalAssignment.next = nextControlFlow
-    				conditionalAssignment.addAnnotation(ANNOTATION_CONDITIONALASSIGNMENT, conditionalAssignment.valuedObject.name)
+    				conditionalAssignment.addAnnotation(ANNOTATION_CONDITIONALASSIGNMENT, guard.valuedObject.name)
     			}
     			nextControlFlows.add(nextControlFlow)
     			

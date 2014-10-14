@@ -14,5 +14,6 @@ Require-Bundle: de.cau.cs.kieler.sim.kiem,
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
  de.cau.cs.kieler.scg,
- com.google.inject
+ com.google.inject,
+ de.cau.cs.kieler.core.krendering.extensions
 
