@@ -78,6 +78,8 @@ class BasicBlockTransformation extends Transformation {
     // -------------------------------------------------------------------------
     
     public static val String GUARDPREFIX = "g"
+
+    protected val SPLITSCHEDULINGBLOCKSATENTRY = false
     
 
     // -------------------------------------------------------------------------
@@ -86,7 +88,7 @@ class BasicBlockTransformation extends Transformation {
     
     protected val processedNodes = <Node> newHashSet
     protected val basicBlockNodeMapping = new HashMap<Node, BasicBlock>
-    
+  
     
     // -------------------------------------------------------------------------
     // -- Transformation method
@@ -465,7 +467,7 @@ class BasicBlockTransformation extends Transformation {
     
     protected def boolean schedulingBlockSplitter(Node node, Node lastNode) {
         (!node.incoming.filter(typeof(Dependency)).filter[ concurrent && !confluent].empty) ||
-        (lastNode instanceof Entry)
+        (SPLITSCHEDULINGBLOCKSATENTRY && (lastNode instanceof Entry))
     } 
     
     /**
