@@ -40,6 +40,7 @@ import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.* //.copy
 
 /**
  * Visualization of a dependency graph for a SyncChart.
@@ -157,16 +158,16 @@ class DependencyDiagramSynthesis extends AbstractDiagramSynthesis<Dependencies> 
                 it.setLineWidth(2)
                 
                 if (dependency instanceof ValuedObjectDependency) {
-                    it.foreground = DEPENDENCY_RED;
+                    it.foreground = DEPENDENCY_RED.copy;
                 }
                 else if (dependency instanceof ControlflowDependency) {
-                    it.foreground = DEPENDENCY_BLUE;
+                    it.foreground = DEPENDENCY_BLUE.copy;
                     if ((dependency as ControlflowDependency).immediate) {
-                        it.foreground = DEPENDENCY_BLUE2;
+                        it.foreground = DEPENDENCY_BLUE2.copy;
                     }
                 }
                 else if (dependency instanceof TransitionDependency) {
-                    it.foreground = DEPENDENCY_GREEN;
+                    it.foreground = DEPENDENCY_GREEN.copy;
                 }
                 
 	        ];
