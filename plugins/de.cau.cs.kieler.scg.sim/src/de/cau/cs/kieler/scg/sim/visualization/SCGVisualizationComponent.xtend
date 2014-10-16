@@ -60,6 +60,7 @@ import de.cau.cs.kieler.core.krendering.KText
 import de.cau.cs.kieler.core.krendering.KRoundedRectangle
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.guardCreation.GuardCreator
 
 /**
  * @author ssm als
@@ -170,7 +171,12 @@ class SCGVisualizationComponent extends JSONObjectDataComponent {
                 if (object instanceof JSONObject && (object as JSONObject).has("value")) {
                     val value = (object as JSONObject).get("value")
                     if ((value as Integer) != 0) {
-                        highlighting += key
+                        if (key.endsWith(GuardCreator::SCHIZOPHRENIC_SUFFIX)) {
+                            val myKey = key.substring(0,key.length-2)
+                            highlighting += myKey                            
+                        } else {
+                            highlighting += key                            
+                        }
                     }
                 }
             }

@@ -94,6 +94,7 @@ import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.core.krendering.Colors
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.klay.layered.properties.InternalProperties
+import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -457,10 +458,15 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             else
                 node.setLayoutOption(LayoutOptions::DIRECTION, Direction::RIGHT)
             node.setLayoutOption(LayoutOptions::SPACING, 25f);
-            node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-            node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-            node.addLayoutParam(Properties::THOROUGHNESS, 100)
-            node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
+            node.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+            node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+            node.setLayoutOption(Properties::THOROUGHNESS, 100)
+            node.setLayoutOption(LayoutOptions::SEPARATE_CC, false);
+            if (scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
+                node.setLayoutOption(Properties::SAUSAGE_FOLDING, true)
+                node.setLayoutOption(Properties::NODE_LAYERING, LayeringStrategy::LONGEST_PATH)
+            }
+            
             
             val threadTypes = <Entry, ThreadPathType> newHashMap
             
