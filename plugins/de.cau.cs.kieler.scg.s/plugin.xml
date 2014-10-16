@@ -10,6 +10,12 @@
             name="C Code">
       </transformationMethod>
       <transformationMethod
+            class="de.cau.cs.kieler.scg.s.transformations.SCG2Java"
+            id="SCG2JAVA"
+            method="transform"
+            name="Java Code">
+      </transformationMethod>
+      <transformationMethod
             class="de.cau.cs.kieler.scg.s.transformations.SCG2S"
             dependencies="SCG2C"
             id="SCG2S"
@@ -22,7 +28,7 @@
             isCategory="true"
             isFeatureGroup="false"
             name="Code Generation"
-            transformations="SCG2C, SCG2S">
+            transformations="SCG2C, SCG2JAVA, SCG2S">
       </transformationGroup>
    </extension>
 

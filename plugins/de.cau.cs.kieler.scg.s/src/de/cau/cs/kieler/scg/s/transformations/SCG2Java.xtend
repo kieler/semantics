@@ -20,12 +20,12 @@ import de.cau.cs.kieler.s.sc.xtend.S2C
 import de.cau.cs.kieler.scg.s.PrimitiveBeautifier
 
 /**
- * Transform SCG 2 C code via S code. Do basic primitive beautifying for small models
+ * Transform SCG 2 Java code via S code. Do basic primitive beautifying for small models
  * 
- * @author ssm, cmot
+ * @author cmot
  *
  */
-class SCG2C {
+class SCG2Java {
     
         /**
          * Transform the incoming SCG to C code. If the eObject is not an SCG then just return it.

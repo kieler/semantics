@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
- package de.cau.cs.kieler.s.sc.xtend
+ package de.cau.cs.kieler.s.sj.xtend
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.BoolValue
@@ -47,15 +47,16 @@ import de.cau.cs.kieler.s.extensions.SExtension
 import java.util.List
 import java.util.HashMap
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
+import static de.cau.cs.kieler.s.sj.xtend.S2Java.*
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
  * 
  * @author cmot 
- * @kieler.design 2012-10-08 proposed cmot
- * @kieler.rating 2012-10-08 yellow KI-28
+ * @kieler.design 2014-10-16 proposed cmot
+ * @kieler.rating 2014-10-16 proposed yellow
  */
-class S2C { 
+class S2Java { 
     
     public static String bufferSize;
     public static String includeHeader;
@@ -99,7 +100,7 @@ class S2C {
    def scHeader(Program program) {
        '''
     /*****************************************************************************/
-    /*                 G E N E R A T E D       C    C O D E                      */
+    /*               G E N E R A T E D      J A V A   C O D E                    */
     /*****************************************************************************/
     /* KIELER - Kiel Integrated Environment for Layout Eclipse RichClient        */
     /*                                                                           */
