@@ -70,14 +70,14 @@ class S2Java {
     val preCache = <ValuedObject> newArrayList     
     
     // General method to create the c simulation interface.
-    def transform (Program program) {
+    def transform (Program program, String className) {
         val timestamp = System.currentTimeMillis
        	program.eAllContents.filter(typeof(OperatorExpression)).filter[operator == OperatorType::PRE].forEach[
        		it.eAllContents.filter(typeof(ValuedObjectReference)).forEach[ preCache += it.valuedObject ]	
        	]    
       val code = '''
-«/* Generate the C header */»
-       «scHeader(program)»
+«/* Generate the Java header */»
+       «header(program, className)»
 
        «/* Possible global host code */»
        «if (program.globalHostCodeInstruction != null) {
@@ -88,6 +88,8 @@ class S2Java {
 
        «/* Generate the tick function */»
        «sTickFunction(program)»
+       
+       }
        '''
         val time = (System.currentTimeMillis - timestamp) as float
         System.out.println("C code generation finished (time used: "+(time / 1000)+"s).")    
@@ -97,7 +99,7 @@ class S2Java {
    // -------------------------------------------------------------------------   
    
    // Generate the C header.
-   def scHeader(Program program) {
+   def header(Program program, String className) {
        '''
     /*****************************************************************************/
     /*               G E N E R A T E D      J A V A   C O D E                    */
@@ -114,6 +116,8 @@ class S2Java {
     /*****************************************************************************/
 
     «includeHeader»
+    
+    class «className» {
 
    «/* Variables */»
     «sVariables(program)»    
@@ -148,21 +152,6 @@ class S2Java {
 
    
    def boolean usesPre(Program program, ValuedObject valuedObject) {
-//       val foundPres = program.cachedFoundPres
-//       for (pre : foundPres) {
-//           for (subExpression : pre.subExpressions) {
-//               if (subExpression instanceof ValuedObjectReference) {
-//                   if ((subExpression as ValuedObjectReference).valuedObject == valuedObject) {
-//                       return true
-//                   }
-//               }
-//               val found = subExpression.cachedFound.filter(e | e.valuedObject == valuedObject).toList
-//             if (found.size > 0) {
-//                   return true
-//               }
-//           }
-//       } 
-//       return false
 		preCache.contains(valuedObject)
    }
 
@@ -170,7 +159,7 @@ class S2Java {
    def sVariables(Program program) {
        '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
-            «signal.type.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
+              «'''  '''»public «signal.type.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
               «IF signal.isArray»
                 «FOR card : signal.cardinalities»{int i«card.hashCode» = 0; for(i«card.hashCode»=0; i«card.hashCode» < «card.intValue»; i«card.hashCode»++) {«ENDFOR»
                 «signal.name»«FOR card : signal.cardinalities»[i«card.hashCode»]«ENDFOR» = «signal.initialValue.expand»;
@@ -180,7 +169,7 @@ class S2Java {
                 «ENDIF»«ENDIF»;
             
             «IF program.usesPre(signal)»
-                «signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
+«'''  '''»«signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
             «ENDIF»
         «ENDFOR»
         «ENDFOR»
@@ -228,7 +217,7 @@ class S2Java {
    
    // Generate the  reset function.
    def sResetFunction(Program program) {
-       '''    void reset(){
+       '''  public void reset(){
        _GO = 1;
        «program.resetVariables»
        return;
@@ -240,7 +229,7 @@ class S2Java {
    
    // Generate the  tick function.
    def sTickFunction(Program program) {
-       '''    void tick(){
+       '''  public void tick(){
        g0 = _GO;
        «FOR state : program.states»
        «state.expand»

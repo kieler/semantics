@@ -16,7 +16,6 @@ package de.cau.cs.kieler.scg.s.transformations
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.s.s.Program
 import com.google.inject.Guice
-import de.cau.cs.kieler.s.sc.xtend.S2C
 import de.cau.cs.kieler.scg.s.PrimitiveBeautifier
 
 /**
@@ -25,7 +24,7 @@ import de.cau.cs.kieler.scg.s.PrimitiveBeautifier
  * @author ssm, cmot
  *
  */
-class SCG2C {
+class S2C {
     
         /**
          * Transform the incoming SCG to C code. If the eObject is not an SCG then just return it.
@@ -37,7 +36,7 @@ class SCG2C {
             
             if (eObject instanceof Program) {
                 
-                val S2C transform2 = Guice.createInjector().getInstance(typeof(S2C));
+                val de.cau.cs.kieler.s.sc.xtend.S2C transform2 = Guice.createInjector().getInstance(typeof(de.cau.cs.kieler.s.sc.xtend.S2C));
                 var String cProgram = transform2.transform(eObject as Program).toString();
                 
                 cProgram = PrimitiveBeautifier.beautify(cProgram)
