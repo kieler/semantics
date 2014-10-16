@@ -4,7 +4,7 @@
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.transformations.GuiceBasedTransformationFactory:de.cau.cs.kieler.sccharts.prio.dependencies.klighd.xtend.DependencyDiagramSynthesis"
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.sccharts.prio.dependencies.klighd.xtend.DependencyDiagramSynthesis"
             id="de.cau.cs.kieler.sccharts.prio.dependencies.klighd.xtend.DependencyDiagramSynthesis">
       </diagramSynthesis>
    </extension>

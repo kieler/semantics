@@ -25,3 +25,5 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.kico.klighd
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
+Export-Package: de.cau.cs.kieler.sccharts.prio.dependencies.klighd,
+ de.cau.cs.kieler.sccharts.prio.dependencies.klighd.xtend

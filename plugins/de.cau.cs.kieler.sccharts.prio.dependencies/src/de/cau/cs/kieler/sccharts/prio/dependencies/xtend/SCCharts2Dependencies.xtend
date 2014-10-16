@@ -18,7 +18,7 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.sccharts.Emission
+//import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -33,6 +33,7 @@ import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.TransitionDependen
 import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ValuedObjectDependency
 import java.util.ArrayList
 import java.util.List
+import de.cau.cs.kieler.sccharts.Assignment
 
 /**
  * Build a dependency graph for a SynChart. Consider control flow dependencies (immediate transitions),
@@ -577,7 +578,7 @@ import java.util.List
     // Create valuedObject dependencies for states emitting valuedObjects and other states testing for these valuedObjects in triggers of
     // their outgoing transitions.
     def handleValuedObjectDependency(Dependencies dependencies, Transition transition, State rootState) {
-                for (effect : transition.eAllContents().toIterable().filter(typeof(Emission))) {
+                for (assignment : transition.eAllContents().toIterable().filter(typeof(Assignment))) {
                     
                     // get other states that test for this valuedObject in out going transition triggers
                     // (the scope of the valuedObject should be respected because we are
@@ -594,15 +595,15 @@ import java.util.List
                     var allTransitions = rootState.eAllContents().toIterable().filter(typeof(Transition)).toList;
                     var triggeredTransitions =  allTransitions.filter (e |
                              e.trigger != null &&
-                            e.trigger.triggerContainingValuedObject((effect as Emission).valuedObject)); 
+                            e.trigger.triggerContainingValuedObject((assignment as Assignment).valuedObject)); 
                         
                     for (triggeredTransition : triggeredTransitions) {
                         var triggerState = (triggeredTransition as Transition).sourceState;
-                        val emitterState = transition.sourceState;
+                        val assignerState = transition.sourceState;
                         // Do not consider self-loops
-                        if (triggerState != emitterState) {
+                        if (triggerState != assignerState) {
                             // The normal case
-                            dependencies.handleValuedObjectDependencyHelper(emitterState, triggerState, triggeredTransition, transition, rootState);
+                            dependencies.handleValuedObjectDependencyHelper(assignerState, triggerState, triggeredTransition, transition, rootState);
                         }
 
 //                        // Test case 43-initial-states-valuedObject-dependencies.kixs
@@ -642,9 +643,9 @@ import java.util.List
                 }
     }
                            
-    def handleValuedObjectDependencyHelper(Dependencies dependencies, State emitterState, State triggerState, Transition triggeredTransition,
+    def handleValuedObjectDependencyHelper(Dependencies dependencies, State assignerState, State triggerState, Transition triggeredTransition,
                                      Transition transition, State rootState) {
-                           val emitterNode = dependencies.getStrongNode(emitterState, transition);
+                           val emitterNode = dependencies.getStrongNode(assignerState, transition);
                            val triggerNode = dependencies.getStrongNode(triggerState, triggeredTransition);
                            
                            // The following cases must exclude each other (test 148) 
@@ -654,28 +655,28 @@ import java.util.List
                            // Special care must be taken for transitions out of simple (non hierarchical) states because these states only have a strong representation in the dependency graph.
                            // =>  && (triggeredTransition.strong || !triggerState.hierarchical)
                            
-                           if (emitterState.needsWeakRepresentation && triggerState.needsStrongRepresentation && (triggeredTransition.strong || !triggerState.hierarchical)) {
-                               // Do not allow iff emitter is child of trigger (test 111)
+                           if (assignerState.needsWeakRepresentation && triggerState.needsStrongRepresentation && (triggeredTransition.strong || !triggerState.hierarchical)) {
+                               // Do not allow iff emitter/assigner is child of trigger (test 111)
                                // Dependency from E2-weak (abort) to C-strong is WRONG
                                // because the weak abort can only happen if C's last wish is executed
                                // there should ONLY be a dependency from E2-weak to C-weak!
-                               if (!emitterState.isChildOf(triggerState)) {
-                                   var emitterNodeW = dependencies.getWeakNode(emitterState, transition);
+                               if (!assignerState.isChildOf(triggerState)) {
+                                   var emitterNodeW = dependencies.getWeakNode(assignerState, transition);
                                    dependencies.getValuedObjectDependency(emitterNodeW, triggerNode);
                                }
                            }
-                           else if (emitterState.needsStrongRepresentation() && (transition.strong || !emitterState.hierarchical) && triggerState.needsStrongRepresentation && (triggeredTransition.strong|| !triggerState.hierarchical)) {
+                           else if (assignerState.needsStrongRepresentation() && (transition.strong || !assignerState.hierarchical) && triggerState.needsStrongRepresentation && (triggeredTransition.strong|| !triggerState.hierarchical)) {
                                // Do not allow iff emitter is child of trigger (test 111)
-                               if (!emitterState.isChildOf(triggerState)) {
+                               if (!assignerState.isChildOf(triggerState)) {
                                    dependencies.getValuedObjectDependency(emitterNode, triggerNode);
                                }
                            }
-                           else if (emitterState.needsStrongRepresentation()  && (transition.strong || !emitterState.hierarchical) && triggerState.needsWeakRepresentation) {
+                           else if (assignerState.needsStrongRepresentation()  && (transition.strong || !assignerState.hierarchical) && triggerState.needsWeakRepresentation) {
                                    var triggerNodeW = dependencies.getWeakNode(triggerState, triggeredTransition);
                                    dependencies.getValuedObjectDependency(emitterNode, triggerNodeW);
                            }
-                           else if (emitterState.needsWeakRepresentation && triggerState.needsWeakRepresentation) {
-                                var emitterNodeW = dependencies.getWeakNode(emitterState, transition);
+                           else if (assignerState.needsWeakRepresentation && triggerState.needsWeakRepresentation) {
+                                var emitterNodeW = dependencies.getWeakNode(assignerState, transition);
                                 var triggerNodeW = dependencies.getWeakNode(triggerState, triggeredTransition);
                                 dependencies.getValuedObjectDependency(emitterNodeW, triggerNodeW);
                            }
