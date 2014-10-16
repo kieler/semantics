@@ -95,7 +95,9 @@ public class EditorListener implements IStartup {
                 if (part instanceof IEditorPart && isValidModelEditor((IEditorPart) part)) {
                     currentEditorPart = (IEditorPart) part;
                     SCChartsPrioDependencyView view = SCChartsPrioDependencyView.getInstance();
-                    view.updateActiveEditor(currentEditorPart);
+                    if (view != null) {
+                        view.updateActiveEditor(currentEditorPart);
+                    }
                 }
             }
         }
@@ -118,7 +120,9 @@ public class EditorListener implements IStartup {
                 if (currentEditorPart == part) {
                     currentEditorPart = null;
                     SCChartsPrioDependencyView view = SCChartsPrioDependencyView.getInstance();
-                    view.updateActiveEditor(null);
+                    if (view != null) {
+                        view.updateActiveEditor(currentEditorPart);
+                    }
                 }
             }
         }
@@ -133,7 +137,9 @@ public class EditorListener implements IStartup {
                 if (part instanceof IEditorPart && isValidModelEditor((IEditorPart) part)) {
                     currentEditorPart = (IEditorPart) part;
                     SCChartsPrioDependencyView view = SCChartsPrioDependencyView.getInstance();
-                    view.updateActiveEditor(currentEditorPart);
+                    if (view != null) {
+                        view.updateActiveEditor(currentEditorPart);
+                    }
                 }
             }
         }

@@ -16,7 +16,7 @@ package de.cau.cs.kieler.scg.s.transformations
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.s.s.Program
 import com.google.inject.Guice
-import de.cau.cs.kieler.s.sc.xtend.S2C
+import de.cau.cs.kieler.scg.s.PrimitiveBeautifier
 
 /**
  * Transform SCG 2 C code via S code. Do basic primitive beautifying for small models
@@ -24,28 +24,7 @@ import de.cau.cs.kieler.s.sc.xtend.S2C
  * @author ssm, cmot
  *
  */
-class SCG2C {
-    
-        // maximum characters of the c code for which beautifying is enabled
-        final int SMALL_MODEL = 100000; 
-    
-        def String removeEmptyLines(String text) {
-            var output = "";
-            var modifiedOutput = text;
-            while (!output.equals(modifiedOutput)) {
-                output = modifiedOutput;
-                modifiedOutput = output.replace("\r\n\r\n","\r\n").replace("\n\n","\n").replace(" ;",";").replace("\r\n;",";").replace("\n;",";");//.replace("(\r\n","(").replace("(\n","(").replace("\r\n)",")").replace("\n)",")");
-            }
-            
-            var lines = modifiedOutput.split("\n");
-            modifiedOutput = "";
-            for (String line : lines) {
-                if (line.trim().length() > 0) {
-                    modifiedOutput = modifiedOutput + line + "\n";
-                }
-            }
-            return modifiedOutput;
-        }
+class S2C {
     
         /**
          * Transform the incoming SCG to C code. If the eObject is not an SCG then just return it.
@@ -57,12 +36,10 @@ class SCG2C {
             
             if (eObject instanceof Program) {
                 
-                val S2C transform2 = Guice.createInjector().getInstance(typeof(S2C));
+                val de.cau.cs.kieler.s.sc.xtend.S2C transform2 = Guice.createInjector().getInstance(typeof(de.cau.cs.kieler.s.sc.xtend.S2C));
                 var String cProgram = transform2.transform(eObject as Program).toString();
                 
-                if (cProgram.length <= SMALL_MODEL) {
-                    cProgram = cProgram.removeEmptyLines
-                }
+                cProgram = PrimitiveBeautifier.beautify(cProgram)
                 
                 return cProgram;
             }

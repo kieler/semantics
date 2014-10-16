@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
- package de.cau.cs.kieler.s.sc.xtend
+ package de.cau.cs.kieler.s.sj.xtend
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.BoolValue
@@ -47,15 +47,16 @@ import de.cau.cs.kieler.s.extensions.SExtension
 import java.util.List
 import java.util.HashMap
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
+import static de.cau.cs.kieler.s.sj.xtend.S2Java.*
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
  * 
  * @author cmot 
- * @kieler.design 2012-10-08 proposed cmot
- * @kieler.rating 2012-10-08 yellow KI-28
+ * @kieler.design 2014-10-16 proposed cmot
+ * @kieler.rating 2014-10-16 proposed yellow
  */
-class S2C { 
+class S2Java { 
     
     public static String bufferSize;
     public static String includeHeader;
@@ -69,14 +70,14 @@ class S2C {
     val preCache = <ValuedObject> newArrayList     
     
     // General method to create the c simulation interface.
-    def transform (Program program) {
+    def transform (Program program, String className) {
         val timestamp = System.currentTimeMillis
        	program.eAllContents.filter(typeof(OperatorExpression)).filter[operator == OperatorType::PRE].forEach[
        		it.eAllContents.filter(typeof(ValuedObjectReference)).forEach[ preCache += it.valuedObject ]	
        	]    
       val code = '''
-«/* Generate the C header */»
-       «header(program)»
+«/* Generate the Java header */»
+       «header(program, className)»
 
        «/* Possible global host code */»
        «if (program.globalHostCodeInstruction != null) {
@@ -87,6 +88,8 @@ class S2C {
 
        «/* Generate the tick function */»
        «sTickFunction(program)»
+       
+       }
        '''
         val time = (System.currentTimeMillis - timestamp) as float
         System.out.println("C code generation finished (time used: "+(time / 1000)+"s).")    
@@ -96,10 +99,10 @@ class S2C {
    // -------------------------------------------------------------------------   
    
    // Generate the C header.
-   def header(Program program) {
+   def header(Program program, String className) {
        '''
     /*****************************************************************************/
-    /*                 G E N E R A T E D       C    C O D E                      */
+    /*               G E N E R A T E D      J A V A   C O D E                    */
     /*****************************************************************************/
     /* KIELER - Kiel Integrated Environment for Layout Eclipse RichClient        */
     /*                                                                           */
@@ -113,6 +116,8 @@ class S2C {
     /*****************************************************************************/
 
     «includeHeader»
+    
+    class «className» {
 
    «/* Variables */»
     «sVariables(program)»    
@@ -154,7 +159,7 @@ class S2C {
    def sVariables(Program program) {
        '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
-            «signal.type.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
+              «'''  '''»public «signal.type.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
               «IF signal.isArray»
                 «FOR card : signal.cardinalities»{int i«card.hashCode» = 0; for(i«card.hashCode»=0; i«card.hashCode» < «card.intValue»; i«card.hashCode»++) {«ENDFOR»
                 «signal.name»«FOR card : signal.cardinalities»[i«card.hashCode»]«ENDFOR» = «signal.initialValue.expand»;
@@ -164,7 +169,7 @@ class S2C {
                 «ENDIF»«ENDIF»;
             
             «IF program.usesPre(signal)»
-                «signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
+«'''  '''»«signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
             «ENDIF»
         «ENDFOR»
         «ENDFOR»
@@ -212,7 +217,7 @@ class S2C {
    
    // Generate the  reset function.
    def sResetFunction(Program program) {
-       '''    void reset(){
+       '''  public void reset(){
        _GO = 1;
        «program.resetVariables»
        return;
@@ -224,7 +229,7 @@ class S2C {
    
    // Generate the  tick function.
    def sTickFunction(Program program) {
-       '''    void tick(){
+       '''  public void tick(){
        g0 = _GO;
        «FOR state : program.states»
        «state.expand»
