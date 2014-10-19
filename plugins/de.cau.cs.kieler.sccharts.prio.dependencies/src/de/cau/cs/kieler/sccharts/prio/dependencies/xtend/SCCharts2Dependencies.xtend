@@ -34,6 +34,8 @@ import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.ValuedObjectDepend
 import java.util.ArrayList
 import java.util.List
 import de.cau.cs.kieler.sccharts.Assignment
+import com.google.inject.Inject
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
 /**
  * Build a dependency graph for a SynChart. Consider control flow dependencies (immediate transitions),
@@ -59,6 +61,9 @@ import de.cau.cs.kieler.sccharts.Assignment
  */
  class SCCharts2Dependencies {
        
+    @Inject
+    extension SCChartsExtension
+           
     // ================================================================================================
     //==                               T R A V E R S E    S Y N C C H A R T                         ==
     // ================================================================================================
@@ -851,17 +856,7 @@ import de.cau.cs.kieler.sccharts.Assignment
     def Boolean isWeak(Transition transition) {
         transition.type == TransitionType::WEAKABORT;
     }    
-
-    // Returns true iff the state is the one and only root state of the SyncChart having no parent state.
-    def Boolean isRootState(State state) {
-        state.parentRegion.parentState == null;
-    }
         
-    // Returns true iff the state contains regions.
-    def boolean isHierarchical(State state) {
-        state.regions.size > 0;
-    }
-    
     // Returns true iff the state has at least one outgoing transition
     def boolean hasOutgoingTransitions(State state) {
         !state.outgoingTransitions.nullOrEmpty;
@@ -891,7 +886,7 @@ import de.cau.cs.kieler.sccharts.Assignment
     // the state is hierarchical and has outgoing weak abort transitions.
     // Note that the root state cannot be aborted but always gets a weak representation.
     def boolean needsWeakRepresentation(State state) {
-        state.rootState || state.needsDependencyRepresentation && (state.hierarchical && state.hasWeakAborts);
+        state.isRootState || state.needsDependencyRepresentation && (state.hierarchical && state.hasWeakAborts);
     }
     
     // Returns true iff the state needs a dependency representation at all AND
@@ -901,7 +896,7 @@ import de.cau.cs.kieler.sccharts.Assignment
     // Note that the root state cannot be aborted but always gets a strong representation.
     def boolean needsStrongRepresentation(State state) {
         // see example 43 why hierarchical states always need a strong representation
-        state.rootState || state.needsDependencyRepresentation;// && (!state.hierarchical || state.hasStrongAborts || !state.hasWeakAborts);
+        state.isRootState || state.needsDependencyRepresentation;// && (!state.hierarchical || state.hasStrongAborts || !state.hasWeakAborts);
     }    
     
     // Returns true if the state is hierarchical or has outgoing transitions.
@@ -955,39 +950,39 @@ import de.cau.cs.kieler.sccharts.Assignment
                .replace(":","").replace(";","").replace("=","");
     }
     
-    // This helper method returns the hierarchical name of a state considering all hierarchical
-    // higher states. A string is formed by the traversed state IDs.
-    def String getHierarchicalName(State state, String StartSymbol) {
-        if (state.parentRegion != null) {
-            if (state.parentRegion.parentState != null) {
-                var higherHierarchyReturnedName = state.parentRegion.parentState.getHierarchicalName(StartSymbol);
-                var regionId = state.parentRegion.id.removeSpecialCharacters;
-                var stateId = state.id.removeSpecialCharacters;
-                // Region IDs can be empty, state IDs normally aren't but the code generation handles 
-                // also this case. 
-                if (stateId.nullOrEmpty) {
-                    stateId = state.hashCode + "";
-                }
-                if (regionId.nullOrEmpty) {
-                    regionId = state.parentRegion.hashCode + "";
-                }
-                if (!higherHierarchyReturnedName.nullOrEmpty) {
-                    higherHierarchyReturnedName = higherHierarchyReturnedName + "_";
-                }
-                if (state.parentRegion.parentState.regions.size > 1) {
-                    return higherHierarchyReturnedName 
-                           + regionId  + "_" +  state.id.removeSpecialCharacters;
-                }
-                else {
-                    // this is the simplified case, where there is just one region and we can
-                    // omit the region id
-                    return higherHierarchyReturnedName  
-                           + state.id.removeSpecialCharacters;
-                }
-            }
-        }
-        return StartSymbol + "_";
-    }    
+//    // This helper method returns the hierarchical name of a state considering all hierarchical
+//    // higher states. A string is formed by the traversed state IDs.
+//    def String getHierarchicalName(State state, String StartSymbol) {
+//        if (state.parentRegion != null) {
+//            if (state.parentRegion.parentState != null) {
+//                var higherHierarchyReturnedName = state.parentRegion.parentState.getHierarchicalName(StartSymbol);
+//                var regionId = state.parentRegion.id.removeSpecialCharacters;
+//                var stateId = state.id.removeSpecialCharacters;
+//                // Region IDs can be empty, state IDs normally aren't but the code generation handles 
+//                // also this case. 
+//                if (stateId.nullOrEmpty) {
+//                    stateId = state.hashCode + "";
+//                }
+//                if (regionId.nullOrEmpty) {
+//                    regionId = state.parentRegion.hashCode + "";
+//                }
+//                if (!higherHierarchyReturnedName.nullOrEmpty) {
+//                    higherHierarchyReturnedName = higherHierarchyReturnedName + "_";
+//                }
+//                if (state.parentRegion.parentState.regions.size > 1) {
+//                    return higherHierarchyReturnedName 
+//                           + regionId  + "_" +  state.id.removeSpecialCharacters;
+//                }
+//                else {
+//                    // this is the simplified case, where there is just one region and we can
+//                    // omit the region id
+//                    return higherHierarchyReturnedName  
+//                           + state.id.removeSpecialCharacters;
+//                }
+//            }
+//        }
+//        return StartSymbol + "_";
+//    }    
     
     
     
