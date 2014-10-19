@@ -15,6 +15,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.kico.KiCoPlugin;
+import de.cau.cs.kieler.kico.ui.CompileChain.CompileChainItem;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -81,17 +82,19 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
      * 
      * @return the returnHashMap
      */
-    public HashMap<String, List<String>> getRegisteredEditors() {
+    public HashMap<String, CompileChain> getRegisteredEditors() {
         IConfigurationElement[] editors =
                 Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_POINT_ID);
 
-        HashMap<String, List<String>> returnHashMap =
-                new HashMap<String, List<String>>(editors.length);
+        HashMap<String, CompileChain> returnHashMap =
+                new HashMap<String, CompileChain>(editors.length);
 
         for (int i = 0; i < editors.length; i++) {
             try {
 
                 String editorID = editors[i].getAttribute("editor").trim();
+                String label = editors[i].getAttribute("label").trim();
+                String priority = editors[i].getAttribute("priority").trim();
                 String transformationIDs = editors[i].getAttribute("transformations");
 
                 String[] transformationIDsArray = transformationIDs.split(",");
@@ -104,8 +107,15 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
                 if (editorID == null || editorID.equals("*") || editorID.equals("")) {
                     editorID = "*";
                 }
+                
+                CompileChain compileChain = new CompileChain(editorID);
+                CompileChainItem item = new CompileChainItem();
+                item.setPriority(priority);
+                item.label = label;
+                item.transformations = transformations;
+                compileChain.insertItem(item);
 
-                returnHashMap.put(editorID, transformations);
+                returnHashMap.put(editorID, compileChain);
             } catch (Exception e) {
                 this.showWarning(editors[i].getContributor().getName() + " could not be loaded.",
                         null, e, true);

@@ -13,6 +13,9 @@
  */
 package de.cau.cs.kieler.kico.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jface.action.ControlContribution;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -29,6 +32,8 @@ import org.eclipse.swt.widgets.Control;
 public class CompileChainCombo extends ControlContribution {
 
     Combo combo;
+    Composite parent;
+    
     public CompileChainCombo(String str)
     {
             super(str);
@@ -37,34 +42,32 @@ public class CompileChainCombo extends ControlContribution {
     @Override
     protected Control createControl(Composite parent)
     {
-            combo = new Combo(parent, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
-
-            combo.add("String 1");
-            combo.add("String 2");
-            combo.add("String 3");
-            combo.add("String 4");
-            combo.setTextLimit(10);
-            combo.select(0);
-
-            combo.addSelectionListener(
-            new SelectionListener() {
-                
-                public void widgetSelected(SelectionEvent e) {
-                    MessageDialog.openInformation(
-                            null, "My App",
-                            "Item at " + combo.getSelectionIndex() + " clicked.");
-                    
-                }
-                
-                public void widgetDefaultSelected(SelectionEvent e) {
-                    MessageDialog.openInformation(
-                            null, "My App",
-                            "Item at " + combo.getSelectionIndex() + " clicked.");
-                    
-                }
-            });
-
+            this.parent = parent;
+            update(new ArrayList<String>());
             return combo;
+    }
+    
+    public void update(List<String> items) {
+        combo = new Combo(parent, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
+        
+        for (String item : items) {
+            combo.add(item);
+        }
+
+        combo.setTextLimit(10);
+        combo.select(0);
+
+        combo.addSelectionListener(
+        new SelectionListener() {
+            
+            public void widgetSelected(SelectionEvent e) {
+                KiCoSelectionView.getInstance().updateVisibleTransformations(combo.getSelectionIndex());
+            }
+            
+            public void widgetDefaultSelected(SelectionEvent e) {
+                KiCoSelectionView.getInstance().updateVisibleTransformations(combo.getSelectionIndex());
+            }
+        });
     }
 
     public void setValue(int index)

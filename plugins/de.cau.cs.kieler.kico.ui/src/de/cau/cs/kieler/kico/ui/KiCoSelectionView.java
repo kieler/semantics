@@ -125,6 +125,9 @@ public class KiCoSelectionView extends DiagramViewPart {
     /** The selected transformations per editor instance. */
     static HashMap<Integer, List<String>> selectedTransformations =
             new HashMap<Integer, List<String>>();
+    
+    /** The selected compile chain per editor instance. */
+    static HashMap<Integer, Integer> selectedCompileChain = new HashMap<Integer, Integer>();
 
     /** The auto-calculated required transformations per editor instance. */
     static HashMap<Integer, List<String>> requiredTransformations =
@@ -151,7 +154,7 @@ public class KiCoSelectionView extends DiagramViewPart {
     String lastEditor = null;
 
     /** The registered editors. */
-    static HashMap<String, List<String>> registeredEditors = KiCoUIPlugin.getInstance()
+    static HashMap<String, CompileChain> registeredEditors = KiCoUIPlugin.getInstance()
             .getRegisteredEditors();
 
     /** Holds the last used workbench part reference. */
@@ -199,6 +202,65 @@ public class KiCoSelectionView extends DiagramViewPart {
         return KiCoSelectionView.selectedTransformations.get(editorID);
     }
 
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    /**
+     * Updates visible transformations. This method is called by the compile chain selection combo.
+     *
+     * @param comboIndex the combo index
+     */
+    public void updateVisibleTransformations(int comboIndex) {
+        
+    }
+    
+    /**
+     * Update compile chain combo. This method needs to be called after another
+     * editor is selected and the selection possibly changes.
+     */
+    public void updateCompileChainCombo(int editorID) {
+        CompileChain compileChain = registeredEditors.get(editorID);
+        if (compileChain != null && compileChain.getCount() > 1) {
+            combo.update(compileChain.getLabels());
+            combo.setVisible(true);
+        } else {
+            combo.setVisible(false);
+        }
+        
+    }
+    
+    // -------------------------------------------------------------------------
+
+    
+    /**
+     * Gets the selected compile chain as an index.
+     * 
+     * @param editorID
+     *            the editor id
+     * @return the selected compile chain index
+     */
+    public static int getSelectedCompileChain(int editorID) {
+        if (!KiCoSelectionView.selectedCompileChain.containsKey(editorID)) {
+            int defaultIndex = 0;
+            KiCoSelectionView.selectedCompileChain.put(editorID, defaultIndex);
+        }
+        return KiCoSelectionView.selectedCompileChain.get(editorID).intValue();
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Sets the selected compile chain for an editor.
+     *
+     * @param editorID the editor id
+     * @param index the index
+     */
+    public static void setSelectedCompileChain(int editorID, int index) {
+        KiCoSelectionView.selectedCompileChain.put(editorID, index);
+    }
+    
+    // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
     /**
@@ -817,6 +879,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         if (ref != null) {
             IWorkbenchPart part = ref.getPart(true);
             String editorID = ref.getId();
+            updateCompileChainCombo(editorID);
             if (registeredEditors.containsKey(editorID)) {
                 List<String> visibleTransformations = registeredEditors.get(editorID);
                 if (part instanceof EditorPart) {
@@ -844,7 +907,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         IActionBars bars = getViewSite().getActionBars();
         IToolBarManager toolBarManager = bars.getToolBarManager();
 
-        combo = new CompileChainCombo("Demo Combo box");
+        combo = new CompileChainCombo("Compile Selection Combo box");
         toolBarManager.add(combo);
 
         toolBarManager.add(getActionSelectAll());
