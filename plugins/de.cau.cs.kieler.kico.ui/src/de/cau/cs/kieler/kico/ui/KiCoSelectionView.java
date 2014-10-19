@@ -12,8 +12,10 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
@@ -154,6 +156,9 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     /** Holds the last used workbench part reference. */
     private IWorkbenchPartReference lastWorkbenchPartReference;
+    
+    /** The combobox for displaying and selecting configurations. */
+    private CompileChainCombo combo;
 
     // -------------------------------------------------------------------------
 
@@ -839,11 +844,15 @@ public class KiCoSelectionView extends DiagramViewPart {
         IActionBars bars = getViewSite().getActionBars();
         IToolBarManager toolBarManager = bars.getToolBarManager();
 
+        combo = new CompileChainCombo("Demo Combo box");
+        toolBarManager.add(combo);
+
         toolBarManager.add(getActionSelectAll());
         toolBarManager.add(getActionExpandAll());
         toolBarManager.add(getActionAdvancedToggle());
         toolBarManager.add(getActionHierarchyToggle());
         // toolBarManager.add(getActionCompileToggle());
+
 
         // Create an IPartListener2
         final IPartListener2 pl = new IPartListener2() {
@@ -902,7 +911,9 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     }
 
-    /**
+    // -------------------------------------------------------------------------
+
+   /**
      * {@inheritDoc}
      */
     protected void addButtons() {
