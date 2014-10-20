@@ -40,7 +40,7 @@ public class CompileChains {
     // -------------------------------------------------------------------------
 
     /**
-     * Insert a new compile chain item in ascent order of its priority.
+     * Insert a new compile chain item in desc order of its priority.
      * 
      * @param item
      *            the item
@@ -48,7 +48,7 @@ public class CompileChains {
     public void insertItem(CompileChain item) {
         int index = 0;
         for (CompileChain otherItem : items) {
-            if (otherItem.priority < item.priority) {
+            if (otherItem.priority > item.priority) {
                 index++;
             }
         }

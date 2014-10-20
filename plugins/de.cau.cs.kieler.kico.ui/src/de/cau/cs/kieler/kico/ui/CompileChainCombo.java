@@ -64,14 +64,25 @@ public class CompileChainCombo extends ControlContribution {
      * @param defaultIndex the default index
      */
     public void update(List<String> items, int defaultIndex) {
-        combo = new Combo(parent, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
-
+        if (combo == null) {
+            combo = new Combo(parent, SWT.NONE | SWT.DROP_DOWN | SWT.READ_ONLY);
+        }
+        
+        combo.removeAll();
+        int maxLen = 10;
         for (String item : items) {
+            if (item.length() > maxLen) {
+                maxLen = item.length();
+            }
             combo.add(item);
         }
 
-        combo.setTextLimit(10);
+//        combo.setSize(5*maxLen, 10);
+//        combo.setTextLimit(maxLen + 10);
+        //combo.setSize(130, 10);
+        combo.setTextLimit(26 + 10);
         combo.select(defaultIndex);
+        combo.redraw();
 
         combo.addSelectionListener(new SelectionListener() {
 

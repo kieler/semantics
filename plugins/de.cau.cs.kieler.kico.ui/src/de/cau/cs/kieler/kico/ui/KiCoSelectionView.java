@@ -154,6 +154,9 @@ public class KiCoSelectionView extends DiagramViewPart {
     /** The last editor. */
     String lastEditor = null;
 
+    /** The last editor ID. */
+    String lastEditorID = null;
+
     /** The registered editors. */
     static HashMap<String, CompileChains> registeredEditors = KiCoUIPlugin.getInstance()
             .getRegisteredEditors();
@@ -212,8 +215,13 @@ public class KiCoSelectionView extends DiagramViewPart {
      *
      * @param comboIndex the combo index
      */
-    public void updateVisibleTransformations(int comboIndex) {
-        
+    public void updateVisibleTransformations(int selectedIndex) {
+        String editorID = this.lastEditorID;
+        setSelectedCompileChainIndex(editorID, selectedIndex);
+        CompileChains compileChain = registeredEditors.get(editorID);
+        CompileChain item = compileChain.getItems().get(selectedIndex);
+        List<String> visibleTransformations = item.transformations;
+        updateView(getActiveEditorID(), visibleTransformations);
     }
     
     /**
@@ -224,11 +232,14 @@ public class KiCoSelectionView extends DiagramViewPart {
         CompileChains compileChain = registeredEditors.get(editorID);
         if (compileChain != null && compileChain.getCount() > 1) {
             int selectedIndex = getSelectedCompileChainIndex(editorID);
+            if (compileChain.getCount() > 1) {
+                combo.setVisible(true);
+            } else {
+                combo.setVisible(false);
+                selectedIndex = 0;
+            }
             combo.update(compileChain.getLabels(), selectedIndex);
-            combo.setVisible(true);
-        } else {
-            combo.setVisible(false);
-        }
+        } 
         
     }
     
@@ -258,7 +269,7 @@ public class KiCoSelectionView extends DiagramViewPart {
      * @param editorID the editor id
      * @param index the index
      */
-    public static void setSelectedCompileChain(String editorID, int index) {
+    public static void setSelectedCompileChainIndex(String editorID, int index) {
         KiCoSelectionView.selectedCompileChainIndex.put(editorID, index);
     }
     
@@ -734,6 +745,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                     clearAll = true;
                     // Clear last editor because we closed it
                     lastEditor = "";
+                    lastEditorID = "";
                     // Next view is collapsed again
                     allExpanded = false;
                     if (allExpanded) {
@@ -892,6 +904,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                     String partName = (editorPart).getPartName();
                     if (!partName.equals(lastEditor)) {
                         lastEditor = partName;
+                        lastEditorID = editorID;
                         updateView(getActiveEditorID(), visibleTransformations);
                     }
                 }
@@ -913,7 +926,6 @@ public class KiCoSelectionView extends DiagramViewPart {
         IToolBarManager toolBarManager = bars.getToolBarManager();
 
         combo = new CompileChainCombo("Compile Selection Combo box");
-        toolBarManager.add(combo);
 
         toolBarManager.add(getActionSelectAll());
         toolBarManager.add(getActionExpandAll());
@@ -921,6 +933,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         toolBarManager.add(getActionHierarchyToggle());
         // toolBarManager.add(getActionCompileToggle());
 
+        toolBarManager.add(combo);
 
         // Create an IPartListener2
         final IPartListener2 pl = new IPartListener2() {

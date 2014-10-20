@@ -118,14 +118,19 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
                     editorID = "*";
                 }
                 
-                CompileChains compileChains = new CompileChains(editorID);
+                
+                CompileChains compileChains = returnHashMap.get(editorID);
+                if (compileChains == null) {
+                    compileChains = new CompileChains(editorID);
+                    returnHashMap.put(editorID, compileChains);
+                }
                 CompileChain item = new CompileChain();
                 item.setPriority(priority);
                 item.label = label;
                 item.transformations = transformations;
                 compileChains.insertItem(item);
 
-                returnHashMap.put(editorID, compileChains);
+                
             } catch (Exception e) {
                 this.showWarning(editors[i].getContributor().getName() + " could not be loaded.",
                         null, e, true);
