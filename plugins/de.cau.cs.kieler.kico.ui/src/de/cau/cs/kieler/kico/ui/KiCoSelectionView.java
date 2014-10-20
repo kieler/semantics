@@ -217,7 +217,7 @@ public class KiCoSelectionView extends DiagramViewPart {
      */
     public void updateVisibleTransformations(int selectedIndex) {
         String editorID = this.lastEditorID;
-        setSelectedCompileChainIndex(editorID, selectedIndex);
+        setSelectedCompileChainIndex(lastEditor, selectedIndex);
         CompileChains compileChain = registeredEditors.get(editorID);
         CompileChain item = compileChain.getItems().get(selectedIndex);
         List<String> visibleTransformations = item.transformations;
@@ -228,10 +228,10 @@ public class KiCoSelectionView extends DiagramViewPart {
      * Update compile chain combo. This method needs to be called after another
      * editor is selected and the selection possibly changes.
      */
-    public void updateCompileChainCombo(String editorID) {
-        CompileChains compileChain = registeredEditors.get(editorID);
+    public void updateCompileChainCombo(String editorTypeID, String editor) {
+        CompileChains compileChain = registeredEditors.get(editorTypeID);
         if (compileChain != null && compileChain.getCount() > 1) {
-            int selectedIndex = getSelectedCompileChainIndex(editorID);
+            int selectedIndex = getSelectedCompileChainIndex(editor);
             if (compileChain.getCount() > 1) {
                 combo.setVisible(true);
             } else {
@@ -893,15 +893,17 @@ public class KiCoSelectionView extends DiagramViewPart {
         if (ref != null) {
             IWorkbenchPart part = ref.getPart(true);
             String editorID = ref.getId();
-            updateCompileChainCombo(editorID);
             if (registeredEditors.containsKey(editorID)) {
-                int selectedIndex = this.getSelectedCompileChainIndex(editorID);
-                CompileChains compileChain = registeredEditors.get(editorID);
-                CompileChain item = compileChain.getItems().get(selectedIndex);
-                List<String> visibleTransformations = item.transformations;
                 if (part instanceof EditorPart) {
                     EditorPart editorPart = (EditorPart) part;
                     String partName = (editorPart).getPartName();
+
+                    updateCompileChainCombo(editorID, partName);
+                    int selectedIndex = getSelectedCompileChainIndex(partName);
+                    CompileChains compileChain = registeredEditors.get(editorID);
+                    CompileChain item = compileChain.getItems().get(selectedIndex);
+                    List<String> visibleTransformations = item.transformations;
+
                     if (!partName.equals(lastEditor)) {
                         lastEditor = partName;
                         lastEditorID = editorID;
