@@ -883,7 +883,7 @@ public class KiCoSelectionView extends DiagramViewPart {
             String editorID = ref.getId();
             updateCompileChainCombo(editorID);
             if (registeredEditors.containsKey(editorID)) {
-                int selectedIndex = selectedCompileChainIndex.get(editorID);
+                int selectedIndex = this.getSelectedCompileChainIndex(editorID);
                 CompileChains compileChain = registeredEditors.get(editorID);
                 CompileChain item = compileChain.getItems().get(selectedIndex);
                 List<String> visibleTransformations = item.transformations;
