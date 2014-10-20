@@ -17,8 +17,8 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.sccharts.sim.c.SCChartsSimCPlugin
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
 /**
  * This class handles the<BR>
