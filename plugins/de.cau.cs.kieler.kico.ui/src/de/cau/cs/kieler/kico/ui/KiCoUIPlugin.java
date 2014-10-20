@@ -15,7 +15,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.kico.KiCoPlugin;
-import de.cau.cs.kieler.kico.ui.CompileChain.CompileChainItem;
+import de.cau.cs.kieler.kico.ui.CompileChains.CompileChain;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -82,12 +82,12 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
      * 
      * @return the returnHashMap
      */
-    public HashMap<String, CompileChain> getRegisteredEditors() {
+    public HashMap<String, CompileChains> getRegisteredEditors() {
         IConfigurationElement[] editors =
                 Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_POINT_ID);
 
-        HashMap<String, CompileChain> returnHashMap =
-                new HashMap<String, CompileChain>(editors.length);
+        HashMap<String, CompileChains> returnHashMap =
+                new HashMap<String, CompileChains>(editors.length);
 
         for (int i = 0; i < editors.length; i++) {
             try {
@@ -108,8 +108,8 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
                     editorID = "*";
                 }
                 
-                CompileChain compileChain = new CompileChain(editorID);
-                CompileChainItem item = new CompileChainItem();
+                CompileChains compileChain = new CompileChains(editorID);
+                CompileChain item = new CompileChain();
                 item.setPriority(priority);
                 item.label = label;
                 item.transformations = transformations;
