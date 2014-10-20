@@ -42,7 +42,7 @@
             id="SCCHARTS_SIMULATION"
             isCategory="false"
             isFeatureGroup="false"
-            name="SSCharts Simulation"
+            name="SCCharts Simulation"
             transformations="SCCHARTS_SIMULATION_NO_VISUALIZATION, SCCHARTS_SIMULATION_VISUALIZATION">
       </transformationGroup>
       <transformationMethod
