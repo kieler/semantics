@@ -15,6 +15,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.kico.KiCoPlugin;
+import de.cau.cs.kieler.kico.Transformation;
 import de.cau.cs.kieler.kico.ui.CompileChains.CompileChain;
 
 /**
@@ -106,12 +107,20 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
                     //ignore
                 }
                 String transformationIDs = editors[i].getAttribute("transformations");
-
-                String[] transformationIDsArray = transformationIDs.split(",");
+                
                 ArrayList<String> transformations = new ArrayList<String>();
-                for (String transformationID : transformationIDsArray) {
-                    transformations.add(transformationID.trim());
+                // The special case where we want to add ALL registered transformations 
+                if (transformationIDs.equals("ALL")) {
+                   for (Transformation transformation :  KiCoPlugin.getInstance().getRegisteredTransformations().values()) {
+                       transformations.add(transformation.getId());
+                   }
+                } else {
+                    String[] transformationIDsArray = transformationIDs.split(",");
+                    for (String transformationID : transformationIDsArray) {
+                        transformations.add(transformationID.trim());
+                    }
                 }
+
 
                 // The case for ANY editor
                 if (editorID == null || editorID.equals("*") || editorID.equals("")) {
