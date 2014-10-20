@@ -750,11 +750,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             ];
             if (!s.hasNoRegionsWithStates) {
                 for (r : s.regions)
-                    node.children += r.translate;
+                    node.children += r.translate(false);
             }
             if (!s.hasNoDataflows) {
                 for (d : s.dataflows)
-                	node.children += d.translate
+                	node.children += d.translate(false)
             }
             if (s.isReferencedState) {
                 if (!PAPER_BW.booleanValue) {
@@ -941,7 +941,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
     // -------------------------------------------------------------------------
     // Transform a region
-    public def dispatch KNode translate(Dataflow d) {
+    public def dispatch KNode translate(Dataflow d, boolean loadLazy) {
         val dNode = d.createNode().putToLookUpWith(d) => [ node |
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
             node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
