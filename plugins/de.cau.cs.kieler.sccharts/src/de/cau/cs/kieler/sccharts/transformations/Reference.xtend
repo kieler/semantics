@@ -56,6 +56,9 @@ class Reference {
     static public final String GENERATED_PREFIX = "_"
 
     static private final String HOSTCODE_ANNOTATION = "alterHostcode"
+    static private final String PROPAGATE_ANNOTATION = "propagate"
+        
+    private val propagatedBindings = <String, Binding> newHashMap
 
     //-------------------------------------------------------------------------
     //--                        R E F E R E N C E                            --
@@ -82,7 +85,9 @@ class Reference {
         	label = state.label
         ]
 
-        for(eObject : newState.eAllContents.toList) {
+        var newStateIterator = newState.eAllContents
+        while(newStateIterator.hasNext) {
+            val eObject = newStateIterator.next
             if (eObject instanceof Assignment 
                 || eObject instanceof ValuedObjectReference 
                 || eObject instanceof TextExpression
@@ -125,6 +130,10 @@ class Reference {
         }
         
         state.bindings.forEach[ binding |
+            if (binding.hasAnnotation(PROPAGATE_ANNOTATION)) {
+                propagatedBindings.put(binding.formal.name, binding)
+            }
+            
             newState.declarations.immutableCopy.forEach[
                 val bindingName = binding.formal.name 
                 val objects = valuedObjects.filter[ name == bindingName ].toList
@@ -138,6 +147,13 @@ class Reference {
 					val newObject = (newState.eContainer as Scope).findValuedObjectByName(name)
 					if (newObject != null) {
 						newState.replaceAllOccurrences(it, newObject)
+					} else {
+					    val propagatedName = name.findPropagatedName
+					    if (!propagatedName.nullOrEmpty) {
+					       val propagatedNewObject = 
+					           (newState.eContainer as Scope).findValuedObjectByName(propagatedName)
+                            newState.replaceAllOccurrences(it, propagatedNewObject)
+			           } 
 					}
 				]
 				declaration.delete
@@ -238,6 +254,20 @@ class Reference {
     	for(r : state.regions.immutableCopy) {
     		if (r.states.size == 0) r.remove
     	}
+   	}
+    	
+    	
+    private def String findPropagatedName(String name) {
+        var newName = name
+        
+        for(k : propagatedBindings.keySet) {
+            if (k == name) {
+                newName = propagatedBindings.get(k).actual.name
+                return newName.findPropagatedName
+            }
+        }
+        
+        newName
     }
 
 }

@@ -19,22 +19,20 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 
-import de.cau.cs.kieler.core.kivi.AbstractCombination;
-import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
-import de.cau.cs.kieler.core.model.triggers.PartTrigger.PartState;
-import de.cau.cs.kieler.core.model.xtext.util.XtextModelingUtil;
+import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
 import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
@@ -49,7 +47,7 @@ import de.cau.cs.kieler.sim.kiem.internal.KiemProxyEditor;
  * @kieler.rating 2012-10-08 proposed yellow cmot
  * 
  */
-public class KIEMModelSelectionCombination extends AbstractCombination implements
+public class KIEMModelSelectionCombination implements
         IKiemEventListener {
 
     /** The time to sleep during blocking wait. */
@@ -74,7 +72,7 @@ public class KIEMModelSelectionCombination extends AbstractCombination implement
      * @param partState
      *            the part state
      */
-    public void execute(final PartState partState) {
+    public void execute(final IWorkbenchPartReference partRef) {
         // to prevent UI thread deadlocks (editorIsActivePart) because during initialization
         // components may require UI access, do not execution at this point
         if (KiemPlugin.getDefault().isInitializingExecution()) {
@@ -82,9 +80,10 @@ public class KIEMModelSelectionCombination extends AbstractCombination implement
         }
 
         // if currently active editor is also the active part
-        if (partState != null) {
+        IWorkbenchPart part = partRef.getPart(false);
+        if (part != null && part instanceof IEditorPart) {
             // Select the active editor
-            IEditorPart activeEditorPart = partState.getEditorPart();
+            IEditorPart activeEditorPart = (IEditorPart) part;
 
             // this is a special editor and we do'nt want to adjust kiem when it is loaded
             if (activeEditorPart == null || activeEditorPart instanceof KiemProxyEditor) {
@@ -208,9 +207,11 @@ public class KIEMModelSelectionCombination extends AbstractCombination implement
      */
     protected EObject getInputModelEObject(final IEditorPart editorPart) {
         EObject model = null;
-        if (editorPart instanceof DiagramEditor) {
-            model = GmfModelingUtil.getModelFromGmfEditor((DiagramEditor) editorPart);
-        } else if (editorPart instanceof XtextEditor) {
+        // removed gmf dependency, 24.07., ssm
+//        if (editorPart instanceof DiagramEditor) {
+//            model = GmfModelingUtil.getModelFromGmfEditor((DiagramEditor) editorPart);
+//        } else 
+        if (editorPart instanceof XtextEditor) {
             boolean ignoreDirtyEditor = true;
             model = XtextModelingUtil.getModelFromXtextEditor((XtextEditor) editorPart,
                     ignoreDirtyEditor);
@@ -235,7 +236,11 @@ public class KIEMModelSelectionCombination extends AbstractCombination implement
             if (model.eResource() != null) {
                 // EMF model case
                 org.eclipse.emf.common.util.URI uri = model.eResource().getURI();
-                IPath path = new Path(uri.toPlatformString(false));
+                String platformURI = uri.toPlatformString(false);
+                if (platformURI == null) {
+                    return fullPath;
+                }
+                IPath path = new Path(platformURI);
                 IFile file = myWorkspaceRoot.getFile(path);
                 fullPath = file.getFullPath();
             }

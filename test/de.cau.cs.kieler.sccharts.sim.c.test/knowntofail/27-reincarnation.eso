@@ -1,0 +1,10 @@
+! reset;
+
+% Output: v(2) 
+;
+d b c a 
+% Output: v(11550) 
+;
+
+% Output: 
+;

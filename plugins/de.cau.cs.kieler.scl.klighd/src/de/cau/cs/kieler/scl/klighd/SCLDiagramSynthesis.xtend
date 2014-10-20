@@ -75,7 +75,7 @@ class SCLDiagramSynthesis extends AbstractDiagramSynthesis<Program> {
            	}           	
 
             if (model.transformAnnotation(SCHEDULINGSCG)) {
-            	scg = (scg as SCGraphBB).schedule
+            	scg = (scg as SCGraphBB).schedule(null)
            	}           	
         
             return SCGTransform.transform(scg, usedContext)

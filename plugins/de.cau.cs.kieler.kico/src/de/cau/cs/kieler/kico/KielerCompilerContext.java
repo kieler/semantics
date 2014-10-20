@@ -18,7 +18,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
@@ -40,29 +42,14 @@ public class KielerCompilerContext {
     /** The resource set of all models for a compile run. */
     private ResourceSet modelResourceSet = null;
 
+    /** The main resource for a compile run. */
+    private Resource mainResource = null;
+
     /** The originally selected transformation IDs. */
     private List<String> selectedTransformationIDs = new ArrayList<String>();
 
     /** The originally disabled transformation IDs. */
     private List<String> disabledTransformationIDs = new ArrayList<String>();
-
-    /** The postponed error list transformation id. */
-    private ArrayList<String> postponedErrorsTransformationID = new ArrayList<String>();
-
-    /** The postponed error list exception. */
-    private ArrayList<Exception> postponedErrors = new ArrayList<Exception>();
-
-    /** The postponed error list transformation id. */
-    private ArrayList<String> postponedWarningsTransformationID = new ArrayList<String>();
-
-    /** The postponed error list exception. */
-    private ArrayList<Exception> postponedWarnings = new ArrayList<Exception>();
-    
-    /** All last/occurred errors processed for this compilation. */
-    private static String allErrors = null;
-    
-    /** All last/occurred warnings processed for this compilation. */
-    private static String allWarnings = null;
 
     /** The (intermediate) compilation result. */
     CompilationResult compilationResult = null;
@@ -85,6 +72,18 @@ public class KielerCompilerContext {
 
     /** The flag to do all transformations inplace and NOT on a copy. */
     private boolean inplace = false;
+
+    /**
+     * The flag to create a dummy resource if no resource is present (e.g. because inplace ==
+     * false).
+     */
+    private boolean dummyResource = false;
+
+    /** The progress monitor. A progress monitor is optional and by default is set to null. */
+    private IProgressMonitor monitor = null;
+
+    /** The progress monitor for the currently called transformation. */
+    private KielerCompilerProgressMonitor currentTransformationProgressMonitor = null;
 
     // -------------------------------------------------------------------------
 
@@ -242,7 +241,7 @@ public class KielerCompilerContext {
 
     // -------------------------------------------------------------------------
     /**
-     * Gets the included model resource.
+     * Sets the included model resource.
      * 
      * @param includedModel
      *            the included model
@@ -250,6 +249,29 @@ public class KielerCompilerContext {
      */
     public void setModelResourceSet(ResourceSet resourceSet) {
         this.modelResourceSet = resourceSet;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the main model resource if one exists.
+     * 
+     * @return the main model resource
+     */
+    public Resource getMainResource() {
+        return this.mainResource;
+    }
+
+    // -------------------------------------------------------------------------
+    /**
+     * Sets the included model resource.
+     * 
+     * @param includedModel
+     *            the included model
+     * @return the included model resource
+     */
+    public void setMainResource(Resource resource) {
+        this.mainResource = resource;
     }
 
     // -------------------------------------------------------------------------
@@ -305,98 +327,6 @@ public class KielerCompilerContext {
      */
     public CompilationResult getCompilationResult() {
         return compilationResult;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Adds the postponed error.
-     * 
-     * @param transformationID
-     *            the transformation ID
-     * @param exception
-     *            the exception
-     */
-    public void addPostponedError(String transformationID, Exception exception) {
-        this.postponedErrorsTransformationID.add(transformationID);
-        this.postponedErrors.add(exception);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Adds the postponed warning.
-     * 
-     * @param transformationID
-     *            the transformation ID
-     * @param exception
-     *            the exception
-     */
-    public void addPostponedWarning(String transformationID, Exception exception) {
-        this.postponedWarningsTransformationID.add(transformationID);
-        this.postponedWarnings.add(exception);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Reset all postponed warnings.
-     */
-    public void resetPostponedWarnings() {
-        this.postponedWarningsTransformationID.clear();
-        this.postponedWarnings.clear();
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Reset all postponed errors.
-     */
-    public void resetPostponedErrors() {
-        this.postponedErrorsTransformationID.clear();
-        this.postponedErrors.clear();
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Process all postponed earnings and put them to the warnings log also building the resulting warning
-     * String.
-     * 
-     * @param errorListTransformationID
-     *            the error list transformation ID
-     * @param errorListException
-     *            the error list exception
-     */
-    public void processPostponedWarnings() {
-        for (int c = 0; c < postponedWarningsTransformationID.size(); c++) {
-            String transformationID = postponedWarningsTransformationID.get(c);
-            Exception e = postponedWarnings.get(c);
-            KiCoPlugin.getInstance().showWarning(
-                    "An warning occurred while calling transformation with the ID '"
-                            + transformationID + "'.", KiCoPlugin.PLUGIN_ID, e, true);
-        }
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Process all postponed errors and put them to the error log also building the resulting error
-     * String.
-     * 
-     * @param errorListTransformationID
-     *            the error list transformation ID
-     * @param errorListException
-     *            the error list exception
-     */
-    public void processPostponedErrors() {
-        for (int c = 0; c < postponedErrorsTransformationID.size(); c++) {
-            String transformationID = postponedErrorsTransformationID.get(c);
-            Exception e = postponedErrors.get(c);
-            KiCoPlugin.getInstance().showError(
-                    "An error occurred while calling transformation with the ID '"
-                            + transformationID + "'.", KiCoPlugin.PLUGIN_ID, e, true);
-        }
     }
 
     // -------------------------------------------------------------------------
@@ -587,6 +517,29 @@ public class KielerCompilerContext {
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Checks if dummy resource flag is set to true.
+     * 
+     * @return true, if is inplace
+     */
+    public boolean isCreateDummyResource() {
+        return this.dummyResource;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the dummy resource flag to true or false.
+     * 
+     * @param dummyResource
+     *            the new dummyResource flag
+     */
+    public void setCreateDummyResource(boolean dummyResource) {
+        this.dummyResource = dummyResource;
+    }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Checks if is inplace.
@@ -675,6 +628,59 @@ public class KielerCompilerContext {
                 getCompilationResult().getIntermediateResults().add(0, eObject);
             }
         }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the main overall progress monitor. A progress monitor is optional therefore this method
+     * may return null if there exists no progress monitor to be used.
+     * 
+     * @return the monitor
+     */
+    public IProgressMonitor getProgressMonitor() {
+        return monitor;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the main overall progress monitor. A progress monitor is optional and by default is set
+     * to null.
+     * 
+     * @param monitor
+     *            the monitor to set
+     */
+    public void setProgressMonitor(IProgressMonitor monitor) {
+        this.monitor = monitor;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the progress monitor for the currently called transformation. This may be used by
+     * transformations to give the status of their current work using
+     * getCurrentTransformationProgressMonitor().setPercentDone(int percent).
+     * 
+     * @return the currentTransformationProgressMonitor
+     */
+    public KielerCompilerProgressMonitor getCurrentTransformationProgressMonitor() {
+        return currentTransformationProgressMonitor;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the progress monitor for the currently called transformation. This is internally used by
+     * the KielerCompiler to pass a new sub progress monitor (KielerCompilerProgressMonitor) for
+     * each transformation step.
+     * 
+     * @param currentTransformationProgressMonitor
+     *            the currentTransformationProgressMonitor to set
+     */
+    public void setCurrentTransformationProgressMonitor(
+            KielerCompilerProgressMonitor currentTransformationProgressMonitor) {
+        this.currentTransformationProgressMonitor = currentTransformationProgressMonitor;
     }
 
     // -------------------------------------------------------------------------

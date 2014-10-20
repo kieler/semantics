@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SC Graph
 Bundle-SymbolicName: de.cau.cs.kieler.scg;singleton:=true
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.1.1.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: de.cau.cs.kieler.scg.SCGPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
@@ -16,7 +16,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtend.lib,
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
- org.eclipse.ui,
  com.google.inject,
  de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.sccharts,
@@ -25,21 +24,14 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.kico
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.scg,
+ de.cau.cs.kieler.scg.analyzer,
  de.cau.cs.kieler.scg.extensions,
  de.cau.cs.kieler.scg.impl,
  de.cau.cs.kieler.scg.optimizer,
  de.cau.cs.kieler.scg.schedulers,
  de.cau.cs.kieler.scg.sequentializer,
+ de.cau.cs.kieler.scg.synchronizer,
  de.cau.cs.kieler.scg.transformations,
- de.cau.cs.kieler.scg.util,
- de.cau.cs.kieler.scgbb,
- de.cau.cs.kieler.scgbb.impl,
- de.cau.cs.kieler.scgbb.util,
- de.cau.cs.kieler.scgdep,
- de.cau.cs.kieler.scgdep.impl,
- de.cau.cs.kieler.scgdep.util,
- de.cau.cs.kieler.scgsched,
- de.cau.cs.kieler.scgsched.impl,
- de.cau.cs.kieler.scgsched.util
+ de.cau.cs.kieler.scg.util
 Bundle-ActivationPolicy: lazy
 

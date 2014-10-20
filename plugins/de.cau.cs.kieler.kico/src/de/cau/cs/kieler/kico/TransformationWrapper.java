@@ -27,7 +27,7 @@ public class TransformationWrapper extends Transformation {
     /**
      * {@inheritDoc}
      */
-    public EObject transform(EObject eObject) {
+    public EObject transform(EObject eObject, KielerCompilerContext context) {
         return null;
     }
 

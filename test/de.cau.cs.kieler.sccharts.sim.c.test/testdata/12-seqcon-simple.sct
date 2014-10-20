@@ -1,0 +1,28 @@
+scchart sequential_concurrent_simple "sequential-concurrent-simple" {
+  output signal pure S;
+
+  initial state A
+  --> B with !S / S;
+
+  state B
+  --> C immediate with S;
+
+  state C;
+
+  region:
+
+  initial state D2 "D"
+  --> E with S;
+
+  state E;
+
+  region:
+
+  initial state F2 "F"
+  --> G2 with !S;
+
+  state G2 "G"
+  --> H with !S;
+
+  state H;
+}

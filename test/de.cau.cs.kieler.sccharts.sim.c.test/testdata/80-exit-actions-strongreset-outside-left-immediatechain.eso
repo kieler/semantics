@@ -1,0 +1,109 @@
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
+R 
+% Output: O 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+BadSignal 
+% Output: 
+;
+BadSignal 
+% Output: 
+;
+R BadSignal 
+% Output: O 
+;
+BadSignal 
+% Output: 
+;
+R BadSignal 
+% Output: O 
+;
+R BadSignal 
+% Output: O 
+;
+R BadSignal 
+% Output: O 
+;
+BadSignal 
+% Output: 
+;
+BadSignal 
+% Output: 
+;
+BadSignal 
+% Output: 
+;
+S BadSignal 
+% Output: O 
+;
+BadSignal 
+% Output: 
+;
+R BadSignal 
+% Output: 
+;
+R BadSignal 
+% Output: O 
+;
+R BadSignal 
+% Output: O 
+;
+R BadSignal 
+% Output: O 
+;
+BadSignal 
+% Output: 
+;
+BadSignal 
+% Output: 
+;
+S BadSignal 
+% Output: O 
+;
+BadSignal 
+% Output: 
+;
+BadSignal 
+% Output: 
+;
+R 
+% Output: 
+;
+R 
+% Output: 
+;
+R 
+% Output: 
+;
+R BadSignal 
+% Output: 
+;
+R BadSignal 
+% Output: O 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+R 
+% Output: O 
+;
+R 
+% Output: 
+;

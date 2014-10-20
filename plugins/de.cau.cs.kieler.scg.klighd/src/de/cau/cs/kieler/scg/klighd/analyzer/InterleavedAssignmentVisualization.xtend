@@ -17,8 +17,7 @@ import de.cau.cs.kieler.scg.klighd.analyzer.IAnalysisVisualization
 import de.cau.cs.kieler.scg.klighd.SCGraphDiagramSynthesis
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
 import de.cau.cs.kieler.core.krendering.KColor
-import de.cau.cs.kieler.scgdep.Dependency
-import de.cau.cs.kieler.scgsched.Analysis
+import de.cau.cs.kieler.scg.Dependency
 
 /**
  * @author ssm
@@ -30,12 +29,12 @@ class InterleavedAssignmentVisualization implements IAnalysisVisualization {
 
     private static val KColor INTERLEAVED_DEPENDENCY = KRenderingFactory::eINSTANCE.createKColor()=>[it.red = 168; it.green = 168; it.blue = 168;]
     
-    override Analysis visualize(Analysis anaysis, SCGraphDiagramSynthesis synthesis) {
-        anaysis => [
-            objectReferences.forEach[
-                synthesis.colorDependency(it as Dependency, INTERLEAVED_DEPENDENCY)
-            ]
-        ]
-    }
+//    override Analysis visualize(Analysis anaysis, SCGraphDiagramSynthesis synthesis) {
+//        anaysis => [
+//            objectReferences.forEach[
+//                synthesis.colorDependency(it as Dependency, INTERLEAVED_DEPENDENCY)
+//            ]
+//        ]
+//    }
     
 }

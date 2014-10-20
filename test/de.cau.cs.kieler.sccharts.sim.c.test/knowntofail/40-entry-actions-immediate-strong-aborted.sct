@@ -1,0 +1,29 @@
+scchart _40_entry_actions_immediate_strong_aborted
+"40-entry-actions-immediate-strong-aborted" {
+  input signal pure I;
+  input signal pure I2;
+  output signal pure O;
+  output signal pure O2;
+  input signal pure R;
+  input signal pure S;
+  input signal pure W;
+
+  initial state A
+  --> B;
+
+  state B {
+
+    initial state C
+    --> D;
+
+    state D {
+      entry I & I2 / O2;
+      entry I / O;
+    }
+    --> E immediate with W
+    o-> E immediate with S;
+
+    state E;
+  }
+  --> B with R;
+}

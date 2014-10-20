@@ -37,21 +37,25 @@ public class EsoParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
+					put(grammarAccess.getTickAccess().getAlternatives_2_1(), "rule__Tick__Alternatives_2_1");
+					put(grammarAccess.getTickAccess().getAlternatives_4_1(), "rule__Tick__Alternatives_4_1");
 					put(grammarAccess.getSignalAccess().getValAlternatives_2_0_0(), "rule__Signal__ValAlternatives_2_0_0");
 					put(grammarAccess.getKvpairAccess().getValueAlternatives_4_0(), "rule__Kvpair__ValueAlternatives_4_0");
 					put(grammarAccess.getTraceAccess().getGroup(), "rule__Trace__Group__0");
 					put(grammarAccess.getTickAccess().getGroup(), "rule__Tick__Group__0");
 					put(grammarAccess.getTickAccess().getGroup_2(), "rule__Tick__Group_2__0");
+					put(grammarAccess.getTickAccess().getGroup_2_1_1(), "rule__Tick__Group_2_1_1__0");
 					put(grammarAccess.getTickAccess().getGroup_4(), "rule__Tick__Group_4__0");
+					put(grammarAccess.getTickAccess().getGroup_4_1_1(), "rule__Tick__Group_4_1_1__0");
 					put(grammarAccess.getSignalAccess().getGroup(), "rule__Signal__Group__0");
 					put(grammarAccess.getSignalAccess().getGroup_2(), "rule__Signal__Group_2__0");
 					put(grammarAccess.getKvpairAccess().getGroup(), "rule__Kvpair__Group__0");
 					put(grammarAccess.getTracelistAccess().getTracesAssignment(), "rule__Tracelist__TracesAssignment");
 					put(grammarAccess.getTraceAccess().getTicksAssignment_3(), "rule__Trace__TicksAssignment_3");
 					put(grammarAccess.getTickAccess().getInputAssignment_1(), "rule__Tick__InputAssignment_1");
-					put(grammarAccess.getTickAccess().getOutputAssignment_2_3(), "rule__Tick__OutputAssignment_2_3");
+					put(grammarAccess.getTickAccess().getOutputAssignment_2_2(), "rule__Tick__OutputAssignment_2_2");
 					put(grammarAccess.getTickAccess().getExtraInfosAssignment_3(), "rule__Tick__ExtraInfosAssignment_3");
-					put(grammarAccess.getTickAccess().getExtraInfosOutputAssignment_4_3(), "rule__Tick__ExtraInfosOutputAssignment_4_3");
+					put(grammarAccess.getTickAccess().getExtraInfosOutputAssignment_4_2(), "rule__Tick__ExtraInfosOutputAssignment_4_2");
 					put(grammarAccess.getSignalAccess().getNameAssignment_0(), "rule__Signal__NameAssignment_0");
 					put(grammarAccess.getSignalAccess().getValuedAssignment_1(), "rule__Signal__ValuedAssignment_1");
 					put(grammarAccess.getSignalAccess().getValAssignment_2_0(), "rule__Signal__ValAssignment_2_0");

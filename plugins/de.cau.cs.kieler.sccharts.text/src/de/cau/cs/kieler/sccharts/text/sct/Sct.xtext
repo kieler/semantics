@@ -21,6 +21,7 @@ SingleRegion returns sccharts::Region:
       (annotations += Annotation)*
       'region' (id=ID)? (label=STRING)? ('['for=For']')?  ':'
       (declarations+=Declaration)*
+//      (bodyText+=TextualCode)* 
      )?
     (states+=State)*;
     
@@ -66,10 +67,10 @@ Dataflow returns sccharts::Dataflow:
 
 // ---------------------------------------------------------------------------------------------------
 
-SCChart:
-    ('package' name = QualifiedName)?
-    imports += ImportDecl*
-    
+SCChart returns sccharts::State:
+//    ('package' name = QualifiedName)?
+//    imports += ImportDecl*
+//    
     (annotations += Annotation)*
     ('scchart') (id=ID) (label=STRING)?
   
@@ -203,7 +204,7 @@ Transition returns sccharts::Transition:
 	 (
 	   ((('with' (delay=INT)? trigger=BoolExpression)|'with')? (('/'|'do') effects+=Effect (';'effects+=Effect)*)? )
 	  |
-	   ( label=STRING )
+	   ( 'with' label=STRING )
 	  )
 	 )?)? 	
 	;

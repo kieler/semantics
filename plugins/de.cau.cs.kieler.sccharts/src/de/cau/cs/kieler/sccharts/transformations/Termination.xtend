@@ -64,9 +64,9 @@ class Termination {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        for (targetState : targetRootState.getAllStates) {
+        targetRootState.getAllStates.forEach[ targetState |
             targetState.transformTermination(targetRootState);
-        }
+        ]
         targetRootState.fixAllTextualOrdersByPriorities;
     }
 

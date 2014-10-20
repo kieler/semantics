@@ -1,0 +1,19 @@
+! reset;
+% Output:;
+I1 % Output: S1 O1;
+
+! reset;
+% Output:;
+I2 % Output: S2 O2;
+
+! reset;
+% Output:;
+I3 % Output: S3 O3;
+
+! reset;
+% Output:;
+I1 I2 % Output: S2 S1;
+
+! reset;
+% Output:;
+I2 I3 % Output: S2 O2;

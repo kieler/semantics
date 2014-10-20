@@ -1,0 +1,22 @@
+scchart _106_weakabort_hierarchy_dependency "106-weakabort-hierarchy-dependency"
+{
+  input signal pure I;
+  output signal pure O;
+  signal pure L;
+  output signal pure O2;
+
+  state A {
+
+    initial state B {
+
+      initial state C
+      --> D with L / O;
+
+      state D;
+    };
+  }
+  --> I with I / L; O2;
+
+  initial state I
+  --> A;
+}

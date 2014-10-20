@@ -12,5 +12,6 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.kico,
  de.cau.cs.kieler.klighd,
  de.cau.cs.kieler.server,
- de.cau.cs.kieler.klighd.piccolo;bundle-version="0.5.0"
+ de.cau.cs.kieler.klighd.piccolo
 Export-Package: de.cau.cs.kieler.klighd.server
+Bundle-Activator: de.cau.cs.kieler.klighd.server.KlighdServerPlugin

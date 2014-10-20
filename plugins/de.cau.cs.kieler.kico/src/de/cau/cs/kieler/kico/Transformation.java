@@ -72,6 +72,12 @@ public abstract class Transformation {
         } else {
             transformMethod = transformationMethod;
         }
+        if (transformMethod == null) {
+            throw (new RuntimeException("The declared transformation method '" + method
+                    + "' of transformation '" + id
+                    + "' was not found. If you declared a method you must not extend the "
+                    + "Transformation abstract class at the same time."));
+        }
         Class<?>[] classArray = transformMethod.getParameterTypes();
         if (classArray.length > 0) {
             return classArray[0];
@@ -84,7 +90,7 @@ public abstract class Transformation {
     /**
      * Implements the transformation from EObject to EObject.
      */
-    public abstract EObject transform(EObject eObject);
+    public abstract EObject transform(EObject eObject, KielerCompilerContext context);
 
     // -------------------------------------------------------------------------
 
@@ -234,14 +240,21 @@ public abstract class Transformation {
      *            the e object
      * @return the e object
      */
-    public final Object doTransform(EObject eObject) throws Exception {
+    public final Object doTransform(EObject eObject, KielerCompilerContext context)
+            throws Exception {
         if (method == null) {
             // A Transformation instance with the standard transformation method
-            return ((Transformation) transformationInstance).transform(eObject);
+            return ((Transformation) transformationInstance).transform(eObject, context);
         } else {
             // Some other class instance with an individual transformation method
             Object result;
-            result = transformationMethod.invoke(transformationInstance, eObject);
+            try {
+                // First try WITH context
+                result = transformationMethod.invoke(transformationInstance, eObject, context);
+            } catch (java.lang.IllegalArgumentException e) {
+                // Then try WITHOUT context
+                result = transformationMethod.invoke(transformationInstance, eObject);
+            }
             return result;
         }
 

@@ -2,19 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Simulation KIVi Data Component
 Bundle-SymbolicName: de.cau.cs.kieler.sim.kivi
-Bundle-Version: 0.3.1.qualifier
+Bundle-Version: 0.3.2.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.kivi.Activator
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- com.google.guava;bundle-version="8.0.0",
- de.cau.cs.kieler.core.kivi,
- de.cau.cs.kieler.sim.kiem,
- de.cau.cs.kieler.core.model,
- de.cau.cs.kieler.sim.signals,
+Require-Bundle: de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.klighd.ui,
- org.eclipse.ui.workbench,
- org.eclipse.ui.ide
+ org.eclipse.ui.ide,
+ de.cau.cs.kieler.kico.klighd,
+ de.cau.cs.kieler.kico
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sim.kivi

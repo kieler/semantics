@@ -17,7 +17,17 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Join
-import de.cau.cs.kieler.scg.extensions.SCGExtensions
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.ThreadPathType
+import de.cau.cs.kieler.scg.Predecessor
+import java.util.Map
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SchedulingBlock
+import java.util.List
+import de.cau.cs.kieler.kico.AbstractKielerCompilerAncillaryData
+import de.cau.cs.kieler.scg.BasicBlock
+import java.util.Set
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -54,17 +64,20 @@ class HybridSynchronizer extends AbstractSynchronizer {
     // -- Injections 
     // -------------------------------------------------------------------------
     
-    /** Inject SCG extensions. */    
     @Inject
-    extension SCGExtensions
+    extension SCGCoreExtensions
     
-    /** Inject KExpressions extensions. */
+    @Inject
+    extension SCGControlFlowExtensions
+        
     @Inject
     extension KExpressionsExtension	
 	
     // -------------------------------------------------------------------------
     // -- Constants
     // -------------------------------------------------------------------------
+    	
+    public static val SYNCHRONIZER_ID = "de.cau.cs.kieler.scg.synchronizer.hybrid"    	
     	
    	private val String FORKVARSUFFIX = "_F"
    	private val String EXITVARSUFFIX = "_T"
@@ -84,10 +97,10 @@ class HybridSynchronizer extends AbstractSynchronizer {
 
         // The valued object of the GuardExpression of the synchronizer is the guard of the
         // scheduling block of the join node. 
-        data.guardExpression.valuedObject = joinSB.guard
+        data.guardExpression.valuedObject = joinSB.guard.valuedObject
 
         
-        val forkVar = createValuedObject(forkSB.guard.name + FORKVARSUFFIX)
+        val forkVar = createValuedObject(forkSB.guard.valuedObject.name + FORKVARSUFFIX)
         data.valuedObjects.add(forkVar)
         data.addAdditionalAssignment(forkSB, forkVar, TRUE)
         data.addAdditionalAssignment(joinSB, forkVar, FALSE)
@@ -102,7 +115,7 @@ class HybridSynchronizer extends AbstractSynchronizer {
         	val exitSB = exit.schedulingBlock 
         	exitNodes.add(exit)
 //        	val exitVar = createValuedObject(exitSB.guard.name + EXITVARSUFFIX)
-            val exitVar = createValuedObject(exitSB.basicBlock.guards.head.name + EXITVARSUFFIX)
+            val exitVar = createValuedObject(exitSB.guard.valuedObject.name + EXITVARSUFFIX)
         	data.valuedObjects.add(exitVar)
         	data.addAdditionalAssignment(forkSB, exitVar, TRUE)
         	data.addAdditionalAssignment(exitSB, exitVar, FALSE)
@@ -114,5 +127,23 @@ class HybridSynchronizer extends AbstractSynchronizer {
         
         data		
 	}
+    
+    override isSynchronizable(Iterable<ThreadPathType> threadPathTypes) {
+        throw new UnsupportedOperationException("TODO: auto-generated method stub")
+    }
+    
+    override getId() {
+        return SYNCHRONIZER_ID
+    }
+    
+    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache,
+    	List<AbstractKielerCompilerAncillaryData> ancillaryData
+    ) {
+        <Predecessor> newHashSet
+    }    
+    
+	override getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, List<AbstractKielerCompilerAncillaryData> ancillaryData) {
+		<Predecessor> newHashSet
+	}    
 		
 }

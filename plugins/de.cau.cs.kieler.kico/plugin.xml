@@ -2,5 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="de.cau.cs.kieler.kico.transformation" name="KIELER Compiler Transformation" schema="schema/de.cau.cs.kieler.kico.transformation.exsd"/>
+   <extension-point id="de.cau.cs.kieler.kico.extension" name="KIELER Compiler Resource Extension Information" schema="schema/de.cau.cs.kieler.kico.extension.exsd"/>
 
 </plugin>

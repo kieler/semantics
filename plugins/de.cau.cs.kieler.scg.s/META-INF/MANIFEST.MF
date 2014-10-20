@@ -2,22 +2,25 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SCG to S Transformation
 Bundle-SymbolicName: de.cau.cs.kieler.scg.s;singleton:=true
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.1.1.qualifier
 Bundle-Activator: de.cau.cs.kieler.scg.s.Activator
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
+Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtend.lib,
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
+ org.eclipse.core.resources,
  de.cau.cs.kieler.s,
  de.cau.cs.kieler.scg,
  de.cau.cs.kieler.core.model,
- com.google.inject
+ com.google.inject,
+ org.eclipse.emf.ecore,
+ de.cau.cs.kieler.kico,
+ de.cau.cs.kieler.s.sc,
+ de.cau.cs.kieler.s.sj
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: de.cau.cs.kieler.scg.s,
- de.cau.cs.kieler.scg.s.handlers,
+Export-Package: de.cau.cs.kieler.scg.s;uses:="org.osgi.framework",
  de.cau.cs.kieler.scg.s.transformations
 
 

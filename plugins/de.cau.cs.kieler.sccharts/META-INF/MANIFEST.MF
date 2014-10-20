@@ -2,14 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SCCharts
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts;singleton:=true
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.1.1.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.sccharts,
  de.cau.cs.kieler.sccharts.extensions,
- de.cau.cs.kieler.sccharts.handler,
  de.cau.cs.kieler.sccharts.impl,
  de.cau.cs.kieler.sccharts.transformations,
  de.cau.cs.kieler.sccharts.util
@@ -21,8 +20,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtend.lib,
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
- de.cau.cs.kieler.core.model;bundle-version="0.7.1",
  com.google.inject;bundle-version="3.0.0",
- de.cau.cs.kieler.klighd.piccolo;bundle-version="0.2.0",
- de.cau.cs.kieler.kico;bundle-version="0.1.0"
+ de.cau.cs.kieler.klighd.piccolo,
+ de.cau.cs.kieler.kico
 Bundle-ActivationPolicy: lazy

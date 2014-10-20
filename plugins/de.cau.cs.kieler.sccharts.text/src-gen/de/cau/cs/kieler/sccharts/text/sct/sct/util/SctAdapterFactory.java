@@ -2,11 +2,6 @@
  */
 package de.cau.cs.kieler.sccharts.text.sct.sct.util;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-
-import de.cau.cs.kieler.sccharts.Scope;
-import de.cau.cs.kieler.sccharts.State;
-
 import de.cau.cs.kieler.sccharts.text.sct.sct.*;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -80,29 +75,9 @@ public class SctAdapterFactory extends AdapterFactoryImpl
     new SctSwitch<Adapter>()
     {
       @Override
-      public Adapter caseSCChart(SCChart object)
-      {
-        return createSCChartAdapter();
-      }
-      @Override
       public Adapter caseImportDecl(ImportDecl object)
       {
         return createImportDeclAdapter();
-      }
-      @Override
-      public Adapter caseAnnotatable(Annotatable object)
-      {
-        return createAnnotatableAdapter();
-      }
-      @Override
-      public Adapter caseScope(Scope object)
-      {
-        return createScopeAdapter();
-      }
-      @Override
-      public Adapter caseState(State object)
-      {
-        return createStateAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -127,21 +102,6 @@ public class SctAdapterFactory extends AdapterFactoryImpl
 
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.text.sct.sct.SCChart <em>SC Chart</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.sccharts.text.sct.sct.SCChart
-   * @generated
-   */
-  public Adapter createSCChartAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.text.sct.sct.ImportDecl <em>Import Decl</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -152,51 +112,6 @@ public class SctAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createImportDeclAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.Annotatable <em>Annotatable</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.core.annotations.Annotatable
-   * @generated
-   */
-  public Adapter createAnnotatableAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Scope <em>Scope</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.sccharts.Scope
-   * @generated
-   */
-  public Adapter createScopeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.State <em>State</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.sccharts.State
-   * @generated
-   */
-  public Adapter createStateAdapter()
   {
     return null;
   }

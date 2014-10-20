@@ -54,6 +54,12 @@ public abstract class HttpServer extends Job {
 
     /** The server name. */
     protected String serverName = "";
+    
+    /** The error cnt. */
+    protected int errorCnt = 0;
+    
+    /** The maxerrors. */
+    protected final int MAX_ERRORS = 100; 
 
     // -------------------------------------------------------------------------
 
@@ -116,7 +122,7 @@ public abstract class HttpServer extends Job {
                 responseHeader.setTypeImagePng();
                 HttpResponse response = new HttpResponse();
                 response.setHeader(responseHeader);
-                response.setBody(bytes);
+                response.setBody(bytes, false);
 
                 return response;
             } catch (IOException e) {
@@ -266,10 +272,11 @@ public abstract class HttpServer extends Job {
 
         socket = null;
         aborted = false;
+        errorCnt = 0;
 
         debug("Server enabled: " + isEnabled());
 
-        while (isEnabled() && !aborted) {
+        while (isEnabled() && !aborted && errorCnt < MAX_ERRORS) {
             debug("Server loop");
             try {
 
@@ -279,7 +286,9 @@ public abstract class HttpServer extends Job {
                     try {
                         socket = new ServerSocket(this.listenPort, 10);
                         debug("Server listen socket established");
+                        errorCnt = 0;
                     } catch (IOException e1) {
+                        errorCnt++;
                         e1.printStackTrace();
                     }
                 }
@@ -294,9 +303,11 @@ public abstract class HttpServer extends Job {
                     // handle connection concurrently
                     (new Thread(new HandleConnection(connection, this))).start();
                     debug("Server async handling started");
+                    errorCnt = 0;
                 }
 
             } catch (Exception e) {
+                errorCnt++;
                 debug("Server IO error: " + getErrorMessage(e));
             }
         }// end while loop forever
@@ -359,10 +370,9 @@ public abstract class HttpServer extends Job {
 
                 HttpRequest request = new HttpRequest();
                 request.header = this.httpParser.getHeader();
-                request.body = this.httpParser.body;
-                if (request.body == null) {
-                    request.body = "".getBytes();
-                }
+                
+                boolean isMethodPOST = request.header.isMethodPOST();
+                request.body.setData(this.httpParser.body, isMethodPOST);
 
                 // First try the "online-check" request
                 HttpResponse response = handleRequestOnline(request);
@@ -376,7 +386,7 @@ public abstract class HttpServer extends Job {
                     // can be determined prior to being transferred" rfc2616
 
                     // Set body length automatically
-                    int Length = response.body.length;
+                    int Length = response.body.getData().length;
                     response.header.setContentLength(Length);
 
                     // Set server name automatically
@@ -389,7 +399,8 @@ public abstract class HttpServer extends Job {
 
                     this.to_client.write(response.header.toString());
                     this.to_client.flush();
-                    this.connection.getOutputStream().write(response.body);
+                    this.connection.getOutputStream().write(response.body.getData());
+//                    this.connection.getOutputStream().write("OK".getBytes());
                 }
 
                 this.to_client.flush();

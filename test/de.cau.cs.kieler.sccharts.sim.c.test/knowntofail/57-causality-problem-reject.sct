@@ -1,0 +1,16 @@
+scchart causalityproblem {
+  output signal pure S;
+  output signal pure O;
+  input signal pure I;
+
+  initial state Hierarchy {
+
+    initial state _
+    --> _2 with I / S;
+
+    state _2;
+  }
+  o-> _2 with S / O;
+
+  state _2;
+}

@@ -13,18 +13,21 @@
  */
 package de.cau.cs.kieler.scg.sequentializer
 
-import de.cau.cs.kieler.core.model.transformations.AbstractModelTransformation
-import org.eclipse.emf.ecore.EObject
+import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scgsched.SCGraphSched
+import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 
 /** 
- * This class is part of the SCG transformation chain. The chain is used to gather important information 
- * about the schedulability of a given SCG. This is done in several key steps. Between two steps the results 
- * are cached in specifically designed metamodels for further processing. At the end of the transformation
- * chain a newly generated (and sequentialized) SCG is returned. <br>
- * You can either call the transformations manually or use the SCG transformation extensions to enrich the
- * SCGs with the desired information.<br>
+ * This class is part of the SCG transformation chain. The chain is used to gather information 
+ * about the schedulability of a given SCG. This is done in several key steps. Contrary to the first 
+ * version of SCGs, there is only one SCG meta-model. In each step the gathered data will be added to 
+ * the model. 
+ * You can either call the transformation manually or use KiCo to perform a series of transformations.
  * <pre>
  * SCG 
  *   |-- Dependency Analysis 	 					
@@ -38,12 +41,42 @@ import de.cau.cs.kieler.scgsched.SCGraphSched
  * @kieler.rating 2013-01-21 proposed yellow
  */
 
-abstract class AbstractSequentializer extends AbstractModelTransformation {
+abstract class AbstractSequentializer extends Transformation {
+    
+    @Inject
+    extension KExpressionsExtension
+        
+    @Inject
+    extension SCGDeclarationExtensions        
+    
+    // -------------------------------------------------------------------------
+    // -- Constants 
+    // -------------------------------------------------------------------------
+    
+    /** Name of the go signal. */
+    protected static val String GOGUARDNAME = "_GO"
+    
+    
+    // -------------------------------------------------------------------------
+    // -- Sequentializer 
+    // -------------------------------------------------------------------------            
 	
-	override transform(EObject eObject) {
-		sequentialize(eObject as SCGraphSched)
-	}
+    override transform(EObject eObject, KielerCompilerContext context) {
+        sequentialize(eObject as SCGraph, context)
+    }
 	
-	abstract def SCGraph sequentialize(SCGraphSched scg)
+	abstract def SCGraph sequentialize(SCGraph scg, KielerCompilerContext context)
+	
+    protected def ValuedObject createGOSignal(SCGraph scg) {
+        /**
+         * To form (circuit like) guard expression a GO signal must be created.  
+         * It is needed in the guard expression of blocks that are active
+         * when the program starts.
+         */
+         
+        // Create a new signal using the kexpression factory for the GO signal.
+        // Don't forget to add it to the SCG.
+        scg.createValuedObject(GOGUARDNAME).setTypeBool
+    }	
 	
 }

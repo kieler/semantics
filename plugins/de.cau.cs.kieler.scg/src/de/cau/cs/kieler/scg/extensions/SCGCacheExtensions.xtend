@@ -14,8 +14,8 @@
 package de.cau.cs.kieler.scg.extensions
 
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scgbb.SCGraphBB
-import de.cau.cs.kieler.scgbb.SchedulingBlock
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SchedulingBlock
 import java.util.Map
 
 /**
@@ -41,11 +41,19 @@ import java.util.Map
  */
 class SCGCacheExtensions { 
     
-    public def  createSchedulingBlockCache(SCGraphBB scg, Map<Node, SchedulingBlock> map) {
-   		scg.eAllContents.filter(typeof(SchedulingBlock)).forEach[ sb |
-   			sb.nodes.forEach[ map.put(it, sb) ]
-   		]
-   		map
+    public def int createSchedulingBlockCache(SCGraph scg, Map<Node, SchedulingBlock> map) {
+        var sBlocks = 0
+        
+        for(basicBlock : scg.basicBlocks) {
+            for(schedulingBlock: basicBlock.schedulingBlocks) {
+                for(node : schedulingBlock.nodes) {
+                    map.put(node, schedulingBlock)
+                }
+                sBlocks = sBlocks + 1
+            }
+        }
+        
+        sBlocks        
     } 
     
 }

@@ -22,6 +22,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.ArrayList
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import java.util.List
 
 /**
  * SCCharts ComplexFinalState Transformation.
@@ -59,19 +60,32 @@ class ComplexFinalState {
     def State transform(State rootState) {
         var targetRootState = rootState.fixAllPriorities;
 
-        // Traverse all states
-        for (targetState : targetRootState.getAllStates) {
-            targetState.transformComplexFinalState(rootState);
+        //Find all possible complex final states
+        val globalFinalStates = targetRootState.getAllStates.filter(
+            e |
+                e.isFinal)
+                
+        val globalComplexFinalStates = globalFinalStates.filter(
+            e |
+                ((!e.outgoingTransitions.nullOrEmpty && e.allContainedStates.size > 0))
+                 || e.entryActions.size > 0 || e.duringActions.size > 0 || e.exitActions.size > 0).toList
+                
+        // Traverse all states containing complex final states
+        for (targetState : globalComplexFinalStates.map[it.parentRegion.parentState].toList) {
+            targetState.transformComplexFinalState(rootState, globalComplexFinalStates);
         }
         targetRootState.fixAllTextualOrdersByPriorities;
     }
 
-    def void transformComplexFinalState(State state, State targetRootState) {
-        val complexFinalStates = state.allContainedStates.filter(
-            e|
-                e.parentRegion.parentState == state && e.isFinal && (!e.outgoingTransitions.nullOrEmpty ||
-                    e.allContainedStates.size > 0 || e.entryActions.size > 0 || e.duringActions.size > 0 ||
-                    e.exitActions.size > 0)).toList()
+    def void transformComplexFinalState(State state, State targetRootState, List<State> globalComplexFinalStates) {
+
+        //als-7.8> Data optimization: Moved state independent filtering to transform method with one single evaluation improving performance
+        //        val complexFinalStates = state.allContainedStates.filter(
+        //            e|
+        //                e.parentRegion.parentState == state && e.isFinal && (!e.outgoingTransitions.nullOrEmpty &&
+        //                    e.allContainedStates.size > 0 || e.entryActions.size > 0 || e.duringActions.size > 0 ||
+        //                    e.exitActions.size > 0)).toList()
+        val complexFinalStates = globalComplexFinalStates.filter[it.parentRegion.parentState == state].toList
 
         if (!complexFinalStates.nullOrEmpty) {
 
@@ -84,8 +98,6 @@ class ComplexFinalState {
                 val termVariable = state.createVariable(GENERATED_PREFIX + "term").setTypeBool.uniqueName
                 termVariable.setInitialValue(FALSE)
                 if (region.initialState.final) {
-
-                    //***
                     termVariable.setInitialValue(TRUE)
                 }
                 termVariables.add(termVariable)

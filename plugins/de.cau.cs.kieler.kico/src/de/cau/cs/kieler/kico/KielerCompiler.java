@@ -19,7 +19,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
@@ -228,7 +231,7 @@ public class KielerCompiler {
                 if (alternative && !dependencyReferenced && !groupReferenced) {
                     if (transformationDummy.reverseDependencies.size() == 0) {
                         toBeDeleted = transformationDummy;
-                         System.out.println("REMOVE " + transformationDummy.id);
+                        System.out.println("REMOVE " + transformationDummy.id);
                         found = true;
                         break;
                     }
@@ -238,8 +241,8 @@ public class KielerCompiler {
                 context.getGraph().remove(toBeDeleted);
                 for (TransformationDummy transformationDummy : context.getGraph()) {
                     if (transformationDummy.reverseDependencies.contains(toBeDeleted)) {
-                         System.out.println("REMOVE " + toBeDeleted.id + " from "
-                         + transformationDummy.id);
+                        System.out.println("REMOVE " + toBeDeleted.id + " from "
+                                + transformationDummy.id);
                         transformationDummy.reverseDependencies.remove(toBeDeleted);
                     }
                 }
@@ -832,6 +835,10 @@ public class KielerCompiler {
 
     /**
      * Advanced internally used KIELER Compiler compile method on a given context.
+     * 
+     * @param context
+     *            the context
+     * @return the compilation result
      */
     public static CompilationResult compile(KielerCompilerContext context) {
         updateMapping(DEBUG);
@@ -839,20 +846,24 @@ public class KielerCompiler {
         // as this is a compile run, the following MUST be set
         EObject transformationEObject = context.getTransformationObject();
         if (transformationEObject == null) {
-            KiCoPlugin
-            .getInstance()
-            .showError(
-                    "No model was supplied for this compilation run! Aborting compilation.", KiCoPlugin.PLUGIN_ID, null, true);
+            KiCoPlugin.getInstance().showError(
+                    "No model was supplied for this compilation run! Aborting compilation.",
+                    KiCoPlugin.PLUGIN_ID, null, true);
             return context.getCompilationResult();
+        }
+
+        // Set the main resource
+        if (context.getMainResource() == null) {
+            context.setMainResource(transformationEObject.eResource());
         }
 
         // If not inplace then produce a copy of the input EObject
         if (!context.isInplace()) {
             EObject copiedObject = EcoreUtil.copy(transformationEObject);
             // replace intermediate object
-            context.getCompilationResult().getIntermediateResults().clear(); 
+            context.getCompilationResult().getIntermediateResults().clear();
             context.getCompilationResult().getIntermediateResults().add(copiedObject);
-            // makd the new copy the transformedObject
+            // make the new copy the transformedObject
             transformationEObject = copiedObject;
         }
 
@@ -887,69 +898,203 @@ public class KielerCompiler {
         eliminateGroupIds(context, true);
 
         List<String> compilationTransformationIDs = context.getCompilationTransformationIDs();
-        
+
+        // The progress monitor is optional and may be null!
+        IProgressMonitor monitor = context.getProgressMonitor();
+
+        int doneWork = 0;
+        int totalWork = compilationTransformationIDs.size();
+        if (monitor != null) {
+            monitor.beginTask("Compiling, performing " + totalWork + "transformations.",
+                    totalWork * 100);
+        }
+
         // This will be the current instance of the transformed model, initially it is the
         // transformationEObject from the context
         EObject transformedObject = transformationEObject;
-        
+
         for (String compilationTransformationID : compilationTransformationIDs) {
             Transformation transformation = getTransformation(compilationTransformationID);
 
-            if (transformation != null) {
-                context.getCompilationResult().getTransformations().add(compilationTransformationID);
+            // Reset the done flag for the next transformation step
+            context.getCompilationResult().setCurrentTransformationDone(false);
 
-                // If the requested TransformationID
-                if (transformation.getId().equals(compilationTransformationID)) {
-                    // If this is an individual
+            doneWork++;
 
-                    Class<?> parameterType = transformedObject.getClass();
-                    Class<?> handledParameterType = transformation.getParameterType();
-                    if (DEBUG) {
-                        System.out.println("PERFORM TRANSFORMATION: " + compilationTransformationID
-                                + " ( is " + parameterType.getName() + "  handled by "
-                                + handledParameterType.getName() + "? "
-                                + handledParameterType.isInstance(transformedObject) + " )");
-                    }
-                    if (handledParameterType.isInstance(transformedObject)) {
+            // Possibly async call to perform the transformation (in a new Eclipse job)
+            performTransformationTask(transformedObject, transformation, context, doneWork,
+                    totalWork);
 
-                        String transformationID = "unknown";
-                        Object object = null;
-                        try {
-                            transformationID = transformation.getId();
-                            object = transformation.doTransform(transformedObject);
-                        } catch (Exception exception) {
-                            context.addPostponedError(transformationID, exception); 
-                        }
-
-                        if (object != null) {
-                            // If this is the FIRST successful transformation AND we are NOT in
-                            // verbose mode
-                            // then clear all possibly previous errors
-                            if (context.getCompilationResult().getIntermediateResults().size() <= 1
-                                    && !context.isVerboseMode()) {
-                                context.resetPostponedErrors();
-                            }
-
-                            // Add to compilation result
-                            context.getCompilationResult().getIntermediateResults().add(object);
-
-                            if (object instanceof EObject) {
-                                transformedObject = (EObject) object;
-                            } else {
-                                // in this case we CANNOT do any further transformation calls
-                                // which require the return value of doTransform to be an EObject
-                                context.processPostponedErrors();
-                                return context.getCompilationResult();
-                            }
-                        }
-                    }
+            boolean cancelled = false;
+            // Blocking waiting until cancelled or current transformation is done
+            while (!cancelled && !context.getCompilationResult().isCurrentTransformationDone()) {
+                if (monitor != null && monitor.isCanceled()) {
+                    cancelled = true;
+                }
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
                 }
             }
+
+            // Break if either cancelled by the user
+            if (monitor != null && monitor.isCanceled()) {
+                break;
+            }
+
+            // Feed back the last transformation result for the NEXT transformation
+            Object object = context.getCompilationResult().getEObject();
+            if (object != null) {
+                transformedObject = (EObject) object;
+            }
+            if (!(object instanceof EObject)) {
+                // In this case we CANNOT do any further transformation calls
+                // which require the return value of doTransform to be an EObject
+                break;
+            }
+
         }
-        context.processPostponedErrors();
+
+        if (monitor != null) {
+            monitor.done();
+        }
+        context.getCompilationResult().processPostponedWarnings();
+        context.getCompilationResult().processPostponedErrors();
         return context.getCompilationResult();
     }
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Internally perform a single transformation.
+     * 
+     * @param transformedObject
+     *            the transformed object
+     * @param transformation
+     *            the transformation
+     * @param context
+     *            the context
+     * @param doneWork
+     *            the done work
+     * @param totalWork
+     *            the total work
+     * @return the object
+     */
+    private static void performTransformationTask(final EObject transformedObject,
+            Transformation transformation, KielerCompilerContext context, int doneWork,
+            int totalWork) {
+        if (transformation != null) {
+            String compilationTransformationID = transformation.getId();
+            context.getCompilationResult().getTransformations().add(compilationTransformationID);
+
+            // The progress monitor is optional and may be null!
+            IProgressMonitor monitor = context.getProgressMonitor();
+
+            if (monitor != null) {
+                monitor.setTaskName("Compiling, performing transformation " + doneWork + "/"
+                        + totalWork + ": '" + transformation.getName() + "'");
+            }
+
+            // If the requested TransformationID
+            if (transformation.getId().equals(compilationTransformationID)) {
+                // If this is an individual
+
+                // Class<?> parameterType = transformedObject.getClass();
+                Class<?> handledParameterType = transformation.getParameterType();
+                if (handledParameterType != null) {
+                    if (DEBUG) {
+                        System.out.println("PERFORM TRANSFORMATION: " + compilationTransformationID
+                        // + " ( is " + parameterType.getName() + " handled by "
+                        // + handledParameterType.getName() + "? "
+                        // + handledParameterType.isInstance(transformedObject) + " )"
+                                );
+                    }
+                    if (handledParameterType.isInstance(transformedObject)) {
+
+                        KielerCompilerProgressMonitor subMonitor = null;
+                        if (monitor == null) {
+                            monitor = new NullProgressMonitor();
+                        }
+                        subMonitor = new KielerCompilerProgressMonitor(monitor, 100);
+                        // Set the sub monitor for this transformation
+                        context.setCurrentTransformationProgressMonitor(subMonitor);
+                        // Each subMonitor can use 0 - 100 % / work units
+                        performTransformation(transformedObject, transformation, context,
+                                subMonitor);
+                        context.getCompilationResult().setCurrentTransformationDone(true);
+                        // Increment the main monitor with 100%-x% percent, where x% is the number
+                        // of
+                        // work in % already added by the subMonitor
+                        int additional = 100 - subMonitor.getPercentDone();
+                        monitor.worked(additional);
+                    } else {
+                        // MUST flag this to be finished otherwise
+                        context.getCompilationResult().setCurrentTransformationDone(true);
+                    }
+                }
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Perform the actual transformation.
+     * 
+     * @param transformedObject
+     *            the transformed object
+     * @param transformation
+     *            the transformation
+     * @param context
+     *            the context
+     * @return the object
+     */
+    private static void performTransformation(final EObject transformedObject,
+            final Transformation transformation, final KielerCompilerContext context,
+            final KielerCompilerProgressMonitor subMonitor) {
+
+        String transformationID = "unknown";
+        Object object = null;
+        try {
+            transformationID = transformation.getId();
+            Resource res = transformedObject.eResource();
+            if (context.isCreateDummyResource()) {
+                // If we should create a dummy resource then save it after each successful
+                // transformation step
+                if (res == null) {
+                    // Create a dummy resource by calling serialization (this creates a dummy
+                    // resource on the fly)
+                    @SuppressWarnings("unused")
+                    String discard = KiCoUtil.serialize(transformedObject, context, true);
+                }
+                res = context.getMainResource();
+            }
+
+            object = transformation.doTransform(transformedObject, context);
+        } catch (Exception exception) {
+            context.getCompilationResult().addPostponedError(
+                    new KielerCompilerException(transformationID, exception));
+        }
+
+        if (object != null) {
+            // If this is the FIRST successful transformation AND we are NOT in
+            // verbose mode
+            // then clear all possibly previous errors
+            if (context.getCompilationResult().getIntermediateResults().size() <= 1
+                    && !context.isVerboseMode()) {
+                context.getCompilationResult().resetPostponedErrors();
+            }
+
+            // Add to compilation result
+            context.getCompilationResult().getIntermediateResults().add(object);
+
+            if (!(object instanceof EObject)) {
+                // in this case we CANNOT do any further transformation calls
+                // which require the return value of doTransform to be an EObject
+                context.getCompilationResult().setCurrentTransformationDone(true);
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
 }

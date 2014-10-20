@@ -67,6 +67,8 @@ public class KielerCompiler {
                             + "  cat <FILE.sct> | java -jar KielerCompiler.jar localhost:5555 EXTENDED CORE > code.c\n"
                             + "Example 2:\n"
                             + "  java -jar KielerCompiler.jar 5555 -f FILE.sct -o code.c CODEGENERATION \n"
+                            + "Example 3:\n"
+                            + "  java -jar KielerCompiler.jar compile.sccharts.com -f FILE.sct -o code.c CODEGENERATION \n"
                             + "\n"
                             + "Options:\n"
                             + "-f <filename> : Use a specific input file\n"
@@ -86,16 +88,22 @@ public class KielerCompiler {
             } catch (Exception e) {
             }
         } else {
-            try {
-                port = Integer.parseInt(hostAndPort[0]);
-            } catch (Exception e) {
+            if (hostAndPort[0].toLowerCase().equals("compile.sccharts.com")) {
+                host = "compile.sccharts.com";
+                port = 80;
             }
-            if (port > 0) {
-                // if only the port was specified, assume localhost
-                host = "localhost";
-            } else {
-                // if only the hostname was specified, assume 5555 as the standard port
-                port = 5555;
+            else {
+                try {
+                    port = Integer.parseInt(hostAndPort[0]);
+                } catch (Exception e) {
+                }
+                if (port > 0) {
+                    // if only the port was specified, assume localhost
+                    host = "localhost";
+                } else {
+                    // if only the hostname was specified, assume 5555 as the standard port
+                    port = 5555;
+                }
             }
         }
 
@@ -293,7 +301,18 @@ public class KielerCompiler {
             InputStream in = yc.getInputStream();
 
             byte[] bytes = new byte[len];
-            in.read(bytes);
+            byte[] buffer = new byte[len];
+            int leftBytes = len;
+            int pos = 0;
+            while (leftBytes > 0) {
+                int readBytes = in.read(buffer);
+                leftBytes = leftBytes - readBytes;
+                // copy buffer to bytes
+                for (int c = 0; c < readBytes; c++) {
+                    bytes[c+pos] = buffer[c]; 
+                }
+                pos = pos + readBytes;
+            }
 
             yc.getInputStream().close();
             result.model = bytes;

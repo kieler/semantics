@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.sccharts.sim.c.SCChartsCDataComponent"
+            id="de.cau.cs.kieler.sccharts.sim.c"
+            name="SCCharts Simulator (C)">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
+      <executionFile
+            file="execution/sccharts_c.execution">
+         <editor
+               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
+               name="Textual SCCharts (SCT) Editor"
+               priority="100">
+         </editor>
+      </executionFile>
+      <executionFile
+            file="execution/sccharts_c_no_visualization.execution">
+         <editor
+               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
+               name="Textual SCCharts (SCT) Editor"
+               priority="99">
+         </editor>
+      </executionFile>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <transformationMethod
+            class="de.cau.cs.kieler.sccharts.sim.c.xtend.SimulationVisualization"
+            dependencies="DURING"
+            id="SCCHARTS_SIMULATION_VISUALIZATION"
+            method="transformVisualization"
+            name="Visualization">
+      </transformationMethod>
+      <transformationGroup
+            alternatives="true"
+            id="SCCHARTS_SIMULATION"
+            isCategory="false"
+            isFeatureGroup="false"
+            name="SSCharts Simulation"
+            transformations="SCCHARTS_SIMULATION_NO_VISUALIZATION, SCCHARTS_SIMULATION_VISUALIZATION">
+      </transformationGroup>
+      <transformationMethod
+            class="de.cau.cs.kieler.sccharts.sim.c.xtend.SimulationVisualization"
+            id="SCCHARTS_SIMULATION_NO_VISUALIZATION"
+            method="transformNoVisualization"
+            name="No Visualization">
+      </transformationMethod>
+   </extension>
+
+</plugin>

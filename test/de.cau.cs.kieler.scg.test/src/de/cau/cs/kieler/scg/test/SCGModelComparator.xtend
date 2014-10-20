@@ -16,9 +16,9 @@ package de.cau.cs.kieler.scg.test
 import de.cau.cs.kieler.core.model.test.AbstractModelComparator
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scgbb.BasicBlock
-import de.cau.cs.kieler.scgbb.SchedulingBlock
-import de.cau.cs.kieler.scgdep.Dependency
+import de.cau.cs.kieler.scg.BasicBlock
+import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.Dependency
 import org.eclipse.emf.ecore.EObject
 
 /**

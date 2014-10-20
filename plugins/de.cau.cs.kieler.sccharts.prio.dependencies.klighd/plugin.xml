@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.klighd.diagramSyntheses">
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.transformations.GuiceBasedTransformationFactory:de.cau.cs.kieler.sccharts.prio.dependencies.klighd.xtend.DependencyDiagramSynthesis"
+            id="de.cau.cs.kieler.sccharts.prio.dependencies.klighd.xtend.DependencyDiagramSynthesis">
+      </diagramSynthesis>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="de.cau.cs.kieler.sim"
+            class="de.cau.cs.kieler.sccharts.prio.dependencies.klighd.SCChartsPrioDependencyView"
+            icon="icons/dependenciesViewIcon.png"
+            id="de.cau.cs.kieler.sccharts.prio.dependencies.klighd.view1"
+            name="SCCharts Priority Dependencies"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="de.cau.cs.kieler.sccharts.prio.dependencies.klighd.EditorListener">
+      </startup>
+   </extension>
+
+</plugin>

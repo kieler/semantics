@@ -17,6 +17,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
@@ -31,6 +33,8 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;
+
+import de.cau.cs.kieler.core.util.Pair;
 
 /**
  * This class is a collection of utility methods for handling models in/with KiCo.
@@ -77,14 +81,33 @@ public class KiCoUtil {
      *            the model
      * @return the string
      */
-    public static String serialize(EObject model, KielerCompilerContext context) {
+    public static String serialize(EObject model, KielerCompilerContext context, boolean updateMainResource) {
         String num = (model.hashCode() + "").replace("-", "");
 
         String returnText = "";
         boolean done = false;
+        
+        // ssm, 11.08.2014:
+        // Since the testing of all possible extensions may take excessive time when working with large models,
+        // a plugin can register a specific resource extension via extension point. The function will test
+        // the eClass for the registered extensions and will skip the general approach if a corresponding
+        // extension was found.
+        List<String> extensionKeyList = new LinkedList<String>(getRegXtext().getExtensionToFactoryMap().keySet());
+        HashMap<String, Pair<String, Boolean>> resourceExtensionMap = KiCoPlugin.getInstance().getRegisteredResourceExtensions(false);
+        if (KiCoPlugin.DEBUG) {
+            System.out.println("MODEL eCLASS: " + model.eClass().getName());
+        }
+        Pair<String, Boolean> specificExtension = resourceExtensionMap.get(model.eClass().getName());
+        if (specificExtension != null) {
+            extensionKeyList.clear();
+            if (!specificExtension.getSecond()) {
+                extensionKeyList.add(0, specificExtension.getFirst());
+            }
+        }
+        
         try {
 
-            for (String ext : getRegXtext().getExtensionToFactoryMap().keySet()) {
+            for (String ext : extensionKeyList) {
                 URI uri = URI.createURI("dummy:/inmemory." + num + "." + ext);
 
                 ResourceSet resourceSet = null;
@@ -97,9 +120,16 @@ public class KiCoUtil {
                     XtextResourceSet newResourceSet = provider.get(XtextResourceSet.class);
                     // newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
                     resourceSet = newResourceSet;
+                    if (context != null) {
+                        // save the resource set for possibly next resources
+                        context.setModelResourceSet(resourceSet);
+                   }
                 }
 
-                Resource res = resourceSet.createResource(uri);
+                Resource res = resourceSet.getResource(uri, false);
+                if (res == null) {
+                    res = resourceSet.createResource(uri);                    
+                }
 
                 done = false;
                 try {
@@ -108,6 +138,9 @@ public class KiCoUtil {
                     res.save(outputStream, getSaveOptions());
                     returnText = outputStream.toString();
                     done = true;
+                    if (updateMainResource) {
+                          context.setMainResource(res);
+                    }
                 } catch (Exception e) {
                     // e.printStackTrace();
                 }
@@ -148,7 +181,7 @@ public class KiCoUtil {
      * 
      * @return Save options
      */
-    protected static Map<String, String> getSaveOptions() {
+    public static Map<String, String> getSaveOptions() {
         Map<String, String> saveOptions = new HashMap<String, String>();
         saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8");
         saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED,

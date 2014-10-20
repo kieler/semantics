@@ -23,15 +23,6 @@ public interface SctFactory extends EFactory
   SctFactory eINSTANCE = de.cau.cs.kieler.sccharts.text.sct.sct.impl.SctFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>SC Chart</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>SC Chart</em>'.
-   * @generated
-   */
-  SCChart createSCChart();
-
-  /**
    * Returns a new object of class '<em>Import Decl</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

@@ -1,0 +1,21 @@
+scchart ^suspend {
+  input signal pure I;
+  output signal pure O;
+
+  initial state A {
+    suspend I;
+
+    initial state B
+    --> C / O;
+
+    state C {
+
+      initial state _
+      --> _ / O;
+    }
+    --> D / O;
+
+    state D
+    --> B / O;
+  };
+}

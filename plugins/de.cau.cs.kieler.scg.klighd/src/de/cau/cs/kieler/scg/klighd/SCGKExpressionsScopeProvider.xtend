@@ -17,7 +17,6 @@ import com.google.inject.Singleton
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.scoping.KExpressionsScopeProvider
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scgbb.SCGraphBB
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.IScope
@@ -76,8 +75,12 @@ class SCGKExpressionsScopeProvider extends KExpressionsScopeProvider {
     def IScope scope_ValuedObjectReference_valuedObject(EObject context, EReference reference) {
   		val scopeObjects = <ValuedObject> newLinkedList
   		scopeObjects.addAll(valuedObjects)
-    	if (parent instanceof SCGraphBB) {
-    		(parent as SCGraphBB).basicBlocks.forEach[scopeObjects.addAll(it.guards)]
+    	if (parent instanceof SCGraph) {
+    		(parent as SCGraph).getBasicBlocks.forEach[
+    		    schedulingBlocks.forEach[
+                    scopeObjects += guard.valuedObject
+    		    ]
+    		]
     	}
         Scopes.scopeFor(scopeObjects)
     }

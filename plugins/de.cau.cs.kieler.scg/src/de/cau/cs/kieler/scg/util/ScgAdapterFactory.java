@@ -81,6 +81,10 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
     protected ScgSwitch<Adapter> modelSwitch =
         new ScgSwitch<Adapter>() {
             @Override
+            public Adapter caseSCGraph(SCGraph object) {
+                return createSCGraphAdapter();
+            }
+            @Override
             public Adapter caseNode(Node object) {
                 return createNodeAdapter();
             }
@@ -113,10 +117,6 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
                 return createLinkAdapter();
             }
             @Override
-            public Adapter caseSCGraph(SCGraph object) {
-                return createSCGraphAdapter();
-            }
-            @Override
             public Adapter caseEntry(Entry object) {
                 return createEntryAdapter();
             }
@@ -127,6 +127,50 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseControlFlow(ControlFlow object) {
                 return createControlFlowAdapter();
+            }
+            @Override
+            public Adapter caseDependency(Dependency object) {
+                return createDependencyAdapter();
+            }
+            @Override
+            public Adapter caseAbsoluteWrite_Read(AbsoluteWrite_Read object) {
+                return createAbsoluteWrite_ReadAdapter();
+            }
+            @Override
+            public Adapter caseRelativeWrite_Read(RelativeWrite_Read object) {
+                return createRelativeWrite_ReadAdapter();
+            }
+            @Override
+            public Adapter caseAbsoluteWrite_RelativeWrite(AbsoluteWrite_RelativeWrite object) {
+                return createAbsoluteWrite_RelativeWriteAdapter();
+            }
+            @Override
+            public Adapter caseWrite_Write(Write_Write object) {
+                return createWrite_WriteAdapter();
+            }
+            @Override
+            public Adapter caseBasicBlock(BasicBlock object) {
+                return createBasicBlockAdapter();
+            }
+            @Override
+            public Adapter caseSchedulingBlock(SchedulingBlock object) {
+                return createSchedulingBlockAdapter();
+            }
+            @Override
+            public Adapter casePredecessor(Predecessor object) {
+                return createPredecessorAdapter();
+            }
+            @Override
+            public Adapter caseSchedule(Schedule object) {
+                return createScheduleAdapter();
+            }
+            @Override
+            public Adapter caseScheduledBlock(ScheduledBlock object) {
+                return createScheduledBlockAdapter();
+            }
+            @Override
+            public Adapter caseGuard(Guard object) {
+                return createGuardAdapter();
             }
             @Override
             public Adapter caseAnnotatable(Annotatable object) {
@@ -321,6 +365,160 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Dependency <em>Dependency</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.Dependency
+     * @generated
+     */
+    public Adapter createDependencyAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.AbsoluteWrite_Read <em>Absolute Write Read</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.AbsoluteWrite_Read
+     * @generated
+     */
+    public Adapter createAbsoluteWrite_ReadAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.RelativeWrite_Read <em>Relative Write Read</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.RelativeWrite_Read
+     * @generated
+     */
+    public Adapter createRelativeWrite_ReadAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite <em>Absolute Write Relative Write</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite
+     * @generated
+     */
+    public Adapter createAbsoluteWrite_RelativeWriteAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Write_Write <em>Write Write</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.Write_Write
+     * @generated
+     */
+    public Adapter createWrite_WriteAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.BasicBlock <em>Basic Block</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.BasicBlock
+     * @generated
+     */
+    public Adapter createBasicBlockAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.SchedulingBlock <em>Scheduling Block</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.SchedulingBlock
+     * @generated
+     */
+    public Adapter createSchedulingBlockAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Predecessor <em>Predecessor</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.Predecessor
+     * @generated
+     */
+    public Adapter createPredecessorAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Schedule <em>Schedule</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.Schedule
+     * @generated
+     */
+    public Adapter createScheduleAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.ScheduledBlock <em>Scheduled Block</em>}'.
+     * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.ScheduledBlock
+     * @generated
+     */
+	public Adapter createScheduledBlockAdapter() {
+        return null;
+    }
+
+				/**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Guard <em>Guard</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scg.Guard
+     * @generated
+     */
+    public Adapter createGuardAdapter() {
+        return null;
+    }
+
+                /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.Annotatable <em>Annotatable</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;

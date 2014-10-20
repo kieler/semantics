@@ -32,10 +32,15 @@
 
 <script>
 
-if (top.location.href != "http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Online+Compiler") {
-	top.location.href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Online+Compiler"
-}
+//if (top.location.href != "http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Online+Compiler") {
+//	top.location.href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Online+Compiler"
+//}
 
+var compileServerName = new Array("onlineserver0a",              "onlineserver1a",               "onlineserver2a",               "onlinelocalhosta");
+var compileServerURL  = new Array("http://compile.sccharts.com", "http://www.sccharts.com:5556", "http://www.sccharts.com:5555", "http://localhost:5555");
+
+var renderServerName  = new Array("onlineserver0b",             "onlineserver1b",               "onlineserver2b",               "onlinelocalhostb");
+var renderServerURL   = new Array("http://render.sccharts.com", "http://www.sccharts.com:4445", "http://www.sccharts.com:4444", "http://localhost:4444");
 
 //function processEvent(e) {
 //  alert('Parent got (from ' + e.origin + '): ' + e.data);
@@ -51,19 +56,54 @@ if (top.location.href != "http://rtsys.informatik.uni-kiel.de/confluence/display
 //window.addEventListener('message', processEvent, false);
 
 
-var windowContent = "<img src='http://www.sccharts.com/transformations.jpg' alt='s' border='0' usemap='#Map' />\
-<map name='Map' id='Map'>\
-  <area shape='rect' coords='4,3,837,19' href='javascript:void(0)' onClick='document.getElementById(\"transformations\").value=\"EXTENDED\"'/><area shape='rect' coords='410,51,830,68' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"STATECHARTS\"'/><area shape='rect' coords='211,103,349,118' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCADEQUARTZESTEREL\"'/><area shape='rect' coords='18,67,68,85' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"REFERENCE\"'/>\
-  <area shape='rect' coords='80,68,103,84' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"MAP\"'/>\
-  <area shape='rect' coords='114,65,137,85' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"FOR\"' />\
-  <area shape='rect' coords='176,66,200,84' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"PRE\"' /><area shape='rect' coords='217,66,251,85' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SIGNAL\"' /><area shape='rect' coords='268,65,308,84' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SUSPEND\"'/><area shape='rect' coords='324,67,383,83' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"COUNTDELAY\"'/><area shape='rect' coords='218,131,282,148' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"WEAKSUSPEND\"'/><area shape='rect' coords='299,130,338,146' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"DEFERRED\"'/><area shape='rect' coords='252,162,282,176' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"HISTORY\"'/><area shape='rect' coords='297,158,328,173' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"STATIC\"'/><area shape='rect' coords='419,109,500,125' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"COMPLEXFINALSTATES\"' /><area shape='rect' coords='513,77,598,94' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"ABORT\"'/><area shape='rect' coords='528,103,584,120' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"ABORTDEFAULT\"'/><area shape='rect' coords='521,129,589,149' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"ABORTALTERNATIVE\"'/><area shape='rect' coords='609,121,647,139' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"DURING\"'/><area shape='rect' coords='614,149,645,170' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"CONST\"'/><area shape='rect' coords='675,103,699,120' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"EXIT\"'/><area shape='rect' coords='660,147,714,163' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"INITIALIZATION\"'/><area shape='rect' coords='727,146,755,163' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"ENTRY\"'/><area shape='rect' coords='772,144,825,162' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"CONNECTOR\"'/><area shape='rect' coords='851,73,1015,89' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"CORE\"'/><area shape='rect' coords='859,98,933,117' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"TRIGGEREFFECT\"'/><area shape='rect' coords='943,99,1006,116' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SURFACEDEPTH\"'/><area shape='rect' coords='1026,59,1396,75' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGRAPH\"'/><area shape='rect' coords='1036,99,1062,115' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCG\"'/><area shape='rect' coords='1072,98,1133,117' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGDEP\"'/><area shape='rect' coords='1141,84,1216,100' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGBBGROUP\"'/><area shape='rect' coords='1155,106,1207,121' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGBB\"' /><area shape='rect' coords='1225,85,1314,100' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGSCHEDGROUP\"'/><area shape='rect' coords='1233,104,1307,121' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGSCHEDSIMPLE\"'/><area shape='rect' coords='1325,100,1388,115' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGSEQ\"'/><area shape='rect' coords='1406,77,1486,91' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"CODEGENERATION\"' /><area shape='rect' coords='1412,98,1454,114' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCG2C\"' />\
-  <area shape='rect' coords='10,39,142,53' href='javascript:void(0)' onClick='document.getElementById(\"transformations\").value=\"EXPANSIONS\"'/>\
-  <area shape='rect' coords='170,41,387,55' href='javascript:void(0)' onClick='document.getElementById(\"transformations\").value=\"SYNCCHARTS\"'/>\
-</map>\
-<input name='transformations' type='hidden' id='transformations' size='94' value='' style='width: 100%' />\
-<br />\
+var windowContent = " <body onBlur='self.focus();'>\
+<div align='left'><img src='http://www.sccharts.com/transformations.jpg' alt='s' border='0' usemap='#Map' />\
+  <map name='Map' id='Map'>\
+    <area shape='rect' coords='4,3,837,19' href='javascript:void(0)' onClick='document.getElementById(\"transformations\").value=\"EXTENDED\"'/>\
+    <area shape='rect' coords='410,51,830,68' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"STATECHARTS\"'/>\
+    <area shape='rect' coords='211,103,349,118' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCADEQUARTZESTEREL\"'/>\
+    <area shape='rect' coords='18,67,68,85' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"REFERENCE\"'/>\
+    <area shape='rect' coords='80,68,103,84' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"MAP\"'/>\
+    <area shape='rect' coords='114,65,137,85' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"FOR\"' />\
+    <area shape='rect' coords='176,66,200,84' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"PRE\"' />\
+    <area shape='rect' coords='217,66,251,85' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SIGNAL\"' />\
+    <area shape='rect' coords='268,65,308,84' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SUSPEND\"'/>\
+    <area shape='rect' coords='324,67,383,83' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"COUNTDELAY\"'/>\
+    <area shape='rect' coords='218,131,282,148' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"WEAKSUSPEND\"'/>\
+    <area shape='rect' coords='299,130,338,146' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"DEFERRED\"'/>\
+    <area shape='rect' coords='252,162,282,176' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"HISTORY\"'/>\
+    <area shape='rect' coords='297,158,328,173' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"STATIC\"'/>\
+    <area shape='rect' coords='419,109,500,125' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"COMPLEXFINALSTATES\"' />\
+    <area shape='rect' coords='513,77,598,94' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"ABORT\"'/>\
+    <area shape='rect' coords='528,103,584,120' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"ABORTDEFAULT\"'/>\
+    <area shape='rect' coords='521,129,589,149' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"ABORTALTERNATIVE\"'/>\
+    <area shape='rect' coords='609,121,647,139' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"DURING\"'/>\
+    <area shape='rect' coords='614,149,645,170' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"CONST\"'/>\
+    <area shape='rect' coords='675,103,699,120' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"EXIT\"'/>\
+    <area shape='rect' coords='660,147,714,163' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"INITIALIZATION\"'/>\
+    <area shape='rect' coords='727,146,755,163' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"ENTRY\"'/>\
+    <area shape='rect' coords='772,144,825,162' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"CONNECTOR\"'/>\
+    <area shape='rect' coords='851,73,1015,89' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"CORE\"'/>\
+    <area shape='rect' coords='859,98,933,117' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"TRIGGEREFFECT\"'/>\
+    <area shape='rect' coords='943,99,1006,116' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SURFACEDEPTH\"'/>\
+    <area shape='rect' coords='1026,59,1396,75' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGRAPH\"'/>\
+    <area shape='rect' coords='1036,99,1062,115' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCG\"'/>\
+    <area shape='rect' coords='1072,98,1133,117' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGDEP\"'/>\
+    <area shape='rect' coords='1141,84,1216,100' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGBBGROUP\"'/>\
+    <area shape='rect' coords='1155,106,1207,121' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGBB\"' />\
+    <area shape='rect' coords='1225,85,1314,100' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGSCHEDGROUP\"'/>\
+    <area shape='rect' coords='1233,104,1307,121' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGSCHEDSIMPLE\"'/>\
+    <area shape='rect' coords='1325,100,1388,115' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCGSEQ\"'/>\
+    <area shape='rect' coords='1406,77,1486,91' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"CODEGENERATION\"' />\
+    <area shape='rect' coords='1412,98,1454,114' href='javascript:void(0)'  onClick='document.getElementById(\"transformations\").value=\"SCG2C\"' />\
+    <area shape='rect' coords='10,39,142,53' href='javascript:void(0)' onClick='document.getElementById(\"transformations\").value=\"EXPANSIONS\"'/>\
+    <area shape='rect' coords='170,41,387,55' href='javascript:void(0)' onClick='document.getElementById(\"transformations\").value=\"SYNCCHARTS\"'/>\
+  </map>\
+  <input name='transformations' type='hidden' id='transformations' size='94' value='' style='width: 100%' />\
+  <br />\
     <span style='font-family: Verdana, Arial, Helvetica, sans-serif;\
-	font-size: x-small'>Click on the transformation that you like to add to the list of applied compile transformations.</span> </div>";
+	font-size: x-small'>Click on the transformation that you like to add to the list of applied compile transformations.</span> </div>\
+</body>";
 
 var mywindow;
 function openSelectWindow() {
@@ -77,7 +117,7 @@ function openSelectWindow() {
   transformationsTimer=setInterval(function(){updateTransformations()},500);
   mywindow = window.open("", "selectWindow", "width=950,height=270, resizable=yes, toolbar=no, scrollbars=yes, menubar=no, status=no, directories=no");
   mywindow.document.write(windowContent);
-  
+
   mywindow.focus();
 }
 
@@ -126,9 +166,14 @@ function setResultText() {
 //	alert("setResultText" + image + text);
 }
 
-function setResultImage() {
-    var scale = document.getElementById("scale");
-	scale.disabled = false;
+function setResultImage(type) {
+   	var scale = document.getElementById("scale");
+	if (type == "png") {
+		scale.disabled = false;
+	} else {
+		// for svg, keep this disabled
+		scale.disabled = true;
+	}
     var size = document.getElementById("size");
 	size.disabled = false;
 //	alert("setResultImage");
@@ -163,10 +208,18 @@ function replaceAll(inputStr, findStr, replaceStr) {
 }
 
 function compileText() {
+	//var data = new FormData();
+	//data.append('model', model.value);
+	//data.append('transformations', transformations.value);
+	//data.append('verbose', verbose);
+	//data.append('strict', strict);
+
     var strict = document.getElementById("strict").checked;
     var verbose = 0;//document.getElementById("verbose").checked;
 
-	var resultUrl =  document.getElementById("KiCoURL").value + "/?model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
+	//var resultUrl =  document.getElementById("KiCoURL").value + "/?model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
+	var resultUrl =  document.getElementById("KiCoURL").value;
+	var data =  "model="+encodeURIComponent(model.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&verbose="+verbose+"&strict=" + strict; // + "#" + new Date().getTime();
     document.getElementById("lastCompilerCall").value = resultUrl;
 
 	var xmlhttp = new XMLHttpRequest();
@@ -190,8 +243,9 @@ function compileText() {
 	      }
 		}
 	}
-	xmlhttp.open('GET', resultUrl, true);
-	xmlhttp.send();
+	xmlhttp.open('POST', resultUrl, true);
+	xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	xmlhttp.send(data);
 }
 
 function clearErrors() {
@@ -202,27 +256,54 @@ function clearErrors() {
 }
 
 
+// Set the config fields and check the radio button for the selected server (manually or by updateSelectedServer method)
+function setConfig(i) {
+	if ((i > 3)||(i < 0)) {
+		// default is local host
+		i = 3;
+	}
+	document.getElementById("radio"+i).checked = true;
+	document.getElementById("KiCoURL").value = compileServerURL[i];
+	document.getElementById("KLighDURL").value =  renderServerURL[i];
+	compile();
+}
 
 
 
+var isOnline = {};
+// On page load: Find & select the first server where compile AND render is online in order: 1. local host (3), 2. main, 3. backup1, 4. backup2
+function updateSelectedServer() {
+   var serverOrder = new Array(3,0,1,2);
+   for (var c = 0; c < 4; c++) {
+        if (isOnline[compileServerName[serverOrder[c]]] == true && isOnline[renderServerName[serverOrder[c]]] == true) {
+			setConfig(serverOrder[c]);
+			return;
+		}
+   }
+}
+
+// Test the online status of a specific server
 function testOnlineStatus(redAndGreenImageId, serverURL) {
 	   var testImage = new Image();
 	   testImage.src = serverURL + "/?online=1#" + new Date().getTime();
-	   
+
   	   testImage.onload = function() {
 			if (testImage.height > 0) {
 			    var redAndGreenImage = document.getElementById(redAndGreenImageId);
 				redAndGreenImage.src = "http://www.sccharts.com/green.png";
+				isOnline[redAndGreenImageId] = true;
+				updateSelectedServer();
 			}
 	    }
 }
 
+// On page load: Test the online status of all servers
 function testAllOnlineStatus() {
-	testOnlineStatus("onlineserver1", "http://www.sccharts.com:5556");
-	testOnlineStatus("onlineserver2", "http://www.sccharts.com:5555");
-	testOnlineStatus("onlinelocalhost", "http://localhost:5555");
+   for (var c = 0; c < 4; c++) {
+		testOnlineStatus(compileServerName[c], compileServerURL[c]);
+		testOnlineStatus(renderServerName[c], renderServerURL[c]);
+   }
 }
-
 testAllOnlineStatus();
 
 function progressImage() {
@@ -247,35 +328,48 @@ function updateImage() {
 	    var scale = document.getElementById("scale")
 		var outputImageSVG = document.getElementById("outputImageSVG").checked;
 		var render = "png";
+		var imageFormat = "png";
 		if (outputImageSVG) {
 				render = "svg";
+				imageFormat = "svg+xml";
 		}
-        var new_image = new Image();
-        //set up the new image
-        new_image.id = "resultImage";
-		var imageUrl = document.getElementById("KLighDURL").value + "/?model="+encodeURIComponent(resultText.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&render="+render+"&scale=" + encodeURIComponent(scale.value) + "#" + new Date().getTime();
+
+		var imageUrl = document.getElementById("KLighDURL").value
+		var data = "encoding=base64&model="+encodeURIComponent(resultText.value) + "&transformations=" + encodeURIComponent(transformations.value) + "&render="+render+"&scale=" + encodeURIComponent(scale.value); // + "#" + new Date().getTime();
 		document.getElementById("lastRenderCall").value = imageUrl;
-        new_image.src = imageUrl;
 
-		new_image.onload = function() {
-        	// insert new image and remove old
-    	    image.parentNode.insertBefore(new_image, image);
-	        image.parentNode.removeChild(image);
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange=function() {
+	  		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+		      var new_image = new Image();
+		      new_image.id = "resultImage";
 
-			var size = document.getElementById("size");
-			var width = new_image.naturalWidth;
-			var height = new_image.naturalHeight;
-			new_image.width = width/size.value;
-			new_image.height = height/size.value;
-	    }
-		//var width = new_image.naturalWidth;
-		//var height = new_image.naturalHeight;
-		//alert(width + "," + height);
-		//new_image.width = "50%";
-		//new_image.height = "50%";
+ 	  	 	  var response = xmlhttp.responseText;
+//		      new_image.src  = "data:image/png;base64," + response + "";
+//		      new_image.src  = "data:image/svg+xml;base64," + response + "";
+		      new_image.src  = "data:image/"+imageFormat+";base64," + response + "";
 
-    }
+		   	  // insert new image and remove old
+    	      image.parentNode.insertBefore(new_image, image);
+	          image.parentNode.removeChild(image);
+
+			  new_image.onload = function() {
+	   			  var size = document.getElementById("size");
+				  var width = new_image.naturalWidth;
+				  var height = new_image.naturalHeight;
+				  new_image.width = width/size.value;
+				  new_image.height = height/size.value;
+	    	  }
+			}
+
+		}
+		xmlhttp.open('POST', imageUrl, true);
+		xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		xmlhttp.send(data);
+	}
 }
+
+
 
 </script>
 
@@ -344,7 +438,7 @@ scchart ABRO {
               </label></td>
             </tr>
             <tr>
-              <th valign="top" scope="row"><span class="Stil8">3. Other Options</span></th>
+              <th valign="top" scope="row"><div align="right"><span class="Stil8">3. Other Options</span></div></th>
               <td align="left"><p>
                 <label><span class="Stil8">
                   <input name="strict" type="checkbox" id="strict" value="true" onclick="compile();">
@@ -355,13 +449,13 @@ scchart ABRO {
                 <p> <span class="Stil8 Stil10">
                   <label>
                   <input name="output" type="radio" id="outputText" onclick="setResultText();" value="text" checked />
-                  <img src="http://www.sccharts.com/text.png" alt=" " width="11" height="14" /> Textual output </label>
+                  <img src="http://www.sccharts.com/text.png" alt=" " width="11" height="14" /> Textual output <span class="Stil12">(compile only)</span></label>
                   <label> <br>
-                  <input name="output" type="radio" id="outputImageSVG" onclick="setResultImage();" value="text" />
-                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> Graphical output (SVG)</label>
+                  <input name="output" type="radio" id="outputImageSVG" onclick="setResultImage('svg');" value="text" />
+                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> Graphical output (SVG) <span class="Stil12">(compile and render)</span></label>
                   <label> <br>
-                  <input type="radio" name="output" value="graph" id="outputImagePNG" onclick="setResultImage();" />
-                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> Graphical output (PNG)<BR>
+                  <input type="radio" name="output" value="graph" id="outputImagePNG" onclick="setResultImage('png');" />
+                  <img src="http://www.sccharts.com/model.png" alt=" " width="11" height="14" /> Graphical output (PNG) <span class="Stil12">(compile and render)</span><BR>
                   <BR>
   &nbsp; 	&nbsp; 	 	&nbsp; Image Quality: </label>
                   <label></label>
@@ -377,7 +471,8 @@ scchart ABRO {
                   </select>
                     , Size:
   <select name="size" id="size" disabled="disabled" onchange="compile();">
-    <option value="1">100%</option>
+    <option value="0.5">200%</option>
+    <option selected="selected" value="1">100%</option>
     <option value="1.5">75%</option>
     <option value="2">50%</option>
     <option value="4">25%</option>
@@ -386,7 +481,7 @@ scchart ABRO {
                   </span><br>
                   <br>
                   <a name="server"></a> <span class="Stil8 Stil12"><a href="#" onclick="toggleAdvanced();">Advanced Options</a></span></p>
-				  
+
 		<div id="advancedOptions" style="font:24px bold; display: none">
 		<span class="Stil8 Stil10">
                 <table width="370" border="0" cellspacing="5">
@@ -397,7 +492,7 @@ scchart ABRO {
                     </label></td>
                   </tr>
                   <tr>
-                    <th scope="row"><div align="right">KLighD URL: </div></th>
+                    <th scope="row"><div align="right">KLighD Render URL: </div></th>
                     <td><input name="KLighDURL" type="text" id="KLighDURL" size="30" value="http://www.sccharts.com:4445"></td>
                   </tr>
                   <tr>
@@ -412,12 +507,12 @@ scchart ABRO {
                     <th scope="row"><div align="right">Last Render Call:</div></th>
                     <td><input name="lastRenderCall" type="text" id="lastRenderCall" readonly="true" size="30" value="" style="background-color: #CCCCCC"></td>
                   </tr>
-                </table>  
+                </table>
 		</span></div>
 					  </td>
             </tr>
             <tr>
-              <th valign="top" scope="row"><p align="right" class="Stil8">4. Server </p></th>
+              <th valign="top" scope="row"><p align="right" class="Stil8">4. Server <BR><span class="Stil15 Stil13 Stil13">(compile/render)</span></p></th>
               <td align="left"><p>
                 <label></label>
               </p>
@@ -425,20 +520,20 @@ scchart ABRO {
                       <tr>
                         <td width="315" valign="top" scope="row"><span class="Stil8">
                         <label>
-                          <input type="radio" name="config" value="server0" id="radio0" disabled="disabled" />
-                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver3"> <span class="Stil20">Main Server <span class="Stil12">(fastest, available shortly)</span></span></label>
+                          <input type="radio" name="config" value="server0" id="radio0"  onclick="setConfig(0);"/>
+                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver0b"> Main Server <span class="Stil12">(fastest)</span></label>
                           <br>
                           <label>
-                        <input type="radio" name="config" value="server1" id="radio" checked="true" onclick="setConfig(1);" />
-                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1">                        Backup Server 1</label>
+                        <input type="radio" name="config" value="server1" id="radio1" checked="true"  onclick="setConfig(1);" />
+                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver1b">                        Backup Server 1</label>
                           <span class="Stil12">(faster)</span><br>
                           <label>
                           <input type="radio" name="config" value="server2" id="radio2" onclick="setConfig(2);" />
-                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2"> Backup Server 2</label>
+                        <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2a"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlineserver2b"> Backup Server 2</label>
                           <span class="Stil12">(slower)</span><br>
                           <label>
-                          <input type="radio" name="config" value="localhost" id="radio4" onclick="setConfig(3);" />
-                          <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhost"> Local Host <span class="Stil12">(fastest)</span><br>
+                          <input type="radio" name="config" value="localhost" id="radio3" onclick="setConfig(3);" />
+                          <img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhosta"><img src="http://www.sccharts.com/red.png" alt="Red means this server is down, green means this server is up and can be used." width="11" height="11" id="onlinelocalhostb"> Local Host <span class="Stil12">(fastest)</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="Stil18">(KIELER HTTP Servers must run&nbsp;locally, see <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+Compiler+Console" target="_blank">here</a> and <a href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/KIELER+KLighD+Console+Diagram+Rendering" target="_blank">here</a>)</span></label>
 </span><span class="Stil8">
                       <label></label>
@@ -497,22 +592,6 @@ function toggleAdvanced() {
   }
 }
 
-
-function setConfig(i) {
-	if (i == 1) {
-		document.getElementById("KiCoURL").value = "http://www.sccharts.com:5556";
-		document.getElementById("KLighDURL").value = "http://www.sccharts.com:4445";
-	}
-	else if (i == 2) {
-		document.getElementById("KiCoURL").value = "http://www.sccharts.com:5555";
-		document.getElementById("KLighDURL").value = "http://www.sccharts.com:4444";
-	}
-	else {
-		document.getElementById("KiCoURL").value = "http://localhost:5555";
-		document.getElementById("KLighDURL").value = "http://localhost:4444";
-	}
-	compile();
-}
 
 
 

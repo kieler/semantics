@@ -1,0 +1,214 @@
+! reset;
+
+% Output: WATCH_MODE_COMMAND
+;
+LL 
+% Output: STOPWATCH_MODE_COMMAND
+;
+LL 
+% Output: ALARM_MODE_COMMAND
+;
+UL 
+% Output: ENTER_SET_ALARM_MODE_COMMAND
+;
+UL 
+% Output: EXIT_SET_ALARM_MODE_COMMAND
+;
+LL 
+% Output: WATCH_MODE_COMMAND
+;
+
+% Output:
+;
+UL 
+% Output: ENTER_SET_WATCH_MODE_COMMAND
+;
+UL 
+% Output: EXIT_SET_WATCH_MODE_COMMAND
+;
+! reset;
+
+% Output: WATCH_MODE_COMMAND
+;
+LL 
+% Output: STOPWATCH_MODE_COMMAND
+;
+LL 
+% Output: ALARM_MODE_COMMAND
+;
+UL 
+% Output: ENTER_SET_ALARM_MODE_COMMAND
+;
+
+% Output:
+;
+! reset;
+
+% Output: WATCH_MODE_COMMAND
+;
+LL 
+% Output: STOPWATCH_MODE_COMMAND
+;
+LL 
+% Output: ALARM_MODE_COMMAND
+;
+
+% Output:
+;
+! reset;
+
+% Output: WATCH_MODE_COMMAND
+;
+LL 
+% Output: STOPWATCH_MODE_COMMAND
+;
+
+% Output:
+;
+! reset;
+
+% Output: WATCH_MODE_COMMAND
+;
+UL 
+% Output: ENTER_SET_WATCH_MODE_COMMAND
+;
+
+% Output:
+;
+! reset;
+
+% Output: WATCH_MODE_COMMAND
+;
+LL 
+% Output: STOPWATCH_MODE_COMMAND
+;
+LL 
+% Output: ALARM_MODE_COMMAND
+;
+UL 
+% Output: ENTER_SET_ALARM_MODE_COMMAND
+;
+UL 
+% Output: EXIT_SET_ALARM_MODE_COMMAND
+;
+! reset;
+
+% Output: WATCH_MODE_COMMAND
+;
+LL 
+% Output: STOPWATCH_MODE_COMMAND
+;
+LL 
+% Output: ALARM_MODE_COMMAND
+;
+UL 
+% Output: ENTER_SET_ALARM_MODE_COMMAND
+;
+
+% Output:
+;
+! reset;
+
+% Output: WATCH_MODE_COMMAND
+;
+LL 
+% Output: STOPWATCH_MODE_COMMAND
+;
+LL 
+% Output: ALARM_MODE_COMMAND
+;
+LL 
+% Output: WATCH_MODE_COMMAND
+;
+! reset;
+
+% Output: WATCH_MODE_COMMAND
+;
+LL 
+% Output: STOPWATCH_MODE_COMMAND
+;
+LL 
+% Output: ALARM_MODE_COMMAND
+;
+
+% Output:
+;
+! reset;
+
+% Output: WATCH_MODE_COMMAND
+;
+LL 
+% Output: STOPWATCH_MODE_COMMAND
+;
+LL 
+% Output: ALARM_MODE_COMMAND
+;
+UL 
+% Output: ENTER_SET_ALARM_MODE_COMMAND
+;
+! reset;
+
+% Output: WATCH_MODE_COMMAND
+;
+UL 
+% Output: ENTER_SET_WATCH_MODE_COMMAND
+;
+UL 
+% Output: EXIT_SET_WATCH_MODE_COMMAND
+;
+! reset;
+
+% Output: WATCH_MODE_COMMAND
+;
+LL 
+% Output: STOPWATCH_MODE_COMMAND
+;
+LL 
+% Output: ALARM_MODE_COMMAND
+;
+! reset;
+
+% Output: WATCH_MODE_COMMAND
+;
+LL 
+% Output: STOPWATCH_MODE_COMMAND
+;
+
+% Output:
+;
+! reset;
+
+% Output: WATCH_MODE_COMMAND
+;
+UL 
+% Output: ENTER_SET_WATCH_MODE_COMMAND
+;
+
+% Output:
+;
+! reset;
+
+% Output: WATCH_MODE_COMMAND
+;
+
+% Output:
+;
+! reset;
+
+% Output: WATCH_MODE_COMMAND
+;
+LL 
+% Output: STOPWATCH_MODE_COMMAND
+;
+! reset;
+
+% Output: WATCH_MODE_COMMAND
+;
+UL 
+% Output: ENTER_SET_WATCH_MODE_COMMAND
+;
+! reset;
+
+% Output: WATCH_MODE_COMMAND
+;
+

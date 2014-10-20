@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.scg.schedulers
 
 import java.util.List
-import de.cau.cs.kieler.scgbb.SchedulingBlock
+import de.cau.cs.kieler.scg.SchedulingBlock
 
 /**
  * Data holder for scheduling constraints.

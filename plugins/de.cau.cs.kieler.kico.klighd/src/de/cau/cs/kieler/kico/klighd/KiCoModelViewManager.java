@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.kico.klighd;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,18 +41,20 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-import de.cau.cs.kieler.core.model.xtext.util.XtextModelingUtil;
+import de.cau.cs.kieler.core.model.adapter.GlobalPartAdapter;
+import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
 import de.cau.cs.kieler.kico.klighd.KiCoModelView.ChangeEvent;
-import de.cau.cs.kieler.kico.klighd.listener.GlobalPartAdapter;
 import de.cau.cs.kieler.kico.ui.KiCoSelection;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager.KiCoSelectionChangeEventListerner;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionView;
 import de.cau.cs.kieler.klighd.KlighdDataManager;
 
 /**
- * Observes Workspace and manages KiCoModelViews
+ * Observes workspace and manages KiCoModelViews
  * 
  * @author als
+ * @kieler.design 2014-07-30 proposed
+ * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
 public class KiCoModelViewManager extends UIJob implements IStartup,
@@ -84,8 +87,8 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
 
     // -- ATTRIBUTES
     // -------------------------------------------------------------------------
-    
-    /** Name of this class used for Jobs  */
+
+    /** Name of this class used for Jobs */
     private static final String jobName = "KIELER ModelView Manager";
 
     /** Global Listener Adapter */
@@ -203,7 +206,7 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
                         // Thus open model views will be restored after restart
                         if (!PlatformUI.getWorkbench().isClosing()) {
                             if (modelView.isPrimaryView()) {
-                                if(editors.isEmpty()){
+                                if (editors.isEmpty()) {
                                     modelView.setActiveEditor(null);
                                 }
                             } else {
@@ -231,22 +234,22 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
                 IEditorPart editor = (IEditorPart) part;
                 int isValid = 0;
                 if (!validEditors.contains(part)) {
-                    //check if valid
+                    // check if valid
                     isValid = isValidModelEditor(editor);
-                    if(isValid == 0){
+                    if (isValid == 0) {
                         editors.remove(part);
                         part.removePropertyListener(undecidedValidityEditorDirtyPropertyListener);
-                    }else if(isValid == 1){
+                    } else if (isValid == 1) {
                         validEditors.add(editor);
                         part.removePropertyListener(undecidedValidityEditorDirtyPropertyListener);
-                    }else if(isValid == 2){//wait until validity is decidable
+                    } else if (isValid == 2) {// wait until validity is decidable
                         part.addPropertyListener(undecidedValidityEditorDirtyPropertyListener);
                         return;
                     }
                 } else {
                     isValid = 1;
                 }
-                //update if valid
+                // update if valid
                 if (isValid == 1) {
                     // get related primary model view
                     KiCoModelView primaryView =
@@ -258,6 +261,10 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
                                                     && view.isPrimaryView();
                                         }
                                     }), null);
+                    if (primaryView != null && primaryView.isDisposed()) {
+                        modelViews.remove(primaryView);
+                        primaryView = null;
+                    }
                     // update or open new view
                     if (primaryView != null) {
                         primaryView.setActiveEditor(editor);
@@ -285,14 +292,14 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
 
         }
     }
-    
+
     /** PropertyListener to check if a editor with undecided validity was saved. */
     final IPropertyListener undecidedValidityEditorDirtyPropertyListener = new IPropertyListener() {
 
         public void propertyChanged(Object source, int propId) {
             IEditorPart editor = (IEditorPart) source;
-            if (propId == IWorkbenchPartConstants.PROP_DIRTY && !editor.isDirty()) {      
-                //fire activation again to decide its valitidy
+            if (propId == IWorkbenchPartConstants.PROP_DIRTY && !editor.isDirty()) {
+                // fire activation again to decide its valitidy
                 partListener.partActivated(editor.getSite().getPage().getReference(editor));
             }
         }
@@ -369,6 +376,28 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
             }
         }
         return model;
+    }
+
+    // -- ModelView Access
+    // -------------------------------------------------------------------------
+
+    /**
+     * Returns the list of model views currently displaying the content of the given editor.
+     * 
+     * @param editor
+     *            the editor to filter for
+     * @return List of KiCoModelView associated with editor
+     */
+    @SuppressWarnings("unchecked")
+    public List<KiCoModelView> getModelViews(final IEditorPart editor) {
+        if (editor != null) {
+            return Lists.newArrayList(Iterables.filter(modelViews, new Predicate() {
+                public boolean apply(Object view) {
+                    return ((KiCoModelView)view).getActiveEditor().equals(editor);
+                }
+            }));
+        }
+        return Collections.emptyList();
     }
 
 }

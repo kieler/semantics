@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2011 by
+ * Copyright 2014 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -64,14 +64,19 @@ class S2C {
     extension KExpressionsExtension    
 
     @Inject
-    extension SExtension     
+    extension SExtension
+    
+    val preCache = <ValuedObject> newArrayList     
     
     // General method to create the c simulation interface.
     def transform (Program program) {
-        val timestamp = System.currentTimeMillis  
+        val timestamp = System.currentTimeMillis
+       	program.eAllContents.filter(typeof(OperatorExpression)).filter[operator == OperatorType::PRE].forEach[
+       		it.eAllContents.filter(typeof(ValuedObjectReference)).forEach[ preCache += it.valuedObject ]	
+       	]    
       val code = '''
 «/* Generate the C header */»
-       «scHeader(program)»
+       «header(program)»
 
        «/* Possible global host code */»
        «if (program.globalHostCodeInstruction != null) {
@@ -91,7 +96,7 @@ class S2C {
    // -------------------------------------------------------------------------   
    
    // Generate the C header.
-   def scHeader(Program program) {
+   def header(Program program) {
        '''
     /*****************************************************************************/
     /*                 G E N E R A T E D       C    C O D E                      */
@@ -142,26 +147,13 @@ class S2C {
 
    
    def boolean usesPre(Program program, ValuedObject valuedObject) {
-       val foundPres = program.cachedFoundPres
-       for (pre : foundPres) {
-           for (subExpression : pre.subExpressions) {
-               if (subExpression instanceof ValuedObjectReference) {
-                   if ((subExpression as ValuedObjectReference).valuedObject == valuedObject) {
-                       return true
-                   }
-               }
-               val found = subExpression.cachedFound.filter(e | e.valuedObject == valuedObject).toList
-             if (found.size > 0) {
-                   return true
-               }
-           }
-       } 
-       return false
+		preCache.contains(valuedObject)
    }
 
    // Generate variables.
    def sVariables(Program program) {
-       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal&&!e.isExtern]»
+       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+          «FOR signal : declaration.valuedObjects»
             «signal.type.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
               «IF signal.isArray»
                 «FOR card : signal.cardinalities»{int i«card.hashCode» = 0; for(i«card.hashCode»=0; i«card.hashCode» < «card.intValue»; i«card.hashCode»++) {«ENDFOR»
@@ -175,19 +167,22 @@ class S2C {
                 «signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
             «ENDIF»
         «ENDFOR»
+        «ENDFOR»
         '''
    }
 
    // Generate PRE variables setter.
    def setPreVariables(Program program) {
-       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal&&!e.isExtern]»
+       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+          «FOR signal : declaration.valuedObjects»
        «IF program.usesPre(signal) 
  			» PRE_«signal.name» = «signal.name»;«
- 		ENDIF»«ENDFOR»'''
+ 		ENDIF»«ENDFOR»«ENDFOR»'''
    }
 
    def resetVariables(Program program) {
-       '''«FOR signal : program.getValuedObjects().filter[e|!e.isSignal&&!e.isExtern]»
+       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+          «FOR signal : declaration.valuedObjects»
        
         «IF signal.isArray»
                 «FOR card : signal.cardinalities»{int _i«signal.cardinalities.indexOf(card)» = 0; for(_i«signal.cardinalities.indexOf(card)»=0; _i«signal.cardinalities.indexOf(card)» < «card.intValue»; _i«signal.cardinalities.indexOf(card)»++) {«ENDFOR»
@@ -198,7 +193,7 @@ class S2C {
        
        «IF program.usesPre(signal) 
  			» PRE_«signal.name» = 0;« // FIXME: Must be the INITIAL value of the valued object
- 		ENDIF»«ENDFOR»'''
+ 		ENDIF»«ENDFOR»«ENDFOR»'''
    }
    
    
@@ -217,9 +212,10 @@ class S2C {
    
    // Generate the  reset function.
    def sResetFunction(Program program) {
-       '''    int reset(){
+       '''    void reset(){
        _GO = 1;
-       «program.resetVariables» 
+       «program.resetVariables»
+       return;
     }
     '''
    }
@@ -228,13 +224,14 @@ class S2C {
    
    // Generate the  tick function.
    def sTickFunction(Program program) {
-       '''    int tick(){
-       guard0 = _GO;
+       '''    void tick(){
+       g0 = _GO;
        «FOR state : program.states»
        «state.expand»
        «ENDFOR»
        _GO = 0;
        «program.setPreVariables»
+       return;
     }
     '''
    }
@@ -244,8 +241,13 @@ class S2C {
    // -------------------------------------------------------------------------
    
    // Expand a state traversing all instructions of that state.
+   // Special case: Do not generate the tick(named) label!
    def dispatch CharSequence expand(State state) {
-           '''«state.name»: { 
+           '''
+           «IF state.name.toLowerCase != "tick"» 
+             state.name»:
+           «ENDIF»
+           { 
            «FOR instruction : state.instructions»
            «instruction.expand»
            «ENDFOR»

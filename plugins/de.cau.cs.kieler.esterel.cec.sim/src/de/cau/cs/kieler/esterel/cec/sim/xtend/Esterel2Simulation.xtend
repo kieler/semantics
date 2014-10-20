@@ -42,7 +42,7 @@ import de.cau.cs.kieler.esterel.esterel.Statement
 import de.cau.cs.kieler.esterel.esterel.StatementContainer
 import de.cau.cs.kieler.esterel.esterel.Suspend
 import de.cau.cs.kieler.esterel.esterel.Sustain
-import org.eclipse.xtend.util.stdlib.CloningExtensions
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 
 /**
@@ -77,7 +77,7 @@ class Esterel2Simulation {
    		
 		// Clone the complete Esterel program
 		// clone the program and then copy modules to preserve the run-links
-   		val target = CloningExtensions::clone(program) as Program;
+   		val target = program.copy as Program;
 		
 		val originalStatements = program.eAllContents().toIterable().filter(typeof(Statement));
 		

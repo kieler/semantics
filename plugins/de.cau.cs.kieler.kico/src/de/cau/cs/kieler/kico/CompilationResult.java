@@ -14,25 +14,54 @@
 package de.cau.cs.kieler.kico;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
+
+import de.cau.cs.kieler.core.util.Pair;
 
 /**
  * This class is the extended version of the transformation result including intermediate results
  * and all processed transformation IDs. By convention the first intermediate result should always
  * be the source model.
  * 
- * @author cmot
+ * @author cmot ssm
  * @kieler.design 2014-05-21 proposed
  * @kieler.rating 2014-05-21 proposed yellow
  * 
  */
 public class CompilationResult {
 
+    /** The executed transformations. */
     private List<String> transformations = new ArrayList<String>();
 
+    /** The intermediate results. */
     private List<Object> intermediateResults = new ArrayList<Object>();
+
+    /** The postponed error list transformation id. */
+    private List<KielerCompilerException> postponedErrors =
+            new ArrayList<KielerCompilerException>();
+
+    /** The postponed error list transformation id. */
+    private List<KielerCompilerException> postponedWarnings =
+            new ArrayList<KielerCompilerException>();
+
+    /** All last/occurred errors processed for this compilation. */
+    private String allErrors = null;
+
+    /** All last/occurred warnings processed for this compilation. */
+    private String allWarnings = null;
+    
+    /** Ancillary data. */
+    private List<AbstractKielerCompilerAncillaryData> ancillaryData = 
+            new ArrayList<AbstractKielerCompilerAncillaryData>();
+
+    /**
+     * Indicates that the compilation is done and no further compilation steps are needed or
+     * possible.
+     */
+    private boolean currentTransformationdone = false;
 
     // -------------------------------------------------------------------------
 
@@ -117,8 +146,8 @@ public class CompilationResult {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the last transformation result as an EObject. Returns null if there is no transformation
-     * result at all or if the last transformation result is not an EObject.
+     * Gets the last transformation result as String. Returns null if there is no transformation
+     * result at all or if the last transformation result is not String.
      * 
      * @return the String
      */
@@ -128,6 +157,179 @@ public class CompilationResult {
             return (String) lastResult;
         }
         return null;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Adds the postponed error.
+     * 
+     * @param exception
+     *            the KielerCompilerException
+     */
+    public void addPostponedError(KielerCompilerException exception) {
+        this.postponedErrors.add(exception);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Adds the postponed warning.
+     * 
+     * @param exception
+     *            the KielerCompilerException
+     */
+    public void addPostponedWarning(KielerCompilerException exception) {
+        this.postponedWarnings.add(exception);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Reset all postponed warnings.
+     */
+    public void resetPostponedWarnings() {
+        this.postponedWarnings.clear();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Reset all postponed errors.
+     */
+    public void resetPostponedErrors() {
+        this.postponedErrors.clear();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Process all postponed warnings and put them to the warnings log also building the resulting
+     * warning String.
+     * 
+     */
+    public void processPostponedWarnings() {
+        for (KielerCompilerException exception : postponedWarnings) {
+            String transformationID = exception.getTransformationID();
+
+            if (allWarnings != null) {
+                allWarnings += ", ";
+            } else {
+                allWarnings = "";
+            }
+            allWarnings += exception.getStackTraceString();
+
+            KiCoPlugin.getInstance().showWarning(
+                    "An warning occurred while calling transformation with the ID '"
+                            + transformationID + "'.", KiCoPlugin.PLUGIN_ID, exception, true);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Process all postponed errors and put them to the error log also building the resulting error
+     * String.
+     * 
+     */
+    public void processPostponedErrors() {
+        for (KielerCompilerException exception : postponedErrors) {
+            String transformationID = exception.getTransformationID();
+
+            if (allErrors != null) {
+                allErrors += ", ";
+            } else {
+                allErrors = "";
+            }
+            allErrors += exception.getStackTraceString();
+
+            KiCoPlugin.getInstance().showError(
+                    "An error occurred while calling transformation with the ID '"
+                            + transformationID + "'.", KiCoPlugin.PLUGIN_ID, exception, true);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the all errors.
+     * 
+     * @return the allErrors
+     */
+    public String getAllErrors() {
+        return allErrors;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the all warnings.
+     * 
+     * @return the allWarnings
+     */
+    public String getAllWarnings() {
+        return allWarnings;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the postponed errors.
+     * 
+     * @return the postponedErrors
+     */
+    public List<KielerCompilerException> getPostponedErrors() {
+        return postponedErrors;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the postponed warnings.
+     * 
+     * @return the postponedWarnings
+     */
+    public List<KielerCompilerException> getPostponedWarnings() {
+        return postponedWarnings;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Internally used to check if the current compilation step is complete.
+     * 
+     * @return the done
+     */
+    public boolean isCurrentTransformationDone() {
+        return currentTransformationdone;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Internally used to set when the current compilation step is complete. Do NOT use this method.
+     * 
+     * @param done
+     *            the done to set
+     */
+    public void setCurrentTransformationDone(boolean done) {
+        this.currentTransformationdone = done;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * @return the ancillaryData
+     */
+    public List<AbstractKielerCompilerAncillaryData> getAncillaryData() {
+        return ancillaryData;
+    }
+
+    /**
+     * @param ancillaryData the ancillaryData to set
+     */
+    public void setAncillaryData(List<AbstractKielerCompilerAncillaryData> ancillaryData) {
+        this.ancillaryData = ancillaryData;
     }
 
     // -------------------------------------------------------------------------

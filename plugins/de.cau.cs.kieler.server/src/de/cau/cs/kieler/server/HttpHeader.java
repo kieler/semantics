@@ -24,212 +24,270 @@ import java.util.ArrayList;
  */
 public class HttpHeader {
 
-    String statusKey = "http/1.0";
-    String statusVal = "200 ok";
-    String serverKey = "server";
-    String serverVal = "";
-    String urlKey = "url";
-    String urlVal = "";
-    String contentLengthKey = "content-length";
-    String contentTypeKey = "content-type";
-    String contentLengthVal = "";
-    String contentTypeVal = " text/html";
-    
+    public static final String STATUS_KEY = "http/1.0";
+    public static final String SERVER_KEY = "server";
+    public static final String CONTENT_LENGTH_KEY = "content-length";
+    public static final String CONTENT_TYPE_KEY = "content-type";
+    public static final String URL_KEY = "url";
+    public static final String METHOD_KEY = "method";
+    public static final String METHOD_POST = "post";
+    public static final String METHOD_GET = "get";
+
+    private String statusVal = "200 ok";
+    private String serverVal = "";
+    private String urlVal = "";
+    private String contentLengthVal = "";
+    private String contentTypeVal = " text/html";
+
     HttpQuery queryString = new HttpQuery();
-    
+
     ArrayList<String> keys = new ArrayList<String>();
     ArrayList<String> vals = new ArrayList<String>();
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     public void setStatusOk() {
         statusVal = "200 OK";
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     public void setStatusErrorNoContent() {
         statusVal = "204 No Content";
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     public void setStatusErrorBadReqyest() {
         statusVal = "400 Bad Request";
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     public void setStatusErrorUnauthorized() {
         statusVal = "401 Unauthorized";
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     public void setStatusErrorForbidden() {
         statusVal = "403 Forbidden";
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     public void setStatusErrorNotFound() {
         statusVal = "404 Not Found";
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     public void setStatusErrorInternalServerError() {
         statusVal = "500 Internal Server Error";
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     public void setTypeTextHtml() {
         contentTypeVal = "text/html";
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     public void setTypeImageJpeg() {
         contentTypeVal = "image/jpeg";
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     public void setTypeImagePng() {
         contentTypeVal = "image/png";
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     public void setTypeImageSvg() {
         contentTypeVal = "image/svg+xml";
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     public void setTypeImageGif() {
         contentTypeVal = "image/gif";
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     public void setTypeTextXML() {
         contentTypeVal = "text/xml";
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     public void setTypeTextPlain() {
         contentTypeVal = "text/plain";
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    public void setTypeForm() {
+        contentTypeVal = "application/x-www-form-urlencoded";
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the method post.
+     */
+    public void setMethodPOST() {
+        this.setHeaderField(HttpHeader.METHOD_KEY, HttpHeader.METHOD_POST);
+    }
+
+    // -------------------------------------------------------------------------
+
+
+    /**
+     * Sets the method get.
+     */
+    public void setMethodGET() {
+        this.setHeaderField(HttpHeader.METHOD_KEY, HttpHeader.METHOD_GET);
+    }
+
+    // -------------------------------------------------------------------------
     
+    public boolean isMethodPOST() {
+        return this.getHeader(HttpHeader.METHOD_KEY).toLowerCase().equals(HttpHeader.METHOD_POST);
+    }
+
+    // -------------------------------------------------------------------------
+    
+    public boolean isMethodGET() {
+        return (!isMethodPOST());
+    }
+
+    // -------------------------------------------------------------------------
+
     /**
      * Sets the type.
-     *
-     * @param type the new type
+     * 
+     * @param type
+     *            the new type
      */
     public void setType(String type) {
         contentTypeVal = type;
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     /**
      * Sets the status.
-     *
-     * @param status the new status
+     * 
+     * @param status
+     *            the new status
      */
     public void setStatus(String status) {
         statusVal = status;
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     /**
      * Sets the server name.
-     *
-     * @param serverName the new server name
+     * 
+     * @param serverName
+     *            the new server name
      */
     public void setServerName(String serverName) {
         serverVal = serverName;
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
      * Sets the URL.
-     *
-     * @param serverName the new server name
+     * 
+     * @param serverName
+     *            the new server name
      */
     public void setURL(String url) {
         urlVal = url;
         queryString = new HttpQuery(urlVal);
     }
 
-
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
      * Gets the URL.
-     *
+     * 
      */
     public String getURL() {
         String encoded = queryString.getEncodedString();
-        
+
         String prior = urlVal;
         int i = prior.indexOf("?");
         if (i >= 0) {
             prior = prior.substring(0, i);
         }
         String after = prior + encoded;
-        
+
         return after;
     }
-    
-    //-------------------------------------------------------------------------
-    
+
+    // -------------------------------------------------------------------------
+
     public HttpQuery getQuery() {
         return queryString;
     }
 
-    //-------------------------------------------------------------------------
-    
-    
+    // -------------------------------------------------------------------------
+
     /**
      * Sets the content length.
-     *
-     * @param len the new content length
+     * 
+     * @param len
+     *            the new content length
      */
     public void setContentLength(int len) {
         contentLengthVal = len + "";
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if the data is form query data.
+     * 
+     * @return true, if is form query data
+     */
+    public boolean isFormQueryData() {
+        boolean isFormData =
+                getHeader(HttpHeader.CONTENT_TYPE_KEY).startsWith("application/x-www-form-urlencoded");
+        return isFormData;
+    }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Gets the header index for specifc key.
-     *
-     * @param key the key
+     * 
+     * @param key
+     *            the key
      * @return the header index
      */
     private int getHeaderIndex(String key) {
         String key2 = key.toLowerCase();
-        if (key2.equals(serverKey)) {
+        if (key2.equals(SERVER_KEY)) {
             return -2;
         }
-        if (key2.equals(statusKey)) {
+        if (key2.equals(STATUS_KEY)) {
             return -2;
         }
-        if (key2.equals(contentLengthKey)) {
+        if (key2.equals(CONTENT_LENGTH_KEY)) {
             return -2;
         }
-        if (key2.equals(contentTypeKey)) {
+        if (key2.equals(CONTENT_TYPE_KEY)) {
             return -2;
         }
-        if (key2.equals(urlKey)) {
+        if (key2.equals(URL_KEY)) {
             return -2;
         }
         for (int c = 0; c < keys.size(); c++) {
@@ -240,30 +298,31 @@ public class HttpHeader {
         }
         return -1;
     }
-    
-    //-------------------------------------------------------------------------
+
+    // -------------------------------------------------------------------------
 
     /**
      * Gets the header for a specific key.
-     *
-     * @param key the key
+     * 
+     * @param key
+     *            the key
      * @return the header
      */
     public String getHeader(String key) {
         String key2 = key.toLowerCase();
-        if (key2.equals(serverKey)) {
+        if (key2.equals(SERVER_KEY)) {
             return serverVal;
         }
-        if (key2.equals(statusKey)) {
+        if (key2.equals(STATUS_KEY)) {
             return statusVal;
         }
-        if (key2.equals(contentLengthKey)) {
+        if (key2.equals(CONTENT_LENGTH_KEY)) {
             return contentLengthVal;
         }
-        if (key2.equals(contentTypeKey)) {
+        if (key2.equals(CONTENT_TYPE_KEY)) {
             return contentTypeVal;
         }
-        if (key2.equals(urlKey)) {
+        if (key2.equals(URL_KEY)) {
             return urlVal;
         }
         for (int c = 0; c < keys.size(); c++) {
@@ -275,36 +334,38 @@ public class HttpHeader {
         return null;
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     /**
      * Sets the header for a specific key.
-     *
-     * @param key the key
-     * @param value the value
+     * 
+     * @param key
+     *            the key
+     * @param value
+     *            the value
      */
     public void setHeaderField(String key, String value) {
         String key2 = key.toLowerCase();
         int index = getHeaderIndex(key2);
         if (index == -2) {
-            if (key2.equals(serverKey)) {
+            if (key2.equals(SERVER_KEY)) {
                 setServerName(value);
             }
-            if (key2.equals(statusKey)) {
+            if (key2.equals(STATUS_KEY)) {
                 setStatus(value);
             }
-            if (key2.equals(contentLengthKey)) {
+            if (key2.equals(CONTENT_LENGTH_KEY)) {
                 int valueInt = 0;
                 try {
                     valueInt = Integer.parseInt(value);
-                } catch(Exception e) {
+                } catch (Exception e) {
                 }
                 setContentLength(valueInt);
             }
-            if (key2.equals(contentTypeKey)) {
+            if (key2.equals(CONTENT_TYPE_KEY)) {
                 setType(value);
             }
-            if (key2.equals(urlKey)) {
+            if (key2.equals(URL_KEY)) {
                 setURL(value);
             }
         } else if (index == -1) {
@@ -317,20 +378,20 @@ public class HttpHeader {
             vals.add(index, value);
         }
     }
-    
-    //-------------------------------------------------------------------------
-    
+
+    // -------------------------------------------------------------------------
+
     /**
      * {@inheritDoc}
      */
     public String toString() {
         String returnText = "";
-        returnText += this.statusKey.toUpperCase() + " " + this.statusVal + "\r\n";
-        returnText += this.serverKey + ": " + this.serverVal + "\r\n";
-        returnText += this.contentTypeKey + ": " + this.contentTypeVal + "\r\n";
-        returnText += this.contentLengthKey + ": " + this.contentLengthVal + "\r\n";
+        returnText += this.STATUS_KEY.toUpperCase() + " " + this.statusVal + "\r\n";
+        returnText += this.SERVER_KEY + ": " + this.serverVal + "\r\n";
+        returnText += this.CONTENT_TYPE_KEY + ": " + this.contentTypeVal + "\r\n";
+        returnText += this.CONTENT_LENGTH_KEY + ": " + this.contentLengthVal + "\r\n";
         if (urlVal.length() > 0) {
-            returnText += this.urlKey + ": " + this.urlVal + "\r\n";
+            returnText += this.URL_KEY + ": " + this.urlVal + "\r\n";
         }
         for (int c = 0; c < keys.size(); c++) {
             String key = keys.get(c);
@@ -341,6 +402,6 @@ public class HttpHeader {
         return returnText;
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
 }
