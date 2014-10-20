@@ -70,7 +70,7 @@ Leaving the editor ID empty means that the registered transformations will be vi
          <attribute name="transformations" type="string">
             <annotation>
                <documentation>
-                  A comma separated list of transformation IDs that should be visible within the KiCo.Ui (KIELER Compiler Selection) View when the defined editor is active.
+                  A comma separated list of transformation IDs that should be visible within the KiCo.Ui (KIELER Compiler Selection) View when the defined editor is active. Enter &quot;ALL&quot; iff you whish to make all registered KiCo transformations visible.
                </documentation>
                <appinfo>
                   <meta.attribute translatable="true"/>
