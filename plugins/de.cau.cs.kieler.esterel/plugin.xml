@@ -10,6 +10,64 @@
        genModel = "de/cau/cs/kieler/esterel/Esterel.genmodel" /> 
 	
   </extension>
+  <extension
+        point="org.eclipse.ui.menus">
+     <menuContribution
+           locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+        <command
+              commandId="de.cau.cs.kieler.esterel.commands.EsterelToSCLTransformation"
+              label="Transform to SCL"
+              mnemonic="A"
+              style="push">
+           <visibleWhen
+                 checkEnabled="true">
+              <iterate
+                    ifEmpty="false"
+                    operator="and">
+                 <adapt
+                       type="org.eclipse.core.resources.IFile">
+                    <test
+                          forcePluginActivation="true"
+                          property="org.eclipse.core.resources.extension"
+                          value="strl">
+                    </test>
+                 </adapt>
+              </iterate>
+           </visibleWhen>
+        </command>
+     </menuContribution>
+  </extension>
+  <extension
+        point="org.eclipse.ui.commands">
+     <command
+           defaultHandler="de.cau.cs.kieler.esterel.handlers.EsterelToSclHandler"
+           id="de.cau.cs.kieler.esterel.commands.EsterelToSCLTransformation"
+           name="Esterel to SCL Transformation">
+     </command>
+  </extension>
+  <extension
+        point="org.eclipse.ui.commands">
+     <command
+           id="de.cau.cs.kieler.esterel.command1"
+           name="name">
+     </command>
+  </extension>
+  <extension
+        point="de.cau.cs.kieler.kico.transformation">
+     <transformationMethod
+           class="de.cau.cs.kieler.esterel.transformations.EsterelToSclTransformation"
+           id="ESTERELTOSCL"
+           method="transform">
+     </transformationMethod>
+  </extension>
+  <extension
+        point="de.cau.cs.kieler.kico.extension">
+     <ExtensionInformation
+           className="de.cau.cs.kieler.esterel.esterel.Program"
+           extensionName="strl"
+           isXMI="true">
+     </ExtensionInformation>
+  </extension>
   <!--extension
         point="org.eclipse.ui.menus">
      <menuContribution

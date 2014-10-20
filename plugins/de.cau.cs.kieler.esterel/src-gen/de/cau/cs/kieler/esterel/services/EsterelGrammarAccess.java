@@ -323,8 +323,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// overwrite to allow function references for signal declarations
 		//EsterelTypeIdentifier returns kexpressions::TypeIdentifier:
-		//	type=ValueType | typeID=ID | {EsterelTypeIdentifier} ("combine" (type=ValueType | typeID=ID) "with" (func=[Function]
-		//	| operator=CombineOperator));
+		//	type=ValueType | typeID=ID | {EsterelTypeIdentifier} ("combine" (type=ValueType | typeID=ID) "with" (func=[Function] |
+		//	operator=CombineOperator));
 		public ParserRule getRule() { return rule; }
 
 		//type=ValueType | typeID=ID | {EsterelTypeIdentifier} ("combine" (type=ValueType | typeID=ID) "with" (func=[Function] |
@@ -1581,8 +1581,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cExecCaseParserRuleCall_21 = (RuleCall)cAlternatives.eContents().get(21);
 		
 		//StatementContainerInterface returns StatementContainer:
-		//	LocalSignalDecl | Block | Abort | AbortInstance | AbortCaseSingle | WeakAbort | WeakAbortInstance | AwaitInstance |
-		//	Do | DoWatchingEnd | EveryDo | ThenPart | ElsePart | LoopBody | PresentCase | Repeat | Suspend | Trap | TrapHandler |
+		//	LocalSignalDecl | Block | Abort | AbortInstance | AbortCaseSingle | WeakAbort | WeakAbortInstance | AwaitInstance | Do
+		//	| DoWatchingEnd | EveryDo | ThenPart | ElsePart | LoopBody | PresentCase | Repeat | Suspend | Trap | TrapHandler |
 		//	LocalVariable | Exec | ExecCase;
 		public ParserRule getRule() { return rule; }
 
@@ -3748,8 +3748,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		public ParserRule getRule() { return rule; }
 
 		//"type" renamings+=TypeRenaming ("," renamings+=TypeRenaming)* | "constant" renamings+=ConstantRenaming (","
-		//renamings+=ConstantRenaming)* | "function" renamings+=FunctionRenaming ("," renamings+=FunctionRenaming)* |
-		//"procedure" renamings+=ProcedureRenaming ("," renamings+=ProcedureRenaming)* | "task" renamings+=TaskRenaming (","
+		//renamings+=ConstantRenaming)* | "function" renamings+=FunctionRenaming ("," renamings+=FunctionRenaming)* | "procedure"
+		//renamings+=ProcedureRenaming ("," renamings+=ProcedureRenaming)* | "task" renamings+=TaskRenaming (","
 		//renamings+=TaskRenaming)* | "signal" renamings+=SignalRenaming ("," renamings+=SignalRenaming)*
 		public Alternatives getAlternatives() { return cAlternatives; }
 
@@ -5678,8 +5678,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// overwrite to allow function references for signal declarations
 	//EsterelTypeIdentifier returns kexpressions::TypeIdentifier:
-	//	type=ValueType | typeID=ID | {EsterelTypeIdentifier} ("combine" (type=ValueType | typeID=ID) "with" (func=[Function]
-	//	| operator=CombineOperator));
+	//	type=ValueType | typeID=ID | {EsterelTypeIdentifier} ("combine" (type=ValueType | typeID=ID) "with" (func=[Function] |
+	//	operator=CombineOperator));
 	public EsterelTypeIdentifierElements getEsterelTypeIdentifierAccess() {
 		return (pEsterelTypeIdentifier != null) ? pEsterelTypeIdentifier : (pEsterelTypeIdentifier = new EsterelTypeIdentifierElements());
 	}
@@ -5958,8 +5958,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//StatementContainerInterface returns StatementContainer:
-	//	LocalSignalDecl | Block | Abort | AbortInstance | AbortCaseSingle | WeakAbort | WeakAbortInstance | AwaitInstance |
-	//	Do | DoWatchingEnd | EveryDo | ThenPart | ElsePart | LoopBody | PresentCase | Repeat | Suspend | Trap | TrapHandler |
+	//	LocalSignalDecl | Block | Abort | AbortInstance | AbortCaseSingle | WeakAbort | WeakAbortInstance | AwaitInstance | Do
+	//	| DoWatchingEnd | EveryDo | ThenPart | ElsePart | LoopBody | PresentCase | Repeat | Suspend | Trap | TrapHandler |
 	//	LocalVariable | Exec | ExecCase;
 	public StatementContainerInterfaceElements getStatementContainerInterfaceAccess() {
 		return (pStatementContainerInterface != null) ? pStatementContainerInterface : (pStatementContainerInterface = new StatementContainerInterfaceElements());
@@ -7384,8 +7384,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
 	// * / enum ValueType:
-	//	PURE="pure" | BOOL="boolean" | UNSIGNED="unsigned" | INT="integer" | FLOAT="float" | DOUBLE="double" |
-	//	STRING="string" | HOST="host";
+	//	PURE="pure" | BOOL="boolean" | UNSIGNED="unsigned" | INT="integer" | FLOAT="float" | DOUBLE="double" | STRING="string"
+	//	| HOST="host";
 	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
 		return gaKExpressions.getValueTypeAccess();
 	}
