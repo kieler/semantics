@@ -50,17 +50,15 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.* //.copy
  * @kieler.rating 2012-10-08 proposed yellow cmot
  * 
  */
-class DependencyDiagramSynthesis extends AbstractDiagramSynthesis<Dependencies> { 
+class DependencyDiagramSynthesis extends AbstractDiagramSynthesis<Dependencies> {
 
     // TODO: Fix checkstyle warnings (e.g. spaces for tabs)
-
     //@Inject
     //extension KRenderingUtil 
-	
     @Inject
     extension KColorExtensions
-    
-    @Inject 
+
+    @Inject
     extension KNodeExtensions
 
     @Inject
@@ -71,69 +69,67 @@ class DependencyDiagramSynthesis extends AbstractDiagramSynthesis<Dependencies> 
 
     @Inject
     extension KLabelExtensions
-    
+
     @Inject
     extension KRenderingExtensions
-    
-	static SynthesisOption edgeStyle = SynthesisOption::createCheckOption("Spline", false);
-	
-	override List<SynthesisOption> getDisplayedSynthesisOptions() {
-	    return newArrayList(edgeStyle); 
-	}
-	
-	// Main transformation for every dependency node create a node figure and for every dependency an connecting edge figure.
-	override KNode transform(Dependencies model) {
-		
-		val rootNode = KimlUtil::createInitializedNode;
-		if (edgeStyle.booleanValue) {
-           rootNode.setLayoutOption(LayoutOptions::SPACING, Float::valueOf("25.0"));
-           rootNode.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN);
-           rootNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-           rootNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
-		} else {
-           rootNode.setLayoutOption(LayoutOptions::SPACING, Float::valueOf("10.0"));
-           rootNode.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN);
-           rootNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-           rootNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-		}
-		
-		val nodes = model.nodes;
-		for (node : nodes) {
-	    	node.createNodeFigure(rootNode);	
-	    }
-		
-		
-		val dependencies = model.dependencies;
-		for (dependency : dependencies) {
-	    	dependency.createDependencyFigure(rootNode);	
-	    }
 
-		return rootNode;
-	}
-	
-	
-	// For a dependency node create a node figure. For strong nodes (ending wit _S) use black for
-	// weak nodes use gray.
-	def createNodeFigure(Node node, KNode rootNode) {
-	        val kNode = node.createNode()
-	        val rect = kNode.addRoundedRectangle(25, 85, 2)
-			
-			kNode.KRendering.foreground = if (node.id.endsWith("_S")) "black".color else "gray".color;
-//            kNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-//            kNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-			
-			val nodeText = node.id.substring(0, node.id.length - 2);
-			val kNode2 = rect.createNode
-			
-			val ktext = kNode2.addText(nodeText + " (" + node.priority + ")")
-			ktext.setFontSize(11)
-			ktext.setFontBold(true);
-			
-			kNode.children.add(kNode2)
-			rootNode.children.add(kNode)
-			return kNode
-	}
-	
+    static SynthesisOption edgeStyle = SynthesisOption::createCheckOption("Spline", false);
+
+    override List<SynthesisOption> getDisplayedSynthesisOptions() {
+        return newArrayList(edgeStyle);
+    }
+
+    // Main transformation for every dependency node create a node figure and for every dependency an connecting edge figure.
+    override KNode transform(Dependencies model) {
+
+        val rootNode = KimlUtil::createInitializedNode;
+        if (edgeStyle.booleanValue) {
+            rootNode.setLayoutOption(LayoutOptions::SPACING, Float::valueOf("25.0"));
+            rootNode.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN);
+            rootNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            rootNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
+        } else {
+            rootNode.setLayoutOption(LayoutOptions::SPACING, Float::valueOf("15.0"));
+            rootNode.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN);
+            rootNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+            rootNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+        }
+
+        val nodes = model.nodes;
+        for (node : nodes) {
+            node.createNodeFigure(rootNode);
+        }
+
+        val dependencies = model.dependencies;
+        for (dependency : dependencies) {
+            dependency.createDependencyFigure(rootNode);
+        }
+
+        return rootNode;
+    }
+
+    // For a dependency node create a node figure. For strong nodes (ending wit _S) use black for
+    // weak nodes use gray.
+    def createNodeFigure(Node node, KNode rootNode) {
+        val kNode = node.createNode()
+        val rect = kNode.addRoundedRectangle(25, 85, 2)
+
+        kNode.KRendering.foreground = if(node.id.endsWith("_S")) "black".color else "gray".color;
+
+        //            kNode.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+        //            kNode.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+        val nodeText = node.id.substring(0, node.id.length - 2);
+        val kNode2 = rect.createNode
+
+        val ktext = kNode2.addText(nodeText + " (" + node.priority + ")")
+        ktext.setFontSize(11)
+        ktext.setFontBold(true);
+
+        kNode.children.add(kNode2)
+        rootNode.children.add(kNode)
+        return kNode
+    }
+
     private static val KColor DEPENDENCY_RED = RENDERING_FACTORY.createKColor() =>
         [it.red = 240; it.green = 0; it.blue = 0];
     private static val KColor DEPENDENCY_GREEN = RENDERING_FACTORY.createKColor() =>
@@ -142,43 +138,45 @@ class DependencyDiagramSynthesis extends AbstractDiagramSynthesis<Dependencies> 
         [it.red = 0; it.green = 0; it.blue = 240];
     private static val KColor DEPENDENCY_BLUE2 = RENDERING_FACTORY.createKColor() =>
         [it.red = 100; it.green = 100; it.blue = 240];
-	
-	
-	// For a dependency edge create a connecting figure with a decorator. Depending on the type use
-	// a different color.
-	def createDependencyFigure(Dependency dependency, KNode rootNode) {
-	    
-	    val kEdge = dependency.createEdge()
-            kEdge.source = dependency.sourceNode.node;
-            kEdge.target = dependency.targetNode.node;
-//            kEdge.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-//            kEdge.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-            kEdge.addSpline(2) => [
-                it.addArrowDecorator()
-                it.setLineWidth(2)
-                
-                if (dependency instanceof ValuedObjectDependency) {
-                    it.foreground = DEPENDENCY_RED.copy;
-                }
-                else if (dependency instanceof ControlflowDependency) {
-                    it.foreground = DEPENDENCY_BLUE.copy;
-                    if ((dependency as ControlflowDependency).immediate) {
-                        it.foreground = DEPENDENCY_BLUE2.copy;
-                    }
-                }
-                else if (dependency instanceof TransitionDependency) {
-                    it.foreground = DEPENDENCY_GREEN.copy;
-                }
-                
-	        ];
 
-	}
-	
+    // For a dependency edge create a connecting figure with a decorator. Depending on the type use
+    // a different color.
+    def createDependencyFigure(Dependency dependency, KNode rootNode) {
+
+        val kEdge = dependency.createEdge()
+        kEdge.source = dependency.sourceNode.node;
+        kEdge.target = dependency.targetNode.node;
+
+        //            kEdge.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+        //            kEdge.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+        if (!edgeStyle.booleanValue) {
+            kEdge.addPolyline(2)
+        } else {
+            kEdge.addSpline(2);
+        }
+        kEdge.KRendering as KPolyline => [
+            it.addArrowDecorator()
+            it.setLineWidth(2)
+            if (dependency instanceof ValuedObjectDependency) {
+                it.foreground = DEPENDENCY_RED.copy;
+            } else if (dependency instanceof ControlflowDependency) {
+                it.foreground = DEPENDENCY_BLUE.copy;
+                if ((dependency as ControlflowDependency).immediate) {
+                    it.foreground = DEPENDENCY_BLUE2.copy;
+                }
+            } else if (dependency instanceof TransitionDependency) {
+                it.foreground = DEPENDENCY_GREEN.copy;
+            }
+        ];
+
+    }
+
     def float getFloat(String s) {
-    	return Float::valueOf(s);
+        return Float::valueOf(s);
     }
+
     def float getFloat(Integer i) {
-    	return Float::valueOf(i);
+        return Float::valueOf(i);
     }
-    	
+
 }
