@@ -176,8 +176,8 @@ class Reference {
     }
     
     def transformDataflows(State state) {
-    	val dataflows = <Dataflow> newArrayList
-    	state.getAllStates.forEach[ dataflows += concurrencies.filter(typeof(Dataflow))]
+    	val dataflows = <Dataflow> newHashSet
+    	state.getAllContainedStates.forEach[ dataflows += concurrencies.filter(typeof(Dataflow))]
     	
     	val wireMapping = <Node, ValuedObject> newHashMap
     	val nodeMapping = <Node, State> newHashMap

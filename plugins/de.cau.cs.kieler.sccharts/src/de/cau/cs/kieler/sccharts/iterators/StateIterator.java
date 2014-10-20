@@ -16,7 +16,9 @@ package de.cau.cs.kieler.sccharts.iterators;
 import static com.google.common.collect.Iterators.concat;
 import static com.google.common.collect.Iterators.transform;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.emf.common.util.AbstractTreeIterator;
 
@@ -40,10 +42,11 @@ public final class StateIterator {
          * {@inheritDoc}
          */
         public Iterator<State> apply(Concurrency r) {
-            if (r instanceof Concurrency) {
+            if (r instanceof Region) {
                 return ((Region)r).getStates().iterator();
             }
-            return null;
+            List<State> empty = new ArrayList<State>();
+            return empty.iterator();
         }
     };
     

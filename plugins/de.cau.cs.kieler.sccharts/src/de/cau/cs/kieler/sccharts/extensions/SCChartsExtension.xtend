@@ -532,10 +532,10 @@ class SCChartsExtension {
         val region = createRegion(id)
         // ATTENTION: if this is the first region and there already is an IMPLICIT region
         // e.g. because of inner actions, then return THIS region only!
-        if (state.regions.size == 1 && state.regions.get(0).allContainedStates.size == 0) {
-            return state.regions.get(0)
-        }
-        state.regions.add(region)
+//        if (state.regions.size == 1 && state.regions.get(0).allContainedStates.size == 0) {
+//            return state.regions.get(0)
+//        }
+        state.concurrencies += region
         region
     }
 
