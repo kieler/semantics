@@ -93,8 +93,18 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
             try {
 
                 String editorID = editors[i].getAttribute("editor").trim();
-                String label = editors[i].getAttribute("label").trim();
-                String priority = editors[i].getAttribute("priority").trim();
+                String label = "No label defined";
+                try {
+                    label = editors[i].getAttribute("label").trim();
+                } catch (Exception e) {
+                    //ignore
+                }
+                String priority = "0";
+                try {
+                    priority = editors[i].getAttribute("priority").trim();
+                } catch (Exception e) {
+                    //ignore
+                }
                 String transformationIDs = editors[i].getAttribute("transformations");
 
                 String[] transformationIDsArray = transformationIDs.split(",");
@@ -108,14 +118,14 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
                     editorID = "*";
                 }
                 
-                CompileChains compileChain = new CompileChains(editorID);
+                CompileChains compileChains = new CompileChains(editorID);
                 CompileChain item = new CompileChain();
                 item.setPriority(priority);
                 item.label = label;
                 item.transformations = transformations;
-                compileChain.insertItem(item);
+                compileChains.insertItem(item);
 
-                returnHashMap.put(editorID, compileChain);
+                returnHashMap.put(editorID, compileChains);
             } catch (Exception e) {
                 this.showWarning(editors[i].getContributor().getName() + " could not be loaded.",
                         null, e, true);
