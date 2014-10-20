@@ -144,18 +144,15 @@ class SCChartsPrio2Simulation {
      // Transform a transition as described in 1.
      def void transformTransition(Transition transition, State targetRootState, String UID) {
           // auxiliary signal
-          val auxiliarySignal = KExpressionsFactory::eINSTANCE.createValuedObject();
-          val auxiliaryEmission = SCChartsFactory::eINSTANCE.createEmission();
+          val auxiliarySignal = targetRootState.createValuedObject(UID) 
+          val auxiliaryEmission = auxiliarySignal.emit
           
           // Setup the auxiliarySignal as an OUTPUT to the module
-          auxiliarySignal.setName(UID);
           auxiliarySignal.setInput(false);
           auxiliarySignal.setOutput(true);
           auxiliarySignal.setSignal(true);
           auxiliarySignal.setType(ValueType::PURE);
-          // Set the auxliiarySignal for emission 
-          auxiliaryEmission.setValuedObject(auxiliarySignal);
-          
+
           // Add emission of auxiliary Signal to tansition
           transition.effects.add(auxiliaryEmission);
 

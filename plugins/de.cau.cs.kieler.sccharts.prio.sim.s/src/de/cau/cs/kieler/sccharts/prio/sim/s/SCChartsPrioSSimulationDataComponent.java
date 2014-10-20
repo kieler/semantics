@@ -28,6 +28,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.inject.Guice;
+
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sim.sc.SSCSimDataComponent;
@@ -387,13 +389,14 @@ public class SCChartsPrioSSimulationDataComponent extends JSONObjectSimulationDa
                 // transformedModel = transform.transform2Simulation(myModel);
 
                 // Simulation Visualization
-                transformedModel = (new SCChartsPrio2Simulation()).transform2Simulation(myModel);
+                SCChartsPrio2Simulation sCChartsPrio2Simulation = Guice.createInjector().getInstance(SCChartsPrio2Simulation.class);
+                transformedModel = sCChartsPrio2Simulation.transform2Simulation(myModel);
 
                 // Because we transformed the S program we need to save a different file
                 // and pass this new file to the SC simulation instead.
                 syncChartOutput = syncChartOutput.trimFragment();
                 syncChartOutput = syncChartOutput.trimFileExtension().appendFileExtension(
-                        "simulation.kixs");
+                        "simulation.sct");
 
                 try {
                     // Write out copy/transformation of syncchart program

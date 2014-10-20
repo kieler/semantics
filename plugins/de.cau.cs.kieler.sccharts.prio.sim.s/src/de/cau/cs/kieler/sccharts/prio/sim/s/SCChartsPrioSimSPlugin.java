@@ -26,7 +26,7 @@ import org.osgi.framework.BundleContext;
 public class SCChartsPrioSimSPlugin extends AbstractUIPlugin {
 
     /** The plug-in ID. */
-    public static final String PLUGIN_ID = "de.cau.cs.kieler.sccharts.sim.s"; //$NON-NLS-1$
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.sccharts.prio.sim.s"; //$NON-NLS-1$
 
     /** The shared instance. */
     private static SCChartsPrioSimSPlugin plugin;
