@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.sim.s;
+package de.cau.cs.kieler.sccharts.prio.sim.s;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -28,6 +28,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.inject.Guice;
+
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sim.sc.SSCSimDataComponent;
@@ -41,8 +43,9 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.sccharts.Region;
-import de.cau.cs.kieler.sccharts.prio.s.xtend.SCCharts2S;
-import de.cau.cs.kieler.sccharts.sim.s.xtend.SCCharts2Simulation;
+import de.cau.cs.kieler.sccharts.State;
+import de.cau.cs.kieler.sccharts.prio.s.xtend.SCChartsPrio2S;
+import de.cau.cs.kieler.sccharts.prio.sim.s.xtend.SCChartsPrio2Simulation;;
 
 /**
  * The SimulationDataComponent for simulating S code with and without visualization.
@@ -55,7 +58,7 @@ public class SCChartsPrioSSimulationDataComponent extends JSONObjectSimulationDa
         IJSONObjectDataComponent {
 
     /** The SyncChart is the considered model to simulate. */
-    private Region myModel = null;
+    private State myModel = null;
 
     /** The Constant NUMBER_OF_TASKS for model transformation and code generation. */
     private static final int NUMBER_OF_TASKS = 10;
@@ -204,11 +207,11 @@ public class SCChartsPrioSSimulationDataComponent extends JSONObjectSimulationDa
                         //
                         // These auxiliary signals must be encapsulated in a state variable.
                         if (signalName
-                                .startsWith(SCChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE)
+                                .startsWith(SCChartsPrioSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE)
                                 && signalIsPresent) {
-                            try {
+                            try { 
                                 String statementWithoutAuxiliaryVariableTag = signalName
-                                        .substring(SCChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE
+                                        .substring(SCChartsPrioSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE
                                                 .length());
                                 // Insert a "," if not the first statement
                                 if (activeStatesBuf.length() != 0) {
@@ -219,11 +222,11 @@ public class SCChartsPrioSSimulationDataComponent extends JSONObjectSimulationDa
                                 // ignore error
                             }
                         } else if (signalName
-                                .startsWith(SCChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)
+                                .startsWith(SCChartsPrioSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)
                                 && signalIsPresent) {
                             try {
                                 String statementWithoutAuxiliaryVariableTag = signalName
-                                        .substring(SCChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION
+                                        .substring(SCChartsPrioSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION
                                                 .length());
                                 // Insert a "," if not the first statement
                                 if (activeTransitionsBuf.length() != 0) {
@@ -234,9 +237,9 @@ public class SCChartsPrioSSimulationDataComponent extends JSONObjectSimulationDa
                                 // ignore error
                             }
                         } else if (!signalName
-                                .startsWith(SCChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE)
+                                .startsWith(SCChartsPrioSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE)
                                 && !signalName
-                                        .startsWith(SCChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                                        .startsWith(SCChartsPrioSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                             // add/pass-through normal signals directly
                             returnObj.accumulate(signalName, signalValue);
                         }
@@ -338,7 +341,7 @@ public class SCChartsPrioSSimulationDataComponent extends JSONObjectSimulationDa
 
         try {
             // get active editor
-            myModel = (Region) this.getModelRootElement();
+            myModel = (State) this.getModelRootElement();
 
             if (myModel == null) {
                 throw new KiemInitializationException(
@@ -357,7 +360,7 @@ public class SCChartsPrioSSimulationDataComponent extends JSONObjectSimulationDa
             URI syncChartOutput = URI.createURI("");
             URI sOutput = URI.createURI("");
             // By default there is not always an additional transformation necessary
-            Region transformedModel = myModel;
+            State transformedModel = myModel;
 
             // Calculate output path for possible S-m2m
             // FileEditorInput editorInput = (FileEditorInput) editorPart.getEditorInput();
@@ -386,13 +389,14 @@ public class SCChartsPrioSSimulationDataComponent extends JSONObjectSimulationDa
                 // transformedModel = transform.transform2Simulation(myModel);
 
                 // Simulation Visualization
-                transformedModel = (new SCCharts2Simulation()).transform2Simulation(myModel);
+                SCChartsPrio2Simulation sCChartsPrio2Simulation = Guice.createInjector().getInstance(SCChartsPrio2Simulation.class);
+                transformedModel = sCChartsPrio2Simulation.transform2Simulation(myModel);
 
                 // Because we transformed the S program we need to save a different file
                 // and pass this new file to the SC simulation instead.
                 syncChartOutput = syncChartOutput.trimFragment();
                 syncChartOutput = syncChartOutput.trimFileExtension().appendFileExtension(
-                        "simulation.kixs");
+                        "simulation.sct");
 
                 try {
                     // Write out copy/transformation of syncchart program
@@ -417,50 +421,50 @@ public class SCChartsPrioSSimulationDataComponent extends JSONObjectSimulationDa
             if (this.getProperties()[KIEM_PROPERTY_EXPOSELOCALSIGNALS + KIEM_PROPERTY_DIFF]
                     .getValueAsBoolean()) {
                 // We now support exposing Local Signals (should run AFTER raising local signals)
-                transformedModel = (new SCCharts2Simulation())
-                        .transformExposeLocalSignal(transformedModel);
+//                transformedModel = (new SCChartsPrio2Simulation())
+//                        .transformExposeLocalSignal(transformedModel);
             }
 
-            // Normal Pre operator (@requires: none)
-            transformedModel = (new SCCharts2Simulation()).transformPreOperator(transformedModel);
+//            // Normal Pre operator (@requires: none)
+//            transformedModel = (new SCCharts2Simulation()).transformPreOperator(transformedModel);
 
             // If a LIGHT runtime is selected, that makes use of normal termination, then
             // do NOT transform these away.
             if (!(runtime.equals(KIEM_RUNTIME_SJL) || runtime.equals(KIEM_RUNTIME_SCL))) {
                 // Normal Termination transitions (@requires: during actions, @before: exit actions)
-                transformedModel = (new SCCharts2Simulation())
-                        .transformNormalTermination(transformedModel);
+//                transformedModel = (new SCCharts2Simulation())
+//                        .transformNormalTermination(transformedModel);
             }
 
-            // Count Delays now for the SC (host code) simulation.
-            transformedModel = (new SCCharts2Simulation()).transformCountDelay(transformedModel);
+//            // Count Delays now for the SC (host code) simulation.
+//            transformedModel = (new SCCharts2Simulation()).transformCountDelay(transformedModel);
 
-            // Exit actions (@requires: entry actions, during actions, history)
-            transformedModel = (new SCCharts2Simulation()).transformExitAction(transformedModel);
+//            // Exit actions (@requires: entry actions, during actions, history)
+//            transformedModel = (new SCCharts2Simulation()).transformExitAction(transformedModel);
 
-            // History transitions. (@requires: suspend)
-            transformedModel = (new SCCharts2Simulation()).transformHistory(transformedModel);
+//            // History transitions. (@requires: suspend)
+//            transformedModel = (new SCCharts2Simulation()).transformHistory(transformedModel);
 
-            // Suspends (non-immediate and non-delayed) (@requires: during)
-            transformedModel = (new SCCharts2Simulation()).transformSuspend(transformedModel);
+//            // Suspends (non-immediate and non-delayed) (@requires: during)
+//            transformedModel = (new SCCharts2Simulation()).transformSuspend(transformedModel);
 
-            // Entry actions (@requires: during actions)
-            transformedModel = (new SCCharts2Simulation()).transformEntryAction(transformedModel);
+//            // Entry actions (@requires: during actions)
+//            transformedModel = (new SCCharts2Simulation()).transformEntryAction(transformedModel);
 
-            // During actions (@requires: none)
-            transformedModel = (new SCCharts2Simulation())
-                    .transformDuringAction(transformedModel);
+//            // During actions (@requires: none)
+//            transformedModel = (new SCCharts2Simulation())
+//                    .transformDuringAction(transformedModel);
 
-            // If a LIGHT runtime is selected, that cannot handle weak/strong aborts, then
-            // transform these away.
-            if (runtime.equals(KIEM_RUNTIME_SJL) || runtime.equals(KIEM_RUNTIME_SCL)) {
-                // Normal SCC Aborts (@requires: none)
-                transformedModel = (new SCCharts2Simulation())
-                        .transformSCCAborts(transformedModel);
-            }
+//            // If a LIGHT runtime is selected, that cannot handle weak/strong aborts, then
+//            // transform these away.
+//            if (runtime.equals(KIEM_RUNTIME_SJL) || runtime.equals(KIEM_RUNTIME_SCL)) {
+//                // Normal SCC Aborts (@requires: none)
+//                transformedModel = (new SCCharts2Simulation())
+//                        .transformSCCAborts(transformedModel);
+//            }
 
             // Transform SyncChart into S code
-            Program program = new SCCharts2S().transform(transformedModel);
+            Program program = new SCChartsPrio2S().transform(transformedModel);
 
             // Calculate out path
             sOutput = URI.createURI(input.toString());
@@ -557,9 +561,9 @@ public class SCChartsPrioSSimulationDataComponent extends JSONObjectSimulationDa
 
                         // Filter here
                         if (!signalName
-                                .startsWith(SCChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE)
+                                .startsWith(SCChartsPrioSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE)
                                 && !signalName
-                                        .startsWith(SCChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                                        .startsWith(SCChartsPrioSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
                             returnObj.accumulate(signalName, signalValue);
                         }
                     } catch (JSONException e) {

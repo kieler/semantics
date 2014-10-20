@@ -13,11 +13,10 @@
  */
 package de.cau.cs.kieler.sccharts.prio.s.xtend
 
-import de.cau.cs.kieler.core.kexpressions.ComplexExpression
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.Signal
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.s.s.Instruction
 import de.cau.cs.kieler.s.s.Prio
@@ -29,14 +28,16 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.TextEffect
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
-import de.cau.cs.kieler.sccharts.codegen.dependencies.dependency.Node
+import de.cau.cs.kieler.sccharts.prio.dependencies.dependency.Node
 import java.util.List
 import org.eclipse.xtend.util.stdlib.TraceComponent
 import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.FloatValue
-import de.cau.cs.kieler.core.kexpressions.BooleanValue
 import de.cau.cs.kieler.core.kexpressions.TextExpression
-
+import de.cau.cs.kieler.core.kexpressions.BoolValue
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 
 /**
  * Helper class with utility functions for conversion of a SyncChart into an S program.
@@ -47,21 +48,16 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
  */
  class Helper {
      
+    @Inject
+    extension SCChartsExtension     
+
+    @Inject
+    extension KExpressionsExtension     
+     
     // ======================================================================================================
     // ==                       B A S I C   M E T A M O D E L   E X T E N S I O N                          ==
     // ======================================================================================================
-     
 
-    // Returns true iff the state is the one and only root state of the SyncChart having no parent state.
-    def Boolean isRootState(State state) {
-        state.parentRegion.parentState == null;
-    }
-
-    // Returns true iff the state contains regions.
-    def Boolean isHierarchical(State state) {
-        state.regions.size > 0;
-    }
-    
     // Returns true iff the state has at least one outgoing transition
     def boolean hasOutgoingTransitions(State state) {
         !state.outgoingTransitions.nullOrEmpty;
@@ -83,11 +79,6 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
         (state.hierarchical && (state.getNormalTerminationTransition != null));
     }
 
-    // Get the initial state of a region.
-       def State getInitialState(Region region) {
-             region.states.filter(e | e.isInitial).toList.get(0);       
-       }
-
     // Get weak transitions ordered by their priority.
     def List<Transition> getWeakTransitionsOrdered(State state) {
         state.outgoingTransitions.filter(e|e.type == TransitionType::WEAKABORT).sort(e1, e2 | compareTransitionPriority(e1,e2));
@@ -100,7 +91,7 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
     
     // Get normal termination transition.
     def Transition getNormalTerminationTransition(State state) {
-        val normalTerminations = state.outgoingTransitions.filter(e|e.type == TransitionType::NORMALTERMINATION);
+        val normalTerminations = state.outgoingTransitions.filter(e|e.type == TransitionType::TERMINATION);
         if (normalTerminations.nullOrEmpty) {
             return null;
         }
@@ -118,34 +109,24 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
     // ==                            C O N V E R T   E X P R E S S I O N S                                 ==
     // ======================================================================================================
 
-    // Apply conversion on children/subexpression.
-    def dispatch Expression convertToSExpression(ComplexExpression expression) {
-        var newExpression = KExpressionsFactory::eINSTANCE.createExpression;
-        newExpression = KExpressionsFactory::eINSTANCE.createComplexExpression;
-        for (subExpression : (expression as ComplexExpression).subExpressions) {
-            (newExpression as ComplexExpression).subExpressions.add(subExpression.convertToSExpression());
-        } 
-        newExpression;
-    }
-
     // Apply conversion on ValuedObjectReference for handling present tests of simple triggers.
     def dispatch Expression convertToSExpression(ValuedObjectReference expression) {
-         val sSignal = TraceComponent::getSingleTraceTarget(expression.valuedObject, "Signal") as de.cau.cs.kieler.core.kexpressions.Signal
+         val sValuedObject = TraceComponent::getSingleTraceTarget(expression.valuedObject, "ValuedObject") as de.cau.cs.kieler.core.kexpressions.ValuedObject
         val newExpression = KExpressionsFactory::eINSTANCE.createValuedObjectReference;
-        newExpression.setValuedObject(sSignal);
+        newExpression.setValuedObject(sValuedObject);
          newExpression; 
     }
 
     // Retrieve a boolean TRUE KExpression.
     def Expression getTrueBooleanValue() {
-        var booleanValue = KExpressionsFactory::eINSTANCE.createBooleanValue();
+        var booleanValue = KExpressionsFactory::eINSTANCE.createBoolValue();
          booleanValue.setValue(true);
          booleanValue    
     }
 
     // Retrieve a boolean FALSE KExpression.
     def Expression getFalseBooleanValue() {
-        var booleanValue = KExpressionsFactory::eINSTANCE.createBooleanValue();
+        var booleanValue = KExpressionsFactory::eINSTANCE.createBoolValue();
          booleanValue.setValue(true);
          booleanValue    
     }
@@ -176,8 +157,8 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
     }
 
     // Apply conversion to boolean values
-    def dispatch Expression convertToSExpression(BooleanValue expression) {
-        var newExpression = KExpressionsFactory::eINSTANCE.createBooleanValue();
+    def dispatch Expression convertToSExpression(BoolValue expression) {
+        var newExpression = KExpressionsFactory::eINSTANCE.createBoolValue();
         newExpression.setValue(expression.value);
         newExpression;
     }    
@@ -185,7 +166,7 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
     // Apply conversion to textual host code 
     def dispatch Expression convertToSExpression(TextExpression expression) {
         var newExpression = KExpressionsFactory::eINSTANCE.createTextExpression
-        newExpression.setCode("'" +  expression.code + "'");
+        newExpression.setText("'" +  expression.text + "'");
         newExpression;
     }    
     
@@ -201,14 +182,14 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
 
     // Convert SyncChart transition effects and add them to an instructions list.
     def dispatch void convertToSEffect(Emission effect, List<de.cau.cs.kieler.s.s.Instruction> instructions) {
-        val sEmit = SFactory::eINSTANCE.createEmit;
-        val sSignal = TraceComponent::getSingleTraceTarget(effect.signal, "Signal") as de.cau.cs.kieler.core.kexpressions.Signal
+        val sAssignment = SFactory::eINSTANCE.createAssignment
+        val sValuedObject = TraceComponent::getSingleTraceTarget(effect.valuedObject, "ValuedObject") as de.cau.cs.kieler.core.kexpressions.ValuedObject
         if (effect.newValue != null) {
-            val sSignalValue = effect.newValue.convertToSExpression;
-            sEmit.setValue(sSignalValue);
+            val sValuedObjectValue = effect.newValue.convertToSExpression;
+            sAssignment.setVariable(sValuedObject)
+            sAssignment.setExpression(sValuedObjectValue)
+            instructions.add(sAssignment);
         }
-        sEmit.setSignal(sSignal);
-        instructions.add(sEmit);
     }
     
     // Convert SyncChart variable assignments and add them to an instructions list.
@@ -219,7 +200,7 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
     // Convert SyncChart text effects and add them to an instructions list.
     def dispatch void convertToSEffect(TextEffect effect, List<de.cau.cs.kieler.s.s.Instruction> instructions) {
         val sHostCode = SFactory::eINSTANCE.createHostCodeInstruction;
-        sHostCode.setHostCode("'" + effect.code + ";'");
+        sHostCode.setHostCode("'" + effect.text + ";'");
         instructions.add(sHostCode);
     }
 
@@ -228,39 +209,39 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
     // ==        C O N V E R T   S Y N C C H A R T   S I G N A L S   I N T O   S   S I G N A L S           ==
     // ======================================================================================================
 
-    // Convert SyncChart variables of a state into S textual host code. Return null if there are no variables.    
-    def String getStateVariables (State state){
-        var StringBuffer returnText = new StringBuffer();
-        for (variable : state.variables) {
-            returnText.append(variable.type.getName.toLowerCase);
-            returnText.append(" ");
-            returnText.append(variable.name);
-            if (variable.initialValue != null) {
-                  returnText.append(" = ");
-                returnText.append(variable.initialValue);
-            }
-            returnText.append(";");
-        }
-        if (returnText.length > 0) {
-            "'" + returnText.toString + "'";
-        } else {
-            null;
-        }
-    }    
+//    // Convert SyncChart variables of a state into S textual host code. Return null if there are no variables.    
+//    def String getStateVariables (State state){
+//        var StringBuffer returnText = new StringBuffer();
+//        for (variable : state.variables) {
+//            returnText.append(variable.type.getName.toLowerCase);
+//            returnText.append(" ");
+//            returnText.append(variable.name);
+//            if (variable.initialValue != null) {
+//                  returnText.append(" = ");
+//                returnText.append(variable.initialValue);
+//            }
+//            returnText.append(";");
+//        }
+//        if (returnText.length > 0) {
+//            "'" + returnText.toString + "'";
+//        } else {
+//            null;
+//        }
+//    }    
     
     // Convert a single SyncChart signal and create a new S signal.
-    def create target : KExpressionsFactory::eINSTANCE.createSignal() transform(Signal signal) {
-        target.setCombineOperator(signal.combineOperator) 
-        target.setName(signal.name) 
-        target.setHostType(signal.hostType) 
-        target.setInitialValue(signal.initialValue) 
-        target.setIsInput(signal.isInput) 
-        target.setIsOutput(signal.isOutput) 
-        target.setType(signal.type)
+    def create target : KExpressionsFactory::eINSTANCE.createValuedObject() transform(ValuedObject valuedObject) {
+        target.setCombineOperator(valuedObject.combineOperator) 
+        target.setName(valuedObject.name)
+        target.setInitialValue(valuedObject.initialValue)
+        target.setSignal(valuedObject.isSignal) 
+        target.setInput(valuedObject.isInput) 
+        target.setOutput(valuedObject.isOutput) 
+        target.setType(valuedObject.type)
         
         // Create traces for created signal
-        TraceComponent::createTrace(signal, target, "Signal" );
-        TraceComponent::createTrace(target, signal, "SignalBack" );
+        TraceComponent::createTrace(valuedObject, target, "ValuedObject" );
+        TraceComponent::createTrace(target, valuedObject, "ValuedObjectBack" );
     }
 
 
@@ -293,39 +274,39 @@ import de.cau.cs.kieler.core.kexpressions.TextExpression
                .replace(":","").replace(";","").replace("=","");
     }
     
-    // This helper method returns the hierarchical name of a state considering all hierarchical
-    // higher states. A string is formed by the traversed state IDs.
-    def String getHierarchicalName(State state, String StartSymbol) {
-        if (state.parentRegion != null) {
-            if (state.parentRegion.parentState != null) {
-                var higherHierarchyReturnedName = state.parentRegion.parentState.getHierarchicalName(StartSymbol);
-                var regionId = state.parentRegion.id.removeSpecialCharacters;
-                var stateId = state.id.removeSpecialCharacters;
-                // Region IDs can be empty, state IDs normally aren't but the code generation handles 
-                // also this case. 
-                if (stateId.nullOrEmpty) {
-                    stateId = state.hashCode + "";
-                }
-                if (regionId.nullOrEmpty) {
-                    regionId = state.parentRegion.hashCode + "";
-                }
-                if (!higherHierarchyReturnedName.nullOrEmpty) {
-                    higherHierarchyReturnedName = higherHierarchyReturnedName + "_";
-                }
-                if (state.parentRegion.parentState.regions.size > 1) {
-                    return higherHierarchyReturnedName 
-                           + regionId  + "_" +  state.id.removeSpecialCharacters;
-                }
-                else {
-                    // this is the simplified case, where there is just one region and we can
-                    // omit the region id
-                    return higherHierarchyReturnedName  
-                           + state.id.removeSpecialCharacters;
-                }
-            }
-        }
-        return StartSymbol + "_";
-    }
+//    // This helper method returns the hierarchical name of a state considering all hierarchical
+//    // higher states. A string is formed by the traversed state IDs.
+//    def String getHierarchicalName(State state, String StartSymbol) {
+//        if (state.parentRegion != null) {
+//            if (state.parentRegion.parentState != null) {
+//                var higherHierarchyReturnedName = state.parentRegion.parentState.getHierarchicalName(StartSymbol);
+//                var regionId = state.parentRegion.id.removeSpecialCharacters;
+//                var stateId = state.id.removeSpecialCharacters;
+//                // Region IDs can be empty, state IDs normally aren't but the code generation handles 
+//                // also this case. 
+//                if (stateId.nullOrEmpty) {
+//                    stateId = state.hashCode + "";
+//                }
+//                if (regionId.nullOrEmpty) {
+//                    regionId = state.parentRegion.hashCode + "";
+//                }
+//                if (!higherHierarchyReturnedName.nullOrEmpty) {
+//                    higherHierarchyReturnedName = higherHierarchyReturnedName + "_";
+//                }
+//                if (state.parentRegion.parentState.regions.size > 1) {
+//                    return higherHierarchyReturnedName 
+//                           + regionId  + "_" +  state.id.removeSpecialCharacters;
+//                }
+//                else {
+//                    // this is the simplified case, where there is just one region and we can
+//                    // omit the region id
+//                    return higherHierarchyReturnedName  
+//                           + state.id.removeSpecialCharacters;
+//                }
+//            }
+//        }
+//        return StartSymbol + "_";
+//    }
 
 
 

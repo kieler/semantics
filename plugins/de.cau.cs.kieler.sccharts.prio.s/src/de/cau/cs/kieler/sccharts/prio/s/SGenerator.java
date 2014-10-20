@@ -37,7 +37,8 @@ import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.sccharts.Region;
-import de.cau.cs.kieler.sccharts.prio.s.xtend.Synccharts2S;
+import de.cau.cs.kieler.sccharts.State;
+import de.cau.cs.kieler.sccharts.prio.s.xtend.SCChartsPrio2S;
 
 /**
  * Generate S Code from a SyncChart using new Xtend language.
@@ -131,10 +132,10 @@ public class SGenerator implements IHandler {
         try {
             // Load SCCharts model
             inputResource.load(null);
-            Region rootRegion = (Region) inputResource.getContents().get(0);
+            State rootState = (State) inputResource.getContents();
 
             // Transform SCCharts to S Program
-            Program program = new Synccharts2S().transform(rootRegion);
+            Program program = new SCChartsPrio2S().transform(rootState);
 
 //            // Debug output
 //            URI output2 = URI.createURI("");

@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.sim.s;
+package de.cau.cs.kieler.sccharts.prio.sim.s;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -43,13 +43,14 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
-import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.Declaration;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.Region;
 
 /**
  * SCCharts random input generation, generates an ESO file with random inputs for the SyncChart
  * based on the interface (input signals).
- *
+ * 
  * @author cmot
  * @kieler.design 2012-11-26 proposed cmot
  * @kieler.rating 2012-11-26 proposed yellow
@@ -95,8 +96,9 @@ public class SCChartsPrioGenerateRandomInputs implements IHandler {
      */
     public Object execute(final ExecutionEvent event) throws ExecutionException {
         // Get input model from currently selected file in Explorer
-        ISelection selection = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                .getSelectionService().getSelection();
+        ISelection selection =
+                PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService()
+                        .getSelection();
         File file = (File) ((TreeSelection) selection).getFirstElement();
         URI input = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
         URI output = URI.createURI("");
@@ -197,7 +199,7 @@ public class SCChartsPrioGenerateRandomInputs implements IHandler {
 
     /**
      * Generate random inputs for ticks ticks.
-     *
+     * 
      * @param signalList
      *            the signal list
      * @param ticks
@@ -241,7 +243,7 @@ public class SCChartsPrioGenerateRandomInputs implements IHandler {
 
     /**
      * Gets a list of all input signal names.
-     *
+     * 
      * @param rootRegion
      *            the root region
      * @return the input signal list
@@ -249,9 +251,11 @@ public class SCChartsPrioGenerateRandomInputs implements IHandler {
     private List<String> getInputSignalList(final Region rootRegion) {
         List<String> returnList = new LinkedList<String>();
         if (rootRegion.getStates() != null && rootRegion.getStates().size() > 0) {
-            for (Signal signal : rootRegion.getStates().get(0).getSignals()) {
-                if (signal.isIsInput()) {
-                    returnList.add(signal.getName());
+            for (Declaration declaration : rootRegion.getStates().get(0).getDeclarations()) {
+                if (declaration.isInput()) {
+                    for (ValuedObject signal : declaration.getValuedObjects()) {
+                        returnList.add(signal.getName());
+                    }
                 }
             }
         }
@@ -265,14 +269,14 @@ public class SCChartsPrioGenerateRandomInputs implements IHandler {
 
     /**
      * Show an input dialog with the message, a default value and a specific title.
-     *
+     * 
      * @param title
      *            the title of the dialog
      * @param message
      *            the message to present
      * @param defaultValue
      *            the default value
-     *
+     * 
      * @return the string value entered or null if aborted
      */
     private String showInputDialog(final String title, final String message,
