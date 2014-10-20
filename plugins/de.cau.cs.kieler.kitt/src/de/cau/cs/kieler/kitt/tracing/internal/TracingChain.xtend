@@ -23,6 +23,7 @@ import java.util.HashSet
 import java.util.LinkedList
 import java.util.List
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.core.util.Pair;
 
 import static com.google.common.base.Preconditions.*
 
@@ -54,11 +55,14 @@ class TracingChain {
         checkNotNull(targetModel);
         checkNotNull(mapping);
         val indexOfSource = models.indexOf(sourceModel);
-        if (indexOfSource != -1 && indexOfSource + 1 < models.size) {
-            val deprecatedModels = models.subList(indexOfSource + 1, models.size());
-            val removedModels = deprecatedModels.immutableCopy;
-            mappings.keySet.removeAll(deprecatedModels);
-            deprecatedModels.clear();
+        if (indexOfSource != -1) {
+            val removedModels = newArrayList();
+            if (indexOfSource + 1 != models.size) { //No models to drop
+                val deprecatedModels = models.subList(indexOfSource + 1, models.size());
+                removedModels.addAll(deprecatedModels);
+                mappings.keySet.removeAll(deprecatedModels);
+                deprecatedModels.clear();
+            }
             joinCache.clear;
             models.add(targetModel);
             mappings.put(sourceModel, mapping);
@@ -135,8 +139,13 @@ class TracingChain {
     def getInPlaceMapping(Object source) {
         val modelIter = models.listIterator;
         while (modelIter.hasNext) {
-            if (modelIter.next == source && modelIter.hasPrevious) {
-                return mappings.get(modelIter.previous);
+            if (modelIter.next == source) {
+                val prev = modelIter.previous;
+                return if (modelIter.hasPrevious) {
+                    mappings.get(modelIter.previous)
+                } else {
+                    mappings.get(prev)
+                };
             }
         }
         return null;
@@ -151,7 +160,7 @@ class TracingChain {
                 chain.reverse;
             }
             chain.forEach [
-                if (chain.empty) {
+                if (mapping.empty) {
                     if (reverse) {
                         mapping.putAll(it.reverseMapping);
                     } else {
@@ -165,7 +174,7 @@ class TracingChain {
                         }
 
                     //Replace all values by new values of additional joined (next) mapping
-                    mapping.keySet.forEach [
+                    mapping.keySet.immutableCopy.forEach [
                         //resolve elementTransformation for all values and replace value
                         val values = mapping.get(it).map [
                             map.get(it)
@@ -179,6 +188,23 @@ class TracingChain {
             ];
             return mapping;
         }
+    }
+
+    def Pair<Object, Object> getModels(TracingMapping mapping) {
+        var realMapping = mapping
+        while (realMapping.inPlace) {
+            realMapping = realMapping.delegate;
+        }
+        val modelIter = models.listIterator;
+        var item = modelIter.next;
+        while (modelIter.hasNext) {
+            val next = modelIter.next;
+            if (mappings.get(item) == realMapping) {
+                return new Pair(item, next)
+            }
+            item = next
+        }
+        return null;
     }
 
 }

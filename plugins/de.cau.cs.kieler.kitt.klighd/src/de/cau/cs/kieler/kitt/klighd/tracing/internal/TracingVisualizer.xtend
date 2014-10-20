@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kitt.klighd.tracing.internal
 
-import com.google.common.collect.Multimap
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KGraphElement
@@ -29,11 +28,13 @@ import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties
 import de.cau.cs.kieler.kitt.tracing.TracingTreeExtensions
+import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
 import de.cau.cs.kieler.kitt.tracingtree.EObjectWrapper
 import de.cau.cs.kieler.kitt.tracingtree.ModelWrapper
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.HashSet
+import java.util.Iterator
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.EObject
@@ -181,7 +182,7 @@ class TracingVisualizer {
                     while (!children.empty && visibleEdgesModelOrigin.addAll(children)) { //continue if derived elements exist and are new (changing the set)
                         children = children.fold(newLinkedList) [ list, item |
                             //derive implicit selected elements from mapping
-                            list.addAll(mapping.get(item));
+                            list.addAll(mapping.getTargets(item));
                             list;
                         ];
                     }
@@ -189,7 +190,7 @@ class TracingVisualizer {
                     do { //this time a do-while because selectedSourceElements already contained
                         parents = parents.fold(newLinkedList) [ list, item |
                             //derive implicit selected elements from reverse mapping
-                            list.addAll(mapping.getReverse(item));
+                            list.addAll(mapping.getOrigins(item));
                             list;
                         ];
                     } while (!parents.empty && visibleEdgesModelOrigin.addAll(parents)); //continue if derived elements exist and are new (changing the set)
@@ -250,12 +251,12 @@ class TracingVisualizer {
             ];
 
             if (!tracedModelMap.empty) {
-                val traceMap = new InternalTraceMap();
+                val traceMap = new TracingMapping(null);
                 val selection = diagram.getTracingSelection(viewContext);
                 if (selection != null) { //resolve mapping if source target are selected
                     val mapping = getMapping(selection.first, selection.second);
-                    mapping.addTracingEdges(viewContext, tracedModelMap.get(selection.first));
-                    traceMap.addMapping(mapping);
+                    mapping.entries.iterator.addTracingEdges(viewContext, tracedModelMap.get(selection.first));
+                    traceMap.putAll(mapping);
                 } else { //dont resolve -> show all
                     val chain = tracedModelMap.keySet.head.tracingChain;
                     if (!chain.models.empty) {
@@ -270,22 +271,23 @@ class TracingVisualizer {
 
                                     //create edges
                                     val mapping = chain.getRawMapping(item, next);
-                                    mapping.mapping.addTracingEdges(viewContext, tracedModelMap.get(item));
-                                    traceMap.addMapping(mapping);
-                                }
-                            } else { //if a model in the chain is not represented in the diagram skip it and resolve to next represented one
-                                var loop = true;
-                                while (loop || chainIter.hasNext) {
-                                    next = chainIter.next;
-                                    if (tracedModelMap.containsKey(next)) {
+                                    mapping.entryIterator.addTracingEdges(viewContext, tracedModelMap.get(item));
+                                    traceMap.putAll(mapping);
+                                } else { //if a model in the chain is not represented in the diagram skip it and resolve to next represented one
+                                    var loop = true;
+                                    while (loop && chainIter.hasNext) {
+                                        next = chainIter.next;
+                                        if (tracedModelMap.containsKey(next)) {
 
-                                        //create edges
-                                        val mapping = getMapping(item, next)
-                                        mapping.addTracingEdges(viewContext, tracedModelMap.get(item));
-                                        traceMap.addMapping(mapping);
+                                            //create edges
+                                            val mapping = getMapping(item, next)
+                                            mapping.entries.iterator.addTracingEdges(viewContext,
+                                                tracedModelMap.get(item));
+                                            traceMap.putAll(mapping);
 
-                                        //end this loop
-                                        loop = false;
+                                            //end this loop
+                                            loop = false;
+                                        }
                                     }
                                 }
                             }
@@ -298,16 +300,14 @@ class TracingVisualizer {
         }
     }
 
-    private def addTracingEdges(Multimap<Object, Object> mapping, ViewContext viewContext, KNode attachNode) {
-        if (mapping != null && !mapping.empty) {
-            mapping.entries.forEach [ entry |
-                viewContext.getTargetElements(entry.key).forEach [ source |
-                    viewContext.getTargetElements(entry.value).forEach [ target |
-                        createTracingEdge(source, target, new Pair(entry.key, entry.value), attachNode);
-                    ]
+    private def addTracingEdges(Iterator<Map.Entry<Object, Object>> entryIter, ViewContext viewContext, KNode attachNode) {
+        entryIter.forEach [ entry |
+            viewContext.getTargetElements(entry.key).forEach [ source |
+                viewContext.getTargetElements(entry.value).forEach [ target |
+                    createTracingEdge(source, target, new Pair(entry.key, entry.value), attachNode);
                 ]
             ]
-        }
+        ]
     }
 
     private def addTracingTreeEdges(ModelWrapper source, ModelWrapper target, ViewContext viewContext) {

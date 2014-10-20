@@ -191,8 +191,9 @@ public class TracingManager {
         Preconditions.checkNotNull(sourceModel);
         Preconditions.checkNotNull(targetModel);
         Preconditions.checkNotNull(tracingMapping);
+        Preconditions.checkArgument(sourceModel == targetModel ^ !tracingMapping.isInPlace(), "Source and Target model are the same object but mapping is in place");
 
-        if (sourceModels.containsKey(sourceModel)) {
+        if (sourceModels.containsKey(sourceModel) && !tracingMapping.isInPlace()) {
             Object root = sourceModels.get(sourceModel);
             TracingChain chain = chains.get(root);
             if (chain == null) {// create new chain if no one exists

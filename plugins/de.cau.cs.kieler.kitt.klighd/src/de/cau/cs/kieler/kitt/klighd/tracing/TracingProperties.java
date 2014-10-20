@@ -20,7 +20,7 @@ import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption.TracingMode;
-import de.cau.cs.kieler.kitt.klighd.tracing.internal.InternalTraceMap;
+import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping;
 
 /**
  * Contains Properties for marking tracing diagrams.
@@ -80,7 +80,7 @@ public final class TracingProperties {
     /**
      * Contains applied mappings.
      */
-    public static final IProperty<InternalTraceMap> TRACING_MAP = new Property<InternalTraceMap>(
+    public static final IProperty<TracingMapping> TRACING_MAP = new Property<TracingMapping>(
             "de.cau.cs.kieler.kitt.klighd.tracing.map", null);
     
     /**
