@@ -18,7 +18,8 @@ Require-Bundle: org.eclipse.ui,
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
  de.cau.cs.kieler.esterel.kexpressions;bundle-version="0.4.3",
- de.cau.cs.kieler.kico.ui;bundle-version="0.1.0"
+ de.cau.cs.kieler.kico.ui;bundle-version="0.1.0",
+ de.cau.cs.kieler.core.annotations;bundle-version="0.3.3"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 
