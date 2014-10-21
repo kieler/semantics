@@ -4168,8 +4168,8 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u0099",
             "\1\u009a",
             "\1\u009b",
-            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\17\62\1\u009c\3"+
-            "\62\1\u009d\6\62",
+            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\17\62\1\u009c\3\62"+
+            "\1\u009d\6\62",
             "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\32\62",
             "\1\u00a0",
             "",
@@ -4197,8 +4197,7 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u00b4",
             "\1\u00b5",
             "\1\u00b6",
-            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\24\62\1\u00b7\5"+
-            "\62",
+            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\24\62\1\u00b7\5\62",
             "\1\u00b9",
             "\1\u00ba",
             "\1\u00bb\1\uffff\1\u00bc",
@@ -4224,16 +4223,14 @@ public class InternalEsterelLexer extends Lexer {
             "",
             "",
             "\1\u00c6",
-            "\12\u00ca\1\u00c8\2\u00ca\1\u00c7\157\u00ca\1\u00c9\uff82"+
-            "\u00ca",
+            "\12\u00ca\1\u00c8\2\u00ca\1\u00c7\157\u00ca\1\u00c9\uff82\u00ca",
             "",
             "",
             "",
             "",
             "",
             "",
-            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\24\62\1\u00cb\5"+
-            "\62",
+            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\24\62\1\u00cb\5\62",
             "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\32\62",
             "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\32\62",
             "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\32\62",
@@ -4276,8 +4273,7 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u00f4",
             "\1\u00f5",
             "\1\u00f6",
-            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\22\62\1\u00f7\7"+
-            "\62",
+            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\22\62\1\u00f7\7\62",
             "\1\u00f9",
             "\1\u00fa",
             "\1\u00fb",
@@ -4292,8 +4288,7 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u0103",
             "\1\u0104",
             "\1\u0105",
-            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\7\62\1\u0106\22"+
-            "\62",
+            "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\7\62\1\u0106\22\62",
             "\1\u0108",
             "",
             "",
@@ -4305,8 +4300,7 @@ public class InternalEsterelLexer extends Lexer {
             "\0\u010c",
             "\12\u00ca\1\u00c8\2\u00ca\1\u00c7\27\u00ca\1\u010d\127\u00ca"+
             "\1\u00c9\uff82\u00ca",
-            "\12\u00ca\1\u00c8\2\u00ca\1\u00c7\157\u00ca\1\u00c9\uff82"+
-            "\u00ca",
+            "\12\u00ca\1\u00c8\2\u00ca\1\u00c7\157\u00ca\1\u00c9\uff82\u00ca",
             "\1\u010e",
             "",
             "",
@@ -4373,8 +4367,7 @@ public class InternalEsterelLexer extends Lexer {
             "",
             "\1\u0146",
             "",
-            "\12\u00ca\1\u00c8\2\u00ca\1\u00c7\157\u00ca\1\u00c9\uff82"+
-            "\u00ca",
+            "\12\u00ca\1\u00c8\2\u00ca\1\u00c7\157\u00ca\1\u00c9\uff82\u00ca",
             "\1\u0147",
             "",
             "\12\62\7\uffff\32\62\4\uffff\1\62\1\uffff\32\62",
