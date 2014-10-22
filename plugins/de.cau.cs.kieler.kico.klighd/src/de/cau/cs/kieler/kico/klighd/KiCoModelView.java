@@ -77,6 +77,7 @@ import de.cau.cs.kieler.kico.klighd.model.KiCoMessageModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
 import de.cau.cs.kieler.kico.ui.KiCoSelection;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
+import de.cau.cs.kieler.kitt.tracing.TracingManager;
 import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.KlighdDataManager;
 import de.cau.cs.kieler.klighd.KlighdPlugin;
@@ -184,10 +185,15 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     /** Flag if this view is paused and does not update its model due to external changes. */
     private boolean pauseSynchronization = false;
 
-    /** The action for toggling pausing of synchronization. */
+    /** The action for toggling diagram placeholders. */
     private Action actionNoDiagramToggle;
-    /** Flag if this view is paused and does not update its model due to external changes. */
+    /** Flag if model placeholders will be displayed. */
     private boolean noDiagram = false;
+    
+    /** The action for toggling tracing. */
+    private Action actionTracingToggle;
+    /** Flag if tracing is activated. */
+    private boolean doTracing = true;
 
     // Models
 
@@ -258,12 +264,22 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             return ID + "." + secondaryID;
         }
     }
+    
+    // -- Getter
+    // -------------------------------------------------------------------------    
 
     /**
-     * @return if this view is primary
+     * @return true if this view is primary
      */
     public boolean isPrimaryView() {
         return secondaryID == null;
+    }
+
+    /**
+     * @return the sourceModel
+     */
+    public EObject getSourceModel() {
+        return sourceModel;
     }
 
     // -- LISTENER
@@ -300,6 +316,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
         
         IMenuManager menu = bars.getMenuManager();
         menu.add(new Separator());
+        menu.add(getActionTracing());
         menu.add(getActionPauseSync());
         menu.add(getActionNoDiagram());
 
@@ -477,6 +494,8 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                     displaySideBySide = true;
                     displayChain = false;
                     actionChainToggle.setChecked(displayChain);
+                }else{
+                    displaySideBySide = false;
                 }
                 updateModel(ChangeEvent.DISPLAY_MODE);
             }
@@ -504,6 +523,8 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                     displayChain = true;
                     displaySideBySide = false;
                     actionSideBySideToggle.setChecked(displaySideBySide);
+                }else{
+                    displayChain = false;
                 }
                 updateModel(ChangeEvent.DISPLAY_MODE);
             }
@@ -562,30 +583,23 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * @return the action
      */
     private Action getActionPauseSync() {
-        final String pauseText = "Decouple from editors";
-        final String continueText = "Couple to editors";
-
         if (actionPauseSyncToggle != null) {
             return actionPauseSyncToggle;
         }
-        actionPauseSyncToggle = new Action("", IAction.AS_PUSH_BUTTON) {
+        actionPauseSyncToggle = new Action("", IAction.AS_CHECK_BOX) {
             public void run() {
-
-                if (pauseSynchronization) {
-                    pauseSynchronization = false;
-                    setText(pauseText);
+                pauseSynchronization = !isChecked();
+                if (!pauseSynchronization) {
                     // force view to update model
                     updateModel(ChangeEvent.ACTIVE_EDITOR);
-                } else {
-                    pauseSynchronization = true;
-                    setText(continueText);
                 }
                 updateViewTitle();
             }
         };
-        actionPauseSyncToggle.setText(pauseText);
+        actionPauseSyncToggle.setChecked(!pauseSynchronization);
+        actionPauseSyncToggle.setText("Synchronize with editor");
         actionPauseSyncToggle
-                .setToolTipText("If paused, this view will no longer update its status.");
+                .setToolTipText("If Synchronize is disabled, this view will no longer update its status when editor changes.");
         return actionPauseSyncToggle;
     }
 
@@ -595,31 +609,42 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * @return the action
      */
     private Action getActionNoDiagram() {
-        final String pauseText = "Deactivate model visualization";
-        final String continueText = "Activate model visualization";
-
         if (actionNoDiagramToggle != null) {
             return actionNoDiagramToggle;
         }
-        actionNoDiagramToggle = new Action("", IAction.AS_PUSH_BUTTON) {
+        actionNoDiagramToggle = new Action("", IAction.AS_CHECK_BOX) {
             public void run() {
-                if (noDiagram) {
-                    this.setText(pauseText);
-                    noDiagram = false;
-                    // force synthesis of diagram
-                    if (currentModel != null) {
-                        updateDiagram(currentModel, true, activeEditor);
-                    }
-                } else {
-                    this.setText(continueText);
-                    noDiagram = true;
-                }
+                noDiagram = !isChecked();
+                // force new synthesis of diagram
+                updateModel(ChangeEvent.DISPLAY_MODE);
             }
         };
-        actionNoDiagramToggle.setText(pauseText);
+        actionNoDiagramToggle.setChecked(!noDiagram);
+        actionNoDiagramToggle.setText("Model visualization");
         actionNoDiagramToggle
                 .setToolTipText("If visualization is deactiveted, all diagrams will be replaced by a placeholder diagram.");
         return actionNoDiagramToggle;
+    }
+
+    /**
+     * Gets the action to switch of activation of tracing.
+     * 
+     * @return the action
+     */
+    private Action getActionTracing() {
+        if (actionTracingToggle != null) {
+            return actionTracingToggle;
+        }
+        actionTracingToggle = new Action("", IAction.AS_CHECK_BOX) {
+            public void run() {
+                doTracing = isChecked();
+            }
+        };
+        actionTracingToggle.setChecked(doTracing);
+        actionTracingToggle.setText("Tracing");
+        actionTracingToggle
+                .setToolTipText("Performes tracing during transformations if activated.");
+        return actionTracingToggle;
     }
 
     // -- Save model
@@ -935,6 +960,11 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                     if (currentCompilation != null) {
                         currentCompilation.cancel();
                     }
+                    
+                    if(doTracing){// KITT
+                        TracingManager.activateTracing(sourceModel);
+                    }                   
+                    
                     // create compilation job
                     currentCompilation =
                             new KiCoAsynchronousCompilation(this, (EObject) sourceModel,
