@@ -60,11 +60,6 @@ class TracingMapping extends EContentAdapter {
         this.rmapping = mapping.rmapping;
         this.delegate = mapping
         this.title = title
-        if (mapping.title == null || mapping.title.empty) {
-            mapping.title = title
-        } else {
-            mapping.title = mapping.title + "," + title
-        }
     }
 
     // -------------------------------------------------------------------------
@@ -73,6 +68,7 @@ class TracingMapping extends EContentAdapter {
 	 * Maps given target to its origin.
      * @return true if the mapping changed.
      * @throws NullPointerException if target or origin is null.
+     * @throws IllegalArgumentException if target origin relation adds a loop to the overall mapping.
 	 */
     def boolean put(Object origin, Object target) {
         checkNotNull(origin, "Origin object is null");
@@ -91,6 +87,7 @@ class TracingMapping extends EContentAdapter {
      * @return true if the mapping changed.
 	 * @throws NullPointerException if targets or origin is null.
 	 * @throws IllegalArgumentException if targets list contains null element.
+     * @throws IllegalArgumentException if target origin relation adds a loop to the overall mapping.
 	 */
     def boolean put(Object origin, List<Object> targets) {
         checkNotNull(origin, "Origin object is null");
@@ -104,6 +101,22 @@ class TracingMapping extends EContentAdapter {
 
         targets.forEach[rmapping.put(it, origin)];
         return mapping.putAll(origin, targets);
+    }
+
+    /**
+     * Maps given target to its origin.
+     * <p>
+     * If origin is an element form the target model such as target. The target will be associated to the same origins such as origin.
+     * @return true if the mapping changed.
+     * @throws NullPointerException if target or origin is null.
+     * @throws IllegalArgumentException if target origin relation adds a loop to the overall mapping.
+     */
+    def smartPut(Object origin, Object target) {
+        if (rmapping.containsKey(origin)) { //origin is brother element
+            origin.origins.fold(false)[ret, it|ret || it.put(target)];
+        } else {
+            origin.put(target)
+        }
     }
 
     /**
@@ -168,10 +181,6 @@ class TracingMapping extends EContentAdapter {
         mapping.clear();
     }
 
-    def contains(Object obj) {
-        return mapping.containsKey(obj) || rmapping.containsKey(obj);
-    }
-
     // -------------------------------------------------------------------------
     // Mapped Copies
     /**
@@ -219,11 +228,16 @@ class TracingMapping extends EContentAdapter {
         return result;
     }
 
-    //remove stuff
+    // -------------------------------------------------------------------------
+    // Adapter
+    /**
+     * Handles removing of mapping-relations when an element is removed from model,
+     */
     override notifyChanged(Notification notification) {
-        val EObject notifier = notification.notifier as EObject;
         if (notification.eventType == Notification.ADD) {
             val EObject element = notification.newValue as EObject;
+
+            //If element is added which was removed earlier then restore mappings
             if (removedEntries.containsKey(element)) {
                 removedEntries.get(element).forEach[put(it.first, it.second)];
                 removedEntries.remove(element);
@@ -234,6 +248,8 @@ class TracingMapping extends EContentAdapter {
             }
         } else if (notification.eventType == Notification.REMOVE) {
             val EObject element = notification.oldValue as EObject;
+
+            //remove all relation even of contained child elements
             if (!contains(element.eContainer)) {
                 removedEntries.put(element, element.removeAll);
                 element.eAllContents.forEach[removedEntries.put(it, it.removeAll)]
@@ -241,25 +257,34 @@ class TracingMapping extends EContentAdapter {
         }
     }
 
-
-    //smart
-    def smartPut(Object origin, Object target) {
-        if (rmapping.containsKey(origin)) { //origin is brother element
-            origin.origins.forEach[it.put(target)];
-        } else {
-            origin.put(target)
-        }
+    // -------------------------------------------------------------------------
+    // mapping administration
+    /**
+     * Returns true if given object is contain in this mapping. Either as origin or target.
+     * @param object object to check for
+     * @return containment in mapping 
+     */
+    def contains(Object object) {
+        return mapping.containsKey(object) || rmapping.containsKey(object);
     }
 
-    //hint: no loop check
-    def putAll(TracingMapping otherMapping) {
+    /**
+     * Puts all relations of given mapping into this mapping
+     * @param otherMapping the other mapping
+     */
+    def void putAll(TracingMapping otherMapping) {
         checkState(!inPlace, "Cannot perform putAll for in-place tracing mapping.");
         mapping.putAll(otherMapping.mapping)
         rmapping.putAll(otherMapping.rmapping)
     }
 
-    //hint: no loop check
-    def putAll(Multimap<Object, Object> otherMapping) {
+    /**
+     * Puts all relations of given multimap into this mapping.
+     * <p>
+     * The other mapping must be sane in case of loops in relations because this method does not check this property but assumes sanity.
+     * @param otherMapping the other mapping
+     */
+    def void putAll(Multimap<Object, Object> otherMapping) {
         checkState(!inPlace, "Cannot perform putAll for in-place tracing mapping.");
         otherMapping.entries.forEach [
             mapping.put(it.key, it.value)
@@ -267,21 +292,41 @@ class TracingMapping extends EContentAdapter {
         ]
     }
 
+    /**
+     * Returns the internal origin-to-target mapping.
+     */
     package def getMapping() {
         return mapping;
     }
 
+    /**
+     * Returns the internal target-to-origin mapping.
+     */
     package def getReverseMapping() {
         return rmapping;
     }
 
-    def getEntryIterator() {
-        return mapping.entries.iterator
+    /**
+     * Returns the internal delegate mapping if this mapping is an in-place mapping.
+     */
+    package def getDelegate() {
+        return delegate;
     }
 
     /**
- * ret never null
- */
+     * Returns an Iterator over all origin-target-pairs in this mapping.
+     * <p>
+     * Removing any element will cause an inconsistent mapping.
+     * @return iterator over all entries. 
+     */
+    def getEntryIterator() {
+        return mapping.entries.iterator;
+    }
+
+    /**
+     * Returns the title of the mapping.
+     * @return title string.
+     */
     def getTitle() {
         return if (title == null) {
             ""
@@ -290,16 +335,19 @@ class TracingMapping extends EContentAdapter {
         };
     }
 
+    /**
+     * Set the title of the mapping to newTitle.
+     * @param newTitle new title.
+     */
     def setTitle(String newTitle) {
         title = newTitle;
     }
 
+    /**
+     * @return true if this mapping is an in-place mapping.
+     */
     def isInPlace() {
         return delegate != null;
-    }
-
-    package def getDelegate() {
-        return delegate;
     }
 
 }

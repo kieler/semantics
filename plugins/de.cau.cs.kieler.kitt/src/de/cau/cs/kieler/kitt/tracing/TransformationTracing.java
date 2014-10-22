@@ -25,11 +25,14 @@ import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping;
 import de.cau.cs.kieler.kitt.tracing.internal.TracingReport;
 
 /**
+ * Supports multiple concurrent transformations
+ * 
  * @author als
  * 
  */
 public class TransformationTracing {
-    
+
+    /** If DEBUG is true additional output are made when a mapping is created */
     public static boolean DEBUG = true;
 
     private static HashMap<Thread, TracingMapping> activeTransformations =
@@ -39,26 +42,28 @@ public class TransformationTracing {
             new HashMap<Thread, HashMap<EObject, EObject>>(4);
 
     public static boolean startTransformationTracing(final EObject sourceModel) {
-        return startTransformationTracing(sourceModel, null, true);
+        return startTransformationTracing(sourceModel, null, null, true);
     }
 
     public static boolean startTransformationTracing(final EObject sourceModel, String name) {
-        return startTransformationTracing(sourceModel, name, true);
+        return startTransformationTracing(sourceModel, null, name, true);
     }
 
     public static boolean startTransformationTracing(final EObject sourceModel,
             final boolean inPlaceTransformation) {
-        return startTransformationTracing(sourceModel, null, inPlaceTransformation);
+        return startTransformationTracing(sourceModel, null, null, inPlaceTransformation);
     }
 
-    public static boolean startTransformationTracing(final EObject sourceModel, String name,
-            final boolean inPlaceTransformation) {
+    public static boolean startTransformationTracing(final EObject sourceModel,
+            final EObject targetModel, final String name, final boolean inPlaceTransformation) {
         Preconditions.checkNotNull(sourceModel, "Source model is null");
         Thread t = Thread.currentThread();
         if (TracingManager.isTracingActivated(sourceModel)) {
             if (activeTransformations.containsKey(t)) {
+                activeTransformations.remove(t);// try to fix
                 throw new IllegalStateException(
                         "Cannot start transformation tracing for given model until other current transformation on the same model have finished");
+
             }
             if (inPlaceTransformation) {
                 TracingChain tracingChain = TracingManager.getTracingChain(sourceModel);
@@ -73,20 +78,29 @@ public class TransformationTracing {
                     }
                 }
             } else {
-                activeTransformations.put(t, new TracingMapping(name));
+                TracingMapping mapping = new TracingMapping(name);
+                activeTransformations.put(t, mapping);
                 appiledDefaultTracings.put(t, new HashMap<EObject, EObject>());
+                if (targetModel != null) {
+                    targetModel.eAdapters().add(mapping);
+                }
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean creationalTransformation(final EObject sourceModel) {
+    public static boolean creationalTransformation(final EObject sourceModel,
+            final EObject targetModel) {
         Thread t = Thread.currentThread();
         if (activeTransformations.containsKey(t)) {
-            TracingMapping deprecatedTransformation = activeTransformations.get(t);
-            sourceModel.eAdapters().remove(deprecatedTransformation);
-            activeTransformations.put(t, new TracingMapping(deprecatedTransformation.getTitle()));
+            TracingMapping mapping = activeTransformations.get(t);
+            if (mapping.isInPlace()) {
+                finishTransformationTracing(sourceModel, sourceModel);
+            } else {
+                finishTransformationTracing(sourceModel, targetModel);
+            }
+            startTransformationTracing(sourceModel, targetModel, mapping.getTitle(), false);
             return true;
         }
         return false;
@@ -97,7 +111,7 @@ public class TransformationTracing {
         Thread t = Thread.currentThread();
         TracingMapping mapping = activeTransformations.get(t);
         if (mapping != null && sourceModel != null && targetModel != null) {
-            if(DEBUG){
+            if (DEBUG) {
                 new TracingReport(sourceModel, targetModel, mapping).printReport();
             }
             TracingManager.addTransformationTrace(sourceModel, targetModel, mapping);
@@ -120,9 +134,12 @@ public class TransformationTracing {
     }
 
     /**
-     * entwerder source target oder bruder beziehung
+     * Traces given target with its origin.
      * <p>
-     * overries default traces, bu tn or explicit ones
+     * If origin is an element form the target model such as target. The target will be associated
+     * to the same origins such as origin.
+     * <p>
+     * Overwrites any default traces if exists.
      * 
      * @param eObject
      * @param origin
@@ -145,14 +162,15 @@ public class TransformationTracing {
 
     public static <T extends EObject> T trace(final T eObject, final EObject... origins) {
         for (EObject origin : origins) {
-            trace(eObject, origin);
+            if (origin != null) {
+                trace(eObject, origin);
+            }
         }
         return eObject;
     }
 
     /**
-     * kein multi tracing (meherere origing per traceToDefault möglich, auch keine kombination aus
-     * default und normalen trace)
+     * Traced given object to the DefaultTrace is set.
      * 
      * @param eObject
      * @return
@@ -167,7 +185,13 @@ public class TransformationTracing {
         return eObject;
     }
 
-    public static <T extends EObject> T traceDefault(final T origin) {
+    /**
+     * Sets given origin ad default origin applied in {@link traceToDefault}.
+     * 
+     * @param origin
+     * @return origin
+     */
+    public static <T extends EObject> T setDefaultTrace(final T origin) {
         tracingDefaults.put(Thread.currentThread(), origin);
         return origin;
     }

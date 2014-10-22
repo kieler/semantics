@@ -22,11 +22,13 @@ import de.cau.cs.kieler.kitt.tracing.TracingManager
  */
 class TracingReport {
     val TracingMapping mapping;
+
     val EObject source;
     val sourceElementInMapping = newHashSet();
     val sourceElementInTragetMapping = newHashSet();
     val sourceElementNotInMapping = newHashSet();
     val mappedSourceElementNotInModel = newHashSet();
+
     val EObject target;
     val targetElementInMapping = newHashSet();
     val targetElementInTragetMapping = newHashSet();
@@ -47,39 +49,44 @@ class TracingReport {
         } else {
             source = null
         }
+        if (targetModel instanceof EObject) {
+            target = targetModel as EObject;
+        } else {
+            target = null
+        }
+        analyseMapping;
+    }
+
+    private def void analyseMapping() {
         if (source != null) {
             source.eAllContents.fold(newArrayList(source))[list, item|list.add(item); list].forEach [
-                if (tracingMapping.mapping.containsKey(it)) {
+                if (mapping.mapping.containsKey(it)) {
                     sourceElementInMapping.add(it);
-                } else if (tracingMapping.reverseMapping.containsKey(it)) {
+                } else if (mapping.reverseMapping.containsKey(it)) {
                     sourceElementInTragetMapping.add(it);
                 } else {
                     sourceElementNotInMapping.add(it);
                 }
             ];
             mappedSourceElementNotInModel.addAll(
-                tracingMapping.mapping.keySet.filter[!sourceElementInMapping.contains(it)]);
-
+                mapping.mapping.keySet.filter[!sourceElementInMapping.contains(it)]);
         }
-        if (targetModel instanceof EObject) {
-            target = targetModel as EObject;
+        if (target != null) {
             target.eAllContents.fold(newArrayList(target))[list, item|list.add(item); list].forEach [
-                if (tracingMapping.reverseMapping.containsKey(it)) {
+                if (mapping.reverseMapping.containsKey(it)) {
                     targetElementInMapping.add(it);
-                } else if (tracingMapping.mapping.containsKey(it)) {
+                } else if (mapping.mapping.containsKey(it)) {
                     targetElementInTragetMapping.add(it);
                 } else {
                     targetElementNotInMapping.add(it);
                 }
             ];
             mappedTargetElementNotInModel.addAll(
-                tracingMapping.reverseMapping.keySet.filter[!targetElementInMapping.contains(it)]);
-        } else {
-            target = null
+                mapping.reverseMapping.keySet.filter[!targetElementInMapping.contains(it)]);
         }
     }
 
-    def printReport() {
+    def void printReport() {
         println("Mapping: " + mapping.title);
         if (sourceElementInTragetMapping.empty && sourceElementNotInMapping.empty && mappedSourceElementNotInModel.empty) {
             println(" Source Mapping: OK");
