@@ -87,11 +87,12 @@
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.extension">
-      <ResourceExtensionInformation
+      <ExtensionInformation
             className="SCGraph"
+            editor_id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
             extensionName="scg"
             isXMI="true">
-      </ResourceExtensionInformation>
+      </ExtensionInformation>
    </extension>
 
 

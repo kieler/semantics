@@ -27,6 +27,8 @@ public class KiCoCodePlaceHolder {
     private final String code;
     /** name of program represented by code */
     private final String name;
+    /** ID of the editor to open */
+    private final String editorID;
 
     /**
      * Creates a CodePlaceHolder for given code.
@@ -34,9 +36,19 @@ public class KiCoCodePlaceHolder {
      * @param code
      */
     public KiCoCodePlaceHolder(String name, String code) {
+        this(name, code, null);
+    }
+    
+    /**
+     * Creates a CodePlaceHolder for given code.
+     * 
+     * @param code
+     */
+    public KiCoCodePlaceHolder(String name, String code, String editorID) {
         super();
         this.name = name;
         this.code = code;
+        this.editorID = editorID;
     }
 
     /**
@@ -52,4 +64,12 @@ public class KiCoCodePlaceHolder {
     public String getName() {
         return name;
     }
+
+    /**
+     * @return the editorID
+     */
+    public String getEditorID() {
+        return editorID != null ? editorID : "org.eclipse.ui.DefaultTextEditor";
+    }
+    
 }

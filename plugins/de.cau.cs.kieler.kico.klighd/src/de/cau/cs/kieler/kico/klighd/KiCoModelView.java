@@ -73,7 +73,9 @@ import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KiCoPlugin;
+import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompilerException;
+import de.cau.cs.kieler.kico.ResourceExtension;
 import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoMessageModel;
@@ -691,9 +693,9 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 filename = filename.substring(0, filename.lastIndexOf('.'));
             }
             // Adding file extension
-            String ext = KiCoPlugin.getInstance().getResourceExtension(currentModel);
+            ResourceExtension ext = KiCoPlugin.getInstance().getResourceExtension(currentModel);
             if (ext != null) {
-                filename += "." + ext;
+                filename += "." + ext.getExtension();
             }
             return filename;
         }
@@ -1111,8 +1113,18 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             } else {
                 KNode currentDiagram = this.getViewer().getViewContext().getViewModel();
                 if (currentDiagram == null || currentDiagram.getChildren().isEmpty()) {
-                    throw new NullPointerException(
-                            "Diagram is null or empty. Inernal KLighD error.");
+                    if (model instanceof EObject && !(model instanceof KiCoCodePlaceHolder)) {
+                        String editorID = null;
+                        //TODO Cannot open xtext editor because it fails to create a resource for the special StringEditorInput because it has no path
+//                        ResourceExtension ext = KiCoPlugin.getInstance().getResourceExtension(currentModel);
+//                        if (ext != null) {
+//                            editorID = ext.getEditorID();
+//                        }
+                        updateDiagram(new KiCoCodePlaceHolder(getCurrentFileName(), KiCoUtil.serialize((EObject)model, null, false), editorID), true, editorContext, null, null, false);
+                    } else {
+                        throw new NullPointerException(
+                                "Diagram is null or empty. Inernal KLighD error.");
+                    }
                 }
             }
 

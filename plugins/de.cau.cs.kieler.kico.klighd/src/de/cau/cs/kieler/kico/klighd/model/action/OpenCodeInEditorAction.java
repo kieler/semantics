@@ -69,7 +69,7 @@ public class OpenCodeInEditorAction implements IAction {
             IWorkbenchPage page = window.getActivePage();
             if (page != null)
                 try {
-                    page.openEditor(input, "org.eclipse.ui.DefaultTextEditor");
+                    page.openEditor(input, codeModel.getEditorID());
                 } catch (PartInitException e) {
                     e.printStackTrace();
                 }
