@@ -35,5 +35,14 @@
             name="genS">
       </command>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <transformationMethod
+            class="de.cau.cs.kieler.sccharts.prio.s.xtend.SCChartsPrio2S"
+            id="SCCHARTSPRIO2S"
+            method="transform"
+            name="Prio S Code">
+      </transformationMethod>
+   </extension>
 
 </plugin>
