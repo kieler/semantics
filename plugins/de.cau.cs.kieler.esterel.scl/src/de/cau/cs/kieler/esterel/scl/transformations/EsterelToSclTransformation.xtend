@@ -12,7 +12,6 @@
  * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.esterel.scl.transformations
-//TODO Sequence
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
@@ -53,6 +52,10 @@ import org.eclipse.emf.common.util.EList
 import java.util.LinkedList
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.esterel.kexpressions.Signal
+import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
+import de.cau.cs.kieler.esterel.esterel.LocalSignal
+import de.cau.cs.kieler.core.kexpressions.Declaration
 
 /**
  * @author krat
@@ -67,13 +70,14 @@ class EsterelToSclTransformation extends Transformation {
     @Inject
     extension EsterelToSclExtensions
     
-    // For KiCo
+    // KiCO
     override EObject transform(EObject eObject, KielerCompilerContext contex) {
         return transform(eObject as de.cau.cs.kieler.esterel.esterel.Program) as EObject
     }
     
     
     public def Program transform(de.cau.cs.kieler.esterel.esterel.Program esterelProgram) {
+        System.out.println("Transforming to SCL...")
         // Create the SCL program
         val program = SclFactory::eINSTANCE.createProgram()
         // TODO handle several modules
@@ -89,22 +93,22 @@ class EsterelToSclTransformation extends Transformation {
                 type = ValueType::BOOL
             ]
             for (sig : sigs.signals) {
-                System.out.println("sig: " + sig)
                 val variable = createValuedObject(sig.name)
                 variables.add(variable)
                 decl.valuedObjects.add(variable)
             }
-            program.declarations.add(decl)  
+            program.declarations.add(decl)
         }
+        
 
 
 
 
         // Body transformations
-        // TODO combine with output reset thread creations
+        val body = SclFactory::eINSTANCE.createStatementSequence
         for (stm : esterelMod.body.statements) {
-            System.out.println("transofmring" + stm)
-            program.statements.addAll(transformStm(stm).statements);
+            //TODO later
+            body.statements.addAll(transformStm(stm).statements);
         }
         
         // Add reset thread for outputs
@@ -116,9 +120,9 @@ class EsterelToSclTransformation extends Transformation {
         program.declarations.add(decl)
         
         val par = SclFactory::eINSTANCE.createParallel
-        par.threads.add(handleOutputs(program, f_term))
+        par.threads.add(handleOutputs(program.declarations, f_term))
         par.threads.add(SclFactory::eINSTANCE.createThread => [
-            statements.addAll(program.statements)
+            statements.addAll(body.statements)
             statements.add(createStmFromInstr(createAssignment(f_term, createBoolValue(true))))
         ])
         
@@ -128,16 +132,16 @@ class EsterelToSclTransformation extends Transformation {
         // Reset labelcount
         resetLabelCount
 
-        // Return the transformed program        
+        // Return the transformed program 
         program
     }
     
     
     /*
-     * Creates thread to set former output signals to false at the start
+     * Creates thread to set output signals to false at the start
      * of every tick
      */
-    def de.cau.cs.kieler.scl.scl.Thread handleOutputs(Program program, ValuedObject f_term) {
+    def de.cau.cs.kieler.scl.scl.Thread handleOutputs(EList<Declaration> decls, ValuedObject f_term) {
         val th = SclFactory::eINSTANCE.createThread
         val l = createFreshLabel
         
@@ -145,8 +149,8 @@ class EsterelToSclTransformation extends Transformation {
              label = l
         ])
         
-        for (decl : program.declarations) {
-            if (decl.output == true) {
+        for (decl : decls) {
+            if (decl.output == true && decl.input == false) {
                 for (value : decl.valuedObjects) {
                     th.statements.add(createStmFromInstr(createAssignment(value, createBoolValue(false))))
                 }
@@ -180,7 +184,6 @@ class EsterelToSclTransformation extends Transformation {
      * emit s
      */
     def dispatch StatementSequence transformStm(Emit emit) {   
-          
         val variable = getValuedObject(variables, emit.signal.name)
         
         val variableRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
@@ -203,13 +206,9 @@ class EsterelToSclTransformation extends Transformation {
         val sclPar = SclFactory::eINSTANCE.createParallel
         
         for (th : par.list) {
-            val sclTh = SclFactory::eINSTANCE.createThread
-            
-            sclTh.statements.addAll(transformStm(th).statements)
-            sclTh.statements.add(SclFactory::eINSTANCE.createEmptyStatement => [
+            sclPar.threads.add(SclFactory::eINSTANCE.createThread => [
+                statements.addAll(transformStm(th).statements)
             ])
-            
-            sclPar.threads.add(sclTh)
         }
 
         createSseq(createStmFromInstr(sclPar))
@@ -220,10 +219,8 @@ class EsterelToSclTransformation extends Transformation {
      * p; q
      */
     def dispatch StatementSequence transformStm(Sequence seq) {
-        System.out.println("transofmring" + seq.list.length)
         SclFactory::eINSTANCE.createStatementSequence => [
             for (stm : seq.list) {
-                System.out.println("transofmring" + stm)
                 statements.addAll(transformStm(stm).statements)
             }    
         ]    
@@ -235,7 +232,6 @@ class EsterelToSclTransformation extends Transformation {
      * TODO await case
      */
     def dispatch StatementSequence transformStm(Await await) {
-        System.out.println("await");
         if (await.body instanceof AwaitCase) {
             return transformStm(awaitToPresentCase(await.body as AwaitCase))
         }
@@ -283,14 +279,19 @@ class EsterelToSclTransformation extends Transformation {
         
     }
     
+    /*
+     * TODO fix
+     */
     def Present awaitToPresentCase(AwaitCase cases) {
         val pres = EsterelFactory::eINSTANCE.createPresent
         val body = EsterelFactory::eINSTANCE.createPresentCaseList
-        System.out.println("1")
+        System.out.println("1!!!!")
         for (singleCase : cases.cases) {
-            System.out.println(singleCase.delay.event.expr)
             body.cases.add(EsterelFactory::eINSTANCE.createPresentCase => [
-//                event.expression = singleCase.delay.expr
+                event = EsterelFactory::eINSTANCE.createPresentEvent => [
+                    expression = singleCase.delay.expr
+                ]
+                System.out.println("singleCase.delay " + singleCase.delay)
                 statement = singleCase.statement
             ])
         }
@@ -382,6 +383,7 @@ class EsterelToSclTransformation extends Transformation {
         }
         //present case s do ...
         else if (pres.body instanceof PresentCaseList) {
+            System.out.println("presesnt case")
             val cond = handleCaseList((pres.body as PresentCaseList).cases, 0, pres.elsePart)
             return createSseq(createStmFromInstr(cond))
         }
@@ -391,6 +393,7 @@ class EsterelToSclTransformation extends Transformation {
      * Creates nested conditional equivalent to cases list
      */
     def Conditional handleCaseList(EList<PresentCase> cases, int idx, ElsePart elsePart) {
+        System.out.println("handle case")
         if (cases.length > idx+1) {
             return SclFactory::eINSTANCE.createConditional => [
                 expression = transformExp(cases.get(idx).event.expression)
@@ -399,6 +402,7 @@ class EsterelToSclTransformation extends Transformation {
             ]
         }
         else {
+            System.out.println("else case")
             return SclFactory::eINSTANCE.createConditional => [
                 expression = transformExp(cases.get(idx).event.expression)
                 statements.addAll(transformStm(cases.get(idx).statement).statements)
@@ -408,6 +412,21 @@ class EsterelToSclTransformation extends Transformation {
             ]
         }
     }
+    
+    
+    /*
+     * signal
+     * Local signals are handled as global output signals
+     * TODO: local signals in xtext
+     */
+//     def dispatch StatementSequence transformStm(LocalSignalDecl signal) {
+//         for (s : (signal.signalList as LocalSignal).signal) {
+//             val obj = createValuedObject(s.name)
+//             variables.add(obj)
+//         }
+//          
+//         transformStm(signal.statement)
+//     }
     
     
     /*

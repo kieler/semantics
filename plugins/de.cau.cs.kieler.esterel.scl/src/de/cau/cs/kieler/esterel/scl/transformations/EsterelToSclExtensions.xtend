@@ -98,7 +98,7 @@ class EsterelToSclExtensions {
     
     /*
      * Takes a variable name and a list of exisiting variables and
-     * adds "_" until varaible name is new
+     * adds "_" until variable name is new
      */
      def String uniqueName(LinkedList<ValuedObject> variables, String s) {
          if (variables.findFirst[name == s] == null) {

@@ -39,15 +39,29 @@
          point="de.cau.cs.kieler.kico.transformation">
       <transformationMethod
             class="de.cau.cs.kieler.esterel.scl.transformations.EsterelToSclTransformation"
+            dependencies="SCLOPT"
             id="ESTERELTOSCL"
-            method="transform">
+            method="transform"
+            name="SCL">
+      </transformationMethod>
+      <transformationGroup
+            id="SCLGROUP"
+            name="SCL"
+            transformations="ESTERELTOSCL,SCLOPT">
+      </transformationGroup>
+      <transformationMethod
+            class="de.cau.cs.kieler.esterel.scl.transformations.EsterelToSclTransformation"
+            dependencies="SCG"
+            id="SCLOPT"
+            method="transform"
+            name="SCL Optimizations">
       </transformationMethod>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.ui.transformation">
       <editor
             editor="de.cau.cs.kieler.esterel.Esterel"
-            transformations="ESTERELTOSCL">
+            transformations="SCLGROUP,SCLOPT,ESTERELTOSCL,SCGRAPH, SCG, SCGDEP, SCGBB, SCGBBSCPLUS, SCGSCHEDSIMPLE, SCGSCHEDDELAYAWARE, SCGSCHEDTHREADAWARE, SCGSEQHYBRID, SCGSEQSIMPLE, SCGSEQGROUP, SCGBBGROUP, SCGSCHEDGROUP,CODEGENERATION, SCG2S, SCG2C">
       </editor>
    </extension>
 
