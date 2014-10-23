@@ -25,10 +25,15 @@ public class KiCoCodePlaceHolder {
 
     /** Code content */
     private final String code;
+    
     /** name of program represented by code */
     private final String name;
+
     /** ID of the editor to open */
     private final String editorID;
+    
+    /** The file/resource extension. */
+    private final String resourceExtension;
 
     /**
      * Creates a CodePlaceHolder for given code.
@@ -36,7 +41,7 @@ public class KiCoCodePlaceHolder {
      * @param code
      */
     public KiCoCodePlaceHolder(String name, String code) {
-        this(name, code, null);
+        this(name, code, null, "txt");
     }
     
     /**
@@ -44,13 +49,18 @@ public class KiCoCodePlaceHolder {
      * 
      * @param code
      */
-    public KiCoCodePlaceHolder(String name, String code, String editorID) {
+    public KiCoCodePlaceHolder(String name, String code, String editorID, String resourceExtension) {
         super();
         this.name = name;
         this.code = code;
         this.editorID = editorID;
+        this.resourceExtension = resourceExtension;
     }
 
+    public String getResourceExtension() {
+        return resourceExtension;
+    }
+    
     /**
      * @return the code string
      */

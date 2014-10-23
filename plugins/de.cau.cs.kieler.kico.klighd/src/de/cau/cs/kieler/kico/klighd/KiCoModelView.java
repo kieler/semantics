@@ -600,7 +600,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             IWorkspaceRoot root = workspace.getRoot();
 
             // get filename with correct extension
-            String filename = getCurrentFileName();
+            String filename = getCurrentResourceName();
 
             SaveAsDialog saveAsDialog = new SaveAsDialog(getSite().getShell());
 
@@ -686,7 +686,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     /**
      * @return filename of current model with appropriate file extension
      */
-    private String getCurrentFileName() {
+    private String getCurrentResourceName() {
         if (activeEditor != null && currentModel != null) {
             String filename = activeEditor.getTitle();
             if (filename.contains(".")) {
@@ -1000,7 +1000,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             if (do_update_diagram) {
                 if (noDiagram && is_buisness_model) {
                     updateDiagram(new KiCoMessageModel(
-                            "Model Placeholder: " + getCurrentFileName(),
+                            "Model Placeholder: " + getCurrentResourceName(),
                             "Model visualization is deactivated"), true, activeEditor);
                 } else {
                     updateDiagram(currentModel, model_type_changed, activeEditor);
@@ -1115,12 +1115,18 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 if (currentDiagram == null || currentDiagram.getChildren().isEmpty()) {
                     if (model instanceof EObject && !(model instanceof KiCoCodePlaceHolder)) {
                         String editorID = null;
+                        // Adding file extension
+                        ResourceExtension resourceExtension = KiCoPlugin.getInstance().getResourceExtension(currentModel);
+                        String resourceExtensionString = "txt";
+                        if (resourceExtension != null) {
+                            resourceExtensionString = resourceExtension.getExtension();
+                        }
                         //TODO Cannot open xtext editor because it fails to create a resource for the special StringEditorInput because it has no path
-//                        ResourceExtension ext = KiCoPlugin.getInstance().getResourceExtension(currentModel);
-//                        if (ext != null) {
-//                            editorID = ext.getEditorID();
-//                        }
-                        updateDiagram(new KiCoCodePlaceHolder(getCurrentFileName(), KiCoUtil.serialize((EObject)model, null, false), editorID), true, editorContext, null, null, false);
+                      ResourceExtension ext = KiCoPlugin.getInstance().getResourceExtension(currentModel);
+                      if (ext != null) {
+                          editorID = ext.getEditorID();
+                      }
+                        updateDiagram(new KiCoCodePlaceHolder(getCurrentResourceName(), KiCoUtil.serialize((EObject)model, null, false), editorID, resourceExtensionString), true, editorContext, null, null, false);
                     } else {
                         throw new NullPointerException(
                                 "Diagram is null or empty. Inernal KLighD error.");
