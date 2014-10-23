@@ -75,7 +75,7 @@ class SCChartsPrio2S {
         SCCharts2Dependenies.transform(dependencies, rootState);
         
         // set highest priority
-        target.setPriority(dependencies.nodes.size);
+        target.setPriority(dependencies.nodes.size + 1);
         
         // create mapping from SyncChart states to dependency nodes
         for (node : dependencies.nodes) {
@@ -114,6 +114,8 @@ class SCChartsPrio2S {
         // it has the maximal priority, followed by priorities of unconnected nodes, followed by other connected nodes.
         val dependencyPrioritySortedStates = rootState.getAllContainedStates.toList.sort(e1, e2 | compareTraceDependencyPriority(e1, e2));
         
+        
+        
         // create all states and their mapping
         for (state : dependencyPrioritySortedStates) {
             val isRoot = state.isRootState
@@ -151,7 +153,7 @@ class SCChartsPrio2S {
         }
         
         // handle transitions (as states are created now and gotos can be mapped)
-        for (state : rootState.getAllStates.toList) {
+        for (state : rootState.getAllContainedStates.toList) {
             val sStateSurface = state.surfaceSState
             val sStateDepth = state.depthSState
             state.fillSStateSurface(sStateSurface); 
@@ -228,7 +230,7 @@ class SCChartsPrio2S {
                 sState.instructions.add(sfork);
             }
             // if there is no immediate weak transition, we do not need an extra surface!
-            if (!state.needsExtraSurfaceSState) {
+            if (!state.isRootState && !state.needsExtraSurfaceSState) {
                 // fork join thread with same priority as current thread or proceed with depth
                 val sfork = SFactory::eINSTANCE.createFork();
                 if (state.needsJoinSState) {
@@ -240,7 +242,7 @@ class SCChartsPrio2S {
                 sfork.setPriority(state.highestDependencyStrong);
                 sState.instructions.add(sfork);
             }
-            else {
+            else if (!state.isRootState) {
                 // fork extra surface thread (instead of join/depth thread!) with same priority as current thread
                 val sfork = SFactory::eINSTANCE.createFork();
                 sfork.setContinuation(state.extraSurfaceSState);
