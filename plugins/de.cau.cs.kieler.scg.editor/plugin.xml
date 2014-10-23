@@ -33,29 +33,7 @@
       </wizard>
    </extension>
 
-   <extension point="org.eclipse.ui.editors">
-      <!-- @generated scgsched -->
-      <editor
-            id="de.cau.cs.kieler.scgsched.presentation.ScgschedEditorID"
-            name="%_UI_ScgschedEditor_label"
-            icon="icons/full/obj16/ScgschedModelFile.gif"
-            extensions="scgsched"
-            class="de.cau.cs.kieler.scgsched.presentation.ScgschedEditor"
-            contributorClass="de.cau.cs.kieler.scgsched.presentation.ScgschedActionBarContributor">
-      </editor>
-   </extension>
 
-   <extension point="org.eclipse.ui.editors">
-      <!-- @generated scgbb -->
-      <editor
-            id="de.cau.cs.kieler.scgbb.presentation.ScgbbEditorID"
-            name="%_UI_ScgbbEditor_label"
-            icon="icons/full/obj16/ScgbbModelFile.gif"
-            extensions="scgbb"
-            class="de.cau.cs.kieler.scgbb.presentation.ScgbbEditor"
-            contributorClass="de.cau.cs.kieler.scgbb.presentation.ScgbbActionBarContributor">
-      </editor>
-   </extension>
 
    <extension point="org.eclipse.ui.editors">
       <!-- @generated scg -->
@@ -69,17 +47,6 @@
       </editor>
    </extension>
 
-   <extension point="org.eclipse.ui.editors">
-      <!-- @generated scgdep -->
-      <editor
-            id="de.cau.cs.kieler.scgdep.presentation.ScgdepEditorID"
-            name="%_UI_ScgdepEditor_label"
-            icon="icons/full/obj16/ScgdepModelFile.gif"
-            extensions="scgdep"
-            class="de.cau.cs.kieler.scgdep.presentation.ScgdepEditor"
-            contributorClass="de.cau.cs.kieler.scgdep.presentation.ScgdepActionBarContributor">
-      </editor>
-   </extension>
    <extension
          point="de.cau.cs.kieler.kico.ui.transformation">
       <editor

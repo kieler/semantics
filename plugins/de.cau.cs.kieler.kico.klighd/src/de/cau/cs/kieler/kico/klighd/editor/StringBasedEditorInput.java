@@ -19,6 +19,8 @@ import java.io.InputStream;
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IPersistableElement;
 import org.eclipse.ui.IStorageEditorInput;
@@ -33,11 +35,15 @@ import org.eclipse.ui.IStorageEditorInput;
  * 
  */
 public class StringBasedEditorInput implements IStorageEditorInput {
+
     class StringStorage implements IStorage {
         /** string content */
         protected String content;
         /** read.only */
         private boolean readOnly;
+        
+        /** The resource extension. */
+        private String resourceExtension;
 
         /**
          * Standard Constructor
@@ -47,10 +53,11 @@ public class StringBasedEditorInput implements IStorageEditorInput {
          * @param readonly
          *            if editing should be enabled before saving
          */
-        public StringStorage(String content, boolean readOnly) {
+        public StringStorage(String content, boolean readOnly, String resourceExtension) {
             super();
             this.content = content;
             this.readOnly = readOnly;
+            this.resourceExtension = resourceExtension;
         }
 
         /**
@@ -64,7 +71,10 @@ public class StringBasedEditorInput implements IStorageEditorInput {
          * {@inheritDoc}
          */
         public IPath getFullPath() {
-            return null;
+            String num = (this.hashCode() + "").replace("-", "");
+            //URI uri = URI.createURI("dummy:/inmemory." + num + "." + resourceExtension);
+            IPath path = new Path("dummy:/inmemory/" + num + "." + resourceExtension); 
+            return path;
         }
 
         /**
@@ -118,10 +128,10 @@ public class StringBasedEditorInput implements IStorageEditorInput {
      * @param readonly
      *            if editing should be enabled before saving
      */
-    public StringBasedEditorInput(String name, String tooltip, String content, boolean readonly) {
+    public StringBasedEditorInput(String name, String tooltip, String content, boolean readonly, String resourceExtension) {
         this.name = name == null ? "Anonymous" : name;
         this.tooltip = tooltip == null ? "" : tooltip;
-        this.storage = new StringStorage(content, readonly);
+        this.storage = new StringStorage(content, readonly, resourceExtension);
     }
 
     /**

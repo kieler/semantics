@@ -35,5 +35,14 @@
             transformations="SCG2S, S2TARGET">
       </transformationGroup>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.extension">
+      <ExtensionInformation
+            className="Program"
+            editor_id="de.cau.cs.kieler.s.S"
+            extensionName="s"
+            isXMI="false">
+      </ExtensionInformation>
+   </extension>
 
 </plugin>
