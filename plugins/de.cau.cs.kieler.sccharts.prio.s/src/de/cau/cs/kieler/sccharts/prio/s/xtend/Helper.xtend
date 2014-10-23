@@ -194,7 +194,12 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
     
     // Convert SyncChart variable assignments and add them to an instructions list.
     def dispatch void convertToSEffect(Assignment effect, List<de.cau.cs.kieler.s.s.Instruction> instructions) {
-        // TODO
+        val sAssignment = SFactory::eINSTANCE.createAssignment
+        val sValuedObject = TraceComponent::getSingleTraceTarget(effect.valuedObject, "ValuedObject") as de.cau.cs.kieler.core.kexpressions.ValuedObject
+        val sValuedObjectValue = effect.expression.convertToSExpression;
+        sAssignment.setVariable(sValuedObject)
+        sAssignment.setExpression(sValuedObjectValue)
+        instructions.add(sAssignment);
     }
 
     // Convert SyncChart text effects and add them to an instructions list.
