@@ -69,7 +69,15 @@ import de.cau.cs.kieler.scl.formatting.SCLFormatter
  *
  */
 class EsterelToSclTransformation extends Transformation {
+    // Global variables
     var variables = new LinkedList<ValuedObject>
+    
+    // Indicates, if currently an abort body is transformed and holds the 
+    // corresponding expression; null if not
+    var Expression abortF = null
+    
+    // Label at the end of currently transformed thread
+    var String threadEnd
 
     @Inject
     extension KExpressionsExtension
@@ -137,6 +145,7 @@ class EsterelToSclTransformation extends Transformation {
         
         // Reset labelcount
         resetLabelCount
+        
 
         // Return the transformed program 
         System.out.println("Transformed")
@@ -212,13 +221,35 @@ class EsterelToSclTransformation extends Transformation {
     def dispatch StatementSequence transformStm(Parallel par) {
         val sclPar = SclFactory::eINSTANCE.createParallel
         
-        for (th : par.list) {
-            sclPar.threads.add(SclFactory::eINSTANCE.createThread => [
-                statements.addAll(transformStm(th).statements)
-            ])
+        if (abortF == null) {
+            for (th : par.list) {
+                sclPar.threads.add(SclFactory::eINSTANCE.createThread => [
+                    statements.addAll(transformStm(th).statements)
+                ])
+            }
+            return createSseq(createStmFromInstr(sclPar))
+        }
+        
+        else {
+            val oldEnd = threadEnd
+            for (th : par.list) {
+                val l = createFreshLabel
+                threadEnd = l
+                sclPar.threads.add(SclFactory::eINSTANCE.createThread => [
+//                    statements.add(createStmFromInstr(ifThenGoto(transformExp(abortF), l)))
+                    statements.addAll(transformStm(th).statements)
+                    statements.add(SclFactory::eINSTANCE.createEmptyStatement => [
+                        label = l
+                    ])
+                ])
+            }
+            threadEnd = oldEnd
+            val res = createSseq(createStmFromInstr(sclPar))
+            
+            res.statements.add(createStmFromInstr(ifThenGoto(transformExp(abortF), threadEnd)))
+            res
         }
 
-        createSseq(createStmFromInstr(sclPar))
     }
     
     
@@ -251,7 +282,7 @@ class EsterelToSclTransformation extends Transformation {
         ])
         
         if(!(await.body as AwaitInstance).delay.isImmediate) {
-            stmSeq.statements.add(createStmFromInstr(SclFactory::eINSTANCE.createPause))
+            stmSeq.statements.addAll(transformStm(EsterelFactory::eINSTANCE.createPause).statements)
         }       
         
         
@@ -323,11 +354,13 @@ class EsterelToSclTransformation extends Transformation {
          
         stmSeq.statements.addAll(transformStm(loop.body.statement).statements)
         
-        stmSeq.statements.add(SclFactory::eINSTANCE.createInstructionStatement => [
-            instruction = SclFactory::eINSTANCE.createGoto => [
+        // TODO Remove pseudo conditional when scg unreachable code is fixed
+        stmSeq.statements.add(createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
+            expression = createBoolValue(true)
+            statements.add(createStmFromInstr(SclFactory::eINSTANCE.createGoto => [
                 targetLabel = l
-            ]
-        ])
+            ]))
+        ]))
         
         stmSeq
     }
@@ -337,7 +370,15 @@ class EsterelToSclTransformation extends Transformation {
      * pause
      */
     def dispatch StatementSequence transformStm(Pause pause) {
-        createSseq(createStmFromInstr(SclFactory::eINSTANCE.createPause))
+        if (abortF == null) {
+            return createSseq(createStmFromInstr(SclFactory::eINSTANCE.createPause))
+        }
+        else {
+            return SclFactory::eINSTANCE.createStatementSequence => [
+                statements.add(createStmFromInstr(SclFactory::eINSTANCE.createPause))
+                statements.add(createStmFromInstr(ifThenGoto(transformExp(abortF), threadEnd)))
+        ]
+        }
     }
     
     
@@ -440,107 +481,108 @@ class EsterelToSclTransformation extends Transformation {
     /*
      * abort p when s
      * TODO Integrate to Esterel to SCL transformation
+     * immediate?
      */
      def dispatch StatementSequence transformStm(Abort abort) {
-         val p = transformStm(abort.statement)
-         val l = createFreshLabel
-         val res = handleAbortSeq(p, ((abort.body as AbortInstance).delay.event.expr), l)
+         abortF = (abort.body as AbortInstance).delay.event.expr
+         val l = createFreshLabel()
+         threadEnd = l
+         val res = transformStm(abort.statement)
          res.statements.add(SclFactory::eINSTANCE.createEmptyStatement => [
              label = l
          ])
+         abortF = null
          
          res
      }
      
+      /*
+       * Statement Sequence
+       */
+//       def StatementSequence handleAbort(StatementSequence sSeq, Expression expr, String label) {
+//           System.out.println("HandleAbort: Handle Sequence")
+//           abortF = true;
+//           val res = transformStm()
+//           sSeq
+//       }
+       
      /*
       * Inserts abortion after pauses
       * Statements
       */
-      def StatementSequence handleAbort(Statement stm, Expression expr, String label) {
-          System.out.println("HandleAbort: Statement is" + stm)
-          
-          // Empty statement
-          if (stm instanceof EmptyStatement) {
-              System.out.println("HandleAbort: Empty Stm")
-              return createSseq(stm)
-          }
-          
-          // Instruction
-          else if (stm instanceof InstructionStatement) {
-              System.out.println("HandleAbort: Instruction Stm")
-              return handleAbort((stm as InstructionStatement).instruction, expr, label)
-          }
-          
-          System.out.println("!!! HandleAbort: Statements not handlebar: " + stm)
-          createSseq(stm)
-      }
+//      def StatementSequence handleAbort(Statement stm, Expression expr, String label) {
+//          System.out.println("HandleAbort: Statement is" + stm)
+//          
+//          // Empty statement
+//          if (stm instanceof EmptyStatement) {
+//              System.out.println("HandleAbort: Empty Stm")
+//              return createSseq(stm)
+//          }
+//          
+//          // Instruction
+//          else if (stm instanceof InstructionStatement) {
+//              System.out.println("HandleAbort: Instruction Stm")
+//              return handleAbort((stm as InstructionStatement).instruction, expr, label)
+//          }
+//          
+//          System.out.println("!!! HandleAbort: Statements not handlebar: " + stm)
+//          createSseq(stm)
+//      }
       
-      /*
-       * Statement Sequence
-       */
-       def StatementSequence handleAbortSeq(StatementSequence sSeq, Expression expr, String label) {
-           System.out.println("HandleAbort: Handle Sequence")
-           val res = SclFactory::eINSTANCE.createStatementSequence
-           for (stm : sSeq.statements) {
-               res.statements.addAll(handleAbort(sSeq.statements.head, expr, label).statements)
-           }
-           
-           res
-       }
       
       /*
        * Instructions
        */
-      def StatementSequence handleAbort(Instruction instr, Expression expr, String label) {
-          System.out.println("Handle Instruction: Instruction is: " + instr)
-          
-          // Pause
-          if (instr instanceof de.cau.cs.kieler.scl.scl.Pause) {
-              System.out.println("HandleAbort: Instruction Stm: Pause")
-              return SclFactory::eINSTANCE.createStatementSequence => [
-                  statements.add(createStmFromInstr(SclFactory::eINSTANCE.createPause))
-                  statements.add(createStmFromInstr(ifThenGoto(transformExp(expr), label)))
-              ]
-          }
-          
-          // Conditional
-          else if (instr instanceof Conditional) {
-              System.out.println("HandleAbort: Instruction Stm: Conditional")
-              val cond = SclFactory::eINSTANCE.createConditional => [
-                  expression = (instr as Conditional).expression
-              ]
-              for (singleStm : (instr as Conditional).statements) {
-                  cond.statements.addAll(handleAbort(singleStm, expr, label).statements)
-              }
-              for (singleStm : (instr as Conditional).elseStatements) {
-                  cond.elseStatements.addAll(handleAbort(singleStm, expr, label).statements)
-              }
-              return createSseq(createStmFromInstr(cond))
-          }
-          
-          // Parallel
-          else if (instr instanceof de.cau.cs.kieler.scl.scl.Parallel) {
-              System.out.println("HandleAbort: Instruction Stm: Parallel")
-              val res = SclFactory::eINSTANCE.createParallel
-              for (th : (instr as de.cau.cs.kieler.scl.scl.Parallel).threads) {
-                  val l = createFreshLabel()
-                  res.threads.add(SclFactory::eINSTANCE.createThread => [
-                      statements.addAll(handleAbortSeq(th, expr, l).statements)
-                      statements.add(SclFactory::eINSTANCE.createEmptyStatement => [
-                          it.label = l
-                      ])
-                  ])
-              }
-              return SclFactory::eINSTANCE.createStatementSequence => [
-                  statements.add(createStmFromInstr(res))
-                  statements.add(createStmFromInstr(ifThenGoto(transformExp(expr), label)))
-              ]
-          }
-          
-          System.out.println("!!! HandleAbort: Handle Instruction: Instruction not handlebar: " + instr)
-          
-          createSseq(createStmFromInstr(instr))
-      }
+//      def StatementSequence handleAbort(Instruction instr, Expression expr, String label) {
+//          System.out.println("Handle Instruction: Instruction is: " + instr)
+//          
+//          // Pause
+//          if (instr instanceof de.cau.cs.kieler.scl.scl.Pause) {
+//              System.out.println("HandleAbort: Instruction Stm: Pause")
+//              return SclFactory::eINSTANCE.createStatementSequence => [
+//                  statements.add(createStmFromInstr(SclFactory::eINSTANCE.createPause))
+//                  statements.add(createStmFromInstr(ifThenGoto(transformExp(expr), label)))
+//              ]
+//          }
+//          
+//          // Conditional
+//          else if (instr instanceof Conditional) {
+//              System.out.println("HandleAbort: Instruction Stm: Conditional")
+//              val cond = SclFactory::eINSTANCE.createConditional => [
+//                  expression = (instr as Conditional).expression
+//              ]
+//              for (singleStm : (instr as Conditional).statements) {
+//                  cond.statements.addAll(handleAbort(singleStm, expr, label).statements)
+//              }
+//              for (singleStm : (instr as Conditional).elseStatements) {
+//                  cond.elseStatements.addAll(handleAbort(singleStm, expr, label).statements)
+//              }
+//              return createSseq(createStmFromInstr(cond))
+//          }
+//          
+//          // Parallel
+//          else if (instr instanceof de.cau.cs.kieler.scl.scl.Parallel) {
+//              System.out.println("HandleAbort: Instruction Stm: Parallel")
+//              val res = SclFactory::eINSTANCE.createParallel
+//              for (th : (instr as de.cau.cs.kieler.scl.scl.Parallel).threads) {
+//                  val l = createFreshLabel()
+//                  res.threads.add(SclFactory::eINSTANCE.createThread => [
+//                      statements.addAll(handleAbort(th, expr, l).statements)
+//                      statements.add(SclFactory::eINSTANCE.createEmptyStatement => [
+//                          it.label = l
+//                      ])
+//                  ])
+//              }
+//              return SclFactory::eINSTANCE.createStatementSequence => [
+//                  statements.add(createStmFromInstr(res))
+//                  statements.add(createStmFromInstr(ifThenGoto(transformExp(expr), label)))
+//              ]
+//          }
+//          
+//          System.out.println("!!! HandleAbort: Handle Instruction: Instruction not handlebar: " + instr)
+//          
+//          createSseq(createStmFromInstr(instr))
+//      }
       
       
       
