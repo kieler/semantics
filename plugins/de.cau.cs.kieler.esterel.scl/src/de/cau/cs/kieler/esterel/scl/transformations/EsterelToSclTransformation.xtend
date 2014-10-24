@@ -56,6 +56,13 @@ import de.cau.cs.kieler.esterel.kexpressions.Signal
 import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
 import de.cau.cs.kieler.esterel.esterel.LocalSignal
 import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.scl.EmptyStatement
+import de.cau.cs.kieler.esterel.esterel.AbortInstance
+import de.cau.cs.kieler.scl.scl.InstructionStatement
+import de.cau.cs.kieler.scl.scl.Instruction
+import de.cau.cs.kieler.scl.scl.Thread
+import de.cau.cs.kieler.scl.formatting.SCLFormatter
 
 /**
  * @author krat
@@ -126,13 +133,13 @@ class EsterelToSclTransformation extends Transformation {
             statements.add(createStmFromInstr(createAssignment(f_term, createBoolValue(true))))
         ])
         
-        
         program.statements.add(createStmFromInstr(par))
-     
+        
         // Reset labelcount
         resetLabelCount
 
         // Return the transformed program 
+        System.out.println("Transformed")
         program
     }
     
@@ -279,6 +286,7 @@ class EsterelToSclTransformation extends Transformation {
         
     }
     
+    
     /*
      * TODO fix
      */
@@ -357,6 +365,7 @@ class EsterelToSclTransformation extends Transformation {
          ]
      }
     
+    
     /*
      * [ ... ]
      */
@@ -383,17 +392,16 @@ class EsterelToSclTransformation extends Transformation {
         }
         //present case s do ...
         else if (pres.body instanceof PresentCaseList) {
-            System.out.println("presesnt case")
             val cond = handleCaseList((pres.body as PresentCaseList).cases, 0, pres.elsePart)
             return createSseq(createStmFromInstr(cond))
         }
     }
     
+    
     /*
      * Creates nested conditional equivalent to cases list
      */
     def Conditional handleCaseList(EList<PresentCase> cases, int idx, ElsePart elsePart) {
-        System.out.println("handle case")
         if (cases.length > idx+1) {
             return SclFactory::eINSTANCE.createConditional => [
                 expression = transformExp(cases.get(idx).event.expression)
@@ -431,41 +439,130 @@ class EsterelToSclTransformation extends Transformation {
     
     /*
      * abort p when s
+     * TODO Integrate to Esterel to SCL transformation
      */
      def dispatch StatementSequence transformStm(Abort abort) {
          val p = transformStm(abort.statement)
+         val l = createFreshLabel
+         val res = handleAbortSeq(p, ((abort.body as AbortInstance).delay.event.expr), l)
+         res.statements.add(SclFactory::eINSTANCE.createEmptyStatement => [
+             label = l
+         ])
          
-         p
+         res
      }
      
      /*
       * Inserts abortion after pauses
+      * Statements
       */
-//      def StatementSequence insertGotoAfterPause(StatementSequence sSeq) {
-//          val res = SclFactory::eINSTANCE.createStatementSequence;
-//          for (stm : sSeq.statements) {
-//              res.statements.add(insertGotoAfterPause(stm))
-//          }
-//          
-//          res
-//      }
-    
+      def StatementSequence handleAbort(Statement stm, Expression expr, String label) {
+          System.out.println("HandleAbort: Statement is" + stm)
+          
+          // Empty statement
+          if (stm instanceof EmptyStatement) {
+              System.out.println("HandleAbort: Empty Stm")
+              return createSseq(stm)
+          }
+          
+          // Instruction
+          else if (stm instanceof InstructionStatement) {
+              System.out.println("HandleAbort: Instruction Stm")
+              return handleAbort((stm as InstructionStatement).instruction, expr, label)
+          }
+          
+          System.out.println("!!! HandleAbort: Statements not handlebar: " + stm)
+          createSseq(stm)
+      }
+      
+      /*
+       * Statement Sequence
+       */
+       def StatementSequence handleAbortSeq(StatementSequence sSeq, Expression expr, String label) {
+           System.out.println("HandleAbort: Handle Sequence")
+           val res = SclFactory::eINSTANCE.createStatementSequence
+           for (stm : sSeq.statements) {
+               res.statements.addAll(handleAbort(sSeq.statements.head, expr, label).statements)
+           }
+           
+           res
+       }
+      
+      /*
+       * Instructions
+       */
+      def StatementSequence handleAbort(Instruction instr, Expression expr, String label) {
+          System.out.println("Handle Instruction: Instruction is: " + instr)
+          
+          // Pause
+          if (instr instanceof de.cau.cs.kieler.scl.scl.Pause) {
+              System.out.println("HandleAbort: Instruction Stm: Pause")
+              return SclFactory::eINSTANCE.createStatementSequence => [
+                  statements.add(createStmFromInstr(SclFactory::eINSTANCE.createPause))
+                  statements.add(createStmFromInstr(ifThenGoto(transformExp(expr), label)))
+              ]
+          }
+          
+          // Conditional
+          else if (instr instanceof Conditional) {
+              System.out.println("HandleAbort: Instruction Stm: Conditional")
+              val cond = SclFactory::eINSTANCE.createConditional => [
+                  expression = (instr as Conditional).expression
+              ]
+              for (singleStm : (instr as Conditional).statements) {
+                  cond.statements.addAll(handleAbort(singleStm, expr, label).statements)
+              }
+              for (singleStm : (instr as Conditional).elseStatements) {
+                  cond.elseStatements.addAll(handleAbort(singleStm, expr, label).statements)
+              }
+              return createSseq(createStmFromInstr(cond))
+          }
+          
+          // Parallel
+          else if (instr instanceof de.cau.cs.kieler.scl.scl.Parallel) {
+              System.out.println("HandleAbort: Instruction Stm: Parallel")
+              val res = SclFactory::eINSTANCE.createParallel
+              for (th : (instr as de.cau.cs.kieler.scl.scl.Parallel).threads) {
+                  val l = createFreshLabel()
+                  res.threads.add(SclFactory::eINSTANCE.createThread => [
+                      statements.addAll(handleAbortSeq(th, expr, l).statements)
+                      statements.add(SclFactory::eINSTANCE.createEmptyStatement => [
+                          it.label = l
+                      ])
+                  ])
+              }
+              return SclFactory::eINSTANCE.createStatementSequence => [
+                  statements.add(createStmFromInstr(res))
+                  statements.add(createStmFromInstr(ifThenGoto(transformExp(expr), label)))
+              ]
+          }
+          
+          System.out.println("!!! HandleAbort: Handle Instruction: Instruction not handlebar: " + instr)
+          
+          createSseq(createStmFromInstr(instr))
+      }
+      
+      
+      
     
     /*
      * Transform Expression
      */
      def de.cau.cs.kieler.core.kexpressions.Expression transformExp(Expression exp) {
          if (exp instanceof OperatorExpression) {
+             System.out.println("transformExp: OperatorExpression")
              return transformOperatorExp(exp as OperatorExpression)
          } 
          else if (exp instanceof ValuedObjectReference) {
+             System.out.println("transformExp: ValuedObjectReference")
              return transformValObjRef(exp as ValuedObjectReference)
          }
          
+         System.out.println("transformExp: Unknown Expression: " + exp)
          createExpression
      }
      
-     def de.cau.cs.kieler.core.kexpressions.Expression transformOperatorExp(OperatorExpression exp) {
+     def de.cau.cs.kieler.core.kexpressions.OperatorExpression transformOperatorExp(OperatorExpression exp) {
          //TODO beautify; complete
          val opType = 
              switch exp.operator {
@@ -482,13 +579,15 @@ class EsterelToSclTransformation extends Transformation {
          ]
      }
      
-     def de.cau.cs.kieler.core.kexpressions.Expression transformCompExp(ComplexExpression comp) {
+     def de.cau.cs.kieler.core.kexpressions.ValuedObjectReference transformCompExp(ComplexExpression comp) {
          if (comp instanceof ValuedObjectReference) {
+             System.out.println("transformCompExp: " + comp)
              transformValObjRef(comp as ValuedObjectReference)
          }
      }
      
-     def de.cau.cs.kieler.core.kexpressions.Expression transformValObjRef(ValuedObjectReference ref) {
+     def de.cau.cs.kieler.core.kexpressions.ValuedObjectReference transformValObjRef(ValuedObjectReference ref) {
+         System.out.println("transformValObjRef: " + ref)
          getValuedObjectRef(variables, ref.valuedObject.name)
      }
     

@@ -23,12 +23,21 @@ import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.scl.scl.Instruction
 import java.util.LinkedList
 import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.scl.Conditional
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 
 /**
  * @author krat
  *
  */
 class EsterelToSclExtensions {
+    
+    @Inject
+    extension KExpressionsExtension
+    
     var static labelCount = 0;
     
     /*
@@ -108,4 +117,17 @@ class EsterelToSclExtensions {
              return uniqueName(variables, s + "_")
          }
      }
+     
+     /*
+      * Creates "if s then goto l"
+      */
+      def Conditional ifThenGoto(Expression s, String l) {
+          System.out.println("ExpType: " + (s))
+          SclFactory::eINSTANCE.createConditional => [
+              expression = s//createBoolValue(true)
+              statements.add(createStmFromInstr(SclFactory::eINSTANCE.createGoto => [
+                  targetLabel = l
+              ]))
+          ]
+      }
 }
