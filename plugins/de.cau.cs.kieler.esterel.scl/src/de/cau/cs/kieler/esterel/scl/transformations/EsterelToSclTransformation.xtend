@@ -63,6 +63,7 @@ import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Instruction
 import de.cau.cs.kieler.scl.scl.Thread
 import de.cau.cs.kieler.scl.formatting.SCLFormatter
+import de.cau.cs.kieler.esterel.esterel.Suspend
 
 /**
  * @author krat
@@ -75,6 +76,9 @@ class EsterelToSclTransformation extends Transformation {
     // Indicates, if currently an abort body is transformed and holds the 
     // corresponding expression; null if not
     var Expression abortF = null
+    
+    // Indicates, if currently a suspend body is transformed
+    var Expression suspF = null
     
     // Label at the end of currently transformed thread
     var String threadEnd
@@ -383,11 +387,26 @@ class EsterelToSclTransformation extends Transformation {
     
     /*
      * pause
+     * suspend within pause
+     * TODO nested?
      */
     def dispatch StatementSequence transformStm(Pause pause) {
-        if (abortF == null) {
+        // pause within suspend
+        if (suspF != null) {
+            val l = createFreshLabel
+            return SclFactory::eINSTANCE.createStatementSequence => [
+                statements.add(SclFactory::eINSTANCE.createEmptyStatement => [
+                    label = l
+                ])
+                statements.add(createStmFromInstr(SclFactory::eINSTANCE.createPause))
+                statements.add(createStmFromInstr(ifThenGoto(transformExp(suspF), l)))
+            ]
+        }
+        // normal pause
+        else if (abortF == null) {
             return createSseq(createStmFromInstr(SclFactory::eINSTANCE.createPause))
         }
+        // pause within abort body
         else {
             return SclFactory::eINSTANCE.createStatementSequence => [
                 statements.add(createStmFromInstr(SclFactory::eINSTANCE.createPause))
@@ -508,6 +527,19 @@ class EsterelToSclTransformation extends Transformation {
          
          res
      }
+     
+     
+     /*
+      * suspend p when s
+      */
+      def dispatch StatementSequence transformStm(Suspend susp) {
+          suspF = susp.delay.event.expr
+          val res = transformStm(susp.statement)
+          
+          suspF = null
+          
+          res
+      }
      
       
     
