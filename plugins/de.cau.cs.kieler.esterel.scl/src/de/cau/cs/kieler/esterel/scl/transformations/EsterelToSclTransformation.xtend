@@ -187,20 +187,10 @@ class EsterelToSclTransformation extends Transformation {
             }
         }
         
-        
-        th.statements.add(createStmFromInstr(
-            SclFactory::eINSTANCE.createConditional => [
-                expression = createOperatorExpression(OperatorType::NOT) => [
+        th.statements.add(createStmFromInstr(ifThenGoto(createOperatorExpression(OperatorType::NOT) => [
                     subExpressions.add(KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
                         valuedObject = f_term
-                    ])
-                ]
-                statements.add(createStmFromInstr(SclFactory::eINSTANCE.createPause))
-                statements.add(createStmFromInstr(SclFactory::eINSTANCE.createGoto => [
-                     targetLabel = l
-                ]))
-            ]))
-
+                    ])], l, false)))
         
        th
     }
@@ -395,6 +385,7 @@ class EsterelToSclTransformation extends Transformation {
     
     /*
      * Iterates through stack containing information about nesting of abort and suspend.
+     * Should be used for pause creation to respect right order of preemptive gotos
      */
     def StatementSequence handlePreemtion(Instruction instr, int i) {
         if (i < 0) {
@@ -571,6 +562,7 @@ class EsterelToSclTransformation extends Transformation {
      
      /*
       * suspend p when s
+      * TODO immediate broken
       */
       def dispatch StatementSequence transformStm(Suspend susp) {
           pushPreemtive(PreemptiveStm.SUSPEND, susp.delay.event.expr, null)
@@ -581,7 +573,12 @@ class EsterelToSclTransformation extends Transformation {
               res.statements.add(SclFactory::eINSTANCE.createEmptyStatement => [
                   label = l
               ])
-              res.statements.add(createStmFromInstr(ifThenGoto(transformExp(susp.delay.event.expr), l, false)))           
+              res.statements.add(createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
+                  expression = transformExp(susp.delay.event.expr)
+                  statements.addAll(transformStm(EsterelFactory::eINSTANCE.createPause).statements)
+                  statements.add(createStmFromInstr(SclFactory::eINSTANCE.createGoto => [
+                      targetLabel = l
+                  ]))]))
           }
           
           
