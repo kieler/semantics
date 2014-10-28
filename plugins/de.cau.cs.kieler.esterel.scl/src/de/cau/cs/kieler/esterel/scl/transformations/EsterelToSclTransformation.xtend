@@ -74,7 +74,7 @@ import com.google.common.collect.Multimap
  *
  */
  
- enum preempt {
+ enum PreemtiveStm {
         ABORT,
         SUSPEND
     }
@@ -85,20 +85,19 @@ class EsterelToSclTransformation extends Transformation {
     
     // Indicates, if currently an abort body is transformed and holds the 
     // corresponding expression; null if not
-    var Expression abortF = null
+//    var Expression abortF = null
     
     // Indicates, if currently a suspend body is transformed
     var Expression suspF = null
     
     // Label at the end of currently transformed thread
-    var String threadEnd
+//    var String threadEnd
     var String curLabel = "root"
     
     // Saves nesting of nested preemtive constructs
-    var Stack<preempt> preempts = new Stack
-    var Stack<String> endLabel = new Stack
-    var Stack<Expression> expr = new Stack
-//    var Stack<String> curLabel = new Stack
+    var Stack<PreemtiveStm> preemtives = new Stack
+    var Stack<String> endLabels = new Stack
+    var Stack<Expression> exprs = new Stack
     
     // List of threads sorted by unique end label; each entry contains labels within that thread
     var Multimap<String, String> labelMap = HashMultimap.create()
@@ -262,7 +261,7 @@ class EsterelToSclTransformation extends Transformation {
             }
             curLabel = oldEnd
             val res = createSseq(createStmFromInstr(sclPar))
-            res.statements.addAll(handlePreemtion(SclFactory::eINSTANCE.createStatementSequence, preempts.length-1).statements)
+            res.statements.addAll(handlePreemtion(null, preemtives.length-1).statements)
 
             res
 
@@ -402,38 +401,46 @@ class EsterelToSclTransformation extends Transformation {
      * pause
      */
     def dispatch StatementSequence transformStm(Pause pause) {
-        return handlePreemtion(createSseq(createStmFromInstr(SclFactory::eINSTANCE.createPause)), preempts.length-1)
+        return handlePreemtion(SclFactory::eINSTANCE.createPause, preemtives.length-1)
 
     }
     
     /*
      * Iterates through stack containing information about nesting of abort and suspend.
      */
-    def StatementSequence handlePreemtion(StatementSequence stm, int i) {
+    def StatementSequence handlePreemtion(Instruction instr, int i) {
         if (i < 0) {
-            stm
+            if (instr == null) {
+                return SclFactory::eINSTANCE.createStatementSequence
+            } 
+            else {
+                createSseq(createStmFromInstr(instr))
+            }
         }
         else {
-            if (preempts.get(i) == preempt.ABORT) {
+            if (preemtives.get(i) == PreemtiveStm.ABORT) {
                 return SclFactory::eINSTANCE.createStatementSequence => [
-                    statements.addAll(handlePreemtion(stm, i-1).statements)
-                    if (labelMap.get(curLabel).contains(endLabel.get(i))) {
-                        statements.add(createStmFromInstr(ifThenGoto(transformExp(expr.get(i)), endLabel.get(i))))
+                    statements.addAll(handlePreemtion(instr, i-1).statements)
+                    if (labelMap.get(curLabel).contains(endLabels.get(i))) {
+                        statements.add(createStmFromInstr(ifThenGoto(transformExp(exprs.get(i)), endLabels.get(i))))
                     }
                     else {
-                        statements.add(createStmFromInstr(ifThenGoto(transformExp(expr.get(i)), curLabel)))
+                        statements.add(createStmFromInstr(ifThenGoto(transformExp(exprs.get(i)), curLabel)))
                     }
                 ]
             }
-            else if (preempts.get(i) == preempt.SUSPEND) {
+            else if (preemtives.get(i) == PreemtiveStm.SUSPEND && instr != null) {
                 val l = createFreshLabel
                 return SclFactory::eINSTANCE.createStatementSequence => [
                     statements.add(SclFactory::eINSTANCE.createEmptyStatement => [
                         label = l
                     ])
-                    statements.addAll(handlePreemtion(stm, i-1).statements)
-                    statements.add(createStmFromInstr(ifThenGoto(transformExp(expr.get(i)), l)))
+                    statements.addAll(handlePreemtion(instr, i-1).statements)
+                    statements.add(createStmFromInstr(ifThenGoto(transformExp(exprs.get(i)), l)))
                 ]
+            }
+            else {
+                return SclFactory::eINSTANCE.createStatementSequence
             }
         }
     }
@@ -543,18 +550,14 @@ class EsterelToSclTransformation extends Transformation {
          val l = createFreshLabel
          labelMap.put(curLabel,l)
 
-         abortF = (abort.body as AbortInstance).delay.event.expr
-         preempts.push(preempt.ABORT)
-         endLabel.push(l)
-         expr.push((abort.body as AbortInstance).delay.event.expr)
+         pushPreemtive(PreemtiveStm.ABORT, (abort.body as AbortInstance).delay.event.expr, l)
+
          val ret = transformStm(abort.statement)
-         preempts.pop
-         endLabel.pop
-         expr.pop
+         popPreemtive
+
          ret.statements.add(SclFactory::eINSTANCE.createEmptyStatement => [
              label = l
          ])
-//         curLabel.pop
          
          ret         
      }
@@ -564,10 +567,9 @@ class EsterelToSclTransformation extends Transformation {
       * suspend p when s
       */
       def dispatch StatementSequence transformStm(Suspend susp) {
-          suspF = susp.delay.event.expr
+          pushPreemtive(PreemtiveStm.SUSPEND, susp.delay.event.expr, null)
           val res = transformStm(susp.statement)
-          
-          suspF = null
+          popPreemtive
           
           res
       }
@@ -618,7 +620,24 @@ class EsterelToSclTransformation extends Transformation {
          System.out.println("transformValObjRef: " + ref)
          getValuedObjectRef(variables, ref.valuedObject.name)
      }
+     
+     /*
+      * Push preemtive informations on stacks
+      * TODO use tripel or something
+      */
+     def pushPreemtive(PreemtiveStm stm, Expression expr, String label) {
+          preemtives.push(stm)
+          exprs.push(expr)
+          endLabels.push(label)
+     }
     
+     def popPreemtive() {
+         preemtives.pop()
+         exprs.pop()
+         endLabels.pop()
+     }
+     
+     
     override getDependencies() {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")
     }
