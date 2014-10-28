@@ -122,12 +122,15 @@ class EsterelToSclExtensions {
      }
      
      /*
-      * Creates "if s then goto l"
+      * Creates "if s then (pause;) goto l"
       */
-      def Conditional ifThenGoto(Expression s, String l) {
+      def Conditional ifThenGoto(Expression s, String l, boolean isImmediate) {
           System.out.println("ExpType: " + (s))
           SclFactory::eINSTANCE.createConditional => [
               expression = s//createBoolValue(true)
+              if (!isImmediate) {
+                  statements.add(createStmFromInstr(SclFactory::eINSTANCE.createPause))
+              }
               statements.add(createStmFromInstr(SclFactory::eINSTANCE.createGoto => [
                   targetLabel = l
               ]))

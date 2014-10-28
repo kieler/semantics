@@ -410,10 +410,10 @@ class EsterelToSclTransformation extends Transformation {
                 return SclFactory::eINSTANCE.createStatementSequence => [
                     statements.addAll(handlePreemtion(instr, i-1).statements)
                     if (labelMap.get(curLabel).contains(endLabels.get(i))) {
-                        statements.add(createStmFromInstr(ifThenGoto(transformExp(exprs.get(i)), endLabels.get(i))))
+                        statements.add(createStmFromInstr(ifThenGoto(transformExp(exprs.get(i)), endLabels.get(i), true)))
                     }
                     else {
-                        statements.add(createStmFromInstr(ifThenGoto(transformExp(exprs.get(i)), curLabel)))
+                        statements.add(createStmFromInstr(ifThenGoto(transformExp(exprs.get(i)), curLabel,true )))
                     }
                 ]
             }
@@ -424,7 +424,7 @@ class EsterelToSclTransformation extends Transformation {
                         label = l
                     ])
                     statements.addAll(handlePreemtion(instr, i-1).statements)
-                    statements.add(createStmFromInstr(ifThenGoto(transformExp(exprs.get(i)), l)))
+                    statements.add(createStmFromInstr(ifThenGoto(transformExp(exprs.get(i)), l, true)))
                 ]
             }
             else {
@@ -555,7 +555,7 @@ class EsterelToSclTransformation extends Transformation {
          val ret = SclFactory::eINSTANCE.createStatementSequence
          
          if ((abort.body as AbortInstance).delay.isImmediate) {
-             ret.statements.add(createStmFromInstr(ifThenGoto(transformExp((abort.body as AbortInstance).delay.event.expr), l)))
+             ret.statements.add(createStmFromInstr(ifThenGoto(transformExp((abort.body as AbortInstance).delay.event.expr), l, true)))
          }
 
          ret.statements.addAll(transformStm(abort.statement).statements)
@@ -574,7 +574,18 @@ class EsterelToSclTransformation extends Transformation {
       */
       def dispatch StatementSequence transformStm(Suspend susp) {
           pushPreemtive(PreemptiveStm.SUSPEND, susp.delay.event.expr, null)
-          val res = transformStm(susp.statement)
+          val res = SclFactory::eINSTANCE.createStatementSequence
+          
+          if (susp.delay.isImmediate) {
+              val l = createFreshLabel
+              res.statements.add(SclFactory::eINSTANCE.createEmptyStatement => [
+                  label = l
+              ])
+              res.statements.add(createStmFromInstr(ifThenGoto(transformExp(susp.delay.event.expr), l, false)))           
+          }
+          
+          
+          res.statements.addAll(transformStm(susp.statement).statements)
           popPreemtive
           
           res
