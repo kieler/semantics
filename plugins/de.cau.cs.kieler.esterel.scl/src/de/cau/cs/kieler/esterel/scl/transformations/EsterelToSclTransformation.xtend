@@ -65,6 +65,9 @@ import de.cau.cs.kieler.scl.scl.Thread
 import de.cau.cs.kieler.scl.formatting.SCLFormatter
 import de.cau.cs.kieler.esterel.esterel.Suspend
 import java.util.Stack
+import java.util.HashMap
+import com.google.common.collect.HashMultimap
+import com.google.common.collect.Multimap
 
 /**
  * @author krat
@@ -89,11 +92,16 @@ class EsterelToSclTransformation extends Transformation {
     
     // Label at the end of currently transformed thread
     var String threadEnd
+    var String curLabel = "root"
     
     // Saves nesting of nested preemtive constructs
     var Stack<preempt> preempts = new Stack
+    var Stack<String> endLabel = new Stack
     var Stack<Expression> expr = new Stack
-    var Stack<String> curLabel = new Stack
+//    var Stack<String> curLabel = new Stack
+    
+    // List of threads sorted by unique end label; each entry contains labels within that thread
+    var Multimap<String, String> labelMap = HashMultimap.create()
     
 
     @Inject
@@ -237,20 +245,13 @@ class EsterelToSclTransformation extends Transformation {
     def dispatch StatementSequence transformStm(Parallel par) {
         val sclPar = SclFactory::eINSTANCE.createParallel
         
-        if (abortF == null) {
-            for (th : par.list) {
-                sclPar.threads.add(SclFactory::eINSTANCE.createThread => [
-                    statements.addAll(transformStm(th).statements)
-                ])
-            }
-            return createSseq(createStmFromInstr(sclPar))
-        }
+
         
-        else {
-            val oldEnd = threadEnd
+
+            val oldEnd = curLabel
             for (th : par.list) {
                 val l = createFreshLabel
-                threadEnd = l
+                curLabel = l
                 sclPar.threads.add(SclFactory::eINSTANCE.createThread => [
 //                    statements.add(createStmFromInstr(ifThenGoto(transformExp(abortF), l)))
                     statements.addAll(transformStm(th).statements)
@@ -259,12 +260,11 @@ class EsterelToSclTransformation extends Transformation {
                     ])
                 ])
             }
-            threadEnd = oldEnd
+            curLabel = oldEnd
             val res = createSseq(createStmFromInstr(sclPar))
-            
-            res.statements.add(createStmFromInstr(ifThenGoto(transformExp(abortF), threadEnd)))
+            res.statements.addAll(handlePreemtion(SclFactory::eINSTANCE.createStatementSequence, preempts.length-1).statements)
+
             res
-        }
 
     }
     
@@ -402,22 +402,27 @@ class EsterelToSclTransformation extends Transformation {
      * pause
      */
     def dispatch StatementSequence transformStm(Pause pause) {
-        return handlePause(preempts.length-1)
+        return handlePreemtion(createSseq(createStmFromInstr(SclFactory::eINSTANCE.createPause)), preempts.length-1)
 
     }
     
     /*
      * Iterates through stack containing information about nesting of abort and suspend.
      */
-    def StatementSequence handlePause(int i) {
+    def StatementSequence handlePreemtion(StatementSequence stm, int i) {
         if (i < 0) {
-            createSseq(createStmFromInstr(SclFactory::eINSTANCE.createPause))
+            stm
         }
         else {
             if (preempts.get(i) == preempt.ABORT) {
                 return SclFactory::eINSTANCE.createStatementSequence => [
-                    statements.addAll(handlePause(i-1).statements)
-                    statements.add(createStmFromInstr(ifThenGoto(transformExp(expr.get(i)), threadEnd)))
+                    statements.addAll(handlePreemtion(stm, i-1).statements)
+                    if (labelMap.get(curLabel).contains(endLabel.get(i))) {
+                        statements.add(createStmFromInstr(ifThenGoto(transformExp(expr.get(i)), endLabel.get(i))))
+                    }
+                    else {
+                        statements.add(createStmFromInstr(ifThenGoto(transformExp(expr.get(i)), curLabel)))
+                    }
                 ]
             }
             else if (preempts.get(i) == preempt.SUSPEND) {
@@ -426,7 +431,7 @@ class EsterelToSclTransformation extends Transformation {
                     statements.add(SclFactory::eINSTANCE.createEmptyStatement => [
                         label = l
                     ])
-                    statements.addAll(handlePause(i-1).statements)
+                    statements.addAll(handlePreemtion(stm, i-1).statements)
                     statements.add(createStmFromInstr(ifThenGoto(transformExp(expr.get(i)), l)))
                 ]
             }
@@ -536,18 +541,20 @@ class EsterelToSclTransformation extends Transformation {
      def dispatch StatementSequence transformStm(Abort abort) {
          System.out.println("Abort")
          val l = createFreshLabel
-         curLabel.push(l)
-         threadEnd = l
+         labelMap.put(curLabel,l)
+
          abortF = (abort.body as AbortInstance).delay.event.expr
          preempts.push(preempt.ABORT)
+         endLabel.push(l)
          expr.push((abort.body as AbortInstance).delay.event.expr)
          val ret = transformStm(abort.statement)
          preempts.pop
+         endLabel.pop
          expr.pop
          ret.statements.add(SclFactory::eINSTANCE.createEmptyStatement => [
              label = l
          ])
-         curLabel.pop
+//         curLabel.pop
          
          ret         
      }
