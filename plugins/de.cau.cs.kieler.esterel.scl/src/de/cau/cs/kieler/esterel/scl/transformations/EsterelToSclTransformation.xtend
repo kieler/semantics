@@ -83,7 +83,7 @@ class EsterelToSclTransformation extends Transformation {
     var variables = new LinkedList<ValuedObject>
     
     // Label at the end of currently transformed thread
-    var String curLabel = "root"
+    var String curLabel = "f_term"
     
     // Saves nesting of nested preemptive constructs
     var Stack<PreemptiveStm> preemptives = new Stack
@@ -154,8 +154,8 @@ class EsterelToSclTransformation extends Transformation {
             statements.addAll(body.statements)
             statements.add(createStmFromInstr(createAssignment(f_term, createBoolValue(true))))
         ])
-        
         program.statements.add(createStmFromInstr(par))
+        
         
         // Reset labelcount
         resetLabelCount
@@ -551,8 +551,14 @@ class EsterelToSclTransformation extends Transformation {
          labelMap.put(curLabel,l)
 
          pushPreemtive(PreemptiveStm.ABORT, (abort.body as AbortInstance).delay.event.expr, l)
+         
+         val ret = SclFactory::eINSTANCE.createStatementSequence
+         
+         if ((abort.body as AbortInstance).delay.isImmediate) {
+             ret.statements.add(createStmFromInstr(ifThenGoto(transformExp((abort.body as AbortInstance).delay.event.expr), l)))
+         }
 
-         val ret = transformStm(abort.statement)
+         ret.statements.addAll(transformStm(abort.statement).statements)
          popPreemtive
 
          ret.statements.add(SclFactory::eINSTANCE.createEmptyStatement => [
