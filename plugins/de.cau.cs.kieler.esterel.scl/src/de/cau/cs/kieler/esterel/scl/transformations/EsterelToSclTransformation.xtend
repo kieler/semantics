@@ -64,11 +64,18 @@ import de.cau.cs.kieler.scl.scl.Instruction
 import de.cau.cs.kieler.scl.scl.Thread
 import de.cau.cs.kieler.scl.formatting.SCLFormatter
 import de.cau.cs.kieler.esterel.esterel.Suspend
+import java.util.Stack
 
 /**
  * @author krat
  *
  */
+ 
+ enum preempt {
+        ABORT,
+        SUSPEND
+    }
+    
 class EsterelToSclTransformation extends Transformation {
     // Global variables
     var variables = new LinkedList<ValuedObject>
@@ -82,6 +89,12 @@ class EsterelToSclTransformation extends Transformation {
     
     // Label at the end of currently transformed thread
     var String threadEnd
+    
+    // Saves nesting of nested preemtive constructs
+    var Stack<preempt> preempts = new Stack
+    var Stack<Expression> expr = new Stack
+    var Stack<String> curLabel = new Stack
+    
 
     @Inject
     extension KExpressionsExtension
@@ -387,35 +400,40 @@ class EsterelToSclTransformation extends Transformation {
     
     /*
      * pause
-     * suspend within pause
-     * TODO nested?
      */
     def dispatch StatementSequence transformStm(Pause pause) {
-        // pause within suspend
-        if (suspF != null) {
-            val l = createFreshLabel
-            return SclFactory::eINSTANCE.createStatementSequence => [
-                statements.add(SclFactory::eINSTANCE.createEmptyStatement => [
-                    label = l
-                ])
-                statements.add(createStmFromInstr(SclFactory::eINSTANCE.createPause))
-                statements.add(createStmFromInstr(ifThenGoto(transformExp(suspF), l)))
-            ]
+        return handlePause(preempts.length-1)
+
+    }
+    
+    /*
+     * Iterates through stack containing information about nesting of abort and suspend.
+     */
+    def StatementSequence handlePause(int i) {
+        if (i < 0) {
+            createSseq(createStmFromInstr(SclFactory::eINSTANCE.createPause))
         }
-        // normal pause
-        else if (abortF == null) {
-            return createSseq(createStmFromInstr(SclFactory::eINSTANCE.createPause))
-        }
-        // pause within abort body
         else {
-            return SclFactory::eINSTANCE.createStatementSequence => [
-                statements.add(createStmFromInstr(SclFactory::eINSTANCE.createPause))
-                statements.add(createStmFromInstr(ifThenGoto(transformExp(abortF), threadEnd)))
-        ]
+            if (preempts.get(i) == preempt.ABORT) {
+                return SclFactory::eINSTANCE.createStatementSequence => [
+                    statements.addAll(handlePause(i-1).statements)
+                    statements.add(createStmFromInstr(ifThenGoto(transformExp(expr.get(i)), threadEnd)))
+                ]
+            }
+            else if (preempts.get(i) == preempt.SUSPEND) {
+                val l = createFreshLabel
+                return SclFactory::eINSTANCE.createStatementSequence => [
+                    statements.add(SclFactory::eINSTANCE.createEmptyStatement => [
+                        label = l
+                    ])
+                    statements.addAll(handlePause(i-1).statements)
+                    statements.add(createStmFromInstr(ifThenGoto(transformExp(expr.get(i)), l)))
+                ]
+            }
         }
     }
     
-    
+
     /*
      * nothing
      */
@@ -516,16 +534,22 @@ class EsterelToSclTransformation extends Transformation {
      * abort p when s
      */
      def dispatch StatementSequence transformStm(Abort abort) {
-         abortF = (abort.body as AbortInstance).delay.event.expr
-         val l = createFreshLabel()
+         System.out.println("Abort")
+         val l = createFreshLabel
+         curLabel.push(l)
          threadEnd = l
-         val res = transformStm(abort.statement)
-         res.statements.add(SclFactory::eINSTANCE.createEmptyStatement => [
+         abortF = (abort.body as AbortInstance).delay.event.expr
+         preempts.push(preempt.ABORT)
+         expr.push((abort.body as AbortInstance).delay.event.expr)
+         val ret = transformStm(abort.statement)
+         preempts.pop
+         expr.pop
+         ret.statements.add(SclFactory::eINSTANCE.createEmptyStatement => [
              label = l
          ])
-         abortF = null
+         curLabel.pop
          
-         res
+         ret         
      }
      
      
@@ -540,7 +564,6 @@ class EsterelToSclTransformation extends Transformation {
           
           res
       }
-     
       
     
     /*

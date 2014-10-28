@@ -28,6 +28,9 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.scl.scl.StatementSequence
+import de.cau.cs.kieler.scl.scl.InstructionStatement
+import de.cau.cs.kieler.scl.scl.Pause
 
 /**
  * @author krat
@@ -130,4 +133,45 @@ class EsterelToSclExtensions {
               ]))
           ]
       }
+      
+      /*
+       * Replaces pause by pause; if (s) then goto l_exit
+       */
+       def StatementSequence pauseAbort(StatementSequence sSeq, Expression expr, String l) {
+           System.out.println("pauseAbort: Starting")
+           val res = SclFactory::eINSTANCE.createStatementSequence
+           
+//           for (stm : sSeq.statements) {
+               System.out.println("pauseAbort: Doing " + sSeq.statements.head)
+               res.statements.addAll(pauseAbort(sSeq.statements.head, expr, l).statements)
+//           }
+           
+           
+           res
+       }
+       
+       def StatementSequence pauseAbort(Statement stm, Expression expr, String l) {
+           val res = SclFactory::eINSTANCE.createStatement
+           
+           if (stm instanceof InstructionStatement) {
+               val instrStm = stm as InstructionStatement
+               System.out.println("pauseAbort: Doing " + (stm as InstructionStatement).instruction)
+               if (instrStm.instruction instanceof Pause) {
+                   System.out.println("PAUSE")
+                   return SclFactory::eINSTANCE.createStatementSequence => [
+                      statements.add(stm)
+                      statements.add(createStmFromInstr(ifThenGoto(expr, l)))
+                      statements.add(createStmFromInstr(ifThenGoto(expr, l)))
+                   ]
+               }
+               else {
+                   return createSseq(stm)
+               }
+               
+           }
+           else {
+               return createSseq(stm)
+           }
+
+       }
 }
