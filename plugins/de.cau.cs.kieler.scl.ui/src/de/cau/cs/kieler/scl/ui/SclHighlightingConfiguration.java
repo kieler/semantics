@@ -15,6 +15,7 @@ package de.cau.cs.kieler.scl.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfigurationAcceptor;
 import org.eclipse.xtext.ui.editor.utils.TextStyle;
@@ -23,20 +24,15 @@ import org.eclipse.xtext.ui.editor.utils.TextStyle;
  * @author krat
  * 
  */
-public class SclHighlightingConfiguration implements IHighlightingConfiguration {
+public class SclHighlightingConfiguration extends DefaultHighlightingConfiguration {
     // provide an id string for the highlighting calculator
-    
-    public static final String KEYWORD = "Keywords";
     public static final String LABEL = "Labels";
-    public static final String DEFAULT = "Default";
     
 
-    // configure the acceptor providing the id, the description string
-    // that will appear in the preference page and the initial text style
+    // declare style for different highlighting
     public void configure(IHighlightingConfigurationAcceptor acceptor) {
-        addType(acceptor, KEYWORD, 127, 0, 85, SWT.BOLD);
         addType(acceptor, LABEL, 0, 0, 0, SWT.ITALIC);
-        addType(acceptor, DEFAULT, 0, 0, 0, SWT.NORMAL);
+        super.configure(acceptor);
     }
 
     public void addType(IHighlightingConfigurationAcceptor acceptor, String s, int r, int g, int b,

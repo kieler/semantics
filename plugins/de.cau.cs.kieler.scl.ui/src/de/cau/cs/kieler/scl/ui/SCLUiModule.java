@@ -4,6 +4,7 @@
 package de.cau.cs.kieler.scl.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.xtext.ui.editor.syntaxcoloring.AbstractAntlrTokenToAttributeIdMapper;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 
@@ -20,6 +21,6 @@ public class SCLUiModule extends de.cau.cs.kieler.scl.ui.AbstractSCLUiModule {
     }
 
     public Class<? extends ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
-        return SclHighlightingCalculator.class;
+        return SclSemanticHighlightingCalculator.class;
     }
 }
