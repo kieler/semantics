@@ -32270,8 +32270,8 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
     static final String DFA10_acceptS =
         "\1\uffff\1\1\17\uffff\1\2";
     static final String DFA10_specialS =
-        "\2\uffff\1\11\1\6\1\12\1\4\1\2\1\16\1\0\1\14\1\1\1\3\1\13\1\15"+
-        "\1\5\1\7\1\10\1\uffff}>";
+        "\2\uffff\1\11\1\6\1\12\1\4\1\2\1\16\1\0\1\14\1\1\1\3\1\13\1\15\1"+
+        "\5\1\7\1\10\1\uffff}>";
     static final String[] DFA10_transitionS = {
             "\1\10\4\uffff\1\6\6\uffff\1\1\1\21\7\uffff\1\1\1\21\22\uffff"+
             "\1\11\1\5\1\4\1\uffff\1\3\2\uffff\1\16\1\13\1\12\2\uffff\1\15"+
@@ -33027,20 +33027,18 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
     static final String DFA21_minS =
         "\1\12\1\uffff\1\5\1\4\1\5\2\uffff\1\5\4\uffff\1\4\1\0\1\uffff";
     static final String DFA21_maxS =
-        "\1\101\1\uffff\1\5\1\107\1\5\2\uffff\1\107\4\uffff\1\107\1\0\1"+
-        "\uffff";
+        "\1\101\1\uffff\1\5\1\107\1\5\2\uffff\1\107\4\uffff\1\107\1\0\1\uffff";
     static final String DFA21_acceptS =
-        "\1\uffff\1\1\3\uffff\1\7\1\3\1\uffff\1\4\1\5\1\2\1\6\2\uffff\1"+
-        "\2";
+        "\1\uffff\1\1\3\uffff\1\7\1\3\1\uffff\1\4\1\5\1\2\1\6\2\uffff\1\2";
     static final String DFA21_specialS =
         "\17\uffff}>";
     static final String[] DFA21_transitionS = {
             "\1\1\66\uffff\1\2",
             "",
             "\1\3",
-            "\1\6\1\7\1\uffff\1\13\1\5\1\11\1\12\27\uffff\7\12\3\uffff"+
-            "\2\12\6\uffff\1\12\3\uffff\2\12\2\uffff\3\12\1\10\1\uffff\1"+
-            "\12\1\4\5\12",
+            "\1\6\1\7\1\uffff\1\13\1\5\1\11\1\12\27\uffff\7\12\3\uffff\2"+
+            "\12\6\uffff\1\12\3\uffff\2\12\2\uffff\3\12\1\10\1\uffff\1\12"+
+            "\1\4\5\12",
             "\1\14",
             "",
             "",
@@ -33050,9 +33048,9 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             "",
             "",
             "",
-            "\1\6\1\7\1\uffff\1\13\1\5\1\11\1\12\27\uffff\7\12\3\uffff"+
-            "\2\12\6\uffff\1\12\3\uffff\2\12\2\uffff\3\12\1\10\1\uffff\1"+
-            "\12\1\4\5\12",
+            "\1\6\1\7\1\uffff\1\13\1\5\1\11\1\12\27\uffff\7\12\3\uffff\2"+
+            "\12\6\uffff\1\12\3\uffff\2\12\2\uffff\3\12\1\10\1\uffff\1\12"+
+            "\1\4\5\12",
             "\1\uffff",
             ""
     };
@@ -33904,8 +33902,8 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
     static final String DFA52_specialS =
         "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\4\uffff}>";
     static final String[] DFA52_transitionS = {
-            "\1\3\4\uffff\1\1\42\uffff\1\10\6\uffff\1\4\3\uffff\1\5\1\6"+
-            "\2\11\1\7\4\uffff\1\2",
+            "\1\3\4\uffff\1\1\42\uffff\1\10\6\uffff\1\4\3\uffff\1\5\1\6\2"+
+            "\11\1\7\4\uffff\1\2",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
