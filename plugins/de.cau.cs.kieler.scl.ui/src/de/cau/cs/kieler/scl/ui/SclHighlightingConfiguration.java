@@ -20,7 +20,7 @@ import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfigurationAcce
 import org.eclipse.xtext.ui.editor.utils.TextStyle;
 
 /**
- * @author karsten
+ * @author krat
  * 
  */
 public class SclHighlightingConfiguration implements IHighlightingConfiguration {
