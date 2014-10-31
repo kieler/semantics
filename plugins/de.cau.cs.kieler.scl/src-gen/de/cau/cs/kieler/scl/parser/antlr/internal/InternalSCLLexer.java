@@ -2705,17 +2705,17 @@ public class InternalSCLLexer extends Lexer {
         }
     }
     static final String DFA24_eotS =
-        "\1\uffff\1\61\3\uffff\4\61\1\uffff\1\75\1\uffff\6\61\4\uffff\1"+
-        "\121\1\123\1\125\2\uffff\1\131\2\uffff\1\134\2\uffff\1\142\5\61"+
-        "\1\55\1\151\2\55\3\uffff\3\61\4\uffff\2\61\1\164\3\61\4\uffff\14"+
-        "\61\22\uffff\1\151\5\uffff\5\61\5\uffff\1\61\1\u008e\1\u008f\3\61"+
-        "\1\u0093\1\uffff\7\61\1\u009b\4\61\1\u00a0\1\61\1\u00a2\2\61\2\uffff"+
-        "\1\u00a5\5\61\2\uffff\3\61\1\uffff\4\61\1\u00b2\1\u00b3\1\u00b4"+
-        "\1\uffff\1\u00b5\1\u00b6\2\61\1\uffff\1\61\1\uffff\1\u00ba\1\u00bb"+
-        "\1\uffff\1\u00bc\1\61\1\u00be\1\u00bf\1\61\1\u00c1\1\61\1\u00c3"+
-        "\4\61\5\uffff\1\u00c8\1\u00b3\1\u00c9\3\uffff\1\61\2\uffff\1\u00cb"+
-        "\1\uffff\1\61\1\uffff\1\u00cd\1\u00ce\1\u00cf\1\u00d0\2\uffff\1"+
-        "\61\1\uffff\1\u00d2\4\uffff\1\61\1\uffff\1\u00d4\1\uffff";
+        "\1\uffff\1\61\3\uffff\4\61\1\uffff\1\75\1\uffff\6\61\4\uffff\1\121"+
+        "\1\123\1\125\2\uffff\1\131\2\uffff\1\134\2\uffff\1\142\5\61\1\55"+
+        "\1\151\2\55\3\uffff\3\61\4\uffff\2\61\1\164\3\61\4\uffff\14\61\22"+
+        "\uffff\1\151\5\uffff\5\61\5\uffff\1\61\1\u008e\1\u008f\3\61\1\u0093"+
+        "\1\uffff\7\61\1\u009b\4\61\1\u00a0\1\61\1\u00a2\2\61\2\uffff\1\u00a5"+
+        "\5\61\2\uffff\3\61\1\uffff\4\61\1\u00b2\1\u00b3\1\u00b4\1\uffff"+
+        "\1\u00b5\1\u00b6\2\61\1\uffff\1\61\1\uffff\1\u00ba\1\u00bb\1\uffff"+
+        "\1\u00bc\1\61\1\u00be\1\u00bf\1\61\1\u00c1\1\61\1\u00c3\4\61\5\uffff"+
+        "\1\u00c8\1\u00b3\1\u00c9\3\uffff\1\61\2\uffff\1\u00cb\1\uffff\1"+
+        "\61\1\uffff\1\u00cd\1\u00ce\1\u00cf\1\u00d0\2\uffff\1\61\1\uffff"+
+        "\1\u00d2\4\uffff\1\61\1\uffff\1\u00d4\1\uffff";
     static final String DFA24_eofS =
         "\u00d5\uffff";
     static final String DFA24_minS =

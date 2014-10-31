@@ -13753,8 +13753,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     static final String DFA28_specialS =
         "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\5\uffff}>";
     static final String[] DFA28_transitionS = {
-            "\1\3\4\uffff\1\1\7\uffff\1\10\13\uffff\1\4\3\uffff\1\5\1\6"+
-            "\2\11\1\7\7\uffff\1\2",
+            "\1\3\4\uffff\1\1\7\uffff\1\10\13\uffff\1\4\3\uffff\1\5\1\6\2"+
+            "\11\1\7\7\uffff\1\2",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -14484,8 +14484,8 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     static final String DFA41_acceptS =
         "\1\uffff\1\1\17\uffff\1\2";
     static final String DFA41_specialS =
-        "\2\uffff\1\14\1\3\1\7\1\15\1\10\1\0\1\4\1\11\1\16\1\1\1\13\1\2"+
-        "\1\12\1\5\1\6\1\uffff}>";
+        "\2\uffff\1\14\1\3\1\7\1\15\1\10\1\0\1\4\1\11\1\16\1\1\1\13\1\2\1"+
+        "\12\1\5\1\6\1\uffff}>";
     static final String[] DFA41_transitionS = {
             "\1\10\4\uffff\1\6\10\uffff\1\4\1\11\5\uffff\1\3\1\uffff\1\2"+
             "\2\uffff\1\16\1\12\1\13\2\uffff\1\14\1\15\2\uffff\1\20\1\uffff"+
@@ -15243,8 +15243,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     static final String DFA59_maxS =
         "\1\55\1\uffff\1\4\1\104\1\4\4\uffff\1\104\2\uffff\1\104\1\0\1\uffff";
     static final String DFA59_acceptS =
-        "\1\uffff\1\1\3\uffff\1\5\1\6\1\7\1\2\1\uffff\1\3\1\4\2\uffff\1"+
-        "\2";
+        "\1\uffff\1\1\3\uffff\1\5\1\6\1\7\1\2\1\uffff\1\3\1\4\2\uffff\1\2";
     static final String DFA59_specialS =
         "\17\uffff}>";
     static final String[] DFA59_transitionS = {
