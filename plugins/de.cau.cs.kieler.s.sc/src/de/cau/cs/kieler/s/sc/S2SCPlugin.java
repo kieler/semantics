@@ -117,11 +117,11 @@ public class S2SCPlugin extends AbstractUIPlugin {
             // by default, produce the normal/old SC syntax
             // cmot/27. Aug 2012: use scc style variables instead of signals (S2SCC instead of S2SC)
 
-            // S2SCC s2SCC = new S2SCC();
-            S2C s2C = Guice.createInjector().getInstance(S2C.class);
+            //S2SCC s2SCC = new S2SCC();
+            S2SCC s2C = Guice.createInjector().getInstance(S2SCC.class);
 //            S2SCC s2SCC = (S2SCC) KiCoPlugin.getGuiceInstance(S2SCC.class);
-            S2C.bufferSize = bufferSize;
-            S2C.includeHeader = includeHeader;
+            S2SCC.bufferSize = bufferSize;
+            S2SCC.includeHeader = includeHeader;
 //            ccode = (String) KielerCompiler.compile("S2SC", program);
             ccode = s2C.transform(program).toString();
         }

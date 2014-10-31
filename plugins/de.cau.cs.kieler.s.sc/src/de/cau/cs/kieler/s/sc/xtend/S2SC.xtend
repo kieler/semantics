@@ -54,10 +54,11 @@ class S2SC {
     extension SExtension    
     
     // General method to create the c simulation interface.
-	def transform (Program program, String outputFolder, String bufferSize) {
+//	def transform (Program program, String bufferSize) {
+    def transform (Program program) {
        '''
 	   «/* Generate the C header */»
-       «scHeader(outputFolder, program)»
+       «scHeader(program)»
 
 	   «/* Simple Signal Reset, Input Output */»
 	   «sReset(program)»
@@ -68,7 +69,7 @@ class S2SC {
 
 	   «/* Generate input functions that are then called my the main function's
 		   tick function of the module */»
-       «sSetInputsFunction(program, bufferSize)»
+       «sSetInputsFunction(program, "50000")»
 
 	   «/* Generate output functions and reset functions for each S signal */» 
        «sSetOutputFunction(program)»
@@ -86,7 +87,7 @@ class S2SC {
    // -------------------------------------------------------------------------   
    
    // Generate the C header.
-   def scHeader(String outputFolderm, Program program) {
+   def scHeader(Program program) {
    	'''
 	/*****************************************************************************/
 	/*                 G E N E R A T E D     S C    C O D E                     */

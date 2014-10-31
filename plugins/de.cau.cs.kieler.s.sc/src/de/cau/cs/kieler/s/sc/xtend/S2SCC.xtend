@@ -55,6 +55,7 @@ import de.cau.cs.kieler.s.extensions.SExtension
 class S2SCC { 
     
     public static String bufferSize;
+    public static String includeHeader;
     
     @Inject
     extension KExpressionsExtension    
@@ -119,6 +120,8 @@ class S2SCC {
     #include <stdio.h>
 
     #include "cJSON.h"
+    
+    «includeHeader»
     
     «/* Signal constants */»
     «sSignalConstants(program)»

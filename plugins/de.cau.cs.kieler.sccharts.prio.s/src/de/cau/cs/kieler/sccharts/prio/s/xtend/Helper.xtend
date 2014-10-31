@@ -194,7 +194,12 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
     
     // Convert SyncChart variable assignments and add them to an instructions list.
     def dispatch void convertToSEffect(Assignment effect, List<de.cau.cs.kieler.s.s.Instruction> instructions) {
-        // TODO
+        val sAssignment = SFactory::eINSTANCE.createAssignment
+        val sValuedObject = TraceComponent::getSingleTraceTarget(effect.valuedObject, "ValuedObject") as de.cau.cs.kieler.core.kexpressions.ValuedObject
+        val sValuedObjectValue = effect.expression.convertToSExpression;
+        sAssignment.setVariable(sValuedObject)
+        sAssignment.setExpression(sValuedObjectValue)
+        instructions.add(sAssignment);
     }
 
     // Convert SyncChart text effects and add them to an instructions list.
@@ -527,7 +532,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
     // ==                                          C O M P A R E                                           ==
     // ======================================================================================================
 
-    // Compare highest strong dependencies of two SyncChart states.
+    // Compare highest strong dependencies of two SCCharts states. Make sure the root node has HIGHTEST prio.
     def int compareTraceDependencyPriority(State e1, State e2) {
 //        System::out.println("----");
 //        System::out.println(e1 + " : "+ e1.id);
@@ -542,6 +547,12 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
         }
         if (node2 != null) {
             node2Priority = node2.priority;
+        }
+        if (e1.isRootState) {
+               return -1;
+        }
+        if (e2.isRootState) {
+               return 1;
         }
         if (node1Priority >= 
             node2Priority) {-1} else {1}
