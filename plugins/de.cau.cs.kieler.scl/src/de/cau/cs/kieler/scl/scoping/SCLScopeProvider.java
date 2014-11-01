@@ -3,13 +3,66 @@
  */
 package de.cau.cs.kieler.scl.scoping;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.naming.QualifiedName;
+import org.eclipse.xtext.resource.EObjectDescription;
+import org.eclipse.xtext.resource.IEObjectDescription;
+import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.impl.SimpleScope;
+
+import de.cau.cs.kieler.core.kexpressions.Declaration;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.scl.scl.Assignment;
+import de.cau.cs.kieler.scl.scl.Program;
+import de.cau.cs.kieler.scl.scl.StatementScope;
+
 /**
  * This class contains custom scoping description.
  * 
- * see : http://www.eclipse.org/Xtext/documentation.html#scoping
- * on how and when to use it 
- *
+ * see : http://www.eclipse.org/Xtext/documentation.html#scoping on how and when to use it
+ * 
+ * @author krat
+ * 
  */
-public class SCLScopeProvider extends de.cau.cs.kieler.core.kexpressions.scoping.KExpressionsScopeProvider {
+public class SCLScopeProvider extends
+        de.cau.cs.kieler.core.kexpressions.scoping.KExpressionsScopeProvider {
 
+
+    public IScope scope_Assignment_valuedObject(final Assignment context, final EReference ref) {
+        return new SimpleScope(getAllSignals(context));
+    }
+
+    // TODO beautify
+    public static List<IEObjectDescription> getAllSignals(final EObject context) {
+        EObject parent = context.eContainer();
+        List<IEObjectDescription> variables = new ArrayList<IEObjectDescription>();
+
+        while (true) {
+            while (!(parent instanceof StatementScope) && !(parent instanceof Program)) {
+                parent = parent.eContainer();
+            }
+
+            if (parent instanceof Program) {
+                for (Declaration decl : ((Program) parent).getDeclarations()) {
+                    for (ValuedObject var : decl.getValuedObjects()) {
+                        variables.add(new EObjectDescription(QualifiedName.create(var.getName()),
+                                var, null));
+                    }
+                }
+                return variables;
+            }
+
+            for (Declaration decl : ((StatementScope) parent).getDeclarations()) {
+                for (ValuedObject var : decl.getValuedObjects()) {
+                    variables.add(new EObjectDescription(QualifiedName.create(var.getName()), var,
+                            null));
+                }
+            }
+            parent = parent.eContainer();
+        }
+    }
 }

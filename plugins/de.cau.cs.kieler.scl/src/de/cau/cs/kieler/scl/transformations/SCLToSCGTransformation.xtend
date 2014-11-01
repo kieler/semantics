@@ -45,6 +45,7 @@ import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scl.scl.StatementScope
 
 /** 
  * SCL to SCG Transformation 
@@ -241,6 +242,12 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
  			    }
     		}
     	]
+    }
+    
+    // TODO make it work
+    private dispatch def SCLContinuation transform(StatementScope sScope, SCGraph scg, List<ControlFlow> incoming) {
+        scg.declarations.addAll(sScope.declarations)
+        transform(sScope.statements, scg, incoming)
     }
            
     
