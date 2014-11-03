@@ -31,6 +31,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.scl.scl.StatementSequence
 import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Pause
+import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl
 
 /**
  * @author krat
@@ -52,7 +53,7 @@ class EsterelToSclExtensions {
             if (ret != null)
                 return ret
         }
-        throw new TransformerException("getValuedObject: Signal not declared")
+        throw new TransformerException("getValuedObject: Signal not declared: " + n)
     }
     
     def dispatch getValuedObject(LinkedList<ValuedObject> variables, String n) {
@@ -61,7 +62,7 @@ class EsterelToSclExtensions {
             if (ret != null)
                 return ret
         }
-        throw new TransformerException("getValuedObject: Signal not declared")
+        throw new TransformerException("getValuedObject: Signal not declared: " + n)
     }
     
     def getValuedObjectRef(EList<Declaration> decls, String n) {
@@ -136,6 +137,32 @@ class EsterelToSclExtensions {
               ]))
           ]
       }
+      
+      /*
+       * Transformation of a declaration
+       */
+       def EList<Declaration> transformDeclaration(InterfaceSignalDecl declaration) {
+           for (decl : declaration.signals) {
+               if (decl.channelDescr != null) {
+                   System.out.println("Type " + decl.channelDescr.type)
+               }
+           }
+           
+           return null;
+       }
        
-       
+}
+
+public class PreemptiveElement {
+    public String type;
+    public String endLabel;
+    public Expression expression;
+    public ValuedObject flag;
+    
+    public new (String t, String l, Expression expr, ValuedObject f) {
+        type = t
+        endLabel = l
+        expression = expr
+        flag = f
+    }
 }
