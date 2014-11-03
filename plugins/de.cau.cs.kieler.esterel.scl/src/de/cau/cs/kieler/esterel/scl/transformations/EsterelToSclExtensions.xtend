@@ -42,6 +42,9 @@ class EsterelToSclExtensions {
     @Inject
     extension KExpressionsExtension
     
+    @Inject
+    extension EsterelToSclTransformation
+    
     var static labelCount = 0;
     
     /*
@@ -130,7 +133,7 @@ class EsterelToSclExtensions {
           SclFactory::eINSTANCE.createConditional => [
               expression = s//createBoolValue(true)
               if (!isImmediate) {
-                  statements.add(createStmFromInstr(SclFactory::eINSTANCE.createPause))
+                  statements.addAll(createSclPause.statements)
               }
               statements.add(createStmFromInstr(SclFactory::eINSTANCE.createGoto => [
                   targetLabel = l
@@ -156,10 +159,10 @@ class EsterelToSclExtensions {
 public class PreemptiveElement {
     public String type;
     public String endLabel;
-    public Expression expression;
+    public de.cau.cs.kieler.esterel.kexpressions.Expression expression;
     public ValuedObject flag;
     
-    public new (String t, String l, Expression expr, ValuedObject f) {
+    public new (String t, String l, de.cau.cs.kieler.esterel.kexpressions.Expression expr, ValuedObject f) {
         type = t
         endLabel = l
         expression = expr
