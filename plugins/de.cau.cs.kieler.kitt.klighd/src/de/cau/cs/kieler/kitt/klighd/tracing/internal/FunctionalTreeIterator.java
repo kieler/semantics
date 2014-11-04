@@ -16,24 +16,25 @@ package de.cau.cs.kieler.kitt.klighd.tracing.internal;
 import java.util.Iterator;
 
 import org.eclipse.emf.common.util.AbstractTreeIterator;
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
+
+import com.google.common.base.Function;
 
 /**
- * Generic Version of the EMF TreeIterator which uses a variable depthFunction to determine
+ * Functional Version of the EMF TreeIterator which uses a variable depthFunction to determine
  * iteration successors.
  * 
  * @author als
  * @kieler.design 2014-09-23 proposed
  * @kieler.rating 2014-09-23 proposed yellow
  */
-public class GenericTreeIterator<E> extends AbstractTreeIterator<E> {
+public class FunctionalTreeIterator<E> extends AbstractTreeIterator<E> {
     private static final long serialVersionUID = 1L;
 
     /** successor function */
-    private final Function1<Object, Iterator<E>> depthFunction;
+    private final Function<Object, Iterator<E>> depthFunction;
 
-    public GenericTreeIterator(E object, boolean includeRoot,
-            Function1<Object, Iterator<E>> depthFunction) {
+    public FunctionalTreeIterator(E object, boolean includeRoot,
+            Function<Object, Iterator<E>> depthFunction) {
         super(object, includeRoot);
         this.depthFunction = depthFunction;
     }

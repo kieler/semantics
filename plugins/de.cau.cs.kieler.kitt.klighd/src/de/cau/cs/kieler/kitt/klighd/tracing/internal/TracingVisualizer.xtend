@@ -143,7 +143,7 @@ class TracingVisualizer {
                         val eow = it as EObjectWrapper;
 
                         //add tracing children
-                        val children = new GenericTreeIterator(eow, true,
+                        val children = new FunctionalTreeIterator(eow, true,
                             [
                                 val elem = it as EObjectWrapper;
                                 if (!elem.model.targetTransformations.empty) {
@@ -155,7 +155,7 @@ class TracingVisualizer {
                         visibleEdgesModelOrigin.addAll(children);
 
                         //add tracing parents
-                        val parents = new GenericTreeIterator(eow, false,
+                        val parents = new FunctionalTreeIterator(eow, false,
                             [
                                 val elem = it as EObjectWrapper;
                                 if (elem.model.sourceTransformation != null) {
