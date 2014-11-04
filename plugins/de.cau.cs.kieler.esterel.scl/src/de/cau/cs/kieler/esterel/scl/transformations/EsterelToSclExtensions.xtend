@@ -99,6 +99,10 @@ class EsterelToSclExtensions {
         ]
     }
     
+    def createSseq() {
+        SclFactory::eINSTANCE.createStatementSequence
+    }
+    
     /*
      * Returns a fresh label
      */
