@@ -65,11 +65,11 @@ public class EsterelToSclHandler extends AbstractHandler {
                 de.cau.cs.kieler.esterel.esterel.Program esterelProgram = loadEsterelProgram(esterelFile);
                  
                 // Call the transformation
-//                Injector injector = Guice.createInjector();
-//                EsterelToSclTransformation transformation =
-//                        injector.getInstance(EsterelToSclTransformation.class);
-//                Program program = transformation.transform(esterelProgram);
-                Program program = (Program) KielerCompiler.compile("ESTERELTOSCL", esterelProgram, false, false).getEObject();
+                Injector injector = Guice.createInjector();
+                EsterelToSclTransformation transformation =
+                        injector.getInstance(EsterelToSclTransformation.class);
+                Program program = transformation.transformProgram(esterelProgram);
+//                Program program = (Program) KielerCompiler.compile("ESTERELTOSCL", esterelProgram, false, false).getEObject();
                  
                 
                 // Save SCL program

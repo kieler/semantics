@@ -79,6 +79,7 @@ import de.cau.cs.kieler.esterel.esterel.WeakAbortBody
 import de.cau.cs.kieler.esterel.esterel.WeakAbortInstance
 import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl
 import java.util.ArrayList
+import de.cau.cs.kieler.esterel.esterel.ConstantExpression
 
 /**
  * @author krat
@@ -237,17 +238,22 @@ class EsterelToSclTransformation extends Transformation {
         //Expression...
         System.out.println("Emit: " + emit.expr)
         val variable = getValuedObject(variables, emit.signal.name)
-
         val variableRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
             valuedObject = variable
         ]
-
-        val op = createOperatorExpression(OperatorType::OR) => [
-            add(variableRef)
-            add(createBoolValue(true))
-        ]
-
-        createSseq(createStmFromInstr(createAssignment(variable, op)))
+        // Unvalued Emit
+        if (emit.expr == null) {
+            val op = createOperatorExpression(OperatorType::OR) => [
+                add(variableRef)
+                add(createBoolValue(true))
+            ]
+    
+            return createSseq(createStmFromInstr(createAssignment(variable, op)))
+        }
+        // Valued Emit
+        else {
+            return createSseq(createStmFromInstr(createAssignment(variable, transformExp(emit.expr))))
+        }
     }
 
     /*
@@ -786,6 +792,9 @@ class EsterelToSclTransformation extends Transformation {
         } else if (exp instanceof ValuedObjectReference) {
             System.out.println("transformExp: ValuedObjectReference")
             return transformValObjRef(exp as ValuedObjectReference)
+        } else if (exp instanceof ConstantExpression) {
+            System.out.println("transformExp: ConstantExpression")
+            return transformConstExp(exp as ConstantExpression)
         }
 
         System.out.println("transformExp: Unknown Expression: " + exp)
@@ -817,6 +826,15 @@ class EsterelToSclTransformation extends Transformation {
 
     def de.cau.cs.kieler.core.kexpressions.ValuedObjectReference transformValObjRef(ValuedObjectReference ref) {
         getValuedObjectRef(variables, ref.valuedObject.name)
+    }
+    
+    // TODO Expression is considered being an integer...
+    def transformConstExp(ConstantExpression constExp) {
+        System.out.println("Value: " + constExp.value)
+        System.out.println("As integer: " + Integer.getInteger(constExp.value))
+        return KExpressionsFactory::eINSTANCE.createIntValue => [
+            value = Integer.parseInt(constExp.value)
+        ]
     }
 
     /*

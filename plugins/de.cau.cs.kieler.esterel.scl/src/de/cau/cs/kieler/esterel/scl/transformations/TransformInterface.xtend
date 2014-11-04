@@ -34,9 +34,6 @@ import de.cau.cs.kieler.scl.scl.Program
  */
 class TransformInterface {
     
-    // Global variables
-    var LinkedList<ValuedObject> variables
-    
     @Inject
     extension KExpressionsExtension
     
@@ -45,7 +42,6 @@ class TransformInterface {
      */
     def transformInterface(ModuleInterface modInterface, Program program) {
         System.out.println("Transforming Interface")
-        variables = new LinkedList<ValuedObject>
         transformDeclaration(modInterface.intSignalDecls, program)
     }
     
@@ -81,7 +77,6 @@ class TransformInterface {
             if (sig.channelDescr == null) {
                 System.out.println("Transforming pure signal " + sig)
                 val variable = createValuedObject(sig.name)
-//                variables.add(variable)
                 pureSignals.valuedObjects.add(variable);
                 System.out.println("Variable1 is " + variable)
             }
@@ -90,7 +85,6 @@ class TransformInterface {
                 System.out.println("Transforming int signal " + sig)
                 val variable = createValuedObject(sig.name)
                 intSignals.valuedObjects.add(variable);
-//                variables.add(variable)
             }
             else {
                 System.out.println("Unable to transform declaration: " + sig.channelDescr.type.type)
