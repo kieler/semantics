@@ -37,7 +37,12 @@ class TransformExpression {
     @Inject
     extension EsterelToSclExtensions
     
-    
+    /*
+     * Transforms an esterel.kexpression.Expression to core.kexpression.Expression
+     * @param exp The Esterel expression to be transformed
+     * @param variables List of ValuedObject in scope
+     * @return The transformed KExpressions Expression
+     */
     def de.cau.cs.kieler.core.kexpressions.Expression transformExp(Expression exp, LinkedList<ValuedObject> variables) {
         if (exp instanceof OperatorExpression) {
             System.out.println("transformExp: OperatorExpression")

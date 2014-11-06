@@ -80,6 +80,12 @@ class EsterelToSclExtensions {
         ]
     }
     
+    def createValuedObjectRef(ValuedObject valObj) {
+        KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
+            valuedObject = valObj
+        ]
+    }
+    
     def createAssignment(ValuedObject obj, Expression exp) {
         SclFactory::eINSTANCE.createAssignment => [
             valuedObject = obj
@@ -160,12 +166,23 @@ class EsterelToSclExtensions {
        
 }
 
+/*
+ * Represents a preemptive hull, can be used to be put on a stack to keep track of nested
+ * preemptive statements.
+ */
 public class PreemptiveElement {
     public String type;
     public String endLabel;
     public de.cau.cs.kieler.esterel.kexpressions.Expression expression;
     public ValuedObject flag;
     
+    /*
+     * Constructs new PreemptiveElement
+     * @param t String representation of the type of the preemptive statement
+     * @param l Optional label representing where to jump to, if preemption happens. null if none
+     * @param expr Esterel expression denoting when preemption happens
+     * @param f Optional flag. null if none
+     */
     public new (String t, String l, de.cau.cs.kieler.esterel.kexpressions.Expression expr, ValuedObject f) {
         type = t
         endLabel = l
