@@ -359,21 +359,15 @@ class EsterelToSclTransformation extends Transformation {
     def StatementSequence handleAwaitInstance(AwaitInstance await, StatementSequence sSeq) {
         val l = createFreshLabel
 
-        sSeq.statements.add(
-            SclFactory::eINSTANCE.createEmptyStatement => [
-                label = l
-            ])
+        sSeq.addLabel(l)
 
         if (!await.delay.isImmediate) {
-            System.out.println("Delayed await")
             sSeq.createSclPause
         }
 
-        val gotoStm = SclFactory::eINSTANCE.createInstructionStatement => [
-            instruction = SclFactory::eINSTANCE.createGoto => [
+        val gotoStm = createStmFromInstr(SclFactory::eINSTANCE.createGoto => [
                 targetLabel = l
-            ]
-        ]
+            ])
 
         val b = createOperatorExpression(OperatorType::NOT) => [
             subExpressions.add(transformExp(await.delay.event.expr, variables))
@@ -382,16 +376,12 @@ class EsterelToSclTransformation extends Transformation {
         val cond = SclFactory::eINSTANCE.createConditional => [
             expression = b
             if (await.delay.isImmediate) {
-                System.out.println("Immediate await")
                 statements.addAll(createSclPause(createSseq).statements)
             }
             statements.add(gotoStm)
         ]
 
-        sSeq.statements.add(
-            SclFactory::eINSTANCE.createInstructionStatement => [
-                instruction = cond
-            ])
+        sSeq.statements.add(createStmFromInstr(cond))
 
         sSeq
     }
@@ -402,17 +392,14 @@ class EsterelToSclTransformation extends Transformation {
     def dispatch StatementSequence transformStm(Loop loop, StatementSequence sSeq) {
 
         // loop p each s
-        if (loop.end != null) {
+        if (loop.end instanceof LoopDelay) {
             return handleLoopEach(loop, (loop.end as LoopDelay).delay, sSeq)
         }
 
         val l = createFreshLabel
 
-        //        val stmSeq = SclFactory::eINSTANCE.createStatementSequence
-        sSeq.statements.add(
-            SclFactory::eINSTANCE.createEmptyStatement => [
-                label = l
-            ])
+        sSeq.addLabel(l)
+        
         transformStm(loop.body.statement, sSeq)
 
         // TODO Remove pseudo conditional when scg unreachable code is fixed
@@ -420,13 +407,9 @@ class EsterelToSclTransformation extends Transformation {
             createStmFromInstr(
                 SclFactory::eINSTANCE.createConditional => [
                     expression = createBoolValue(true)
-                    statements.add(
-                        createStmFromInstr(
-                            SclFactory::eINSTANCE.createGoto => [
-                                targetLabel = l
-                            ]))
+                    statements.add(createGotoStm(l))
                 ]))
-        System.out.println("4")
+                
         sSeq
     }
 
@@ -486,8 +469,9 @@ class EsterelToSclTransformation extends Transformation {
      * pause
      */
     def dispatch StatementSequence transformStm(Pause pause, StatementSequence sSeq) {
-        sSeq.createSclPause.statements
-        return sSeq
+        sSeq.createSclPause
+        
+        sSeq
     }
 
     /*
@@ -565,11 +549,8 @@ class EsterelToSclTransformation extends Transformation {
      */
     def StatementSequence handleSuspend(Instruction instr, int i, StatementSequence sSeq) {
         val l = createFreshLabel
-        sSeq.statements.add(
-            SclFactory::eINSTANCE.createEmptyStatement => [
-                label = l
-            ])
-        sSeq.statements.addAll(handlePreemtion(instr, i - 1, sSeq).statements)
+        sSeq.addLabel(l)
+        handlePreemtion(instr, i - 1, sSeq)
         sSeq.statements.add(
             createStmFromInstr(ifThenGoto(transformExp(preemption.get(i).expression, variables), l, true)))
 
@@ -582,7 +563,6 @@ class EsterelToSclTransformation extends Transformation {
      * @param i Position in preemptive stack to be handled
      */
     def StatementSequence handleWeakImmediateAbortPause(Instruction instr, int i, StatementSequence sSeq) {
-        System.out.println("Weaky")
 
         val cond = SclFactory::eINSTANCE.createConditional => [
             expression = transformExp(preemption.get(i).expression, variables)
@@ -596,21 +576,13 @@ class EsterelToSclTransformation extends Transformation {
                             ], createBoolValue(true))
                     ]))
             if (labelMap.get(curLabel).contains(preemption.get(i).endLabel)) {
-                statements.add(
-                    createStmFromInstr(
-                        SclFactory::eINSTANCE.createGoto => [
-                            targetLabel = preemption.get(i).endLabel
-                        ]))
+                statements.add(createGotoStm(preemption.get(i).endLabel))
             } else {
-                statements.add(
-                    createStmFromInstr(
-                        SclFactory::eINSTANCE.createGoto => [
-                            targetLabel = curLabel
-                        ]))
+                statements.add(createGotoStm(curLabel))
             }
         ];
         sSeq.statements.add(createStmFromInstr(cond))
-        sSeq.statements.addAll(handlePreemtion(instr, i - 1, sSeq).statements)
+        handlePreemtion(instr, i - 1, sSeq)
 
         sSeq
     }
@@ -647,16 +619,10 @@ class EsterelToSclTransformation extends Transformation {
      */
     def dispatch StatementSequence transformStm(Halt halt, StatementSequence sSeq) {
         val l = createFreshLabel
-        sSeq.statements.add(
-            SclFactory::eINSTANCE.createEmptyStatement => [
-                label = l
-            ])
-        sSeq.statements.addAll(sSeq.createSclPause.statements)
-        sSeq.statements.add(
-            createStmFromInstr(
-                SclFactory::eINSTANCE.createGoto => [
-                    targetLabel = l
-                ]))
+        sSeq.addLabel(l)
+        sSeq.createSclPause
+        sSeq.addGoto(l)
+        
         sSeq
     }
 
@@ -692,8 +658,8 @@ class EsterelToSclTransformation extends Transformation {
                 }
             ]
             sSeq.statements.add(createStmFromInstr(cond))
+            
             return sSeq
-
         }
         //present case s do ...
         else if (pres.body instanceof PresentCaseList) {
@@ -707,7 +673,6 @@ class EsterelToSclTransformation extends Transformation {
      * Creates nested conditional equivalent to cases list
      */
     def Conditional handleCaseList(EList<PresentCase> cases, int idx, ElsePart elsePart) {
-        System.out.println("handleCaseList")
         if (cases.length > idx + 1) {
             return SclFactory::eINSTANCE.createConditional => [
                 expression = transformExp(cases.get(idx).event.expression, variables)

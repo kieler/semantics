@@ -152,6 +152,38 @@ class EsterelToSclExtensions {
       }
       
       /*
+       * Adds a new empty statement to a StatementSequence
+       * @param sSeq The StatementSequence to add the empty statement
+       * @param l The label
+       */
+       def addLabel(StatementSequence sSeq, String l) {
+           sSeq.statements.add(
+            SclFactory::eINSTANCE.createEmptyStatement => [
+                label = l
+            ])
+       }
+       
+       /*
+        * Adds a new goto instruction to a StatementSequence
+        * @param sSeq The StatementSequence to add the empty statement
+        * @param l The target label 
+        */
+        def addGoto(StatementSequence sSeq, String l) {
+            sSeq.statements.add(createGotoStm(l))
+        }
+        
+        /*
+        * Creates an InstructionStatement containing a goto
+        * @param l The target label 
+        */
+        def createGotoStm(String l) {
+                    createStmFromInstr(
+                        SclFactory::eINSTANCE.createGoto => [
+                            targetLabel = l
+                        ])
+        }
+      
+      /*
        * Transformation of a declaration
        */
        def EList<Declaration> transformDeclaration(InterfaceSignalDecl declaration) {
