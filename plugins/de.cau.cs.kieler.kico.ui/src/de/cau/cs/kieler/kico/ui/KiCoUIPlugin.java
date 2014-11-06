@@ -15,6 +15,8 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.kico.KiCoPlugin;
+import de.cau.cs.kieler.kico.Transformation;
+import de.cau.cs.kieler.kico.ui.CompileChains.CompileChain;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -81,31 +83,63 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
      * 
      * @return the returnHashMap
      */
-    public HashMap<String, List<String>> getRegisteredEditors() {
+    public HashMap<String, CompileChains> getRegisteredEditors() {
         IConfigurationElement[] editors =
                 Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_POINT_ID);
 
-        HashMap<String, List<String>> returnHashMap =
-                new HashMap<String, List<String>>(editors.length);
+        HashMap<String, CompileChains> returnHashMap =
+                new HashMap<String, CompileChains>(editors.length);
 
         for (int i = 0; i < editors.length; i++) {
             try {
 
                 String editorID = editors[i].getAttribute("editor").trim();
-                String transformationIDs = editors[i].getAttribute("transformations");
-
-                String[] transformationIDsArray = transformationIDs.split(",");
-                ArrayList<String> transformations = new ArrayList<String>();
-                for (String transformationID : transformationIDsArray) {
-                    transformations.add(transformationID.trim());
+                String label = "No label defined";
+                try {
+                    label = editors[i].getAttribute("label").trim();
+                } catch (Exception e) {
+                    //ignore
                 }
+                String priority = "0";
+                try {
+                    priority = editors[i].getAttribute("priority").trim();
+                } catch (Exception e) {
+                    //ignore
+                }
+                String transformationIDs = editors[i].getAttribute("transformations");
+                
+                ArrayList<String> transformations = new ArrayList<String>();
+                // The special case where we want to add ALL registered transformations 
+                if (transformationIDs.equals("ALL")) {
+                   for (Transformation transformation :  KiCoPlugin.getInstance().getRegisteredTransformations().values()) {
+                       transformations.add(transformation.getId());
+                   }
+                } else {
+                    String[] transformationIDsArray = transformationIDs.split(",");
+                    for (String transformationID : transformationIDsArray) {
+                        transformations.add(transformationID.trim());
+                    }
+                }
+
 
                 // The case for ANY editor
                 if (editorID == null || editorID.equals("*") || editorID.equals("")) {
                     editorID = "*";
                 }
+                
+                
+                CompileChains compileChains = returnHashMap.get(editorID);
+                if (compileChains == null) {
+                    compileChains = new CompileChains(editorID);
+                    returnHashMap.put(editorID, compileChains);
+                }
+                CompileChain item = new CompileChain();
+                item.setPriority(priority);
+                item.label = label;
+                item.transformations = transformations;
+                compileChains.insertItem(item);
 
-                returnHashMap.put(editorID, transformations);
+                
             } catch (Exception e) {
                 this.showWarning(editors[i].getContributor().getName() + " could not be loaded.",
                         null, e, true);

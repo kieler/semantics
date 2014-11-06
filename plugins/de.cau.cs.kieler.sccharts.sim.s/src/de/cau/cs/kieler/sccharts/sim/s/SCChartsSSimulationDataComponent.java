@@ -148,6 +148,9 @@ public class SCChartsSSimulationDataComponent extends JSONObjectSimulationDataCo
             dirtyIndicator = newDirtyIndicator;
             return true;
         }
+        // If KiCo Selection has changed, consider this to be dirty
+        
+        
         // If we conclude at this point that we are not dirty on the level of
         // changes to the diagram, we MUST check whether the simulation
         // DataComponent used comes to the same result.

@@ -280,11 +280,12 @@
    </extension>
      <extension
            point="de.cau.cs.kieler.kico.extension">
-        <ResourceExtensionInformation
+        <ExtensionInformation
               className="State"
+              editor_id="de.cau.cs.kieler.sccharts.presentation.SCChartsEditorID"
               extensionName="sct"
               isXMI="true">
-        </ResourceExtensionInformation>
+        </ExtensionInformation>
      </extension>   
 
 

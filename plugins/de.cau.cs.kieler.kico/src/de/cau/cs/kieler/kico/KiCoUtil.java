@@ -93,15 +93,15 @@ public class KiCoUtil {
         // the eClass for the registered extensions and will skip the general approach if a corresponding
         // extension was found.
         List<String> extensionKeyList = new LinkedList<String>(getRegXtext().getExtensionToFactoryMap().keySet());
-        HashMap<String, Pair<String, Boolean>> resourceExtensionMap = KiCoPlugin.getInstance().getRegisteredResourceExtensions(false);
+        HashMap<String, ResourceExtension> resourceExtensionMap = KiCoPlugin.getInstance().getRegisteredResourceExtensions(false);
         if (KiCoPlugin.DEBUG) {
             System.out.println("MODEL eCLASS: " + model.eClass().getName());
         }
-        Pair<String, Boolean> specificExtension = resourceExtensionMap.get(model.eClass().getName());
+        ResourceExtension specificExtension = resourceExtensionMap.get(model.eClass().getName());
         if (specificExtension != null) {
             extensionKeyList.clear();
-            if (!specificExtension.getSecond()) {
-                extensionKeyList.add(0, specificExtension.getFirst());
+            if (!specificExtension.isXMI()) {
+                extensionKeyList.add(0, specificExtension.getExtension());
             }
         }
         

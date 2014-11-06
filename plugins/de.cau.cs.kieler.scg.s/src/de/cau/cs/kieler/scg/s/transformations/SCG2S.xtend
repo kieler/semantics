@@ -32,6 +32,9 @@ class SCG2S {
                 val SCGToSTransformation transform1 = Guice.createInjector().getInstance(typeof(SCGToSTransformation));
                 val Program sProgram = transform1.transformSCGToS(scg);
                 
+                //TODO: put real scchart name here, scg should be able to store a name
+                sProgram.setName("SCChart")
+                
                 return sProgram;
             }
             
