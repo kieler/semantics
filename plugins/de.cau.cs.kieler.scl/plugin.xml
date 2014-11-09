@@ -174,5 +174,14 @@
             class="de.cau.cs.kieler.scl.scl.SclPackage"
             genModel="model/SCL.genmodel"/>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <transformationMethod
+            class="de.cau.cs.kieler.scl.transformations.SCLToSCGTransformation"
+            id="SCLTOSCG"
+            method="transform"
+            name="SCG">
+      </transformationMethod>
+   </extension>
 
 </plugin>

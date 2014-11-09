@@ -61,9 +61,6 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     @Inject
     extension SCGControlFlowExtensions
     
-    @Inject 
-    extension SCLExtensions
-    
     @Inject
     extension KExpressionsExtension
          
@@ -244,11 +241,6 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     	]
     }
     
-    // TODO make it work
-    private dispatch def SCLContinuation transform(StatementScope sScope, SCGraph scg, List<ControlFlow> incoming) {
-        scg.declarations.addAll(sScope.declarations)
-        transform(sScope.statements, scg, incoming)
-    }
            
     
     // Valued objects must be set according to the mapping!

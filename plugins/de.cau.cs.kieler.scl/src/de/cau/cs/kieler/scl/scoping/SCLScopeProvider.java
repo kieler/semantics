@@ -4,8 +4,11 @@
 package de.cau.cs.kieler.scl.scoping;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.naming.QualifiedName;
@@ -14,8 +17,12 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.scl.scl.Assignment;
 import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.StatementScope;
@@ -30,39 +37,66 @@ import de.cau.cs.kieler.scl.scl.StatementScope;
  */
 public class SCLScopeProvider extends
         de.cau.cs.kieler.core.kexpressions.scoping.KExpressionsScopeProvider {
+    
 
+    
+//    public IScope getScope(EObject context, EReference reference) {
+//        System.out.println("scope_" + reference.getEContainingClass().getName()
+//        + "_" +reference.getName()
+//        + "(" + context.eClass().getName() + ", ..)");
+//        
+//        return super.getScope(context, reference);
+//    }
 
     public IScope scope_Assignment_valuedObject(final Assignment context, final EReference ref) {
         return new SimpleScope(getAllSignals(context));
     }
+    
+    public IScope scope_ValuedObjectReference_valuedObject(ValuedObjectReference context, final EReference red) {
+        return new SimpleScope(getAllSignals(context));
+    }
+    
 
-    // TODO beautify
+    /*
+     * Collects all declared variables above current context
+     */
     public static List<IEObjectDescription> getAllSignals(final EObject context) {
         EObject parent = context.eContainer();
         List<IEObjectDescription> variables = new ArrayList<IEObjectDescription>();
 
         while (true) {
+//            System.out.println("Parent: " + parent);
             while (!(parent instanceof StatementScope) && !(parent instanceof Program)) {
+//                System.out.println("Parent: " + parent);
                 parent = parent.eContainer();
             }
 
             if (parent instanceof Program) {
-                for (Declaration decl : ((Program) parent).getDeclarations()) {
-                    for (ValuedObject var : decl.getValuedObjects()) {
-                        variables.add(new EObjectDescription(QualifiedName.create(var.getName()),
-                                var, null));
-                    }
-                }
+                variables = collectDeclarations(((Program) parent).getDeclarations(), variables);
                 return variables;
             }
 
-            for (Declaration decl : ((StatementScope) parent).getDeclarations()) {
-                for (ValuedObject var : decl.getValuedObjects()) {
-                    variables.add(new EObjectDescription(QualifiedName.create(var.getName()), var,
-                            null));
-                }
-            }
+            variables = collectDeclarations(((StatementScope) parent).getDeclarations(), variables);
             parent = parent.eContainer();
         }
     }
+    
+    /*
+     * Adds variables of a list of declarations to given list
+     */
+    public static List<IEObjectDescription> collectDeclarations(EList<Declaration> declarations, List<IEObjectDescription> variables) {
+        for (Declaration decl : declarations) {
+            for (ValuedObject var : decl.getValuedObjects()) {
+                variables.add(new EObjectDescription(QualifiedName.create(var.getName()),
+                        var, getEmptyMap(String.class)));
+            }
+        }
+        return variables;        
+    }
+    
+    private static <T> Map<T, T> getEmptyMap(final Class<T> clazz) {
+        return Collections.emptyMap();
+    }
+    
+
 }

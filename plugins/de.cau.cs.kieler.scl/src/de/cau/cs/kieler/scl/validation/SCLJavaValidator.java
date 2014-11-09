@@ -25,6 +25,9 @@ import de.cau.cs.kieler.scl.scl.StatementScope;
 public class SCLJavaValidator extends de.cau.cs.kieler.scl.validation.AbstractSCLJavaValidator {
 
     // TODO beautify
+    /*
+     * Checks if within one declaration block variable names are unique
+     */
     @Check
     public void checkUniqueNamesInProgram(Program program) {
         if (hasDuplicateDeclaration(program.getDeclarations())) {
