@@ -83,6 +83,7 @@ import de.cau.cs.kieler.esterel.esterel.ConstantExpression
 import de.cau.cs.kieler.esterel.esterel.Trap
 import de.cau.cs.kieler.esterel.kexpressions.ISignal
 import de.cau.cs.kieler.esterel.esterel.Exit
+import de.cau.cs.kieler.esterel.esterel.Sustain
 
 /**
  * @author krat
@@ -241,6 +242,25 @@ class EsterelToSclTransformation extends Transformation {
 
         sSeq
     }
+    
+    /*
+     * sustain s
+     */
+     def dispatch StatementSequence transformStm(Sustain sustain, StatementSequence sSeq) {
+         val l = createFreshLabel
+         
+         sSeq.addLabel(l)
+         val emit = EsterelFactory::eINSTANCE.createEmit => [
+             signal = sustain.signal
+             expr = sustain.expression
+             tick = sustain.tick
+         ]
+         transformStm(emit, sSeq)
+         sSeq.createSclPause
+         sSeq.addGoto(l)
+         
+         sSeq;
+     }
 
     /*
      * p || q
