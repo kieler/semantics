@@ -5,29 +5,14 @@
 
 % Output: 
 ;
-
-% Output: 
-;
-A 
+a 
 % Output: 
 ;
 
 % Output: 
 ;
-B 
-% Output: O(1) 
-;
-
-% Output: 
-;
-A B 
-% Output: 
-;
-
-% Output: 
-;
-R 
-% Output: 
+b 
+% Output: o(1) 
 ;
 
 % Output: 
@@ -35,7 +20,13 @@ R
 
 % Output: 
 ;
-A B R 
+r 
+% Output: 
+;
+
+% Output: 
+;
+b r a 
 % Output: 
 ;
 
@@ -44,14 +35,26 @@ A B R
 
 % Output: 
 ;
-R 
+b a 
+% Output: o(1) 
+;
+
 % Output: 
 ;
 
 % Output: 
 ;
-A B 
-% Output: O(1) 
+a 
+% Output: 
+;
+
+% Output: 
+;
+b 
+% Output: 
+;
+
+% Output: 
 ;
 
 % Output: 

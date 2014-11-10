@@ -1,0 +1,15 @@
+module ABO:
+input A,B;
+output O1, O2;
+
+[
+	await B;
+	emit O1
+	||
+	await immediate A;
+	emit B;
+	emit O1
+];
+emit O2
+
+end module
