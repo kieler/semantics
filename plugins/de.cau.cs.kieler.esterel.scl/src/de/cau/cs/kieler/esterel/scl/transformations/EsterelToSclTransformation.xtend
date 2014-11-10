@@ -476,7 +476,6 @@ class EsterelToSclTransformation extends Transformation {
 
     /*
      * Creates an scl pause statement with respect to surrounding preemption
-     * TODO thread as argument
      */
     def StatementSequence createSclPause(StatementSequence sSeq) {
         return handlePreemtion(SclFactory::eINSTANCE.createPause, preemption.length - 1, sSeq)
@@ -516,6 +515,9 @@ class EsterelToSclTransformation extends Transformation {
             } else if (preemption.get(i).type == "WEAK_IMMEDIATE_ABORT" && instr == null) {
                 return handleWeakImmediateAbortJoin(instr, i, sSeq)
 
+            // Handle trap
+            } else if (preemption.get(i).type == "TRAP") {
+                return handleTrap(instr, i, sSeq)
             } else {
                 return sSeq
             }
@@ -528,7 +530,9 @@ class EsterelToSclTransformation extends Transformation {
      * @param i Position in preemptive stack to be handled
      */
     def StatementSequence handleAbort(Instruction instr, int i, StatementSequence sSeq) {
-        handlePreemtion(instr, i - 1, sSeq)
+        if (instr != null) 
+            handlePreemtion(instr, i - 1, sSeq)
+            
         if (labelMap.get(curLabel).contains(preemption.get(i).endLabel)) {
             sSeq.statements.add(
                 createStmFromInstr(
@@ -538,6 +542,9 @@ class EsterelToSclTransformation extends Transformation {
             sSeq.statements.add(
                 createStmFromInstr(ifThenGoto(transformExp(preemption.get(i).expression, variables), curLabel, true)))
         }
+        
+        if (instr == null)
+            handlePreemtion(instr, i - 1, sSeq)
 
         sSeq
     }
@@ -586,6 +593,27 @@ class EsterelToSclTransformation extends Transformation {
 
         sSeq
     }
+    
+    /*
+     * Handler for traps
+     * @param instr The instruction to be handled
+     * @param i Position in preemptive stack to be handled
+     */
+    def StatementSequence handleTrap(Instruction instr, int i, StatementSequence sSeq) {
+        val flagRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
+            valuedObject = preemption.get(i).flag
+        ]
+        if (labelMap.get(curLabel).contains(preemption.get(i).endLabel)) {
+                sSeq.statements.add(createStmFromInstr(ifThenGoto(flagRef, preemption.get(i).endLabel, true)))
+            } else {
+                sSeq.statements.add(createStmFromInstr(ifThenGoto(flagRef, curLabel, true)))
+            }
+        
+        handlePreemtion(instr, i - 1, sSeq)
+
+        sSeq
+    }
+    
 
     /*
      * Handler for join for weak immediate abort
@@ -801,11 +829,7 @@ class EsterelToSclTransformation extends Transformation {
                     SclFactory::eINSTANCE.createConditional => [
                         expression = transformExp(susp.delay.event.expr, variables)
                         statements.addAll(createSclPause.statements)
-                        statements.add(
-                            createStmFromInstr(
-                                SclFactory::eINSTANCE.createGoto => [
-                                    targetLabel = l
-                                ]))]))
+                        statements.add(createGotoStm(l))]))
         }
 
         preemption.push(new PreemptiveElement("SUSPEND", null, susp.delay.event.expr, null))
@@ -818,7 +842,6 @@ class EsterelToSclTransformation extends Transformation {
     /*
      * Trap s in p end
      * TODO more than one trapdecl?
-     * TODO implement
      */
     def dispatch StatementSequence transformStm(Trap trap, StatementSequence sSeq) {
         System.out.println("It's a trap")
@@ -830,6 +853,7 @@ class EsterelToSclTransformation extends Transformation {
         val f_s = createValuedObject(uniqueName(variables, trap.trapDeclList.trapDecls.head.name))
         variables.add(f_s);
         val l = createFreshLabel
+        labelMap.put(curLabel, l)
 
         // TODO should also not be overwritten by local signal declarations within abort body...
         sScope.declarations.add(
@@ -843,10 +867,13 @@ class EsterelToSclTransformation extends Transformation {
 
         //TODO support more than one signal declaration
         exitMap.put(trap.trapDeclList.trapDecls.head, f_s)
-        trap.statement.transformStm(sSeq)
+        trap.statement.transformStm(sScope)
         preemption.pop
+        
+        sSeq.statements.add(createStmFromInstr(sScope))
+        sSeq.addLabel(l)
 
-        return sSeq
+        sSeq
     }
 
     def dispatch StatementSequence transformStm(Exit exit, StatementSequence sSeq) {
@@ -861,7 +888,7 @@ class EsterelToSclTransformation extends Transformation {
 
         sSeq.statements.add(createStmFromInstr(createAssignment(variable, op)))
 
-        return null
+        return sSeq
     }
 
     override getDependencies() {

@@ -132,6 +132,7 @@ public class EsterelToSclHandler extends AbstractHandler {
          
         // Get the URI of the model file.
         URI fileURI = URI.createFileURI(programFile.getRawLocation().makeAbsolute().toFile().getAbsolutePath());
+        System.out.println("URI " + fileURI);
          
         // Create a resource for this file.
         Resource resource = resourceSet.createResource(fileURI);
