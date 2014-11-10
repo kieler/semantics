@@ -484,8 +484,6 @@ class EsterelToSclTransformation extends Transformation {
     /*
      * Iterates through stack containing information about nesting of abort and suspend.
      * Is used for pause creation to respect right order of preemptive gotos
-     * TODO thread as argument
-     * TODO some lambda stuff
      */
     def StatementSequence handlePreemtion(Instruction instr, int i, StatementSequence sSeq) {
 
@@ -600,6 +598,10 @@ class EsterelToSclTransformation extends Transformation {
      * @param i Position in preemptive stack to be handled
      */
     def StatementSequence handleTrap(Instruction instr, int i, StatementSequence sSeq) {
+        // Handling join
+        if (instr == null)
+            handlePreemtion(instr, i - 1, sSeq)
+        
         val flagRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
             valuedObject = preemption.get(i).flag
         ]
@@ -609,7 +611,9 @@ class EsterelToSclTransformation extends Transformation {
                 sSeq.statements.add(createStmFromInstr(ifThenGoto(flagRef, curLabel, true)))
             }
         
-        handlePreemtion(instr, i - 1, sSeq)
+        // Handling pause
+        if (instr != null)
+            handlePreemtion(instr, i - 1, sSeq)
 
         sSeq
     }
