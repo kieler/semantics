@@ -21,8 +21,8 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.SCGraph
 import java.util.HashMap
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -82,6 +82,7 @@ class SCGDeclarationExtensions {
      */
     def ValuedObject createValuedObject(SCGraph scg, String valuedObjectName) {
          createValuedObject(valuedObjectName) => [
+             traceToDefault
              scg.valuedObjects.add(it)
          ]
     }
@@ -113,7 +114,7 @@ class SCGDeclarationExtensions {
 	}     
     
     public def void copyValuedObject(ValuedObject sourceObject, Declaration targetDeclaration) {
-        val newValuedObject = sourceObject.copy
+        val newValuedObject = sourceObject.tracedCopy
         targetDeclaration.valuedObjects += newValuedObject
         valuedObjectMapping.put(sourceObject, newValuedObject)
     }    
@@ -147,7 +148,7 @@ class SCGDeclarationExtensions {
     
     def Expression copySCGExpression(Expression expression) {
     	// Use the ecore utils to copy the expression. 
-        val newExpression = expression.copy
+        val newExpression = expression.tracedCopy
         
         if (newExpression instanceof ValuedObjectReference) {
 	        // If it is a single object reference, simply replace the reference with the object of the target SCG.
