@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kico.klighd;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.WeakHashMap;
@@ -70,7 +69,6 @@ import com.google.common.collect.Maps;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.model.util.ModelUtil;
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KiCoUtil;
@@ -80,7 +78,6 @@ import de.cau.cs.kieler.kico.klighd.model.KiCoCodePlaceHolder;
 import de.cau.cs.kieler.kico.klighd.model.KiCoErrorModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoMessageModel;
 import de.cau.cs.kieler.kico.klighd.model.KiCoModelChain;
-import de.cau.cs.kieler.kico.klighd.model.KiCoModelWrapper;
 import de.cau.cs.kieler.kico.ui.KiCoSelection;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
 import de.cau.cs.kieler.kitt.tracing.TracingManager;
@@ -104,6 +101,7 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
+@SuppressWarnings("restriction")
 public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
     /**
