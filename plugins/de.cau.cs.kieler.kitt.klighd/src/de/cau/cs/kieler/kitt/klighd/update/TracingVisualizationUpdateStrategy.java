@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.kitt.klighd.update;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.WeakHashMap;
 
@@ -26,7 +28,9 @@ import com.google.inject.Guice;
 import com.google.inject.Module;
 import com.google.inject.Scopes;
 
+import de.cau.cs.kieler.core.kgraph.KLabel;
 import de.cau.cs.kieler.core.kgraph.KNode;
+import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption;
@@ -67,10 +71,21 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
 
         public void selectionChanged(SelectionChangedEvent event) {
             IKlighdSelection selection = (IKlighdSelection) event.getSelection();
+            // Klighd does not select KLabels when its KText is selected, so this the KLabel are
+            // added here
+            ArrayList<EObject> selectionList =
+                    Lists.newArrayList(selection.diagramElementsIterator());
+            for (Iterator<EObject> iterator = selection.diagramElementsIterator(); iterator
+                    .hasNext();) {
+                EObject eObject = (EObject) iterator.next();
+                if (eObject instanceof KText && eObject.eContainer() instanceof KLabel) {
+                    selectionList.add(eObject.eContainer());
+                }
+            }
+
             ViewContext viewContext = selection.getViewContext();
             visualizeTracing(enabledContextViewer.get(viewContext.getViewer().getContextViewer()),
-                    viewContext.getViewModel(), viewContext,
-                    Lists.newArrayList(selection.diagramElementsIterator()), false);
+                    viewContext.getViewModel(), viewContext, selectionList, false);
         }
     };
 
@@ -94,7 +109,7 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
             // Assumption: SynthesisOptions are preset earlier and there is at most one option
             // changed to its previous state
             TracingMode mode = TracingMode.getTracingMode(viewContext.getOptionValue(option));
-            if (mode != viewContext.getProperty(TracingProperties.TRACING_VISUALAIZATION_MODE)) {
+            if (mode != viewContext.getProperty(TracingProperties.TRACING_VISUALIZATION_MODE)) {
                 // omit a new synthesis run when only tracing mode were changed
                 return false;
             } else {
@@ -122,10 +137,10 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
             // Activate tracing in currrent mode
             TracingMode mode = TracingMode.getTracingMode(viewContext.getOptionValue(option));
             enableVisualization(mode, baseModel, viewContext);
-            viewContext.setProperty(TracingProperties.TRACING_VISUALAIZATION_MODE, mode);
+            viewContext.setProperty(TracingProperties.TRACING_VISUALIZATION_MODE, mode);
         } else {
             // disable tracing when a diagram without tracing options is present
-            viewContext.setProperty(TracingProperties.TRACING_VISUALAIZATION_MODE,
+            viewContext.setProperty(TracingProperties.TRACING_VISUALIZATION_MODE,
                     TracingMode.NO_TRACING);
             viewContext.setProperty(TracingProperties.TRACING_MAP, null);
         }

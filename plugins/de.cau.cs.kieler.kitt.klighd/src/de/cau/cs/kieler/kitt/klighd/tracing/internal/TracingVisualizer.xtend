@@ -42,6 +42,8 @@ import org.eclipse.emf.ecore.EObject
 import static extension de.cau.cs.kieler.kitt.klighd.actions.AbstractTracingSelectionAction.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingManager.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import de.cau.cs.kieler.core.krendering.KRendering
+import com.google.common.base.Predicates
 
 /**
  * @author als
@@ -302,11 +304,7 @@ class TracingVisualizer {
 
     private def addTracingEdges(Iterator<Map.Entry<Object, Object>> entryIter, ViewContext viewContext, KNode attachNode) {
         entryIter.forEach [ entry |
-            viewContext.getTargetElements(entry.key).forEach [ source |
-                viewContext.getTargetElements(entry.value).forEach [ target |
-                    createTracingEdge(source, target, new Pair(entry.key, entry.value), attachNode);
-                ]
-            ]
+            createTracingEdges(entry.key, entry.value, attachNode, viewContext);
         ]
     }
 
@@ -341,58 +339,66 @@ class TracingVisualizer {
                         } else {
                             entry.value;
                         }
-                    viewContext.getTargetElements(key).forEach [ elementSource |
-                        viewContext.getTargetElements(value).forEach [ elementTarget |
-                            createTracingEdge(elementSource, elementTarget,
-                                new Pair(key as Object, value as Object), sourceModelRootNode);
-                        ]
-                    ]
+                    createTracingEdges(key, value, sourceModelRootNode, viewContext);
                 ]
             }
         }
     }
 
+    private def createTracingEdges(Object source, Object target, KNode attachNode, ViewContext viewContext) {
+        val origin = new Pair(source, target);
+        val predicate = Predicates.or(viewContext.getProperty(TracingProperties.TRACING_VISUALIZATION_PREDICATE),
+            [
+                if (it instanceof KGraphElement) {
+                    return (it as KGraphElement).getData(KLayoutData).getProperty(TracingProperties.TRACING_NODE);
+                } else if (it instanceof KRendering) {
+                    return (it as KRendering).getProperty(TracingProperties.TRACING_NODE);
+                } else {
+                    return false;
+                }
+            ]);
+        viewContext.getTargetElements(source).filter(predicate).forEach [ sourceElem |
+            viewContext.getTargetElements(target).filter(predicate).forEach [ targetElem |
+                createTracingEdge(sourceElem, targetElem, origin, attachNode);
+            ]
+        ]
+    }
+
     private def createTracingEdge(EObject source, EObject target, Pair<Object, Object> origin, KNode attachNode) {
         if (source != null && target != null && origin != null && attachNode != null) {
-            if (source instanceof KGraphElement && target instanceof KGraphElement) {
-                val sourceElem = source as KGraphElement;
-                val targetElem = target as KGraphElement;
-                if (!(sourceElem.getData(KLayoutData).getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE) ||
-                    targetElem.getData(KLayoutData).getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE))) {
 
-                    //Standard Edge
-                    //                createEdge => [
-                    //                    it.source = sourceNode;
-                    //                    it.target = targetNode;
-                    //                    it.getData(KLayoutData).setProperty(LayoutOptions.NO_LAYOUT, true);
-                    //                    it.getData(KLayoutData).setProperty(TracingProperties.TRACING_EDGE, origin);
-                    //                    it.addPolyline => [
-                    //                        it.invisible = true;
-                    //                        it.invisible.propagateToChildren = true;
-                    //                        it.foreground = Colors.RED;
-                    //                        it.addArrowDecorator;
-                    //                    ];
-                    //                ]
-                    //
-                    //Advanced Edge
-                    val edge = createEdge;
-                    edge.source = attachNode;
-                    edge.target = attachNode;
-                    edge.getData(KLayoutData).setProperty(LayoutOptions.NO_LAYOUT, true);
-                    edge.getData(KLayoutData).setProperty(TracingProperties.TRACING_EDGE, origin);
-                    edge.data += createKCustomRendering => [
-                        it.figureObject = new TracingEdgeNode(it, source, target, attachNode);
-                        it.setProperty(KlighdProperties.NOT_SELECTABLE, true);
-                        it.addPolyline => [
-                            it.foreground = Colors.RED;
-                            it.addArrowDecorator;
-                        ];
-                        it.invisible = true;
-                        it.invisible.propagateToChildren = true;
-                    ];
-                }
-            }
+            //Standard Edge
+            //                createEdge => [
+            //                    it.source = sourceNode;
+            //                    it.target = targetNode;
+            //                    it.getData(KLayoutData).setProperty(LayoutOptions.NO_LAYOUT, true);
+            //                    it.getData(KLayoutData).setProperty(TracingProperties.TRACING_EDGE, origin);
+            //                    it.addPolyline => [
+            //                        it.invisible = true;
+            //                        it.invisible.propagateToChildren = true;
+            //                        it.foreground = Colors.RED;
+            //                        it.addArrowDecorator;
+            //                    ];
+            //                ]
+            //
+            //Advanced Edge
+            val edge = createEdge;
+            edge.source = attachNode;
+            edge.target = attachNode;
+            edge.getData(KLayoutData).setProperty(LayoutOptions.NO_LAYOUT, true);
+            edge.getData(KLayoutData).setProperty(TracingProperties.TRACING_EDGE, origin);
+            edge.data += createKCustomRendering => [
+                it.figureObject = new TracingEdgeNode(it, source, target, attachNode);
+                it.setProperty(KlighdProperties.NOT_SELECTABLE, true);
+                it.addPolyline => [
+                    it.foreground = Colors.CHOCOLATE_1;
+                    it.addArrowDecorator;
+                ];
+                it.invisible = true;
+                it.invisible.propagateToChildren = true;
+            ];
         }
+
     }
 
     private def isTracingEdge(KEdge edge) {

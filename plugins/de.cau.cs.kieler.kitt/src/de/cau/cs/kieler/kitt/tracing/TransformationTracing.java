@@ -112,7 +112,9 @@ public class TransformationTracing {
         TracingMapping mapping = activeTransformations.get(t);
         if (mapping != null && sourceModel != null && targetModel != null) {
             if (DEBUG) {
-                new TracingReport(sourceModel, targetModel, mapping).printReport();
+                TracingReport tracingReport = new TracingReport(sourceModel, targetModel, mapping);
+                tracingReport.printReport();
+                //tracingReport.failOnIncompleteMapping();
             }
             TracingManager.addTransformationTrace(sourceModel, targetModel, mapping);
         }

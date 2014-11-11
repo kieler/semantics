@@ -15,10 +15,17 @@ package de.cau.cs.kieler.kitt.klighd.tracing;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
+
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+
+import de.cau.cs.kieler.core.kgraph.KGraphElement;
 import de.cau.cs.kieler.core.krendering.KStyle;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.core.util.Pair;
+import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption.TracingMode;
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping;
 
@@ -38,18 +45,52 @@ public final class TracingProperties {
     private TracingProperties() {
     }
 
-    /**
-     * Marks an node as an element associated with the root element of a traced model.
-     */
-    public static final IProperty<Boolean> TRACED_MODEL_ROOT_NODE = new Property<Boolean>(
-            "de.cau.cs.kieler.kitt.klighd.tracing.model_root_node", false);
+    // -- ViewContext Properties --
+    // ----------------------------
+    // These Properties are added to / used in the ViewContext
 
     /**
      * Indicates Tracing visualization mode of a diagram in its ViewContext.
      */
-    public static final IProperty<TracingMode> TRACING_VISUALAIZATION_MODE =
+    public static final IProperty<TracingMode> TRACING_VISUALIZATION_MODE =
             new Property<TracingMode>("de.cau.cs.kieler.kitt.klighd.tracing.mode",
                     TracingMode.NO_TRACING);
+
+    /**
+     * Indicates Tracing visualization mode of a diagram in its ViewContext.
+     */
+    public static final IProperty<Predicate<EObject>> TRACING_VISUALIZATION_PREDICATE =
+            new Property<Predicate<EObject>>("de.cau.cs.kieler.kitt.klighd.tracing.predicate",
+                    new Predicate<EObject>() {
+
+                        public boolean apply(EObject eObject) {
+                            // visualize all KGraphElements but not TRACED_MODEL_ROOT_NODEs
+                            if (eObject instanceof KGraphElement) {
+                                return !((KGraphElement) eObject).getData(KLayoutData.class)
+                                        .getProperty(TracingProperties.TRACED_MODEL_ROOT_NODE);
+                            }
+                            return false;
+                        }
+
+                    });
+
+    // -- KGraph Properties --
+    // ----------------------------
+    // These Properties are added to / used in KGraph including Renderings
+
+    /**
+     * Marks an element in a KGraph (KGraphElement or KRending) as an explicit tracing node which
+     * always should be visualized in an appropiate mode, ignoring the
+     * TRACING_VISUALIZATION_PREDICATE.
+     */
+    public static final IProperty<Boolean> TRACING_NODE = new Property<Boolean>(
+            "de.cau.cs.kieler.kitt.klighd.tracing.node", false);
+
+    /**
+     * Marks an node as an element associated with the root element of a traced model.
+     */
+    public static final IProperty<Boolean> TRACED_MODEL_ROOT_NODE = new Property<Boolean>(
+            "de.cau.cs.kieler.kitt.klighd.tracing.modelRootNode", false);
 
     /**
      * Marks an edge as a tracing edge when object is not null. Object indicates the origin object
@@ -82,5 +123,5 @@ public final class TracingProperties {
      */
     public static final IProperty<TracingMapping> TRACING_MAP = new Property<TracingMapping>(
             "de.cau.cs.kieler.kitt.klighd.tracing.map", null);
-    
+
 }

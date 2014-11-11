@@ -45,6 +45,7 @@ import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KCustomConnectionFigureNod
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KEdgeNode;
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KlighdPath;
 import de.cau.cs.kieler.klighd.piccolo.internal.util.Styles;
+import de.cau.cs.kieler.klighd.util.ModelingUtil;
 import de.cau.cs.kieler.klighd.util.RenderingContextData;
 import edu.umd.cs.piccolo.PNode;
 
@@ -182,9 +183,8 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
     public void setParent(final PNode newParent) {
         // When the diagram is displayed it is faded in and the position of PNode are updated on
         // order and not by change events leading to the situation than source and target PNodes
-        // don't
-        // have any points. As a consequence this case is handled by an listener reacting on the
-        // fade in effect and updating the points again.
+        // don't have any points. As a consequence this case is handled by an listener reacting on
+        // the fade in effect and updating the points again.
         if (newParent instanceof KEdgeNode) {
             newParent.addPropertyChangeListener(PNode.PROPERTY_TRANSPARENCY,
                     new PropertyChangeListener() {
@@ -301,26 +301,25 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
         if (elem instanceof KGraphElement) {
             return RenderingContextData.get((KGraphElement) elem).getProperty(REP);
         } else if (elem instanceof KRendering) {
-            EObject findObj = elem;
             // find least upper KGraphElement
-            while (findObj != null && !(findObj instanceof KGraphElement)) {
-                findObj = findObj.eContainer();
-            }
+            EObject findObj = ModelingUtil.eContainerOfType(elem, KGraphElement.class);
+            // move down to find PNode
             if (findObj != null) {
                 PNode findNode = findPNode(findObj);
                 if (findNode != null) {
-                    return Iterators.find(new FunctionalTreeIterator<PNode>(findNode, true,
-                            new Function<Object, Iterator<PNode>>() {
+                    return (PNode) Iterators.find(new FunctionalTreeIterator<IKlighdNode>(
+                            (IKlighdNode) findNode, true,
+                            new Function<Object, Iterator<IKlighdNode>>() {
 
-                                @SuppressWarnings("unchecked")
-                                public Iterator<PNode> apply(Object node) {
-                                    return ((PNode) node).getChildrenIterator();
+                                public Iterator<IKlighdNode> apply(Object node) {
+                                    return Iterators.filter(((PNode) node).getChildrenIterator(),
+                                            IKlighdNode.class);
                                 }
 
-                            }), new Predicate<PNode>() {
+                            }), new Predicate<IKlighdNode>() {
 
-                        public boolean apply(PNode node) {
-                            return ((IKlighdNode) node).getGraphElement() == elem;
+                        public boolean apply(IKlighdNode node) {
+                            return node.getGraphElement() == elem;
                         }
                     }, null);
                 }

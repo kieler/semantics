@@ -69,12 +69,12 @@ public class SourceTracingSelectionAction extends AbstractTracingSelectionAction
         //update tracing edges if necessary
         if (updateTracing) {
             TracingVisualizationUpdateStrategy.visualizeTracing(context.getViewContext()
-                    .getProperty(TracingProperties.TRACING_VISUALAIZATION_MODE), root, context
+                    .getProperty(TracingProperties.TRACING_VISUALIZATION_MODE), root, context
                     .getViewContext(), Lists.newArrayList(((IKlighdSelection) context
                     .getContextViewer().getSelection()).diagramElementsIterator()), true);
             return ActionResult.createResult(true);
         }// update selection visualization if necessary
-        else if (context.getViewContext().getProperty(TracingProperties.TRACING_VISUALAIZATION_MODE) != TracingMode.NO_TRACING) {
+        else if (context.getViewContext().getProperty(TracingProperties.TRACING_VISUALIZATION_MODE) != TracingMode.NO_TRACING) {
             showTracingSelection(root);
             return ActionResult.createResult(true);
         }

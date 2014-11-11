@@ -58,9 +58,9 @@ abstract class AbstractTracingSelectionAction implements IAction {
                 data.setProperty(TracingProperties.TRACING_SELECTION_HIGHLIGHTING,
                     node.getData().filter(KRendering).fold(newLinkedList()) [ list, rendering |
                         //Source selection style
-                        val fg = factory.createKForeground();
+                        val fg = factory.createKBackground();
                         val c = factory.createKColor();
-                        c.setColor(Colors.AQUAMARINE);
+                        c.setColor(Colors.DARK_GREEN);
                         fg.setColor(c);
                         rendering.styles.add(fg);
                         list.add(fg);
@@ -70,9 +70,9 @@ abstract class AbstractTracingSelectionAction implements IAction {
                 data.setProperty(TracingProperties.TRACING_SELECTION_HIGHLIGHTING,
                     node.getData().filter(KRendering).fold(newLinkedList()) [ list, rendering |
                         //Target selection style
-                        val fg = factory.createKForeground();
+                        val fg = factory.createKBackground();
                         val c = factory.createKColor();
-                        c.setColor(Colors.VIOLET_RED);
+                        c.setColor(Colors.DARK_RED);
                         fg.setColor(c);
                         rendering.styles.add(fg);
                         list.add(fg);

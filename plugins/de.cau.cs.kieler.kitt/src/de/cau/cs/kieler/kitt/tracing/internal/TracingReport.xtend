@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kitt.tracing.internal
 
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kitt.tracing.TracingManager
+import com.google.common.base.Preconditions
 
 /**
  * @author als
@@ -83,6 +84,12 @@ class TracingReport {
             ];
             mappedTargetElementNotInModel.addAll(
                 mapping.reverseMapping.keySet.filter[!targetElementInMapping.contains(it)]);
+        }
+    }
+    
+    def void failOnIncompleteMapping(){
+       if (sourceElementInTragetMapping.empty && sourceElementNotInMapping.empty && mappedSourceElementNotInModel.empty) {
+            throw new Exception("Incomplete Mapping");
         }
     }
 
