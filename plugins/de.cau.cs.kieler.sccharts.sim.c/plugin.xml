@@ -19,6 +19,14 @@
                priority="100">
          </editor>
       </executionFile>
+      <executionFile
+            file="execution/sccharts_c_no_visualization.execution">
+         <editor
+               id="de.cau.cs.kieler.sccharts.text.sct.Sct"
+               name="Textual SCCharts (SCT) Editor"
+               priority="99">
+         </editor>
+      </executionFile>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.transformation">
@@ -34,7 +42,7 @@
             id="SCCHARTS_SIMULATION"
             isCategory="false"
             isFeatureGroup="false"
-            name="SSCharts Simulation"
+            name="SCCharts Simulation"
             transformations="SCCHARTS_SIMULATION_NO_VISUALIZATION, SCCHARTS_SIMULATION_VISUALIZATION">
       </transformationGroup>
       <transformationMethod

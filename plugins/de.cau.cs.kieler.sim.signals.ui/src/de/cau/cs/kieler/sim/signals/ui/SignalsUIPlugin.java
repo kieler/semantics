@@ -14,6 +14,7 @@
 
 package de.cau.cs.kieler.sim.signals.ui;
 
+import org.eclipse.core.runtime.Preferences;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -90,4 +91,27 @@ public class SignalsUIPlugin extends AbstractUIPlugin {
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Checks if is black background set.
+     *
+     * @return true, if is black background set
+     */
+    public static boolean isBlackBackgroundSet() {
+        Preferences prefs = getDefault().getPluginPreferences();
+        boolean value = prefs.getBoolean("blackbackground");
+        return value;
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Sets the black background.
+     *
+     * @param isSet the new black background
+     */
+    public static void setBlackBackground(boolean isSet) {
+        Preferences prefs = getDefault().getPluginPreferences();
+        prefs.setValue("blackbackground", isSet);
+        plugin.savePluginPreferences();
+    }
 }

@@ -1,0 +1,26 @@
+scchart S0 "nested_broadcast" {
+  input signal pure I;
+  signal pure L;
+  output signal pure O;
+
+  initial state S0 "macro1" {
+
+    initial state S0 "s1"
+    --> S1 with L / O;
+
+    state S1 "s2";
+  };
+
+  region:
+
+  initial state S0 "macro2" {
+
+    initial state S0 "macro3" {
+
+      initial state S0 "s3"
+      --> S1 with I / L;
+
+      state S1 "s4";
+    };
+  };
+}

@@ -76,7 +76,7 @@ class HybridSequentializer extends SimpleSequentializer {
 		// The simple scheduler uses the SurfaceSynchronizer. 
 		// The result of the synchronizer is stored in the synchronizerData class joinData.
 		val HybridSynchronizer synchronizer = Guice.createInjector().getInstance(typeof(HybridSynchronizer))
-		val joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join)
+		val joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join, null, null)
 
 		// Add additional valued objects to the SCG and use the guard expression of the synchronizer as it is.
         for (valuedObject : joinData.valuedObjects) {

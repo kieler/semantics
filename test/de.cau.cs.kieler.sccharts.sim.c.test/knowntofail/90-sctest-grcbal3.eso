@@ -1,0 +1,10 @@
+!reset;
+A % Output:B C D E T;
+!reset;
+% Output:;
+% Output: B;
+!reset;
+A haltTrap39 % Output:B C D E T;
+!reset;
+% Output:;
+haltTrap39 % Output: B;

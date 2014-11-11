@@ -206,6 +206,12 @@ class SCChartsExtension {
         region.parentState.getRootState
     }
 
+    // Returns true iff the state contains regions.
+    def boolean isHierarchical(State state) {
+        state.regions.size > 0;
+    }    
+
+    
     def State createSCChart() {
         val state = SCChartsFactory::eINSTANCE.createState();
         return state.traceToDefault;
@@ -713,6 +719,18 @@ class SCChartsExtension {
         state.localActions.add(action);
         action.traceToDefault
     }
+    
+    // Retrieves the first during action if there is any or returns a new one
+    def DuringAction retrieveDuringAction(State state, boolean immediate) {
+        val duringActions = state.duringActions.filter(e|e.immediate == immediate)
+        if (!duringActions.empty) {
+            return duringActions.get(0)
+        }
+        val newDuringAction = state.createDuringAction
+        newDuringAction.setImmediate(immediate)
+        newDuringAction
+    }
+
 
     // Create an immediate during action for a state.
     def DuringAction createImmediateDuringAction(State state) {
@@ -1250,21 +1268,22 @@ class SCChartsExtension {
     
     
     def State copyState(State state) {
-    	createState(state.id) => [ newState |
-    	    newState.trace(state) // trace before copy to allow correct tracing during tracedCopy
-    		newState.label = state.label
-    		newState.type = state.type
-    		newState.initial = state.initial
-    		newState.^final = state.^final
-    		newState.regions += state.regions.copyAll
-    		newState.outgoingTransitions += state.outgoingTransitions.copyAll
-    		newState.incomingTransitions += state.incomingTransitions.copyAll
-    		newState.localActions += state.localActions.copyAll
-    		newState.referencedScope = state.referencedScope
-    		newState.bindings += state.bindings.copyAll
-    		newState.declarations += state.declarations.copyAll
-    		newState.^for = state.^for.copy
-    		newState.annotations += state.annotations.copyAll
+//    	createState(state.id) => [ newState |
+//    		newState.trace(state) // trace before copy to allow correct tracing during tracedCopy
+//    		newState.label = state.label
+//    		newState.type = state.type
+//    		newState.initial = state.initial
+//    		newState.^final = state.^final
+//    		newState.regions += state.regions.copyAll
+//    		newState.outgoingTransitions += state.outgoingTransitions.copyAll
+//    		newState.incomingTransitions += state.incomingTransitions.copyAll
+//    		newState.localActions += state.localActions.copyAll
+//    		newState.referencedScope = state.referencedScope
+//    		newState.bindings += state.bindings.copyAll
+//    		newState.declarations += state.declarations.copyAll
+//    		newState.^for = state.^for.copy
+//    		newState.annotations += state.annotations.copyAll
+        val newState = state.copy
     		
     		// Fix valued object references
     		state.valuedObjects.forEach[
@@ -1273,7 +1292,8 @@ class SCChartsExtension {
     				newState.replaceAllOccurrences(it, newValuedObject)
    				}
     		]
-    	]
+//    	]
+        newState
     }
     
     //-----------------------------------------

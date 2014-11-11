@@ -141,24 +141,33 @@
             alternatives="true"
             id="ABORT"
             name="Abort"
-            transformations="ABORTALTERNATIVE, ABORTDEFAULT">
+            transformations="ABORTDEFAULT, ABORTNOWTO, ABORTSPECIAL">
       </transformationGroup>
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Abort"
             dependencies="EXIT, INITIALIZATION"
+            id="ABORTSPECIAL"
+            method="transformAbortSpecial"
+            name="Abort Special">
+      </transformationMethod>
+
+      <transformationMethod
+            class="de.cau.cs.kieler.sccharts.transformations.Abort"
+            dependencies="EXIT, INITIALIZATION"
             id="ABORTDEFAULT"
-            method="transform"
+            method="transformAbort"
             name="Abort Default">
       </transformationMethod>
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Abort"
             dependencies="EXIT, INITIALIZATION"
-            id="ABORTALTERNATIVE"
-            method="transformAbortAlternative"
-            name="Abort Alternative">
+            id="ABORTNOWTO"
+            method="transformAbortNoWTO"
+            name="Abort No WTO">
       </transformationMethod>
+
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.During"
@@ -271,11 +280,12 @@
    </extension>
      <extension
            point="de.cau.cs.kieler.kico.extension">
-        <ResourceExtensionInformation
-              className="SCChart"
+        <ExtensionInformation
+              className="State"
+              editor_id="de.cau.cs.kieler.sccharts.presentation.SCChartsEditorID"
               extensionName="sct"
               isXMI="true">
-        </ResourceExtensionInformation>
+        </ExtensionInformation>
      </extension>   
 
 

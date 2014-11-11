@@ -1,0 +1,32 @@
+! reset;
+
+% Output: O8 O5 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+I 
+% Output: T O9 O7 O6 O10 O4 O3 O2 O1 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+! reset;
+I 
+% Output: O8 O5 
+;
+I 
+% Output: T O9 O7 O6 O10 O4 O3 O2 O1 
+;
+I 
+% Output: 
+;
+I 
+% Output: 
+;

@@ -8,7 +8,8 @@ Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.klighd.ui,
  org.eclipse.ui.ide,
- de.cau.cs.kieler.kico.klighd
+ de.cau.cs.kieler.kico.klighd,
+ de.cau.cs.kieler.kico
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sim.kivi

@@ -13,12 +13,23 @@
  */
 package de.cau.cs.kieler.scg.synchronizer
 
-import de.cau.cs.kieler.scg.Join
-import java.util.Map
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.SchedulingBlock
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.scg.Exit
+import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.Predecessor
+import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.extensions.ThreadPathType
+import java.util.Map
+import java.util.Set
+import de.cau.cs.kieler.kico.AbstractKielerCompilerAncillaryData
+import java.util.List
+import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.scg.BasicBlock
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -52,8 +63,20 @@ abstract class AbstractSynchronizer {
 	
     /** Inject SCG extensions. */    
     @Inject
-    extension SCGCoreExtensions	
+    extension SCGCoreExtensions
+    
+    @Inject
+    extension SCGControlFlowExtensions	
 	
+    @Inject
+    extension SCGThreadExtensions
+    
+    @Inject
+    extension AnnotationsExtensions	
+    
+    protected static val ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
+	
+	protected var KielerCompilerContext compilerContext = null
 	protected var Map<Node, SchedulingBlock> schedulingCache = null
    
     /**
@@ -69,6 +92,16 @@ abstract class AbstractSynchronizer {
      */
     protected abstract def SynchronizerData build(Join join);
     
+    public abstract def boolean isSynchronizable(Iterable<ThreadPathType> threadPathTypes);
+    
+    public abstract def Set<Predecessor> getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
+    	List<AbstractKielerCompilerAncillaryData> ancillaryData);
+    	
+    public abstract def Set<Predecessor> getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
+    	List<AbstractKielerCompilerAncillaryData> ancillaryData);
+    
+    public abstract def String getId();
+    
     /**
      * This function is the entry point for the scheduler. The scheduler calls 
      * {@code synchronize} whenever multiple threads are joined at a join node.
@@ -78,17 +111,27 @@ abstract class AbstractSynchronizer {
      * @return Returns a {@code SynchronizerData} class which includes all mandatory 
      * 		data to construct a guard expression for the join node in question.
      */
-    public def SynchronizerData synchronize(Join join) {
-        build(join)
+    public def SynchronizerData synchronize(Join join, KielerCompilerContext context, Map<Node, SchedulingBlock> schedulingBlockCache) {
+        schedulingCache = schedulingBlockCache
+        compilerContext = context
+        build(join) => [ synchronizerId = getId ]
     }    
     
-    
-    public def setSchedulingCache(Map<Node, SchedulingBlock> cache) {
-    	schedulingCache = cache
+    public def boolean isSynchronizable(Join join) {
+        val threadPathTypes = join.getEntryNodes.map[ getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE) ].map[ fromString2 ]
+        isSynchronizable(threadPathTypes)
     }
-    
+   
     protected def getCachedSchedulingBlock(Node node) {
     	if (schedulingCache == null) { return node.schedulingBlock }
     	schedulingCache.get(node)
+    }
+    
+    protected def getThreadPathTypes(Join join) {
+        join.getEntryNodes.map[ getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE) ].map[ fromString2 ]
+    }
+    
+    protected def getEntryNodes(Join join) {
+        join.allPrevious.map[ eContainer ].filter(typeof(Exit)).map[ entry ]
     }
 }

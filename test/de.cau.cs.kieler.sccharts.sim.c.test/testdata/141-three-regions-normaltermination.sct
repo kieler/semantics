@@ -1,0 +1,28 @@
+scchart threeregionsnormaltermination {
+  output signal pure O;
+
+  initial state M {
+
+    initial state C
+    --> D;
+
+    final state D;
+
+    region:
+
+    initial state E
+    --> F;
+
+    final state F;
+
+    region:
+
+    initial state A
+    --> B;
+
+    final state B;
+  }
+  >-> D / O;
+
+  state D;
+}

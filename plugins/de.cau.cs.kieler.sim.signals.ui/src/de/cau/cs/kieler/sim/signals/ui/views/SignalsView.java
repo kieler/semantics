@@ -19,6 +19,8 @@ import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Plugin;
+import org.eclipse.core.runtime.Preferences;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -134,12 +136,20 @@ public class SignalsView extends ViewPart {
         // instantiate a plotter, and provide data to it.
         signalsPlotter = new SignalsPlotter(parent);
 
-        // set white color as default
-        defaultColorScheme = false;
-        colors.setBackgroundColor(NONDEFAULTBACKGROUNDCOLOR);
-        colors.setSignalColor2(NONDEFAULTSIGNALCOLOR2);
-        colors.setSignalColorMarker(NONDEFAULTSIGNALCOLORMARKER);
-        colors.setSignalSpareColor(NONDEFAULTSIGNALCOLOR0);
+        // set white or black  as default
+        defaultColorScheme = SignalsUIPlugin.isBlackBackgroundSet();
+        if (defaultColorScheme) {
+            Colors tmpColors = new Colors();
+            colors.setBackgroundColor(tmpColors.getBackgroundColor());
+            colors.setSignalColor2(tmpColors.getSignalColor2());
+            colors.setSignalColorMarker(tmpColors.getSignalColorMarker());
+            colors.setSignalSpareColor(tmpColors.getSignalSpareColor());
+        } else {
+            colors.setBackgroundColor(NONDEFAULTBACKGROUNDCOLOR);
+            colors.setSignalColor2(NONDEFAULTSIGNALCOLOR2);
+            colors.setSignalColorMarker(NONDEFAULTSIGNALCOLORMARKER);
+            colors.setSignalSpareColor(NONDEFAULTSIGNALCOLOR0);
+        }
         signalsPlotter.plot(zoomLevel, colors, drawMode);
 
         // update signalList of plotter and plot
@@ -462,6 +472,7 @@ public class SignalsView extends ViewPart {
         actionToggleColors = new Action("", IAction.AS_CHECK_BOX) {
             public void run() {
                 defaultColorScheme = !defaultColorScheme;
+                SignalsUIPlugin.setBlackBackground(defaultColorScheme);
                 if (defaultColorScheme) {
                     Colors tmpColors = new Colors();
                     colors.setBackgroundColor(tmpColors.getBackgroundColor());

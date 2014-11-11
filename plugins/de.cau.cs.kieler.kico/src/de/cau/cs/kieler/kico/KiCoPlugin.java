@@ -61,7 +61,7 @@ public class KiCoPlugin extends Plugin {
     private static KiCoPlugin plugin;
     
     /** The resource extension cached. */
-    private static HashMap<String, Pair<String, Boolean>> resourceExtensionCached = null;
+    private static HashMap<String, ResourceExtension> resourceExtensionCached = null;
 
     /**
      * The parent shell iff a GUI is used. This shell may be used to prompt a save-dialog to save
@@ -311,7 +311,7 @@ public class KiCoPlugin extends Plugin {
      * @param forceReload the force reload
      * @return the registered resource extensions
      */
-    public HashMap<String, Pair<String, Boolean>> getRegisteredResourceExtensions(boolean forceReload) {
+    public HashMap<String, ResourceExtension> getRegisteredResourceExtensions(boolean forceReload) {
         
         if (resourceExtensionCached != null && !forceReload) {
             return resourceExtensionCached;
@@ -320,7 +320,7 @@ public class KiCoPlugin extends Plugin {
         IConfigurationElement[] resourceExtensions =
                 Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_EXTENSION_POINT_ID);
 
-        resourceExtensionCached = new HashMap<String, Pair<String, Boolean>>();
+        resourceExtensionCached = new HashMap<String, ResourceExtension>();
 
         for (int i = 0; i < resourceExtensions.length; i++) {
             try {
@@ -328,7 +328,8 @@ public class KiCoPlugin extends Plugin {
                 String className = resourceExtensions[i].getAttribute("className");
                 String extension = resourceExtensions[i].getAttribute("extensionName");
                 String isXMI = resourceExtensions[i].getAttribute("isXMI");
-                resourceExtensionCached.put(className, new Pair<String, Boolean>(extension, isXMI.toLowerCase().equals("true")));
+                String editorID = resourceExtensions[i].getAttribute("editor_id");
+                resourceExtensionCached.put(className, new ResourceExtension(className, extension, isXMI.toLowerCase().equals("true"), editorID));
 
                 if (DEBUG) {
                      System.out.println("KiCo register resource extension: "
@@ -341,6 +342,32 @@ public class KiCoPlugin extends Plugin {
         }
 
         return resourceExtensionCached;
+    }
+    
+    /**
+     * Gets the resource extension for an model. Note that for this method to work there must be a
+     * plugin that uses the extension point de.cau.cs.kieler.kico.extension to register a
+     * resource/file extension for a specific class name that is the (intermediate) result of one or
+     * several performed transformations. If no resource extension is registered for the class name
+     * of the intermediateResult given, then null is returned.
+     * 
+     * @param model
+     *            the intermediate result
+     * @return the resource extension
+     */
+    public ResourceExtension getResourceExtension(Object model) {
+        HashMap<String, ResourceExtension> resourceExtensionMap =
+                KiCoPlugin.getInstance().getRegisteredResourceExtensions(false);
+        ResourceExtension specificExtension = null;
+        if (model instanceof EObject) {
+            specificExtension = resourceExtensionMap.get(((EObject) model).eClass().getName());
+        } else {
+            specificExtension = resourceExtensionMap.get(model.getClass().getSimpleName());
+        }
+        if (specificExtension != null) {
+            return specificExtension;
+        }
+        return null;
     }
 
     // -------------------------------------------------------------------------

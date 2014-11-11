@@ -22,10 +22,21 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Join
+import de.cau.cs.kieler.scg.Predecessor
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.sequentializer.EmptyExpression
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.extensions.ThreadPathType
+import de.cau.cs.kieler.scg.sequentializer.EmptyExpression
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import java.util.Map
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SchedulingBlock
+import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.kico.AbstractKielerCompilerAncillaryData
+import java.util.List
+import de.cau.cs.kieler.scg.BasicBlock
+import java.util.Set
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -66,13 +77,21 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
     extension KExpressionsExtension
     
     @Inject
+    extension SCGCoreExtensions
+    
+    @Inject
     extension SCGControlFlowExtensions
     
     @Inject
     extension SCGThreadExtensions
+
+    @Inject
+    extension AnnotationsExtensions
    
-    private val OPERATOREXPRESSION_DEPTHLIMIT = 16
-    private val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8
+    protected val OPERATOREXPRESSION_DEPTHLIMIT = 16
+    protected val OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER = 8
+
+    public static val SYNCHRONIZER_ID = "de.cau.cs.kieler.scg.synchronizer.surface"
 
     // -------------------------------------------------------------------------
     // -- Synchronizer
@@ -96,95 +115,122 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 	 */  
     override protected SynchronizerData build(Join join) {
     	// Create a new SynchronizerData class which holds the data to return.
-        var data = new SynchronizerData()
+        var data = new SynchronizerData() => [ setJoin(join) ]
 		
 		// Since we are working we completely enriched SCGs, we can use the SCG extensions 
 		// to retrieve the scheduling block of the join node in question.
 		val joinSB = join.getCachedSchedulingBlock
-		
-		// Create a new list for all exit nodes of the threads of the fork-join-combination...
-        val exitNodes = <Exit> newLinkedList
-        // ... and fill the list with the exit nodes of all threads.
-        join.allPrevious.forEach[exitNodes.add(it.eContainer as Exit)]
         
         // The valued object of the GuardExpression of the synchronizer is the guard of the
         // scheduling block of the join node. 
-        data.guardExpression.valuedObject = joinSB.guard
+        data.guardExpression.valuedObject = joinSB.guard.valuedObject
 
 		// Create a new expression that determines if at least on thread exits in this tick instance.
 		// At first this simple scheduler assumes that the fork node spawns more than one thread.
 		// Hence, we create an or-operator expression. 
-        val terminationExpr = KExpressionsFactory::eINSTANCE.createOperatorExpression
-        terminationExpr.setOperator(OperatorType::OR)
+        val terminationExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression => 
+        	[ setOperator(OperatorType::OR) ]
         
+		data.createEmptyExpressions(terminationExpression)
+		data.createGuardExpression(terminationExpression)
+//        data.guardExpression.expression = FALSE
+        
+		data.fixEmptyExpressions.fixSynchronizerExpression
+    }
+    
+    protected def SynchronizerData createEmptyExpressions(SynchronizerData data, OperatorExpression terminationExpression) {
         // Count the exit nodes. The counter is used for enumerating the empty expressions.        
         var exitNodeCount = 0
         
+        val threadPathTypes = <Exit, ThreadPathType> newHashMap;
+        
+        var delayFound = false
+        for(entry:data.join.getEntryNodes) {
+            val t = entry.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2 
+            threadPathTypes.put(entry.exit, t)
+            if (t != ThreadPathType::INSTANTANEOUS) {
+                delayFound = true
+            }
+        }
+        
+		// Create a new list for all exit nodes of the threads of the fork-join-combination...
+        val exitNodes = <Exit> newLinkedList
+        // ... and fill the list with the exit nodes of all threads.
+        data.join.allPrevious.forEach[ exitNodes.add(it.eContainer as Exit) ]        
+        
         // Build an empty expression for each exit node.
         for(exit:exitNodes){
-        	// Increment the exit node counter and retrieve the scheduling block of the exit node.
-        	exitNodeCount = exitNodeCount + 1
-            val exitSB = exit.getCachedSchedulingBlock
-            // This scheduling block is a predecessor of the join node. Add it to the data structure.
-            data.predecessors.add(exitSB)
             
-            // Now, retrieve all surfaces of the actual thread.
-            val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Surface)).toList
-            
-            // If there are surface, build an empty expression.
-            if (threadSurfaces.size>0) {
-            	/**
-            	 * To build an empty expression we use the Scgsched factory and create a new object.
-            	 * As name of the valued object of the expression, we use the name of the guard and
-            	 * add a human-readable suffix for the empty expression. The type is boolean.<br>
-            	 * It is important to add the new valued object to the list of valued objects in the
-            	 * SynchronizerData structure since the object has to be added to the list of 
-            	 * valued objects in the SCG. 
-            	 */
-      			val emptyExp = new EmptyExpression()  
-      			emptyExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
-      			emptyExp.valuedObject.name = exitSB.guard.name + '_e' + exitNodeCount
-//      			emptyExp.valuedObject.type = ValueType::BOOL
-      			data.valuedObjects.add(emptyExp.valuedObject)
-
-				/**
-				 * In the surface synchronizer a thread is called empty if none of its surface is active
-				 * in this tick instance. Therefore, create a new not-operator expression and add 
-				 * all surface to an included or-operator expression.   
-				 */
-            	val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-            	expression.setOperator(OperatorType::NOT)
-            	// Add an or-operatr expression if there are more than one surfaces.
-            	if (threadSurfaces.size>1) {
-	            	val subExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
-    	        	subExpression.setOperator(OperatorType::OR)
-//        	    	threadSurfaces.forEach[subExpression.subExpressions.add(it.schedulingBlock.guard.reference)]
-                    threadSurfaces.forEach[subExpression.subExpressions.add(it.getCachedSchedulingBlock.guard.reference)]
-	            	expression.subExpressions.add(subExpression)
-            	} else {
-            		// Otherwise, add a reference to the surface block directly.
-//                    expression.subExpressions.add(threadSurfaces.head.schedulingBlock.guard.reference)
-                    expression.subExpressions.add(threadSurfaces.head.getCachedSchedulingBlock.guard.reference)
-            	}
-            	// Add the newly created expression to the empty expression and link the thread exit object field
-            	// to the guard of the exit node. This enables further processors to identify the block responsible
-            	// for the creation of the empty expression. 
-            	emptyExp.expression = expression
-//            	emptyExp.threadExitObject = exitSB.guard
-                emptyExp.threadExitObject = exitSB.guard
-            
-            	// Subsequently, add the newly created empty expression to the list of empty expressions
-            	// in the guard expression of the synchronizer.
-            	data.guardExpression.emptyExpressions.add(emptyExp)
-           	}           
-           	
-           	// For each exit node, add the guard of the scheduling block of the exit node to the termination expression.
-           	// At least one thread must be exited in this tick to trigger the synchronizer.
-//            terminationExpr.subExpressions.add(exitSB.guard.reference)
-            terminationExpr.subExpressions.add(exitSB.guard.reference)
+            if (!delayFound || threadPathTypes.get(exit) != ThreadPathType::INSTANTANEOUS) {
+	            
+	        	// Increment the exit node counter and retrieve the scheduling block of the exit node.
+	        	exitNodeCount = exitNodeCount + 1
+	            val exitSB = exit.getCachedSchedulingBlock
+	            // This scheduling block is a predecessor of the join node. Add it to the data structure.
+	            data.predecessors.add(exitSB)
+	            
+	            // Now, retrieve all surfaces of the actual thread.
+	            val threadSurfaces = exit.entry.getThreadNodes.filter(typeof(Surface)).toList
+	            
+	            // If there are surface, build an empty expression.
+	            if (threadSurfaces.size>0) {
+	            	/**
+	            	 * To build an empty expression we use the Scgsched factory and create a new object.
+	            	 * As name of the valued object of the expression, we use the name of the guard and
+	            	 * add a human-readable suffix for the empty expression. The type is boolean.<br>
+	            	 * It is important to add the new valued object to the list of valued objects in the
+	            	 * SynchronizerData structure since the object has to be added to the list of 
+	            	 * valued objects in the SCG. 
+	            	 */
+	      			val emptyExp = new EmptyExpression()  
+	      			emptyExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
+	      			emptyExp.valuedObject.name = exitSB.guard.valuedObject.name + '_e' + exitNodeCount
+	//      			emptyExp.valuedObject.type = ValueType::BOOL
+	      			data.valuedObjects.add(emptyExp.valuedObject)
+	
+					/**
+					 * In the surface synchronizer a thread is called empty if none of its surface is active
+					 * in this tick instance. Therefore, create a new not-operator expression and add 
+					 * all surface to an included or-operator expression.   
+					 */
+	            	val expression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+	            	expression.setOperator(OperatorType::NOT)
+	            	// Add an or-operatr expression if there are more than one surfaces.
+	            	if (threadSurfaces.size>1) {
+		            	val subExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression
+	    	        	subExpression.setOperator(OperatorType::OR)
+	//        	    	threadSurfaces.forEach[subExpression.subExpressions.add(it.schedulingBlock.guard.reference)]
+	                    threadSurfaces.forEach[subExpression.subExpressions.add(it.getCachedSchedulingBlock.guard.valuedObject.reference)]
+		            	expression.subExpressions.add(subExpression)
+	            	} else {
+	            		// Otherwise, add a reference to the surface block directly.
+	//                    expression.subExpressions.add(threadSurfaces.head.schedulingBlock.guard.reference)
+	                    expression.subExpressions.add(threadSurfaces.head.getCachedSchedulingBlock.guard.valuedObject.reference)
+	            	}
+	            	// Add the newly created expression to the empty expression and link the thread exit object field
+	            	// to the guard of the exit node. This enables further processors to identify the block responsible
+	            	// for the creation of the empty expression. 
+	            	emptyExp.expression = expression
+	//            	emptyExp.threadExitObject = exitSB.guard
+	                emptyExp.threadExitObject = exitSB.guard.valuedObject
+	            
+	            	// Subsequently, add the newly created empty expression to the list of empty expressions
+	            	// in the guard expression of the synchronizer.
+	            	data.guardExpression.emptyExpressions.add(emptyExp)
+	           	}           
+	           	
+	           	// For each exit node, add the guard of the scheduling block of the exit node to the termination expression.
+	           	// At least one thread must be exited in this tick to trigger the synchronizer.
+	//            terminationExpr.subExpressions.add(exitSB.guard.reference)
+	            terminationExpression.subExpressions.add(exitSB.guard.valuedObject.reference)
+	        }
         }
-
-		/**
+        
+        data    	
+    }
+    
+    protected def SynchronizerData createGuardExpression(SynchronizerData data, OperatorExpression terminationExpression) {
+    	/**
 		 * At this point a termination expression and an empty expression for each thread have been created.
 		 * Now, we have to concatenate these expressions via an and-operator expression. 
 		 * As stated in the introduction of the build function, a thread must be empty or exited in this thread. 
@@ -207,18 +253,22 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         	   expression.subExpressions.add(threadExpr)
             ]
             // Conclusively, add the termination expression - at least one thread must exit this tick.
-            if (terminationExpr.subExpressions.size == 1) {
-                expression.subExpressions.add(terminationExpr.subExpressions.head)        
+            if (terminationExpression.subExpressions.size == 1) {
+                expression.subExpressions.add(terminationExpression.subExpressions.head)        
             } else {
-                expression.subExpressions.add(terminationExpr)
+                expression.subExpressions.add(terminationExpression)
             }
             data.guardExpression.expression = expression
         } else {
             // No surface found! Synchronizer exists immediately!
-            data.guardExpression.expression = terminationExpr
+            data.guardExpression.expression = terminationExpression
         }
         
-        /** Fix for too long empty expressions. */
+        data
+    }
+    
+    protected def SynchronizerData fixEmptyExpressions(SynchronizerData data) {
+    	/** Fix for too long empty expressions. */
         var ok = false
         while (!ok) {
             ok = true
@@ -257,8 +307,12 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
             }
         }
         
+        data
+    }
+    
+    protected def SynchronizerData fixSynchronizerExpression(SynchronizerData data) {
         /** Basically, do the same thing for the synchronizer expression. */
-        ok = false
+        var ok = false
         if (data.guardExpression.expression instanceof OperatorExpression &&
             (data.guardExpression.expression as OperatorExpression).operator == OperatorType::AND
         ) {
@@ -302,10 +356,49 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
                 	fixcnt = fixcnt + 1
             	}           
             }
-        }
+        }  
         
-        // Return the gathered data (to the scheduler).
-        data 
+        data  	
     }
+       
+    override String getId() {
+        return SYNCHRONIZER_ID
+    }
+    
+    override isSynchronizable(Iterable<ThreadPathType> threadPathTypes) {
+        var synchronizable = true
+        
+        for(tpt : threadPathTypes) {
+            if (tpt == ThreadPathType::POTENTIAL_INSTANTANEOUS) synchronizable = false
+        } 
+        
+        synchronizable
+    }
+    
+    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
+    	List<AbstractKielerCompilerAncillaryData> ancillaryData) {
+        val excludeSet = <Predecessor> newHashSet
+
+        val predecessors = schedulingBlockCache.get(join).basicBlock.predecessors.toSet
+        
+        var delayFound = false
+        for(entry:join.getEntryNodes) {
+            val t = entry.getStringAnnotationValue(ANNOTATION_CONTROLFLOWTHREADPATHTYPE).fromString2 
+            if (t != ThreadPathType::INSTANTANEOUS) {
+                delayFound = true
+            } else {
+                excludeSet += predecessors.filter[ it.basicBlock == schedulingBlockCache.get(entry.exit).basicBlock ]
+            }
+        }
+       
+        if (!delayFound) { 
+            excludeSet.clear
+        }
+        return excludeSet
+    }
+    
+	override getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, List<AbstractKielerCompilerAncillaryData> ancillaryData) {
+		<Predecessor> newHashSet
+	}    
     
 }

@@ -64,22 +64,10 @@ public class SctFactoryImpl extends EFactoryImpl implements SctFactory
   {
     switch (eClass.getClassifierID())
     {
-      case SctPackage.SC_CHART: return createSCChart();
       case SctPackage.IMPORT_DECL: return createImportDecl();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public SCChart createSCChart()
-  {
-    SCChartImpl scChart = new SCChartImpl();
-    return scChart;
   }
 
   /**

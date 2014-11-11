@@ -62,10 +62,10 @@ abstract class AbstractSequentializer extends Transformation {
     // -------------------------------------------------------------------------            
 	
     override transform(EObject eObject, KielerCompilerContext context) {
-        sequentialize(eObject as SCGraph)
+        sequentialize(eObject as SCGraph, context)
     }
 	
-	abstract def SCGraph sequentialize(SCGraph scg)
+	abstract def SCGraph sequentialize(SCGraph scg, KielerCompilerContext context)
 	
     protected def ValuedObject createGOSignal(SCGraph scg) {
         /**

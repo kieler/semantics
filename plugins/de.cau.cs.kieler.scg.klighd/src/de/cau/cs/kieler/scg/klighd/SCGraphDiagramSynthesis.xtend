@@ -598,8 +598,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     var assignmentStr = valuedObjectName + " = " + assignmentText
                         
                     if (assignmentStr.contains("&") && assignmentStr.indexOf("&") != assignmentStr.lastIndexOf("&")) {
-                        assignmentStr = assignmentStr.replaceAll("=", "=\n" + KLIGHDSPACER)
-                        assignmentStr = assignmentStr.replaceAll("&", "&\n" + KLIGHDSPACER)
+//                        assignmentStr = assignmentStr.replaceAll("=", "=\n" + KLIGHDSPACER)
+//                        assignmentStr = assignmentStr.replaceAll("&", "&\n" + KLIGHDSPACER)
                     }
                     it.addText(assignmentStr).putToLookUpWith(assignment).setSurroundingSpace(4, 0, 2, 0) => [
                         if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
@@ -1242,7 +1242,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 val bbContainer = bbNodes.createHierarchy(NODEGROUPING_BASICBLOCK)
                 bbContainerList.put(bb, bbContainer)
 //                val bbName = serializer.serialize(bb.guards.head.reference)
-                val bbName = bb.schedulingBlocks.head.guard.name //reference.valuedObject.name
+                val bbName = bb.schedulingBlocks.head.guard.valuedObject.name //reference.valuedObject.name
                 bbContainer.addOutsideTopLeftNodeLabel(bbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = BASICBLOCKBORDER
             }
             if (SHOW_SCHEDULINGBLOCKS.booleanValue)
@@ -1250,7 +1250,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK)
                     schedulingBlockMapping.put(schedulingBlock, sbContainer)
 //                    val sbName = serializer.serialize(schedulingBlock.guard.reference)
-                     val sbName = schedulingBlock.guard.name //reference.valuedObject.name
+                     val sbName = schedulingBlock.guard.valuedObject.name //reference.valuedObject.name
                     sbContainer.addOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER
                 }
         }
@@ -1290,7 +1290,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             
             if (SHOW_SCHEDULINGBLOCKS.booleanValue) {
                 val usBlocks = scg.getAllSchedulingBlocks
-                scg.schedules.head.getSchedulingBlocks.forEach[usBlocks.remove(it)]
+                scg.schedules.head.getScheduledBlocks.forEach[ 
+                    if (!it.schizophrenic) 
+                        usBlocks.remove(it.schedulingBlock)
+                ]
                 usBlocks.forEach [
                     val node = schedulingBlockMapping.get(it)
                     node.getData(typeof(KRoundedRectangle)) => [
@@ -1315,7 +1318,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private def void synthesizeAnalyses(SCGraph scg) {
 
         // val AnalysesVisualization analysesVisualization = Guice.createInjector().getInstance(typeof(AnalysesVisualization))
-//        if(!SHOW_POTENTIALPROBLEMS.booleanValue) return;
+        if(!SHOW_POTENTIALPROBLEMS.booleanValue) return;
 //        scg.analyses.forEach[visualize(it, this)]
 
         if (PIL_Nodes.empty) return;

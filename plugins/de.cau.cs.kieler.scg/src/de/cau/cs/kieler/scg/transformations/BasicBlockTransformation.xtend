@@ -213,8 +213,8 @@ class BasicBlockTransformation extends Transformation {
         
         // Create a new ValuedObject for the guards of the upcoming basic block.
         // Each guard is identified by its unique name and is of boolean type.
-        val guard = KExpressionsFactory::eINSTANCE.createValuedObject
-        guard.name = GUARDPREFIX + newIndex.toString
+        val guardValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
+        guardValuedObject.name = GUARDPREFIX + newIndex.toString
 //        guard.type = ValueType::BOOL;
         
         // Increase the index for successive iterative calls.
@@ -222,12 +222,12 @@ class BasicBlockTransformation extends Transformation {
         
         // Since the nodes are stored in the scheduling blocks of a basic block, we create a new SchedulingBlock to accumulate the nodes.
         // The corresponding basic block will be created when all nodes of a block are determined.
-        var schedulingBlock = ScgFactory::eINSTANCE.createSchedulingBlock
+        val nodeList = <Node> newArrayList
         
         // Repeat the node gathering until the node is empty.
         while(node != null) {
         	// This first node is always part of the new block. Add it.
-            schedulingBlock.nodes.add(node)
+            nodeList += node
             
             // Now, check the type of the node and react appropriately.
             if (node instanceof Conditional) {
@@ -238,7 +238,7 @@ class BasicBlockTransformation extends Transformation {
             	 * createBasicBlock function for each control flow.<br>
             	 * Afterwards, set the node to null which will ensure the exiting of this function instance.
             	 */
-                val block = scg.insertBasicBlock(guard, schedulingBlock, basicBlockCache, predecessorBlocks)
+                val block = scg.insertBasicBlock(guardValuedObject, nodeList, basicBlockCache, predecessorBlocks)
                 newIndex = scg.createBasicBlocks((node as Conditional).then.target, newIndex, basicBlockCache, newLinkedList(block))
                 newIndex = scg.createBasicBlocks((node as Conditional).getElse.target, newIndex, basicBlockCache, newLinkedList(block))
                 node = null
@@ -249,7 +249,7 @@ class BasicBlockTransformation extends Transformation {
             	 * The next block will start at the corresponding depth node.<br>
             	 * Create the block and proceed recursively with the depth. Then ensure the exiting of this instance.
             	 */
-                val block = scg.insertBasicBlock(guard, schedulingBlock, basicBlockCache, predecessorBlocks)
+                val block = scg.insertBasicBlock(guardValuedObject, nodeList, basicBlockCache, predecessorBlocks)
                 newIndex = scg.createBasicBlocks((node as Surface).depth, newIndex, basicBlockCache, newLinkedList(block))
                 node = null
             }  else
@@ -262,7 +262,7 @@ class BasicBlockTransformation extends Transformation {
             	 * so proceed with the corresponding join node of the fork and leave this instance.<br>
             	 */
             	// Insert the actual block. 
-                val block = scg.insertBasicBlock(guard, schedulingBlock, basicBlockCache, predecessorBlocks)
+                val block = scg.insertBasicBlock(guardValuedObject, nodeList, basicBlockCache, predecessorBlocks)
                 // Call the createBasicBlock method for each control flow.
                 for(flow : node.eAllContents.filter(typeof(ControlFlow)).toList) {
                     newIndex = scg.createBasicBlocks(flow.target, newIndex, basicBlockCache, newLinkedList(block))
@@ -295,7 +295,7 @@ class BasicBlockTransformation extends Transformation {
                 	 * Insert the actual block and do not proceed. The calling fork tree will handle 
                 	 * the other threads and the subsequent join analysis.
                 	 */
-                    scg.insertBasicBlock(guard, schedulingBlock, basicBlockCache, predecessorBlocks)
+                    scg.insertBasicBlock(guardValuedObject, nodeList, basicBlockCache, predecessorBlocks)
                     node = null
                 } else
                 if (next != null && next.incoming.filter(typeof(ControlFlow)).size > 1) {
@@ -303,7 +303,7 @@ class BasicBlockTransformation extends Transformation {
                 	 * If the next block has more than one incoming control flow, it starts a new block.
                 	 * Hence, add the actual block and proceed with the next one but exit this instance. 
                 	 */
-                    val block = scg.insertBasicBlock(guard, schedulingBlock, basicBlockCache, predecessorBlocks)
+                    val block = scg.insertBasicBlock(guardValuedObject, nodeList, basicBlockCache, predecessorBlocks)
                     newIndex = scg.createBasicBlocks(next, newIndex, basicBlockCache, newLinkedList(block)) 
                     node = null;
                 } else {
@@ -336,19 +336,19 @@ class BasicBlockTransformation extends Transformation {
      * 			a list of basic blocks that serve as predecessors for this block
      * @return Returns the actual newly generated basic block.
      */     
-    protected def BasicBlock insertBasicBlock(SCGraph scg, ValuedObject guard, SchedulingBlock schedulingBlock,
+    protected def BasicBlock insertBasicBlock(SCGraph scg, ValuedObject guard, List<Node> nodeList,
         List<BasicBlock> basicBlockCache, List<BasicBlock> predecessorBlocks
     ) {
     	// Create a new basic block with the Scgbb factory.
         val basicBlock = ScgFactory::eINSTANCE.createBasicBlock
         
         /** Assume that the basic block depends on the GO-Signal of a circuit if it has no predecessors. */ 
-        if (predecessorBlocks != null && predecessorBlocks.size == 0 && schedulingBlock.nodes.head instanceof Entry) {
+        if (predecessorBlocks != null && predecessorBlocks.size == 0 && nodeList.head instanceof Entry) {
         	basicBlock.goBlock = true
         }
         
         /** If the block has no predecessors but is also not the entry block, it is a dead block. */
-        if (!basicBlock.goBlock && predecessorBlocks.size == 0 && schedulingBlock.nodes.head.allPrevious.size == 0) {
+        if (!basicBlock.goBlock && predecessorBlocks.size == 0 && nodeList.head.allPrevious.size == 0) {
             basicBlock.deadBlock = true
         }
         
@@ -358,18 +358,23 @@ class BasicBlockTransformation extends Transformation {
          * This is done to remove all dependencies to previous blocks for the scheduler because the block 
          * does not rely on them in the actual tick instance.
          */ 
-        if (schedulingBlock.nodes.head instanceof Depth) { 
+        if (nodeList.head instanceof Depth) { 
         	basicBlock.depthBlock = true
-        	basicBlock.preGuard = predecessorBlocks.head.schedulingBlocks.head.guard
+        	basicBlock.preGuard = predecessorBlocks.head.schedulingBlocks.head.guard.valuedObject
         	predecessorBlocks.clear
         }
         /** If the block begins with a join node, mark the block as synchronizer block. */
-        if (schedulingBlock.nodes.head instanceof Join) { basicBlock.synchronizerBlock = true }
+        if (nodeList.head instanceof Join) { 
+            basicBlock.synchronizerBlock = true
+        }
+        if (nodeList.head instanceof Entry) { 
+            basicBlock.entryBlock = true
+        }
  
  		// Add the guard object.
 //        basicBlock.guard = guard
         // Add all scheduling blocks as described in the introduction of this function.
-        basicBlock.schedulingBlocks.addAll(schedulingBlock.splitSchedulingBlock(basicBlock, guard))
+        basicBlock.schedulingBlocks += scg.createSchedulingBlocks(nodeList, basicBlock, guard)
         // Add all predecessors. To do this createPredecessors creates a list with predecessor objects.
         basicBlock.predecessors.addAll(predecessorBlocks.createPredecessors(basicBlock))
         // Add the newly created basic block to the SCG...
@@ -391,7 +396,7 @@ class BasicBlockTransformation extends Transformation {
      * 			the basic block the scheduling block will belong to
      * @return Returns a list of scheduling blocks which will at least contain one block.
      */
-    protected def List<SchedulingBlock> splitSchedulingBlock(SchedulingBlock schedulingBlock, BasicBlock basicBlock, 
+    protected def List<SchedulingBlock> createSchedulingBlocks(SCGraph scg, List<Node> nodeList, BasicBlock basicBlock, 
         ValuedObject guard
     ) {
     	// Create a new list of scheduling blocks.
@@ -400,12 +405,13 @@ class BasicBlockTransformation extends Transformation {
         // Set the variables of the actual block to null to mark the first iteration.
         var SchedulingBlock block = null
         var ValuedObject sbGuard = null
+        var Node lastNode = null
         
         // Examine each node of the original scheduling block.
-        for (node : schedulingBlock.nodes) {
+        for (node : nodeList) {
         	// In the first iteration or if we have to split the block...
             if (block == null || 
-                (node.incoming.filter(typeof(Dependency)).filter[it.concurrent&&!it.confluent].size > 0)
+                node.schedulingBlockSplitter(lastNode)
             ) {
             	// ... add the block if it is not the first.
                 if (block != null) schedulingBlocks.add(block)
@@ -428,19 +434,29 @@ class BasicBlockTransformation extends Transformation {
                 }
                 // Create a new scheduling block, add all incoming dependencies of the node to the block for caching purposes
                 // and store a reference of the guard.
+                val newGuard = ScgFactory::eINSTANCE.createGuard
+                newGuard.valuedObject = sbGuard;
+                scg.guards += newGuard
+                
                 block = ScgFactory::eINSTANCE.createSchedulingBlock()
-                block.guard = sbGuard
+                block.guard = newGuard
                 block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))
             }
             // Add the node to the scheduling block.
             block.nodes.add(node)
             processedNodes.add(node)
+            lastNode = node
         }
         // Finally, add the block to the list, if it is not empty and return the list of blocks.
         if (block != null) schedulingBlocks.add(block)
         
         schedulingBlocks
     }
+    
+    protected def boolean schedulingBlockSplitter(Node node, Node lastNode) {
+        (!node.incoming.filter(typeof(Dependency)).filter[ concurrent && !confluent].empty) ||
+        (lastNode instanceof Entry)
+    } 
     
     /**
      * Since predecessor blocks may have additional attributes, a predecessors is identified by its own object.

@@ -28,6 +28,7 @@ import java.util.List
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopAnalyzer
 import com.google.inject.Guice
+import de.cau.cs.kieler.scg.ScheduledBlock
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -92,7 +93,7 @@ class SimpleScheduler extends AbstractScheduler {
     }
     
     protected def boolean isPlaceable(SchedulingBlock schedulingBlock, List<SchedulingBlock> remainingBlocks, 
-    	List<SchedulingBlock> schedule, SCGraph scg
+    	List<ScheduledBlock> schedule, SCGraph scg
     ) {
        	// Assume all preconditions are met and query parent basic block.
         val parentBasicBlock = schedulingBlock.eContainer as BasicBlock
@@ -119,7 +120,7 @@ class SimpleScheduler extends AbstractScheduler {
     }
     
     protected def void topologicalPlacement(SchedulingBlock schedulingBlock, 
-        List<SchedulingBlock> schedulingBlocks, List<SchedulingBlock> schedule, 
+        List<SchedulingBlock> schedulingBlocks, List<ScheduledBlock> schedule, 
         SchedulingConstraints constraints, SCGraph scg
     ) {
         if (!topologicalSortVisited.contains(schedulingBlock)) {
@@ -140,14 +141,18 @@ class SimpleScheduler extends AbstractScheduler {
             }
             
             if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg)) {
-                schedule.add(schedulingBlock)
+            	val scheduledBlock = ScgFactory.eINSTANCE.createScheduledBlock => [
+            		it.schedulingBlock = schedulingBlock
+            	]
+                schedule.add(scheduledBlock)
                 placedBlocks.add(schedulingBlock)
             }
         } 
     }
     
     
-    protected def boolean createSchedule(SCGraph scg, List<SchedulingBlock> schedule, SchedulingConstraints constraints) {
+    protected def boolean createSchedule(SCGraph scg, List<ScheduledBlock> schedule, SchedulingConstraints constraints,
+    	KielerCompilerContext context) {
 
         val schedulingBlocks = new ArrayList<SchedulingBlock>(schedulingBlockCount)
         schedulingBlocks.addAll(constraints.schedulingBlocks)
@@ -193,9 +198,9 @@ class SimpleScheduler extends AbstractScheduler {
         
         schedulingBlockCount = scg.createSchedulingBlockCache(schedulingBlockCache)
         
-        val sBlockList = <SchedulingBlock> newLinkedList
-        var schedulable = scg.createSchedule(sBlockList, schedulingConstraints)
-        schedule.schedulingBlocks += sBlockList
+        val sBlockList = <ScheduledBlock> newLinkedList
+        var schedulable = scg.createSchedule(sBlockList, schedulingConstraints, context)
+		schedule.scheduledBlocks += sBlockList
         
         // Print out results on the console
         // and add the scheduling information to the graph.

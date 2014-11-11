@@ -10,9 +10,9 @@ import com.google.inject.Injector;
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.s.SPlugin;
 import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.s.SCCharts2STransformation;
 import de.cau.cs.kieler.sccharts.text.sct.SctStandaloneSetup;
-import de.cau.cs.kieler.sccharts.text.sct.sct.SCChart;
 
 /**
  * The abstract handler for SCCharts file formats scc and sct.
@@ -57,7 +57,7 @@ public class SCChartsModelFileHandler extends AbstractConvertModelHandler {
         // refactored model).
         transformed = model;
         if (commandString.equals(S_TRANSFORMATION)) {
-            transformed = transformation.transformS((SCChart) model);
+            transformed = transformation.transformS((State) model);
         }
         return transformed;
     }

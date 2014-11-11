@@ -1,0 +1,85 @@
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: O(0) 
+;
+
+% Output: 
+;
+
+% Output: O(0) 
+;
+
+% Output: 
+;
+I 
+% Output: O(0) 
+;
+
+% Output: 
+;
+I 
+% Output: O(1) 
+;
+
+% Output: 
+;
+I 
+% Output: O(2) 
+;
+
+% Output: 
+;
+
+% Output: O(3) 
+;
+I 
+% Output: 
+;
+
+% Output: O(4) 
+;
+I 
+% Output: 
+;
+
+% Output: O(5) 
+;
+I 
+% Output: 
+;
+
+% Output: O(6) 
+;
+I 
+% Output: 
+;
+I 
+% Output: O(7) 
+;
+I 
+% Output: 
+;
+I 
+% Output: O(9) 
+;
+I 
+% Output: 
+;
+I 
+% Output: O(11) 
+;
+I 
+% Output: 
+;
+I 
+% Output: O(13) 
+;
+I 
+% Output: 
+;

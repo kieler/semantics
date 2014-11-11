@@ -269,183 +269,167 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	public class SCChartElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SCChart");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
-		private final Keyword cPackageKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
-		private final Assignment cNameAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final RuleCall cNameQualifiedNameParserRuleCall_0_1_0 = (RuleCall)cNameAssignment_0_1.eContents().get(0);
-		private final Assignment cImportsAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cImportsImportDeclParserRuleCall_1_0 = (RuleCall)cImportsAssignment_1.eContents().get(0);
-		private final Assignment cAnnotationsAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cAnnotationsAnnotationParserRuleCall_2_0 = (RuleCall)cAnnotationsAssignment_2.eContents().get(0);
-		private final Keyword cScchartKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cIdAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cIdIDTerminalRuleCall_4_0 = (RuleCall)cIdAssignment_4.eContents().get(0);
-		private final Assignment cLabelAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cLabelSTRINGTerminalRuleCall_5_0 = (RuleCall)cLabelAssignment_5.eContents().get(0);
-		private final Alternatives cAlternatives_6 = (Alternatives)cGroup.eContents().get(6);
-		private final Group cGroup_6_0 = (Group)cAlternatives_6.eContents().get(0);
-		private final Keyword cReferencesKeyword_6_0_0 = (Keyword)cGroup_6_0.eContents().get(0);
-		private final Assignment cReferencedScopeAssignment_6_0_1 = (Assignment)cGroup_6_0.eContents().get(1);
-		private final CrossReference cReferencedScopeStateCrossReference_6_0_1_0 = (CrossReference)cReferencedScopeAssignment_6_0_1.eContents().get(0);
-		private final RuleCall cReferencedScopeStateIDTerminalRuleCall_6_0_1_0_1 = (RuleCall)cReferencedScopeStateCrossReference_6_0_1_0.eContents().get(1);
-		private final Group cGroup_6_0_2 = (Group)cGroup_6_0.eContents().get(2);
-		private final Keyword cBindKeyword_6_0_2_0 = (Keyword)cGroup_6_0_2.eContents().get(0);
-		private final Assignment cBindingsAssignment_6_0_2_1 = (Assignment)cGroup_6_0_2.eContents().get(1);
-		private final RuleCall cBindingsBindingParserRuleCall_6_0_2_1_0 = (RuleCall)cBindingsAssignment_6_0_2_1.eContents().get(0);
-		private final Group cGroup_6_0_2_2 = (Group)cGroup_6_0_2.eContents().get(2);
-		private final Keyword cCommaKeyword_6_0_2_2_0 = (Keyword)cGroup_6_0_2_2.eContents().get(0);
-		private final Assignment cBindingsAssignment_6_0_2_2_1 = (Assignment)cGroup_6_0_2_2.eContents().get(1);
-		private final RuleCall cBindingsBindingParserRuleCall_6_0_2_2_1_0 = (RuleCall)cBindingsAssignment_6_0_2_2_1.eContents().get(0);
-		private final Group cGroup_6_1 = (Group)cAlternatives_6.eContents().get(1);
-		private final Keyword cLeftCurlyBracketKeyword_6_1_0 = (Keyword)cGroup_6_1.eContents().get(0);
-		private final Group cGroup_6_1_1 = (Group)cGroup_6_1.eContents().get(1);
-		private final Alternatives cAlternatives_6_1_1_0 = (Alternatives)cGroup_6_1_1.eContents().get(0);
-		private final Assignment cDeclarationsAssignment_6_1_1_0_0 = (Assignment)cAlternatives_6_1_1_0.eContents().get(0);
-		private final RuleCall cDeclarationsDeclarationParserRuleCall_6_1_1_0_0_0 = (RuleCall)cDeclarationsAssignment_6_1_1_0_0.eContents().get(0);
-		private final Assignment cLocalActionsAssignment_6_1_1_0_1 = (Assignment)cAlternatives_6_1_1_0.eContents().get(1);
-		private final RuleCall cLocalActionsLocalActionParserRuleCall_6_1_1_0_1_0 = (RuleCall)cLocalActionsAssignment_6_1_1_0_1.eContents().get(0);
-		private final Group cGroup_6_1_1_1 = (Group)cGroup_6_1_1.eContents().get(1);
-		private final Assignment cRegionsAssignment_6_1_1_1_0 = (Assignment)cGroup_6_1_1_1.eContents().get(0);
-		private final RuleCall cRegionsSingleRegionParserRuleCall_6_1_1_1_0_0 = (RuleCall)cRegionsAssignment_6_1_1_1_0.eContents().get(0);
-		private final Assignment cRegionsAssignment_6_1_1_1_1 = (Assignment)cGroup_6_1_1_1.eContents().get(1);
-		private final RuleCall cRegionsRegionParserRuleCall_6_1_1_1_1_0 = (RuleCall)cRegionsAssignment_6_1_1_1_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_6_1_2 = (Keyword)cGroup_6_1.eContents().get(2);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Keyword cScchartKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cIdAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cIdIDTerminalRuleCall_2_0 = (RuleCall)cIdAssignment_2.eContents().get(0);
+		private final Assignment cLabelAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cLabelSTRINGTerminalRuleCall_3_0 = (RuleCall)cLabelAssignment_3.eContents().get(0);
+		private final Alternatives cAlternatives_4 = (Alternatives)cGroup.eContents().get(4);
+		private final Group cGroup_4_0 = (Group)cAlternatives_4.eContents().get(0);
+		private final Keyword cReferencesKeyword_4_0_0 = (Keyword)cGroup_4_0.eContents().get(0);
+		private final Assignment cReferencedScopeAssignment_4_0_1 = (Assignment)cGroup_4_0.eContents().get(1);
+		private final CrossReference cReferencedScopeStateCrossReference_4_0_1_0 = (CrossReference)cReferencedScopeAssignment_4_0_1.eContents().get(0);
+		private final RuleCall cReferencedScopeStateIDTerminalRuleCall_4_0_1_0_1 = (RuleCall)cReferencedScopeStateCrossReference_4_0_1_0.eContents().get(1);
+		private final Group cGroup_4_0_2 = (Group)cGroup_4_0.eContents().get(2);
+		private final Keyword cBindKeyword_4_0_2_0 = (Keyword)cGroup_4_0_2.eContents().get(0);
+		private final Assignment cBindingsAssignment_4_0_2_1 = (Assignment)cGroup_4_0_2.eContents().get(1);
+		private final RuleCall cBindingsBindingParserRuleCall_4_0_2_1_0 = (RuleCall)cBindingsAssignment_4_0_2_1.eContents().get(0);
+		private final Group cGroup_4_0_2_2 = (Group)cGroup_4_0_2.eContents().get(2);
+		private final Keyword cCommaKeyword_4_0_2_2_0 = (Keyword)cGroup_4_0_2_2.eContents().get(0);
+		private final Assignment cBindingsAssignment_4_0_2_2_1 = (Assignment)cGroup_4_0_2_2.eContents().get(1);
+		private final RuleCall cBindingsBindingParserRuleCall_4_0_2_2_1_0 = (RuleCall)cBindingsAssignment_4_0_2_2_1.eContents().get(0);
+		private final Group cGroup_4_1 = (Group)cAlternatives_4.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_4_1_0 = (Keyword)cGroup_4_1.eContents().get(0);
+		private final Group cGroup_4_1_1 = (Group)cGroup_4_1.eContents().get(1);
+		private final Alternatives cAlternatives_4_1_1_0 = (Alternatives)cGroup_4_1_1.eContents().get(0);
+		private final Assignment cDeclarationsAssignment_4_1_1_0_0 = (Assignment)cAlternatives_4_1_1_0.eContents().get(0);
+		private final RuleCall cDeclarationsDeclarationParserRuleCall_4_1_1_0_0_0 = (RuleCall)cDeclarationsAssignment_4_1_1_0_0.eContents().get(0);
+		private final Assignment cLocalActionsAssignment_4_1_1_0_1 = (Assignment)cAlternatives_4_1_1_0.eContents().get(1);
+		private final RuleCall cLocalActionsLocalActionParserRuleCall_4_1_1_0_1_0 = (RuleCall)cLocalActionsAssignment_4_1_1_0_1.eContents().get(0);
+		private final Group cGroup_4_1_1_1 = (Group)cGroup_4_1_1.eContents().get(1);
+		private final Assignment cRegionsAssignment_4_1_1_1_0 = (Assignment)cGroup_4_1_1_1.eContents().get(0);
+		private final RuleCall cRegionsSingleRegionParserRuleCall_4_1_1_1_0_0 = (RuleCall)cRegionsAssignment_4_1_1_1_0.eContents().get(0);
+		private final Assignment cRegionsAssignment_4_1_1_1_1 = (Assignment)cGroup_4_1_1_1.eContents().get(1);
+		private final RuleCall cRegionsRegionParserRuleCall_4_1_1_1_1_0 = (RuleCall)cRegionsAssignment_4_1_1_1_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_4_1_2 = (Keyword)cGroup_4_1.eContents().get(2);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		// SCChart:
-		//	("package" name=QualifiedName)? imports+=ImportDecl* annotations+=Annotation* "scchart" id=ID label=STRING?
-		//	("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding ("," bindings+=Binding)*)? | "{"
-		//	((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion regions+=Region*)?) "}")?;
+		// SCChart returns
+		//sccharts::State:
+		//	annotations+=Annotation* //    ('package' name = QualifiedName)?
+		// //    imports += ImportDecl*
+		// //    
+		// "scchart"
+		//	id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
+		//	bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion
+		//	regions+=Region*)?) "}")?;
 		public ParserRule getRule() { return rule; }
 
-		//("package" name=QualifiedName)? imports+=ImportDecl* annotations+=Annotation* "scchart" id=ID label=STRING?
-		//("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding ("," bindings+=Binding)*)? | "{"
-		//((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion regions+=Region*)?) "}")?
+		//annotations+=Annotation* //    ('package' name = QualifiedName)?
+		// //    imports += ImportDecl*
+		// //    
+		// "scchart" id=ID
+		//label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding ("," bindings+=Binding)*)? |
+		//"{" ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion regions+=Region*)?) "}")?
 		public Group getGroup() { return cGroup; }
 
-		//("package" name=QualifiedName)?
-		public Group getGroup_0() { return cGroup_0; }
-
-		//"package"
-		public Keyword getPackageKeyword_0_0() { return cPackageKeyword_0_0; }
-
-		//name=QualifiedName
-		public Assignment getNameAssignment_0_1() { return cNameAssignment_0_1; }
-
-		//QualifiedName
-		public RuleCall getNameQualifiedNameParserRuleCall_0_1_0() { return cNameQualifiedNameParserRuleCall_0_1_0; }
-
-		//imports+=ImportDecl*
-		public Assignment getImportsAssignment_1() { return cImportsAssignment_1; }
-
-		//ImportDecl
-		public RuleCall getImportsImportDeclParserRuleCall_1_0() { return cImportsImportDeclParserRuleCall_1_0; }
-
 		//annotations+=Annotation*
-		public Assignment getAnnotationsAssignment_2() { return cAnnotationsAssignment_2; }
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 
 		//Annotation
-		public RuleCall getAnnotationsAnnotationParserRuleCall_2_0() { return cAnnotationsAnnotationParserRuleCall_2_0; }
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
 		//"scchart"
-		public Keyword getScchartKeyword_3() { return cScchartKeyword_3; }
+		public Keyword getScchartKeyword_1() { return cScchartKeyword_1; }
 
 		//id=ID
-		public Assignment getIdAssignment_4() { return cIdAssignment_4; }
+		public Assignment getIdAssignment_2() { return cIdAssignment_2; }
 
 		//ID
-		public RuleCall getIdIDTerminalRuleCall_4_0() { return cIdIDTerminalRuleCall_4_0; }
+		public RuleCall getIdIDTerminalRuleCall_2_0() { return cIdIDTerminalRuleCall_2_0; }
 
 		//label=STRING?
-		public Assignment getLabelAssignment_5() { return cLabelAssignment_5; }
+		public Assignment getLabelAssignment_3() { return cLabelAssignment_3; }
 
 		//STRING
-		public RuleCall getLabelSTRINGTerminalRuleCall_5_0() { return cLabelSTRINGTerminalRuleCall_5_0; }
+		public RuleCall getLabelSTRINGTerminalRuleCall_3_0() { return cLabelSTRINGTerminalRuleCall_3_0; }
 
 		//("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding ("," bindings+=Binding)*)? | "{"
 		//((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion regions+=Region*)?) "}")?
-		public Alternatives getAlternatives_6() { return cAlternatives_6; }
+		public Alternatives getAlternatives_4() { return cAlternatives_4; }
 
 		//"references" referencedScope=[sccharts::State] ("bind" bindings+=Binding ("," bindings+=Binding)*)?
-		public Group getGroup_6_0() { return cGroup_6_0; }
+		public Group getGroup_4_0() { return cGroup_4_0; }
 
 		//"references"
-		public Keyword getReferencesKeyword_6_0_0() { return cReferencesKeyword_6_0_0; }
+		public Keyword getReferencesKeyword_4_0_0() { return cReferencesKeyword_4_0_0; }
 
 		//referencedScope=[sccharts::State]
-		public Assignment getReferencedScopeAssignment_6_0_1() { return cReferencedScopeAssignment_6_0_1; }
+		public Assignment getReferencedScopeAssignment_4_0_1() { return cReferencedScopeAssignment_4_0_1; }
 
 		//[sccharts::State]
-		public CrossReference getReferencedScopeStateCrossReference_6_0_1_0() { return cReferencedScopeStateCrossReference_6_0_1_0; }
+		public CrossReference getReferencedScopeStateCrossReference_4_0_1_0() { return cReferencedScopeStateCrossReference_4_0_1_0; }
 
 		//ID
-		public RuleCall getReferencedScopeStateIDTerminalRuleCall_6_0_1_0_1() { return cReferencedScopeStateIDTerminalRuleCall_6_0_1_0_1; }
+		public RuleCall getReferencedScopeStateIDTerminalRuleCall_4_0_1_0_1() { return cReferencedScopeStateIDTerminalRuleCall_4_0_1_0_1; }
 
 		//("bind" bindings+=Binding ("," bindings+=Binding)*)?
-		public Group getGroup_6_0_2() { return cGroup_6_0_2; }
+		public Group getGroup_4_0_2() { return cGroup_4_0_2; }
 
 		//"bind"
-		public Keyword getBindKeyword_6_0_2_0() { return cBindKeyword_6_0_2_0; }
+		public Keyword getBindKeyword_4_0_2_0() { return cBindKeyword_4_0_2_0; }
 
 		//bindings+=Binding
-		public Assignment getBindingsAssignment_6_0_2_1() { return cBindingsAssignment_6_0_2_1; }
+		public Assignment getBindingsAssignment_4_0_2_1() { return cBindingsAssignment_4_0_2_1; }
 
 		//Binding
-		public RuleCall getBindingsBindingParserRuleCall_6_0_2_1_0() { return cBindingsBindingParserRuleCall_6_0_2_1_0; }
+		public RuleCall getBindingsBindingParserRuleCall_4_0_2_1_0() { return cBindingsBindingParserRuleCall_4_0_2_1_0; }
 
 		//("," bindings+=Binding)*
-		public Group getGroup_6_0_2_2() { return cGroup_6_0_2_2; }
+		public Group getGroup_4_0_2_2() { return cGroup_4_0_2_2; }
 
 		//","
-		public Keyword getCommaKeyword_6_0_2_2_0() { return cCommaKeyword_6_0_2_2_0; }
+		public Keyword getCommaKeyword_4_0_2_2_0() { return cCommaKeyword_4_0_2_2_0; }
 
 		//bindings+=Binding
-		public Assignment getBindingsAssignment_6_0_2_2_1() { return cBindingsAssignment_6_0_2_2_1; }
+		public Assignment getBindingsAssignment_4_0_2_2_1() { return cBindingsAssignment_4_0_2_2_1; }
 
 		//Binding
-		public RuleCall getBindingsBindingParserRuleCall_6_0_2_2_1_0() { return cBindingsBindingParserRuleCall_6_0_2_2_1_0; }
+		public RuleCall getBindingsBindingParserRuleCall_4_0_2_2_1_0() { return cBindingsBindingParserRuleCall_4_0_2_2_1_0; }
 
 		//"{" ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion regions+=Region*)?) "}"
-		public Group getGroup_6_1() { return cGroup_6_1; }
+		public Group getGroup_4_1() { return cGroup_4_1; }
 
 		//"{"
-		public Keyword getLeftCurlyBracketKeyword_6_1_0() { return cLeftCurlyBracketKeyword_6_1_0; }
+		public Keyword getLeftCurlyBracketKeyword_4_1_0() { return cLeftCurlyBracketKeyword_4_1_0; }
 
 		//(declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion regions+=Region*)?
-		public Group getGroup_6_1_1() { return cGroup_6_1_1; }
+		public Group getGroup_4_1_1() { return cGroup_4_1_1; }
 
 		//(declarations+=Declaration | localActions+=LocalAction)*
-		public Alternatives getAlternatives_6_1_1_0() { return cAlternatives_6_1_1_0; }
+		public Alternatives getAlternatives_4_1_1_0() { return cAlternatives_4_1_1_0; }
 
 		//declarations+=Declaration
-		public Assignment getDeclarationsAssignment_6_1_1_0_0() { return cDeclarationsAssignment_6_1_1_0_0; }
+		public Assignment getDeclarationsAssignment_4_1_1_0_0() { return cDeclarationsAssignment_4_1_1_0_0; }
 
 		//Declaration
-		public RuleCall getDeclarationsDeclarationParserRuleCall_6_1_1_0_0_0() { return cDeclarationsDeclarationParserRuleCall_6_1_1_0_0_0; }
+		public RuleCall getDeclarationsDeclarationParserRuleCall_4_1_1_0_0_0() { return cDeclarationsDeclarationParserRuleCall_4_1_1_0_0_0; }
 
 		//localActions+=LocalAction
-		public Assignment getLocalActionsAssignment_6_1_1_0_1() { return cLocalActionsAssignment_6_1_1_0_1; }
+		public Assignment getLocalActionsAssignment_4_1_1_0_1() { return cLocalActionsAssignment_4_1_1_0_1; }
 
 		//LocalAction
-		public RuleCall getLocalActionsLocalActionParserRuleCall_6_1_1_0_1_0() { return cLocalActionsLocalActionParserRuleCall_6_1_1_0_1_0; }
+		public RuleCall getLocalActionsLocalActionParserRuleCall_4_1_1_0_1_0() { return cLocalActionsLocalActionParserRuleCall_4_1_1_0_1_0; }
 
 		//(regions+=SingleRegion regions+=Region*)?
-		public Group getGroup_6_1_1_1() { return cGroup_6_1_1_1; }
+		public Group getGroup_4_1_1_1() { return cGroup_4_1_1_1; }
 
 		//regions+=SingleRegion
-		public Assignment getRegionsAssignment_6_1_1_1_0() { return cRegionsAssignment_6_1_1_1_0; }
+		public Assignment getRegionsAssignment_4_1_1_1_0() { return cRegionsAssignment_4_1_1_1_0; }
 
 		//SingleRegion
-		public RuleCall getRegionsSingleRegionParserRuleCall_6_1_1_1_0_0() { return cRegionsSingleRegionParserRuleCall_6_1_1_1_0_0; }
+		public RuleCall getRegionsSingleRegionParserRuleCall_4_1_1_1_0_0() { return cRegionsSingleRegionParserRuleCall_4_1_1_1_0_0; }
 
 		//regions+=Region*
-		public Assignment getRegionsAssignment_6_1_1_1_1() { return cRegionsAssignment_6_1_1_1_1; }
+		public Assignment getRegionsAssignment_4_1_1_1_1() { return cRegionsAssignment_4_1_1_1_1; }
 
 		//Region
-		public RuleCall getRegionsRegionParserRuleCall_6_1_1_1_1_0() { return cRegionsRegionParserRuleCall_6_1_1_1_1_0; }
+		public RuleCall getRegionsRegionParserRuleCall_4_1_1_1_1_0() { return cRegionsRegionParserRuleCall_4_1_1_1_1_0; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_6_1_2() { return cRightCurlyBracketKeyword_6_1_2; }
+		public Keyword getRightCurlyBracketKeyword_4_1_2() { return cRightCurlyBracketKeyword_4_1_2; }
 	}
 
 	public class ImportDeclElements extends AbstractParserRuleElementFinder {
@@ -1562,10 +1546,15 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	// SCChart:
-	//	("package" name=QualifiedName)? imports+=ImportDecl* annotations+=Annotation* "scchart" id=ID label=STRING?
-	//	("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding ("," bindings+=Binding)*)? | "{"
-	//	((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion regions+=Region*)?) "}")?;
+	// SCChart returns
+	//sccharts::State:
+	//	annotations+=Annotation* //    ('package' name = QualifiedName)?
+	// //    imports += ImportDecl*
+	// //    
+	// "scchart"
+	//	id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
+	//	bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion
+	//	regions+=Region*)?) "}")?;
 	public SCChartElements getSCChartAccess() {
 		return (pSCChart != null) ? pSCChart : (pSCChart = new SCChartElements());
 	}

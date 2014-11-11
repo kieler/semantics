@@ -18,23 +18,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,27 +35,21 @@ import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension;
-import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
 import de.cau.cs.kieler.kico.CompilationResult;
-import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.s.extensions.SExtension;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.sc.CExecution;
-import de.cau.cs.kieler.sc.SCExecution;
-import de.cau.cs.kieler.sc.SCPlugin;
-import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.State;
-import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulation;
-import de.cau.cs.kieler.sim.benchmark.Benchmark;
+import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulationSCChart;
+import de.cau.cs.kieler.sccharts.sim.c.xtend.CSimulationSCG;
+import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
@@ -145,8 +130,8 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     /** The list of output transitions used for the visualization. */
     private LinkedList<String> outputTransitionList = null;
 
-    /** The SSCharts State is the considered model to simulate. */
-    private State myModel = null;
+    /** The SSCharts State / SCG is the considered model to simulate. */
+    private EObject myModel = null;
 
     /** The single s / kexpression extension. */
     private static SExtension sExtension = new SExtension();
@@ -381,13 +366,13 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-
+    
     /**
      * {@inheritDoc}
      */
     public void doModel2ModelTransform(final ProgressMonitorAdapter monitor)
             throws KiemInitializationException {
-        doModel2ModelTransform(monitor, (State) this.getModelRootElement(),
+        doModel2ModelTransform(monitor, this.getModelRootElement(),
                 this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE + KIEM_PROPERTY_DIFF]
                         .getValueAsBoolean());
     }
@@ -397,7 +382,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     /**
      * {@inheritDoc}
      */
-    public void doModel2ModelTransform(final ProgressMonitorAdapter monitor, final State model,
+    public void doModel2ModelTransform(final ProgressMonitorAdapter monitor, final EObject model,
             final boolean debug) throws KiemInitializationException {
         
         System.out.println("1");
@@ -415,11 +400,11 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             }
             System.out.println("4");
 
-            if (this.getModelRootElement().eResource() == null) {
-                throw new KiemInitializationException(
-                        "The active editor has must be saved in order to simulate the SCChart."
-                                + " Volatile resources cannot be simulated.", true, null);
-            }
+//            if (this.getModelRootElement().eResource() == null) {
+//                throw new KiemInitializationException(
+//                        "The active editor has must be saved in order to simulate the SCChart."
+//                                + " Volatile resources cannot be simulated.", true, null);
+//            }
             System.out.println("5");
 
             // Make a copy of the S program in case it was from
@@ -473,16 +458,15 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
                     KielerCompiler.compile(highLevelContext);
             System.out.println("11");
 
-            // The following should be a state
-            State coreSCChart = (State) highLeveleCompilationResult.getEObject();
-            System.out.println("12 " + coreSCChart.getId());
+            // The following should be a state or an SCG
+            EObject stateOrSCG = highLeveleCompilationResult.getEObject();
 
             //String coreSSChartText = KiCoUtil.serialize(coreSCChart, highLevelContext, false);
             //writeOutputModel("D:\\sschart.sct", coreSSChartText.getBytes());
             // System.out.println(coreSSChartText);
 
             KielerCompilerContext lowLevelContext =
-                    new KielerCompilerContext(lowLevelTransformations, coreSCChart);
+                    new KielerCompilerContext(lowLevelTransformations, stateOrSCG);
             lowLevelContext.setCreateDummyResource(true);
             lowLevelContext.setInplace(false);
             lowLevelContext.setPrerequirements(true);
@@ -494,10 +478,19 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             System.out.println("14 " + cSCChartCCode);
 
             // Generate Simulation wrapper C code
-            System.out.println("15");
-            CSimulation transform = Guice.createInjector().getInstance(CSimulation.class);
-            System.out.println("16");
-            String cSimulation = transform.transform(coreSCChart, "10000").toString();
+            String cSimulation = "";
+            if (stateOrSCG instanceof State) {
+                System.out.println("15");
+                CSimulationSCChart cSimulationSCChart = Guice.createInjector().getInstance(CSimulationSCChart.class);
+                System.out.println("16");
+                cSimulation = cSimulationSCChart.transform((State)stateOrSCG, "10000").toString();
+            }
+            else if (stateOrSCG instanceof SCGraph) {
+                System.out.println("15");
+                CSimulationSCG cSimulationSCG = Guice.createInjector().getInstance(CSimulationSCG.class);
+                System.out.println("16");
+                cSimulation = cSimulationSCG.transform((SCGraph)stateOrSCG, "10000").toString();
+            }
             System.out.println("17 " + cSimulation);
 
             // Set a random output folder for the compiled files
@@ -523,7 +516,10 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             generatedSCFiles.add(outputFileSimulation);
             // generatedSCFiles.add(outputFileSCChart);
             generatedSCFiles.add("-I " + includePath);
-            String modelName = myModel.getId();
+            String modelName = "SCG";
+            if (myModel instanceof State) {
+                modelName = ((State) myModel).getId();
+            }
             cExecution.compile(generatedSCFiles, modelName);
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "

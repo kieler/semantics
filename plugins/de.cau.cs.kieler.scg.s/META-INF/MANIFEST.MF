@@ -16,7 +16,8 @@ Require-Bundle: org.eclipse.core.runtime,
  com.google.inject,
  org.eclipse.emf.ecore,
  de.cau.cs.kieler.kico,
- de.cau.cs.kieler.s.sc
+ de.cau.cs.kieler.s.sc,
+ de.cau.cs.kieler.s.sj
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.scg.s;uses:="org.osgi.framework",

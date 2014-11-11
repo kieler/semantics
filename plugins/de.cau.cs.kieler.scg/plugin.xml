@@ -70,7 +70,7 @@
             alternatives="true"
             id="SCGSCHEDGROUP"
             name="Scheduler"
-            transformations="SCGSCHEDSIMPLE, SCGSCHEDTHREADAWARE">
+            transformations="SCGSCHEDDELAYAWARE, SCGSCHEDSIMPLE, SCGSCHEDTHREADAWARE">
       </transformationGroup>
       <transformationMethod
             class="de.cau.cs.kieler.scg.schedulers.SimpleScheduler"
@@ -78,6 +78,13 @@
             id="SCGSCHEDSIMPLE"
             method="schedule"
             name="Simple">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.schedulers.DelayAwareScheduler"
+            dependencies="SCGSEQGROUP"
+            id="SCGSCHEDDELAYAWARE"
+            method="schedule"
+            name="Delay Aware">
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scg.schedulers.ThreadAwareScheduler"

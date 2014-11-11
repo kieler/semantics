@@ -1,0 +1,62 @@
+scchart nested_abort_awa {
+  output signal pure E;
+  output signal pure F;
+  output signal pure G;
+  output signal pure H;
+  input signal pure A;
+  input signal pure B;
+  input signal pure C;
+  input signal pure D;
+
+  region main:
+
+  initial state init0 "I"
+  --> StatementList47state immediate;
+
+  state StatementList47state {
+
+    region R0:
+
+    initial state init1 "I"
+    --> StatementList51state immediate;
+
+    state StatementList51state {
+
+      region R0:
+
+      initial state init2 "I"
+      --> StatementList55state immediate;
+
+      state StatementList55state {
+
+        region R0:
+
+        initial state init3 "I"
+        --> S49 immediate;
+
+        state S49 "49"
+        --> S78 with D / E;
+
+        final state S78 "78";
+      }
+      o-> S147 with C / F
+      >-> S147 / F;
+
+      final state S176 "176";
+
+      state S147 "147"
+      --> S176 with D / E;
+    }
+    --> S225 with B
+    >-> S225;
+
+    final state S254 "254";
+
+    state S225 "225"
+    --> S254 with D / G;
+  }
+  o-> S323 with A / H
+  >-> S323 / H;
+
+  state S323 "323";
+}

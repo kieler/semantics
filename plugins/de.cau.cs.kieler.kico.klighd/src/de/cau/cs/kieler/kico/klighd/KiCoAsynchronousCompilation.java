@@ -101,6 +101,7 @@ public class KiCoAsynchronousCompilation extends Job {
             context.setPrerequirements(transformations.isAdvanced());
             context.setInplace(false);
             context.setProgressMonitor(monitor);
+            // Do turn this on ONLY if you temporary want to SEE simulation transformations in KiCo selection view
             context.setCreateDummyResource(false);
             result = KielerCompiler.compile(context);
 

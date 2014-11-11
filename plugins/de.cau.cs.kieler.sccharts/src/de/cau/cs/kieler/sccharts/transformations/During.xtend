@@ -44,17 +44,17 @@ class During {
     //-------------------------------------------------------------------------
     // Transforming During Actions.
     def State transform(State rootState) {
-        val targetRootRegion = rootState.fixAllPriorities;
+        val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootRegion.getAllStates.forEach[ targetState |
-            targetState.transformDuring(targetRootRegion);
+        targetRootState.getAllStates.toList.forEach[ targetState |
+            targetState.transformDuring(targetRootState);
         ]
-        targetRootRegion;//.fixAllTextualOrdersByPriorities;
+        targetRootState;//.fixAllTextualOrdersByPriorities;
     }
 
     // Traverse all states and transform macro states that have actions to transform
-    def void transformDuring(State state, State targetRootRegion) {
+    def void transformDuring(State state, State targetRootState) {
 
         // DURING ACTIONS : 
         // For each action create a separate region in the state. 
@@ -78,9 +78,9 @@ class During {
             // If the state has outgoing terminations, we need to finalize the during
             // actions in case we end the states over these transitions
             if (hasOutgoingTerminations) {
-               state.transformDuringComplexFinalStates(targetRootRegion)
+               state.transformDuringComplexFinalStates(targetRootState)
             } else {
-               state.transformDuringSimple(targetRootRegion)
+               state.transformDuringSimple(targetRootState)
             }
             
           }

@@ -16,6 +16,8 @@ package de.cau.cs.kieler.kico.klighd.model;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import org.eclipse.core.runtime.Platform;
+
 /**
  * Model of KiCoModelView to represent errors and exceptions
  * 
@@ -25,7 +27,6 @@ import java.io.StringWriter;
  * 
  */
 public class KiCoErrorModel {
-
     private final String message;
     private final String reason;
     private final String stacktrace;
@@ -52,12 +53,35 @@ public class KiCoErrorModel {
      */
     public KiCoErrorModel(String message, String reason, String stacktrace) {
         this.message = message;
-        this.stacktrace = stacktrace;
+        // reason
+        String reasonToSet = "Unkown";
         if (reason == null) {
-            this.reason = "Unkown";
+            // Parse reason from stacktrace
+            if (stacktrace != null && !stacktrace.isEmpty()) {
+                int newline = stacktrace.indexOf('\n');
+                int startReason = stacktrace.indexOf(':');
+                if (newline != -1) {
+                    if (startReason != -1 && startReason + 2 < newline) {
+                        reasonToSet = stacktrace.substring(startReason + 2, newline);
+                    } else {
+                        reasonToSet = stacktrace.substring(0, newline);
+                    }
+                }
+            }
         } else {
-            this.reason = reason;
+            reasonToSet = reason;
         }
+        this.reason = reasonToSet;
+        // stacktrace
+        String stacktraceToSet = stacktrace;
+        if (!Platform.getOS().equals(Platform.OS_WIN32)) {
+            // Fix newlines
+            String newline = System.getProperty("line.separator");
+            if (newline != null) {
+                stacktraceToSet = stacktrace.replaceAll("\n", newline);
+            }
+        }
+        this.stacktrace = stacktraceToSet;
     }
 
     /**
@@ -68,17 +92,20 @@ public class KiCoErrorModel {
      * @param exception
      */
     public KiCoErrorModel(String message, Exception exception) {
-        this.message = message;
-        // Print stack trace into string
+        this(message, exception.getMessage(), getStackTrace(exception));
+    }
+
+    /**
+     * Prints the stack trace of an Exception into String
+     * 
+     * @param exception
+     *            Exception
+     * @return StackTrace as String
+     */
+    private final static String getStackTrace(Exception exception) {
         StringWriter traceReader = new StringWriter();
         exception.printStackTrace(new PrintWriter(traceReader));
-        String exceptionTrace = traceReader.toString();
-        this.stacktrace = exceptionTrace;
-        if(exception.getMessage() == null || exception.getMessage().isEmpty()){
-            this.reason = exception.toString();
-        }else{
-            this.reason = exception.getMessage();
-        }
+        return traceReader.toString();
     }
 
     /**
@@ -101,4 +128,5 @@ public class KiCoErrorModel {
     public String getReason() {
         return reason;
     }
+
 }
