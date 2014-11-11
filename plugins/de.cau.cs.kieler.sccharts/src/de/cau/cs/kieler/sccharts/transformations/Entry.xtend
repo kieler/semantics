@@ -16,8 +16,7 @@ package de.cau.cs.kieler.sccharts.transformations
 import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts Entry Transformation.
@@ -58,7 +57,9 @@ class Entry {
 
             var State firstState
             var State lastState
-
+            
+            state.setDefaultTrace //All following states etc. will be traced to state
+            
             if (state.final) {
                 val connector = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector
                 for (transition : state.incomingTransitions.immutableCopy) {
@@ -95,6 +96,8 @@ class Entry {
             val entryRegion = firstState.parentRegion
             val lastEntryAction = state.entryActions.last
             for (entryAction : state.entryActions.immutableCopy) {
+                entryAction.setDefaultTrace //All following states etc. will be traced to their entryAction
+                
                 var connector = lastState
                 if (entryAction != lastEntryAction) {
                     connector = entryRegion.createState(GENERATED_PREFIX + "C").uniqueName.setTypeConnector

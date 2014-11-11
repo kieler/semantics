@@ -19,8 +19,8 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.extensions.SCChartsOptimization
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts SurfaceDepth Transformation.
@@ -105,6 +105,8 @@ class SurfaceDepth {
             var State currentState = surfaceState
             //System.out.println("Set currentState := " + surfaceState.id)
 
+            surfaceState.setDefaultTrace //All following states etc. will be traced to surfaceState if not traced to transition
+
             for (transition : orderedTransitionList) {
 
                 if (!(transition.isImmediate) && !pauseInserted) {
@@ -115,11 +117,11 @@ class SurfaceDepth {
                     pauseInserted = true
 
                     depthState = parentRegion.createState(GENERATED_PREFIX + "Pause").uniqueName
-                    previousState.createImmediateTransitionTo(depthState)
+                    previousState.createImmediateTransitionTo(depthState).trace(transition)
                     //System.out.println("Connect pause 1:" + previousState.id + " -> " + depthState.id);
 
                     val pauseState = parentRegion.createState(GENERATED_PREFIX + "Depth").uniqueName
-                    depthState.createTransitionTo(pauseState)
+                    depthState.createTransitionTo(pauseState).trace(transition)
 
                     // Imitate next cycle
                     previousState = pauseState
@@ -157,7 +159,7 @@ class SurfaceDepth {
             }
 
             // Connect back depth with surface state
-            var T2tmp = previousState.createImmediateTransitionTo(depthState)
+            var T2tmp = previousState.createImmediateTransitionTo(depthState).trace(previousState)
             //System.out.println("Connect BACK:" + previousState.id + " -> " + depthState.id);
 
             // Afterwards do the DTO transformation
@@ -214,8 +216,10 @@ class SurfaceDepth {
                                     val t = K2.incomingTransitions.get(0)
                                     t.setTargetState(stateAfterDepth)
                                     for (transition : K2.outgoingTransitions) {
+                                        stateAfterDepth.trace(transition) //KITT: Redirect tracing before removing
                                         transition.targetState.incomingTransitions.remove(transition)
                                     }
+                                    stateAfterDepth.trace(K2) //KITT: Redirect tracing before removing
                                     K2.parentRegion.states.remove(K2)
                                     done = false
                                     T2tmp = t

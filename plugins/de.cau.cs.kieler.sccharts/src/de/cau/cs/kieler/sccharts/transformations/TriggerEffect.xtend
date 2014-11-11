@@ -17,6 +17,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts TriggerEffect Transformation.
@@ -62,11 +63,11 @@ class TriggerEffect {
             val parentRegion = targetState.parentRegion
             val transitionOriginalTarget = transition.targetState
             var Transition lastTransition = transition
-
+ 
             for (effect : transition.effects.immutableCopy) {
-                    val effectState = parentRegion.createState(GENERATED_PREFIX + "S")
+                    val effectState = parentRegion.createState(GENERATED_PREFIX + "S").trace(transition, effect)
                     effectState.uniqueName
-                    val effectTransition = createImmediateTransition.addEffect(effect)
+                    val effectTransition = createImmediateTransition().trace(transition, effect).addEffect(effect)
                     effectTransition.setSourceState(effectState)
                     lastTransition.setTargetState(effectState)
                     lastTransition = effectTransition
