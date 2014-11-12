@@ -46,6 +46,9 @@ import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.scl.StatementScope
+import java.util.LinkedList
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.core.kexpressions.ValueType
 
 /** 
  * SCL to SCG Transformation 
@@ -72,7 +75,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     private val reverseNodeMapping = new HashMap<Node, EObject>()
     private val labelMapping = new HashMap<String, Node>()
     private val gotoFlows = new HashMap<Goto, List<ControlFlow>>()
-    
+  
     // -------------------------------------------------------------------------
     // -- M2M Transformation 
     // -------------------------------------------------------------------------
@@ -98,6 +101,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
         
         scl.transform(scg, null)
         scl.eAllContents.filter(Goto).forEach[ transform(scg, gotoFlows.get(it)) ]
+        
         
         scg
     }

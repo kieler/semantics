@@ -178,6 +178,7 @@
          point="de.cau.cs.kieler.kico.transformation">
       <transformationMethod
             class="de.cau.cs.kieler.scl.transformations.SCLToSCGTransformation"
+            dependencies="SCGDEP"
             id="SCLTOSCG"
             method="transform"
             name="SCG">
