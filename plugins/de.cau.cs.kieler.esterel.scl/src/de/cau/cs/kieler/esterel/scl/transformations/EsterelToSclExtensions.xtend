@@ -60,9 +60,9 @@ class EsterelToSclExtensions {
         throw new TransformerException("getValuedObject: Signal not declared: " + n)
     }
     
-    def dispatch getValuedObject(LinkedList<ValuedObject> variables, String n) {
+    def dispatch getValuedObject(LinkedList<Pair<String, ValuedObject>> variables, String n) {
         for (varaible : variables) {
-            val ret = variables.findFirst[name == n]
+            val ret = variables.findLast[key == n].value
             if (ret != null)
                 return ret
         }
@@ -75,7 +75,7 @@ class EsterelToSclExtensions {
         ]
     }
     
-    def getValuedObjectRef(LinkedList<ValuedObject> variables, String n) {
+    def getValuedObjectRef(LinkedList<Pair<String, ValuedObject>> variables, String n) {
         KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
             valuedObject = getValuedObject(variables, n)
         ]
@@ -127,8 +127,8 @@ class EsterelToSclExtensions {
      * Takes a variable name and a list of exisiting variables and
      * adds "_" until variable name is new
      */
-     def String uniqueName(LinkedList<ValuedObject> variables, String s) {
-         if (variables.findFirst[name == s] == null) {
+     def String uniqueName(LinkedList<Pair<String,ValuedObject>> variables, String s) {
+         if (variables.findFirst[value.name == s] == null) {
              return s
          }
          else {

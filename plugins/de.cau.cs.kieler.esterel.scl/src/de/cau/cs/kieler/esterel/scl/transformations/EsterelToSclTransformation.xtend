@@ -93,12 +93,6 @@ import de.cau.cs.kieler.core.kexpressions.util.KExpressionsAdapterFactory
  */
 class EsterelToSclTransformation extends Transformation {
 
-    // Global variables
-    var LinkedList<ValuedObject> variables
-    
-    // Global variables
-    var LinkedList<ValuedObject> globalVariables
-
     // Label at the end of currently transformed thread
     var String curLabel
 
@@ -111,10 +105,10 @@ class EsterelToSclTransformation extends Transformation {
     // List of exit signals and the corresponding label
     var HashMap<ISignal, ValuedObject> exitMap
     
-    // List of all locally used variables; just tmp solution until local variable declarations
-    // can be translated to SCG
+    // List of all locally used variables, used to add them as global declaration after transformation
     var LinkedList<Declaration> localDeclarations
     
+    // Connecting a signal name with a valuedObject. Allows "scoping" and shadowing out
     var LinkedList<Pair<String, ValuedObject>> signalMap
 
     @Inject
@@ -137,10 +131,6 @@ class EsterelToSclTransformation extends Transformation {
     public def Program transformProgram(de.cau.cs.kieler.esterel.esterel.Program esterelProgram) {
         System.out.println("Transforming to SCL...")
 
-        // Initialize class variables
-        variables = new LinkedList<ValuedObject>
-        // Initialize class variables
-        globalVariables = new LinkedList<ValuedObject>
         // Just a dummy, should never be used
         curLabel = null
         // Stack containing information about nesting of preemption
@@ -169,8 +159,6 @@ class EsterelToSclTransformation extends Transformation {
         transformDeclaration(esterelMod.interface.intSignalDecls, program)
 
         // Save all declarated valuedObjects to a list
-        program.declarations.forEach [ valuedObjects.forEach [variables.add(it)] ]
-        // Should replace variables
         program.declarations.forEach [ valuedObjects.forEach [signalMap.add(it.name -> it)] ]
 
 
@@ -179,7 +167,7 @@ class EsterelToSclTransformation extends Transformation {
         esterelMod.body.statements.forEach[transformStm(sSeq)]
 
         // Add reset thread for outputs
-        val f_term = createValuedObject(uniqueName(variables, "f_term"))
+        val f_term = createValuedObject(uniqueName(signalMap, "f_term"))
         val decl = createDeclaration => [
             type = ValueType::BOOL
             valuedObjects.add(f_term)
@@ -198,7 +186,7 @@ class EsterelToSclTransformation extends Transformation {
         // Reset labelcount
         resetLabelCount
         
-        // Tmp, add local variable declarations
+        // Add local variable declarations
         program.declarations.addAll(localDeclarations)
 
         // Return the transformed program 
@@ -246,7 +234,8 @@ class EsterelToSclTransformation extends Transformation {
 
         //Expression...
         System.out.println("Emit: " + emit.expr)
-        val variable = signalMap.filter[ it.key == emit.signal.name ].last.value //getValuedObject(variables, emit.signal.name)
+        // Get the LAST defined valued object (with respect to local signals)
+        val variable = signalMap.filter[ it.key == emit.signal.name ].last.value
         val variableRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
             valuedObject = variable
         ]
@@ -262,7 +251,7 @@ class EsterelToSclTransformation extends Transformation {
         }
         // Valued Emit
         else {
-            sSeq.statements.add(createStmFromInstr(createAssignment(variable, transformExp(emit.expr, variables))))
+            sSeq.statements.add(createStmFromInstr(createAssignment(variable, transformExp(emit.expr, signalMap))))
         }
 
         sSeq
@@ -342,17 +331,10 @@ class EsterelToSclTransformation extends Transformation {
         val l_start = createFreshLabel
         val l_end = createFreshLabel
         // Flag indicating, if also delayed await cases may be taken
-        val delayedFlag = createValuedObject(uniqueName(variables, "f_immediate"))
+        val delayedFlag = createValuedObject(uniqueName(signalMap, "f_immediate"))
         delayedFlag.initialValue = createBoolValue(false)
-        variables.add(delayedFlag)
+        signalMap.add(delayedFlag.name -> delayedFlag)
 
-//        val sScope = SclFactory::eINSTANCE.createStatementScope => [
-//            declarations.add(
-//                KExpressionsFactory::eINSTANCE.createDeclaration => [
-//                    valuedObjects.add(delayedFlag)
-//                    type = ValueType::BOOL
-//                ])
-//        ]
         localDeclarations += KExpressionsFactory::eINSTANCE.createDeclaration => [
             valuedObjects.add(delayedFlag)
             type = ValueType::BOOL
@@ -364,11 +346,11 @@ class EsterelToSclTransformation extends Transformation {
             val cond = SclFactory::eINSTANCE.createConditional => [
                 if (!singleCase.delay.isImmediate) {
                     expression = createOperatorExpression(OperatorType::AND) => [
-                        add(transformExp(singleCase.delay.event.expr, variables))
+                        add(transformExp(singleCase.delay.event.expr, signalMap))
                         add(delayedFlag.createValuedObjectRef)
                     ]
                 } else {
-                    expression = transformExp(singleCase.delay.event.expr, variables)
+                    expression = transformExp(singleCase.delay.event.expr, signalMap)
                 }
                 statements.addAll(transformStm(singleCase.statement, createSseq).statements)
                 statements.add(createGotoStm(l_end))
@@ -381,7 +363,6 @@ class EsterelToSclTransformation extends Transformation {
         sSeq.addGoto(l_start)
         sSeq.addLabel(l_end)
 
-//        sSeq.statements.add(createStmFromInstr(sScope))
         sSeq
     }
 
@@ -398,7 +379,7 @@ class EsterelToSclTransformation extends Transformation {
         }
 
         val b = createOperatorExpression(OperatorType::NOT) => [
-            subExpressions.add(transformExp(await.delay.event.expr, variables))
+            subExpressions.add(transformExp(await.delay.event.expr, signalMap))
         ]
 
         val cond = SclFactory::eINSTANCE.createConditional => [
@@ -561,11 +542,11 @@ class EsterelToSclTransformation extends Transformation {
         if (labelMap.get(curLabel).contains(preemption.get(i).endLabel)) {
             sSeq.statements.add(
                 createStmFromInstr(
-                    ifThenGoto(transformExp(preemption.get(i).expression, variables), preemption.get(i).endLabel,
+                    ifThenGoto(transformExp(preemption.get(i).expression, signalMap), preemption.get(i).endLabel,
                         true)))
         } else {
             sSeq.statements.add(
-                createStmFromInstr(ifThenGoto(transformExp(preemption.get(i).expression, variables), curLabel, true)))
+                createStmFromInstr(ifThenGoto(transformExp(preemption.get(i).expression, signalMap), curLabel, true)))
         }
         
         if (instr == null)
@@ -584,7 +565,7 @@ class EsterelToSclTransformation extends Transformation {
         sSeq.addLabel(l)
         handlePreemtion(instr, i - 1, sSeq)
         sSeq.statements.add(
-            createStmFromInstr(ifThenGoto(transformExp(preemption.get(i).expression, variables), l, true)))
+            createStmFromInstr(ifThenGoto(transformExp(preemption.get(i).expression, signalMap), l, true)))
 
         sSeq
     }
@@ -597,7 +578,7 @@ class EsterelToSclTransformation extends Transformation {
     def StatementSequence handleWeakImmediateAbortPause(Instruction instr, int i, StatementSequence sSeq) {
 
         val cond = SclFactory::eINSTANCE.createConditional => [
-            expression = transformExp(preemption.get(i).expression, variables)
+            expression = transformExp(preemption.get(i).expression, signalMap)
             statements.add(
                 createStmFromInstr(
                     SclFactory::eINSTANCE.createAssignment => [
@@ -702,7 +683,7 @@ class EsterelToSclTransformation extends Transformation {
         //present s then p (else q)
         if (pres.body instanceof PresentEventBody) {
             val cond = SclFactory::eINSTANCE.createConditional => [
-                expression = transformExp((pres.body as PresentEventBody).event.expression, variables)
+                expression = transformExp((pres.body as PresentEventBody).event.expression, signalMap)
                 if ((pres.body as PresentEventBody).thenPart != null) {
                     val thenPart = SclFactory::eINSTANCE.createStatementSequence
 
@@ -734,13 +715,13 @@ class EsterelToSclTransformation extends Transformation {
     def Conditional handleCaseList(EList<PresentCase> cases, int idx, ElsePart elsePart) {
         if (cases.length > idx + 1) {
             return SclFactory::eINSTANCE.createConditional => [
-                expression = transformExp(cases.get(idx).event.expression, variables)
+                expression = transformExp(cases.get(idx).event.expression, signalMap)
                 statements.addAll(transformStm(cases.get(idx).statement, createSseq).statements)
                 elseStatements.addAll(createStmFromInstr(handleCaseList(cases, idx + 1, elsePart)))
             ]
         } else {
             return SclFactory::eINSTANCE.createConditional => [
-                expression = transformExp(cases.get(idx).event.expression, variables)
+                expression = transformExp(cases.get(idx).event.expression, signalMap)
                 statements.addAll(transformStm(cases.get(idx).statement, createSseq).statements)
                 if (elsePart != null) {
                     elseStatements.addAll(transformStm(elsePart.statement, createSseq).statements)
@@ -759,9 +740,9 @@ class EsterelToSclTransformation extends Transformation {
             type = ValueType::BOOL
         ]
         for (s : (signal.signalList as LocalSignal).signal) {
-            val obj = createValuedObject(uniqueName(variables, s.name))
+            val obj = createValuedObject(uniqueName(signalMap, s.name))
             decl.valuedObjects.add(obj)
-            variables.add(obj)
+            signalMap.add(obj.name -> obj)
             signalMap.add(s.name -> obj)
         }
         localDeclarations.add(decl)
@@ -813,7 +794,7 @@ class EsterelToSclTransformation extends Transformation {
         if (abort.body instanceof WeakAbortInstance && ((abort.body as AbortInstance).delay.isImmediate)) {
             System.out.println("Weak Immediate Abort " + abort.statement)
 
-            val f_wa = createValuedObject(uniqueName(variables, "f_wa"))
+            val f_wa = createValuedObject(uniqueName(signalMap, "f_wa"))
             val abortExpr = (abort.body as AbortInstance).delay.event.expr
             preemption.push(new PreemptiveElement("WEAK_IMMEDIATE_ABORT", l, abortExpr, f_wa))
 
@@ -834,7 +815,7 @@ class EsterelToSclTransformation extends Transformation {
             if ((abort.body as AbortInstance).delay.isImmediate) {
                 sSeq.statements.add(
                     createStmFromInstr(
-                        ifThenGoto(transformExp((abort.body as AbortInstance).delay.event.expr, variables), l, true)))
+                        ifThenGoto(transformExp((abort.body as AbortInstance).delay.event.expr, signalMap), l, true)))
             }
 
             transformStm(abort.statement, sSeq)
@@ -856,7 +837,7 @@ class EsterelToSclTransformation extends Transformation {
             sSeq.statements.add(
                 createStmFromInstr(
                     SclFactory::eINSTANCE.createConditional => [
-                        expression = transformExp(susp.delay.event.expr, variables)
+                        expression = transformExp(susp.delay.event.expr, signalMap)
                         statements.addAll(createSclPause.statements)
                         statements.add(createGotoStm(l))]))
         }
@@ -875,8 +856,8 @@ class EsterelToSclTransformation extends Transformation {
         System.out.println("It's a trap")
         System.out.println("Decl List: " + trap.trapDeclList.trapDecls)
 
-        val f_s = createValuedObject(uniqueName(variables, trap.trapDeclList.trapDecls.head.name))
-        variables.add(f_s);
+        val f_s = createValuedObject(uniqueName(signalMap, trap.trapDeclList.trapDecls.head.name))
+        signalMap.add(f_s.name -> f_s);
         val l = createFreshLabel
         labelMap.put(curLabel, l)
 

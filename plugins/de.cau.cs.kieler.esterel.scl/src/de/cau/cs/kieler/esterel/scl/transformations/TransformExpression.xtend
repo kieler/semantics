@@ -43,7 +43,7 @@ class TransformExpression {
      * @param variables List of ValuedObject in scope
      * @return The transformed KExpressions Expression
      */
-    def de.cau.cs.kieler.core.kexpressions.Expression transformExp(Expression exp, LinkedList<ValuedObject> variables) {
+    def de.cau.cs.kieler.core.kexpressions.Expression transformExp(Expression exp, LinkedList<Pair<String, ValuedObject>> variables) {
         if (exp instanceof OperatorExpression) {
             System.out.println("transformExp: OperatorExpression")
             return transformOperatorExp(exp as OperatorExpression, variables)
@@ -59,7 +59,7 @@ class TransformExpression {
         createExpression
     }
 
-    def de.cau.cs.kieler.core.kexpressions.OperatorExpression transformOperatorExp(OperatorExpression exp, LinkedList<ValuedObject> variables) {
+    def de.cau.cs.kieler.core.kexpressions.OperatorExpression transformOperatorExp(OperatorExpression exp, LinkedList<Pair<String, ValuedObject>> variables) {
 
         //TODO beautify; complete
         val opType = switch exp.operator {
@@ -76,13 +76,13 @@ class TransformExpression {
         ]
     }
 
-    def de.cau.cs.kieler.core.kexpressions.ValuedObjectReference transformCompExp(ComplexExpression comp, LinkedList<ValuedObject> variables) {
+    def de.cau.cs.kieler.core.kexpressions.ValuedObjectReference transformCompExp(ComplexExpression comp, LinkedList<Pair<String, ValuedObject>> variables) {
         if (comp instanceof ValuedObjectReference) {
             transformValObjRef(comp as ValuedObjectReference, variables)
         }
     }
 
-    def de.cau.cs.kieler.core.kexpressions.ValuedObjectReference transformValObjRef(ValuedObjectReference ref, LinkedList<ValuedObject> variables) {
+    def de.cau.cs.kieler.core.kexpressions.ValuedObjectReference transformValObjRef(ValuedObjectReference ref, LinkedList<Pair<String, ValuedObject>> variables) {
         getValuedObjectRef(variables, ref.valuedObject.name)
     }
 
