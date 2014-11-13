@@ -165,6 +165,9 @@ class EsterelToSclTransformation extends Transformation {
         // Body transformations
         val sSeq = SclFactory::eINSTANCE.createStatementSequence
         esterelMod.body.statements.forEach[transformStm(sSeq)]
+        
+        // Add local variable declarations
+        program.declarations.addAll(localDeclarations)
 
         // Add reset thread for outputs
         val f_term = createValuedObject(uniqueName(signalMap, "f_term"))
@@ -186,8 +189,6 @@ class EsterelToSclTransformation extends Transformation {
         // Reset labelcount
         resetLabelCount
         
-        // Add local variable declarations
-        program.declarations.addAll(localDeclarations)
 
         // Return the transformed program 
         System.out.println("Transformation to SCL finished")
@@ -205,7 +206,7 @@ class EsterelToSclTransformation extends Transformation {
         th.addLabel(l)
 
         for (decl : decls) {
-            if ((decl.output == true && decl.input == false) || isLocal) {
+            if ((decl.output && !decl.input) || isLocal) {
                 for (value : decl.valuedObjects) {
                     th.statements.add(createStmFromInstr(createAssignment(value, createBoolValue(false))))
                 }
@@ -337,6 +338,7 @@ class EsterelToSclTransformation extends Transformation {
 
         localDeclarations += KExpressionsFactory::eINSTANCE.createDeclaration => [
             valuedObjects.add(delayedFlag)
+            output = true
             type = ValueType::BOOL
         ]
 
@@ -732,50 +734,21 @@ class EsterelToSclTransformation extends Transformation {
 
     /*
      * signal s in p end
-     * TODO sometimes behaves strange; maybe xtext parsing error?
-     * TODO replace variables by unique ones and make them global
      */
     def dispatch StatementSequence transformStm(LocalSignalDecl signal, StatementSequence sSeq) {
         val decl = createDeclaration => [
             type = ValueType::BOOL
+            output = true
         ]
         for (s : (signal.signalList as LocalSignal).signal) {
             val obj = createValuedObject(uniqueName(signalMap, s.name))
             decl.valuedObjects.add(obj)
-            signalMap.add(obj.name -> obj)
             signalMap.add(s.name -> obj)
         }
         localDeclarations.add(decl)
-        System.out.println("Signal Map: " + signalMap)
 
-        // Indicates if signal body has terminated
-//        val f_term = createValuedObject(uniqueName(variables, "f_term"))
-//        variables.add(f_term)
-//
-//        sScope.declarations.add(decl)
-//
-//        // Add reset thread for signals       
-//        val par = SclFactory::eINSTANCE.createParallel
-//        par.threads.add(handleOutputs(sScope.declarations, f_term, true))
-//        par.threads.add(
-//            SclFactory::eINSTANCE.createThread => [
-//                val list = createSseq
-//                transformStm(signal.statement, list)
-//                statements.addAll(list.statements)
-//                statements.add(createStmFromInstr(createAssignment(f_term, createBoolValue(true))))
-//            ])
-//        sScope.declarations.add(
-//            KExpressionsFactory::eINSTANCE.createDeclaration => [
-//                valuedObjects.add(f_term);
-//                type = ValueType::BOOL
-//            ])
-//        sScope.statements.add(createStmFromInstr(par))
-//
-//        sSeq.statements.add(createStmFromInstr(sScope))
         transformStm(signal.statement, sSeq)
-        for (s : (signal.signalList as LocalSignal).signal) {
-            System.out.println("removed: " + signalMap.removeLast)
-        }
+        (signal.signalList as LocalSignal).signal.forEach[ signalMap.removeLast ]
         
         sSeq
     }
@@ -801,6 +774,7 @@ class EsterelToSclTransformation extends Transformation {
             localDeclarations.add(
                 KExpressionsFactory::eINSTANCE.createDeclaration => [
                     type = ValueType::BOOL;
+                    output = true
                     valuedObjects.add(f_wa)
                 ])
 
@@ -864,6 +838,7 @@ class EsterelToSclTransformation extends Transformation {
         localDeclarations.add(
             KExpressionsFactory::eINSTANCE.createDeclaration => [
                 type = ValueType::BOOL;
+                output = true
                 f_s.initialValue = createBoolValue(false)
                 valuedObjects.add(f_s)
             ])
