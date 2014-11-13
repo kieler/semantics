@@ -106,6 +106,10 @@ class EsterelToSclTransformation extends Transformation {
 
     // List of exit signals and the corresponding label
     var HashMap<ISignal, ValuedObject> exitMap
+    
+    // List of all locally used variables; just tmp solution until local variable declarations
+    // can be translated to SCG
+    var LinkedList<Declaration> localDeclarations
 
     @Inject
     extension KExpressionsExtension
@@ -137,6 +141,8 @@ class EsterelToSclTransformation extends Transformation {
         labelMap = HashMultimap.create()
         // Contains informations about which exit expression is represented by which flag
         exitMap = new HashMap<ISignal, ValuedObject>()
+        
+        localDeclarations = new LinkedList<Declaration>
 
         // Create the SCL program
         val program = SclFactory::eINSTANCE.createProgram()
@@ -176,6 +182,9 @@ class EsterelToSclTransformation extends Transformation {
 
         // Reset labelcount
         resetLabelCount
+        
+        // Tmp, add local variable declarations
+        program.declarations.addAll(localDeclarations)
 
         // Return the transformed program 
         System.out.println("Transformation to SCL finished")
@@ -322,15 +331,19 @@ class EsterelToSclTransformation extends Transformation {
         delayedFlag.initialValue = createBoolValue(false)
         variables.add(delayedFlag)
 
-        val sScope = SclFactory::eINSTANCE.createStatementScope => [
-            declarations.add(
-                KExpressionsFactory::eINSTANCE.createDeclaration => [
-                    valuedObjects.add(delayedFlag)
-                    type = ValueType::BOOL
-                ])
+//        val sScope = SclFactory::eINSTANCE.createStatementScope => [
+//            declarations.add(
+//                KExpressionsFactory::eINSTANCE.createDeclaration => [
+//                    valuedObjects.add(delayedFlag)
+//                    type = ValueType::BOOL
+//                ])
+//        ]
+        localDeclarations += KExpressionsFactory::eINSTANCE.createDeclaration => [
+            valuedObjects.add(delayedFlag)
+            type = ValueType::BOOL
         ]
 
-        sScope.addLabel(l_start)
+        sSeq.addLabel(l_start)
 
         for (singleCase : awaitCase.cases) {
             val cond = SclFactory::eINSTANCE.createConditional => [
@@ -345,15 +358,15 @@ class EsterelToSclTransformation extends Transformation {
                 statements.addAll(transformStm(singleCase.statement, createSseq).statements)
                 statements.add(createGotoStm(l_end))
             ]
-            sScope.statements.add(createStmFromInstr(cond))
+            sSeq.statements.add(createStmFromInstr(cond))
         }
 
-        sScope.createSclPause
-        sScope.statements.add(createStmFromInstr(createAssignment(delayedFlag, createBoolValue(true))))
-        sScope.addGoto(l_start)
-        sScope.addLabel(l_end)
+        sSeq.createSclPause
+        sSeq.statements.add(createStmFromInstr(createAssignment(delayedFlag, createBoolValue(true))))
+        sSeq.addGoto(l_start)
+        sSeq.addLabel(l_end)
 
-        sSeq.statements.add(createStmFromInstr(sScope))
+//        sSeq.statements.add(createStmFromInstr(sScope))
         sSeq
     }
 
@@ -381,7 +394,7 @@ class EsterelToSclTransformation extends Transformation {
             statements.add(createGotoStm(l))
         ]
 
-        sSeq.statements.add(createStmFromInstr(cond))
+        sSeq.statements += createStmFromInstr(cond)
 
         sSeq
     }
@@ -450,7 +463,6 @@ class EsterelToSclTransformation extends Transformation {
                         delay = EcoreUtil.copy(everyDo.delay)
                     ]
                 ])
-            System.out.println(everyDo.delay.event.expr)
             list.add(
                 EsterelFactory::eINSTANCE.createLoop => [
                     body = EsterelFactory::eINSTANCE.createLoopBody => [
@@ -725,6 +737,7 @@ class EsterelToSclTransformation extends Transformation {
     /*
      * signal s in p end
      * TODO sometimes behaves strange; maybe xtext parsing error?
+     * TODO replace varaibles by unique ones and make them global
      */
     def dispatch StatementSequence transformStm(LocalSignalDecl signal, StatementSequence sSeq) {
         val sScope = SclFactory::eINSTANCE.createStatementScope
@@ -738,7 +751,7 @@ class EsterelToSclTransformation extends Transformation {
             variables.add(obj)
         }
 
-        // indicates if signal body has terminated
+        // Indicates if signal body has terminated
         val f_term = createValuedObject(uniqueName(variables, "f_term"))
         variables.add(f_term)
 
@@ -783,18 +796,13 @@ class EsterelToSclTransformation extends Transformation {
             val abortExpr = (abort.body as AbortInstance).delay.event.expr
             preemption.push(new PreemptiveElement("WEAK_IMMEDIATE_ABORT", l, abortExpr, f_wa))
 
-            val ret = SclFactory::eINSTANCE.createStatementScope
-
-            // TODO should also not be overwritten by local signal declarations within abort body...
-            ret.declarations.add(
+            localDeclarations.add(
                 KExpressionsFactory::eINSTANCE.createDeclaration => [
                     type = ValueType::BOOL;
                     valuedObjects.add(f_wa)
                 ])
 
-            transformStm(abort.statement, ret)
-
-            sSeq.statements.add(createStmFromInstr(ret))
+            transformStm(abort.statement, sSeq)
 
         // Strong abort
         } else {
@@ -811,7 +819,6 @@ class EsterelToSclTransformation extends Transformation {
             transformStm(abort.statement, sSeq)
         }
         preemption.pop
-        System.out.println("Ret " + sSeq.statements.length)
         sSeq.addLabel(l)
 
         sSeq
@@ -842,36 +849,34 @@ class EsterelToSclTransformation extends Transformation {
 
     /*
      * Trap s in p end
-     * TODO more than one trapdecl?
      */
     def dispatch StatementSequence transformStm(Trap trap, StatementSequence sSeq) {
         System.out.println("It's a trap")
         System.out.println("Decl List: " + trap.trapDeclList.trapDecls)
-
-        //        System.out.println("Decl List: " + trap.trapHandler.head.trapExpr) //null
-        val sScope = SclFactory::eINSTANCE.createStatementScope
 
         val f_s = createValuedObject(uniqueName(variables, trap.trapDeclList.trapDecls.head.name))
         variables.add(f_s);
         val l = createFreshLabel
         labelMap.put(curLabel, l)
 
-        // TODO should also not be overwritten by local signal declarations within abort body...
-        sScope.declarations.add(
+        localDeclarations.add(
             KExpressionsFactory::eINSTANCE.createDeclaration => [
                 type = ValueType::BOOL;
                 f_s.initialValue = createBoolValue(false)
                 valuedObjects.add(f_s)
             ])
-
+        
         preemption.push(new PreemptiveElement("TRAP", l, null, f_s))
 
         //TODO support more than one signal declaration
-        exitMap.put(trap.trapDeclList.trapDecls.head, f_s)
-        trap.statement.transformStm(sScope)
+//        trap.trapDeclList.trapDecls.forEach[ exitMap.put(it, f_s) ]
+        for (decl : trap.trapDeclList.trapDecls) {
+            System.out.println("decl")
+            exitMap.put(decl, f_s)
+        }
+        trap.statement.transformStm(sSeq)
         preemption.pop
         
-        sSeq.statements.add(createStmFromInstr(sScope))
         sSeq.addLabel(l)
 
         sSeq
@@ -888,6 +893,15 @@ class EsterelToSclTransformation extends Transformation {
         ]
 
         sSeq.statements.add(createStmFromInstr(createAssignment(variable, op)))
+        
+        val l = preemption.filter[ flag == variable ].head.endLabel
+        
+        // Just tmp; remove if unreachable node bug fixed
+        sSeq.statements.add(createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
+            expression = createBoolValue(true)
+            statements.add(createGotoj(l, curLabel, labelMap))
+        ]))
+//        sSeq.addGotoj(l, curLabel, labelMap)
 
         return sSeq
     }

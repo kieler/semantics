@@ -32,6 +32,7 @@ import de.cau.cs.kieler.scl.scl.StatementSequence
 import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl
+import com.google.common.collect.Multimap
 
 /**
  * @author krat
@@ -173,6 +174,39 @@ class EsterelToSclExtensions {
         }
         
         /*
+         * Returns a gotoj l: Jumps to l if l is in the current thread and to the end of the
+         * thread otherwise
+         * @param l The target label
+         * @param curLabel Label at the end of the current thread
+         * @param labelMap Map of which label is in which thread
+         */
+         def createGotoj(String l, String curLabel, Multimap<String, String> labelMap) {
+             if (labelMap.get(curLabel).contains(l)) {
+                 return createGotoStm(l)
+             } else {
+                 return createGotoStm(curLabel)
+             }
+         }
+        
+        /*
+         * Adds a gotoj l: Jumps to l if l is in the current thread and to the end of the
+         * thread otherwise
+         * @param sSeq The StatementSequence to add the gotoj
+         * @param l The target label
+         * @param curLabel Label at the end of the current thread
+         * @param labelMap Map of which label is in which thread
+         */
+         def addGotoj(StatementSequence sSeq, String l, String curLabel, Multimap<String, String> labelMap) {
+             if (labelMap.get(curLabel).contains(l)) {
+                 sSeq.addGoto(l)
+             } else {
+                 sSeq.addGoto(curLabel)
+             }
+             
+             sSeq
+         }
+        
+        /*
         * Creates an InstructionStatement containing a goto
         * @param l The target label 
         */
@@ -185,6 +219,7 @@ class EsterelToSclExtensions {
       
       /*
        * Transformation of a declaration
+       * TODO deprecated?
        */
        def EList<Declaration> transformDeclaration(InterfaceSignalDecl declaration) {
            for (decl : declaration.signals) {
