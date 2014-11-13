@@ -85,6 +85,7 @@ import de.cau.cs.kieler.esterel.kexpressions.ISignal
 import de.cau.cs.kieler.esterel.esterel.Exit
 import de.cau.cs.kieler.esterel.esterel.Sustain
 import java.util.HashMap
+import de.cau.cs.kieler.core.kexpressions.util.KExpressionsAdapterFactory
 
 /**
  * @author krat
@@ -94,6 +95,9 @@ class EsterelToSclTransformation extends Transformation {
 
     // Global variables
     var LinkedList<ValuedObject> variables
+    
+    // Global variables
+    var LinkedList<ValuedObject> globalVariables
 
     // Label at the end of currently transformed thread
     var String curLabel
@@ -110,6 +114,8 @@ class EsterelToSclTransformation extends Transformation {
     // List of all locally used variables; just tmp solution until local variable declarations
     // can be translated to SCG
     var LinkedList<Declaration> localDeclarations
+    
+    var LinkedList<Pair<String, ValuedObject>> signalMap
 
     @Inject
     extension KExpressionsExtension
@@ -133,6 +139,8 @@ class EsterelToSclTransformation extends Transformation {
 
         // Initialize class variables
         variables = new LinkedList<ValuedObject>
+        // Initialize class variables
+        globalVariables = new LinkedList<ValuedObject>
         // Just a dummy, should never be used
         curLabel = null
         // Stack containing information about nesting of preemption
@@ -141,8 +149,13 @@ class EsterelToSclTransformation extends Transformation {
         labelMap = HashMultimap.create()
         // Contains informations about which exit expression is represented by which flag
         exitMap = new HashMap<ISignal, ValuedObject>()
-        
+        // Local declarated variables/flags
         localDeclarations = new LinkedList<Declaration>
+        // Variables are stored as a MultiMap. Signals are keys, the first signal in the returned
+        // list for a key is the current variable representing a (local) signal
+        // TODO: Should replace variables and localDeclarations
+        signalMap = new LinkedList<Pair<String, ValuedObject>>
+        
 
         // Create the SCL program
         val program = SclFactory::eINSTANCE.createProgram()
@@ -157,6 +170,8 @@ class EsterelToSclTransformation extends Transformation {
 
         // Save all declarated valuedObjects to a list
         program.declarations.forEach [ valuedObjects.forEach [variables.add(it)] ]
+        // Should replace variables
+        program.declarations.forEach [ valuedObjects.forEach [signalMap.add(it.name -> it)] ]
 
 
         // Body transformations
@@ -231,7 +246,7 @@ class EsterelToSclTransformation extends Transformation {
 
         //Expression...
         System.out.println("Emit: " + emit.expr)
-        val variable = getValuedObject(variables, emit.signal.name)
+        val variable = signalMap.filter[ it.key == emit.signal.name ].last.value //getValuedObject(variables, emit.signal.name)
         val variableRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
             valuedObject = variable
         ]
@@ -737,44 +752,50 @@ class EsterelToSclTransformation extends Transformation {
     /*
      * signal s in p end
      * TODO sometimes behaves strange; maybe xtext parsing error?
-     * TODO replace varaibles by unique ones and make them global
+     * TODO replace variables by unique ones and make them global
      */
     def dispatch StatementSequence transformStm(LocalSignalDecl signal, StatementSequence sSeq) {
-        val sScope = SclFactory::eINSTANCE.createStatementScope
-
         val decl = createDeclaration => [
             type = ValueType::BOOL
         ]
         for (s : (signal.signalList as LocalSignal).signal) {
-            val obj = createValuedObject(s.name)
+            val obj = createValuedObject(uniqueName(variables, s.name))
             decl.valuedObjects.add(obj)
             variables.add(obj)
+            signalMap.add(s.name -> obj)
         }
+        localDeclarations.add(decl)
+        System.out.println("Signal Map: " + signalMap)
 
         // Indicates if signal body has terminated
-        val f_term = createValuedObject(uniqueName(variables, "f_term"))
-        variables.add(f_term)
-
-        sScope.declarations.add(decl)
-
-        // Add reset thread for signals       
-        val par = SclFactory::eINSTANCE.createParallel
-        par.threads.add(handleOutputs(sScope.declarations, f_term, true))
-        par.threads.add(
-            SclFactory::eINSTANCE.createThread => [
-                val list = createSseq
-                transformStm(signal.statement, list)
-                statements.addAll(list.statements)
-                statements.add(createStmFromInstr(createAssignment(f_term, createBoolValue(true))))
-            ])
-        sScope.declarations.add(
-            KExpressionsFactory::eINSTANCE.createDeclaration => [
-                valuedObjects.add(f_term);
-                type = ValueType::BOOL
-            ])
-        sScope.statements.add(createStmFromInstr(par))
-
-        sSeq.statements.add(createStmFromInstr(sScope))
+//        val f_term = createValuedObject(uniqueName(variables, "f_term"))
+//        variables.add(f_term)
+//
+//        sScope.declarations.add(decl)
+//
+//        // Add reset thread for signals       
+//        val par = SclFactory::eINSTANCE.createParallel
+//        par.threads.add(handleOutputs(sScope.declarations, f_term, true))
+//        par.threads.add(
+//            SclFactory::eINSTANCE.createThread => [
+//                val list = createSseq
+//                transformStm(signal.statement, list)
+//                statements.addAll(list.statements)
+//                statements.add(createStmFromInstr(createAssignment(f_term, createBoolValue(true))))
+//            ])
+//        sScope.declarations.add(
+//            KExpressionsFactory::eINSTANCE.createDeclaration => [
+//                valuedObjects.add(f_term);
+//                type = ValueType::BOOL
+//            ])
+//        sScope.statements.add(createStmFromInstr(par))
+//
+//        sSeq.statements.add(createStmFromInstr(sScope))
+        transformStm(signal.statement, sSeq)
+        for (s : (signal.signalList as LocalSignal).signal) {
+            System.out.println("removed: " + signalMap.removeLast)
+        }
+        
         sSeq
     }
 
