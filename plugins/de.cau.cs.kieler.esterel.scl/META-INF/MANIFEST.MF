@@ -24,5 +24,6 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.scg.klighd;bundle-version="0.1.1"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Import-Package: de.cau.cs.kieler.core.model.handlers
+Import-Package: de.cau.cs.kieler.core.model.handlers,
+ de.cau.cs.kieler.sim.kiem.ui.datacomponent
 
