@@ -34,6 +34,11 @@
             id="de.cau.cs.kieler.esterel.scl.EsterelToScl"
             name="Tranform to SCL">
       </command>
+      <command
+            defaultHandler="de.cau.cs.kieler.esterel.scl.handlers.EsterelToScgHandler"
+            id="de.cau.cs.kieler.esterel.scl.EsterelToScg"
+            name="Transform to SCG">
+      </command>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.transformation">
@@ -67,6 +72,32 @@
             editor="de.cau.cs.kieler.esterel.Esterel"
             transformations="SCLGROUP,ESTERELTOSCL,    SCLSCGGROUP,SCLTOSCG, SCGDEP, SCGBB, SCGBBSCPLUS, SCGSCHEDSIMPLE, SCGSCHEDCLUSTER, SCGSCHEDHYBRID, SCGSEQ, SCGBBGROUP, SCGSCHEDGROUP,SCGSEQGROUP,SCGSEQSIMPLE,SCGSEQHYBRID,CODEGENERATION, SCG2S,SCG2C">
       </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               commandId="de.cau.cs.kieler.esterel.scl.EsterelToScg"
+               label="Transform to SCG"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IResource">
+                     <test
+                           property="org.eclipse.core.resources.extension"
+                           value="strl">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
    </extension>
 
 </plugin>

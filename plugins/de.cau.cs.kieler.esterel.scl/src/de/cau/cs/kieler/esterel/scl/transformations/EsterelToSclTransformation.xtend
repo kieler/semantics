@@ -131,7 +131,7 @@ class EsterelToSclTransformation extends Transformation {
     public def Program transformProgram(de.cau.cs.kieler.esterel.esterel.Program esterelProgram) {
         System.out.println("Transforming to SCL...")
 
-        // Just a dummy, should never be used
+        // Label at the end of the currently transformed thread if not root thread
         curLabel = null
         // Stack containing information about nesting of preemption
         preemption = new Stack
@@ -141,9 +141,8 @@ class EsterelToSclTransformation extends Transformation {
         exitMap = new HashMap<ISignal, ValuedObject>()
         // Local declarated variables/flags
         localDeclarations = new LinkedList<Declaration>
-        // Variables are stored as a MultiMap. Signals are keys, the first signal in the returned
+        // Variables are stored as a LinkedList. Signals are keys, the first signal in the returned
         // list for a key is the current variable representing a (local) signal
-        // TODO: Should replace variables and localDeclarations
         signalMap = new LinkedList<Pair<String, ValuedObject>>
         
 
@@ -158,7 +157,7 @@ class EsterelToSclTransformation extends Transformation {
         // Interface transformations
         transformDeclaration(esterelMod.interface.intSignalDecls, program)
 
-        // Save all declarated valuedObjects to a list
+        // Save all declarated valuedObjects to the signalMap
         program.declarations.forEach [ valuedObjects.forEach [signalMap.add(it.name -> it)] ]
 
 
@@ -361,7 +360,11 @@ class EsterelToSclTransformation extends Transformation {
         }
 
         sSeq.createSclPause
-        sSeq.statements.add(createStmFromInstr(createAssignment(delayedFlag, createBoolValue(true))))
+        val op = createOperatorExpression(OperatorType::OR) => [
+                add(createValuedObjectRef(delayedFlag))
+                add(createBoolValue(true))
+            ]
+        sSeq.statements.add(createStmFromInstr(createAssignment(delayedFlag, op)))
         sSeq.addGoto(l_start)
         sSeq.addLabel(l_end)
 
@@ -828,7 +831,6 @@ class EsterelToSclTransformation extends Transformation {
      */
     def dispatch StatementSequence transformStm(Trap trap, StatementSequence sSeq) {
         System.out.println("It's a trap")
-        System.out.println("Decl List: " + trap.trapDeclList.trapDecls)
 
         val f_s = createValuedObject(uniqueName(signalMap, trap.trapDeclList.trapDecls.head.name))
         signalMap.add(f_s.name -> f_s);
@@ -845,10 +847,7 @@ class EsterelToSclTransformation extends Transformation {
         
         preemption.push(new PreemptiveElement("TRAP", l, null, f_s))
 
-        //TODO support more than one signal declaration
-//        trap.trapDeclList.trapDecls.forEach[ exitMap.put(it, f_s) ]
         for (decl : trap.trapDeclList.trapDecls) {
-            System.out.println("decl")
             exitMap.put(decl, f_s)
         }
         trap.statement.transformStm(sSeq)
@@ -878,7 +877,6 @@ class EsterelToSclTransformation extends Transformation {
             expression = createBoolValue(true)
             statements.add(createGotoj(l, curLabel, labelMap))
         ]))
-//        sSeq.addGotoj(l, curLabel, labelMap)
 
         return sSeq
     }
