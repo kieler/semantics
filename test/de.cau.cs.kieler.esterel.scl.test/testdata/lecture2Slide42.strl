@@ -1,0 +1,13 @@
+module lecture2Slide42:
+output A;
+input B;
+
+suspend
+  loop
+    emit A;
+    pause;
+    pause
+  end
+when B
+
+end module

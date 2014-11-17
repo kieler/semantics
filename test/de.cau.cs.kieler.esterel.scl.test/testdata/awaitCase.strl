@@ -1,0 +1,13 @@
+module awaitCase:
+
+input x,y;
+output a,b,c,d;
+
+await 
+case x do emit b;
+case immediate x do emit a;
+case y do emit d;
+case immediate x do emit c;
+end;
+
+end module
