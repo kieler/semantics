@@ -113,6 +113,16 @@
             method="sequentialize"
             name="Hybrid">
       </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.optimizations.ConstantConditionals"
+            id="CONSTCONDS"
+            method="transform">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.optimizations.UnreachableNodes"
+            id="UNREACHABLE_NODES"
+            method="transform">
+      </transformationMethod>
    </extension>
 
 

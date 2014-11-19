@@ -110,7 +110,7 @@ class SCGThreadExtensions {
             // Now, add all succeeding control flow provided 
             //   - that the flow is not already included in the flow list
             //   - the target of the flow is not already processed
-            //   - and the target of the flow is not the exit node.  
+            //   - and the target of the flow is not the exit node. 
             if (nextNode != null)
             nextNode.allNext.filter[ 
             	(!returnList.contains(it.target)) && 
