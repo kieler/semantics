@@ -139,7 +139,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     			// krat: connect EVERY label preceding to the resulting node
     			if (continuation.node == null) {
     			    labelList.add(continuation.label)
-    			} else {
+    			} else if (!labelList.empty) {
     			    val node = continuation.node
     			    labelList.forEach[ labelMapping.put(it, node) ]
     			    labelList.clear
