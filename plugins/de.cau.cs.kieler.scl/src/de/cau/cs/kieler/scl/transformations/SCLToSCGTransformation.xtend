@@ -130,7 +130,6 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     	if (statements.size>0) {
     		for(statement : statements) {
     			continuation = statement.transform(scg, cf)
-    			System.out.println("Statement: " + statement + "; label: " + continuation.label + "; Node: " + continuation.node + "; Controlflows: " + continuation.controlFlows)
 //    			if (!label.nullOrEmpty) {
 //    				labelMapping.put(label, continuation.node)
 //    			}
@@ -156,7 +155,6 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     }
     
     private dispatch def SCLContinuation transform(EmptyStatement statement, SCGraph scg, List<ControlFlow> incoming) {
-//        System.out.println("Empty Statement: " + incoming.head.valuedObjects)
     	new SCLContinuation => [
     		controlFlows += incoming
     		label = statement.label
