@@ -123,6 +123,12 @@
             id="UNREACHABLE_NODES"
             method="transform">
       </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.optimizations.Optimize"
+            id="SCGOPT"
+            method="transform"
+            name="SCG Optimization">
+      </transformationMethod>
    </extension>
 
 
