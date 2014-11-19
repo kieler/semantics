@@ -49,6 +49,7 @@ import de.cau.cs.kieler.scl.scl.StatementScope
 import java.util.LinkedList
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.ValueType
+import java.util.ArrayList
 
 /** 
  * SCL to SCG Transformation 
@@ -124,15 +125,28 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     private dispatch def SCLContinuation transform(List<Statement> statements, SCGraph scg, List<ControlFlow> incoming) {
     	var cf = incoming
     	var continuation = new SCLContinuation
-    	var String label = ""
+//    	var String label = ""
+    	var ArrayList<String> labelList = new ArrayList<String>()
     	if (statements.size>0) {
     		for(statement : statements) {
     			continuation = statement.transform(scg, cf)
-    			if (!label.nullOrEmpty) {
-    				labelMapping.put(label, continuation.node)
+    			System.out.println("Statement: " + statement + "; label: " + continuation.label + "; Node: " + continuation.node + "; Controlflows: " + continuation.controlFlows)
+//    			if (!label.nullOrEmpty) {
+//    				labelMapping.put(label, continuation.node)
+//    			}
+//    			label = continuation.label
+    			
+    			// krat: connect EVERY label preceding to the resulting node
+    			if (continuation.node == null) {
+    			    labelList.add(continuation.label)
+    			} else {
+    			    val node = continuation.node
+    			    labelList.forEach[ labelMapping.put(it, node) ]
+    			    labelList.clear
     			}
+    			
+    			
     			cf = continuation.controlFlows
-    			label = continuation.label
     		}
    		} else {
    			continuation.controlFlows += incoming
@@ -142,6 +156,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     }
     
     private dispatch def SCLContinuation transform(EmptyStatement statement, SCGraph scg, List<ControlFlow> incoming) {
+//        System.out.println("Empty Statement: " + incoming.head.valuedObjects)
     	new SCLContinuation => [
     		controlFlows += incoming
     		label = statement.label
