@@ -125,9 +125,15 @@
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scg.optimizations.Optimize"
+            dependencies="SCGDEP"
             id="SCGOPT"
             method="transform"
             name="SCG Optimization">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.optimizations.ReplaceUnusedVariables"
+            id="UNUSED_VARIABLES"
+            method="transform">
       </transformationMethod>
    </extension>
 
