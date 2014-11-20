@@ -33,6 +33,7 @@ import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl
 import com.google.common.collect.Multimap
+import de.cau.cs.kieler.core.kexpressions.OperatorType
 
 /**
  * @author krat
@@ -216,6 +217,29 @@ class EsterelToSclExtensions {
                             targetLabel = l
                         ])
         }
+        
+        /*
+         * Create an AND expression
+         * @param arg1 first argument
+         * @param arg2 secodn argument
+         */
+         def createAnd(Expression arg1, Expression arg2) {
+             KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+                 operator = OperatorType::AND
+                 subExpressions.add(arg1)
+                 subExpressions.add(arg2)
+                 
+             ]
+         }
+         
+         /*
+          * Adds an instruction to a StatementSeqeuence
+          */
+          def add(StatementSequence sSeq, Instruction instr) {
+              sSeq.statements.add(createStmFromInstr(instr))
+              
+              sSeq
+          }
       
       /*
        * Transformation of a declaration

@@ -529,13 +529,11 @@ class EsterelToSclTransformation extends Transformation {
                 
             // Handle weak delayed abort for Pause statements
             } else if (preemption.get(i).type == "WEAK_DELAYED_ABORT" && instr != null) {
-                return null
-//                return handleWeakAbortPause(instr, i, sSeq)
+                return handleWeakAbortPause(instr, i, sSeq)
 
             // Handle weak delayed abort for join
             } else if (preemption.get(i).type == "WEAK_DELAYED_ABORT" && instr == null) {
-                return sSeq
-//                return handleWeakAbortJoin(instr, i, sSeq)
+                return handleWeakAbortJoin(instr, i, sSeq)
 
             // Handle trap
             } else if (preemption.get(i).type == "TRAP") {
@@ -567,6 +565,48 @@ class EsterelToSclTransformation extends Transformation {
         
         if (instr == null)
             handlePreemtion(instr, i - 1, sSeq)
+
+        sSeq
+    }
+    
+    /*
+     * Handler for weak delayed abortion
+     * @param instr The instruction to be handled
+     * @param i Position in preemptive stack to be handled
+     * TODO test, depth not set for every single thread
+     */
+    def StatementSequence handleWeakAbortPause(Instruction instr, int i, StatementSequence sSeq) {
+        val f_wa = preemption.get(i).flag1.createValuedObjectRef
+        val f_depth = preemption.get(i).flag2.createValuedObjectRef
+        System.out.println("FWA: " + f_wa)
+        sSeq.add(SclFactory::eINSTANCE.createConditional => [
+            statements.add(createStmFromInstr(createAssignment(f_wa.valuedObject, createOperatorExpression(OperatorType::OR) => [
+                add(EcoreUtil.copy(f_wa))
+                add(createBoolValue(true))
+            ])))
+            expression = and(preemption.get(i).expression.transformExp(signalMap), f_depth)
+            statements.add(createGotoj(preemption.get(i).endLabel, curLabel, labelMap))
+        ])
+        
+        handlePreemtion(instr, i - 1, sSeq)
+
+        sSeq.add(createAssignment(preemption.get(i).flag2, createBoolValue(true)))
+
+        sSeq
+    }
+    
+    /*
+     * Handler for weak delayed abortion
+     * @param instr The instruction to be handled
+     * @param i Position in preemptive stack to be handled
+     */
+    def StatementSequence handleWeakAbortJoin(Instruction instr, int i, StatementSequence sSeq) {
+        handlePreemtion(instr, i - 1, sSeq)
+        
+        sSeq.add(SclFactory::eINSTANCE.createConditional => [
+            expression = preemption.get(i).flag1.createValuedObjectRef
+            statements.add(createGotoj(preemption.get(i).endLabel, curLabel, labelMap))
+        ])
 
         sSeq
     }
@@ -649,6 +689,7 @@ class EsterelToSclTransformation extends Transformation {
      * @param i Position in preemptive stack to be handled
      */
     def StatementSequence handleWeakImmediateAbortJoin(Instruction instr, int i, StatementSequence sSeq) {
+        // TODO addall needed?
         sSeq.statements.addAll(handlePreemtion(instr, i - 1, sSeq).statements)
         val f_wa_ref = KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
             valuedObject = preemption.get(i).flag1
