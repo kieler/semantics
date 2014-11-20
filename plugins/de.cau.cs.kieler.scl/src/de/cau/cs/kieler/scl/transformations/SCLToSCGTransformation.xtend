@@ -36,6 +36,7 @@ import de.cau.cs.kieler.scl.extensions.SCLExtensions
 import de.cau.cs.kieler.scl.scl.EmptyStatement
 import de.cau.cs.kieler.scl.scl.Goto
 import de.cau.cs.kieler.scl.scl.InstructionStatement
+import de.cau.cs.kieler.scl.scl.StatementSequence
 import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.Program
@@ -50,6 +51,8 @@ import java.util.LinkedList
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import java.util.ArrayList
+import com.google.common.collect.HashMultimap
+import org.eclipse.emf.common.util.EList
 
 /** 
  * SCL to SCG Transformation 
@@ -84,9 +87,39 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
 	override transform(EObject eObject) {
 		(eObject as Program).transformSCLToSCG
 	}    
+	
+	/*
+	 * Initialize transformation by optimizing gotos
+	 */
+	def Program initialize(Program scl) {
+	    val LinkedList<String> labelList = newLinkedList
+	    val LinkedList<Pair<String, String>> replaceTarget = new LinkedList<Pair<String, String>>
+	    
+	    scl.eAllContents.forEach [
+            if (it instanceof EmptyStatement) {
+                labelList.add((it as EmptyStatement).label)
+            } else if ((it instanceof InstructionStatement) && ((it as InstructionStatement).instruction instanceof Goto)) {
+                val stm = it
+                labelList.forEach[ replaceTarget.add(it -> ((stm as InstructionStatement).instruction as Goto).targetLabel) ]
+                labelList.clear
+            } else {
+                labelList.clear
+            }
+	    ]
+	    
+	    scl.eAllContents.filter(Goto).forEach [ 
+	        val targetLabel = it.targetLabel
+	        val newLabel = replaceTarget.filter[ it.key == targetLabel ].head
+	        if (newLabel != null) {
+	            it.targetLabel = newLabel.value
+	        }
+	    ]
+	    
+	    scl
+	}
     
     def SCGraph transformSCLToSCG(Program scl) {
-        // Create new SCL program...
+        // Create new SCG...
         val scg = ScgFactory::eINSTANCE.createSCGraph
                   
         // ... and copy declarations.
@@ -103,7 +136,6 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
         scl.transform(scg, null)
         scl.eAllContents.filter(Goto).forEach[ transform(scg, gotoFlows.get(it)) ]
         
-        
         scg
     }
     
@@ -111,6 +143,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     	val entry = ScgFactory::eINSTANCE.createEntry.createNodeList(program) as Entry => [
     		scg.nodes += it 
     	]
+    	program.initialize
     	program.statements.transform(scg, entry.createControlFlow.toList) => [ continuation |
     		ScgFactory::eINSTANCE.createExit.createNodeList(program) as Exit => [ 
    				scg.nodes += it 
@@ -127,18 +160,27 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     	var continuation = new SCLContinuation
 //    	var String label = ""
     	var ArrayList<String> labelList = new ArrayList<String>()
+    	var ArrayList<SCLContinuation> labelContList = new ArrayList<SCLContinuation>()
     	if (statements.size>0) {
     		for(statement : statements) {
+    		    
+    		    System.out.println("Stm: " + statement + " list: " + labelList)
+    		    
     			continuation = statement.transform(scg, cf)
+    		    if ((statement instanceof InstructionStatement) && ((statement as InstructionStatement).instruction instanceof Goto) && !labelList.empty) {
+    		        // Problem
+    		        System.out.println("Problem")
+    		    }
 //    			if (!label.nullOrEmpty) {
 //    				labelMapping.put(label, continuation.node)
 //    			}
 //    			label = continuation.label
     			
     			// krat: connect EVERY label preceding to the resulting node
-    			if (continuation.node == null) {
+    			System.out.println("Node: " + continuation.node + ", label " + continuation.label)
+    			if (!continuation.label.nullOrEmpty) {
     			    labelList.add(continuation.label)
-    			} else if (!labelList.empty) {
+    			} else if (!labelList.empty && continuation.node != null) {
     			    val node = continuation.node
     			    labelList.forEach[ labelMapping.put(it, node) ]
     			    labelList.clear
@@ -189,9 +231,9 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     			it.condition = conditional.expression.copyExpression
     			it.controlFlowTarget(incoming)
     			conditional.statements.transform(scg, it.createControlFlow.toList) 
-    				=> [ continue.controlFlows += it.controlFlows ]
+    				=> [ System.out.println("FLOW: " + it.controlFlows);continue.controlFlows += it.controlFlows ]
     			conditional.elseStatements.transform(scg, it.createControlFlow.toList)
-    				=> [ continue.controlFlows += it.controlFlows ]
+    				=> [ System.out.println("elseFLOW: " + it.controlFlows);continue.controlFlows += it.controlFlows ]
     		]
     	]
     }
@@ -249,6 +291,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     	new SCLContinuation => [
     		if (labelMapping.keySet.contains(goto.targetLabel)) {
     			val node = labelMapping.get(goto.targetLabel)
+    			System.out.println("NodeType: " + node)
     			if (node instanceof Depth) {
     			     (node as Depth).surface.controlFlowTarget(incoming)    
     			} else {
