@@ -115,6 +115,8 @@ class SCGThreadExtensions {
             nextNode.allNext.filter[ 
             	(!returnList.contains(it.target)) && 
             	(!controlFlows.contains(it)) && 
+            	// krat: added check for null, may not be enough
+            	(it.target != null) &&
                 (!it.target.equals(exit)) ] 
                 	=> [ controlFlows.addAll(it) ]
         }
