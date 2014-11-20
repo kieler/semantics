@@ -24,3 +24,4 @@ Require-Bundle: com.google.guava;bundle-version="10.0.1",
  de.cau.cs.kieler.kico.klighd
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.scg.klighd
+Import-Package: de.cau.cs.kieler.scl.scl

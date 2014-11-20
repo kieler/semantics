@@ -241,19 +241,22 @@ public class PreemptiveElement {
     public String type;
     public String endLabel;
     public de.cau.cs.kieler.esterel.kexpressions.Expression expression;
-    public ValuedObject flag;
+    public ValuedObject flag1;
+    public ValuedObject flag2;
     
     /*
      * Constructs new PreemptiveElement
      * @param t String representation of the type of the preemptive statement
      * @param l Optional label representing where to jump to, if preemption happens. null if none
      * @param expr Esterel expression denoting when preemption happens
-     * @param f Optional flag. null if none
+     * @param f1 Optional flag. null if none
+     * @param f2 Optional flag. null if none
      */
-    public new (String t, String l, de.cau.cs.kieler.esterel.kexpressions.Expression expr, ValuedObject f) {
+    public new (String t, String l, de.cau.cs.kieler.esterel.kexpressions.Expression expr, ValuedObject f1, ValuedObject f2) {
         type = t
         endLabel = l
         expression = expr
-        flag = f
+        flag1 = f1
+        flag2 = f2
     }
 }

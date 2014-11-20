@@ -87,6 +87,7 @@ import de.cau.cs.kieler.kico.CompilationResult
 import de.cau.cs.kieler.kico.klighd.KiCoKLighDProperties
 import java.util.Set
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
+import javax.inject.Singleton
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -96,7 +97,8 @@ import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
  * @kieler.design 2013-10-23 proposed 
  * @kieler.rating 2013-10-23 proposed yellow
  */
-class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
+class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<de.cau.cs.kieler.scg.SCGraph> {
+    
 
     // -------------------------------------------------------------------------
     // -- Guice
@@ -112,6 +114,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val SCGKExpressionsScopeProvider scopeProvider = guiceInjector.getInstance(
         typeof(SCGKExpressionsScopeProvider));
     private static val ISerializer serializer = guiceInjector.getInstance(typeof(ISerializer));
+    
 
     // -------------------------------------------------------------------------
     // -- Extensions 
@@ -394,6 +397,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private int orientation;
     
     private int sequentializedSCGCounter = 0
+    
 
     // -------------------------------------------------------------------------
     // -- Main Entry Point 
@@ -406,11 +410,9 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 	 * @return Returns the root KNode.
 	 */
     override transform(SCGraph model) {
-
         // Connect the model to the scope provider for the serialization.
         scopeProvider.parent = model;
-
-        compilationResult = this.usedContext.getProperty(KiCoKLighDProperties.COMPILATION_RESULT)
+        compilationResult = this.usedContext.getProperty(KiCoKLighDProperties.COMPILATION_RESULT);
         if (compilationResult != null) {
             val PILR = compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head
             if (PILR != null) PIL_Nodes += PILR.criticalNodes
