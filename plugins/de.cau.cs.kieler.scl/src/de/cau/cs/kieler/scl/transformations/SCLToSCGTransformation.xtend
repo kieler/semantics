@@ -92,30 +92,48 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
 	 * Initialize transformation by optimizing gotos
 	 */
 	def Program initialize(Program scl) {
-	    val LinkedList<String> labelList = newLinkedList
-	    val LinkedList<Pair<String, String>> replaceTarget = new LinkedList<Pair<String, String>>
 	    
-	    scl.eAllContents.forEach [
-            if (it instanceof EmptyStatement) {
+	    collectLabels(scl.statements, new LinkedList<Pair<String, String>>)
+	    scl.eAllContents.filter(StatementSequence).forEach [
+	        collectLabels((it as StatementSequence).statements, new LinkedList<Pair<String, String>>)
+	    ]
+	    
+	    scl
+	}
+	def EList<Statement> collectLabels(EList<Statement> stms,
+	    LinkedList<Pair<String, String>> replaceTarget) {
+	    val LinkedList<String> labelList = newLinkedList
+	    stms.forEach[
+	        if (it instanceof EmptyStatement) {
                 labelList.add((it as EmptyStatement).label)
-            } else if ((it instanceof InstructionStatement) && ((it as InstructionStatement).instruction instanceof Goto)) {
-                val stm = it
-                labelList.forEach[ replaceTarget.add(it -> ((stm as InstructionStatement).instruction as Goto).targetLabel) ]
+            } else if (it instanceof de.cau.cs.kieler.scl.scl.Conditional) {
+                val cond = it as de.cau.cs.kieler.scl.scl.Conditional
+                collectLabels(cond.statements, replaceTarget)
+                collectLabels(cond.elseStatements, replaceTarget)
+                labelList.clear
+            }
+            
+            else if ((it instanceof InstructionStatement) && ((it as InstructionStatement).instruction instanceof Goto)) {
+                val stm = it as InstructionStatement
+                labelList.forEach[ replaceTarget.add(it -> (stm.instruction as Goto).targetLabel) ]
                 labelList.clear
             } else {
                 labelList.clear
             }
 	    ]
 	    
-	    scl.eAllContents.filter(Goto).forEach [ 
-	        val targetLabel = it.targetLabel
-	        val newLabel = replaceTarget.filter[ it.key == targetLabel ].head
-	        if (newLabel != null) {
-	            it.targetLabel = newLabel.value
+	    stms.filter(InstructionStatement).forEach [ 
+	        if (it.instruction instanceof Goto) {
+	            val goto = it.instruction as Goto
+                val targetLabel = goto.targetLabel
+                val newLabel = replaceTarget.filter[ it.key == targetLabel ].head
+                if (newLabel != null) {
+                    goto.targetLabel = newLabel.value
+                }
 	        }
-	    ]
+        ]
 	    
-	    scl
+	    stms
 	}
     
     def SCGraph transformSCLToSCG(Program scl) {
