@@ -5,14 +5,21 @@ package de.cau.cs.kieler.scl.validation;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.validation.Check;
 
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.scl.scl.Conditional;
+import de.cau.cs.kieler.scl.scl.EmptyStatement;
 import de.cau.cs.kieler.scl.scl.Program;
+import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
+import de.cau.cs.kieler.scl.scl.StatementSequence;
 
 /**
  * Custom validation rules.
@@ -35,6 +42,7 @@ public class SCLJavaValidator extends de.cau.cs.kieler.scl.validation.AbstractSC
                 error("Duplicate variable declaration", decl, null, -1);
             }
         }
+
     }
 
     @Check
@@ -45,8 +53,8 @@ public class SCLJavaValidator extends de.cau.cs.kieler.scl.validation.AbstractSC
             }
         }
     }
-    
-    public boolean hasDuplicateDeclaration (EList<Declaration> declarations) {
+
+    public boolean hasDuplicateDeclaration(EList<Declaration> declarations) {
         ArrayList<String> vars = new ArrayList<String>();
         for (Declaration decl : declarations) {
             for (ValuedObject valObj : decl.getValuedObjects()) {
@@ -58,5 +66,29 @@ public class SCLJavaValidator extends de.cau.cs.kieler.scl.validation.AbstractSC
             return true;
         }
         return false;
+    }
+
+    /*
+     * Checks if empty statements (labels) are unique
+     */
+    @Check
+    public void checkUniqueLabel(StatementSequence sSeq) {
+        collectLabels(sSeq.getStatements(), new LinkedList<String>());
+    }
+
+    private LinkedList<String> collectLabels(EList<Statement> sSeq, LinkedList<String> labels) {
+        for (Statement stm : sSeq) {
+            if (stm instanceof EmptyStatement) {
+                if (labels.contains(((EmptyStatement) stm).getLabel()))
+                    error("Duplicate label", stm, null, -1);
+                else
+                    labels.add(((EmptyStatement) stm).getLabel());
+            } else if (stm instanceof Conditional) {
+                Conditional cond = (Conditional) stm;
+                labels.addAll(collectLabels(cond.getStatements(), labels));
+                labels.addAll(collectLabels(cond.getElseStatements(), labels));
+            }
+        }
+        return labels;
     }
 }

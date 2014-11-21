@@ -56,7 +56,7 @@ public class SCLFormatter extends AbstractDeclarativeFormatter {
 	        c.setIndentation(f.getParallelAccess().getForkKeyword_0(), 
 	                         f.getParallelAccess().getParKeyword_1_1_0());
 	        c.setIndentation(f.getParallelAccess().getParKeyword_1_1_0(), 
-	                         f.getParallelAccess().getJoinKeyword_2());	
+	                         f.getParallelAccess().getJoinKeyword_2());
 	        
 	        // Indent then and else statements
 	        c.setLinewrap(1).after(f.getConditionalAccess().getThenKeyword_2());
