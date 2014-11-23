@@ -150,7 +150,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     }
 
     /*
-     * Tranformation method
+     * Transformation method
      */
     def SCGraph transformSCLToSCG(Program scl) {
 
