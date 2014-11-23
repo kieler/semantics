@@ -79,6 +79,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     private val reverseNodeMapping = new HashMap<Node, EObject>()
     private val labelMapping = new HashMap<String, Node>()
     private val gotoFlows = new HashMap<Goto, List<ControlFlow>>()
+    private val nullLabels = new LinkedList<String>
   
     // -------------------------------------------------------------------------
     // -- M2M Transformation 
@@ -89,7 +90,13 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
 	}    
 	
 	/*
-	 * Initialize transformation by optimizing gotos
+	 * Initialize transformation by optimizing gotos. E.g.
+	 * l1:
+	 * pause;
+	 * goto l2; -> goto l1;
+	 * l2:
+	 * goto l1;
+	 * 
 	 */
 	def Program initialize(Program scl) {
 	    
@@ -100,6 +107,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
 	    
 	    scl
 	}
+	
 	def EList<Statement> collectLabels(EList<Statement> stms,
 	    LinkedList<Pair<String, String>> replaceTarget) {
 	    val LinkedList<String> labelList = newLinkedList
@@ -136,6 +144,9 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
 	    stms
 	}
     
+    /*
+     * Tranformation method
+     */
     def SCGraph transformSCLToSCG(Program scl) {
         // Create new SCG...
         val scg = ScgFactory::eINSTANCE.createSCGraph
@@ -167,6 +178,11 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
    				scg.nodes += it 
     			it.entry = entry
     			it.controlFlowTarget(continuation.controlFlows)
+    			// krat: Connect "naked" labels to the exit node
+    			for (l : nullLabels) {
+    			    labelMapping.put(l, it)
+    			}
+    			nullLabels.clear
     		]
     	]
     	
@@ -178,24 +194,18 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     	var continuation = new SCLContinuation
 //    	var String label = ""
     	var ArrayList<String> labelList = new ArrayList<String>()
-    	var ArrayList<SCLContinuation> labelContList = new ArrayList<SCLContinuation>()
     	if (statements.size>0) {
     		for(statement : statements) {
     		    
     		    System.out.println("Stm: " + statement + " list: " + labelList)
     		    
     			continuation = statement.transform(scg, cf)
-    		    if ((statement instanceof InstructionStatement) && ((statement as InstructionStatement).instruction instanceof Goto) && !labelList.empty) {
-    		        // Problem
-    		        System.out.println("Problem")
-    		    }
 //    			if (!label.nullOrEmpty) {
 //    				labelMapping.put(label, continuation.node)
 //    			}
 //    			label = continuation.label
     			
     			// krat: connect EVERY label preceding to the resulting node
-    			System.out.println("Node: " + continuation.node + ", label " + continuation.label)
     			if (!continuation.label.nullOrEmpty) {
     			    labelList.add(continuation.label)
     			} else if (!labelList.empty && continuation.node != null) {
@@ -204,9 +214,10 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     			    labelList.clear
     			}
     			
-    			
     			cf = continuation.controlFlows
     		}
+    		// Save labels with no subsequent node
+    		nullLabels.addAll(labelList)
    		} else {
    			continuation.controlFlows += incoming
    		}
