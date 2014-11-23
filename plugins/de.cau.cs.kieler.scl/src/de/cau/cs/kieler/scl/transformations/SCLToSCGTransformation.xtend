@@ -79,6 +79,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     private val reverseNodeMapping = new HashMap<Node, EObject>()
     private val labelMapping = new HashMap<String, Node>()
     private val gotoFlows = new HashMap<Goto, List<ControlFlow>>()
+    // Holds labels, which are not assigned to a node yet
     private val nullLabels = new LinkedList<String>
   
     // -------------------------------------------------------------------------
@@ -178,11 +179,6 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
    				scg.nodes += it 
     			it.entry = entry
     			it.controlFlowTarget(continuation.controlFlows)
-    			// krat: Connect "naked" labels to the exit node
-    			for (l : nullLabels) {
-    			    labelMapping.put(l, it)
-    			}
-    			nullLabels.clear
     		]
     	]
     	
@@ -193,11 +189,11 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     	var cf = incoming
     	var continuation = new SCLContinuation
 //    	var String label = ""
-    	var ArrayList<String> labelList = new ArrayList<String>()
+//    	var ArrayList<String> labelList = new ArrayList<String>()
     	if (statements.size>0) {
     		for(statement : statements) {
     		    
-    		    System.out.println("Stm: " + statement + " list: " + labelList)
+    		    System.out.println("Stm: " + statement + " list: " + nullLabels)
     		    
     			continuation = statement.transform(scg, cf)
 //    			if (!label.nullOrEmpty) {
@@ -207,17 +203,15 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     			
     			// krat: connect EVERY label preceding to the resulting node
     			if (!continuation.label.nullOrEmpty) {
-    			    labelList.add(continuation.label)
-    			} else if (!labelList.empty && continuation.node != null) {
+    			    nullLabels.add(continuation.label)
+    			} else if (!nullLabels.empty && continuation.node != null) {
     			    val node = continuation.node
-    			    labelList.forEach[ labelMapping.put(it, node) ]
-    			    labelList.clear
+    			    nullLabels.forEach[ labelMapping.put(it, node) ]
+    			    nullLabels.clear
     			}
     			
     			cf = continuation.controlFlows
     		}
-    		// Save labels with no subsequent node
-    		nullLabels.addAll(labelList)
    		} else {
    			continuation.controlFlows += incoming
    		}
@@ -292,6 +286,10 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     	        	it.createControlFlow.setTarget(join)
                     if (!continuation.label.nullOrEmpty) {
                         labelMapping.put(continuation.label, it)
+                        for (l : nullLabels) {
+                            labelMapping.put(l, it)
+                        }
+                        nullLabels.clear
                     }
     	    	]
     		]
