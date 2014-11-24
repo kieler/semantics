@@ -21,6 +21,7 @@ import de.cau.cs.kieler.scl.scl.Program;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
 import de.cau.cs.kieler.scl.scl.StatementSequence;
+import de.cau.cs.kieler.scl.scl.Thread;
 
 /**
  * Custom validation rules.
@@ -96,13 +97,12 @@ public class SCLJavaValidator extends de.cau.cs.kieler.scl.validation.AbstractSC
     /*
      * Checks if goto target label is in scope
      */
-//    @Check
+    @Check
     public void checkLabelExisting(Goto goingTo) {
         EObject parent = goingTo.eContainer();
         while (!(parent instanceof Thread) && !(parent instanceof Program)) {
             parent = parent.eContainer();
         }
-        System.out.println("parent is " + goingTo.getTargetLabel());
         if (!labelExisting(((StatementSequence) parent).getStatements(), goingTo.getTargetLabel())) {
             error("Label not in scope", goingTo, null, -1);
         }
@@ -110,14 +110,7 @@ public class SCLJavaValidator extends de.cau.cs.kieler.scl.validation.AbstractSC
     
     private boolean labelExisting(EList<Statement> stms, String l) {
         for (Statement stm : stms) {
-            if ((stm instanceof EmptyStatement)) {
-                System.out.println("stm is " + ((EmptyStatement)stm).getLabel());
-                System.out.println("label is " + l);
-                System.out.println("same? " + ((EmptyStatement)stm).getLabel().equals(l));
-            }
             if ((stm instanceof EmptyStatement) && (((EmptyStatement) stm).getLabel().equals(l))) {
-                System.out.println("gotolabel is " + l + " empty stm label is: " + ((EmptyStatement) stm).getLabel());
-                System.out.println("Should return true");
                 return true;
             }
             else if (stm instanceof Conditional) {
