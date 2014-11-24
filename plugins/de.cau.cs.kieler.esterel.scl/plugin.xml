@@ -50,9 +50,10 @@
             name="SCL">
       </transformationMethod>
       <transformationGroup
+            alternatives="true"
             id="SCLGROUP"
             name="SCL"
-            transformations="ESTERELTOSCL">
+            transformations="ESTERELTOSCL, ESTERELTOSCL_OPT">
       </transformationGroup>
       <transformationMethod
             class="de.cau.cs.kieler.esterel.scl.transformations.EsterelToSclTransformation"
@@ -63,14 +64,21 @@
       <transformationGroup
             id="SCLSCGGROUP"
             name="SCGraph"
-            transformations="SCLTOSCG,SCGOPT,SCGDEP, SCGBBGROUP, SCGSCHEDGROUP,SCGSEQGROUP">
+            transformations="SCLTOSCG,SCGDEP, SCGBBGROUP, SCGSCHEDGROUP,SCGSEQGROUP">
       </transformationGroup>
+      <transformationMethod
+            class="de.cau.cs.kieler.esterel.scl.transformations.EsterelToSclTransformation"
+            dependencies="SCLTOSCG"
+            id="ESTERELTOSCL_OPT"
+            method="transformOpt"
+            name="SCL Optimized">
+      </transformationMethod>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.ui.transformation">
       <editor
             editor="de.cau.cs.kieler.esterel.Esterel"
-            transformations="SCLGROUP,ESTERELTOSCL,    SCLSCGGROUP,SCLTOSCG, SCGDEP, SCGBB, SCGBBSCPLUS, SCGSCHEDSIMPLE, SCGSCHEDCLUSTER, SCGSCHEDHYBRID, SCGSEQ, SCGBBGROUP, SCGSCHEDGROUP,SCGSEQGROUP,SCGSEQSIMPLE,SCGSEQHYBRID,CODEGENERATION, SCG2S,SCG2C">
+            transformations="SCLGROUP,ESTERELTOSCL,ESTERELTOSCL_OPT,    SCLSCGGROUP,SCLTOSCG, SCGDEP, SCGBB, SCGBBSCPLUS, SCGSCHEDSIMPLE, SCGSCHEDCLUSTER, SCGSCHEDHYBRID, SCGSEQ, SCGBBGROUP, SCGSCHEDGROUP,SCGSEQGROUP,SCGSEQSIMPLE,SCGSEQHYBRID,CODEGENERATION, SCG2S,SCG2C">
       </editor>
    </extension>
    <extension

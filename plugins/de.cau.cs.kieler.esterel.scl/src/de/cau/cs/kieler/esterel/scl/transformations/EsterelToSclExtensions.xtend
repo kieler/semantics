@@ -34,6 +34,15 @@ import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl
 import com.google.common.collect.Multimap
 import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.esterel.esterel.Halt
+import de.cau.cs.kieler.esterel.esterel.Loop
+import de.cau.cs.kieler.esterel.esterel.Sustain
+import de.cau.cs.kieler.esterel.esterel.Parallel
+import de.cau.cs.kieler.esterel.esterel.Sequence
+import de.cau.cs.kieler.esterel.esterel.Program
+import de.cau.cs.kieler.esterel.esterel.Present
+import de.cau.cs.kieler.esterel.esterel.PresentEventBody
+import de.cau.cs.kieler.esterel.esterel.PresentCaseList
 
 /**
  * @author krat
@@ -221,7 +230,7 @@ class EsterelToSclExtensions {
         /*
          * Create an AND expression
          * @param arg1 first argument
-         * @param arg2 secodn argument
+         * @param arg2 second argument
          */
          def createAnd(Expression arg1, Expression arg2) {
              KExpressionsFactory::eINSTANCE.createOperatorExpression => [
@@ -241,20 +250,67 @@ class EsterelToSclExtensions {
               sSeq
           }
       
-      /*
-       * Transformation of a declaration
-       * TODO deprecated?
-       */
-       def EList<Declaration> transformDeclaration(InterfaceSignalDecl declaration) {
-           for (decl : declaration.signals) {
-               if (decl.channelDescr != null) {
-                   System.out.println("Type " + decl.channelDescr.type)
-               }
-           }
-           
-           return null;
-       }
-       
+ 
+       /*
+        * Checks whether an Esterel statement terminates
+        * TODO finish
+        */
+        def dispatch boolean checkTerminate(de.cau.cs.kieler.esterel.esterel.Statement stm) {
+            if (stm instanceof Halt) {
+                return false;
+            } else if (stm instanceof Loop) {
+                return false;
+            } else if (stm instanceof Sustain) {
+                return false;
+            } else if (stm instanceof Parallel) {
+                val par = stm as Parallel
+                var terms = true;
+                for (th : par.list) {
+                    terms = terms && th.checkTerminate
+                }
+                return terms
+            } else if (stm instanceof Sequence) {
+                val seq = stm as Sequence
+                var terms = true;
+                for (s : seq.list) {
+                    terms = terms && s.checkTerminate
+                }
+                return terms
+            } else if (stm instanceof Present) {
+                val pres = stm as Present
+                if (pres.body instanceof PresentEventBody) {
+                    val presBody = pres.body as PresentEventBody
+                    return presBody.thenPart.checkTerminate && pres.elsePart.checkTerminate
+                } else if (pres.body instanceof PresentCaseList) {
+                    val presBody = pres.body as PresentCaseList
+                    // TODO add
+                }
+            }
+            
+            return true;
+        }
+
+        def dispatch boolean checkTerminate(Program program) {
+            var terms = true;
+            for (th : program.modules.head.body.statements) {
+                terms = terms && th.checkTerminate
+            }
+            return terms
+        }
+        
+        def dispatch boolean checkTerminate(EList<Statement> stms) {
+            var terms = true;
+            for (stm : stms) {
+                terms = terms && stm.checkTerminate
+            }
+            
+            terms
+        }
+        
+        def dispatch boolean checkTerminate(Void x) {
+            return true;
+        }
+        
 }
 
 /*
