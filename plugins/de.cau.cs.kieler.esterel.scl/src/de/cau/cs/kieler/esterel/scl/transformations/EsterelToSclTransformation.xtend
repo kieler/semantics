@@ -111,7 +111,7 @@ class EsterelToSclTransformation extends Transformation {
     // Connecting a signal name with a valuedObject. Allows "scoping" and shadowing out
     var LinkedList<Pair<String, ValuedObject>> signalMap
 
-    // Falg indicating if optimized transformations should be used
+    // Flag indicating if optimized transformations should be used
     var boolean opt
 
     @Inject
