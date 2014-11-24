@@ -87,6 +87,7 @@ import de.cau.cs.kieler.kico.CompilationResult
 import de.cau.cs.kieler.kico.klighd.KiCoKLighDProperties
 import java.util.Set
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
+import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -246,6 +247,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private static val SynthesisOption SHOW_DEPENDENCY_WRITE_WRITE = SynthesisOption::createCheckOption(
         DEPENDENCYFILTERSTRING_WRITE_WRITE, true);
 
+    /** Show sausage folding */
+    private static val SynthesisOption SHOW_SAUSAGE_FOLDING = SynthesisOption::createCheckOption(
+        "Sausage Folding", true);
+
     /** Show absolute write-relative write dependencies */
     private static val SynthesisOption SHOW_DEPENDENCY_ABSWRITE_RELWRITE = SynthesisOption::
         createCheckOption(DEPENDENCYFILTERSTRING_ABSWRITE_RELWRITE, true);
@@ -281,6 +286,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             CONTROLFLOW_THICKNESS,
             SynthesisOption::createSeparator("Dependency Filter"),
             SHOW_DEPENDENCY_WRITE_WRITE,
+            SHOW_SAUSAGE_FOLDING,
             SHOW_DEPENDENCY_ABSWRITE_RELWRITE,
             SHOW_DEPENDENCY_WRITE_READ,
             SHOW_DEPENDENCY_RELWRITE_READ,
@@ -450,6 +456,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
             node.addLayoutParam(Properties::THOROUGHNESS, 100)
             node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
+            
+            //Suasage folding on/off
+            if ((SHOW_SAUSAGE_FOLDING.booleanValue) && scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
+                node.addLayoutParam(Properties::NODE_LAYERING, LayeringStrategy::LONGEST_PATH);
+                node.addLayoutParam(Properties::SAUSAGE_FOLDING, true);
+            }
             
             val threadTypes = <Entry, ThreadPathType> newHashMap
             
