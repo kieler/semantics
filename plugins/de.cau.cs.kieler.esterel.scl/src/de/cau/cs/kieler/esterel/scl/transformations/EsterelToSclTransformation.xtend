@@ -139,7 +139,6 @@ class EsterelToSclTransformation extends Transformation {
 
     public def Program transformProgram(de.cau.cs.kieler.esterel.esterel.Program esterelProgram) {
         System.out.println("Transforming to SCL...")
-        System.out.println("Program terminates? " + esterelProgram.checkTerminate)
 
         // Label at the end of the currently transformed thread if not root thread
         curLabel = null
@@ -161,7 +160,11 @@ class EsterelToSclTransformation extends Transformation {
         signalMap = new LinkedList<Pair<String, ValuedObject>>
 
         // Does the program terminate?
-        val terminates = esterelProgram.checkTerminate
+        var boolean termTmp = true
+        if (opt) {
+            termTmp = esterelProgram.checkTerminate
+        }
+        val terminates = termTmp;
 
         // Create the SCL program
         val program = SclFactory::eINSTANCE.createProgram()

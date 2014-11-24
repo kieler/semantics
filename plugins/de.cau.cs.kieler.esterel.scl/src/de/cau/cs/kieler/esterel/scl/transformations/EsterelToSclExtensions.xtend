@@ -43,6 +43,10 @@ import de.cau.cs.kieler.esterel.esterel.Program
 import de.cau.cs.kieler.esterel.esterel.Present
 import de.cau.cs.kieler.esterel.esterel.PresentEventBody
 import de.cau.cs.kieler.esterel.esterel.PresentCaseList
+import de.cau.cs.kieler.esterel.esterel.EveryDo
+import de.cau.cs.kieler.esterel.esterel.Await
+import de.cau.cs.kieler.esterel.esterel.AwaitInstance
+import de.cau.cs.kieler.esterel.esterel.AwaitCase
 
 /**
  * @author krat
@@ -249,8 +253,7 @@ class EsterelToSclExtensions {
               
               sSeq
           }
-      
- 
+
        /*
         * Checks whether an Esterel statement terminates
         * TODO finish
@@ -283,10 +286,26 @@ class EsterelToSclExtensions {
                     return presBody.thenPart.checkTerminate && pres.elsePart.checkTerminate
                 } else if (pres.body instanceof PresentCaseList) {
                     val presBody = pres.body as PresentCaseList
-                    // TODO add
+                    var terms = true
+                    for (singleCase : presBody.cases) {
+                        terms = terms && singleCase.statement.checkTerminate
+                    }
+                    terms = terms && pres.elsePart.checkTerminate
+                    return terms
+                }
+            } else if (stm instanceof EveryDo) {
+                return false;
+            } else if (stm instanceof Await) {
+                val await = stm as Await
+                if (await.body instanceof AwaitCase) {
+                    var terms = true
+                    val awaitCase = await.body as AwaitCase
+                    for (singleCase : awaitCase.cases) {
+                        terms = terms && singleCase.statement.checkTerminate
+                    }
+                    return terms
                 }
             }
-            
             return true;
         }
 
