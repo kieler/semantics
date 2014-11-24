@@ -96,7 +96,7 @@ public class SCLJavaValidator extends de.cau.cs.kieler.scl.validation.AbstractSC
     /*
      * Checks if goto target label is in scope
      */
-    @Check
+//    @Check
     public void checkLabelExisting(Goto goingTo) {
         EObject parent = goingTo.eContainer();
         while (!(parent instanceof Thread) && !(parent instanceof Program)) {

@@ -54,6 +54,7 @@ import java.util.ArrayList
 import com.google.common.collect.HashMultimap
 import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.scl.scl.Thread
+import de.cau.cs.kieler.scl.scl.SclFactory
 
 /** 
  * SCL to SCG Transformation 
@@ -103,29 +104,46 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
         scl.eAllContents.filter(Thread).forEach [
             replaceGotoTargets(it.statements, collectLabels(it.statements, new LinkedList<Pair<String, String>>))
         ]
-        
+
+        // Variable initialization
+        scl.declarations.forEach [
+            for (valObj : valuedObjects) {
+                if (valObj.initialValue != null) {
+                    scl.statements.add(0,
+                        SclFactory::eINSTANCE.createInstructionStatement => [
+                            instruction = SclFactory::eINSTANCE.createAssignment => [
+                                valuedObject = valObj
+                                expression = valObj.initialValue
+                            ]
+                        ])
+                }
+            }
+        ]
+
         scl
     }
-    
+
     def EList<Statement> replaceGotoTargets(EList<Statement> stms, LinkedList<Pair<String, String>> replaceTarget) {
         stms.forEach [
-             if (it instanceof InstructionStatement && ((it as InstructionStatement).instruction instanceof de.cau.cs.kieler.scl.scl.Conditional)) {
+            if (it instanceof InstructionStatement &&
+                ((it as InstructionStatement).instruction instanceof de.cau.cs.kieler.scl.scl.Conditional)) {
                 val cond = (it as InstructionStatement).instruction as de.cau.cs.kieler.scl.scl.Conditional
                 replaceGotoTargets(cond.statements, replaceTarget)
                 replaceGotoTargets(cond.elseStatements, replaceTarget)
             } else if ((it instanceof InstructionStatement) &&
                 ((it as InstructionStatement).instruction instanceof Goto)) {
                 val stm = (it as InstructionStatement).instruction as Goto
-                if (!replaceTarget.filter[ key == stm.targetLabel ].empty) {
-                    stm.targetLabel = replaceTarget.filter[ key == stm.targetLabel ].head.value
+                if (!replaceTarget.filter[key == stm.targetLabel].empty) {
+                    stm.targetLabel = replaceTarget.filter[key == stm.targetLabel].head.value
                 }
-                }
+            }
         ]
 
         stms
     }
 
-    def LinkedList<Pair<String, String>> collectLabels(EList<Statement> stms, LinkedList<Pair<String, String>> replaceTarget) {
+    def LinkedList<Pair<String, String>> collectLabels(EList<Statement> stms,
+        LinkedList<Pair<String, String>> replaceTarget) {
         val LinkedList<String> labelList = newLinkedList
         stms.forEach [
             if (it instanceof EmptyStatement) {
@@ -144,6 +162,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
                 labelList.clear
             }
         ]
+
         // Labels in the sequence, which are not followed by any other statement, should point to last label
         labelList.forEach[replaceTarget.add(it -> labelList.last)]
         replaceTarget
@@ -164,6 +183,9 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
                 val newValuedObject = createValuedObject(valuedObject.name)
                 newDeclaration.valuedObjects += newValuedObject
                 valuedObjectMapping.put(valuedObject, newValuedObject)
+                if (valuedObject.initialValue != null) {
+                    // create Assignment
+                }
             }
             scg.declarations += newDeclaration
         }
@@ -196,10 +218,9 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
         var continuation = new SCLContinuation
 
         //    	var String label = ""
-            	var ArrayList<String> labelList = new ArrayList<String>()
+        var ArrayList<String> labelList = new ArrayList<String>()
         if (statements.size > 0) {
             for (statement : statements) {
-
 
                 continuation = statement.transform(scg, cf)
 
