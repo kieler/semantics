@@ -170,6 +170,7 @@ class EsterelToSclTransformation extends Transformation {
 
         // Add reset thread for outputs
         val f_term = createValuedObject(uniqueName(signalMap, "f_term"))
+        f_term.initialValue = createBoolValue(false)
         val decl = createDeclaration => [
             type = ValueType::BOOL
             valuedObjects.add(f_term)
@@ -824,6 +825,7 @@ class EsterelToSclTransformation extends Transformation {
             System.out.println("Weak Immediate Abort " + abort.statement)
 
             val f_wa = createValuedObject(uniqueName(signalMap, "f_wa"))
+            f_wa.initialValue = createBoolValue(false);
             preemption.push(new PreemptiveElement("WEAK_IMMEDIATE_ABORT", l, abortExpr, f_wa, null))
 
             localDeclarations.add(
