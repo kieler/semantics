@@ -255,7 +255,8 @@ class EsterelToSclExtensions {
           }
 
        /*
-        * Checks whether an Esterel statement terminates
+        * Checks whether an Esterel statement terminates. Not complete: May return true even
+        * if a program does not terminate.
         * TODO finish
         */
         def dispatch boolean checkTerminate(de.cau.cs.kieler.esterel.esterel.Statement stm) {

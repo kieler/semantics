@@ -302,7 +302,7 @@ class EsterelToSclTransformation extends Transformation {
         sSeq.createSclPause
         sSeq.addGoto(l)
          
-         sSeq;
+        sSeq;
     }
 
     /*
