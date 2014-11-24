@@ -68,7 +68,9 @@ class UnreachableNodes extends Transformation {
                 removeControlFlows.add(dep.next) 
             }
             if (node instanceof Fork) {
+                //TODO remove all threads and exit nodes
                 val fork = node as Fork
+                fork.next.forEach[ scg.nodes.remove(target); removeControlFlows.add(it) ]
                 removeControlFlows.addAll(fork.next) 
             }
             if (node instanceof Join) {
