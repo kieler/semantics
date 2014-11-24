@@ -192,7 +192,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
     @Override
     public boolean checkModelValidation(final EObject rootEObject)
             throws KiemInitializationException {
-        if (!(rootEObject instanceof State)) {
+        if (!(rootEObject instanceof State) && !(rootEObject instanceof SCGraph)) {
             throw new KiemInitializationException(
                     "SCCharts Simulator can only be used with a SCCharts editor.\n\n", true, null);
         }
@@ -202,7 +202,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
 
     // -------------------------------------------------------------------------
 
-    /**
+    /**SCG
      * {@inheritDoc}
      */
     public boolean isDirty() {
@@ -500,6 +500,7 @@ public class SCChartsCDataComponent extends JSONObjectSimulationDataComponent im
             String fileNameSCChart = "scchart.c";
             String outputFileSCChart = outputFolder + fileNameSCChart;
             System.out.println("19 " + outputFileSCChart);
+            System.out.println("19,5 " + cSCChartCCode.getBytes());
             writeOutputModel(outputFileSCChart, cSCChartCCode.getBytes());
 
             String fileNameSimulation = "simulation.c";

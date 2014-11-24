@@ -87,7 +87,7 @@ import de.cau.cs.kieler.kico.CompilationResult
 import de.cau.cs.kieler.kico.klighd.KiCoKLighDProperties
 import java.util.Set
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
-import javax.inject.Singleton
+import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -97,8 +97,7 @@ import javax.inject.Singleton
  * @kieler.design 2013-10-23 proposed 
  * @kieler.rating 2013-10-23 proposed yellow
  */
-class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<de.cau.cs.kieler.scg.SCGraph> {
-    
+class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
     // -------------------------------------------------------------------------
     // -- Guice
@@ -114,7 +113,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<de.cau.cs.kieler.
     private static val SCGKExpressionsScopeProvider scopeProvider = guiceInjector.getInstance(
         typeof(SCGKExpressionsScopeProvider));
     private static val ISerializer serializer = guiceInjector.getInstance(typeof(ISerializer));
-    
 
     // -------------------------------------------------------------------------
     // -- Extensions 
@@ -249,6 +247,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<de.cau.cs.kieler.
     private static val SynthesisOption SHOW_DEPENDENCY_WRITE_WRITE = SynthesisOption::createCheckOption(
         DEPENDENCYFILTERSTRING_WRITE_WRITE, true);
 
+    /** Show sausage folding */
+    private static val SynthesisOption SHOW_SAUSAGE_FOLDING = SynthesisOption::createCheckOption(
+        "Sausage Folding", true);
+
     /** Show absolute write-relative write dependencies */
     private static val SynthesisOption SHOW_DEPENDENCY_ABSWRITE_RELWRITE = SynthesisOption::
         createCheckOption(DEPENDENCYFILTERSTRING_ABSWRITE_RELWRITE, true);
@@ -284,6 +286,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<de.cau.cs.kieler.
             CONTROLFLOW_THICKNESS,
             SynthesisOption::createSeparator("Dependency Filter"),
             SHOW_DEPENDENCY_WRITE_WRITE,
+            SHOW_SAUSAGE_FOLDING,
             SHOW_DEPENDENCY_ABSWRITE_RELWRITE,
             SHOW_DEPENDENCY_WRITE_READ,
             SHOW_DEPENDENCY_RELWRITE_READ,
@@ -397,7 +400,6 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<de.cau.cs.kieler.
     private int orientation;
     
     private int sequentializedSCGCounter = 0
-    
 
     // -------------------------------------------------------------------------
     // -- Main Entry Point 
@@ -410,9 +412,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<de.cau.cs.kieler.
 	 * @return Returns the root KNode.
 	 */
     override transform(SCGraph model) {
+
         // Connect the model to the scope provider for the serialization.
         scopeProvider.parent = model;
-        compilationResult = this.usedContext.getProperty(KiCoKLighDProperties.COMPILATION_RESULT);
+
+        compilationResult = this.usedContext.getProperty(KiCoKLighDProperties.COMPILATION_RESULT)
         if (compilationResult != null) {
             val PILR = compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head
             if (PILR != null) PIL_Nodes += PILR.criticalNodes
@@ -452,6 +456,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<de.cau.cs.kieler.
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
             node.addLayoutParam(Properties::THOROUGHNESS, 100)
             node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
+            
+            //Suasage folding on/off
+            if ((SHOW_SAUSAGE_FOLDING.booleanValue) && scg.hasAnnotation(ANNOTATION_SEQUENTIALIZED)) {
+                node.addLayoutParam(Properties::NODE_LAYERING, LayeringStrategy::LONGEST_PATH);
+                node.addLayoutParam(Properties::SAUSAGE_FOLDING, true);
+            }
             
             val threadTypes = <Entry, ThreadPathType> newHashMap
             
