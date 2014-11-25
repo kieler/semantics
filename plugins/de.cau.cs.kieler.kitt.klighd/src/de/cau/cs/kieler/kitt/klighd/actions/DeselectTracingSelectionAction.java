@@ -21,6 +21,7 @@ import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption.TracingMode;
+import de.cau.cs.kieler.kitt.klighd.tracing.internal.InternalTracingProperties;
 import de.cau.cs.kieler.kitt.klighd.update.TracingVisualizationUpdateStrategy;
 import de.cau.cs.kieler.klighd.IKlighdSelection;
 
@@ -55,19 +56,19 @@ public class DeselectTracingSelectionAction extends AbstractTracingSelectionActi
         // remove all selections from all nodes
         for (EObject obj : getModelRootNodes(root)) {
             KLayoutData data = ((KNode) obj).getData(KLayoutData.class);
-            data.setProperty(TracingProperties.TRACING_SOURCE_SELECTION, false);
-            data.setProperty(TracingProperties.TRACING_TARGET_SELECTION, false);
+            data.setProperty(InternalTracingProperties.SOURCE_SELECTION, false);
+            data.setProperty(InternalTracingProperties.TARGET_SELECTION, false);
         }
 
         // update tracing edges if necessary
         if (updateTracing) {
             TracingVisualizationUpdateStrategy.visualizeTracing(context.getViewContext()
-                    .getProperty(TracingProperties.TRACING_VISUALIZATION_MODE), root, context
+                    .getProperty(InternalTracingProperties.VISUALIZATION_MODE), root, context
                     .getViewContext(), Lists.newArrayList(((IKlighdSelection) context
                     .getContextViewer().getSelection()).diagramElementsIterator()), true);
             return ActionResult.createResult(true);
         }// remove selection visualization if necessary
-        else if (context.getViewContext().getProperty(TracingProperties.TRACING_VISUALIZATION_MODE) != TracingMode.NO_TRACING) {
+        else if (context.getViewContext().getProperty(InternalTracingProperties.VISUALIZATION_MODE) != TracingMode.NO_TRACING) {
             hideTracingSelection(root);
             return ActionResult.createResult(true);
         }

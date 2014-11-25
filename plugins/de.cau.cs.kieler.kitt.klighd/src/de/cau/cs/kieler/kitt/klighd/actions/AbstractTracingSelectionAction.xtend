@@ -17,14 +17,15 @@ import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.Colors
 import de.cau.cs.kieler.core.krendering.KRendering
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
+import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties
+import de.cau.cs.kieler.kitt.klighd.tracing.internal.InternalTracingProperties
 import de.cau.cs.kieler.kitt.tracingtree.ModelWrapper
 import de.cau.cs.kieler.klighd.IAction
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.core.util.Pair
 
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 
@@ -51,11 +52,11 @@ abstract class AbstractTracingSelectionAction implements IAction {
         diagram.getModelRootNodes.forEach [
             val node = it as KNode
             val data = node.getData(KLayoutData);
-            val highlighting = data.getProperty(TracingProperties.TRACING_SELECTION_HIGHLIGHTING);
-            val isSource = data.getProperty(TracingProperties.TRACING_SOURCE_SELECTION);
-            val isTarget = data.getProperty(TracingProperties.TRACING_TARGET_SELECTION);
+            val highlighting = data.getProperty(InternalTracingProperties.SELECTION_HIGHLIGHTING);
+            val isSource = data.getProperty(InternalTracingProperties.SOURCE_SELECTION);
+            val isTarget = data.getProperty(InternalTracingProperties.TARGET_SELECTION);
             if (highlighting == null && isSource) {
-                data.setProperty(TracingProperties.TRACING_SELECTION_HIGHLIGHTING,
+                data.setProperty(InternalTracingProperties.SELECTION_HIGHLIGHTING,
                     node.getData().filter(KRendering).fold(newLinkedList()) [ list, rendering |
                         //Source selection style
                         val fg = factory.createKBackground();
@@ -67,7 +68,7 @@ abstract class AbstractTracingSelectionAction implements IAction {
                         return list;
                     ]);
             } else if (highlighting == null && isTarget) {
-                data.setProperty(TracingProperties.TRACING_SELECTION_HIGHLIGHTING,
+                data.setProperty(InternalTracingProperties.SELECTION_HIGHLIGHTING,
                     node.getData().filter(KRendering).fold(newLinkedList()) [ list, rendering |
                         //Target selection style
                         val fg = factory.createKBackground();
@@ -83,7 +84,7 @@ abstract class AbstractTracingSelectionAction implements IAction {
                     //remove style from its parent
                     (it.eContainer as KRendering).getStyles().remove(it);
                 ];
-                data.setProperty(TracingProperties.TRACING_SELECTION_HIGHLIGHTING, null);
+                data.setProperty(InternalTracingProperties.SELECTION_HIGHLIGHTING, null);
             }
         ];
 
@@ -98,13 +99,13 @@ abstract class AbstractTracingSelectionAction implements IAction {
         diagram.getModelRootNodes.forEach [
             val data = (it as KNode).getData(KLayoutData);
             //get styles from property
-            val highlighting = data.getProperty(TracingProperties.TRACING_SELECTION_HIGHLIGHTING);
+            val highlighting = data.getProperty(InternalTracingProperties.SELECTION_HIGHLIGHTING);
             if (highlighting != null) {
                 highlighting.forEach [
                     //remove style from its parent
                     (it.eContainer as KRendering).getStyles().remove(it);
                 ];
-                data.setProperty(TracingProperties.TRACING_SELECTION_HIGHLIGHTING, null);
+                data.setProperty(InternalTracingProperties.SELECTION_HIGHLIGHTING, null);
             }
         ];
     }
@@ -119,10 +120,10 @@ abstract class AbstractTracingSelectionAction implements IAction {
     static def Pair<EObject, EObject> getTracingSelection(KNode diagram, ViewContext viewContext) {
         //get selected nodes
         val sourceModelNode = diagram.getModelRootNodes.findFirst [
-            (it as KNode).getData(KLayoutData)?.getProperty(TracingProperties.TRACING_SOURCE_SELECTION);
+            (it as KNode).getData(KLayoutData)?.getProperty(InternalTracingProperties.SOURCE_SELECTION);
         ];
         val targetModelNode = diagram.getModelRootNodes.findFirst [
-            (it as KNode).getData(KLayoutData)?.getProperty(TracingProperties.TRACING_TARGET_SELECTION);
+            (it as KNode).getData(KLayoutData)?.getProperty(InternalTracingProperties.TARGET_SELECTION);
         ];
         if (sourceModelNode != null && targetModelNode != null && sourceModelNode != targetModelNode) {
             //map to model elements

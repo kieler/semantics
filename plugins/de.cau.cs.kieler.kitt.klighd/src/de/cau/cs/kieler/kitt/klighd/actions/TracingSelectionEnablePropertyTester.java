@@ -20,6 +20,7 @@ import org.eclipse.core.expressions.PropertyTester;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties;
+import de.cau.cs.kieler.kitt.klighd.tracing.internal.InternalTracingProperties;
 import de.cau.cs.kieler.kitt.tracingtree.ModelWrapper;
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
 
@@ -60,8 +61,8 @@ public class TracingSelectionEnablePropertyTester extends PropertyTester {
                         if (property.equals(NONE)) {
                             return true;
                         } else if ((property.equals(SOURCE) || property.equals(TARGET))
-                                && !data.getProperty(TracingProperties.TRACING_TARGET_SELECTION)
-                                && !data.getProperty(TracingProperties.TRACING_SOURCE_SELECTION)) {
+                                && !data.getProperty(InternalTracingProperties.TARGET_SELECTION)
+                                && !data.getProperty(InternalTracingProperties.SOURCE_SELECTION)) {
                             return true;
                         }
                     }

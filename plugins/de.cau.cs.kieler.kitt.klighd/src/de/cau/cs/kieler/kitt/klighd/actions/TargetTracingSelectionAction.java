@@ -19,8 +19,8 @@ import com.google.common.collect.Lists;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption.TracingMode;
+import de.cau.cs.kieler.kitt.klighd.tracing.internal.InternalTracingProperties;
 import de.cau.cs.kieler.kitt.klighd.update.TracingVisualizationUpdateStrategy;
 import de.cau.cs.kieler.klighd.IKlighdSelection;
 
@@ -57,24 +57,24 @@ public class TargetTracingSelectionAction extends AbstractTracingSelectionAction
             KLayoutData data = ((KNode) obj).getData(KLayoutData.class);
             // set new selection
             if (obj == context.getKNode()) {
-                data.setProperty(TracingProperties.TRACING_TARGET_SELECTION, true);
+                data.setProperty(InternalTracingProperties.TARGET_SELECTION, true);
             } // remove selection from current target node
             else {
-                data.setProperty(TracingProperties.TRACING_TARGET_SELECTION, false);
+                data.setProperty(InternalTracingProperties.TARGET_SELECTION, false);
             }
             //check for corresponding source
-            updateTracing |= data.getProperty(TracingProperties.TRACING_SOURCE_SELECTION);
+            updateTracing |= data.getProperty(InternalTracingProperties.SOURCE_SELECTION);
         }
 
         //update tracing edges if necessary
         if (updateTracing) {
             TracingVisualizationUpdateStrategy.visualizeTracing(context.getViewContext()
-                    .getProperty(TracingProperties.TRACING_VISUALIZATION_MODE), root, context
+                    .getProperty(InternalTracingProperties.VISUALIZATION_MODE), root, context
                     .getViewContext(), Lists.newArrayList(((IKlighdSelection) context
                     .getContextViewer().getSelection()).diagramElementsIterator()), true);
             return ActionResult.createResult(true);
         }// update selection visualization if necessary
-        else if (context.getViewContext().getProperty(TracingProperties.TRACING_VISUALIZATION_MODE) != TracingMode.NO_TRACING) {
+        else if (context.getViewContext().getProperty(InternalTracingProperties.VISUALIZATION_MODE) != TracingMode.NO_TRACING) {
             showTracingSelection(root);
             return ActionResult.createResult(true);
         }

@@ -14,11 +14,14 @@
 package de.cau.cs.kieler.kitt.tracing;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Lists;
 
 import de.cau.cs.kieler.kitt.tracing.internal.TracingChain;
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping;
@@ -37,9 +40,10 @@ public class TransformationTracing {
 
     private static HashMap<Thread, TracingMapping> activeTransformations =
             new HashMap<Thread, TracingMapping>(4);
-    private static HashMap<Thread, EObject> tracingDefaults = new HashMap<Thread, EObject>(4);
-    private static HashMap<Thread, HashMap<EObject, EObject>> appiledDefaultTracings =
-            new HashMap<Thread, HashMap<EObject, EObject>>(4);
+    private static HashMap<Thread, List<EObject>> tracingDefaults =
+            new HashMap<Thread, List<EObject>>(4);
+    private static HashMap<Thread, HashMultimap<EObject, EObject>> appiledDefaultTracings =
+            new HashMap<Thread, HashMultimap<EObject, EObject>>(4);
 
     public static boolean startTransformationTracing(final EObject sourceModel) {
         return startTransformationTracing(sourceModel, null, null, true);
@@ -63,7 +67,6 @@ public class TransformationTracing {
                 activeTransformations.remove(t);// try to fix
                 throw new IllegalStateException(
                         "Cannot start transformation tracing for given model until other current transformation on the same model have finished");
-
             }
             if (inPlaceTransformation) {
                 TracingChain tracingChain = TracingManager.getTracingChain(sourceModel);
@@ -72,18 +75,20 @@ public class TransformationTracing {
                     if (inPlaceMapping != null) {
                         TracingMapping tracingMapping = new TracingMapping(inPlaceMapping, name);
                         sourceModel.eAdapters().add(tracingMapping);
+                        tracingMapping.setActive(true);
                         activeTransformations.put(t, tracingMapping);
-                        appiledDefaultTracings.put(t, new HashMap<EObject, EObject>());
+                        appiledDefaultTracings.put(t, HashMultimap.<EObject, EObject> create());
                         return true;
                     }
                 }
             } else {
-                TracingMapping mapping = new TracingMapping(name);
-                activeTransformations.put(t, mapping);
-                appiledDefaultTracings.put(t, new HashMap<EObject, EObject>());
+                TracingMapping tracingMapping = new TracingMapping(name);
+                activeTransformations.put(t, tracingMapping);
+                appiledDefaultTracings.put(t, HashMultimap.<EObject, EObject> create());
                 if (targetModel != null) {
-                    targetModel.eAdapters().add(mapping);
+                    targetModel.eAdapters().add(tracingMapping);
                 }
+                tracingMapping.setActive(true);
                 return true;
             }
         }
@@ -111,10 +116,16 @@ public class TransformationTracing {
         Thread t = Thread.currentThread();
         TracingMapping mapping = activeTransformations.get(t);
         if (mapping != null && sourceModel != null && targetModel != null) {
+            mapping.setActive(false);
+            if (mapping.isInPlace()) {
+                sourceModel.eAdapters().remove(mapping);
+            } else if (targetModel instanceof EObject) {
+                ((EObject) targetModel).eAdapters().remove(mapping);
+            }
             if (DEBUG) {
                 TracingReport tracingReport = new TracingReport(sourceModel, targetModel, mapping);
                 tracingReport.printReport();
-                //tracingReport.failOnIncompleteMapping();
+                // tracingReport.failOnIncompleteMapping();
             }
             TracingManager.addTransformationTrace(sourceModel, targetModel, mapping);
         }
@@ -151,11 +162,11 @@ public class TransformationTracing {
         Thread t = Thread.currentThread();
         TracingMapping mapping = activeTransformations.get(t);
         if (mapping != null) {
-            HashMap<EObject, EObject> appiledDefaultTracing = appiledDefaultTracings.get(t);
+            HashMultimap<EObject, EObject> appiledDefaultTracing = appiledDefaultTracings.get(t);
             // Drop any default tracing if applied
             if (appiledDefaultTracing.containsKey(eObject)) {
                 mapping.remove(eObject, appiledDefaultTracing.get(eObject));
-                appiledDefaultTracing.remove(eObject);
+                appiledDefaultTracing.removeAll(eObject);
             }
             mapping.smartPut(origin, eObject);
         }
@@ -172,7 +183,8 @@ public class TransformationTracing {
     }
 
     /**
-     * Traced given object to the DefaultTrace is set.
+     * Traced given object to the DefaultTrace is set. Does not override exiting explicit taring
+     * relation made by trace
      * 
      * @param eObject
      * @return
@@ -181,20 +193,43 @@ public class TransformationTracing {
         Thread t = Thread.currentThread();
         if (activeTransformations.containsKey(t) && tracingDefaults.get(t) != null) {
             TracingMapping mapping = activeTransformations.get(t);
-            appiledDefaultTracings.get(t).put(eObject, tracingDefaults.get(t));
-            mapping.smartPut(tracingDefaults.get(t), eObject);
+            List<EObject> tracingDefaultList = tracingDefaults.get(t);
+            if (!mapping.contains(eObject)) {
+                appiledDefaultTracings.get(t).putAll(eObject, tracingDefaultList);
+                for (EObject tracingDefault : tracingDefaultList) {
+                    mapping.smartPut(tracingDefault, eObject);
+                }
+            } else if (appiledDefaultTracings.get(t).containsKey(eObject)) {
+                for (EObject tracingDefault : tracingDefaultList) {
+                    mapping.remove(tracingDefault, eObject);
+                }
+                appiledDefaultTracings.get(t).putAll(eObject, tracingDefaultList);
+                for (EObject tracingDefault : tracingDefaultList) {
+                    mapping.smartPut(tracingDefault, eObject);
+                }
+            }
         }
         return eObject;
     }
 
     /**
-     * Sets given origin ad default origin applied in {@link traceToDefault}.
+     * Sets given origin as default origin applied in {@link traceToDefault}.
      * 
      * @param origin
      * @return origin
      */
     public static <T extends EObject> T setDefaultTrace(final T origin) {
-        tracingDefaults.put(Thread.currentThread(), origin);
+        tracingDefaults.put(Thread.currentThread(), Lists.<EObject> newArrayList(origin));
         return origin;
     }
+
+    /**
+     * Sets given origins as default origins applied in {@link traceToDefault}.
+     * 
+     * @param origin
+     */
+    public static <T extends EObject> void setDefaultTrace(final T... origins) {
+        tracingDefaults.put(Thread.currentThread(), Lists.<EObject> newArrayList(origins));
+    }
+
 }

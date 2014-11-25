@@ -15,9 +15,12 @@ package de.cau.cs.kieler.kitt.tracing.internal
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
+import de.cau.cs.kieler.core.util.Pair
+import java.util.Collection
 import java.util.HashMap
 import java.util.List
 import org.eclipse.emf.common.notify.Notification
+import org.eclipse.emf.common.notify.Notifier
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EContentAdapter
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
@@ -25,6 +28,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 import static com.google.common.base.Preconditions.*
 
 import static extension com.google.common.collect.Multimaps.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * 
@@ -42,11 +46,13 @@ class TracingMapping extends EContentAdapter {
     /** Reverse mapping */
     private val HashMultimap<Object, Object> rmapping;
 
-    private val HashMap<EObject, List<de.cau.cs.kieler.core.util.Pair<Object, Object>>> removedEntries = newHashMap;
+    private val HashMap<EObject, List<Pair<Object, Object>>> removedEntries = newHashMap;
 
     private var String title = null;
 
     private val TracingMapping delegate;
+
+    private var boolean active = false;
 
     new(String title) {
         this.mapping = HashMultimap::create(10000, 10);
@@ -73,6 +79,7 @@ class TracingMapping extends EContentAdapter {
     def boolean put(Object origin, Object target) {
         checkNotNull(origin, "Origin object is null");
         checkNotNull(target, "Target object is null");
+        checkArgument(origin != target, "Origin is equal to target element.");
         checkArgument(!rmapping.containsKey(origin),
             "Loop detect in tracing mapping. Origin element is already mapped as target.", origin);
         checkArgument(!mapping.containsKey(target),
@@ -89,9 +96,10 @@ class TracingMapping extends EContentAdapter {
 	 * @throws IllegalArgumentException if targets list contains null element.
      * @throws IllegalArgumentException if target origin relation adds a loop to the overall mapping.
 	 */
-    def boolean put(Object origin, List<Object> targets) {
+    def <T extends Object> boolean putAll(Object origin, Collection<T> targets) {
         checkNotNull(origin, "Origin object is null");
         checkNotNull(targets, "Targets list is null");
+        checkArgument(!targets.contains(origin), "Targets list contains origin element");
         checkArgument(!targets.contains(null), "Targets list contains null element");
         checkArgument(!rmapping.containsKey(origin),
             "Loop detect in tracing mapping. Origin element is already mapped as target.", origin);
@@ -161,13 +169,13 @@ class TracingMapping extends EContentAdapter {
 	 * Object can be origin or target
      * @return true if the mapping changed
 	 */
-    def List<de.cau.cs.kieler.core.util.Pair<Object, Object>> removeAll(Object obj) {
+    def List<Pair<Object, Object>> removeAll(Object obj) {
         if (mapping.containsKey(obj)) { //if object is key
             obj.getTargets.forEach[rmapping.remove(it, obj)];
-            return mapping.removeAll(obj).map[new de.cau.cs.kieler.core.util.Pair(obj, it)].toList;
+            return mapping.removeAll(obj).map[new Pair(obj, it)].toList;
         } else if (rmapping.containsKey(obj)) { //if object is value
             obj.getOrigins.forEach[mapping.remove(it, obj)];
-            return rmapping.removeAll(obj).map[new de.cau.cs.kieler.core.util.Pair(it, obj)].toList;
+            return rmapping.removeAll(obj).map[new Pair(it, obj)].toList;
         } else {
             return emptyList;
         }
@@ -231,29 +239,61 @@ class TracingMapping extends EContentAdapter {
     // -------------------------------------------------------------------------
     // Adapter
     /**
+     * Activated or deactivates automatic relation deriving on Notification 
+     * this adapter receives from the observed model.
+     */
+    def setActive(boolean activeState) {
+        active = activeState;
+    }
+
+    /**
+     * Returns the current active state.
+     * If active automatic relation deriving on Notification 
+     * this adapter receives from the observed model are performed.
+     */
+    def isActive() {
+        active
+    }
+
+    /**
      * Handles removing of mapping-relations when an element is removed from model,
      */
     override notifyChanged(Notification notification) {
-        if (notification.eventType == Notification.ADD) {
-            val EObject element = notification.newValue as EObject;
+
+        if (notification.eventType == Notification.SET) {
+            val newValue = notification.newValue;
+            val oldValue = notification.oldValue;
+
+            if (newValue instanceof EObject && oldValue instanceof EObject && newValue != oldValue) {
+                smartPut(oldValue as EObject, newValue as EObject);
+            }
+        }
+
+        //super implementation handles selfAdapt calling add/remocveAdapter
+        //thus invoke this behavior after redirecting tracing
+        super.notifyChanged(notification);
+    }
+
+    override void addAdapter(Notifier notifier) {
+        super.addAdapter(notifier);
+        if (active) {
+            val element = notifier as EObject;
 
             //If element is added which was removed earlier then restore mappings
             if (removedEntries.containsKey(element)) {
                 removedEntries.get(element).forEach[put(it.first, it.second)];
                 removedEntries.remove(element);
-                element.eAllContents.forEach [
-                    removedEntries.get(it)?.forEach[put(it.first, it.second)];
-                    removedEntries.remove(it);
-                ];
+            } else if (!contains(element)) {
+                element.traceToDefault;
             }
-        } else if (notification.eventType == Notification.REMOVE) {
-            val EObject element = notification.oldValue as EObject;
+        }
+    }
 
-            //remove all relation even of contained child elements
-            if (!contains(element.eContainer)) {
-                removedEntries.put(element, element.removeAll);
-                element.eAllContents.forEach[removedEntries.put(it, it.removeAll)]
-            }
+    override void removeAdapter(Notifier notifier) {
+        super.removeAdapter(notifier);
+        if (active) {
+            val element = notifier as EObject;
+            removedEntries.put(element, element.removeAll);
         }
     }
 

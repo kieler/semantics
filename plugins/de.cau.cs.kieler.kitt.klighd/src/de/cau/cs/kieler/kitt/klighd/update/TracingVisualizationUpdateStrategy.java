@@ -32,9 +32,9 @@ import de.cau.cs.kieler.core.kgraph.KLabel;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.ViewSynthesisShared;
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption.TracingMode;
+import de.cau.cs.kieler.kitt.klighd.tracing.internal.InternalTracingProperties;
 import de.cau.cs.kieler.kitt.klighd.tracing.internal.TracingVisualizer;
 import de.cau.cs.kieler.klighd.IKlighdSelection;
 import de.cau.cs.kieler.klighd.IUpdateStrategy;
@@ -109,7 +109,7 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
             // Assumption: SynthesisOptions are preset earlier and there is at most one option
             // changed to its previous state
             TracingMode mode = TracingMode.getTracingMode(viewContext.getOptionValue(option));
-            if (mode != viewContext.getProperty(TracingProperties.TRACING_VISUALIZATION_MODE)) {
+            if (mode != viewContext.getProperty(InternalTracingProperties.VISUALIZATION_MODE)) {
                 // omit a new synthesis run when only tracing mode were changed
                 return false;
             } else {
@@ -137,12 +137,13 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
             // Activate tracing in currrent mode
             TracingMode mode = TracingMode.getTracingMode(viewContext.getOptionValue(option));
             enableVisualization(mode, baseModel, viewContext);
-            viewContext.setProperty(TracingProperties.TRACING_VISUALIZATION_MODE, mode);
+            viewContext.setProperty(InternalTracingProperties.VISUALIZATION_MODE, mode);
         } else {
             // disable tracing when a diagram without tracing options is present
-            viewContext.setProperty(TracingProperties.TRACING_VISUALIZATION_MODE,
+            viewContext.setProperty(InternalTracingProperties.VISUALIZATION_MODE,
                     TracingMode.NO_TRACING);
-            viewContext.setProperty(TracingProperties.TRACING_MAP, null);
+            viewContext.setProperty(InternalTracingProperties.MAPPING, null);
+            viewContext.setProperty(InternalTracingProperties.DIAGRAM_EQUIVALENCE_CLASSES, null);
         }
     }
 
