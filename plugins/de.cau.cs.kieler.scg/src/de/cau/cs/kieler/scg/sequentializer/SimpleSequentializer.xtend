@@ -94,7 +94,7 @@ class SimpleSequentializer extends AbstractSequentializer {
     // -- Globals
     // -------------------------------------------------------------------------
     
-    private static val ANNOTATION_SEQUENTIALIZED = "sequentialized" 
+    public static val ANNOTATION_SEQUENTIALIZED = "sequentialized" 
     
     protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
     protected var KielerCompilerContext compilerContext
