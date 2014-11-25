@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.esterel.scl;
 
-import javax.inject.Inject;
-
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
