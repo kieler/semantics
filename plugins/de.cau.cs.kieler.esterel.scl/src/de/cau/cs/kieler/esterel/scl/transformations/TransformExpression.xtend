@@ -100,31 +100,31 @@ class TransformExpression {
     }
 
     // TODO Kind of ugly as type is not stored explicitly
-    def dispatch transformConstExp(ConstantExpression constExp, ValueType type) {
+    def dispatch transformConstExp(ConstantExpression constExp, String type) {
         System.out.println("Value: " + constExp.value)
-        System.out.println("constant: " + constExp.constant)
+        System.out.println("type: " + type)
         System.out.println("As integer: " + Integer.getInteger(constExp.value))
 
         switch type {
-            case (ValueType::INT):
+            case ("int"):
                 return KExpressionsFactory::eINSTANCE.createIntValue => [
                     value = Integer.parseInt(constExp.value)
                 ]
-            case (ValueType::BOOL):
+            case ("bool"):
                 return KExpressionsFactory::eINSTANCE.createBoolValue => [
                     value = Boolean.parseBoolean(constExp.value)
                 ]
-            case (ValueType::FLOAT):
+            case ("float"):
                 return KExpressionsFactory::eINSTANCE.createFloatValue => [
                     value = Float.parseFloat(constExp.value)
                 ]
                 //TODO should be double...
-            case (ValueType::DOUBLE):
+            case ("double"):
                 return KExpressionsFactory::eINSTANCE.createFloatValue => [
                     value = Float.parseFloat(constExp.value)
                 ]
                 //TODO should be unsigned...
-            case (ValueType::UNSIGNED):
+            case ("unsigned"):
                 return KExpressionsFactory::eINSTANCE.createIntValue => [
                     value = Integer.parseInt(constExp.value)
                 ]

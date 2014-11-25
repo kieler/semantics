@@ -47,6 +47,8 @@ import de.cau.cs.kieler.esterel.esterel.EveryDo
 import de.cau.cs.kieler.esterel.esterel.Await
 import de.cau.cs.kieler.esterel.esterel.AwaitInstance
 import de.cau.cs.kieler.esterel.esterel.AwaitCase
+import de.cau.cs.kieler.esterel.esterel.LocalSignal
+import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
 
 /**
  * @author krat
@@ -305,6 +307,8 @@ class EsterelToSclExtensions {
                 }
             } else if (stm instanceof EveryDo) {
                 return false;
+            } else if (stm instanceof LocalSignalDecl) {
+                return (stm as LocalSignalDecl).statement.checkTerminate
             } else if (stm instanceof Await) {
                 val await = stm as Await
                 if (await.body instanceof AwaitCase) {

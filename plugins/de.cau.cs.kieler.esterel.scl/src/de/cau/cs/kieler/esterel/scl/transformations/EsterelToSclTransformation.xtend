@@ -180,7 +180,7 @@ class EsterelToSclTransformation extends Transformation {
         program.name = esterelMod.name
 
         // Interface transformations
-        transformDeclaration(esterelMod.interface.intSignalDecls, program)
+        valuedMap = transformDeclaration(esterelMod.interface.intSignalDecls, program)
 
         // Save all declarated valuedObjects to the signalMap
         program.declarations.forEach[valuedObjects.forEach[signalMap.add(it.name -> it)]]
@@ -274,18 +274,16 @@ class EsterelToSclTransformation extends Transformation {
             valuedObject = variable
         ]
 
-        // Unvalued Emit
-        if (emit.expr == null) {
-            val op = createOperatorExpression(OperatorType::OR) => [
-                add(variableRef)
-                add(createBoolValue(true))
-            ]
+        val op = createOperatorExpression(OperatorType::OR) => [
+            add(variableRef)
+            add(createBoolValue(true))
+        ]
+        sSeq.statements.add(createStmFromInstr(createAssignment(variable, op)))
 
-            sSeq.statements.add(createStmFromInstr(createAssignment(variable, op)))
-        }
         // Valued Emit
-        else {
-            sSeq.statements.add(createStmFromInstr(createAssignment(variable, transformExp(emit.expr, signalMap))))
+        if (emit.expr != null) {
+            val s_val = valuedMap.get(variable)
+            sSeq.statements.add(createStmFromInstr(createAssignment(s_val, transformConstExp(emit.expr, s_val.type.toString))))
         }
 
         sSeq

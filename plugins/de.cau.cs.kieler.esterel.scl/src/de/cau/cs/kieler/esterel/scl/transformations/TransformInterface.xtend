@@ -28,6 +28,7 @@ import java.util.LinkedList
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scl.scl.Program
 import de.cau.cs.kieler.esterel.esterel.ConstantExpression
+import java.util.HashMap
 
 /**
  * @author krat
@@ -47,7 +48,7 @@ class TransformInterface {
     /*
      * Transforms an Esterel module interface to a list of Kexpression declarations
      */
-    def transformInterface(ModuleInterface modInterface, Program program) {
+    def HashMap<ValuedObject, ValuedObject> transformInterface(ModuleInterface modInterface, Program program) {
         System.out.println("Transforming Interface")
         transformDeclaration(modInterface.intSignalDecls, program)
     }
@@ -55,19 +56,23 @@ class TransformInterface {
     /*
      * Transforms the signal declarations
      */
-    def transformDeclaration(EList<InterfaceSignalDecl> list, Program program) {
+    def HashMap<ValuedObject, ValuedObject> transformDeclaration(EList<InterfaceSignalDecl> list, Program program) {
         System.out.println("Transforming Interface Signal Declarations")
         val names = list.collectNames
+        val HashMap<ValuedObject, ValuedObject> valuedMap = newHashMap
         
         for (singleDecl : list) {
-            transformSingleDeclartion(singleDecl, program, names)
+            valuedMap.putAll(transformSingleDeclartion(singleDecl, program, names))
         }
+        
+        valuedMap
     }
     
     /*
      * Transforms one signal declaration, which may consist of pure and valued signals
      */
-    def transformSingleDeclartion(InterfaceSignalDecl decl, Program program, LinkedList<String> names) {
+    def HashMap<ValuedObject, ValuedObject> transformSingleDeclartion(InterfaceSignalDecl decl, Program program, LinkedList<String> names) {
+        val HashMap<ValuedObject, ValuedObject> valuedMap = newHashMap
         val pureSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
             input = decl instanceof Input
             output = decl instanceof Output
@@ -114,7 +119,8 @@ class TransformInterface {
         
         for (sig : decl.signals) {
             System.out.println("Transforming signal " + sig)
-            pureSignals.valuedObjects.add(createValuedObject(sig.name));
+            val pureSig = createValuedObject(sig.name)
+            pureSignals.valuedObjects.add(pureSig);
             
             // Valued signals get a variable containing the value
             if (sig.channelDescr != null) {//de.cau.cs.kieler.esterel.kexpressions.ValueType::INT) {
@@ -122,8 +128,9 @@ class TransformInterface {
                 System.out.println("Initial value is " + sig.channelDescr.expression)
                 val s_val = createValuedObject(uniqueNameByList(names, sig.name + "_val"))
                 
+                valuedMap.put(pureSig, s_val)
                 val type = sig.channelDescr.type.type
-                s_val.initialValue = sig.channelDescr.expression.transformConstExp(type)
+                s_val.initialValue = sig.channelDescr.expression.transformConstExp(type.toString)
                 switch (type) {
                     case (de.cau.cs.kieler.esterel.kexpressions.ValueType::INT):
                         intSignals.valuedObjects.add(s_val)
@@ -165,7 +172,7 @@ class TransformInterface {
             program.declarations.add(doubleSignals)
         }
 
-        
+        valuedMap
     }
     
     /*
