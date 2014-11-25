@@ -86,6 +86,7 @@ import de.cau.cs.kieler.esterel.esterel.Exit
 import de.cau.cs.kieler.esterel.esterel.Sustain
 import java.util.HashMap
 import de.cau.cs.kieler.core.kexpressions.util.KExpressionsAdapterFactory
+import de.cau.cs.kieler.core.kexpressions.CombineOperator
 
 /**
  * @author krat
@@ -112,7 +113,7 @@ class EsterelToSclTransformation extends Transformation {
     var LinkedList<Pair<String, ValuedObject>> signalMap
     
     // Maps valued variables to signal
-    var HashMap<ValuedObject, ValuedObject> valuedMap
+    var HashMap<ValuedObject, Pair<ValuedObject, OperatorType>> valuedMap
 
     // Flag indicating if optimized transformations should be used
     var boolean opt
@@ -162,7 +163,7 @@ class EsterelToSclTransformation extends Transformation {
         // list for a key is the current variable representing a (local) signal
         signalMap = new LinkedList<Pair<String, ValuedObject>>
         
-        valuedMap = new HashMap<ValuedObject, ValuedObject>()
+        valuedMap = new HashMap<ValuedObject, Pair<ValuedObject, OperatorType>>()
 
         // Does the program terminate?
         var boolean termTmp = true
@@ -233,7 +234,7 @@ class EsterelToSclTransformation extends Transformation {
         th.addLabel(l)
 
         for (decl : decls) {
-            if (((decl.output && !decl.input) || isLocal) && decl.type == ValueType::BOOL) {
+            if (((decl.output && !decl.input) || isLocal)) {
                 for (value : decl.valuedObjects) {
                     th.statements.add(createStmFromInstr(createAssignment(value, createBoolValue(false))))
                 }
@@ -278,12 +279,39 @@ class EsterelToSclTransformation extends Transformation {
             add(variableRef)
             add(createBoolValue(true))
         ]
-        sSeq.statements.add(createStmFromInstr(createAssignment(variable, op)))
+
+        // "emits" the signal by setting it to true
+        val setSignal = createStmFromInstr(createAssignment(variable, op))
+        
+        // Unvalued emit
+        if (emit.expr == null) {
+            sSeq.statements.add(setSignal)
+        }
 
         // Valued Emit
-        if (emit.expr != null) {
-            val s_val = valuedMap.get(variable)
-            sSeq.statements.add(createStmFromInstr(createAssignment(s_val, transformConstExp(emit.expr, s_val.type.toString))))
+        else if (emit.expr != null) {
+            val s_val = valuedMap.get(variable).key
+            val combine = valuedMap.get(variable).value
+            val sclExpr = emit.expr.transformExp(signalMap)
+            System.out.println("Variable Ref: " + variableRef)
+            val cond = SclFactory::eINSTANCE.createConditional => [
+                expression = variableRef
+                statements += createStmFromInstr(SclFactory::eINSTANCE.createAssignment => [
+                    expression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+                        operator = OperatorType::AND//combine
+                        subExpressions.add(createValuedObjectRef(s_val))
+                        subExpressions.add(sclExpr)
+                    ]
+                    valuedObject = s_val
+                ])
+                System.out.println("s_val: " + s_val)
+                System.out.println("op: " + op)
+                elseStatements.add(createStmFromInstr(createAssignment(s_val, createBoolValue(true))))
+                System.out.println("s_val2: " + s_val)
+                System.out.println("op2: " + op)
+//                elseStatements.add(createStmFromInstr(createAssignment(s_val, sclExpr)))                
+            ]
+            sSeq.statements += cond.createStmFromInstr
         }
 
         sSeq

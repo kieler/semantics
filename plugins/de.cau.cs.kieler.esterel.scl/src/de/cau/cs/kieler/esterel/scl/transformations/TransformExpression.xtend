@@ -27,6 +27,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.esterel.kexpressions.BooleanValue
 import de.cau.cs.kieler.core.kexpressions.util.KExpressionsAdapterFactory
 import de.cau.cs.kieler.esterel.kexpressions.ValueType
+import de.cau.cs.kieler.esterel.kexpressions.CombineOperator
 
 /**
  * @author krat
@@ -58,7 +59,7 @@ class TransformExpression {
             System.out.println("transformExp: ConstantExpression")
 
             // TODO: Does not have to be bool
-            return transformConstExp(exp, ValueType::BOOL)
+            return transformConstExp(exp, "bool")
         } else if (exp instanceof BooleanValue) {
             return KExpressionsFactory::eINSTANCE.createBoolValue => [
                 value = (exp as BooleanValue).value
@@ -85,6 +86,13 @@ class TransformExpression {
                 subExpressions.add(transformExp(subExp, variables))
             }
         ]
+    }
+    
+    /*
+     * Translates esterel CombineOperator to KExpressions Operator
+     */
+    def de.cau.cs.kieler.core.kexpressions.OperatorType transformCombineOperator(CombineOperator op) {
+        return de.cau.cs.kieler.core.kexpressions.OperatorType::get(op.toString)
     }
 
     def de.cau.cs.kieler.core.kexpressions.ValuedObjectReference transformCompExp(ComplexExpression comp,
@@ -134,7 +142,7 @@ class TransformExpression {
         }
     }
     
-    def dispatch transformConstExp(BooleanValue b, ValueType type) {
+    def dispatch transformConstExp(BooleanValue b, String type) {
         return KExpressionsFactory::eINSTANCE.createBoolValue => [
                     value = b.value
                 ]
