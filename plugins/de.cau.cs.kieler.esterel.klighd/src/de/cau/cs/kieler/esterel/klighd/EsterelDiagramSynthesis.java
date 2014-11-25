@@ -15,7 +15,7 @@ package de.cau.cs.kieler.esterel.klighd;
 
 import java.util.List;
 
-import javax.inject.Inject;
+import com.google.inject.Inject;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.kico.KielerCompiler;
