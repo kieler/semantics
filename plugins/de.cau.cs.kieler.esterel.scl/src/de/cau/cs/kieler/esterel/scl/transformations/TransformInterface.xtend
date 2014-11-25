@@ -27,6 +27,7 @@ import de.cau.cs.kieler.core.kexpressions.ValueType
 import java.util.LinkedList
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scl.scl.Program
+import de.cau.cs.kieler.esterel.esterel.ConstantExpression
 
 /**
  * @author krat
@@ -36,6 +37,12 @@ class TransformInterface {
     
     @Inject
     extension KExpressionsExtension
+    
+    @Inject
+    extension EsterelToSclExtensions
+    
+    @Inject
+    extension TransformExpression
     
     /*
      * Transforms an Esterel module interface to a list of Kexpression declarations
@@ -50,16 +57,17 @@ class TransformInterface {
      */
     def transformDeclaration(EList<InterfaceSignalDecl> list, Program program) {
         System.out.println("Transforming Interface Signal Declarations")
+        val names = list.collectNames
         
         for (singleDecl : list) {
-            transformSingleDeclartion(singleDecl, program)
+            transformSingleDeclartion(singleDecl, program, names)
         }
     }
     
     /*
      * Transforms one signal declaration, which may consist of pure and valued signals
      */
-    def transformSingleDeclartion(InterfaceSignalDecl decl, Program program) {
+    def transformSingleDeclartion(InterfaceSignalDecl decl, Program program, LinkedList<String> names) {
         val pureSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
             input = decl instanceof Input
             output = decl instanceof Output
@@ -72,22 +80,66 @@ class TransformInterface {
             type = ValueType::INT
             //...
         ]
+        val boolSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
+            input = decl instanceof Input
+            output = decl instanceof Output
+            type = ValueType::BOOL
+            //...
+        ]
+        val unsignedSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
+            input = decl instanceof Input
+            output = decl instanceof Output
+            type = ValueType::UNSIGNED
+            //...
+        ]
+        val floatSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
+            input = decl instanceof Input
+            output = decl instanceof Output
+            type = ValueType::FLOAT
+            //...
+        ]
+        val doubleSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
+            input = decl instanceof Input
+            output = decl instanceof Output
+            type = ValueType::DOUBLE
+            //...
+        ]
+        val stringSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
+            input = decl instanceof Input
+            output = decl instanceof Output
+            type = ValueType::STRING
+            //...
+        ]
+        // TODO: HOST?
         
         for (sig : decl.signals) {
-            if (sig.channelDescr == null) {
-                System.out.println("Transforming pure signal " + sig)
-                val variable = createValuedObject(sig.name)
-                pureSignals.valuedObjects.add(variable);
-                System.out.println("Variable1 is " + variable)
-            }
-            // Valued int signal
-            else if (sig.channelDescr.type.type == de.cau.cs.kieler.esterel.kexpressions.ValueType::INT) {
-                System.out.println("Transforming int signal " + sig)
-                val variable = createValuedObject(sig.name)
-                intSignals.valuedObjects.add(variable);
-            }
-            else {
-                System.out.println("Unable to transform declaration: " + sig.channelDescr.type.type)
+            System.out.println("Transforming signal " + sig)
+            pureSignals.valuedObjects.add(createValuedObject(sig.name));
+            
+            // Valued signals get a variable containing the value
+            if (sig.channelDescr != null) {//de.cau.cs.kieler.esterel.kexpressions.ValueType::INT) {
+                System.out.println("Transforming valued signal type.type " + sig.channelDescr.type.type)
+                System.out.println("Initial value is " + sig.channelDescr.expression)
+                val s_val = createValuedObject(uniqueNameByList(names, sig.name + "_val"))
+                
+                val type = sig.channelDescr.type.type
+                s_val.initialValue = sig.channelDescr.expression.transformConstExp(type)
+                switch (type) {
+                    case (de.cau.cs.kieler.esterel.kexpressions.ValueType::INT):
+                        intSignals.valuedObjects.add(s_val)
+                    case (de.cau.cs.kieler.esterel.kexpressions.ValueType::BOOL):
+                        boolSignals.valuedObjects.add(s_val)
+                    case (de.cau.cs.kieler.esterel.kexpressions.ValueType::STRING):
+                        stringSignals.valuedObjects.add(s_val)
+                    case (de.cau.cs.kieler.esterel.kexpressions.ValueType::FLOAT):
+                        floatSignals.valuedObjects.add(s_val)
+                    case (de.cau.cs.kieler.esterel.kexpressions.ValueType::UNSIGNED):
+                        unsignedSignals.valuedObjects.add(s_val)
+                    case (de.cau.cs.kieler.esterel.kexpressions.ValueType::DOUBLE):
+                        doubleSignals.valuedObjects.add(s_val)
+                    default:
+                        System.out.println("Unable to transform declaration: " + sig.channelDescr.type.type)
+                }
             }
         }
         
@@ -97,7 +149,38 @@ class TransformInterface {
         if (intSignals.valuedObjects.length != 0) {
             program.declarations.add(intSignals)
         }
+        if (boolSignals.valuedObjects.length != 0) {
+            program.declarations.add(boolSignals)
+        }
+        if (stringSignals.valuedObjects.length != 0) {
+            program.declarations.add(stringSignals)
+        }
+        if (unsignedSignals.valuedObjects.length != 0) {
+            program.declarations.add(unsignedSignals)
+        }
+        if (floatSignals.valuedObjects.length != 0) {
+            program.declarations.add(floatSignals)
+        }
+        if (doubleSignals.valuedObjects.length != 0) {
+            program.declarations.add(doubleSignals)
+        }
+
+        
     }
+    
+    /*
+     * Collects all declarated signal names
+     */
+     def LinkedList<String> collectNames(EList<InterfaceSignalDecl> decls) {
+         val LinkedList<String> names = newLinkedList
+         decls.forEach[
+             signals.forEach[
+                 names += it.name
+             ]
+         ]
+         
+         names
+     }
 
     
 }

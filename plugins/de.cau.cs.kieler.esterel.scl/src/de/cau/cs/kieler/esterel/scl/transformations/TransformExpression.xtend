@@ -24,26 +24,30 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.esterel.kexpressions.ComplexExpression
 import java.util.LinkedList
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.esterel.kexpressions.BooleanValue
+import de.cau.cs.kieler.core.kexpressions.util.KExpressionsAdapterFactory
+import de.cau.cs.kieler.esterel.kexpressions.ValueType
 
 /**
  * @author krat
  *
  */
 class TransformExpression {
-    
+
     @Inject
     extension KExpressionsExtension
-    
+
     @Inject
     extension EsterelToSclExtensions
-    
+
     /*
      * Transforms an esterel.kexpression.Expression to core.kexpression.Expression
      * @param exp The Esterel expression to be transformed
      * @param variables List of ValuedObject in scope
      * @return The transformed KExpressions Expression
      */
-    def de.cau.cs.kieler.core.kexpressions.Expression transformExp(Expression exp, LinkedList<Pair<String, ValuedObject>> variables) {
+    def de.cau.cs.kieler.core.kexpressions.Expression transformExp(Expression exp,
+        LinkedList<Pair<String, ValuedObject>> variables) {
         if (exp instanceof OperatorExpression) {
             System.out.println("transformExp: OperatorExpression")
             return transformOperatorExp(exp as OperatorExpression, variables)
@@ -52,14 +56,21 @@ class TransformExpression {
             return transformValObjRef(exp as ValuedObjectReference, variables)
         } else if (exp instanceof ConstantExpression) {
             System.out.println("transformExp: ConstantExpression")
-            return transformConstExp(exp as ConstantExpression)
+
+            // TODO: Does not have to be bool
+            return transformConstExp(exp, ValueType::BOOL)
+        } else if (exp instanceof BooleanValue) {
+            return KExpressionsFactory::eINSTANCE.createBoolValue => [
+                value = (exp as BooleanValue).value
+            ]
         }
 
         System.out.println("transformExp: Unknown Expression: " + exp)
         createExpression
     }
 
-    def de.cau.cs.kieler.core.kexpressions.OperatorExpression transformOperatorExp(OperatorExpression exp, LinkedList<Pair<String, ValuedObject>> variables) {
+    def de.cau.cs.kieler.core.kexpressions.OperatorExpression transformOperatorExp(OperatorExpression exp,
+        LinkedList<Pair<String, ValuedObject>> variables) {
 
         //TODO beautify; complete
         val opType = switch exp.operator {
@@ -76,22 +87,56 @@ class TransformExpression {
         ]
     }
 
-    def de.cau.cs.kieler.core.kexpressions.ValuedObjectReference transformCompExp(ComplexExpression comp, LinkedList<Pair<String, ValuedObject>> variables) {
+    def de.cau.cs.kieler.core.kexpressions.ValuedObjectReference transformCompExp(ComplexExpression comp,
+        LinkedList<Pair<String, ValuedObject>> variables) {
         if (comp instanceof ValuedObjectReference) {
             transformValObjRef(comp as ValuedObjectReference, variables)
         }
     }
 
-    def de.cau.cs.kieler.core.kexpressions.ValuedObjectReference transformValObjRef(ValuedObjectReference ref, LinkedList<Pair<String, ValuedObject>> variables) {
+    def de.cau.cs.kieler.core.kexpressions.ValuedObjectReference transformValObjRef(ValuedObjectReference ref,
+        LinkedList<Pair<String, ValuedObject>> variables) {
         getValuedObjectRef(variables, ref.valuedObject.name)
     }
 
-    // TODO Expression is considered being an integer...
-    def transformConstExp(ConstantExpression constExp) {
+    // TODO Kind of ugly as type is not stored explicitly
+    def dispatch transformConstExp(ConstantExpression constExp, ValueType type) {
         System.out.println("Value: " + constExp.value)
+        System.out.println("constant: " + constExp.constant)
         System.out.println("As integer: " + Integer.getInteger(constExp.value))
-        return KExpressionsFactory::eINSTANCE.createIntValue => [
-            value = Integer.parseInt(constExp.value)
-        ]
+
+        switch type {
+            case (ValueType::INT):
+                return KExpressionsFactory::eINSTANCE.createIntValue => [
+                    value = Integer.parseInt(constExp.value)
+                ]
+            case (ValueType::BOOL):
+                return KExpressionsFactory::eINSTANCE.createBoolValue => [
+                    value = Boolean.parseBoolean(constExp.value)
+                ]
+            case (ValueType::FLOAT):
+                return KExpressionsFactory::eINSTANCE.createFloatValue => [
+                    value = Float.parseFloat(constExp.value)
+                ]
+                //TODO should be double...
+            case (ValueType::DOUBLE):
+                return KExpressionsFactory::eINSTANCE.createFloatValue => [
+                    value = Float.parseFloat(constExp.value)
+                ]
+                //TODO should be unsigned...
+            case (ValueType::UNSIGNED):
+                return KExpressionsFactory::eINSTANCE.createIntValue => [
+                    value = Integer.parseInt(constExp.value)
+                ]
+                //TODO string
+            default:
+                System.out.println("Unable to transform constant expression: " + constExp.value)
+        }
+    }
+    
+    def dispatch transformConstExp(BooleanValue b, ValueType type) {
+        return KExpressionsFactory::eINSTANCE.createBoolValue => [
+                    value = b.value
+                ]
     }
 }

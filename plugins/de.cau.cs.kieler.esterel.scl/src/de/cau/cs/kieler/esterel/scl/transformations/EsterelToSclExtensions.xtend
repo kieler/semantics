@@ -150,6 +150,15 @@ class EsterelToSclExtensions {
          }
      }
      
+     def String uniqueNameByList(LinkedList<String> variables, String s) {
+         if (!variables.contains(s)) {
+             return s;
+         }
+         else {
+             return uniqueNameByList(variables, s + "_")
+         }
+     }
+     
      /*
       * Creates "if s then (pause;) goto l"
       */

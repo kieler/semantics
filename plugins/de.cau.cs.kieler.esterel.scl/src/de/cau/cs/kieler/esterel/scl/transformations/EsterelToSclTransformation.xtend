@@ -110,6 +110,9 @@ class EsterelToSclTransformation extends Transformation {
 
     // Connecting a signal name with a valuedObject. Allows "scoping" and shadowing out
     var LinkedList<Pair<String, ValuedObject>> signalMap
+    
+    // Maps valued variables to signal
+    var HashMap<ValuedObject, ValuedObject> valuedMap
 
     // Flag indicating if optimized transformations should be used
     var boolean opt
@@ -158,6 +161,8 @@ class EsterelToSclTransformation extends Transformation {
         // Variables are stored as a LinkedList. Signals are keys, the first signal in the returned
         // list for a key is the current variable representing a (local) signal
         signalMap = new LinkedList<Pair<String, ValuedObject>>
+        
+        valuedMap = new HashMap<ValuedObject, ValuedObject>()
 
         // Does the program terminate?
         var boolean termTmp = true
@@ -228,7 +233,7 @@ class EsterelToSclTransformation extends Transformation {
         th.addLabel(l)
 
         for (decl : decls) {
-            if ((decl.output && !decl.input) || isLocal) {
+            if (((decl.output && !decl.input) || isLocal) && decl.type == ValueType::BOOL) {
                 for (value : decl.valuedObjects) {
                     th.statements.add(createStmFromInstr(createAssignment(value, createBoolValue(false))))
                 }
