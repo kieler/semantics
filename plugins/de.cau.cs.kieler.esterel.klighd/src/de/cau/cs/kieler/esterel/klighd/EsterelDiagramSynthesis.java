@@ -46,5 +46,4 @@ public class EsterelDiagramSynthesis extends AbstractDiagramSynthesis<de.cau.cs.
     public List<SynthesisOption> getDisplayedSynthesisOptions() {
         return delegate.getDisplayedSynthesisOptions();
     }
-
 }
