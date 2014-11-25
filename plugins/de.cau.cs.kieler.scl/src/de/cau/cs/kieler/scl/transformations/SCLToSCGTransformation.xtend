@@ -183,9 +183,6 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
                 val newValuedObject = createValuedObject(valuedObject.name)
                 newDeclaration.valuedObjects += newValuedObject
                 valuedObjectMapping.put(valuedObject, newValuedObject)
-                if (valuedObject.initialValue != null) {
-                    // create Assignment
-                }
             }
             scg.declarations += newDeclaration
         }
@@ -284,9 +281,9 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
                 it.condition = conditional.expression.copyExpression
                 it.controlFlowTarget(incoming)
                 conditional.statements.transform(scg, it.createControlFlow.toList) =>
-                    [System.out.println("FLOW: " + it.controlFlows); continue.controlFlows += it.controlFlows]
+                    [continue.controlFlows += it.controlFlows]
                 conditional.elseStatements.transform(scg, it.createControlFlow.toList) =>
-                    [System.out.println("elseFLOW: " + it.controlFlows); continue.controlFlows += it.controlFlows]
+                    [continue.controlFlows += it.controlFlows]
             ]
         ]
     }
