@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.validation.Check;
 
@@ -17,7 +16,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
 import de.cau.cs.kieler.scl.scl.Goto;
-import de.cau.cs.kieler.scl.scl.Program;
+import de.cau.cs.kieler.scl.scl.SCLProgram;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
 import de.cau.cs.kieler.scl.scl.StatementSequence;
@@ -38,7 +37,7 @@ public class SCLJavaValidator extends de.cau.cs.kieler.scl.validation.AbstractSC
      * Checks if within one declaration block variable names are unique
      */
     @Check
-    public void checkUniqueNamesInProgram(Program program) {
+    public void checkUniqueNamesInProgram(SCLProgram program) {
         if (hasDuplicateDeclaration(program.getDeclarations())) {
             for (Declaration decl : program.getDeclarations()) {
                 error("Duplicate variable declaration", decl, null, -1);
@@ -100,7 +99,7 @@ public class SCLJavaValidator extends de.cau.cs.kieler.scl.validation.AbstractSC
     @Check
     public void checkLabelExisting(Goto goingTo) {
         EObject parent = goingTo.eContainer();
-        while (!(parent instanceof Thread) && !(parent instanceof Program)) {
+        while (!(parent instanceof Thread) && !(parent instanceof SCLProgram)) {
             parent = parent.eContainer();
         }
         if (!labelExisting(((StatementSequence) parent).getStatements(), goingTo.getTargetLabel())) {

@@ -24,7 +24,7 @@ import de.cau.cs.kieler.core.kexpressions.Declaration;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.scl.scl.Assignment;
-import de.cau.cs.kieler.scl.scl.Program;
+import de.cau.cs.kieler.scl.scl.SCLProgram;
 import de.cau.cs.kieler.scl.scl.StatementScope;
 
 /**
@@ -66,13 +66,13 @@ public class SCLScopeProvider extends
 
         while (true) {
 //            System.out.println("Parent: " + parent);
-            while (!(parent instanceof StatementScope) && !(parent instanceof Program)) {
+            while (!(parent instanceof StatementScope) && !(parent instanceof SCLProgram)) {
 //                System.out.println("Parent: " + parent);
                 parent = parent.eContainer();
             }
 
-            if (parent instanceof Program) {
-                variables = collectDeclarations(((Program) parent).getDeclarations(), variables);
+            if (parent instanceof SCLProgram) {
+                variables = collectDeclarations(((SCLProgram) parent).getDeclarations(), variables);
                 return variables;
             }
 

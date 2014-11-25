@@ -52,7 +52,6 @@ import de.cau.cs.kieler.esterel.kexpressions.Expression
 import de.cau.cs.kieler.esterel.kexpressions.OperatorExpression
 import de.cau.cs.kieler.esterel.kexpressions.ComplexExpression
 import de.cau.cs.kieler.esterel.kexpressions.Signal
-import de.cau.cs.kieler.scl.scl.Program
 import de.cau.cs.kieler.scl.scl.Thread
 import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.scl.scl.InstructionStatement
@@ -87,6 +86,7 @@ import de.cau.cs.kieler.esterel.esterel.Sustain
 import java.util.HashMap
 import de.cau.cs.kieler.core.kexpressions.util.KExpressionsAdapterFactory
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
+import de.cau.cs.kieler.scl.scl.SCLProgram
 
 /**
  * @author krat
@@ -141,7 +141,7 @@ class EsterelToSclTransformation extends Transformation {
         return transformProgram(eObject as de.cau.cs.kieler.esterel.esterel.Program) as EObject
     }
 
-    public def Program transformProgram(de.cau.cs.kieler.esterel.esterel.Program esterelProgram) {
+    public def SCLProgram transformProgram(de.cau.cs.kieler.esterel.esterel.Program esterelProgram) {
         System.out.println("Transforming to SCL...")
 
         // Label at the end of the currently transformed thread if not root thread
@@ -173,7 +173,7 @@ class EsterelToSclTransformation extends Transformation {
         val terminates = termTmp;
 
         // Create the SCL program
-        val program = SclFactory::eINSTANCE.createProgram()
+        val program = SclFactory::eINSTANCE.createSCLProgram()
 
         // Only the first module is considered
         // TODO handle several modules

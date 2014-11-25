@@ -39,7 +39,6 @@ import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.StatementSequence
 import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.scl.scl.Pause
-import de.cau.cs.kieler.scl.scl.Program
 import de.cau.cs.kieler.scl.scl.Statement
 import java.util.HashMap
 import java.util.List
@@ -55,6 +54,7 @@ import com.google.common.collect.HashMultimap
 import org.eclipse.emf.common.util.EList
 import de.cau.cs.kieler.scl.scl.Thread
 import de.cau.cs.kieler.scl.scl.SclFactory
+import de.cau.cs.kieler.scl.scl.SCLProgram
 
 /** 
  * SCL to SCG Transformation 
@@ -85,7 +85,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     // -- M2M Transformation 
     // -------------------------------------------------------------------------
     override transform(EObject eObject) {
-        (eObject as Program).transformSCLToSCG
+        (eObject as SCLProgram).transformSCLToSCG
     }
 
     /*
@@ -99,7 +99,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
 	 * TODO beautify
 	 * 
 	 */
-    def Program initialize(Program scl) {
+    def SCLProgram initialize(SCLProgram scl) {
         replaceGotoTargets(scl.statements, collectLabels(scl.statements, new LinkedList<Pair<String, String>>))
         scl.eAllContents.filter(Thread).forEach [
             replaceGotoTargets(it.statements, collectLabels(it.statements, new LinkedList<Pair<String, String>>))
@@ -171,7 +171,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     /*
      * Transformation method
      */
-    def SCGraph transformSCLToSCG(Program scl) {
+    def SCGraph transformSCLToSCG(SCLProgram scl) {
 
         // Create new SCG...
         val scg = ScgFactory::eINSTANCE.createSCGraph
@@ -193,7 +193,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
         scg
     }
 
-    private dispatch def SCLContinuation transform(Program program, SCGraph scg, List<ControlFlow> incoming) {
+    private dispatch def SCLContinuation transform(SCLProgram program, SCGraph scg, List<ControlFlow> incoming) {
         val entry = ScgFactory::eINSTANCE.createEntry.createNodeList(program) as Entry => [
             scg.nodes += it
         ]

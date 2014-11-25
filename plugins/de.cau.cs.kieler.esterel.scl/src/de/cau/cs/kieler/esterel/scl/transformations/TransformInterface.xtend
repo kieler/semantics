@@ -26,11 +26,11 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import java.util.LinkedList
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.scl.scl.Program
 import de.cau.cs.kieler.esterel.esterel.ConstantExpression
 import java.util.HashMap
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.scl.scl.SCLProgram
 
 /**
  * @author krat
@@ -51,7 +51,7 @@ class TransformInterface {
      * Transforms an Esterel module interface to a list of Kexpression declarations
      * @return MultiHashMap containing the signal valObj (key), the valued valObj and the CombineOperator
      */
-    def HashMap<ValuedObject, Pair<ValuedObject, OperatorType>> transformInterface(ModuleInterface modInterface, Program program) {
+    def HashMap<ValuedObject, Pair<ValuedObject, OperatorType>> transformInterface(ModuleInterface modInterface, SCLProgram program) {
         System.out.println("Transforming Interface")
         transformDeclaration(modInterface.intSignalDecls, program)
     }
@@ -59,7 +59,7 @@ class TransformInterface {
     /*
      * Transforms the signal declarations
      */
-    def HashMap<ValuedObject, Pair<ValuedObject, OperatorType>>  transformDeclaration(EList<InterfaceSignalDecl> list, Program program) {
+    def HashMap<ValuedObject, Pair<ValuedObject, OperatorType>>  transformDeclaration(EList<InterfaceSignalDecl> list, SCLProgram program) {
         System.out.println("Transforming Interface Signal Declarations")
         val names = list.collectNames
         val HashMap<ValuedObject, Pair<ValuedObject, OperatorType>>  valuedMap = newHashMap
@@ -74,7 +74,7 @@ class TransformInterface {
     /*
      * Transforms one signal declaration, which may consist of pure and valued signals
      */
-    def HashMap<ValuedObject, Pair<ValuedObject, OperatorType>>  transformSingleDeclartion(InterfaceSignalDecl decl, Program program, LinkedList<String> names) {
+    def HashMap<ValuedObject, Pair<ValuedObject, OperatorType>>  transformSingleDeclartion(InterfaceSignalDecl decl, SCLProgram program, LinkedList<String> names) {
         val HashMap<ValuedObject, Pair<ValuedObject, OperatorType>>  valuedMap = newHashMap
         val pureSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
             input = decl instanceof Input
