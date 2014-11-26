@@ -15,7 +15,11 @@
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.esterel.kexpressions.Input
+//import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl
+import de.cau.cs.kieler.esterel.kexpressions.Output
 import de.cau.cs.kieler.esterel.esterel.Program
+import de.cau.cs.kieler.esterel.kexpressions.Signal
 
 /**
  * Transformation from Esterel Program to wrapper code for the simulation.
@@ -80,37 +84,39 @@ class CSimulationEsterel {
    // Read inputs.
    def readInputs(Program model, String bufferSize) {
    	'''
-«««void readInputs() {
-«««   char buffer[«bufferSize»];
-«««   int i=0;
-«««   char c;
-«««   // read next line
-«««   for (i=0; (c=getchar())!='\n'; i++){buffer[i]=c;} buffer[i]=0;
-«««  
-«««   cJSON* object = 0;
-«««   cJSON* child = 0;
-«««   cJSON* present = 0;
-«««   cJSON* value = 0;
-«««
-«««    object = cJSON_Parse(buffer);
-«««    
-«««    «FOR valuedObject : scchart.getValuedObjects().filter(e|e.isInput)» 
-«««    child = cJSON_GetObjectItem(object, "«valuedObject.name»");
-«««    if (child != NULL) {
-«««            present = cJSON_GetObjectItem(child, "present");
-«««            value = cJSON_GetObjectItem(child, "value");
-«««            if (present != NULL && present->type) {
-«««                «valuedObject.name» = 1;
-«««            }
-«««            else if (value != NULL && value->type) {
-«««                «valuedObject.name»  = value->valueint;
-«««            }
-«««            else {
-«««                «valuedObject.name» = 0;
-«««            }
-«««    }   
-«««    «ENDFOR»
-«««}
+void readInputs() {
+   char buffer[«bufferSize»];
+   int i=0;
+   char c;
+   // read next line
+   for (i=0; (c=getchar())!='\n'; i++){buffer[i]=c;} buffer[i]=0;
+  
+   cJSON* object = 0;
+   cJSON* child = 0;
+   cJSON* present = 0;
+   cJSON* value = 0;
+
+    object = cJSON_Parse(buffer);
+    
+    «FOR intSignalDecl : model.modules.get(0).interface.intSignalDecls»
+    «FOR Signal signal : intSignalDecl.signals.filter[isInput]»
+    child = cJSON_GetObjectItem(object, "«signal.name»");
+    if (child != NULL) {
+            present = cJSON_GetObjectItem(child, "present");
+            value = cJSON_GetObjectItem(child, "value");
+            if (present != NULL && present->type) {
+                «signal.name» = 1;
+            }
+            else if (value != NULL && value->type) {
+                «signal.name»  = value->valueint;
+            }
+            else {
+                «signal.name» = 0;
+            }
+    }   
+    «ENDFOR»
+    «ENDFOR»
+}
 '''
   }
    
@@ -119,14 +125,16 @@ class CSimulationEsterel {
    // Write outputs.
    def writeOutputs(Program model) {
    	'''
-«««void writeOutputs() {
-«««    cJSON* value;;
-«««	«FOR output : scchart.getValuedObjects().filter(e|e.isOutput)»
-«««	value = cJSON_CreateObject();
-«««	cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(«output.name»));
-«««	cJSON_AddItemToObject(output, "«output.name»", value);
-«««    «ENDFOR»
-«««}
+void writeOutputs() {
+    cJSON* value;;
+    «FOR intSignalDecl : model.modules.get(0).interface.intSignalDecls»
+    «FOR Signal signal : intSignalDecl.signals.filter[isOutput]»
+	value = cJSON_CreateObject();
+	cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(«signal.name»));
+	cJSON_AddItemToObject(output, "«signal.name»", value);
+    «ENDFOR»
+    «ENDFOR»
+}
 '''
    }
 
