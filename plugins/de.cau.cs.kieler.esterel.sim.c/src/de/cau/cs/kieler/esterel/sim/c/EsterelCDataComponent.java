@@ -227,7 +227,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
     // -------------------------------------------------------------------------
 
     public String getDataComponentId() {
-        return "de.cau.cs.kieler.sccharts.sim.c";
+        return "de.cau.cs.kieler.esterel.sim.c";
     }
 
     // -------------------------------------------------------------------------
