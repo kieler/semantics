@@ -304,7 +304,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
     @Override
     public JSONObject doProvideInitialVariables() throws KiemInitializationException {
         // start execution of compiled program
-        if (cExecution.isCompiled()) {
+        if (cExecution != null && cExecution.isCompiled()) {
             try {
                 cExecution.startExecution();
             } catch (IOException e) {
@@ -468,8 +468,8 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             CompilationResult lowLevelCompilationResult = KielerCompiler.compile(lowLevelContext);
             System.out.println("13");
 
-            String cSCChartCCode = lowLevelCompilationResult.getString();
-            System.out.println("14 " + cSCChartCCode);
+            String cModelCCode = lowLevelCompilationResult.getString();
+            System.out.println("14 " + cModelCCode);
 
             // Generate Simulation wrapper C code
             String cSimulation = "";
@@ -491,11 +491,11 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             String outputFolder = KiemUtil.generateRandomTempOutputFolder();
             System.out.println("18 " + outputFolder);
 
-            String fileNameSCChart = "scchart.c";
+            String fileNameSCChart = "model.c";
             String outputFileSCChart = outputFolder + fileNameSCChart;
             System.out.println("19 " + outputFileSCChart);
-            System.out.println("19,5 " + cSCChartCCode.getBytes());
-            writeOutputModel(outputFileSCChart, cSCChartCCode.getBytes());
+            System.out.println("19,5 " + cModelCCode.getBytes());
+            writeOutputModel(outputFileSCChart, cModelCCode.getBytes());
 
             String fileNameSimulation = "simulation.c";
             String outputFileSimulation = outputFolder + fileNameSimulation;
