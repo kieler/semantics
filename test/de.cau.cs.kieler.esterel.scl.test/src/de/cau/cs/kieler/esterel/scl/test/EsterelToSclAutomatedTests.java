@@ -84,8 +84,8 @@ public class EsterelToSclAutomatedTests extends KiemAutomatedJUnitTest {
             Program esterelProgram = (Program) resource.getContents().get(0);
 
             // Transform to SCL and to SCG
-            de.cau.cs.kieler.scl.scl.Program sclProgram =
-                    (de.cau.cs.kieler.scl.scl.Program) KielerCompiler.compile("ESTERELTOSCL_OPT",
+            de.cau.cs.kieler.scl.scl.SCLProgram sclProgram =
+                    (de.cau.cs.kieler.scl.scl.SCLProgram) KielerCompiler.compile("ESTERELTOSCL_OPT",
                             esterelProgram, false, false).getEObject();
             SCGraph scg =
                     (SCGraph) KielerCompiler.compile("SCLTOSCG", sclProgram, false, false)
