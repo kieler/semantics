@@ -130,7 +130,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
         
         @Override
         protected String getFirstRuleName() {
-        	return "Program";	
+        	return "SCLProgram";	
        	}
        	
        	@Override
@@ -140,31 +140,31 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
 
-    // $ANTLR start "entryRuleProgram"
-    // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:75:1: entryRuleProgram returns [EObject current=null] : iv_ruleProgram= ruleProgram EOF ;
-    public final EObject entryRuleProgram() throws RecognitionException {
+    // $ANTLR start "entryRuleSCLProgram"
+    // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:75:1: entryRuleSCLProgram returns [EObject current=null] : iv_ruleSCLProgram= ruleSCLProgram EOF ;
+    public final EObject entryRuleSCLProgram() throws RecognitionException {
         EObject current = null;
-        int entryRuleProgram_StartIndex = input.index();
-        EObject iv_ruleProgram = null;
+        int entryRuleSCLProgram_StartIndex = input.index();
+        EObject iv_ruleSCLProgram = null;
 
 
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 1) ) { return current; }
-            // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:76:2: (iv_ruleProgram= ruleProgram EOF )
-            // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:77:2: iv_ruleProgram= ruleProgram EOF
+            // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:76:2: (iv_ruleSCLProgram= ruleSCLProgram EOF )
+            // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:77:2: iv_ruleSCLProgram= ruleSCLProgram EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getProgramRule()); 
+               newCompositeNode(grammarAccess.getSCLProgramRule()); 
             }
-            pushFollow(FOLLOW_ruleProgram_in_entryRuleProgram88);
-            iv_ruleProgram=ruleProgram();
+            pushFollow(FOLLOW_ruleSCLProgram_in_entryRuleSCLProgram88);
+            iv_ruleSCLProgram=ruleSCLProgram();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleProgram; 
+               current =iv_ruleSCLProgram; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleProgram98); if (state.failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleSCLProgram98); if (state.failed) return current;
 
             }
 
@@ -175,18 +175,18 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 appendSkippedTokens();
             } 
         finally {
-            if ( state.backtracking>0 ) { memoize(input, 1, entryRuleProgram_StartIndex); }
+            if ( state.backtracking>0 ) { memoize(input, 1, entryRuleSCLProgram_StartIndex); }
         }
         return current;
     }
-    // $ANTLR end "entryRuleProgram"
+    // $ANTLR end "entryRuleSCLProgram"
 
 
-    // $ANTLR start "ruleProgram"
-    // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:84:1: ruleProgram returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'module' ( (lv_name_2_0= RULE_ID ) ) ( (lv_declarations_3_0= ruleDeclaration ) )* otherlv_4= '{' ( ( ( ( (lv_statements_5_0= ruleInstructionStatement ) ) otherlv_6= ';' ) | ( (lv_statements_7_0= ruleEmptyStatement ) ) )* ( ( (lv_statements_8_0= ruleInstructionStatement ) ) ( (lv_statements_9_0= ruleEmptyStatement ) )* )? ) otherlv_10= '}' ) ;
-    public final EObject ruleProgram() throws RecognitionException {
+    // $ANTLR start "ruleSCLProgram"
+    // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:84:1: ruleSCLProgram returns [EObject current=null] : ( ( (lv_annotations_0_0= ruleAnnotation ) )* otherlv_1= 'module' ( (lv_name_2_0= RULE_ID ) ) ( (lv_declarations_3_0= ruleDeclaration ) )* otherlv_4= '{' ( ( ( ( (lv_statements_5_0= ruleInstructionStatement ) ) otherlv_6= ';' ) | ( (lv_statements_7_0= ruleEmptyStatement ) ) )* ( ( (lv_statements_8_0= ruleInstructionStatement ) ) ( (lv_statements_9_0= ruleEmptyStatement ) )* )? ) otherlv_10= '}' ) ;
+    public final EObject ruleSCLProgram() throws RecognitionException {
         EObject current = null;
-        int ruleProgram_StartIndex = input.index();
+        int ruleSCLProgram_StartIndex = input.index();
         Token otherlv_1=null;
         Token lv_name_2_0=null;
         Token otherlv_4=null;
@@ -235,10 +235,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getProgramAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
+            	      	        newCompositeNode(grammarAccess.getSCLProgramAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleAnnotation_in_ruleProgram144);
+            	    pushFollow(FOLLOW_ruleAnnotation_in_ruleSCLProgram144);
             	    lv_annotations_0_0=ruleAnnotation();
 
             	    state._fsp--;
@@ -246,7 +246,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getProgramRule());
+            	      	            current = createModelElementForParent(grammarAccess.getSCLProgramRule());
             	      	        }
             	             		add(
             	             			current, 
@@ -268,10 +268,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_1=(Token)match(input,16,FOLLOW_16_in_ruleProgram157); if (state.failed) return current;
+            otherlv_1=(Token)match(input,16,FOLLOW_16_in_ruleSCLProgram157); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_1, grammarAccess.getProgramAccess().getModuleKeyword_1());
+                  	newLeafNode(otherlv_1, grammarAccess.getSCLProgramAccess().getModuleKeyword_1());
                   
             }
             // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:110:1: ( (lv_name_2_0= RULE_ID ) )
@@ -280,16 +280,16 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:111:1: (lv_name_2_0= RULE_ID )
             // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:112:3: lv_name_2_0= RULE_ID
             {
-            lv_name_2_0=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleProgram174); if (state.failed) return current;
+            lv_name_2_0=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleSCLProgram174); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(lv_name_2_0, grammarAccess.getProgramAccess().getNameIDTerminalRuleCall_2_0()); 
+              			newLeafNode(lv_name_2_0, grammarAccess.getSCLProgramAccess().getNameIDTerminalRuleCall_2_0()); 
               		
             }
             if ( state.backtracking==0 ) {
 
               	        if (current==null) {
-              	            current = createModelElement(grammarAccess.getProgramRule());
+              	            current = createModelElement(grammarAccess.getSCLProgramRule());
               	        }
                      		setWithLastConsumed(
                      			current, 
@@ -324,10 +324,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getProgramAccess().getDeclarationsDeclarationParserRuleCall_3_0()); 
+            	      	        newCompositeNode(grammarAccess.getSCLProgramAccess().getDeclarationsDeclarationParserRuleCall_3_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleDeclaration_in_ruleProgram200);
+            	    pushFollow(FOLLOW_ruleDeclaration_in_ruleSCLProgram200);
             	    lv_declarations_3_0=ruleDeclaration();
 
             	    state._fsp--;
@@ -335,7 +335,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getProgramRule());
+            	      	            current = createModelElementForParent(grammarAccess.getSCLProgramRule());
             	      	        }
             	             		add(
             	             			current, 
@@ -357,10 +357,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_4=(Token)match(input,17,FOLLOW_17_in_ruleProgram213); if (state.failed) return current;
+            otherlv_4=(Token)match(input,17,FOLLOW_17_in_ruleSCLProgram213); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_4, grammarAccess.getProgramAccess().getLeftCurlyBracketKeyword_4());
+                  	newLeafNode(otherlv_4, grammarAccess.getSCLProgramAccess().getLeftCurlyBracketKeyword_4());
                   
             }
             // ../de.cau.cs.kieler.scl/src-gen/de/cau/cs/kieler/scl/parser/antlr/internal/InternalSCL.g:150:1: ( ( ( ( (lv_statements_5_0= ruleInstructionStatement ) ) otherlv_6= ';' ) | ( (lv_statements_7_0= ruleEmptyStatement ) ) )* ( ( (lv_statements_8_0= ruleInstructionStatement ) ) ( (lv_statements_9_0= ruleEmptyStatement ) )* )? )
@@ -386,10 +386,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getProgramAccess().getStatementsInstructionStatementParserRuleCall_5_0_0_0_0()); 
+            	      	        newCompositeNode(grammarAccess.getSCLProgramAccess().getStatementsInstructionStatementParserRuleCall_5_0_0_0_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleInstructionStatement_in_ruleProgram237);
+            	    pushFollow(FOLLOW_ruleInstructionStatement_in_ruleSCLProgram237);
             	    lv_statements_5_0=ruleInstructionStatement();
 
             	    state._fsp--;
@@ -397,7 +397,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getProgramRule());
+            	      	            current = createModelElementForParent(grammarAccess.getSCLProgramRule());
             	      	        }
             	             		add(
             	             			current, 
@@ -413,10 +413,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    otherlv_6=(Token)match(input,18,FOLLOW_18_in_ruleProgram249); if (state.failed) return current;
+            	    otherlv_6=(Token)match(input,18,FOLLOW_18_in_ruleSCLProgram249); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	          	newLeafNode(otherlv_6, grammarAccess.getProgramAccess().getSemicolonKeyword_5_0_0_1());
+            	          	newLeafNode(otherlv_6, grammarAccess.getSCLProgramAccess().getSemicolonKeyword_5_0_0_1());
             	          
             	    }
 
@@ -436,10 +436,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getProgramAccess().getStatementsEmptyStatementParserRuleCall_5_0_1_0()); 
+            	      	        newCompositeNode(grammarAccess.getSCLProgramAccess().getStatementsEmptyStatementParserRuleCall_5_0_1_0()); 
             	      	    
             	    }
-            	    pushFollow(FOLLOW_ruleEmptyStatement_in_ruleProgram277);
+            	    pushFollow(FOLLOW_ruleEmptyStatement_in_ruleSCLProgram277);
             	    lv_statements_7_0=ruleEmptyStatement();
 
             	    state._fsp--;
@@ -447,7 +447,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             	    if ( state.backtracking==0 ) {
 
             	      	        if (current==null) {
-            	      	            current = createModelElementForParent(grammarAccess.getProgramRule());
+            	      	            current = createModelElementForParent(grammarAccess.getSCLProgramRule());
             	      	        }
             	             		add(
             	             			current, 
@@ -491,10 +491,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getProgramAccess().getStatementsInstructionStatementParserRuleCall_5_1_0_0()); 
+                      	        newCompositeNode(grammarAccess.getSCLProgramAccess().getStatementsInstructionStatementParserRuleCall_5_1_0_0()); 
                       	    
                     }
-                    pushFollow(FOLLOW_ruleInstructionStatement_in_ruleProgram301);
+                    pushFollow(FOLLOW_ruleInstructionStatement_in_ruleSCLProgram301);
                     lv_statements_8_0=ruleInstructionStatement();
 
                     state._fsp--;
@@ -502,7 +502,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                       	        if (current==null) {
-                      	            current = createModelElementForParent(grammarAccess.getProgramRule());
+                      	            current = createModelElementForParent(grammarAccess.getSCLProgramRule());
                       	        }
                              		add(
                              			current, 
@@ -538,10 +538,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	    {
                     	    if ( state.backtracking==0 ) {
                     	       
-                    	      	        newCompositeNode(grammarAccess.getProgramAccess().getStatementsEmptyStatementParserRuleCall_5_1_1_0()); 
+                    	      	        newCompositeNode(grammarAccess.getSCLProgramAccess().getStatementsEmptyStatementParserRuleCall_5_1_1_0()); 
                     	      	    
                     	    }
-                    	    pushFollow(FOLLOW_ruleEmptyStatement_in_ruleProgram322);
+                    	    pushFollow(FOLLOW_ruleEmptyStatement_in_ruleSCLProgram322);
                     	    lv_statements_9_0=ruleEmptyStatement();
 
                     	    state._fsp--;
@@ -549,7 +549,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	    if ( state.backtracking==0 ) {
 
                     	      	        if (current==null) {
-                    	      	            current = createModelElementForParent(grammarAccess.getProgramRule());
+                    	      	            current = createModelElementForParent(grammarAccess.getSCLProgramRule());
                     	      	        }
                     	             		add(
                     	             			current, 
@@ -580,10 +580,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_10=(Token)match(input,19,FOLLOW_19_in_ruleProgram338); if (state.failed) return current;
+            otherlv_10=(Token)match(input,19,FOLLOW_19_in_ruleSCLProgram338); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-                  	newLeafNode(otherlv_10, grammarAccess.getProgramAccess().getRightCurlyBracketKeyword_6());
+                  	newLeafNode(otherlv_10, grammarAccess.getSCLProgramAccess().getRightCurlyBracketKeyword_6());
                   
             }
 
@@ -602,11 +602,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                 appendSkippedTokens();
             } 
         finally {
-            if ( state.backtracking>0 ) { memoize(input, 2, ruleProgram_StartIndex); }
+            if ( state.backtracking>0 ) { memoize(input, 2, ruleSCLProgram_StartIndex); }
         }
         return current;
     }
-    // $ANTLR end "ruleProgram"
+    // $ANTLR end "ruleSCLProgram"
 
 
     // $ANTLR start "entryRuleDeclaration"
@@ -11891,7 +11891,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
         {
         if ( state.backtracking==0 ) {
            
-          	        newCompositeNode(grammarAccess.getProgramAccess().getStatementsInstructionStatementParserRuleCall_5_0_0_0_0()); 
+          	        newCompositeNode(grammarAccess.getSCLProgramAccess().getStatementsInstructionStatementParserRuleCall_5_0_0_0_0()); 
           	    
         }
         pushFollow(FOLLOW_ruleInstructionStatement_in_synpred3_InternalSCL237);
@@ -11930,7 +11930,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
         {
         if ( state.backtracking==0 ) {
            
-          	        newCompositeNode(grammarAccess.getProgramAccess().getStatementsEmptyStatementParserRuleCall_5_0_1_0()); 
+          	        newCompositeNode(grammarAccess.getSCLProgramAccess().getStatementsEmptyStatementParserRuleCall_5_0_1_0()); 
           	    
         }
         pushFollow(FOLLOW_ruleEmptyStatement_in_synpred4_InternalSCL277);
@@ -15304,19 +15304,19 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     }
  
 
-    public static final BitSet FOLLOW_ruleProgram_in_entryRuleProgram88 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleProgram98 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAnnotation_in_ruleProgram144 = new BitSet(new long[]{0x0000200000010200L});
-    public static final BitSet FOLLOW_16_in_ruleProgram157 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleProgram174 = new BitSet(new long[]{0xC000200001F30200L,0x000000000000001FL});
-    public static final BitSet FOLLOW_ruleDeclaration_in_ruleProgram200 = new BitSet(new long[]{0xC000200001F30200L,0x000000000000001FL});
-    public static final BitSet FOLLOW_17_in_ruleProgram213 = new BitSet(new long[]{0x00002026200B0210L});
-    public static final BitSet FOLLOW_ruleInstructionStatement_in_ruleProgram237 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_18_in_ruleProgram249 = new BitSet(new long[]{0x00002026200B0210L});
-    public static final BitSet FOLLOW_ruleEmptyStatement_in_ruleProgram277 = new BitSet(new long[]{0x00002026200B0210L});
-    public static final BitSet FOLLOW_ruleInstructionStatement_in_ruleProgram301 = new BitSet(new long[]{0x00002026200B0210L});
-    public static final BitSet FOLLOW_ruleEmptyStatement_in_ruleProgram322 = new BitSet(new long[]{0x00002026200B0210L});
-    public static final BitSet FOLLOW_19_in_ruleProgram338 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSCLProgram_in_entryRuleSCLProgram88 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleSCLProgram98 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAnnotation_in_ruleSCLProgram144 = new BitSet(new long[]{0x0000200000010200L});
+    public static final BitSet FOLLOW_16_in_ruleSCLProgram157 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleSCLProgram174 = new BitSet(new long[]{0xC000200001F30200L,0x000000000000001FL});
+    public static final BitSet FOLLOW_ruleDeclaration_in_ruleSCLProgram200 = new BitSet(new long[]{0xC000200001F30200L,0x000000000000001FL});
+    public static final BitSet FOLLOW_17_in_ruleSCLProgram213 = new BitSet(new long[]{0x00002026200B0210L});
+    public static final BitSet FOLLOW_ruleInstructionStatement_in_ruleSCLProgram237 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_18_in_ruleSCLProgram249 = new BitSet(new long[]{0x00002026200B0210L});
+    public static final BitSet FOLLOW_ruleEmptyStatement_in_ruleSCLProgram277 = new BitSet(new long[]{0x00002026200B0210L});
+    public static final BitSet FOLLOW_ruleInstructionStatement_in_ruleSCLProgram301 = new BitSet(new long[]{0x00002026200B0210L});
+    public static final BitSet FOLLOW_ruleEmptyStatement_in_ruleSCLProgram322 = new BitSet(new long[]{0x00002026200B0210L});
+    public static final BitSet FOLLOW_19_in_ruleSCLProgram338 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleDeclaration_in_entryRuleDeclaration374 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleDeclaration384 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAnnotation_in_ruleDeclaration430 = new BitSet(new long[]{0xC000200001F10200L,0x000000000000001FL});

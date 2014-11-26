@@ -22,7 +22,7 @@ import com.google.inject.Injector;
 import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.scl.SCLStandaloneSetup;
-import de.cau.cs.kieler.scl.scl.Program;
+import de.cau.cs.kieler.scl.scl.SCLProgram;
 
 /**
  * @author krat
@@ -66,7 +66,7 @@ public class EsterelToSclHandler extends AbstractConvertModelHandler {
 
         transformed = model;
         if (commandString.equals(ESTEREL_TRANSFORMATION)) {
-            transformed = (Program) KielerCompiler.compile("ESTERELTOSCL", model, false, false).getEObject();
+            transformed = (SCLProgram) KielerCompiler.compile("ESTERELTOSCL", model, false, false).getEObject();
         } 
         return transformed;
     }

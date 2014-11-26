@@ -132,25 +132,25 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
 
 
 
-    // $ANTLR start "entryRuleProgram"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:61:1: entryRuleProgram : ruleProgram EOF ;
-    public final void entryRuleProgram() throws RecognitionException {
+    // $ANTLR start "entryRuleSCLProgram"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:61:1: entryRuleSCLProgram : ruleSCLProgram EOF ;
+    public final void entryRuleSCLProgram() throws RecognitionException {
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:62:1: ( ruleProgram EOF )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:63:1: ruleProgram EOF
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:62:1: ( ruleSCLProgram EOF )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:63:1: ruleSCLProgram EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramRule()); 
+               before(grammarAccess.getSCLProgramRule()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleProgram_in_entryRuleProgram67);
-            ruleProgram();
+            pushFollow(FollowSets000.FOLLOW_ruleSCLProgram_in_entryRuleSCLProgram67);
+            ruleSCLProgram();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramRule()); 
+               after(grammarAccess.getSCLProgramRule()); 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleProgram74); if (state.failed) return ;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleSCLProgram74); if (state.failed) return ;
 
             }
 
@@ -163,30 +163,30 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "entryRuleProgram"
+    // $ANTLR end "entryRuleSCLProgram"
 
 
-    // $ANTLR start "ruleProgram"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:70:1: ruleProgram : ( ( rule__Program__Group__0 ) ) ;
-    public final void ruleProgram() throws RecognitionException {
+    // $ANTLR start "ruleSCLProgram"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:70:1: ruleSCLProgram : ( ( rule__SCLProgram__Group__0 ) ) ;
+    public final void ruleSCLProgram() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:74:2: ( ( ( rule__Program__Group__0 ) ) )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:75:1: ( ( rule__Program__Group__0 ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:74:2: ( ( ( rule__SCLProgram__Group__0 ) ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:75:1: ( ( rule__SCLProgram__Group__0 ) )
             {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:75:1: ( ( rule__Program__Group__0 ) )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:76:1: ( rule__Program__Group__0 )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:75:1: ( ( rule__SCLProgram__Group__0 ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:76:1: ( rule__SCLProgram__Group__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getGroup()); 
+               before(grammarAccess.getSCLProgramAccess().getGroup()); 
             }
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:77:1: ( rule__Program__Group__0 )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:77:2: rule__Program__Group__0
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:77:1: ( rule__SCLProgram__Group__0 )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:77:2: rule__SCLProgram__Group__0
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group__0_in_ruleProgram100);
-            rule__Program__Group__0();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group__0_in_ruleSCLProgram100);
+            rule__SCLProgram__Group__0();
 
             state._fsp--;
             if (state.failed) return ;
@@ -194,7 +194,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getGroup()); 
+               after(grammarAccess.getSCLProgramAccess().getGroup()); 
             }
 
             }
@@ -214,7 +214,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "ruleProgram"
+    // $ANTLR end "ruleSCLProgram"
 
 
     // $ANTLR start "entryRuleDeclaration"
@@ -4662,31 +4662,31 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "ruleCombineOperator"
 
 
-    // $ANTLR start "rule__Program__Alternatives_5_0"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1632:1: rule__Program__Alternatives_5_0 : ( ( ( rule__Program__Group_5_0_0__0 ) ) | ( ( rule__Program__StatementsAssignment_5_0_1 ) ) );
-    public final void rule__Program__Alternatives_5_0() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Alternatives_5_0"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1632:1: rule__SCLProgram__Alternatives_5_0 : ( ( ( rule__SCLProgram__Group_5_0_0__0 ) ) | ( ( rule__SCLProgram__StatementsAssignment_5_0_1 ) ) );
+    public final void rule__SCLProgram__Alternatives_5_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1636:1: ( ( ( rule__Program__Group_5_0_0__0 ) ) | ( ( rule__Program__StatementsAssignment_5_0_1 ) ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1636:1: ( ( ( rule__SCLProgram__Group_5_0_0__0 ) ) | ( ( rule__SCLProgram__StatementsAssignment_5_0_1 ) ) )
             int alt1=2;
             alt1 = dfa1.predict(input);
             switch (alt1) {
                 case 1 :
-                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1637:1: ( ( rule__Program__Group_5_0_0__0 ) )
+                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1637:1: ( ( rule__SCLProgram__Group_5_0_0__0 ) )
                     {
-                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1637:1: ( ( rule__Program__Group_5_0_0__0 ) )
-                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1638:1: ( rule__Program__Group_5_0_0__0 )
+                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1637:1: ( ( rule__SCLProgram__Group_5_0_0__0 ) )
+                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1638:1: ( rule__SCLProgram__Group_5_0_0__0 )
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getProgramAccess().getGroup_5_0_0()); 
+                       before(grammarAccess.getSCLProgramAccess().getGroup_5_0_0()); 
                     }
-                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1639:1: ( rule__Program__Group_5_0_0__0 )
-                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1639:2: rule__Program__Group_5_0_0__0
+                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1639:1: ( rule__SCLProgram__Group_5_0_0__0 )
+                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1639:2: rule__SCLProgram__Group_5_0_0__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__Program__Group_5_0_0__0_in_rule__Program__Alternatives_5_03364);
-                    rule__Program__Group_5_0_0__0();
+                    pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group_5_0_0__0_in_rule__SCLProgram__Alternatives_5_03364);
+                    rule__SCLProgram__Group_5_0_0__0();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -4694,7 +4694,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
                     }
 
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getProgramAccess().getGroup_5_0_0()); 
+                       after(grammarAccess.getSCLProgramAccess().getGroup_5_0_0()); 
                     }
 
                     }
@@ -4703,19 +4703,19 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1643:6: ( ( rule__Program__StatementsAssignment_5_0_1 ) )
+                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1643:6: ( ( rule__SCLProgram__StatementsAssignment_5_0_1 ) )
                     {
-                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1643:6: ( ( rule__Program__StatementsAssignment_5_0_1 ) )
-                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1644:1: ( rule__Program__StatementsAssignment_5_0_1 )
+                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1643:6: ( ( rule__SCLProgram__StatementsAssignment_5_0_1 ) )
+                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1644:1: ( rule__SCLProgram__StatementsAssignment_5_0_1 )
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getProgramAccess().getStatementsAssignment_5_0_1()); 
+                       before(grammarAccess.getSCLProgramAccess().getStatementsAssignment_5_0_1()); 
                     }
-                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1645:1: ( rule__Program__StatementsAssignment_5_0_1 )
-                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1645:2: rule__Program__StatementsAssignment_5_0_1
+                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1645:1: ( rule__SCLProgram__StatementsAssignment_5_0_1 )
+                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1645:2: rule__SCLProgram__StatementsAssignment_5_0_1
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__Program__StatementsAssignment_5_0_1_in_rule__Program__Alternatives_5_03382);
-                    rule__Program__StatementsAssignment_5_0_1();
+                    pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__StatementsAssignment_5_0_1_in_rule__SCLProgram__Alternatives_5_03382);
+                    rule__SCLProgram__StatementsAssignment_5_0_1();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -4723,7 +4723,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
                     }
 
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getProgramAccess().getStatementsAssignment_5_0_1()); 
+                       after(grammarAccess.getSCLProgramAccess().getStatementsAssignment_5_0_1()); 
                     }
 
                     }
@@ -4745,7 +4745,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Alternatives_5_0"
+    // $ANTLR end "rule__SCLProgram__Alternatives_5_0"
 
 
     // $ANTLR start "rule__InstructionStatement__InstructionAlternatives_1_0"
@@ -7509,23 +7509,23 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__CombineOperator__Alternatives"
 
 
-    // $ANTLR start "rule__Program__Group__0"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2340:1: rule__Program__Group__0 : rule__Program__Group__0__Impl rule__Program__Group__1 ;
-    public final void rule__Program__Group__0() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group__0"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2340:1: rule__SCLProgram__Group__0 : rule__SCLProgram__Group__0__Impl rule__SCLProgram__Group__1 ;
+    public final void rule__SCLProgram__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2344:1: ( rule__Program__Group__0__Impl rule__Program__Group__1 )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2345:2: rule__Program__Group__0__Impl rule__Program__Group__1
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2344:1: ( rule__SCLProgram__Group__0__Impl rule__SCLProgram__Group__1 )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2345:2: rule__SCLProgram__Group__0__Impl rule__SCLProgram__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group__0__Impl_in_rule__Program__Group__05091);
-            rule__Program__Group__0__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group__0__Impl_in_rule__SCLProgram__Group__05091);
+            rule__SCLProgram__Group__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group__1_in_rule__Program__Group__05094);
-            rule__Program__Group__1();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group__1_in_rule__SCLProgram__Group__05094);
+            rule__SCLProgram__Group__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -7544,26 +7544,26 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group__0"
+    // $ANTLR end "rule__SCLProgram__Group__0"
 
 
-    // $ANTLR start "rule__Program__Group__0__Impl"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2352:1: rule__Program__Group__0__Impl : ( ( rule__Program__AnnotationsAssignment_0 )* ) ;
-    public final void rule__Program__Group__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group__0__Impl"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2352:1: rule__SCLProgram__Group__0__Impl : ( ( rule__SCLProgram__AnnotationsAssignment_0 )* ) ;
+    public final void rule__SCLProgram__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2356:1: ( ( ( rule__Program__AnnotationsAssignment_0 )* ) )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2357:1: ( ( rule__Program__AnnotationsAssignment_0 )* )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2356:1: ( ( ( rule__SCLProgram__AnnotationsAssignment_0 )* ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2357:1: ( ( rule__SCLProgram__AnnotationsAssignment_0 )* )
             {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2357:1: ( ( rule__Program__AnnotationsAssignment_0 )* )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2358:1: ( rule__Program__AnnotationsAssignment_0 )*
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2357:1: ( ( rule__SCLProgram__AnnotationsAssignment_0 )* )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2358:1: ( rule__SCLProgram__AnnotationsAssignment_0 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getAnnotationsAssignment_0()); 
+               before(grammarAccess.getSCLProgramAccess().getAnnotationsAssignment_0()); 
             }
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2359:1: ( rule__Program__AnnotationsAssignment_0 )*
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2359:1: ( rule__SCLProgram__AnnotationsAssignment_0 )*
             loop26:
             do {
                 int alt26=2;
@@ -7576,10 +7576,10 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
 
                 switch (alt26) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2359:2: rule__Program__AnnotationsAssignment_0
+            	    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2359:2: rule__SCLProgram__AnnotationsAssignment_0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__Program__AnnotationsAssignment_0_in_rule__Program__Group__0__Impl5121);
-            	    rule__Program__AnnotationsAssignment_0();
+            	    pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__AnnotationsAssignment_0_in_rule__SCLProgram__Group__0__Impl5121);
+            	    rule__SCLProgram__AnnotationsAssignment_0();
 
             	    state._fsp--;
             	    if (state.failed) return ;
@@ -7593,7 +7593,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getAnnotationsAssignment_0()); 
+               after(grammarAccess.getSCLProgramAccess().getAnnotationsAssignment_0()); 
             }
 
             }
@@ -7613,26 +7613,26 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group__0__Impl"
+    // $ANTLR end "rule__SCLProgram__Group__0__Impl"
 
 
-    // $ANTLR start "rule__Program__Group__1"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2369:1: rule__Program__Group__1 : rule__Program__Group__1__Impl rule__Program__Group__2 ;
-    public final void rule__Program__Group__1() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group__1"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2369:1: rule__SCLProgram__Group__1 : rule__SCLProgram__Group__1__Impl rule__SCLProgram__Group__2 ;
+    public final void rule__SCLProgram__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2373:1: ( rule__Program__Group__1__Impl rule__Program__Group__2 )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2374:2: rule__Program__Group__1__Impl rule__Program__Group__2
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2373:1: ( rule__SCLProgram__Group__1__Impl rule__SCLProgram__Group__2 )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2374:2: rule__SCLProgram__Group__1__Impl rule__SCLProgram__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group__1__Impl_in_rule__Program__Group__15152);
-            rule__Program__Group__1__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group__1__Impl_in_rule__SCLProgram__Group__15152);
+            rule__SCLProgram__Group__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group__2_in_rule__Program__Group__15155);
-            rule__Program__Group__2();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group__2_in_rule__SCLProgram__Group__15155);
+            rule__SCLProgram__Group__2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -7651,12 +7651,12 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group__1"
+    // $ANTLR end "rule__SCLProgram__Group__1"
 
 
-    // $ANTLR start "rule__Program__Group__1__Impl"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2381:1: rule__Program__Group__1__Impl : ( 'module' ) ;
-    public final void rule__Program__Group__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group__1__Impl"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2381:1: rule__SCLProgram__Group__1__Impl : ( 'module' ) ;
+    public final void rule__SCLProgram__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -7668,11 +7668,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2387:1: 'module'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getModuleKeyword_1()); 
+               before(grammarAccess.getSCLProgramAccess().getModuleKeyword_1()); 
             }
-            match(input,44,FollowSets000.FOLLOW_44_in_rule__Program__Group__1__Impl5183); if (state.failed) return ;
+            match(input,44,FollowSets000.FOLLOW_44_in_rule__SCLProgram__Group__1__Impl5183); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getModuleKeyword_1()); 
+               after(grammarAccess.getSCLProgramAccess().getModuleKeyword_1()); 
             }
 
             }
@@ -7692,26 +7692,26 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group__1__Impl"
+    // $ANTLR end "rule__SCLProgram__Group__1__Impl"
 
 
-    // $ANTLR start "rule__Program__Group__2"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2400:1: rule__Program__Group__2 : rule__Program__Group__2__Impl rule__Program__Group__3 ;
-    public final void rule__Program__Group__2() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group__2"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2400:1: rule__SCLProgram__Group__2 : rule__SCLProgram__Group__2__Impl rule__SCLProgram__Group__3 ;
+    public final void rule__SCLProgram__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2404:1: ( rule__Program__Group__2__Impl rule__Program__Group__3 )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2405:2: rule__Program__Group__2__Impl rule__Program__Group__3
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2404:1: ( rule__SCLProgram__Group__2__Impl rule__SCLProgram__Group__3 )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2405:2: rule__SCLProgram__Group__2__Impl rule__SCLProgram__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group__2__Impl_in_rule__Program__Group__25214);
-            rule__Program__Group__2__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group__2__Impl_in_rule__SCLProgram__Group__25214);
+            rule__SCLProgram__Group__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group__3_in_rule__Program__Group__25217);
-            rule__Program__Group__3();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group__3_in_rule__SCLProgram__Group__25217);
+            rule__SCLProgram__Group__3();
 
             state._fsp--;
             if (state.failed) return ;
@@ -7730,30 +7730,30 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group__2"
+    // $ANTLR end "rule__SCLProgram__Group__2"
 
 
-    // $ANTLR start "rule__Program__Group__2__Impl"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2412:1: rule__Program__Group__2__Impl : ( ( rule__Program__NameAssignment_2 ) ) ;
-    public final void rule__Program__Group__2__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group__2__Impl"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2412:1: rule__SCLProgram__Group__2__Impl : ( ( rule__SCLProgram__NameAssignment_2 ) ) ;
+    public final void rule__SCLProgram__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2416:1: ( ( ( rule__Program__NameAssignment_2 ) ) )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2417:1: ( ( rule__Program__NameAssignment_2 ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2416:1: ( ( ( rule__SCLProgram__NameAssignment_2 ) ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2417:1: ( ( rule__SCLProgram__NameAssignment_2 ) )
             {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2417:1: ( ( rule__Program__NameAssignment_2 ) )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2418:1: ( rule__Program__NameAssignment_2 )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2417:1: ( ( rule__SCLProgram__NameAssignment_2 ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2418:1: ( rule__SCLProgram__NameAssignment_2 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getNameAssignment_2()); 
+               before(grammarAccess.getSCLProgramAccess().getNameAssignment_2()); 
             }
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2419:1: ( rule__Program__NameAssignment_2 )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2419:2: rule__Program__NameAssignment_2
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2419:1: ( rule__SCLProgram__NameAssignment_2 )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2419:2: rule__SCLProgram__NameAssignment_2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Program__NameAssignment_2_in_rule__Program__Group__2__Impl5244);
-            rule__Program__NameAssignment_2();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__NameAssignment_2_in_rule__SCLProgram__Group__2__Impl5244);
+            rule__SCLProgram__NameAssignment_2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -7761,7 +7761,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getNameAssignment_2()); 
+               after(grammarAccess.getSCLProgramAccess().getNameAssignment_2()); 
             }
 
             }
@@ -7781,26 +7781,26 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group__2__Impl"
+    // $ANTLR end "rule__SCLProgram__Group__2__Impl"
 
 
-    // $ANTLR start "rule__Program__Group__3"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2429:1: rule__Program__Group__3 : rule__Program__Group__3__Impl rule__Program__Group__4 ;
-    public final void rule__Program__Group__3() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group__3"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2429:1: rule__SCLProgram__Group__3 : rule__SCLProgram__Group__3__Impl rule__SCLProgram__Group__4 ;
+    public final void rule__SCLProgram__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2433:1: ( rule__Program__Group__3__Impl rule__Program__Group__4 )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2434:2: rule__Program__Group__3__Impl rule__Program__Group__4
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2433:1: ( rule__SCLProgram__Group__3__Impl rule__SCLProgram__Group__4 )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2434:2: rule__SCLProgram__Group__3__Impl rule__SCLProgram__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group__3__Impl_in_rule__Program__Group__35274);
-            rule__Program__Group__3__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group__3__Impl_in_rule__SCLProgram__Group__35274);
+            rule__SCLProgram__Group__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group__4_in_rule__Program__Group__35277);
-            rule__Program__Group__4();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group__4_in_rule__SCLProgram__Group__35277);
+            rule__SCLProgram__Group__4();
 
             state._fsp--;
             if (state.failed) return ;
@@ -7819,26 +7819,26 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group__3"
+    // $ANTLR end "rule__SCLProgram__Group__3"
 
 
-    // $ANTLR start "rule__Program__Group__3__Impl"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2441:1: rule__Program__Group__3__Impl : ( ( rule__Program__DeclarationsAssignment_3 )* ) ;
-    public final void rule__Program__Group__3__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group__3__Impl"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2441:1: rule__SCLProgram__Group__3__Impl : ( ( rule__SCLProgram__DeclarationsAssignment_3 )* ) ;
+    public final void rule__SCLProgram__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2445:1: ( ( ( rule__Program__DeclarationsAssignment_3 )* ) )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2446:1: ( ( rule__Program__DeclarationsAssignment_3 )* )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2445:1: ( ( ( rule__SCLProgram__DeclarationsAssignment_3 )* ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2446:1: ( ( rule__SCLProgram__DeclarationsAssignment_3 )* )
             {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2446:1: ( ( rule__Program__DeclarationsAssignment_3 )* )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2447:1: ( rule__Program__DeclarationsAssignment_3 )*
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2446:1: ( ( rule__SCLProgram__DeclarationsAssignment_3 )* )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2447:1: ( rule__SCLProgram__DeclarationsAssignment_3 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getDeclarationsAssignment_3()); 
+               before(grammarAccess.getSCLProgramAccess().getDeclarationsAssignment_3()); 
             }
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2448:1: ( rule__Program__DeclarationsAssignment_3 )*
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2448:1: ( rule__SCLProgram__DeclarationsAssignment_3 )*
             loop27:
             do {
                 int alt27=2;
@@ -7851,10 +7851,10 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
 
                 switch (alt27) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2448:2: rule__Program__DeclarationsAssignment_3
+            	    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2448:2: rule__SCLProgram__DeclarationsAssignment_3
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__Program__DeclarationsAssignment_3_in_rule__Program__Group__3__Impl5304);
-            	    rule__Program__DeclarationsAssignment_3();
+            	    pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__DeclarationsAssignment_3_in_rule__SCLProgram__Group__3__Impl5304);
+            	    rule__SCLProgram__DeclarationsAssignment_3();
 
             	    state._fsp--;
             	    if (state.failed) return ;
@@ -7868,7 +7868,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getDeclarationsAssignment_3()); 
+               after(grammarAccess.getSCLProgramAccess().getDeclarationsAssignment_3()); 
             }
 
             }
@@ -7888,26 +7888,26 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group__3__Impl"
+    // $ANTLR end "rule__SCLProgram__Group__3__Impl"
 
 
-    // $ANTLR start "rule__Program__Group__4"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2458:1: rule__Program__Group__4 : rule__Program__Group__4__Impl rule__Program__Group__5 ;
-    public final void rule__Program__Group__4() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group__4"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2458:1: rule__SCLProgram__Group__4 : rule__SCLProgram__Group__4__Impl rule__SCLProgram__Group__5 ;
+    public final void rule__SCLProgram__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2462:1: ( rule__Program__Group__4__Impl rule__Program__Group__5 )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2463:2: rule__Program__Group__4__Impl rule__Program__Group__5
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2462:1: ( rule__SCLProgram__Group__4__Impl rule__SCLProgram__Group__5 )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2463:2: rule__SCLProgram__Group__4__Impl rule__SCLProgram__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group__4__Impl_in_rule__Program__Group__45335);
-            rule__Program__Group__4__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group__4__Impl_in_rule__SCLProgram__Group__45335);
+            rule__SCLProgram__Group__4__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group__5_in_rule__Program__Group__45338);
-            rule__Program__Group__5();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group__5_in_rule__SCLProgram__Group__45338);
+            rule__SCLProgram__Group__5();
 
             state._fsp--;
             if (state.failed) return ;
@@ -7926,12 +7926,12 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group__4"
+    // $ANTLR end "rule__SCLProgram__Group__4"
 
 
-    // $ANTLR start "rule__Program__Group__4__Impl"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2470:1: rule__Program__Group__4__Impl : ( '{' ) ;
-    public final void rule__Program__Group__4__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group__4__Impl"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2470:1: rule__SCLProgram__Group__4__Impl : ( '{' ) ;
+    public final void rule__SCLProgram__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -7943,11 +7943,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2476:1: '{'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getLeftCurlyBracketKeyword_4()); 
+               before(grammarAccess.getSCLProgramAccess().getLeftCurlyBracketKeyword_4()); 
             }
-            match(input,45,FollowSets000.FOLLOW_45_in_rule__Program__Group__4__Impl5366); if (state.failed) return ;
+            match(input,45,FollowSets000.FOLLOW_45_in_rule__SCLProgram__Group__4__Impl5366); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getLeftCurlyBracketKeyword_4()); 
+               after(grammarAccess.getSCLProgramAccess().getLeftCurlyBracketKeyword_4()); 
             }
 
             }
@@ -7967,26 +7967,26 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group__4__Impl"
+    // $ANTLR end "rule__SCLProgram__Group__4__Impl"
 
 
-    // $ANTLR start "rule__Program__Group__5"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2489:1: rule__Program__Group__5 : rule__Program__Group__5__Impl rule__Program__Group__6 ;
-    public final void rule__Program__Group__5() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group__5"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2489:1: rule__SCLProgram__Group__5 : rule__SCLProgram__Group__5__Impl rule__SCLProgram__Group__6 ;
+    public final void rule__SCLProgram__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2493:1: ( rule__Program__Group__5__Impl rule__Program__Group__6 )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2494:2: rule__Program__Group__5__Impl rule__Program__Group__6
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2493:1: ( rule__SCLProgram__Group__5__Impl rule__SCLProgram__Group__6 )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2494:2: rule__SCLProgram__Group__5__Impl rule__SCLProgram__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group__5__Impl_in_rule__Program__Group__55397);
-            rule__Program__Group__5__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group__5__Impl_in_rule__SCLProgram__Group__55397);
+            rule__SCLProgram__Group__5__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group__6_in_rule__Program__Group__55400);
-            rule__Program__Group__6();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group__6_in_rule__SCLProgram__Group__55400);
+            rule__SCLProgram__Group__6();
 
             state._fsp--;
             if (state.failed) return ;
@@ -8005,30 +8005,30 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group__5"
+    // $ANTLR end "rule__SCLProgram__Group__5"
 
 
-    // $ANTLR start "rule__Program__Group__5__Impl"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2501:1: rule__Program__Group__5__Impl : ( ( rule__Program__Group_5__0 ) ) ;
-    public final void rule__Program__Group__5__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group__5__Impl"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2501:1: rule__SCLProgram__Group__5__Impl : ( ( rule__SCLProgram__Group_5__0 ) ) ;
+    public final void rule__SCLProgram__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2505:1: ( ( ( rule__Program__Group_5__0 ) ) )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2506:1: ( ( rule__Program__Group_5__0 ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2505:1: ( ( ( rule__SCLProgram__Group_5__0 ) ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2506:1: ( ( rule__SCLProgram__Group_5__0 ) )
             {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2506:1: ( ( rule__Program__Group_5__0 ) )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2507:1: ( rule__Program__Group_5__0 )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2506:1: ( ( rule__SCLProgram__Group_5__0 ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2507:1: ( rule__SCLProgram__Group_5__0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getGroup_5()); 
+               before(grammarAccess.getSCLProgramAccess().getGroup_5()); 
             }
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2508:1: ( rule__Program__Group_5__0 )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2508:2: rule__Program__Group_5__0
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2508:1: ( rule__SCLProgram__Group_5__0 )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2508:2: rule__SCLProgram__Group_5__0
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group_5__0_in_rule__Program__Group__5__Impl5427);
-            rule__Program__Group_5__0();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group_5__0_in_rule__SCLProgram__Group__5__Impl5427);
+            rule__SCLProgram__Group_5__0();
 
             state._fsp--;
             if (state.failed) return ;
@@ -8036,7 +8036,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getGroup_5()); 
+               after(grammarAccess.getSCLProgramAccess().getGroup_5()); 
             }
 
             }
@@ -8056,21 +8056,21 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group__5__Impl"
+    // $ANTLR end "rule__SCLProgram__Group__5__Impl"
 
 
-    // $ANTLR start "rule__Program__Group__6"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2518:1: rule__Program__Group__6 : rule__Program__Group__6__Impl ;
-    public final void rule__Program__Group__6() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group__6"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2518:1: rule__SCLProgram__Group__6 : rule__SCLProgram__Group__6__Impl ;
+    public final void rule__SCLProgram__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2522:1: ( rule__Program__Group__6__Impl )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2523:2: rule__Program__Group__6__Impl
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2522:1: ( rule__SCLProgram__Group__6__Impl )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2523:2: rule__SCLProgram__Group__6__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group__6__Impl_in_rule__Program__Group__65457);
-            rule__Program__Group__6__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group__6__Impl_in_rule__SCLProgram__Group__65457);
+            rule__SCLProgram__Group__6__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -8089,12 +8089,12 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group__6"
+    // $ANTLR end "rule__SCLProgram__Group__6"
 
 
-    // $ANTLR start "rule__Program__Group__6__Impl"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2529:1: rule__Program__Group__6__Impl : ( '}' ) ;
-    public final void rule__Program__Group__6__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group__6__Impl"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2529:1: rule__SCLProgram__Group__6__Impl : ( '}' ) ;
+    public final void rule__SCLProgram__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -8106,11 +8106,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2535:1: '}'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getRightCurlyBracketKeyword_6()); 
+               before(grammarAccess.getSCLProgramAccess().getRightCurlyBracketKeyword_6()); 
             }
-            match(input,46,FollowSets000.FOLLOW_46_in_rule__Program__Group__6__Impl5485); if (state.failed) return ;
+            match(input,46,FollowSets000.FOLLOW_46_in_rule__SCLProgram__Group__6__Impl5485); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getRightCurlyBracketKeyword_6()); 
+               after(grammarAccess.getSCLProgramAccess().getRightCurlyBracketKeyword_6()); 
             }
 
             }
@@ -8130,26 +8130,26 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group__6__Impl"
+    // $ANTLR end "rule__SCLProgram__Group__6__Impl"
 
 
-    // $ANTLR start "rule__Program__Group_5__0"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2562:1: rule__Program__Group_5__0 : rule__Program__Group_5__0__Impl rule__Program__Group_5__1 ;
-    public final void rule__Program__Group_5__0() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group_5__0"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2562:1: rule__SCLProgram__Group_5__0 : rule__SCLProgram__Group_5__0__Impl rule__SCLProgram__Group_5__1 ;
+    public final void rule__SCLProgram__Group_5__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2566:1: ( rule__Program__Group_5__0__Impl rule__Program__Group_5__1 )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2567:2: rule__Program__Group_5__0__Impl rule__Program__Group_5__1
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2566:1: ( rule__SCLProgram__Group_5__0__Impl rule__SCLProgram__Group_5__1 )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2567:2: rule__SCLProgram__Group_5__0__Impl rule__SCLProgram__Group_5__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group_5__0__Impl_in_rule__Program__Group_5__05530);
-            rule__Program__Group_5__0__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group_5__0__Impl_in_rule__SCLProgram__Group_5__05530);
+            rule__SCLProgram__Group_5__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group_5__1_in_rule__Program__Group_5__05533);
-            rule__Program__Group_5__1();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group_5__1_in_rule__SCLProgram__Group_5__05533);
+            rule__SCLProgram__Group_5__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -8168,36 +8168,36 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group_5__0"
+    // $ANTLR end "rule__SCLProgram__Group_5__0"
 
 
-    // $ANTLR start "rule__Program__Group_5__0__Impl"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2574:1: rule__Program__Group_5__0__Impl : ( ( rule__Program__Alternatives_5_0 )* ) ;
-    public final void rule__Program__Group_5__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group_5__0__Impl"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2574:1: rule__SCLProgram__Group_5__0__Impl : ( ( rule__SCLProgram__Alternatives_5_0 )* ) ;
+    public final void rule__SCLProgram__Group_5__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2578:1: ( ( ( rule__Program__Alternatives_5_0 )* ) )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2579:1: ( ( rule__Program__Alternatives_5_0 )* )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2578:1: ( ( ( rule__SCLProgram__Alternatives_5_0 )* ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2579:1: ( ( rule__SCLProgram__Alternatives_5_0 )* )
             {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2579:1: ( ( rule__Program__Alternatives_5_0 )* )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2580:1: ( rule__Program__Alternatives_5_0 )*
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2579:1: ( ( rule__SCLProgram__Alternatives_5_0 )* )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2580:1: ( rule__SCLProgram__Alternatives_5_0 )*
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getAlternatives_5_0()); 
+               before(grammarAccess.getSCLProgramAccess().getAlternatives_5_0()); 
             }
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2581:1: ( rule__Program__Alternatives_5_0 )*
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2581:1: ( rule__SCLProgram__Alternatives_5_0 )*
             loop28:
             do {
                 int alt28=2;
                 alt28 = dfa28.predict(input);
                 switch (alt28) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2581:2: rule__Program__Alternatives_5_0
+            	    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2581:2: rule__SCLProgram__Alternatives_5_0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__Program__Alternatives_5_0_in_rule__Program__Group_5__0__Impl5560);
-            	    rule__Program__Alternatives_5_0();
+            	    pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Alternatives_5_0_in_rule__SCLProgram__Group_5__0__Impl5560);
+            	    rule__SCLProgram__Alternatives_5_0();
 
             	    state._fsp--;
             	    if (state.failed) return ;
@@ -8211,7 +8211,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getAlternatives_5_0()); 
+               after(grammarAccess.getSCLProgramAccess().getAlternatives_5_0()); 
             }
 
             }
@@ -8231,21 +8231,21 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group_5__0__Impl"
+    // $ANTLR end "rule__SCLProgram__Group_5__0__Impl"
 
 
-    // $ANTLR start "rule__Program__Group_5__1"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2591:1: rule__Program__Group_5__1 : rule__Program__Group_5__1__Impl ;
-    public final void rule__Program__Group_5__1() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group_5__1"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2591:1: rule__SCLProgram__Group_5__1 : rule__SCLProgram__Group_5__1__Impl ;
+    public final void rule__SCLProgram__Group_5__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2595:1: ( rule__Program__Group_5__1__Impl )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2596:2: rule__Program__Group_5__1__Impl
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2595:1: ( rule__SCLProgram__Group_5__1__Impl )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2596:2: rule__SCLProgram__Group_5__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group_5__1__Impl_in_rule__Program__Group_5__15591);
-            rule__Program__Group_5__1__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group_5__1__Impl_in_rule__SCLProgram__Group_5__15591);
+            rule__SCLProgram__Group_5__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -8264,26 +8264,26 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group_5__1"
+    // $ANTLR end "rule__SCLProgram__Group_5__1"
 
 
-    // $ANTLR start "rule__Program__Group_5__1__Impl"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2602:1: rule__Program__Group_5__1__Impl : ( ( rule__Program__Group_5_1__0 )? ) ;
-    public final void rule__Program__Group_5__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group_5__1__Impl"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2602:1: rule__SCLProgram__Group_5__1__Impl : ( ( rule__SCLProgram__Group_5_1__0 )? ) ;
+    public final void rule__SCLProgram__Group_5__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2606:1: ( ( ( rule__Program__Group_5_1__0 )? ) )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2607:1: ( ( rule__Program__Group_5_1__0 )? )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2606:1: ( ( ( rule__SCLProgram__Group_5_1__0 )? ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2607:1: ( ( rule__SCLProgram__Group_5_1__0 )? )
             {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2607:1: ( ( rule__Program__Group_5_1__0 )? )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2608:1: ( rule__Program__Group_5_1__0 )?
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2607:1: ( ( rule__SCLProgram__Group_5_1__0 )? )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2608:1: ( rule__SCLProgram__Group_5_1__0 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getGroup_5_1()); 
+               before(grammarAccess.getSCLProgramAccess().getGroup_5_1()); 
             }
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2609:1: ( rule__Program__Group_5_1__0 )?
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2609:1: ( rule__SCLProgram__Group_5_1__0 )?
             int alt29=2;
             int LA29_0 = input.LA(1);
 
@@ -8292,10 +8292,10 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             }
             switch (alt29) {
                 case 1 :
-                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2609:2: rule__Program__Group_5_1__0
+                    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2609:2: rule__SCLProgram__Group_5_1__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__Program__Group_5_1__0_in_rule__Program__Group_5__1__Impl5618);
-                    rule__Program__Group_5_1__0();
+                    pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group_5_1__0_in_rule__SCLProgram__Group_5__1__Impl5618);
+                    rule__SCLProgram__Group_5_1__0();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -8306,7 +8306,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getGroup_5_1()); 
+               after(grammarAccess.getSCLProgramAccess().getGroup_5_1()); 
             }
 
             }
@@ -8326,26 +8326,26 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group_5__1__Impl"
+    // $ANTLR end "rule__SCLProgram__Group_5__1__Impl"
 
 
-    // $ANTLR start "rule__Program__Group_5_0_0__0"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2623:1: rule__Program__Group_5_0_0__0 : rule__Program__Group_5_0_0__0__Impl rule__Program__Group_5_0_0__1 ;
-    public final void rule__Program__Group_5_0_0__0() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group_5_0_0__0"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2623:1: rule__SCLProgram__Group_5_0_0__0 : rule__SCLProgram__Group_5_0_0__0__Impl rule__SCLProgram__Group_5_0_0__1 ;
+    public final void rule__SCLProgram__Group_5_0_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2627:1: ( rule__Program__Group_5_0_0__0__Impl rule__Program__Group_5_0_0__1 )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2628:2: rule__Program__Group_5_0_0__0__Impl rule__Program__Group_5_0_0__1
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2627:1: ( rule__SCLProgram__Group_5_0_0__0__Impl rule__SCLProgram__Group_5_0_0__1 )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2628:2: rule__SCLProgram__Group_5_0_0__0__Impl rule__SCLProgram__Group_5_0_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group_5_0_0__0__Impl_in_rule__Program__Group_5_0_0__05653);
-            rule__Program__Group_5_0_0__0__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group_5_0_0__0__Impl_in_rule__SCLProgram__Group_5_0_0__05653);
+            rule__SCLProgram__Group_5_0_0__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group_5_0_0__1_in_rule__Program__Group_5_0_0__05656);
-            rule__Program__Group_5_0_0__1();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group_5_0_0__1_in_rule__SCLProgram__Group_5_0_0__05656);
+            rule__SCLProgram__Group_5_0_0__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -8364,30 +8364,30 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group_5_0_0__0"
+    // $ANTLR end "rule__SCLProgram__Group_5_0_0__0"
 
 
-    // $ANTLR start "rule__Program__Group_5_0_0__0__Impl"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2635:1: rule__Program__Group_5_0_0__0__Impl : ( ( rule__Program__StatementsAssignment_5_0_0_0 ) ) ;
-    public final void rule__Program__Group_5_0_0__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group_5_0_0__0__Impl"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2635:1: rule__SCLProgram__Group_5_0_0__0__Impl : ( ( rule__SCLProgram__StatementsAssignment_5_0_0_0 ) ) ;
+    public final void rule__SCLProgram__Group_5_0_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2639:1: ( ( ( rule__Program__StatementsAssignment_5_0_0_0 ) ) )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2640:1: ( ( rule__Program__StatementsAssignment_5_0_0_0 ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2639:1: ( ( ( rule__SCLProgram__StatementsAssignment_5_0_0_0 ) ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2640:1: ( ( rule__SCLProgram__StatementsAssignment_5_0_0_0 ) )
             {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2640:1: ( ( rule__Program__StatementsAssignment_5_0_0_0 ) )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2641:1: ( rule__Program__StatementsAssignment_5_0_0_0 )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2640:1: ( ( rule__SCLProgram__StatementsAssignment_5_0_0_0 ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2641:1: ( rule__SCLProgram__StatementsAssignment_5_0_0_0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getStatementsAssignment_5_0_0_0()); 
+               before(grammarAccess.getSCLProgramAccess().getStatementsAssignment_5_0_0_0()); 
             }
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2642:1: ( rule__Program__StatementsAssignment_5_0_0_0 )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2642:2: rule__Program__StatementsAssignment_5_0_0_0
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2642:1: ( rule__SCLProgram__StatementsAssignment_5_0_0_0 )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2642:2: rule__SCLProgram__StatementsAssignment_5_0_0_0
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Program__StatementsAssignment_5_0_0_0_in_rule__Program__Group_5_0_0__0__Impl5683);
-            rule__Program__StatementsAssignment_5_0_0_0();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__StatementsAssignment_5_0_0_0_in_rule__SCLProgram__Group_5_0_0__0__Impl5683);
+            rule__SCLProgram__StatementsAssignment_5_0_0_0();
 
             state._fsp--;
             if (state.failed) return ;
@@ -8395,7 +8395,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getStatementsAssignment_5_0_0_0()); 
+               after(grammarAccess.getSCLProgramAccess().getStatementsAssignment_5_0_0_0()); 
             }
 
             }
@@ -8415,21 +8415,21 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group_5_0_0__0__Impl"
+    // $ANTLR end "rule__SCLProgram__Group_5_0_0__0__Impl"
 
 
-    // $ANTLR start "rule__Program__Group_5_0_0__1"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2652:1: rule__Program__Group_5_0_0__1 : rule__Program__Group_5_0_0__1__Impl ;
-    public final void rule__Program__Group_5_0_0__1() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group_5_0_0__1"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2652:1: rule__SCLProgram__Group_5_0_0__1 : rule__SCLProgram__Group_5_0_0__1__Impl ;
+    public final void rule__SCLProgram__Group_5_0_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2656:1: ( rule__Program__Group_5_0_0__1__Impl )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2657:2: rule__Program__Group_5_0_0__1__Impl
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2656:1: ( rule__SCLProgram__Group_5_0_0__1__Impl )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2657:2: rule__SCLProgram__Group_5_0_0__1__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group_5_0_0__1__Impl_in_rule__Program__Group_5_0_0__15713);
-            rule__Program__Group_5_0_0__1__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group_5_0_0__1__Impl_in_rule__SCLProgram__Group_5_0_0__15713);
+            rule__SCLProgram__Group_5_0_0__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -8448,12 +8448,12 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group_5_0_0__1"
+    // $ANTLR end "rule__SCLProgram__Group_5_0_0__1"
 
 
-    // $ANTLR start "rule__Program__Group_5_0_0__1__Impl"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2663:1: rule__Program__Group_5_0_0__1__Impl : ( ';' ) ;
-    public final void rule__Program__Group_5_0_0__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group_5_0_0__1__Impl"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2663:1: rule__SCLProgram__Group_5_0_0__1__Impl : ( ';' ) ;
+    public final void rule__SCLProgram__Group_5_0_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -8465,11 +8465,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2669:1: ';'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getSemicolonKeyword_5_0_0_1()); 
+               before(grammarAccess.getSCLProgramAccess().getSemicolonKeyword_5_0_0_1()); 
             }
-            match(input,47,FollowSets000.FOLLOW_47_in_rule__Program__Group_5_0_0__1__Impl5741); if (state.failed) return ;
+            match(input,47,FollowSets000.FOLLOW_47_in_rule__SCLProgram__Group_5_0_0__1__Impl5741); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getSemicolonKeyword_5_0_0_1()); 
+               after(grammarAccess.getSCLProgramAccess().getSemicolonKeyword_5_0_0_1()); 
             }
 
             }
@@ -8489,110 +8489,26 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group_5_0_0__1__Impl"
+    // $ANTLR end "rule__SCLProgram__Group_5_0_0__1__Impl"
 
 
-    // $ANTLR start "rule__Program__Group_5_1__0"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2686:1: rule__Program__Group_5_1__0 : rule__Program__Group_5_1__0__Impl rule__Program__Group_5_1__1 ;
-    public final void rule__Program__Group_5_1__0() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2690:1: ( rule__Program__Group_5_1__0__Impl rule__Program__Group_5_1__1 )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2691:2: rule__Program__Group_5_1__0__Impl rule__Program__Group_5_1__1
-            {
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group_5_1__0__Impl_in_rule__Program__Group_5_1__05776);
-            rule__Program__Group_5_1__0__Impl();
-
-            state._fsp--;
-            if (state.failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group_5_1__1_in_rule__Program__Group_5_1__05779);
-            rule__Program__Group_5_1__1();
-
-            state._fsp--;
-            if (state.failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Program__Group_5_1__0"
-
-
-    // $ANTLR start "rule__Program__Group_5_1__0__Impl"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2698:1: rule__Program__Group_5_1__0__Impl : ( ( rule__Program__StatementsAssignment_5_1_0 ) ) ;
-    public final void rule__Program__Group_5_1__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group_5_1__0"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2686:1: rule__SCLProgram__Group_5_1__0 : rule__SCLProgram__Group_5_1__0__Impl rule__SCLProgram__Group_5_1__1 ;
+    public final void rule__SCLProgram__Group_5_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2702:1: ( ( ( rule__Program__StatementsAssignment_5_1_0 ) ) )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2703:1: ( ( rule__Program__StatementsAssignment_5_1_0 ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2690:1: ( rule__SCLProgram__Group_5_1__0__Impl rule__SCLProgram__Group_5_1__1 )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2691:2: rule__SCLProgram__Group_5_1__0__Impl rule__SCLProgram__Group_5_1__1
             {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2703:1: ( ( rule__Program__StatementsAssignment_5_1_0 ) )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2704:1: ( rule__Program__StatementsAssignment_5_1_0 )
-            {
-            if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getStatementsAssignment_5_1_0()); 
-            }
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2705:1: ( rule__Program__StatementsAssignment_5_1_0 )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2705:2: rule__Program__StatementsAssignment_5_1_0
-            {
-            pushFollow(FollowSets000.FOLLOW_rule__Program__StatementsAssignment_5_1_0_in_rule__Program__Group_5_1__0__Impl5806);
-            rule__Program__StatementsAssignment_5_1_0();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group_5_1__0__Impl_in_rule__SCLProgram__Group_5_1__05776);
+            rule__SCLProgram__Group_5_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
-
-            }
-
-            if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getStatementsAssignment_5_1_0()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__Program__Group_5_1__0__Impl"
-
-
-    // $ANTLR start "rule__Program__Group_5_1__1"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2715:1: rule__Program__Group_5_1__1 : rule__Program__Group_5_1__1__Impl ;
-    public final void rule__Program__Group_5_1__1() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2719:1: ( rule__Program__Group_5_1__1__Impl )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2720:2: rule__Program__Group_5_1__1__Impl
-            {
-            pushFollow(FollowSets000.FOLLOW_rule__Program__Group_5_1__1__Impl_in_rule__Program__Group_5_1__15836);
-            rule__Program__Group_5_1__1__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group_5_1__1_in_rule__SCLProgram__Group_5_1__05779);
+            rule__SCLProgram__Group_5_1__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -8611,26 +8527,110 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group_5_1__1"
+    // $ANTLR end "rule__SCLProgram__Group_5_1__0"
 
 
-    // $ANTLR start "rule__Program__Group_5_1__1__Impl"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2726:1: rule__Program__Group_5_1__1__Impl : ( ( rule__Program__StatementsAssignment_5_1_1 )* ) ;
-    public final void rule__Program__Group_5_1__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__Group_5_1__0__Impl"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2698:1: rule__SCLProgram__Group_5_1__0__Impl : ( ( rule__SCLProgram__StatementsAssignment_5_1_0 ) ) ;
+    public final void rule__SCLProgram__Group_5_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2730:1: ( ( ( rule__Program__StatementsAssignment_5_1_1 )* ) )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2731:1: ( ( rule__Program__StatementsAssignment_5_1_1 )* )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2702:1: ( ( ( rule__SCLProgram__StatementsAssignment_5_1_0 ) ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2703:1: ( ( rule__SCLProgram__StatementsAssignment_5_1_0 ) )
             {
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2731:1: ( ( rule__Program__StatementsAssignment_5_1_1 )* )
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2732:1: ( rule__Program__StatementsAssignment_5_1_1 )*
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2703:1: ( ( rule__SCLProgram__StatementsAssignment_5_1_0 ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2704:1: ( rule__SCLProgram__StatementsAssignment_5_1_0 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getStatementsAssignment_5_1_1()); 
+               before(grammarAccess.getSCLProgramAccess().getStatementsAssignment_5_1_0()); 
             }
-            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2733:1: ( rule__Program__StatementsAssignment_5_1_1 )*
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2705:1: ( rule__SCLProgram__StatementsAssignment_5_1_0 )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2705:2: rule__SCLProgram__StatementsAssignment_5_1_0
+            {
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__StatementsAssignment_5_1_0_in_rule__SCLProgram__Group_5_1__0__Impl5806);
+            rule__SCLProgram__StatementsAssignment_5_1_0();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getSCLProgramAccess().getStatementsAssignment_5_1_0()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__SCLProgram__Group_5_1__0__Impl"
+
+
+    // $ANTLR start "rule__SCLProgram__Group_5_1__1"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2715:1: rule__SCLProgram__Group_5_1__1 : rule__SCLProgram__Group_5_1__1__Impl ;
+    public final void rule__SCLProgram__Group_5_1__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2719:1: ( rule__SCLProgram__Group_5_1__1__Impl )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2720:2: rule__SCLProgram__Group_5_1__1__Impl
+            {
+            pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group_5_1__1__Impl_in_rule__SCLProgram__Group_5_1__15836);
+            rule__SCLProgram__Group_5_1__1__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__SCLProgram__Group_5_1__1"
+
+
+    // $ANTLR start "rule__SCLProgram__Group_5_1__1__Impl"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2726:1: rule__SCLProgram__Group_5_1__1__Impl : ( ( rule__SCLProgram__StatementsAssignment_5_1_1 )* ) ;
+    public final void rule__SCLProgram__Group_5_1__1__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2730:1: ( ( ( rule__SCLProgram__StatementsAssignment_5_1_1 )* ) )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2731:1: ( ( rule__SCLProgram__StatementsAssignment_5_1_1 )* )
+            {
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2731:1: ( ( rule__SCLProgram__StatementsAssignment_5_1_1 )* )
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2732:1: ( rule__SCLProgram__StatementsAssignment_5_1_1 )*
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getSCLProgramAccess().getStatementsAssignment_5_1_1()); 
+            }
+            // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2733:1: ( rule__SCLProgram__StatementsAssignment_5_1_1 )*
             loop30:
             do {
                 int alt30=2;
@@ -8643,10 +8643,10 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
 
                 switch (alt30) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2733:2: rule__Program__StatementsAssignment_5_1_1
+            	    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2733:2: rule__SCLProgram__StatementsAssignment_5_1_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__Program__StatementsAssignment_5_1_1_in_rule__Program__Group_5_1__1__Impl5863);
-            	    rule__Program__StatementsAssignment_5_1_1();
+            	    pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__StatementsAssignment_5_1_1_in_rule__SCLProgram__Group_5_1__1__Impl5863);
+            	    rule__SCLProgram__StatementsAssignment_5_1_1();
 
             	    state._fsp--;
             	    if (state.failed) return ;
@@ -8660,7 +8660,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getStatementsAssignment_5_1_1()); 
+               after(grammarAccess.getSCLProgramAccess().getStatementsAssignment_5_1_1()); 
             }
 
             }
@@ -8680,7 +8680,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__Group_5_1__1__Impl"
+    // $ANTLR end "rule__SCLProgram__Group_5_1__1__Impl"
 
 
     // $ANTLR start "rule__Declaration__Group__0"
@@ -26180,9 +26180,9 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__ExtendedID__Group_1__1__Impl"
 
 
-    // $ANTLR start "rule__Program__AnnotationsAssignment_0"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9048:1: rule__Program__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
-    public final void rule__Program__AnnotationsAssignment_0() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__AnnotationsAssignment_0"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9048:1: rule__SCLProgram__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
+    public final void rule__SCLProgram__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -26194,15 +26194,15 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9054:1: ruleAnnotation
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
+               before(grammarAccess.getSCLProgramAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_rule__Program__AnnotationsAssignment_018320);
+            pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_rule__SCLProgram__AnnotationsAssignment_018320);
             ruleAnnotation();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
+               after(grammarAccess.getSCLProgramAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
             }
 
             }
@@ -26222,12 +26222,12 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__AnnotationsAssignment_0"
+    // $ANTLR end "rule__SCLProgram__AnnotationsAssignment_0"
 
 
-    // $ANTLR start "rule__Program__NameAssignment_2"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9063:1: rule__Program__NameAssignment_2 : ( RULE_ID ) ;
-    public final void rule__Program__NameAssignment_2() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__NameAssignment_2"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9063:1: rule__SCLProgram__NameAssignment_2 : ( RULE_ID ) ;
+    public final void rule__SCLProgram__NameAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -26239,11 +26239,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9069:1: RULE_ID
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getNameIDTerminalRuleCall_2_0()); 
+               before(grammarAccess.getSCLProgramAccess().getNameIDTerminalRuleCall_2_0()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__Program__NameAssignment_218351); if (state.failed) return ;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__SCLProgram__NameAssignment_218351); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getNameIDTerminalRuleCall_2_0()); 
+               after(grammarAccess.getSCLProgramAccess().getNameIDTerminalRuleCall_2_0()); 
             }
 
             }
@@ -26263,12 +26263,12 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__NameAssignment_2"
+    // $ANTLR end "rule__SCLProgram__NameAssignment_2"
 
 
-    // $ANTLR start "rule__Program__DeclarationsAssignment_3"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9078:1: rule__Program__DeclarationsAssignment_3 : ( ruleDeclaration ) ;
-    public final void rule__Program__DeclarationsAssignment_3() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__DeclarationsAssignment_3"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9078:1: rule__SCLProgram__DeclarationsAssignment_3 : ( ruleDeclaration ) ;
+    public final void rule__SCLProgram__DeclarationsAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -26280,15 +26280,15 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9084:1: ruleDeclaration
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getDeclarationsDeclarationParserRuleCall_3_0()); 
+               before(grammarAccess.getSCLProgramAccess().getDeclarationsDeclarationParserRuleCall_3_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleDeclaration_in_rule__Program__DeclarationsAssignment_318382);
+            pushFollow(FollowSets000.FOLLOW_ruleDeclaration_in_rule__SCLProgram__DeclarationsAssignment_318382);
             ruleDeclaration();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getDeclarationsDeclarationParserRuleCall_3_0()); 
+               after(grammarAccess.getSCLProgramAccess().getDeclarationsDeclarationParserRuleCall_3_0()); 
             }
 
             }
@@ -26308,12 +26308,12 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__DeclarationsAssignment_3"
+    // $ANTLR end "rule__SCLProgram__DeclarationsAssignment_3"
 
 
-    // $ANTLR start "rule__Program__StatementsAssignment_5_0_0_0"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9093:1: rule__Program__StatementsAssignment_5_0_0_0 : ( ruleInstructionStatement ) ;
-    public final void rule__Program__StatementsAssignment_5_0_0_0() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__StatementsAssignment_5_0_0_0"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9093:1: rule__SCLProgram__StatementsAssignment_5_0_0_0 : ( ruleInstructionStatement ) ;
+    public final void rule__SCLProgram__StatementsAssignment_5_0_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -26325,15 +26325,15 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9099:1: ruleInstructionStatement
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getStatementsInstructionStatementParserRuleCall_5_0_0_0_0()); 
+               before(grammarAccess.getSCLProgramAccess().getStatementsInstructionStatementParserRuleCall_5_0_0_0_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleInstructionStatement_in_rule__Program__StatementsAssignment_5_0_0_018413);
+            pushFollow(FollowSets000.FOLLOW_ruleInstructionStatement_in_rule__SCLProgram__StatementsAssignment_5_0_0_018413);
             ruleInstructionStatement();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getStatementsInstructionStatementParserRuleCall_5_0_0_0_0()); 
+               after(grammarAccess.getSCLProgramAccess().getStatementsInstructionStatementParserRuleCall_5_0_0_0_0()); 
             }
 
             }
@@ -26353,12 +26353,12 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__StatementsAssignment_5_0_0_0"
+    // $ANTLR end "rule__SCLProgram__StatementsAssignment_5_0_0_0"
 
 
-    // $ANTLR start "rule__Program__StatementsAssignment_5_0_1"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9108:1: rule__Program__StatementsAssignment_5_0_1 : ( ruleEmptyStatement ) ;
-    public final void rule__Program__StatementsAssignment_5_0_1() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__StatementsAssignment_5_0_1"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9108:1: rule__SCLProgram__StatementsAssignment_5_0_1 : ( ruleEmptyStatement ) ;
+    public final void rule__SCLProgram__StatementsAssignment_5_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -26370,15 +26370,15 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9114:1: ruleEmptyStatement
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getStatementsEmptyStatementParserRuleCall_5_0_1_0()); 
+               before(grammarAccess.getSCLProgramAccess().getStatementsEmptyStatementParserRuleCall_5_0_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleEmptyStatement_in_rule__Program__StatementsAssignment_5_0_118444);
+            pushFollow(FollowSets000.FOLLOW_ruleEmptyStatement_in_rule__SCLProgram__StatementsAssignment_5_0_118444);
             ruleEmptyStatement();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getStatementsEmptyStatementParserRuleCall_5_0_1_0()); 
+               after(grammarAccess.getSCLProgramAccess().getStatementsEmptyStatementParserRuleCall_5_0_1_0()); 
             }
 
             }
@@ -26398,12 +26398,12 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__StatementsAssignment_5_0_1"
+    // $ANTLR end "rule__SCLProgram__StatementsAssignment_5_0_1"
 
 
-    // $ANTLR start "rule__Program__StatementsAssignment_5_1_0"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9123:1: rule__Program__StatementsAssignment_5_1_0 : ( ruleInstructionStatement ) ;
-    public final void rule__Program__StatementsAssignment_5_1_0() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__StatementsAssignment_5_1_0"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9123:1: rule__SCLProgram__StatementsAssignment_5_1_0 : ( ruleInstructionStatement ) ;
+    public final void rule__SCLProgram__StatementsAssignment_5_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -26415,15 +26415,15 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9129:1: ruleInstructionStatement
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getStatementsInstructionStatementParserRuleCall_5_1_0_0()); 
+               before(grammarAccess.getSCLProgramAccess().getStatementsInstructionStatementParserRuleCall_5_1_0_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleInstructionStatement_in_rule__Program__StatementsAssignment_5_1_018475);
+            pushFollow(FollowSets000.FOLLOW_ruleInstructionStatement_in_rule__SCLProgram__StatementsAssignment_5_1_018475);
             ruleInstructionStatement();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getStatementsInstructionStatementParserRuleCall_5_1_0_0()); 
+               after(grammarAccess.getSCLProgramAccess().getStatementsInstructionStatementParserRuleCall_5_1_0_0()); 
             }
 
             }
@@ -26443,12 +26443,12 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__StatementsAssignment_5_1_0"
+    // $ANTLR end "rule__SCLProgram__StatementsAssignment_5_1_0"
 
 
-    // $ANTLR start "rule__Program__StatementsAssignment_5_1_1"
-    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9138:1: rule__Program__StatementsAssignment_5_1_1 : ( ruleEmptyStatement ) ;
-    public final void rule__Program__StatementsAssignment_5_1_1() throws RecognitionException {
+    // $ANTLR start "rule__SCLProgram__StatementsAssignment_5_1_1"
+    // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9138:1: rule__SCLProgram__StatementsAssignment_5_1_1 : ( ruleEmptyStatement ) ;
+    public final void rule__SCLProgram__StatementsAssignment_5_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -26460,15 +26460,15 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:9144:1: ruleEmptyStatement
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getProgramAccess().getStatementsEmptyStatementParserRuleCall_5_1_1_0()); 
+               before(grammarAccess.getSCLProgramAccess().getStatementsEmptyStatementParserRuleCall_5_1_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleEmptyStatement_in_rule__Program__StatementsAssignment_5_1_118506);
+            pushFollow(FollowSets000.FOLLOW_ruleEmptyStatement_in_rule__SCLProgram__StatementsAssignment_5_1_118506);
             ruleEmptyStatement();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getProgramAccess().getStatementsEmptyStatementParserRuleCall_5_1_1_0()); 
+               after(grammarAccess.getSCLProgramAccess().getStatementsEmptyStatementParserRuleCall_5_1_1_0()); 
             }
 
             }
@@ -26488,7 +26488,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Program__StatementsAssignment_5_1_1"
+    // $ANTLR end "rule__SCLProgram__StatementsAssignment_5_1_1"
 
 
     // $ANTLR start "rule__Declaration__AnnotationsAssignment_0"
@@ -30762,20 +30762,20 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
 
     // $ANTLR start synpred1_InternalSCL
     public final void synpred1_InternalSCL_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1637:1: ( ( ( rule__Program__Group_5_0_0__0 ) ) )
-        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1637:1: ( ( rule__Program__Group_5_0_0__0 ) )
+        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1637:1: ( ( ( rule__SCLProgram__Group_5_0_0__0 ) ) )
+        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1637:1: ( ( rule__SCLProgram__Group_5_0_0__0 ) )
         {
-        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1637:1: ( ( rule__Program__Group_5_0_0__0 ) )
-        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1638:1: ( rule__Program__Group_5_0_0__0 )
+        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1637:1: ( ( rule__SCLProgram__Group_5_0_0__0 ) )
+        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1638:1: ( rule__SCLProgram__Group_5_0_0__0 )
         {
         if ( state.backtracking==0 ) {
-           before(grammarAccess.getProgramAccess().getGroup_5_0_0()); 
+           before(grammarAccess.getSCLProgramAccess().getGroup_5_0_0()); 
         }
-        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1639:1: ( rule__Program__Group_5_0_0__0 )
-        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1639:2: rule__Program__Group_5_0_0__0
+        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1639:1: ( rule__SCLProgram__Group_5_0_0__0 )
+        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:1639:2: rule__SCLProgram__Group_5_0_0__0
         {
-        pushFollow(FollowSets000.FOLLOW_rule__Program__Group_5_0_0__0_in_synpred1_InternalSCL3364);
-        rule__Program__Group_5_0_0__0();
+        pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Group_5_0_0__0_in_synpred1_InternalSCL3364);
+        rule__SCLProgram__Group_5_0_0__0();
 
         state._fsp--;
         if (state.failed) return ;
@@ -31068,11 +31068,11 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
 
     // $ANTLR start synpred57_InternalSCL
     public final void synpred57_InternalSCL_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2581:2: ( rule__Program__Alternatives_5_0 )
-        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2581:2: rule__Program__Alternatives_5_0
+        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2581:2: ( rule__SCLProgram__Alternatives_5_0 )
+        // ../de.cau.cs.kieler.scl.ui/src-gen/de/cau/cs/kieler/scl/ui/contentassist/antlr/internal/InternalSCL.g:2581:2: rule__SCLProgram__Alternatives_5_0
         {
-        pushFollow(FollowSets000.FOLLOW_rule__Program__Alternatives_5_0_in_synpred57_InternalSCL5560);
-        rule__Program__Alternatives_5_0();
+        pushFollow(FollowSets000.FOLLOW_rule__SCLProgram__Alternatives_5_0_in_synpred57_InternalSCL5560);
+        rule__SCLProgram__Alternatives_5_0();
 
         state._fsp--;
         if (state.failed) return ;
@@ -31517,7 +31517,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             this.transition = DFA1_transition;
         }
         public String getDescription() {
-            return "1632:1: rule__Program__Alternatives_5_0 : ( ( ( rule__Program__Group_5_0_0__0 ) ) | ( ( rule__Program__StatementsAssignment_5_0_1 ) ) );";
+            return "1632:1: rule__SCLProgram__Alternatives_5_0 : ( ( ( rule__SCLProgram__Group_5_0_0__0 ) ) | ( ( rule__SCLProgram__StatementsAssignment_5_0_1 ) ) );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -33145,7 +33145,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             this.transition = DFA28_transition;
         }
         public String getDescription() {
-            return "()* loopback of 2581:1: ( rule__Program__Alternatives_5_0 )*";
+            return "()* loopback of 2581:1: ( rule__SCLProgram__Alternatives_5_0 )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -34389,9 +34389,9 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
 
     
     private static class FollowSets000 {
-        public static final BitSet FOLLOW_ruleProgram_in_entryRuleProgram67 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleProgram74 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Group__0_in_ruleProgram100 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleSCLProgram_in_entryRuleSCLProgram67 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleSCLProgram74 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group__0_in_ruleSCLProgram100 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleDeclaration_in_entryRuleDeclaration127 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleDeclaration134 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__Declaration__Group__0_in_ruleDeclaration160 = new BitSet(new long[]{0x0000000000000002L});
@@ -34539,8 +34539,8 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_27_in_ruleLogicalAndOperator3255 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ValueType__Alternatives_in_ruleValueType3293 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__CombineOperator__Alternatives_in_ruleCombineOperator3329 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Group_5_0_0__0_in_rule__Program__Alternatives_5_03364 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__StatementsAssignment_5_0_1_in_rule__Program__Alternatives_5_03382 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group_5_0_0__0_in_rule__SCLProgram__Alternatives_5_03364 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__StatementsAssignment_5_0_1_in_rule__SCLProgram__Alternatives_5_03382 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleAssignment_in_rule__InstructionStatement__InstructionAlternatives_1_03416 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleConditional_in_rule__InstructionStatement__InstructionAlternatives_1_03433 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleGoto_in_rule__InstructionStatement__InstructionAlternatives_1_03450 = new BitSet(new long[]{0x0000000000000002L});
@@ -34614,41 +34614,41 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_17_in_rule__CombineOperator__Alternatives5016 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_18_in_rule__CombineOperator__Alternatives5037 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_40_in_rule__CombineOperator__Alternatives5058 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Group__0__Impl_in_rule__Program__Group__05091 = new BitSet(new long[]{0x0000100000000000L});
-        public static final BitSet FOLLOW_rule__Program__Group__1_in_rule__Program__Group__05094 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__AnnotationsAssignment_0_in_rule__Program__Group__0__Impl5121 = new BitSet(new long[]{0x0000000000000402L,0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Group__1__Impl_in_rule__Program__Group__15152 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__Program__Group__2_in_rule__Program__Group__15155 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_44_in_rule__Program__Group__1__Impl5183 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Group__2__Impl_in_rule__Program__Group__25214 = new BitSet(new long[]{0x000021FC00000400L,0x00000000000000FAL});
-        public static final BitSet FOLLOW_rule__Program__Group__3_in_rule__Program__Group__25217 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__NameAssignment_2_in_rule__Program__Group__2__Impl5244 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Group__3__Impl_in_rule__Program__Group__35274 = new BitSet(new long[]{0x000021FC00000400L,0x00000000000000FAL});
-        public static final BitSet FOLLOW_rule__Program__Group__4_in_rule__Program__Group__35277 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__DeclarationsAssignment_3_in_rule__Program__Group__3__Impl5304 = new BitSet(new long[]{0x000001FC00000402L,0x00000000000000FAL});
-        public static final BitSet FOLLOW_rule__Program__Group__4__Impl_in_rule__Program__Group__45335 = new BitSet(new long[]{0x1310200000000420L,0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Group__5_in_rule__Program__Group__45338 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_45_in_rule__Program__Group__4__Impl5366 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Group__5__Impl_in_rule__Program__Group__55397 = new BitSet(new long[]{0x0000400000000000L});
-        public static final BitSet FOLLOW_rule__Program__Group__6_in_rule__Program__Group__55400 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Group_5__0_in_rule__Program__Group__5__Impl5427 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Group__6__Impl_in_rule__Program__Group__65457 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_46_in_rule__Program__Group__6__Impl5485 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Group_5__0__Impl_in_rule__Program__Group_5__05530 = new BitSet(new long[]{0x1310200000000420L,0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Group_5__1_in_rule__Program__Group_5__05533 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Alternatives_5_0_in_rule__Program__Group_5__0__Impl5560 = new BitSet(new long[]{0x1310200000000422L,0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Group_5__1__Impl_in_rule__Program__Group_5__15591 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Group_5_1__0_in_rule__Program__Group_5__1__Impl5618 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Group_5_0_0__0__Impl_in_rule__Program__Group_5_0_0__05653 = new BitSet(new long[]{0x0000800000000000L});
-        public static final BitSet FOLLOW_rule__Program__Group_5_0_0__1_in_rule__Program__Group_5_0_0__05656 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__StatementsAssignment_5_0_0_0_in_rule__Program__Group_5_0_0__0__Impl5683 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Group_5_0_0__1__Impl_in_rule__Program__Group_5_0_0__15713 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_47_in_rule__Program__Group_5_0_0__1__Impl5741 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Group_5_1__0__Impl_in_rule__Program__Group_5_1__05776 = new BitSet(new long[]{0x1310200000000420L,0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Group_5_1__1_in_rule__Program__Group_5_1__05779 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__StatementsAssignment_5_1_0_in_rule__Program__Group_5_1__0__Impl5806 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Group_5_1__1__Impl_in_rule__Program__Group_5_1__15836 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__StatementsAssignment_5_1_1_in_rule__Program__Group_5_1__1__Impl5863 = new BitSet(new long[]{0x1310200000000422L,0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group__0__Impl_in_rule__SCLProgram__Group__05091 = new BitSet(new long[]{0x0000100000000000L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group__1_in_rule__SCLProgram__Group__05094 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__AnnotationsAssignment_0_in_rule__SCLProgram__Group__0__Impl5121 = new BitSet(new long[]{0x0000000000000402L,0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group__1__Impl_in_rule__SCLProgram__Group__15152 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group__2_in_rule__SCLProgram__Group__15155 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_44_in_rule__SCLProgram__Group__1__Impl5183 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group__2__Impl_in_rule__SCLProgram__Group__25214 = new BitSet(new long[]{0x000021FC00000400L,0x00000000000000FAL});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group__3_in_rule__SCLProgram__Group__25217 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__NameAssignment_2_in_rule__SCLProgram__Group__2__Impl5244 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group__3__Impl_in_rule__SCLProgram__Group__35274 = new BitSet(new long[]{0x000021FC00000400L,0x00000000000000FAL});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group__4_in_rule__SCLProgram__Group__35277 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__DeclarationsAssignment_3_in_rule__SCLProgram__Group__3__Impl5304 = new BitSet(new long[]{0x000001FC00000402L,0x00000000000000FAL});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group__4__Impl_in_rule__SCLProgram__Group__45335 = new BitSet(new long[]{0x1310200000000420L,0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group__5_in_rule__SCLProgram__Group__45338 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_45_in_rule__SCLProgram__Group__4__Impl5366 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group__5__Impl_in_rule__SCLProgram__Group__55397 = new BitSet(new long[]{0x0000400000000000L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group__6_in_rule__SCLProgram__Group__55400 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group_5__0_in_rule__SCLProgram__Group__5__Impl5427 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group__6__Impl_in_rule__SCLProgram__Group__65457 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_46_in_rule__SCLProgram__Group__6__Impl5485 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group_5__0__Impl_in_rule__SCLProgram__Group_5__05530 = new BitSet(new long[]{0x1310200000000420L,0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group_5__1_in_rule__SCLProgram__Group_5__05533 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Alternatives_5_0_in_rule__SCLProgram__Group_5__0__Impl5560 = new BitSet(new long[]{0x1310200000000422L,0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group_5__1__Impl_in_rule__SCLProgram__Group_5__15591 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group_5_1__0_in_rule__SCLProgram__Group_5__1__Impl5618 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group_5_0_0__0__Impl_in_rule__SCLProgram__Group_5_0_0__05653 = new BitSet(new long[]{0x0000800000000000L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group_5_0_0__1_in_rule__SCLProgram__Group_5_0_0__05656 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__StatementsAssignment_5_0_0_0_in_rule__SCLProgram__Group_5_0_0__0__Impl5683 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group_5_0_0__1__Impl_in_rule__SCLProgram__Group_5_0_0__15713 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_47_in_rule__SCLProgram__Group_5_0_0__1__Impl5741 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group_5_1__0__Impl_in_rule__SCLProgram__Group_5_1__05776 = new BitSet(new long[]{0x1310200000000420L,0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group_5_1__1_in_rule__SCLProgram__Group_5_1__05779 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__StatementsAssignment_5_1_0_in_rule__SCLProgram__Group_5_1__0__Impl5806 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group_5_1__1__Impl_in_rule__SCLProgram__Group_5_1__15836 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__StatementsAssignment_5_1_1_in_rule__SCLProgram__Group_5_1__1__Impl5863 = new BitSet(new long[]{0x1310200000000422L,0x0000000000000002L});
         public static final BitSet FOLLOW_rule__Declaration__Group__0__Impl_in_rule__Declaration__Group__05898 = new BitSet(new long[]{0x000001FC00000400L,0x00000000000000FAL});
         public static final BitSet FOLLOW_rule__Declaration__Group__1_in_rule__Declaration__Group__05901 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__Declaration__AnnotationsAssignment_0_in_rule__Declaration__Group__0__Impl5928 = new BitSet(new long[]{0x0000000000000402L,0x0000000000000002L});
@@ -35168,13 +35168,13 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_66_in_rule__ExtendedID__Group_1__0__Impl18224 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ExtendedID__Group_1__1__Impl_in_rule__ExtendedID__Group_1__118255 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_ID_in_rule__ExtendedID__Group_1__1__Impl18282 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_rule__Program__AnnotationsAssignment_018320 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__Program__NameAssignment_218351 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleDeclaration_in_rule__Program__DeclarationsAssignment_318382 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleInstructionStatement_in_rule__Program__StatementsAssignment_5_0_0_018413 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleEmptyStatement_in_rule__Program__StatementsAssignment_5_0_118444 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleInstructionStatement_in_rule__Program__StatementsAssignment_5_1_018475 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleEmptyStatement_in_rule__Program__StatementsAssignment_5_1_118506 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_rule__SCLProgram__AnnotationsAssignment_018320 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__SCLProgram__NameAssignment_218351 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleDeclaration_in_rule__SCLProgram__DeclarationsAssignment_318382 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleInstructionStatement_in_rule__SCLProgram__StatementsAssignment_5_0_0_018413 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEmptyStatement_in_rule__SCLProgram__StatementsAssignment_5_0_118444 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleInstructionStatement_in_rule__SCLProgram__StatementsAssignment_5_1_018475 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEmptyStatement_in_rule__SCLProgram__StatementsAssignment_5_1_118506 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleAnnotation_in_rule__Declaration__AnnotationsAssignment_018537 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_67_in_rule__Declaration__ConstAssignment_118573 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_68_in_rule__Declaration__InputAssignment_218617 = new BitSet(new long[]{0x0000000000000002L});
@@ -35269,7 +35269,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_ruleExtendedID_in_rule__KeyFloatValueAnnotation__NameAssignment_121460 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_FLOAT_in_rule__KeyFloatValueAnnotation__ValueAssignment_221491 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyFloatValueAnnotation__AnnotationsAssignment_3_121522 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Group_5_0_0__0_in_synpred1_InternalSCL3364 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Group_5_0_0__0_in_synpred1_InternalSCL3364 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__Conditional__Group_4_0_0__0_in_synpred7_InternalSCL3534 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__Conditional__Group_5_2_0_0__0_in_synpred8_InternalSCL3585 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__Thread__Group_1_0_0__0_in_synpred9_InternalSCL3637 = new BitSet(new long[]{0x0000000000000002L});
@@ -35279,7 +35279,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_rule__CompareOperation__Group_0__0_in_synpred17_InternalSCL3939 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleValuedExpression_in_synpred18_InternalSCL3989 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__AtomicValuedExpression__Group_2__0_in_synpred27_InternalSCL4273 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__Program__Alternatives_5_0_in_synpred57_InternalSCL5560 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__SCLProgram__Alternatives_5_0_in_synpred57_InternalSCL5560 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__Conditional__DeclarationsAssignment_3_in_synpred72_InternalSCL7907 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__Conditional__Alternatives_4_0_in_synpred74_InternalSCL8162 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__Conditional__DeclarationsAssignment_5_1_in_synpred77_InternalSCL8592 = new BitSet(new long[]{0x0000000000000002L});

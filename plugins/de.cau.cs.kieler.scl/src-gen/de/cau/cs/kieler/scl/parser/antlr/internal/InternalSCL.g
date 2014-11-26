@@ -52,7 +52,7 @@ import de.cau.cs.kieler.scl.services.SCLGrammarAccess;
     
     @Override
     protected String getFirstRuleName() {
-    	return "Program";	
+    	return "SCLProgram";	
    	}
    	
    	@Override
@@ -71,28 +71,28 @@ import de.cau.cs.kieler.scl.services.SCLGrammarAccess;
 
 
 
-// Entry rule entryRuleProgram
-entryRuleProgram returns [EObject current=null] 
+// Entry rule entryRuleSCLProgram
+entryRuleSCLProgram returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getProgramRule()); }
-	 iv_ruleProgram=ruleProgram 
-	 { $current=$iv_ruleProgram.current; } 
+	{ newCompositeNode(grammarAccess.getSCLProgramRule()); }
+	 iv_ruleSCLProgram=ruleSCLProgram 
+	 { $current=$iv_ruleSCLProgram.current; } 
 	 EOF 
 ;
 
-// Rule Program
-ruleProgram returns [EObject current=null] 
+// Rule SCLProgram
+ruleSCLProgram returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
 ((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProgramAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
+	        newCompositeNode(grammarAccess.getSCLProgramAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
 	    }
 		lv_annotations_0_0=ruleAnnotation		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getProgramRule());
+	            $current = createModelElementForParent(grammarAccess.getSCLProgramRule());
 	        }
        		add(
        			$current, 
@@ -105,17 +105,17 @@ ruleProgram returns [EObject current=null]
 )
 )*	otherlv_1='module' 
     {
-    	newLeafNode(otherlv_1, grammarAccess.getProgramAccess().getModuleKeyword_1());
+    	newLeafNode(otherlv_1, grammarAccess.getSCLProgramAccess().getModuleKeyword_1());
     }
 (
 (
 		lv_name_2_0=RULE_ID
 		{
-			newLeafNode(lv_name_2_0, grammarAccess.getProgramAccess().getNameIDTerminalRuleCall_2_0()); 
+			newLeafNode(lv_name_2_0, grammarAccess.getSCLProgramAccess().getNameIDTerminalRuleCall_2_0()); 
 		}
 		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getProgramRule());
+	            $current = createModelElement(grammarAccess.getSCLProgramRule());
 	        }
        		setWithLastConsumed(
        			$current, 
@@ -128,11 +128,11 @@ ruleProgram returns [EObject current=null]
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProgramAccess().getDeclarationsDeclarationParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getSCLProgramAccess().getDeclarationsDeclarationParserRuleCall_3_0()); 
 	    }
 		lv_declarations_3_0=ruleDeclaration		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getProgramRule());
+	            $current = createModelElementForParent(grammarAccess.getSCLProgramRule());
 	        }
        		add(
        			$current, 
@@ -145,16 +145,16 @@ ruleProgram returns [EObject current=null]
 )
 )*	otherlv_4='{' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getProgramAccess().getLeftCurlyBracketKeyword_4());
+    	newLeafNode(otherlv_4, grammarAccess.getSCLProgramAccess().getLeftCurlyBracketKeyword_4());
     }
 ((((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProgramAccess().getStatementsInstructionStatementParserRuleCall_5_0_0_0_0()); 
+	        newCompositeNode(grammarAccess.getSCLProgramAccess().getStatementsInstructionStatementParserRuleCall_5_0_0_0_0()); 
 	    }
 		lv_statements_5_0=ruleInstructionStatement		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getProgramRule());
+	            $current = createModelElementForParent(grammarAccess.getSCLProgramRule());
 	        }
        		add(
        			$current, 
@@ -167,17 +167,17 @@ ruleProgram returns [EObject current=null]
 )
 )	otherlv_6=';' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getProgramAccess().getSemicolonKeyword_5_0_0_1());
+    	newLeafNode(otherlv_6, grammarAccess.getSCLProgramAccess().getSemicolonKeyword_5_0_0_1());
     }
 )
     |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProgramAccess().getStatementsEmptyStatementParserRuleCall_5_0_1_0()); 
+	        newCompositeNode(grammarAccess.getSCLProgramAccess().getStatementsEmptyStatementParserRuleCall_5_0_1_0()); 
 	    }
 		lv_statements_7_0=ruleEmptyStatement		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getProgramRule());
+	            $current = createModelElementForParent(grammarAccess.getSCLProgramRule());
 	        }
        		add(
        			$current, 
@@ -191,11 +191,11 @@ ruleProgram returns [EObject current=null]
 ))*((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProgramAccess().getStatementsInstructionStatementParserRuleCall_5_1_0_0()); 
+	        newCompositeNode(grammarAccess.getSCLProgramAccess().getStatementsInstructionStatementParserRuleCall_5_1_0_0()); 
 	    }
 		lv_statements_8_0=ruleInstructionStatement		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getProgramRule());
+	            $current = createModelElementForParent(grammarAccess.getSCLProgramRule());
 	        }
        		add(
        			$current, 
@@ -209,11 +209,11 @@ ruleProgram returns [EObject current=null]
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProgramAccess().getStatementsEmptyStatementParserRuleCall_5_1_1_0()); 
+	        newCompositeNode(grammarAccess.getSCLProgramAccess().getStatementsEmptyStatementParserRuleCall_5_1_1_0()); 
 	    }
 		lv_statements_9_0=ruleEmptyStatement		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getProgramRule());
+	            $current = createModelElementForParent(grammarAccess.getSCLProgramRule());
 	        }
        		add(
        			$current, 
@@ -226,7 +226,7 @@ ruleProgram returns [EObject current=null]
 )
 )*)?)	otherlv_10='}' 
     {
-    	newLeafNode(otherlv_10, grammarAccess.getProgramAccess().getRightCurlyBracketKeyword_6());
+    	newLeafNode(otherlv_10, grammarAccess.getSCLProgramAccess().getRightCurlyBracketKeyword_6());
     }
 )
 ;

@@ -19,8 +19,8 @@ import de.cau.cs.kieler.core.annotations.text.services.AnnotationsGrammarAccess;
 public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
-	public class ProgramElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Program");
+	public class SCLProgramElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SCLProgram");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
@@ -45,7 +45,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatementsEmptyStatementParserRuleCall_5_1_1_0 = (RuleCall)cStatementsAssignment_5_1_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
-		//Program:
+		//SCLProgram:
 		//	annotations+=Annotation* "module" name=ID declarations+=Declaration* "{" ((statements+=InstructionStatement ";" |
 		//	statements+=EmptyStatement)* (statements+=InstructionStatement statements+=EmptyStatement*)?) "}";
 		public ParserRule getRule() { return rule; }
@@ -659,22 +659,22 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "StatementSequence");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cThreadParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cProgramParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cSCLProgramParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cConditionalParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cStatementScopeParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
 		//StatementSequence:
-		//	Thread | Program | Conditional | StatementScope;
+		//	Thread | SCLProgram | Conditional | StatementScope;
 		public ParserRule getRule() { return rule; }
 
-		//Thread | Program | Conditional | StatementScope
+		//Thread | SCLProgram | Conditional | StatementScope
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Thread
 		public RuleCall getThreadParserRuleCall_0() { return cThreadParserRuleCall_0; }
 
-		//Program
-		public RuleCall getProgramParserRuleCall_1() { return cProgramParserRuleCall_1; }
+		//SCLProgram
+		public RuleCall getSCLProgramParserRuleCall_1() { return cSCLProgramParserRuleCall_1; }
 
 		//Conditional
 		public RuleCall getConditionalParserRuleCall_2() { return cConditionalParserRuleCall_2; }
@@ -910,7 +910,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	
-	private ProgramElements pProgram;
+	private SCLProgramElements pSCLProgram;
 	private DeclarationElements pDeclaration;
 	private ValuedObjectElements pValuedObject;
 	private StatementElements pStatement;
@@ -964,15 +964,15 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	//Program:
+	//SCLProgram:
 	//	annotations+=Annotation* "module" name=ID declarations+=Declaration* "{" ((statements+=InstructionStatement ";" |
 	//	statements+=EmptyStatement)* (statements+=InstructionStatement statements+=EmptyStatement*)?) "}";
-	public ProgramElements getProgramAccess() {
-		return (pProgram != null) ? pProgram : (pProgram = new ProgramElements());
+	public SCLProgramElements getSCLProgramAccess() {
+		return (pSCLProgram != null) ? pSCLProgram : (pSCLProgram = new SCLProgramElements());
 	}
 	
-	public ParserRule getProgramRule() {
-		return getProgramAccess().getRule();
+	public ParserRule getSCLProgramRule() {
+		return getSCLProgramAccess().getRule();
 	}
 
 	//Declaration returns kexpressions::Declaration:
@@ -1070,7 +1070,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//StatementSequence:
-	//	Thread | Program | Conditional | StatementScope;
+	//	Thread | SCLProgram | Conditional | StatementScope;
 	public StatementSequenceElements getStatementSequenceAccess() {
 		return (pStatementSequence != null) ? pStatementSequence : (pStatementSequence = new StatementSequenceElements());
 	}

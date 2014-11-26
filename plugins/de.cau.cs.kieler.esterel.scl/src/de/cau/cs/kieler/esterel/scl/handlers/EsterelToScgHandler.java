@@ -23,7 +23,7 @@ import de.cau.cs.kieler.core.model.handlers.AbstractConvertModelHandler;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scl.SCLStandaloneSetup;
-import de.cau.cs.kieler.scl.scl.Program;
+import de.cau.cs.kieler.scl.scl.SCLProgram;
 
 /**
  * @author krat
@@ -67,7 +67,7 @@ public class EsterelToScgHandler extends AbstractConvertModelHandler {
 
         transformed = model;
         if (commandString.equals(ESTEREL_TRANSFORMATION)) {
-            Program sclProgram = (Program) KielerCompiler.compile("ESTERELTOSCL", model, false, false).getEObject();
+            SCLProgram sclProgram = (SCLProgram) KielerCompiler.compile("ESTERELTOSCL", model, false, false).getEObject();
             transformed = (SCGraph) KielerCompiler.compile("SCLTOSCG", sclProgram, false, false).getEObject();
         } 
         return transformed;

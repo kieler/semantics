@@ -29,7 +29,6 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
-import de.cau.cs.kieler.scl.scl.Program
 import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.scl.scl.Statement
 import de.cau.cs.kieler.scl.scl.StatementSequence
@@ -39,6 +38,7 @@ import java.util.List
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scl.scl.SCLProgram
 
 /** 
  * SCG to SCL Transformation 
@@ -73,9 +73,9 @@ class SCGToSCLTransformation {
     // -- M2M Transformation 
     // -------------------------------------------------------------------------
     
-    def Program transformSCGToSCL(SCGraph scg) {
+    def SCLProgram transformSCGToSCL(SCGraph scg) {
         // Create new SCL program...
-        val scl = SclFactory::eINSTANCE.createProgram()
+        val scl = SclFactory::eINSTANCE.createSCLProgram()
         scl.name = 'M' + scg.hashCode.toString
                   
         // ... and copy declarations.

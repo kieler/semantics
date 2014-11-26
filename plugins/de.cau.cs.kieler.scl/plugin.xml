@@ -187,7 +187,7 @@
    <extension
          point="de.cau.cs.kieler.kico.extension">
       <ExtensionInformation
-            className="Program"
+            className="SCLProgram"
             editor_id="de.cau.cs.kieler.scl.SCL"
             extensionName="scl"
             isXMI="false">
