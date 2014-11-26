@@ -1,0 +1,697 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ *
+ * Copyright 2014 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ *
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+package de.cau.cs.kieler.esterel.sim.c;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.util.LinkedList;
+
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.osgi.framework.Bundle;
+
+import com.google.inject.Guice;
+
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension;
+import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
+import de.cau.cs.kieler.esterel.sim.c.xtend.CSimulationEsterel;
+import de.cau.cs.kieler.esterel.sim.c.xtend.CSimulationSCL;
+import de.cau.cs.kieler.kico.CompilationResult;
+import de.cau.cs.kieler.kico.KielerCompiler;
+import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.s.extensions.SExtension;
+//import de.cau.cs.kieler.s.s.Program;
+import de.cau.cs.kieler.sc.CExecution;
+import de.cau.cs.kieler.esterel.esterel.Program;
+import de.cau.cs.kieler.scg.SCGraph;
+import de.cau.cs.kieler.scl.scl.SCLProgram;
+import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
+import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
+import de.cau.cs.kieler.sim.signals.JSONSignalValues;
+
+/**
+ * The main simulator component.
+ * 
+ * @author cmot
+ * @kieler.design 2014-11-26 proposed cmot
+ * @kieler.rating 2014-11-26 proposed yellow
+ */
+public class EsterelCDataComponent extends JSONObjectSimulationDataComponent implements
+        IJSONObjectDataComponent {
+    /** A separate tick counter that is computed for the SC debug console as a reference. */
+    private long computedTick = 1;
+
+    /** The dirty indicator is used to notice editor changes and set the dirty flag accordingly. */
+    private int dirtyIndicator = 0;
+
+    private static final int KIEM_PROPERTY_MAX = 6;
+
+    private static final int KIEM_PROPERTY_STATEMENTNAME = 0;
+    private static final String KIEM_PROPERTY_NAME_STATEMENTNAME = "Statement Name";
+
+    /** The Constant KIEM_PROPERTY_CCOMPILER. */
+    private static final int KIEM_PROPERTY_CCOMPILER = 1;
+
+    /** The Constant KIEM_PROPERTY_DEFAULT_CCOMPILER. */
+    private static final String KIEM_PROPERTY_DEFAULT_CCOMPILER = "gcc";
+
+    /** The Constant KIEM_PROPERTY_NAME_CCOMPILER. */
+    private static final String KIEM_PROPERTY_NAME_CCOMPILER = "SC-Compiler";
+
+    /** The Constant KIEM_PROPERTY_FULLDEBUGMODE. */
+    private static final int KIEM_PROPERTY_FULLDEBUGMODE = 2;
+
+    /** The Constant KIEM_PROPERTY_NAME_FULLDEBUGMODE. */
+    private static final String KIEM_PROPERTY_NAME_FULLDEBUGMODE = "Full Debug Mode";
+
+    /** The Constant KIEM_PROPERTY_DEBUGTRANSFORMATIONS. */
+    private static final int KIEM_PROPERTY_DEBUGTRANSFORMATIONS = 3;
+    /** The Constant KIEM_PROPERTY_NAME_DEBUGTRANSFORMATIONS. */
+    private static final String KIEM_PROPERTY_NAME_DEBUGTRANSFORMATIONS = "Debug Transformations";
+    /** The Constant KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONSS. */
+    private static final String KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONS = "SCCHARTS_SIMULATION_VISUALIZATION";
+
+    /** The Constant KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS. */
+    private static final int KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS = 4;
+    /** The Constant KIEM_PROPERTY_NAME_HIGHLEVELTRANSFORMATIONS. */
+    private static final String KIEM_PROPERTY_NAME_HIGHLEVELTRANSFORMATIONS =
+            "High Level Transformations";
+    /** The Constant KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS. */
+    private static final String KIEM_PROPERTY_DEFAULT_HIGHLEVELTRANSFORMATIONS = "CORE";
+
+    /** The Constant KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS. */
+    private static final int KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS = 5;
+    /** The Constant KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS. */
+    private static final String KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS = 
+            "Low Level Transformations";
+    /** The Constant KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS. */
+    private static final String KIEM_PROPERTY_DEFAULT_LOWLEVELTRANSFORMATIONS = "CODEGENERATION";
+
+    /** The C execution object for concurrent execution. */
+    private CExecution cExecution = null;
+
+    /** The list of output signals. */
+    private LinkedList<String> outputSignalList = null;
+
+    /** The list of output signals. */
+    private LinkedList<String> outputVariableList = null;
+
+    /** The list of output states used for the visualization. */
+    private LinkedList<String> outputActiveStatementList = null;
+
+    /** The list of output transitions used for the visualization. */
+    private LinkedList<String> outputTransitionList = null;
+
+    /** The SSCharts State / SCG is the considered model to simulate. */
+    private EObject myModel = null;
+
+    /** The single s / kexpression extension. */
+    private static SExtension sExtension = new SExtension();
+    private static KExpressionsExtension kExpressionExtension = new KExpressionsExtension();
+
+    // -------------------------------------------------------------------------
+
+    public EsterelCDataComponent() {
+        // TODO Auto-generated constructor stub
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public KiemProperty[] doProvideProperties() {
+        final int nProperties = KIEM_PROPERTY_MAX;
+        KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile();
+        KiemProperty[] properties = new KiemProperty[nProperties];
+        properties[KIEM_PROPERTY_STATEMENTNAME] =
+                new KiemProperty(KIEM_PROPERTY_NAME_STATEMENTNAME, "statement");
+        properties[KIEM_PROPERTY_CCOMPILER] =
+                new KiemProperty(KIEM_PROPERTY_NAME_CCOMPILER, compilerFile,
+                        KIEM_PROPERTY_DEFAULT_CCOMPILER);
+        properties[KIEM_PROPERTY_FULLDEBUGMODE] =
+                new KiemProperty(KIEM_PROPERTY_NAME_FULLDEBUGMODE, true);
+        properties[KIEM_PROPERTY_DEBUGTRANSFORMATIONS] =
+                new KiemProperty(KIEM_PROPERTY_NAME_DEBUGTRANSFORMATIONS,
+                        KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONS);
+        properties[KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS] =
+                new KiemProperty(KIEM_PROPERTY_NAME_HIGHLEVELTRANSFORMATIONS,
+                        KIEM_PROPERTY_DEFAULT_HIGHLEVELTRANSFORMATIONS);
+        properties[KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS] =
+                new KiemProperty(KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS,
+                        KIEM_PROPERTY_DEFAULT_LOWLEVELTRANSFORMATIONS);
+        // properties[KIEM_PROPERTY_BENCHMARK] = new KiemProperty(KIEM_PROPERTY_NAME_BENCHMARK,
+        // false);
+        // properties[KIEM_PROPERTY_RUNTIMEDEBUGCONSOLE] = new KiemProperty(
+        // KIEM_PROPERTY_NAME_RUNTIMEDEBUGCONSOLE, true);
+        // properties[KIEM_PROPERTY_EXPOSELOCALSIGNALS] = new KiemProperty(
+        // KIEM_PROPERTY_NAME_EXPOSELOCALSIGNALS, false);
+        // String[] items = { KIEM_RUNTIME_SJ, KIEM_RUNTIME_SJL, KIEM_RUNTIME_SC, KIEM_RUNTIME_SCL
+        // };
+        // properties[KIEM_PROPERTY_RUNTIME] = new KiemProperty(KIEM_PROPERTY_NAME_RUNTIME,
+        // new KiemPropertyTypeChoice(items), items[0]);
+        return properties;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean checkModelValidation(final EObject rootEObject)
+            throws KiemInitializationException {
+        if (!(rootEObject instanceof Program) && !(rootEObject instanceof SCLProgram)) {
+            throw new KiemInitializationException(
+                    "Esterel (SCG) Simulator can only be used with an Esterel or SCL editor.\n\n", true, null);
+        }
+
+        return true;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**SCG
+     * {@inheritDoc}
+     */
+    public boolean isDirty() {
+        // Calculate a dirty indicator from ALL model elements and their textual representation's
+        // hash code.
+        int newDirtyIndicator = 0;
+        TreeIterator<?> treeIterator = super.getModelRootElement().eAllContents();
+        while (treeIterator.hasNext()) {
+            Object obj = treeIterator.next();
+            newDirtyIndicator += obj.toString().hashCode();
+        }
+        // Also consider KIEM properties (may have changes and require new code generation)
+        for (int i = 0; i < KIEM_PROPERTY_MAX + KIEM_PROPERTY_DIFF; i++) {
+            newDirtyIndicator += this.getProperties()[i].getValue().hashCode();
+        }
+        if (newDirtyIndicator != dirtyIndicator) {
+            dirtyIndicator = newDirtyIndicator;
+            return true;
+        }
+        // We conclude at this point that we are not dirty on the level of
+        // changes to the diagram
+        return false || (cExecution == null);
+    }
+
+    // -------------------------------------------------------------------------
+
+    public String getDataComponentId() {
+        return "de.cau.cs.kieler.esterel.sim.c";
+    }
+
+    // -------------------------------------------------------------------------
+
+    public void initialize() throws KiemInitializationException {
+        computedTick = 1;
+    }
+
+    // -------------------------------------------------------------------------
+
+    public void wrapup() throws KiemInitializationException {
+        if (cExecution != null) {
+            // Do not delete the executable, maybe it can be used again
+            cExecution.stopExecution(false);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    public boolean isProducer() {
+        return true;
+    }
+
+    // -------------------------------------------------------------------------
+
+    public boolean isObserver() {
+        return true;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the C execution.
+     * 
+     * @return the C execution
+     */
+    public CExecution getCExecution() {
+        return cExecution;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the bundle path.
+     * 
+     * @param subDirectory
+     *            the sub directory
+     * @return the bundle path
+     */
+    private String getBundlePath(String subDirectory) {
+        Bundle bundle = Platform.getBundle(EsterelCSimulationPlugin.PLUGIN_ID);
+
+        URL url = null;
+        try {
+            url = FileLocator.toFileURL(FileLocator.find(bundle, new Path(subDirectory), null));
+        } catch (IOException e2) {
+            e2.printStackTrace();
+        }
+        String bundleLocation = url.getFile();
+
+        // Windows vs. Linux: Exchange possibly wrong slash/backslash
+        bundleLocation = bundleLocation.replaceAll("[/\\\\]+", "\\" + File.separator);
+        if (bundleLocation.startsWith("\\")) {
+            bundleLocation = bundleLocation.substring(1);
+        }
+        return bundleLocation;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public JSONObject doProvideInitialVariables() throws KiemInitializationException {
+        // start execution of compiled program
+        if (cExecution.isCompiled()) {
+            try {
+                cExecution.startExecution();
+            } catch (IOException e) {
+                throw new KiemInitializationException(
+                        "Esterel program could not be started sucessfully.\n\n", true, e);
+            }
+        } else {
+            throw new KiemInitializationException("Esterel program was not compiled sucessfully.\n\n",
+                    true, null);
+        }
+
+        if (!cExecution.isStarted()) {
+            throw new KiemInitializationException(
+                    "Error running Esterel program. Compiled simulation does not exist.\n", true, null);
+        }
+
+        // Build the list of interface output signals
+        outputSignalList = new LinkedList<String>();
+        outputVariableList = new LinkedList<String>();
+
+        JSONObject res = new JSONObject();
+        try {
+            if (myModel != null && kExpressionExtension.getValuedObjects(myModel) != null) {
+                for (ValuedObject valuedObject : kExpressionExtension.getValuedObjects(myModel)) {
+                    if (kExpressionExtension.isInput(valuedObject)) {
+                        if (kExpressionExtension.isSignal(valuedObject)) {
+                            res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));
+                        } else {
+                            res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));
+                        }
+                    }
+                    if (kExpressionExtension.isOutput(valuedObject)) {
+                        String signalName = valuedObject.getName();
+                        if (signalName.startsWith(EsterelCSimulationPlugin.AUXILIARY_VARIABLE_TAG)) {
+                            outputActiveStatementList.add(signalName);
+                        } else {
+                            if (kExpressionExtension.isSignal(valuedObject)) {
+                                res.accumulate(signalName, JSONSignalValues.newValue(false));
+                                outputSignalList.add(signalName);
+                            } else {
+                                res.accumulate(signalName, JSONSignalValues.newValue(false));
+                                outputVariableList.add(signalName);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            // ignore
+        }
+        return res;
+    }
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void doModel2ModelTransform(final ProgressMonitorAdapter monitor)
+            throws KiemInitializationException {
+        doModel2ModelTransform(monitor, this.getModelRootElement(),
+                this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE + KIEM_PROPERTY_DIFF]
+                        .getValueAsBoolean());
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public void doModel2ModelTransform(final ProgressMonitorAdapter monitor, final EObject model,
+            final boolean debug) throws KiemInitializationException {
+        
+        System.out.println("1");
+        this.myModel = model;
+        monitor.begin("Esterel (SCG) Simulation", 1);
+        System.out.println("2");
+
+        String compile = "";
+        try {
+
+            System.out.println("3");
+            if (this.myModel == null) {
+                throw new KiemInitializationException(
+                        "Cannot simulate active editor using the Esterel (SCG) Simulator", true, null);
+            }
+            System.out.println("4");
+
+//            if (this.getModelRootElement().eResource() == null) {
+//                throw new KiemInitializationException(
+//                        "The active editor has must be saved in order to simulate the SCChart."
+//                                + " Volatile resources cannot be simulated.", true, null);
+//            }
+            System.out.println("5");
+
+            // Make a copy of the S program in case it was from
+            // an active Editor
+            URI sOutput = URI.createURI("");
+            URI scOutput = URI.createURI("");
+
+            // By default there is no additional transformation necessary
+            Program transformedProgram = null;
+
+            // Calculate output path for possible S-m2m
+            String inputPathString = this.getModelFilePath().toString();
+            System.out.println("6 " + inputPathString);
+            URI input = URI.createPlatformResourceURI(inputPathString.replace("%20", " "), true);
+            sOutput = URI.createURI(input.toString());
+
+            String highLevelTransformations =
+                    this.getProperties()[KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS
+                            + KIEM_PROPERTY_DIFF].getValue();
+            String lowLevelTransformations =
+                    this.getProperties()[KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS + KIEM_PROPERTY_DIFF]
+                            .getValue();
+            System.out.println("7");
+
+            // If 'Full Debug Mode' is turned on then the user also wants to have
+            // states and transitions visualized.
+            // Hence some pre-processing is needed and done by the
+            // an addition model transformation
+            String debugTransformations =
+                    this.getProperties()[KIEM_PROPERTY_DEBUGTRANSFORMATIONS + KIEM_PROPERTY_DIFF]
+                            .getValue();
+            if (debug) {
+                highLevelTransformations = debugTransformations + ", " + highLevelTransformations;
+            }
+            System.out.println("8");
+
+            // Compile the SCChart to C code
+            EObject extendedSCChart = this.myModel;
+            System.out.println("9");
+
+            KielerCompilerContext highLevelContext =
+                    new KielerCompilerContext(highLevelTransformations, extendedSCChart);
+            
+            // Create a dummy resource ONLY for debug visualization, where we need FragmentURIs
+            highLevelContext.setCreateDummyResource(debug);
+            
+            highLevelContext.setInplace(false);
+            highLevelContext.setPrerequirements(true);
+            System.out.println("10");
+            CompilationResult highLeveleCompilationResult =
+                    KielerCompiler.compile(highLevelContext);
+            System.out.println("11");
+
+            // The following should be a state or an SCG
+            EObject esterelProgramOrSCLProgram = highLeveleCompilationResult.getEObject();
+
+            //String coreSSChartText = KiCoUtil.serialize(coreSCChart, highLevelContext, false);
+            //writeOutputModel("D:\\sschart.sct", coreSSChartText.getBytes());
+            // System.out.println(coreSSChartText);
+
+            KielerCompilerContext lowLevelContext =
+                    new KielerCompilerContext(lowLevelTransformations, esterelProgramOrSCLProgram);
+            lowLevelContext.setCreateDummyResource(true);
+            lowLevelContext.setInplace(false);
+            lowLevelContext.setPrerequirements(true);
+            System.out.println("12");
+            CompilationResult lowLevelCompilationResult = KielerCompiler.compile(lowLevelContext);
+            System.out.println("13");
+
+            String cSCChartCCode = lowLevelCompilationResult.getString();
+            System.out.println("14 " + cSCChartCCode);
+
+            // Generate Simulation wrapper C code
+            String cSimulation = "";
+            if (esterelProgramOrSCLProgram instanceof Program) {
+                System.out.println("15");
+                CSimulationEsterel cSimulationSCChart = Guice.createInjector().getInstance(CSimulationEsterel.class);
+                System.out.println("16");
+                cSimulation = cSimulationSCChart.transform((Program)esterelProgramOrSCLProgram, "10000").toString();
+            }
+            else if (esterelProgramOrSCLProgram instanceof SCLProgram) {
+                System.out.println("15");
+                CSimulationSCL cSimulationSCG = Guice.createInjector().getInstance(CSimulationSCL.class);
+                System.out.println("16");
+                cSimulation = cSimulationSCG.transform((SCLProgram)esterelProgramOrSCLProgram, "10000").toString();
+            }
+            System.out.println("17 " + cSimulation);
+
+            // Set a random output folder for the compiled files
+            String outputFolder = KiemUtil.generateRandomTempOutputFolder();
+            System.out.println("18 " + outputFolder);
+
+            String fileNameSCChart = "scchart.c";
+            String outputFileSCChart = outputFolder + fileNameSCChart;
+            System.out.println("19 " + outputFileSCChart);
+            System.out.println("19,5 " + cSCChartCCode.getBytes());
+            writeOutputModel(outputFileSCChart, cSCChartCCode.getBytes());
+
+            String fileNameSimulation = "simulation.c";
+            String outputFileSimulation = outputFolder + fileNameSimulation;
+            System.out.println("20 " + outputFileSimulation);
+            writeOutputModel(outputFileSimulation, cSimulation.getBytes());
+
+            String includePath = getBundlePath("templates");
+            System.out.println("21 " + includePath);
+            System.out.println(includePath);
+            // Compile
+            cExecution = new CExecution(outputFolder, false);
+            LinkedList<String> generatedSCFiles = new LinkedList<String>();
+            generatedSCFiles.add(outputFileSimulation);
+            // generatedSCFiles.add(outputFileSCChart);
+            generatedSCFiles.add("-I " + includePath);
+            String modelName = "SCG";
+            if (myModel instanceof Program) {
+                modelName = ((Program) myModel).getModules().get(0).getName();
+            }
+            else if (myModel instanceof SCLProgram) {
+                modelName = ((SCLProgram) myModel).getName();
+            }
+            cExecution.compile(generatedSCFiles, modelName);
+        } catch (RuntimeException e) {
+            throw new KiemInitializationException("Error compiling S program:\n\n "
+                    + e.getMessage() + "\n\n" + compile, true, e);
+        } catch (IOException e) {
+            throw new KiemInitializationException("Error compiling S program:\n\n "
+                    + e.getMessage() + "\n\n" + compile, true, e);
+        } catch (InterruptedException e) {
+            throw new KiemInitializationException("Error compiling S program:\n\n "
+                    + e.getMessage() + "\n\n" + compile, true, e);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Write output model to file.
+     * 
+     * @param outputFile
+     *            the output file
+     * @param modelAsText
+     *            the model as text
+     */
+    private static void writeOutputModel(String outputFile, byte[] model) {
+        FileOutputStream out;
+        try {
+            out = new FileOutputStream(outputFile);
+            out.write(model);
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    public JSONObject doStep(JSONObject jSONObject) throws KiemExecutionException {
+        // The return object to construct
+        JSONObject returnObj = new JSONObject();
+
+        boolean debugConsole = false;
+
+        // Collect active statements
+         StringBuffer activeStatementsBuf = new StringBuffer();
+         StringBuffer activeTransitionsBuf = new StringBuffer();
+         //List<DebugData> activeStatesList = new LinkedList<DebugData>();
+
+        if (cExecution == null || !cExecution.isStarted()) {
+            throw new KiemExecutionException("No S simulation is running", true, null);
+        }
+
+        try {
+            String out = jSONObject.toString();
+            System.out.println("> " + out);
+            cExecution.getInterfaceToExecution().write(out + "\n");
+            cExecution.getInterfaceToExecution().flush();
+            while (cExecution.getInterfaceError().ready()) {
+                // Error output, if any
+                System.out.print(cExecution.getInterfaceError().read());
+            }
+
+            String receivedMessage = cExecution.getInterfaceFromExecution().readLine();
+
+            System.out.println("< " + receivedMessage);
+            // if (debugConsole) {
+            // printConsole("==============| TICK " + computedTick++ + " |==============");
+            // while (!receivedMessage.startsWith("{\"")) {
+            // printConsole(receivedMessage);
+            // receivedMessage = scExecution.getInterfaceFromExecution().readLine();
+            // }
+            // printConsole("\n");
+            // }
+
+            if (receivedMessage != null) {
+                JSONObject output = new JSONObject(receivedMessage);
+                JSONArray outputArray = output.names();
+
+                if (outputArray != null) {
+                    // First add auxiliary signals (for active statements)
+                    for (int i = 0; i < outputArray.length(); i++) {
+                        String outputName = outputArray.getString(i);
+
+                        if (output.get(outputName) instanceof JSONObject) {
+
+                            JSONObject valuedObject = output.getJSONObject(outputName);
+                            Object value = ((JSONObject) valuedObject).get("value");
+
+                            boolean present = false;
+                            if (value instanceof Boolean) {
+                                present = (Boolean) value;
+                            } else if (value instanceof Integer) {
+                                present = ((Integer) value) != 0;
+                            }
+
+                            if (outputName.startsWith(EsterelCSimulationPlugin.AUXILIARY_VARIABLE_TAG)) {
+                                if (present) {
+                                    if (activeStatementsBuf.length() > 0) {
+                                        activeStatementsBuf.append(",");
+                                    }
+                                    String activeStatementName = outputName.substring(EsterelCSimulationPlugin.AUXILIARY_VARIABLE_TAG.length());
+                                    activeStatementsBuf.append(activeStatementName);
+                                }
+                            }
+                            else {
+                                returnObj.accumulate(outputName,
+                                        JSONSignalValues.newValue(value, present));
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            // Finally accumulate all active Statements (activeStatements)
+            // under the statementName
+            String activeStatements = "";
+            activeStatements = activeStatementsBuf.toString();
+
+            String activeStatementsName =
+             this.getProperties()[KIEM_PROPERTY_STATEMENTNAME + KIEM_PROPERTY_DIFF]
+             .getValue();
+             returnObj.accumulate(activeStatementsName, activeStatements);
+
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            cExecution.stopExecution(false);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            cExecution.stopExecution(false);
+        }
+
+        return returnObj;
+    }
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    /**
+     * The Class DebugData.
+     */
+    protected class DebugData implements Comparable<DebugData> {
+
+        /** The name. */
+        public String name;
+
+        /** The prio. */
+        public int prio;
+
+        /** The order. */
+        public int order;
+
+        /**
+         * Instantiates a new debug data.
+         */
+        public DebugData() {
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public int compareTo(final DebugData compareObject) {
+            if (order < compareObject.order) {
+                return -1;
+            } else if (order == compareObject.order) {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+}
