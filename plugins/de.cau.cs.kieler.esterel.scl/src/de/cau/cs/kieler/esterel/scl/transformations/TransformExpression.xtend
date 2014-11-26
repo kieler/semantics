@@ -91,8 +91,8 @@ class TransformExpression {
     /*
      * Translates esterel CombineOperator to KExpressions Operator
      */
-    def de.cau.cs.kieler.core.kexpressions.OperatorType transformCombineOperator(CombineOperator op) {
-        return de.cau.cs.kieler.core.kexpressions.OperatorType::get(op.toString)
+    def de.cau.cs.kieler.core.kexpressions.CombineOperator transformCombineOperator(CombineOperator op) {
+        return de.cau.cs.kieler.core.kexpressions.CombineOperator::get(op.toString)
     }
 
     def de.cau.cs.kieler.core.kexpressions.ValuedObjectReference transformCompExp(ComplexExpression comp,
