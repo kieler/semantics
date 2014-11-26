@@ -5,7 +5,7 @@
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
             class="de.cau.cs.kieler.esterel.sim.c.EsterelCDataComponent"
-            id="de.cau.cs.kieler.sccharts.sim.c"
+            id="de.cau.cs.kieler.esterel.sim.c"
             name="Esterel Simulator (SCG)">
       </content>
    </extension>

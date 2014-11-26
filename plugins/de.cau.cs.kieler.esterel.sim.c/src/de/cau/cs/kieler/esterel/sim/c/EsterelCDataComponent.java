@@ -189,10 +189,10 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
     @Override
     public boolean checkModelValidation(final EObject rootEObject)
             throws KiemInitializationException {
-//        if (!(rootEObject instanceof State) && !(rootEObject instanceof SCGraph)) {
-//            throw new KiemInitializationException(
-//                    "SCCharts Simulator can only be used with a SCCharts editor.\n\n", true, null);
-//        }
+        if (!(rootEObject instanceof Program) && !(rootEObject instanceof SCLProgram)) {
+            throw new KiemInitializationException(
+                    "Esterel (SCG) Simulator can only be used with an Esterel or SCL editor.\n\n", true, null);
+        }
 
         return true;
     }
@@ -309,16 +309,16 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
                 cExecution.startExecution();
             } catch (IOException e) {
                 throw new KiemInitializationException(
-                        "SCCharts could not be started sucessfully.\n\n", true, e);
+                        "Esterel program could not be started sucessfully.\n\n", true, e);
             }
         } else {
-            throw new KiemInitializationException("SCCharts was not compiled sucessfully.\n\n",
+            throw new KiemInitializationException("Esterel program was not compiled sucessfully.\n\n",
                     true, null);
         }
 
         if (!cExecution.isStarted()) {
             throw new KiemInitializationException(
-                    "Error running SCCharts. Compiled simulation does not exist.\n", true, null);
+                    "Error running Esterel program. Compiled simulation does not exist.\n", true, null);
         }
 
         // Build the list of interface output signals
@@ -381,7 +381,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
         
         System.out.println("1");
         this.myModel = model;
-        monitor.begin("SCCharts Simulation", 1);
+        monitor.begin("Esterel (SCG) Simulation", 1);
         System.out.println("2");
 
         String compile = "";
@@ -390,7 +390,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             System.out.println("3");
             if (this.myModel == null) {
                 throw new KiemInitializationException(
-                        "Cannot simulate active editor using the SCCharts Simulator", true, null);
+                        "Cannot simulate active editor using the Esterel (SCG) Simulator", true, null);
             }
             System.out.println("4");
 
