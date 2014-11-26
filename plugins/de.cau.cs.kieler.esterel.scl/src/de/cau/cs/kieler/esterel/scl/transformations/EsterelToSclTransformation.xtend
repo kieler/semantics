@@ -292,11 +292,13 @@ class EsterelToSclTransformation extends Transformation {
             sSeq.statements.add(setSignal)
         }
 
-        // Valued Emit
+        // Valued Emit with combine function
         if (emit.expr != null) {
             val s_val = valuedMap.get(variable)
             val sclExpr = emit.expr.transformConstExp(s_val.type.toString)
-            if (s_val.combineOperator != null) {
+            System.out.println("Combineoperator: " + s_val.combineOperator.toString)
+            System.out.println("op: " + OperatorType::get(s_val.combineOperator.toString))
+            if (s_val.combineOperator.value != 0) {
                 val cond = SclFactory::eINSTANCE.createConditional => [
                     expression = KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
                         valuedObject = variable
@@ -304,7 +306,7 @@ class EsterelToSclTransformation extends Transformation {
                     statements += createStmFromInstr(
                         SclFactory::eINSTANCE.createAssignment => [
                             expression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-                                operator = OperatorType::get(s_val.combineOperator.getName)
+                                operator = OperatorType::get(s_val.combineOperator.toString)
                                 subExpressions.add(createValuedObjectRef(s_val))
                                 subExpressions.add(EcoreUtil.copy(sclExpr))
                             ]
@@ -314,6 +316,11 @@ class EsterelToSclTransformation extends Transformation {
                     elseStatements.add(createStmFromInstr(createAssignment(s_val, sclExpr)))                
                 ]
                 sSeq.statements += cond.createStmFromInstr
+            }
+            // Valued emit without combine function
+            else {
+                sSeq.statements.add(setSignal)
+                sSeq.statements.add(createStmFromInstr(createAssignment(s_val, sclExpr)))
             }
         }
 
