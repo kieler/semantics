@@ -71,15 +71,13 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
     /** The dirty indicator is used to notice editor changes and set the dirty flag accordingly. */
     private int dirtyIndicator = 0;
 
-    private static final int KIEM_PROPERTY_MAX = 7;
+    private static final int KIEM_PROPERTY_MAX = 6;
 
-    private static final int KIEM_PROPERTY_STATENAME = 0;
-    private static final String KIEM_PROPERTY_NAME_STATENAME = "State Name";
-    private static final int KIEM_PROPERTY_TRANSITIONNAME = 1;
-    private static final String KIEM_PROPERTY_NAME_TRANSITIONNAME = "Transition Name";
+    private static final int KIEM_PROPERTY_STATEMENTNAME = 0;
+    private static final String KIEM_PROPERTY_NAME_STATEMENTNAME = "Statement Name";
 
     /** The Constant KIEM_PROPERTY_CCOMPILER. */
-    private static final int KIEM_PROPERTY_CCOMPILER = 2;
+    private static final int KIEM_PROPERTY_CCOMPILER = 1;
 
     /** The Constant KIEM_PROPERTY_DEFAULT_CCOMPILER. */
     private static final String KIEM_PROPERTY_DEFAULT_CCOMPILER = "gcc";
@@ -88,20 +86,20 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
     private static final String KIEM_PROPERTY_NAME_CCOMPILER = "SC-Compiler";
 
     /** The Constant KIEM_PROPERTY_FULLDEBUGMODE. */
-    private static final int KIEM_PROPERTY_FULLDEBUGMODE = 3;
+    private static final int KIEM_PROPERTY_FULLDEBUGMODE = 2;
 
     /** The Constant KIEM_PROPERTY_NAME_FULLDEBUGMODE. */
     private static final String KIEM_PROPERTY_NAME_FULLDEBUGMODE = "Full Debug Mode";
 
     /** The Constant KIEM_PROPERTY_DEBUGTRANSFORMATIONS. */
-    private static final int KIEM_PROPERTY_DEBUGTRANSFORMATIONS = 4;
+    private static final int KIEM_PROPERTY_DEBUGTRANSFORMATIONS = 3;
     /** The Constant KIEM_PROPERTY_NAME_DEBUGTRANSFORMATIONS. */
     private static final String KIEM_PROPERTY_NAME_DEBUGTRANSFORMATIONS = "Debug Transformations";
     /** The Constant KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONSS. */
     private static final String KIEM_PROPERTY_DEFAULT_DEBUGTRANSFORMATIONS = "SCCHARTS_SIMULATION_VISUALIZATION";
 
     /** The Constant KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS. */
-    private static final int KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS = 5;
+    private static final int KIEM_PROPERTY_HIGHLEVELTRANSFORMATIONS = 4;
     /** The Constant KIEM_PROPERTY_NAME_HIGHLEVELTRANSFORMATIONS. */
     private static final String KIEM_PROPERTY_NAME_HIGHLEVELTRANSFORMATIONS =
             "High Level Transformations";
@@ -109,9 +107,9 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
     private static final String KIEM_PROPERTY_DEFAULT_HIGHLEVELTRANSFORMATIONS = "CORE";
 
     /** The Constant KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS. */
-    private static final int KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS = 6;
+    private static final int KIEM_PROPERTY_LOWLEVELTRANSFORMATIONS = 5;
     /** The Constant KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS. */
-    private static final String KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS =
+    private static final String KIEM_PROPERTY_NAME_LOWLEVELTRANSFORMATIONS = 
             "Low Level Transformations";
     /** The Constant KIEM_PROPERTY_DEFAULT_COMPILETRANSFORMATIONS. */
     private static final String KIEM_PROPERTY_DEFAULT_LOWLEVELTRANSFORMATIONS = "CODEGENERATION";
@@ -154,10 +152,8 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
         final int nProperties = KIEM_PROPERTY_MAX;
         KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile();
         KiemProperty[] properties = new KiemProperty[nProperties];
-        properties[KIEM_PROPERTY_STATENAME] =
-                new KiemProperty(KIEM_PROPERTY_NAME_STATENAME, "state");
-        properties[KIEM_PROPERTY_TRANSITIONNAME] =
-                new KiemProperty(KIEM_PROPERTY_NAME_TRANSITIONNAME, "transition");
+        properties[KIEM_PROPERTY_STATEMENTNAME] =
+                new KiemProperty(KIEM_PROPERTY_NAME_STATEMENTNAME, "statement");
         properties[KIEM_PROPERTY_CCOMPILER] =
                 new KiemProperty(KIEM_PROPERTY_NAME_CCOMPILER, compilerFile,
                         KIEM_PROPERTY_DEFAULT_CCOMPILER);
@@ -640,19 +636,13 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
             // Finally accumulate all active Statements (activeStatements)
             // under the statementName
-            String activeStates = "";
-            String activeTransitions = "";
-            activeStates = activeStatementsBuf.toString();
-            activeTransitions = activeTransitionsBuf.toString();
+            String activeStatements = "";
+            activeStatements = activeStatementsBuf.toString();
 
-            String activeStatesName =
-             this.getProperties()[KIEM_PROPERTY_STATENAME + KIEM_PROPERTY_DIFF]
+            String activeStatementsName =
+             this.getProperties()[KIEM_PROPERTY_STATEMENTNAME + KIEM_PROPERTY_DIFF]
              .getValue();
-             String activeTransitionsName =
-             this.getProperties()[KIEM_PROPERTY_TRANSITIONNAME + KIEM_PROPERTY_DIFF]
-             .getValue();
-             returnObj.accumulate(activeStatesName, activeStates);
-             returnObj.accumulate(activeTransitionsName, activeTransitions);
+             returnObj.accumulate(activeStatementsName, activeStatements);
 
         } catch (IOException e) {
             System.err.println(e.getMessage());
