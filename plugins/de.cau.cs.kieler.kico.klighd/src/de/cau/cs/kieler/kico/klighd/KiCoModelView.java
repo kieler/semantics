@@ -1056,6 +1056,9 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             // listen for internal klighd errors
             lastException = null;
             Platform.addLogListener(this);
+            
+            boolean success = false;
+            
             // Update diagram
             if (modelTypeChanged) {
                 //save previous synthesis options to restore later
@@ -1092,7 +1095,8 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 publishCurrentModelInformation(model);
 
                 // the (re)initialization case
-                DiagramViewManager.initializeView(this, model, null, properties);
+                initialize(model, null, properties);
+                success = true;
                 // reset layout to resolve KISEMA-905
                 resetLayoutConfig();
 
@@ -1101,7 +1105,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 vc.setProperty(KiCoKLighDProperties.COMPILATION_RESULT, compilationResult);
                 publishCurrentModelInformation(model);
                 // update case (keeps options and sidebar)
-                DiagramViewManager.updateView(this.getViewer().getViewContext(), model);
+                success = DiagramViewManager.updateView(this.getViewer().getViewContext(), model) != null;
             }
 
             // stop listening
@@ -1112,7 +1116,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 throw lastException;
             } else {
                 KNode currentDiagram = this.getViewer().getViewContext().getViewModel();
-                if (currentDiagram == null || currentDiagram.getChildren().isEmpty()) {
+                if (!success || currentDiagram == null || currentDiagram.getChildren().isEmpty()) {
                     if (model instanceof EObject && !(model instanceof KiCoCodePlaceHolder)) {
                         String editorID = null;
                         // Adding file extension
