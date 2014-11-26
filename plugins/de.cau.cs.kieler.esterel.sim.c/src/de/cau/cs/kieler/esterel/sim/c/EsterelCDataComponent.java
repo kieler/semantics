@@ -36,16 +36,17 @@ import com.google.inject.Guice;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension;
 import de.cau.cs.kieler.core.model.util.ProgressMonitorAdapter;
-import de.cau.cs.kieler.esterel.sim.c.xtend.CSimulationSCChart;
-import de.cau.cs.kieler.esterel.sim.c.xtend.CSimulationSCG;
+import de.cau.cs.kieler.esterel.sim.c.xtend.CSimulationEsterel;
+import de.cau.cs.kieler.esterel.sim.c.xtend.CSimulationSCL;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.s.extensions.SExtension;
-import de.cau.cs.kieler.s.s.Program;
+//import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.sc.CExecution;
-import de.cau.cs.kieler.sccharts.State;
+import de.cau.cs.kieler.esterel.esterel.Program;
 import de.cau.cs.kieler.scg.SCGraph;
+import de.cau.cs.kieler.scl.scl.SCLProgram;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -125,7 +126,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
     private LinkedList<String> outputVariableList = null;
 
     /** The list of output states used for the visualization. */
-    private LinkedList<String> outputStateList = null;
+    private LinkedList<String> outputActiveStatementList = null;
 
     /** The list of output transitions used for the visualization. */
     private LinkedList<String> outputTransitionList = null;
@@ -281,7 +282,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
      * @return the bundle path
      */
     private String getBundlePath(String subDirectory) {
-        Bundle bundle = Platform.getBundle(SCChartsSimCPlugin.PLUGIN_ID);
+        Bundle bundle = Platform.getBundle(EsterelCSimulationPlugin.PLUGIN_ID);
 
         URL url = null;
         try {
@@ -341,11 +342,8 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
                     }
                     if (kExpressionExtension.isOutput(valuedObject)) {
                         String signalName = valuedObject.getName();
-                        if (signalName.startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
-                            outputStateList.add(signalName);
-                        } else if (signalName
-                                .startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
-                            outputTransitionList.add(signalName);
+                        if (signalName.startsWith(EsterelCSimulationPlugin.AUXILIARY_VARIABLE_TAG)) {
+                            outputActiveStatementList.add(signalName);
                         } else {
                             if (kExpressionExtension.isSignal(valuedObject)) {
                                 res.accumulate(signalName, JSONSignalValues.newValue(false));
@@ -459,14 +457,14 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             System.out.println("11");
 
             // The following should be a state or an SCG
-            EObject stateOrSCG = highLeveleCompilationResult.getEObject();
+            EObject esterelProgramOrSCLProgram = highLeveleCompilationResult.getEObject();
 
             //String coreSSChartText = KiCoUtil.serialize(coreSCChart, highLevelContext, false);
             //writeOutputModel("D:\\sschart.sct", coreSSChartText.getBytes());
             // System.out.println(coreSSChartText);
 
             KielerCompilerContext lowLevelContext =
-                    new KielerCompilerContext(lowLevelTransformations, stateOrSCG);
+                    new KielerCompilerContext(lowLevelTransformations, esterelProgramOrSCLProgram);
             lowLevelContext.setCreateDummyResource(true);
             lowLevelContext.setInplace(false);
             lowLevelContext.setPrerequirements(true);
@@ -479,17 +477,17 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
             // Generate Simulation wrapper C code
             String cSimulation = "";
-            if (stateOrSCG instanceof State) {
+            if (esterelProgramOrSCLProgram instanceof Program) {
                 System.out.println("15");
-                CSimulationSCChart cSimulationSCChart = Guice.createInjector().getInstance(CSimulationSCChart.class);
+                CSimulationEsterel cSimulationSCChart = Guice.createInjector().getInstance(CSimulationEsterel.class);
                 System.out.println("16");
-                cSimulation = cSimulationSCChart.transform((State)stateOrSCG, "10000").toString();
+                cSimulation = cSimulationSCChart.transform((Program)esterelProgramOrSCLProgram, "10000").toString();
             }
-            else if (stateOrSCG instanceof SCGraph) {
+            else if (esterelProgramOrSCLProgram instanceof SCLProgram) {
                 System.out.println("15");
-                CSimulationSCG cSimulationSCG = Guice.createInjector().getInstance(CSimulationSCG.class);
+                CSimulationSCL cSimulationSCG = Guice.createInjector().getInstance(CSimulationSCL.class);
                 System.out.println("16");
-                cSimulation = cSimulationSCG.transform((SCGraph)stateOrSCG, "10000").toString();
+                cSimulation = cSimulationSCG.transform((SCLProgram)esterelProgramOrSCLProgram, "10000").toString();
             }
             System.out.println("17 " + cSimulation);
 
@@ -518,8 +516,11 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             // generatedSCFiles.add(outputFileSCChart);
             generatedSCFiles.add("-I " + includePath);
             String modelName = "SCG";
-            if (myModel instanceof State) {
-                modelName = ((State) myModel).getId();
+            if (myModel instanceof Program) {
+                modelName = ((Program) myModel).getModules().get(0).getName();
+            }
+            else if (myModel instanceof SCLProgram) {
+                modelName = ((SCLProgram) myModel).getName();
             }
             cExecution.compile(generatedSCFiles, modelName);
         } catch (RuntimeException e) {
@@ -567,7 +568,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
         boolean debugConsole = false;
 
         // Collect active statements
-         StringBuffer activeStatesBuf = new StringBuffer();
+         StringBuffer activeStatementsBuf = new StringBuffer();
          StringBuffer activeTransitionsBuf = new StringBuffer();
          //List<DebugData> activeStatesList = new LinkedList<DebugData>();
 
@@ -602,7 +603,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
                 JSONArray outputArray = output.names();
 
                 if (outputArray != null) {
-                    // First add auxiliary signals
+                    // First add auxiliary signals (for active statements)
                     for (int i = 0; i < outputArray.length(); i++) {
                         String outputName = outputArray.getString(i);
 
@@ -618,21 +619,13 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
                                 present = ((Integer) value) != 0;
                             }
 
-                            if (outputName.startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_STATE)) {
+                            if (outputName.startsWith(EsterelCSimulationPlugin.AUXILIARY_VARIABLE_TAG)) {
                                 if (present) {
-                                    if (activeStatesBuf.length() > 0) {
-                                        activeStatesBuf.append(",");
+                                    if (activeStatementsBuf.length() > 0) {
+                                        activeStatementsBuf.append(",");
                                     }
-                                    String activeStateName = outputName.substring(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_STATE.length());
-                                    activeStatesBuf.append(activeStateName);
-                                }
-                            } else if (outputName.startsWith(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
-                                if (present) {
-                                    if (activeTransitionsBuf.length() > 0) {
-                                        activeTransitionsBuf.append(",");
-                                    }
-                                    String activeTransitionName = outputName.substring(SCChartsSimCPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION.length());
-                                    activeTransitionsBuf.append(activeTransitionName);
+                                    String activeStatementName = outputName.substring(EsterelCSimulationPlugin.AUXILIARY_VARIABLE_TAG.length());
+                                    activeStatementsBuf.append(activeStatementName);
                                 }
                             }
                             else {
@@ -649,7 +642,7 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
             // under the statementName
             String activeStates = "";
             String activeTransitions = "";
-            activeStates = activeStatesBuf.toString();
+            activeStates = activeStatementsBuf.toString();
             activeTransitions = activeTransitionsBuf.toString();
 
             String activeStatesName =
