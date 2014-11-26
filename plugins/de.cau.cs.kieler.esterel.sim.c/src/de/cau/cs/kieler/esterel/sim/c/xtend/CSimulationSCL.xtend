@@ -15,6 +15,7 @@
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.scl.scl.SCLProgram
 
 /**
  * Transformation from SCL Program to wrapper code for the simulation.
