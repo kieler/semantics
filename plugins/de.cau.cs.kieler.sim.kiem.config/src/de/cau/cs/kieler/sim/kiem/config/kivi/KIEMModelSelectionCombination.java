@@ -132,19 +132,21 @@ public class KIEMModelSelectionCombination implements
         for (IEditorPart editorPart : localEditors) {
             IPath inputModelPath = getInputModelPath(editorPart);
 
-            // this is the active editor if any
-            if (editorPart == activeEditorPart) {
-                KiemPlugin.setCurrentModelFile(inputModelPath);
-            }
+            if (inputModelPath != null) {
+                // this is the active editor if any
+                if (editorPart == activeEditorPart) {
+                    KiemPlugin.setCurrentModelFile(inputModelPath);
+                }
 
-            // add to opened model files
-            KiemPlugin.getOpenedModelFiles().add(inputModelPath);
-            EObject rootObject = this.getInputModelEObject(editorPart);
-            if (rootObject != null) {
-                KiemPlugin.getOpenedModelRootObjects().put(inputModelPath, rootObject);
-            }
-            if (editorPart != null) {
-                KiemPlugin.getOpenedModelEditors().put(inputModelPath, editorPart);
+                // add to opened model files
+                KiemPlugin.getOpenedModelFiles().add(inputModelPath);
+                EObject rootObject = this.getInputModelEObject(editorPart);
+                if (rootObject != null) {
+                    KiemPlugin.getOpenedModelRootObjects().put(inputModelPath, rootObject);
+                }
+                if (editorPart != null) {
+                    KiemPlugin.getOpenedModelEditors().put(inputModelPath, editorPart);
+                }
             }
 
         }

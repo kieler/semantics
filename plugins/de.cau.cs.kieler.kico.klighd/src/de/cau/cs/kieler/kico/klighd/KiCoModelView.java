@@ -94,6 +94,7 @@ import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMExecutionAutoloadCombination;
 
 /**
  * Singleton instance of DiagramViewPart to display any model
@@ -1184,9 +1185,11 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             if (model != null && !is_placeholder && !is_chain) {
                 KiemPlugin.getOpenedModelRootObjects().put(modelViewPath, (EObject) model);
                 KiemPlugin.setCurrentModelFile(modelViewPath);
+                KIEMExecutionAutoloadCombination.autoloadExecutionSchedule();
             } else if (!is_placeholder) {
                 KiemPlugin.getOpenedModelRootObjects().put(modelViewPath, null);
                 KiemPlugin.setCurrentModelFile(modelViewPath);
+                KIEMExecutionAutoloadCombination.autoloadExecutionSchedule();
             }
         }
     }
