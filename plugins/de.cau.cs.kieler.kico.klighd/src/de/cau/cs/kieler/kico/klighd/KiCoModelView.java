@@ -1092,7 +1092,9 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
                 // Give model synthesis access to the compilation result
                 properties.setProperty(KiCoKLighDProperties.COMPILATION_RESULT, compilationResult);
-                publishCurrentModelInformation(model);
+                if (getActiveEditor() == editorContext) {
+                    publishCurrentModelInformation(model);
+                }
 
                 // the (re)initialization case
                 initialize(model, null, properties);
@@ -1184,7 +1186,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             if (model != null && !is_placeholder && !is_chain) {
                 KiemPlugin.getOpenedModelRootObjects().put(modelViewPath, (EObject) model);
                 KiemPlugin.setCurrentModelFile(modelViewPath);
-            } else {
+            } else if (!is_placeholder) {
                 KiemPlugin.getOpenedModelRootObjects().put(modelViewPath, null);
                 KiemPlugin.setCurrentModelFile(modelViewPath);
             }
