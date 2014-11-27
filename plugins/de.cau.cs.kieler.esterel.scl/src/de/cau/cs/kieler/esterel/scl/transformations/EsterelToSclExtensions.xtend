@@ -139,6 +139,12 @@ class EsterelToSclExtensions {
         labelCount = 0;
     }
     
+    def createEmptyStm(String l) {
+        SclFactory::eINSTANCE.createEmptyStatement => [
+            label = l
+        ]
+    }
+    
     /*
      * Takes a variable name and a list of exisiting variables and
      * adds "_" until variable name is new
