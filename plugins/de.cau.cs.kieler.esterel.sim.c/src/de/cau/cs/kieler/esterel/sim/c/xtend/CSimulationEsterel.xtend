@@ -20,6 +20,8 @@ import de.cau.cs.kieler.esterel.kexpressions.Input
 import de.cau.cs.kieler.esterel.kexpressions.Output
 import de.cau.cs.kieler.esterel.esterel.Program
 import de.cau.cs.kieler.esterel.kexpressions.Signal
+import de.cau.cs.kieler.esterel.kexpressions.impl.InputImpl
+import de.cau.cs.kieler.esterel.kexpressions.impl.OutputImpl
 
 /**
  * Transformation from Esterel Program to wrapper code for the simulation.
@@ -99,7 +101,8 @@ void readInputs() {
     object = cJSON_Parse(buffer);
     
     «FOR intSignalDecl : model.modules.get(0).interface.intSignalDecls»
-    «FOR Signal signal : intSignalDecl.signals.filter[isInput]»
+        «IF intSignalDecl instanceof InputImpl»
+            «FOR Signal signal : (intSignalDecl as InputImpl).signals»
     child = cJSON_GetObjectItem(object, "«signal.name»");
     if (child != NULL) {
             present = cJSON_GetObjectItem(child, "present");
@@ -114,7 +117,8 @@ void readInputs() {
                 «signal.name» = 0;
             }
     }   
-    «ENDFOR»
+            «ENDFOR»
+        «ENDIF»
     «ENDFOR»
 }
 '''
@@ -128,11 +132,13 @@ void readInputs() {
 void writeOutputs() {
     cJSON* value;;
     «FOR intSignalDecl : model.modules.get(0).interface.intSignalDecls»
-    «FOR Signal signal : intSignalDecl.signals.filter[isOutput]»
+        «IF intSignalDecl instanceof OutputImpl»
+            «FOR Signal signal : (intSignalDecl as OutputImpl).signals»
 	value = cJSON_CreateObject();
 	cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(«signal.name»));
 	cJSON_AddItemToObject(output, "«signal.name»", value);
-    «ENDFOR»
+            «ENDFOR»
+        «ENDIF»
     «ENDFOR»
 }
 '''
