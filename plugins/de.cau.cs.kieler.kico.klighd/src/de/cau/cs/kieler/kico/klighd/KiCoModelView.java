@@ -1184,7 +1184,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             if (model != null && !is_placeholder && !is_chain) {
                 KiemPlugin.getOpenedModelRootObjects().put(modelViewPath, (EObject) model);
                 KiemPlugin.setCurrentModelFile(modelViewPath);
-            } else {
+            } else if (!is_placeholder) {
                 KiemPlugin.getOpenedModelRootObjects().put(modelViewPath, null);
                 KiemPlugin.setCurrentModelFile(modelViewPath);
             }

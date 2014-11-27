@@ -44,7 +44,12 @@ import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.s.extensions.SExtension;
 //import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.sc.CExecution;
+import de.cau.cs.kieler.esterel.esterel.Module;
 import de.cau.cs.kieler.esterel.esterel.Program;
+import de.cau.cs.kieler.esterel.kexpressions.Input;
+import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl;
+import de.cau.cs.kieler.esterel.kexpressions.Output;
+import de.cau.cs.kieler.esterel.kexpressions.Signal;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scl.scl.SCLProgram;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
@@ -327,27 +332,31 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
 
         JSONObject res = new JSONObject();
         try {
-            if (myModel != null && kExpressionExtension.getValuedObjects(myModel) != null) {
-                for (ValuedObject valuedObject : kExpressionExtension.getValuedObjects(myModel)) {
-                    if (kExpressionExtension.isInput(valuedObject)) {
-                        if (kExpressionExtension.isSignal(valuedObject)) {
-                            res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));
-                        } else {
-                            res.accumulate(valuedObject.getName(), JSONSignalValues.newValue(false));
-                        }
-                    }
-                    if (kExpressionExtension.isOutput(valuedObject)) {
-                        String signalName = valuedObject.getName();
-                        if (signalName.startsWith(EsterelCSimulationPlugin.AUXILIARY_VARIABLE_TAG)) {
-                            outputActiveStatementList.add(signalName);
-                        } else {
-                            if (kExpressionExtension.isSignal(valuedObject)) {
-                                res.accumulate(signalName, JSONSignalValues.newValue(false));
-                                outputSignalList.add(signalName);
-                            } else {
-                                res.accumulate(signalName, JSONSignalValues.newValue(false));
-                                outputVariableList.add(signalName);
+            if (myModel != null && myModel instanceof Program) {
+                Program program = (Program) myModel;
+                // only do this for the first module as it is the main module
+                if (program.getModules() != null && program.getModules().size() > 0) {
+                    Module module = program.getModules().get(0);
+
+                    if (module.getInterface() != null
+                            && module.getInterface().getIntSignalDecls() != null) {
+                        for (InterfaceSignalDecl sig : module.getInterface().getIntSignalDecls()) {
+                            if (sig instanceof Input) {
+                                for (Signal s : sig.getSignals()) {
+                                    res.accumulate(s.getName(), JSONSignalValues.newValue(false));
+                                }
                             }
+                            if (sig instanceof Output) {
+                                for (Signal signal : sig.getSignals()) {
+                                    String signalName = signal.getName();
+                                    if (!signalName
+                                            .startsWith(EsterelCSimulationPlugin.AUXILIARY_VARIABLE_TAG)) {
+                                        res.accumulate(signalName, JSONSignalValues.newValue(false));
+                                        outputSignalList.add(signalName);
+                                    }
+                                }
+                            }
+
                         }
                     }
                 }
@@ -477,7 +486,8 @@ public class EsterelCDataComponent extends JSONObjectSimulationDataComponent imp
                 System.out.println("15");
                 CSimulationEsterel cSimulationSCChart = Guice.createInjector().getInstance(CSimulationEsterel.class);
                 System.out.println("16");
-                cSimulation = cSimulationSCChart.transform((Program)esterelProgramOrSCLProgram, "10000").toString();
+                Program program = (Program)esterelProgramOrSCLProgram;
+                cSimulation = cSimulationSCChart.transform(program, "10000").toString();
             }
             else if (esterelProgramOrSCLProgram instanceof SCLProgram) {
                 System.out.println("15");

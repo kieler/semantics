@@ -122,11 +122,11 @@ public class KIEMModelSelectionCombination implements
             return;
         }
 
-        // By default reset opened editors (also no active one)
-        KiemPlugin.getOpenedModelFiles().clear();
-        KiemPlugin.setCurrentModelFile(null);
-        KiemPlugin.getOpenedModelEditors().clear();
-        KiemPlugin.getOpenedModelRootObjects().clear();
+//        // By default reset opened editors (also no active one)
+//        KiemPlugin.getOpenedModelFiles().clear();
+//        KiemPlugin.setCurrentModelFile(null);
+//        KiemPlugin.getOpenedModelEditors().clear();
+//        KiemPlugin.getOpenedModelRootObjects().clear();
 
         // Go thru all editors
         for (IEditorPart editorPart : localEditors) {
