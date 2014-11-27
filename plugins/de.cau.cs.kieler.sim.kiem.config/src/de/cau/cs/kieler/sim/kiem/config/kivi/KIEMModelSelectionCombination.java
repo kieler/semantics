@@ -90,33 +90,41 @@ public class KIEMModelSelectionCombination implements
                 return;
             }
 
-            // if no execution is running or is about to run
-            if (!(KiemPlugin.getDefault().isInitializingExecution() || KiemPlugin.getDefault()
-                    .getExecution() != null)) {
-                // reset any deferred partState
-                deferredEditorPart = null;
-                if (KIEMExecutionAutoloadCombination.getLastValidEditorId() == null) {
-                  //Is the following right?! By-pass setting this seems to corrupt detection 
-                  //wether this is the first start
-                  //KIEMExecutionAutoloadCombination.setLastValidEditorId(activeEditorPart.getSite().getId());
-                }
-                refreshKIEMActiveAndOpenedModels(activeEditorPart);
-            } else {
-                // defer the partState until KIEM is stopping
-                // then a KIEM event will trigger this combination
-                deferredEditorPart = activeEditorPart;
-            }
+            refreshKIEMActiveAndOpenedModels(activeEditorPart);
         }
 
     }
 
     // -------------------------------------------------------------------------
-
+    
+    
+    
     /**
      * Refresh KIEM's the active and the list of opened models that serves as an input for the model
      * selection KIEMProperty of simulator components.
      */
-    private void refreshKIEMActiveAndOpenedModels(final IEditorPart activeEditorPart) {
+    public static void refreshKIEMActiveAndOpenedModels(final IEditorPart activeEditorPart) {
+        // if no execution is running or is about to run
+        if (!(KiemPlugin.getDefault().isInitializingExecution() || KiemPlugin.getDefault()
+                .getExecution() != null)) {
+            // reset any deferred partState
+            deferredEditorPart = null;
+            if (KIEMExecutionAutoloadCombination.getLastValidEditorId() == null) {
+              //Is the following right?! By-pass setting this seems to corrupt detection 
+              //wether this is the first start
+              //KIEMExecutionAutoloadCombination.setLastValidEditorId(activeEditorPart.getSite().getId());
+            }
+            refreshKIEMActiveAndOpenedModels2(activeEditorPart);
+        } else {
+            // defer the partState until KIEM is stopping
+            // then a KIEM event will trigger this combination
+            deferredEditorPart = activeEditorPart;
+        }    }
+    
+    // -------------------------------------------------------------------------
+
+    
+    private static void refreshKIEMActiveAndOpenedModels2(final IEditorPart activeEditorPart) {
         IEditorPart[] localEditors = getEditorList();
         if ((localEditors == null) || (localEditors.length == 0)) {
             return;
@@ -131,20 +139,23 @@ public class KIEMModelSelectionCombination implements
         // Go thru all editors
         for (IEditorPart editorPart : localEditors) {
             IPath inputModelPath = getInputModelPath(editorPart);
+           
+            if (inputModelPath != null) {
+                // this is the active editor if any
+                if (editorPart == activeEditorPart) {
+                    KiemPlugin.setCurrentModelFile(inputModelPath);
+                }
 
-            // this is the active editor if any
-            if (editorPart == activeEditorPart) {
-                KiemPlugin.setCurrentModelFile(inputModelPath);
-            }
+                // add to opened model files
+                KiemPlugin.getOpenedModelFiles().add(inputModelPath);
+                EObject rootObject = getInputModelEObject(editorPart);
 
-            // add to opened model files
-            KiemPlugin.getOpenedModelFiles().add(inputModelPath);
-            EObject rootObject = this.getInputModelEObject(editorPart);
-            if (rootObject != null) {
-                KiemPlugin.getOpenedModelRootObjects().put(inputModelPath, rootObject);
-            }
-            if (editorPart != null) {
-                KiemPlugin.getOpenedModelEditors().put(inputModelPath, editorPart);
+                if (rootObject != null) {
+                    KiemPlugin.getOpenedModelRootObjects().put(inputModelPath, rootObject);
+                }
+                if (editorPart != null) {
+                    KiemPlugin.getOpenedModelEditors().put(inputModelPath, editorPart);
+                }
             }
 
         }
@@ -153,15 +164,15 @@ public class KIEMModelSelectionCombination implements
 
     // -------------------------------------------------------------------------
 
-    private boolean doneGetEditorList = false;
-    private IEditorPart[] editors = null;
+    private static boolean doneGetEditorList = false;
+    private static IEditorPart[] editors = null;
 
     /**
      * Gets the editor list in the UI thread.
      * 
      * @return the editor list
      */
-    IEditorPart[] getEditorList() {
+    private static IEditorPart[] getEditorList() {
         doneGetEditorList = false;
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
@@ -205,7 +216,7 @@ public class KIEMModelSelectionCombination implements
      *            the editor part
      * @return the input model e object
      */
-    protected EObject getInputModelEObject(final IEditorPart editorPart) {
+    protected static EObject getInputModelEObject(final IEditorPart editorPart) {
         EObject model = null;
         // removed gmf dependency, 24.07., ssm
 //        if (editorPart instanceof DiagramEditor) {
@@ -228,21 +239,26 @@ public class KIEMModelSelectionCombination implements
      *            the editor part
      * @return the input model
      */
-    protected IPath getInputModelPath(final IEditorPart editorPart) {
-        EObject model = this.getInputModelEObject(editorPart);
+    protected static IPath getInputModelPath(final IEditorPart editorPart) {
+        EObject model = getInputModelEObject(editorPart);
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
         IPath fullPath = null;
         if (model != null) {
             if (model.eResource() != null) {
                 // EMF model case
                 org.eclipse.emf.common.util.URI uri = model.eResource().getURI();
-                String platformURI = uri.toPlatformString(false);
-                if (platformURI == null) {
-                    return fullPath;
+                if (uri != null) {
+                    String platformURI = uri.toPlatformString(false);
+                    if (platformURI != null) {
+                        IPath path = new Path(platformURI);
+                        IFile file = myWorkspaceRoot.getFile(path);
+                        fullPath = file.getFullPath();
+                    }
                 }
-                IPath path = new Path(platformURI);
-                IFile file = myWorkspaceRoot.getFile(path);
-                fullPath = file.getFullPath();
+            } 
+            if (fullPath == null && editorPart.getEditorInput() instanceof FileEditorInput){
+                FileEditorInput input = (FileEditorInput) editorPart.getEditorInput();
+                fullPath = input.getFile().getFullPath();
             }
         } else {
             // Other editors
