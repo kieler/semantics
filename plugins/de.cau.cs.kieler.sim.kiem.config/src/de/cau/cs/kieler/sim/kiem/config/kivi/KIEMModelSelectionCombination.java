@@ -247,11 +247,13 @@ public class KIEMModelSelectionCombination implements
             if (model.eResource() != null) {
                 // EMF model case
                 org.eclipse.emf.common.util.URI uri = model.eResource().getURI();
-                String platformURI = uri.toPlatformString(false);
-                if (platformURI != null) {
-                    IPath path = new Path(platformURI);
-                    IFile file = myWorkspaceRoot.getFile(path);
-                    fullPath = file.getFullPath();
+                if (uri != null) {
+                    String platformURI = uri.toPlatformString(false);
+                    if (platformURI != null) {
+                        IPath path = new Path(platformURI);
+                        IFile file = myWorkspaceRoot.getFile(path);
+                        fullPath = file.getFullPath();
+                    }
                 }
             } 
             if (fullPath == null && editorPart.getEditorInput() instanceof FileEditorInput){
