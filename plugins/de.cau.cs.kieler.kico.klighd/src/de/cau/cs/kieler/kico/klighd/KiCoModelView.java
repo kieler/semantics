@@ -1092,9 +1092,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
                 // Give model synthesis access to the compilation result
                 properties.setProperty(KiCoKLighDProperties.COMPILATION_RESULT, compilationResult);
-                if (getActiveEditor() == editorContext) {
-                    publishCurrentModelInformation(model);
-                }
+                publishCurrentModelInformation(model);
 
                 // the (re)initialization case
                 initialize(model, null, properties);
