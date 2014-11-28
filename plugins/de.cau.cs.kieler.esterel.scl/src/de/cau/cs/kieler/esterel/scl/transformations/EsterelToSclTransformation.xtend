@@ -87,6 +87,7 @@ import java.util.HashMap
 import de.cau.cs.kieler.core.kexpressions.util.KExpressionsAdapterFactory
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.scl.scl.SCLProgram
+import de.cau.cs.kieler.esterel.esterel.AbortCase
 
 /**
  * @author krat
@@ -401,13 +402,12 @@ class EsterelToSclTransformation extends Transformation {
         val l_end = createFreshLabel
 
         // Flag indicating, if also delayed await cases may be taken
-        val delayedFlag = createValuedObject(uniqueName(signalMap, "f_immediate"))
+        val delayedFlag = createValuedObject(uniqueName(signalMap, "f_depth"))
         delayedFlag.initialValue = createBoolValue(false)
         signalMap.add(delayedFlag.name -> delayedFlag)
 
         localDeclarations += KExpressionsFactory::eINSTANCE.createDeclaration => [
             valuedObjects.add(delayedFlag)
-            output = true
             type = ValueType::BOOL
         ]
 
@@ -609,6 +609,7 @@ class EsterelToSclTransformation extends Transformation {
         //present s then p (else q)
         if (pres.body instanceof PresentEventBody) {
             val cond = SclFactory::eINSTANCE.createConditional => [
+                System.out.println("Present: " + transformExp((pres.body as PresentEventBody).event.expression, signalMap))
                 expression = transformExp((pres.body as PresentEventBody).event.expression, signalMap)
                 if ((pres.body as PresentEventBody).thenPart != null) {
                     val thenPart = SclFactory::eINSTANCE.createStatementSequence
@@ -679,16 +680,60 @@ class EsterelToSclTransformation extends Transformation {
 
     /*
      * abort p when s
-     * TODO merge weak and strong abort
-     * TODO add weak delayed abort
      */
     def dispatch StatementSequence transformStm(Abort abort, StatementSequence sSeq) {
 
+        
+        // Abort Cases
+        if (abort.body instanceof AbortCase) {
+            val saveAbort = EcoreUtil.copy(abort)
+            val l_end = createFreshLabel
+            labelMap.put(curLabel, l_end)
+            
+            val f_depth = createValuedObject(uniqueName(signalMap, "f_depth"))
+            f_depth.initialValue = createBoolValue(false);
+            localDeclarations.add(
+                KExpressionsFactory::eINSTANCE.createDeclaration => [
+                    type = ValueType::BOOL;
+                    valuedObjects.add(f_depth)
+                ])
+            signalMap.add(f_depth.name -> f_depth)
+            pauseTransformation.push [StatementSequence seq |
+                seq.add(createAssignment(f_depth, createBoolValue(true)))
+            ]
+            
+            handleAbortCase(abort).transformStm(sSeq)
+            
+            signalMap.remove(f_depth.name -> f_depth)
+            pauseTransformation.pop
+            
+            for (singleCase : (saveAbort.body as AbortCase).cases) {
+                sSeq.add(SclFactory::eINSTANCE.createConditional => [
+                    if (singleCase.delay.isImmediate || true) {
+                        val exp = singleCase.delay.expr.transformExp(signalMap)
+                        System.out.println("EXP " + exp.class)
+//                        expression = 
+                    } else {
+                        expression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+                            operator = OperatorType::AND
+                            subExpressions.add(singleCase.delay.expr.transformExp(signalMap))
+                            subExpressions.add(createValuedObjectRef(f_depth))
+                        ]
+                    }
+                    statements += singleCase.statement.transformStm(newSseq).statements
+                    statements += createGotoStm(l_end)
+                ])
+            }
+            sSeq.addLabel(l_end)
+            
+            return sSeq
+        }
+            
         val l = createFreshLabel
         labelMap.put(curLabel, l)
         val abortExpr = (abort.body as AbortInstance).delay.event.expr
-
-        // Weak immediate abort
+        val oldSignalMap = signalMap.clone  as LinkedList<Pair<String, ValuedObject>>
+         // Weak immediate abort
         if (abort.body instanceof WeakAbortInstance && ((abort.body as AbortInstance).delay.isImmediate)) {
 
             val f_wa = createValuedObject(uniqueName(signalMap, "f_wa"))
@@ -697,14 +742,13 @@ class EsterelToSclTransformation extends Transformation {
             localDeclarations.add(
                 KExpressionsFactory::eINSTANCE.createDeclaration => [
                     type = ValueType::BOOL;
-                    output = true
                     valuedObjects.add(f_wa)
                 ])
                 
             signalMap.add(f_wa.name -> f_wa)
             pauseTransformation.push [ StatementSequence seq |
                 val cond = SclFactory::eINSTANCE.createConditional => [
-                    expression = transformExp(abortExpr, signalMap)
+                    expression = transformExp(abortExpr, oldSignalMap)
                     statements.add(
                         createStmFromInstr(
                             SclFactory::eINSTANCE.createAssignment => [
@@ -779,7 +823,7 @@ class EsterelToSclTransformation extends Transformation {
                                             add(EcoreUtil.copy(f_wa_ref))
                                             add(createBoolValue(true))
                                         ])))
-                            expression = and(abortExpr.transformExp(signalMap), f_depth_ref)
+                            expression = and(abortExpr.transformExp(oldSignalMap), f_depth_ref)
                             statements.add(createGotoj(l, curLabel, labelMap))
                         ]))
                 seq.add(createAssignment(f_depth, createBoolValue(true)))
@@ -806,18 +850,14 @@ class EsterelToSclTransformation extends Transformation {
                         ifThenGoto(transformExp((abort.body as AbortInstance).delay.event.expr, signalMap), l, true)))
             }
             
-                        // Create jumps before to avoid problems with signal renaming due to local declarations
-            val shortJump = ifThenGoto(transformExp(abortExpr, signalMap), l, true)
-            val longJump = ifThenGoto(transformExp(abortExpr, signalMap), curLabel, true)
             val trans = [ StatementSequence seq |
                 val stms = new LinkedList<Statement>
                 if (labelMap.get(curLabel).contains(l)) {
                     stms.add(
-                        createStmFromInstr(
-                            ifThenGoto(transformExp(abortExpr, signalMap), l, true)))
+                            createStmFromInstr(ifThenGoto(transformExp(abortExpr, oldSignalMap), l, true)))
                 } else {
                     stms.add(
-                        createStmFromInstr(ifThenGoto(transformExp(abortExpr, signalMap), curLabel, true)))
+                        createStmFromInstr(ifThenGoto(transformExp(abortExpr, oldSignalMap), curLabel, true)))
                 }
                 seq.statements.addAll(stms)
                 
@@ -835,6 +875,23 @@ class EsterelToSclTransformation extends Transformation {
         sSeq.addLabel(l)
 
         sSeq
+    }
+    
+    // Strong abort case
+    def de.cau.cs.kieler.esterel.esterel.Statement handleAbortCase(Abort abortCase) {
+        val abortCaseBody = (abortCase.body as AbortCase)
+        if (abortCaseBody.cases.empty) {
+            return abortCase.statement
+        } else {
+            EsterelFactory::eINSTANCE.createAbort => [
+                body = EsterelFactory::eINSTANCE.createAbortInstance => [
+                    delay = abortCaseBody.cases.head.delay
+                ]
+                abortCaseBody.cases.remove(0)
+                statement = handleAbortCase(abortCase)
+            ]
+        }
+        
     }
 
     /*

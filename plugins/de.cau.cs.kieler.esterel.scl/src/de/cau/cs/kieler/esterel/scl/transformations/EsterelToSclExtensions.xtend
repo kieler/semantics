@@ -301,7 +301,13 @@ class EsterelToSclExtensions {
                 val pres = stm as Present
                 if (pres.body instanceof PresentEventBody) {
                     val presBody = pres.body as PresentEventBody
-                    return presBody.thenPart.checkTerminate && pres.elsePart.checkTerminate
+                    var terms = true
+                    if (presBody.thenPart != null)
+                        terms = presBody.thenPart.statement.checkTerminate
+                    if (pres.elsePart != null)
+                        terms = terms && pres.elsePart.statement.checkTerminate
+                    
+                    return terms
                 } else if (pres.body instanceof PresentCaseList) {
                     val presBody = pres.body as PresentCaseList
                     var terms = true
@@ -348,6 +354,10 @@ class EsterelToSclExtensions {
         
         def dispatch boolean checkTerminate(Void x) {
             return true;
+        }
+        
+        def StatementSequence newSseq() {
+            SclFactory::eINSTANCE.createStatementSequence
         }
         
 }

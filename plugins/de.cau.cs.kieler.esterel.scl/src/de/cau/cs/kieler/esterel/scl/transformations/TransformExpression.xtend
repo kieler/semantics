@@ -47,7 +47,7 @@ class TransformExpression {
      * @param variables List of ValuedObject in scope
      * @return The transformed KExpressions Expression
      */
-    def de.cau.cs.kieler.core.kexpressions.Expression transformExp(Expression exp,
+    def transformExp(Expression exp,
         LinkedList<Pair<String, ValuedObject>> variables) {
         if (exp instanceof OperatorExpression) {
             System.out.println("transformExp: OperatorExpression")
