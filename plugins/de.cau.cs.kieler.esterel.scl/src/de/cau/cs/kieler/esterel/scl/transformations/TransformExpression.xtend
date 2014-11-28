@@ -104,6 +104,8 @@ class TransformExpression {
 
     def de.cau.cs.kieler.core.kexpressions.ValuedObjectReference transformValObjRef(ValuedObjectReference ref,
         LinkedList<Pair<String, ValuedObject>> variables) {
+            System.out.println("ref: " + ref)
+            System.out.println("variables: " + variables)
         getValuedObjectRef(variables, ref.valuedObject.name)
     }
 

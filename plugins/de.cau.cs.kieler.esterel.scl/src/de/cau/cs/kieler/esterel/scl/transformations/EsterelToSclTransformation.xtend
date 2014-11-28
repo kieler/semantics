@@ -686,7 +686,8 @@ class EsterelToSclTransformation extends Transformation {
         
         // Abort Cases
         if (abort.body instanceof AbortCase) {
-            val saveAbort = EcoreUtil.copy(abort)
+            val saveAbort = EcoreUtil.copy((abort.body as AbortCase))
+            System.out.println("Not null? " + (abort.body as AbortCase).cases.head.delay.event.expr)
             val l_end = createFreshLabel
             labelMap.put(curLabel, l_end)
             
@@ -707,22 +708,22 @@ class EsterelToSclTransformation extends Transformation {
             signalMap.remove(f_depth.name -> f_depth)
             pauseTransformation.pop
             
-            for (singleCase : (saveAbort.body as AbortCase).cases) {
+            for (singleCase : saveAbort.cases) {
                 sSeq.add(SclFactory::eINSTANCE.createConditional => [
-                    if (singleCase.delay.isImmediate || true) {
-                        val exp = singleCase.delay.expr.transformExp(signalMap)
-                        System.out.println("EXP " + exp.class)
-//                        expression = 
+                    if (singleCase.delay.isImmediate) {
+//                        System.out.println("EXP " + singleCase.delay.expr)
+                        expression = singleCase.delay.event.expr.transformExp(signalMap)
                     } else {
                         expression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
                             operator = OperatorType::AND
-                            subExpressions.add(singleCase.delay.expr.transformExp(signalMap))
+                            subExpressions.add(singleCase.delay.event.expr.transformExp(signalMap))
                             subExpressions.add(createValuedObjectRef(f_depth))
                         ]
                     }
                     statements += singleCase.statement.transformStm(newSseq).statements
                     statements += createGotoStm(l_end)
                 ])
+                
             }
             sSeq.addLabel(l_end)
             
