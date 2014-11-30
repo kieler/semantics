@@ -138,7 +138,7 @@ class TransformInterface {
                 valuedMap.put(pureSig, s_val)
                 val type = sig.channelDescr.type.type
                 if (sig.channelDescr.expression != null) {
-                    s_val.initialValue = sig.channelDescr.expression.transformConstExp(type.toString)
+                    s_val.initialValue = sig.channelDescr.expression.transformExp(type.toString)
                 }
                 switch (type) {
                     case (de.cau.cs.kieler.esterel.kexpressions.ValueType::INT):

@@ -287,12 +287,15 @@ class EsterelToSclTransformation extends Transformation {
         // Unvalued emit
         if (emit.expr == null) {
             sSeq.statements.add(setSignal)
+            return sSeq
         }
+        
+        System.out.println("Emit expr: " + emit.expr)
 
         // Valued Emit with combine function
         if (emit.expr != null) {
             val s_val = valuedMap.get(variable)
-            val sclExpr = emit.expr.transformConstExp(s_val.type.toString)
+            val sclExpr = emit.expr.transformExp(signalMap)
             if (s_val.combineOperator.value != 0) {
                 val cond = SclFactory::eINSTANCE.createConditional => [
                     expression = KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
@@ -315,6 +318,7 @@ class EsterelToSclTransformation extends Transformation {
             // Valued emit without combine function
             else {
                 sSeq.statements.add(setSignal)
+                // sclExpr ist the problem...
                 sSeq.statements.add(createStmFromInstr(createAssignment(s_val, sclExpr)))
             }
         }
@@ -687,7 +691,6 @@ class EsterelToSclTransformation extends Transformation {
         // Abort Cases
         if (abort.body instanceof AbortCase) {
             val saveAbort = EcoreUtil.copy((abort.body as AbortCase))
-            System.out.println("Not null? " + (abort.body as AbortCase).cases.head.delay.event.expr)
             val l_end = createFreshLabel
             labelMap.put(curLabel, l_end)
             
@@ -711,7 +714,6 @@ class EsterelToSclTransformation extends Transformation {
             for (singleCase : saveAbort.cases) {
                 sSeq.add(SclFactory::eINSTANCE.createConditional => [
                     if (singleCase.delay.isImmediate) {
-//                        System.out.println("EXP " + singleCase.delay.expr)
                         expression = singleCase.delay.event.expr.transformExp(signalMap)
                     } else {
                         expression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
