@@ -28,6 +28,7 @@ import de.cau.cs.kieler.esterel.kexpressions.BooleanValue
 import de.cau.cs.kieler.core.kexpressions.util.KExpressionsAdapterFactory
 import de.cau.cs.kieler.esterel.kexpressions.ValueType
 import de.cau.cs.kieler.esterel.kexpressions.CombineOperator
+import de.cau.cs.kieler.esterel.esterel.EsterelFactory
 
 /**
  * @author krat
@@ -89,6 +90,15 @@ class TransformExpression {
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(ValuedObjectReference ref,
         LinkedList<Pair<String, ValuedObject>> variables) {
         getValuedObjectRef(variables, ref.valuedObject.name)
+    }
+    
+    // Consider Strings as ConstantExpressions
+    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(String exp, String type) {
+        val esterelExp = EsterelFactory::eINSTANCE.createConstantExpression => [
+            value = exp
+        ]
+
+        esterelExp.transformExp(type)
     }
 
     // TODO Kind of ugly as type is not stored explicitly

@@ -145,7 +145,6 @@ class EsterelToSclTransformation extends Transformation {
 
     public def SCLProgram transformProgram(de.cau.cs.kieler.esterel.esterel.Program esterelProgram) {
         System.out.println("Transforming to SCL...")
-        val LinkedList<(StatementSequence)=>StatementSequence> l = new LinkedList<(StatementSequence)=>StatementSequence>()
 
         // Label at the end of the currently transformed thread if not root thread
         curLabel = null
@@ -184,7 +183,7 @@ class EsterelToSclTransformation extends Transformation {
         program.name = esterelMod.name
 
         // Interface transformations
-        transformDeclaration(esterelMod.interface.intSignalDecls, program)
+        transformInterface(esterelMod.interface, program)
 
         // Body transformations
         val sSeq = SclFactory::eINSTANCE.createStatementSequence
