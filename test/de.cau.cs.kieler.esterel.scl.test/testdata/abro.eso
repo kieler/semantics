@@ -5,6 +5,64 @@
 
 % Output: 
 ;
+
+% Output: 
+;
+A 
+% Output: 
+;
+
+% Output: 
+;
+B 
+% Output: O(1) 
+;
+
+% Output: 
+;
+A B 
+% Output: 
+;
+
+% Output: 
+;
+R 
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+A B R 
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+R 
+% Output: 
+;
+
+% Output: 
+;
+A B 
+% Output: O(1) 
+;
+
+% Output: 
+;
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
 a 
 % Output: 
 ;
@@ -15,6 +73,9 @@ b
 % Output: o(1) 
 ;
 
+% Output: 
+;
+b a 
 % Output: 
 ;
 
@@ -44,17 +105,27 @@ b a
 
 % Output: 
 ;
-a 
+b r a 
 % Output: 
 ;
 
 % Output: 
 ;
-b 
+b a 
+% Output: o(1) 
+;
+
+% Output: 
+;
+! reset;
+
 % Output: 
 ;
 
 % Output: 
+;
+A B 
+% Output: O 
 ;
 
 % Output: 

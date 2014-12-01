@@ -40,8 +40,7 @@ import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnitTest;
  * @author krat
  * 
  *         When initializing this class, all .strl files in the test data folder should be
- *         transformed to SCG. It would also be useful to provide some kind of eso file manipulation
- *         to delete valued signal outputs.
+ *         transformed to SCG.
  * 
  */
 public class EsterelToSclAutomatedTests extends KiemAutomatedJUnitTest {
@@ -125,7 +124,7 @@ public class EsterelToSclAutomatedTests extends KiemAutomatedJUnitTest {
      * {@inheritDoc}
      */
     protected String getModelFileExtension() {
-        return "scg";
+        return "strl";
     }
 
     /**
@@ -139,7 +138,7 @@ public class EsterelToSclAutomatedTests extends KiemAutomatedJUnitTest {
      * {@inheritDoc}
      */
     protected String getExecutionFileName() {
-        return "sccharts_c_validation_headless.execution";
+        return "esterel_scg_kart.execution";
     }
 
     /**
