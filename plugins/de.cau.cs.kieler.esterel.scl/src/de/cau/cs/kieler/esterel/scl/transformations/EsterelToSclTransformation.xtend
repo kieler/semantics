@@ -88,6 +88,9 @@ import de.cau.cs.kieler.core.kexpressions.util.KExpressionsAdapterFactory
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.esterel.esterel.AbortCase
+import de.cau.cs.kieler.esterel.esterel.Run
+import de.cau.cs.kieler.esterel.esterel.Program
+import de.cau.cs.kieler.esterel.esterel.SignalRenaming
 
 /**
  * @author krat
@@ -95,6 +98,8 @@ import de.cau.cs.kieler.esterel.esterel.AbortCase
  */
 class EsterelToSclTransformation extends Transformation {
 
+    // The currently transformed Esterel program
+    var Program currProgram
     // Label at the end of currently transformed thread
     var String curLabel
 
@@ -145,6 +150,8 @@ class EsterelToSclTransformation extends Transformation {
 
     public def SCLProgram transformProgram(de.cau.cs.kieler.esterel.esterel.Program esterelProgram) {
         System.out.println("Transforming to SCL...")
+        
+        currProgram = esterelProgram
 
         // Label at the end of the currently transformed thread if not root thread
         curLabel = null
@@ -998,6 +1005,9 @@ class EsterelToSclTransformation extends Transformation {
         sSeq
     }
 
+    /*
+     * exit T
+     */
     def dispatch StatementSequence transformStm(Exit exit, StatementSequence sSeq) {
         val variable = exitMap.get(exit.trap).key
         val variableRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
@@ -1019,6 +1029,24 @@ class EsterelToSclTransformation extends Transformation {
 
         //        ]))
         return sSeq
+    }
+    
+    /*
+     * run mod
+     */
+    def dispatch StatementSequence transformStm(Run run, StatementSequence sSeq) {
+
+        // Rename signals
+        run.list.list.forEach[ 
+            for (renaming : renamings) {
+                signalMap.add((renaming as SignalRenaming).oldName.name -> signalMap.findLast[ key == (renaming as SignalRenaming).newName.name ].value)
+                
+            }
+        ]
+        
+        run.module.module.body.statements.forEach[ transformStm(sSeq) ]
+        
+        sSeq
     }
 
     override getDependencies() {

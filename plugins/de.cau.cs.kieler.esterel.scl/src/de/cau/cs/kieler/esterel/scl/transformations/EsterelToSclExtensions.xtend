@@ -49,6 +49,7 @@ import de.cau.cs.kieler.esterel.esterel.AwaitInstance
 import de.cau.cs.kieler.esterel.esterel.AwaitCase
 import de.cau.cs.kieler.esterel.esterel.LocalSignal
 import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
+import de.cau.cs.kieler.esterel.esterel.Run
 
 /**
  * @author krat
@@ -331,6 +332,8 @@ class EsterelToSclExtensions {
                     }
                     return terms
                 }
+            } else if (stm instanceof Run) {
+                return (stm as Run).module.module.body.statements.checkTerminate
             }
             return true;
         }
@@ -343,7 +346,7 @@ class EsterelToSclExtensions {
             return terms
         }
         
-        def dispatch boolean checkTerminate(EList<Statement> stms) {
+        def dispatch boolean checkTerminate(EList<de.cau.cs.kieler.esterel.esterel.Statement> stms) {
             var terms = true;
             for (stm : stms) {
                 terms = terms && stm.checkTerminate
