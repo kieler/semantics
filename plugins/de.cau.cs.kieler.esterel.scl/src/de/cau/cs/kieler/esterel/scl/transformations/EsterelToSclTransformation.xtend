@@ -111,6 +111,9 @@ class EsterelToSclTransformation extends Transformation {
 
     // List of exit signals and the corresponding label
     var HashMap<ISignal, Pair<ValuedObject, String>> exitMap
+    
+    // List of all variables (var v in p end) used
+    var protected LinkedList<String> localVars
 
     // List of all locally used variables, used to add them as global declaration after transformation
     var LinkedList<Declaration> localDeclarations
@@ -161,6 +164,8 @@ class EsterelToSclTransformation extends Transformation {
 
         // Multimap containing information if certain label is in a thread
         labelMap = HashMultimap.create()
+        
+        localVars = new LinkedList<String>
 
         // Contains informations about which exit expression is represented by which flag
         exitMap = new HashMap<ISignal, Pair<ValuedObject, String>>()
@@ -280,7 +285,8 @@ class EsterelToSclTransformation extends Transformation {
     def dispatch StatementSequence transformStm(Emit emit, StatementSequence sSeq) {
 
         // Get the LAST defined valued object (with respect to local signals)
-        val variable = signalMap.findLast[it.key == emit.signal.name].value
+        // Put ignore local variable declarations
+        val variable = signalMap.filter[!localVars.contains(it.value.name)].findLast[it.key == emit.signal.name].value
         val variableRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
             valuedObject = variable
         ]
