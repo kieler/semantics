@@ -29,6 +29,7 @@ import de.cau.cs.kieler.core.kexpressions.util.KExpressionsAdapterFactory
 import de.cau.cs.kieler.esterel.kexpressions.ValueType
 import de.cau.cs.kieler.esterel.kexpressions.CombineOperator
 import de.cau.cs.kieler.esterel.esterel.EsterelFactory
+import de.cau.cs.kieler.esterel.kexpressions.IntValue
 
 /**
  * @author krat
@@ -146,7 +147,12 @@ class TransformExpression {
         ]
     }
     
+    //TODO other values
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(BooleanValue boolVal, LinkedList<Pair<String, ValuedObject>> variables) {
         return createBoolValue(boolVal.value)
+    }
+    
+    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(IntValue intVal, LinkedList<Pair<String, ValuedObject>> variables) {
+        return createIntValue(intVal.value)
     }
 }

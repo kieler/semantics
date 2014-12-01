@@ -1074,7 +1074,14 @@ class EsterelToSclTransformation extends Transformation {
       */
       def dispatch StatementSequence transformStm(Assignment assign, StatementSequence sSeq) {
          val arg1 = signalMap.findLast[ key == assign.^var.name ].value
-         val expr = transformExp(assign.expr, signalMap)
+         var de.cau.cs.kieler.core.kexpressions.Expression exprVar
+         if (assign.expr instanceof ConstantExpression)
+            exprVar = transformExp(assign.expr, assign.valuedObjects.head.type)
+         else {
+             exprVar = transformExp(assign.expr, signalMap)
+         }
+         
+         val expr = exprVar
          
          sSeq.add(createAssignment(arg1, expr))
          

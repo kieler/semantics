@@ -50,6 +50,7 @@ import de.cau.cs.kieler.esterel.esterel.AwaitCase
 import de.cau.cs.kieler.esterel.esterel.LocalSignal
 import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
 import de.cau.cs.kieler.esterel.esterel.Run
+import de.cau.cs.kieler.esterel.esterel.LocalVariable
 
 /**
  * @author krat
@@ -334,6 +335,8 @@ class EsterelToSclExtensions {
                 }
             } else if (stm instanceof Run) {
                 return (stm as Run).module.module.body.statements.checkTerminate
+            } else if (stm instanceof LocalVariable) {
+                return (stm as LocalVariable).statement.checkTerminate
             }
             return true;
         }
