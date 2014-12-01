@@ -93,6 +93,7 @@ import de.cau.cs.kieler.esterel.esterel.Program
 import de.cau.cs.kieler.esterel.esterel.SignalRenaming
 import de.cau.cs.kieler.esterel.esterel.LocalVariable
 import de.cau.cs.kieler.esterel.esterel.Assignment
+import de.cau.cs.kieler.esterel.esterel.IfTest
 
 /**
  * @author krat
@@ -1073,6 +1074,23 @@ class EsterelToSclTransformation extends Transformation {
          
          sSeq
       }
+      
+      /*
+       * if then
+       */
+       def dispatch StatementSequence transformStm(IfTest ifTest, StatementSequence sSeq) {
+           val cond = SclFactory::eINSTANCE.createConditional => [
+               expression = ifTest.expr.transformExp(signalMap)
+               if (ifTest.thenPart != null)
+                statements += transformStm(ifTest.thenPart.statement, newSseq).statements
+            if (ifTest.elsePart != null)
+               elseStatements += transformStm(ifTest.elsePart.statement, newSseq).statements
+           ]
+           
+           sSeq.add(cond)
+           
+           sSeq
+       }
 
     override getDependencies() {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")

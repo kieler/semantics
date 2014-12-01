@@ -340,6 +340,7 @@ class TransformInterface {
         
         declaration.variables.forEach [
             val s_val = createValuedObject(uniqueName(signalMap, it.name))
+            // TODO add to signalmap?
             signalMap.add(it.name -> s_val)
             if (it.expression instanceof ConstantExpression)
                 s_val.initialValue = it.expression.transformExp(declaration.type.type.literal)
