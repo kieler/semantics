@@ -91,6 +91,8 @@ import de.cau.cs.kieler.esterel.esterel.AbortCase
 import de.cau.cs.kieler.esterel.esterel.Run
 import de.cau.cs.kieler.esterel.esterel.Program
 import de.cau.cs.kieler.esterel.esterel.SignalRenaming
+import de.cau.cs.kieler.esterel.esterel.LocalVariable
+import de.cau.cs.kieler.esterel.esterel.Assignment
 
 /**
  * @author krat
@@ -1035,7 +1037,6 @@ class EsterelToSclTransformation extends Transformation {
      * run mod
      */
     def dispatch StatementSequence transformStm(Run run, StatementSequence sSeq) {
-
         // Rename signals
         run.list.list.forEach[ 
             for (renaming : renamings) {
@@ -1048,6 +1049,30 @@ class EsterelToSclTransformation extends Transformation {
         
         sSeq
     }
+    
+    /*
+     * var v : type in
+     */
+     def dispatch StatementSequence transformStm(LocalVariable localVar, StatementSequence sSeq) {
+         localVar.^var.varDecls.forEach [
+             val decl = transformIntVarDeclaration(it, signalMap)
+             localDeclarations += decl
+         ]
+         
+         localVar.statement.transformStm(sSeq)
+     }
+     
+     /*
+      * v1 := v2
+      */
+      def dispatch StatementSequence transformStm(Assignment assign, StatementSequence sSeq) {
+         val arg1 = signalMap.findLast[ key == assign.^var.name ].value
+         val expr = transformExp(assign.expr, signalMap)
+         
+         sSeq.add(createAssignment(arg1, expr))
+         
+         sSeq
+      }
 
     override getDependencies() {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")

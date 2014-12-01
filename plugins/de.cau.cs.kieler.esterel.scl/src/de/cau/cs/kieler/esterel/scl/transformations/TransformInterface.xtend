@@ -34,6 +34,8 @@ import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.esterel.esterel.ConstantDecls
 import de.cau.cs.kieler.esterel.esterel.LocalSignalList
 import de.cau.cs.kieler.esterel.kexpressions.ISignal
+import de.cau.cs.kieler.esterel.kexpressions.InterfaceVariableDecl
+import de.cau.cs.kieler.esterel.kexpressions.VariableDecl
 
 /**
  * @author krat
@@ -312,7 +314,7 @@ class TransformInterface {
     /*
      * Transforms a valued declaration
      * @param sig The signal to be declared
-     * @param name The name of the resulting variable (should be unique)
+     * @param name The resulting variable (should be unique)
      */
      def Declaration transformValuedDeclaration(ISignal sig, ValuedObject valObj) {
          val decl = createDeclaration => [
@@ -321,6 +323,30 @@ class TransformInterface {
         ]
         
         decl.valuedObjects += valObj
+         
+         decl
+     }
+     
+    /*
+     * Transforms a local variable declaration
+     * @param sig The variable to be declared
+     * @param name The resulting variable (should be unique)
+     */
+     def Declaration transformIntVarDeclaration(VariableDecl declaration, LinkedList<Pair<String, ValuedObject>> signalMap) {
+         val decl = createDeclaration => [
+            type = ValueType::getByName(declaration.type.type.name)
+            output = true
+        ]
+        
+        declaration.variables.forEach [
+            val s_val = createValuedObject(uniqueName(signalMap, it.name))
+            signalMap.add(it.name -> s_val)
+            if (it.expression instanceof ConstantExpression)
+                s_val.initialValue = it.expression.transformExp(declaration.type.type.literal)
+            else if (it.expression != null)
+              s_val.initialValue = it.expression.transformExp(signalMap)
+            decl.valuedObjects += s_val
+        ]
          
          decl
      }
