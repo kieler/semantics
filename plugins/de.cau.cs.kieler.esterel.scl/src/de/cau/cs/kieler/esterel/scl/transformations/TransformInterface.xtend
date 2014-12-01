@@ -32,6 +32,8 @@ import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.esterel.esterel.ConstantDecls
+import de.cau.cs.kieler.esterel.esterel.LocalSignalList
+import de.cau.cs.kieler.esterel.kexpressions.ISignal
 
 /**
  * @author krat
@@ -79,15 +81,12 @@ class TransformInterface {
      */
     def transformConstDeclaration(EList<ConstantDecls> list, SCLProgram program, LinkedList<String> names) {
         System.out.println("Transforming Interface Constant Declarations")
-        val HashMap<ValuedObject, ValuedObject> valuedMap = newHashMap
 
         for (singleDecl : list) {
             transformSingleConstDeclartion(singleDecl, program, names)
         }
-
-        valuedMap
     }
-
+    
     /*
      * Transforms one signal declaration, which may consist of pure and valued signals
      */
@@ -151,6 +150,7 @@ class TransformInterface {
                 val s_val = createValuedObject(uniqueNameByList(names, sig.name + "_val"))
                 s_val.combineOperator = sig.channelDescr.type.operator.transformCombineOperator
                 valuedMap.put(pureSig, s_val)
+                signalMap.add(s_val.name -> s_val)
                 val type = sig.channelDescr.type.type
                 if (sig.channelDescr.expression != null) {
                     s_val.initialValue = sig.channelDescr.expression.transformExp(type.toString)
@@ -167,7 +167,7 @@ class TransformInterface {
                     case (de.cau.cs.kieler.esterel.kexpressions.ValueType::UNSIGNED):
                         unsignedSignals.valuedObjects.add(s_val)
                     case (de.cau.cs.kieler.esterel.kexpressions.ValueType::DOUBLE):
-                        doubleSignals.valuedObjects.add(s_val)
+                        floatSignals.valuedObjects.add(s_val)
                     default:
                         System.out.println("Unable to transform declaration: " + sig.channelDescr.type.type)
                 }
@@ -258,8 +258,6 @@ class TransformInterface {
             // Type of the constant
             val type = singleDecl.type.type
             for (const : singleDecl.constants) {
-//                    val pureSig = createValuedObject(const.constant.name)
-//                    pureSignals.valuedObjects.add(pureSig)
                     val s_val = createValuedObject(uniqueNameByList(names, const.constant.name))
                     signalMap.add(const.constant.name -> s_val)
                     valuedMap.put(s_val, s_val)
@@ -279,7 +277,7 @@ class TransformInterface {
                         case (de.cau.cs.kieler.esterel.kexpressions.ValueType::UNSIGNED):
                             unsignedSignals.valuedObjects.add(s_val)
                         case (de.cau.cs.kieler.esterel.kexpressions.ValueType::DOUBLE):
-                            doubleSignals.valuedObjects.add(s_val)
+                            floatSignals.valuedObjects.add(s_val)
                         default:
                             System.out.println("Unable to transform declaration: " + type)
                     
@@ -310,6 +308,23 @@ class TransformInterface {
         }
 
     }
+    
+    /*
+     * Transforms a valued declaration
+     * @param sig The signal to be declared
+     * @param name The name of the resulting variable (should be unique)
+     */
+     def Declaration transformValuedDeclaration(ISignal sig, ValuedObject valObj) {
+         val decl = createDeclaration => [
+            type = ValueType::getByName(sig.channelDescr.type.type.name)
+            output = true
+        ]
+        
+        decl.valuedObjects += valObj
+         
+         decl
+     }
+    
 
     /*
      * Collects all declarated signal names

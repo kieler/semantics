@@ -270,7 +270,7 @@ class EsterelToSclTransformation extends Transformation {
     def dispatch StatementSequence transformStm(Emit emit, StatementSequence sSeq) {
 
         // Get the LAST defined valued object (with respect to local signals)
-        val variable = signalMap.filter[it.key == emit.signal.name].last.value
+        val variable = signalMap.findLast[it.key == emit.signal.name].value
         val variableRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
             valuedObject = variable
         ]
@@ -291,10 +291,19 @@ class EsterelToSclTransformation extends Transformation {
         
         System.out.println("Emit expr: " + emit.expr)
 
-        // Valued Emit with combine function
+        // Valued Emit
         if (emit.expr != null) {
             val s_val = valuedMap.get(variable)
-            val sclExpr = emit.expr.transformExp(signalMap)
+            var de.cau.cs.kieler.core.kexpressions.Expression sclExprVar
+            
+            if (emit.expr instanceof ConstantExpression) {
+                sclExprVar = emit.expr.transformExp(s_val.type.toString)
+            } else {
+                sclExprVar = emit.expr.transformExp(signalMap)
+            }
+            
+            val sclExpr = sclExprVar
+            
             if (s_val.combineOperator.value != 0) {
                 val cond = SclFactory::eINSTANCE.createConditional => [
                     expression = KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
@@ -317,7 +326,6 @@ class EsterelToSclTransformation extends Transformation {
             // Valued emit without combine function
             else {
                 sSeq.statements.add(setSignal)
-                // sclExpr ist the problem...
                 sSeq.statements.add(createStmFromInstr(createAssignment(s_val, sclExpr)))
             }
         }
@@ -662,6 +670,7 @@ class EsterelToSclTransformation extends Transformation {
 
     /*
      * signal s in p end
+     * TODO valued signals
      */
     def dispatch StatementSequence transformStm(LocalSignalDecl signal, StatementSequence sSeq) {
         val decl = createDeclaration => [
@@ -672,11 +681,24 @@ class EsterelToSclTransformation extends Transformation {
             val obj = createValuedObject(uniqueName(signalMap, s.name))
             decl.valuedObjects.add(obj)
             signalMap.add(s.name -> obj)
+            
+            // Valued signal
+            if (s.channelDescr != null) {
+                val s_val = createValuedObject(uniqueName(signalMap, s.name + "_val")) => [
+                    type = ValueType::getByName(s.channelDescr.type.type.toString)
+                    if (s.channelDescr.expression != null)
+                        initialValue = s.channelDescr.expression.transformExp(s.channelDescr.type.type.toString)
+                    if (s.channelDescr.type.operator != null)
+                        combineOperator = s.channelDescr.type.operator.transformCombineOperator
+                ]
+                valuedMap.put(obj, s_val)
+                localDeclarations.add(transformValuedDeclaration(s, s_val))
+            }
         }
         localDeclarations.add(decl)
 
         transformStm(signal.statement, sSeq)
-        (signal.signalList as LocalSignal).signal.forEach[signalMap.removeLast]
+        (signal.signalList as LocalSignal).signal.forEach[ signalMap.removeLast ]
 
         sSeq
     }

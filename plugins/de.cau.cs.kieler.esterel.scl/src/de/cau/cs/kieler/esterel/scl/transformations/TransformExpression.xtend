@@ -54,11 +54,12 @@ class TransformExpression {
         // ? Operator: Return variable holding the value
         // TODO val working?
         if (opType == OperatorType::VAL) {
-            val sig = variables.findFirst [
+            val sig = variables.findLast [
                 (exp.subExpressions.head as ValuedObjectReference).valuedObject.name == it.key
             ].value
             System.out.println("transformExp: OperatorExpression " + sig)
             val sig_val = valuedMap.get(sig)
+            System.out.println("transformExp: did not find " + sig + " in " + valuedMap)
             return KExpressionsFactory::eINSTANCE.createOperatorExpression => [
                 operator = opType
                 subExpressions += createValuedObjectRef(sig_val)
