@@ -358,6 +358,8 @@ class TransformInterface {
      * Collects all declarated signal names
      */
     def LinkedList<String> collectNames(ModuleInterface modInt, LinkedList<String> names) {
+        if (modInt == null) 
+            return names
         modInt.intSignalDecls.collectSigNames(names)
         modInt.intConstantDecls.collectConstNames(names)
 

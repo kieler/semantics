@@ -414,10 +414,12 @@ class EsterelToSclTransformation extends Transformation {
      */
     def dispatch StatementSequence transformStm(Await await, StatementSequence sSeq) {
         if (await.body instanceof AwaitCase) {
-            return handleAwaitCase((await.body as AwaitCase), sSeq)
+            handleAwaitCase((await.body as AwaitCase), sSeq)
         } else if (await.body instanceof AwaitInstance) {
-            return handleAwaitInstance(await.body as AwaitInstance, sSeq)
+            handleAwaitInstance(await.body as AwaitInstance, sSeq)
         }
+        
+        sSeq
     }
 
     /*
@@ -476,28 +478,70 @@ class EsterelToSclTransformation extends Transformation {
         val l = createFreshLabel
 
         sSeq.addLabel(l)
+        labelMap.put(curLabel, l)
 
         if (!await.delay.isImmediate) {
             sSeq.createSclPause
         }
         
-        // This is probably an await tick
-        if (await.delay.expr == null)
-            return sSeq
-
-        val b = createOperatorExpression(OperatorType::NOT) => [
-            subExpressions.add(transformExp(await.delay.event.expr, signalMap))
-        ]
-
-        val cond = SclFactory::eINSTANCE.createConditional => [
-            expression = b
-            if (await.delay.isImmediate) {
-                statements.addAll(createSclPause(createSseq).statements)
-            }
-            statements.add(createGotoStm(l))
-        ]
-
-        sSeq.statements += createStmFromInstr(cond)
+        // Wait several times, e.g. await 5 a
+        // i counts
+        val i = createValuedObject(uniqueName(signalMap, "i"))
+        if (await.delay.expr != null) {
+            signalMap.add(i.name -> i);
+    
+            localDeclarations.add(
+                KExpressionsFactory::eINSTANCE.createDeclaration => [
+                    type = ValueType::INT;
+                    i.initialValue = createIntValue(0)
+                    valuedObjects.add(i)
+                ])
+            // if a present increment counter
+            val condTimes = SclFactory::eINSTANCE.createConditional => [
+                    expression = transformExp(await.delay.event.expr, signalMap)
+                    statements.add(incrementInt(i))
+                ]
+                sSeq.add(condTimes)
+        }
+        
+        
+            
+        // This is probably not an await tick 
+        // TODO await 0?
+        if (await.delay.event.expr != null){
+            val b = createOperatorExpression(OperatorType::NOT) => [
+                subExpressions.add(transformExp(await.delay.event.expr, signalMap))
+            ]
+    
+            val cond = SclFactory::eINSTANCE.createConditional => [
+                // The counter has to be at the specified value
+                if (await.delay.expr != null) {
+                    expression = createOperatorExpression(OperatorType::OR) => [
+                      subExpressions += b
+                      subExpressions += KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+                    operator = OperatorType::GT
+                    if (await.delay.expr instanceof ConstantExpression)
+                        subExpressions += await.delay.expr.transformExp("int")
+                    else {
+                        subExpressions += await.delay.expr.transformExp(signalMap)
+                    }
+                    subExpressions += i.createValuedObjectRef
+                ]
+                      // TODO and counter
+                    ]
+                } else {
+                    expression = b
+                }
+                
+                if (await.delay.isImmediate) {
+                    statements.addAll(createSclPause(createSseq).statements)
+                }
+                statements.add(createGotoStm(l))
+            ]
+    
+            sSeq.statements += createStmFromInstr(cond)
+        
+        }
 
         sSeq
     }
