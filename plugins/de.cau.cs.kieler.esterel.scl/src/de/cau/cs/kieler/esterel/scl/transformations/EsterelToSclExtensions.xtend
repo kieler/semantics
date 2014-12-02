@@ -267,8 +267,20 @@ class EsterelToSclExtensions {
          /*
           * Adds an instruction to a StatementSeqeuence
           */
-          def add(StatementSequence sSeq, Instruction instr) {
+          def dispatch add(StatementSequence sSeq, Instruction instr) {
               sSeq.statements.add(createStmFromInstr(instr))
+              
+              sSeq
+          }
+          
+          def dispatch add(StatementSequence sSeq, Statement stm) {
+              sSeq.statements.add(stm)
+              
+              sSeq
+          }
+          
+          def dispatch add(StatementSequence sSeq, StatementSequence stm) {
+              sSeq.statements.addAll(stm.statements)
               
               sSeq
           }
@@ -364,6 +376,14 @@ class EsterelToSclExtensions {
         
         def StatementSequence newSseq() {
             SclFactory::eINSTANCE.createStatementSequence
+        }
+        
+        def Statement incrementInt(ValuedObject valObj) {
+            createStmFromInstr(createAssignment(valObj, KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+                operator = OperatorType::ADD
+                subExpressions += createValuedObjectRef(valObj)
+                subExpressions += createIntValue(1)
+            ]))
         }
         
 }

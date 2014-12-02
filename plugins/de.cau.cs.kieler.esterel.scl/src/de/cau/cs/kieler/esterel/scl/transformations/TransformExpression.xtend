@@ -153,6 +153,12 @@ class TransformExpression {
     }
     
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(IntValue intVal, LinkedList<Pair<String, ValuedObject>> variables) {
+        //TODO no negative INT values?
+        if (intVal.value < 0)
+            return KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+                operator = OperatorType::SUB
+                subExpressions += createIntValue(intVal.value * -1)
+            ]
         return createIntValue(intVal.value)
     }
 }

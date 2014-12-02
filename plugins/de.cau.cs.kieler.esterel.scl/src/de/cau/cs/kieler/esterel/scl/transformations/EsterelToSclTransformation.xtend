@@ -94,6 +94,7 @@ import de.cau.cs.kieler.esterel.esterel.SignalRenaming
 import de.cau.cs.kieler.esterel.esterel.LocalVariable
 import de.cau.cs.kieler.esterel.esterel.Assignment
 import de.cau.cs.kieler.esterel.esterel.IfTest
+import de.cau.cs.kieler.esterel.esterel.Repeat
 
 /**
  * @author krat
@@ -479,6 +480,10 @@ class EsterelToSclTransformation extends Transformation {
         if (!await.delay.isImmediate) {
             sSeq.createSclPause
         }
+        
+        // This is probably an await tick
+        if (await.delay.expr == null)
+            return sSeq
 
         val b = createOperatorExpression(OperatorType::NOT) => [
             subExpressions.add(transformExp(await.delay.event.expr, signalMap))
@@ -1044,13 +1049,15 @@ class EsterelToSclTransformation extends Transformation {
      * run mod
      */
     def dispatch StatementSequence transformStm(Run run, StatementSequence sSeq) {
-        // Rename signals
-        run.list.list.forEach[ 
-            for (renaming : renamings) {
-                signalMap.add((renaming as SignalRenaming).oldName.name -> signalMap.findLast[ key == (renaming as SignalRenaming).newName.name ].value)
-                
-            }
-        ]
+        // Rename signals (only if renaming happens)
+        if (run.list != null) {
+            run.list.list.forEach[ 
+                for (renaming : renamings) {
+                    signalMap.add((renaming as SignalRenaming).oldName.name -> signalMap.findLast[ key == (renaming as SignalRenaming).newName.name ].value)
+                    
+                }
+            ]
+        }
         
         run.module.module.body.statements.forEach[ transformStm(sSeq) ]
         
@@ -1076,7 +1083,7 @@ class EsterelToSclTransformation extends Transformation {
          val arg1 = signalMap.findLast[ key == assign.^var.name ].value
          var de.cau.cs.kieler.core.kexpressions.Expression exprVar
          if (assign.expr instanceof ConstantExpression)
-            exprVar = transformExp(assign.expr, assign.valuedObjects.head.type)
+            exprVar = transformExp(assign.expr, arg1.type.toString)
          else {
              exprVar = transformExp(assign.expr, signalMap)
          }
@@ -1104,6 +1111,38 @@ class EsterelToSclTransformation extends Transformation {
            
            sSeq
        }
+       
+       /*
+        * repeat n times
+        */
+        def dispatch StatementSequence transformStm(Repeat repeat, StatementSequence sSeq) {
+            val i = createValuedObject(uniqueName(signalMap, "i"))
+            signalMap.add(i.name -> i);
+            val l = createFreshLabel
+            labelMap.put(curLabel, l)
+    
+            localDeclarations.add(
+                KExpressionsFactory::eINSTANCE.createDeclaration => [
+                    type = ValueType::INT;
+                    i.initialValue = createIntValue(0)
+                    valuedObjects.add(i)
+                ])
+                
+                sSeq.addLabel(l)
+                repeat.statement.transformStm(sSeq)
+                sSeq.add(incrementInt(i))
+                sSeq.add(ifThenGoto(KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+                    operator = OperatorType::GT
+                    if (repeat.expression instanceof ConstantExpression)
+                        subExpressions += repeat.expression.transformExp("int")
+                    else {
+                        subExpressions += repeat.expression.transformExp(signalMap)
+                    }
+                    subExpressions += i.createValuedObjectRef
+                ], l, true))
+            
+            sSeq
+        }
 
     override getDependencies() {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")
