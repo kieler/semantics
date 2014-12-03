@@ -89,12 +89,12 @@ import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.esterel.esterel.AbortCase
 import de.cau.cs.kieler.esterel.esterel.Run
-import de.cau.cs.kieler.esterel.esterel.Program
 import de.cau.cs.kieler.esterel.esterel.SignalRenaming
 import de.cau.cs.kieler.esterel.esterel.LocalVariable
 import de.cau.cs.kieler.esterel.esterel.Assignment
 import de.cau.cs.kieler.esterel.esterel.IfTest
 import de.cau.cs.kieler.esterel.esterel.Repeat
+import de.cau.cs.kieler.esterel.esterel.Program
 
 /**
  * @author krat
@@ -103,7 +103,7 @@ import de.cau.cs.kieler.esterel.esterel.Repeat
 class EsterelToSclTransformation extends Transformation {
 
     // The currently transformed Esterel program
-    var Program currProgram
+//    var Program currProgram
     // Label at the end of currently transformed thread
     var String curLabel
 
@@ -147,18 +147,18 @@ class EsterelToSclTransformation extends Transformation {
     // KiCo
     override EObject transform(EObject eObject, KielerCompilerContext contex) {
         opt = false;
-        return transformProgram(eObject as de.cau.cs.kieler.esterel.esterel.Program) as EObject
+        return transformProgram(eObject as Program) as EObject
     }
 
     def EObject transformOpt(EObject eObject, KielerCompilerContext contex) {
         opt = true;
-        return transformProgram(eObject as de.cau.cs.kieler.esterel.esterel.Program) as EObject
+        return transformProgram(eObject as Program) as EObject
     }
 
-    public def SCLProgram transformProgram(de.cau.cs.kieler.esterel.esterel.Program esterelProgram) {
+    public def SCLProgram transformProgram(Program esterelProgram) {
         System.out.println("Transforming to SCL...")
         
-        currProgram = esterelProgram
+//        currProgram = esterelProgram
 
         // Label at the end of the currently transformed thread if not root thread
         curLabel = null
@@ -426,6 +426,7 @@ class EsterelToSclTransformation extends Transformation {
      * Await Case
      * Cases are handled in a "break" style; if a case is taken, a goto to the end of the
      * statement is taken
+     * TODO await n times
      */
     def StatementSequence handleAwaitCase(AwaitCase awaitCase, StatementSequence sSeq) {
         val l_start = createFreshLabel
@@ -475,6 +476,10 @@ class EsterelToSclTransformation extends Transformation {
      * Await instance
      */
     def StatementSequence handleAwaitInstance(AwaitInstance await, StatementSequence sSeq) {
+        // await 0 a should do nothing
+        if ((await.delay.expr instanceof ConstantExpression) && (await.delay.expr as ConstantExpression).value=="0") {
+            return sSeq
+        }        
         val l = createFreshLabel
 
         sSeq.addLabel(l)
@@ -527,7 +532,6 @@ class EsterelToSclTransformation extends Transformation {
                     }
                     subExpressions += i.createValuedObjectRef
                 ]
-                      // TODO and counter
                     ]
                 } else {
                     expression = b
@@ -1187,6 +1191,7 @@ class EsterelToSclTransformation extends Transformation {
             
             sSeq
         }
+        
 
     override getDependencies() {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")

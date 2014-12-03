@@ -30,6 +30,7 @@ import de.cau.cs.kieler.esterel.kexpressions.ValueType
 import de.cau.cs.kieler.esterel.kexpressions.CombineOperator
 import de.cau.cs.kieler.esterel.esterel.EsterelFactory
 import de.cau.cs.kieler.esterel.kexpressions.IntValue
+import de.cau.cs.kieler.esterel.esterel.FunctionExpression
 
 /**
  * @author krat
@@ -160,5 +161,35 @@ class TransformExpression {
                 subExpressions += createIntValue(intVal.value * -1)
             ]
         return createIntValue(intVal.value)
+    }
+    
+    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(ConstantExpression constExp, LinkedList<Pair<String, ValuedObject>> variables) {
+        return KExpressionsFactory::eINSTANCE.createTextExpression => [
+                text = constExp.value
+            ]
+    }
+    
+        def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(FunctionExpression funcExp, LinkedList<Pair<String, ValuedObject>> variables) {
+        val res = KExpressionsFactory::eINSTANCE.createFunctionCall
+            res.functionName = funcExp.function.name
+            var i = 0
+            for (exp : funcExp.kexpressions) {
+                val type = funcExp.function.idList.get(i).type.toString
+                res.parameters.add(KExpressionsFactory::eINSTANCE.createParameter => [
+                    if (exp instanceof ConstantExpression) {
+                        System.out.println("It's a constant " + type)
+                        expression = exp.transformExp(type)
+                    }
+                    else {
+                        expression = exp.transformExp(variables)
+                    }
+        ]
+        
+        )
+        i = i+1
+        
+        }
+        
+        res
     }
 }
