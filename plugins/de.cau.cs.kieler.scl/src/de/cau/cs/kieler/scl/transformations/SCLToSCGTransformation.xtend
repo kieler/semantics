@@ -80,6 +80,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     private val reverseNodeMapping = new HashMap<Node, EObject>()
     private val labelMapping = new HashMap<String, Node>()
     private val gotoFlows = new HashMap<Goto, List<ControlFlow>>()
+    private val unmappedLabels = new LinkedList<String>
 
     // -------------------------------------------------------------------------
     // -- M2M Transformation 
@@ -204,6 +205,9 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
                 it.entry = entry
                 it.controlFlowTarget(continuation.controlFlows)
                 labelMapping.put(continuation.label, it)
+                for (l : unmappedLabels)
+                    labelMapping.put(l, it)
+                unmappedLabels.clear
             ]
         ]
 
@@ -239,6 +243,8 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
         } else {
             continuation.controlFlows += incoming
         }
+        
+        labelList.forEach[ unmappedLabels.add(it) ]
 
         continuation
     }
@@ -313,6 +319,10 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
                     if (!continuation.label.nullOrEmpty) {
                         labelMapping.put(continuation.label, it)
                     }
+                    for (l : unmappedLabels)
+                        labelMapping.put(l, it)
+                    unmappedLabels.clear
+                    
                 ]
             ]
             cont.node = fork

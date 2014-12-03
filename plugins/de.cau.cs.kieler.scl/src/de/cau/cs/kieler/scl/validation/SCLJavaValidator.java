@@ -121,6 +121,6 @@ public class SCLJavaValidator extends de.cau.cs.kieler.scl.validation.AbstractSC
             }
         }
         
-        return false;
+        return exists;
     }
 }
