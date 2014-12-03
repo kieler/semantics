@@ -47,7 +47,6 @@ class TransformExpression {
     @Inject
     extension EsterelToSclTransformation
 
-
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(OperatorExpression exp,
         LinkedList<Pair<String, ValuedObject>> variables) {
 
@@ -61,11 +60,12 @@ class TransformExpression {
             ].value
             System.out.println("transformExp: OperatorExpression " + sig)
             val sig_val = valuedMap.get(sig)
-            System.out.println("transformExp: did not find " + sig + " in " + valuedMap)
-            return KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-                operator = opType
-                subExpressions += createValuedObjectRef(sig_val)
-            ]
+            //TODO VAL is not translated right
+//            return KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+//                operator = opType
+//                subExpressions += createValuedObjectRef(sig_val)
+//            ]
+            return createValuedObjectRef(sig_val)
         }
 
         KExpressionsFactory::eINSTANCE.createOperatorExpression => [
@@ -94,7 +94,7 @@ class TransformExpression {
         LinkedList<Pair<String, ValuedObject>> variables) {
         getValuedObjectRef(variables, ref.valuedObject.name)
     }
-    
+
     // Consider Strings as ConstantExpressions
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(String exp, String type) {
         val esterelExp = EsterelFactory::eINSTANCE.createConstantExpression => [
@@ -141,19 +141,22 @@ class TransformExpression {
             value = b.value
         ]
     }
-    
+
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(BooleanValue b, boolean bool) {
         return KExpressionsFactory::eINSTANCE.createBoolValue => [
             value = bool
         ]
     }
-    
+
     //TODO other values
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(BooleanValue boolVal, LinkedList<Pair<String, ValuedObject>> variables) {
+    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(BooleanValue boolVal,
+        LinkedList<Pair<String, ValuedObject>> variables) {
         return createBoolValue(boolVal.value)
     }
-    
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(IntValue intVal, LinkedList<Pair<String, ValuedObject>> variables) {
+
+    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(IntValue intVal,
+        LinkedList<Pair<String, ValuedObject>> variables) {
+
         //TODO no negative INT values?
         if (intVal.value < 0)
             return KExpressionsFactory::eINSTANCE.createOperatorExpression => [
@@ -162,34 +165,34 @@ class TransformExpression {
             ]
         return createIntValue(intVal.value)
     }
-    
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(ConstantExpression constExp, LinkedList<Pair<String, ValuedObject>> variables) {
+
+    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(ConstantExpression constExp,
+        LinkedList<Pair<String, ValuedObject>> variables) {
         return KExpressionsFactory::eINSTANCE.createTextExpression => [
-                text = constExp.value
-            ]
+            text = constExp.value
+        ]
     }
-    
-        def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(FunctionExpression funcExp, LinkedList<Pair<String, ValuedObject>> variables) {
+
+    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(FunctionExpression funcExp,
+        LinkedList<Pair<String, ValuedObject>> variables) {
         val res = KExpressionsFactory::eINSTANCE.createFunctionCall
-            res.functionName = funcExp.function.name
-            var i = 0
-            for (exp : funcExp.kexpressions) {
-                val type = funcExp.function.idList.get(i).type.toString
-                res.parameters.add(KExpressionsFactory::eINSTANCE.createParameter => [
+        res.functionName = funcExp.function.name
+        var i = 0
+        for (exp : funcExp.kexpressions) {
+            val type = funcExp.function.idList.get(i).type.toString
+            res.parameters.add(
+                KExpressionsFactory::eINSTANCE.createParameter => [
                     if (exp instanceof ConstantExpression) {
-                        System.out.println("It's a constant " + type)
                         expression = exp.transformExp(type)
-                    }
-                    else {
+                    } else {
                         expression = exp.transformExp(variables)
                     }
-        ]
-        
-        )
-        i = i+1
-        
+                ]
+            )
+            i = i + 1
+
         }
-        
+
         res
     }
 }
