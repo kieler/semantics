@@ -16,6 +16,8 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.scl.scl.Conditional;
 import de.cau.cs.kieler.scl.scl.EmptyStatement;
 import de.cau.cs.kieler.scl.scl.Goto;
+import de.cau.cs.kieler.scl.scl.Instruction;
+import de.cau.cs.kieler.scl.scl.InstructionStatement;
 import de.cau.cs.kieler.scl.scl.SCLProgram;
 import de.cau.cs.kieler.scl.scl.Statement;
 import de.cau.cs.kieler.scl.scl.StatementScope;
@@ -84,8 +86,8 @@ public class SCLJavaValidator extends de.cau.cs.kieler.scl.validation.AbstractSC
                     error("Duplicate label", stm, null, -1);
                 else
                     labels.add(((EmptyStatement) stm).getLabel());
-            } else if (stm instanceof Conditional) {
-                Conditional cond = (Conditional) stm;
+            } else if (stm instanceof InstructionStatement && ((InstructionStatement) stm).getInstruction() instanceof Conditional) {
+                Conditional cond = (Conditional) ((InstructionStatement) stm).getInstruction();
                 labels.addAll(collectLabels(cond.getStatements(), labels));
                 labels.addAll(collectLabels(cond.getElseStatements(), labels));
             }
@@ -108,13 +110,14 @@ public class SCLJavaValidator extends de.cau.cs.kieler.scl.validation.AbstractSC
     }
     
     private boolean labelExisting(EList<Statement> stms, String l) {
+        boolean exists = false;
         for (Statement stm : stms) {
             if ((stm instanceof EmptyStatement) && (((EmptyStatement) stm).getLabel().equals(l))) {
                 return true;
             }
-            else if (stm instanceof Conditional) {
-                return labelExisting(((Conditional) stm).getStatements(), l)
-                        || labelExisting(((Conditional) stm).getElseStatements(), l);
+            else if (stm instanceof InstructionStatement && ((InstructionStatement) stm).getInstruction() instanceof Conditional) {
+                exists = exists || labelExisting(((Conditional) ((InstructionStatement) stm).getInstruction()).getStatements(), l)
+                        || labelExisting(((Conditional) ((InstructionStatement) stm).getInstruction()).getElseStatements(), l);
             }
         }
         
