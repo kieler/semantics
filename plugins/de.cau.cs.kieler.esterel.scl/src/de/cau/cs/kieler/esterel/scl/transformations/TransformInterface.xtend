@@ -61,10 +61,12 @@ class TransformInterface {
      */
     def transformInterface(ModuleInterface modInterface, SCLProgram program) {
         System.out.println("Transforming Interface")
-        val names = new LinkedList<String>
-        modInterface.collectNames(names)
-        transformSigDeclaration(modInterface.intSignalDecls, program, names)
-        transformConstDeclaration(modInterface.intConstantDecls, program, names)
+        if (modInterface != null) {
+            val names = new LinkedList<String>
+            modInterface.collectNames(names)
+            transformConstDeclaration(modInterface.intConstantDecls, program, names)
+            transformSigDeclaration(modInterface.intSignalDecls, program, names)
+        }
     }
 
     /*
@@ -154,8 +156,10 @@ class TransformInterface {
                 valuedMap.put(pureSig, s_val)
                 signalMap.add(s_val.name -> s_val)
                 val type = sig.channelDescr.type.type
-                if (sig.channelDescr.expression != null) {
+                if (sig.channelDescr.expression != null && sig.channelDescr.expression instanceof ConstantExpression) {
                     s_val.initialValue = sig.channelDescr.expression.transformExp(type.toString)
+                } else if (sig.channelDescr.expression != null) {
+                    s_val.initialValue = sig.channelDescr.expression.transformExp(signalMap)
                 }
                 switch (type) {
                     case (de.cau.cs.kieler.esterel.kexpressions.ValueType::INT):

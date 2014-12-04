@@ -67,7 +67,7 @@ class TransformExpression {
 //            ]
             return createValuedObjectRef(sig_val)
         }
-
+        
         KExpressionsFactory::eINSTANCE.createOperatorExpression => [
             operator = opType
             for (subExp : exp.subExpressions) {
@@ -130,9 +130,12 @@ class TransformExpression {
                 return KExpressionsFactory::eINSTANCE.createIntValue => [
                     value = Integer.parseInt(constExp.value)
                 ]
-            //TODO string
+            case ("string"):
+                return KExpressionsFactory::eINSTANCE.createTextExpression => [
+                    text = "'" + constExp.value + "'"
+                ]
             default:
-                return null
+                throw new IllegalArgumentException("Unknown datatype: " + type)
         }
     }
 

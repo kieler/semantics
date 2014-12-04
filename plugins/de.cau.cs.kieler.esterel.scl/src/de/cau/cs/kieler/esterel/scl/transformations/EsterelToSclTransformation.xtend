@@ -454,7 +454,9 @@ class EsterelToSclTransformation extends Transformation {
                 } else {
                     expression = transformExp(singleCase.delay.event.expr, signalMap)
                 }
-                statements.addAll(transformStm(singleCase.statement, createSseq).statements)
+                // Possible "do" block
+                if (singleCase.statement != null)
+                    statements.addAll(transformStm(singleCase.statement, createSseq).statements)
                 statements.add(createGotoStm(l_end))
             ]
             sSeq.statements.add(createStmFromInstr(cond))
