@@ -169,12 +169,12 @@ class TransformExpression {
         return createIntValue(intVal.value)
     }
 
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(ConstantExpression constExp,
-        LinkedList<Pair<String, ValuedObject>> variables) {
-        return KExpressionsFactory::eINSTANCE.createTextExpression => [
-            text = constExp.value
-        ]
-    }
+//    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(ConstantExpression constExp,
+//        LinkedList<Pair<String, ValuedObject>> variables) {
+//        return KExpressionsFactory::eINSTANCE.createTextExpression => [
+//            text = constExp.value
+//        ]
+//    }
 
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(FunctionExpression funcExp,
         LinkedList<Pair<String, ValuedObject>> variables) {

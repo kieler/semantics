@@ -79,10 +79,11 @@ class EsterelToSclExtensions {
     }
     
     def dispatch getValuedObject(LinkedList<Pair<String, ValuedObject>> variables, String n) {
-        for (varaible : variables) {
-            val ret = variables.findLast[key == n].value
+        System.out.println("N " + n + " varaibles: " + variables)
+        for (variable : variables) {
+            val ret = variables.findLast[key == n]
             if (ret != null)
-                return ret
+                return ret.value
         }
         throw new TransformerException("getValuedObject: Signal not declared: " + n)
     }
@@ -152,7 +153,10 @@ class EsterelToSclExtensions {
      * adds "_" until variable name is new
      */
      def String uniqueName(LinkedList<Pair<String,ValuedObject>> variables, String s) {
-         if (variables.findFirst[value.name == s] == null) {
+         // The variable should neither be on the current signalMap nor locally defined
+         if ((variables.findFirst[value.name == s] == null) && 
+             (localDeclarations.filter[ valuedObjects.findFirst[ name == s ] != null ].empty)
+         ) {
              return s
          }
          else {

@@ -36,6 +36,7 @@ import de.cau.cs.kieler.esterel.esterel.LocalSignalList
 import de.cau.cs.kieler.esterel.kexpressions.ISignal
 import de.cau.cs.kieler.esterel.kexpressions.InterfaceVariableDecl
 import de.cau.cs.kieler.esterel.kexpressions.VariableDecl
+import de.cau.cs.kieler.esterel.esterel.SensorDecl
 
 /**
  * @author krat
@@ -66,6 +67,7 @@ class TransformInterface {
             modInterface.collectNames(names)
             transformConstDeclaration(modInterface.intConstantDecls, program, names)
             transformSigDeclaration(modInterface.intSignalDecls, program, names)
+            transformSensorDeclaration(modInterface.intSensorDecls, program, names)
         }
     }
 
@@ -88,6 +90,17 @@ class TransformInterface {
 
         for (singleDecl : list) {
             transformSingleConstDeclartion(singleDecl, program, names)
+        }
+    }
+    
+    /*
+     * Transforms the sensor declarations
+     */
+    def transformSensorDeclaration(EList<SensorDecl> list, SCLProgram program, LinkedList<String> names) {
+        System.out.println("Transforming Interface Sensor Declarations")
+
+        for (singleDecl : list) {
+            transformSingleSensorDeclartion(singleDecl, program, names)
         }
     }
     
@@ -139,10 +152,17 @@ class TransformInterface {
             type = ValueType::STRING
         //...
         ]
+        val hostSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
+            input = decl instanceof Input
+            output = decl instanceof Output
+            type = ValueType::HOST
+        //...
+        ]
 
         // TODO: HOST?
         for (sig : decl.signals) {
             System.out.println("Transforming signal " + sig)
+            if (signalMap.findFirst[ sig.name == key ] == null) {
             val pureSig = createValuedObject(sig.name)
             pureSignals.valuedObjects.add(pureSig)
             signalMap.add(sig.name -> pureSig)
@@ -175,8 +195,10 @@ class TransformInterface {
                     case (de.cau.cs.kieler.esterel.kexpressions.ValueType::DOUBLE):
                         floatSignals.valuedObjects.add(s_val)
                     default:
-                        System.out.println("Unable to transform declaration: " + sig.channelDescr.type.type)
+                        hostSignals.valuedObjects.add(s_val)
                 }
+            }
+            
             }
         }
 
@@ -200,6 +222,9 @@ class TransformInterface {
         }
         if (doubleSignals.valuedObjects.length != 0) {
             program.declarations.add(doubleSignals)
+        }
+        if (hostSignals.valuedObjects.length != 0) {
+            program.declarations.add(hostSignals)
         }
 
     }
@@ -264,6 +289,7 @@ class TransformInterface {
             // Type of the constant
             val type = singleDecl.type.type
             for (const : singleDecl.constants) {
+                if (signalMap.findFirst[ const.constant.name == key ] == null) {
                     val s_val = createValuedObject(uniqueNameByList(names, const.constant.name))
                     signalMap.add(const.constant.name -> s_val)
                     valuedMap.put(s_val, s_val)
@@ -288,6 +314,113 @@ class TransformInterface {
                             System.out.println("Unable to transform declaration: " + type)
                     
                     }
+                }
+                
+                }
+            }
+
+        if (pureSignals.valuedObjects.length != 0) {
+            program.declarations.add(pureSignals)
+        }
+        if (intSignals.valuedObjects.length != 0) {
+            program.declarations.add(intSignals)
+        }
+        if (boolSignals.valuedObjects.length != 0) {
+            program.declarations.add(boolSignals)
+        }
+        if (stringSignals.valuedObjects.length != 0) {
+            program.declarations.add(stringSignals)
+        }
+        if (unsignedSignals.valuedObjects.length != 0) {
+            program.declarations.add(unsignedSignals)
+        }
+        if (floatSignals.valuedObjects.length != 0) {
+            program.declarations.add(floatSignals)
+        }
+        if (doubleSignals.valuedObjects.length != 0) {
+            program.declarations.add(doubleSignals)
+        }
+
+    }
+    
+    /*
+     * Transforms one signal constant declaration, which may consist of pure and valued constant
+     * TODO: Merge with normal signal declarations...
+     */
+    def transformSingleSensorDeclartion(SensorDecl decl, SCLProgram program, LinkedList<String> names) {
+        val pureSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
+            input = decl instanceof Input
+            output = decl instanceof Output
+            type = ValueType::BOOL
+        //...
+        ]
+        val intSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
+            input = decl instanceof Input
+            output = decl instanceof Output
+            type = ValueType::INT
+        //...
+        ]
+        val boolSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
+            input = decl instanceof Input
+            output = decl instanceof Output
+            type = ValueType::BOOL
+        //...
+        ]
+        val unsignedSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
+            input = decl instanceof Input
+            output = decl instanceof Output
+            type = ValueType::UNSIGNED
+        //...
+        ]
+        val floatSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
+            input = decl instanceof Input
+            output = decl instanceof Output
+            type = ValueType::FLOAT
+        //...
+        ]
+        val doubleSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
+            input = decl instanceof Input
+            output = decl instanceof Output
+            type = ValueType::DOUBLE
+        //...
+        ]
+        val stringSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
+            input = decl instanceof Input
+            output = decl instanceof Output
+            type = ValueType::STRING
+        //...
+        ]
+
+        // TODO: HOST?
+        for (singleDecl : decl.sensors) {
+            // Type of the constant
+            if (signalMap.findFirst[ singleDecl.sensor.name == key ] == null) {
+            val type = singleDecl.type.type
+                    val s_val = createValuedObject(uniqueNameByList(names, singleDecl.sensor.name))
+                    signalMap.add(singleDecl.sensor.name -> s_val)
+                    valuedMap.put(s_val, s_val)
+                    
+//                    if (const.value != null) {
+//                        s_val.initialValue = const.value.transformExp(type.toString)
+//                    }
+                    switch (type) {
+                        case (de.cau.cs.kieler.esterel.kexpressions.ValueType::INT):
+                            intSignals.valuedObjects.add(s_val)
+                        case (de.cau.cs.kieler.esterel.kexpressions.ValueType::BOOL):
+                            boolSignals.valuedObjects.add(s_val)
+                        case (de.cau.cs.kieler.esterel.kexpressions.ValueType::STRING):
+                            stringSignals.valuedObjects.add(s_val)
+                        case (de.cau.cs.kieler.esterel.kexpressions.ValueType::FLOAT):
+                            floatSignals.valuedObjects.add(s_val)
+                        case (de.cau.cs.kieler.esterel.kexpressions.ValueType::UNSIGNED):
+                            unsignedSignals.valuedObjects.add(s_val)
+                        case (de.cau.cs.kieler.esterel.kexpressions.ValueType::DOUBLE):
+                            floatSignals.valuedObjects.add(s_val)
+                        default:
+                            System.out.println("Unable to transform declaration: " + type)
+                    
+                }
+                
                 }
             }
 
