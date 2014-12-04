@@ -92,7 +92,7 @@ class TransformInterface {
             transformSingleConstDeclartion(singleDecl, program, names)
         }
     }
-    
+
     /*
      * Transforms the sensor declarations
      */
@@ -103,130 +103,70 @@ class TransformInterface {
             transformSingleSensorDeclartion(singleDecl, program, names)
         }
     }
-    
+
+    /*
+     * Transforms single declaration
+     */
+    def transformDeclaration(boolean isInput, boolean isOutput, boolean isConstant, ValueType valType) {
+        KExpressionsFactory::eINSTANCE.createDeclaration => [
+            input = isInput
+            output = isOutput
+            const = isConstant
+            type = valType
+        //...
+        ]
+    }
+
     /*
      * Transforms one signal declaration, which may consist of pure and valued signals
      */
     def transformSingleDeclartion(InterfaceSignalDecl decl, SCLProgram program, LinkedList<String> names) {
 
-        //        val HashMap<ValuedObject, ValuedObject>  valuedMap = newHashMap
-        val pureSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::BOOL
-        //...
-        ]
-        val intSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::INT
-        //...
-        ]
-        val boolSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::BOOL
-        //...
-        ]
-        val unsignedSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::UNSIGNED
-        //...
-        ]
-        val floatSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::FLOAT
-        //...
-        ]
-        val doubleSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::DOUBLE
-        //...
-        ]
-        val stringSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::STRING
-        //...
-        ]
-        val hostSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::HOST
-        //...
-        ]
-
         // TODO: HOST?
         for (sig : decl.signals) {
             System.out.println("Transforming signal " + sig)
-            if (signalMap.findFirst[ sig.name == key ] == null) {
-            val pureSig = createValuedObject(sig.name)
-            pureSignals.valuedObjects.add(pureSig)
-            signalMap.add(sig.name -> pureSig)
+            if (signalMap.findFirst[sig.name == key] == null) {
+                val pureSig = createValuedObject(sig.name)
 
-            // Valued signals get a variable containing the value
-            if (sig.channelDescr != null) { //de.cau.cs.kieler.esterel.kexpressions.ValueType::INT) {
-                System.out.println("Transforming valued signal type.type " + sig.channelDescr.type.type)
-                System.out.println("Combine with: " + sig.channelDescr.type.operator)
-                val s_val = createValuedObject(uniqueNameByList(names, sig.name + "_val"))
-                s_val.combineOperator = sig.channelDescr.type.operator.transformCombineOperator
-                valuedMap.put(pureSig, s_val)
-                signalMap.add(s_val.name -> s_val)
-                val type = sig.channelDescr.type.type
-                if (sig.channelDescr.expression != null && sig.channelDescr.expression instanceof ConstantExpression) {
-                    s_val.initialValue = sig.channelDescr.expression.transformExp(type.toString)
-                } else if (sig.channelDescr.expression != null) {
-                    s_val.initialValue = sig.channelDescr.expression.transformExp(signalMap)
+                val sclSigDecl = transformDeclaration(
+                    (decl instanceof Input) || (decl instanceof InputOutput),
+                    (decl instanceof Output) || (decl instanceof InputOutput),
+                    false,
+                    ValueType::BOOL
+                )
+                sclSigDecl.valuedObjects += pureSig
+                signalMap.add(sig.name -> pureSig)
+                program.declarations += sclSigDecl
+
+                // Valued signals get a variable containing the value
+                if (sig.channelDescr != null) {
+                    System.out.println("Transforming valued signal type.type " + sig.channelDescr.type.type)
+                    System.out.println("Combine with: " + sig.channelDescr.type.operator)
+                    val s_val = createValuedObject(uniqueNameByList(names, sig.name + "_val"))
+                    s_val.combineOperator = sig.channelDescr.type.operator.transformCombineOperator
+                    valuedMap.put(pureSig, s_val)
+                    signalMap.add(s_val.name -> s_val)
+                    val type = sig.channelDescr.type.type
+                    if (sig.channelDescr.expression != null && sig.channelDescr.expression instanceof ConstantExpression) {
+                        s_val.initialValue = sig.channelDescr.expression.transformExp(type.toString)
+                    } else if (sig.channelDescr.expression != null) {
+                        s_val.initialValue = sig.channelDescr.expression.transformExp(signalMap)
+                    }
+
+                    val sclDecl = transformDeclaration(
+                        (decl instanceof Input) || (decl instanceof InputOutput),
+                        (decl instanceof Output) || (decl instanceof InputOutput),
+                        false,
+                        ValueType::getByName(type.name)
+                    )
+                    sclDecl.valuedObjects += s_val
+
+                    program.declarations += sclDecl
+
                 }
-                switch (type) {
-                    case (de.cau.cs.kieler.esterel.kexpressions.ValueType::INT):
-                        intSignals.valuedObjects.add(s_val)
-                    case (de.cau.cs.kieler.esterel.kexpressions.ValueType::BOOL):
-                        boolSignals.valuedObjects.add(s_val)
-                    case (de.cau.cs.kieler.esterel.kexpressions.ValueType::STRING):
-                        stringSignals.valuedObjects.add(s_val)
-                    case (de.cau.cs.kieler.esterel.kexpressions.ValueType::FLOAT):
-                        floatSignals.valuedObjects.add(s_val)
-                    case (de.cau.cs.kieler.esterel.kexpressions.ValueType::UNSIGNED):
-                        unsignedSignals.valuedObjects.add(s_val)
-                    case (de.cau.cs.kieler.esterel.kexpressions.ValueType::DOUBLE):
-                        floatSignals.valuedObjects.add(s_val)
-                    default:
-                        hostSignals.valuedObjects.add(s_val)
-                }
-            }
-            
+
             }
         }
-
-        if (pureSignals.valuedObjects.length != 0) {
-            program.declarations.add(pureSignals)
-        }
-        if (intSignals.valuedObjects.length != 0) {
-            program.declarations.add(intSignals)
-        }
-        if (boolSignals.valuedObjects.length != 0) {
-            program.declarations.add(boolSignals)
-        }
-        if (stringSignals.valuedObjects.length != 0) {
-            program.declarations.add(stringSignals)
-        }
-        if (unsignedSignals.valuedObjects.length != 0) {
-            program.declarations.add(unsignedSignals)
-        }
-        if (floatSignals.valuedObjects.length != 0) {
-            program.declarations.add(floatSignals)
-        }
-        if (doubleSignals.valuedObjects.length != 0) {
-            program.declarations.add(doubleSignals)
-        }
-        if (hostSignals.valuedObjects.length != 0) {
-            program.declarations.add(hostSignals)
-        }
-
     }
 
     /*
@@ -234,247 +174,97 @@ class TransformInterface {
      * TODO: Merge with normal signal declarations...
      */
     def transformSingleConstDeclartion(ConstantDecls decl, SCLProgram program, LinkedList<String> names) {
-        val pureSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::BOOL
-            const = true
-        //...
-        ]
-        val intSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::INT
-            const = true
-        //...
-        ]
-        val boolSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::BOOL
-            const = true
-        //...
-        ]
-        val unsignedSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::UNSIGNED
-            const = true
-        //...
-        ]
-        val floatSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::FLOAT
-            const = true
-        //...
-        ]
-        val doubleSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::DOUBLE
-            const = true
-        //...
-        ]
-        val stringSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::STRING
-            const = true
-        //...
-        ]
 
         // TODO: HOST?
         for (singleDecl : decl.constants) {
+
             // Type of the constant
             val type = singleDecl.type.type
             for (const : singleDecl.constants) {
-                if (signalMap.findFirst[ const.constant.name == key ] == null) {
+                if (signalMap.findFirst[const.constant.name == key] == null) {
                     val s_val = createValuedObject(uniqueNameByList(names, const.constant.name))
                     signalMap.add(const.constant.name -> s_val)
                     valuedMap.put(s_val, s_val)
-                    
+
                     if (const.value != null) {
                         s_val.initialValue = const.value.transformExp(type.toString)
                     }
-                    switch (type) {
-                        case (de.cau.cs.kieler.esterel.kexpressions.ValueType::INT):
-                            intSignals.valuedObjects.add(s_val)
-                        case (de.cau.cs.kieler.esterel.kexpressions.ValueType::BOOL):
-                            boolSignals.valuedObjects.add(s_val)
-                        case (de.cau.cs.kieler.esterel.kexpressions.ValueType::STRING):
-                            stringSignals.valuedObjects.add(s_val)
-                        case (de.cau.cs.kieler.esterel.kexpressions.ValueType::FLOAT):
-                            floatSignals.valuedObjects.add(s_val)
-                        case (de.cau.cs.kieler.esterel.kexpressions.ValueType::UNSIGNED):
-                            unsignedSignals.valuedObjects.add(s_val)
-                        case (de.cau.cs.kieler.esterel.kexpressions.ValueType::DOUBLE):
-                            floatSignals.valuedObjects.add(s_val)
-                        default:
-                            System.out.println("Unable to transform declaration: " + type)
-                    
-                    }
-                }
-                
-                }
-            }
 
-        if (pureSignals.valuedObjects.length != 0) {
-            program.declarations.add(pureSignals)
-        }
-        if (intSignals.valuedObjects.length != 0) {
-            program.declarations.add(intSignals)
-        }
-        if (boolSignals.valuedObjects.length != 0) {
-            program.declarations.add(boolSignals)
-        }
-        if (stringSignals.valuedObjects.length != 0) {
-            program.declarations.add(stringSignals)
-        }
-        if (unsignedSignals.valuedObjects.length != 0) {
-            program.declarations.add(unsignedSignals)
-        }
-        if (floatSignals.valuedObjects.length != 0) {
-            program.declarations.add(floatSignals)
-        }
-        if (doubleSignals.valuedObjects.length != 0) {
-            program.declarations.add(doubleSignals)
+                    //                (boolean isInput, boolean isOutput, boolean isConstant, ValueType valType)
+                    val sclDecl = transformDeclaration(
+                        false,
+                        false,
+                        true,
+                        ValueType::getByName(type.name)
+                    )
+                    sclDecl.valuedObjects += s_val
+
+                    program.declarations += sclDecl
+
+                }
+
+            }
         }
 
     }
-    
+
     /*
      * Transforms one signal constant declaration, which may consist of pure and valued constant
      * TODO: Merge with normal signal declarations...
      */
     def transformSingleSensorDeclartion(SensorDecl decl, SCLProgram program, LinkedList<String> names) {
-        val pureSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::BOOL
-        //...
-        ]
-        val intSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::INT
-        //...
-        ]
-        val boolSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::BOOL
-        //...
-        ]
-        val unsignedSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::UNSIGNED
-        //...
-        ]
-        val floatSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::FLOAT
-        //...
-        ]
-        val doubleSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::DOUBLE
-        //...
-        ]
-        val stringSignals = KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = decl instanceof Input
-            output = decl instanceof Output
-            type = ValueType::STRING
-        //...
-        ]
 
         // TODO: HOST?
         for (singleDecl : decl.sensors) {
+
             // Type of the constant
-            if (signalMap.findFirst[ singleDecl.sensor.name == key ] == null) {
-            val type = singleDecl.type.type
-                    val s_val = createValuedObject(uniqueNameByList(names, singleDecl.sensor.name))
-                    signalMap.add(singleDecl.sensor.name -> s_val)
-                    valuedMap.put(s_val, s_val)
-                    
-//                    if (const.value != null) {
-//                        s_val.initialValue = const.value.transformExp(type.toString)
-//                    }
-                    switch (type) {
-                        case (de.cau.cs.kieler.esterel.kexpressions.ValueType::INT):
-                            intSignals.valuedObjects.add(s_val)
-                        case (de.cau.cs.kieler.esterel.kexpressions.ValueType::BOOL):
-                            boolSignals.valuedObjects.add(s_val)
-                        case (de.cau.cs.kieler.esterel.kexpressions.ValueType::STRING):
-                            stringSignals.valuedObjects.add(s_val)
-                        case (de.cau.cs.kieler.esterel.kexpressions.ValueType::FLOAT):
-                            floatSignals.valuedObjects.add(s_val)
-                        case (de.cau.cs.kieler.esterel.kexpressions.ValueType::UNSIGNED):
-                            unsignedSignals.valuedObjects.add(s_val)
-                        case (de.cau.cs.kieler.esterel.kexpressions.ValueType::DOUBLE):
-                            floatSignals.valuedObjects.add(s_val)
-                        default:
-                            System.out.println("Unable to transform declaration: " + type)
-                    
-                }
-                
-                }
+            if (signalMap.findFirst[singleDecl.sensor.name == key] == null) {
+                val type = singleDecl.type.type
+                val s_val = createValuedObject(uniqueNameByList(names, singleDecl.sensor.name))
+                signalMap.add(singleDecl.sensor.name -> s_val)
+                valuedMap.put(s_val, s_val)
+                val sclDecl = transformDeclaration(
+                    false,
+                    false,
+                    false,
+                    ValueType::getByName(type.name)
+                )
+                sclDecl.valuedObjects += s_val
+
+                program.declarations += sclDecl
+
             }
-
-        if (pureSignals.valuedObjects.length != 0) {
-            program.declarations.add(pureSignals)
         }
-        if (intSignals.valuedObjects.length != 0) {
-            program.declarations.add(intSignals)
-        }
-        if (boolSignals.valuedObjects.length != 0) {
-            program.declarations.add(boolSignals)
-        }
-        if (stringSignals.valuedObjects.length != 0) {
-            program.declarations.add(stringSignals)
-        }
-        if (unsignedSignals.valuedObjects.length != 0) {
-            program.declarations.add(unsignedSignals)
-        }
-        if (floatSignals.valuedObjects.length != 0) {
-            program.declarations.add(floatSignals)
-        }
-        if (doubleSignals.valuedObjects.length != 0) {
-            program.declarations.add(doubleSignals)
-        }
-
     }
-    
+
     /*
      * Transforms a valued declaration
      * @param sig The signal to be declared
      * @param name The resulting variable (should be unique)
      */
-     def Declaration transformValuedDeclaration(ISignal sig, ValuedObject valObj) {
-         val decl = createDeclaration => [
+    def Declaration transformValuedDeclaration(ISignal sig, ValuedObject valObj) {
+        val decl = createDeclaration => [
             type = ValueType::getByName(sig.channelDescr.type.type.name)
             output = true
         ]
-        
+
         decl.valuedObjects += valObj
-         
-         decl
-     }
-     
+
+        decl
+    }
+
     /*
      * Transforms a local variable declaration
      * @param sig The variable to be declared
      * @param name The resulting variable (should be unique)
      */
-     def Declaration transformIntVarDeclaration(VariableDecl declaration, LinkedList<Pair<String, ValuedObject>> signalMap) {
-         val decl = createDeclaration => [
+    def Declaration transformIntVarDeclaration(VariableDecl declaration,
+        LinkedList<Pair<String, ValuedObject>> signalMap) {
+        val decl = createDeclaration => [
             type = ValueType::getByName(declaration.type.type.name)
             output = true
         ]
-        
+
         declaration.variables.forEach [
             val s_val = createValuedObject(uniqueName(signalMap, it.name))
             // TODO add to signalmap?
@@ -483,19 +273,18 @@ class TransformInterface {
             if (it.expression instanceof ConstantExpression)
                 s_val.initialValue = it.expression.transformExp(declaration.type.type.literal)
             else if (it.expression != null)
-              s_val.initialValue = it.expression.transformExp(signalMap)
+                s_val.initialValue = it.expression.transformExp(signalMap)
             decl.valuedObjects += s_val
         ]
-         
-         decl
-     }
-    
+
+        decl
+    }
 
     /*
      * Collects all declarated signal names
      */
     def LinkedList<String> collectNames(ModuleInterface modInt, LinkedList<String> names) {
-        if (modInt == null) 
+        if (modInt == null)
             return names
         modInt.intSignalDecls.collectSigNames(names)
         modInt.intConstantDecls.collectConstNames(names)
