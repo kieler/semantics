@@ -95,6 +95,7 @@ import de.cau.cs.kieler.esterel.esterel.Assignment
 import de.cau.cs.kieler.esterel.esterel.IfTest
 import de.cau.cs.kieler.esterel.esterel.Repeat
 import de.cau.cs.kieler.esterel.esterel.Program
+import de.cau.cs.kieler.esterel.esterel.ProcCall
 
 /**
  * @author krat
@@ -1166,6 +1167,26 @@ class EsterelToSclTransformation extends Transformation {
         * repeat n times
         */
         def dispatch StatementSequence transformStm(Repeat repeat, StatementSequence sSeq) {
+            // If not marked as positive and non positive value is given do nothing
+            var de.cau.cs.kieler.core.kexpressions.Expression expr
+            val l_end = createFreshLabel
+            labelMap.put(curLabel, l_end)
+            if (!repeat.positive) {
+                if (repeat.expression instanceof ConstantExpression) {
+                            expr = repeat.expression.transformExp("int")
+                }
+                        else {
+                            expr = repeat.expression.transformExp(signalMap)
+                        }
+                        val exprVal = EcoreUtil.copy(expr)
+                        val op = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+                    operator = OperatorType::GEQ
+                    subExpressions += createIntValue(0)
+                    subExpressions += exprVal
+                    
+                    ]
+                sSeq.add(ifThenGoto(op, l_end, true))
+            }
             val i = createValuedObject(uniqueName(signalMap, "i"))
             signalMap.add(i.name -> i);
             val l = createFreshLabel
@@ -1190,9 +1211,18 @@ class EsterelToSclTransformation extends Transformation {
                     }
                     subExpressions += i.createValuedObjectRef
                 ], l, true))
+                
+                sSeq.addLabel(l_end)
             
             sSeq
         }
+        
+        /*
+         * Procedure calls
+         */
+         def dispatch StatementSequence transformStm(ProcCall procCall, StatementSequence sSeq) {
+             
+         }
         
 
     override getDependencies() {
