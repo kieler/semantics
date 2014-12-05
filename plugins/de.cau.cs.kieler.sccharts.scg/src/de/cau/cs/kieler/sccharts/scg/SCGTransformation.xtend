@@ -192,15 +192,44 @@ class SCGTransformation {
 //            valuedObjectSCG.applyAttributes(valuedObject)
 //            valuedObjectSCG.map(valuedObject)
 //        }
-		for(declaration : state.declarations) {
-			val newDeclaration = createDeclaration(declaration)
-			declaration.valuedObjects.forEach[
-				val newValuedObject = it.copy
-				newDeclaration.valuedObjects += newValuedObject
-				newValuedObject.map(it)
-			]
-			sCGraph.declarations += newDeclaration
-		}
+
+        // do the LOCALS (= !(INPUT||OUTPUT))
+        for(declaration : state.declarations.filter[!isInput&&!isOutput]) {
+            val newDeclaration = createDeclaration(declaration)
+            declaration.valuedObjects.forEach[
+                val newValuedObject = it.copy
+                System::out.println("LOCAL " + it.name);
+                newDeclaration.valuedObjects += newValuedObject
+                newValuedObject.map(it)
+            ]
+            sCGraph.declarations += newDeclaration
+        }
+        // do INPUTS
+        for(declaration : state.declarations.filter[isInput]) {
+            val newDeclaration = createDeclaration(declaration)
+            newDeclaration.setInput(true);
+            declaration.valuedObjects.forEach[
+                val newValuedObject = it.copy
+                System::out.println("INPUT " + it.name);
+                newDeclaration.valuedObjects += newValuedObject
+                newValuedObject.map(it)
+            ]
+            sCGraph.declarations += newDeclaration
+        }
+        // do OUTPUTS
+        for(declaration : state.declarations.filter[isOutput]) {
+            val newDeclaration = createDeclaration(declaration)
+            newDeclaration.setOutput(true);
+            declaration.valuedObjects.forEach[
+                val newValuedObject = it.copy
+                System::out.println("OUTPUT " + it.name);
+                newDeclaration.valuedObjects += newValuedObject
+                newValuedObject.map(it)
+            ]
+            sCGraph.declarations += newDeclaration
+        }
+
+
         // Include top most level of hierarchy 
         // if the root state itself already contains multiple regions.
         // Otherwise skip the first layer of hierarchy.

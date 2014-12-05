@@ -188,6 +188,7 @@ class SCCharts2STransformation {
         for (valuedObject : rootState.valuedObjects) {
             val sValuedObject = valuedObject.copy
             sValuedObject.map(valuedObject)
+            sValuedObject.applyAttributes(valuedObject)
             target.valuedObjects.add(sValuedObject)
         }
 
