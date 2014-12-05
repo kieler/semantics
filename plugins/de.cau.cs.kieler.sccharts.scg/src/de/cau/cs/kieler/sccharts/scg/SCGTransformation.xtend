@@ -193,36 +193,10 @@ class SCGTransformation {
 //            valuedObjectSCG.map(valuedObject)
 //        }
 
-        // do the LOCALS (= !(INPUT||OUTPUT))
-        for(declaration : state.declarations.filter[!isInput&&!isOutput]) {
+        for(declaration : state.declarations) {
             val newDeclaration = createDeclaration(declaration)
             declaration.valuedObjects.forEach[
                 val newValuedObject = it.copy
-                System::out.println("LOCAL " + it.name);
-                newDeclaration.valuedObjects += newValuedObject
-                newValuedObject.map(it)
-            ]
-            sCGraph.declarations += newDeclaration
-        }
-        // do INPUTS
-        for(declaration : state.declarations.filter[isInput]) {
-            val newDeclaration = createDeclaration(declaration)
-            newDeclaration.setInput(true);
-            declaration.valuedObjects.forEach[
-                val newValuedObject = it.copy
-                System::out.println("INPUT " + it.name);
-                newDeclaration.valuedObjects += newValuedObject
-                newValuedObject.map(it)
-            ]
-            sCGraph.declarations += newDeclaration
-        }
-        // do OUTPUTS
-        for(declaration : state.declarations.filter[isOutput]) {
-            val newDeclaration = createDeclaration(declaration)
-            newDeclaration.setOutput(true);
-            declaration.valuedObjects.forEach[
-                val newValuedObject = it.copy
-                System::out.println("OUTPUT " + it.name);
                 newDeclaration.valuedObjects += newValuedObject
                 newValuedObject.map(it)
             ]
