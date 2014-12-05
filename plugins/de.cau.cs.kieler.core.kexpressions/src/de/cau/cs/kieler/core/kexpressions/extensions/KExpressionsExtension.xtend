@@ -571,8 +571,10 @@ class KExpressionsExtension {
     }
 
     def TextExpression fixHostCodeInTextExpression(TextExpression expression) {
-        if(expression.text.startsWith("'")) return expression else return expression.copy =>
-            [setText("'" + expression.getText + "'")]
+        if (expression.text.startsWith("'"))
+            return expression
+        else
+            return expression.copy => [setText("'" + expression.getText + "'")]
     }
 
     def Expression fixHostCodeInOperatorExpression(OperatorExpression expression) {
@@ -820,17 +822,37 @@ class KExpressionsExtension {
         valuedObject
     }
 
-    // Apply attributes of another ValuedObject.
+    // Apply attributes of another ValuedObject. Be careful when applying this on valuedObjects of
+    // DIFFERENT models! initialValue und type may be a problem and has to be set priorly.
     def ValuedObject applyAttributes(ValuedObject valuedObject, ValuedObject valuedObjectWithAttributes) {
-        valuedObject.setInput(valuedObjectWithAttributes.isInput)
-        valuedObject.setOutput(valuedObjectWithAttributes.isOutput)
-        valuedObject.setStatic(valuedObjectWithAttributes.isStatic)
-        valuedObject.setConst(valuedObjectWithAttributes.isConst)
-        valuedObject.setExtern(valuedObjectWithAttributes.isExtern)
+        if (valuedObjectWithAttributes.isInput != valuedObject.isInput) {
+            valuedObject.setInput(valuedObjectWithAttributes.isInput)
+        }
+
+        if (valuedObjectWithAttributes.isOutput != valuedObject.isOutput) {
+            valuedObject.setOutput(valuedObjectWithAttributes.isOutput)
+        }
+
+        if (valuedObjectWithAttributes.isStatic != valuedObject.isStatic) {
+            valuedObject.setStatic(valuedObjectWithAttributes.isStatic)
+        }
+
+        if (valuedObjectWithAttributes.isConst != valuedObject.isConst) {
+            valuedObject.setConst(valuedObjectWithAttributes.isConst)
+        }
+
+        if (valuedObjectWithAttributes.isExtern != valuedObject.isExtern) {
+            valuedObject.setExtern(valuedObjectWithAttributes.isExtern)
+        }
+ 
         if (valuedObjectWithAttributes.initialValue != null) {
             valuedObject.setInitialValue(valuedObjectWithAttributes.initialValue.copy)
         }
-        valuedObject.setType(valuedObjectWithAttributes.type)
+
+        if (!valuedObjectWithAttributes.type.literal.equals(valuedObject.type.literal)) {
+            valuedObject.setType(valuedObjectWithAttributes.type);
+        }
+
         if (valuedObjectWithAttributes.combineOperator != null) {
             valuedObject.setCombineOperator(valuedObjectWithAttributes.combineOperator)
             if (!valuedObjectWithAttributes.cardinalities.nullOrEmpty) {
@@ -839,7 +861,6 @@ class KExpressionsExtension {
                 }
             }
         }
-        System::out.println("XXx " + valuedObject.declaration)
         valuedObject
     }
 
