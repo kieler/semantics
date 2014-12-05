@@ -154,12 +154,20 @@ class S2Java {
    def boolean usesPre(Program program, ValuedObject valuedObject) {
 		preCache.contains(valuedObject)
    }
+   
+   
+   def privateOrPublic(ValuedObject valuedObject) {
+       if (valuedObject.isInput || valuedObject.isOutput || valuedObject.isExtern) {
+           return '''public'''
+       }
+       return '''private'''
+   }
 
    // Generate variables.
    def sVariables(Program program) {
        '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
-              «'''  '''»public «signal.type.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
+              «'''  '''»«signal.privateOrPublic» «signal.type.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
               «IF signal.isArray»
                 «FOR card : signal.cardinalities»{int i«card.hashCode» = 0; for(i«card.hashCode»=0; i«card.hashCode» < «card.intValue»; i«card.hashCode»++) {«ENDFOR»
                 «signal.name»«FOR card : signal.cardinalities»[i«card.hashCode»]«ENDFOR» = «signal.initialValue.expand»;
@@ -169,7 +177,7 @@ class S2Java {
                 «ENDIF»«ENDIF»;
             
             «IF program.usesPre(signal)»
-«'''  '''»«signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
+«'''  '''»«signal.privateOrPublic»«signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
             «ENDIF»
         «ENDFOR»
         «ENDFOR»
