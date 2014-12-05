@@ -72,10 +72,17 @@ class SCGToSTransformation {
         	sProgram.declarations += newDeclaration
 	        for (valuedObject : declaration.valuedObjects) {
     	        val newValuedObject = valuedObject.copy
-        	    newValuedObject.applyAttributes(valuedObject)
-          		newDeclaration.valuedObjects += newValuedObject
-            	valuedObjectMapping.put(valuedObject, newValuedObject)
+                newValuedObject.applyAttributes(valuedObject)
+                newDeclaration.valuedObjects += newValuedObject
+            	if (valuedObject.isInput) {
+            	    newValuedObject.setIsInput
+            	}
+                if (valuedObject.isOutput) {
+                    newValuedObject.setIsOutput
+                }
             	valuedObjectCache.put(newValuedObject.name, newValuedObject)
+//                System::out.println("S" + valuedObject.name + ": I=" + valuedObject.isInput + ", O="+ valuedObject.isOutput)
+//               System::out.println("T" + newValuedObject.name + ": I=" + newValuedObject.isInput + ", O="+ newValuedObject.isOutput)
         	}
         }
         
