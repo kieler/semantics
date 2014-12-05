@@ -177,6 +177,8 @@
       </repositories>
 
       <modules>
+        <module>../plugins/de.cau.cs.kieler.core.product</module>
+        <module>../features/de.cau.cs.kieler.dependencies.feature</module>
         <module>../../lego/build/de.cau.cs.kieler.klots.product.repository</module>
       </modules>
     </profile>	
