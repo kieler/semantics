@@ -238,7 +238,6 @@ class S2Java {
    // Generate the  tick function.
    def sTickFunction(Program program) {
        '''  public void tick(){
-       g0 = _GO;
        «FOR state : program.states»
        «state.expand»
        «ENDFOR»
