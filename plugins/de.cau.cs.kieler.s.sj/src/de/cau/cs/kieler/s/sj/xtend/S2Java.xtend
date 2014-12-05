@@ -177,7 +177,7 @@ class S2Java {
                 «ENDIF»«ENDIF»;
             
             «IF program.usesPre(signal)»
-«'''  '''»«signal.privateOrPublic»«signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
+«'''  '''»«signal.privateOrPublic» «signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
             «ENDIF»
         «ENDFOR»
         «ENDFOR»
