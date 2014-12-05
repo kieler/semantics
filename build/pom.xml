@@ -108,9 +108,14 @@
     </profile>
 	
     <profile>
-      <id>klots.product</id>
+      <id>klots</id>
       
       <repositories>
+        <repository>
+          <id>p2.guava</id>
+          <layout>p2</layout>
+          <url>http://guava-osgi.googlecode.com/svn/trunk/repository/</url>
+        </repository>
         <repository>
           <id>p2.kepler43</id>
           <layout>p2</layout>
@@ -136,6 +141,42 @@
       <modules>
         <module>../../lego/plugins</module>
         <module>../../lego/features/de.cau.cs.kieler.klots.feature</module>
+      </modules>
+    </profile>	
+	
+	
+    <profile>
+      <id>klots.product</id>
+      
+      <repositories>
+        <repository>
+          <id>p2.guava</id>
+          <layout>p2</layout>
+          <url>http://guava-osgi.googlecode.com/svn/trunk/repository/</url>
+        </repository>
+        <repository>
+          <id>p2.kepler43</id>
+          <layout>p2</layout>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/kepler43/</url>
+        </repository>
+        <repository>
+          <id>p2.kieler-pragmatics</id>
+          <layout>p2</layout>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/pragmatics/</url>
+        </repository>
+        <repository>
+          <id>p2.kieler-semantics</id>
+          <layout>p2</layout>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics</url>
+        </repository>
+        <repository>
+          <id>p2.ptolemy</id>
+          <layout>p2</layout>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy/</url>
+        </repository>
+      </repositories>
+
+      <modules>
         <module>../../lego/build/de.cau.cs.kieler.klots.product.repository</module>
       </modules>
     </profile>	
@@ -195,7 +236,7 @@
           <argLine>-ea</argLine>
         </configuration>
       </plugin>      
-      
+      <!--
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
@@ -213,7 +254,7 @@
         <configuration>
           <targetJdk>1.5</targetJdk>
           <format>xml</format>
-          <!--  <aggregate>true</aggregate> -->
+          <!- <aggregate>true</aggregate> ->
         </configuration>
       </plugin>
 
@@ -234,7 +275,7 @@
           </execution>
         </executions>
       </plugin>
-
+-->
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
