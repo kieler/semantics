@@ -28,6 +28,22 @@
   <!-- Define one profile for each output target we have. -->
   <profiles>
   
+    <profile>
+      <id>product.contrib</id>
+      
+      <repositories>
+        <repository>
+          <id>p2.kepler43</id>
+          <layout>p2</layout>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/kepler43/</url>
+        </repository>
+      </repositories>
+
+      <modules>
+        <module>../plugins/de.cau.cs.kieler.core.product</module>
+        <module>../features/de.cau.cs.kieler.dependencies.feature</module>
+      </modules>
+    </profile>
   
       <!-- The Semantics product. -->
     <profile>
@@ -177,8 +193,6 @@
       </repositories>
 
       <modules>
-        <module>../plugins/de.cau.cs.kieler.core.product</module>
-        <module>../features/de.cau.cs.kieler.dependencies.feature</module>
         <module>../../lego/build/de.cau.cs.kieler.klots.product.repository</module>
       </modules>
     </profile>	
