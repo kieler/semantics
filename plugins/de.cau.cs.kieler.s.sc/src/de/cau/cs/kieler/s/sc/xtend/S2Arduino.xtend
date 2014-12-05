@@ -320,7 +320,6 @@ class S2Arduino {
        «ENDFOR»
        «ENDFOR»
            
-       g0 = _GO;
        «program.generateTickFunctionInner»
        _GO = 0;
        
