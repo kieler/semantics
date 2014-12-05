@@ -39,11 +39,11 @@
           <layout>p2</layout>
           <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/kepler43/</url>
         </repository>
-        <repository>
+<!--        <repository>
           <id>p2.guava</id>
           <layout>p2</layout>
           <url>http://guava-osgi.googlecode.com/svn/trunk/repository/</url>
-        </repository>
+        </repository -->
         <repository>
           <id>p2.kieler-pragmatics</id>
           <layout>p2</layout>
@@ -83,11 +83,11 @@
           <layout>p2</layout>
           <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/kepler43/</url>
         </repository>
-        <repository>
+        <!-- repository>
           <id>p2.guava</id>
           <layout>p2</layout>
           <url>http://guava-osgi.googlecode.com/svn/trunk/repository/</url>
-        </repository>
+        </repository -->
         <repository>
           <id>p2.kieler-pragmatics</id>
           <layout>p2</layout>
@@ -111,11 +111,11 @@
       <id>klots</id>
       
       <repositories>
-        <repository>
+        <!-- repository>
           <id>p2.guava</id>
           <layout>p2</layout>
           <url>http://guava-osgi.googlecode.com/svn/trunk/repository/</url>
-        </repository>
+        </repository -->
         <repository>
           <id>p2.kepler43</id>
           <layout>p2</layout>
@@ -149,11 +149,11 @@
       <id>klots.product</id>
       
       <repositories>
-        <repository>
+        <!-- repository>
           <id>p2.guava</id>
           <layout>p2</layout>
           <url>http://guava-osgi.googlecode.com/svn/trunk/repository/</url>
-        </repository>
+        </repository -->
         <repository>
           <id>p2.kepler43</id>
           <layout>p2</layout>
