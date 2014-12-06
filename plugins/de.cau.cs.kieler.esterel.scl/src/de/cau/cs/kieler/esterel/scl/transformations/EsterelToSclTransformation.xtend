@@ -96,6 +96,8 @@ import de.cau.cs.kieler.esterel.esterel.IfTest
 import de.cau.cs.kieler.esterel.esterel.Repeat
 import de.cau.cs.kieler.esterel.esterel.Program
 import de.cau.cs.kieler.esterel.esterel.ProcCall
+import de.cau.cs.kieler.esterel.esterel.DoUpto
+import de.cau.cs.kieler.esterel.esterel.Do
 
 /**
  * @author krat
@@ -132,7 +134,7 @@ class EsterelToSclTransformation extends Transformation {
     // List of transformation function to manipulate pauses and join
     var Stack<(StatementSequence)=>StatementSequence> pauseTransformation
     var Stack<(StatementSequence)=>StatementSequence> joinTransformation
-
+    
     @Inject
     extension KExpressionsExtension
 
@@ -1278,6 +1280,31 @@ class EsterelToSclTransformation extends Transformation {
         // Create dummy assignment
         sSeq.add(createAssignment(valObj, res))
         
+        
+        sSeq
+    }
+    
+       /*
+       * do p (upto s)
+       * Deprecated, but used for example in wristwatch
+       * Simply transforms the doupto to kernel statements and transforms them
+       */
+    def dispatch StatementSequence transformStm(Do ^do, StatementSequence sSeq) {
+        if (^do.end instanceof DoUpto) {
+            val doUpto = ^do.end as DoUpto
+            val abort = EsterelFactory::eINSTANCE.createAbort => [
+            body = EsterelFactory.eINSTANCE.createAbortInstance => [
+                delay = doUpto.expr
+            ]
+            statement = EsterelFactory::eINSTANCE.createSequence => [
+                    list += ^do.statement
+                    list += EsterelFactory::eINSTANCE.createHalt
+                ]
+        ]
+            abort.transformStm(sSeq)
+        } else {
+            ^do.statement.transformStm(sSeq)
+        }
         
         sSeq
     }
