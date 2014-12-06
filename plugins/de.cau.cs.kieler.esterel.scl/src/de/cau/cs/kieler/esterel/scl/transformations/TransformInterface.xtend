@@ -58,7 +58,6 @@ class TransformInterface {
 
     /*
      * Transforms an Esterel module interface to a list of Kexpression declarations
-     * @return MultiHashMap containing the signal valObj (key), the valued valObj and the CombineOperator
      */
     def transformInterface(ModuleInterface modInterface, SCLProgram program) {
         System.out.println("Transforming Interface")
