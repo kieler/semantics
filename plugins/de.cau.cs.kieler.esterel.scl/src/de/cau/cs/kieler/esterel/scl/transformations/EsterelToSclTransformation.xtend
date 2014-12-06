@@ -1237,6 +1237,49 @@ class EsterelToSclTransformation extends Transformation {
          * Procedure calls
          */
     def dispatch StatementSequence transformStm(ProcCall procCall, StatementSequence sSeq) {
+        val valObj = createValuedObject(uniqueName(signalMap,"procDummy"))
+        signalMap.add(valObj.name -> valObj)
+        localDeclarations.add(createDeclaration => [
+            valuedObjects += valObj
+            type = ValueType::HOST //HOST?
+        ])
+        
+        val res = KExpressionsFactory::eINSTANCE.createFunctionCall
+        res.functionName = procCall.proc.name
+        // Get call-by-value parameters
+        var i = 0
+        for (exp : procCall.kexpressions) {
+            val type = procCall.proc.idList1.get(i).type.toString
+            res.parameters.add(
+                KExpressionsFactory::eINSTANCE.createParameter => [
+                    if (exp instanceof ConstantExpression) {
+                        expression = exp.transformExp(type)
+                    } else {
+                        expression = exp.transformExp(signalMap)
+                    }
+                    callByReference = false
+                ]
+            )
+            i = i + 1
+
+        }
+        
+        // Get call-by-reference parameters
+//        i = 0
+        for (v : procCall.varList) {
+            res.parameters.add(
+                KExpressionsFactory::eINSTANCE.createParameter => [
+                    expression = createValuedObjectRef(signalMap.findLast[ key == v.name ].value)
+                    callByReference = true
+                ]
+            )
+        }
+        
+        // Create dummy assignment
+        sSeq.add(createAssignment(valObj, res))
+        
+        
+        sSeq
     }
 
     override getDependencies() {

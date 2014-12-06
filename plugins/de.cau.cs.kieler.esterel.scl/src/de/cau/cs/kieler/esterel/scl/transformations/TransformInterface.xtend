@@ -260,8 +260,12 @@ class TransformInterface {
     def Declaration transformIntVarDeclaration(VariableDecl declaration,
         LinkedList<Pair<String, ValuedObject>> signalMap) {
         val decl = createDeclaration => [
-            type = ValueType::getByName(declaration.type.type.name)
-            output = true
+            if (declaration.type.type.name != "PURE") {
+                type = ValueType::getByName(declaration.type.type.name)
+            } else {
+                type = ValueType::HOST
+            }
+//            output = true
         ]
 
         declaration.variables.forEach [

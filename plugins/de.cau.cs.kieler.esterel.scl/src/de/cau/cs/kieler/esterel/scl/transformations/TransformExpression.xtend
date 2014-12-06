@@ -134,6 +134,10 @@ class TransformExpression {
                 return KExpressionsFactory::eINSTANCE.createTextExpression => [
                     text = "'" + constExp.value + "'"
                 ]
+            case ("host"):
+                return KExpressionsFactory::eINSTANCE.createTextExpression => [
+                    text = "'" + constExp.value + "'"
+                ]
             default:
                 throw new IllegalArgumentException("Unknown datatype: " + type)
         }
