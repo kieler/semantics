@@ -192,15 +192,18 @@ class SCGTransformation {
 //            valuedObjectSCG.applyAttributes(valuedObject)
 //            valuedObjectSCG.map(valuedObject)
 //        }
-		for(declaration : state.declarations) {
-			val newDeclaration = createDeclaration(declaration)
-			declaration.valuedObjects.forEach[
-				val newValuedObject = it.copy
-				newDeclaration.valuedObjects += newValuedObject
-				newValuedObject.map(it)
-			]
-			sCGraph.declarations += newDeclaration
-		}
+
+        for(declaration : state.declarations) {
+            val newDeclaration = createDeclaration(declaration)
+            declaration.valuedObjects.forEach[
+                val newValuedObject = it.copy
+                newDeclaration.valuedObjects += newValuedObject
+                newValuedObject.map(it)
+            ]
+            sCGraph.declarations += newDeclaration
+        }
+
+
         // Include top most level of hierarchy 
         // if the root state itself already contains multiple regions.
         // Otherwise skip the first layer of hierarchy.

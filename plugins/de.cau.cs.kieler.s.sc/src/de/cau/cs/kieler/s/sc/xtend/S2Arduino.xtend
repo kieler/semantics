@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
- package de.cau.cs.kieler.s.sj.xtend
+ package de.cau.cs.kieler.s.sc.xtend
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.BoolValue
@@ -47,19 +47,15 @@ import de.cau.cs.kieler.s.extensions.SExtension
 import java.util.List
 import java.util.HashMap
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
-import static de.cau.cs.kieler.s.sj.xtend.S2Java.*
 
 /**
- * Transformation of S code into SS code that can be executed using the GCC.
+ * Transformation of S code into Arduino "C" code for be executed
  * 
  * @author cmot 
- * @kieler.design 2014-10-16 proposed cmot
- * @kieler.rating 2014-10-16 proposed yellow
+ * @kieler.design 2012-10-08 proposed cmot
+ * @kieler.rating 2012-10-08 yellow KI-28
  */
-class S2Java { 
-    
-    public static String bufferSize;
-    public static String includeHeader;
+class S2Arduino { 
     
     @Inject
     extension KExpressionsExtension    
@@ -67,29 +63,43 @@ class S2Java {
     @Inject
     extension SExtension
     
-    val preCache = <ValuedObject> newArrayList     
+    val preCache = <ValuedObject> newArrayList  
+
+   // -------------------------------------------------------------------------
+
+    // This method needs to run befor every code generation run
+    def prepareCache (Program program) {
+        program.eAllContents.filter(typeof(OperatorExpression)).filter[operator == OperatorType::PRE].forEach[
+            it.eAllContents.filter(typeof(ValuedObjectReference)).forEach[ preCache += it.valuedObject ]    
+        ]    
+    }   
+
+   // -------------------------------------------------------------------------
+   // -------------------------------------------------------------------------
     
     // General method to create the c simulation interface.
-    def transform (Program program, String className) {
-        val timestamp = System.currentTimeMillis
-       	program.eAllContents.filter(typeof(OperatorExpression)).filter[operator == OperatorType::PRE].forEach[
-       		it.eAllContents.filter(typeof(ValuedObjectReference)).forEach[ preCache += it.valuedObject ]	
-       	]    
-      val code = '''
-«/* Generate the Java header */»
-       «header(program, className)»
+    def generateProgram (Program program) {
+      val timestamp = System.currentTimeMillis
+      program.prepareCache
 
-       «/* Possible global host code */»
-       «if (program.globalHostCodeInstruction != null) {
-       program.globalHostCodeInstruction.extractCode}»
+      val code = '''
+       «/* Generate the header */»
+       «program.generateHeader»
+
+       «/* Generate the header */»
+       «program.generateInterfaceVariables»
+
+       «/* Generate the internal variables (may change from gen run to gen run) */»
+       «program.generateInternalVariables»
+
+       «/* Generate the global host code */»
+       «program.generateGlobalHostCode»
 
        «/* Generate the reset function */»
-       «sResetFunction(program)»
+       «program.generateResetFunction»
 
        «/* Generate the tick function */»
-       «sTickFunction(program)»
-       
-       }
+       «program.generateTickFunction»
        '''
         val time = (System.currentTimeMillis - timestamp) as float
         System.out.println("C code generation finished (time used: "+(time / 1000)+"s).")    
@@ -97,12 +107,13 @@ class S2Java {
    }     
 
    // -------------------------------------------------------------------------   
-   
+   // -------------------------------------------------------------------------
+
    // Generate the C header.
-   def header(Program program, String className) {
+   def generateHeader(Program program) {
        '''
     /*****************************************************************************/
-    /*               G E N E R A T E D      J A V A   C O D E                    */
+    /*              G E N E R A T E D     A R D U I N O   C O D E                */
     /*****************************************************************************/
     /* KIELER - Kiel Integrated Environment for Layout Eclipse RichClient        */
     /*                                                                           */
@@ -114,15 +125,17 @@ class S2Java {
     /*                                                                           */
     /* This code is provided under the terms of the Eclipse Public License (EPL).*/
     /*****************************************************************************/
-
-    «includeHeader»
-    
-    class «className» {
-
-   «/* Variables */»
-    «sVariables(program)»    
-    
     ''' 
+   }
+   
+   // -------------------------------------------------------------------------
+
+   def generateGlobalHostCode(Program program) {
+       '''
+       «/* Possible global host code */»
+       «if (program.globalHostCodeInstruction != null) {
+       program.globalHostCodeInstruction.extractCode}»
+       '''
    }
    
    // -------------------------------------------------------------------------
@@ -150,24 +163,21 @@ class S2Java {
    
    // -------------------------------------------------------------------------
 
-   
+   // Tells if a specific valued object needs state information (register/pre)   
    def boolean usesPre(Program program, ValuedObject valuedObject) {
 		preCache.contains(valuedObject)
    }
-   
-   
-   def privateOrPublic(ValuedObject valuedObject) {
-       if (valuedObject.isInput || valuedObject.isOutput || valuedObject.isExtern) {
-           return '''public'''
-       }
-       return '''private'''
-   }
 
-   // Generate variables.
-   def sVariables(Program program) {
-       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+   // -------------------------------------------------------------------------
+
+   // Generate internal variables.
+   def generateInternalVariables(Program program) {
+       '''
+       //  |   |   |   -------------------------------------------   |   |   | 
+       // \|/ \|/ \|/  VOLATILE GENERATED CODE BELOW - DO NOT EDIT  \|/ \|/ \|/
+       «FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern && !e.input && !e.output]»
           «FOR signal : declaration.valuedObjects»
-              «'''  '''»«signal.privateOrPublic» «signal.type.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
+            «signal.type.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
               «IF signal.isArray»
                 «FOR card : signal.cardinalities»{int i«card.hashCode» = 0; for(i«card.hashCode»=0; i«card.hashCode» < «card.intValue»; i«card.hashCode»++) {«ENDFOR»
                 «signal.name»«FOR card : signal.cardinalities»[i«card.hashCode»]«ENDFOR» = «signal.initialValue.expand»;
@@ -175,14 +185,63 @@ class S2Java {
                 «ELSE»
                   = «signal.initialValue.expand» 
                 «ENDIF»«ENDIF»;
-            
             «IF program.usesPre(signal)»
-«'''  '''»«signal.privateOrPublic» «signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
+                «signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
+            «ENDIF»
+        «ENDFOR»
+        «ENDFOR»
+       // /|\ /|\ /|\  VOLATILE GENERATED CODE ABOVE - DO NOT EDIT  /|\ /|\ /|\
+       //  |   |   |   -------------------------------------------   |   |   | 
+        '''
+   }
+
+   // -------------------------------------------------------------------------
+
+   // Generate internal variables.
+   def generateInterfaceVariables(Program program) {
+       '''
+          «FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+          «FOR variable : declaration.valuedObjects»
+            «IF variable.isInput»
+                int inputPin«variable.name» = >>ENTER_INPUT_PIN_HERE<<;
+            «ENDIF»
+            «IF variable.isOutput»
+                int outputPin«variable.name» = >>ENTER_OUTPUT_PIN_HERE<<;
+            «ENDIF»
+        «ENDFOR»
+        «ENDFOR»
+          «FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+          «FOR variable : declaration.valuedObjects»
+            «IF variable.isInput»
+                «variable.type.expand» «variable.name»; 
+            «ENDIF»
+            «IF variable.isOutput»
+                «variable.type.expand» «variable.name»; 
             «ENDIF»
         «ENDFOR»
         «ENDFOR»
         '''
    }
+   
+   // -------------------------------------------------------------------------
+
+   // Used for initial reset function generation.
+   def generateSetupCode(Program program) {
+       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+          «FOR variable : declaration.valuedObjects»
+            «IF variable.isInput»
+                pinMode(inputPin«variable.name», INPUT);
+                digitalWrite(inputPin«variable.name», HIGH);
+            «ENDIF»
+            «IF variable.isOutput»
+                pinMode(outputPin«variable.name», OUTPUT);
+            «ENDIF»
+        «ENDFOR»
+        «ENDFOR»
+        '''
+   }
+
+   // -------------------------------------------------------------------------
 
    // Generate PRE variables setter.
    def setPreVariables(Program program) {
@@ -193,6 +252,7 @@ class S2Java {
  		ENDIF»«ENDFOR»«ENDFOR»'''
    }
 
+   // Generate the reset for variables and arrays
    def resetVariables(Program program) {
        '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
@@ -209,8 +269,7 @@ class S2Java {
  		ENDIF»«ENDFOR»«ENDFOR»'''
    }
    
-   
-
+   // -------------------------------------------------------------------------
 
    def dispatch expand(ValueType valueType) {
        if (valueType == ValueType::BOOL) {
@@ -223,29 +282,75 @@ class S2Java {
 
    // -------------------------------------------------------------------------   
    
-   // Generate the  reset function.
-   def sResetFunction(Program program) {
-       '''  public void reset(){
+   // Generate the complete reset function.
+   def generateResetFunction(Program program) {
+       '''    void setup(){
+        «program.generateSetupCode»
        _GO = 1;
-       «program.resetVariables»
+       «program.generateResetFunctionInner»
        return;
     }
     '''
    }
+
+   // -------------------------------------------------------------------------   
+
+   // Generate the inner of the reset function that needs to be replaced at every code generation.
+   def generateResetFunctionInner(Program program) {
+    '''
+    //  |   |   |   -------------------------------------------   |   |   | 
+    // \|/ \|/ \|/  VOLATILE GENERATED CODE BELOW - DO NOT EDIT  \|/ \|/ \|/
+    «program.resetVariables»
+    // /|\ /|\ /|\  VOLATILE GENERATED CODE ABOVE - DO NOT EDIT  /|\ /|\ /|\
+    //  |   |   |   -------------------------------------------   |   |   | 
+    '''
+   }
       
    // -------------------------------------------------------------------------   
-   
-   // Generate the  tick function.
-   def sTickFunction(Program program) {
-       '''  public void tick(){
-       «FOR state : program.states»
-       «state.expand»
+
+   // Generate the complete tick function.
+   def generateTickFunction(Program program) {
+       '''    void loop(){
+       // Read inputs           
+       «FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+       «FOR variable : declaration.valuedObjects»
+            «IF variable.isInput»
+                «variable.name» = digitalRead(inputPin«variable.name»);
+            «ENDIF»
        «ENDFOR»
+       «ENDFOR»
+           
+       «program.generateTickFunctionInner»
        _GO = 0;
-       «program.setPreVariables»
+       
+       // Write outputs           
+       «FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+       «FOR variable : declaration.valuedObjects»
+            «IF variable.isOutput»
+                digitalWrite(outputPin«variable.name», «variable.name»); 
+            «ENDIF»
+       «ENDFOR»
+       «ENDFOR»
+       
        return;
     }
     '''
+   }
+   
+   // -------------------------------------------------------------------------   
+
+   // Generate the inner of the tick function that needs to be replaced at every code generation.
+   def generateTickFunctionInner(Program program) {
+       '''
+       //  |   |   |   -------------------------------------------   |   |   | 
+       // \|/ \|/ \|/  VOLATILE GENERATED CODE BELOW - DO NOT EDIT  \|/ \|/ \|/
+       «FOR state : program.states»
+       «state.expand»
+       «ENDFOR»
+       «program.setPreVariables»
+       // /|\ /|\ /|\  VOLATILE GENERATED CODE ABOVE - DO NOT EDIT  /|\ /|\ /|\
+       //  |   |   |   -------------------------------------------   |   |   | 
+       '''
    }
    
    // -------------------------------------------------------------------------   
