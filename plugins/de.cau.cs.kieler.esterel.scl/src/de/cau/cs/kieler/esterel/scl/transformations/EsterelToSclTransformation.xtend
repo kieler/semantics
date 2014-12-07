@@ -98,6 +98,7 @@ import de.cau.cs.kieler.esterel.esterel.Program
 import de.cau.cs.kieler.esterel.esterel.ProcCall
 import de.cau.cs.kieler.esterel.esterel.DoUpto
 import de.cau.cs.kieler.esterel.esterel.Do
+import de.cau.cs.kieler.esterel.esterel.DoWatching
 
 /**
  * @author krat
@@ -134,7 +135,7 @@ class EsterelToSclTransformation extends Transformation {
     // List of transformation function to manipulate pauses and join
     var Stack<(StatementSequence)=>StatementSequence> pauseTransformation
     var Stack<(StatementSequence)=>StatementSequence> joinTransformation
-    
+
     @Inject
     extension KExpressionsExtension
 
@@ -485,7 +486,7 @@ class EsterelToSclTransformation extends Transformation {
         if ((await.delay.expr instanceof ConstantExpression) && (await.delay.expr as ConstantExpression).value == "0") {
             return sSeq
         }
-        
+
         val l = createFreshLabel
 
         sSeq.addLabel(l)
@@ -523,39 +524,38 @@ class EsterelToSclTransformation extends Transformation {
         }
 
         // This is probably not an await tick
-            var de.cau.cs.kieler.core.kexpressions.OperatorExpression b
-            if (await.delay.event.expr != null) {
-                b = createOperatorExpression(OperatorType::NOT) => [
-                    subExpressions.add(transformExp(await.delay.event.expr, signalMap))
-                ]
-            }
-            val bVal = b
-
-            val cond = SclFactory::eINSTANCE.createConditional => [
-                // The counter has to be at the specified value
-                if (await.delay.expr != null) {
-
-                    expression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-                        operator = OperatorType::GT
-                        if (await.delay.expr instanceof ConstantExpression)
-                            subExpressions += await.delay.expr.transformExp("int")
-                        else {
-                            subExpressions += await.delay.expr.transformExp(signalMap)
-                        }
-                        subExpressions += i.createValuedObjectRef
-                    ]
-
-                } else if (await.delay.event.expr != null) {
-                    expression = bVal
-                }
-                if (await.delay.isImmediate) {
-                    statements.addAll(createSclPause(createSseq).statements)
-                }
-                statements.add(createGotoStm(l))
+        var de.cau.cs.kieler.core.kexpressions.OperatorExpression b
+        if (await.delay.event.expr != null) {
+            b = createOperatorExpression(OperatorType::NOT) => [
+                subExpressions.add(transformExp(await.delay.event.expr, signalMap))
             ]
+        }
+        val bVal = b
 
-            sSeq.statements += createStmFromInstr(cond)
+        val cond = SclFactory::eINSTANCE.createConditional => [
+            // The counter has to be at the specified value
+            if (await.delay.expr != null) {
 
+                expression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+                    operator = OperatorType::GT
+                    if (await.delay.expr instanceof ConstantExpression)
+                        subExpressions += await.delay.expr.transformExp("int")
+                    else {
+                        subExpressions += await.delay.expr.transformExp(signalMap)
+                    }
+                    subExpressions += i.createValuedObjectRef
+                ]
+
+            } else if (await.delay.event.expr != null) {
+                expression = bVal
+            }
+            if (await.delay.isImmediate) {
+                statements.addAll(createSclPause(createSseq).statements)
+            }
+            statements.add(createGotoStm(l))
+        ]
+
+        sSeq.statements += createStmFromInstr(cond)
 
         sSeq
     }
@@ -771,7 +771,7 @@ class EsterelToSclTransformation extends Transformation {
                         } else {
                             initialValue = s.channelDescr.expression.transformExp(signalMap)
                         }
-                        
+
                     }
                     if (s.channelDescr.type.operator != null)
                         combineOperator = s.channelDescr.type.operator.transformCombineOperator
@@ -949,16 +949,17 @@ class EsterelToSclTransformation extends Transformation {
                         statements.add(createGotoj(l, curLabel, labelMap))
                     ])
             ]
-            
+
             transformStm(abort.statement, sSeq)
-            
+
             // In case of additional "do" block check for depth flag and expression
             val f_depth_ref = f_depth.createValuedObjectRef
             if ((abort.body as WeakAbortInstance).statement != null) {
-                sSeq.add(SclFactory::eINSTANCE.createConditional => [
-                    expression = and(abortExpr.transformExp(oldSignalMap), f_depth_ref)
-                    statements += (abort.body as AbortInstance).statement.transformStm(newSseq).statements
-                ])
+                sSeq.add(
+                    SclFactory::eINSTANCE.createConditional => [
+                        expression = and(abortExpr.transformExp(oldSignalMap), f_depth_ref)
+                        statements += (abort.body as AbortInstance).statement.transformStm(newSseq).statements
+                    ])
             }
             signalMap.remove(f_wa.name -> f_wa)
             signalMap.remove(f_depth.name -> f_depth)
@@ -996,13 +997,13 @@ class EsterelToSclTransformation extends Transformation {
         val l_doNothing = createFreshLabel
         sSeq.addGoto(l_doNothing)
         sSeq.addLabel(l)
-        
+
         // Some do statement
         if ((abort.body as AbortInstance).statement != null) {
             (abort.body as AbortInstance).statement.transformStm(sSeq)
         }
         sSeq.addLabel(l_doNothing)
-        
+
         sSeq
     }
 
@@ -1165,7 +1166,7 @@ class EsterelToSclTransformation extends Transformation {
         ]
 
         localVar.statement.transformStm(sSeq)
-        localVar.^var.varDecls.forEach[ variables.forEach[ signalMap.removeLast ] ]
+        localVar.^var.varDecls.forEach[variables.forEach[signalMap.removeLast]]
 
         sSeq
     }
@@ -1174,7 +1175,7 @@ class EsterelToSclTransformation extends Transformation {
       * v1 := v2
       */
     def dispatch StatementSequence transformStm(Assignment assign, StatementSequence sSeq) {
-        val arg1 = signalMap.findLast[ key == assign.^var.name ].value
+        val arg1 = signalMap.findLast[key == assign.^var.name].value
         var de.cau.cs.kieler.core.kexpressions.Expression exprVar
         if (assign.expr instanceof ConstantExpression)
             exprVar = transformExp(assign.expr, arg1.type.toString)
@@ -1265,15 +1266,17 @@ class EsterelToSclTransformation extends Transformation {
          * Procedure calls
          */
     def dispatch StatementSequence transformStm(ProcCall procCall, StatementSequence sSeq) {
-        val valObj = createValuedObject(uniqueName(signalMap,"procDummy"))
+        val valObj = createValuedObject(uniqueName(signalMap, "procDummy"))
         signalMap.add(valObj.name -> valObj)
-        localDeclarations.add(createDeclaration => [
-            valuedObjects += valObj
-            type = ValueType::HOST //HOST?
-        ])
-        
+        localDeclarations.add(
+            createDeclaration => [
+                valuedObjects += valObj
+                type = ValueType::HOST //HOST?
+            ])
+
         val res = KExpressionsFactory::eINSTANCE.createFunctionCall
         res.functionName = procCall.proc.name
+
         // Get call-by-value parameters
         var i = 0
         for (exp : procCall.kexpressions) {
@@ -1291,26 +1294,25 @@ class EsterelToSclTransformation extends Transformation {
             i = i + 1
 
         }
-        
+
         // Get call-by-reference parameters
         for (v : procCall.varList) {
             res.parameters.add(
                 KExpressionsFactory::eINSTANCE.createParameter => [
-                    expression = createValuedObjectRef(signalMap.findLast[ key == v.name ].value)
+                    expression = createValuedObjectRef(signalMap.findLast[key == v.name].value)
                     callByReference = true
                 ]
             )
         }
-        
+
         // Create dummy assignment
         sSeq.add(createAssignment(valObj, res))
-        
-        
+
         sSeq
     }
-    
-       /*
-       * do p (upto s)
+
+    /*
+       * do p (upto s | watching s timeout q)
        * Deprecated, but used for example in wristwatch
        * Simply transforms the doupto to kernel statements and transforms them
        */
@@ -1318,19 +1320,29 @@ class EsterelToSclTransformation extends Transformation {
         if (^do.end instanceof DoUpto) {
             val doUpto = ^do.end as DoUpto
             val abort = EsterelFactory::eINSTANCE.createAbort => [
-            body = EsterelFactory.eINSTANCE.createAbortInstance => [
-                delay = doUpto.expr
-            ]
-            statement = EsterelFactory::eINSTANCE.createSequence => [
+                body = EsterelFactory.eINSTANCE.createAbortInstance => [
+                    delay = doUpto.expr
+                ]
+                statement = EsterelFactory::eINSTANCE.createSequence => [
                     list += ^do.statement
                     list += EsterelFactory::eINSTANCE.createHalt
                 ]
-        ]
+            ]
+            abort.transformStm(sSeq)
+        } else if (^do.end instanceof DoWatching) {
+            val doWatching = ^do.end as DoWatching
+            val abort = EsterelFactory::eINSTANCE.createAbort => [
+                body = EsterelFactory.eINSTANCE.createAbortInstance => [
+                    delay = doWatching.delay
+                    statement = doWatching.end.statement
+                ]
+                statement = ^do.statement
+            ]
             abort.transformStm(sSeq)
         } else {
             ^do.statement.transformStm(sSeq)
         }
-        
+
         sSeq
     }
 
