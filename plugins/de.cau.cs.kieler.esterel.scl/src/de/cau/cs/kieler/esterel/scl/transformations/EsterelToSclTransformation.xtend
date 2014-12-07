@@ -1055,7 +1055,8 @@ class EsterelToSclTransformation extends Transformation {
     }
 
     /*
-     * Trap s in p end
+     * Trap t in p end
+     * TODO several flags
      */
     def dispatch StatementSequence transformStm(Trap trap, StatementSequence sSeq) {
         System.out.println("It's a trap")
@@ -1078,9 +1079,8 @@ class EsterelToSclTransformation extends Transformation {
 
         val trans = [ boolean pause, StatementSequence seq |
             val stm = new LinkedList<Statement>
-            val flagRef = KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
-                valuedObject = f_s
-            ]
+            val flagRef = createValuedObjectRef(f_s)
+            
             if (labelMap.get(curLabel).contains(l)) {
                 stm.add(createStmFromInstr(ifThenGoto(flagRef, l, true)))
             } else {
@@ -1100,6 +1100,10 @@ class EsterelToSclTransformation extends Transformation {
         pauseTransformation.pop
         joinTransformation.pop
         sSeq.addLabel(l)
+        sSeq.add(SclFactory::eINSTANCE.createConditional => [
+            expression = createValuedObjectRef(f_s)
+            statements += trap.trapHandler.head.statement.transformStm(newSseq).statements
+        ])
 
         sSeq
     }
