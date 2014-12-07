@@ -765,8 +765,14 @@ class EsterelToSclTransformation extends Transformation {
             if (s.channelDescr != null) {
                 val s_val = createValuedObject(uniqueName(signalMap, s.name + "_val")) => [
                     type = ValueType::getByName(s.channelDescr.type.type.toString)
-                    if (s.channelDescr.expression != null)
-                        initialValue = s.channelDescr.expression.transformExp(s.channelDescr.type.type.toString)
+                    if (s.channelDescr.expression != null) {
+                        if (s.channelDescr.expression instanceof ConstantExpression) {
+                            initialValue = s.channelDescr.expression.transformExp(s.channelDescr.type.type.toString)
+                        } else {
+                            initialValue = s.channelDescr.expression.transformExp(signalMap)
+                        }
+                        
+                    }
                     if (s.channelDescr.type.operator != null)
                         combineOperator = s.channelDescr.type.operator.transformCombineOperator
                 ]
@@ -1142,6 +1148,9 @@ class EsterelToSclTransformation extends Transformation {
         ]
 
         localVar.statement.transformStm(sSeq)
+        localVar.^var.varDecls.forEach[ variables.forEach[ signalMap.removeLast ] ]
+
+        sSeq
     }
 
     /*
@@ -1267,7 +1276,6 @@ class EsterelToSclTransformation extends Transformation {
         }
         
         // Get call-by-reference parameters
-//        i = 0
         for (v : procCall.varList) {
             res.parameters.add(
                 KExpressionsFactory::eINSTANCE.createParameter => [

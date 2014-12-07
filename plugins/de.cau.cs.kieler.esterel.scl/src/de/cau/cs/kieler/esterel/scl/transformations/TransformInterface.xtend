@@ -272,6 +272,7 @@ class TransformInterface {
             val s_val = createValuedObject(uniqueName(signalMap, it.name))
             // TODO add to signalmap?
             signalMap.add(it.name -> s_val)
+            valuedMap.put(s_val, s_val)
             localVars += s_val.name
             if (it.expression instanceof ConstantExpression)
                 s_val.initialValue = it.expression.transformExp(declaration.type.type.literal)
