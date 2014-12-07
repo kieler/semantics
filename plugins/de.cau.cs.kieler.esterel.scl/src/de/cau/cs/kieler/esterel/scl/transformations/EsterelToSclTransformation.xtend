@@ -790,6 +790,7 @@ class EsterelToSclTransformation extends Transformation {
 
     /*
      * abort p when s
+     * TODO do ...
      */
     def dispatch StatementSequence transformStm(Abort abort, StatementSequence sSeq) {
 
@@ -901,7 +902,6 @@ class EsterelToSclTransformation extends Transformation {
         // Weak delayed abort
         } else if (abort.body instanceof WeakAbortInstance) {
 
-            // TODO implement
             val f_wa = createValuedObject(uniqueName(signalMap, "f_wa"))
             val f_depth = createValuedObject(uniqueName(signalMap, "f_depth"))
             f_wa.initialValue = createBoolValue(false)
@@ -949,8 +949,17 @@ class EsterelToSclTransformation extends Transformation {
                         statements.add(createGotoj(l, curLabel, labelMap))
                     ])
             ]
-
+            
             transformStm(abort.statement, sSeq)
+            
+            // In case of additional "do" block check for depth flag and expression
+            val f_depth_ref = f_depth.createValuedObjectRef
+            if ((abort.body as WeakAbortInstance).statement != null) {
+                sSeq.add(SclFactory::eINSTANCE.createConditional => [
+                    expression = and(abortExpr.transformExp(oldSignalMap), f_depth_ref)
+                    statements += (abort.body as AbortInstance).statement.transformStm(newSseq).statements
+                ])
+            }
             signalMap.remove(f_wa.name -> f_wa)
             signalMap.remove(f_depth.name -> f_depth)
 
@@ -984,8 +993,16 @@ class EsterelToSclTransformation extends Transformation {
         pauseTransformation.pop
         joinTransformation.pop
 
+        val l_doNothing = createFreshLabel
+        sSeq.addGoto(l_doNothing)
         sSeq.addLabel(l)
-
+        
+        // Some do statement
+        if ((abort.body as AbortInstance).statement != null) {
+            (abort.body as AbortInstance).statement.transformStm(sSeq)
+        }
+        sSeq.addLabel(l_doNothing)
+        
         sSeq
     }
 
@@ -1157,7 +1174,7 @@ class EsterelToSclTransformation extends Transformation {
       * v1 := v2
       */
     def dispatch StatementSequence transformStm(Assignment assign, StatementSequence sSeq) {
-        val arg1 = signalMap.findLast[key == assign.^var.name].value
+        val arg1 = signalMap.findLast[ key == assign.^var.name ].value
         var de.cau.cs.kieler.core.kexpressions.Expression exprVar
         if (assign.expr instanceof ConstantExpression)
             exprVar = transformExp(assign.expr, arg1.type.toString)
