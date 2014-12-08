@@ -859,11 +859,15 @@ class EsterelToSclTransformation extends Transformation {
         val countExp = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
             operator = OperatorType::AND
             subExpressions += abortExpr.transformExp(signalMap)
-             subExpressions += KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+            subExpressions += KExpressionsFactory::eINSTANCE.createOperatorExpression => [
             operator = OperatorType::GT
             if ((abort.body as AbortInstance).delay.expr != null) {
                 if (delayExpression) {
-                    subExpressions += (abort.body as AbortInstance).delay.expr.transformExp("int")
+                    if ((abort.body as AbortInstance).delay.expr instanceof ConstantExpression) {
+                        subExpressions += (abort.body as AbortInstance).delay.expr.transformExp("int")
+                    } else {
+                        subExpressions += (abort.body as AbortInstance).delay.expr.transformExp(signalMap)
+                    }
                 } else {
                     subExpressions += (abort.body as AbortInstance).delay.expr.transformExp(signalMap)
                 }
@@ -1132,17 +1136,9 @@ class EsterelToSclTransformation extends Transformation {
     def dispatch StatementSequence transformStm(Trap trap, StatementSequence sSeq) {
         System.out.println("It's a trap")
 
-        val f_s = createValuedObject(uniqueName(signalMap, trap.trapDeclList.trapDecls.head.name))
-        signalMap.add(f_s.name -> f_s);
+        val f_s = createFreshVar(trap.trapDeclList.trapDecls.head.name, ValueType::BOOL)
         val l = createFreshLabel
         labelMap.put(curLabel, l)
-
-        localDeclarations.add(
-            KExpressionsFactory::eINSTANCE.createDeclaration => [
-                type = ValueType::BOOL;
-                f_s.initialValue = createBoolValue(false)
-                valuedObjects.add(f_s)
-            ])
 
         for (decl : trap.trapDeclList.trapDecls) {
             exitMap.put(decl, (f_s -> l))
@@ -1307,17 +1303,9 @@ class EsterelToSclTransformation extends Transformation {
             ]
             sSeq.add(ifThenGoto(op, l_end, true))
         }
-        val i = createValuedObject(uniqueName(signalMap, "i"))
-        signalMap.add(i.name -> i);
+        val i = createFreshVar("i", ValueType::INT)
         val l = createFreshLabel
         labelMap.put(curLabel, l)
-
-        localDeclarations.add(
-            KExpressionsFactory::eINSTANCE.createDeclaration => [
-                type = ValueType::INT;
-                i.initialValue = createIntValue(0)
-                valuedObjects.add(i)
-            ])
 
         sSeq.addLabel(l)
         repeat.statement.transformStm(sSeq)
@@ -1343,13 +1331,7 @@ class EsterelToSclTransformation extends Transformation {
          * Procedure calls
          */
     def dispatch StatementSequence transformStm(ProcCall procCall, StatementSequence sSeq) {
-        val valObj = createValuedObject(uniqueName(signalMap, "procDummy"))
-        signalMap.add(valObj.name -> valObj)
-        localDeclarations.add(
-            createDeclaration => [
-                valuedObjects += valObj
-                type = ValueType::HOST //HOST?
-            ])
+        val valObj = createFreshVar("procDummy", ValueType::HOST)
 
         val res = KExpressionsFactory::eINSTANCE.createFunctionCall
         res.functionName = procCall.proc.name
@@ -1411,7 +1393,9 @@ class EsterelToSclTransformation extends Transformation {
             val abort = EsterelFactory::eINSTANCE.createAbort => [
                 body = EsterelFactory.eINSTANCE.createAbortInstance => [
                     delay = doWatching.delay
-                    statement = doWatching.end.statement
+                    if (doWatching.end != null) {
+                        statement = doWatching.end.statement
+                    }
                 ]
                 statement = ^do.statement
             ]
