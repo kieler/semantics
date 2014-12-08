@@ -1095,8 +1095,32 @@ class EsterelToSclTransformation extends Transformation {
 
     /*
       * suspend p when s
+      * when n s
       */
     def dispatch StatementSequence transformStm(Suspend susp, StatementSequence sSeq) {
+        // Add a counting variable, if delay.expr is set
+        val counter = createFreshVar("i", ValueType::INT)
+        counter.initialValue = createIntValue(0)
+        // Delay Expression?
+        val delayExpression = susp.delay.expr != null
+        // if a and c > i then...
+        val countExp = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+            operator = OperatorType::AND
+            subExpressions += susp.delay.event.expr.transformExp(signalMap)
+             subExpressions += KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+            operator = OperatorType::GT
+            if (susp.delay.expr != null) {
+                if (delayExpression) {
+                    subExpressions += susp.delay.expr.transformExp("int")
+                } else {
+                    subExpressions += susp.delay.expr.transformExp(signalMap)
+                }
+                subExpressions += counter.createValuedObjectRef
+            }
+        ]
+        
+        ]
+        
         if (susp.delay.isImmediate) {
             val l = createFreshLabel
             sSeq.addLabel(l)
@@ -1104,7 +1128,11 @@ class EsterelToSclTransformation extends Transformation {
             sSeq.statements.add(
                 createStmFromInstr(
                     SclFactory::eINSTANCE.createConditional => [
-                        expression = transformExp(susp.delay.event.expr, signalMap)
+                        if (delayExpression) {
+                            expression = EcoreUtil.copy(countExp)
+                        } else {
+                            expression = transformExp(susp.delay.event.expr, signalMap)
+                        }
                         statements.addAll(createSclPause.statements)
                         statements.add(createGotoStm(l))]))
         }
@@ -1112,8 +1140,17 @@ class EsterelToSclTransformation extends Transformation {
         pauseTransformation.push [ StatementSequence seq |
             val l = createFreshLabel
             seq.statements.add(0, createEmptyStm(l))
-            seq.statements.add(
-                createStmFromInstr(ifThenGoto(transformExp(susp.delay.event.expr, signalMap), l, true)))
+            if (delayExpression) {
+                seq.statements.add(createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
+                    expression = transformExp(susp.delay.event.expr, signalMap)
+                    statements += incrementInt(counter)
+                ]))
+                seq.statements.add(createStmFromInstr(ifThenGoto(EcoreUtil.copy(countExp), l, true)))
+            } else {
+                seq.statements.add(
+                    createStmFromInstr(ifThenGoto(transformExp(susp.delay.event.expr, signalMap), l, true)))
+            }
+            
             seq
         ]
 
