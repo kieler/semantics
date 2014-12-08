@@ -429,7 +429,6 @@ class EsterelToSclTransformation extends Transformation {
      * Await Case
      * Cases are handled in a "break" style; if a case is taken, a goto to the end of the
      * statement is taken
-     * TODO await n times
      */
     def StatementSequence handleAwaitCase(AwaitCase awaitCase, StatementSequence sSeq) {
         val l_start = createFreshLabel
@@ -815,8 +814,7 @@ class EsterelToSclTransformation extends Transformation {
 
     /*
      * abort p when s
-     * TODO do ...done?
-     * TDO 15 s
+     * TODO 15 s
      */
     def dispatch StatementSequence transformStm(Abort abort, StatementSequence sSeq) {
 
@@ -864,7 +862,8 @@ class EsterelToSclTransformation extends Transformation {
 
             return sSeq
         }
-
+        
+        // Weak and strong abort instance
         val l = createFreshLabel
         labelMap.put(curLabel, l)
         val abortExpr = (abort.body as AbortInstance).delay.event.expr
