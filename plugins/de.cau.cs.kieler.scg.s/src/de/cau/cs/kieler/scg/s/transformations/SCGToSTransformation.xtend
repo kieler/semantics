@@ -14,10 +14,15 @@
 package de.cau.cs.kieler.scg.s.transformations
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.annotations.StringAnnotation
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.FunctionCall
+import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.s.extensions.SExtension
 import de.cau.cs.kieler.s.s.Instruction
 import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.s.s.SFactory
@@ -31,9 +36,6 @@ import java.util.HashMap
 import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.s.extensions.SExtension
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
 
 /**
  * Transform SCG to S
@@ -50,8 +52,12 @@ class SCGToSTransformation {
 
     @Inject
     extension SExtension
+    
+    @Inject
+    extension AnnotationsExtensions    
 
     private static val GOGUARDNAME = "_GO"
+    private static val String ANNOTATION_HOSTCODE = "hostcode"    
 
     private val valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>
     private val processedNodes = <Node, Boolean>newHashMap
@@ -66,6 +72,11 @@ class SCGToSTransformation {
         val Program sProgram = SFactory::eINSTANCE.createProgram
         sProgram.priority = 1
         sProgram.name = "S"
+        
+        val hostcodeAnnotations = scg.getStringAnnotations(ANNOTATION_HOSTCODE)
+        hostcodeAnnotations.forEach[
+            sProgram.addAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).value)
+        ]   
 
         val timestamp = System.currentTimeMillis
 
