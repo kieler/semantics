@@ -433,6 +433,7 @@ class EsterelToSclTransformation extends Transformation {
      */
     def StatementSequence handleAwaitCase(AwaitCase awaitCase, StatementSequence sSeq) {
         val l_start = createFreshLabel
+        val l_restart = createFreshLabel
         val l_end = createFreshLabel
 
         // Flag indicating, if also delayed await cases may be taken
@@ -449,28 +450,54 @@ class EsterelToSclTransformation extends Transformation {
 
         for (singleCase : awaitCase.cases) {
             val cond = SclFactory::eINSTANCE.createConditional => [
+                // Additional check for f_depth
                 if (!singleCase.delay.isImmediate) {
                     expression = createOperatorExpression(OperatorType::AND) => [
                         add(transformExp(singleCase.delay.event.expr, signalMap))
                         add(delayedFlag.createValuedObjectRef)
                     ]
+                // Simple check for expression
                 } else {
                     expression = transformExp(singleCase.delay.event.expr, signalMap)
                 }
-                // Possible "do" block
-                if (singleCase.statement != null)
-                    statements.addAll(transformStm(singleCase.statement, createSseq).statements)
-                statements.add(createGotoStm(l_end))
             ]
+            
+            // If there is an additional delay expression (case n x do) add counting integer
+            if (singleCase.delay.expr != null) {
+                // i count occurences of the signal
+                val counter = createValuedObject(uniqueName(signalMap, "i"))
+                counter.initialValue = createIntValue(0)
+                signalMap.add(counter.name -> counter)
+        
+                localDeclarations += KExpressionsFactory::eINSTANCE.createDeclaration => [
+                valuedObjects.add(counter)
+                type = ValueType::INT
+             ]
+             // Increment counter if guard holds
+             cond.statements += incrementInt(counter)
+             // Check counting condition
+             val countCondition = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+                 operator = OperatorType::GT
+                 if (singleCase.delay.expr instanceof ConstantExpression) {
+                     subExpressions += singleCase.delay.expr.transformExp("int")
+                 } else {
+                     subExpressions += singleCase.delay.expr.transformExp(signalMap)
+                 }
+                 subExpressions += counter.createValuedObjectRef
+             ]
+             cond.statements.add(createStmFromInstr(ifThenGoto(countCondition, l_restart, true)))
+            }
+            // Possible "do" block
+            if (singleCase.statement != null)
+                cond.statements.addAll(transformStm(singleCase.statement, createSseq).statements)
+            cond.statements.add(createGotoStm(l_end))
             sSeq.statements.add(createStmFromInstr(cond))
         }
-
+        sSeq.addLabel(l_restart)
         sSeq.createSclPause
-        val op = createOperatorExpression(OperatorType::OR) => [
-            add(createValuedObjectRef(delayedFlag))
-            add(createBoolValue(true))
-        ]
-        sSeq.statements.add(createStmFromInstr(createAssignment(delayedFlag, op)))
+        
+        // Set depth flag
+        sSeq.statements.add(createStmFromInstr(createAssignment(delayedFlag, createBoolValue(true))))
         sSeq.addGoto(l_start)
         sSeq.addLabel(l_end)
 
@@ -691,8 +718,6 @@ class EsterelToSclTransformation extends Transformation {
 
     /*
      * present
-     * 
-     * TODO test
      */
     def dispatch StatementSequence transformStm(Present pres, StatementSequence sSeq) {
 
@@ -790,7 +815,8 @@ class EsterelToSclTransformation extends Transformation {
 
     /*
      * abort p when s
-     * TODO do ...
+     * TODO do ...done?
+     * TDO 15 s
      */
     def dispatch StatementSequence transformStm(Abort abort, StatementSequence sSeq) {
 
