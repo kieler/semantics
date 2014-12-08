@@ -52,6 +52,7 @@ import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
 import de.cau.cs.kieler.esterel.esterel.Run
 import de.cau.cs.kieler.esterel.esterel.LocalVariable
 import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.esterel.esterel.Suspend
 
 /**
  * @author krat
@@ -370,6 +371,8 @@ class EsterelToSclExtensions {
             return (stm as Run).module.module.body.statements.checkTerminate
         } else if (stm instanceof LocalVariable) {
             return (stm as LocalVariable).statement.checkTerminate
+        } else if (stm instanceof Suspend) {
+            return (stm as Suspend).statement.checkTerminate
         }
         return true;
     }

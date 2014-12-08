@@ -436,14 +436,8 @@ class EsterelToSclTransformation extends Transformation {
         val l_end = createFreshLabel
 
         // Flag indicating, if also delayed await cases may be taken
-        val delayedFlag = createValuedObject(uniqueName(signalMap, "f_depth"))
+        val delayedFlag = createFreshVar("f_depth", ValueType::BOOL)
         delayedFlag.initialValue = createBoolValue(false)
-        signalMap.add(delayedFlag.name -> delayedFlag)
-
-        localDeclarations += KExpressionsFactory::eINSTANCE.createDeclaration => [
-            valuedObjects.add(delayedFlag)
-            type = ValueType::BOOL
-        ]
 
         sSeq.addLabel(l_start)
 
@@ -464,14 +458,9 @@ class EsterelToSclTransformation extends Transformation {
             // If there is an additional delay expression (case n x do) add counting integer
             if (singleCase.delay.expr != null) {
                 // i count occurences of the signal
-                val counter = createValuedObject(uniqueName(signalMap, "i"))
+                val counter = createFreshVar("i", ValueType::INT)
                 counter.initialValue = createIntValue(0)
-                signalMap.add(counter.name -> counter)
         
-                localDeclarations += KExpressionsFactory::eINSTANCE.createDeclaration => [
-                valuedObjects.add(counter)
-                type = ValueType::INT
-             ]
              // Increment counter if guard holds
              cond.statements += incrementInt(counter)
              // Check counting condition
@@ -723,8 +712,6 @@ class EsterelToSclTransformation extends Transformation {
         //present s then p (else q)
         if (pres.body instanceof PresentEventBody) {
             val cond = SclFactory::eINSTANCE.createConditional => [
-                System.out.println(
-                    "Present: " + transformExp((pres.body as PresentEventBody).event.expression, signalMap))
                 expression = transformExp((pres.body as PresentEventBody).event.expression, signalMap)
                 if ((pres.body as PresentEventBody).thenPart != null) {
                     val thenPart = SclFactory::eINSTANCE.createStatementSequence
@@ -778,7 +765,7 @@ class EsterelToSclTransformation extends Transformation {
     def dispatch StatementSequence transformStm(LocalSignalDecl signal, StatementSequence sSeq) {
         val decl = createDeclaration => [
             type = ValueType::BOOL
-            output = true
+            output = true //TODO output???
         ]
         for (s : (signal.signalList as LocalSignal).signal) {
             val obj = createValuedObject(uniqueName(signalMap, s.name))
@@ -814,7 +801,6 @@ class EsterelToSclTransformation extends Transformation {
 
     /*
      * abort p when s
-     * TODO 15 s
      */
     def dispatch StatementSequence transformStm(Abort abort, StatementSequence sSeq) {
 
@@ -824,14 +810,9 @@ class EsterelToSclTransformation extends Transformation {
             val l_end = createFreshLabel
             labelMap.put(curLabel, l_end)
 
-            val f_depth = createValuedObject(uniqueName(signalMap, "f_depth"))
+            val f_depth = createFreshVar("f_depth", ValueType::BOOL)
             f_depth.initialValue = createBoolValue(false);
-            localDeclarations.add(
-                KExpressionsFactory::eINSTANCE.createDeclaration => [
-                    type = ValueType::BOOL;
-                    valuedObjects.add(f_depth)
-                ])
-            signalMap.add(f_depth.name -> f_depth)
+
             pauseTransformation.push [ StatementSequence seq |
                 seq.add(createAssignment(f_depth, createBoolValue(true)))
             ]
@@ -895,16 +876,9 @@ class EsterelToSclTransformation extends Transformation {
         // Weak immediate abort
         if (abort.body instanceof WeakAbortInstance && ((abort.body as AbortInstance).delay.isImmediate)) {
 
-            val f_wa = createValuedObject(uniqueName(signalMap, "f_wa"))
+            val f_wa = createFreshVar("f_wa", ValueType::BOOL)
             f_wa.initialValue = createBoolValue(false);
 
-            localDeclarations.add(
-                KExpressionsFactory::eINSTANCE.createDeclaration => [
-                    type = ValueType::BOOL;
-                    valuedObjects.add(f_wa)
-                ])
-                
-            signalMap.add(f_wa.name -> f_wa)
             pauseTransformation.push [ StatementSequence seq |
                 
                 val cond = SclFactory::eINSTANCE.createConditional => [
@@ -947,20 +921,11 @@ class EsterelToSclTransformation extends Transformation {
         // Weak delayed abort
         } else if (abort.body instanceof WeakAbortInstance) {
 
-            val f_wa = createValuedObject(uniqueName(signalMap, "f_wa"))
-            val f_depth = createValuedObject(uniqueName(signalMap, "f_depth"))
+            val f_wa = createFreshVar("f_wa", ValueType::BOOL)
+            val f_depth = createFreshVar("f_depth", ValueType::BOOL)
             f_wa.initialValue = createBoolValue(false)
             f_depth.initialValue = createBoolValue(false)
 
-            localDeclarations.add(
-                KExpressionsFactory::eINSTANCE.createDeclaration => [
-                    type = ValueType::BOOL;
-                    valuedObjects.add(f_wa)
-                    valuedObjects.add(f_depth)
-                ])
-
-            signalMap.add(f_wa.name -> f_wa)
-            signalMap.add(f_depth.name -> f_depth)
             pauseTransformation.push [ StatementSequence seq |
                 if (delayExpression) {
                     seq.statements += createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
@@ -1206,10 +1171,12 @@ class EsterelToSclTransformation extends Transformation {
         pauseTransformation.pop
         joinTransformation.pop
         sSeq.addLabel(l)
-        sSeq.add(SclFactory::eINSTANCE.createConditional => [
-            expression = createValuedObjectRef(f_s)
-            statements += trap.trapHandler.head.statement.transformStm(newSseq).statements
-        ])
+        if (!trap.trapHandler.empty) {
+            sSeq.add(SclFactory::eINSTANCE.createConditional => [
+                expression = createValuedObjectRef(f_s)
+                statements += trap.trapHandler.head.statement.transformStm(newSseq).statements
+            ])
+        }
 
         sSeq
     }
