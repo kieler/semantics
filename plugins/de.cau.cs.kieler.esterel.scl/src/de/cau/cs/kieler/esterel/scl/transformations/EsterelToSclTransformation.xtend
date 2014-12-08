@@ -868,6 +868,29 @@ class EsterelToSclTransformation extends Transformation {
         labelMap.put(curLabel, l)
         val abortExpr = (abort.body as AbortInstance).delay.event.expr
         val oldSignalMap = signalMap.clone  as LinkedList<Pair<String, ValuedObject>>
+        
+        // Add a counting variable, if delay.expr is set
+        val counter = createFreshVar("i", ValueType::INT)
+        counter.initialValue = createIntValue(0)
+        // Delay Expression?
+        val delayExpression = (abort.body as AbortInstance).delay.expr != null
+        // if a and c > i then...
+        val countExp = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+            operator = OperatorType::AND
+            subExpressions += abortExpr.transformExp(signalMap)
+             subExpressions += KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+            operator = OperatorType::GT
+            if ((abort.body as AbortInstance).delay.expr != null) {
+                if (delayExpression) {
+                    subExpressions += (abort.body as AbortInstance).delay.expr.transformExp("int")
+                } else {
+                    subExpressions += (abort.body as AbortInstance).delay.expr.transformExp(signalMap)
+                }
+                subExpressions += counter.createValuedObjectRef
+            }
+        ]
+        
+        ]
 
         // Weak immediate abort
         if (abort.body instanceof WeakAbortInstance && ((abort.body as AbortInstance).delay.isImmediate)) {
@@ -880,20 +903,17 @@ class EsterelToSclTransformation extends Transformation {
                     type = ValueType::BOOL;
                     valuedObjects.add(f_wa)
                 ])
-
+                
             signalMap.add(f_wa.name -> f_wa)
             pauseTransformation.push [ StatementSequence seq |
+                
                 val cond = SclFactory::eINSTANCE.createConditional => [
                     expression = transformExp(abortExpr, oldSignalMap)
                     statements.add(
                         createStmFromInstr(
-                            SclFactory::eINSTANCE.createAssignment => [
-                                valuedObject = f_wa
-                                expression = or(
-                                    KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
-                                        valuedObject = f_wa
-                                    ], createBoolValue(true))
-                            ]))
+                            createAssignment(f_wa, or(createValuedObjectRef(f_wa)
+                                                , createBoolValue(true)))
+                            ))
                     if (labelMap.get(curLabel).contains(l)) {
                         statements.add(createGotoStm(l))
                     } else {
@@ -942,6 +962,12 @@ class EsterelToSclTransformation extends Transformation {
             signalMap.add(f_wa.name -> f_wa)
             signalMap.add(f_depth.name -> f_depth)
             pauseTransformation.push [ StatementSequence seq |
+                if (delayExpression) {
+                    seq.statements += createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
+                        expression = transformExp(abortExpr, oldSignalMap)
+                        statements += incrementInt(counter)
+                    ])
+                }
                 val f_wa_ref = f_wa.createValuedObjectRef
                 val f_depth_ref = f_depth.createValuedObjectRef
                 // Insert directly before pause
@@ -960,7 +986,11 @@ class EsterelToSclTransformation extends Transformation {
                                             add(EcoreUtil.copy(f_wa_ref))
                                             add(createBoolValue(true))
                                         ])))
-                            expression = and(abortExpr.transformExp(oldSignalMap), f_depth_ref)
+                            if (delayExpression) {
+                                 expression = and(EcoreUtil.copy(countExp), EcoreUtil.copy(f_depth_ref))
+                            } else {
+                                expression = and(abortExpr.transformExp(oldSignalMap), f_depth_ref)
+                            }
                             statements.add(createGotoj(l, curLabel, labelMap))
                         ]))
                 seq.add(createAssignment(f_depth, createBoolValue(true)))
@@ -999,13 +1029,27 @@ class EsterelToSclTransformation extends Transformation {
             }
 
             val trans = [ StatementSequence seq |
+                if ((abort.body as AbortInstance).delay.expr != null) {
+                    seq.statements += createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
+                        expression = transformExp(abortExpr, oldSignalMap)
+                        statements += incrementInt(counter)
+                    ])
+                }
                 val stms = new LinkedList<Statement>
                 if (labelMap.get(curLabel).contains(l)) {
-                    stms.add(
-                        createStmFromInstr(ifThenGoto(transformExp(abortExpr, oldSignalMap), l, true)))
+                    if ((abort.body as AbortInstance).delay.expr != null) {
+                        stms.add(
+                            createStmFromInstr(ifThenGoto(EcoreUtil.copy(countExp), l, true)))
+                    } else {
+                        stms.add(createStmFromInstr(ifThenGoto(transformExp(abortExpr, oldSignalMap), l, true)))
+                    }
                 } else {
-                    stms.add(
-                        createStmFromInstr(ifThenGoto(transformExp(abortExpr, oldSignalMap), curLabel, true)))
+                    if ((abort.body as AbortInstance).delay.expr != null) {
+                        stms.add(
+                            createStmFromInstr(ifThenGoto(EcoreUtil.copy(countExp), curLabel, true)))
+                    } else {
+                        stms.add(createStmFromInstr(ifThenGoto(transformExp(abortExpr, oldSignalMap), curLabel, true)))
+                    }
                 }
                 seq.statements.addAll(stms)
                 seq
