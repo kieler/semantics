@@ -270,6 +270,9 @@
     <genClasses ecoreClass="Esterel.ecore#//Suspend">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Suspend/delay"/>
     </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//WeakSuspend">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//WeakSuspend/delay"/>
+    </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//Sustain">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//Sustain/signal"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Sustain/tick"/>

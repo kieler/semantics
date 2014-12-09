@@ -108,6 +108,7 @@ import de.cau.cs.kieler.esterel.esterel.WeakAbortCase;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortEnd;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortEndAlt;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortInstance;
+import de.cau.cs.kieler.esterel.esterel.WeakSuspend;
 
 import de.cau.cs.kieler.esterel.kexpressions.KExpressionsPackage;
 
@@ -678,6 +679,13 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * @generated
    */
   private EClass suspendEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass weakSuspendEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -2925,6 +2933,26 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getWeakSuspend()
+  {
+    return weakSuspendEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getWeakSuspend_Delay()
+  {
+    return (EReference)weakSuspendEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getSustain()
   {
     return sustainEClass;
@@ -3879,6 +3907,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     suspendEClass = createEClass(SUSPEND);
     createEReference(suspendEClass, SUSPEND__DELAY);
 
+    weakSuspendEClass = createEClass(WEAK_SUSPEND);
+    createEReference(weakSuspendEClass, WEAK_SUSPEND__DELAY);
+
     sustainEClass = createEClass(SUSTAIN);
     createEReference(sustainEClass, SUSTAIN__SIGNAL);
     createEAttribute(sustainEClass, SUSTAIN__TICK);
@@ -4049,6 +4080,8 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     runEClass.getESuperTypes().add(this.getStatement());
     suspendEClass.getESuperTypes().add(this.getStatementContainer());
     suspendEClass.getESuperTypes().add(this.getStatement());
+    weakSuspendEClass.getESuperTypes().add(this.getStatementContainer());
+    weakSuspendEClass.getESuperTypes().add(this.getStatement());
     sustainEClass.getESuperTypes().add(this.getStatement());
     trapEClass.getESuperTypes().add(this.getStatementContainer());
     trapEClass.getESuperTypes().add(this.getStatement());
@@ -4353,6 +4386,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(suspendEClass, Suspend.class, "Suspend", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getSuspend_Delay(), this.getDelayExpr(), null, "delay", null, 0, 1, Suspend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(weakSuspendEClass, WeakSuspend.class, "WeakSuspend", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getWeakSuspend_Delay(), this.getDelayExpr(), null, "delay", null, 0, 1, WeakSuspend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(sustainEClass, Sustain.class, "Sustain", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getSustain_Signal(), theKExpressionsPackage.getISignal(), null, "signal", null, 0, 1, Sustain.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

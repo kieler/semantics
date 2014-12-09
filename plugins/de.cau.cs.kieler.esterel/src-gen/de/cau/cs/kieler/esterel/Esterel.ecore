@@ -340,6 +340,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="delay" eType="#//DelayExpr"
         containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WeakSuspend" eSuperTypes="#//StatementContainer #//Statement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="delay" eType="#//DelayExpr"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Sustain" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signal" eType="ecore:EClass ../../../../../../../de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.ecore#//ISignal"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="tick" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

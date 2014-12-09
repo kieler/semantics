@@ -143,6 +143,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.TASK_RENAMING: return createTaskRenaming();
       case EsterelPackage.SIGNAL_RENAMING: return createSignalRenaming();
       case EsterelPackage.SUSPEND: return createSuspend();
+      case EsterelPackage.WEAK_SUSPEND: return createWeakSuspend();
       case EsterelPackage.SUSTAIN: return createSustain();
       case EsterelPackage.TRAP: return createTrap();
       case EsterelPackage.TRAP_DECL_LIST: return createTrapDeclList();
@@ -1040,6 +1041,17 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     SuspendImpl suspend = new SuspendImpl();
     return suspend;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public WeakSuspend createWeakSuspend()
+  {
+    WeakSuspendImpl weakSuspend = new WeakSuspendImpl();
+    return weakSuspend;
   }
 
   /**

@@ -146,8 +146,9 @@ StatementContainer:
 ;
 
 StatementContainerInterface returns StatementContainer:
-	LocalSignalDecl | Block | Abort | AbortInstance | AbortCaseSingle | WeakAbort | WeakAbortInstance | AwaitInstance | Do | DoWatchingEnd | EveryDo | ThenPart | ElsePart | LoopBody | PresentCase | Repeat | Suspend | Trap | TrapHandler | LocalVariable | Exec | ExecCase
+	LocalSignalDecl | Block | Abort | AbortInstance | AbortCaseSingle | WeakAbort | WeakAbortInstance | AwaitInstance | Do | DoWatchingEnd | EveryDo | ThenPart | ElsePart | LoopBody | PresentCase | Repeat | Suspend | WeakSuspend | Trap | TrapHandler | LocalVariable | Exec | ExecCase
 ;
+
 
 // ==============================================
 // ===            B.4 Statements              ===
@@ -160,7 +161,7 @@ Statement:
 	// -!
 AtomicStatement returns Statement:
 	Abort | Assignment | Await | Block | ProcCall | Do | Emit | EveryDo | Exit | Exec | Halt | IfTest | LocalSignalDecl |
-	Loop | Nothing | Pause | Present | Repeat | Run | Suspend | Sustain | Trap | LocalVariable | WeakAbort;
+	Loop | Nothing | Pause | Present | Repeat | Run | Suspend | WeakSuspend | Sustain | Trap | LocalVariable | WeakAbort;
 
 	// --> B.4.1 Control Flow Operators <--	
 // !-(sequence)
@@ -394,6 +395,11 @@ BuildInFunction:
 // !-(suspend)-------------------------------------
 Suspend:
 	"suspend" statement=Statement "when" delay=DelayExpr;
+	
+// !-(weak suspend)-------------------------------------
+WeakSuspend:
+    "weak suspend" statement=Statement "when" delay=DelayExpr;
+    
 	// -!
 // --> B.4.22 sustain: Emit a Signal Indefinitely
 // !-(sustain) -------------------------------------

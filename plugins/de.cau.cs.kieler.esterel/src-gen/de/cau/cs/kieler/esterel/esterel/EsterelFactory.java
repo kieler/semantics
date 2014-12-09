@@ -734,6 +734,15 @@ public interface EsterelFactory extends EFactory
   Suspend createSuspend();
 
   /**
+   * Returns a new object of class '<em>Weak Suspend</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Weak Suspend</em>'.
+   * @generated
+   */
+  WeakSuspend createWeakSuspend();
+
+  /**
    * Returns a new object of class '<em>Sustain</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

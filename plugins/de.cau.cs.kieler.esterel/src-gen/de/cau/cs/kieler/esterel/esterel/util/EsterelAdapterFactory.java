@@ -479,6 +479,11 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createSuspendAdapter();
       }
       @Override
+      public Adapter caseWeakSuspend(WeakSuspend object)
+      {
+        return createWeakSuspendAdapter();
+      }
+      @Override
       public Adapter caseSustain(Sustain object)
       {
         return createSustainAdapter();
@@ -1851,6 +1856,21 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createSuspendAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.WeakSuspend <em>Weak Suspend</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.WeakSuspend
+   * @generated
+   */
+  public Adapter createWeakSuspendAdapter()
   {
     return null;
   }

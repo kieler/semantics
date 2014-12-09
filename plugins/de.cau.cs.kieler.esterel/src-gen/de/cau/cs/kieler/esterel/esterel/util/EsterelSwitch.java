@@ -681,6 +681,15 @@ public class EsterelSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case EsterelPackage.WEAK_SUSPEND:
+      {
+        WeakSuspend weakSuspend = (WeakSuspend)theEObject;
+        T result = caseWeakSuspend(weakSuspend);
+        if (result == null) result = caseStatementContainer(weakSuspend);
+        if (result == null) result = caseStatement(weakSuspend);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case EsterelPackage.SUSTAIN:
       {
         Sustain sustain = (Sustain)theEObject;
@@ -2158,6 +2167,22 @@ public class EsterelSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseSuspend(Suspend object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Weak Suspend</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Weak Suspend</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseWeakSuspend(WeakSuspend object)
   {
     return null;
   }

@@ -106,6 +106,7 @@ import de.cau.cs.kieler.esterel.esterel.WeakAbortCase;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortEnd;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortEndAlt;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortInstance;
+import de.cau.cs.kieler.esterel.esterel.WeakSuspend;
 import de.cau.cs.kieler.esterel.kexpressions.BooleanValue;
 import de.cau.cs.kieler.esterel.kexpressions.FloatValue;
 import de.cau.cs.kieler.esterel.kexpressions.ISignal;
@@ -1008,6 +1009,18 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 				   context == grammarAccess.getWeakAbortBodyRule() ||
 				   context == grammarAccess.getWeakAbortInstanceRule()) {
 					sequence_WeakAbortInstance(context, (WeakAbortInstance) semanticObject); 
+					return; 
+				}
+				else break;
+			case EsterelPackage.WEAK_SUSPEND:
+				if(context == grammarAccess.getAtomicStatementRule() ||
+				   context == grammarAccess.getSequenceRule() ||
+				   context == grammarAccess.getSequenceAccess().getSequenceListAction_1_0() ||
+				   context == grammarAccess.getStatementRule() ||
+				   context == grammarAccess.getStatementContainerInterfaceRule() ||
+				   context == grammarAccess.getStatementAccess().getParallelListAction_1_0() ||
+				   context == grammarAccess.getWeakSuspendRule()) {
+					sequence_WeakSuspend(context, (WeakSuspend) semanticObject); 
 					return; 
 				}
 				else break;
@@ -2360,6 +2373,25 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
 		feeder.accept(grammarAccess.getWeakAbortAccess().getStatementStatementParserRuleCall_3_0(), semanticObject.getStatement());
 		feeder.accept(grammarAccess.getWeakAbortAccess().getBodyWeakAbortBodyParserRuleCall_5_0(), semanticObject.getBody());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (statement=Statement delay=DelayExpr)
+	 */
+	protected void sequence_WeakSuspend(EObject context, WeakSuspend semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, EsterelPackage.Literals.STATEMENT_CONTAINER__STATEMENT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.STATEMENT_CONTAINER__STATEMENT));
+			if(transientValues.isValueTransient(semanticObject, EsterelPackage.Literals.WEAK_SUSPEND__DELAY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.WEAK_SUSPEND__DELAY));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getWeakSuspendAccess().getStatementStatementParserRuleCall_1_0(), semanticObject.getStatement());
+		feeder.accept(grammarAccess.getWeakSuspendAccess().getDelayDelayExprParserRuleCall_3_0(), semanticObject.getDelay());
 		feeder.finish();
 	}
 }

@@ -11,7 +11,12 @@ Require-Bundle: org.eclipse.xtext.generator;bundle-version="2.1.0",
  de.cau.cs.kieler.esterel.kexpressions.ui,
  de.cau.cs.kieler.core.annotations.text.ui,
  de.cau.cs.kieler.core.kexpressions.edit;bundle-version="0.5.1",
- de.cau.cs.kieler.core.kexpressions.ui;bundle-version="0.5.1"
+ de.cau.cs.kieler.core.kexpressions.ui;bundle-version="0.5.1",
+ org.eclipse.xtext,
+ org.eclipse.xtext.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common,
+ org.antlr.runtime
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.esterel,
  de.cau.cs.kieler.esterel.esterel,
@@ -25,4 +30,4 @@ Export-Package: de.cau.cs.kieler.esterel,
  de.cau.cs.kieler.esterel.services,
  de.cau.cs.kieler.esterel.validation,
  de.cau.cs.kieler.esterel.xtend
-
+Import-Package: org.apache.log4j
