@@ -58,13 +58,7 @@ class TransformExpression {
             val sig = variables.findLast [
                 (exp.subExpressions.head as ValuedObjectReference).valuedObject.name == it.key
             ].value
-            System.out.println("transformExp: OperatorExpression " + sig)
             val sig_val = valuedMap.get(sig)
-            //TODO VAL is not translated right
-//            return KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-//                operator = opType
-//                subExpressions += createValuedObjectRef(sig_val)
-//            ]
             return createValuedObjectRef(sig_val)
         }
         
@@ -173,12 +167,6 @@ class TransformExpression {
         return createIntValue(intVal.value)
     }
 
-//    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(ConstantExpression constExp,
-//        LinkedList<Pair<String, ValuedObject>> variables) {
-//        return KExpressionsFactory::eINSTANCE.createTextExpression => [
-//            text = constExp.value
-//        ]
-//    }
 
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(FunctionExpression funcExp,
         LinkedList<Pair<String, ValuedObject>> variables) {

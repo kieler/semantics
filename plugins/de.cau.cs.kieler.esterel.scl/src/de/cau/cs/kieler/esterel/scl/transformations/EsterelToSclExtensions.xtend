@@ -81,7 +81,6 @@ class EsterelToSclExtensions {
     }
 
     def dispatch getValuedObject(LinkedList<Pair<String, ValuedObject>> variables, String n) {
-        System.out.println("N " + n + " varaibles: " + variables)
         for (variable : variables) {
             val ret = variables.findLast[key == n]
             if (ret != null)
@@ -194,7 +193,6 @@ class EsterelToSclExtensions {
       * Creates "if s then (pause;) goto l"
       */
     def Conditional ifThenGoto(Expression s, String l, boolean isImmediate) {
-        System.out.println("ExpType: " + (s))
         SclFactory::eINSTANCE.createConditional => [
             expression = s //createBoolValue(true)
             if (!isImmediate) {

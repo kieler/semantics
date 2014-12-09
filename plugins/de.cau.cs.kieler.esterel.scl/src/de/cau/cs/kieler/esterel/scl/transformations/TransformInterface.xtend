@@ -60,7 +60,6 @@ class TransformInterface {
      * Transforms an Esterel module interface to a list of Kexpression declarations
      */
     def transformInterface(ModuleInterface modInterface, SCLProgram program) {
-        System.out.println("Transforming Interface")
         if (modInterface != null) {
             val names = new LinkedList<String>
             modInterface.collectNames(names)
@@ -74,7 +73,6 @@ class TransformInterface {
      * Transforms the signal declarations
      */
     def transformSigDeclaration(EList<InterfaceSignalDecl> list, SCLProgram program, LinkedList<String> names) {
-        System.out.println("Transforming Interface Signal Declarations")
 
         for (singleDecl : list) {
             transformSingleDeclartion(singleDecl, program, names)
@@ -85,7 +83,6 @@ class TransformInterface {
      * Transforms the constant declarations
      */
     def transformConstDeclaration(EList<ConstantDecls> list, SCLProgram program, LinkedList<String> names) {
-        System.out.println("Transforming Interface Constant Declarations")
 
         for (singleDecl : list) {
             transformSingleConstDeclartion(singleDecl, program, names)
@@ -96,7 +93,6 @@ class TransformInterface {
      * Transforms the sensor declarations
      */
     def transformSensorDeclaration(EList<SensorDecl> list, SCLProgram program, LinkedList<String> names) {
-        System.out.println("Transforming Interface Sensor Declarations")
 
         for (singleDecl : list) {
             transformSingleSensorDeclartion(singleDecl, program, names)
@@ -123,7 +119,6 @@ class TransformInterface {
 
         // TODO: HOST?
         for (sig : decl.signals) {
-            System.out.println("Transforming signal " + sig)
             if (signalMap.findFirst[sig.name == key] == null) {
                 val pureSig = createValuedObject(sig.name)
 
@@ -139,8 +134,6 @@ class TransformInterface {
 
                 // Valued signals get a variable containing the value
                 if (sig.channelDescr != null) {
-                    System.out.println("Transforming valued signal type.type " + sig.channelDescr.type.type)
-                    System.out.println("Combine with: " + sig.channelDescr.type.operator)
                     val s_val = createValuedObject(uniqueNameByList(names, sig.name + "_val"))
                     s_val.combineOperator = sig.channelDescr.type.operator.transformCombineOperator
                     valuedMap.put(pureSig, s_val)
@@ -189,7 +182,6 @@ class TransformInterface {
                         s_val.initialValue = const.value.transformExp(type.toString)
                     }
 
-                    //                (boolean isInput, boolean isOutput, boolean isConstant, ValueType valType)
                     val sclDecl = transformDeclaration(
                         false,
                         false,

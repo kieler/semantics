@@ -99,6 +99,7 @@ import de.cau.cs.kieler.esterel.esterel.ProcCall
 import de.cau.cs.kieler.esterel.esterel.DoUpto
 import de.cau.cs.kieler.esterel.esterel.Do
 import de.cau.cs.kieler.esterel.esterel.DoWatching
+import de.cau.cs.kieler.esterel.esterel.WeakSuspend
 
 /**
  * @author krat
@@ -128,7 +129,10 @@ class EsterelToSclTransformation extends Transformation {
 
     // Maps valued variables to signal
     var protected HashMap<ValuedObject, ValuedObject> valuedMap
-
+    
+    // State variables for weak suspension
+    var HashMap<String, String> waStates
+    
     // Flag indicating if optimized transformations should be used
     var boolean opt
 
@@ -182,6 +186,8 @@ class EsterelToSclTransformation extends Transformation {
         signalMap = new LinkedList<Pair<String, ValuedObject>>
 
         valuedMap = new HashMap<ValuedObject, ValuedObject>()
+        
+        waStates = new HashMap<String, String>
 
         pauseTransformation = new Stack<(StatementSequence)=>StatementSequence>
         joinTransformation = new Stack<(StatementSequence)=>StatementSequence>
@@ -255,7 +261,6 @@ class EsterelToSclTransformation extends Transformation {
             if (((decl.output && !decl.input))) {
                 for (valObj : decl.valuedObjects) {
 
-                    // TODO don't do this with _val
                     if (valObj.type == ValueType::BOOL && valuedMap.values.findFirst[v|v == valObj] == null) {
                         th.statements.add(createStmFromInstr(createAssignment(valObj, createBoolValue(false))))
                     }
@@ -308,8 +313,6 @@ class EsterelToSclTransformation extends Transformation {
             sSeq.statements.add(setSignal)
             return sSeq
         }
-
-        System.out.println("Emit expr: " + emit.expr)
 
         // Valued Emit
         if (emit.expr != null) {
@@ -593,13 +596,6 @@ class EsterelToSclTransformation extends Transformation {
 
         sSeq.addGoto(l)
 
-        // TODO Remove pseudo conditional when scg unreachable code is fixed
-        //        sSeq.statements.add(
-        //            createStmFromInstr(
-        //                SclFactory::eINSTANCE.createConditional => [
-        //                    expression = createBoolValue(true)
-        //                    statements.add(createGotoStm(l))
-        //                ]))
         sSeq
     }
 
@@ -1134,7 +1130,6 @@ class EsterelToSclTransformation extends Transformation {
      * TODO several flags
      */
     def dispatch StatementSequence transformStm(Trap trap, StatementSequence sSeq) {
-        System.out.println("It's a trap")
 
         val f_s = createFreshVar(trap.trapDeclList.trapDecls.head.name, ValueType::BOOL)
         val l = createFreshLabel
@@ -1194,9 +1189,6 @@ class EsterelToSclTransformation extends Transformation {
 
         val l = exitMap.get(exit.trap).value
 
-        // Just tmp; remove if unreachable node bug fixed
-        //        sSeq.statements.add(createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
-        //            expression = createBoolValue(true)
         sSeq.statements.add(createGotoj(l, curLabel, labelMap))
 
         //        ]))
@@ -1209,6 +1201,7 @@ class EsterelToSclTransformation extends Transformation {
     def dispatch StatementSequence transformStm(Run run, StatementSequence sSeq) {
 
         // Rename signals (only if renaming happens)
+        // TODO Throw exception?
         if (run.list != null) {
             run.list.list.forEach [
                 for (renaming : renamings) {
@@ -1406,6 +1399,58 @@ class EsterelToSclTransformation extends Transformation {
 
         sSeq
     }
+    
+    /*
+     * weak suspend p when s
+     * (immediate)
+     */
+     def dispatch StatementSequence transformStm(WeakSuspend weakSuspend, StatementSequence sSeq) {
+         // Used as an unique identifier for this weak suspend instance
+         val l = createFreshLabel
+         labelMap.put(curLabel, l)
+         sSeq.addLabel(l)
+         waStates.put(l, l)
+         
+         val f_ws = createFreshVar("f_ws", ValueType::BOOL)
+        
+         pauseTransformation.push [ StatementSequence seq |
+            seq.statements.add(0, createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
+                expression = weakSuspend.delay.event.expr.transformExp(signalMap)
+                statements += createAssignment(f_ws, createBoolValue(true)).createStmFromInstr
+            ]))
+            seq.statements.add(0, createAssignment(f_ws, createBoolValue(false)).createStmFromInstr)
+            
+            seq.add(SclFactory::eINSTANCE.createConditional => [
+                expression = f_ws.createValuedObjectRef
+                statements += createStmFromInstr(SclFactory::eINSTANCE.createGoto => [ 
+                    targetLabel = waStates.get(l)
+                ])
+                
+            ])
+            val lNew = createFreshLabel
+            labelMap.put(curLabel, lNew)
+            waStates.put(l, lNew)
+            seq.addLabel(lNew)
+            
+            seq
+        ]
+        
+        joinTransformation.push [ StatementSequence seq |
+            seq.statements.add(0, createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
+                expression = f_ws.createValuedObjectRef
+                statements += createGotoj(waStates.get(l), curLabel, labelMap)
+            ]))
+            
+            seq
+        ]
+        
+         weakSuspend.statement.transformStm(sSeq)
+         
+         pauseTransformation.pop
+         joinTransformation.pop
+         
+         sSeq
+     }
 
     override getDependencies() {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")
