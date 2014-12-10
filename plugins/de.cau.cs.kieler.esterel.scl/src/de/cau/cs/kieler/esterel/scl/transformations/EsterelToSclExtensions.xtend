@@ -53,6 +53,7 @@ import de.cau.cs.kieler.esterel.esterel.Run
 import de.cau.cs.kieler.esterel.esterel.LocalVariable
 import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.esterel.esterel.Suspend
+import de.cau.cs.kieler.esterel.kexpressions.Signal
 
 /**
  * @author krat
@@ -409,34 +410,35 @@ class EsterelToSclExtensions {
                     subExpressions += createIntValue(1)
                 ]))
     }
-
-}
-
-/*
- * Represents a preemptive hull, can be used to be put on a stack to keep track of nested
- * preemptive statements.
- */
-public class PreemptiveElement {
-    public String type;
-    public String endLabel;
-    public de.cau.cs.kieler.esterel.kexpressions.Expression expression;
-    public ValuedObject flag1;
-    public ValuedObject flag2;
-
+    
     /*
-     * Constructs new PreemptiveElement
-     * @param t String representation of the type of the preemptive statement
-     * @param l Optional label representing where to jump to, if preemption happens. null if none
-     * @param expr Esterel expression denoting when preemption happens
-     * @param f1 Optional flag. null if none
-     * @param f2 Optional flag. null if none
+     * Checks for valid names. The suffix "_val" is reserved fo valued signals.
      */
-    public new(String t, String l, de.cau.cs.kieler.esterel.kexpressions.Expression expr, ValuedObject f1,
-        ValuedObject f2) {
-        type = t
-        endLabel = l
-        expression = expr
-        flag1 = f1
-        flag2 = f2
+    def boolean validateNames(Program esterelProgram) {
+        esterelProgram.modules.forEach [
+            interface.intSignalDecls.forEach [
+                signals.forEach [
+                   if (it.name.endsWith("_val"))
+                        throw new IllegalArgumentException("Variables should not have the suffix _val") 
+                ]
+            ]
+            interface.intSensorDecls.forEach [
+                sensors.forEach [
+                   if (it.sensor.name.endsWith("_val"))
+                        throw new IllegalArgumentException("Variables should not have the suffix _val") 
+                ]
+            ]
+            interface.intConstantDecls.forEach [
+                constants.forEach [
+                    it.constants.forEach [
+                   if (it.constant.name.endsWith("_val"))
+                        throw new IllegalArgumentException("Variables should not have the suffix _val") 
+                        ]
+                ]
+            ]
+        ]
+        
+        return true;
     }
+
 }

@@ -168,7 +168,7 @@ class EsterelToSclTransformation extends Transformation {
 
         //        currProgram = esterelProgram
         // Label at the end of the currently transformed thread if not root thread
-        curLabel = null
+        curLabel = "root"
 
         // Multimap containing information if certain label is in a thread
         labelMap = HashMultimap.create()
@@ -192,6 +192,9 @@ class EsterelToSclTransformation extends Transformation {
         pauseTransformation = new Stack<(StatementSequence)=>StatementSequence>
         joinTransformation = new Stack<(StatementSequence)=>StatementSequence>
 
+        // Check if naming conventions are satisfied
+        esterelProgram.validateNames
+        
         // Does the program terminate?
         var boolean termTmp = true
         if (opt) {
@@ -212,6 +215,7 @@ class EsterelToSclTransformation extends Transformation {
 
         // Body transformations
         val sSeq = SclFactory::eINSTANCE.createStatementSequence
+        sSeq.addLabel("root")
         esterelMod.body.statements.forEach[transformStm(sSeq)]
 
         // Add local variable declarations
@@ -1400,57 +1404,56 @@ class EsterelToSclTransformation extends Transformation {
         sSeq
     }
     
-    /*
-     * weak suspend p when s
-     * (immediate)
-     */
-     def dispatch StatementSequence transformStm(WeakSuspend weakSuspend, StatementSequence sSeq) {
-         // Used as an unique identifier for this weak suspend instance
-         val l = createFreshLabel
-         labelMap.put(curLabel, l)
-         sSeq.addLabel(l)
-         waStates.put(l, l)
-         
-         val f_ws = createFreshVar("f_ws", ValueType::BOOL)
-        
-         pauseTransformation.push [ StatementSequence seq |
-            seq.statements.add(0, createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
-                expression = weakSuspend.delay.event.expr.transformExp(signalMap)
-                statements += createAssignment(f_ws, createBoolValue(true)).createStmFromInstr
-            ]))
-            seq.statements.add(0, createAssignment(f_ws, createBoolValue(false)).createStmFromInstr)
-            
-            seq.add(SclFactory::eINSTANCE.createConditional => [
-                expression = f_ws.createValuedObjectRef
-                statements += createStmFromInstr(SclFactory::eINSTANCE.createGoto => [ 
-                    targetLabel = waStates.get(l)
-                ])
-                
-            ])
-            val lNew = createFreshLabel
-            labelMap.put(curLabel, lNew)
-            waStates.put(l, lNew)
-            seq.addLabel(lNew)
-            
-            seq
-        ]
-        
-        joinTransformation.push [ StatementSequence seq |
-            seq.statements.add(0, createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
-                expression = f_ws.createValuedObjectRef
-                statements += createGotoj(waStates.get(l), curLabel, labelMap)
-            ]))
-            
-            seq
-        ]
-        
-         weakSuspend.statement.transformStm(sSeq)
-         
-         pauseTransformation.pop
-         joinTransformation.pop
-         
-         sSeq
-     }
+//    /*
+//     * weak suspend p when s
+//     * (immediate)
+//     */
+//     def dispatch StatementSequence transformStm(WeakSuspend weakSuspend, StatementSequence sSeq) {
+//         // Used as an unique identifier for this weak suspend instance
+//         val l = createFreshLabel
+//         labelMap.put(curLabel, l)
+//         sSeq.addLabel(l)
+//         waStates.put(l, l -> l)
+//         
+//         val f_ws = createFreshVar("f_ws", ValueType::BOOL)
+//        
+//         pauseTransformation.push [ StatementSequence seq |
+//            seq.statements.add(0, createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
+//                expression = weakSuspend.delay.event.expr.transformExp(signalMap)
+//                statements += createAssignment(f_ws, createBoolValue(true)).createStmFromInstr
+//            ]))
+//            seq.statements.add(0, createAssignment(f_ws, createBoolValue(false)).createStmFromInstr)
+//            
+//            seq.add(SclFactory::eINSTANCE.createConditional => [
+//                expression = f_ws.createValuedObjectRef
+//                statements += createGotoj(waStates.get(l).key, curLabel, labelMap)
+//                
+//            ])
+//            val lNew = createFreshLabel
+//            labelMap.put(curLabel, lNew)
+//            waStates.put(l, waStates.get(l).value -> lNew)
+//            seq.addLabel(lNew)
+//            
+//            seq
+//        ]
+//        
+//        joinTransformation.push [ StatementSequence seq |
+//            seq.statements.add(0, createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
+//                expression = f_ws.createValuedObjectRef
+//                statements += createGotoj(waStates.get(l).key, curLabel, labelMap)
+//            ]))
+//            
+//            seq
+//        ]
+//        
+//         weakSuspend.statement.transformStm(sSeq)
+//         
+//         pauseTransformation.pop
+//         joinTransformation.pop
+//         
+//         sSeq
+//     }
+
 
     override getDependencies() {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")

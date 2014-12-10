@@ -144,12 +144,19 @@ class TransformInterface {
                     } else if (sig.channelDescr.expression != null) {
                         s_val.initialValue = sig.channelDescr.expression.transformExp(signalMap)
                     }
+                    var ValueType t
+                    // Check for hostcode type
+                    if (sig.type.name == "PURE" && sig.channelDescr.type.typeID != null) {
+                        t = ValueType::HOST
+                    } else {
+                        t = ValueType::getByName(type.name)
+                    }
 
                     val sclDecl = transformDeclaration(
                         (decl instanceof Input) || (decl instanceof InputOutput),
                         (decl instanceof Output) || (decl instanceof InputOutput),
                         false,
-                        ValueType::getByName(type.name)
+                        t
                     )
                     sclDecl.valuedObjects += s_val
 
@@ -312,5 +319,5 @@ class TransformInterface {
 
         names
     }
-
+    
 }
