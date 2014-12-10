@@ -71,7 +71,7 @@ class SCGToSTransformation {
 
         val Program sProgram = SFactory::eINSTANCE.createProgram
         sProgram.priority = 1
-        sProgram.name = "S"
+        sProgram.name = if (!scg.label.nullOrEmpty) scg.label else "S"
         
         val hostcodeAnnotations = scg.getStringAnnotations(ANNOTATION_HOSTCODE)
         hostcodeAnnotations.forEach[

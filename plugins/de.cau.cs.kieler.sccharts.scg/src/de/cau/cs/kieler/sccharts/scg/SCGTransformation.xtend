@@ -187,7 +187,9 @@ class SCGTransformation {
         stateTypeCache.clear
         uniqueNameCache.clear        
         // Create a new SCGraph
-        val sCGraph = ScgFactory::eINSTANCE.createSCGraph
+        val sCGraph = ScgFactory::eINSTANCE.createSCGraph => [
+            label = if (!rootState.label.nullOrEmpty) rootState.label else rootState.id
+        ]
         // Handle declarations
 //        for (valuedObject : state.valuedObjects) {
 //            val valuedObjectSCG = sCGraph.createValuedObject(valuedObject.name)

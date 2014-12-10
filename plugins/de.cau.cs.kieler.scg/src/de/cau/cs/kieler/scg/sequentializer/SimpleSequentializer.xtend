@@ -144,6 +144,7 @@ class SimpleSequentializer extends AbstractSequentializer {
          */
         val newSCG = ScgFactory::eINSTANCE.createSCGraph => [
         	annotations += createStringAnnotation(ANNOTATION_SEQUENTIALIZED, "")
+        	label = scg.label
         ]
         val hostcodeAnnotations = scg.getStringAnnotations(ANNOTATION_HOSTCODE)
         hostcodeAnnotations.forEach[
