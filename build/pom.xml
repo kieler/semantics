@@ -10,8 +10,10 @@
 
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
-    <tycho-version>0.18.1</tycho-version>
+    <tycho-version>0.21.0</tycho-version>
+    <xtend-version>2.7.2</xtend-version>
     <targetJdk>1.5</targetJdk>
+	
 
     <!-- chsch: copied from https://eclipse.googlesource.com/recommenders/org.eclipse.recommenders/+/3dae4575d3370da2da25a1cbce3dfcff198f0611/features/pom.xml -->
     <!-- Non-breakable space, as normal spaces are trimmed. -->
@@ -376,7 +378,7 @@
         <plugin>
           <groupId>org.eclipse.xtend</groupId>
           <artifactId>xtend-maven-plugin</artifactId>
-          <version>2.4.2</version>
+          <version>${xtend-version}</version>
           <configuration>
             <outputDirectory>${basedir}/xtend-gen</outputDirectory>
           </configuration>
