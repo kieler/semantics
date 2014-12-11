@@ -35,9 +35,14 @@
       
       <repositories>
         <repository>
-          <id>p2.kepler43</id>
+          <id>p2.target</id>
           <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/kepler43/</url>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441/</url>
+        </repository>
+        <repository>
+          <id>p2.target.delta</id>
+          <layout>p2</layout>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441_delta/</url>
         </repository>
       </repositories>
 
@@ -53,9 +58,14 @@
       
       <repositories>
         <repository>
-          <id>p2.kepler43</id>
+          <id>p2.target</id>
           <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/kepler43/</url>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441/</url>
+        </repository>
+        <repository>
+          <id>p2.target.delta</id>
+          <layout>p2</layout>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441_delta/</url>
         </repository>
 <!--        <repository>
           <id>p2.guava</id>
@@ -97,9 +107,14 @@
 
       <repositories>
         <repository>
-          <id>p2.kepler43</id>
+          <id>p2.target</id>
           <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/kepler43/</url>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441/</url>
+        </repository>
+        <repository>
+          <id>p2.target.delta</id>
+          <layout>p2</layout>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441_delta/</url>
         </repository>
         <!-- repository>
           <id>p2.guava</id>
@@ -135,9 +150,14 @@
           <url>http://guava-osgi.googlecode.com/svn/trunk/repository/</url>
         </repository -->
         <repository>
-          <id>p2.kepler43</id>
+          <id>p2.target</id>
           <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/kepler43/</url>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441/</url>
+        </repository>
+        <repository>
+          <id>p2.target.delta</id>
+          <layout>p2</layout>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441_delta/</url>
         </repository>
         <repository>
           <id>p2.kieler-pragmatics</id>
@@ -173,9 +193,14 @@
           <url>http://guava-osgi.googlecode.com/svn/trunk/repository/</url>
         </repository -->
         <repository>
-          <id>p2.kepler43</id>
+          <id>p2.target</id>
           <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/kepler43/</url>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441/</url>
+        </repository>
+        <repository>
+          <id>p2.target.delta</id>
+          <layout>p2</layout>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441_delta/</url>
         </repository>
         <repository>
           <id>p2.kieler-pragmatics</id>
