@@ -131,7 +131,7 @@ class EsterelToSclTransformation extends Transformation {
     var protected HashMap<ValuedObject, ValuedObject> valuedMap
     
     // State variables for weak suspension
-    var HashMap<String, String> waStates
+    var LinkedList<Pair<Integer, String>> waStates
     
     // Flag indicating if optimized transformations should be used
     var boolean opt
@@ -187,7 +187,7 @@ class EsterelToSclTransformation extends Transformation {
 
         valuedMap = new HashMap<ValuedObject, ValuedObject>()
         
-        waStates = new HashMap<String, String>
+        waStates = new LinkedList<Pair<Integer, String>>
 
         pauseTransformation = new Stack<(StatementSequence)=>StatementSequence>
         joinTransformation = new Stack<(StatementSequence)=>StatementSequence>
@@ -1453,6 +1453,91 @@ class EsterelToSclTransformation extends Transformation {
 //         
 //         sSeq
 //     }
+
+    /*
+     * weak suspend p when s
+     * (immediate)
+     */
+     def dispatch StatementSequence transformStm(WeakSuspend weakSuspend, StatementSequence sSeq) {
+         val state = createFreshVar("state", ValueType::INT)
+         if (weakSuspend.delay.isImmediate) {
+             val l = createFreshLabel
+             labelMap.put(curLabel, l)
+             waStates.add(0 -> l)
+             sSeq.add(createAssignment(state, 0.createIntValue))
+             sSeq.addLabel(l)
+         }
+
+         val f_wa = createFreshVar("f_wa", ValueType::BOOL)
+         f_wa.initialValue = createBoolValue(true)
+        
+         pauseTransformation.push [ StatementSequence seq |
+            seq.statements.add(0, createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
+                expression = weakSuspend.delay.event.expr.transformExp(signalMap)
+                statements += createAssignment(f_wa, createBoolValue(true)).createStmFromInstr
+                for (waState : waStates) {
+                    statements += createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
+                        expression = createEquals(state.createValuedObjectRef, createIntValue(waState.key))
+                        statements += createGotoj(waState.value, curLabel, labelMap)
+                    ])
+                }
+                elseStatements += createStmFromInstr(createAssignment(state, waStates.length.createIntValue))
+                val lNew = createFreshLabel
+                labelMap.put(curLabel, lNew)
+                waStates.add(waStates.length + 1 -> lNew)
+                elseStatements += createEmptyStm(lNew)
+                ]
+            ))
+            
+            seq.add(createAssignment(f_wa, createBoolValue(false)))
+            
+            
+            
+            seq
+        ]
+        
+        joinTransformation.push [ StatementSequence seq |
+            seq.statements.add(0, createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
+                expression = f_wa.createValuedObjectRef
+                for (waState : waStates) {
+                    statements += createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
+                        expression = createEquals(state.createValuedObjectRef, createIntValue(waState.key))
+                        statements += createGotoj(waState.value, curLabel, labelMap)
+                    ])
+                }
+                ]
+            ))
+            
+            seq
+        ]
+        
+         weakSuspend.statement.transformStm(sSeq)
+         
+         pauseTransformation.pop
+         joinTransformation.pop
+         
+         // At the end of the suspend body also suspension may happen
+         // TODO instant body does need a pause...
+         sSeq.add(SclFactory::eINSTANCE.createConditional => [
+                expression = weakSuspend.delay.event.expr.transformExp(signalMap)
+                if (weakSuspend.delay.isImmediate) {
+                statements += createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
+                        expression = createEquals(state.createValuedObjectRef, createIntValue(0))
+                        statements += createSclPause.statements
+                        statements += createGotoj(waStates.get(0).value, curLabel, labelMap)
+                    ])}
+                for (waState : waStates.tail) {
+                    statements += createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
+                        expression = createEquals(state.createValuedObjectRef, createIntValue(waState.key))
+                        statements += createGotoj(waState.value, curLabel, labelMap)
+                    ]
+                    )
+                }
+                ]
+                )
+         
+         sSeq
+     }
 
 
     override getDependencies() {

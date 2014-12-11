@@ -284,6 +284,19 @@ class EsterelToSclExtensions {
             subExpressions.add(arg2)
         ]
     }
+    
+    /*
+         * Create an Equals expression
+         * @param arg1 first argument
+         * @param arg2 second argument
+         */
+    def createEquals(Expression arg1, Expression arg2) {
+        KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+            operator = OperatorType::EQ
+            subExpressions.add(arg1)
+            subExpressions.add(arg2)
+        ]
+    }
 
     /*
           * Adds an instruction to a StatementSeqeuence
