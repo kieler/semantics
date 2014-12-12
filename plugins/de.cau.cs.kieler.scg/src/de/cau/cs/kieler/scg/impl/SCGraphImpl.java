@@ -11,10 +11,12 @@ import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scg.ScgPackage;
 import de.cau.cs.kieler.scg.Schedule;
 import java.util.Collection;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -30,6 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getBasicBlocks <em>Basic Blocks</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getSchedules <em>Schedules</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getGuards <em>Guards</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getLabel <em>Label</em>}</li>
  * </ul>
  * </p>
  *
@@ -85,6 +88,26 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
      * @ordered
      */
     protected EList<Guard> guards;
+
+    /**
+     * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getLabel()
+     * @generated
+     * @ordered
+     */
+    protected static final String LABEL_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getLabel()
+     * @generated
+     * @ordered
+     */
+    protected String label = LABEL_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -170,6 +193,27 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getLabel() {
+        return label;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setLabel(String newLabel) {
+        String oldLabel = label;
+        label = newLabel;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.SC_GRAPH__LABEL, oldLabel, label));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -205,6 +249,8 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
                 return getSchedules();
             case ScgPackage.SC_GRAPH__GUARDS:
                 return getGuards();
+            case ScgPackage.SC_GRAPH__LABEL:
+                return getLabel();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -238,6 +284,9 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
                 getGuards().clear();
                 getGuards().addAll((Collection<? extends Guard>)newValue);
                 return;
+            case ScgPackage.SC_GRAPH__LABEL:
+                setLabel((String)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -265,6 +314,9 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
             case ScgPackage.SC_GRAPH__GUARDS:
                 getGuards().clear();
                 return;
+            case ScgPackage.SC_GRAPH__LABEL:
+                setLabel(LABEL_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -287,8 +339,26 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
                 return schedules != null && !schedules.isEmpty();
             case ScgPackage.SC_GRAPH__GUARDS:
                 return guards != null && !guards.isEmpty();
+            case ScgPackage.SC_GRAPH__LABEL:
+                return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (label: ");
+        result.append(label);
+        result.append(')');
+        return result.toString();
     }
 
 } //SCGraphImpl

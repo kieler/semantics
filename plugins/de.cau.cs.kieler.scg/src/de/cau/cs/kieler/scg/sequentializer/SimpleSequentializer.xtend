@@ -49,6 +49,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
 import de.cau.cs.kieler.scg.synchronizer.SynchronizerData
+import de.cau.cs.kieler.core.annotations.StringAnnotation
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -95,6 +96,7 @@ class SimpleSequentializer extends AbstractSequentializer {
     // -------------------------------------------------------------------------
     
     public static val ANNOTATION_SEQUENTIALIZED = "sequentialized" 
+    private static val String ANNOTATION_HOSTCODE = "hostcode"
     
     protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
     protected var KielerCompilerContext compilerContext
@@ -142,7 +144,12 @@ class SimpleSequentializer extends AbstractSequentializer {
          */
         val newSCG = ScgFactory::eINSTANCE.createSCGraph => [
         	annotations += createStringAnnotation(ANNOTATION_SEQUENTIALIZED, "")
+        	label = scg.label
         ]
+        val hostcodeAnnotations = scg.getStringAnnotations(ANNOTATION_HOSTCODE)
+        hostcodeAnnotations.forEach[
+            newSCG.addAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).value)
+        ]        
         schizoDeclaration = createDeclaration=>[ setType(ValueType::BOOL) ]
 		val predecessorList = <Predecessor> newArrayList
 		val basicBlockList = <BasicBlock> newArrayList

@@ -436,7 +436,8 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 				}
 				else break;
 			case SPackage.PROGRAM:
-				if(context == grammarAccess.getProgramRule()) {
+				if(context == grammarAccess.getMetamodelManipulationRuleRule() ||
+				   context == grammarAccess.getProgramRule()) {
 					sequence_Program(context, (Program) semanticObject); 
 					return; 
 				}
@@ -495,6 +496,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	/**
 	 * Constraint:
 	 *     (
+	 *         annotations+=Annotation* 
 	 *         (
 	 *             (
 	 *                 extern?='extern'? 
@@ -630,7 +632,14 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (name=ID priority=INT declarations+=Declaration* globalHostCodeInstruction=HOSTCODE? states+=State+)
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         name=ID 
+	 *         priority=INT 
+	 *         declarations+=Declaration* 
+	 *         globalHostCodeInstruction=HOSTCODE? 
+	 *         states+=State+
+	 *     )
 	 */
 	protected void sequence_Program(EObject context, Program semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -639,7 +648,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (name=ID declarations+=Declaration* instructions+=Instruction*)
+	 *     (annotations+=Annotation* name=ID declarations+=Declaration* instructions+=Instruction*)
 	 */
 	protected void sequence_State(EObject context, State semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -673,7 +682,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (name=ID cardinalities+=INT* initialValue=Expression? combineOperator=CombineOperator?)
+	 *     (annotations+=Annotation* name=ID cardinalities+=INT* initialValue=Expression? combineOperator=CombineOperator?)
 	 */
 	protected void sequence_ValuedObject(EObject context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

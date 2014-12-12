@@ -10,8 +10,10 @@
 
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
-    <tycho-version>0.18.1</tycho-version>
+    <tycho-version>0.21.0</tycho-version>
+    <xtend-version>2.7.2</xtend-version>
     <targetJdk>1.5</targetJdk>
+	
 
     <!-- chsch: copied from https://eclipse.googlesource.com/recommenders/org.eclipse.recommenders/+/3dae4575d3370da2da25a1cbce3dfcff198f0611/features/pom.xml -->
     <!-- Non-breakable space, as normal spaces are trimmed. -->
@@ -33,9 +35,14 @@
       
       <repositories>
         <repository>
-          <id>p2.kepler43</id>
+          <id>p2.target</id>
           <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/kepler43/</url>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441/</url>
+        </repository>
+        <repository>
+          <id>p2.target.delta</id>
+          <layout>p2</layout>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441_delta/</url>
         </repository>
       </repositories>
 
@@ -51,9 +58,14 @@
       
       <repositories>
         <repository>
-          <id>p2.kepler43</id>
+          <id>p2.target</id>
           <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/kepler43/</url>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441/</url>
+        </repository>
+        <repository>
+          <id>p2.target.delta</id>
+          <layout>p2</layout>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441_delta/</url>
         </repository>
 <!--        <repository>
           <id>p2.guava</id>
@@ -95,9 +107,14 @@
 
       <repositories>
         <repository>
-          <id>p2.kepler43</id>
+          <id>p2.target</id>
           <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/kepler43/</url>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441/</url>
+        </repository>
+        <repository>
+          <id>p2.target.delta</id>
+          <layout>p2</layout>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441_delta/</url>
         </repository>
         <!-- repository>
           <id>p2.guava</id>
@@ -133,9 +150,14 @@
           <url>http://guava-osgi.googlecode.com/svn/trunk/repository/</url>
         </repository -->
         <repository>
-          <id>p2.kepler43</id>
+          <id>p2.target</id>
           <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/kepler43/</url>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441/</url>
+        </repository>
+        <repository>
+          <id>p2.target.delta</id>
+          <layout>p2</layout>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441_delta/</url>
         </repository>
         <repository>
           <id>p2.kieler-pragmatics</id>
@@ -171,9 +193,14 @@
           <url>http://guava-osgi.googlecode.com/svn/trunk/repository/</url>
         </repository -->
         <repository>
-          <id>p2.kepler43</id>
+          <id>p2.target</id>
           <layout>p2</layout>
-          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/kepler43/</url>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441/</url>
+        </repository>
+        <repository>
+          <id>p2.target.delta</id>
+          <layout>p2</layout>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/repository/luna441_delta/</url>
         </repository>
         <repository>
           <id>p2.kieler-pragmatics</id>
@@ -376,7 +403,7 @@
         <plugin>
           <groupId>org.eclipse.xtend</groupId>
           <artifactId>xtend-maven-plugin</artifactId>
-          <version>2.4.2</version>
+          <version>${xtend-version}</version>
           <configuration>
             <outputDirectory>${basedir}/xtend-gen</outputDirectory>
           </configuration>
