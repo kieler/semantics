@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
+import de.cau.cs.kieler.core.annotations.Annotation;
+
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 
 import de.cau.cs.kieler.s.s.Instruction;
@@ -31,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.StateImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.StateImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.StateImpl#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.StateImpl#getInstructions <em>Instructions</em>}</li>
@@ -41,6 +44,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class StateImpl extends MinimalEObjectImpl.Container implements State
 {
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
+
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -107,6 +120,20 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, SPackage.STATE__ANNOTATIONS);
+    }
+    return annotations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public String getName()
   {
     return name;
@@ -163,6 +190,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
+      case SPackage.STATE__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case SPackage.STATE__DECLARATIONS:
         return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
       case SPackage.STATE__INSTRUCTIONS:
@@ -181,6 +210,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
+      case SPackage.STATE__ANNOTATIONS:
+        return getAnnotations();
       case SPackage.STATE__NAME:
         return getName();
       case SPackage.STATE__DECLARATIONS:
@@ -202,6 +233,10 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
+      case SPackage.STATE__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
       case SPackage.STATE__NAME:
         setName((String)newValue);
         return;
@@ -227,6 +262,9 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
+      case SPackage.STATE__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
       case SPackage.STATE__NAME:
         setName(NAME_EDEFAULT);
         return;
@@ -250,6 +288,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
+      case SPackage.STATE__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
       case SPackage.STATE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case SPackage.STATE__DECLARATIONS:

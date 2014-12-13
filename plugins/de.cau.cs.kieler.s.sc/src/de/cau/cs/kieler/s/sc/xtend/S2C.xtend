@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2011 by
+ * Copyright 2014 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -76,7 +76,7 @@ class S2C {
        	]    
       val code = '''
 «/* Generate the C header */»
-       «scHeader(program)»
+       «header(program)»
 
        «/* Possible global host code */»
        «if (program.globalHostCodeInstruction != null) {
@@ -96,7 +96,7 @@ class S2C {
    // -------------------------------------------------------------------------   
    
    // Generate the C header.
-   def scHeader(Program program) {
+   def header(Program program) {
        '''
     /*****************************************************************************/
     /*                 G E N E R A T E D       C    C O D E                      */
@@ -147,21 +147,6 @@ class S2C {
 
    
    def boolean usesPre(Program program, ValuedObject valuedObject) {
-//       val foundPres = program.cachedFoundPres
-//       for (pre : foundPres) {
-//           for (subExpression : pre.subExpressions) {
-//               if (subExpression instanceof ValuedObjectReference) {
-//                   if ((subExpression as ValuedObjectReference).valuedObject == valuedObject) {
-//                       return true
-//                   }
-//               }
-//               val found = subExpression.cachedFound.filter(e | e.valuedObject == valuedObject).toList
-//             if (found.size > 0) {
-//                   return true
-//               }
-//           }
-//       } 
-//       return false
 		preCache.contains(valuedObject)
    }
 
@@ -240,7 +225,6 @@ class S2C {
    // Generate the  tick function.
    def sTickFunction(Program program) {
        '''    void tick(){
-       g0 = _GO;
        «FOR state : program.states»
        «state.expand»
        «ENDFOR»

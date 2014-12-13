@@ -215,13 +215,22 @@ public interface ScgPackage extends EPackage {
     int SC_GRAPH__GUARDS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_GRAPH__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+
+    /**
      * The number of structural features of the '<em>SC Graph</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SC_GRAPH_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+    int SC_GRAPH_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1860,6 +1869,17 @@ public interface ScgPackage extends EPackage {
     EReference getSCGraph_Guards();
 
     /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.SCGraph#getLabel <em>Label</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Label</em>'.
+     * @see de.cau.cs.kieler.scg.SCGraph#getLabel()
+     * @see #getSCGraph()
+     * @generated
+     */
+    EAttribute getSCGraph_Label();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Entry <em>Entry</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2580,6 +2600,14 @@ public interface ScgPackage extends EPackage {
          * @generated
          */
         EReference SC_GRAPH__GUARDS = eINSTANCE.getSCGraph_Guards();
+
+        /**
+         * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute SC_GRAPH__LABEL = eINSTANCE.getSCGraph_Label();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.EntryImpl <em>Entry</em>}' class.

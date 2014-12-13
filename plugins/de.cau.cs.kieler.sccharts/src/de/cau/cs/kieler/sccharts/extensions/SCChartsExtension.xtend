@@ -203,6 +203,11 @@ class SCChartsExtension {
         region.parentState.getRootState
     }
 
+    // Returns true iff the state contains regions.
+    def boolean isHierarchical(State state) {
+        state.regions.size > 0;
+    }    
+
     
     def State createSCChart() {
          SCChartsFactory::eINSTANCE.createState

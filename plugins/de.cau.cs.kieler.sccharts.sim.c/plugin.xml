@@ -6,7 +6,7 @@
       <content
             class="de.cau.cs.kieler.sccharts.sim.c.SCChartsCDataComponent"
             id="de.cau.cs.kieler.sccharts.sim.c"
-            name="SCCharts Simulator (C)">
+            name="SCCharts / SCG Simulator (C)">
       </content>
    </extension>
    <extension
@@ -18,6 +18,16 @@
                name="Textual SCCharts (SCT) Editor"
                priority="100">
          </editor>
+         <editor
+               id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
+               name="SCG (Tree) Editor"
+               priority="100">
+         </editor>
+         <editor
+               id=" de.cau.cs.kieler.scl.SCL"
+               name="SCL (Textual) Editor"
+               priority="100">
+         </editor>
       </executionFile>
       <executionFile
             file="execution/sccharts_c_no_visualization.execution">
@@ -25,6 +35,16 @@
                id="de.cau.cs.kieler.sccharts.text.sct.Sct"
                name="Textual SCCharts (SCT) Editor"
                priority="99">
+         </editor>
+         <editor
+               id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
+               name="SCG (Tree) Editor"
+               priority="101">
+         </editor>
+         <editor
+               id=" de.cau.cs.kieler.scl.SCL"
+               name="SCL (Textual) Editor"
+               priority="101">
          </editor>
       </executionFile>
    </extension>
@@ -42,7 +62,7 @@
             id="SCCHARTS_SIMULATION"
             isCategory="false"
             isFeatureGroup="false"
-            name="SSCharts Simulation"
+            name="SCCharts Simulation"
             transformations="SCCHARTS_SIMULATION_NO_VISUALIZATION, SCCHARTS_SIMULATION_VISUALIZATION">
       </transformationGroup>
       <transformationMethod

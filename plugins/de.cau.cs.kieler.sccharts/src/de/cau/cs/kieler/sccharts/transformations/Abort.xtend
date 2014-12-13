@@ -324,10 +324,14 @@ class Abort {
             // or a delayed termination
             val notCoreTerminations = outgoingTransitions.filter[e|(e.typeTermination && (!(e.immediate2) || (e.trigger != null)))]
             val delayedWeekAborts  = outgoingTransitions.filter[e|e.typeWeakAbort && !e.immediate2]
+            val finalStates = state.regions.filter[e|e.states.filter[ee|ee.final].size > 0].size > 0
+            val termination = outgoingTransitions.filter[e|e.typeTermination && e.trigger == null].size > 0
             
-            val terminationHandlingNeeded = (notCoreTerminations.size > 0)
+            val terminationHandlingNeeded = (notCoreTerminations.size > 0) 
             val delayedWeakAbortHandlingNeeded = (delayedWeekAborts.size > 0)
-            val needCtrlRegion = terminationHandlingNeeded||delayedWeakAbortHandlingNeeded
+            val anyFinalStatesButNoTermination = finalStates && !termination 
+            val needCtrlRegion = terminationHandlingNeeded||delayedWeakAbortHandlingNeeded||anyFinalStatesButNoTermination
+            
  
             // .. || stateHasUntransformedTransitions : for conditional terminations!
             if (stateHasUntransformedAborts || stateHasUntransformedTransitions) {
@@ -422,9 +426,11 @@ class Abort {
                 // we do not need a ctrlRegion iff there are no conditional terminations or
                 // delayed terminations
                 for (transition : outgoingTransitions) {
-                    if ((transition.typeTermination && (!(transition.immediate2) || (transition.trigger != null)))
-                        ||
-                        (transition.typeWeakAbort && !transition.immediate2)) {
+                    if (needCtrlRegion) {
+                        //(transition.typeTermination && (!(transition.immediate2) || (transition.trigger != null)))
+                        //||
+                        //(transition.typeWeakAbort && !transition.immediate2)) {
+                        
                         // Create a ctrlTransition in the ctrlRegion
                         val ctrlTransition = runState.createTransitionTo(doneState)
                         if (transition.immediate2) {
@@ -438,14 +444,19 @@ class Abort {
                             } else {
                                 ctrlTransition.setTrigger(terminationTrigger.copy)
                             }
-                        } else {
-                            // in this case we have to take care of getting the auxiliary variable for the
-                            // original delayed weak abort trigger
+                        } else  {
+                            // this is the fallback were we copy in a NO WTO fashion the triggers
                             ctrlTransition.setTrigger(transition.trigger.copy)
-                            // Get the _transitionTrigger that was created earlier
-                            val transitionTriggerVariable = transitionTriggerVariableMapping.get(transition)
-                            ctrlTransition.addEffect(transitionTriggerVariable.assign(TRUE))
+                            
+                            if (transition.typeWeakAbort && !transition.immediate2) {
+                               // in this case we have to take care of getting the auxiliary variable for the
+                               // original delayed weak abort trigger
+                               // Get the _transitionTrigger that was created earlier
+                               val transitionTriggerVariable = transitionTriggerVariableMapping.get(transition)
+                               ctrlTransition.addEffect(transitionTriggerVariable.assign(TRUE))
+                            }
                         }
+                        
                     }
                 }
 

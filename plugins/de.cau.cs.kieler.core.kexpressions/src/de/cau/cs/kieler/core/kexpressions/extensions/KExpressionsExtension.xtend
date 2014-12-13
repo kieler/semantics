@@ -41,21 +41,16 @@ import java.util.List
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class KExpressionsExtension {
-    
+
     //    public val Injector i = ActionsStandaloneSetup::doSetup();
     //    public val ActionsScopeProvider scopeProvider = i.getInstance(typeof(ActionsScopeProvider));
     //    public val ISerializer serializer = i.getInstance(typeof(ISerializer));
     // -------------------------------------------------------------------------   
-
-
-
     //=======  SYNC MEETING DEMO  ======
-
     // Return the type of the ValuedObject.
     def public ValueType getType(ValuedObject valuedObject) {
         valuedObject.declaration.type
     }
-
 
     // Set the type of a ValuedObject. 
     def public ValuedObject setType(ValuedObject valuedObject, ValueType type) {
@@ -63,8 +58,7 @@ class KExpressionsExtension {
         uniqueDeclaration.setType(type)
         valuedObject;
     }
-    
-    
+
     // Helper method for Setter-Wrapper. It returns the direct Declaration of a ValuedObject
     // if there are no other ValuedObjects in this group. Otherwise it creates and returns
     // a new Declaration and removes the ValuedObject from the old one, adding it to the 
@@ -72,11 +66,14 @@ class KExpressionsExtension {
     def public Declaration getUniqueDeclaration(ValuedObject valuedObject) {
         val declaration = valuedObject.declarationOrCreate
         if (declaration._containsOnly(valuedObject)) {
+
             // We don't have to care about other valuedObjects
             return declaration
         } else {
+
             // Make a new Declaration
             val newDeclaration = createDeclaration(declaration)
+
             // Remove the valuedObject from the old group and add it to the new group
             declaration._removeValuedObject(valuedObject)
             if (declaration.valuedObjects.size == 0) {
@@ -85,21 +82,19 @@ class KExpressionsExtension {
             newDeclaration._addValuedObject(valuedObject)
             newDeclaration
         }
-    } 
-         
-         
-//    // Return the list of all contained ValuedObjects.
-//    def private List<ValuedObject> getValuedObjects(List<Declaration> declarations) {
-//        <ValuedObject>newArrayList => [list|declarations.forEach[list += valuedObjects]]
-//    }
-            
-    
+    }
+
+    //    // Return the list of all contained ValuedObjects.
+    //    def private List<ValuedObject> getValuedObjects(List<Declaration> declarations) {
+    //        <ValuedObject>newArrayList => [list|declarations.forEach[list += valuedObjects]]
+    //    }
     // Return the list of all contained ValuedObjects. 
     // ATTENTION: This method returns a specific list. If you add ValuedObjects to this
     // list they will be added to  the container of a Declaration.
     def public ValuedObjectList getValuedObjects(EObject eObject) {
         val declarations = eObject.eContents.filter(typeof(Declaration)).toList
         val returnList = new ValuedObjectList()
+
         // This is necessary for adding ValuedObjects later
         returnList.setContainer(eObject)
         for (declaration : declarations) {
@@ -108,92 +103,78 @@ class KExpressionsExtension {
         returnList
     }
 
-   
-    
     //=======  DECLARATION WRAPPINGS  ======
-    
     // Add a valuedObject to an eObject
     def public void addValuedObject(EObject eObject, ValuedObject valuedObject) {
         val declaration = valuedObject.uniqueDeclaration
+
         //val declarationFeature = eObject.eClass().getEStructuralFeature(KExpressionsPackage.TYPE_GROUP__VALUED_OBJECTS)
-        val getDeclarations =  eObject.class.getMethod("getDeclarations")
+        val getDeclarations = eObject.class.getMethod("getDeclarations")
         val possibleList = getDeclarations.invoke(eObject);
         val list = possibleList as EList<Object>
-        list.add(declaration);        
+        list.add(declaration);
     }
-    
-    
+
     // Remove a valuedObject from an eObject
     def public void removeValuedObject(EObject eObject, ValuedObject valuedObject) {
-        val getDeclarations =  eObject.class.getMethod("getDeclarations")
+        val getDeclarations = eObject.class.getMethod("getDeclarations")
         val possibleList = getDeclarations.invoke(eObject);
         val declarations = possibleList as EList<Declaration>
         for (declaration : declarations) {
             declaration._removeValuedObject(valuedObject)
         }
-    }   
-    
-        
-    
-
-    //=======  GENERAL  ======
-
-    // added by cmot (9.3.14)
-    public def String removeEnclosingQuotes(String text) {
-            var returnText = text
-            if (returnText.startsWith("'") && returnText.endsWith("'")) {
-                returnText = returnText.replaceFirst("'", "")
-                returnText = returnText.substring(0, returnText.length - 1)
-                return returnText.removeEnclosingQuotes
-            }
-            if (returnText.startsWith("\"") && returnText.endsWith("\"")) {
-                returnText = returnText.substring(0, returnText.length - 1)
-                returnText = returnText.replaceFirst("'", "")
-                return returnText.removeEnclosingQuotes
-            }
-            return text
     }
 
+    //=======  GENERAL  ======
+    // added by cmot (9.3.14)
+    public def String removeEnclosingQuotes(String text) {
+        var returnText = text
+        if (returnText.startsWith("'") && returnText.endsWith("'")) {
+            returnText = returnText.replaceFirst("'", "")
+            returnText = returnText.substring(0, returnText.length - 1)
+            return returnText.removeEnclosingQuotes
+        }
+        if (returnText.startsWith("\"") && returnText.endsWith("\"")) {
+            returnText = returnText.substring(0, returnText.length - 1)
+            returnText = returnText.replaceFirst("'", "")
+            return returnText.removeEnclosingQuotes
+        }
+        return text
+    }
 
-
-        
-    
-//    // Return the list of all contained ValuedObjects. 
-//    // ATTENTION: This method returns a specific list. If you add ValuedObjects to this
-//    // list they will be added to  the container of a Declaration.
-//    def public ValuedObjectList getValuedObjects(EObject eObject) {
-//        val declarations = eObject.eContents.filter(typeof(Declaration)).toList
-//        val returnList = new ValuedObjectList()
-//        // This is necessary for adding ValuedObjects later
-//        returnList.setContainer(eObject)
-//        for (declaration : declarations) {
-//            returnList.addAll(declaration.valuedObjects)
-//        }
-//        returnList
-//    }
-
+    //    // Return the list of all contained ValuedObjects. 
+    //    // ATTENTION: This method returns a specific list. If you add ValuedObjects to this
+    //    // list they will be added to  the container of a Declaration.
+    //    def public ValuedObjectList getValuedObjects(EObject eObject) {
+    //        val declarations = eObject.eContents.filter(typeof(Declaration)).toList
+    //        val returnList = new ValuedObjectList()
+    //        // This is necessary for adding ValuedObjects later
+    //        returnList.setContainer(eObject)
+    //        for (declaration : declarations) {
+    //            returnList.addAll(declaration.valuedObjects)
+    //        }
+    //        returnList
+    //    }
     // Get the real container of a ValuedObject (not the Declaration).
     def public EObject getEContainer(ValuedObject valuedObject) {
         valuedObject.eContainer.eContainer
     }
 
-//    // Return the list of all contained ValuedObjects.
-//    def private List<ValuedObject> getValuedObjects(List<Declaration> declarations) {
-//        <ValuedObject>newArrayList => [list|declarations.forEach[list += valuedObjects]]
-//    }
-//
-//    // Remove a specific ValuedObject.
-//    def private removeValuedObject(List<Declaration> declarations, ValuedObject valuedObject) {
-//        for (declaration : declarations) {
-//            declaration._removeValuedObject(valuedObject)
-//        }
-//    }
-
-//    // Return the type of the ValuedObject.
-//    def public ValueType getType(ValuedObject valuedObject) {
-//        valuedObject.declaration.type
-//    }
-
+    //    // Return the list of all contained ValuedObjects.
+    //    def private List<ValuedObject> getValuedObjects(List<Declaration> declarations) {
+    //        <ValuedObject>newArrayList => [list|declarations.forEach[list += valuedObjects]]
+    //    }
+    //
+    //    // Remove a specific ValuedObject.
+    //    def private removeValuedObject(List<Declaration> declarations, ValuedObject valuedObject) {
+    //        for (declaration : declarations) {
+    //            declaration._removeValuedObject(valuedObject)
+    //        }
+    //    }
+    //    // Return the type of the ValuedObject.
+    //    def public ValueType getType(ValuedObject valuedObject) {
+    //        valuedObject.declaration.type
+    //    }
     // Return whether the ValuedObject is an input.
     def public boolean getInput(ValuedObject valuedObject) {
         valuedObject.declaration.input
@@ -213,7 +194,7 @@ class KExpressionsExtension {
     def public boolean isOutput(ValuedObject valuedObject) {
         valuedObject.getOutput()
     }
-    
+
     // Return whether the ValuedObject is static.
     def public boolean getStatic(ValuedObject valuedObject) {
         valuedObject.declaration.static
@@ -223,7 +204,7 @@ class KExpressionsExtension {
     def public boolean isStatic(ValuedObject valuedObject) {
         valuedObject.getStatic()
     }
-    
+
     // Return whether the ValuedObject is a const.
     def public boolean getConst(ValuedObject valuedObject) {
         valuedObject.declaration.const
@@ -233,7 +214,7 @@ class KExpressionsExtension {
     def public boolean isConst(ValuedObject valuedObject) {
         valuedObject.getConst()
     }
-    
+
     // Return whether the ValuedObject is a const.
     def public boolean getExtern(ValuedObject valuedObject) {
         valuedObject.declaration.extern
@@ -242,7 +223,7 @@ class KExpressionsExtension {
     // Return whether the ValuedObject is a const.
     def public boolean isExtern(ValuedObject valuedObject) {
         valuedObject.getExtern()
-    }    
+    }
 
     // Return whether the ValuedObject is an array.
     def public boolean isArray(ValuedObject valuedObject) {
@@ -258,78 +239,87 @@ class KExpressionsExtension {
     def public boolean isSignal(ValuedObject valuedObject) {
         valuedObject.getSignal()
     }
-    
-//    // Set the type of a ValuedObject. 
-//    def public ValuedObject setType(ValuedObject valuedObject, ValueType type) {
-//        val uniqueDeclaration = valuedObject.uniqueDeclaration
-//        uniqueDeclaration.setType(type)
-//        valuedObject;
-//    }
 
+    //    // Set the type of a ValuedObject. 
+    //    def public ValuedObject setType(ValuedObject valuedObject, ValueType type) {
+    //        val uniqueDeclaration = valuedObject.uniqueDeclaration
+    //        uniqueDeclaration.setType(type)
+    //        valuedObject;
+    //    }
     // Set the ValuedObject to be or not be an input.
     def public ValuedObject setInput(ValuedObject valuedObject, boolean isInput) {
         val uniqueDeclaration = valuedObject.uniqueDeclaration
         uniqueDeclaration.setInput(isInput)
         valuedObject;
     }
+
     def public ValuedObject setIsInput(ValuedObject valuedObject) {
         valuedObject.setInput(true)
-    } 
+    }
+
     def public ValuedObject setIsNotInput(ValuedObject valuedObject) {
         valuedObject.setInput(false)
-    } 
-    
+    }
+
     // Set the ValuedObject to be or not be an output.
     def public ValuedObject setOutput(ValuedObject valuedObject, boolean isOutput) {
         val uniqueDeclaration = valuedObject.uniqueDeclaration
         uniqueDeclaration.setOutput(isOutput)
         valuedObject;
     }
+
     def public ValuedObject setIsOutput(ValuedObject valuedObject) {
         valuedObject.setOutput(true)
-    } 
+    }
+
     def public ValuedObject setIsNotOutput(ValuedObject valuedObject) {
         valuedObject.setOutput(false)
-    } 
+    }
 
     // Set the ValuedObject to be or not be static.
     def public ValuedObject setStatic(ValuedObject valuedObject, boolean isStatic) {
         val uniqueDeclaration = valuedObject.uniqueDeclaration
-        uniqueDeclaration.setInput(isStatic)
+        uniqueDeclaration.setStatic(isStatic)
         valuedObject;
     }
+
     def public ValuedObject setIsStatic(ValuedObject valuedObject) {
         valuedObject.setConst(true)
-    } 
+    }
+
     def public ValuedObject setIsNotStatic(ValuedObject valuedObject) {
         valuedObject.setConst(false)
-    } 
-    
-   // Set the ValuedObject to be or not be a Const.
-   def public ValuedObject setConst(ValuedObject valuedObject, boolean isConst) {
+    }
+
+    // Set the ValuedObject to be or not be a Const.
+    def public ValuedObject setConst(ValuedObject valuedObject, boolean isConst) {
         val uniqueDeclaration = valuedObject.uniqueDeclaration
         uniqueDeclaration.setConst(isConst)
         valuedObject;
     }
+
     def public ValuedObject setIsConst(ValuedObject valuedObject) {
         valuedObject.setConst(true)
-    } 
+    }
+
     def public ValuedObject setIsNotConst(ValuedObject valuedObject) {
         valuedObject.setConst(false)
-    } 
+    }
 
-   // Set the ValuedObject to be or not be a Const.
-   def public ValuedObject setExtern(ValuedObject valuedObject, boolean isExtern) {
+    // Set the ValuedObject to be or not be a Const.
+    def public ValuedObject setExtern(ValuedObject valuedObject, boolean isExtern) {
         val uniqueDeclaration = valuedObject.uniqueDeclaration
         uniqueDeclaration.setExtern(isExtern)
         valuedObject;
     }
+
     def public ValuedObject setIsExtern(ValuedObject valuedObject) {
         valuedObject.setExtern(true)
-    } 
+    }
+
     def public ValuedObject setIsNotExtern(ValuedObject valuedObject) {
         valuedObject.setExtern(false)
-    } 
+    }
 
     // Set the ValuedObject to be or not be a sinal.
     def public ValuedObject setSignal(ValuedObject valuedObject, boolean isSignal) {
@@ -337,16 +327,16 @@ class KExpressionsExtension {
         uniqueDeclaration.setSignal(isSignal)
         valuedObject;
     }
+
     def public ValuedObject setIsSignal(ValuedObject valuedObject) {
         valuedObject.setSignal(true)
-    } 
+    }
+
     def public ValuedObject setIsNotSignal(ValuedObject valuedObject) {
         valuedObject.setSignal(false)
-    } 
-
+    }
 
     //=======  DECLARATIONS  ======
-
     // Creates a new Declaration.
     def public Declaration createDeclaration() {
         KExpressionsFactory::eINSTANCE.createDeclaration
@@ -365,15 +355,12 @@ class KExpressionsExtension {
         ]
     }
 
-//    // Set the Declaration to a specific type.
-//    def private Declaration setType(Declaration declaration, ValueType type) {
-//        declaration.type = type
-//        declaration
-//    }
-
-
+    //    // Set the Declaration to a specific type.
+    //    def private Declaration setType(Declaration declaration, ValueType type) {
+    //        declaration.type = type
+    //        declaration
+    //    }
     //=======  DECLARATIONS AND VALUED OBJECTS  ======
-    
     // Get the surrounding Declaration of a ValuedObject that contains the ValuedObject. 
     // This Declaration may also contain other ValuedObjects, see containsOnly().
     // If the valuedObject does not have any Declaration yet, then create a new one.
@@ -386,47 +373,46 @@ class KExpressionsExtension {
             newDeclaration
         }
     }
-    
+
     def public Declaration declaration(ValuedObject valuedObject) {
         if (valuedObject.eContainer instanceof Declaration) {
             return valuedObject.eContainer as Declaration
-        } 
+        }
     }
-    
-//    // Helper method for Setter-Wrapper. It returns the direct Declaration of a ValuedObject
-//    // if there are no other ValuedObjects in this group. Otherwise it creates and returns
-//    // a new Declaration and removes the ValuedObject from the old one, adding it to the 
-//    // new one.
-//    def public Declaration getUniqueDeclaration(ValuedObject valuedObject) {
-//        val declaration = valuedObject.declaration
-//        if (declaration._containsOnly(valuedObject)) {
-//            // We don't have to care about other valuedObjects
-//            return declaration
-//        } else {
-//            // Make a new Declaration
-//            val newDeclaration = createDeclaration(declaration)
-//            // Remove the valuedObject from the old group and add it to the new group
-//            declaration._removeValuedObject(valuedObject)
-//            if (declaration.valuedObjects.size == 0) {
-//                // THIS CANNOT HAPPEN, OTHERWISE WE WOULD HAVE BEEN IN CASE ONE!
-//            }
-//            newDeclaration._addValuedObject(valuedObject)
-//            newDeclaration
-//        }
-//    }    
 
+    //    // Helper method for Setter-Wrapper. It returns the direct Declaration of a ValuedObject
+    //    // if there are no other ValuedObjects in this group. Otherwise it creates and returns
+    //    // a new Declaration and removes the ValuedObject from the old one, adding it to the 
+    //    // new one.
+    //    def public Declaration getUniqueDeclaration(ValuedObject valuedObject) {
+    //        val declaration = valuedObject.declaration
+    //        if (declaration._containsOnly(valuedObject)) {
+    //            // We don't have to care about other valuedObjects
+    //            return declaration
+    //        } else {
+    //            // Make a new Declaration
+    //            val newDeclaration = createDeclaration(declaration)
+    //            // Remove the valuedObject from the old group and add it to the new group
+    //            declaration._removeValuedObject(valuedObject)
+    //            if (declaration.valuedObjects.size == 0) {
+    //                // THIS CANNOT HAPPEN, OTHERWISE WE WOULD HAVE BEEN IN CASE ONE!
+    //            }
+    //            newDeclaration._addValuedObject(valuedObject)
+    //            newDeclaration
+    //        }
+    //    }    
     // Check if a Declaration only contains a single ValuedObject.
     def private boolean _containsOnly(Declaration declaration, ValuedObject valuedObject) {
-        (declaration.valuedObjects.contains(valuedObject))&&(declaration.valuedObjects.size == 1)
+        (declaration.valuedObjects.contains(valuedObject)) && (declaration.valuedObjects.size == 1)
     }
 
     // Remove a specific ValuedObject.
     def private _removeValuedObject(Declaration declaration, ValuedObject valuedObject) {
-         if (declaration.valuedObjects.contains(valuedObject)) {
-           declaration.valuedObjects -= valuedObject  
-         } 
+        if (declaration.valuedObjects.contains(valuedObject)) {
+            declaration.valuedObjects -= valuedObject
+        }
     }
-    
+
     // Add a ValuedObject.
     def private Declaration _addValuedObject(Declaration declaration, ValuedObject valuedObject) {
         declaration.valuedObjects.add(valuedObject)
@@ -434,9 +420,7 @@ class KExpressionsExtension {
     }
 
     // -------------------------------------------------------------------------   
-    
     //=======  STATIC EXPRESSIONS  ======
-    
     // In an EObject replace one expression by another
     //    def dispatch equals2(Object expression1, Object expression2) {
     //        if (expression1 == null && expression2 == null) {
@@ -507,7 +491,7 @@ class KExpressionsExtension {
         }
         expression
     }
-   
+
     // Trim all AND/OR Expressions if it contains only a single sub expression
     def dispatch Expression trim(Expression expression) {
         expression
@@ -576,37 +560,37 @@ class KExpressionsExtension {
         newOperatorExpression.subExpressions.add(operatorExpressionCopy.fixForOperatorExpressionLists);
         return newOperatorExpression;
     }
-    
+
     def Expression fixHostCode(Expression expression) {
-    	if (expression instanceof TextExpression) 
-    		(expression as TextExpression).fixHostCodeInTextExpression
-    	else if (expression instanceof OperatorExpression)
-    		(expression as OperatorExpression).fixHostCodeInOperatorExpression	
-    	else 
-    		expression	
+        if (expression instanceof TextExpression)
+            (expression as TextExpression).fixHostCodeInTextExpression
+        else if (expression instanceof OperatorExpression)
+            (expression as OperatorExpression).fixHostCodeInOperatorExpression
+        else
+            expression
     }
-    
+
     def TextExpression fixHostCodeInTextExpression(TextExpression expression) {
-    	if (expression.text.startsWith("'")) return expression
-    	else return expression.copy => [ setText("'" + expression.getText + "'") ]
+        if (expression.text.startsWith("'"))
+            return expression
+        else
+            return expression.copy => [setText("'" + expression.getText + "'")]
     }
-    
+
     def Expression fixHostCodeInOperatorExpression(OperatorExpression expression) {
-    	if (expression == null || expression.subExpressions.nullOrEmpty) {
-    		return expression
-    	}
+        if (expression == null || expression.subExpressions.nullOrEmpty) {
+            return expression
+        }
         val oeCopy = expression.copy
         oeCopy.subExpressions.clear
         expression.subExpressions.forEach [
-        	oeCopy.subExpressions += it.copy.fixHostCode
+            oeCopy.subExpressions += it.copy.fixHostCode
         ]
-        
+
         oeCopy
     }
-    
 
     //==========  EXPRESSIONS  ==========
-    
     // Create an Expression.
     def Expression createExpression() {
         val expression = KExpressionsFactory::eINSTANCE.createExpression()
@@ -838,26 +822,50 @@ class KExpressionsExtension {
         valuedObject
     }
 
-    // Apply attributes of another ValuedObject.
+    // Apply attributes of another ValuedObject. Be careful when applying this on valuedObjects of
+    // DIFFERENT models! initialValue und type may be a problem and has to be set priorly.
     def ValuedObject applyAttributes(ValuedObject valuedObject, ValuedObject valuedObjectWithAttributes) {
-        valuedObject.setInput(valuedObjectWithAttributes.isInput)
-        valuedObject.setOutput(valuedObjectWithAttributes.isOutput)
-        valuedObject.setStatic(valuedObjectWithAttributes.isStatic)
-        valuedObject.setConst(valuedObjectWithAttributes.isConst)
-        valuedObject.setExtern(valuedObjectWithAttributes.isExtern)
-        valuedObject.setInitialValue(valuedObjectWithAttributes.initialValue.copy)
-        valuedObject.setType(valuedObjectWithAttributes.type)
-        valuedObject.setCombineOperator(valuedObjectWithAttributes.combineOperator)
-        if (!valuedObjectWithAttributes.cardinalities.nullOrEmpty) {
-            for (card : valuedObjectWithAttributes.cardinalities) {
-                valuedObject.cardinalities.add(card);        
+        if (valuedObjectWithAttributes.isInput != valuedObject.isInput) {
+            valuedObject.setInput(valuedObjectWithAttributes.isInput)
+        }
+
+        if (valuedObjectWithAttributes.isOutput != valuedObject.isOutput) {
+            valuedObject.setOutput(valuedObjectWithAttributes.isOutput)
+        }
+
+        if (valuedObjectWithAttributes.isStatic != valuedObject.isStatic) {
+            valuedObject.setStatic(valuedObjectWithAttributes.isStatic)
+        }
+
+        if (valuedObjectWithAttributes.isConst != valuedObject.isConst) {
+            valuedObject.setConst(valuedObjectWithAttributes.isConst)
+        }
+
+        if (valuedObjectWithAttributes.isExtern != valuedObject.isExtern) {
+            valuedObject.setExtern(valuedObjectWithAttributes.isExtern)
+        }
+ 
+        if (valuedObjectWithAttributes.initialValue != null) {
+            valuedObject.setInitialValue(valuedObjectWithAttributes.initialValue.copy)
+        }
+
+        if (!valuedObjectWithAttributes.type.literal.equals(valuedObject.type.literal)) {
+            valuedObject.setType(valuedObjectWithAttributes.type);
+        }
+
+        if (valuedObjectWithAttributes.combineOperator != null) {
+            valuedObject.setCombineOperator(valuedObjectWithAttributes.combineOperator)
+            if (!valuedObjectWithAttributes.cardinalities.nullOrEmpty) {
+                for (card : valuedObjectWithAttributes.cardinalities) {
+                    valuedObject.cardinalities.add(card);
+                }
             }
         }
         valuedObject
     }
-    
+
     def List<ValuedObjectReference> getAllReferences(Expression expression) {
-        val list = <ValuedObjectReference> newArrayList
+        val list = <ValuedObjectReference>newArrayList
         if (expression instanceof ValuedObjectReference) {
             list += expression as ValuedObjectReference
         } else {
@@ -951,37 +959,30 @@ class KExpressionsExtension {
     //         valuedObject.setType(ValueType::FLOAT)
     //         valuedObject
     //    }    
-    
-    
     def void delete(Declaration declaration) {
-    	declaration.valuedObjects.immutableCopy.forEach[ remove ]
-    	declaration.remove
+        declaration.valuedObjects.immutableCopy.forEach[remove]
+        declaration.remove
     }
-    
+
     //===========  VARIABLES  ===========
-    
     // Creates a new variable ValuedObject.
     def ValuedObject createVariable(String variableName) {
         createValuedObject(variableName)
     }
-    
+
     def void delete(ValuedObject valuedObject) {
         val declaration = valuedObject.declaration
         valuedObject.remove
-        if (declaration.valuedObjects.nullOrEmpty) declaration.remove
+        if(declaration.valuedObjects.nullOrEmpty) declaration.remove
     }
 
-
     //============  SIGNALS  ============
-    
     // Creates a new signal ValuedObject.
     def ValuedObject createSignal(Declaration declaration, String signalName) {
         createValuedObject(signalName).setSignal(true)
     }
 
-
     //===========  VALUES  ===========
-    
     // Create a TRUE value.
     def public BoolValue TRUE() {
         createBoolValue(true)
@@ -991,7 +992,7 @@ class KExpressionsExtension {
     def public BoolValue FALSE() {
         createBoolValue(false)
     }
-        
+
     // Create an int value.
     def IntValue createIntValue(int value) {
         val expression = KExpressionsFactory::eINSTANCE.createIntValue()
@@ -1018,11 +1019,11 @@ class KExpressionsExtension {
         val expression = KExpressionsFactory::eINSTANCE.createTextExpression()
         expression
     }
-    
+
     def FunctionCall createFunctionCall() {
         KExpressionsFactory::eINSTANCE.createFunctionCall()
     }
-    
+
     def Parameter createParameter() {
         KExpressionsFactory::eINSTANCE.createParameter()
     }
@@ -1033,5 +1034,5 @@ class KExpressionsExtension {
         expression.setText("'" + text + "'")
         expression
     }
-    
+
 }
