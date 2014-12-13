@@ -990,14 +990,15 @@ class EsterelToSclTransformation extends Transformation {
 
         // Strong abort
         } else {
-
+            val f_a = createFreshVar("f_a", ValueType::BOOL)
+            f_a.initialValue = false.createBoolValue
             if ((abort.body as AbortInstance).delay.isImmediate) {
                 sSeq.statements.add(
                     createStmFromInstr(
                         ifThenGoto(transformExp((abort.body as AbortInstance).delay.event.expr, signalMap), l, true)))
             }
 
-            val trans = [ StatementSequence seq |
+            val pause = [ StatementSequence seq |
                 if ((abort.body as AbortInstance).delay.expr != null) {
                     seq.statements += createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
                         expression = transformExp(abortExpr, oldSignalMap)
@@ -1005,27 +1006,37 @@ class EsterelToSclTransformation extends Transformation {
                     ])
                 }
                 val stms = new LinkedList<Statement>
+                    if ((abort.body as AbortInstance).delay.expr != null) {
+                         stms.add(createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
+                             expression = EcoreUtil.copy(countExp)
+                             statements += createStmFromInstr(createAssignment(f_a, createBoolValue(true)))
+                             statements += createGotoj(l, curLabel, labelMap)
+                         ]))   
+                    } else {
+                        stms.add(createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
+                             expression = transformExp(abortExpr, oldSignalMap)
+                             statements += createStmFromInstr(createAssignment(f_a, createBoolValue(true)))
+                             statements += createGotoj(l, curLabel, labelMap)
+                         ]))
+                    }
+                seq.statements.addAll(stms)
+                seq
+            ]
+            
+            val join = [ StatementSequence seq |
+
+                val stms = new LinkedList<Statement>
                 if (labelMap.get(curLabel).contains(l)) {
-                    if ((abort.body as AbortInstance).delay.expr != null) {
-                        stms.add(
-                            createStmFromInstr(ifThenGoto(EcoreUtil.copy(countExp), l, true)))
-                    } else {
-                        stms.add(createStmFromInstr(ifThenGoto(transformExp(abortExpr, oldSignalMap), l, true)))
-                    }
+                        stms.add(createStmFromInstr(ifThenGoto(f_a.createValuedObjectRef, l, true)))
                 } else {
-                    if ((abort.body as AbortInstance).delay.expr != null) {
-                        stms.add(
-                            createStmFromInstr(ifThenGoto(EcoreUtil.copy(countExp), curLabel, true)))
-                    } else {
-                        stms.add(createStmFromInstr(ifThenGoto(transformExp(abortExpr, oldSignalMap), curLabel, true)))
-                    }
+                        stms.add(createStmFromInstr(ifThenGoto(f_a.createValuedObjectRef, curLabel, true)))
                 }
                 seq.statements.addAll(stms)
                 seq
             ]
 
-            pauseTransformation.push[StatementSequence seq|trans.apply(seq)]
-            joinTransformation.push[StatementSequence seq|trans.apply(seq)]
+            pauseTransformation.push(pause)
+            joinTransformation.push(join)
 
             transformStm(abort.statement, sSeq)
         }
@@ -1517,7 +1528,6 @@ class EsterelToSclTransformation extends Transformation {
          joinTransformation.pop
          
          // At the end of the suspend body also suspension may happen
-         // TODO instant body does need a pause...
          sSeq.add(SclFactory::eINSTANCE.createConditional => [
                 expression = weakSuspend.delay.event.expr.transformExp(signalMap)
                 if (weakSuspend.delay.isImmediate) {
