@@ -398,7 +398,7 @@ Suspend:
 	
 // !-(weak suspend)-------------------------------------
 WeakSuspend:
-    "weak suspend" statement=Statement "when" delay=DelayExpr;
+    "weak" "suspend" statement=Statement "when" delay=DelayExpr;
     
 	// -!
 // --> B.4.22 sustain: Emit a Signal Indefinitely

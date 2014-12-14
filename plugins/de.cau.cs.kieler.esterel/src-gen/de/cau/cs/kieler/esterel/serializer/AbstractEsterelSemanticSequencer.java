@@ -2390,8 +2390,8 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getWeakSuspendAccess().getStatementStatementParserRuleCall_1_0(), semanticObject.getStatement());
-		feeder.accept(grammarAccess.getWeakSuspendAccess().getDelayDelayExprParserRuleCall_3_0(), semanticObject.getDelay());
+		feeder.accept(grammarAccess.getWeakSuspendAccess().getStatementStatementParserRuleCall_2_0(), semanticObject.getStatement());
+		feeder.accept(grammarAccess.getWeakSuspendAccess().getDelayDelayExprParserRuleCall_4_0(), semanticObject.getDelay());
 		feeder.finish();
 	}
 }

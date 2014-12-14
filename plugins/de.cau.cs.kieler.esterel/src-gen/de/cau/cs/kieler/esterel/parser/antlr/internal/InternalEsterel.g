@@ -7053,45 +7053,49 @@ ruleWeakSuspend returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='weak suspend' 
+(	otherlv_0='weak' 
     {
-    	newLeafNode(otherlv_0, grammarAccess.getWeakSuspendAccess().getWeakSuspendKeyword_0());
+    	newLeafNode(otherlv_0, grammarAccess.getWeakSuspendAccess().getWeakKeyword_0());
+    }
+	otherlv_1='suspend' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getWeakSuspendAccess().getSuspendKeyword_1());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getWeakSuspendAccess().getStatementStatementParserRuleCall_1_0()); 
+	        newCompositeNode(grammarAccess.getWeakSuspendAccess().getStatementStatementParserRuleCall_2_0()); 
 	    }
-		lv_statement_1_0=ruleStatement		{
+		lv_statement_2_0=ruleStatement		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getWeakSuspendRule());
 	        }
        		set(
        			$current, 
        			"statement",
-        		lv_statement_1_0, 
+        		lv_statement_2_0, 
         		"Statement");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)	otherlv_2='when' 
+)	otherlv_3='when' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getWeakSuspendAccess().getWhenKeyword_2());
+    	newLeafNode(otherlv_3, grammarAccess.getWeakSuspendAccess().getWhenKeyword_3());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getWeakSuspendAccess().getDelayDelayExprParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getWeakSuspendAccess().getDelayDelayExprParserRuleCall_4_0()); 
 	    }
-		lv_delay_3_0=ruleDelayExpr		{
+		lv_delay_4_0=ruleDelayExpr		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getWeakSuspendRule());
 	        }
        		set(
        			$current, 
        			"delay",
-        		lv_delay_3_0, 
+        		lv_delay_4_0, 
         		"DelayExpr");
 	        afterParserOrEnumRuleCall();
 	    }

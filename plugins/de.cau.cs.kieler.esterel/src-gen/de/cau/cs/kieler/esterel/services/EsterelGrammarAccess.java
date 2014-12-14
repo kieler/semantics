@@ -4300,38 +4300,42 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	public class WeakSuspendElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "WeakSuspend");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cWeakSuspendKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cStatementAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cStatementStatementParserRuleCall_1_0 = (RuleCall)cStatementAssignment_1.eContents().get(0);
-		private final Keyword cWhenKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cDelayAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cDelayDelayExprParserRuleCall_3_0 = (RuleCall)cDelayAssignment_3.eContents().get(0);
+		private final Keyword cWeakKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cSuspendKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cStatementAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cStatementStatementParserRuleCall_2_0 = (RuleCall)cStatementAssignment_2.eContents().get(0);
+		private final Keyword cWhenKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cDelayAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cDelayDelayExprParserRuleCall_4_0 = (RuleCall)cDelayAssignment_4.eContents().get(0);
 		
 		//// !-(weak suspend)-------------------------------------
 		//WeakSuspend:
-		//	"weak suspend" statement=Statement "when" delay=DelayExpr;
+		//	"weak" "suspend" statement=Statement "when" delay=DelayExpr;
 		public ParserRule getRule() { return rule; }
 
-		//"weak suspend" statement=Statement "when" delay=DelayExpr
+		//"weak" "suspend" statement=Statement "when" delay=DelayExpr
 		public Group getGroup() { return cGroup; }
 
-		//"weak suspend"
-		public Keyword getWeakSuspendKeyword_0() { return cWeakSuspendKeyword_0; }
+		//"weak"
+		public Keyword getWeakKeyword_0() { return cWeakKeyword_0; }
+
+		//"suspend"
+		public Keyword getSuspendKeyword_1() { return cSuspendKeyword_1; }
 
 		//statement=Statement
-		public Assignment getStatementAssignment_1() { return cStatementAssignment_1; }
+		public Assignment getStatementAssignment_2() { return cStatementAssignment_2; }
 
 		//Statement
-		public RuleCall getStatementStatementParserRuleCall_1_0() { return cStatementStatementParserRuleCall_1_0; }
+		public RuleCall getStatementStatementParserRuleCall_2_0() { return cStatementStatementParserRuleCall_2_0; }
 
 		//"when"
-		public Keyword getWhenKeyword_2() { return cWhenKeyword_2; }
+		public Keyword getWhenKeyword_3() { return cWhenKeyword_3; }
 
 		//delay=DelayExpr
-		public Assignment getDelayAssignment_3() { return cDelayAssignment_3; }
+		public Assignment getDelayAssignment_4() { return cDelayAssignment_4; }
 
 		//DelayExpr
-		public RuleCall getDelayDelayExprParserRuleCall_3_0() { return cDelayDelayExprParserRuleCall_3_0; }
+		public RuleCall getDelayDelayExprParserRuleCall_4_0() { return cDelayDelayExprParserRuleCall_4_0; }
 	}
 
 	public class SustainElements extends AbstractParserRuleElementFinder {
@@ -6686,7 +6690,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// !-(weak suspend)-------------------------------------
 	//WeakSuspend:
-	//	"weak suspend" statement=Statement "when" delay=DelayExpr;
+	//	"weak" "suspend" statement=Statement "when" delay=DelayExpr;
 	public WeakSuspendElements getWeakSuspendAccess() {
 		return (pWeakSuspend != null) ? pWeakSuspend : (pWeakSuspend = new WeakSuspendElements());
 	}
