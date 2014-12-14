@@ -57,6 +57,8 @@ import de.cau.cs.kieler.esterel.kexpressions.Signal
 
 /**
  * @author krat
+ * 
+ * Collection of methods and shortcuts to ease the Esterel to SCL transformation
  *
  */
 class EsterelToSclExtensions {
@@ -67,6 +69,7 @@ class EsterelToSclExtensions {
     @Inject
     extension EsterelToSclTransformation
 
+    // Current lablecount ensures the creation of fresh labels
     var static labelCount = 0;
 
     /*
@@ -102,12 +105,15 @@ class EsterelToSclExtensions {
         ]
     }
 
-    def createValuedObjectRef(ValuedObject valObj) {
+    def createValObjRef(ValuedObject valObj) {
         KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
             valuedObject = valObj
         ]
     }
 
+    /*
+     * Creates an assignment
+     */
     def createAssignment(ValuedObject obj, Expression exp) {
         SclFactory::eINSTANCE.createAssignment => [
             valuedObject = obj
@@ -115,6 +121,9 @@ class EsterelToSclExtensions {
         ]
     }
 
+    /*
+     * Creates a Statement from an Instruction
+     */
     def createStmFromInstr(Instruction instr) {
         SclFactory::eINSTANCE.createInstructionStatement => [
             instruction = instr
@@ -286,6 +295,19 @@ class EsterelToSclExtensions {
     }
     
     /*
+         * Create an OR expression
+         * @param arg1 first argument
+         * @param arg2 second argument
+         */
+    def createOr(Expression arg1, Expression arg2) {
+        KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+            operator = OperatorType::OR
+            subExpressions.add(arg1)
+            subExpressions.add(arg2)
+        ]
+    }
+    
+    /*
          * Create an Equals expression
          * @param arg1 first argument
          * @param arg2 second argument
@@ -419,7 +441,7 @@ class EsterelToSclExtensions {
             createAssignment(valObj,
                 KExpressionsFactory::eINSTANCE.createOperatorExpression => [
                     operator = OperatorType::ADD
-                    subExpressions += createValuedObjectRef(valObj)
+                    subExpressions += createValObjRef(valObj)
                     subExpressions += createIntValue(1)
                 ]))
     }

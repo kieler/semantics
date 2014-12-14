@@ -59,7 +59,7 @@ class TransformExpression {
                 (exp.subExpressions.head as ValuedObjectReference).valuedObject.name == it.key
             ].value
             val sig_val = valuedMap.get(sig)
-            return createValuedObjectRef(sig_val)
+            return createValObjRef(sig_val)
         }
         
         KExpressionsFactory::eINSTANCE.createOperatorExpression => [
