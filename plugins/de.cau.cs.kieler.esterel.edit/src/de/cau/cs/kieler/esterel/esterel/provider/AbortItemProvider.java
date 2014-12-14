@@ -660,6 +660,11 @@ public class AbortItemProvider extends StatementContainerItemProvider {
         newChildDescriptors.add
             (createChildParameter
                 (EsterelPackage.Literals.ABORT__BODY,
+                 EsterelFactory.eINSTANCE.createWeakSuspend()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (EsterelPackage.Literals.ABORT__BODY,
                  AnnotationsFactory.eINSTANCE.createAnnotation()));
 
         newChildDescriptors.add

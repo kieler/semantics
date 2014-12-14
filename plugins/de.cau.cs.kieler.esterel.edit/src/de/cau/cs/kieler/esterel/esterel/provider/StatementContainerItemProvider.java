@@ -282,6 +282,11 @@ public class StatementContainerItemProvider
             (createChildParameter
                 (EsterelPackage.Literals.STATEMENT_CONTAINER__STATEMENT,
                  EsterelFactory.eINSTANCE.createWeakAbort()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (EsterelPackage.Literals.STATEMENT_CONTAINER__STATEMENT,
+                 EsterelFactory.eINSTANCE.createWeakSuspend()));
     }
 
     /**

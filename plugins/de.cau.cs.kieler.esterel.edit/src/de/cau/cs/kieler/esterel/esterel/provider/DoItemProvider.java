@@ -660,6 +660,11 @@ public class DoItemProvider extends StatementContainerItemProvider {
         newChildDescriptors.add
             (createChildParameter
                 (EsterelPackage.Literals.DO__END,
+                 EsterelFactory.eINSTANCE.createWeakSuspend()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (EsterelPackage.Literals.DO__END,
                  AnnotationsFactory.eINSTANCE.createAnnotation()));
 
         newChildDescriptors.add

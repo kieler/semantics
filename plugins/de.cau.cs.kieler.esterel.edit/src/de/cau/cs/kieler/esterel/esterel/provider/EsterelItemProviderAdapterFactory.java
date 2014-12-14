@@ -2464,6 +2464,29 @@ public class EsterelItemProviderAdapterFactory extends EsterelAdapterFactory imp
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.esterel.esterel.WeakSuspend} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected WeakSuspendItemProvider weakSuspendItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.esterel.esterel.WeakSuspend}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createWeakSuspendAdapter() {
+        if (weakSuspendItemProvider == null) {
+            weakSuspendItemProvider = new WeakSuspendItemProvider(this);
+        }
+
+        return weakSuspendItemProvider;
+    }
+
+    /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2666,6 +2689,7 @@ public class EsterelItemProviderAdapterFactory extends EsterelAdapterFactory imp
         if (functionExpressionItemProvider != null) functionExpressionItemProvider.dispose();
         if (constantExpressionItemProvider != null) constantExpressionItemProvider.dispose();
         if (trapReferenceExprItemProvider != null) trapReferenceExprItemProvider.dispose();
+        if (weakSuspendItemProvider != null) weakSuspendItemProvider.dispose();
     }
 
 }

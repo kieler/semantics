@@ -675,6 +675,11 @@ public class RenamingItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (EsterelPackage.Literals.RENAMING__RENAMINGS,
+                 EsterelFactory.eINSTANCE.createWeakSuspend()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (EsterelPackage.Literals.RENAMING__RENAMINGS,
                  AnnotationsFactory.eINSTANCE.createAnnotation()));
 
         newChildDescriptors.add

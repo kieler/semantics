@@ -282,6 +282,11 @@ public class ModuleBodyItemProvider
             (createChildParameter
                 (EsterelPackage.Literals.MODULE_BODY__STATEMENTS,
                  EsterelFactory.eINSTANCE.createWeakAbort()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (EsterelPackage.Literals.MODULE_BODY__STATEMENTS,
+                 EsterelFactory.eINSTANCE.createWeakSuspend()));
     }
 
     /**

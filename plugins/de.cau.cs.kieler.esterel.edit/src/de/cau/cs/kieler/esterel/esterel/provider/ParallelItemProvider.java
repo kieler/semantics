@@ -267,6 +267,11 @@ public class ParallelItemProvider extends StatementItemProvider {
             (createChildParameter
                 (EsterelPackage.Literals.PARALLEL__LIST,
                  EsterelFactory.eINSTANCE.createWeakAbort()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (EsterelPackage.Literals.PARALLEL__LIST,
+                 EsterelFactory.eINSTANCE.createWeakSuspend()));
     }
 
 }

@@ -224,6 +224,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTaskRenamingAccess().getGroup(), "rule__TaskRenaming__Group__0");
 					put(grammarAccess.getSignalRenamingAccess().getGroup(), "rule__SignalRenaming__Group__0");
 					put(grammarAccess.getSuspendAccess().getGroup(), "rule__Suspend__Group__0");
+					put(grammarAccess.getWeakSuspendAccess().getGroup(), "rule__WeakSuspend__Group__0");
 					put(grammarAccess.getSustainAccess().getGroup(), "rule__Sustain__Group__0");
 					put(grammarAccess.getSustainAccess().getGroup_2(), "rule__Sustain__Group_2__0");
 					put(grammarAccess.getTrapAccess().getGroup(), "rule__Trap__Group__0");
@@ -521,6 +522,8 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSignalRenamingAccess().getOldNameAssignment_2(), "rule__SignalRenaming__OldNameAssignment_2");
 					put(grammarAccess.getSuspendAccess().getStatementAssignment_1(), "rule__Suspend__StatementAssignment_1");
 					put(grammarAccess.getSuspendAccess().getDelayAssignment_3(), "rule__Suspend__DelayAssignment_3");
+					put(grammarAccess.getWeakSuspendAccess().getStatementAssignment_2(), "rule__WeakSuspend__StatementAssignment_2");
+					put(grammarAccess.getWeakSuspendAccess().getDelayAssignment_4(), "rule__WeakSuspend__DelayAssignment_4");
 					put(grammarAccess.getSustainAccess().getSignalAssignment_1_0(), "rule__Sustain__SignalAssignment_1_0");
 					put(grammarAccess.getSustainAccess().getTickAssignment_1_1(), "rule__Sustain__TickAssignment_1_1");
 					put(grammarAccess.getSustainAccess().getExpressionAssignment_2_1(), "rule__Sustain__ExpressionAssignment_2_1");
