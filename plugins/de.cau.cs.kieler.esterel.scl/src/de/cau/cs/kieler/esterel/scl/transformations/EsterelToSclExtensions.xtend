@@ -450,13 +450,16 @@ class EsterelToSclExtensions {
      * Checks for valid names. The suffix "_val" is reserved fo valued signals.
      */
     def boolean validateNames(Program esterelProgram) {
+        System.out.println("Name: " + esterelProgram.modules.head.name)
         esterelProgram.modules.forEach [
+            if (interface != null) {
             interface.intSignalDecls.forEach [
                 signals.forEach [
                    if (it.name.endsWith("_val"))
                         throw new IllegalArgumentException("Variables should not have the suffix _val") 
                 ]
             ]
+            
             interface.intSensorDecls.forEach [
                 sensors.forEach [
                    if (it.sensor.name.endsWith("_val"))
@@ -471,6 +474,7 @@ class EsterelToSclExtensions {
                         ]
                 ]
             ]
+            }
         ]
         
         return true;
