@@ -1,0 +1,16 @@
+module test_trisim2:
+
+input A;
+input B;
+output C;
+
+loop
+  present A then
+    present C else emit C end present
+  else
+    present B then emit C end present
+  end present;
+  pause
+end loop
+
+end module

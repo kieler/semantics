@@ -1,0 +1,97 @@
+% Annex 2: The Reflex Game Program (Second Version) 
+
+module AVERAGE : 
+
+input INCREMENT_AVERAGE(integer); 
+
+output AVERAGE_VALUE(integer); 
+
+var TOTAL:=0, NUMBER:=0 : integer in 
+   every immediate INCREMENT_AVERAGE do 
+       TOTAL := TOTAL + ? INCREMENT_AVERAGE; 
+       NUMBER := NUMBER+1; 
+       emit AVERAGE_VALUE (TOTAL/NUMBER) 
+   end 
+end.
+
+module REFLEX_GAME : 
+constant LIMIT_TIME, MEASURE_NUMBER, PAUSE_LENGTH : integer; 
+function RANDOM():integer; 
+input MS, COIN, READY, STOP; 
+relation MS # COIN # READY, COIN # STOP, READY # STOP; 
+output DISPLAY(integer), 
+	GO_ON, GO_OFF, 
+	GAME_OVER_ON, GAME_OVER_OFF, 
+	TILT_ON, TILT_OFF, 
+	RING_BELL; 
+
+% overall initializations 
+emit DISPLAY(0); 
+emit GO_OFF; 
+emit GAME_OVER_ON; 
+emit TILT_OFF; 
+
+% loop over a single game 
+every COIN do 
+	% initializations 
+	emit DISPLAY(0); 
+	emit GO_OFF; 
+	emit GAME_OVER_OFF; 
+	emit TILT_OFF; 
+	% exception handling 
+	trap END_GAME, ERROR in 
+		signal INCREMENT_AVERAGE(integer), 
+		       AVERAGE_VALUE(integer) in 
+		   [ 
+			copymodule AVERAGE 
+		     ||
+			repeat MEASURE_NUMBER times 
+
+			% phase 1 
+			do 
+			  do 
+			    every STOP do emit RING_BELL end
+			  upto READY 
+			watching LIMIT_TIME MS 
+			timeout exit ERROR end; 
+			% phases 2 and 3 
+			trap END_MEASURE in 
+			    [
+				every READY do emit RING_BELL end
+			     ||
+				% phase 2 
+				do 
+				  await RANDOM() MS 
+				watching STOP timeout exit ERROR end; 
+				emit GO_ON; 
+				% phase 3 
+				do 
+				  var TIME:=0:integer in 
+				     do 
+				        every MS do TIME:=TIME+1 end
+				     upto STOP; 
+			             emit DISPLAY(TIME); 
+				     emit INCREMENT_AVERAGE (TIME) 
+				  end 
+				watching LIMIT_TIME MS 
+				timeout exit ERROR end; 
+				emit GO_OFF; 
+				exit END_MEASURE 
+			     ]
+			   end
+			end;
+
+			% final display 
+			await PAUSE_LENGTH MS do 
+				emit DISPLAY(? AVERAGE_VALUE) 
+			end; 
+			exit END_GAME 
+		  ]
+		end 
+	handle ERROR do 
+		emit TILT_ON; 
+		emit GO_OFF 
+	end; 
+	% end of the game 
+	emit GAME_OVER_ON 
+end.

@@ -1,0 +1,8 @@
+module test_counter1:
+input A;
+output B;
+
+await 5 A;
+emit B
+
+end module

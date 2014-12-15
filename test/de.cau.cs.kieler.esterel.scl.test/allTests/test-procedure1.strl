@@ -1,0 +1,16 @@
+module test_procedure1:
+procedure proc1(integer, boolean)(integer, integer, boolean);
+output A : integer;
+output B : boolean;
+
+var i1 := 1 : integer,
+    i2 := 2 : integer,
+    i3 := 5 : integer,
+    b1 := false : boolean,
+    b2 := true : boolean in
+  call proc1(i3, b2)(i1, i2, b1);
+  emit A(i3);
+  emit B(b2)
+end var
+
+end module
