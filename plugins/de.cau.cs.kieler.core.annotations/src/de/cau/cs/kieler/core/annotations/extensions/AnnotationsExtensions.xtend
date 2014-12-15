@@ -11,6 +11,10 @@ class AnnotationsExtensions {
 	def public Annotation getStringAnnotation(Annotatable annotatable, String name) {
 		annotatable.annotations.filter[ it.name == name ]?.head
 	} 
+
+    def public Iterable<Annotation> getStringAnnotations(Annotatable annotatable, String name) {
+        annotatable.annotations.filter[ it.name == name ]
+    } 
 	
 	def public String getStringAnnotationValue(Annotatable annotatable, String name) {
 		val anno = annotatable.getStringAnnotation(name)

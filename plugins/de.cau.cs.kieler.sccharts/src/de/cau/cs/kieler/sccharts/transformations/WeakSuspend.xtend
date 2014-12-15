@@ -71,14 +71,16 @@ class WeakSuspend {
             for (region : state.allContainedRegions.immutableCopy) {
                 val subStates = region.states.immutableCopy
                 val wsState = region.createState(GENERATED_PREFIX + "WS").uniqueName
-                val stateEnum = state.createVariable(GENERATED_PREFIX + "stateEnum").setTypeBool.uniqueName
+                val stateEnum = state.createVariable(GENERATED_PREFIX + "stateEnum").setTypeInt.uniqueName
                 var counter = 0
 
                 for (subState : subStates) {
                     val reEnterTransition = wsState.createImmediateTransitionTo(subState)
                     reEnterTransition.setTrigger(stateEnum.reference.isEqual(counter.createIntValue))
                     reEnterTransition.setDeferred(true)
-                    subState.createEntryAction.addEffect(stateEnum.assign(counter.createIntValue))
+                    val entryAction = subState.createEntryAction
+                    entryAction.addEffect(stateEnum.assign(counter.createIntValue))
+                    entryAction.setTrigger(not(weakSuspendFlag.reference))
                     counter = counter + 1
                     val weakSuspendTransition = subState.createImmediateTransitionTo(wsState)
                     weakSuspendTransition.setTrigger(weakSuspendFlag.reference)
