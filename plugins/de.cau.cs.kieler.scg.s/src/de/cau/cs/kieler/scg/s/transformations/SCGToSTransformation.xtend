@@ -81,7 +81,7 @@ class SCGToSTransformation {
         val timestamp = System.currentTimeMillis
 
         for (declaration : scg.declarations) {
-            val newDeclaration = createDeclaration => [setType(declaration.type)]
+            val newDeclaration = createDeclaration => [setType(declaration.type); setHostType(declaration.hostType)]
             sProgram.declarations += newDeclaration
             for (valuedObject : declaration.valuedObjects) {
 
