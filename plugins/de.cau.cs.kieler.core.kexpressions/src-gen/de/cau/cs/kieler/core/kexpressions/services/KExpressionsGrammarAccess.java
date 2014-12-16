@@ -1244,6 +1244,22 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getHOSTHostKeyword_6_0() { return cHOSTHostKeyword_6_0; }
 	}
 
+	public class HostTypeElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "HostType");
+		private final EnumLiteralDeclaration cHOSTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cHOSTHostKeyword_0 = (Keyword)cHOSTEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum HostType returns ValueType:
+		//	HOST="host";
+		public EnumRule getRule() { return rule; }
+
+		//HOST="host"
+		public EnumLiteralDeclaration getHOSTEnumLiteralDeclaration() { return cHOSTEnumLiteralDeclaration; }
+
+		//"host"
+		public Keyword getHOSTHostKeyword_0() { return cHOSTHostKeyword_0; }
+	}
+
 	public class CombineOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "CombineOperator");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -1359,6 +1375,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private LogicalOrOperatorElements unknownRuleLogicalOrOperator;
 	private LogicalAndOperatorElements unknownRuleLogicalAndOperator;
 	private ValueTypeElements unknownRuleValueType;
+	private HostTypeElements unknownRuleHostType;
 	private CombineOperatorElements unknownRuleCombineOperator;
 	private TerminalRule tHOSTCODE;
 	
@@ -1823,6 +1840,16 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getValueTypeRule() {
 		return getValueTypeAccess().getRule();
+	}
+
+	//enum HostType returns ValueType:
+	//	HOST="host";
+	public HostTypeElements getHostTypeAccess() {
+		return (unknownRuleHostType != null) ? unknownRuleHostType : (unknownRuleHostType = new HostTypeElements());
+	}
+	
+	public EnumRule getHostTypeRule() {
+		return getHostTypeAccess().getRule();
 	}
 
 	//enum CombineOperator:

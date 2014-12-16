@@ -212,6 +212,9 @@ enum ValueType returns ValueType:
 	INT="int" | FLOAT="float" |
 	STRING="string" | HOST="host";
 
+enum HostType returns ValueType:
+    HOST="host";
+
 
 enum CombineOperator returns CombineOperator:
 	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
