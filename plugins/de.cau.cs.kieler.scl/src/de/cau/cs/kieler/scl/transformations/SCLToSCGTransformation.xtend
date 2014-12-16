@@ -63,7 +63,7 @@ import de.cau.cs.kieler.scl.scl.SCLProgram
  * @kieler.design 2014-01-27 proposed 
  * @kieler.rating 2014-01-27 proposed yellow
  */
-// This class contians all mandatory methods for the SCGDEP-to-SCGBB-Transformation.
+// This class contains all mandatory methods for the SCGDEP-to-SCGBB-Transformation.
 class SCLToSCGTransformation extends AbstractModelTransformation {
 
     @Inject
