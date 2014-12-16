@@ -158,6 +158,12 @@ class TransformInterface {
                         false,
                         t
                     )
+                    
+                    // Add the hostType
+                    if (sig.type.name == "PURE" && sig.channelDescr.type.typeID != null) {
+                        sclDecl.hostType = sig.channelDescr.type.typeID
+                    }
+                    
                     sclDecl.valuedObjects += s_val
 
                     program.declarations += sclDecl
