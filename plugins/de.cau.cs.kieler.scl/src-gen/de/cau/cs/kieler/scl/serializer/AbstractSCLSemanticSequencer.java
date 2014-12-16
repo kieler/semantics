@@ -461,6 +461,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExpressionsSemanticS
 	 *         static?='static'? 
 	 *         signal?='signal'? 
 	 *         type=ValueType 
+	 *         hostType=STRING? 
 	 *         valuedObjects+=ValuedObject 
 	 *         valuedObjects+=ValuedObject*
 	 *     )
@@ -571,7 +572,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExpressionsSemanticS
 	
 	/**
 	 * Constraint:
-	 *     (annotations+=Annotation* name=ID initialValue=Expression? combineOperator=CombineOperator?)
+	 *     (name=ID initialValue=Expression? combineOperator=CombineOperator?)
 	 */
 	protected void sequence_ValuedObject(EObject context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

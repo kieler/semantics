@@ -13,7 +13,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalSCLLexer extends Lexer {
     public static final int T__68=68;
-    public static final int RULE_BOOLEAN=8;
+    public static final int RULE_BOOLEAN=9;
     public static final int T__69=69;
     public static final int T__66=66;
     public static final int RULE_ID=4;
@@ -50,9 +50,9 @@ public class InternalSCLLexer extends Lexer {
     public static final int T__54=54;
     public static final int RULE_NUMBER=12;
     public static final int T__59=59;
-    public static final int RULE_INT=6;
+    public static final int RULE_INT=7;
     public static final int T__50=50;
-    public static final int RULE_COMMENT_ANNOTATION=9;
+    public static final int RULE_COMMENT_ANNOTATION=10;
     public static final int T__42=42;
     public static final int T__43=43;
     public static final int T__40=40;
@@ -63,14 +63,14 @@ public class InternalSCLLexer extends Lexer {
     public static final int T__45=45;
     public static final int T__48=48;
     public static final int T__49=49;
-    public static final int RULE_FLOAT=7;
+    public static final int RULE_FLOAT=8;
     public static final int RULE_SL_COMMENT=13;
-    public static final int RULE_HOSTCODE=5;
+    public static final int RULE_HOSTCODE=6;
     public static final int RULE_ML_COMMENT=11;
     public static final int T__30=30;
     public static final int T__31=31;
     public static final int T__32=32;
-    public static final int RULE_STRING=10;
+    public static final int RULE_STRING=5;
     public static final int T__33=33;
     public static final int T__71=71;
     public static final int T__34=34;

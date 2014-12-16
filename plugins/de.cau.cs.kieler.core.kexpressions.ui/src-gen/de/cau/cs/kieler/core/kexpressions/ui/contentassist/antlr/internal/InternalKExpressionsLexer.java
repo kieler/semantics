@@ -1823,8 +1823,8 @@ public class InternalKExpressionsLexer extends Lexer {
         "\1\0\2\uffff\1\154\20\uffff\1\165\1\154\2\uffff\1\60\2\uffff\1\60"+
         "\1\145\1\163\2\uffff\1\60\1\145\1\uffff\1\60";
     static final String DFA24_maxS =
-        "\1\uffff\1\162\1\174\1\46\2\uffff\1\71\2\uffff\1\57\1\141\1\75"+
-        "\1\76\1\75\7\uffff\1\uffff\1\146\1\162\1\141\1\uffff\1\172\3\uffff"+
+        "\1\uffff\1\162\1\174\1\46\2\uffff\1\71\2\uffff\1\57\1\141\1\75\1"+
+        "\76\1\75\7\uffff\1\uffff\1\146\1\162\1\141\1\uffff\1\172\3\uffff"+
         "\1\145\10\uffff\1\146\2\uffff\1\uffff\2\uffff\1\154\20\uffff\1\165"+
         "\1\154\2\uffff\1\172\2\uffff\1\172\1\145\1\163\2\uffff\1\172\1\145"+
         "\1\uffff\1\172";
