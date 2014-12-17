@@ -260,7 +260,7 @@ DoWatchingEnd:
 // --> B.4.7 emit: Signal Emission <--
 // !-(emit)2 -------------------------------------
 Emit:
-	"emit" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) ("(" expr=Expression ")")?;
+	"emit" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) (expr=Expression)?;
 	// -!
 // --> B.4.8 every-do: Conditional Iteration
 // !-(every)-------------------------------------

@@ -2744,20 +2744,17 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSignalISignalIDTerminalRuleCall_1_0_0_1 = (RuleCall)cSignalISignalCrossReference_1_0_0.eContents().get(1);
 		private final Assignment cTickAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
 		private final RuleCall cTickTickParserRuleCall_1_1_0 = (RuleCall)cTickAssignment_1_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cExprAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cExprExpressionParserRuleCall_2_1_0 = (RuleCall)cExprAssignment_2_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final Assignment cExprAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cExprExpressionParserRuleCall_2_0 = (RuleCall)cExprAssignment_2.eContents().get(0);
 		
 		//// -!
 		//// --> B.4.7 emit: Signal Emission <--
 		//// !-(emit)2 -------------------------------------
 		//Emit:
-		//	"emit" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expr=Expression ")")?;
+		//	"emit" (signal=[kexpressions::ISignal] | tick=Tick) expr=Expression?;
 		public ParserRule getRule() { return rule; }
 
-		//"emit" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expr=Expression ")")?
+		//"emit" (signal=[kexpressions::ISignal] | tick=Tick) expr=Expression?
 		public Group getGroup() { return cGroup; }
 
 		//"emit"
@@ -2781,20 +2778,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//Tick
 		public RuleCall getTickTickParserRuleCall_1_1_0() { return cTickTickParserRuleCall_1_1_0; }
 
-		//("(" expr=Expression ")")?
-		public Group getGroup_2() { return cGroup_2; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
-
-		//expr=Expression
-		public Assignment getExprAssignment_2_1() { return cExprAssignment_2_1; }
+		//expr=Expression?
+		public Assignment getExprAssignment_2() { return cExprAssignment_2; }
 
 		//Expression
-		public RuleCall getExprExpressionParserRuleCall_2_1_0() { return cExprExpressionParserRuleCall_2_1_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
+		public RuleCall getExprExpressionParserRuleCall_2_0() { return cExprExpressionParserRuleCall_2_0; }
 	}
 
 	public class EveryDoElements extends AbstractParserRuleElementFinder {
@@ -6309,7 +6297,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// --> B.4.7 emit: Signal Emission <--
 	//// !-(emit)2 -------------------------------------
 	//Emit:
-	//	"emit" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expr=Expression ")")?;
+	//	"emit" (signal=[kexpressions::ISignal] | tick=Tick) expr=Expression?;
 	public EmitElements getEmitAccess() {
 		return (pEmit != null) ? pEmit : (pEmit = new EmitElements());
 	}
