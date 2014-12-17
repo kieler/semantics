@@ -37,6 +37,12 @@ Declaration returns kexpressions::Declaration:
     )
 ;
 
+// Override ValueType rule without host type
+enum ValueType returns kexpressions::ValueType:
+    PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | 
+    INT="int" | FLOAT="float" |
+    STRING="string";
+
 ValuedObject returns kexpressions::ValuedObject:
 //    (annotations+=Annotation)* // Parser does not like this
     name=ID ('=' initialValue=Expression)?

@@ -163,14 +163,12 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Declaration returns kexpressions::Declaration:
 		//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
-		//	(type=HostType hostType=STRING valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";" // TODO forbid "int "huhu" a"
-		//	// TODO There have to be a hostType if type is HOST
+		//	(type=HostType hostType=STRING valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";" // TODO There have to be a hostType if type is HOST
 		//	| type=ValueType valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";");
 		public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
-		//(type=HostType hostType=STRING valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";" // TODO forbid "int "huhu" a"
-		//// TODO There have to be a hostType if type is HOST
+		//(type=HostType hostType=STRING valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";" // TODO There have to be a hostType if type is HOST
 		//| type=ValueType valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";")
 		public Group getGroup() { return cGroup; }
 
@@ -210,8 +208,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//"signal"
 		public Keyword getSignalSignalKeyword_5_0() { return cSignalSignalKeyword_5_0; }
 
-		//type=HostType hostType=STRING valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";" // TODO forbid "int "huhu" a"
-		//// TODO There have to be a hostType if type is HOST
+		//type=HostType hostType=STRING valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";" // TODO There have to be a hostType if type is HOST
 		//| type=ValueType valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";"
 		public Alternatives getAlternatives_6() { return cAlternatives_6; }
 
@@ -966,8 +963,70 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	
+	public class ValueTypeElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "ValueType");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cPUREEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cPUREPureKeyword_0_0 = (Keyword)cPUREEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cBOOLEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cBOOLBoolKeyword_1_0 = (Keyword)cBOOLEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cUNSIGNEDEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cUNSIGNEDUnsignedKeyword_2_0 = (Keyword)cUNSIGNEDEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cINTEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cINTIntKeyword_3_0 = (Keyword)cINTEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cFLOATEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cFLOATFloatKeyword_4_0 = (Keyword)cFLOATEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cSTRINGEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cSTRINGStringKeyword_5_0 = (Keyword)cSTRINGEnumLiteralDeclaration_5.eContents().get(0);
+		
+		//// Override ValueType rule without host type
+		//enum ValueType returns kexpressions::ValueType:
+		//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | STRING="string";
+		public EnumRule getRule() { return rule; }
+
+		//PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | STRING="string"
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//PURE="pure"
+		public EnumLiteralDeclaration getPUREEnumLiteralDeclaration_0() { return cPUREEnumLiteralDeclaration_0; }
+
+		//"pure"
+		public Keyword getPUREPureKeyword_0_0() { return cPUREPureKeyword_0_0; }
+
+		//BOOL="bool"
+		public EnumLiteralDeclaration getBOOLEnumLiteralDeclaration_1() { return cBOOLEnumLiteralDeclaration_1; }
+
+		//"bool"
+		public Keyword getBOOLBoolKeyword_1_0() { return cBOOLBoolKeyword_1_0; }
+
+		//UNSIGNED="unsigned"
+		public EnumLiteralDeclaration getUNSIGNEDEnumLiteralDeclaration_2() { return cUNSIGNEDEnumLiteralDeclaration_2; }
+
+		//"unsigned"
+		public Keyword getUNSIGNEDUnsignedKeyword_2_0() { return cUNSIGNEDUnsignedKeyword_2_0; }
+
+		//INT="int"
+		public EnumLiteralDeclaration getINTEnumLiteralDeclaration_3() { return cINTEnumLiteralDeclaration_3; }
+
+		//"int"
+		public Keyword getINTIntKeyword_3_0() { return cINTIntKeyword_3_0; }
+
+		//FLOAT="float"
+		public EnumLiteralDeclaration getFLOATEnumLiteralDeclaration_4() { return cFLOATEnumLiteralDeclaration_4; }
+
+		//"float"
+		public Keyword getFLOATFloatKeyword_4_0() { return cFLOATFloatKeyword_4_0; }
+
+		//STRING="string"
+		public EnumLiteralDeclaration getSTRINGEnumLiteralDeclaration_5() { return cSTRINGEnumLiteralDeclaration_5; }
+
+		//"string"
+		public Keyword getSTRINGStringKeyword_5_0() { return cSTRINGStringKeyword_5_0; }
+	}
+	
 	private SCLProgramElements pSCLProgram;
 	private DeclarationElements pDeclaration;
+	private ValueTypeElements unknownRuleValueType;
 	private ValuedObjectElements pValuedObject;
 	private StatementElements pStatement;
 	private EmptyStatementElements pEmptyStatement;
@@ -1033,8 +1092,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Declaration returns kexpressions::Declaration:
 	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
-	//	(type=HostType hostType=STRING valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";" // TODO forbid "int "huhu" a"
-	//	// TODO There have to be a hostType if type is HOST
+	//	(type=HostType hostType=STRING valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";" // TODO There have to be a hostType if type is HOST
 	//	| type=ValueType valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";");
 	public DeclarationElements getDeclarationAccess() {
 		return (pDeclaration != null) ? pDeclaration : (pDeclaration = new DeclarationElements());
@@ -1042,6 +1100,17 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getDeclarationRule() {
 		return getDeclarationAccess().getRule();
+	}
+
+	//// Override ValueType rule without host type
+	//enum ValueType returns kexpressions::ValueType:
+	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | STRING="string";
+	public ValueTypeElements getValueTypeAccess() {
+		return (unknownRuleValueType != null) ? unknownRuleValueType : (unknownRuleValueType = new ValueTypeElements());
+	}
+	
+	public EnumRule getValueTypeRule() {
+		return getValueTypeAccess().getRule();
 	}
 
 	//ValuedObject returns kexpressions::ValuedObject: //    (annotations+=Annotation)* // Parser does not like this
@@ -1590,18 +1659,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getLogicalAndOperatorRule() {
 		return getLogicalAndOperatorAccess().getRule();
-	}
-
-	/// *
-	//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
-	// * / enum ValueType:
-	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | STRING="string" | HOST="host";
-	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
-		return gaKExpressions.getValueTypeAccess();
-	}
-	
-	public EnumRule getValueTypeRule() {
-		return getValueTypeAccess().getRule();
 	}
 
 	//enum HostType returns ValueType:
