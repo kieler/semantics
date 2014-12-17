@@ -796,6 +796,7 @@ class EsterelToSclTransformation extends Transformation {
     def dispatch StatementSequence transformStm(Abort abort, StatementSequence sSeq) {
 
         // Abort Cases
+        // TODO weak abort case?
         if (abort.body instanceof AbortCase) {
             val saveAbort = EcoreUtil.copy((abort.body as AbortCase))
             val l_end = createFreshLabel
@@ -804,14 +805,14 @@ class EsterelToSclTransformation extends Transformation {
             val f_depth = createFreshVar("f_depth", ValueType::BOOL)
             f_depth.initialValue = createBoolValue(false);
 
-            pauseTransformation.push [ StatementSequence seq |
-                seq.add(createAssignment(f_depth, createBoolValue(true)))
-            ]
+//            pauseTransformation.push [ StatementSequence seq |
+//                seq.add(createAssignment(f_depth, createBoolValue(true)))
+//            ]
 
             handleAbortCase(abort).transformStm(sSeq)
 
             signalMap.remove(f_depth.name -> f_depth)
-            pauseTransformation.pop
+//            pauseTransformation.pop
 
             for (singleCase : saveAbort.cases) {
                 sSeq.add(
@@ -847,10 +848,7 @@ class EsterelToSclTransformation extends Transformation {
         // Delay Expression?
         val delayExpression = (abort.body as AbortInstance).delay.expr != null
         // if a and c > i then...
-        val countExp = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-            operator = OperatorType::AND
-            subExpressions += abortExpr.transformExp(signalMap)
-            subExpressions += KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+        val countExp = createAnd(abortExpr.transformExp(signalMap),KExpressionsFactory::eINSTANCE.createOperatorExpression => [
             operator = OperatorType::GT
             if ((abort.body as AbortInstance).delay.expr != null) {
                 if (delayExpression) {
@@ -864,10 +862,14 @@ class EsterelToSclTransformation extends Transformation {
                 }
                 subExpressions += counter.createValObjRef
             }
-        ]
+        ])
         
-        ]
-
+        // If no delay expression do not produce i
+        if (!delayExpression) {
+            localDeclarations.removeLast
+            signalMap.removeLast
+        }
+        
         // Weak immediate abort
         if (abort.body instanceof WeakAbortInstance && ((abort.body as AbortInstance).delay.isImmediate)) {
 
@@ -1054,13 +1056,23 @@ class EsterelToSclTransformation extends Transformation {
         if (abortCaseBody.cases.empty) {
             return abortCase.statement
         } else {
-            EsterelFactory::eINSTANCE.createAbort => [
-                body = EsterelFactory::eINSTANCE.createAbortInstance => [
-                    delay = abortCaseBody.cases.head.delay
+            if (abortCase instanceof WeakAbort) {
+                EsterelFactory::eINSTANCE.createWeakAbort => [
+                    body = EsterelFactory::eINSTANCE.createWeakAbortInstance => [
+                        delay = abortCaseBody.cases.head.delay
+                    ]
+                    abortCaseBody.cases.remove(0)
+                    statement = handleAbortCase(abortCase)
                 ]
-                abortCaseBody.cases.remove(0)
-                statement = handleAbortCase(abortCase)
-            ]
+            } else {
+                EsterelFactory::eINSTANCE.createAbort => [
+                    body = EsterelFactory::eINSTANCE.createAbortInstance => [
+                        delay = abortCaseBody.cases.head.delay
+                    ]
+                    abortCaseBody.cases.remove(0)
+                    statement = handleAbortCase(abortCase)
+                ]
+            }
         }
 
     }
