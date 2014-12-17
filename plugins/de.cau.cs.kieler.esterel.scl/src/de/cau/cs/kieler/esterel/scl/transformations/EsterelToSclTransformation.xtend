@@ -441,6 +441,11 @@ class EsterelToSclTransformation extends Transformation {
         sSeq.addLabel(l_start)
 
         for (singleCase : awaitCase.cases) {
+        if (singleCase.delay.expr != null) {
+                // i count occurences of the signal
+                val counter = createFreshVar("i", ValueType::INT)
+                sSeq.add(createAssignment(counter, 0.createIntValue))
+                }
             val cond = SclFactory::eINSTANCE.createConditional => [
                 // Additional check for f_depth
                 if (!singleCase.delay.isImmediate) {
@@ -502,10 +507,17 @@ class EsterelToSclTransformation extends Transformation {
             return sSeq
         }
 
+        val i = createValuedObject(uniqueName(signalMap, "i"))
+        if (await.delay.expr != null) {
+            sSeq.add(createAssignment(i, 0.createIntValue))
+            signalMap.add(i.name -> i);
+            
+            }
         val l = createFreshLabel
 
         sSeq.addLabel(l)
         labelMap.put(curLabel, l)
+        
 
         if (!await.delay.isImmediate) {
             sSeq.createSclPause
@@ -518,8 +530,6 @@ class EsterelToSclTransformation extends Transformation {
 
         // Wait several times, e.g. await 5 a
         // i counts
-        val i = createValuedObject(uniqueName(signalMap, "i"))
-        sSeq.add(createAssignment(i, 0.createIntValue))
 //        i.initialValue = createIntValue(0)
         if (await.delay.expr != null) {
             signalMap.add(i.name -> i);
@@ -863,7 +873,7 @@ class EsterelToSclTransformation extends Transformation {
         val delayExpression = (abort.body as AbortInstance).delay.expr != null
         // if a and c > i then...
         val countExp = createAnd(abortExpr.transformExp(signalMap),KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-            operator = OperatorType::GT
+            operator = OperatorType::LEQ
             if ((abort.body as AbortInstance).delay.expr != null) {
                 if (delayExpression) {
                     if ((abort.body as AbortInstance).delay.expr instanceof ConstantExpression) {
