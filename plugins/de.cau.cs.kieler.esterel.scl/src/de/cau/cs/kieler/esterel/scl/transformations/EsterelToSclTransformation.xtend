@@ -206,7 +206,6 @@ class EsterelToSclTransformation extends Transformation {
         val program = SclFactory::eINSTANCE.createSCLProgram()
 
         // Only the first module is considered
-        // TODO handle several modules
         val esterelMod = esterelProgram.modules.head
         program.name = esterelMod.name
 
@@ -984,9 +983,11 @@ class EsterelToSclTransformation extends Transformation {
             val f_a = createFreshVar("f_a", ValueType::BOOL)
             f_a.initialValue = false.createBoolValue
             if ((abort.body as AbortInstance).delay.isImmediate) {
-                sSeq.statements.add(
-                    createStmFromInstr(
-                        ifThenGoto(transformExp((abort.body as AbortInstance).delay.event.expr, signalMap), l, true)))
+                sSeq.statements.add(createStmFromInstr(SclFactory::eINSTANCE.createConditional => [
+                             expression = transformExp(abortExpr, oldSignalMap)
+                             statements += createStmFromInstr(createAssignment(f_a, createBoolValue(true)))
+                             statements += createGotoj(l, curLabel, labelMap)
+                         ]))
             }
 
             val pause = [ StatementSequence seq |
