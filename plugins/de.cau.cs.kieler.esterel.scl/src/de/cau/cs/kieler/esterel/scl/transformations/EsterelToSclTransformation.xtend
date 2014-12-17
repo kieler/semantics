@@ -100,6 +100,7 @@ import de.cau.cs.kieler.esterel.esterel.DoUpto
 import de.cau.cs.kieler.esterel.esterel.Do
 import de.cau.cs.kieler.esterel.esterel.DoWatching
 import de.cau.cs.kieler.esterel.esterel.WeakSuspend
+import de.cau.cs.kieler.esterel.esterel.ConstantRenaming
 
 /**
  * @author krat
@@ -457,7 +458,8 @@ class EsterelToSclTransformation extends Transformation {
             if (singleCase.delay.expr != null) {
                 // i count occurences of the signal
                 val counter = createFreshVar("i", ValueType::INT)
-                counter.initialValue = createIntValue(0)
+                sSeq.add(createAssignment(counter, 0.createIntValue))
+//                counter.initialValue = createIntValue(0)
         
              // Increment counter if guard holds
              cond.statements += incrementInt(counter)
@@ -508,10 +510,17 @@ class EsterelToSclTransformation extends Transformation {
         if (!await.delay.isImmediate) {
             sSeq.createSclPause
         }
+        
+        // await tick is just a pause
+        if (await.delay.event.expr == null && await.delay.expr == null) {
+            return sSeq.createSclPause
+        }
 
         // Wait several times, e.g. await 5 a
         // i counts
         val i = createValuedObject(uniqueName(signalMap, "i"))
+        sSeq.add(createAssignment(i, 0.createIntValue))
+//        i.initialValue = createIntValue(0)
         if (await.delay.expr != null) {
             signalMap.add(i.name -> i);
 
@@ -535,7 +544,7 @@ class EsterelToSclTransformation extends Transformation {
                 sSeq.add(incrementInt(i))
             }
         }
-
+        
         // This is probably not an await tick
         var de.cau.cs.kieler.core.kexpressions.OperatorExpression b
         if (await.delay.event.expr != null) {
@@ -603,11 +612,8 @@ class EsterelToSclTransformation extends Transformation {
             body = EsterelFactory::eINSTANCE.createLoopBody => [
                 statement = EsterelFactory::eINSTANCE.createAbort => [
                     body = EsterelFactory::eINSTANCE.createAbortInstance => [
-                        delay = EsterelFactory::eINSTANCE.createDelayExpr => [
-                            event = EsterelFactory::eINSTANCE.createDelayEvent => [
-                                expr = s.event.expr
-                            ]
-                        ]
+                        delay = s
+                        
                     ]
                     statement = EsterelFactory::eINSTANCE.createSequence => [
                         list.add(loop.body.statement)
@@ -699,7 +705,14 @@ class EsterelToSclTransformation extends Transformation {
      * present
      */
     def dispatch StatementSequence transformStm(Present pres, StatementSequence sSeq) {
-
+        // present tick always takes the then branch
+        if ((pres.body as PresentEventBody).event.expression == null) {
+            val thenPart = SclFactory::eINSTANCE.createStatementSequence
+            transformStm((pres.body as PresentEventBody).thenPart.statement, thenPart)
+            sSeq.statements.addAll(thenPart.statements)
+            return sSeq
+        }
+        
         //present s then p (else q)
         if (pres.body instanceof PresentEventBody) {
             val cond = SclFactory::eINSTANCE.createConditional => [
@@ -844,7 +857,8 @@ class EsterelToSclTransformation extends Transformation {
         
         // Add a counting variable, if delay.expr is set
         val counter = createFreshVar("i", ValueType::INT)
-        counter.initialValue = createIntValue(0)
+        sSeq.add(createAssignment(counter, 0.createIntValue))
+//        counter.initialValue = createIntValue(0)
         // Delay Expression?
         val delayExpression = (abort.body as AbortInstance).delay.expr != null
         // if a and c > i then...
@@ -1084,7 +1098,8 @@ class EsterelToSclTransformation extends Transformation {
     def dispatch StatementSequence transformStm(Suspend susp, StatementSequence sSeq) {
         // Add a counting variable, if delay.expr is set
         val counter = createFreshVar("i", ValueType::INT)
-        counter.initialValue = createIntValue(0)
+        sSeq.add(createAssignment(counter, 0.createIntValue))
+//        counter.initialValue = createIntValue(0)
         // Delay Expression?
         val delayExpression = susp.delay.expr != null
         // if a and c > i then...
@@ -1146,11 +1161,11 @@ class EsterelToSclTransformation extends Transformation {
 
     /*
      * Trap t in p end
-     * TODO several flags
      */
     def dispatch StatementSequence transformStm(Trap trap, StatementSequence sSeq) {
 
         val f_s = createFreshVar(trap.trapDeclList.trapDecls.head.name, ValueType::BOOL)
+        f_s.initialValue = false.createBoolValue
         val l = createFreshLabel
         labelMap.put(curLabel, l)
 
@@ -1209,7 +1224,6 @@ class EsterelToSclTransformation extends Transformation {
 
         sSeq.statements.add(createGotoj(l, curLabel, labelMap))
 
-        //        ]))
         return sSeq
     }
 
@@ -1217,25 +1231,65 @@ class EsterelToSclTransformation extends Transformation {
      * run mod
      */
     def dispatch StatementSequence transformStm(Run run, StatementSequence sSeq) {
+        
+        System.out.println("length: " + signalMap.length)
+        var oldLength = signalMap.length
 
+        // Signal declared in run module have to be copied, but only if not already done
+        val p = SclFactory::eINSTANCE.createSCLProgram
+        transformInterface(run.module.module.interface, p)
+        p.declarations.forEach [
+            if (!(alreadyDefined(localDeclarations, it.valuedObjects.head.name))) {
+                localDeclarations += it
+            }
+        ]
+        
         // Rename signals (only if renaming happens)
         // TODO Throw exception?
         if (run.list != null) {
             run.list.list.forEach [
                 for (renaming : renamings) {
+                    if (renaming instanceof SignalRenaming) {
                     signalMap.add(
                         (renaming as SignalRenaming).oldName.name ->
                             signalMap.findLast[key == (renaming as SignalRenaming).newName.name].value)
+                    }
+                    else if (renaming instanceof ConstantRenaming) {
+                    signalMap.add(
+                        (renaming as ConstantRenaming).oldName.name ->
+                            signalMap.findLast[key == (renaming as ConstantRenaming).newName.name].value)
+                    }
                 }
             ]
         }
 
-        // Signal declared in run module have to be copied, but only if not already done
-        val p = SclFactory::eINSTANCE.createSCLProgram
-        transformInterface(run.module.module.interface, p)
-        localDeclarations += p.declarations
-
-        run.module.module.body.statements.forEach[transformStm(sSeq)]
+        // Copy the body in case of multiple calls for the same module
+        val statements = EcoreUtil.copy(run.module.module.body)
+        statements.statements.forEach[ transformStm(sSeq) ]
+        
+        // Delete local signal renamings
+        // TODO WTO und so...
+//        if (run.list != null) {
+//            run.list.list.forEach [
+//                for (renaming : renamings) {
+//                    if (renaming instanceof SignalRenaming) {
+//                    signalMap.remove(
+//                        (renaming as SignalRenaming).oldName.name ->
+//                            signalMap.findLast[key == (renaming as SignalRenaming).newName.name].value)
+//                    }
+//                    else if (renaming instanceof ConstantRenaming) {
+//                    signalMap.remove(
+//                        (renaming as ConstantRenaming).oldName.name ->
+//                            signalMap.findLast[key == (renaming as ConstantRenaming).newName.name].value)
+//                    }
+//                }
+//            ]
+//        }
+        
+        while (oldLength < signalMap.length) {
+            signalMap.removeLast
+        }
+        System.out.println("newlength: " + signalMap.length)
 
         sSeq
     }
@@ -1315,6 +1369,8 @@ class EsterelToSclTransformation extends Transformation {
             sSeq.add(ifThenGoto(op, l_end, true))
         }
         val i = createFreshVar("i", ValueType::INT)
+        sSeq.add(createAssignment(i, 0.createIntValue))
+//        i.initialValue = createIntValue(0)
         val l = createFreshLabel
         labelMap.put(curLabel, l)
 
@@ -1339,8 +1395,8 @@ class EsterelToSclTransformation extends Transformation {
     }
 
     /*
-         * Procedure calls
-         */
+     * Procedure calls
+     */
     def dispatch StatementSequence transformStm(ProcCall procCall, StatementSequence sSeq) {
         val valObj = createFreshVar("procDummy", ValueType::HOST)
 
@@ -1350,7 +1406,7 @@ class EsterelToSclTransformation extends Transformation {
         // Get call-by-value parameters
         var i = 0
         for (exp : procCall.kexpressions) {
-            val type = procCall.proc.idList1.get(i).type.toString
+            val type = procCall.proc.idList2.get(i).type.toString
             res.parameters.add(
                 KExpressionsFactory::eINSTANCE.createParameter => [
                     if (exp instanceof ConstantExpression) {

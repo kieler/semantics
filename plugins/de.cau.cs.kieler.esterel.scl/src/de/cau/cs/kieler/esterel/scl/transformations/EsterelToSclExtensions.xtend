@@ -479,5 +479,22 @@ class EsterelToSclExtensions {
         
         return true;
     }
+    
+    /*
+     * Checks, whether a variable is already declared
+     */
+     def boolean alreadyDefined(LinkedList<Declaration> declarations, String n) {
+         for (decl : declarations) {
+             for (valObj : decl.valuedObjects) {
+                 if (valObj.name == n) {
+                    return true
+                 }
+             
+             
+             }
+         }
+         
+         false
+     }
 
 }
