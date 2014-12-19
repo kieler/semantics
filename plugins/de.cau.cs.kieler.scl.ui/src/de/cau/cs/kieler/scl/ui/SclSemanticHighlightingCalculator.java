@@ -31,19 +31,21 @@ public class SclSemanticHighlightingCalculator extends KExpressionsSemanticHighl
      * {@inheritDoc}
      */
     public void provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor) {
-        if (resource == null || resource.getParseResult() == null)
-            return;
-
-        INode root = resource.getParseResult().getRootNode();
-      
-        for (INode node : root.getAsTreeIterable()) {
-            // highlighting for labels
-            if (node.getSemanticElement() instanceof EmptyStatement) {
-                acceptor.addPosition(node.getOffset(), node.getLength(),
-                        SclHighlightingConfiguration.LABEL);
-            } else {
-                super.provideHighlightingFor(resource, acceptor);
-            }
-        }
+        super.provideHighlightingFor(resource, acceptor);
+        // Semantic highlighting causes a crash on large files
+//        if (resource == null || resource.getParseResult() == null)
+//            return;
+//
+//        INode root = resource.getParseResult().getRootNode();
+//      
+//        for (INode node : root.getAsTreeIterable()) {
+//            // highlighting for labels
+//            if (node.getSemanticElement() instanceof EmptyStatement) {
+//                acceptor.addPosition(node.getOffset(), node.getLength(),
+//                        SclHighlightingConfiguration.LABEL);
+//            } else {
+//                super.provideHighlightingFor(resource, acceptor);
+//            }
+//        }
     }
 }
