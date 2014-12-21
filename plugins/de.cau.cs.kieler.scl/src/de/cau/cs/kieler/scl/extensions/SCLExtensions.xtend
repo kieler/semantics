@@ -35,7 +35,7 @@ class SCLExtensions {
      * Removes all goto instructions, that target a label, that follows that goto.
      * krat: if the following statements are just other label, we can remove the goto
      */
-    def StatementSequence removeSuperfluousGotos(SCLProgram sSeq) {
+    def StatementSequence removeSuperfluousGotos(StatementSequence sSeq) {
         val toDelete = <Goto>newLinkedList
         for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
             var statement = goto.eContainer
@@ -71,7 +71,7 @@ class SCLExtensions {
     /*
      * Removes all labels which are not used
      */
-    def StatementSequence optimizeLabels(SCLProgram sSeq) {
+    def StatementSequence optimizeLabels(StatementSequence sSeq) {
         val gotos = sSeq.eAllContents.toList.filter(typeof(Goto))
         val toDelete = <EmptyStatement>newLinkedList
         sSeq.eAllContents.filter(typeof(EmptyStatement)).forEach [
@@ -85,7 +85,7 @@ class SCLExtensions {
     /*
      * Removes all statements that follow a goto before any label
      */
-    def StatementSequence removeUnreachableCode(SCLProgram sSeq) {
+    def StatementSequence removeUnreachableCode(StatementSequence sSeq) {
         val toDelete = <Statement>newLinkedList
         for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
             var statement = goto.eContainer
@@ -110,4 +110,42 @@ class SCLExtensions {
 
         sSeq
     }
+    
+    /*
+     * Removes subsequent labels and changes corresponding gotos
+     */
+     def StatementSequence removeSubseqeuentLabels(StatementSequence sSeq) {
+         val toDelete = <Statement>newLinkedList
+         val replaceBy = <Pair<String, String>>newLinkedList
+         
+         for (emptyStm : sSeq.eAllContents.toList.filter(typeof(EmptyStatement))) {
+             var parent = emptyStm.eContainer as StatementSequence
+             var index = parent.statements.indexOf(emptyStm)
+             var isLabel = true
+             while (parent.statements.size > index + 1 && isLabel) {
+                 val nextStatement = parent.statements.get(index + 1) as Statement
+                 
+                 if (nextStatement instanceof EmptyStatement) {
+                     toDelete.add(nextStatement)
+                     replaceBy.add((nextStatement as EmptyStatement).label -> emptyStm.label)
+                     index = index + 1
+                 } else {
+                     isLabel = false;
+                 }
+             }
+         }
+         toDelete.forEach[it.remove]
+         
+         // Replace goto targets
+         for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
+             var newLabel = replaceBy.findFirst[ key == (goto as Goto).targetLabel ].value
+             
+             if (newLabel != null) {
+                 (goto as Goto).targetLabel = newLabel
+             }
+         }
+         
+         
+         sSeq
+     }
 }
