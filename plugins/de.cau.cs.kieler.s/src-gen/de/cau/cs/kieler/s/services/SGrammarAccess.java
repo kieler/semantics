@@ -1251,37 +1251,58 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	
-	private ProgramElements pProgram;
-	private MetamodelManipulationRuleElements pMetamodelManipulationRule;
-	private StateElements pState;
-	private DeclarationElements pDeclaration;
-	private ValuedObjectElements pValuedObject;
-	private HostCodeInstructionElements pHostCodeInstruction;
-	private InstructionElements pInstruction;
-	private AssignmentElements pAssignment;
-	private PrioElements pPrio;
-	private TransElements pTrans;
-	private ForkElements pFork;
-	private JoinElements pJoin;
-	private PauseElements pPause;
-	private TermElements pTerm;
-	private HaltElements pHalt;
-	private LocalSignalElements pLocalSignal;
-	private EmitElements pEmit;
-	private AbortElements pAbort;
-	private IfElements pIf;
-	private AwaitElements pAwait;
-	private SExpressionElements pSExpression;
+	private final ProgramElements pProgram;
+	private final MetamodelManipulationRuleElements pMetamodelManipulationRule;
+	private final StateElements pState;
+	private final DeclarationElements pDeclaration;
+	private final ValuedObjectElements pValuedObject;
+	private final HostCodeInstructionElements pHostCodeInstruction;
+	private final InstructionElements pInstruction;
+	private final AssignmentElements pAssignment;
+	private final PrioElements pPrio;
+	private final TransElements pTrans;
+	private final ForkElements pFork;
+	private final JoinElements pJoin;
+	private final PauseElements pPause;
+	private final TermElements pTerm;
+	private final HaltElements pHalt;
+	private final LocalSignalElements pLocalSignal;
+	private final EmitElements pEmit;
+	private final AbortElements pAbort;
+	private final IfElements pIf;
+	private final AwaitElements pAwait;
+	private final SExpressionElements pSExpression;
 	
 	private final Grammar grammar;
 
-	private KExpressionsGrammarAccess gaKExpressions;
+	private final KExpressionsGrammarAccess gaKExpressions;
 
 	@Inject
 	public SGrammarAccess(GrammarProvider grammarProvider,
 		KExpressionsGrammarAccess gaKExpressions) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaKExpressions = gaKExpressions;
+		this.pProgram = new ProgramElements();
+		this.pMetamodelManipulationRule = new MetamodelManipulationRuleElements();
+		this.pState = new StateElements();
+		this.pDeclaration = new DeclarationElements();
+		this.pValuedObject = new ValuedObjectElements();
+		this.pHostCodeInstruction = new HostCodeInstructionElements();
+		this.pInstruction = new InstructionElements();
+		this.pAssignment = new AssignmentElements();
+		this.pPrio = new PrioElements();
+		this.pTrans = new TransElements();
+		this.pFork = new ForkElements();
+		this.pJoin = new JoinElements();
+		this.pPause = new PauseElements();
+		this.pTerm = new TermElements();
+		this.pHalt = new HaltElements();
+		this.pLocalSignal = new LocalSignalElements();
+		this.pEmit = new EmitElements();
+		this.pAbort = new AbortElements();
+		this.pIf = new IfElements();
+		this.pAwait = new AwaitElements();
+		this.pSExpression = new SExpressionElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -1322,7 +1343,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	// globalHostCodeInstruction=HOSTCODE?
 	//	states+=State+;
 	public ProgramElements getProgramAccess() {
-		return (pProgram != null) ? pProgram : (pProgram = new ProgramElements());
+		return pProgram;
 	}
 	
 	public ParserRule getProgramRule() {
@@ -1332,7 +1353,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//MetamodelManipulationRule returns annotations::Annotatable:
 	//	Program;
 	public MetamodelManipulationRuleElements getMetamodelManipulationRuleAccess() {
-		return (pMetamodelManipulationRule != null) ? pMetamodelManipulationRule : (pMetamodelManipulationRule = new MetamodelManipulationRuleElements());
+		return pMetamodelManipulationRule;
 	}
 	
 	public ParserRule getMetamodelManipulationRuleRule() {
@@ -1351,7 +1372,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	// State:
 	//	annotations+=Annotation* "state" "(" name=ID ")" "{" declarations+=Declaration* (instructions+=Instruction ";")* "}";
 	public StateElements getStateAccess() {
-		return (pState != null) ? pState : (pState = new StateElements());
+		return pState;
 	}
 	
 	public ParserRule getStateRule() {
@@ -1365,7 +1386,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//	input?="input"? output?="output"? signal?="signal"? type=ValueType?) valuedObjects+=ValuedObject (","
 	//	valuedObjects+=ValuedObject)* ";";
 	public DeclarationElements getDeclarationAccess() {
-		return (pDeclaration != null) ? pDeclaration : (pDeclaration = new DeclarationElements());
+		return pDeclaration;
 	}
 	
 	public ParserRule getDeclarationRule() {
@@ -1376,7 +1397,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//	annotations+=Annotation* name=ID ("[" cardinalities+=INT "]")* ("=" initialValue=Expression)? ("combine"
 	//	combineOperator=CombineOperator)?;
 	public ValuedObjectElements getValuedObjectAccess() {
-		return (pValuedObject != null) ? pValuedObject : (pValuedObject = new ValuedObjectElements());
+		return pValuedObject;
 	}
 	
 	public ParserRule getValuedObjectRule() {
@@ -1409,7 +1430,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	// HostCodeInstruction:
 	//	hostCode=HOSTCODE;
 	public HostCodeInstructionElements getHostCodeInstructionAccess() {
-		return (pHostCodeInstruction != null) ? pHostCodeInstruction : (pHostCodeInstruction = new HostCodeInstructionElements());
+		return pHostCodeInstruction;
 	}
 	
 	public ParserRule getHostCodeInstructionRule() {
@@ -1424,7 +1445,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//	Halt | Abort | Join | Pause | Term | If | Trans | Fork | LocalSignal | Emit | Await | Prio | HostCodeInstruction |
 	//	Assignment;
 	public InstructionElements getInstructionAccess() {
-		return (pInstruction != null) ? pInstruction : (pInstruction = new InstructionElements());
+		return pInstruction;
 	}
 	
 	public ParserRule getInstructionRule() {
@@ -1434,7 +1455,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//Assignment:
 	//	variable=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "=" expression=Expression;
 	public AssignmentElements getAssignmentAccess() {
-		return (pAssignment != null) ? pAssignment : (pAssignment = new AssignmentElements());
+		return pAssignment;
 	}
 	
 	public ParserRule getAssignmentRule() {
@@ -1445,7 +1466,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	// Prio:
 	//	"prio" "(" priority=INT ("," continuation=[State])? ")";
 	public PrioElements getPrioAccess() {
-		return (pPrio != null) ? pPrio : (pPrio = new PrioElements());
+		return pPrio;
 	}
 	
 	public ParserRule getPrioRule() {
@@ -1456,7 +1477,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	// Trans:
 	//	"trans" "(" continuation=[State] ")";
 	public TransElements getTransAccess() {
-		return (pTrans != null) ? pTrans : (pTrans = new TransElements());
+		return pTrans;
 	}
 	
 	public ParserRule getTransRule() {
@@ -1467,7 +1488,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	// Fork:
 	//	"fork" "(" continuation=[State] "," priority=INT ")";
 	public ForkElements getForkAccess() {
-		return (pFork != null) ? pFork : (pFork = new ForkElements());
+		return pFork;
 	}
 	
 	public ParserRule getForkRule() {
@@ -1478,7 +1499,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	// Join:
 	//	{Join} "join" "(" continuation=[State]? ")";
 	public JoinElements getJoinAccess() {
-		return (pJoin != null) ? pJoin : (pJoin = new JoinElements());
+		return pJoin;
 	}
 	
 	public ParserRule getJoinRule() {
@@ -1489,7 +1510,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	// Pause:
 	//	{Pause} "pause" "(" continuation=[State]? ")";
 	public PauseElements getPauseAccess() {
-		return (pPause != null) ? pPause : (pPause = new PauseElements());
+		return pPause;
 	}
 	
 	public ParserRule getPauseRule() {
@@ -1499,7 +1520,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//Term:
 	//	{Term} "term" "(" continuation=[State]? ")";
 	public TermElements getTermAccess() {
-		return (pTerm != null) ? pTerm : (pTerm = new TermElements());
+		return pTerm;
 	}
 	
 	public ParserRule getTermRule() {
@@ -1509,7 +1530,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//Halt:
 	//	{Halt} "halt" "(" continuation=[State]? ")";
 	public HaltElements getHaltAccess() {
-		return (pHalt != null) ? pHalt : (pHalt = new HaltElements());
+		return pHalt;
 	}
 	
 	public ParserRule getHaltRule() {
@@ -1520,7 +1541,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	// LocalSignal:
 	//	"signal" "(" signal=[kexpressions::ValuedObject] ")";
 	public LocalSignalElements getLocalSignalAccess() {
-		return (pLocalSignal != null) ? pLocalSignal : (pLocalSignal = new LocalSignalElements());
+		return pLocalSignal;
 	}
 	
 	public ParserRule getLocalSignalRule() {
@@ -1530,7 +1551,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//Emit:
 	//	"emit" "(" signal=[kexpressions::ValuedObject] ("(" value=SExpression ")")? ("," continuation=[State])? ")";
 	public EmitElements getEmitAccess() {
-		return (pEmit != null) ? pEmit : (pEmit = new EmitElements());
+		return pEmit;
 	}
 	
 	public ParserRule getEmitRule() {
@@ -1540,7 +1561,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//Abort:
 	//	{Abort} "abort" "(" continuation=[State]? ")";
 	public AbortElements getAbortAccess() {
-		return (pAbort != null) ? pAbort : (pAbort = new AbortElements());
+		return pAbort;
 	}
 	
 	public ParserRule getAbortRule() {
@@ -1551,7 +1572,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	// If:
 	//	"if" "(" expression=SExpression ("," continuation=[State])? ")" "{" (instructions+=Instruction ";")* "}";
 	public IfElements getIfAccess() {
-		return (pIf != null) ? pIf : (pIf = new IfElements());
+		return pIf;
 	}
 	
 	public ParserRule getIfRule() {
@@ -1562,7 +1583,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	// Await:
 	//	"await" "(" signal=[kexpressions::ValuedObject] ("," continuation=[State])? ")";
 	public AwaitElements getAwaitAccess() {
-		return (pAwait != null) ? pAwait : (pAwait = new AwaitElements());
+		return pAwait;
 	}
 	
 	public ParserRule getAwaitRule() {
@@ -1572,7 +1593,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//SExpression returns kexpressions::Expression: //| HOSTCODE
 	// Expression;
 	public SExpressionElements getSExpressionAccess() {
-		return (pSExpression != null) ? pSExpression : (pSExpression = new SExpressionElements());
+		return pSExpression;
 	}
 	
 	public ParserRule getSExpressionRule() {
@@ -1789,7 +1810,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//FunctionCall:
-	//	"<" functionName=ID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")")? ">";
+	//	"<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" | "()")? ">";
 	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
 		return gaKExpressions.getFunctionCallAccess();
 	}
