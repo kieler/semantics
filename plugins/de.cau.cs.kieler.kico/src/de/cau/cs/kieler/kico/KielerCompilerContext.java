@@ -437,7 +437,7 @@ public class KielerCompilerContext {
                     List<String> priorized = new ArrayList<String>();
                     
                     //FIXME: BAD HACK FOR WEIHNACHTSFEIER, USE KICO.UI EXTENSION POINT!!!
-                    priorized.add("S2ARDUINO");
+                    //priorized.add("S2ARDUINO");
                     
                     
                     String selectedAlternative =
