@@ -48,6 +48,9 @@ public class KielerCompilerContext {
     /** The originally selected transformation IDs. */
     private List<String> selectedTransformationIDs = new ArrayList<String>();
 
+    /** The originally priorized transformation IDs. */
+    private List<String> priorizedTransformationIDs = new ArrayList<String>();
+
     /** The originally disabled transformation IDs. */
     private List<String> disabledTransformationIDs = new ArrayList<String>();
 
@@ -84,6 +87,22 @@ public class KielerCompilerContext {
 
     /** The progress monitor for the currently called transformation. */
     private KielerCompilerProgressMonitor currentTransformationProgressMonitor = null;
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the list of priorized transformations IDs which are preferred if an alternative group is
+     * selected an no other transformation is selected.
+     * 
+     * @return the priorized transformations
+     */
+    public List<String> getPriorizedTransformationsIDs() {
+        // FIXME: THIS IS A TEMPORARY HACK!!! REMOVE THIS HACK LATER AND EVAL THE EXTENSION POINT
+        // FROM KICO.UI TO FILL THIS!
+        priorizedTransformationIDs.clear();
+        priorizedTransformationIDs.add("S2ARDUINO");
+        return priorizedTransformationIDs;
+    }
 
     // -------------------------------------------------------------------------
 
@@ -414,9 +433,17 @@ public class KielerCompilerContext {
                 if (preselectAlternatives) {
                     // If this is an alternative group, then ONLY add the SELECTED alternative
                     // according to the prioritizedTransformationIDs (input)
+                    TransformationGroup group = (TransformationGroup) transformationDummy.transformation;
+                    List<String> priorized = new ArrayList<String>();
+                    
+                    //FIXME: BAD HACK FOR WEIHNACHTSFEIER, USE KICO.UI EXTENSION POINT!!!
+                    //priorized.add("S2ARDUINO");
+                    
+                    
                     String selectedAlternative =
-                            ((TransformationGroup) transformationDummy.transformation)
-                                    .getSelectedDependency(prioritizedTransformationIDs);
+                            (group)
+                                    .getSelectedDependency(prioritizedTransformationIDs,
+                                            disabledTransformationIDs, priorized);
                     dependencies.add(selectedAlternative);
                 } else {
                     List<String> allAlternative =
@@ -517,7 +544,7 @@ public class KielerCompilerContext {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Checks if dummy resource flag is set to true.
      * 

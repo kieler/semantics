@@ -152,7 +152,7 @@ public class KielerCompiler {
     public static void removeFromGraph(KielerCompilerContext context, List<String> transformationIDs) {
         if (transformationIDs != null && (transformationIDs.size() > 0)) {
             // remove ONLY the selected
-            boolean removeSelected = false;
+            boolean removeSelected = true;
             removeFromGraph(context, transformationIDs, removeSelected);
         }
     }
@@ -582,12 +582,12 @@ public class KielerCompiler {
      *            the transformation i ds
      * @return the list
      */
-    private static List<String> expandGroups(List<String> transformationIDs) {
-        List<String> returnList = expandGroupsHelper(transformationIDs);
+    private static List<String> expandGroups(List<String> transformationIDs, List<String> disabledTransformationIDs, List<String> priorizedTransformationIDs) {
+        List<String> returnList = expandGroupsHelper(transformationIDs, disabledTransformationIDs, priorizedTransformationIDs);
         while (returnList.size() != transformationIDs.size()) {
             // find fixed point
             transformationIDs = returnList;
-            returnList = expandGroupsHelper(transformationIDs);
+            returnList = expandGroupsHelper(transformationIDs, disabledTransformationIDs, priorizedTransformationIDs);
         }
         return returnList;
     }
@@ -601,7 +601,7 @@ public class KielerCompiler {
      *            the transformation i ds
      * @return the list
      */
-    private static List<String> expandGroupsHelper(List<String> transformationIDs) {
+    private static List<String> expandGroupsHelper(List<String> transformationIDs, List<String> disabledTransformationIDs, List<String> priorizedTransformationIDs) {
         List<String> returnList = new ArrayList<String>();
         for (String transformationID : transformationIDs) {
             Transformation transformation = getTransformation(transformationID);
@@ -626,8 +626,11 @@ public class KielerCompiler {
                         }
                         if (!exists) {
                             // Add default here because no alternative of this group is yet included
+                            // take the first alternative group member that is not disabled! //TODO:
+                            System.out.println("### " + transformation.getName());
+                            List<String> allPrioDependencies = transformationIDs;
                             String defaultTransformation =
-                                    transformationGroup.getSelectedDependency(transformationIDs);
+                                    transformationGroup.getSelectedDependency(transformationIDs, disabledTransformationIDs, priorizedTransformationIDs);
                             returnList.add(defaultTransformation);
                         }
                     }
@@ -648,7 +651,7 @@ public class KielerCompiler {
      *            the context
      * @return the list
      */
-    private static void eliminateGroupIds(KielerCompilerContext context, boolean allGroups) {
+    private static void eliminateGroupIds(KielerCompilerContext context, boolean allGroups, List<String> disabledTransformationIDs) {
         List<String> returnList = new ArrayList<String>();
         for (String transformationID : context.getCompilationTransformationIDs()) {
             Transformation transformation = getTransformation(transformationID);
@@ -665,7 +668,7 @@ public class KielerCompiler {
                             returnList.add(transformationID);
                         } else {
                             boolean allMarked = true;
-                            List<String> dependencyIDs = expandGroups(group.getDependencies());
+                            List<String> dependencyIDs = expandGroups(group.getDependencies(), disabledTransformationIDs, context.getPriorizedTransformationsIDs());
                             for (String dependencyID : dependencyIDs) {
                                 boolean found = false;
                                 for (String searchTransformationID : context
@@ -766,7 +769,7 @@ public class KielerCompiler {
         topologicalSort(context);
 
         // 7. final cleanup, eliminate any groups
-        eliminateGroupIds(context, context.isNoGroups());
+        eliminateGroupIds(context, context.isNoGroups(), context.getDisabledTransformationIDs());
         return;
     }
 
@@ -895,7 +898,7 @@ public class KielerCompiler {
         topologicalSort(context);
 
         // 7. final cleanup, eliminate any groups
-        eliminateGroupIds(context, true);
+        eliminateGroupIds(context, true, context.getDisabledTransformationIDs());
 
         List<String> compilationTransformationIDs = context.getCompilationTransformationIDs();
 

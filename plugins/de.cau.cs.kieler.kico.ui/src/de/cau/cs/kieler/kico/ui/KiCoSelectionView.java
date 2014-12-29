@@ -124,7 +124,7 @@ public class KiCoSelectionView extends DiagramViewPart {
             new HashMap<Integer, KielerCompilerContext>();
 
     /** The selected transformations per editor instance. */
-    static HashMap<Integer, List<String>> selectedTransformations =
+    static HashMap<Integer, List<String>> selectedAndDisabledTransformations =
             new HashMap<Integer, List<String>>();
     
     /** The selected compile chain per editor instance. */
@@ -198,14 +198,54 @@ public class KiCoSelectionView extends DiagramViewPart {
      *            the editor id
      * @return the selected transformations
      */
-    public static List<String> getSelectedTransformations(int editorID) {
-        if (!KiCoSelectionView.selectedTransformations.containsKey(editorID)) {
+    public static List<String> getSelectedAndDisabledTransformations(int editorID) {
+        if (!KiCoSelectionView.selectedAndDisabledTransformations.containsKey(editorID)) {
             List<String> selectedList = new ArrayList<String>();
-            KiCoSelectionView.selectedTransformations.put(editorID, selectedList);
+            KiCoSelectionView.selectedAndDisabledTransformations.put(editorID, selectedList);
         }
-        return KiCoSelectionView.selectedTransformations.get(editorID);
+        return KiCoSelectionView.selectedAndDisabledTransformations.get(editorID);
     }
 
+    // -------------------------------------------------------------------------
+   
+    /**
+     * Gets the selected transformations as a list of Strings of their IDs.
+     * 
+     * @param editorID
+     *            the editor id
+     * @return the selected transformations
+     */
+    public static List<String> getSelectedTransformations(int editorID) {
+        List<String> selectedAndDisabledList =  getSelectedAndDisabledTransformations(editorID);
+        List<String> returnList = new ArrayList<String>();
+        for (String selectedAndDisabled : selectedAndDisabledList) {
+            if (!selectedAndDisabled.startsWith("!")) {
+                returnList.add(selectedAndDisabled);
+            }
+        }
+        return returnList;
+    }
+
+    /**
+     * Gets the disabled transformations as a list of Strings of their IDs.
+     * 
+     * @param editorID
+     *            the editor id
+     * @return the selected transformations
+     */
+    public static List<String> getDisabledTransformations(int editorID) {
+        List<String> selectedAndDisabledList =  getSelectedAndDisabledTransformations(editorID);
+        List<String> returnList = new ArrayList<String>();
+        for (String selectedAndDisabled : selectedAndDisabledList) {
+            if (selectedAndDisabled.startsWith("!")) {
+                returnList.add(selectedAndDisabled.substring(1));
+            }
+        }
+        return returnList;
+    }
+
+
+    
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
@@ -286,7 +326,7 @@ public class KiCoSelectionView extends DiagramViewPart {
      * @return true, if is selected transformation
      */
     public static boolean isSelectedTransformation(String transformationDummyID, int editorID) {
-        return isSelectedTransformation(transformationDummyID, getSelectedTransformations(editorID));
+        return isSelectedTransformation(transformationDummyID, getSelectedAndDisabledTransformations(editorID));
     }
 
     // -------------------------------------------------------------------------
@@ -327,7 +367,7 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static boolean isSelectedTransformationDisabled(String transformationDummyID,
             int editorID) {
         return isSelectedTransformationDisabled(transformationDummyID,
-                getSelectedTransformations(editorID));
+                getSelectedAndDisabledTransformations(editorID));
     }
 
     // -------------------------------------------------------------------------
@@ -368,7 +408,7 @@ public class KiCoSelectionView extends DiagramViewPart {
      */
     public static void addSelectedTransformation(String transformationDummyID, int editorID,
             boolean enabled) {
-        addSelectedTransformation(transformationDummyID, getSelectedTransformations(editorID),
+        addSelectedTransformation(transformationDummyID, getSelectedAndDisabledTransformations(editorID),
                 enabled);
     }
 
@@ -402,7 +442,7 @@ public class KiCoSelectionView extends DiagramViewPart {
      *            the editor id
      */
     public static void removeSelectedTransformation(String transformationDummyID, int editorID) {
-        removeSelectedTransformation(transformationDummyID, getSelectedTransformations(editorID));
+        removeSelectedTransformation(transformationDummyID, getSelectedAndDisabledTransformations(editorID));
     }
 
     // -------------------------------------------------------------------------
@@ -469,9 +509,10 @@ public class KiCoSelectionView extends DiagramViewPart {
         if (recalculate) {
             requiredList.clear();
             List<String> selectedTransformations = getSelectedTransformations(editorID);
+            List<String> disabledTransformations = getDisabledTransformations(editorID);
             List<String> allRequiredTransformations =
                     KielerCompiler.calculatePreRequirements(selectedTransformations,
-                            new ArrayList<String>(), false);
+                            disabledTransformations, false);
             for (String requiredTransformation : allRequiredTransformations) {
                 boolean found = false;
                 for (String selectedTransformation : selectedTransformations) {
@@ -599,7 +640,7 @@ public class KiCoSelectionView extends DiagramViewPart {
      */
     public static void addSelectedTransformationVisualization(int editorID) {
         List<String> selectedTransformations =
-                KiCoSelectionView.getSelectedTransformations(editorID);
+                KiCoSelectionView.getSelectedAndDisabledTransformations(editorID);
         ViewContext context = instance.getViewer().getViewContext();
         for (String selectedTransformationID : selectedTransformations) {
             TransformationDummy selectedTransformationDummy =
@@ -679,7 +720,7 @@ public class KiCoSelectionView extends DiagramViewPart {
      */
     public static void removeSelectedTransformationVisualization(int editorID) {
         List<String> selectedTransformations =
-                KiCoSelectionView.getSelectedTransformations(editorID);
+                KiCoSelectionView.getSelectedAndDisabledTransformations(editorID);
         ViewContext context = instance.getViewer().getViewContext();
         for (String selectedTransformationID : selectedTransformations) {
             TransformationDummy selectedTransformationDummy =
@@ -762,7 +803,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                 int activeEditorID = getActiveEditorID(editorPart);
 
                 List<String> selectedAndExcludedTransformations =
-                        getSelectedTransformations(activeEditorID);
+                        getSelectedAndDisabledTransformations(activeEditorID);
 
                 while (selectedAndExcludedTransformations.size() > 0) {
                     String transformationID = selectedAndExcludedTransformations.get(0);
@@ -794,7 +835,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         List<String> selectedTransformationIDs = new ArrayList<String>();
         List<String> disabledTransformationIDs = new ArrayList<String>();
         List<String> selectedAndExcludedTransformations =
-                getSelectedTransformations(activeEditorID);
+                getSelectedAndDisabledTransformations(activeEditorID);
         for (String transformation : selectedAndExcludedTransformations) {
             if (transformation.startsWith("!")) {
                 disabledTransformationIDs.add(transformation.substring(1));
@@ -1159,14 +1200,14 @@ public class KiCoSelectionView extends DiagramViewPart {
                     }
                     addSelectedTransformationVisualization(activeEditorID, allTransformationIDs);
                     List<String> selectedAndExcludedTransformations =
-                            getSelectedTransformations(activeEditorID);
+                            getSelectedAndDisabledTransformations(activeEditorID);
                     for (String transformationID : allTransformationIDs) {
                         addSelectedTransformation(transformationID,
                                 selectedAndExcludedTransformations, true);
                     }
                 } else {
                     List<String> selectedAndExcludedTransformations =
-                            getSelectedTransformations(activeEditorID);
+                            getSelectedAndDisabledTransformations(activeEditorID);
                     removeSelectedTransformationVisualization(activeEditorID);
 
                     while (selectedAndExcludedTransformations.size() > 0) {
@@ -1369,7 +1410,7 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static void updateActiveTransformationsProperty() {
         KiCoSelection currentSelection =
                 new KiCoSelection(getActiveEditorID(),
-                        selectedTransformations.get(getActiveEditorID()),
+                        selectedAndDisabledTransformations.get(getActiveEditorID()),
                         requiredTransformations.get(getActiveEditorID()), advancedMode);
         selectionEventManger.fireSelectionChangeEvent(currentSelection);
     }
