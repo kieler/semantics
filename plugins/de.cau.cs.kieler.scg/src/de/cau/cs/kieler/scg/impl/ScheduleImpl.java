@@ -27,11 +27,12 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * An implementation of the model object '<em><b>Schedule</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.ScheduleImpl#getGuards <em>Guards</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

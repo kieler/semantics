@@ -63,13 +63,13 @@ public class OpenCodeInEditorAction implements IAction {
             // of save as saving has no effect
             IStorageEditorInput input =
                     new StringBasedEditorInput(codeModel.getName(), "Generated Code",
-                            codeModel.getCode(), true);
+                            codeModel.getCode(), true, codeModel.getResourceExtension());
 
             // open editor
             IWorkbenchPage page = window.getActivePage();
             if (page != null)
                 try {
-                    page.openEditor(input, "org.eclipse.ui.DefaultTextEditor");
+                    page.openEditor(input, codeModel.getEditorID());
                 } catch (PartInitException e) {
                     e.printStackTrace();
                 }

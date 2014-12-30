@@ -37,7 +37,9 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * An implementation of the model object '<em><b>Guard</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getExpression <em>Expression</em>}</li>
@@ -46,7 +48,6 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getVolatile <em>Volatile</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#isSequentialize <em>Sequentialize</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

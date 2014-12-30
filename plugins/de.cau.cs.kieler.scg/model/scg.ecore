@@ -13,6 +13,7 @@
         eType="#//Schedule" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="guards" upperBound="-1"
         eType="#//Guard" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotatable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="incoming" upperBound="-1"

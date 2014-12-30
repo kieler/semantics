@@ -32,13 +32,14 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * An implementation of the model object '<em><b>Scheduling Block</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SchedulingBlockImpl#getNodes <em>Nodes</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SchedulingBlockImpl#getDependencies <em>Dependencies</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SchedulingBlockImpl#getGuard <em>Guard</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

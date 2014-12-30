@@ -27,12 +27,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * An implementation of the model object '<em><b>Fork</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.ForkImpl#getJoin <em>Join</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.ForkImpl#getNext <em>Next</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

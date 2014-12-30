@@ -77,9 +77,7 @@ class BasicBlockTransformation extends Transformation {
     // -- Constants
     // -------------------------------------------------------------------------
     
-    public static val String GUARDPREFIX = "g"
-
-    protected val SPLITSCHEDULINGBLOCKSATENTRY = false
+    public val String GUARDPREFIX = "g"
     
 
     // -------------------------------------------------------------------------
@@ -88,7 +86,7 @@ class BasicBlockTransformation extends Transformation {
     
     protected val processedNodes = <Node> newHashSet
     protected val basicBlockNodeMapping = new HashMap<Node, BasicBlock>
-  
+    
     
     // -------------------------------------------------------------------------
     // -- Transformation method
@@ -452,7 +450,6 @@ class BasicBlockTransformation extends Transformation {
                 block = ScgFactory::eINSTANCE.createSchedulingBlock()
                 block.guard = newGuard
                 block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))
-                newGuard.schedulingBlockLink = block
             }
             // Add the node to the scheduling block.
             block.nodes.add(node)
@@ -467,7 +464,7 @@ class BasicBlockTransformation extends Transformation {
     
     protected def boolean schedulingBlockSplitter(Node node, Node lastNode) {
         (!node.incoming.filter(typeof(Dependency)).filter[ concurrent && !confluent].empty) ||
-        (SPLITSCHEDULINGBLOCKSATENTRY && (lastNode instanceof Entry))
+        (lastNode instanceof Entry)
     } 
     
     /**

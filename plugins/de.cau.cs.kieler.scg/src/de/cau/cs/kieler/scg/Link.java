@@ -22,10 +22,10 @@ import de.cau.cs.kieler.core.annotations.Annotatable;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.Link#getTarget <em>Target</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.scg.ScgPackage#getLink()
  * @model

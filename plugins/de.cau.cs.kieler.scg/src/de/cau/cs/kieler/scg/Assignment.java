@@ -26,13 +26,13 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.Assignment#getNext <em>Next</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Assignment#getAssignment <em>Assignment</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Assignment#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Assignment#getIndices <em>Indices</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.scg.ScgPackage#getAssignment()
  * @model

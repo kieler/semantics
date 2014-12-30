@@ -23,12 +23,12 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.SchedulingBlock#getNodes <em>Nodes</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.SchedulingBlock#getDependencies <em>Dependencies</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.SchedulingBlock#getGuard <em>Guard</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.scg.ScgPackage#getSchedulingBlock()
  * @model

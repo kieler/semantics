@@ -21,11 +21,11 @@ package de.cau.cs.kieler.scg;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.Depth#getSurface <em>Surface</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Depth#getNext <em>Next</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.scg.ScgPackage#getDepth()
  * @model

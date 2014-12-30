@@ -21,11 +21,11 @@ package de.cau.cs.kieler.scg;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.Entry#getExit <em>Exit</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Entry#getNext <em>Next</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.scg.ScgPackage#getEntry()
  * @model

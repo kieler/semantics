@@ -30,13 +30,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * An implementation of the model object '<em><b>Node</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getIncoming <em>Incoming</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#isIsInitial <em>Is Initial</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getDependencies <em>Dependencies</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

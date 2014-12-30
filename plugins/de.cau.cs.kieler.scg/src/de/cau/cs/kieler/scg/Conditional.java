@@ -24,12 +24,12 @@ import de.cau.cs.kieler.core.kexpressions.Expression;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.Conditional#getThen <em>Then</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Conditional#getElse <em>Else</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Conditional#getCondition <em>Condition</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.scg.ScgPackage#getConditional()
  * @model

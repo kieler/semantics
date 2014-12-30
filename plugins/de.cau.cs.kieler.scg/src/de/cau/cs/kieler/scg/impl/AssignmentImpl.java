@@ -26,14 +26,15 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * An implementation of the model object '<em><b>Assignment</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getNext <em>Next</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getAssignment <em>Assignment</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.AssignmentImpl#getIndices <em>Indices</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

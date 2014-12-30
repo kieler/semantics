@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EClass;
  * An implementation of the model object '<em><b>Absolute Write Relative Write</b></em>'.
  * <!-- end-user-doc -->
  * <p>
- * </p>
  *
  * @generated
  */

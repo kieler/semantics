@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#getSchedulingBlocks <em>Scheduling Blocks</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#getPredecessors <em>Predecessors</em>}</li>
@@ -34,7 +35,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#isDeadBlock <em>Dead Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.BasicBlock#getPreGuard <em>Pre Guard</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.scg.ScgPackage#getBasicBlock()
  * @model

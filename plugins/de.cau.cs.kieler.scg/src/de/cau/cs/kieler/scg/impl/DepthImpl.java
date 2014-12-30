@@ -20,12 +20,13 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * An implementation of the model object '<em><b>Depth</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.DepthImpl#getSurface <em>Surface</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.DepthImpl#getNext <em>Next</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -75,7 +75,7 @@ class SCChartsPrio2S {
         SCCharts2Dependenies.transform(dependencies, rootState);
         
         // set highest priority
-        target.setPriority(dependencies.nodes.size);
+        target.setPriority(dependencies.nodes.size + 1);
         
         // create mapping from SyncChart states to dependency nodes
         for (node : dependencies.nodes) {
@@ -112,14 +112,17 @@ class SCChartsPrio2S {
         // order SyncChart states according to their dependency priority  (strong nodes)
         // w.r.t. this order, the root state should be the one to start with (the priority assignment has to ensure that
         // it has the maximal priority, followed by priorities of unconnected nodes, followed by other connected nodes.
-        val dependencyPrioritySortedStates = rootState.getAllStates.toList.sort(e1, e2 | compareTraceDependencyPriority(e1, e2));
+        val dependencyPrioritySortedStates = rootState.getAllContainedStates.toList.sort(e1, e2 | compareTraceDependencyPriority(e1, e2));
+        
+        
         
         // create all states and their mapping
         for (state : dependencyPrioritySortedStates) {
-            val sStateSurface = state.createSStateSurface(state.isRootState);
-            val sStateDepth   = state.createSStateDepth(state.isRootState);
-            val sStateJoin = state.createSStateJoin(state.isRootState);
-            val sStateExtraSurface = state.createSStateExtraSurface(state.isRootState);
+            val isRoot = state.isRootState
+            val sStateSurface = state.createSStateSurface(isRoot);
+            val sStateDepth   = state.createSStateDepth(isRoot);
+            val sStateJoin = state.createSStateJoin(isRoot);
+            val sStateExtraSurface = state.createSStateExtraSurface(isRoot);
 
             // possibly normal termination (for parallel regions)
             if (state.needsJoinSState) {
@@ -150,7 +153,7 @@ class SCChartsPrio2S {
         }
         
         // handle transitions (as states are created now and gotos can be mapped)
-        for (state : rootState.getAllStates.toList) {
+        for (state : rootState.getAllContainedStates.toList) {
             val sStateSurface = state.surfaceSState
             val sStateDepth = state.depthSState
             state.fillSStateSurface(sStateSurface); 
@@ -227,7 +230,7 @@ class SCChartsPrio2S {
                 sState.instructions.add(sfork);
             }
             // if there is no immediate weak transition, we do not need an extra surface!
-            if (!state.needsExtraSurfaceSState) {
+            if (!state.isRootState && !state.needsExtraSurfaceSState) {
                 // fork join thread with same priority as current thread or proceed with depth
                 val sfork = SFactory::eINSTANCE.createFork();
                 if (state.needsJoinSState) {
@@ -239,7 +242,7 @@ class SCChartsPrio2S {
                 sfork.setPriority(state.highestDependencyStrong);
                 sState.instructions.add(sfork);
             }
-            else {
+            else if (!state.isRootState) {
                 // fork extra surface thread (instead of join/depth thread!) with same priority as current thread
                 val sfork = SFactory::eINSTANCE.createFork();
                 sfork.setContinuation(state.extraSurfaceSState);

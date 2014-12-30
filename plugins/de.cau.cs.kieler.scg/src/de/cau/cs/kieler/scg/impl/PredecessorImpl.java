@@ -29,13 +29,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * An implementation of the model object '<em><b>Predecessor</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.PredecessorImpl#getBasicBlock <em>Basic Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.PredecessorImpl#getConditional <em>Conditional</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.PredecessorImpl#getBranchType <em>Branch Type</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

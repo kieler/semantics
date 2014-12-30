@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.Guard#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Guard#getExpression <em>Expression</em>}</li>
@@ -34,7 +35,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.scg.Guard#getVolatile <em>Volatile</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Guard#isSequentialize <em>Sequentialize</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.scg.ScgPackage#getGuard()
  * @model

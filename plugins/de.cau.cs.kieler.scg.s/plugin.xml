@@ -26,7 +26,7 @@
             alternatives="true"
             id="S2TARGET"
             name="Target"
-            transformations="S2C, S2JAVA">
+            transformations="S2C, S2JAVA, S2ARDUINO">
       </transformationGroup>
       <transformationGroup
             alternatives="false"
@@ -34,6 +34,21 @@
             name="Code Generation"
             transformations="SCG2S, S2TARGET">
       </transformationGroup>
+      <transformationMethod
+            class="de.cau.cs.kieler.s.sc.ArduinoGenerator"
+            id="S2ARDUINO"
+            method="transform"
+            name="Arduino Code">
+      </transformationMethod>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.extension">
+      <ExtensionInformation
+            className="Program"
+            editor_id="de.cau.cs.kieler.s.S"
+            extensionName="s"
+            isXMI="false">
+      </ExtensionInformation>
    </extension>
 
 </plugin>

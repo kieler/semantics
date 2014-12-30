@@ -27,12 +27,13 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * An implementation of the model object '<em><b>Dependency</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.DependencyImpl#isConcurrent <em>Concurrent</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.DependencyImpl#isConfluent <em>Confluent</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -22,12 +22,12 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.Predecessor#getBasicBlock <em>Basic Block</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Predecessor#getConditional <em>Conditional</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Predecessor#getBranchType <em>Branch Type</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.scg.ScgPackage#getPredecessor()
  * @model

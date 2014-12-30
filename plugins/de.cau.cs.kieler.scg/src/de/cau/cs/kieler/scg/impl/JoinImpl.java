@@ -20,12 +20,13 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * An implementation of the model object '<em><b>Join</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.impl.JoinImpl#getFork <em>Fork</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.JoinImpl#getNext <em>Next</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
