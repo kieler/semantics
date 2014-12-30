@@ -219,6 +219,12 @@
             method="removeSubseqeuentLabels"
             name="Remove subsequent labels">
       </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scl.extensions.SCLExtensions"
+            id="REMOVE_DOUBLE_JUMPS"
+            method="removeDoubleJumps"
+            name="Remove double jumps">
+      </transformationMethod>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.extension">

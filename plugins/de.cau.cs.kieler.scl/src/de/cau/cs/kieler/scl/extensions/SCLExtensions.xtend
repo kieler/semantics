@@ -138,14 +138,46 @@ class SCLExtensions {
          
          // Replace goto targets
          for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
-             var newLabel = replaceBy.findFirst[ key == (goto as Goto).targetLabel ].value
+             var newLabel = replaceBy.findFirst[ key == (goto as Goto).targetLabel ]
              
              if (newLabel != null) {
-                 (goto as Goto).targetLabel = newLabel
+                 (goto as Goto).targetLabel = newLabel.value
              }
          }
          
          
          sSeq
      }
+     
+     /*
+      * Removes double jumps
+      * TODO: Superfluous labels are removed?
+      */
+      def StatementSequence removeDoubleJumps(StatementSequence sSeq) {
+          val replaceBy = <Pair<String, String>>newLinkedList
+          for (emptyStm : sSeq.eAllContents.toList.filter(typeof(EmptyStatement))) {
+              var parent = emptyStm.eContainer as StatementSequence
+              var index = parent.statements.indexOf(emptyStm)
+              if (parent.statements.size > index + 1) {
+                  val nextStatement = parent.statements.get(index + 1) as Statement
+                  if (nextStatement instanceof InstructionStatement&&
+                      (nextStatement as InstructionStatement).instruction instanceof Goto) {
+                          val goto = ((nextStatement as InstructionStatement).instruction as Goto)
+                          replaceBy += emptyStm.label -> goto.targetLabel
+                      }
+              }
+              //TODO conditional
+          }
+          
+          // Replace goto targets
+         for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
+             var newLabel = replaceBy.findFirst[ key == (goto as Goto).targetLabel ]
+             
+             if (newLabel != null) {
+                 (goto as Goto).targetLabel = newLabel.value
+             }
+         }
+          
+          sSeq
+      }
 }
