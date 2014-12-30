@@ -22,7 +22,6 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.esterel.kexpressions.ComplexExpression
-import java.util.LinkedList
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.esterel.kexpressions.BooleanValue
 import de.cau.cs.kieler.core.kexpressions.util.KExpressionsAdapterFactory
@@ -47,15 +46,14 @@ class TransformExpression {
     @Inject
     extension EsterelToSclTransformation
 
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(OperatorExpression exp,
-        LinkedList<Pair<String, ValuedObject>> variables) {
+    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(OperatorExpression exp) {
 
         val opType = OperatorType::getByName(exp.operator.name)
 
         // ? Operator: Return variable holding the value
         // TODO val working?
         if (opType == OperatorType::VAL) {
-            val sig = variables.findLast [
+            val sig = signalMap.findLast [
                 (exp.subExpressions.head as ValuedObjectReference).valuedObject.name == it.key
             ].value
             val sig_val = valuedMap.get(sig)
@@ -65,7 +63,7 @@ class TransformExpression {
         KExpressionsFactory::eINSTANCE.createOperatorExpression => [
             operator = opType
             for (subExp : exp.subExpressions) {
-                subExpressions.add(transformExp(subExp, variables))
+                subExpressions.add(transformExp(subExp))
             }
         ]
     }
@@ -77,16 +75,14 @@ class TransformExpression {
         return de.cau.cs.kieler.core.kexpressions.CombineOperator::get(op.toString)
     }
 
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(ComplexExpression comp,
-        LinkedList<Pair<String, ValuedObject>> variables) {
+    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(ComplexExpression comp) {
         if (comp instanceof ValuedObjectReference) {
-            transformExp(comp as ValuedObjectReference, variables)
+            transformExp(comp as ValuedObjectReference)
         }
     }
 
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(ValuedObjectReference ref,
-        LinkedList<Pair<String, ValuedObject>> variables) {
-        getValuedObjectRef(variables, ref.valuedObject.name)
+    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(ValuedObjectReference ref) {
+        getValuedObjectRef(signalMap, ref.valuedObject.name)
     }
 
     // Consider Strings as ConstantExpressions
@@ -99,8 +95,13 @@ class TransformExpression {
     }
 
     // TODO Kind of ugly as type is not stored explicitly
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(ConstantExpression constExp, String type) {
+    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(Expression exp, String type) {
+        
+        if (!(exp instanceof ConstantExpression)) {
+            return exp.transformExp
+        }
 
+        val constExp = exp as ConstantExpression
         switch type {
             case ("int"):
                 return KExpressionsFactory::eINSTANCE.createIntValue => [
@@ -150,13 +151,11 @@ class TransformExpression {
     }
 
     //TODO other values
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(BooleanValue boolVal,
-        LinkedList<Pair<String, ValuedObject>> variables) {
+    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(BooleanValue boolVal) {
         return createBoolValue(boolVal.value)
     }
 
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(IntValue intVal,
-        LinkedList<Pair<String, ValuedObject>> variables) {
+    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(IntValue intVal) {
 
         //TODO no negative INT values?
         if (intVal.value < 0)
@@ -168,8 +167,7 @@ class TransformExpression {
     }
 
 
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(FunctionExpression funcExp,
-        LinkedList<Pair<String, ValuedObject>> variables) {
+    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(FunctionExpression funcExp) {
         val res = KExpressionsFactory::eINSTANCE.createFunctionCall
         res.functionName = funcExp.function.name
         var i = 0
@@ -180,7 +178,7 @@ class TransformExpression {
                     if (exp instanceof ConstantExpression) {
                         expression = exp.transformExp(type)
                     } else {
-                        expression = exp.transformExp(variables)
+                        expression = exp.transformExp
                     }
                 ]
             )

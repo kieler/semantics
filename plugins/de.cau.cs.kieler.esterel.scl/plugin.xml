@@ -39,6 +39,11 @@
             id="de.cau.cs.kieler.esterel.scl.EsterelToScg"
             name="Transform to SCG">
       </command>
+      <command
+            defaultHandler="de.cau.cs.kieler.esterel.scl.handlers.SclToEsterelHandler"
+            id="de.cau.cs.kieler.esterel.scl.SclToEsterel"
+            name="Transform to Esterel">
+      </command>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.transformation">
@@ -72,6 +77,12 @@
             id="ESTERELTOSCL_OPT"
             method="transformOpt"
             name="SCL Optimized">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.esterel.scl.transformations.SclToEsterelTransformation"
+            id="SCL_TO_ESTEREL"
+            method="transform"
+            name="Esterel">
       </transformationMethod>
    </extension>
    <extension

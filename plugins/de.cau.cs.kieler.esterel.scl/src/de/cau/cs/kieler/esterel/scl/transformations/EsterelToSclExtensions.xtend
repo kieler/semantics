@@ -139,6 +139,14 @@ class EsterelToSclExtensions {
     def createSseq() {
         SclFactory::eINSTANCE.createStatementSequence
     }
+    
+    def createThread() {
+        SclFactory::eINSTANCE.createThread
+    }
+    
+    def createParallel() {
+        SclFactory::eINSTANCE.createParallel
+    }
 
     /*
      * Returns a fresh label
@@ -161,7 +169,7 @@ class EsterelToSclExtensions {
                 valuedObjects.add(ret)
             ])
 
-        signalMap.add(ret.name -> ret)
+        signalMap.add(name -> ret)
 
         ret
     }
@@ -236,6 +244,10 @@ class EsterelToSclExtensions {
     def addGoto(StatementSequence sSeq, String l) {
         sSeq.statements.add(createGotoStm(l))
     }
+    
+    def addGoto(EList<Statement> sSeq, String l) {
+        sSeq.add(createGotoStm(l))
+    }
 
     /*
          * Returns a gotoj l: Jumps to l if l is in the current thread and to the end of the
@@ -308,6 +320,17 @@ class EsterelToSclExtensions {
     }
     
     /*
+         * Create an not expression
+         * @param arg1 first argument
+         */
+    def createNot(Expression arg1) {
+        KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+            operator = OperatorType::NOT
+            subExpressions.add(arg1)
+        ]
+    }
+    
+    /*
          * Create an Equals expression
          * @param arg1 first argument
          * @param arg2 second argument
@@ -319,10 +342,27 @@ class EsterelToSclExtensions {
             subExpressions.add(arg2)
         ]
     }
+    
+    /*
+         * Create an greater than expression
+         * @param arg1 first argument
+         * @param arg2 second argument
+         */
+    def createGT(Expression arg1, Expression arg2) {
+        KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+            operator = OperatorType::GT
+            subExpressions.add(arg1)
+            subExpressions.add(arg2)
+        ]
+    }
+    
+    def createConditional() {
+        SclFactory::eINSTANCE.createConditional
+    }
 
     /*
-          * Adds an instruction to a StatementSeqeuence
-          */
+     * Adds an instruction to a StatementSeqeuence
+     */
     def dispatch add(StatementSequence sSeq, Instruction instr) {
         sSeq.statements.add(createStmFromInstr(instr))
 

@@ -139,10 +139,8 @@ class TransformInterface {
                     valuedMap.put(pureSig, s_val)
                     signalMap.add(s_val.name -> s_val)
                     val type = sig.channelDescr.type.type
-                    if (sig.channelDescr.expression != null && sig.channelDescr.expression instanceof ConstantExpression) {
+                    if (sig.channelDescr.expression != null) {
                         s_val.initialValue = sig.channelDescr.expression.transformExp(type.toString)
-                    } else if (sig.channelDescr.expression != null) {
-                        s_val.initialValue = sig.channelDescr.expression.transformExp(signalMap)
                     }
                     var ValueType t
                     // Check for hostcode type
@@ -278,11 +276,8 @@ class TransformInterface {
             // TODO add to signalmap?
             signalMap.add(it.name -> s_val)
             valuedMap.put(s_val, s_val)
-            localVars += s_val.name
-            if (it.expression instanceof ConstantExpression)
+            if (it.expression != null)
                 s_val.initialValue = it.expression.transformExp(declaration.type.type.literal)
-            else if (it.expression != null)
-                s_val.initialValue = it.expression.transformExp(signalMap)
             decl.valuedObjects += s_val
         ]
 
