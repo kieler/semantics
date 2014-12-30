@@ -793,13 +793,17 @@ class EsterelToSclTransformation extends Transformation {
         val abortExpr = (abort.body as AbortInstance).delay.event.expr
 //        val oldSignalMap = signalMap.clone  as LinkedList<Pair<String, ValuedObject>>
 
-        // Add a counting variable, if delay.expr is set
-        val counter = createFreshVar("i", ValueType::INT)
-        sSeq.add(createAssignment(counter, 0.createIntValue))
-
-        //        counter.initialValue = createIntValue(0)
         // Delay Expression?
         val delayExpression = (abort.body as AbortInstance).delay.expr != null
+        
+        // Add a counting variable, if delay.expr is set
+        val counter = createFreshVar("i", ValueType::INT)
+        if (delayExpression) {
+            sSeq.add(createAssignment(counter, 0.createIntValue))
+        }
+
+        //        counter.initialValue = createIntValue(0)
+        
 
         // if a and c > i then...
         val countExp = createAnd(abortExpr.transformExp,

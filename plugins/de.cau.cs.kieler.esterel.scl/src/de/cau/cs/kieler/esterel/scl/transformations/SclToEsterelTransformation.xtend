@@ -36,6 +36,10 @@ import de.cau.cs.kieler.esterel.kexpressions.OperatorExpression
 import de.cau.cs.kieler.esterel.kexpressions.OperatorType
 import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.scl.scl.Conditional
+import de.cau.cs.kieler.scl.scl.Goto
+import de.cau.cs.kieler.scl.scl.StatementSequence
+import de.cau.cs.kieler.scl.scl.EmptyStatement
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * @author krat
@@ -112,10 +116,9 @@ class SclToEsterelTransformation {
     }
 
     def Sequence transformStm(EList<Statement> stms, Sequence stmSeq) {
-
-        stms.forEach [
-            if (it instanceof InstructionStatement) {
-                val instrStm = it as InstructionStatement
+        for (stm : stms) {
+            if (stm instanceof InstructionStatement) {
+                val instrStm = stm as InstructionStatement
 
                 // Pause
                 if (instrStm.instruction instanceof Pause) {
@@ -159,8 +162,55 @@ class SclToEsterelTransformation {
                         }
                     ]
                 }
+                // Goto
+                else if (instrStm.instruction instanceof Goto) {
+                    val goto = instrStm.instruction as Goto
+                    // Find the innermost StatementSequence
+                    val gotoStm = goto.eContainer as InstructionStatement
+                    val parent = gotoStm.eContainer as StatementSequence
+                    // Find the corresponding label
+                    // TODO Will throw exception if not there
+                    val emptyStm = parent.eAllContents.filter(EmptyStatement).findFirst[ label == goto.targetLabel ]
+                    var indexLabel = parent.statements.indexOf(emptyStm)
+                    var indexGoto = parent.statements.indexOf(gotoStm)
+                    System.out.println("indexLabel: " + indexLabel + " indexGoto " + indexGoto + " statements " + parent.statements)
+                    
+                    // If the jump goes backwards this is a loop
+                    if (indexLabel < indexGoto) {
+                        val sSeq = EcoreUtil.copy((parent as StatementSequence))
+                        // TODO beautify
+                        // TODO array index out of bounds when more than one goto loop taken
+                        while (indexLabel >= 0) {
+                            sSeq.statements.remove(0)
+                            indexLabel = indexLabel -1
+                        }
+                        while (indexGoto <= sSeq.statements.length) {
+                            sSeq.statements.remove(indexGoto-1)
+                            indexGoto = indexGoto + 1
+                        }
+                        stmSeq.list += EsterelFactory::eINSTANCE.createNothing
+                            stmSeq.list += EsterelFactory::eINSTANCE.createLoop => [
+                                body = EsterelFactory::eINSTANCE.createLoopBody => [
+                                    statement = transformStm(sSeq.statements, EsterelFactory::eINSTANCE.createSequence)
+                                ]
+                                end1 = EsterelFactory::eINSTANCE.createEndLoop
+                            ]
+                        return stmSeq
+                    }
+                    
+                    // Do what happens after the label
+                    // TRAP?
+                    val sSeq = EcoreUtil.copy((parent as StatementSequence))
+                    while (indexLabel >= 0) {
+                        sSeq.statements.remove(0)
+                        indexLabel = indexLabel -1
+                    }
+                    return transformStm(sSeq.statements, stmSeq)
+                }
             }
-        ]
+            
+            }
+        
 
         // A Seqeuence is not allowed to have only one element...
         if (stmSeq.list.length < 2)
