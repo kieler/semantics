@@ -121,14 +121,14 @@ class GuardCreator extends AbstractGuardCreator {
     protected val predecessorSBCache = <Predecessor, List<SchedulingBlock>> newHashMap
     protected val predecessorTwinMark = <SchedulingBlock> newHashSet
     
-    public static val SCHIZOPHRENIC_SUFFIX = "_s"
+/*    public static val SCHIZOPHRENIC_SUFFIX = "_s"
     protected val schizophrenicGuards = <ValuedObject> newHashSet
     protected var schizophrenicGuardCounter = 0
     protected var Declaration schizoDeclaration = null
     protected var Set<Node> pilData = null
     protected var SynchronizerData joinData = null
     
-    protected val newSchizoGuards = <Guard> newHashSet
+    protected val newSchizoGuards = <Guard> newHashSet*/
     
     protected val conditionalGuards = <Conditional, Guard> newHashMap
     
@@ -151,7 +151,7 @@ class GuardCreator extends AbstractGuardCreator {
         val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = 
             Guice.createInjector().getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
         context.compilationResult.ancillaryData += potentialInstantaneousLoopAnalyzer.analyze(scg)
-        pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
+//        pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
           
         /**
          * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 
@@ -162,13 +162,13 @@ class GuardCreator extends AbstractGuardCreator {
         scg => [
         	annotations += createStringAnnotation(ANNOTATION_GUARDCREATOR, "")
         ]
-        schizoDeclaration = createDeclaration=>[ setType(ValueType::BOOL) ]
+//        schizoDeclaration = createDeclaration=>[ setType(ValueType::BOOL) ]
 		val predecessorList = <Predecessor> newArrayList
 		val basicBlockList = <BasicBlock> newArrayList
         scg.createGOSignal
         
         conditionalGuards.clear
-        newSchizoGuards.clear
+//        newSchizoGuards.clear
         schedulingBlocks.clear
         schedulingBlockCache.clear
         schedulingBlockGuardCache.clear
@@ -239,12 +239,12 @@ class GuardCreator extends AbstractGuardCreator {
         // Query the basic block of the scheduling block.
         val basicBlock = schedulingBlock.basicBlock
 
-        if (guard.schizophrenic && basicBlock.entryBlock && 
+        /*if (guard.schizophrenic && basicBlock.entryBlock && 
         	((basicBlock.schedulingBlocks.head.nodes.head as Entry).allPrevious.head as Fork).join.getSynchronizer.id 
         	== DepthJoinSynchronizer::SYNCHRONIZER_ID
         ) {
             guard.expression = FALSE
-        } else {                 
+        } else {      */            
                 
         /** 
          * If the scheduling block is the first scheduling block in the basic block,
@@ -308,7 +308,7 @@ class GuardCreator extends AbstractGuardCreator {
             guard.createSubsequentSchedulingBlockGuardExpression(schedulingBlock, scg)
         }
     	
-    	if (guard.schizophrenic) {
+    	/*if (guard.schizophrenic) {
     	    val newGuards = scg.handleSchizophrenicExpression(guard.expression, pilData)
     	    for(ng : newGuards) {
                 val sb = ng.schedulingBlockLink
@@ -325,12 +325,12 @@ class GuardCreator extends AbstractGuardCreator {
     		for(volatile : guard.volatile) {
     			volatileText = volatileText + volatile.name + " "
     		}
-    	}
-        System.out.println("Generated guard " + guard.valuedObject.name + " with expression " + guard.expression.serialize + volatileText)      
+    	}*/
+        System.out.println("Generated guard " + guard.valuedObject.name + " with expression " + guard.expression.serialize)// + volatileText)      
     }
-    } // schizo entry
+//    } // schizo entry
     
-    protected def Set<Guard> handleSchizophrenicExpression(SCGraph scg, Expression expression, Set<Node> pilData) {
+/*    protected def Set<Guard> handleSchizophrenicExpression(SCGraph scg, Expression expression, Set<Node> pilData) {
         val createdGuards = <Guard> newHashSet
         val vors = <ValuedObjectReference> newHashSet
         if (expression instanceof ValuedObjectReference) {
@@ -426,7 +426,7 @@ class GuardCreator extends AbstractGuardCreator {
             if (pilData.contains(n)) return true
         }
         return false
-    } 
+    } */
     
     
     // --- CREATE GUARDS: GO BLOCK 
@@ -463,10 +463,10 @@ class GuardCreator extends AbstractGuardCreator {
 //            (synchronizer as DepthJoinSynchronizer).schizophrenicDeclaration = schizoDeclaration
 //        }
         
-        synchronizer.synchronize(schedulingBlock.nodes.head as Join, guard, schedulingBlock, scg, compilerContext, schedulingBlockCache)
+        synchronizer.synchronize(schedulingBlock.nodes.head as Join, guard, schedulingBlock, scg, this, compilerContext, schedulingBlockCache)
         
         val newGuards = synchronizer.newGuards
-        newSchizoGuards += newGuards
+//        newSchizoGuards += newGuards
         for(ng : newGuards) {
             val sb = ng.schedulingBlockLink
             if (sb != null) {
@@ -624,7 +624,7 @@ class GuardCreator extends AbstractGuardCreator {
         }
     }
  
-    protected def Expression fixSchizophrenicExpression(SCGraph scg, Expression expression) {
+/*    protected def Expression fixSchizophrenicExpression(SCGraph scg, Expression expression) {
         if (expression instanceof ValuedObjectReference) {
             val vor = (expression as ValuedObjectReference)
             val newVO = schizoDeclaration.findValuedObjectByName(vor.valuedObject.name + SCHIZOPHRENIC_SUFFIX)
@@ -642,7 +642,7 @@ class GuardCreator extends AbstractGuardCreator {
         }
         
         expression
-    }   
+    }*/   
     
     def ValuedObject findValuedObjectByName(Declaration declaration, String name) {
         for(vo : declaration.valuedObjects) {

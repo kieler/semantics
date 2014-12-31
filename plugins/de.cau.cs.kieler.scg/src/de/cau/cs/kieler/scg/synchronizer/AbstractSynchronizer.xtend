@@ -32,6 +32,7 @@ import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -116,6 +117,7 @@ abstract class AbstractSynchronizer {
      * 		data to construct a guard expression for the join node in question.
      */
     public def void synchronize(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg, 
+    	AbstractGuardCreator guardCreator, 
     	KielerCompilerContext context, Map<Node, SchedulingBlock> schedulingBlockCache
     ) {
         schedulingCache = schedulingBlockCache
