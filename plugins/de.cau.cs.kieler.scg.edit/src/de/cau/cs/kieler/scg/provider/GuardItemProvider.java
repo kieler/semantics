@@ -77,7 +77,7 @@ public class GuardItemProvider
 
 			addSchizophrenicPropertyDescriptor(object);
 			addSchedulingBlockLinkPropertyDescriptor(object);
-			addVolatilePropertyDescriptor(object);
+			addOriginalObjectPropertyDescriptor(object);
 			addSequentializePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
@@ -128,19 +128,19 @@ public class GuardItemProvider
 	}
 
 				/**
-	 * This adds a property descriptor for the Volatile feature.
+	 * This adds a property descriptor for the Original Object feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addVolatilePropertyDescriptor(Object object) {
+	protected void addOriginalObjectPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Guard_volatile_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Guard_volatile_feature", "_UI_Guard_type"),
-				 ScgPackage.Literals.GUARD__VOLATILE,
+				 getString("_UI_Guard_originalObject_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Guard_originalObject_feature", "_UI_Guard_type"),
+				 ScgPackage.Literals.GUARD__ORIGINAL_OBJECT,
 				 true,
 				 false,
 				 true,

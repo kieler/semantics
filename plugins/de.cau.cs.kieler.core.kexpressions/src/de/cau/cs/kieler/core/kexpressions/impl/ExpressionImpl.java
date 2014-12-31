@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * An implementation of the model object '<em><b>Expression</b></em>'.
  * <!-- end-user-doc -->
  * <p>
- * </p>
  *
  * @generated
  */

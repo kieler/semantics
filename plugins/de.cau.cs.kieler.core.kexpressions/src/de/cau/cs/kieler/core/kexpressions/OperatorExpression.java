@@ -24,11 +24,11 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.OperatorExpression#getOperator <em>Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.OperatorExpression#getSubExpressions <em>Sub Expressions</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getOperatorExpression()
  * @model

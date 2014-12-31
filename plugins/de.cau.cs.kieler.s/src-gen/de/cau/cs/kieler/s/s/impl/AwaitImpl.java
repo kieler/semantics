@@ -20,12 +20,13 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * An implementation of the model object '<em><b>Await</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.AwaitImpl#getSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.AwaitImpl#getContinuation <em>Continuation</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

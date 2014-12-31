@@ -166,8 +166,8 @@ class GuardScheduler extends AbstractScheduler {
 			    }
 			}
 			
-			if (!guard.volatile.empty) {
-				for(volatile : guard.volatile) {
+			if (!guard.originalObject.empty) {
+				for(volatile : guard.originalObject) {
 //					if (!placedVOs.contains(volatile)) {
 						VOR -= volatile
 						guard.expression = guard.expression.replace(volatile, TRUE)

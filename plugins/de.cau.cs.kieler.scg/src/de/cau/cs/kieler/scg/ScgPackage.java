@@ -1415,13 +1415,13 @@ public interface ScgPackage extends EPackage {
 	int GUARD__SCHEDULING_BLOCK_LINK = 3;
 
 	/**
-	 * The feature id for the '<em><b>Volatile</b></em>' reference list.
+	 * The feature id for the '<em><b>Original Object</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GUARD__VOLATILE = 4;
+	int GUARD__ORIGINAL_OBJECT = 4;
 
 	/**
 	 * The feature id for the '<em><b>Sequentialize</b></em>' attribute.
@@ -2212,15 +2212,15 @@ public interface ScgPackage extends EPackage {
 	EReference getGuard_SchedulingBlockLink();
 
 	/**
-	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scg.Guard#getVolatile <em>Volatile</em>}'.
+	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.scg.Guard#getOriginalObject <em>Original Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Volatile</em>'.
-	 * @see de.cau.cs.kieler.scg.Guard#getVolatile()
+	 * @return the meta object for the reference list '<em>Original Object</em>'.
+	 * @see de.cau.cs.kieler.scg.Guard#getOriginalObject()
 	 * @see #getGuard()
 	 * @generated
 	 */
-	EReference getGuard_Volatile();
+	EReference getGuard_OriginalObject();
 
 	/**
 	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.Guard#isSequentialize <em>Sequentialize</em>}'.
@@ -2878,12 +2878,12 @@ public interface ScgPackage extends EPackage {
 		EReference GUARD__SCHEDULING_BLOCK_LINK = eINSTANCE.getGuard_SchedulingBlockLink();
 
 		/**
-		 * The meta object literal for the '<em><b>Volatile</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Original Object</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference GUARD__VOLATILE = eINSTANCE.getGuard_Volatile();
+		EReference GUARD__ORIGINAL_OBJECT = eINSTANCE.getGuard_OriginalObject();
 
 		/**
 		 * The meta object literal for the '<em><b>Sequentialize</b></em>' attribute feature.

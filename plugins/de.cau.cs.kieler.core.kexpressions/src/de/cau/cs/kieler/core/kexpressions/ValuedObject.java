@@ -24,13 +24,13 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getCombineOperator <em>Combine Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getInitialValue <em>Initial Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getCardinalities <em>Cardinalities</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObject()
  * @model

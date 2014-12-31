@@ -36,13 +36,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class OperatorExpressionItemProvider
-    extends ExpressionItemProvider
-    implements
-        IEditingDomainItemProvider,
-        IStructuredItemContentProvider,
-        ITreeItemContentProvider,
-        IItemLabelProvider,
-        IItemPropertySource {
+    extends ExpressionItemProvider {
     /**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->

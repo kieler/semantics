@@ -26,12 +26,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * An implementation of the model object '<em><b>Statement Scope</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementScopeImpl#getStatements <em>Statements</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementScopeImpl#getDeclarations <em>Declarations</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -45,7 +45,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#isSchizophrenic <em>Schizophrenic</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getSchedulingBlockLink <em>Scheduling Block Link</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getVolatile <em>Volatile</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getOriginalObject <em>Original Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#isSequentialize <em>Sequentialize</em>}</li>
  * </ul>
  *
@@ -103,14 +103,14 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 	protected SchedulingBlock schedulingBlockLink;
 
 				/**
-	 * The cached value of the '{@link #getVolatile() <em>Volatile</em>}' reference list.
+	 * The cached value of the '{@link #getOriginalObject() <em>Original Object</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getVolatile()
+	 * @see #getOriginalObject()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ValuedObject> volatile_;
+	protected EList<ValuedObject> originalObject;
 
 				/**
 	 * The default value of the '{@link #isSequentialize() <em>Sequentialize</em>}' attribute.
@@ -301,11 +301,11 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ValuedObject> getVolatile() {
-		if (volatile_ == null) {
-			volatile_ = new EObjectResolvingEList<ValuedObject>(ValuedObject.class, this, ScgPackage.GUARD__VOLATILE);
+	public EList<ValuedObject> getOriginalObject() {
+		if (originalObject == null) {
+			originalObject = new EObjectResolvingEList<ValuedObject>(ValuedObject.class, this, ScgPackage.GUARD__ORIGINAL_OBJECT);
 		}
-		return volatile_;
+		return originalObject;
 	}
 
 				/**
@@ -362,8 +362,8 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 			case ScgPackage.GUARD__SCHEDULING_BLOCK_LINK:
 				if (resolve) return getSchedulingBlockLink();
 				return basicGetSchedulingBlockLink();
-			case ScgPackage.GUARD__VOLATILE:
-				return getVolatile();
+			case ScgPackage.GUARD__ORIGINAL_OBJECT:
+				return getOriginalObject();
 			case ScgPackage.GUARD__SEQUENTIALIZE:
 				return isSequentialize();
 		}
@@ -391,9 +391,9 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 			case ScgPackage.GUARD__SCHEDULING_BLOCK_LINK:
 				setSchedulingBlockLink((SchedulingBlock)newValue);
 				return;
-			case ScgPackage.GUARD__VOLATILE:
-				getVolatile().clear();
-				getVolatile().addAll((Collection<? extends ValuedObject>)newValue);
+			case ScgPackage.GUARD__ORIGINAL_OBJECT:
+				getOriginalObject().clear();
+				getOriginalObject().addAll((Collection<? extends ValuedObject>)newValue);
 				return;
 			case ScgPackage.GUARD__SEQUENTIALIZE:
 				setSequentialize((Boolean)newValue);
@@ -422,8 +422,8 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 			case ScgPackage.GUARD__SCHEDULING_BLOCK_LINK:
 				setSchedulingBlockLink((SchedulingBlock)null);
 				return;
-			case ScgPackage.GUARD__VOLATILE:
-				getVolatile().clear();
+			case ScgPackage.GUARD__ORIGINAL_OBJECT:
+				getOriginalObject().clear();
 				return;
 			case ScgPackage.GUARD__SEQUENTIALIZE:
 				setSequentialize(SEQUENTIALIZE_EDEFAULT);
@@ -448,8 +448,8 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 				return schizophrenic != SCHIZOPHRENIC_EDEFAULT;
 			case ScgPackage.GUARD__SCHEDULING_BLOCK_LINK:
 				return schedulingBlockLink != null;
-			case ScgPackage.GUARD__VOLATILE:
-				return volatile_ != null && !volatile_.isEmpty();
+			case ScgPackage.GUARD__ORIGINAL_OBJECT:
+				return originalObject != null && !originalObject.isEmpty();
 			case ScgPackage.GUARD__SEQUENTIALIZE:
 				return sequentialize != SEQUENTIALIZE_EDEFAULT;
 		}

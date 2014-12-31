@@ -161,12 +161,10 @@ class GuardSequentializer extends AbstractSequentializer {
         ]
         
         scg.copyDeclarations(newSCG)
-       	val guardDeclaration = createDeclaration=>[ setType(ValueType::BOOL) ]
-       	newSCG.declarations += guardDeclaration
-        scg.guards.forEach[
-            val vo = createValuedObject(it.valuedObject.name) 
-                => [ guardDeclaration.valuedObjects += it ]
-            it.valuedObject.addToValuedObjectMapping(vo)
+       	val guardDeclaration = createDeclaration => [ setType(ValueType::BOOL); it.volatile = true; newSCG.declarations += it ]
+        scg.guards.forEach[ g |
+            val vo = createValuedObject(g.valuedObject.name) => [ guardDeclaration.valuedObjects += it ]
+            g.valuedObject.addToValuedObjectMapping(vo)
         ]
         
         var time = (System.currentTimeMillis - timestamp) as float

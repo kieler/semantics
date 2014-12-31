@@ -30,11 +30,11 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference#getIndices <em>Indices</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getValuedObjectReference()
  * @model
