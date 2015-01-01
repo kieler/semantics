@@ -21,6 +21,7 @@ import de.cau.cs.kieler.scl.scl.EmptyStatement
 import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Conditional
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * SCL Extensions.
@@ -180,4 +181,21 @@ class SCLExtensions {
           
           sSeq
       }
+      
+      /*
+       * Applies all optimizations until fixed-point is reached
+       */
+       def StatementSequence optimizeAll(StatementSequence sSeq) {
+           var StatementSequence oldSseq
+           do {
+               oldSseq = EcoreUtil.copy(sSeq)
+               sSeq.removeSuperfluousGotos
+               sSeq.optimizeLabels
+               sSeq.removeUnreachableCode
+               sSeq.removeSubseqeuentLabels
+               sSeq.removeDoubleJumps
+           } while (!EcoreUtil.equals(oldSseq, sSeq))
+           
+           sSeq
+       }
 }

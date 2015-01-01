@@ -97,7 +97,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
 	 * l2:
 	 * goto l1;
 	 * 
-	 * TODO beautify
+	 * TODO use double jump optimization instead
 	 * 
 	 */
     def SCLProgram initialize(SCLProgram scl) {

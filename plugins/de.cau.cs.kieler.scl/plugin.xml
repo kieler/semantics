@@ -225,6 +225,12 @@
             method="removeDoubleJumps"
             name="Remove double jumps">
       </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scl.extensions.SCLExtensions"
+            id="OPTIMIZE_ALL"
+            method="optimizeAll"
+            name="Optimize all">
+      </transformationMethod>
    </extension>
    <extension
          point="de.cau.cs.kieler.kico.extension">
