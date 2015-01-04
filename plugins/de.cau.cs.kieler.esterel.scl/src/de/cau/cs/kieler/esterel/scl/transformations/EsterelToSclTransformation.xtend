@@ -936,7 +936,7 @@ class EsterelToSclTransformation extends Transformation {
         // Strong abort
         } else {
             val f_a = createFreshVar("f_a", ValueType::BOOL)
-            f_a.initialValue = false.createBoolValue
+            sSeq.add(createAssignment(f_a, false.createBoolValue))
             if ((abort.body as AbortInstance).delay.isImmediate) {
                 sSeq.add(createConditional => [
                             expression = transformExp(abortExpr)//, oldSignalMap)
