@@ -23,27 +23,28 @@ import org.eclipse.emf.ecore.EClass;
  * An implementation of the model object '<em><b>Write Write</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * </p>
  *
  * @generated
  */
 public class Write_WriteImpl extends DependencyImpl implements Write_Write {
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     protected Write_WriteImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return ScgPackage.Literals.WRITE_WRITE;
-	}
+        return ScgPackage.Literals.WRITE_WRITE;
+    }
 
 } //Write_WriteImpl

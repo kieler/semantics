@@ -61,7 +61,7 @@ class CopyPropagation extends AbstractOptimizer {
         val toDelete = <Guard> newArrayList // make this a set for final review!
         
         for (key : assignmentReferences.keySet.immutableCopy) {
-            for (guard : scg.guards) {
+            for (guard : scg.guards.filter[ !isDead ]) {
                 if (guard.expression instanceof ValuedObjectReference) {
                         if ((guard.expression as ValuedObjectReference).valuedObject == key) {
                             (guard.expression as ValuedObjectReference).valuedObject == assignmentReferences.get(key)

@@ -109,7 +109,7 @@ class GuardScheduler extends AbstractScheduler {
         val schedulingBlocks = <SchedulingBlock> newLinkedList
         scg.basicBlocks.forEach[ schedulingBlocks.addAll(it.schedulingBlocks) ]
         
-        val guardList = <Guard> newArrayList => [ addAll(scg.guards) ]
+        val guardList = <Guard> newArrayList => [ addAll(scg.guards.filter[ !isDead ]) ]
         
         new SchedulingConstraints => [
         	it.schedulingBlocks = schedulingBlocks

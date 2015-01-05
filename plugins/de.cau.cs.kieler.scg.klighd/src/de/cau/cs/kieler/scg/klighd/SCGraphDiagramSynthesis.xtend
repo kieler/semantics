@@ -351,6 +351,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         [it.red = 144; it.green = 144; it.blue = 144;]
     private static val KColor SCHEDULING_SCHEDULINGEDGE = RENDERING_FACTORY.createKColor() =>
         [it.red = 128; it.green = 0; it.blue = 253;]
+    private static val KColor SCHEDULING_DEADCODE = RENDERING_FACTORY.createKColor() =>
+        [it.red = 128; it.green = 128; it.blue = 128;]
     private static val int SCHEDULING_SCHEDULINGEDGE_ALPHA = 96
 
     private static val KColor PROBLEM_COLOR = KRenderingFactory::eINSTANCE.createKColor() => 
@@ -1350,7 +1352,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 
 	                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
 	                    var expText = "<null>"
-	                    if (schedulingBlock.guard != null) {
+	                    if (schedulingBlock.guard != null && !schedulingBlock.guard.dead) {
         	            	expText = serializer.serialize(schedulingBlock.guard.expression.copy.fix)
     	            	}	
 //        	        	expText.createLabel(sbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER                	
@@ -1358,6 +1360,15 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 					}
             	    
                 	sbName.createLabel(sbContainer).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER.copy
+                	
+                    if (basicBlock.deadBlock) {
+                        sbContainer.getData(typeof(KRoundedRectangle)) => [
+                            it.lineStyle = LineStyle::SOLID
+                            it.foreground = SCHEDULING_DEADCODE.copy
+                        ]
+                        sbContainer.KRendering.background = SCHEDULING_DEADCODE.copy
+                        sbContainer.KRendering.background.alpha = 128
+                    }
                 }
         }
 
@@ -1402,6 +1413,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         usBlocks -= scheduledBlocks
                     } 
                 ]
+                for(deadGuard : scg.guards.filter[ dead ]) {
+                    val deadBlocks = usBlocks.filter[ e | e.guard == deadGuard].toList
+                    usBlocks -= deadBlocks
+                }
                 usBlocks.forEach [
                     val node = schedulingBlockMapping.get(it)
                     node.getData(typeof(KRoundedRectangle)) => [

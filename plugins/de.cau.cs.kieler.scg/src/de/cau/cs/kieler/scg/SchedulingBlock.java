@@ -23,12 +23,12 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.SchedulingBlock#getNodes <em>Nodes</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.SchedulingBlock#getDependencies <em>Dependencies</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.SchedulingBlock#getGuard <em>Guard</em>}</li>
  * </ul>
+ * </p>
  *
  * @see de.cau.cs.kieler.scg.ScgPackage#getSchedulingBlock()
  * @model
@@ -36,61 +36,61 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface SchedulingBlock extends EObject {
     /**
-	 * Returns the value of the '<em><b>Nodes</b></em>' reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.scg.Node}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Nodes</b></em>' reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.scg.Node}.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Nodes</em>' reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Nodes</em>' reference list.
-	 * @see de.cau.cs.kieler.scg.ScgPackage#getSchedulingBlock_Nodes()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Nodes</em>' reference list.
+     * @see de.cau.cs.kieler.scg.ScgPackage#getSchedulingBlock_Nodes()
+     * @model
+     * @generated
+     */
     EList<Node> getNodes();
 
     /**
-	 * Returns the value of the '<em><b>Dependencies</b></em>' reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.scg.Dependency}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Dependencies</b></em>' reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.scg.Dependency}.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Dependencies</em>' reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Dependencies</em>' reference list.
-	 * @see de.cau.cs.kieler.scg.ScgPackage#getSchedulingBlock_Dependencies()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Dependencies</em>' reference list.
+     * @see de.cau.cs.kieler.scg.ScgPackage#getSchedulingBlock_Dependencies()
+     * @model
+     * @generated
+     */
     EList<Dependency> getDependencies();
 
     /**
-	 * Returns the value of the '<em><b>Guard</b></em>' reference.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Guard</b></em>' reference.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Guard</em>' containment reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Guard</em>' reference.
-	 * @see #setGuard(Guard)
-	 * @see de.cau.cs.kieler.scg.ScgPackage#getSchedulingBlock_Guard()
-	 * @model required="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Guard</em>' reference.
+     * @see #setGuard(Guard)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getSchedulingBlock_Guard()
+     * @model required="true"
+     * @generated
+     */
     Guard getGuard();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.scg.SchedulingBlock#getGuard <em>Guard</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.SchedulingBlock#getGuard <em>Guard</em>}' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Guard</em>' reference.
-	 * @see #getGuard()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Guard</em>' reference.
+     * @see #getGuard()
+     * @generated
+     */
     void setGuard(Guard value);
 
 } // SchedulingBlock

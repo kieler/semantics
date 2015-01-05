@@ -174,12 +174,18 @@ class GuardCreator extends AbstractGuardCreator {
         schedulingBlockCache.clear
         schedulingBlockGuardCache.clear
         for(basicBlock : scg.basicBlocks) {
-        	predecessorList += basicBlock.predecessors
-            for(schedulingBlock: basicBlock.schedulingBlocks) {
-            	schedulingBlocks += schedulingBlock
-                for(node : schedulingBlock.nodes) {
-                    schedulingBlockCache.put(node, schedulingBlock)
-                    schedulingBlockGuardCache.put(schedulingBlock.guard, schedulingBlock)
+            if (basicBlock.isDeadBlock) {
+                for(schedulingBlock : basicBlock.schedulingBlocks) {
+                    schedulingBlock.guard.dead = true
+                } 
+            } else {
+        	   predecessorList += basicBlock.predecessors
+                for(schedulingBlock: basicBlock.schedulingBlocks) {
+            	   schedulingBlocks += schedulingBlock
+                    for(node : schedulingBlock.nodes) {
+                        schedulingBlockCache.put(node, schedulingBlock)
+                        schedulingBlockGuardCache.put(schedulingBlock.guard, schedulingBlock)
+                    }
                 }
             }
         }        
