@@ -1407,11 +1407,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             
             if (scg.hasSchedulingData && SHOW_SCHEDULINGBLOCKS.booleanValue) {
                 val usBlocks = scg.getAllSchedulingBlocks
-                scg.schedules.head.guards.forEach[ 
-                    if (!it.schizophrenic) {
-                        val scheduledBlocks = usBlocks.filter[ e | e.guard == it].toList
-                        usBlocks -= scheduledBlocks
-                    } 
+                scg.schedules.head.scheduleBlocks.forEach[ 
+//                    if (!it.schizophrenic) {
+//                        val scheduledBlocks = usBlocks.filter[ e | e.guard == it].toList
+                        usBlocks -= it.schedulingBlock
+//                    } 
                 ]
                 for(deadGuard : scg.guards.filter[ dead ]) {
                     val deadBlocks = usBlocks.filter[ e | e.guard == deadGuard].toList

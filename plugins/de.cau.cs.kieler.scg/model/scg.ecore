@@ -119,9 +119,14 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="conditional" eType="#//Conditional"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="branchType" eType="#//BranchType"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Schedule">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="guards" upperBound="-1"
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleBlock">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="schedulingBlock" eType="#//SchedulingBlock"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="additionalGuards" upperBound="-1"
         eType="#//Guard"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Schedule">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scheduleBlocks" upperBound="-1"
+        eType="#//ScheduleBlock" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Guard">
     <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"

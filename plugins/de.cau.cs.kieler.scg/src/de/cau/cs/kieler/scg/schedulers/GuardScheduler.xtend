@@ -44,6 +44,7 @@ import java.util.Arrays
 import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
 import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.scg.ScheduleBlock
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -85,12 +86,14 @@ class GuardScheduler extends AbstractScheduler {
     // -- Globals 
     // -------------------------------------------------------------------------
    
-    protected val topologicalSortVisited = <Guard> newHashSet 
+    protected val topologicalSortVisited = <SchedulingBlock> newHashSet 
     protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
+    protected val schedulingBlockVOCache = <ValuedObject, Set<SchedulingBlock>> newHashMap
+    protected val allSchedulingBlocks = <SchedulingBlock> newHashSet
     protected var int schedulingBlockCount
+    protected val guardVOCache = <ValuedObject, Guard> newHashMap
     
     protected val placedVOs = <ValuedObject> newHashSet
-    protected val guardCache = <ValuedObject, Guard> newHashMap  
 
     
     // -------------------------------------------------------------------------
@@ -106,33 +109,35 @@ class GuardScheduler extends AbstractScheduler {
      */
     
     protected override SchedulingConstraints orderSchedulingBlocks(SCGraph scg) {
-        val schedulingBlocks = <SchedulingBlock> newLinkedList
-        scg.basicBlocks.forEach[ schedulingBlocks.addAll(it.schedulingBlocks) ]
+        val schedulingBlocks = allSchedulingBlocks.toList
         
-        val guardList = <Guard> newArrayList => [ addAll(scg.guards.filter[ !isDead ]) ]
+//        val guardList = <Guard> newArrayList => [ addAll(scg.guards.filter[ !isDead ]) ]
         
         new SchedulingConstraints => [
         	it.schedulingBlocks = schedulingBlocks
-        	it.guards = guardList
+//        	it.guards = guardList
         ]    
     }
         
-    protected def void topologicalPlacement(Guard guard, 
-        List<Guard> guards, List<Guard> schedule, 
+    protected def void topologicalPlacement(SchedulingBlock schedulingBlock, 
+        Set<SchedulingBlock> remainingSchedulingBlocks, List<ScheduleBlock> schedule, 
         SchedulingConstraints constraints, SCGraph scg, String indent
     ) {
-        if (!topologicalSortVisited.contains(guard)) {
+        if (!topologicalSortVisited.contains(schedulingBlock)) {
         	
-        	topologicalSortVisited.add(guard)
+        	topologicalSortVisited.add(schedulingBlock)
         	
 			val VOR = <ValuedObject> newArrayList
 			val lastVOs = <ValuedObject> newArrayList
+			val addGuardBeforeScheduledBlock = <Guard> newHashSet
 			
-			if (guard.expression instanceof ValuedObjectReference) {
-				VOR += (guard.expression as ValuedObjectReference).valuedObject	
+			if (schedulingBlock.guard.expression instanceof ValuedObjectReference) {
+				VOR += (schedulingBlock.guard.expression as ValuedObjectReference).valuedObject	
 			} else {
-				if (guard.expression instanceof OperatorExpression && (guard.expression as OperatorExpression).operator != OperatorType::PRE) {
-					guard.expression.eAllContents.filter(typeof(ValuedObjectReference)).map[ valuedObject ].forEach[ VOR += it ]
+				if (schedulingBlock.guard.expression instanceof OperatorExpression && 
+					(schedulingBlock.guard.expression as OperatorExpression).operator != OperatorType::PRE
+				) {
+					schedulingBlock.guard.expression.eAllContents.filter(typeof(ValuedObjectReference)).map[ valuedObject ].forEach[ VOR += it ]
 					for(vo : VOR) {
 						if (vo.name.startsWith(AbstractGuardCreator::CONDITIONAL_EXPRESSION_PREFIX))
 							lastVOs += vo
@@ -141,10 +146,10 @@ class GuardScheduler extends AbstractScheduler {
 				}
 			}   
 			
-			if (guard.schedulingBlockLink != null) {
-			    val dependencies = guard.schedulingBlockLink.getAllDependencies
+			if (schedulingBlock != null) {
+			    val dependencies = schedulingBlock.getAllDependencies(scg)
 			    if (!dependencies.empty) {
-			        System.out.print(indent + "Guard " + guard.valuedObject.name + " has dependencies: ")
+			        System.out.print(indent + "Scheduling block with guard " + schedulingBlock.guard.valuedObject.name + " has dependencies: ")
 			        for(dependency : dependencies) {
 			            if (dependency.concurrent && !dependency.confluent) {
 			                val sb = schedulingBlockCache.get(dependency.eContainer)
@@ -152,30 +157,30 @@ class GuardScheduler extends AbstractScheduler {
 			                
 			                // TODO: VERIFY!
 //			                if (guard.schizophrenic) {
-			                    val schizoGuard = scg.guards.filter[ it.schedulingBlockLink == sb && it.schizophrenic].toList
-			                    if (!schizoGuard.empty) {
-			                        VOR += schizoGuard.head.valuedObject
-                                    System.out.print(" using " + schizoGuard.head.valuedObject.name)			                        
+//			                    val schizoGuard = scg.guards.filter[ it.schedulingBlockLink == sb && it.schizophrenic].toList
+//			                    if (!schizoGuard.empty) {
+//			                        VOR += schizoGuard.head.valuedObject
+//                                    System.out.print(" using " + schizoGuard.head.valuedObject.name)			                        
 //			                    }
-			                } else {
+//			                } else {
     			                VOR += sb.guard.valuedObject
-  			                }
+//  			                }
     	                }
 			        }
                     System.out.println("")
 			    }
 			}
 			
-			if (!guard.originalObject.empty) {
-				for(volatile : guard.originalObject) {
-//					if (!placedVOs.contains(volatile)) {
-						VOR -= volatile
-						guard.expression = guard.expression.replace(volatile, TRUE)
-//					}						
-				}
-			}
+//			if (!guard.originalObject.empty) {
+//				for(volatile : guard.originalObject) {
+////					if (!placedVOs.contains(volatile)) {
+//						VOR -= volatile
+//						guard.expression = guard.expression.replace(volatile, TRUE)
+////					}						
+//				}
+//			}
 
-			System.out.print(indent + "Placing guard " + guard.valuedObject.name + ": ")
+			System.out.print(indent + "Placing scheduling block guard " + schedulingBlock.guard.valuedObject.name + ": ")
 			for(ref : VOR) {
 				System.out.print(ref.name + " ")
 			}
@@ -184,8 +189,16 @@ class GuardScheduler extends AbstractScheduler {
 			
 			for(ref : VOR) {
 				if (!placedVOs.contains(ref)) {
-					val tpGuard = guardCache.get(ref)
-					tpGuard.topologicalPlacement(guards, schedule, constraints, scg, indent + "  ")
+//					val tpGuard = guardCache.get(ref)
+					val vorSBList = schedulingBlockVOCache.get(ref)
+					if (vorSBList != null) { 
+						for (sb : schedulingBlockVOCache.get(ref)) {
+							sb.topologicalPlacement(remainingSchedulingBlocks, schedule, constraints, scg, indent + "  ")
+						}
+					} else {
+							addGuardBeforeScheduledBlock += guardVOCache.get(ref)
+							placedVOs += ref
+					}
 				} 
 			}
 
@@ -206,15 +219,27 @@ class GuardScheduler extends AbstractScheduler {
 				
 				for(ref : lastVOs) {
 					if (!placedVOs.contains(ref)) {
-						val tpGuard = guardCache.get(ref)
-						tpGuard.topologicalPlacement(guards, schedule, constraints, scg, indent + "  ")
+////						val tpGuard = guardCache.get(ref)
+//						for (sb : schedulingBlockVOCache.get(ref)) {
+//							sb.topologicalPlacement(remainingSchedulingBlocks, schedule, constraints, scg, indent + "  ")
+//						}
+							addGuardBeforeScheduledBlock += guardVOCache.get(ref)
+							placedVOs += ref
 					} 
 				}
 				
-                System.out.println(indent + "  " + guard.valuedObject.name + " placed.")
-				schedule += guard
-				placedVOs += guard.valuedObject
-				guards -= guard
+                System.out.println(indent + "  Scheduling block with guard " + schedulingBlock.guard.valuedObject.name + " placed.")
+                
+                val scheduleBlock = ScgFactory::eINSTANCE.createScheduleBlock => [
+                	it.schedulingBlock = schedulingBlock
+                	if (!addGuardBeforeScheduledBlock.empty) {
+                		it.additionalGuards.addAll(addGuardBeforeScheduledBlock)
+                	} 
+                ]
+                
+				schedule += scheduleBlock
+				placedVOs += schedulingBlock.guard.valuedObject
+				remainingSchedulingBlocks -= schedulingBlock
 			}
 			   	
         }
@@ -222,27 +247,25 @@ class GuardScheduler extends AbstractScheduler {
     }
     
     
-    protected def boolean createSchedule(SCGraph scg, List<Guard> schedule, SchedulingConstraints constraints,
+    protected def boolean createSchedule(SCGraph scg, List<ScheduleBlock> schedule, SchedulingConstraints constraints,
     	KielerCompilerContext context) {
 
-        val guards = new ArrayList<Guard>
-        guards += constraints.guards
-        val guardLoop = new ArrayList<Guard>
-        guardLoop += guards
+        val remainingSchedulingBlocks = <SchedulingBlock> newHashSet
+        remainingSchedulingBlocks += constraints.schedulingBlocks
         
         topologicalSortVisited.clear
         
-        for (guard : guardLoop) {
-        	if (!topologicalSortVisited.contains(guard)) {
-                guard.topologicalPlacement(guards, schedule, constraints, scg, "")
+        for (sb : remainingSchedulingBlocks.immutableCopy) {
+        	if (!topologicalSortVisited.contains(sb)) {
+                sb.topologicalPlacement(remainingSchedulingBlocks, schedule, constraints, scg, "")
             }
         }
         
-        System.out.print("Scheduled guards: ")
-        for (g : schedule) { System.out.print(g.valuedObject.name + " ") }
+        System.out.print("Schedules: ")
+        for (g : schedule) { System.out.print(g.schedulingBlock.guard.valuedObject.name + " ") }
         System.out.println("")
         
-        guards.size == 0
+        remainingSchedulingBlocks.size == 0
     }
     
 
@@ -270,8 +293,24 @@ class GuardScheduler extends AbstractScheduler {
         val schedule = ScgFactory::eINSTANCE.createSchedule
         
         schedulingBlockCache.clear
+        allSchedulingBlocks.clear
+        schedulingBlockVOCache.clear
         scg.createSchedulingBlockCache(schedulingBlockCache)
-
+        scg.basicBlocks.filter[ !isDeadBlock ].forEach[ 
+        	allSchedulingBlocks.addAll(schedulingBlocks)
+        	for (sb : schedulingBlocks) {
+        		val vo = sb.guard.valuedObject
+        		if (schedulingBlockVOCache.keySet.contains(vo)) {
+        			val sbSet = schedulingBlockVOCache.get(vo)
+        			sbSet += sbSet
+        		} else {
+		        	val sbSet = <SchedulingBlock> newHashSet        	
+        			sbSet += sb
+        			schedulingBlockVOCache.put(vo, sbSet)			
+        		}
+        	}
+        ]
+        
         // Create and fill a list for all scheduling blocks.
         val schedulingConstraints = scg.orderSchedulingBlocks
         
@@ -280,14 +319,14 @@ class GuardScheduler extends AbstractScheduler {
         	placedVOs += decl.valuedObjects
         ]
         
-        guardCache.clear
+        guardVOCache.clear
         scg.guards.forEach[ g |
-        	guardCache.put(g.valuedObject, g)
+        	guardVOCache.put(g.valuedObject, g)
         ]
         
-        val guardList = <Guard> newLinkedList
-        var schedulable = scg.createSchedule(guardList, schedulingConstraints, context)
-		schedule.guards += guardList
+        val scedList = <ScheduleBlock> newLinkedList
+        var schedulable = scg.createSchedule(scedList, schedulingConstraints, context)
+		schedule.scheduleBlocks += scedList
         
         // Print out results on the console
         // and add the scheduling information to the graph.
@@ -306,8 +345,15 @@ class GuardScheduler extends AbstractScheduler {
     }
     
     
-    private def Set<Dependency> getAllDependencies(SchedulingBlock schedulingBlock) {
+    private def Set<Dependency> getAllDependencies(SchedulingBlock schedulingBlock, SCGraph scg) {
     	val returnSet = <Dependency> newHashSet;
+    	
+//    	val guard = schedulingBlock.guard
+//    	for (sb : scg.allSchedulingBlocks) {
+//    		if (sb.guard == guard) {
+//    			returnSet += sb.dependencies
+//    		}
+//    	} 
     	
     	//(schedulingBlock.eContainer as BasicBlock).schedulingBlocks.forEach[ returnSet += it.dependencies ]
     	returnSet += schedulingBlock.dependencies
