@@ -44,6 +44,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
 import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.esterel.esterel.TrapDecl
+import org.eclipse.emf.ecore.util.EObjectEList
 
 /**
  * @author krat
@@ -59,6 +60,7 @@ class SclToEsterelTransformation {
 
     var LinkedList<ISignal> allSignals
     var LinkedList<TrapDecl> allTraps
+    var TRAP_SUFFIX = ""
 
     def Program transform(SCLProgram sclProgram) {
 
@@ -71,6 +73,10 @@ class SclToEsterelTransformation {
         module.end = "end module"
         module.body = EsterelFactory::eINSTANCE.createModuleBody
 
+        //Initialize SCL Program
+        //        sclProgram.optimizeAll
+        sclProgram.removeForwardJumps
+
         // Transform declarations
         transformInterface(sclProgram.declarations, module)
 
@@ -78,13 +84,14 @@ class SclToEsterelTransformation {
         //        module.body.statements += EsterelFactory::eINSTANCE.createNothing
         val stmSeq = EsterelFactory::eINSTANCE.createSequence
         transformStm(sclProgram.statements, stmSeq)
+
         module.body.statements += stmSeq
 
         esterelProgram.modules += module
         esterelProgram
 
     //        sclProgram.normalize
-    //        sclProgram
+    //                sclProgram
     }
 
     /*
@@ -92,14 +99,15 @@ class SclToEsterelTransformation {
      */
     def normalize(StatementSequence sSeq) {
         sSeq.optimizeAll
-//        sSeq.eliminateElseBranches
-//        sSeq.eliminateNestedConditionals
 
+        //        sSeq.eliminateElseBranches
+        //        sSeq.eliminateNestedConditionals
         sSeq
     }
 
     /*
       * Eliminates else branches
+      * TODO may be needed to use only sseq.statements
       */
     def eliminateElseBranches(StatementSequence sSeq) {
         for (cond : sSeq.eAllContents.toList.filter(typeof(Conditional))) {
@@ -118,6 +126,63 @@ class SclToEsterelTransformation {
         sSeq
     }
 
+    /*
+     * Removes forward jumps by producing redundancy...
+     */
+    def removeForwardJumps(StatementSequence sSeq) {
+        for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
+            var parent = goto.eContainer.eContainer as StatementSequence
+            var index = parent.statements.indexOf(goto.eContainer) + 1
+            var gotoIndex = index - 1
+            var foundTarget = false
+            var notFound = false
+
+            // Seek target label
+            while (!foundTarget && !notFound) {
+                if (index == parent.statements.length && parent instanceof Conditional) {
+                    val oldParent = parent
+                    parent = parent.eContainer.eContainer as StatementSequence
+                    index = parent.statements.indexOf(oldParent.eContainer)
+                } else if (index == parent.statements.length) {
+                    notFound = true
+                } else if (parent.statements.get(index) instanceof EmptyStatement &&
+                    (parent.statements.get(index) as EmptyStatement).label == goto.targetLabel) {
+                    foundTarget = true
+                } else {
+                    index = index + 1
+                }
+            }
+
+            // Remove goto and replace by label contents
+            if (foundTarget) {
+                System.out.println("foundit")
+                val gotoParent = goto.eContainer.eContainer as StatementSequence
+                val copyStms = createSseq
+                var gotoStm = false
+                while (index + 1 < parent.statements.length && !gotoStm) {
+                    if (!(parent.statements.get(index + 1) instanceof EmptyStatement)) {
+                        copyStms.statements.add(EcoreUtil.copy(parent.statements.get(index + 1)))
+                    }
+                    if (parent.statements.get(index + 1) instanceof InstructionStatement &&
+                        (parent.statements.get(index + 1) as InstructionStatement ).instruction instanceof Goto) {
+                        gotoStm = true
+                    }
+                    index = index + 1
+                }
+
+                // End of StatementSequence reached
+                if (!gotoStm) {
+                    copyStms.addGoto("seq_exit")
+                }
+                gotoParent.statements.remove(gotoIndex)
+                gotoParent.statements.addAll(gotoIndex, copyStms.statements)
+
+            }
+        }
+        sSeq.addLabel("seq_exit")
+
+        sSeq
+    }
 
     /*
      * Transforms SCL declarations to Esterel module interface
@@ -216,7 +281,7 @@ class SclToEsterelTransformation {
                     val goto = instrStm.instruction as Goto
 
                     stmSeq.list += EsterelFactory::eINSTANCE.createExit => [
-                        trap = allTraps.findFirst[ name == goto.targetLabel ]
+                        trap = allTraps.findFirst[name == goto.targetLabel]
                     ]
                 }
             }
@@ -224,20 +289,31 @@ class SclToEsterelTransformation {
             else if (stm instanceof EmptyStatement) {
                 val label = stm as EmptyStatement
                 val idxVal = idx
-                stmSeq.list += EsterelFactory::eINSTANCE.createLoop => [
-                    body = EsterelFactory::eINSTANCE.createLoopBody => [
-                        statement = EsterelFactory::eINSTANCE.createTrap => [
-                            trapDeclList = EsterelFactory::eINSTANCE.createTrapDeclList => [
-                                val trapDecl = EsterelFactory::eINSTANCE.createTrapDecl => [
-                                    name = label.label
-                                ]
-                                trapDecls += trapDecl
-                                allTraps += trapDecl
-                            ]
-                            statement = transformStm(stms.drop(idxVal), EsterelFactory::eINSTANCE.createSequence)
-                        ]
+                val exit_trap = EsterelFactory::eINSTANCE.createTrapDecl => [
+                    name = "l_exit" + TRAP_SUFFIX
+                    TRAP_SUFFIX = TRAP_SUFFIX + "_"
+                ]
+                stmSeq.list += EsterelFactory::eINSTANCE.createTrap => [
+                    trapDeclList = EsterelFactory::eINSTANCE.createTrapDeclList => [
+                        trapDecls += exit_trap
                     ]
-                    end1 = EsterelFactory::eINSTANCE.createEndLoop
+                    statement = EsterelFactory::eINSTANCE.createLoop => [
+                        body = EsterelFactory::eINSTANCE.createLoopBody => [
+                            statement = EsterelFactory::eINSTANCE.createTrap => [
+                                trapDeclList = EsterelFactory::eINSTANCE.createTrapDeclList => [
+                                    val trapDecl = EsterelFactory::eINSTANCE.createTrapDecl => [
+                                        name = label.label
+                                    ]
+                                    trapDecls += trapDecl
+                                    allTraps += trapDecl
+                                ]
+                                val seq = transformStm(stms.drop(idxVal), EsterelFactory::eINSTANCE.createSequence)
+                                seq.list.add(EsterelFactory::eINSTANCE.createExit => [trap = exit_trap])
+                                statement = seq
+                            ]
+                        ]
+                        end1 = EsterelFactory::eINSTANCE.createEndLoop
+                    ]
                 ]
 
                 // A Seqeuence is not allowed to have only one element...
@@ -252,7 +328,7 @@ class SclToEsterelTransformation {
         // A Seqeuence is not allowed to have only one element...
         if (stmSeq.list.length < 2)
             stmSeq.list += EsterelFactory::eINSTANCE.createNothing
-            stmSeq.list += EsterelFactory::eINSTANCE.createNothing
+        stmSeq.list += EsterelFactory::eINSTANCE.createNothing
 
         stmSeq
     }

@@ -13,30 +13,19 @@
  */
 package de.cau.cs.kieler.esterel.scl.transformations
 
-import de.cau.cs.kieler.esterel.esterel.ModuleInterface
-import java.util.ArrayList
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.esterel.kexpressions.Input
-import de.cau.cs.kieler.esterel.kexpressions.Output
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.ValueType
-import java.util.LinkedList
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.esterel.esterel.ConstantExpression
-import java.util.HashMap
-import de.cau.cs.kieler.core.kexpressions.CombineOperator
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.scl.scl.SCLProgram
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.esterel.esterel.ConstantDecls
-import de.cau.cs.kieler.esterel.esterel.LocalSignalList
-import de.cau.cs.kieler.esterel.kexpressions.ISignal
-import de.cau.cs.kieler.esterel.kexpressions.InterfaceVariableDecl
-import de.cau.cs.kieler.esterel.kexpressions.VariableDecl
+import de.cau.cs.kieler.esterel.esterel.ModuleInterface
 import de.cau.cs.kieler.esterel.esterel.SensorDecl
+import de.cau.cs.kieler.esterel.kexpressions.Input
+import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl
+import de.cau.cs.kieler.esterel.kexpressions.Output
+import de.cau.cs.kieler.esterel.kexpressions.VariableDecl
+import de.cau.cs.kieler.scl.scl.SCLProgram
+import org.eclipse.xtext.xbase.lib.InputOutput
 
 /**
  * @author krat
@@ -57,202 +46,99 @@ class TransformInterface {
     extension TransformExpression
 
     /*
-     * Transforms an Esterel module interface to a list of Kexpression declarations
+     * Transforms an Esterel module interface to Kexpression declarations
      */
     def transformInterface(ModuleInterface modInterface, SCLProgram program) {
         if (modInterface != null) {
-            val names = new LinkedList<String>
-            modInterface.collectNames(names)
-            transformConstDeclaration(modInterface.intConstantDecls, program, names)
-            transformSigDeclaration(modInterface.intSignalDecls, program, names)
-            transformSensorDeclaration(modInterface.intSensorDecls, program, names)
+            modInterface.intConstantDecls.forEach[ transformSingleDeclartion(it, program) ]
+            modInterface.intSignalDecls.forEach[ transformSingleDeclartion(it, program) ]
+            modInterface.intSensorDecls.forEach[ transformSingleDeclartion(it, program) ]
         }
     }
 
-    /*
-     * Transforms the signal declarations
-     */
-    def transformSigDeclaration(EList<InterfaceSignalDecl> list, SCLProgram program, LinkedList<String> names) {
-
-        for (singleDecl : list) {
-            transformSingleDeclartion(singleDecl, program, names)
-        }
-    }
-
-    /*
-     * Transforms the constant declarations
-     */
-    def transformConstDeclaration(EList<ConstantDecls> list, SCLProgram program, LinkedList<String> names) {
-
-        for (singleDecl : list) {
-            transformSingleConstDeclartion(singleDecl, program, names)
-        }
-    }
-
-    /*
-     * Transforms the sensor declarations
-     */
-    def transformSensorDeclaration(EList<SensorDecl> list, SCLProgram program, LinkedList<String> names) {
-
-        for (singleDecl : list) {
-            transformSingleSensorDeclartion(singleDecl, program, names)
-        }
-    }
-
-    /*
-     * Transforms single declaration
-     */
-    def transformDeclaration(boolean isInput, boolean isOutput, boolean isConstant, ValueType valType) {
-        KExpressionsFactory::eINSTANCE.createDeclaration => [
-            input = isInput
-            output = isOutput
-            const = isConstant
-            type = valType
-        //...
-        ]
-    }
-
-    /*
-     * Transforms one signal declaration, which may consist of pure and valued signals
-     */
-    def transformSingleDeclartion(InterfaceSignalDecl decl, SCLProgram program, LinkedList<String> names) {
-
-        // TODO: HOST?
+    def transformSingleDeclartion(InterfaceSignalDecl decl, SCLProgram program) {
         for (sig : decl.signals) {
-            if (signalMap.findFirst[sig.name == key] == null) {
-                val pureSig = createValuedObject(sig.name)
+            val pureSig = createValuedObject(sig.name)
+            signalMap.add(sig.name -> pureSig)
+            program.declarations += createDeclaration => [
+                input = (decl instanceof Input) || (decl instanceof de.cau.cs.kieler.esterel.kexpressions.InputOutput)
+                output = (decl instanceof Output) || (decl instanceof de.cau.cs.kieler.esterel.kexpressions.InputOutput)
+                type = ValueType::BOOL
+                valuedObjects += pureSig
+            ]
 
-                val sclSigDecl = transformDeclaration(
-                    (decl instanceof Input) || (decl instanceof InputOutput),
-                    (decl instanceof Output) || (decl instanceof InputOutput),
-                    false,
-                    ValueType::BOOL
-                )
-                sclSigDecl.valuedObjects += pureSig
-                signalMap.add(sig.name -> pureSig)
-                program.declarations += sclSigDecl
+            // If it is a valued signal add a variable for the value
+            if (sig.channelDescr != null) {
+                val s_val = createValuedObject(sig.name + "_val")
+                val type = sig.channelDescr.type.type
+                s_val.combineOperator = sig.channelDescr.type.operator.transformCombineOperator
+                valuedMap.put(pureSig, s_val)
 
-                // Valued signals get a variable containing the value
-                if (sig.channelDescr != null) {
-                    val s_val = createValuedObject(uniqueNameByList(names, sig.name + "_val"))
-                    s_val.combineOperator = sig.channelDescr.type.operator.transformCombineOperator
-                    valuedMap.put(pureSig, s_val)
-                    signalMap.add(s_val.name -> s_val)
-                    val type = sig.channelDescr.type.type
-                    if (sig.channelDescr.expression != null) {
-                        s_val.initialValue = sig.channelDescr.expression.transformExp(type.toString)
-                    }
-                    var ValueType t
+                // Initial value?
+                if (sig.channelDescr.expression != null) {
+                    s_val.initialValue = sig.channelDescr.expression.transformExp(type.toString)
+                }
+                program.declarations += createDeclaration => [
+                    input = decl instanceof Input || decl instanceof InputOutput
+                    output = decl instanceof Output || decl instanceof InputOutput
+                    valuedObjects += s_val
                     // Check for hostcode type
                     if (sig.type.name == "PURE" && sig.channelDescr.type.typeID != null) {
-                        t = ValueType::HOST
+                        it.type = ValueType::HOST
+                        it.hostType = sig.channelDescr.type.typeID
                     } else {
-                        t = ValueType::getByName(type.name)
+                        it.type = ValueType::getByName(type.name)
                     }
-
-                    val sclDecl = transformDeclaration(
-                        (decl instanceof Input) || (decl instanceof InputOutput),
-                        (decl instanceof Output) || (decl instanceof InputOutput),
-                        false,
-                        t
-                    )
-                    
-                    // Add the hostType
-                    if (sig.type.name == "PURE" && sig.channelDescr.type.typeID != null) {
-                        sclDecl.hostType = sig.channelDescr.type.typeID
-                    }
-                    
-                    sclDecl.valuedObjects += s_val
-
-                    program.declarations += sclDecl
-
-                }
-
+                ]
             }
         }
     }
 
-    /*
-     * Transforms one signal constant declaration, which may consist of pure and valued constant
-     * TODO: Merge with normal signal declarations...
-     */
-    def transformSingleConstDeclartion(ConstantDecls decl, SCLProgram program, LinkedList<String> names) {
-
-        // TODO: HOST?
+    def transformSingleDeclartion(ConstantDecls decl, SCLProgram program) {
         for (singleDecl : decl.constants) {
-
             // Type of the constant
             val type = singleDecl.type.type
-            for (const : singleDecl.constants) {
-                if (signalMap.findFirst[const.constant.name == key] == null) {
-                    val s_val = createValuedObject(uniqueNameByList(names, const.constant.name))
-                    signalMap.add(const.constant.name -> s_val)
-                    valuedMap.put(s_val, s_val)
+            for (constant : singleDecl.constants) {
+                val s_val = createValuedObject(constant.constant.name)
+                signalMap.add(constant.constant.name -> s_val)
+                valuedMap.put(s_val, s_val)
 
-                    if (const.value != null) {
-                        s_val.initialValue = const.value.transformExp(type.toString)
-                    }
-
-                    val sclDecl = transformDeclaration(
-                        false,
-                        false,
-                        true,
-                        ValueType::getByName(type.name)
-                    )
-                    sclDecl.valuedObjects += s_val
-
-                    program.declarations += sclDecl
-
+                if (constant.value != null) {
+                    s_val.initialValue = constant.value.transformExp(type.toString)
                 }
 
+                program.declarations += createDeclaration => [
+                    valuedObjects += s_val
+                    it.const = true
+                    if (type.name == "PURE" && singleDecl.type.typeID != null) {
+                        it.type = ValueType::HOST
+                        it.hostType = singleDecl.type.typeID
+                    } else {
+                        it.type = ValueType::getByName(type.name)
+                    }
+                ]
             }
         }
 
     }
-
-    /*
-     * Transforms one signal constant declaration, which may consist of pure and valued constant
-     * TODO: Merge with normal signal declarations...
-     */
-    def transformSingleSensorDeclartion(SensorDecl decl, SCLProgram program, LinkedList<String> names) {
-
-        // TODO: HOST?
+    
+    def transformSingleDeclartion(SensorDecl decl, SCLProgram program) {
         for (singleDecl : decl.sensors) {
-
-            // Type of the constant
-            if (signalMap.findFirst[singleDecl.sensor.name == key] == null) {
                 val type = singleDecl.type.type
-                val s_val = createValuedObject(uniqueNameByList(names, singleDecl.sensor.name))
+                val s_val = createValuedObject(singleDecl.sensor.name)
                 signalMap.add(singleDecl.sensor.name -> s_val)
                 valuedMap.put(s_val, s_val)
-                val sclDecl = transformDeclaration(
-                    false,
-                    false,
-                    false,
-                    ValueType::getByName(type.name)
-                )
-                sclDecl.valuedObjects += s_val
-
-                program.declarations += sclDecl
-
-            }
+                program.declarations += createDeclaration => [
+                    valuedObjects += s_val
+                    it.type = ValueType::getByName(type.name)
+                    if (type.name == "PURE" && singleDecl.type.typeID != null) {
+                        it.type = ValueType::HOST
+                        it.hostType = singleDecl.type.typeID
+                    } else {
+                        it.type = ValueType::getByName(type.name)
+                    }
+                ]
         }
-    }
-
-    /*
-     * Transforms a valued declaration
-     * @param sig The signal to be declared
-     * @param name The resulting variable (should be unique)
-     */
-    def Declaration transformValuedDeclaration(ISignal sig, ValuedObject valObj) {
-        val decl = createDeclaration => [
-            type = ValueType::getByName(sig.channelDescr.type.type.name)
-            output = true
-        ]
-
-        decl.valuedObjects += valObj
-
-        decl
     }
 
     /*
@@ -260,20 +146,17 @@ class TransformInterface {
      * @param sig The variable to be declared
      * @param name The resulting variable (should be unique)
      */
-    def Declaration transformIntVarDeclaration(VariableDecl declaration,
-        LinkedList<Pair<String, ValuedObject>> signalMap) {
+    def Declaration transformIntVarDeclaration(VariableDecl declaration) {
         val decl = createDeclaration => [
             if (declaration.type.type.name != "PURE") {
                 type = ValueType::getByName(declaration.type.type.name)
             } else {
                 type = ValueType::HOST
             }
-//            output = true
         ]
 
         declaration.variables.forEach [
             val s_val = createValuedObject(uniqueName(signalMap, it.name))
-            // TODO add to signalmap?
             signalMap.add(it.name -> s_val)
             valuedMap.put(s_val, s_val)
             if (it.expression != null)
@@ -283,42 +166,4 @@ class TransformInterface {
 
         decl
     }
-
-    /*
-     * Collects all declarated signal names
-     */
-    def LinkedList<String> collectNames(ModuleInterface modInt, LinkedList<String> names) {
-        if (modInt == null)
-            return names
-        modInt.intSignalDecls.collectSigNames(names)
-        modInt.intConstantDecls.collectConstNames(names)
-
-        names
-    }
-
-    def LinkedList<String> collectSigNames(EList<InterfaceSignalDecl> decls, LinkedList<String> names) {
-        decls.forEach [
-            signals.forEach [
-                names += it.name
-            ]
-        ]
-
-        names
-    }
-
-    /*
-     * Collects all declarated signal names
-     */
-    def LinkedList<String> collectConstNames(EList<ConstantDecls> decls, LinkedList<String> names) {
-        decls.forEach [
-            constants.forEach [
-                constants.forEach [
-                    valuedObjects.forEach[names += it.name]
-                ]
-            ]
-        ]
-
-        names
-    }
-    
 }

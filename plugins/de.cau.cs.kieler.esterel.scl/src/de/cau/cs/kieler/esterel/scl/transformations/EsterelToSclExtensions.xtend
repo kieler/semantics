@@ -13,47 +13,40 @@
  */
 package de.cau.cs.kieler.esterel.scl.transformations
 
-import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import javax.xml.transform.TransformerException
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.scl.scl.SclFactory
-import de.cau.cs.kieler.scl.scl.Instruction
-import java.util.LinkedList
-import de.cau.cs.kieler.scl.scl.Statement
-import de.cau.cs.kieler.scl.scl.Conditional
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.scl.scl.StatementSequence
-import de.cau.cs.kieler.scl.scl.InstructionStatement
-import de.cau.cs.kieler.scl.scl.Pause
-import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl
 import com.google.common.collect.Multimap
+import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.esterel.esterel.Halt
-import de.cau.cs.kieler.esterel.esterel.Loop
-import de.cau.cs.kieler.esterel.esterel.Sustain
-import de.cau.cs.kieler.esterel.esterel.Parallel
-import de.cau.cs.kieler.esterel.esterel.Sequence
-import de.cau.cs.kieler.esterel.esterel.Program
-import de.cau.cs.kieler.esterel.esterel.Present
-import de.cau.cs.kieler.esterel.esterel.PresentEventBody
-import de.cau.cs.kieler.esterel.esterel.PresentCaseList
-import de.cau.cs.kieler.esterel.esterel.EveryDo
-import de.cau.cs.kieler.esterel.esterel.Await
-import de.cau.cs.kieler.esterel.esterel.AwaitInstance
-import de.cau.cs.kieler.esterel.esterel.AwaitCase
-import de.cau.cs.kieler.esterel.esterel.LocalSignal
-import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
-import de.cau.cs.kieler.esterel.esterel.Run
-import de.cau.cs.kieler.esterel.esterel.LocalVariable
 import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.esterel.esterel.Await
+import de.cau.cs.kieler.esterel.esterel.AwaitCase
+import de.cau.cs.kieler.esterel.esterel.EveryDo
+import de.cau.cs.kieler.esterel.esterel.Halt
+import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
+import de.cau.cs.kieler.esterel.esterel.LocalVariable
+import de.cau.cs.kieler.esterel.esterel.Loop
+import de.cau.cs.kieler.esterel.esterel.Parallel
+import de.cau.cs.kieler.esterel.esterel.Present
+import de.cau.cs.kieler.esterel.esterel.PresentCaseList
+import de.cau.cs.kieler.esterel.esterel.PresentEventBody
+import de.cau.cs.kieler.esterel.esterel.Program
+import de.cau.cs.kieler.esterel.esterel.Run
+import de.cau.cs.kieler.esterel.esterel.Sequence
 import de.cau.cs.kieler.esterel.esterel.Suspend
-import de.cau.cs.kieler.esterel.kexpressions.Signal
+import de.cau.cs.kieler.esterel.esterel.Sustain
+import de.cau.cs.kieler.scl.scl.Conditional
+import de.cau.cs.kieler.scl.scl.Instruction
+import de.cau.cs.kieler.scl.scl.SclFactory
+import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.scl.StatementSequence
+import java.util.LinkedList
+import javax.xml.transform.TransformerException
+import org.eclipse.emf.common.util.EList
+import org.eclipse.xtext.xbase.lib.Pair
 
 /**
  * @author krat
@@ -75,7 +68,7 @@ class EsterelToSclExtensions {
     /*
      * Searches a valuedObject in a declarations list
      */
-    def dispatch getValuedObject(EList<Declaration> decls, String n) {
+    def getValuedObject(EList<Declaration> decls, String n) {
         for (decl : decls) {
             val ret = decl.valuedObjects.findFirst[name == n]
             if (ret != null)
@@ -84,68 +77,32 @@ class EsterelToSclExtensions {
         throw new TransformerException("getValuedObject: Signal not declared: " + n)
     }
 
-    def dispatch getValuedObject(LinkedList<Pair<String, ValuedObject>> variables, String n) {
-        for (variable : variables) {
-            val ret = variables.findLast[key == n]
+    def getValuedObject(String n) {
+        for (variable : signalMap) {
+            val ret = signalMap.findLast[key == n]
             if (ret != null)
                 return ret.value
         }
         throw new TransformerException("getValuedObject: Signal not declared: " + n)
     }
 
-    def getValuedObjectRef(EList<Declaration> decls, String n) {
+    /*
+     * Returns a references to valued object valObj
+     */
+    def getValuedObjectRef(EList<Declaration> decls, String valObj) {
         KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
-            valuedObject = getValuedObject(decls, n)
+            valuedObject = getValuedObject(decls, valObj)
         ]
     }
 
-    def getValuedObjectRef(LinkedList<Pair<String, ValuedObject>> variables, String n) {
-        KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
-            valuedObject = getValuedObject(variables, n)
-        ]
+    def getValuedObjectRef(String valObj) {
+        valObj.getValuedObject.createValObjRef
     }
 
     def createValObjRef(ValuedObject valObj) {
         KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
             valuedObject = valObj
         ]
-    }
-
-    /*
-     * Creates an assignment
-     */
-    def createAssignment(ValuedObject obj, Expression exp) {
-        SclFactory::eINSTANCE.createAssignment => [
-            valuedObject = obj
-            expression = exp
-        ]
-    }
-
-    /*
-     * Creates a Statement from an Instruction
-     */
-    def createStmFromInstr(Instruction instr) {
-        SclFactory::eINSTANCE.createInstructionStatement => [
-            instruction = instr
-        ]
-    }
-
-    def createSseq(Statement stm) {
-        SclFactory::eINSTANCE.createStatementSequence => [
-            statements.add(stm)
-        ]
-    }
-
-    def createSseq() {
-        SclFactory::eINSTANCE.createStatementSequence
-    }
-    
-    def createThread() {
-        SclFactory::eINSTANCE.createThread
-    }
-    
-    def createParallel() {
-        SclFactory::eINSTANCE.createParallel
     }
 
     /*
@@ -168,7 +125,6 @@ class EsterelToSclExtensions {
                 type = t
                 valuedObjects.add(ret)
             ])
-
         signalMap.add(name -> ret)
 
         ret
@@ -185,7 +141,7 @@ class EsterelToSclExtensions {
     }
 
     /*
-     * Takes a variable name and a list of exisiting variables and
+     * Takes a variable name and a list of existing variables and
      * adds "_" until variable name is new
      */
     def String uniqueName(LinkedList<Pair<String, ValuedObject>> variables, String s) {
@@ -207,185 +163,14 @@ class EsterelToSclExtensions {
         }
     }
 
-    /*
-      * Creates "if s then (pause;) goto l"
-      */
-    def Conditional ifThenGoto(Expression s, String l, boolean isImmediate) {
-        SclFactory::eINSTANCE.createConditional => [
-            expression = s //createBoolValue(true)
-            if (!isImmediate) {
-                statements.addAll(createSclPause.statements)
-            }
-            statements.add(
-                createStmFromInstr(
-                    SclFactory::eINSTANCE.createGoto => [
-                        targetLabel = l
-                    ]))
-        ]
-    }
 
-    /*
-       * Adds a new empty statement to a StatementSequence
-       * @param sSeq The StatementSequence to add the empty statement
-       * @param l The label
-       */
-    def addLabel(StatementSequence sSeq, String l) {
-        sSeq.statements.add(
-            SclFactory::eINSTANCE.createEmptyStatement => [
-                label = l
-            ])
-    }
 
-    /*
-        * Adds a new goto instruction to a StatementSequence
-        * @param sSeq The StatementSequence to add the empty statement
-        * @param l The target label 
-        */
-    def addGoto(StatementSequence sSeq, String l) {
-        sSeq.statements.add(createGotoStm(l))
-    }
-    
-    def addGoto(EList<Statement> sSeq, String l) {
-        sSeq.add(createGotoStm(l))
-    }
-
-    /*
-         * Returns a gotoj l: Jumps to l if l is in the current thread and to the end of the
-         * thread otherwise
-         * @param l The target label
-         * @param curLabel Label at the end of the current thread
-         * @param labelMap Map of which label is in which thread
-         */
-    def createGotoj(String l, String curLabel, Multimap<String, String> labelMap) {
-        if (labelMap.get(curLabel).contains(l)) {
-            return createGotoStm(l)
-        } else {
-            return createGotoStm(curLabel)
-        }
-    }
-
-    /*
-         * Adds a gotoj l: Jumps to l if l is in the current thread and to the end of the
-         * thread otherwise
-         * @param sSeq The StatementSequence to add the gotoj
-         * @param l The target label
-         * @param curLabel Label at the end of the current thread
-         * @param labelMap Map of which label is in which thread
-         */
-    def addGotoj(StatementSequence sSeq, String l, String curLabel, Multimap<String, String> labelMap) {
-        if (labelMap.get(curLabel).contains(l)) {
-            sSeq.addGoto(l)
-        } else {
-            sSeq.addGoto(curLabel)
-        }
-
-        sSeq
-    }
-
-    /*
-        * Creates an InstructionStatement containing a goto
-        * @param l The target label 
-        */
-    def createGotoStm(String l) {
-        createStmFromInstr(
-            SclFactory::eINSTANCE.createGoto => [
-                targetLabel = l
-            ])
-    }
-
-    /*
-         * Create an AND expression
-         * @param arg1 first argument
-         * @param arg2 second argument
-         */
-    def createAnd(Expression arg1, Expression arg2) {
-        KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-            operator = OperatorType::AND
-            subExpressions.add(arg1)
-            subExpressions.add(arg2)
-        ]
-    }
-    
-    /*
-         * Create an OR expression
-         * @param arg1 first argument
-         * @param arg2 second argument
-         */
-    def createOr(Expression arg1, Expression arg2) {
-        KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-            operator = OperatorType::OR
-            subExpressions.add(arg1)
-            subExpressions.add(arg2)
-        ]
-    }
-    
-    /*
-         * Create an not expression
-         * @param arg1 first argument
-         */
-    def createNot(Expression arg1) {
-        KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-            operator = OperatorType::NOT
-            subExpressions.add(arg1)
-        ]
-    }
-    
-    /*
-         * Create an Equals expression
-         * @param arg1 first argument
-         * @param arg2 second argument
-         */
-    def createEquals(Expression arg1, Expression arg2) {
-        KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-            operator = OperatorType::EQ
-            subExpressions.add(arg1)
-            subExpressions.add(arg2)
-        ]
-    }
-    
-    /*
-         * Create an greater than expression
-         * @param arg1 first argument
-         * @param arg2 second argument
-         */
-    def createGT(Expression arg1, Expression arg2) {
-        KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-            operator = OperatorType::GT
-            subExpressions.add(arg1)
-            subExpressions.add(arg2)
-        ]
-    }
-    
-    def createConditional() {
-        SclFactory::eINSTANCE.createConditional
-    }
-
-    /*
-     * Adds an instruction to a StatementSeqeuence
-     */
-    def dispatch add(StatementSequence sSeq, Instruction instr) {
-        sSeq.statements.add(createStmFromInstr(instr))
-
-        sSeq
-    }
-
-    def dispatch add(StatementSequence sSeq, Statement stm) {
-        sSeq.statements.add(stm)
-
-        sSeq
-    }
-
-    def dispatch add(StatementSequence sSeq, StatementSequence stm) {
-        sSeq.statements.addAll(stm.statements)
-
-        sSeq
-    }
-
-    /*
-        * Checks whether an Esterel statement terminates. Not complete: May return true even
-        * if a program does not terminate.
-        * TODO finish
-        */
+    /**
+    * Checks whether an Esterel statement terminates. Not complete: May return true even
+    * if a program does not terminate.
+    * @param stm The statement to check
+    * @return True if program terminates, else false
+    */
     def dispatch boolean checkTerminate(de.cau.cs.kieler.esterel.esterel.Statement stm) {
         if (stm instanceof Halt) {
             return false;
@@ -472,10 +257,12 @@ class EsterelToSclExtensions {
         return true;
     }
 
-    def StatementSequence newSseq() {
-        SclFactory::eINSTANCE.createStatementSequence
-    }
-
+    
+    /**
+     * Creates a statement which increments a valued object by 1
+     * @param valObj The valued object to increment
+     * @return A statement which increments valObj
+     */
     def Statement incrementInt(ValuedObject valObj) {
         createStmFromInstr(
             createAssignment(valObj,
@@ -487,7 +274,7 @@ class EsterelToSclExtensions {
     }
     
     /*
-     * Checks for valid names. The suffix "_val" is reserved fo valued signals.
+     * Checks for valid names. The suffix "_val" is reserved for valued signals.
      */
     def boolean validateNames(Program esterelProgram) {
         System.out.println("Name: " + esterelProgram.modules.head.name)
@@ -536,5 +323,231 @@ class EsterelToSclExtensions {
          
          false
      }
+     
+    // -------------------------------------------------------------------------
+    // -- SCL Shortcuts
+    // -------------------------------------------------------------------------
+    
+    def StatementSequence newSseq() {
+        SclFactory::eINSTANCE.createStatementSequence
+    }
+    
+     /**
+      * Creates "if s then (pause;) goto l"
+      * @param s The condition
+      * @param l The targetlabel
+      * @param isImmediate When false a pause statement is added prior to the jump
+      */
+    def Conditional ifThenGoto(Expression s, String l, boolean isImmediate) {
+        SclFactory::eINSTANCE.createConditional => [
+            expression = s
+            if (!isImmediate) {
+                statements.addAll(createSclPause.statements)
+            }
+            statements.add(
+                createStmFromInstr(
+                    SclFactory::eINSTANCE.createGoto => [
+                        targetLabel = l
+                    ]))
+        ]
+    }
 
+    /**
+     * Adds a new empty statement to a StatementSequence
+     * @param sSeq The StatementSequence to add the empty statement
+     * @param l The label
+     */
+    def addLabel(StatementSequence sSeq, String l) {
+        sSeq.statements.add(
+            SclFactory::eINSTANCE.createEmptyStatement => [
+                label = l
+            ])
+    }
+
+    /**
+     * Adds a new goto instruction to a StatementSequence
+     * @param sSeq The StatementSequence to add the empty statement
+     * @param l The target label 
+     */
+    def addGoto(StatementSequence sSeq, String l) {
+        sSeq.statements.add(createGotoStm(l))
+    }
+    
+    /**
+     * Adds a new goto instruction to a StatementSequence
+     * @param sSeq The Statement EList to add the empty statement
+     * @param l The target label 
+     */
+    def addGoto(EList<Statement> sSeq, String l) {
+        sSeq.add(createGotoStm(l))
+    }
+
+    /**
+     * Returns a gotoj l: Jumps to l if l is in the current thread and to the end of the
+     * thread otherwise
+     * @param l The target label
+     * @param curLabel Label at the end of the currently transformed thread
+     * @param labelMap Map of which label is in which thread
+         */
+    def createGotoj(String l, String curLabel, Multimap<String, String> labelMap) {
+        if (labelMap.get(curLabel).contains(l)) {
+            return createGotoStm(l)
+        } else {
+            return createGotoStm(curLabel)
+        }
+    }
+
+    /**
+     * Adds a gotoj l: Jumps to l if l is in the current thread and to the end of the
+     * thread otherwise
+     * @param sSeq The StatementSequence to add the gotoj
+     * @param l The target label
+     * @param curLabel Label at the end of the current thread
+     * @param labelMap Map of which label is in which thread
+     */
+    def addGotoj(StatementSequence sSeq, String l, String curLabel, Multimap<String, String> labelMap) {
+        if (labelMap.get(curLabel).contains(l)) {
+            sSeq.addGoto(l)
+        } else {
+            sSeq.addGoto(curLabel)
+        }
+
+        sSeq
+    }
+
+    /**
+    * Creates an InstructionStatement containing a goto
+    * @param l The target label 
+    */
+    def createGotoStm(String l) {
+        createStmFromInstr(
+            SclFactory::eINSTANCE.createGoto => [
+                targetLabel = l
+            ])
+    }
+
+    /**
+     * Create an AND expression
+     * @param arg1 first argument
+     * @param arg2 second argument
+     */
+    def createAnd(Expression arg1, Expression arg2) {
+        KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+            operator = OperatorType::AND
+            subExpressions.add(arg1)
+            subExpressions.add(arg2)
+        ]
+    }
+    
+    /**
+     * Create an OR expression
+     * @param arg1 first argument
+     * @param arg2 second argument
+     */
+    def createOr(Expression arg1, Expression arg2) {
+        KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+            operator = OperatorType::OR
+            subExpressions.add(arg1)
+            subExpressions.add(arg2)
+        ]
+    }
+    
+    /**
+     * Create an NOT expression
+     * @param arg1 first argument
+     */
+    def createNot(Expression arg1) {
+        KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+            operator = OperatorType::NOT
+            subExpressions.add(arg1)
+        ]
+    }
+    
+    /**
+     * Create an Equals expression
+     * @param arg1 first argument
+     * @param arg2 second argument
+     */
+    def createEquals(Expression arg1, Expression arg2) {
+        KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+            operator = OperatorType::EQ
+            subExpressions.add(arg1)
+            subExpressions.add(arg2)
+        ]
+    }
+    
+    /**
+     * Create an greater than expression
+     * @param arg1 first argument
+     * @param arg2 second argument
+     */
+    def createGT(Expression arg1, Expression arg2) {
+        KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+            operator = OperatorType::GT
+            subExpressions.add(arg1)
+            subExpressions.add(arg2)
+        ]
+    }
+    
+    def createConditional() {
+        SclFactory::eINSTANCE.createConditional
+    }
+    
+    /*
+     * Adds an instruction to a StatementSeqeuence
+     */
+    def dispatch add(StatementSequence sSeq, Instruction instr) {
+        sSeq.statements.add(createStmFromInstr(instr))
+
+        sSeq
+    }
+
+    def dispatch add(StatementSequence sSeq, Statement stm) {
+        sSeq.statements.add(stm)
+
+        sSeq
+    }
+
+    def dispatch add(StatementSequence sSeq, StatementSequence stm) {
+        sSeq.statements.addAll(stm.statements)
+
+        sSeq
+    }
+    
+    /*
+     * Creates an assignment
+     */
+    def createAssignment(ValuedObject obj, Expression exp) {
+        SclFactory::eINSTANCE.createAssignment => [
+            valuedObject = obj
+            expression = exp
+        ]
+    }
+
+    /*
+     * Creates a Statement from an Instruction
+     */
+    def createStmFromInstr(Instruction instr) {
+        SclFactory::eINSTANCE.createInstructionStatement => [
+            instruction = instr
+        ]
+    }
+
+    def createSseq(Statement stm) {
+        SclFactory::eINSTANCE.createStatementSequence => [
+            statements.add(stm)
+        ]
+    }
+
+    def createSseq() {
+        SclFactory::eINSTANCE.createStatementSequence
+    }
+    
+    def createThread() {
+        SclFactory::eINSTANCE.createThread
+    }
+    
+    def createParallel() {
+        SclFactory::eINSTANCE.createParallel
+    }
 }

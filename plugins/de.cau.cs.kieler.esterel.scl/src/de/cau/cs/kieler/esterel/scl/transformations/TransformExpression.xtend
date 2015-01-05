@@ -13,23 +13,20 @@
  */
 package de.cau.cs.kieler.esterel.scl.transformations
 
-import de.cau.cs.kieler.esterel.kexpressions.Expression
-import de.cau.cs.kieler.esterel.kexpressions.OperatorExpression
-import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.esterel.esterel.ConstantExpression
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.esterel.kexpressions.ComplexExpression
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.esterel.kexpressions.BooleanValue
-import de.cau.cs.kieler.core.kexpressions.util.KExpressionsAdapterFactory
-import de.cau.cs.kieler.esterel.kexpressions.ValueType
-import de.cau.cs.kieler.esterel.kexpressions.CombineOperator
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.esterel.esterel.ConstantExpression
 import de.cau.cs.kieler.esterel.esterel.EsterelFactory
-import de.cau.cs.kieler.esterel.kexpressions.IntValue
 import de.cau.cs.kieler.esterel.esterel.FunctionExpression
+import de.cau.cs.kieler.esterel.kexpressions.BooleanValue
+import de.cau.cs.kieler.esterel.kexpressions.CombineOperator
+import de.cau.cs.kieler.esterel.kexpressions.ComplexExpression
+import de.cau.cs.kieler.esterel.kexpressions.Expression
+import de.cau.cs.kieler.esterel.kexpressions.IntValue
+import de.cau.cs.kieler.esterel.kexpressions.OperatorExpression
+import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference
 
 /**
  * @author krat
@@ -46,12 +43,13 @@ class TransformExpression {
     @Inject
     extension EsterelToSclTransformation
 
+    /*
+     * Transforms Esterel Operator Expression to KExpression Operator Expression
+     */
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(OperatorExpression exp) {
-
         val opType = OperatorType::getByName(exp.operator.name)
 
         // ? Operator: Return variable holding the value
-        // TODO val working?
         if (opType == OperatorType::VAL) {
             val sig = signalMap.findLast [
                 (exp.subExpressions.head as ValuedObjectReference).valuedObject.name == it.key
@@ -69,7 +67,7 @@ class TransformExpression {
     }
 
     /*
-     * Translates esterel CombineOperator to KExpressions Operator
+     * Translates Esterel CombineOperator to KExpressions Operator
      */
     def de.cau.cs.kieler.core.kexpressions.CombineOperator transformCombineOperator(CombineOperator op) {
         return de.cau.cs.kieler.core.kexpressions.CombineOperator::get(op.toString)
@@ -82,10 +80,9 @@ class TransformExpression {
     }
 
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(ValuedObjectReference ref) {
-        getValuedObjectRef(signalMap, ref.valuedObject.name)
+        getValuedObjectRef(ref.valuedObject.name)
     }
 
-    // Consider Strings as ConstantExpressions
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(String exp, String type) {
         val esterelExp = EsterelFactory::eINSTANCE.createConstantExpression => [
             value = exp
@@ -94,7 +91,6 @@ class TransformExpression {
         esterelExp.transformExp(type)
     }
 
-    // TODO Kind of ugly as type is not stored explicitly
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(Expression exp, String type) {
         
         if (!(exp instanceof ConstantExpression)) {
@@ -115,12 +111,12 @@ class TransformExpression {
                 return KExpressionsFactory::eINSTANCE.createFloatValue => [
                     value = Float.parseFloat(constExp.value)
                 ]
-            //TODO should be double...
+            //No double in SCL...
             case ("double"):
                 return KExpressionsFactory::eINSTANCE.createFloatValue => [
                     value = Float.parseFloat(constExp.value)
                 ]
-            //TODO should be unsigned...
+            //No Unsigned in SCL...
             case ("unsigned"):
                 return KExpressionsFactory::eINSTANCE.createIntValue => [
                     value = Integer.parseInt(constExp.value)
@@ -138,17 +134,17 @@ class TransformExpression {
         }
     }
 
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(BooleanValue b, String type) {
-        return KExpressionsFactory::eINSTANCE.createBoolValue => [
-            value = b.value
-        ]
-    }
-
-    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(BooleanValue b, boolean bool) {
-        return KExpressionsFactory::eINSTANCE.createBoolValue => [
-            value = bool
-        ]
-    }
+//    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(BooleanValue b, String type) {
+//        return KExpressionsFactory::eINSTANCE.createBoolValue => [
+//            value = b.value
+//        ]
+//    }
+//
+//    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(BooleanValue b, boolean bool) {
+//        return KExpressionsFactory::eINSTANCE.createBoolValue => [
+//            value = bool
+//        ]
+//    }
 
     //TODO other values
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(BooleanValue boolVal) {
@@ -156,8 +152,6 @@ class TransformExpression {
     }
 
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(IntValue intVal) {
-
-        //TODO no negative INT values?
         if (intVal.value < 0)
             return KExpressionsFactory::eINSTANCE.createOperatorExpression => [
                 operator = OperatorType::SUB
@@ -175,15 +169,10 @@ class TransformExpression {
             val type = funcExp.function.idList.get(i).type.toString
             res.parameters.add(
                 KExpressionsFactory::eINSTANCE.createParameter => [
-                    if (exp instanceof ConstantExpression) {
                         expression = exp.transformExp(type)
-                    } else {
-                        expression = exp.transformExp
-                    }
                 ]
             )
             i = i + 1
-
         }
 
         res
