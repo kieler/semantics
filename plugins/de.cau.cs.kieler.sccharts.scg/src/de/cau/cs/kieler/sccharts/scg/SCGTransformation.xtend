@@ -261,7 +261,8 @@ class SCGTransformation {
         // ssm, 04.05.2014
     	timestamp = System.currentTimeMillis
         val SuperfluousForkRemover superfluousForkRemover = Guice.createInjector().getInstance(typeof(SuperfluousForkRemover))
-        val scg = superfluousForkRemover.optimize(sCGraph)
+        //val scg = superfluousForkRemover.optimize(sCGraph)
+        val scg = sCGraph
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("SCG optimization completed (additional time elapsed: "+(time / 1000)+"s).")
         
