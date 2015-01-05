@@ -25,6 +25,7 @@ import com.google.common.collect.ImmutableList
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Guard
+import java.util.List
 
 /**
  * @author ssm
@@ -43,8 +44,13 @@ class CopyPropagation extends AbstractOptimizer {
     
     private val assignmentReferences = <ValuedObject, ValuedObject> newHashMap
     private val reverseGuardMap = <ValuedObject, Guard> newHashMap
+    private val replacementMap = <Guard, Guard> newHashMap
+    
+    private val relinkVisited = <Guard> newHashSet
     
     override optimize(SCGraph scg) {
+    	
+    	var Guard goGuard = null 
         
         scg.guards.forEach[
             reverseGuardMap.put(valuedObject, it)
@@ -75,8 +81,12 @@ class CopyPropagation extends AbstractOptimizer {
                     }
                 }
                 
-                if ((guard.valuedObject == key) && (!guard.valuedObject.name.startsWith(GOGUARDVALUEDOBJECTNAME))) {
-                    toDelete += guard
+                if (guard.valuedObject == key) {
+                    if (guard.valuedObject.name.startsWith(GOGUARDVALUEDOBJECTNAME)) {
+                    	goGuard = guard
+                    } else {
+                    	toDelete += guard
+                    }
                 }
             } // guards
             
@@ -95,15 +105,16 @@ class CopyPropagation extends AbstractOptimizer {
         }
         System.out.println("")
         
+        relinkVisited.clear
+        replacementMap.clear
         for (del : toDelete.immutableCopy) {
             if (del.valuedObject.name.startsWith(GUARDPREFIX)) {
-                System.out.println("Copy propagation: relinking " + del.valuedObject.name)
-                val vo = (del.expression as ValuedObjectReference).valuedObject
-                val newGuard = reverseGuardMap.get(vo)
-                del.schedulingBlockLink.guard = newGuard
+                del.relink(toDelete, "")
             }
         }
         System.out.println("")
+        
+//        toDelete -= goGuard
 
         for (del : toDelete.immutableCopy) {
             scg.guards -= del
@@ -112,4 +123,21 @@ class CopyPropagation extends AbstractOptimizer {
         scg
     }
     
+    private def Guard relink(Guard guard, List<Guard> deleteList, String debugIndent) {
+    	if (!relinkVisited.contains(guard)) {
+            System.out.println(debugIndent + "Copy propagation: relinking " + guard.valuedObject.name)
+    		relinkVisited += guard
+	    	val vo = (guard.expression as ValuedObjectReference).valuedObject
+        	var Guard newGuard = reverseGuardMap.get(vo)
+        	if (deleteList.contains(newGuard)) {
+        		newGuard = newGuard.relink(deleteList, "  ")
+        	}
+        	guard.schedulingBlockLink.guard = newGuard
+        	reverseGuardMap.put(guard.valuedObject, newGuard)
+//			replacementMap.put(guard, newGuard)
+        	return newGuard
+        }
+        
+        return guard
+    }
 }
