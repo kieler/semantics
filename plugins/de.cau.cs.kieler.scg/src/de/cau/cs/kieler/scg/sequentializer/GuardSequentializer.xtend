@@ -51,6 +51,8 @@ import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
 import de.cau.cs.kieler.scg.synchronizer.SynchronizerData
 import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.core.annotations.StringAnnotation
+import de.cau.cs.kieler.scg.optimizer.CopyPropagation
+import com.google.inject.Guice
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -201,6 +203,11 @@ class GuardSequentializer extends AbstractSequentializer {
                 
         // Return the SCG.
         if (schizoDeclaration.valuedObjects.size > 0) newSCG.declarations += schizoDeclaration
+
+//        val CopyPropagation copyPropagation = 
+//            Guice.createInjector().getInstance(typeof(CopyPropagation))        
+//        copyPropagation.optimize(newSCG)        
+        
         newSCG     	
     }
     

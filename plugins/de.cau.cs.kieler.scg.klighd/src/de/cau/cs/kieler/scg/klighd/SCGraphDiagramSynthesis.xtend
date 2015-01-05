@@ -1343,10 +1343,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK, schedulingBlock)
                     schedulingBlockMapping.put(schedulingBlock, sbContainer)
 //                    val sbName = serializer.serialize(schedulingBlock.guard.reference)
-                     var sbName = schedulingBlock.guard.valuedObject.name //reference.valuedObject.name
+                     var sbName = "<null>"
+                     if (schedulingBlock.guard != null) { 
+                        sbName = schedulingBlock.guard.valuedObject.name //reference.valuedObject.name
+                     }
 
 	                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
-    	            	val expText = serializer.serialize(schedulingBlock.guard.expression.copy.fix)	
+	                    var expText = "<null>"
+	                    if (schedulingBlock.guard != null) {
+        	            	expText = serializer.serialize(schedulingBlock.guard.expression.copy.fix)
+    	            	}	
 //        	        	expText.createLabel(sbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER                	
 						sbName = sbName + "\n" + expText       
 					}
@@ -1391,8 +1397,10 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             if (scg.hasSchedulingData && SHOW_SCHEDULINGBLOCKS.booleanValue) {
                 val usBlocks = scg.getAllSchedulingBlocks
                 scg.schedules.head.guards.forEach[ 
-                    if (!it.schizophrenic) 
-                        usBlocks.remove(it.schedulingBlockLink)
+                    if (!it.schizophrenic) {
+                        val scheduledBlocks = usBlocks.filter[ e | e.guard == it].toList
+                        usBlocks -= scheduledBlocks
+                    } 
                 ]
                 usBlocks.forEach [
                     val node = schedulingBlockMapping.get(it)

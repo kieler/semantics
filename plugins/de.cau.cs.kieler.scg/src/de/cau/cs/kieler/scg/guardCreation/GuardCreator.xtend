@@ -59,6 +59,7 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
+import de.cau.cs.kieler.scg.optimizer.CopyPropagation
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -218,6 +219,10 @@ class GuardCreator extends AbstractGuardCreator {
         for(schedulingBlock : schedulingBlocks) {
         	schedulingBlock.guard.createGuardEquation(schedulingBlock, scg)
         }
+        
+        val CopyPropagation copyPropagation = 
+            Guice.createInjector().getInstance(typeof(CopyPropagation))        
+        copyPropagation.optimize(scg)         
         
         scg     	
     }
