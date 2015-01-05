@@ -22,11 +22,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * An implementation of the model object '<em><b>Parallel</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ParallelImpl#getThreads <em>Threads</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

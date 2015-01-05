@@ -36,8 +36,6 @@ import de.cau.cs.kieler.sccharts.SuspendAction;
 import de.cau.cs.kieler.sccharts.TextEffect;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.text.actions.serializer.ActionsSemanticSequencer;
-import de.cau.cs.kieler.sccharts.text.sct.sct.ImportDecl;
-import de.cau.cs.kieler.sccharts.text.sct.sct.SctPackage;
 import de.cau.cs.kieler.sccharts.text.sct.services.SctGrammarAccess;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
@@ -436,14 +434,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				}
 				else break;
 			}
-		else if(semanticObject.eClass().getEPackage() == SctPackage.eINSTANCE) switch(semanticObject.eClass().getClassifierID()) {
-			case SctPackage.IMPORT_DECL:
-				if(context == grammarAccess.getImportDeclRule()) {
-					sequence_ImportDecl(context, (ImportDecl) semanticObject); 
-					return; 
-				}
-				else break;
-			}
 		if (errorAcceptor != null) errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
 	
@@ -493,15 +483,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *     (valuedObject=ValuedObject from=INT to=INT)
 	 */
 	protected void sequence_For(EObject context, For semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (importedType=[State|QualifiedName] | importedNamespace=QualifiedNameWithWildcard)
-	 */
-	protected void sequence_ImportDecl(EObject context, ImportDecl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

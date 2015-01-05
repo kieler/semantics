@@ -38,6 +38,8 @@ import java.util.List
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -66,14 +68,18 @@ class BasicBlockTransformation extends Transformation {
     
     @Inject
     extension SCGControlFlowExtensions
+    
+    @Inject
+    extension AnnotationsExtensions
          
          
     // -------------------------------------------------------------------------
     // -- Constants
     // -------------------------------------------------------------------------
     
-    protected val String GUARDPREFIX = "g"
+    public static val String GUARDPREFIX = "g"
     
+	protected val SPLITSCHEDULINGBLOCKSATENTRY = false
 
     // -------------------------------------------------------------------------
     // -- Globals
@@ -109,6 +115,10 @@ class BasicBlockTransformation extends Transformation {
      * 			if the first node of the SCG is not an entry node.
      */
     public def SCGraph transformSCGDEPToSCGBB(SCGraph scg) {
+        
+        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)) {
+            return scg
+        }
         
         // Since KiCo may use the transformation instance several times, we must clear the caches manually. 
         processedNodes.clear     
@@ -441,6 +451,7 @@ class BasicBlockTransformation extends Transformation {
                 block = ScgFactory::eINSTANCE.createSchedulingBlock()
                 block.guard = newGuard
                 block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))
+                newGuard.schedulingBlockLink = block
             }
             // Add the node to the scheduling block.
             block.nodes.add(node)
@@ -455,7 +466,7 @@ class BasicBlockTransformation extends Transformation {
     
     protected def boolean schedulingBlockSplitter(Node node, Node lastNode) {
         (!node.incoming.filter(typeof(Dependency)).filter[ concurrent && !confluent].empty) ||
-        (lastNode instanceof Entry)
+        (SPLITSCHEDULINGBLOCKSATENTRY && (lastNode instanceof Entry))
     } 
     
     /**

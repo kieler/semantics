@@ -2,11 +2,11 @@
  */
 package de.cau.cs.kieler.s.s;
 
+import de.cau.cs.kieler.core.annotations.Annotatable;
+
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 
 import org.eclipse.emf.common.util.EList;
-
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.Program#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Program#getPriority <em>Priority</em>}</li>
@@ -22,13 +23,12 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.s.s.Program#getGlobalHostCodeInstruction <em>Global Host Code Instruction</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Program#getStates <em>States</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.s.s.SPackage#getProgram()
  * @model
  * @generated
  */
-public interface Program extends EObject
+public interface Program extends Annotatable
 {
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.

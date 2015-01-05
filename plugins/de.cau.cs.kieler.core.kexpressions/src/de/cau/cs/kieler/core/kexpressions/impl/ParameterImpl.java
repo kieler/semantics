@@ -20,12 +20,13 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * An implementation of the model object '<em><b>Parameter</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ParameterImpl#isCallByReference <em>Call By Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ParameterImpl#getExpression <em>Expression</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

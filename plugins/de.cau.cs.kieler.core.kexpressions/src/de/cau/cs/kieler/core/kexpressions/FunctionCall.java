@@ -11,11 +11,11 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.FunctionCall#getFunctionName <em>Function Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.FunctionCall#getParameters <em>Parameters</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getFunctionCall()
  * @model

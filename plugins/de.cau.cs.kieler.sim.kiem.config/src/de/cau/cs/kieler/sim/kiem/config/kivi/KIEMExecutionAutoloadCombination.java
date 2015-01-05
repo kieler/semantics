@@ -111,7 +111,7 @@ public class KIEMExecutionAutoloadCombination implements IKiemEventListener {
     
     //-------------------------------------------------------------------------
 
-    private void autoloadExecutionSchedule() {
+    public static void autoloadExecutionSchedule() {
         EditorIdWrapper editorId = null;
         String editorName = null;
 

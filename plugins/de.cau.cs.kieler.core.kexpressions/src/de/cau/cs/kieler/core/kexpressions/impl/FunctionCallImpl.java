@@ -26,12 +26,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * An implementation of the model object '<em><b>Function Call</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.FunctionCallImpl#getFunctionName <em>Function Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.FunctionCallImpl#getParameters <em>Parameters</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

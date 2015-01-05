@@ -21,11 +21,11 @@ package de.cau.cs.kieler.scg;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.Join#getFork <em>Fork</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Join#getNext <em>Next</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.scg.ScgPackage#getJoin()
  * @model
@@ -33,57 +33,57 @@ package de.cau.cs.kieler.scg;
  */
 public interface Join extends Node {
     /**
-     * Returns the value of the '<em><b>Fork</b></em>' reference.
-     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.scg.Fork#getJoin <em>Join</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Fork</b></em>' reference.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.scg.Fork#getJoin <em>Join</em>}'.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Fork</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Fork</em>' reference.
-     * @see #setFork(Fork)
-     * @see de.cau.cs.kieler.scg.ScgPackage#getJoin_Fork()
-     * @see de.cau.cs.kieler.scg.Fork#getJoin
-     * @model opposite="join" required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Fork</em>' reference.
+	 * @see #setFork(Fork)
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getJoin_Fork()
+	 * @see de.cau.cs.kieler.scg.Fork#getJoin
+	 * @model opposite="join" required="true"
+	 * @generated
+	 */
     Fork getFork();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.scg.Join#getFork <em>Fork</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.scg.Join#getFork <em>Fork</em>}' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Fork</em>' reference.
-     * @see #getFork()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Fork</em>' reference.
+	 * @see #getFork()
+	 * @generated
+	 */
     void setFork(Fork value);
 
     /**
-     * Returns the value of the '<em><b>Next</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Next</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Next</em>' containment reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Next</em>' containment reference.
-     * @see #setNext(ControlFlow)
-     * @see de.cau.cs.kieler.scg.ScgPackage#getJoin_Next()
-     * @model containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Next</em>' containment reference.
+	 * @see #setNext(ControlFlow)
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getJoin_Next()
+	 * @model containment="true"
+	 * @generated
+	 */
     ControlFlow getNext();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.scg.Join#getNext <em>Next</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.scg.Join#getNext <em>Next</em>}' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Next</em>' containment reference.
-     * @see #getNext()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Next</em>' containment reference.
+	 * @see #getNext()
+	 * @generated
+	 */
     void setNext(ControlFlow value);
 
 } // Join

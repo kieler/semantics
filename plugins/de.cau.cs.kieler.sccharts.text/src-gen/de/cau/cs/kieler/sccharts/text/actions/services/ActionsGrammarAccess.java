@@ -547,60 +547,68 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cLessThanSignKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cFunctionNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cFunctionNameIDTerminalRuleCall_1_0 = (RuleCall)cFunctionNameAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cParametersAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cParametersParameterParserRuleCall_2_1_0 = (RuleCall)cParametersAssignment_2_1.eContents().get(0);
-		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
-		private final Keyword cCommaKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
-		private final Assignment cParametersAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
-		private final RuleCall cParametersParameterParserRuleCall_2_2_1_0 = (RuleCall)cParametersAssignment_2_2_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
+		private final RuleCall cFunctionNameExtendedIDParserRuleCall_1_0 = (RuleCall)cFunctionNameAssignment_1.eContents().get(0);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
+		private final Assignment cParametersAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_2_0_1_0 = (RuleCall)cParametersAssignment_2_0_1.eContents().get(0);
+		private final Group cGroup_2_0_2 = (Group)cGroup_2_0.eContents().get(2);
+		private final Keyword cCommaKeyword_2_0_2_0 = (Keyword)cGroup_2_0_2.eContents().get(0);
+		private final Assignment cParametersAssignment_2_0_2_1 = (Assignment)cGroup_2_0_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_2_0_2_1_0 = (RuleCall)cParametersAssignment_2_0_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_0_3 = (Keyword)cGroup_2_0.eContents().get(3);
+		private final Keyword cLeftParenthesisRightParenthesisKeyword_2_1 = (Keyword)cAlternatives_2.eContents().get(1);
 		private final Keyword cGreaterThanSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//FunctionCallEffect returns sccharts::FunctionCallEffect:
-		//	"<" functionName=ID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")")? ">";
+		//	"<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" | "()")? ">";
 		public ParserRule getRule() { return rule; }
 
-		//"<" functionName=ID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")")? ">"
+		//"<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" | "()")? ">"
 		public Group getGroup() { return cGroup; }
 
 		//"<"
 		public Keyword getLessThanSignKeyword_0() { return cLessThanSignKeyword_0; }
 
-		//functionName=ID
+		//functionName=ExtendedID
 		public Assignment getFunctionNameAssignment_1() { return cFunctionNameAssignment_1; }
 
-		//ID
-		public RuleCall getFunctionNameIDTerminalRuleCall_1_0() { return cFunctionNameIDTerminalRuleCall_1_0; }
+		//ExtendedID
+		public RuleCall getFunctionNameExtendedIDParserRuleCall_1_0() { return cFunctionNameExtendedIDParserRuleCall_1_0; }
 
-		//("(" parameters+=Parameter ("," parameters+=Parameter)* ")")?
-		public Group getGroup_2() { return cGroup_2; }
+		//("(" parameters+=Parameter ("," parameters+=Parameter)* ")" | "()")?
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+
+		//"(" parameters+=Parameter ("," parameters+=Parameter)* ")"
+		public Group getGroup_2_0() { return cGroup_2_0; }
 
 		//"("
-		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
+		public Keyword getLeftParenthesisKeyword_2_0_0() { return cLeftParenthesisKeyword_2_0_0; }
 
 		//parameters+=Parameter
-		public Assignment getParametersAssignment_2_1() { return cParametersAssignment_2_1; }
+		public Assignment getParametersAssignment_2_0_1() { return cParametersAssignment_2_0_1; }
 
 		//Parameter
-		public RuleCall getParametersParameterParserRuleCall_2_1_0() { return cParametersParameterParserRuleCall_2_1_0; }
+		public RuleCall getParametersParameterParserRuleCall_2_0_1_0() { return cParametersParameterParserRuleCall_2_0_1_0; }
 
 		//("," parameters+=Parameter)*
-		public Group getGroup_2_2() { return cGroup_2_2; }
+		public Group getGroup_2_0_2() { return cGroup_2_0_2; }
 
 		//","
-		public Keyword getCommaKeyword_2_2_0() { return cCommaKeyword_2_2_0; }
+		public Keyword getCommaKeyword_2_0_2_0() { return cCommaKeyword_2_0_2_0; }
 
 		//parameters+=Parameter
-		public Assignment getParametersAssignment_2_2_1() { return cParametersAssignment_2_2_1; }
+		public Assignment getParametersAssignment_2_0_2_1() { return cParametersAssignment_2_0_2_1; }
 
 		//Parameter
-		public RuleCall getParametersParameterParserRuleCall_2_2_1_0() { return cParametersParameterParserRuleCall_2_2_1_0; }
+		public RuleCall getParametersParameterParserRuleCall_2_0_2_1_0() { return cParametersParameterParserRuleCall_2_0_2_1_0; }
 
 		//")"
-		public Keyword getRightParenthesisKeyword_2_3() { return cRightParenthesisKeyword_2_3; }
+		public Keyword getRightParenthesisKeyword_2_0_3() { return cRightParenthesisKeyword_2_0_3; }
+
+		//"()"
+		public Keyword getLeftParenthesisRightParenthesisKeyword_2_1() { return cLeftParenthesisRightParenthesisKeyword_2_1; }
 
 		//">"
 		public Keyword getGreaterThanSignKeyword_3() { return cGreaterThanSignKeyword_3; }
@@ -687,29 +695,42 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getDEEPHistoryKeyword_2_0() { return cDEEPHistoryKeyword_2_0; }
 	}
 	
-	private TransitionElements pTransition;
-	private EntryActionElements pEntryAction;
-	private DuringActionElements pDuringAction;
-	private ExitActionElements pExitAction;
-	private SuspendActionElements pSuspendAction;
-	private EffectElements pEffect;
-	private EmissionElements pEmission;
-	private AssignmentElements pAssignment;
-	private TextEffectElements pTextEffect;
-	private FunctionCallEffectElements pFunctionCallEffect;
-	private ParameterElements pParameter;
-	private DivOperatorElements unknownRuleDivOperator;
-	private HistoryTypeElements unknownRuleHistoryType;
+	private final TransitionElements pTransition;
+	private final EntryActionElements pEntryAction;
+	private final DuringActionElements pDuringAction;
+	private final ExitActionElements pExitAction;
+	private final SuspendActionElements pSuspendAction;
+	private final EffectElements pEffect;
+	private final EmissionElements pEmission;
+	private final AssignmentElements pAssignment;
+	private final TextEffectElements pTextEffect;
+	private final FunctionCallEffectElements pFunctionCallEffect;
+	private final ParameterElements pParameter;
+	private final DivOperatorElements unknownRuleDivOperator;
+	private final HistoryTypeElements unknownRuleHistoryType;
 	
 	private final Grammar grammar;
 
-	private KExpressionsGrammarAccess gaKExpressions;
+	private final KExpressionsGrammarAccess gaKExpressions;
 
 	@Inject
 	public ActionsGrammarAccess(GrammarProvider grammarProvider,
 		KExpressionsGrammarAccess gaKExpressions) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaKExpressions = gaKExpressions;
+		this.pTransition = new TransitionElements();
+		this.pEntryAction = new EntryActionElements();
+		this.pDuringAction = new DuringActionElements();
+		this.pExitAction = new ExitActionElements();
+		this.pSuspendAction = new SuspendActionElements();
+		this.pEffect = new EffectElements();
+		this.pEmission = new EmissionElements();
+		this.pAssignment = new AssignmentElements();
+		this.pTextEffect = new TextEffectElements();
+		this.pFunctionCallEffect = new FunctionCallEffectElements();
+		this.pParameter = new ParameterElements();
+		this.unknownRuleDivOperator = new DivOperatorElements();
+		this.unknownRuleHistoryType = new HistoryTypeElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -750,7 +771,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	{sccharts::Transition} annotations+=Annotation* immediate?="immediate"? delay=INT? deferred?="deferred"?
 	//	history=HistoryType? trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)?;
 	public TransitionElements getTransitionAccess() {
-		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
+		return pTransition;
 	}
 	
 	public ParserRule getTransitionRule() {
@@ -770,7 +791,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	// "entry" trigger=BoolExpression? ("/" effects+=Effect (";"
 	//	effects+=Effect)*)? ";"?;
 	public EntryActionElements getEntryActionAccess() {
-		return (pEntryAction != null) ? pEntryAction : (pEntryAction = new EntryActionElements());
+		return pEntryAction;
 	}
 	
 	public ParserRule getEntryActionRule() {
@@ -782,7 +803,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	// immediate?="immediate"? "during" trigger=BoolExpression?
 	//	("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
 	public DuringActionElements getDuringActionAccess() {
-		return (pDuringAction != null) ? pDuringAction : (pDuringAction = new DuringActionElements());
+		return pDuringAction;
 	}
 	
 	public ParserRule getDuringActionRule() {
@@ -794,7 +815,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	// "exit" trigger=BoolExpression? ("/" effects+=Effect (";"
 	//	effects+=Effect)*)? ";"?;
 	public ExitActionElements getExitActionAccess() {
-		return (pExitAction != null) ? pExitAction : (pExitAction = new ExitActionElements());
+		return pExitAction;
 	}
 	
 	public ParserRule getExitActionRule() {
@@ -806,7 +827,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	// immediate?="immediate"? weak?="weak"? "suspend"
 	//	trigger=BoolExpression? ";"?;
 	public SuspendActionElements getSuspendActionAccess() {
-		return (pSuspendAction != null) ? pSuspendAction : (pSuspendAction = new SuspendActionElements());
+		return pSuspendAction;
 	}
 	
 	public ParserRule getSuspendActionRule() {
@@ -816,7 +837,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//Effect returns sccharts::Effect:
 	//	Emission | Assignment | TextEffect | FunctionCallEffect;
 	public EffectElements getEffectAccess() {
-		return (pEffect != null) ? pEffect : (pEffect = new EffectElements());
+		return pEffect;
 	}
 	
 	public ParserRule getEffectRule() {
@@ -826,7 +847,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//Emission returns sccharts::Emission:
 	//	valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?;
 	public EmissionElements getEmissionAccess() {
-		return (pEmission != null) ? pEmission : (pEmission = new EmissionElements());
+		return pEmission;
 	}
 	
 	public ParserRule getEmissionRule() {
@@ -836,7 +857,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//Assignment returns sccharts::Assignment:
 	//	valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "=" expression=Expression;
 	public AssignmentElements getAssignmentAccess() {
-		return (pAssignment != null) ? pAssignment : (pAssignment = new AssignmentElements());
+		return pAssignment;
 	}
 	
 	public ParserRule getAssignmentRule() {
@@ -846,7 +867,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//TextEffect returns sccharts::TextEffect:
 	//	text=HOSTCODE;
 	public TextEffectElements getTextEffectAccess() {
-		return (pTextEffect != null) ? pTextEffect : (pTextEffect = new TextEffectElements());
+		return pTextEffect;
 	}
 	
 	public ParserRule getTextEffectRule() {
@@ -854,9 +875,9 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//FunctionCallEffect returns sccharts::FunctionCallEffect:
-	//	"<" functionName=ID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")")? ">";
+	//	"<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" | "()")? ">";
 	public FunctionCallEffectElements getFunctionCallEffectAccess() {
-		return (pFunctionCallEffect != null) ? pFunctionCallEffect : (pFunctionCallEffect = new FunctionCallEffectElements());
+		return pFunctionCallEffect;
 	}
 	
 	public ParserRule getFunctionCallEffectRule() {
@@ -866,7 +887,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//Parameter returns kexpressions::Parameter:
 	//	callByReference?="&"? expression=Expression;
 	public ParameterElements getParameterAccess() {
-		return (pParameter != null) ? pParameter : (pParameter = new ParameterElements());
+		return pParameter;
 	}
 	
 	public ParserRule getParameterRule() {
@@ -876,7 +897,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum DivOperator returns kexpressions::OperatorType:
 	//	DIV=":";
 	public DivOperatorElements getDivOperatorAccess() {
-		return (unknownRuleDivOperator != null) ? unknownRuleDivOperator : (unknownRuleDivOperator = new DivOperatorElements());
+		return unknownRuleDivOperator;
 	}
 	
 	public EnumRule getDivOperatorRule() {
@@ -886,7 +907,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum HistoryType returns sccharts::HistoryType:
 	//	RESET="reset" | SHALLOW="shallow history" | DEEP="history";
 	public HistoryTypeElements getHistoryTypeAccess() {
-		return (unknownRuleHistoryType != null) ? unknownRuleHistoryType : (unknownRuleHistoryType = new HistoryTypeElements());
+		return unknownRuleHistoryType;
 	}
 	
 	public EnumRule getHistoryTypeRule() {
@@ -1103,7 +1124,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//FunctionCall:
-	//	"<" functionName=ID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")")? ">";
+	//	"<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" | "()")? ">";
 	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
 		return gaKExpressions.getFunctionCallAccess();
 	}

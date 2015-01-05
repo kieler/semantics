@@ -4,7 +4,7 @@
     editorDirectory="/de.cau.cs.kieler.scl.editor/src" modelPluginID="de.cau.cs.kieler.scl"
     forceOverwrite="true" modelName="SCL" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.scl.edit"
-    editorPluginID="de.cau.cs.kieler.scl.editor" runtimeVersion="2.9" usedGenPackages="platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions">
+    editorPluginID="de.cau.cs.kieler.scl.editor" runtimeVersion="2.10" usedGenPackages="platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions">
   <genPackages prefix="Scl" basePackage="de.cau.cs.kieler.scl" disposableProviderFactory="true"
       ecorePackage="platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#/">
     <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.scl/model/SCL.ecore#//Program">

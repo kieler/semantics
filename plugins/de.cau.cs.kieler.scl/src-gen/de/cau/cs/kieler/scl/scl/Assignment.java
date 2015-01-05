@@ -12,11 +12,11 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.Assignment#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.Assignment#getExpression <em>Expression</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.scl.scl.SclPackage#getAssignment()
  * @model

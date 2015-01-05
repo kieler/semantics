@@ -43,7 +43,7 @@ import de.cau.cs.kieler.esterel.esterel.StatementContainer
 import de.cau.cs.kieler.esterel.esterel.Suspend
 import de.cau.cs.kieler.esterel.esterel.Sustain
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-
+import de.cau.cs.kieler.esterel.esterel.Block
 
 /**
  * Transformation of Esterel code into Esterel code that is 
@@ -160,6 +160,7 @@ class Esterel2Simulation {
 		   ||(statement instanceof Run)
 		   ||(statement instanceof Suspend)
 		   ||(statement instanceof Sustain)
+		   ||(statement instanceof Block)
 // Other statements that currently are not visualized in an Esterel debug session		   
 //		   ||(statement instanceof ProcCall)
 //		   ||(statement instanceof LoopDelay)
