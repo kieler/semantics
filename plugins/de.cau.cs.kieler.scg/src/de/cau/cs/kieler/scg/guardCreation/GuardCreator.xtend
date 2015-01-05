@@ -228,7 +228,7 @@ class GuardCreator extends AbstractGuardCreator {
         
         val CopyPropagation copyPropagation = 
             Guice.createInjector().getInstance(typeof(CopyPropagation))        
-        copyPropagation.optimize(scg)         
+//        copyPropagation.optimize(scg)         
         
         scg     	
     }
