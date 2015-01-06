@@ -45,6 +45,7 @@ import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
 import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.scg.ScheduleBlock
+import de.cau.cs.kieler.scg.ControlFlow
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -149,7 +150,7 @@ class GuardScheduler extends AbstractScheduler {
 			if (schedulingBlock != null) {
 			    val dependencies = schedulingBlock.getAllDependencies(scg)
 			    if (!dependencies.empty) {
-			        System.out.print(indent + "Scheduling block with guard " + schedulingBlock.guard.valuedObject.name + " has dependencies: ")
+			        System.out.print(indent + "Scheduling block" + schedulingBlock.label + " has dependencies: ")
 			        for(dependency : dependencies) {
 			            if (dependency.concurrent && !dependency.confluent) {
 			                val sb = schedulingBlockCache.get(dependency.eContainer)
@@ -215,6 +216,18 @@ class GuardScheduler extends AbstractScheduler {
 				}
 			}			
 			
+			for(incoming : schedulingBlock.nodes.head.incoming.filter(typeof(ControlFlow))) {
+			    var prevNode = incoming.eContainer as Node
+			    var prevSB = schedulingBlockCache.get(prevNode)
+			    if (!topologicalSortVisited.contains(prevSB)) { 
+			         System.out.println(indent + "Previous SB is missing: " + prevSB.label)
+			         prevSB.topologicalPlacement(remainingSchedulingBlocks, schedule, constraints, scg, indent + "  ")
+			         if (!topologicalSortVisited.contains(prevSB)) {
+			             placeable = false
+			         }
+			    }
+			}
+			
 			if (placeable) {
 				
 				for(ref : lastVOs) {
@@ -228,7 +241,7 @@ class GuardScheduler extends AbstractScheduler {
 					} 
 				}
 				
-                System.out.println(indent + "  Scheduling block with guard " + schedulingBlock.guard.valuedObject.name + " placed.")
+                System.out.println(indent + "  Scheduling block " + schedulingBlock.label + " placed.")
                 
                 val scheduleBlock = ScgFactory::eINSTANCE.createScheduleBlock => [
                 	it.schedulingBlock = schedulingBlock
@@ -261,8 +274,8 @@ class GuardScheduler extends AbstractScheduler {
             }
         }
         
-        System.out.print("Schedules: ")
-        for (g : schedule) { System.out.print(g.schedulingBlock.guard.valuedObject.name + " ") }
+        System.out.print("Schedule: ")
+        for (g : schedule) { System.out.print(g.schedulingBlock.label + " ") }
         System.out.println("")
         
         remainingSchedulingBlocks.size == 0

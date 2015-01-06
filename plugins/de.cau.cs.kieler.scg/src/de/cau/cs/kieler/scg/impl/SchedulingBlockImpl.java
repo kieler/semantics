@@ -37,6 +37,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link de.cau.cs.kieler.scg.impl.SchedulingBlockImpl#getNodes <em>Nodes</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SchedulingBlockImpl#getDependencies <em>Dependencies</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SchedulingBlockImpl#getGuard <em>Guard</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.SchedulingBlockImpl#getLabel <em>Label</em>}</li>
  * </ul>
  * </p>
  *
@@ -44,196 +45,263 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  */
 public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements SchedulingBlock {
     /**
-	 * The cached value of the '{@link #getNodes() <em>Nodes</em>}' reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getNodes() <em>Nodes</em>}' reference list.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getNodes()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getNodes()
+     * @generated
+     * @ordered
+     */
     protected EList<Node> nodes;
 
     /**
-	 * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getDependencies() <em>Dependencies</em>}' reference list.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getDependencies()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getDependencies()
+     * @generated
+     * @ordered
+     */
     protected EList<Dependency> dependencies;
 
     /**
-	 * The cached value of the '{@link #getGuard() <em>Guard</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getGuard() <em>Guard</em>}' reference.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getGuard()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getGuard()
+     * @generated
+     * @ordered
+     */
     protected Guard guard;
 
     /**
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
-    protected SchedulingBlockImpl() {
-		super();
-	}
+     * @see #getLabel()
+     * @generated
+     * @ordered
+     */
+    protected static final String LABEL_EDEFAULT = null;
 
     /**
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @see #getLabel()
+     * @generated
+     * @ordered
+     */
+    protected String label = LABEL_EDEFAULT;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected SchedulingBlockImpl() {
+        super();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return ScgPackage.Literals.SCHEDULING_BLOCK;
-	}
+        return ScgPackage.Literals.SCHEDULING_BLOCK;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EList<Node> getNodes() {
-		if (nodes == null) {
-			nodes = new EObjectResolvingEList<Node>(Node.class, this, ScgPackage.SCHEDULING_BLOCK__NODES);
-		}
-		return nodes;
-	}
+        if (nodes == null) {
+            nodes = new EObjectResolvingEList<Node>(Node.class, this, ScgPackage.SCHEDULING_BLOCK__NODES);
+        }
+        return nodes;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EList<Dependency> getDependencies() {
-		if (dependencies == null) {
-			dependencies = new EObjectResolvingEList<Dependency>(Dependency.class, this, ScgPackage.SCHEDULING_BLOCK__DEPENDENCIES);
-		}
-		return dependencies;
-	}
+        if (dependencies == null) {
+            dependencies = new EObjectResolvingEList<Dependency>(Dependency.class, this, ScgPackage.SCHEDULING_BLOCK__DEPENDENCIES);
+        }
+        return dependencies;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Guard getGuard() {
-		if (guard != null && guard.eIsProxy()) {
-			InternalEObject oldGuard = (InternalEObject)guard;
-			guard = (Guard)eResolveProxy(oldGuard);
-			if (guard != oldGuard) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.SCHEDULING_BLOCK__GUARD, oldGuard, guard));
-			}
-		}
-		return guard;
-	}
+        if (guard != null && guard.eIsProxy()) {
+            InternalEObject oldGuard = (InternalEObject)guard;
+            guard = (Guard)eResolveProxy(oldGuard);
+            if (guard != oldGuard) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ScgPackage.SCHEDULING_BLOCK__GUARD, oldGuard, guard));
+            }
+        }
+        return guard;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Guard basicGetGuard() {
-		return guard;
-	}
+        return guard;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setGuard(Guard newGuard) {
-		Guard oldGuard = guard;
-		guard = newGuard;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.SCHEDULING_BLOCK__GUARD, oldGuard, guard));
-	}
+        Guard oldGuard = guard;
+        guard = newGuard;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.SCHEDULING_BLOCK__GUARD, oldGuard, guard));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
+    public String getLabel() {
+        return label;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setLabel(String newLabel) {
+        String oldLabel = label;
+        label = newLabel;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.SCHEDULING_BLOCK__LABEL, oldLabel, label));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case ScgPackage.SCHEDULING_BLOCK__NODES:
-				return getNodes();
-			case ScgPackage.SCHEDULING_BLOCK__DEPENDENCIES:
-				return getDependencies();
-			case ScgPackage.SCHEDULING_BLOCK__GUARD:
-				if (resolve) return getGuard();
-				return basicGetGuard();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case ScgPackage.SCHEDULING_BLOCK__NODES:
+                return getNodes();
+            case ScgPackage.SCHEDULING_BLOCK__DEPENDENCIES:
+                return getDependencies();
+            case ScgPackage.SCHEDULING_BLOCK__GUARD:
+                if (resolve) return getGuard();
+                return basicGetGuard();
+            case ScgPackage.SCHEDULING_BLOCK__LABEL:
+                return getLabel();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case ScgPackage.SCHEDULING_BLOCK__NODES:
-				getNodes().clear();
-				getNodes().addAll((Collection<? extends Node>)newValue);
-				return;
-			case ScgPackage.SCHEDULING_BLOCK__DEPENDENCIES:
-				getDependencies().clear();
-				getDependencies().addAll((Collection<? extends Dependency>)newValue);
-				return;
-			case ScgPackage.SCHEDULING_BLOCK__GUARD:
-				setGuard((Guard)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case ScgPackage.SCHEDULING_BLOCK__NODES:
+                getNodes().clear();
+                getNodes().addAll((Collection<? extends Node>)newValue);
+                return;
+            case ScgPackage.SCHEDULING_BLOCK__DEPENDENCIES:
+                getDependencies().clear();
+                getDependencies().addAll((Collection<? extends Dependency>)newValue);
+                return;
+            case ScgPackage.SCHEDULING_BLOCK__GUARD:
+                setGuard((Guard)newValue);
+                return;
+            case ScgPackage.SCHEDULING_BLOCK__LABEL:
+                setLabel((String)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case ScgPackage.SCHEDULING_BLOCK__NODES:
-				getNodes().clear();
-				return;
-			case ScgPackage.SCHEDULING_BLOCK__DEPENDENCIES:
-				getDependencies().clear();
-				return;
-			case ScgPackage.SCHEDULING_BLOCK__GUARD:
-				setGuard((Guard)null);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case ScgPackage.SCHEDULING_BLOCK__NODES:
+                getNodes().clear();
+                return;
+            case ScgPackage.SCHEDULING_BLOCK__DEPENDENCIES:
+                getDependencies().clear();
+                return;
+            case ScgPackage.SCHEDULING_BLOCK__GUARD:
+                setGuard((Guard)null);
+                return;
+            case ScgPackage.SCHEDULING_BLOCK__LABEL:
+                setLabel(LABEL_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case ScgPackage.SCHEDULING_BLOCK__NODES:
-				return nodes != null && !nodes.isEmpty();
-			case ScgPackage.SCHEDULING_BLOCK__DEPENDENCIES:
-				return dependencies != null && !dependencies.isEmpty();
-			case ScgPackage.SCHEDULING_BLOCK__GUARD:
-				return guard != null;
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case ScgPackage.SCHEDULING_BLOCK__NODES:
+                return nodes != null && !nodes.isEmpty();
+            case ScgPackage.SCHEDULING_BLOCK__DEPENDENCIES:
+                return dependencies != null && !dependencies.isEmpty();
+            case ScgPackage.SCHEDULING_BLOCK__GUARD:
+                return guard != null;
+            case ScgPackage.SCHEDULING_BLOCK__LABEL:
+                return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
+        }
+        return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (label: ");
+        result.append(label);
+        result.append(')');
+        return result.toString();
+    }
 
 } //SchedulingBlockImpl

@@ -1346,8 +1346,13 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     schedulingBlockMapping.put(schedulingBlock, sbContainer)
 //                    val sbName = serializer.serialize(schedulingBlock.guard.reference)
                      var sbName = "<null>"
+                     if (!schedulingBlock.label.nullOrEmpty) {
+                         sbName = schedulingBlock.label + " "
+                     }
                      if (schedulingBlock.guard != null) { 
-                        sbName = schedulingBlock.guard.valuedObject.name //reference.valuedObject.name
+                         if (schedulingBlock.guard.valuedObject.name != schedulingBlock.label) {
+                            sbName = sbName + "(" + schedulingBlock.guard.valuedObject.name + ")"//reference.valuedObject.name
+                         }
                      }
 
 	                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
@@ -1372,35 +1377,37 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 }
         }
 
-//        if (scg.hasSchedulingData && SHOW_SCHEDULINGPATH.booleanValue) {
-//            var Node source = null
-//            var Node target = null
-//            for (node : scg.schedules.head.scheduleNodes) {
-//                target = node
-//                if (target != null && source != null) {
-//
-//                    val controlFlows = source.getControlFlows(target)
-//                    if (controlFlows.size > 0) {
-//                        controlFlows.forEach[colorControlFlow(SCHEDULING_SCHEDULINGEDGE)]
-//                        controlFlows.forEach[thickenControlFlow(CONTROLFLOW_SCHEDULINGEDGE_WIDTH)]
-//                        controlFlows.forEach[controlFlowAlpha(SCHEDULING_SCHEDULINGEDGE_ALPHA)]
-//                    } else {
-//                        val sourceF = source.node
-//                        val targetF = target.node
-//                        source.createEdge("schedule " + source.toString + target.toString) => [ edge |
-//                            edge.source = sourceF
-//                            edge.target = targetF
-//                            edge.addRoundedBendsPolyline(8, CONTROLFLOW_SCHEDULINGEDGE_WIDTH) => [
-//                                it.foreground = SCHEDULING_SCHEDULINGEDGE.copy
-//                                it.foreground.alpha = SCHEDULING_SCHEDULINGEDGE_ALPHA
-//                                it.addArrowDecorator
-//                            ]
-//                            edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
-//                        ]
-//                    }
-//                }
-//                source = target
-//            }
+        if (scg.hasSchedulingData && SHOW_SCHEDULINGPATH.booleanValue) {
+            var Node source = null
+            var Node target = null
+            for (scheduleBlock : scg.schedules.head.scheduleBlocks) {
+                for (node : scheduleBlock.schedulingBlock.nodes) {                
+                target = node
+                if (target != null && source != null) {
+
+                    val controlFlows = source.getControlFlows(target)
+                    if (controlFlows.size > 0) {
+                        controlFlows.forEach[colorControlFlow(SCHEDULING_SCHEDULINGEDGE)]
+                        controlFlows.forEach[thickenControlFlow(CONTROLFLOW_SCHEDULINGEDGE_WIDTH)]
+                        controlFlows.forEach[controlFlowAlpha(SCHEDULING_SCHEDULINGEDGE_ALPHA)]
+                    } else {
+                        val sourceF = source.node
+                        val targetF = target.node
+                        source.createEdge("schedule " + source.toString + target.toString) => [ edge |
+                            edge.source = sourceF
+                            edge.target = targetF
+                            edge.addRoundedBendsPolyline(8, CONTROLFLOW_SCHEDULINGEDGE_WIDTH) => [
+                                it.foreground = SCHEDULING_SCHEDULINGEDGE.copy
+                                it.foreground.alpha = SCHEDULING_SCHEDULINGEDGE_ALPHA
+                                it.addArrowDecorator
+                            ]
+                            edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
+                        ]
+                    }
+                }
+                source = target
+                }
+            }
 
             // not schedulable blocks!
             // TODO: draw not scheduled blocks
@@ -1427,7 +1434,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     node.KRendering.background.alpha = 128
                 ]
             }
-//        }
+        }
     }
 
     /**

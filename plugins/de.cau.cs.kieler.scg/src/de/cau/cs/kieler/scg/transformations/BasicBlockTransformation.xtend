@@ -455,6 +455,7 @@ class BasicBlockTransformation extends Transformation {
                 
                 block = ScgFactory::eINSTANCE.createSchedulingBlock()
                 block.guard = newGuard
+                block.label = newGuard.valuedObject.name
                 block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))
                 newGuard.schedulingBlockLink = block
             }
