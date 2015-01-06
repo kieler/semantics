@@ -110,7 +110,8 @@ class GuardScheduler extends AbstractScheduler {
      */
     
     protected override SchedulingConstraints orderSchedulingBlocks(SCGraph scg) {
-        val schedulingBlocks = allSchedulingBlocks.toList
+        val schedulingBlocks = <SchedulingBlock> newLinkedList
+        scg.basicBlocks.filter[ !isDeadBlock ].forEach[ it.schedulingBlocks.forEach[ schedulingBlocks += it ]]
         
 //        val guardList = <Guard> newArrayList => [ addAll(scg.guards.filter[ !isDead ]) ]
         
@@ -273,7 +274,7 @@ class GuardScheduler extends AbstractScheduler {
         
         topologicalSortVisited.clear
         
-        for (sb : remainingSchedulingBlocks.immutableCopy) {
+        for (sb : constraints.schedulingBlocks.immutableCopy) {
         	if (!topologicalSortVisited.contains(sb)) {
                 sb.topologicalPlacement(remainingSchedulingBlocks, schedule, constraints, scg, "")
             }
