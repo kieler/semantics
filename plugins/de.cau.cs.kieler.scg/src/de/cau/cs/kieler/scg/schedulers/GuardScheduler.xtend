@@ -131,6 +131,9 @@ class GuardScheduler extends AbstractScheduler {
 			val VOR = <ValuedObject> newArrayList
 			val lastVOs = <ValuedObject> newArrayList
 			val addGuardBeforeScheduledBlock = <Guard> newHashSet
+
+            val neededNodes = <Node> newHashSet
+
 			
 			if (schedulingBlock.guard.expression instanceof ValuedObjectReference) {
 				VOR += (schedulingBlock.guard.expression as ValuedObjectReference).valuedObject	
@@ -154,7 +157,8 @@ class GuardScheduler extends AbstractScheduler {
 			        for(dependency : dependencies) {
 			            if (dependency.concurrent && !dependency.confluent) {
 			                val sb = schedulingBlockCache.get(dependency.eContainer)
-			                System.out.print(sb.guard.valuedObject.name + " ")
+			                System.out.print(sb.label + " (" + sb.guard.valuedObject.name + ")")
+			                neededNodes += dependency.target
 			                
 			                // TODO: VERIFY!
 //			                if (guard.schizophrenic) {
@@ -181,7 +185,7 @@ class GuardScheduler extends AbstractScheduler {
 //				}
 //			}
 
-			System.out.print(indent + "Placing scheduling block guard " + schedulingBlock.guard.valuedObject.name + ": ")
+			System.out.print(indent + "Placing scheduling block " + schedulingBlock.label + ": ")
 			for(ref : VOR) {
 				System.out.print(ref.name + " ")
 			}
@@ -214,11 +218,12 @@ class GuardScheduler extends AbstractScheduler {
 						placeable = false
 //					}
 				}
-			}			
+			}
 			
-			for(incoming : schedulingBlock.nodes.head.incoming.filter(typeof(ControlFlow))) {
-			    var prevNode = incoming.eContainer as Node
-			    var prevSB = schedulingBlockCache.get(prevNode)
+			neededNodes += schedulingBlock.nodes.head.incoming.filter(typeof(ControlFlow)).map[ eContainer as Node ]
+			
+			for(node : neededNodes) {
+			    var prevSB = schedulingBlockCache.get(node)
 			    if (!topologicalSortVisited.contains(prevSB)) { 
 			         System.out.println(indent + "Previous SB is missing: " + prevSB.label)
 			         prevSB.topologicalPlacement(remainingSchedulingBlocks, schedule, constraints, scg, indent + "  ")
