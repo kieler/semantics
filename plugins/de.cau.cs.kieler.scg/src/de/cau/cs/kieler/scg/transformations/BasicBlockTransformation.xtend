@@ -78,9 +78,8 @@ class BasicBlockTransformation extends Transformation {
     // -------------------------------------------------------------------------
     
     public static val String GUARDPREFIX = "g"
-
-    protected val SPLITSCHEDULINGBLOCKSATENTRY = false
     
+	protected val SPLITSCHEDULINGBLOCKSATENTRY = false
 
     // -------------------------------------------------------------------------
     // -- Globals
@@ -88,7 +87,7 @@ class BasicBlockTransformation extends Transformation {
     
     protected val processedNodes = <Node> newHashSet
     protected val basicBlockNodeMapping = new HashMap<Node, BasicBlock>
-  
+    
     
     // -------------------------------------------------------------------------
     // -- Transformation method
@@ -377,6 +376,11 @@ class BasicBlockTransformation extends Transformation {
         /** If the block begins with a join node, mark the block as synchronizer block. */
         if (nodeList.head instanceof Join) { 
             basicBlock.synchronizerBlock = true
+            for (predecessor : predecessorBlocks) {
+                if (predecessor.deadBlock) {
+                    basicBlock.deadBlock = true
+                }
+            }
         }
         if (nodeList.head instanceof Entry) { 
             basicBlock.entryBlock = true

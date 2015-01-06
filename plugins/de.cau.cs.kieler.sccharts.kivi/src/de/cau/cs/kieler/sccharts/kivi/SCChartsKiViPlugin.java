@@ -22,7 +22,7 @@ import org.osgi.framework.BundleContext;
  * @author mmu
  * @kieler.ignore (excluded from review process)
  */
-public class Activator extends AbstractUIPlugin {
+public class SCChartsKiViPlugin extends AbstractUIPlugin {
 
     /**
      * The plug-in ID.
@@ -30,12 +30,12 @@ public class Activator extends AbstractUIPlugin {
     public static final String PLUGIN_ID = "de.cau.cs.kieler.sccharts.kivi"; //$NON-NLS-1$
 
     // The shared instance
-    private static Activator plugin;
+    private static SCChartsKiViPlugin plugin;
 
     /**
      * The constructor.
      */
-    public Activator() {
+    public SCChartsKiViPlugin() {
     }
 
     /**
@@ -59,7 +59,7 @@ public class Activator extends AbstractUIPlugin {
      *
      * @return the shared instance
      */
-    public static Activator getDefault() {
+    public static SCChartsKiViPlugin getDefault() {
         return plugin;
     }
 

@@ -31,8 +31,9 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.scg.Guard#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Guard#isSchizophrenic <em>Schizophrenic</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Guard#getSchedulingBlockLink <em>Scheduling Block Link</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.Guard#getVolatile <em>Volatile</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.Guard#getOriginalObject <em>Original Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Guard#isSequentialize <em>Sequentialize</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.Guard#isDead <em>Dead</em>}</li>
  * </ul>
  * </p>
  *
@@ -104,7 +105,7 @@ public interface Guard extends EObject {
 	 * @return the value of the '<em>Schizophrenic</em>' attribute.
 	 * @see #setSchizophrenic(boolean)
 	 * @see de.cau.cs.kieler.scg.ScgPackage#getGuard_Schizophrenic()
-	 * @model
+	 * @model required="true"
 	 * @generated
 	 */
 	boolean isSchizophrenic();
@@ -146,20 +147,20 @@ public interface Guard extends EObject {
 	void setSchedulingBlockLink(SchedulingBlock value);
 
 				/**
-	 * Returns the value of the '<em><b>Volatile</b></em>' reference list.
+	 * Returns the value of the '<em><b>Original Object</b></em>' reference list.
 	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Volatile</em>' reference list isn't clear,
+	 * If the meaning of the '<em>Original Object</em>' reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Volatile</em>' reference list.
-	 * @see de.cau.cs.kieler.scg.ScgPackage#getGuard_Volatile()
+	 * @return the value of the '<em>Original Object</em>' reference list.
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getGuard_OriginalObject()
 	 * @model
 	 * @generated
 	 */
-	EList<ValuedObject> getVolatile();
+	EList<ValuedObject> getOriginalObject();
 
 				/**
 	 * Returns the value of the '<em><b>Sequentialize</b></em>' attribute.
@@ -173,7 +174,7 @@ public interface Guard extends EObject {
 	 * @return the value of the '<em>Sequentialize</em>' attribute.
 	 * @see #setSequentialize(boolean)
 	 * @see de.cau.cs.kieler.scg.ScgPackage#getGuard_Sequentialize()
-	 * @model default="true"
+	 * @model default="true" required="true"
 	 * @generated
 	 */
 	boolean isSequentialize();
@@ -187,5 +188,31 @@ public interface Guard extends EObject {
 	 * @generated
 	 */
 	void setSequentialize(boolean value);
+
+                /**
+	 * Returns the value of the '<em><b>Dead</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Dead</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+	 * @return the value of the '<em>Dead</em>' attribute.
+	 * @see #setDead(boolean)
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getGuard_Dead()
+	 * @model
+	 * @generated
+	 */
+    boolean isDead();
+
+                /**
+	 * Sets the value of the '{@link de.cau.cs.kieler.scg.Guard#isDead <em>Dead</em>}' attribute.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Dead</em>' attribute.
+	 * @see #isDead()
+	 * @generated
+	 */
+    void setDead(boolean value);
 
 } // Guard

@@ -161,6 +161,10 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
 				return createPredecessorAdapter();
 			}
 			@Override
+			public Adapter caseScheduleBlock(ScheduleBlock object) {
+				return createScheduleBlockAdapter();
+			}
+			@Override
 			public Adapter caseSchedule(Schedule object) {
 				return createScheduleAdapter();
 			}
@@ -473,6 +477,20 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
 	}
 
     /**
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.ScheduleBlock <em>Schedule Block</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.scg.ScheduleBlock
+	 * @generated
+	 */
+	public Adapter createScheduleBlockAdapter() {
+		return null;
+	}
+
+				/**
 	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.Schedule <em>Schedule</em>}'.
 	 * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;

@@ -13,6 +13,7 @@
         eType="#//Schedule" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="guards" upperBound="-1"
         eType="#//Guard" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Node" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotatable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="incoming" upperBound="-1"
@@ -118,9 +119,14 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="conditional" eType="#//Conditional"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="branchType" eType="#//BranchType"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Schedule">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="guards" upperBound="-1"
+  <eClassifiers xsi:type="ecore:EClass" name="ScheduleBlock">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="schedulingBlock" eType="#//SchedulingBlock"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="additionalGuards" upperBound="-1"
         eType="#//Guard"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Schedule">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scheduleBlocks" upperBound="-1"
+        eType="#//ScheduleBlock" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Guard">
     <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" lowerBound="1"
@@ -128,11 +134,13 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="schizophrenic" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="schizophrenic" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="schedulingBlockLink" eType="#//SchedulingBlock"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="volatile" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="originalObject" upperBound="-1"
         eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sequentialize" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-        defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sequentialize" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dead" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -56,6 +56,7 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import java.util.Set
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.core.annotations.StringAnnotation
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -90,6 +91,7 @@ class SCGTransformation {
     
     private static val String ANNOTATION_REGIONNAME = "regionName"
     private static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
+    private static val String ANNOTATION_HOSTCODE = "hostcode"
     
     //-------------------------------------------------------------------------
     //--                         U T I L I T Y                               --
@@ -185,22 +187,32 @@ class SCGTransformation {
         stateTypeCache.clear
         uniqueNameCache.clear        
         // Create a new SCGraph
-        val sCGraph = ScgFactory::eINSTANCE.createSCGraph
+        val sCGraph = ScgFactory::eINSTANCE.createSCGraph => [
+            label = if (!rootState.label.nullOrEmpty) rootState.label else rootState.id
+        ]
         // Handle declarations
 //        for (valuedObject : state.valuedObjects) {
 //            val valuedObjectSCG = sCGraph.createValuedObject(valuedObject.name)
 //            valuedObjectSCG.applyAttributes(valuedObject)
 //            valuedObjectSCG.map(valuedObject)
 //        }
-		for(declaration : state.declarations) {
-			val newDeclaration = createDeclaration(declaration)
-			declaration.valuedObjects.forEach[
-				val newValuedObject = it.copy
-				newDeclaration.valuedObjects += newValuedObject
-				newValuedObject.map(it)
-			]
-			sCGraph.declarations += newDeclaration
-		}
+
+        for(declaration : state.declarations) {
+            val newDeclaration = createDeclaration(declaration)
+            declaration.valuedObjects.forEach[
+                val newValuedObject = it.copy
+                newDeclaration.valuedObjects += newValuedObject
+                newValuedObject.map(it)
+            ]
+            sCGraph.declarations += newDeclaration
+        }
+        
+        val hostcodeAnnotations = state.getStringAnnotations(ANNOTATION_HOSTCODE)
+        hostcodeAnnotations.forEach[
+            sCGraph.addAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).value)
+        ]
+
+
         // Include top most level of hierarchy 
         // if the root state itself already contains multiple regions.
         // Otherwise skip the first layer of hierarchy.

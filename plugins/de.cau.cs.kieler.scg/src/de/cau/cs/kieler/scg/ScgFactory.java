@@ -213,6 +213,15 @@ public interface ScgFactory extends EFactory {
     Predecessor createPredecessor();
 
     /**
+	 * Returns a new object of class '<em>Schedule Block</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Schedule Block</em>'.
+	 * @generated
+	 */
+	ScheduleBlock createScheduleBlock();
+
+				/**
 	 * Returns a new object of class '<em>Schedule</em>'.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

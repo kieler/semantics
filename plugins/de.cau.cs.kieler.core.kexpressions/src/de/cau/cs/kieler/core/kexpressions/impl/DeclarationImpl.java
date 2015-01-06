@@ -29,7 +29,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * An implementation of the model object '<em><b>Declaration</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl#getValuedObjects <em>Valued Objects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl#getType <em>Type</em>}</li>
@@ -39,8 +41,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl#isSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl#isConst <em>Const</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl#isExtern <em>Extern</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl#isVolatile <em>Volatile</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -196,6 +198,26 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
     protected boolean extern = EXTERN_EDEFAULT;
 
     /**
+	 * The default value of the '{@link #isVolatile() <em>Volatile</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isVolatile()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean VOLATILE_EDEFAULT = false;
+
+				/**
+	 * The cached value of the '{@link #isVolatile() <em>Volatile</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isVolatile()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean volatile_ = VOLATILE_EDEFAULT;
+
+				/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -375,6 +397,27 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
 
     /**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isVolatile() {
+		return volatile_;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setVolatile(boolean newVolatile) {
+		boolean oldVolatile = volatile_;
+		volatile_ = newVolatile;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.DECLARATION__VOLATILE, oldVolatile, volatile_));
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -411,6 +454,8 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
 				return isConst();
 			case KExpressionsPackage.DECLARATION__EXTERN:
 				return isExtern();
+			case KExpressionsPackage.DECLARATION__VOLATILE:
+				return isVolatile();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -449,6 +494,9 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
 			case KExpressionsPackage.DECLARATION__EXTERN:
 				setExtern((Boolean)newValue);
 				return;
+			case KExpressionsPackage.DECLARATION__VOLATILE:
+				setVolatile((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -485,6 +533,9 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
 			case KExpressionsPackage.DECLARATION__EXTERN:
 				setExtern(EXTERN_EDEFAULT);
 				return;
+			case KExpressionsPackage.DECLARATION__VOLATILE:
+				setVolatile(VOLATILE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -513,6 +564,8 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
 				return const_ != CONST_EDEFAULT;
 			case KExpressionsPackage.DECLARATION__EXTERN:
 				return extern != EXTERN_EDEFAULT;
+			case KExpressionsPackage.DECLARATION__VOLATILE:
+				return volatile_ != VOLATILE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -541,6 +594,8 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
 		result.append(const_);
 		result.append(", extern: ");
 		result.append(extern);
+		result.append(", volatile: ");
+		result.append(volatile_);
 		result.append(')');
 		return result.toString();
 	}

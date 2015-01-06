@@ -188,7 +188,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
                         newGuard.valuedObject = newValuedObject
                         newGuard.schedulingBlockLink = originalGuard.schedulingBlockLink
                         newGuard.schizophrenic = true
-                        newGuard.volatile += originalGuard.volatile
+                        newGuard.originalObject += originalGuard.originalObject
                         scg.guards += newGuard
                     
                         vor.valuedObject = newGuard.valuedObject 

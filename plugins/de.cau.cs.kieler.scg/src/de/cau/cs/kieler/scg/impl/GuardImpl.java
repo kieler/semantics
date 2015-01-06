@@ -43,8 +43,9 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#isSchizophrenic <em>Schizophrenic</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getSchedulingBlockLink <em>Scheduling Block Link</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getVolatile <em>Volatile</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#getOriginalObject <em>Original Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#isSequentialize <em>Sequentialize</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.GuardImpl#isDead <em>Dead</em>}</li>
  * </ul>
  * </p>
  *
@@ -102,14 +103,14 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 	protected SchedulingBlock schedulingBlockLink;
 
 				/**
-	 * The cached value of the '{@link #getVolatile() <em>Volatile</em>}' reference list.
+	 * The cached value of the '{@link #getOriginalObject() <em>Original Object</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getVolatile()
+	 * @see #getOriginalObject()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ValuedObject> volatile_;
+	protected EList<ValuedObject> originalObject;
 
 				/**
 	 * The default value of the '{@link #isSequentialize() <em>Sequentialize</em>}' attribute.
@@ -132,6 +133,26 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 	protected boolean sequentialize = SEQUENTIALIZE_EDEFAULT;
 
 				/**
+	 * The default value of the '{@link #isDead() <em>Dead</em>}' attribute.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @see #isDead()
+	 * @generated
+	 * @ordered
+	 */
+    protected static final boolean DEAD_EDEFAULT = false;
+
+                /**
+	 * The cached value of the '{@link #isDead() <em>Dead</em>}' attribute.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @see #isDead()
+	 * @generated
+	 * @ordered
+	 */
+    protected boolean dead = DEAD_EDEFAULT;
+
+                /**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -300,11 +321,11 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ValuedObject> getVolatile() {
-		if (volatile_ == null) {
-			volatile_ = new EObjectResolvingEList<ValuedObject>(ValuedObject.class, this, ScgPackage.GUARD__VOLATILE);
+	public EList<ValuedObject> getOriginalObject() {
+		if (originalObject == null) {
+			originalObject = new EObjectResolvingEList<ValuedObject>(ValuedObject.class, this, ScgPackage.GUARD__ORIGINAL_OBJECT);
 		}
-		return volatile_;
+		return originalObject;
 	}
 
 				/**
@@ -329,6 +350,27 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 	}
 
 				/**
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 */
+    public boolean isDead() {
+		return dead;
+	}
+
+                /**
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 */
+    public void setDead(boolean newDead) {
+		boolean oldDead = dead;
+		dead = newDead;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.GUARD__DEAD, oldDead, dead));
+	}
+
+                /**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated
@@ -361,10 +403,12 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 			case ScgPackage.GUARD__SCHEDULING_BLOCK_LINK:
 				if (resolve) return getSchedulingBlockLink();
 				return basicGetSchedulingBlockLink();
-			case ScgPackage.GUARD__VOLATILE:
-				return getVolatile();
+			case ScgPackage.GUARD__ORIGINAL_OBJECT:
+				return getOriginalObject();
 			case ScgPackage.GUARD__SEQUENTIALIZE:
 				return isSequentialize();
+			case ScgPackage.GUARD__DEAD:
+				return isDead();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -390,12 +434,15 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 			case ScgPackage.GUARD__SCHEDULING_BLOCK_LINK:
 				setSchedulingBlockLink((SchedulingBlock)newValue);
 				return;
-			case ScgPackage.GUARD__VOLATILE:
-				getVolatile().clear();
-				getVolatile().addAll((Collection<? extends ValuedObject>)newValue);
+			case ScgPackage.GUARD__ORIGINAL_OBJECT:
+				getOriginalObject().clear();
+				getOriginalObject().addAll((Collection<? extends ValuedObject>)newValue);
 				return;
 			case ScgPackage.GUARD__SEQUENTIALIZE:
 				setSequentialize((Boolean)newValue);
+				return;
+			case ScgPackage.GUARD__DEAD:
+				setDead((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -421,11 +468,14 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 			case ScgPackage.GUARD__SCHEDULING_BLOCK_LINK:
 				setSchedulingBlockLink((SchedulingBlock)null);
 				return;
-			case ScgPackage.GUARD__VOLATILE:
-				getVolatile().clear();
+			case ScgPackage.GUARD__ORIGINAL_OBJECT:
+				getOriginalObject().clear();
 				return;
 			case ScgPackage.GUARD__SEQUENTIALIZE:
 				setSequentialize(SEQUENTIALIZE_EDEFAULT);
+				return;
+			case ScgPackage.GUARD__DEAD:
+				setDead(DEAD_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -447,10 +497,12 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 				return schizophrenic != SCHIZOPHRENIC_EDEFAULT;
 			case ScgPackage.GUARD__SCHEDULING_BLOCK_LINK:
 				return schedulingBlockLink != null;
-			case ScgPackage.GUARD__VOLATILE:
-				return volatile_ != null && !volatile_.isEmpty();
+			case ScgPackage.GUARD__ORIGINAL_OBJECT:
+				return originalObject != null && !originalObject.isEmpty();
 			case ScgPackage.GUARD__SEQUENTIALIZE:
 				return sequentialize != SEQUENTIALIZE_EDEFAULT;
+			case ScgPackage.GUARD__DEAD:
+				return dead != DEAD_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -469,6 +521,8 @@ public class GuardImpl extends MinimalEObjectImpl.Container implements Guard {
 		result.append(schizophrenic);
 		result.append(", sequentialize: ");
 		result.append(sequentialize);
+		result.append(", dead: ");
+		result.append(dead);
 		result.append(')');
 		return result.toString();
 	}

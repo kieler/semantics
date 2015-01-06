@@ -77,6 +77,7 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
 			case ScgPackage.BASIC_BLOCK: return createBasicBlock();
 			case ScgPackage.SCHEDULING_BLOCK: return createSchedulingBlock();
 			case ScgPackage.PREDECESSOR: return createPredecessor();
+			case ScgPackage.SCHEDULE_BLOCK: return createScheduleBlock();
 			case ScgPackage.SCHEDULE: return createSchedule();
 			case ScgPackage.GUARD: return createGuard();
 			default:
@@ -315,6 +316,16 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
 	}
 
     /**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ScheduleBlock createScheduleBlock() {
+		ScheduleBlockImpl scheduleBlock = new ScheduleBlockImpl();
+		return scheduleBlock;
+	}
+
+				/**
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @generated

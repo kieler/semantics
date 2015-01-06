@@ -14,10 +14,10 @@ package de.cau.cs.kieler.core.kexpressions;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.BoolValue#getValue <em>Value</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getBoolValue()
  * @model

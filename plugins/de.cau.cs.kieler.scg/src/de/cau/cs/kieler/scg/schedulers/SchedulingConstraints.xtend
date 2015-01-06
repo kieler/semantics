@@ -34,6 +34,6 @@ class SchedulingConstraints {
 	@Property
 	List<List<SchedulingBlock>> schedulingBlockClusters
 	
-	@Property
-	List<Guard> guards
+//	@Property
+//	List<Guard> guards
 }

@@ -234,6 +234,12 @@ public class ScgSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ScgPackage.SCHEDULE_BLOCK: {
+				ScheduleBlock scheduleBlock = (ScheduleBlock)theEObject;
+				T result = caseScheduleBlock(scheduleBlock);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ScgPackage.SCHEDULE: {
 				Schedule schedule = (Schedule)theEObject;
 				T result = caseSchedule(schedule);
@@ -551,6 +557,21 @@ public class ScgSwitch<T> extends Switch<T> {
 	}
 
     /**
+	 * Returns the result of interpreting the object as an instance of '<em>Schedule Block</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Schedule Block</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseScheduleBlock(ScheduleBlock object) {
+		return null;
+	}
+
+				/**
 	 * Returns the result of interpreting the object as an instance of '<em>Schedule</em>'.
 	 * <!-- begin-user-doc -->
      * This implementation returns null;

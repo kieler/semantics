@@ -94,6 +94,8 @@ import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMExecutionAutoloadCombination;
+import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMModelSelectionCombination;
 
 /**
  * Singleton instance of DiagramViewPart to display any model
@@ -1056,6 +1058,9 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             // listen for internal klighd errors
             lastException = null;
             Platform.addLogListener(this);
+            
+            boolean success = false;
+            
             // Update diagram
             if (modelTypeChanged) {
                 //save previous synthesis options to restore later
@@ -1089,19 +1094,20 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
                 // Give model synthesis access to the compilation result
                 properties.setProperty(KiCoKLighDProperties.COMPILATION_RESULT, compilationResult);
-                publishCurrentModelInformation(model);
+                publishCurrentModelInformation(model, compilationResult);
 
                 // the (re)initialization case
-                DiagramViewManager.initializeView(this, model, null, properties);
+                initialize(model, null, properties);
+                success = true;
                 // reset layout to resolve KISEMA-905
                 resetLayoutConfig();
 
             } else {
                 // Give model synthesis access to the compilation result
                 vc.setProperty(KiCoKLighDProperties.COMPILATION_RESULT, compilationResult);
-                publishCurrentModelInformation(model);
+                publishCurrentModelInformation(model, compilationResult);
                 // update case (keeps options and sidebar)
-                DiagramViewManager.updateView(this.getViewer().getViewContext(), model);
+                success = DiagramViewManager.updateView(this.getViewer().getViewContext(), model) != null;
             }
 
             // stop listening
@@ -1112,7 +1118,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 throw lastException;
             } else {
                 KNode currentDiagram = this.getViewer().getViewContext().getViewModel();
-                if (currentDiagram == null || currentDiagram.getChildren().isEmpty()) {
+                if (!success || currentDiagram == null || currentDiagram.getChildren().isEmpty()) {
                     if (model instanceof EObject && !(model instanceof KiCoCodePlaceHolder)) {
                         String editorID = null;
                         // Adding file extension
@@ -1170,19 +1176,26 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
      * 
      * @param model
      */
-    private void publishCurrentModelInformation(final Object model) {
+    private void publishCurrentModelInformation(final Object model, final CompilationResult compilationResult) {
         if (isPrimaryView()) {
             boolean is_placeholder =
                     model instanceof KiCoErrorModel || model instanceof KiCoMessageModel
                             || model instanceof KiCoCodePlaceHolder;
             boolean is_chain = model instanceof KiCoModelChain;
             // Inform KIEM about current model
-            if (model != null && !is_placeholder && !is_chain) {
-                KiemPlugin.getOpenedModelRootObjects().put(modelViewPath, (EObject) model);
-                KiemPlugin.setCurrentModelFile(modelViewPath);
-            } else {
-                KiemPlugin.getOpenedModelRootObjects().put(modelViewPath, null);
-                KiemPlugin.setCurrentModelFile(modelViewPath);
+            if (compilationResult != null) {
+                if (model != null && !is_placeholder && !is_chain) {
+                    KiemPlugin.getOpenedModelRootObjects().put(modelViewPath, (EObject) model);
+                    KiemPlugin.setCurrentModelFile(modelViewPath);
+                    KIEMExecutionAutoloadCombination.autoloadExecutionSchedule();
+                } else if (!is_placeholder) {
+                    KiemPlugin.getOpenedModelRootObjects().put(modelViewPath, null);
+                    KiemPlugin.setCurrentModelFile(modelViewPath);
+                    KIEMExecutionAutoloadCombination.autoloadExecutionSchedule();
+                }
+            } else { //this case when model is not compiled
+                KIEMModelSelectionCombination.refreshKIEMActiveAndOpenedModels(activeEditor);
+                KIEMExecutionAutoloadCombination.autoloadExecutionSchedule();
             }
         }
     }

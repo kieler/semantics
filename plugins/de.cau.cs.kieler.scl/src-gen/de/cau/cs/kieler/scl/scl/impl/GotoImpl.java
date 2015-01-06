@@ -16,11 +16,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * An implementation of the model object '<em><b>Goto</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.GotoImpl#getTargetLabel <em>Target Label</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

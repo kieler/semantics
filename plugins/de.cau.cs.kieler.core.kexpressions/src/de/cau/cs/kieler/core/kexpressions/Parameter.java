@@ -11,11 +11,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.Parameter#isCallByReference <em>Call By Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.Parameter#getExpression <em>Expression</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getParameter()
  * @model

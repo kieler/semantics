@@ -16,11 +16,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * An implementation of the model object '<em><b>Host Code Instruction</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.HostCodeInstructionImpl#getHostCode <em>Host Code</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

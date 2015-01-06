@@ -418,6 +418,13 @@ litigation.
          unpack="false"/>
 
    <plugin
+         id="de.cau.cs.kieler.sj"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="de.cau.cs.kieler.sim.kiem"
          download-size="0"
          install-size="0"

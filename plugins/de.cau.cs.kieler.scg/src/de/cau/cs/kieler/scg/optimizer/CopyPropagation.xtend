@@ -22,6 +22,10 @@ import de.cau.cs.kieler.scg.SCGraph
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import com.google.common.collect.ImmutableList
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.Guard
+import java.util.List
 
 /**
  * @author ssm
@@ -33,38 +37,107 @@ class CopyPropagation extends AbstractOptimizer {
     @Inject
     extension KExpressionsExtension
     
-    private static val GUARDNAME = "guard" 
+    private static val GUARDPREFIX = "g" 
+    private static val CONDPREFIX = "_cond"
+    private static val GOGUARD = "_GO"
+    private static val GOGUARDVALUEDOBJECTNAME = "g0"
     
-    private val referenceAssignments = <Assignment> newArrayList
+    private val assignmentReferences = <ValuedObject, ValuedObject> newHashMap
+    private val reverseGuardMap = <ValuedObject, Guard> newHashMap
+    private val replacementMap = <Guard, Guard> newHashMap
+    
+    private val relinkVisited = <Guard> newHashSet
     
     override optimize(SCGraph scg) {
-        scg.nodes.filter(typeof(Assignment)).forEach[
-            if (it.assignment instanceof ValuedObjectReference
-                && it.valuedObject.name.contains(GUARDNAME)
+    	
+    	var Guard goGuard = null 
+        
+        scg.guards.forEach[
+            reverseGuardMap.put(valuedObject, it)
+        ]
+        
+        scg.guards.filter[ expression instanceof ValuedObjectReference ].forEach[
+            if ((valuedObject.name.contains(GUARDPREFIX) || valuedObject.name.contains(CONDPREFIX))
+//               && (!(expression as ValuedObjectReference).valuedObject.name.contains(GOGUARD))
             ) {
-                referenceAssignments += it
+                assignmentReferences.put(it.valuedObject, (expression as ValuedObjectReference).valuedObject)
             }    
         ]  
         
-        val ic = ImmutableList::copyOf(referenceAssignments)  
+        val toDelete = <Guard> newArrayList // make this a set for final review!
         
-        ic.forEach[ ra |
-            val incoming = ImmutableList::copyOf(ra.incoming.filter(typeof(ControlFlow)))
-            incoming.forEach[ target = ra.next.target ]
+        for (key : assignmentReferences.keySet.immutableCopy) {
+            for (guard : scg.guards.filter[ !isDead ]) {
+                if (guard.expression instanceof ValuedObjectReference) {
+                        if ((guard.expression as ValuedObjectReference).valuedObject == key) {
+                            (guard.expression as ValuedObjectReference).valuedObject == assignmentReferences.get(key)
+                        }
+                } else {
+                    val references = guard.expression.eAllContents.filter(typeof(ValuedObjectReference)).filter[ it.valuedObject == key ].toSet
+                    for (ref : references) {
+                        if (ref.valuedObject == key) {
+                            ref.valuedObject = assignmentReferences.get(key)
+                        }
+                    }
+                }
+                
+                if (guard.valuedObject == key) {
+                    if (guard.valuedObject.name.startsWith(GOGUARDVALUEDOBJECTNAME)) {
+                    	goGuard = guard
+                    } else {
+                    	toDelete += guard
+                    }
+                }
+            } // guards
             
-            val originalObject = (ra.assignment as ValuedObjectReference).valuedObject 
-            val references = ImmutableList::copyOf(scg.eAllContents.filter(typeof(ValuedObjectReference)).filter[ it.valuedObject == ra.valuedObject ])
-            for(ref : references) {
-                if (ref!=null) 
-                    ref.valuedObject = originalObject
+                for (ar : assignmentReferences.keySet.immutableCopy) {
+                    if (assignmentReferences.get(ar) == key) {
+                        assignmentReferences.put(ar, assignmentReferences.get(key))
+                    }
+                }            
+        }  // assignment references
+        
+        
+        
+        System.out.print("Copy propagation: ")
+        for (del : toDelete.immutableCopy) {
+            System.out.print(del.valuedObject.name + " ")
+        }
+        System.out.println("")
+        
+        relinkVisited.clear
+        replacementMap.clear
+        for (del : toDelete.immutableCopy) {
+            if (del.valuedObject.name.startsWith(GUARDPREFIX)) {
+                del.relink(toDelete, "")
             }
-            
-            scg.removeValuedObject(ra.valuedObject)
-            ra.next.target.incoming -= ra.next
-            ra.remove
-        ]
+        }
+        System.out.println("")
+        
+//        toDelete -= goGuard
+
+        for (del : toDelete.immutableCopy) {
+            scg.guards -= del
+        }
         
         scg
     }
     
+    private def Guard relink(Guard guard, List<Guard> deleteList, String debugIndent) {
+    	if (!relinkVisited.contains(guard)) {
+            System.out.println(debugIndent + "Copy propagation: relinking " + guard.valuedObject.name)
+    		relinkVisited += guard
+	    	val vo = (guard.expression as ValuedObjectReference).valuedObject
+        	var Guard newGuard = reverseGuardMap.get(vo)
+        	if (deleteList.contains(newGuard)) {
+        		newGuard = newGuard.relink(deleteList, "  ")
+        	}
+        	guard.schedulingBlockLink.guard = newGuard
+        	reverseGuardMap.put(guard.valuedObject, newGuard)
+//			replacementMap.put(guard, newGuard)
+        	return newGuard
+        }
+        
+        return guard
+    }
 }

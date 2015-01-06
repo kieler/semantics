@@ -225,7 +225,6 @@ class S2C {
    // Generate the  tick function.
    def sTickFunction(Program program) {
        '''    void tick(){
-       g0 = _GO;
        «FOR state : program.states»
        «state.expand»
        «ENDFOR»

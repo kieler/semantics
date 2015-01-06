@@ -2,6 +2,8 @@
  */
 package de.cau.cs.kieler.s.s;
 
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -67,13 +69,22 @@ public interface SPackage extends EPackage
   int PROGRAM = 0;
 
   /**
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PROGRAM__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROGRAM__NAME = 0;
+  int PROGRAM__NAME = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Priority</b></em>' attribute.
@@ -82,7 +93,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROGRAM__PRIORITY = 1;
+  int PROGRAM__PRIORITY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -91,7 +102,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROGRAM__DECLARATIONS = 2;
+  int PROGRAM__DECLARATIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Global Host Code Instruction</b></em>' attribute.
@@ -100,7 +111,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROGRAM__GLOBAL_HOST_CODE_INSTRUCTION = 3;
+  int PROGRAM__GLOBAL_HOST_CODE_INSTRUCTION = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>States</b></em>' containment reference list.
@@ -109,7 +120,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROGRAM__STATES = 4;
+  int PROGRAM__STATES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Program</em>' class.
@@ -118,7 +129,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROGRAM_FEATURE_COUNT = 5;
+  int PROGRAM_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.StateImpl <em>State</em>}' class.
@@ -131,13 +142,22 @@ public interface SPackage extends EPackage
   int STATE = 1;
 
   /**
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE__ANNOTATIONS = 0;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE__NAME = 0;
+  int STATE__NAME = 1;
 
   /**
    * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -146,7 +166,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE__DECLARATIONS = 1;
+  int STATE__DECLARATIONS = 2;
 
   /**
    * The feature id for the '<em><b>Instructions</b></em>' containment reference list.
@@ -155,7 +175,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE__INSTRUCTIONS = 2;
+  int STATE__INSTRUCTIONS = 3;
 
   /**
    * The number of structural features of the '<em>State</em>' class.
@@ -164,7 +184,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE_FEATURE_COUNT = 3;
+  int STATE_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.InstructionImpl <em>Instruction</em>}' class.
@@ -735,6 +755,17 @@ public interface SPackage extends EPackage
   EClass getState();
 
   /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.State#getAnnotations <em>Annotations</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Annotations</em>'.
+   * @see de.cau.cs.kieler.s.s.State#getAnnotations()
+   * @see #getState()
+   * @generated
+   */
+  EReference getState_Annotations();
+
+  /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.s.s.State#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1252,6 +1283,14 @@ public interface SPackage extends EPackage
      * @generated
      */
     EClass STATE = eINSTANCE.getState();
+
+    /**
+     * The meta object literal for the '<em><b>Annotations</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference STATE__ANNOTATIONS = eINSTANCE.getState_Annotations();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.

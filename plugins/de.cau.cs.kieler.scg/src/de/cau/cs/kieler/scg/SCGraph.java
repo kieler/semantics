@@ -30,6 +30,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getBasicBlocks <em>Basic Blocks</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getSchedules <em>Schedules</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getGuards <em>Guards</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.SCGraph#getLabel <em>Label</em>}</li>
  * </ul>
  * </p>
  *
@@ -117,5 +118,31 @@ public interface SCGraph extends Annotatable {
 	 * @generated
 	 */
     EList<Guard> getGuards();
+
+    /**
+	 * Returns the value of the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Label</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+	 * @return the value of the '<em>Label</em>' attribute.
+	 * @see #setLabel(String)
+	 * @see de.cau.cs.kieler.scg.ScgPackage#getSCGraph_Label()
+	 * @model
+	 * @generated
+	 */
+    String getLabel();
+
+    /**
+	 * Sets the value of the '{@link de.cau.cs.kieler.scg.SCGraph#getLabel <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Label</em>' attribute.
+	 * @see #getLabel()
+	 * @generated
+	 */
+    void setLabel(String value);
 
 } // SCGraph

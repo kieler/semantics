@@ -30,14 +30,15 @@ import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
  * An implementation of the model object '<em><b>Valued Object</b></em>'.
  * <!-- end-user-doc -->
  * <p>
+ * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getCombineOperator <em>Combine Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getInitialValue <em>Initial Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectImpl#getCardinalities <em>Cardinalities</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

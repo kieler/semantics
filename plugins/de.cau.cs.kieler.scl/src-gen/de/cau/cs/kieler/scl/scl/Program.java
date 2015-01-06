@@ -15,12 +15,12 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.Program#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.Program#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.Program#getDeclarations <em>Declarations</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.scl.scl.SclPackage#getProgram()
  * @model

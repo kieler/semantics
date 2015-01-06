@@ -13,6 +13,7 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.Declaration#getValuedObjects <em>Valued Objects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.Declaration#getType <em>Type</em>}</li>
@@ -22,8 +23,8 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.Declaration#isSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.Declaration#isConst <em>Const</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.Declaration#isExtern <em>Extern</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.Declaration#isVolatile <em>Volatile</em>}</li>
  * </ul>
- * </p>
  *
  * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getDeclaration()
  * @model
@@ -230,5 +231,31 @@ public interface Declaration extends Annotatable {
 	 * @generated
 	 */
     void setExtern(boolean value);
+
+				/**
+	 * Returns the value of the '<em><b>Volatile</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Volatile</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Volatile</em>' attribute.
+	 * @see #setVolatile(boolean)
+	 * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getDeclaration_Volatile()
+	 * @model required="true"
+	 * @generated
+	 */
+	boolean isVolatile();
+
+				/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.Declaration#isVolatile <em>Volatile</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Volatile</em>' attribute.
+	 * @see #isVolatile()
+	 * @generated
+	 */
+	void setVolatile(boolean value);
 
 } // Declaration

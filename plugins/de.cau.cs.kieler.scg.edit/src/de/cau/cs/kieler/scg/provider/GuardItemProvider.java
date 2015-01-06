@@ -77,7 +77,9 @@ public class GuardItemProvider
 
 			addSchizophrenicPropertyDescriptor(object);
 			addSchedulingBlockLinkPropertyDescriptor(object);
-			addVolatilePropertyDescriptor(object);
+			addOriginalObjectPropertyDescriptor(object);
+			addSequentializePropertyDescriptor(object);
+			addDeadPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -127,19 +129,19 @@ public class GuardItemProvider
 	}
 
 				/**
-	 * This adds a property descriptor for the Volatile feature.
+	 * This adds a property descriptor for the Original Object feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addVolatilePropertyDescriptor(Object object) {
+	protected void addOriginalObjectPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Guard_volatile_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Guard_volatile_feature", "_UI_Guard_type"),
-				 ScgPackage.Literals.GUARD__VOLATILE,
+				 getString("_UI_Guard_originalObject_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Guard_originalObject_feature", "_UI_Guard_type"),
+				 ScgPackage.Literals.GUARD__ORIGINAL_OBJECT,
 				 true,
 				 false,
 				 true,
@@ -149,6 +151,50 @@ public class GuardItemProvider
 	}
 
 				/**
+	 * This adds a property descriptor for the Sequentialize feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addSequentializePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Guard_sequentialize_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Guard_sequentialize_feature", "_UI_Guard_type"),
+				 ScgPackage.Literals.GUARD__SEQUENTIALIZE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+				/**
+	 * This adds a property descriptor for the Dead feature.
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 */
+    protected void addDeadPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Guard_dead_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Guard_dead_feature", "_UI_Guard_type"),
+				 ScgPackage.Literals.GUARD__DEAD,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+                /**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -216,6 +262,8 @@ public class GuardItemProvider
 
 		switch (notification.getFeatureID(Guard.class)) {
 			case ScgPackage.GUARD__SCHIZOPHRENIC:
+			case ScgPackage.GUARD__SEQUENTIALIZE:
+			case ScgPackage.GUARD__DEAD:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case ScgPackage.GUARD__VALUED_OBJECT:

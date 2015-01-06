@@ -48,6 +48,8 @@ import java.util.List
 import java.util.HashMap
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import static de.cau.cs.kieler.s.sj.xtend.S2Java.*
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.annotations.StringAnnotation
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -61,6 +63,11 @@ class S2Java {
     public static String bufferSize;
     public static String includeHeader;
     
+    private static val ANNOTATION_HOSTCODE = "hostcode"
+    
+    @Inject
+    extension AnnotationsExtensions    
+
     @Inject
     extension KExpressionsExtension    
 
@@ -74,10 +81,11 @@ class S2Java {
         val timestamp = System.currentTimeMillis
        	program.eAllContents.filter(typeof(OperatorExpression)).filter[operator == OperatorType::PRE].forEach[
        		it.eAllContents.filter(typeof(ValuedObjectReference)).forEach[ preCache += it.valuedObject ]	
-       	]    
+       	]  
+              	  
       val code = '''
 «/* Generate the Java header */»
-       «header(program, className)»
+       «header(program, program.name)»
 
        «/* Possible global host code */»
        «if (program.globalHostCodeInstruction != null) {
@@ -116,6 +124,10 @@ class S2Java {
     /*****************************************************************************/
 
     «includeHeader»
+    «FOR hostcode : program.getStringAnnotations(ANNOTATION_HOSTCODE)»
+    «(hostcode as StringAnnotation).value»
+    «ENDFOR»
+    
     
     class «className» {
 
@@ -154,27 +166,62 @@ class S2Java {
    def boolean usesPre(Program program, ValuedObject valuedObject) {
 		preCache.contains(valuedObject)
    }
+   
+   
+   def privateOrPublic(ValuedObject valuedObject) {
+       if (valuedObject.isInput || valuedObject.isOutput || valuedObject.isExtern) {
+           return '''public'''
+       }
+       return '''private'''
+   }
 
    // Generate variables.
    def sVariables(Program program) {
        '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
-              «'''  '''»public «signal.type.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
-              «IF signal.isArray»
-                «FOR card : signal.cardinalities»{int i«card.hashCode» = 0; for(i«card.hashCode»=0; i«card.hashCode» < «card.intValue»; i«card.hashCode»++) {«ENDFOR»
-                «signal.name»«FOR card : signal.cardinalities»[i«card.hashCode»]«ENDFOR» = «signal.initialValue.expand»;
-                «FOR card : signal.cardinalities»}}«ENDFOR»
+              «IF !declaration.volatile»
+              «'''  '''»«signal.privateOrPublic» «signal.type.expand»«IF signal.isArray»[]«ENDIF» «signal.name»«IF signal.isArray» = new «signal.type.expand»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
+              «IF signal.isArray
+//TODO: initial values für arrays
+»
+«««                «FOR card : signal.cardinalities»{int i«card.hashCode» = 0; for(i«card.hashCode»=0; i«card.hashCode» < «card.intValue»; i«card.hashCode»++) {«ENDFOR»
+«««                «signal.name»«FOR card : signal.cardinalities»[i«card.hashCode»]«ENDFOR» = «signal.initialValue.expand»;
+«««                «FOR card : signal.cardinalities»}}«ENDFOR»
                 «ELSE»
                   = «signal.initialValue.expand» 
                 «ENDIF»«ENDIF»;
             
+            «ENDIF»
             «IF program.usesPre(signal)»
-«'''  '''»«signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
+«'''  '''»«signal.privateOrPublic» «signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
             «ENDIF»
         «ENDFOR»
         «ENDFOR»
         '''
    }
+   
+   // Generate variables.
+   def tickVariables(Program program) {
+       '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
+          «FOR signal : declaration.valuedObjects»
+              «IF declaration.volatile»
+              «'''  '''»«signal.type.expand»«IF signal.isArray»[]«ENDIF» «signal.name»«IF signal.isArray» = new «signal.type.expand»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
+              «IF signal.isArray
+//TODO: initial values für arrays
+»
+«««                «FOR card : signal.cardinalities»{int i«card.hashCode» = 0; for(i«card.hashCode»=0; i«card.hashCode» < «card.intValue»; i«card.hashCode»++) {«ENDFOR»
+«««                «signal.name»«FOR card : signal.cardinalities»[i«card.hashCode»]«ENDFOR» = «signal.initialValue.expand»;
+«««                «FOR card : signal.cardinalities»}}«ENDFOR»
+                «ELSE»
+                  = «signal.initialValue.expand» 
+                «ENDIF»«ENDIF»;
+            
+            «ENDIF»
+        «ENDFOR»
+        «ENDFOR»
+        '''
+   }
+   
 
    // Generate PRE variables setter.
    def setPreVariables(Program program) {
@@ -191,13 +238,17 @@ class S2Java {
        
         «IF signal.isArray»
                 «FOR card : signal.cardinalities»{int _i«signal.cardinalities.indexOf(card)» = 0; for(_i«signal.cardinalities.indexOf(card)»=0; _i«signal.cardinalities.indexOf(card)» < «card.intValue»; _i«signal.cardinalities.indexOf(card)»++) {«ENDFOR»
-                «signal.name»«FOR card : signal.cardinalities»[_i«signal.cardinalities.indexOf(card)»]«ENDFOR» = 0;
+                «IF signal.type == ValueType::BOOL»
+                  «signal.name»«FOR card : signal.cardinalities»[_i«signal.cardinalities.indexOf(card)»]«ENDFOR» = false;
+                «ELSE»
+                  «signal.name»«FOR card : signal.cardinalities»[_i«signal.cardinalities.indexOf(card)»]«ENDFOR» = 0;
+                «ENDIF»
                 «FOR card : signal.cardinalities»}}
                 «ENDFOR»
         «ENDIF»
        
        «IF program.usesPre(signal) 
- 			» PRE_«signal.name» = 0;« // FIXME: Must be the INITIAL value of the valued object
+ 			» PRE_«signal.name» = false;« // FIXME: Must be the INITIAL value of the valued object
  		ENDIF»«ENDFOR»«ENDFOR»'''
    }
    
@@ -206,7 +257,7 @@ class S2Java {
 
    def dispatch expand(ValueType valueType) {
        if (valueType == ValueType::BOOL) {
-           return '''int'''
+           return '''boolean'''
        }
        else {
            return '''«valueType»'''
@@ -218,7 +269,7 @@ class S2Java {
    // Generate the  reset function.
    def sResetFunction(Program program) {
        '''  public void reset(){
-       _GO = 1;
+       _GO = true;
        «program.resetVariables»
        return;
     }
@@ -230,11 +281,11 @@ class S2Java {
    // Generate the  tick function.
    def sTickFunction(Program program) {
        '''  public void tick(){
-       g0 = _GO;
+       	«program.tickVariables»
        «FOR state : program.states»
        «state.expand»
        «ENDFOR»
-       _GO = 0;
+       _GO = false;
        «program.setPreVariables»
        return;
     }
@@ -576,7 +627,7 @@ class S2Java {
 
    // Expand a boolean expression value (true or false).
    def dispatch CharSequence expand(BoolValue expression) {
-        '''«IF expression.value == true »1«ENDIF»«IF expression.value == false»0«ENDIF»'''
+        '''«IF expression.value == true »true«ENDIF»«IF expression.value == false»false«ENDIF»'''
    }
 
    // Expand an object reference.

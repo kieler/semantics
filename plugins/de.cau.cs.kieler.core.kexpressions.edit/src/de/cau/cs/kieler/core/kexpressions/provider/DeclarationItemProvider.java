@@ -37,13 +37,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class DeclarationItemProvider
-    extends AnnotatableItemProvider
-    implements
-        IEditingDomainItemProvider,
-        IStructuredItemContentProvider,
-        ITreeItemContentProvider,
-        IItemLabelProvider,
-        IItemPropertySource {
+    extends AnnotatableItemProvider {
     /**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -72,6 +66,7 @@ public class DeclarationItemProvider
 			addSignalPropertyDescriptor(object);
 			addConstPropertyDescriptor(object);
 			addExternPropertyDescriptor(object);
+			addVolatilePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -231,6 +226,28 @@ public class DeclarationItemProvider
 	}
 
     /**
+	 * This adds a property descriptor for the Volatile feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addVolatilePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Declaration_volatile_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Declaration_volatile_feature", "_UI_Declaration_type"),
+				 KExpressionsPackage.Literals.DECLARATION__VOLATILE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+				/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -305,6 +322,7 @@ public class DeclarationItemProvider
 			case KExpressionsPackage.DECLARATION__SIGNAL:
 			case KExpressionsPackage.DECLARATION__CONST:
 			case KExpressionsPackage.DECLARATION__EXTERN:
+			case KExpressionsPackage.DECLARATION__VOLATILE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case KExpressionsPackage.DECLARATION__VALUED_OBJECTS:
