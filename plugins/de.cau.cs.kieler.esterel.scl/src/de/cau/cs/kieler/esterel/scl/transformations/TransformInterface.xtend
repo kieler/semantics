@@ -26,6 +26,9 @@ import de.cau.cs.kieler.esterel.kexpressions.Output
 import de.cau.cs.kieler.esterel.kexpressions.VariableDecl
 import de.cau.cs.kieler.scl.scl.SCLProgram
 import org.eclipse.xtext.xbase.lib.InputOutput
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import java.util.LinkedList
+import java.util.HashMap
 
 /**
  * @author krat
@@ -38,7 +41,7 @@ class TransformInterface {
 
     @Inject
     extension EsterelToSclExtensions
-
+    
     @Inject
     extension EsterelToSclTransformation
 
@@ -48,15 +51,17 @@ class TransformInterface {
     /*
      * Transforms an Esterel module interface to Kexpression declarations
      */
-    def transformInterface(ModuleInterface modInterface, SCLProgram program) {
+    def transformInterface(ModuleInterface modInterface, SCLProgram program,
+        LinkedList<Pair<String, ValuedObject>> signalMap) {
         if (modInterface != null) {
-            modInterface.intConstantDecls.forEach[ transformSingleDeclartion(it, program) ]
-            modInterface.intSignalDecls.forEach[ transformSingleDeclartion(it, program) ]
-            modInterface.intSensorDecls.forEach[ transformSingleDeclartion(it, program) ]
+            modInterface.intConstantDecls.forEach[ transformSingleDeclartion(it, program, signalMap) ]
+            modInterface.intSignalDecls.forEach[ transformSingleDeclartion(it, program, signalMap) ]
+            modInterface.intSensorDecls.forEach[ transformSingleDeclartion(it, program, signalMap) ]
         }
     }
 
-    def transformSingleDeclartion(InterfaceSignalDecl decl, SCLProgram program) {
+    def transformSingleDeclartion(InterfaceSignalDecl decl, SCLProgram program, 
+        LinkedList<Pair<String, ValuedObject>> signalMap) {
         for (sig : decl.signals) {
             val pureSig = createValuedObject(sig.name)
             signalMap.add(sig.name -> pureSig)
@@ -94,7 +99,8 @@ class TransformInterface {
         }
     }
 
-    def transformSingleDeclartion(ConstantDecls decl, SCLProgram program) {
+    def transformSingleDeclartion(ConstantDecls decl, SCLProgram program,
+        LinkedList<Pair<String, ValuedObject>> signalMap) {
         for (singleDecl : decl.constants) {
             // Type of the constant
             val type = singleDecl.type.type
@@ -122,7 +128,8 @@ class TransformInterface {
 
     }
     
-    def transformSingleDeclartion(SensorDecl decl, SCLProgram program) {
+    def transformSingleDeclartion(SensorDecl decl, SCLProgram program,
+        LinkedList<Pair<String, ValuedObject>> signalMap) {
         for (singleDecl : decl.sensors) {
                 val type = singleDecl.type.type
                 val s_val = createValuedObject(singleDecl.sensor.name)
@@ -146,7 +153,8 @@ class TransformInterface {
      * @param sig The variable to be declared
      * @param name The resulting variable (should be unique)
      */
-    def Declaration transformIntVarDeclaration(VariableDecl declaration) {
+    def Declaration transformIntVarDeclaration(VariableDecl declaration, LinkedList<Pair<String, ValuedObject>> signals,
+        LinkedList<Pair<String, ValuedObject>> signalMap) {
         val decl = createDeclaration => [
             if (declaration.type.type.name != "PURE") {
                 type = ValueType::getByName(declaration.type.type.name)
@@ -157,6 +165,7 @@ class TransformInterface {
 
         declaration.variables.forEach [
             val s_val = createValuedObject(uniqueName(signalMap, it.name))
+            signals.add(it.name -> s_val)
             signalMap.add(it.name -> s_val)
             valuedMap.put(s_val, s_val)
             if (it.expression != null)

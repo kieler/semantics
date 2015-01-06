@@ -310,17 +310,16 @@ class EsterelToSclExtensions {
     /*
      * Checks, whether a variable is already declared
      */
-     def boolean alreadyDefined(LinkedList<Declaration> declarations, String n) {
-         for (decl : declarations) {
+     def boolean alreadyDefined(String n) {
+         for (decl : localDeclarations) {
              for (valObj : decl.valuedObjects) {
                  if (valObj.name == n) {
                     return true
                  }
-             
-             
              }
          }
-         
+         if (!signalMap.filter[ key == n ].nullOrEmpty)
+            return true
          false
      }
      
