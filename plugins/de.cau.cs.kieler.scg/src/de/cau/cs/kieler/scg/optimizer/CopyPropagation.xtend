@@ -51,6 +51,11 @@ class CopyPropagation extends AbstractOptimizer {
     override optimize(SCGraph scg) {
     	
     	var Guard goGuard = null 
+    	
+    	assignmentReferences.clear
+    	reverseGuardMap.clear
+    	replacementMap.clear
+    	relinkVisited.clear
         
         scg.guards.forEach[
             reverseGuardMap.put(valuedObject, it)
