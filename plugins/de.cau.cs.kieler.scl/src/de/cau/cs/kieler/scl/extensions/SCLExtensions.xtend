@@ -34,7 +34,6 @@ class SCLExtensions {
 
     /*
      * Removes all goto instructions, that target a label, that follows that goto.
-     * krat: if the following statements are just other label, we can remove the goto
      */
     def StatementSequence removeSuperfluousGotos(StatementSequence sSeq) {
         val toDelete = <Goto>newLinkedList
@@ -52,16 +51,17 @@ class SCLExtensions {
                     parent = parent.eContainer.eContainer as StatementSequence
                     index = parent.statements.indexOf(oldSseq.eContainer)
                 }
-
-                val nextStatement = parent.statements.get(index + 1) as Statement
-                if (nextStatement instanceof EmptyStatement &&
-                    (nextStatement as EmptyStatement).label == goto.targetLabel) {
-                    toDelete.add(goto)
+                if (parent.statements.length > index + 1) {
+                    val nextStatement = parent.statements.get(index + 1) as Statement
+                    if (nextStatement instanceof EmptyStatement &&
+                        (nextStatement as EmptyStatement).label == goto.targetLabel) {
+                        toDelete.add(goto)
+                    }
+                    if (!(nextStatement instanceof EmptyStatement)) {
+                        justLabel = false
+                    }
+                    index = index + 1
                 }
-                if (!(nextStatement instanceof EmptyStatement)) {
-                    justLabel = false
-                }
-                index = index + 1
 
             }
         }
@@ -151,7 +151,6 @@ class SCLExtensions {
 
     /*
       * Removes double jumps
-      * TODO: Superfluous labels are removed?
       */
     def StatementSequence removeDoubleJumps(StatementSequence sSeq) {
         val replaceBy = <Pair<String, String>>newLinkedList

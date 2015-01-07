@@ -71,6 +71,9 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
 
     @Inject
     extension KExpressionsExtension
+    
+    @Inject
+    extension SCLExtensions
 
     // M2M Mapping
     //    private val nodeMapping = new HashMap<Node, Node>
@@ -90,21 +93,10 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     }
 
     /*
-	 * Initialize transformation by optimizing gotos. E.g.
-	 * l1:
-	 * pause;
-	 * goto l2; -> goto l1;
-	 * l2:
-	 * goto l1;
-	 * 
-	 * TODO use double jump optimization instead
-	 * 
+	 * Initialize transformation by removing double jumps and explicitly set initial values
 	 */
     def SCLProgram initialize(SCLProgram scl) {
-        replaceGotoTargets(scl.statements, collectLabels(scl.statements, new LinkedList<Pair<String, String>>))
-        scl.eAllContents.filter(Thread).forEach [
-            replaceGotoTargets(it.statements, collectLabels(it.statements, new LinkedList<Pair<String, String>>))
-        ]
+        scl.removeDoubleJumps
 
         // Variable initialization
         scl.declarations.forEach [
@@ -122,51 +114,6 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
         ]
 
         scl
-    }
-
-    def EList<Statement> replaceGotoTargets(EList<Statement> stms, LinkedList<Pair<String, String>> replaceTarget) {
-        stms.forEach [
-            if (it instanceof InstructionStatement &&
-                ((it as InstructionStatement).instruction instanceof de.cau.cs.kieler.scl.scl.Conditional)) {
-                val cond = (it as InstructionStatement).instruction as de.cau.cs.kieler.scl.scl.Conditional
-                replaceGotoTargets(cond.statements, replaceTarget)
-                replaceGotoTargets(cond.elseStatements, replaceTarget)
-            } else if ((it instanceof InstructionStatement) &&
-                ((it as InstructionStatement).instruction instanceof Goto)) {
-                val stm = (it as InstructionStatement).instruction as Goto
-                if (!replaceTarget.filter[key == stm.targetLabel].empty) {
-                    stm.targetLabel = replaceTarget.filter[key == stm.targetLabel].head.value
-                }
-            }
-        ]
-
-        stms
-    }
-
-    def LinkedList<Pair<String, String>> collectLabels(EList<Statement> stms,
-        LinkedList<Pair<String, String>> replaceTarget) {
-        val LinkedList<String> labelList = newLinkedList
-        stms.forEach [
-            if (it instanceof EmptyStatement) {
-                labelList.add((it as EmptyStatement).label)
-            } else if (it instanceof de.cau.cs.kieler.scl.scl.Conditional) {
-                val cond = it as de.cau.cs.kieler.scl.scl.Conditional
-                collectLabels(cond.statements, replaceTarget)
-                collectLabels(cond.elseStatements, replaceTarget)
-                labelList.clear
-            } else if ((it instanceof InstructionStatement) &&
-                ((it as InstructionStatement).instruction instanceof Goto)) {
-                val stm = it as InstructionStatement
-                labelList.forEach[replaceTarget.add(it -> (stm.instruction as Goto).targetLabel)]
-                labelList.clear
-            } else {
-                labelList.clear
-            }
-        ]
-
-        // Labels in the sequence, which are not followed by any other statement, should point to last label
-        labelList.forEach[replaceTarget.add(it -> labelList.last)]
-        replaceTarget
     }
 
     /*
@@ -225,11 +172,6 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
 
                 continuation = statement.transform(scg, cf)
 
-                //    			if (!label.nullOrEmpty) {
-                //    				labelMapping.put(label, continuation.node)
-                //    			}
-                //    			label = continuation.label
-                // krat: connect EVERY label preceding to the resulting node
                 if (!continuation.label.nullOrEmpty) {
                     labelList.add(continuation.label)
                 } else if (!labelList.empty && continuation.node != null) {
