@@ -41,10 +41,10 @@ import de.cau.cs.kieler.scl.scl.StatementSequence
 import de.cau.cs.kieler.scl.scl.EmptyStatement
 import org.eclipse.emf.ecore.util.EcoreUtil
 import com.google.inject.Inject
-import de.cau.cs.kieler.scl.extensions.SCLExtensions
 import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.esterel.esterel.TrapDecl
 import org.eclipse.emf.ecore.util.EObjectEList
+import de.cau.cs.kieler.scl.extensions.SCLExtensions
 
 /**
  * @author krat
@@ -75,23 +75,36 @@ class SclToEsterelTransformation {
 
         //Initialize SCL Program
         //        sclProgram.optimizeAll
+        sclProgram.optimizeAll
         sclProgram.removeForwardJumps
 
         // Transform declarations
         transformInterface(sclProgram.declarations, module)
+        
+        val trap = EsterelFactory::eINSTANCE.createTrap => [
+                                trapDeclList = EsterelFactory::eINSTANCE.createTrapDeclList => [
+                                    val trapDecl = EsterelFactory::eINSTANCE.createTrapDecl => [
+                                        name = "seq_exit"
+                                    ]
+                                    trapDecls += trapDecl
+                                    allTraps += trapDecl
+                                    
+                                    ]
+                                    ]
 
         // Transform body
         //        module.body.statements += EsterelFactory::eINSTANCE.createNothing
         val stmSeq = EsterelFactory::eINSTANCE.createSequence
         transformStm(sclProgram.statements, stmSeq)
+        trap.statement = stmSeq
 
-        module.body.statements += stmSeq
+        module.body.statements += trap
 
         esterelProgram.modules += module
         esterelProgram
 
     //        sclProgram.normalize
-    //                sclProgram
+//                    sclProgram
     }
 
     /*
@@ -130,6 +143,16 @@ class SclToEsterelTransformation {
      * Removes forward jumps by producing redundancy...
      */
     def removeForwardJumps(StatementSequence sSeq) {
+        for (th : sSeq.eAllContents.toList.filter(typeof(de.cau.cs.kieler.scl.scl.Thread))) {
+            val l_exit = ("l_exit" + TRAP_SUFFIX)
+            TRAP_SUFFIX = TRAP_SUFFIX +"_"
+            allTraps += EsterelFactory::eINSTANCE.createTrapDecl => [
+                                        name = l_exit
+                                    ]
+            (th as de.cau.cs.kieler.scl.scl.Thread).statements.add(SclFactory::eINSTANCE.createEmptyStatement => [label = l_exit])
+        }
+        sSeq.addLabel("seq_exit")
+        
         for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
             var parent = goto.eContainer.eContainer as StatementSequence
             var index = parent.statements.indexOf(goto.eContainer) + 1
@@ -172,14 +195,19 @@ class SclToEsterelTransformation {
 
                 // End of StatementSequence reached
                 if (!gotoStm) {
-                    copyStms.addGoto("seq_exit")
+                    var seq = goto.eContainer.eContainer
+                    while (!(seq instanceof de.cau.cs.kieler.scl.scl.Thread) && !(seq instanceof SCLProgram))
+                        seq = seq.eContainer
+                        
+                    copyStms.addGoto(((seq as StatementSequence).statements.last as EmptyStatement).label)
                 }
                 gotoParent.statements.remove(gotoIndex)
                 gotoParent.statements.addAll(gotoIndex, copyStms.statements)
 
             }
         }
-        sSeq.addLabel("seq_exit")
+        
+        
 
         sSeq
     }
@@ -244,7 +272,16 @@ class SclToEsterelTransformation {
                     stmSeq.list += EsterelFactory::eINSTANCE.createBlock => [
                         statement = EsterelFactory::eINSTANCE.createParallel => [
                             for (th : par.threads) {
-                                list += transformStm(th.statements, EsterelFactory::eINSTANCE.createSequence)
+                                val trap = EsterelFactory::eINSTANCE.createTrap => [
+                                trapDeclList = EsterelFactory::eINSTANCE.createTrapDeclList => [
+
+                                    trapDecls += allTraps.findFirst[ name == (th.statements.last as EmptyStatement).label ]
+                                    
+                                    ]
+                                    statement = transformStm(th.statements, EsterelFactory::eINSTANCE.createSequence)
+                                    
+                                    ]
+                                list += trap
                             }
                         ]
                     ]
