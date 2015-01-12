@@ -61,8 +61,9 @@ class SclToEsterelTransformation {
     var LinkedList<ISignal> allSignals
     var LinkedList<TrapDecl> allTraps
     var TRAP_SUFFIX = ""
+    var LABEL_SUFFIX = "_"
 
-    def Program transform(SCLProgram sclProgram) {
+    def SCLProgram transform(SCLProgram sclProgram) {
 
         allSignals = new LinkedList<ISignal>
         allTraps = new LinkedList<TrapDecl>
@@ -101,10 +102,10 @@ class SclToEsterelTransformation {
         module.body.statements += trap
 
         esterelProgram.modules += module
-        esterelProgram
+//        esterelProgram
 
     //        sclProgram.normalize
-//                    sclProgram
+                    sclProgram
     }
 
     /*
@@ -153,6 +154,9 @@ class SclToEsterelTransformation {
         }
         sSeq.addLabel("seq_exit")
         
+        var StatementSequence oldSseq
+        do {
+            oldSseq = EcoreUtil.copy(sSeq)
         for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
             var parent = goto.eContainer.eContainer as StatementSequence
             var index = parent.statements.indexOf(goto.eContainer) + 1
@@ -183,9 +187,7 @@ class SclToEsterelTransformation {
                 val copyStms = createSseq
                 var gotoStm = false
                 while (index + 1 < parent.statements.length && !gotoStm) {
-                    if (!(parent.statements.get(index + 1) instanceof EmptyStatement)) {
-                        copyStms.statements.add(EcoreUtil.copy(parent.statements.get(index + 1)))
-                    }
+                    copyStms.statements.add(EcoreUtil.copy(parent.statements.get(index + 1)))
                     if (parent.statements.get(index + 1) instanceof InstructionStatement &&
                         (parent.statements.get(index + 1) as InstructionStatement ).instruction instanceof Goto) {
                         gotoStm = true
@@ -201,11 +203,29 @@ class SclToEsterelTransformation {
                         
                     copyStms.addGoto(((seq as StatementSequence).statements.last as EmptyStatement).label)
                 }
+                // Loop was copied
+                if (gotoStm && goto.targetLabel == ((copyStms.statements.last as InstructionStatement).instruction as Goto).targetLabel) {
+                    copyStms.statements.add(0, SclFactory::eINSTANCE.createEmptyStatement => [ label = "l" + LABEL_SUFFIX ])
+                    copyStms.statements.remove(copyStms.statements.length - 1)
+                    copyStms.addGoto("l" + LABEL_SUFFIX)
+                    LABEL_SUFFIX = LABEL_SUFFIX + "_"
+                }
+                // Rename labels to avoid infinite loop
+                for (emptyStm : copyStms.eAllContents.toList.filter(typeof(EmptyStatement))) {
+                    (emptyStm as EmptyStatement).label = (emptyStm as EmptyStatement).label + LABEL_SUFFIX
+                }
+                for (changeGotoTarget : copyStms.eAllContents.toList.filter(typeof(Goto))) {
+                    (changeGotoTarget as Goto).targetLabel = (changeGotoTarget as Goto).targetLabel + LABEL_SUFFIX
+                }
+                LABEL_SUFFIX = LABEL_SUFFIX + "_"
+                
                 gotoParent.statements.remove(gotoIndex)
                 gotoParent.statements.addAll(gotoIndex, copyStms.statements)
 
             }
         }
+        
+        } while (!EcoreUtil.equals(oldSseq, sSeq))
         
         
 
