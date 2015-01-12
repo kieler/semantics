@@ -285,8 +285,8 @@ class S2Java {
        «FOR state : program.states»
        «state.expand»
        «ENDFOR»
-       _GO = false;
        «program.setPreVariables»
+       _GO = false;
        return;
     }
     '''

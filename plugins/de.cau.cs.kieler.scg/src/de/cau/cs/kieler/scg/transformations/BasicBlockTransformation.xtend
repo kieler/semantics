@@ -376,6 +376,11 @@ class BasicBlockTransformation extends Transformation {
         /** If the block begins with a join node, mark the block as synchronizer block. */
         if (nodeList.head instanceof Join) { 
             basicBlock.synchronizerBlock = true
+            for (predecessor : predecessorBlocks) {
+                if (predecessor.deadBlock) {
+                    basicBlock.deadBlock = true
+                }
+            }
         }
         if (nodeList.head instanceof Entry) { 
             basicBlock.entryBlock = true
@@ -450,6 +455,7 @@ class BasicBlockTransformation extends Transformation {
                 
                 block = ScgFactory::eINSTANCE.createSchedulingBlock()
                 block.guard = newGuard
+                block.label = newGuard.valuedObject.name
                 block.dependencies.addAll(node.incoming.filter(typeof(Dependency)))
                 newGuard.schedulingBlockLink = block
             }

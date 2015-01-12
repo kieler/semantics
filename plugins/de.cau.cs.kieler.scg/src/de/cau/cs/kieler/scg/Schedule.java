@@ -23,10 +23,10 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scg.Schedule#getGuards <em>Guards</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.Schedule#getScheduleBlocks <em>Schedule Blocks</em>}</li>
  * </ul>
+ * </p>
  *
  * @see de.cau.cs.kieler.scg.ScgPackage#getSchedule()
  * @model
@@ -34,19 +34,19 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Schedule extends EObject {
     /**
-	 * Returns the value of the '<em><b>Guards</b></em>' reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.scg.Guard}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Schedule Blocks</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.scg.ScheduleBlock}.
+     * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Guards</em>' reference list isn't clear,
+	 * If the meaning of the '<em>Schedule Blocks</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Guards</em>' reference list.
-	 * @see de.cau.cs.kieler.scg.ScgPackage#getSchedule_Guards()
-	 * @model
-	 * @generated
-	 */
-	EList<Guard> getGuards();
+     * @return the value of the '<em>Schedule Blocks</em>' containment reference list.
+     * @see de.cau.cs.kieler.scg.ScgPackage#getSchedule_ScheduleBlocks()
+     * @model containment="true"
+     * @generated
+     */
+	EList<ScheduleBlock> getScheduleBlocks();
 
 } // Schedule

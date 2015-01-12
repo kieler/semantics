@@ -59,6 +59,7 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
+import de.cau.cs.kieler.scg.optimizer.CopyPropagation
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -173,12 +174,18 @@ class GuardCreator extends AbstractGuardCreator {
         schedulingBlockCache.clear
         schedulingBlockGuardCache.clear
         for(basicBlock : scg.basicBlocks) {
-        	predecessorList += basicBlock.predecessors
-            for(schedulingBlock: basicBlock.schedulingBlocks) {
-            	schedulingBlocks += schedulingBlock
-                for(node : schedulingBlock.nodes) {
-                    schedulingBlockCache.put(node, schedulingBlock)
-                    schedulingBlockGuardCache.put(schedulingBlock.guard, schedulingBlock)
+            if (basicBlock.isDeadBlock) {
+                for(schedulingBlock : basicBlock.schedulingBlocks) {
+                    schedulingBlock.guard.dead = true
+                } 
+            } else {
+        	   predecessorList += basicBlock.predecessors
+                for(schedulingBlock: basicBlock.schedulingBlocks) {
+            	   schedulingBlocks += schedulingBlock
+                    for(node : schedulingBlock.nodes) {
+                        schedulingBlockCache.put(node, schedulingBlock)
+                        schedulingBlockGuardCache.put(schedulingBlock.guard, schedulingBlock)
+                    }
                 }
             }
         }        
@@ -218,6 +225,10 @@ class GuardCreator extends AbstractGuardCreator {
         for(schedulingBlock : schedulingBlocks) {
         	schedulingBlock.guard.createGuardEquation(schedulingBlock, scg)
         }
+        
+        val CopyPropagation copyPropagation = 
+            Guice.createInjector().getInstance(typeof(CopyPropagation))        
+        copyPropagation.optimize(scg)         
         
         scg     	
     }

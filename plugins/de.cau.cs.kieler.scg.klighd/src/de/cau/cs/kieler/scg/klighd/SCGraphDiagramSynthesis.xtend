@@ -351,6 +351,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         [it.red = 144; it.green = 144; it.blue = 144;]
     private static val KColor SCHEDULING_SCHEDULINGEDGE = RENDERING_FACTORY.createKColor() =>
         [it.red = 128; it.green = 0; it.blue = 253;]
+    private static val KColor SCHEDULING_DEADCODE = RENDERING_FACTORY.createKColor() =>
+        [it.red = 128; it.green = 128; it.blue = 128;]
     private static val int SCHEDULING_SCHEDULINGEDGE_ALPHA = 96
 
     private static val KColor PROBLEM_COLOR = KRenderingFactory::eINSTANCE.createKColor() => 
@@ -1343,57 +1345,85 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     val sbContainer = schedulingBlock.nodes.createHierarchy(NODEGROUPING_SCHEDULINGBLOCK, schedulingBlock)
                     schedulingBlockMapping.put(schedulingBlock, sbContainer)
 //                    val sbName = serializer.serialize(schedulingBlock.guard.reference)
-                     var sbName = schedulingBlock.guard.valuedObject.name //reference.valuedObject.name
+                     var sbName = "<null>"
+                     if (!schedulingBlock.label.nullOrEmpty) {
+                         sbName = schedulingBlock.label + " "
+                     }
+                     if (schedulingBlock.guard != null) { 
+                         if (schedulingBlock.guard.valuedObject.name != schedulingBlock.label) {
+                            sbName = sbName + "(" + schedulingBlock.guard.valuedObject.name + ")"//reference.valuedObject.name
+                         }
+                     }
 
 	                if (scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)) {
-    	            	val expText = serializer.serialize(schedulingBlock.guard.expression.copy.fix)	
+	                    var expText = "<null>"
+	                    if (schedulingBlock.guard != null && !schedulingBlock.guard.dead) {
+        	            	expText = serializer.serialize(schedulingBlock.guard.expression.copy.fix)
+    	            	}	
 //        	        	expText.createLabel(sbContainer).configureOutsideBottomLeftNodeLabel(expText, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER                	
 						sbName = sbName + "\n" + expText       
 					}
             	    
                 	sbName.createLabel(sbContainer).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).foreground = SCHEDULINGBLOCKBORDER.copy
+                	
+                    if (basicBlock.deadBlock) {
+                        sbContainer.getData(typeof(KRoundedRectangle)) => [
+                            it.lineStyle = LineStyle::SOLID
+                            it.foreground = SCHEDULING_DEADCODE.copy
+                        ]
+                        sbContainer.KRendering.background = SCHEDULING_DEADCODE.copy
+                        sbContainer.KRendering.background.alpha = 128
+                    }
                 }
         }
 
-//        if (scg.hasSchedulingData && SHOW_SCHEDULINGPATH.booleanValue) {
-//            var Node source = null
-//            var Node target = null
-//            for (node : scg.schedules.head.scheduleNodes) {
-//                target = node
-//                if (target != null && source != null) {
-//
-//                    val controlFlows = source.getControlFlows(target)
-//                    if (controlFlows.size > 0) {
-//                        controlFlows.forEach[colorControlFlow(SCHEDULING_SCHEDULINGEDGE)]
-//                        controlFlows.forEach[thickenControlFlow(CONTROLFLOW_SCHEDULINGEDGE_WIDTH)]
-//                        controlFlows.forEach[controlFlowAlpha(SCHEDULING_SCHEDULINGEDGE_ALPHA)]
-//                    } else {
-//                        val sourceF = source.node
-//                        val targetF = target.node
-//                        source.createEdge("schedule " + source.toString + target.toString) => [ edge |
-//                            edge.source = sourceF
-//                            edge.target = targetF
-//                            edge.addRoundedBendsPolyline(8, CONTROLFLOW_SCHEDULINGEDGE_WIDTH) => [
-//                                it.foreground = SCHEDULING_SCHEDULINGEDGE.copy
-//                                it.foreground.alpha = SCHEDULING_SCHEDULINGEDGE_ALPHA
-//                                it.addArrowDecorator
-//                            ]
-//                            edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
-//                        ]
-//                    }
-//                }
-//                source = target
-//            }
+        if (scg.hasSchedulingData && SHOW_SCHEDULINGPATH.booleanValue) {
+            var Node source = null
+            var Node target = null
+            for (scheduleBlock : scg.schedules.head.scheduleBlocks) {
+                for (node : scheduleBlock.schedulingBlock.nodes) {                
+                target = node
+                if (target != null && source != null) {
+
+                    val controlFlows = source.getControlFlows(target)
+                    if (controlFlows.size > 0) {
+                        controlFlows.forEach[colorControlFlow(SCHEDULING_SCHEDULINGEDGE)]
+                        controlFlows.forEach[thickenControlFlow(CONTROLFLOW_SCHEDULINGEDGE_WIDTH)]
+                        controlFlows.forEach[controlFlowAlpha(SCHEDULING_SCHEDULINGEDGE_ALPHA)]
+                    } else {
+                        val sourceF = source.node
+                        val targetF = target.node
+                        source.createEdge("schedule " + source.toString + target.toString) => [ edge |
+                            edge.source = sourceF
+                            edge.target = targetF
+                            edge.addRoundedBendsPolyline(8, CONTROLFLOW_SCHEDULINGEDGE_WIDTH) => [
+                                it.foreground = SCHEDULING_SCHEDULINGEDGE.copy
+                                it.foreground.alpha = SCHEDULING_SCHEDULINGEDGE_ALPHA
+                                it.addArrowDecorator
+                            ]
+                            edge.setLayoutOption(LayoutOptions::NO_LAYOUT, true)
+                        ]
+                    }
+                }
+                source = target
+                }
+            }
 
             // not schedulable blocks!
             // TODO: draw not scheduled blocks
             
             if (scg.hasSchedulingData && SHOW_SCHEDULINGBLOCKS.booleanValue) {
                 val usBlocks = scg.getAllSchedulingBlocks
-                scg.schedules.head.guards.forEach[ 
-                    if (!it.schizophrenic) 
-                        usBlocks.remove(it.schedulingBlockLink)
+                scg.schedules.head.scheduleBlocks.forEach[ 
+//                    if (!it.schizophrenic) {
+//                        val scheduledBlocks = usBlocks.filter[ e | e.guard == it].toList
+                        usBlocks -= it.schedulingBlock
+//                    } 
                 ]
+                for(deadGuard : scg.guards.filter[ dead ]) {
+                    val deadBlocks = usBlocks.filter[ e | e.guard == deadGuard].toList
+                    usBlocks -= deadBlocks
+                }
                 usBlocks.forEach [
                     val node = schedulingBlockMapping.get(it)
                     node.getData(typeof(KRoundedRectangle)) => [
@@ -1404,7 +1434,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                     node.KRendering.background.alpha = 128
                 ]
             }
-//        }
+        }
     }
 
     /**
