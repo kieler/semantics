@@ -21,12 +21,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -36,8 +31,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * @generated
  */
-public class DeclarationItemProvider
-    extends AnnotatableItemProvider {
+public class DeclarationItemProvider extends AnnotatableItemProvider {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc -->
@@ -229,10 +223,10 @@ public class DeclarationItemProvider
     /**
      * This adds a property descriptor for the Volatile feature.
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
-	protected void addVolatilePropertyDescriptor(Object object) {
+    protected void addVolatilePropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
@@ -247,7 +241,6 @@ public class DeclarationItemProvider
                  null,
                  null));
     }
-
 
     /**
      * This adds a property descriptor for the Host Type feature.
@@ -326,6 +319,7 @@ public class DeclarationItemProvider
             getString("_UI_Declaration_type") :
             getString("_UI_Declaration_type") + " " + label;
     }
+    
 
     /**
      * This handles model notifications by calling {@link #updateChildren} to update any cached

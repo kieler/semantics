@@ -31,15 +31,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * An implementation of the model object '<em><b>State</b></em>'.
  * <!-- end-user-doc -->
  * <p>
- * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.StateImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.StateImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.StateImpl#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.StateImpl#getInstructions <em>Instructions</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */

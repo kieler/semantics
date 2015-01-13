@@ -13,12 +13,12 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.If#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.If#getContinuation <em>Continuation</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.If#getInstructions <em>Instructions</em>}</li>
  * </ul>
+ * </p>
  *
  * @see de.cau.cs.kieler.s.s.SPackage#getIf()
  * @model

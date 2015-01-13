@@ -10,10 +10,10 @@ package de.cau.cs.kieler.s.s;
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.Abort#getContinuation <em>Continuation</em>}</li>
  * </ul>
+ * </p>
  *
  * @see de.cau.cs.kieler.s.s.SPackage#getAbort()
  * @model

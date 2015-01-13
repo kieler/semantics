@@ -125,158 +125,152 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	public class DeclarationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Declaration");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
-		private final Assignment cConstAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cConstConstKeyword_1_0 = (Keyword)cConstAssignment_1.eContents().get(0);
-		private final Assignment cInputAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final Keyword cInputInputKeyword_2_0 = (Keyword)cInputAssignment_2.eContents().get(0);
-		private final Assignment cOutputAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Keyword cOutputOutputKeyword_3_0 = (Keyword)cOutputAssignment_3.eContents().get(0);
-		private final Assignment cStaticAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final Keyword cStaticStaticKeyword_4_0 = (Keyword)cStaticAssignment_4.eContents().get(0);
-		private final Assignment cSignalAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final Keyword cSignalSignalKeyword_5_0 = (Keyword)cSignalAssignment_5.eContents().get(0);
-		private final Alternatives cAlternatives_6 = (Alternatives)cGroup.eContents().get(6);
-		private final Group cGroup_6_0 = (Group)cAlternatives_6.eContents().get(0);
-		private final Assignment cTypeAssignment_6_0_0 = (Assignment)cGroup_6_0.eContents().get(0);
-		private final RuleCall cTypeHostTypeEnumRuleCall_6_0_0_0 = (RuleCall)cTypeAssignment_6_0_0.eContents().get(0);
-		private final Assignment cHostTypeAssignment_6_0_1 = (Assignment)cGroup_6_0.eContents().get(1);
-		private final RuleCall cHostTypeSTRINGTerminalRuleCall_6_0_1_0 = (RuleCall)cHostTypeAssignment_6_0_1.eContents().get(0);
-		private final Assignment cValuedObjectsAssignment_6_0_2 = (Assignment)cGroup_6_0.eContents().get(2);
-		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_6_0_2_0 = (RuleCall)cValuedObjectsAssignment_6_0_2.eContents().get(0);
-		private final Group cGroup_6_0_3 = (Group)cGroup_6_0.eContents().get(3);
-		private final Keyword cCommaKeyword_6_0_3_0 = (Keyword)cGroup_6_0_3.eContents().get(0);
-		private final Assignment cValuedObjectsAssignment_6_0_3_1 = (Assignment)cGroup_6_0_3.eContents().get(1);
-		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_6_0_3_1_0 = (RuleCall)cValuedObjectsAssignment_6_0_3_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_6_0_4 = (Keyword)cGroup_6_0.eContents().get(4);
-		private final Group cGroup_6_1 = (Group)cAlternatives_6.eContents().get(1);
-		private final Assignment cTypeAssignment_6_1_0 = (Assignment)cGroup_6_1.eContents().get(0);
-		private final RuleCall cTypeValueTypeEnumRuleCall_6_1_0_0 = (RuleCall)cTypeAssignment_6_1_0.eContents().get(0);
-		private final Assignment cValuedObjectsAssignment_6_1_1 = (Assignment)cGroup_6_1.eContents().get(1);
-		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_6_1_1_0 = (RuleCall)cValuedObjectsAssignment_6_1_1.eContents().get(0);
-		private final Group cGroup_6_1_2 = (Group)cGroup_6_1.eContents().get(2);
-		private final Keyword cCommaKeyword_6_1_2_0 = (Keyword)cGroup_6_1_2.eContents().get(0);
-		private final Assignment cValuedObjectsAssignment_6_1_2_1 = (Assignment)cGroup_6_1_2.eContents().get(1);
-		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_6_1_2_1_0 = (RuleCall)cValuedObjectsAssignment_6_1_2_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_6_1_3 = (Keyword)cGroup_6_1.eContents().get(3);
+		private final Assignment cConstAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cConstConstKeyword_0_0 = (Keyword)cConstAssignment_0.eContents().get(0);
+		private final Assignment cInputAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cInputInputKeyword_1_0 = (Keyword)cInputAssignment_1.eContents().get(0);
+		private final Assignment cOutputAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cOutputOutputKeyword_2_0 = (Keyword)cOutputAssignment_2.eContents().get(0);
+		private final Assignment cStaticAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Keyword cStaticStaticKeyword_3_0 = (Keyword)cStaticAssignment_3.eContents().get(0);
+		private final Assignment cSignalAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Keyword cSignalSignalKeyword_4_0 = (Keyword)cSignalAssignment_4.eContents().get(0);
+		private final Alternatives cAlternatives_5 = (Alternatives)cGroup.eContents().get(5);
+		private final Group cGroup_5_0 = (Group)cAlternatives_5.eContents().get(0);
+		private final Assignment cTypeAssignment_5_0_0 = (Assignment)cGroup_5_0.eContents().get(0);
+		private final RuleCall cTypeHostTypeEnumRuleCall_5_0_0_0 = (RuleCall)cTypeAssignment_5_0_0.eContents().get(0);
+		private final Assignment cHostTypeAssignment_5_0_1 = (Assignment)cGroup_5_0.eContents().get(1);
+		private final RuleCall cHostTypeSTRINGTerminalRuleCall_5_0_1_0 = (RuleCall)cHostTypeAssignment_5_0_1.eContents().get(0);
+		private final Assignment cValuedObjectsAssignment_5_0_2 = (Assignment)cGroup_5_0.eContents().get(2);
+		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_5_0_2_0 = (RuleCall)cValuedObjectsAssignment_5_0_2.eContents().get(0);
+		private final Group cGroup_5_0_3 = (Group)cGroup_5_0.eContents().get(3);
+		private final Keyword cCommaKeyword_5_0_3_0 = (Keyword)cGroup_5_0_3.eContents().get(0);
+		private final Assignment cValuedObjectsAssignment_5_0_3_1 = (Assignment)cGroup_5_0_3.eContents().get(1);
+		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_5_0_3_1_0 = (RuleCall)cValuedObjectsAssignment_5_0_3_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_5_0_4 = (Keyword)cGroup_5_0.eContents().get(4);
+		private final Group cGroup_5_1 = (Group)cAlternatives_5.eContents().get(1);
+		private final Assignment cTypeAssignment_5_1_0 = (Assignment)cGroup_5_1.eContents().get(0);
+		private final RuleCall cTypeValueTypeEnumRuleCall_5_1_0_0 = (RuleCall)cTypeAssignment_5_1_0.eContents().get(0);
+		private final Assignment cValuedObjectsAssignment_5_1_1 = (Assignment)cGroup_5_1.eContents().get(1);
+		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_5_1_1_0 = (RuleCall)cValuedObjectsAssignment_5_1_1.eContents().get(0);
+		private final Group cGroup_5_1_2 = (Group)cGroup_5_1.eContents().get(2);
+		private final Keyword cCommaKeyword_5_1_2_0 = (Keyword)cGroup_5_1_2.eContents().get(0);
+		private final Assignment cValuedObjectsAssignment_5_1_2_1 = (Assignment)cGroup_5_1_2.eContents().get(1);
+		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_5_1_2_1_0 = (RuleCall)cValuedObjectsAssignment_5_1_2_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_5_1_3 = (Keyword)cGroup_5_1.eContents().get(3);
 		
 		//Declaration returns kexpressions::Declaration:
-		//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
-		//	(type=HostType hostType=STRING valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";" // TODO There have to be a hostType if type is HOST
+		//	const?="const"? //    (annotations+=Annotation)*
+		//	input?="input"? output?="output"? static?="static"? signal?="signal"? (type=HostType hostType=STRING
+		//	valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";" // TODO There have to be a hostType if type is HOST
 		//	| type=ValueType valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";");
 		public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
-		//(type=HostType hostType=STRING valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";" // TODO There have to be a hostType if type is HOST
+		//const?="const"? //    (annotations+=Annotation)*
+		//input?="input"? output?="output"? static?="static"? signal?="signal"? (type=HostType hostType=STRING
+		//valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";" // TODO There have to be a hostType if type is HOST
 		//| type=ValueType valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";")
 		public Group getGroup() { return cGroup; }
 
-		//annotations+=Annotation*
-		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
-
-		//Annotation
-		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
-
 		//const?="const"?
-		public Assignment getConstAssignment_1() { return cConstAssignment_1; }
+		public Assignment getConstAssignment_0() { return cConstAssignment_0; }
 
 		//"const"
-		public Keyword getConstConstKeyword_1_0() { return cConstConstKeyword_1_0; }
+		public Keyword getConstConstKeyword_0_0() { return cConstConstKeyword_0_0; }
 
 		//input?="input"?
-		public Assignment getInputAssignment_2() { return cInputAssignment_2; }
+		public Assignment getInputAssignment_1() { return cInputAssignment_1; }
 
 		//"input"
-		public Keyword getInputInputKeyword_2_0() { return cInputInputKeyword_2_0; }
+		public Keyword getInputInputKeyword_1_0() { return cInputInputKeyword_1_0; }
 
 		//output?="output"?
-		public Assignment getOutputAssignment_3() { return cOutputAssignment_3; }
+		public Assignment getOutputAssignment_2() { return cOutputAssignment_2; }
 
 		//"output"
-		public Keyword getOutputOutputKeyword_3_0() { return cOutputOutputKeyword_3_0; }
+		public Keyword getOutputOutputKeyword_2_0() { return cOutputOutputKeyword_2_0; }
 
 		//static?="static"?
-		public Assignment getStaticAssignment_4() { return cStaticAssignment_4; }
+		public Assignment getStaticAssignment_3() { return cStaticAssignment_3; }
 
 		//"static"
-		public Keyword getStaticStaticKeyword_4_0() { return cStaticStaticKeyword_4_0; }
+		public Keyword getStaticStaticKeyword_3_0() { return cStaticStaticKeyword_3_0; }
 
 		//signal?="signal"?
-		public Assignment getSignalAssignment_5() { return cSignalAssignment_5; }
+		public Assignment getSignalAssignment_4() { return cSignalAssignment_4; }
 
 		//"signal"
-		public Keyword getSignalSignalKeyword_5_0() { return cSignalSignalKeyword_5_0; }
+		public Keyword getSignalSignalKeyword_4_0() { return cSignalSignalKeyword_4_0; }
 
 		//type=HostType hostType=STRING valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";" // TODO There have to be a hostType if type is HOST
 		//| type=ValueType valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";"
-		public Alternatives getAlternatives_6() { return cAlternatives_6; }
+		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 
 		//type=HostType hostType=STRING valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";"
-		public Group getGroup_6_0() { return cGroup_6_0; }
+		public Group getGroup_5_0() { return cGroup_5_0; }
 
 		//type=HostType
-		public Assignment getTypeAssignment_6_0_0() { return cTypeAssignment_6_0_0; }
+		public Assignment getTypeAssignment_5_0_0() { return cTypeAssignment_5_0_0; }
 
 		//HostType
-		public RuleCall getTypeHostTypeEnumRuleCall_6_0_0_0() { return cTypeHostTypeEnumRuleCall_6_0_0_0; }
+		public RuleCall getTypeHostTypeEnumRuleCall_5_0_0_0() { return cTypeHostTypeEnumRuleCall_5_0_0_0; }
 
 		//hostType=STRING
-		public Assignment getHostTypeAssignment_6_0_1() { return cHostTypeAssignment_6_0_1; }
+		public Assignment getHostTypeAssignment_5_0_1() { return cHostTypeAssignment_5_0_1; }
 
 		//STRING
-		public RuleCall getHostTypeSTRINGTerminalRuleCall_6_0_1_0() { return cHostTypeSTRINGTerminalRuleCall_6_0_1_0; }
+		public RuleCall getHostTypeSTRINGTerminalRuleCall_5_0_1_0() { return cHostTypeSTRINGTerminalRuleCall_5_0_1_0; }
 
 		//valuedObjects+=ValuedObject
-		public Assignment getValuedObjectsAssignment_6_0_2() { return cValuedObjectsAssignment_6_0_2; }
+		public Assignment getValuedObjectsAssignment_5_0_2() { return cValuedObjectsAssignment_5_0_2; }
 
 		//ValuedObject
-		public RuleCall getValuedObjectsValuedObjectParserRuleCall_6_0_2_0() { return cValuedObjectsValuedObjectParserRuleCall_6_0_2_0; }
+		public RuleCall getValuedObjectsValuedObjectParserRuleCall_5_0_2_0() { return cValuedObjectsValuedObjectParserRuleCall_5_0_2_0; }
 
 		//("," valuedObjects+=ValuedObject)*
-		public Group getGroup_6_0_3() { return cGroup_6_0_3; }
+		public Group getGroup_5_0_3() { return cGroup_5_0_3; }
 
 		//","
-		public Keyword getCommaKeyword_6_0_3_0() { return cCommaKeyword_6_0_3_0; }
+		public Keyword getCommaKeyword_5_0_3_0() { return cCommaKeyword_5_0_3_0; }
 
 		//valuedObjects+=ValuedObject
-		public Assignment getValuedObjectsAssignment_6_0_3_1() { return cValuedObjectsAssignment_6_0_3_1; }
+		public Assignment getValuedObjectsAssignment_5_0_3_1() { return cValuedObjectsAssignment_5_0_3_1; }
 
 		//ValuedObject
-		public RuleCall getValuedObjectsValuedObjectParserRuleCall_6_0_3_1_0() { return cValuedObjectsValuedObjectParserRuleCall_6_0_3_1_0; }
+		public RuleCall getValuedObjectsValuedObjectParserRuleCall_5_0_3_1_0() { return cValuedObjectsValuedObjectParserRuleCall_5_0_3_1_0; }
 
 		//";"
-		public Keyword getSemicolonKeyword_6_0_4() { return cSemicolonKeyword_6_0_4; }
+		public Keyword getSemicolonKeyword_5_0_4() { return cSemicolonKeyword_5_0_4; }
 
 		//type=ValueType valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";"
-		public Group getGroup_6_1() { return cGroup_6_1; }
+		public Group getGroup_5_1() { return cGroup_5_1; }
 
 		//type=ValueType
-		public Assignment getTypeAssignment_6_1_0() { return cTypeAssignment_6_1_0; }
+		public Assignment getTypeAssignment_5_1_0() { return cTypeAssignment_5_1_0; }
 
 		//ValueType
-		public RuleCall getTypeValueTypeEnumRuleCall_6_1_0_0() { return cTypeValueTypeEnumRuleCall_6_1_0_0; }
+		public RuleCall getTypeValueTypeEnumRuleCall_5_1_0_0() { return cTypeValueTypeEnumRuleCall_5_1_0_0; }
 
 		//valuedObjects+=ValuedObject
-		public Assignment getValuedObjectsAssignment_6_1_1() { return cValuedObjectsAssignment_6_1_1; }
+		public Assignment getValuedObjectsAssignment_5_1_1() { return cValuedObjectsAssignment_5_1_1; }
 
 		//ValuedObject
-		public RuleCall getValuedObjectsValuedObjectParserRuleCall_6_1_1_0() { return cValuedObjectsValuedObjectParserRuleCall_6_1_1_0; }
+		public RuleCall getValuedObjectsValuedObjectParserRuleCall_5_1_1_0() { return cValuedObjectsValuedObjectParserRuleCall_5_1_1_0; }
 
 		//("," valuedObjects+=ValuedObject)*
-		public Group getGroup_6_1_2() { return cGroup_6_1_2; }
+		public Group getGroup_5_1_2() { return cGroup_5_1_2; }
 
 		//","
-		public Keyword getCommaKeyword_6_1_2_0() { return cCommaKeyword_6_1_2_0; }
+		public Keyword getCommaKeyword_5_1_2_0() { return cCommaKeyword_5_1_2_0; }
 
 		//valuedObjects+=ValuedObject
-		public Assignment getValuedObjectsAssignment_6_1_2_1() { return cValuedObjectsAssignment_6_1_2_1; }
+		public Assignment getValuedObjectsAssignment_5_1_2_1() { return cValuedObjectsAssignment_5_1_2_1; }
 
 		//ValuedObject
-		public RuleCall getValuedObjectsValuedObjectParserRuleCall_6_1_2_1_0() { return cValuedObjectsValuedObjectParserRuleCall_6_1_2_1_0; }
+		public RuleCall getValuedObjectsValuedObjectParserRuleCall_5_1_2_1_0() { return cValuedObjectsValuedObjectParserRuleCall_5_1_2_1_0; }
 
 		//";"
-		public Keyword getSemicolonKeyword_6_1_3() { return cSemicolonKeyword_6_1_3; }
+		public Keyword getSemicolonKeyword_5_1_3() { return cSemicolonKeyword_5_1_3; }
 	}
 
 	public class ValuedObjectElements extends AbstractParserRuleElementFinder {
@@ -1091,8 +1085,9 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Declaration returns kexpressions::Declaration:
-	//	annotations+=Annotation* const?="const"? input?="input"? output?="output"? static?="static"? signal?="signal"?
-	//	(type=HostType hostType=STRING valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";" // TODO There have to be a hostType if type is HOST
+	//	const?="const"? //    (annotations+=Annotation)*
+	//	input?="input"? output?="output"? static?="static"? signal?="signal"? (type=HostType hostType=STRING
+	//	valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";" // TODO There have to be a hostType if type is HOST
 	//	| type=ValueType valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";");
 	public DeclarationElements getDeclarationAccess() {
 		return (pDeclaration != null) ? pDeclaration : (pDeclaration = new DeclarationElements());

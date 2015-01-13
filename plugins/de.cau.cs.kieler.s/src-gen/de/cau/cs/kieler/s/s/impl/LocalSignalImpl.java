@@ -19,12 +19,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * An implementation of the model object '<em><b>Local Signal</b></em>'.
  * <!-- end-user-doc -->
  * <p>
- * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.LocalSignalImpl#getSignal <em>Signal</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */

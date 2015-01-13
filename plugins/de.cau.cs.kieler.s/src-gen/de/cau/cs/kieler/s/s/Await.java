@@ -11,11 +11,11 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject;
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.Await#getSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Await#getContinuation <em>Continuation</em>}</li>
  * </ul>
+ * </p>
  *
  * @see de.cau.cs.kieler.s.s.SPackage#getAwait()
  * @model
