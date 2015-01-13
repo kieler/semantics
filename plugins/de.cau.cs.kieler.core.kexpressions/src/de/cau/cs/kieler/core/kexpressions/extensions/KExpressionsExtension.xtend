@@ -28,7 +28,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.Parameter
 import java.util.List
