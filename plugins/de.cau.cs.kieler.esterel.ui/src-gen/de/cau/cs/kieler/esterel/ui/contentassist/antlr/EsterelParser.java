@@ -233,6 +233,8 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTrapDeclAccess().getGroup(), "rule__TrapDecl__Group__0");
 					put(grammarAccess.getTrapHandlerAccess().getGroup(), "rule__TrapHandler__Group__0");
 					put(grammarAccess.getLocalVariableAccess().getGroup(), "rule__LocalVariable__Group__0");
+					put(grammarAccess.getGotoAccess().getGroup(), "rule__Goto__Group__0");
+					put(grammarAccess.getLabelAccess().getGroup(), "rule__Label__Group__0");
 					put(grammarAccess.getAtomicExpressionAccess().getGroup_5(), "rule__AtomicExpression__Group_5__0");
 					put(grammarAccess.getTrapExpressionAccess().getGroup(), "rule__TrapExpression__Group__0");
 					put(grammarAccess.getFunctionExpressionAccess().getGroup(), "rule__FunctionExpression__Group__0");
@@ -540,6 +542,8 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getLocalVariableAccess().getVarAssignment_0(), "rule__LocalVariable__VarAssignment_0");
 					put(grammarAccess.getLocalVariableAccess().getStatementAssignment_2(), "rule__LocalVariable__StatementAssignment_2");
 					put(grammarAccess.getLocalVariableAccess().getOptEndAssignment_4(), "rule__LocalVariable__OptEndAssignment_4");
+					put(grammarAccess.getGotoAccess().getTargetLabelAssignment_1(), "rule__Goto__TargetLabelAssignment_1");
+					put(grammarAccess.getLabelAccess().getLabelAssignment_0(), "rule__Label__LabelAssignment_0");
 					put(grammarAccess.getTrapExpressionAccess().getTrapAssignment_2(), "rule__TrapExpression__TrapAssignment_2");
 					put(grammarAccess.getFunctionExpressionAccess().getFunctionAssignment_1(), "rule__FunctionExpression__FunctionAssignment_1");
 					put(grammarAccess.getFunctionExpressionAccess().getKexpressionsAssignment_3_0(), "rule__FunctionExpression__KexpressionsAssignment_3_0");

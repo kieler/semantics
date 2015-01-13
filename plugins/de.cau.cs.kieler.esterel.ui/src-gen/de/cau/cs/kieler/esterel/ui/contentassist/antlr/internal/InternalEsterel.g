@@ -2820,6 +2820,10 @@ finally {
 
 
 
+
+
+
+
 // Entry rule entryRuleAtomicExpression
 entryRuleAtomicExpression 
 :
@@ -19771,6 +19775,8 @@ finally {
 
 
 
+
+
 rule__AtomicExpression__Group_5__0
     @init {
 		int stackSize = keepStackSize();
@@ -30919,6 +30925,8 @@ rule__LocalVariable__OptEndAssignment_4
 finally {
 	restoreStackSize(stackSize);
 }
+
+
 
 rule__TrapExpression__TrapAssignment_2
     @init {
