@@ -178,24 +178,7 @@ public class TimingAnalysisHandler extends AbstractHandler {
                         maybe.set((State) resource.getContents().get(0));
 
                     }
-                });
-                
-//              13.01.2015
-//                final Maybe<SCChartImpl> maybe = new Maybe<>();
-//                document.readOnly(new IUnitOfWork.Void<XtextResource>() {
-//                    @Override
-//                    public void process(XtextResource resource) throws Exception {
-//                        EList<EObject> contents = resource.getContents();
-//                        if (resource.getContents().isEmpty()
-//                                || (!(resource.getContents().get(0) instanceof SCChartImpl))) {
-//                            return;
-//                        }
-//
-//                        maybe.set((SCChartImpl) resource.getContents().get(0));
-//
-//                    }
-//                });
-//              End 13.01.2015
+                }); 
                 
                 State scchart;
                 State maybeGet = (State) maybe.get();
