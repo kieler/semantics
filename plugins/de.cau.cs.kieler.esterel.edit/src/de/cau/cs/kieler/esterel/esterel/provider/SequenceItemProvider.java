@@ -236,6 +236,11 @@ public class SequenceItemProvider extends StatementItemProvider {
         newChildDescriptors.add
             (createChildParameter
                 (EsterelPackage.Literals.SEQUENCE__LIST,
+                 EsterelFactory.eINSTANCE.createWeakSuspend()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (EsterelPackage.Literals.SEQUENCE__LIST,
                  EsterelFactory.eINSTANCE.createSustain()));
 
         newChildDescriptors.add
@@ -267,11 +272,6 @@ public class SequenceItemProvider extends StatementItemProvider {
             (createChildParameter
                 (EsterelPackage.Literals.SEQUENCE__LIST,
                  EsterelFactory.eINSTANCE.createWeakAbort()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.SEQUENCE__LIST,
-                 EsterelFactory.eINSTANCE.createWeakSuspend()));
     }
 
 }

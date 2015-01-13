@@ -535,6 +535,11 @@ public class DoItemProvider extends StatementContainerItemProvider {
         newChildDescriptors.add
             (createChildParameter
                 (EsterelPackage.Literals.DO__END,
+                 EsterelFactory.eINSTANCE.createWeakSuspend()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (EsterelPackage.Literals.DO__END,
                  EsterelFactory.eINSTANCE.createSustain()));
 
         newChildDescriptors.add
@@ -556,6 +561,16 @@ public class DoItemProvider extends StatementContainerItemProvider {
             (createChildParameter
                 (EsterelPackage.Literals.DO__END,
                  EsterelFactory.eINSTANCE.createLocalVariable()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (EsterelPackage.Literals.DO__END,
+                 EsterelFactory.eINSTANCE.createGoto()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (EsterelPackage.Literals.DO__END,
+                 EsterelFactory.eINSTANCE.createLabel()));
 
         newChildDescriptors.add
             (createChildParameter
@@ -656,11 +671,6 @@ public class DoItemProvider extends StatementContainerItemProvider {
             (createChildParameter
                 (EsterelPackage.Literals.DO__END,
                  EsterelFactory.eINSTANCE.createTrapReferenceExpr()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.DO__END,
-                 EsterelFactory.eINSTANCE.createWeakSuspend()));
 
         newChildDescriptors.add
             (createChildParameter

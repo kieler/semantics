@@ -160,6 +160,7 @@ class TransformInterface {
                 type = ValueType::getByName(declaration.type.type.name)
             } else {
                 type = ValueType::HOST
+                hostType = declaration.type.typeID
             }
         ]
 

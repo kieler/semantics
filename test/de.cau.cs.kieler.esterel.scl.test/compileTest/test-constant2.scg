@@ -57,10 +57,10 @@
   <declarations type="string" const="true">
     <valuedObjects name="e"/>
   </declarations>
-  <declarations const="true">
+  <declarations type="host" const="true" hostType="a">
     <valuedObjects name="f"/>
   </declarations>
-  <declarations const="true">
+  <declarations type="host" const="true" hostType="b">
     <valuedObjects name="g"/>
   </declarations>
   <declarations type="bool">

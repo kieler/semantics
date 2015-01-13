@@ -63,7 +63,7 @@ class SclToEsterelTransformation {
     var TRAP_SUFFIX = ""
     var LABEL_SUFFIX = "_"
 
-    def SCLProgram transform(SCLProgram sclProgram) {
+    def Program transform(SCLProgram sclProgram) {
 
         allSignals = new LinkedList<ISignal>
         allTraps = new LinkedList<TrapDecl>
@@ -102,10 +102,10 @@ class SclToEsterelTransformation {
         module.body.statements += trap
 
         esterelProgram.modules += module
-//        esterelProgram
+        esterelProgram
 
     //        sclProgram.normalize
-                    sclProgram
+//                    sclProgram
     }
 
     /*
@@ -186,23 +186,25 @@ class SclToEsterelTransformation {
                 val gotoParent = goto.eContainer.eContainer as StatementSequence
                 val copyStms = createSseq
                 var gotoStm = false
-                while (index + 1 < parent.statements.length && !gotoStm) {
-                    copyStms.statements.add(EcoreUtil.copy(parent.statements.get(index + 1)))
-                    if (parent.statements.get(index + 1) instanceof InstructionStatement &&
-                        (parent.statements.get(index + 1) as InstructionStatement ).instruction instanceof Goto) {
-                        gotoStm = true
+                while (index < parent.statements.length && !gotoStm) {
+                    copyStms.statements.add(EcoreUtil.copy(parent.statements.get(index)))
+                    if (parent.statements.get(index) instanceof InstructionStatement &&
+                        (parent.statements.get(index) as InstructionStatement ).instruction instanceof Conditional) {
+                        val cond = (parent.statements.get(index) as InstructionStatement ).instruction as Conditional
+                        parent = cond.eContainer.eContainer as StatementSequence
+                        index = parent.statements.indexOf(cond.eContainer)
                     }
                     index = index + 1
                 }
+                
+                // Remove copied StatementSequence endlabel
+                copyStms.statements.remove(copyStms.statements.length-1)
 
-                // End of StatementSequence reached
-                if (!gotoStm) {
-                    var seq = goto.eContainer.eContainer
-                    while (!(seq instanceof de.cau.cs.kieler.scl.scl.Thread) && !(seq instanceof SCLProgram))
-                        seq = seq.eContainer
-                        
-                    copyStms.addGoto(((seq as StatementSequence).statements.last as EmptyStatement).label)
-                }
+                // End of Thread/Program reached
+                var seq = goto.eContainer.eContainer
+                while (!(seq instanceof de.cau.cs.kieler.scl.scl.Thread) && !(seq instanceof SCLProgram))
+                    seq = seq.eContainer
+                    
                 // Loop was copied
                 if (gotoStm && goto.targetLabel == ((copyStms.statements.last as InstructionStatement).instruction as Goto).targetLabel) {
                     copyStms.statements.add(0, SclFactory::eINSTANCE.createEmptyStatement => [ label = "l" + LABEL_SUFFIX ])
@@ -211,13 +213,19 @@ class SclToEsterelTransformation {
                     LABEL_SUFFIX = LABEL_SUFFIX + "_"
                 }
                 // Rename labels to avoid infinite loop
+                val copiedLabels = new LinkedList<String>
                 for (emptyStm : copyStms.eAllContents.toList.filter(typeof(EmptyStatement))) {
+                    copiedLabels.add((emptyStm as EmptyStatement).label)
                     (emptyStm as EmptyStatement).label = (emptyStm as EmptyStatement).label + LABEL_SUFFIX
                 }
                 for (changeGotoTarget : copyStms.eAllContents.toList.filter(typeof(Goto))) {
-                    (changeGotoTarget as Goto).targetLabel = (changeGotoTarget as Goto).targetLabel + LABEL_SUFFIX
+                    if (copiedLabels.contains((changeGotoTarget as Goto).targetLabel))
+                        (changeGotoTarget as Goto).targetLabel = (changeGotoTarget as Goto).targetLabel + LABEL_SUFFIX
                 }
                 LABEL_SUFFIX = LABEL_SUFFIX + "_"
+                
+                // Add a goto to end of Thread/Program
+                copyStms.addGoto(((seq as StatementSequence).statements.last as EmptyStatement).label)
                 
                 gotoParent.statements.remove(gotoIndex)
                 gotoParent.statements.addAll(gotoIndex, copyStms.statements)

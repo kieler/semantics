@@ -550,6 +550,11 @@ public class RenamingItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (EsterelPackage.Literals.RENAMING__RENAMINGS,
+                 EsterelFactory.eINSTANCE.createWeakSuspend()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (EsterelPackage.Literals.RENAMING__RENAMINGS,
                  EsterelFactory.eINSTANCE.createSustain()));
 
         newChildDescriptors.add
@@ -571,6 +576,16 @@ public class RenamingItemProvider
             (createChildParameter
                 (EsterelPackage.Literals.RENAMING__RENAMINGS,
                  EsterelFactory.eINSTANCE.createLocalVariable()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (EsterelPackage.Literals.RENAMING__RENAMINGS,
+                 EsterelFactory.eINSTANCE.createGoto()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (EsterelPackage.Literals.RENAMING__RENAMINGS,
+                 EsterelFactory.eINSTANCE.createLabel()));
 
         newChildDescriptors.add
             (createChildParameter
@@ -671,11 +686,6 @@ public class RenamingItemProvider
             (createChildParameter
                 (EsterelPackage.Literals.RENAMING__RENAMINGS,
                  EsterelFactory.eINSTANCE.createTrapReferenceExpr()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.RENAMING__RENAMINGS,
-                 EsterelFactory.eINSTANCE.createWeakSuspend()));
 
         newChildDescriptors.add
             (createChildParameter

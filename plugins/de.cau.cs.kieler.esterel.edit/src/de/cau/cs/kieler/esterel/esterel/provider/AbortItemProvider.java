@@ -535,6 +535,11 @@ public class AbortItemProvider extends StatementContainerItemProvider {
         newChildDescriptors.add
             (createChildParameter
                 (EsterelPackage.Literals.ABORT__BODY,
+                 EsterelFactory.eINSTANCE.createWeakSuspend()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (EsterelPackage.Literals.ABORT__BODY,
                  EsterelFactory.eINSTANCE.createSustain()));
 
         newChildDescriptors.add
@@ -556,6 +561,16 @@ public class AbortItemProvider extends StatementContainerItemProvider {
             (createChildParameter
                 (EsterelPackage.Literals.ABORT__BODY,
                  EsterelFactory.eINSTANCE.createLocalVariable()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (EsterelPackage.Literals.ABORT__BODY,
+                 EsterelFactory.eINSTANCE.createGoto()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (EsterelPackage.Literals.ABORT__BODY,
+                 EsterelFactory.eINSTANCE.createLabel()));
 
         newChildDescriptors.add
             (createChildParameter
@@ -656,11 +671,6 @@ public class AbortItemProvider extends StatementContainerItemProvider {
             (createChildParameter
                 (EsterelPackage.Literals.ABORT__BODY,
                  EsterelFactory.eINSTANCE.createTrapReferenceExpr()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (EsterelPackage.Literals.ABORT__BODY,
-                 EsterelFactory.eINSTANCE.createWeakSuspend()));
 
         newChildDescriptors.add
             (createChildParameter

@@ -2004,6 +2004,52 @@ public class EsterelItemProviderAdapterFactory extends EsterelAdapterFactory imp
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.esterel.esterel.Goto} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected GotoItemProvider gotoItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.esterel.esterel.Goto}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createGotoAdapter() {
+        if (gotoItemProvider == null) {
+            gotoItemProvider = new GotoItemProvider(this);
+        }
+
+        return gotoItemProvider;
+    }
+
+    /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.esterel.esterel.Label} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected LabelItemProvider labelItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.esterel.esterel.Label}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createLabelAdapter() {
+        if (labelItemProvider == null) {
+            labelItemProvider = new LabelItemProvider(this);
+        }
+
+        return labelItemProvider;
+    }
+
+    /**
      * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.esterel.esterel.DelayExpr} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2664,11 +2710,14 @@ public class EsterelItemProviderAdapterFactory extends EsterelAdapterFactory imp
         if (taskRenamingItemProvider != null) taskRenamingItemProvider.dispose();
         if (signalRenamingItemProvider != null) signalRenamingItemProvider.dispose();
         if (suspendItemProvider != null) suspendItemProvider.dispose();
+        if (weakSuspendItemProvider != null) weakSuspendItemProvider.dispose();
         if (sustainItemProvider != null) sustainItemProvider.dispose();
         if (trapItemProvider != null) trapItemProvider.dispose();
         if (trapDeclListItemProvider != null) trapDeclListItemProvider.dispose();
         if (trapHandlerItemProvider != null) trapHandlerItemProvider.dispose();
         if (localVariableItemProvider != null) localVariableItemProvider.dispose();
+        if (gotoItemProvider != null) gotoItemProvider.dispose();
+        if (labelItemProvider != null) labelItemProvider.dispose();
         if (delayExprItemProvider != null) delayExprItemProvider.dispose();
         if (delayEventItemProvider != null) delayEventItemProvider.dispose();
         if (execItemProvider != null) execItemProvider.dispose();
@@ -2689,7 +2738,6 @@ public class EsterelItemProviderAdapterFactory extends EsterelAdapterFactory imp
         if (functionExpressionItemProvider != null) functionExpressionItemProvider.dispose();
         if (constantExpressionItemProvider != null) constantExpressionItemProvider.dispose();
         if (trapReferenceExprItemProvider != null) trapReferenceExprItemProvider.dispose();
-        if (weakSuspendItemProvider != null) weakSuspendItemProvider.dispose();
     }
 
 }

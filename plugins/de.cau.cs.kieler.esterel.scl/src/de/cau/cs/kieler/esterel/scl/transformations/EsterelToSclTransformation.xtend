@@ -1211,7 +1211,7 @@ class EsterelToSclTransformation extends Transformation {
      * Procedure calls
      */
     def dispatch StatementSequence transformStm(ProcCall procCall, StatementSequence sSeq) {
-        val valObj = createFreshVar("procDummy", ValueType::HOST)
+        val valObj = createFreshVar("procDummy", ValueType::BOOL)
 
         val res = KExpressionsFactory::eINSTANCE.createFunctionCall
         res.functionName = procCall.proc.name

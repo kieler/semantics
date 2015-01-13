@@ -78,6 +78,7 @@ public class EsterelToSclSimpleTest extends KiemAutomatedJUnitTest {
                 e1.printStackTrace();
             }
 
+            System.out.println("Testing " + fileURI);
             Resource resource = resourceSet.getResource(fileURI, true);
             Program esterelProgram = (Program) resource.getContents().get(0);
 
