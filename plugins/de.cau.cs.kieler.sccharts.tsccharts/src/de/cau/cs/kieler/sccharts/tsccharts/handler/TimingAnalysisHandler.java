@@ -195,6 +195,7 @@ public class TimingAnalysisHandler extends AbstractHandler {
 //
 //                    }
 //                });
+//              End 13.01.2015
                 
                 State scchart;
                 State maybeGet = (State) maybe.get();
@@ -202,61 +203,6 @@ public class TimingAnalysisHandler extends AbstractHandler {
                     scchart = maybeGet;
                 } else return Status.CANCEL_STATUS;
                 
-
-                // final Maybe<Region> maybe = new Maybe<>();
-                //
-                // document.readOnly(new IUnitOfWork.Void<XtextResource>() {
-                //
-                // @Override
-                // public void process(XtextResource resource) throws Exception {
-                // EList<EObject> contents = resource.getContents();
-                // if (resource.getContents().isEmpty()
-                // || (!(resource.getContents().get(0) instanceof Region))) {
-                // return;
-                // }
-                //
-                // maybe.set((Region) resource.getContents().get(0));
-                //
-                // }
-                // });
-                //
-                // Region rootRegion = (Region) /*EcoreUtil.copy(*/maybe.get();
-
-                // /////////////Transformations to S and building of Transformation
-                // Tree/////////////////////////////////
-                // /////////////Momentarily restricted to transformations form core SCChart
-                // downwards////////////////////
-
-                // Region modelSplitTE = SCCtransformation.transformTriggerEffect(rootRegion);
-                //
-                // ModelWrapper modelSplitTEModelWrapper =
-                // transformationTree.initializeTransformationTree
-                // (SCCtransformation.extractMapping(), "TriggerEffect", rootRegion,
-                // "coreSCChart", modelSplitTE, "coreSCChart-splitTriggerEffect");
-                //
-                // Region modelNormalized = SCCtransformation.transformSurfaceDepth(modelSplitTE);
-                //
-                // ModelWrapper modelNormalizedModelWrapper = transformationTree.
-                // addTransformationToTree(SCCtransformation.extractMapping(),
-                // modelSplitTEModelWrapper, "SurfaceDepth", modelSplitTE,Depth
-                // modelNormalized, "NormalizedChoreSCChart");
-                //
-                // SCGraph modelSCG = SCGtransformation.transformSCG(modelNormalized);
-                //
-                // ModelWrapper modelSCGModelWrapper = transformationTree.
-                // addTransformationToTree(SCGtransformation.extractMapping(),
-                // modelNormalizedModelWrapper, "SCC2SCG",
-                // modelNormalized, modelSCG, "SCG");
-                //
-                // de.cau.cs.kieler.s.s.Program modelS = Stransformation.transformSCGToS(modelSCG);
-                //
-                // ModelWrapper modelSModelWrapper = transformationTree.
-                // addTransformationToTree(Stransformation.extractMapping(), modelSCGModelWrapper,
-                // "SCG2S",
-                // modelSCG, modelS, "S");
-                //
-                // ModelWrapper KTM = transformationTree.root(modelSModelWrapper);
-
                 // ///////////////Setting of timing domains in both SCChart and S code with the help
                 // of the KTM tree.////
                 // ///////////////Get thread tree on the
@@ -267,117 +213,70 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 HashMap<Integer, LinkedList<Integer>> threadTree =
                         new HashMap<Integer, LinkedList<Integer>>();
 
-                // get main region
-                // Region main = rootRegion.getStates().get(0).getRegions().get(0);
-
-                // Region main = scchart.getRegions().get(0);
-                // Integer domainNumber =
-                // annotationProvider.setTimingDomainsWithS(main, 0, threadTree, null);
-
                 Integer domainNumber =
                         annotationProvider.setTimingDomainsWithS(scchart, 0, threadTree, null);
 
-                // annotationProvider.setTimingDomainsSimple(rootRegion, 0);
-
-                // EList<State> rootRegionStates = rootRegion.getStates();
-
-                // PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-                //
-                // @Override
-                // public void run() {
-                // // TODO Auto-generated method stub
-                //
-                // }
-                // });
-
-                CompilationResult transformed =
-                        KielerCompiler.compile("SCGRAPH", scchart, true, true);
-                EObject transformedEObject = transformed.getEObject();
-                SCGraph sequentialSCG = (SCGraph) transformedEObject;
-                HashMultimap<EObject, EObject> testMappingSCC2SCG= getTestMapping(1);
-                EList<Node> nodeList = sequentialSCG.getNodes();
-                Iterator<Node> nodeListIterator = nodeList.iterator();
-                // collect all edges with their source nodes
-                HashMap<ControlFlow, Node> edgesWithSource = new HashMap<ControlFlow, Node>();
-                while (nodeListIterator.hasNext()) {
-                    Node node = nodeListIterator.next();
-                    if (node instanceof Conditional) {
-                        Conditional conditional = (Conditional) node;
-                        edgesWithSource.put(conditional.getElse(), node);
-                        edgesWithSource.put(conditional.getThen(), node);
-                    } else {
-                        if (node instanceof Depth) {
-                            Depth depth = (Depth) node;
-                            edgesWithSource.put(depth.getNext(), node);
-                        } else {
-                            if (node instanceof Assignment) {
-                                Assignment assignment = (Assignment) node;
-                                edgesWithSource.put(assignment.getNext(), node);
-                            } else {
-                                if (node instanceof Join) {
-                                    Join join = (Join) node;
-                                    edgesWithSource.put(join.getNext(), node);
-                                } else {
-                                    if (node instanceof Fork) {
-                                        Fork fork = (Fork) node;
-                                        EList<ControlFlow> forkEdges = fork.getNext();
-                                        Iterator<ControlFlow> forkEdgesIterator =
-                                                forkEdges.iterator();
-                                        while (forkEdgesIterator.hasNext()) {
-                                            edgesWithSource.put(forkEdgesIterator.next(), node);
-                                        }
-                                    } else {
-                                        if (node instanceof Entry) {
-                                            Entry entry = (Entry) node;
-                                            edgesWithSource.put(entry.getNext(), node);
-                                        } else {
-                                            if (node instanceof Exit) {
-                                                Exit exit = (Exit) node;
-                                                edgesWithSource.put(exit.getNext(), node);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                Iterator<ControlFlow> edgeIterator = edgesWithSource.keySet().iterator();
-                while(edgeIterator.hasNext()){
-                  
-                }
-                // EList<Link> incomingList = node.getIncoming();
-                // Iterator<Link> incomingIterator = incomingList.iterator();
-                // while (incomingIterator.hasNext()) {
-                // Link link = incomingIterator.next();
-                // if(edgesWithNodes.containsKey(link)){
-                // edgesWithNodes.get(link).getSecond();
-                // }
-                // // ControlFlowImpl oldControlFlow = (ControlFlowImpl) link;
-                // //
-                // // // get target node of this link
-                // // Node target = link.getTarget();
-                // //
-                // // AssignmentImpl newNode = new AssignmentImpl();
-                // // TextExpressionImpl timingPoint = new TextExpressionImpl();
-                // // timingPoint.setText("TPP(1)");
-                // // newNode.setAssignment(timingPoint);
-                // //
-                // // oldControlFlow.setTarget(newNode);
-                // //
-                // // ControlFlowImpl newControlFlow = new ControlFlowImpl();
-                // // newControlFlow.setTarget(node);
-                // //
-                // // newNode.setNext(newControlFlow);
-                // }
-
-                CompilationResult codeGeneration =
-                        KielerCompiler.compile("CodeGeneration", sequentialSCG, true, true);
-
-                // CompilationResult transformed = KielerCompiler.compile("CODEGENERATION", scchart,
-                // true,
-                // true);
-                // String code = transformed.getString();
+//                13.01.2015
+//                CompilationResult transformed =
+//                        KielerCompiler.compile("SCGRAPH", scchart, true, true);
+//                EObject transformedEObject = transformed.getEObject();
+//                SCGraph sequentialSCG = (SCGraph) transformedEObject;
+//                HashMultimap<EObject, EObject> testMappingSCC2SCG= getTestMapping(1);
+//                EList<Node> nodeList = sequentialSCG.getNodes();
+//                Iterator<Node> nodeListIterator = nodeList.iterator();
+//                // collect all edges with their source nodes
+//                HashMap<ControlFlow, Node> edgesWithSource = new HashMap<ControlFlow, Node>();
+//                while (nodeListIterator.hasNext()) {
+//                    Node node = nodeListIterator.next();
+//                    if (node instanceof Conditional) {
+//                        Conditional conditional = (Conditional) node;
+//                        edgesWithSource.put(conditional.getElse(), node);
+//                        edgesWithSource.put(conditional.getThen(), node);
+//                    } else {
+//                        if (node instanceof Depth) {
+//                            Depth depth = (Depth) node;
+//                            edgesWithSource.put(depth.getNext(), node);
+//                        } else {
+//                            if (node instanceof Assignment) {
+//                                Assignment assignment = (Assignment) node;
+//                                edgesWithSource.put(assignment.getNext(), node);
+//                            } else {
+//                                if (node instanceof Join) {
+//                                    Join join = (Join) node;
+//                                    edgesWithSource.put(join.getNext(), node);
+//                                } else {
+//                                    if (node instanceof Fork) {
+//                                        Fork fork = (Fork) node;
+//                                        EList<ControlFlow> forkEdges = fork.getNext();
+//                                        Iterator<ControlFlow> forkEdgesIterator =
+//                                                forkEdges.iterator();
+//                                        while (forkEdgesIterator.hasNext()) {
+//                                            edgesWithSource.put(forkEdgesIterator.next(), node);
+//                                        }
+//                                    } else {
+//                                        if (node instanceof Entry) {
+//                                            Entry entry = (Entry) node;
+//                                            edgesWithSource.put(entry.getNext(), node);
+//                                        } else {
+//                                            if (node instanceof Exit) {
+//                                                Exit exit = (Exit) node;
+//                                                edgesWithSource.put(exit.getNext(), node);
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//                Iterator<ControlFlow> edgeIterator = edgesWithSource.keySet().iterator();
+//                while(edgeIterator.hasNext()){
+//                  
+//                }
+//                
+//                CompilationResult codeGeneration =
+//                        KielerCompiler.compile("CodeGeneration", sequentialSCG, true, true);
+//              End 13.01.2015
 
                 State state = scchart;// rootRegionStates.get(0);
                 IFile file = ResourceUtil.getFile(maybe.get().eResource());
@@ -392,7 +291,7 @@ public class TimingAnalysisHandler extends AbstractHandler {
                     showRegionTimingRecursive(childRegion, kts.getViewContext());
                 }
 
-                //
+                // old
                 //
                 // annotationProvider.setTimingDomainsSimple(rootRegion, 0);
                 //
@@ -422,7 +321,7 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 // "Saving or refresh"
                 // + "failed.", e));
                 // }
-                //
+                // old
                 return Status.OK_STATUS;
             }
 
