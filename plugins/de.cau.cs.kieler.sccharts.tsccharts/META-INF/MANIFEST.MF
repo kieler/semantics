@@ -22,7 +22,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Import-Package: de.cau.cs.kieler.kico,
  de.cau.cs.kieler.sccharts.scg,
- de.cau.cs.kieler.sccharts.text.sct.sct.impl,
- de.cau.cs.kieler.scg.c,
  de.cau.cs.kieler.scg.s.transformations
 

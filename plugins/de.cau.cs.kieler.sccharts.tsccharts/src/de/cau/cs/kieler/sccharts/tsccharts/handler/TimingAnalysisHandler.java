@@ -63,9 +63,10 @@ import de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions;
 import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.State;
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension;
 //import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation;
 import de.cau.cs.kieler.sccharts.scg.SCGTransformation;
-import de.cau.cs.kieler.sccharts.text.sct.sct.impl.SCChartImpl;
+//import de.cau.cs.kieler.sccharts.text.sct.sct.impl.SCChartImpl;
 import de.cau.cs.kieler.sccharts.tsccharts.TimingAnnotationProvider;
 import de.cau.cs.kieler.sccharts.tsccharts.annotation.extensions.TSCChartsAnnotationExtension;
 import de.cau.cs.kieler.scg.Assignment;
@@ -79,7 +80,7 @@ import de.cau.cs.kieler.scg.Join;
 import de.cau.cs.kieler.scg.Link;
 import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scg.SCGraph;
-import de.cau.cs.kieler.scg.c.SCG2C;
+//import de.cau.cs.kieler.scg.c.SCG2C;
 import de.cau.cs.kieler.scg.impl.AssignmentImpl;
 import de.cau.cs.kieler.scg.impl.ControlFlowImpl;
 import de.cau.cs.kieler.scg.impl.EntryImpl;
@@ -105,11 +106,12 @@ public class TimingAnalysisHandler extends AbstractHandler {
     public KRenderingExtensions renderingExtensions = new KRenderingExtensions();
     public KContainerRenderingExtensions containerRenderingExtensions =
             new KContainerRenderingExtensions();
+    public SCChartsExtension scchartsExtension = new SCChartsExtension();
 
     @Inject
     private TimingAnnotationProvider annotationProvider;
 
-    private SCG2C scg2c = new SCG2C();
+//    private SCG2C scg2c = new SCG2C();
 
     // @Inject
     // private SCChartsCoreTransformation SCCtransformation;
@@ -140,7 +142,8 @@ public class TimingAnalysisHandler extends AbstractHandler {
         if (it.hasNext()) {
             Object o = it.next();
 
-            if (o instanceof State || o instanceof Region || o instanceof SCChartImpl) {
+            if (o instanceof State || o instanceof Region //|| o instanceof SCChartImpl
+                    ) {
                 // state = (State) o;
             } else {
                 return null;
@@ -161,23 +164,44 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 } else {
                     return Status.CANCEL_STATUS;
                 }
-
-                final Maybe<SCChartImpl> maybe = new Maybe<>();
+                
+                final Maybe<State> maybe = new Maybe<>();
                 document.readOnly(new IUnitOfWork.Void<XtextResource>() {
                     @Override
                     public void process(XtextResource resource) throws Exception {
                         EList<EObject> contents = resource.getContents();
                         if (resource.getContents().isEmpty()
-                                || (!(resource.getContents().get(0) instanceof SCChartImpl))) {
+                                || (!(resource.getContents().get(0) instanceof State))) {
                             return;
                         }
 
-                        maybe.set((SCChartImpl) resource.getContents().get(0));
+                        maybe.set((State) resource.getContents().get(0));
 
                     }
                 });
-
-                SCChartImpl scchart = (SCChartImpl) /* EcoreUtil.copy( */maybe.get();
+                
+//              13.01.2015
+//                final Maybe<SCChartImpl> maybe = new Maybe<>();
+//                document.readOnly(new IUnitOfWork.Void<XtextResource>() {
+//                    @Override
+//                    public void process(XtextResource resource) throws Exception {
+//                        EList<EObject> contents = resource.getContents();
+//                        if (resource.getContents().isEmpty()
+//                                || (!(resource.getContents().get(0) instanceof SCChartImpl))) {
+//                            return;
+//                        }
+//
+//                        maybe.set((SCChartImpl) resource.getContents().get(0));
+//
+//                    }
+//                });
+                
+                State scchart;
+                State maybeGet = (State) maybe.get();
+                if (scchartsExtension.isRootState(maybeGet)){
+                    scchart = maybeGet;
+                } else return Status.CANCEL_STATUS;
+                
 
                 // final Maybe<Region> maybe = new Maybe<>();
                 //
