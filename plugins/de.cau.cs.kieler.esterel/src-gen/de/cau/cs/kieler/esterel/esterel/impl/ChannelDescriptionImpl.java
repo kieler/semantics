@@ -19,24 +19,24 @@ import org.eclipse.emf.ecore.EClass;
 public class ChannelDescriptionImpl extends de.cau.cs.kieler.esterel.kexpressions.impl.ChannelDescriptionImpl implements ChannelDescription
 {
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected ChannelDescriptionImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.CHANNEL_DESCRIPTION;
-  }
+        return EsterelPackage.Literals.CHANNEL_DESCRIPTION;
+    }
 
 } //ChannelDescriptionImpl

@@ -4603,24 +4603,32 @@ ruleEmit returns [EObject current=null]
 	    }
 
 )
-))(
+))(	otherlv_3='(' 
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getEmitAccess().getLeftParenthesisKeyword_2_0());
+    }
+(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getEmitAccess().getExprExpressionParserRuleCall_2_0()); 
+	        newCompositeNode(grammarAccess.getEmitAccess().getExprExpressionParserRuleCall_2_1_0()); 
 	    }
-		lv_expr_3_0=ruleExpression		{
+		lv_expr_4_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getEmitRule());
 	        }
        		set(
        			$current, 
        			"expr",
-        		lv_expr_3_0, 
+        		lv_expr_4_0, 
         		"Expression");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
+)	otherlv_5=')' 
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getEmitAccess().getRightParenthesisKeyword_2_2());
+    }
 )?)
 ;
 
@@ -7555,6 +7563,10 @@ ruleLocalVariable returns [EObject current=null]
 )
 )?)
 ;
+
+
+
+
 
 
 

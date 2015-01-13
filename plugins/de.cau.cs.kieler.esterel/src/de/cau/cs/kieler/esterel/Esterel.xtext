@@ -156,7 +156,8 @@ StatementContainerInterface returns StatementContainer:
 // !-(parallel)
 Statement:
 	//was Sequence ({Parallel.list+=current} "||" list+=Sequence)*; (uru)
-	Sequence ({Parallel.list+=current} ("||" list+=Sequence)+)?;
+	Sequence ({Parallel.list+=current} ("||" list+=Sequence)+)?
+	;
 
 	// -!
 AtomicStatement returns Statement:
@@ -260,7 +261,7 @@ DoWatchingEnd:
 // --> B.4.7 emit: Signal Emission <--
 // !-(emit)2 -------------------------------------
 Emit:
-	"emit" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) (expr=Expression)?;
+	"emit" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) ("("expr=Expression")")?;
 	// -!
 // --> B.4.8 every-do: Conditional Iteration
 // !-(every)-------------------------------------
@@ -426,6 +427,21 @@ TrapHandler:
 LocalVariable:
 	var=InterfaceVariableDecl "in" statement=Statement "end" (optEnd="var")?;
 	// -!
+	
+	
+// ==============================================
+// ===            B.2.5 SCL             ===
+// ==============================================
+
+// goto -------------------------------------
+Goto:
+    "goto" targetLabel=ID ";";
+    
+Label:
+    label=ID':';
+
+    
+    
 // ==============================================
 // ===            B.3 Expressions             ===
 // ==============================================

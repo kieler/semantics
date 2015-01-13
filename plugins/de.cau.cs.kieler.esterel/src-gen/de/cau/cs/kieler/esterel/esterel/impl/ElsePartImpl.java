@@ -19,24 +19,24 @@ import org.eclipse.emf.ecore.EClass;
 public class ElsePartImpl extends StatementContainerImpl implements ElsePart
 {
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected ElsePartImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.ELSE_PART;
-  }
+        return EsterelPackage.Literals.ELSE_PART;
+    }
 
 } //ElsePartImpl

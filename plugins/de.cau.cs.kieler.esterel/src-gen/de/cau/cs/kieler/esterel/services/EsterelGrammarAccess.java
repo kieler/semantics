@@ -2744,17 +2744,20 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSignalISignalIDTerminalRuleCall_1_0_0_1 = (RuleCall)cSignalISignalCrossReference_1_0_0.eContents().get(1);
 		private final Assignment cTickAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
 		private final RuleCall cTickTickParserRuleCall_1_1_0 = (RuleCall)cTickAssignment_1_1.eContents().get(0);
-		private final Assignment cExprAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cExprExpressionParserRuleCall_2_0 = (RuleCall)cExprAssignment_2.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cExprAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cExprExpressionParserRuleCall_2_1_0 = (RuleCall)cExprAssignment_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
 		//// -!
 		//// --> B.4.7 emit: Signal Emission <--
 		//// !-(emit)2 -------------------------------------
 		//Emit:
-		//	"emit" (signal=[kexpressions::ISignal] | tick=Tick) expr=Expression?;
+		//	"emit" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expr=Expression ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//"emit" (signal=[kexpressions::ISignal] | tick=Tick) expr=Expression?
+		//"emit" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expr=Expression ")")?
 		public Group getGroup() { return cGroup; }
 
 		//"emit"
@@ -2778,11 +2781,20 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//Tick
 		public RuleCall getTickTickParserRuleCall_1_1_0() { return cTickTickParserRuleCall_1_1_0; }
 
-		//expr=Expression?
-		public Assignment getExprAssignment_2() { return cExprAssignment_2; }
+		//("(" expr=Expression ")")?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
+
+		//expr=Expression
+		public Assignment getExprAssignment_2_1() { return cExprAssignment_2_1; }
 
 		//Expression
-		public RuleCall getExprExpressionParserRuleCall_2_0() { return cExprExpressionParserRuleCall_2_0; }
+		public RuleCall getExprExpressionParserRuleCall_2_1_0() { return cExprExpressionParserRuleCall_2_1_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
 	}
 
 	public class EveryDoElements extends AbstractParserRuleElementFinder {
@@ -4599,6 +4611,63 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getOptEndVarKeyword_4_0() { return cOptEndVarKeyword_4_0; }
 	}
 
+	public class GotoElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Goto");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cGotoKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cTargetLabelAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cTargetLabelIDTerminalRuleCall_1_0 = (RuleCall)cTargetLabelAssignment_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		
+		//// -!
+		//// ==============================================
+		//// ===            B.2.5 SCL             ===
+		//// ==============================================
+		//// goto -------------------------------------
+		//Goto:
+		//	"goto" targetLabel=ID ";";
+		public ParserRule getRule() { return rule; }
+
+		//"goto" targetLabel=ID ";"
+		public Group getGroup() { return cGroup; }
+
+		//"goto"
+		public Keyword getGotoKeyword_0() { return cGotoKeyword_0; }
+
+		//targetLabel=ID
+		public Assignment getTargetLabelAssignment_1() { return cTargetLabelAssignment_1; }
+
+		//ID
+		public RuleCall getTargetLabelIDTerminalRuleCall_1_0() { return cTargetLabelIDTerminalRuleCall_1_0; }
+
+		//";"
+		public Keyword getSemicolonKeyword_2() { return cSemicolonKeyword_2; }
+	}
+
+	public class LabelElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Label");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cLabelAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cLabelIDTerminalRuleCall_0_0 = (RuleCall)cLabelAssignment_0.eContents().get(0);
+		private final Keyword cColonKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//Label:
+		//	label=ID ":";
+		public ParserRule getRule() { return rule; }
+
+		//label=ID ":"
+		public Group getGroup() { return cGroup; }
+
+		//label=ID
+		public Assignment getLabelAssignment_0() { return cLabelAssignment_0; }
+
+		//ID
+		public RuleCall getLabelIDTerminalRuleCall_0_0() { return cLabelIDTerminalRuleCall_0_0; }
+
+		//":"
+		public Keyword getColonKeyword_1() { return cColonKeyword_1; }
+	}
+
 	public class AtomicExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AtomicExpression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -4613,7 +4682,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
 		private final RuleCall cConstantExpressionParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		
-		//// -!
 		//// ==============================================
 		//// ===            B.3 Expressions             ===
 		//// ==============================================
@@ -5583,6 +5651,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	private TrapDeclElements pTrapDecl;
 	private TrapHandlerElements pTrapHandler;
 	private LocalVariableElements pLocalVariable;
+	private GotoElements pGoto;
+	private LabelElements pLabel;
 	private AtomicExpressionElements pAtomicExpression;
 	private TrapExpressionElements pTrapExpression;
 	private FunctionExpressionElements pFunctionExpression;
@@ -6297,7 +6367,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// --> B.4.7 emit: Signal Emission <--
 	//// !-(emit)2 -------------------------------------
 	//Emit:
-	//	"emit" (signal=[kexpressions::ISignal] | tick=Tick) expr=Expression?;
+	//	"emit" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expr=Expression ")")?;
 	public EmitElements getEmitAccess() {
 		return (pEmit != null) ? pEmit : (pEmit = new EmitElements());
 	}
@@ -6757,6 +6827,30 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// -!
+	//// ==============================================
+	//// ===            B.2.5 SCL             ===
+	//// ==============================================
+	//// goto -------------------------------------
+	//Goto:
+	//	"goto" targetLabel=ID ";";
+	public GotoElements getGotoAccess() {
+		return (pGoto != null) ? pGoto : (pGoto = new GotoElements());
+	}
+	
+	public ParserRule getGotoRule() {
+		return getGotoAccess().getRule();
+	}
+
+	//Label:
+	//	label=ID ":";
+	public LabelElements getLabelAccess() {
+		return (pLabel != null) ? pLabel : (pLabel = new LabelElements());
+	}
+	
+	public ParserRule getLabelRule() {
+		return getLabelAccess().getRule();
+	}
+
 	//// ==============================================
 	//// ===            B.3 Expressions             ===
 	//// ==============================================

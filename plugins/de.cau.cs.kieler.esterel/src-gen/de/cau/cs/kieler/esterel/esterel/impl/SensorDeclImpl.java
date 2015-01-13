@@ -36,132 +36,126 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class SensorDeclImpl extends MinimalEObjectImpl.Container implements SensorDecl
 {
   /**
-   * The cached value of the '{@link #getSensors() <em>Sensors</em>}' containment reference list.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getSensors() <em>Sensors</em>}' containment reference list.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSensors()
-   * @generated
-   * @ordered
-   */
+     * @see #getSensors()
+     * @generated
+     * @ordered
+     */
   protected EList<SensorWithType> sensors;
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected SensorDeclImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.SENSOR_DECL;
-  }
+        return EsterelPackage.Literals.SENSOR_DECL;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public EList<SensorWithType> getSensors()
   {
-    if (sensors == null)
-    {
-      sensors = new EObjectContainmentEList<SensorWithType>(SensorWithType.class, this, EsterelPackage.SENSOR_DECL__SENSORS);
+        if (sensors == null) {
+            sensors = new EObjectContainmentEList<SensorWithType>(SensorWithType.class, this, EsterelPackage.SENSOR_DECL__SENSORS);
+        }
+        return sensors;
     }
-    return sensors;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.SENSOR_DECL__SENSORS:
-        return ((InternalEList<?>)getSensors()).basicRemove(otherEnd, msgs);
+        switch (featureID) {
+            case EsterelPackage.SENSOR_DECL__SENSORS:
+                return ((InternalEList<?>)getSensors()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.SENSOR_DECL__SENSORS:
-        return getSensors();
+        switch (featureID) {
+            case EsterelPackage.SENSOR_DECL__SENSORS:
+                return getSensors();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.SENSOR_DECL__SENSORS:
-        getSensors().clear();
-        getSensors().addAll((Collection<? extends SensorWithType>)newValue);
-        return;
+        switch (featureID) {
+            case EsterelPackage.SENSOR_DECL__SENSORS:
+                getSensors().clear();
+                getSensors().addAll((Collection<? extends SensorWithType>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.SENSOR_DECL__SENSORS:
-        getSensors().clear();
-        return;
+        switch (featureID) {
+            case EsterelPackage.SENSOR_DECL__SENSORS:
+                getSensors().clear();
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.SENSOR_DECL__SENSORS:
-        return sensors != null && !sensors.isEmpty();
+        switch (featureID) {
+            case EsterelPackage.SENSOR_DECL__SENSORS:
+                return sensors != null && !sensors.isEmpty();
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
 } //SensorDeclImpl

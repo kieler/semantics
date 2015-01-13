@@ -23,29 +23,29 @@ import org.eclipse.emf.ecore.EObject;
 public interface EndLoop extends EObject
 {
   /**
-   * Returns the value of the '<em><b>End Opt</b></em>' attribute.
-   * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>End Opt</b></em>' attribute.
+     * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>End Opt</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>End Opt</em>' attribute.
-   * @see #setEndOpt(String)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getEndLoop_EndOpt()
-   * @model
-   * @generated
-   */
+     * @return the value of the '<em>End Opt</em>' attribute.
+     * @see #setEndOpt(String)
+     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getEndLoop_EndOpt()
+     * @model
+     * @generated
+     */
   String getEndOpt();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.EndLoop#getEndOpt <em>End Opt</em>}' attribute.
-   * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.EndLoop#getEndOpt <em>End Opt</em>}' attribute.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>End Opt</em>' attribute.
-   * @see #getEndOpt()
-   * @generated
-   */
+     * @param value the new value of the '<em>End Opt</em>' attribute.
+     * @see #getEndOpt()
+     * @generated
+     */
   void setEndOpt(String value);
 
 } // EndLoop

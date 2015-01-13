@@ -25,19 +25,19 @@ import org.eclipse.emf.ecore.EObject;
 public interface ProcedureDecl extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Procedures</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.Procedure}.
-   * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Procedures</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.Procedure}.
+     * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Procedures</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Procedures</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getProcedureDecl_Procedures()
-   * @model containment="true"
-   * @generated
-   */
+     * @return the value of the '<em>Procedures</em>' containment reference list.
+     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getProcedureDecl_Procedures()
+     * @model containment="true"
+     * @generated
+     */
   EList<Procedure> getProcedures();
 
 } // ProcedureDecl

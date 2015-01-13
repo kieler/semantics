@@ -31,164 +31,157 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class StatementContainerImpl extends MinimalEObjectImpl.Container implements StatementContainer
 {
   /**
-   * The cached value of the '{@link #getStatement() <em>Statement</em>}' containment reference.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getStatement() <em>Statement</em>}' containment reference.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getStatement()
-   * @generated
-   * @ordered
-   */
+     * @see #getStatement()
+     * @generated
+     * @ordered
+     */
   protected Statement statement;
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected StatementContainerImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.STATEMENT_CONTAINER;
-  }
+        return EsterelPackage.Literals.STATEMENT_CONTAINER;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Statement getStatement()
   {
-    return statement;
-  }
+        return statement;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public NotificationChain basicSetStatement(Statement newStatement, NotificationChain msgs)
   {
-    Statement oldStatement = statement;
-    statement = newStatement;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.STATEMENT_CONTAINER__STATEMENT, oldStatement, newStatement);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+        Statement oldStatement = statement;
+        statement = newStatement;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.STATEMENT_CONTAINER__STATEMENT, oldStatement, newStatement);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
     }
-    return msgs;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public void setStatement(Statement newStatement)
   {
-    if (newStatement != statement)
-    {
-      NotificationChain msgs = null;
-      if (statement != null)
-        msgs = ((InternalEObject)statement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.STATEMENT_CONTAINER__STATEMENT, null, msgs);
-      if (newStatement != null)
-        msgs = ((InternalEObject)newStatement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.STATEMENT_CONTAINER__STATEMENT, null, msgs);
-      msgs = basicSetStatement(newStatement, msgs);
-      if (msgs != null) msgs.dispatch();
+        if (newStatement != statement) {
+            NotificationChain msgs = null;
+            if (statement != null)
+                msgs = ((InternalEObject)statement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.STATEMENT_CONTAINER__STATEMENT, null, msgs);
+            if (newStatement != null)
+                msgs = ((InternalEObject)newStatement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.STATEMENT_CONTAINER__STATEMENT, null, msgs);
+            msgs = basicSetStatement(newStatement, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.STATEMENT_CONTAINER__STATEMENT, newStatement, newStatement));
     }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.STATEMENT_CONTAINER__STATEMENT, newStatement, newStatement));
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.STATEMENT_CONTAINER__STATEMENT:
-        return basicSetStatement(null, msgs);
+        switch (featureID) {
+            case EsterelPackage.STATEMENT_CONTAINER__STATEMENT:
+                return basicSetStatement(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.STATEMENT_CONTAINER__STATEMENT:
-        return getStatement();
+        switch (featureID) {
+            case EsterelPackage.STATEMENT_CONTAINER__STATEMENT:
+                return getStatement();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.STATEMENT_CONTAINER__STATEMENT:
-        setStatement((Statement)newValue);
-        return;
+        switch (featureID) {
+            case EsterelPackage.STATEMENT_CONTAINER__STATEMENT:
+                setStatement((Statement)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.STATEMENT_CONTAINER__STATEMENT:
-        setStatement((Statement)null);
-        return;
+        switch (featureID) {
+            case EsterelPackage.STATEMENT_CONTAINER__STATEMENT:
+                setStatement((Statement)null);
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.STATEMENT_CONTAINER__STATEMENT:
-        return statement != null;
+        switch (featureID) {
+            case EsterelPackage.STATEMENT_CONTAINER__STATEMENT:
+                return statement != null;
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
 } //StatementContainerImpl

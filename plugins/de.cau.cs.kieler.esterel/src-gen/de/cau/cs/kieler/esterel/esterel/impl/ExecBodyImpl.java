@@ -40,167 +40,160 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class ExecBodyImpl extends MinimalEObjectImpl.Container implements ExecBody
 {
   /**
-   * The cached value of the '{@link #getVars() <em>Vars</em>}' reference list.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getVars() <em>Vars</em>}' reference list.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getVars()
-   * @generated
-   * @ordered
-   */
+     * @see #getVars()
+     * @generated
+     * @ordered
+     */
   protected EList<IVariable> vars;
 
   /**
-   * The cached value of the '{@link #getKexpressions() <em>Kexpressions</em>}' containment reference list.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getKexpressions() <em>Kexpressions</em>}' containment reference list.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getKexpressions()
-   * @generated
-   * @ordered
-   */
+     * @see #getKexpressions()
+     * @generated
+     * @ordered
+     */
   protected EList<Expression> kexpressions;
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected ExecBodyImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.EXEC_BODY;
-  }
+        return EsterelPackage.Literals.EXEC_BODY;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public EList<IVariable> getVars()
   {
-    if (vars == null)
-    {
-      vars = new EObjectResolvingEList<IVariable>(IVariable.class, this, EsterelPackage.EXEC_BODY__VARS);
+        if (vars == null) {
+            vars = new EObjectResolvingEList<IVariable>(IVariable.class, this, EsterelPackage.EXEC_BODY__VARS);
+        }
+        return vars;
     }
-    return vars;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public EList<Expression> getKexpressions()
   {
-    if (kexpressions == null)
-    {
-      kexpressions = new EObjectContainmentEList<Expression>(Expression.class, this, EsterelPackage.EXEC_BODY__KEXPRESSIONS);
+        if (kexpressions == null) {
+            kexpressions = new EObjectContainmentEList<Expression>(Expression.class, this, EsterelPackage.EXEC_BODY__KEXPRESSIONS);
+        }
+        return kexpressions;
     }
-    return kexpressions;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.EXEC_BODY__KEXPRESSIONS:
-        return ((InternalEList<?>)getKexpressions()).basicRemove(otherEnd, msgs);
+        switch (featureID) {
+            case EsterelPackage.EXEC_BODY__KEXPRESSIONS:
+                return ((InternalEList<?>)getKexpressions()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.EXEC_BODY__VARS:
-        return getVars();
-      case EsterelPackage.EXEC_BODY__KEXPRESSIONS:
-        return getKexpressions();
+        switch (featureID) {
+            case EsterelPackage.EXEC_BODY__VARS:
+                return getVars();
+            case EsterelPackage.EXEC_BODY__KEXPRESSIONS:
+                return getKexpressions();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.EXEC_BODY__VARS:
-        getVars().clear();
-        getVars().addAll((Collection<? extends IVariable>)newValue);
-        return;
-      case EsterelPackage.EXEC_BODY__KEXPRESSIONS:
-        getKexpressions().clear();
-        getKexpressions().addAll((Collection<? extends Expression>)newValue);
-        return;
+        switch (featureID) {
+            case EsterelPackage.EXEC_BODY__VARS:
+                getVars().clear();
+                getVars().addAll((Collection<? extends IVariable>)newValue);
+                return;
+            case EsterelPackage.EXEC_BODY__KEXPRESSIONS:
+                getKexpressions().clear();
+                getKexpressions().addAll((Collection<? extends Expression>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.EXEC_BODY__VARS:
-        getVars().clear();
-        return;
-      case EsterelPackage.EXEC_BODY__KEXPRESSIONS:
-        getKexpressions().clear();
-        return;
+        switch (featureID) {
+            case EsterelPackage.EXEC_BODY__VARS:
+                getVars().clear();
+                return;
+            case EsterelPackage.EXEC_BODY__KEXPRESSIONS:
+                getKexpressions().clear();
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.EXEC_BODY__VARS:
-        return vars != null && !vars.isEmpty();
-      case EsterelPackage.EXEC_BODY__KEXPRESSIONS:
-        return kexpressions != null && !kexpressions.isEmpty();
+        switch (featureID) {
+            case EsterelPackage.EXEC_BODY__VARS:
+                return vars != null && !vars.isEmpty();
+            case EsterelPackage.EXEC_BODY__KEXPRESSIONS:
+                return kexpressions != null && !kexpressions.isEmpty();
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
 } //ExecBodyImpl

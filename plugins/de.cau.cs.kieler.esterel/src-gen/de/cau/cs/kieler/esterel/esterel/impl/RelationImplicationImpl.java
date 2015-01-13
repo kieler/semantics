@@ -31,208 +31,200 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class RelationImplicationImpl extends RelationTypeImpl implements RelationImplication
 {
   /**
-   * The cached value of the '{@link #getFirst() <em>First</em>}' reference.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getFirst() <em>First</em>}' reference.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getFirst()
-   * @generated
-   * @ordered
-   */
+     * @see #getFirst()
+     * @generated
+     * @ordered
+     */
   protected ISignal first;
 
   /**
-   * The cached value of the '{@link #getSecond() <em>Second</em>}' reference.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getSecond() <em>Second</em>}' reference.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSecond()
-   * @generated
-   * @ordered
-   */
+     * @see #getSecond()
+     * @generated
+     * @ordered
+     */
   protected ISignal second;
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected RelationImplicationImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.RELATION_IMPLICATION;
-  }
+        return EsterelPackage.Literals.RELATION_IMPLICATION;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ISignal getFirst()
   {
-    if (first != null && first.eIsProxy())
-    {
-      InternalEObject oldFirst = (InternalEObject)first;
-      first = (ISignal)eResolveProxy(oldFirst);
-      if (first != oldFirst)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.RELATION_IMPLICATION__FIRST, oldFirst, first));
-      }
+        if (first != null && first.eIsProxy()) {
+            InternalEObject oldFirst = (InternalEObject)first;
+            first = (ISignal)eResolveProxy(oldFirst);
+            if (first != oldFirst) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.RELATION_IMPLICATION__FIRST, oldFirst, first));
+            }
+        }
+        return first;
     }
-    return first;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ISignal basicGetFirst()
   {
-    return first;
-  }
+        return first;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public void setFirst(ISignal newFirst)
   {
-    ISignal oldFirst = first;
-    first = newFirst;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.RELATION_IMPLICATION__FIRST, oldFirst, first));
-  }
+        ISignal oldFirst = first;
+        first = newFirst;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.RELATION_IMPLICATION__FIRST, oldFirst, first));
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ISignal getSecond()
   {
-    if (second != null && second.eIsProxy())
-    {
-      InternalEObject oldSecond = (InternalEObject)second;
-      second = (ISignal)eResolveProxy(oldSecond);
-      if (second != oldSecond)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.RELATION_IMPLICATION__SECOND, oldSecond, second));
-      }
+        if (second != null && second.eIsProxy()) {
+            InternalEObject oldSecond = (InternalEObject)second;
+            second = (ISignal)eResolveProxy(oldSecond);
+            if (second != oldSecond) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.RELATION_IMPLICATION__SECOND, oldSecond, second));
+            }
+        }
+        return second;
     }
-    return second;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ISignal basicGetSecond()
   {
-    return second;
-  }
+        return second;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public void setSecond(ISignal newSecond)
   {
-    ISignal oldSecond = second;
-    second = newSecond;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.RELATION_IMPLICATION__SECOND, oldSecond, second));
-  }
+        ISignal oldSecond = second;
+        second = newSecond;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.RELATION_IMPLICATION__SECOND, oldSecond, second));
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.RELATION_IMPLICATION__FIRST:
-        if (resolve) return getFirst();
-        return basicGetFirst();
-      case EsterelPackage.RELATION_IMPLICATION__SECOND:
-        if (resolve) return getSecond();
-        return basicGetSecond();
+        switch (featureID) {
+            case EsterelPackage.RELATION_IMPLICATION__FIRST:
+                if (resolve) return getFirst();
+                return basicGetFirst();
+            case EsterelPackage.RELATION_IMPLICATION__SECOND:
+                if (resolve) return getSecond();
+                return basicGetSecond();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.RELATION_IMPLICATION__FIRST:
-        setFirst((ISignal)newValue);
-        return;
-      case EsterelPackage.RELATION_IMPLICATION__SECOND:
-        setSecond((ISignal)newValue);
-        return;
+        switch (featureID) {
+            case EsterelPackage.RELATION_IMPLICATION__FIRST:
+                setFirst((ISignal)newValue);
+                return;
+            case EsterelPackage.RELATION_IMPLICATION__SECOND:
+                setSecond((ISignal)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.RELATION_IMPLICATION__FIRST:
-        setFirst((ISignal)null);
-        return;
-      case EsterelPackage.RELATION_IMPLICATION__SECOND:
-        setSecond((ISignal)null);
-        return;
+        switch (featureID) {
+            case EsterelPackage.RELATION_IMPLICATION__FIRST:
+                setFirst((ISignal)null);
+                return;
+            case EsterelPackage.RELATION_IMPLICATION__SECOND:
+                setSecond((ISignal)null);
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.RELATION_IMPLICATION__FIRST:
-        return first != null;
-      case EsterelPackage.RELATION_IMPLICATION__SECOND:
-        return second != null;
+        switch (featureID) {
+            case EsterelPackage.RELATION_IMPLICATION__FIRST:
+                return first != null;
+            case EsterelPackage.RELATION_IMPLICATION__SECOND:
+                return second != null;
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
 } //RelationImplicationImpl

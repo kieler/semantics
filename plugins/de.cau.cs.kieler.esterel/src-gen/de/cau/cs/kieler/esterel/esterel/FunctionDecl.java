@@ -25,19 +25,19 @@ import org.eclipse.emf.ecore.EObject;
 public interface FunctionDecl extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Functions</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.Function}.
-   * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Functions</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.Function}.
+     * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Functions</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Functions</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getFunctionDecl_Functions()
-   * @model containment="true"
-   * @generated
-   */
+     * @return the value of the '<em>Functions</em>' containment reference list.
+     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getFunctionDecl_Functions()
+     * @model containment="true"
+     * @generated
+     */
   EList<Function> getFunctions();
 
 } // FunctionDecl

@@ -293,6 +293,12 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//LocalVariable/var"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//LocalVariable/optEnd"/>
     </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Goto">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Goto/targetLabel"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Label">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Label/label"/>
+    </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//DelayExpr">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DelayExpr/expr"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DelayExpr/event"/>

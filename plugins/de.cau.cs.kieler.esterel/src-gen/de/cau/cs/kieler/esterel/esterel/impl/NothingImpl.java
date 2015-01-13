@@ -19,24 +19,24 @@ import org.eclipse.emf.ecore.EClass;
 public class NothingImpl extends StatementImpl implements Nothing
 {
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected NothingImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.NOTHING;
-  }
+        return EsterelPackage.Literals.NOTHING;
+    }
 
 } //NothingImpl

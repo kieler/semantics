@@ -21,24 +21,24 @@ import org.eclipse.emf.ecore.EClass;
 public class TrapDeclImpl extends ISignalImpl implements TrapDecl
 {
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected TrapDeclImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.TRAP_DECL;
-  }
+        return EsterelPackage.Literals.TRAP_DECL;
+    }
 
 } //TrapDeclImpl

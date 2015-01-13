@@ -36,132 +36,126 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class TaskDeclImpl extends MinimalEObjectImpl.Container implements TaskDecl
 {
   /**
-   * The cached value of the '{@link #getTasks() <em>Tasks</em>}' containment reference list.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getTasks() <em>Tasks</em>}' containment reference list.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getTasks()
-   * @generated
-   * @ordered
-   */
+     * @see #getTasks()
+     * @generated
+     * @ordered
+     */
   protected EList<Task> tasks;
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected TaskDeclImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.TASK_DECL;
-  }
+        return EsterelPackage.Literals.TASK_DECL;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public EList<Task> getTasks()
   {
-    if (tasks == null)
-    {
-      tasks = new EObjectContainmentEList<Task>(Task.class, this, EsterelPackage.TASK_DECL__TASKS);
+        if (tasks == null) {
+            tasks = new EObjectContainmentEList<Task>(Task.class, this, EsterelPackage.TASK_DECL__TASKS);
+        }
+        return tasks;
     }
-    return tasks;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.TASK_DECL__TASKS:
-        return ((InternalEList<?>)getTasks()).basicRemove(otherEnd, msgs);
+        switch (featureID) {
+            case EsterelPackage.TASK_DECL__TASKS:
+                return ((InternalEList<?>)getTasks()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.TASK_DECL__TASKS:
-        return getTasks();
+        switch (featureID) {
+            case EsterelPackage.TASK_DECL__TASKS:
+                return getTasks();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.TASK_DECL__TASKS:
-        getTasks().clear();
-        getTasks().addAll((Collection<? extends Task>)newValue);
-        return;
+        switch (featureID) {
+            case EsterelPackage.TASK_DECL__TASKS:
+                getTasks().clear();
+                getTasks().addAll((Collection<? extends Task>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.TASK_DECL__TASKS:
-        getTasks().clear();
-        return;
+        switch (featureID) {
+            case EsterelPackage.TASK_DECL__TASKS:
+                getTasks().clear();
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.TASK_DECL__TASKS:
-        return tasks != null && !tasks.isEmpty();
+        switch (featureID) {
+            case EsterelPackage.TASK_DECL__TASKS:
+                return tasks != null && !tasks.isEmpty();
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
 } //TaskDeclImpl

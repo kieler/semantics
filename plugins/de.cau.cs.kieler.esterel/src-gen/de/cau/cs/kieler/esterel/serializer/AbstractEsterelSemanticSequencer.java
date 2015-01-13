@@ -47,8 +47,10 @@ import de.cau.cs.kieler.esterel.esterel.Function;
 import de.cau.cs.kieler.esterel.esterel.FunctionDecl;
 import de.cau.cs.kieler.esterel.esterel.FunctionExpression;
 import de.cau.cs.kieler.esterel.esterel.FunctionRenaming;
+import de.cau.cs.kieler.esterel.esterel.Goto;
 import de.cau.cs.kieler.esterel.esterel.Halt;
 import de.cau.cs.kieler.esterel.esterel.IfTest;
+import de.cau.cs.kieler.esterel.esterel.Label;
 import de.cau.cs.kieler.esterel.esterel.LocalSignal;
 import de.cau.cs.kieler.esterel.esterel.LocalSignalDecl;
 import de.cau.cs.kieler.esterel.esterel.LocalVariable;
@@ -531,6 +533,12 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 					return; 
 				}
 				else break;
+			case EsterelPackage.GOTO:
+				if(context == grammarAccess.getGotoRule()) {
+					sequence_Goto(context, (Goto) semanticObject); 
+					return; 
+				}
+				else break;
 			case EsterelPackage.HALT:
 				if(context == grammarAccess.getAtomicStatementRule() ||
 				   context == grammarAccess.getHaltRule() ||
@@ -550,6 +558,12 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 				   context == grammarAccess.getStatementRule() ||
 				   context == grammarAccess.getStatementAccess().getParallelListAction_1_0()) {
 					sequence_IfTest(context, (IfTest) semanticObject); 
+					return; 
+				}
+				else break;
+			case EsterelPackage.LABEL:
+				if(context == grammarAccess.getLabelRule()) {
+					sequence_Label(context, (Label) semanticObject); 
 					return; 
 				}
 				else break;
@@ -1677,6 +1691,22 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 	
 	/**
 	 * Constraint:
+	 *     targetLabel=ID
+	 */
+	protected void sequence_Goto(EObject context, Goto semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, EsterelPackage.Literals.GOTO__TARGET_LABEL) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.GOTO__TARGET_LABEL));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getGotoAccess().getTargetLabelIDTerminalRuleCall_1_0(), semanticObject.getTargetLabel());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     {Halt}
 	 */
 	protected void sequence_Halt(EObject context, Halt semanticObject) {
@@ -1690,6 +1720,22 @@ public abstract class AbstractEsterelSemanticSequencer extends KExpressionsSeman
 	 */
 	protected void sequence_IfTest(EObject context, IfTest semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     label=ID
+	 */
+	protected void sequence_Label(EObject context, Label semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, EsterelPackage.Literals.LABEL__LABEL) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, EsterelPackage.Literals.LABEL__LABEL));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getLabelAccess().getLabelIDTerminalRuleCall_0_0(), semanticObject.getLabel());
+		feeder.finish();
 	}
 	
 	

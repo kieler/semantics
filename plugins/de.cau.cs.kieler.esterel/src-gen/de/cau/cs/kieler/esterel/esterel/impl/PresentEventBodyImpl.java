@@ -32,234 +32,225 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class PresentEventBodyImpl extends PresentBodyImpl implements PresentEventBody
 {
   /**
-   * The cached value of the '{@link #getEvent() <em>Event</em>}' containment reference.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getEvent() <em>Event</em>}' containment reference.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getEvent()
-   * @generated
-   * @ordered
-   */
+     * @see #getEvent()
+     * @generated
+     * @ordered
+     */
   protected PresentEvent event;
 
   /**
-   * The cached value of the '{@link #getThenPart() <em>Then Part</em>}' containment reference.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getThenPart() <em>Then Part</em>}' containment reference.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getThenPart()
-   * @generated
-   * @ordered
-   */
+     * @see #getThenPart()
+     * @generated
+     * @ordered
+     */
   protected ThenPart thenPart;
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected PresentEventBodyImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.PRESENT_EVENT_BODY;
-  }
+        return EsterelPackage.Literals.PRESENT_EVENT_BODY;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public PresentEvent getEvent()
   {
-    return event;
-  }
+        return event;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public NotificationChain basicSetEvent(PresentEvent newEvent, NotificationChain msgs)
   {
-    PresentEvent oldEvent = event;
-    event = newEvent;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_EVENT_BODY__EVENT, oldEvent, newEvent);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+        PresentEvent oldEvent = event;
+        event = newEvent;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_EVENT_BODY__EVENT, oldEvent, newEvent);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
     }
-    return msgs;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public void setEvent(PresentEvent newEvent)
   {
-    if (newEvent != event)
-    {
-      NotificationChain msgs = null;
-      if (event != null)
-        msgs = ((InternalEObject)event).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_EVENT_BODY__EVENT, null, msgs);
-      if (newEvent != null)
-        msgs = ((InternalEObject)newEvent).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_EVENT_BODY__EVENT, null, msgs);
-      msgs = basicSetEvent(newEvent, msgs);
-      if (msgs != null) msgs.dispatch();
+        if (newEvent != event) {
+            NotificationChain msgs = null;
+            if (event != null)
+                msgs = ((InternalEObject)event).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_EVENT_BODY__EVENT, null, msgs);
+            if (newEvent != null)
+                msgs = ((InternalEObject)newEvent).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_EVENT_BODY__EVENT, null, msgs);
+            msgs = basicSetEvent(newEvent, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_EVENT_BODY__EVENT, newEvent, newEvent));
     }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_EVENT_BODY__EVENT, newEvent, newEvent));
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ThenPart getThenPart()
   {
-    return thenPart;
-  }
+        return thenPart;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public NotificationChain basicSetThenPart(ThenPart newThenPart, NotificationChain msgs)
   {
-    ThenPart oldThenPart = thenPart;
-    thenPart = newThenPart;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_EVENT_BODY__THEN_PART, oldThenPart, newThenPart);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+        ThenPart oldThenPart = thenPart;
+        thenPart = newThenPart;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_EVENT_BODY__THEN_PART, oldThenPart, newThenPart);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
     }
-    return msgs;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public void setThenPart(ThenPart newThenPart)
   {
-    if (newThenPart != thenPart)
-    {
-      NotificationChain msgs = null;
-      if (thenPart != null)
-        msgs = ((InternalEObject)thenPart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_EVENT_BODY__THEN_PART, null, msgs);
-      if (newThenPart != null)
-        msgs = ((InternalEObject)newThenPart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_EVENT_BODY__THEN_PART, null, msgs);
-      msgs = basicSetThenPart(newThenPart, msgs);
-      if (msgs != null) msgs.dispatch();
+        if (newThenPart != thenPart) {
+            NotificationChain msgs = null;
+            if (thenPart != null)
+                msgs = ((InternalEObject)thenPart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_EVENT_BODY__THEN_PART, null, msgs);
+            if (newThenPart != null)
+                msgs = ((InternalEObject)newThenPart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_EVENT_BODY__THEN_PART, null, msgs);
+            msgs = basicSetThenPart(newThenPart, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_EVENT_BODY__THEN_PART, newThenPart, newThenPart));
     }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_EVENT_BODY__THEN_PART, newThenPart, newThenPart));
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.PRESENT_EVENT_BODY__EVENT:
-        return basicSetEvent(null, msgs);
-      case EsterelPackage.PRESENT_EVENT_BODY__THEN_PART:
-        return basicSetThenPart(null, msgs);
+        switch (featureID) {
+            case EsterelPackage.PRESENT_EVENT_BODY__EVENT:
+                return basicSetEvent(null, msgs);
+            case EsterelPackage.PRESENT_EVENT_BODY__THEN_PART:
+                return basicSetThenPart(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.PRESENT_EVENT_BODY__EVENT:
-        return getEvent();
-      case EsterelPackage.PRESENT_EVENT_BODY__THEN_PART:
-        return getThenPart();
+        switch (featureID) {
+            case EsterelPackage.PRESENT_EVENT_BODY__EVENT:
+                return getEvent();
+            case EsterelPackage.PRESENT_EVENT_BODY__THEN_PART:
+                return getThenPart();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.PRESENT_EVENT_BODY__EVENT:
-        setEvent((PresentEvent)newValue);
-        return;
-      case EsterelPackage.PRESENT_EVENT_BODY__THEN_PART:
-        setThenPart((ThenPart)newValue);
-        return;
+        switch (featureID) {
+            case EsterelPackage.PRESENT_EVENT_BODY__EVENT:
+                setEvent((PresentEvent)newValue);
+                return;
+            case EsterelPackage.PRESENT_EVENT_BODY__THEN_PART:
+                setThenPart((ThenPart)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.PRESENT_EVENT_BODY__EVENT:
-        setEvent((PresentEvent)null);
-        return;
-      case EsterelPackage.PRESENT_EVENT_BODY__THEN_PART:
-        setThenPart((ThenPart)null);
-        return;
+        switch (featureID) {
+            case EsterelPackage.PRESENT_EVENT_BODY__EVENT:
+                setEvent((PresentEvent)null);
+                return;
+            case EsterelPackage.PRESENT_EVENT_BODY__THEN_PART:
+                setThenPart((ThenPart)null);
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.PRESENT_EVENT_BODY__EVENT:
-        return event != null;
-      case EsterelPackage.PRESENT_EVENT_BODY__THEN_PART:
-        return thenPart != null;
+        switch (featureID) {
+            case EsterelPackage.PRESENT_EVENT_BODY__EVENT:
+                return event != null;
+            case EsterelPackage.PRESENT_EVENT_BODY__THEN_PART:
+                return thenPart != null;
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
 } //PresentEventBodyImpl
