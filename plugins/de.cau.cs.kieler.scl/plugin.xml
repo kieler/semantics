@@ -185,7 +185,6 @@
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scl.extensions.SCLExtensions"
-            dependencies="OPTIMIZE_LABELS"
             id="REMOVE_SUPERFLUOUS_GOTOS"
             method="removeSuperfluousGotos"
             name="Remove superfluous gotos">
@@ -199,11 +198,10 @@
       <transformationGroup
             id="SCL_OPTIMIZATIONS"
             name="SCL Optimizations"
-            transformations="REMOVE_SUPERFLUOUS_GOTOS, OPTIMIZE_LABELS,REMOVE_UNREACHABLE_CODE">
+            transformations="REMOVE_SUPERFLUOUS_GOTOS, OPTIMIZE_LABELS,REMOVE_UNREACHABLE_CODE,REMOVE_DOUBLE_JUMPS,OPTIMIZE_ALL,REMOVE_SUBSEQUENT_LABELS">
       </transformationGroup>
       <transformationMethod
             class="de.cau.cs.kieler.scl.extensions.SCLExtensions"
-            dependencies="REMOVE_SUPERFLUOUS_GOTOS, OPTIMIZE_LABELS"
             id="REMOVE_UNREACHABLE_CODE"
             method="removeUnreachableCode"
             name="Remove unreachable code">
@@ -221,7 +219,7 @@
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scl.extensions.SCLExtensions"
-            id="REMOVE_DOUBLE_JUMPS"
+            id="REMOVE_DOUBLE_JUMPSs"
             method="removeDoubleJumps"
             name="Remove double jumps">
       </transformationMethod>

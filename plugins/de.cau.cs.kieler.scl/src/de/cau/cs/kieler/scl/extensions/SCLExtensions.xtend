@@ -43,27 +43,27 @@ class SCLExtensions {
             var index = parent.statements.indexOf(statement)
             var justLabel = true
             var oldSseq = parent
-            while ((parent.statements.size > index + 1 && justLabel) || parent instanceof Conditional) {
-
-                // Check conditional following if in if-then-else branch
-                if (parent.statements.size == index + 1 && justLabel && parent instanceof Conditional) {
-                    oldSseq = parent
-                    parent = parent.eContainer.eContainer as StatementSequence
-                    index = parent.statements.indexOf(oldSseq.eContainer)
-                }
-                if (parent.statements.length > index + 1) {
-                    val nextStatement = parent.statements.get(index + 1) as Statement
-                    if (nextStatement instanceof EmptyStatement &&
-                        (nextStatement as EmptyStatement).label == goto.targetLabel) {
-                        toDelete.add(goto)
-                    }
-                    if (!(nextStatement instanceof EmptyStatement)) {
-                        justLabel = false
-                    }
-                    index = index + 1
-                }
-
-            }
+//            while ((parent.statements.size > index + 1 && justLabel) || parent instanceof Conditional) {
+//
+//                // Check conditional following if in if-then-else branch
+//                if (parent.statements.size == index + 1 && justLabel && parent instanceof Conditional) {
+//                    oldSseq = parent
+//                    parent = parent.eContainer.eContainer as StatementSequence
+//                    index = parent.statements.indexOf(oldSseq.eContainer)
+//                }
+//                if (parent.statements.length > index + 1) {
+//                    val nextStatement = parent.statements.get(index + 1) as Statement
+//                    if (nextStatement instanceof EmptyStatement &&
+//                        (nextStatement as EmptyStatement).label == goto.targetLabel) {
+//                        toDelete.add(goto)
+//                    }
+//                    if (!(nextStatement instanceof EmptyStatement)) {
+//                        justLabel = false
+//                    }
+//                    index = index + 1
+//                }
+//
+//            }
         }
         toDelete.forEach[it.eContainer.remove]
 
