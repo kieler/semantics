@@ -49,13 +49,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class ActionItemProvider
-    extends AnnotatableItemProvider
-    implements
-        IEditingDomainItemProvider,
-        IStructuredItemContentProvider,
-        ITreeItemContentProvider,
-        IItemLabelProvider,
-        IItemPropertySource {
+    extends AnnotatableItemProvider {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

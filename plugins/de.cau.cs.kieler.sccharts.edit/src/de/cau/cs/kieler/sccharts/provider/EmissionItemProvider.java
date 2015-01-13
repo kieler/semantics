@@ -44,13 +44,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class EmissionItemProvider
-    extends EffectItemProvider
-    implements
-        IEditingDomainItemProvider,
-        IStructuredItemContentProvider,
-        ITreeItemContentProvider,
-        IItemLabelProvider,
-        IItemPropertySource {
+    extends EffectItemProvider {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

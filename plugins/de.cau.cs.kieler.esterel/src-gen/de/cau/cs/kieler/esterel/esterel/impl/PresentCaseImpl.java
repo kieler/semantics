@@ -30,164 +30,157 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class PresentCaseImpl extends StatementContainerImpl implements PresentCase
 {
   /**
-   * The cached value of the '{@link #getEvent() <em>Event</em>}' containment reference.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getEvent() <em>Event</em>}' containment reference.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getEvent()
-   * @generated
-   * @ordered
-   */
+     * @see #getEvent()
+     * @generated
+     * @ordered
+     */
   protected PresentEvent event;
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected PresentCaseImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.PRESENT_CASE;
-  }
+        return EsterelPackage.Literals.PRESENT_CASE;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public PresentEvent getEvent()
   {
-    return event;
-  }
+        return event;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public NotificationChain basicSetEvent(PresentEvent newEvent, NotificationChain msgs)
   {
-    PresentEvent oldEvent = event;
-    event = newEvent;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_CASE__EVENT, oldEvent, newEvent);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+        PresentEvent oldEvent = event;
+        event = newEvent;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_CASE__EVENT, oldEvent, newEvent);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
     }
-    return msgs;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public void setEvent(PresentEvent newEvent)
   {
-    if (newEvent != event)
-    {
-      NotificationChain msgs = null;
-      if (event != null)
-        msgs = ((InternalEObject)event).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_CASE__EVENT, null, msgs);
-      if (newEvent != null)
-        msgs = ((InternalEObject)newEvent).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_CASE__EVENT, null, msgs);
-      msgs = basicSetEvent(newEvent, msgs);
-      if (msgs != null) msgs.dispatch();
+        if (newEvent != event) {
+            NotificationChain msgs = null;
+            if (event != null)
+                msgs = ((InternalEObject)event).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_CASE__EVENT, null, msgs);
+            if (newEvent != null)
+                msgs = ((InternalEObject)newEvent).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.PRESENT_CASE__EVENT, null, msgs);
+            msgs = basicSetEvent(newEvent, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_CASE__EVENT, newEvent, newEvent));
     }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_CASE__EVENT, newEvent, newEvent));
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.PRESENT_CASE__EVENT:
-        return basicSetEvent(null, msgs);
+        switch (featureID) {
+            case EsterelPackage.PRESENT_CASE__EVENT:
+                return basicSetEvent(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.PRESENT_CASE__EVENT:
-        return getEvent();
+        switch (featureID) {
+            case EsterelPackage.PRESENT_CASE__EVENT:
+                return getEvent();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.PRESENT_CASE__EVENT:
-        setEvent((PresentEvent)newValue);
-        return;
+        switch (featureID) {
+            case EsterelPackage.PRESENT_CASE__EVENT:
+                setEvent((PresentEvent)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.PRESENT_CASE__EVENT:
-        setEvent((PresentEvent)null);
-        return;
+        switch (featureID) {
+            case EsterelPackage.PRESENT_CASE__EVENT:
+                setEvent((PresentEvent)null);
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.PRESENT_CASE__EVENT:
-        return event != null;
+        switch (featureID) {
+            case EsterelPackage.PRESENT_CASE__EVENT:
+                return event != null;
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
 } //PresentCaseImpl

@@ -21,24 +21,24 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class LocalSignalListImpl extends MinimalEObjectImpl.Container implements LocalSignalList
 {
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected LocalSignalListImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.LOCAL_SIGNAL_LIST;
-  }
+        return EsterelPackage.Literals.LOCAL_SIGNAL_LIST;
+    }
 
 } //LocalSignalListImpl

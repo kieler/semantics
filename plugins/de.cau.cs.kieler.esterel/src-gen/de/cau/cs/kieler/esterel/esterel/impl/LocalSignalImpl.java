@@ -35,132 +35,126 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class LocalSignalImpl extends LocalSignalListImpl implements LocalSignal
 {
   /**
-   * The cached value of the '{@link #getSignal() <em>Signal</em>}' containment reference list.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getSignal() <em>Signal</em>}' containment reference list.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSignal()
-   * @generated
-   * @ordered
-   */
+     * @see #getSignal()
+     * @generated
+     * @ordered
+     */
   protected EList<ISignal> signal;
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected LocalSignalImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.LOCAL_SIGNAL;
-  }
+        return EsterelPackage.Literals.LOCAL_SIGNAL;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public EList<ISignal> getSignal()
   {
-    if (signal == null)
-    {
-      signal = new EObjectContainmentEList<ISignal>(ISignal.class, this, EsterelPackage.LOCAL_SIGNAL__SIGNAL);
+        if (signal == null) {
+            signal = new EObjectContainmentEList<ISignal>(ISignal.class, this, EsterelPackage.LOCAL_SIGNAL__SIGNAL);
+        }
+        return signal;
     }
-    return signal;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.LOCAL_SIGNAL__SIGNAL:
-        return ((InternalEList<?>)getSignal()).basicRemove(otherEnd, msgs);
+        switch (featureID) {
+            case EsterelPackage.LOCAL_SIGNAL__SIGNAL:
+                return ((InternalEList<?>)getSignal()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.LOCAL_SIGNAL__SIGNAL:
-        return getSignal();
+        switch (featureID) {
+            case EsterelPackage.LOCAL_SIGNAL__SIGNAL:
+                return getSignal();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.LOCAL_SIGNAL__SIGNAL:
-        getSignal().clear();
-        getSignal().addAll((Collection<? extends ISignal>)newValue);
-        return;
+        switch (featureID) {
+            case EsterelPackage.LOCAL_SIGNAL__SIGNAL:
+                getSignal().clear();
+                getSignal().addAll((Collection<? extends ISignal>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.LOCAL_SIGNAL__SIGNAL:
-        getSignal().clear();
-        return;
+        switch (featureID) {
+            case EsterelPackage.LOCAL_SIGNAL__SIGNAL:
+                getSignal().clear();
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.LOCAL_SIGNAL__SIGNAL:
-        return signal != null && !signal.isEmpty();
+        switch (featureID) {
+            case EsterelPackage.LOCAL_SIGNAL__SIGNAL:
+                return signal != null && !signal.isEmpty();
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
 } //LocalSignalImpl

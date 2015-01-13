@@ -1,0 +1,15 @@
+module test_signal2:
+type a;
+type b;
+type c;
+input a;
+output b;
+inputoutput c;
+input d : a;
+output e : integer;
+inputoutput f : float;
+sensor g : double;
+
+nothing
+
+end module

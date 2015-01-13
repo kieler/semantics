@@ -3214,6 +3214,8 @@ ruleLogicalAndOperator returns [Enumerator current=null]
 
 
 
+
+
 RULE_HOSTCODE : '\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'';
 
 RULE_COMMENT_ANNOTATION : '/**' ( options {greedy=false;} : . )*'*/';

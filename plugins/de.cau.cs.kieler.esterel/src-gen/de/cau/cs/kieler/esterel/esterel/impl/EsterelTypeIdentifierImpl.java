@@ -31,144 +31,138 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class EsterelTypeIdentifierImpl extends TypeIdentifierImpl implements EsterelTypeIdentifier
 {
   /**
-   * The cached value of the '{@link #getFunc() <em>Func</em>}' reference.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getFunc() <em>Func</em>}' reference.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getFunc()
-   * @generated
-   * @ordered
-   */
+     * @see #getFunc()
+     * @generated
+     * @ordered
+     */
   protected Function func;
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected EsterelTypeIdentifierImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.ESTEREL_TYPE_IDENTIFIER;
-  }
+        return EsterelPackage.Literals.ESTEREL_TYPE_IDENTIFIER;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Function getFunc()
   {
-    if (func != null && func.eIsProxy())
-    {
-      InternalEObject oldFunc = (InternalEObject)func;
-      func = (Function)eResolveProxy(oldFunc);
-      if (func != oldFunc)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.ESTEREL_TYPE_IDENTIFIER__FUNC, oldFunc, func));
-      }
+        if (func != null && func.eIsProxy()) {
+            InternalEObject oldFunc = (InternalEObject)func;
+            func = (Function)eResolveProxy(oldFunc);
+            if (func != oldFunc) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.ESTEREL_TYPE_IDENTIFIER__FUNC, oldFunc, func));
+            }
+        }
+        return func;
     }
-    return func;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Function basicGetFunc()
   {
-    return func;
-  }
+        return func;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public void setFunc(Function newFunc)
   {
-    Function oldFunc = func;
-    func = newFunc;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ESTEREL_TYPE_IDENTIFIER__FUNC, oldFunc, func));
-  }
+        Function oldFunc = func;
+        func = newFunc;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ESTEREL_TYPE_IDENTIFIER__FUNC, oldFunc, func));
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.ESTEREL_TYPE_IDENTIFIER__FUNC:
-        if (resolve) return getFunc();
-        return basicGetFunc();
+        switch (featureID) {
+            case EsterelPackage.ESTEREL_TYPE_IDENTIFIER__FUNC:
+                if (resolve) return getFunc();
+                return basicGetFunc();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.ESTEREL_TYPE_IDENTIFIER__FUNC:
-        setFunc((Function)newValue);
-        return;
+        switch (featureID) {
+            case EsterelPackage.ESTEREL_TYPE_IDENTIFIER__FUNC:
+                setFunc((Function)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.ESTEREL_TYPE_IDENTIFIER__FUNC:
-        setFunc((Function)null);
-        return;
+        switch (featureID) {
+            case EsterelPackage.ESTEREL_TYPE_IDENTIFIER__FUNC:
+                setFunc((Function)null);
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.ESTEREL_TYPE_IDENTIFIER__FUNC:
-        return func != null;
+        switch (featureID) {
+            case EsterelPackage.ESTEREL_TYPE_IDENTIFIER__FUNC:
+                return func != null;
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
 } //EsterelTypeIdentifierImpl

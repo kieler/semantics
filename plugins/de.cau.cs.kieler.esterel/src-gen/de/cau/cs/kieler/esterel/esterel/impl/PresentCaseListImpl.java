@@ -34,132 +34,126 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class PresentCaseListImpl extends PresentBodyImpl implements PresentCaseList
 {
   /**
-   * The cached value of the '{@link #getCases() <em>Cases</em>}' containment reference list.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getCases() <em>Cases</em>}' containment reference list.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getCases()
-   * @generated
-   * @ordered
-   */
+     * @see #getCases()
+     * @generated
+     * @ordered
+     */
   protected EList<PresentCase> cases;
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected PresentCaseListImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.PRESENT_CASE_LIST;
-  }
+        return EsterelPackage.Literals.PRESENT_CASE_LIST;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public EList<PresentCase> getCases()
   {
-    if (cases == null)
-    {
-      cases = new EObjectContainmentEList<PresentCase>(PresentCase.class, this, EsterelPackage.PRESENT_CASE_LIST__CASES);
+        if (cases == null) {
+            cases = new EObjectContainmentEList<PresentCase>(PresentCase.class, this, EsterelPackage.PRESENT_CASE_LIST__CASES);
+        }
+        return cases;
     }
-    return cases;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.PRESENT_CASE_LIST__CASES:
-        return ((InternalEList<?>)getCases()).basicRemove(otherEnd, msgs);
+        switch (featureID) {
+            case EsterelPackage.PRESENT_CASE_LIST__CASES:
+                return ((InternalEList<?>)getCases()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.PRESENT_CASE_LIST__CASES:
-        return getCases();
+        switch (featureID) {
+            case EsterelPackage.PRESENT_CASE_LIST__CASES:
+                return getCases();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.PRESENT_CASE_LIST__CASES:
-        getCases().clear();
-        getCases().addAll((Collection<? extends PresentCase>)newValue);
-        return;
+        switch (featureID) {
+            case EsterelPackage.PRESENT_CASE_LIST__CASES:
+                getCases().clear();
+                getCases().addAll((Collection<? extends PresentCase>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.PRESENT_CASE_LIST__CASES:
-        getCases().clear();
-        return;
+        switch (featureID) {
+            case EsterelPackage.PRESENT_CASE_LIST__CASES:
+                getCases().clear();
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.PRESENT_CASE_LIST__CASES:
-        return cases != null && !cases.isEmpty();
+        switch (featureID) {
+            case EsterelPackage.PRESENT_CASE_LIST__CASES:
+                return cases != null && !cases.isEmpty();
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
 } //PresentCaseListImpl

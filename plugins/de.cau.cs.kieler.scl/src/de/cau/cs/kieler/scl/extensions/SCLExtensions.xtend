@@ -15,46 +15,197 @@ package de.cau.cs.kieler.scl.extensions
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scl.scl.StatementSequence
-import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.scl.scl.Goto
 import de.cau.cs.kieler.scl.scl.Statement
 import de.cau.cs.kieler.scl.scl.EmptyStatement
+import de.cau.cs.kieler.scl.scl.SCLProgram
+import de.cau.cs.kieler.scl.scl.InstructionStatement
+import de.cau.cs.kieler.scl.scl.Conditional
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 /**
  * SCL Extensions.
  * 
- * @author ssm
+ * @author ssm, krat
  * @kieler.design 2013-10-31 proposed 
  * @kieler.rating 2013-10-31 proposed yellow
  */
-class SCLExtensions { 
+class SCLExtensions {
 
-    def StatementSequence optimizeGotos(StatementSequence sSeq) {
-        val toDelete = <Goto> newLinkedList
-        for(goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
-            val statement = goto.eContainer
-            val parent = statement.eContainer as StatementSequence
-            val index = parent.statements.indexOf(statement)
-            if (parent.statements.size>index+1) {
-                val nextStatement = parent.statements.get(index+1) as Statement
-                if (nextStatement instanceof EmptyStatement && 
-                    (nextStatement as EmptyStatement).label == goto.targetLabel) {
-                        toDelete.add(goto)
-                    }
-            }
+    /*
+     * Removes all goto instructions, that target a label, that follows that goto.
+     */
+    def StatementSequence removeSuperfluousGotos(StatementSequence sSeq) {
+        val toDelete = <Goto>newLinkedList
+        for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
+            var statement = goto.eContainer
+            var parent = statement.eContainer as StatementSequence
+            var index = parent.statements.indexOf(statement)
+            var justLabel = true
+            var oldSseq = parent
+//            while ((parent.statements.size > index + 1 && justLabel) || parent instanceof Conditional) {
+//
+//                // Check conditional following if in if-then-else branch
+//                if (parent.statements.size == index + 1 && justLabel && parent instanceof Conditional) {
+//                    oldSseq = parent
+//                    parent = parent.eContainer.eContainer as StatementSequence
+//                    index = parent.statements.indexOf(oldSseq.eContainer)
+//                }
+//                if (parent.statements.length > index + 1) {
+//                    val nextStatement = parent.statements.get(index + 1) as Statement
+//                    if (nextStatement instanceof EmptyStatement &&
+//                        (nextStatement as EmptyStatement).label == goto.targetLabel) {
+//                        toDelete.add(goto)
+//                    }
+//                    if (!(nextStatement instanceof EmptyStatement)) {
+//                        justLabel = false
+//                    }
+//                    index = index + 1
+//                }
+//
+//            }
         }
         toDelete.forEach[it.eContainer.remove]
+
         sSeq
     }
-    
+
+    /*
+     * Removes all labels which are not used
+     */
     def StatementSequence optimizeLabels(StatementSequence sSeq) {
         val gotos = sSeq.eAllContents.toList.filter(typeof(Goto))
-        val toDelete = <EmptyStatement> newLinkedList
-        sSeq.eAllContents.filter(typeof(EmptyStatement)).forEach[
-            if (!gotos.exists(f | f.targetLabel == it.label)) toDelete.add(it)
+        val toDelete = <EmptyStatement>newLinkedList
+        sSeq.eAllContents.filter(typeof(EmptyStatement)).forEach [
+            if(!gotos.exists(f|f.targetLabel == it.label)) toDelete.add(it)
         ]
         toDelete.forEach[it.remove]
+
         sSeq
     }
-            
+
+    /*
+     * Removes all statements that follow a goto before any label
+     */
+    def StatementSequence removeUnreachableCode(StatementSequence sSeq) {
+        val toDelete = <Statement>newLinkedList
+        for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
+            var statement = goto.eContainer
+            var parent = statement.eContainer as StatementSequence
+            var index = parent.statements.indexOf(statement)
+            var noLabel = true
+            while (parent.statements.size > index + 1 && noLabel) {
+                val nextStatement = parent.statements.get(index + 1) as Statement
+
+                if (nextStatement instanceof EmptyStatement) {
+                    noLabel = false
+                } else {
+                    toDelete.add(nextStatement)
+                }
+                index = index + 1
+
+            }
+
+        }
+        toDelete.forEach[it.remove]
+
+        sSeq
+    }
+
+    /*
+     * Removes subsequent labels and changes corresponding gotos
+     */
+    def StatementSequence removeSubseqeuentLabels(StatementSequence sSeq) {
+        val toDelete = <Statement>newLinkedList
+        val replaceBy = <Pair<String, String>>newLinkedList
+
+        for (emptyStm : sSeq.eAllContents.toList.filter(typeof(EmptyStatement))) {
+            var parent = emptyStm.eContainer as StatementSequence
+            var index = parent.statements.indexOf(emptyStm)
+            var isLabel = true
+            while (parent.statements.size > index + 1 && isLabel) {
+                val nextStatement = parent.statements.get(index + 1) as Statement
+
+                if (nextStatement instanceof EmptyStatement) {
+                    toDelete.add(nextStatement)
+                    replaceBy.add((nextStatement as EmptyStatement).label -> emptyStm.label)
+                    index = index + 1
+                } else {
+                    isLabel = false;
+                }
+            }
+        }
+        toDelete.forEach[it.remove]
+
+        // Replace goto targets
+        for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
+            var newLabel = replaceBy.findFirst[key == (goto as Goto).targetLabel]
+
+            if (newLabel != null) {
+                (goto as Goto).targetLabel = newLabel.value
+            }
+        }
+
+        sSeq
+    }
+
+    /*
+      * Removes double jumps
+      */
+    def StatementSequence removeDoubleJumps(StatementSequence sSeq) {
+        val replaceBy = <Pair<String, String>>newLinkedList
+        for (emptyStm : sSeq.eAllContents.toList.filter(typeof(EmptyStatement))) {
+            var parent = emptyStm.eContainer as StatementSequence
+            var index = parent.statements.indexOf(emptyStm)
+            if (parent.statements.size > index + 1) {
+                val nextStatement = parent.statements.get(index + 1) as Statement
+                if (nextStatement instanceof InstructionStatement &&
+                    (nextStatement as InstructionStatement).instruction instanceof Goto) {
+                    val goto = ((nextStatement as InstructionStatement).instruction as Goto)
+                    replaceBy += emptyStm.label -> goto.targetLabel
+                }
+            // Check whether at end of conditonal branch and "look outside"
+            } else if (parent instanceof Conditional) {
+                val cond = parent as Conditional
+                parent = parent.eContainer.eContainer as StatementSequence
+                index = parent.statements.indexOf(cond.eContainer)
+                if (parent.statements.size > index + 1) {
+                    val nextStatement = parent.statements.get(index + 1) as Statement
+                    if (nextStatement instanceof InstructionStatement &&
+                        (nextStatement as InstructionStatement).instruction instanceof Goto) {
+                        val goto = ((nextStatement as InstructionStatement).instruction as Goto)
+                        replaceBy += emptyStm.label -> goto.targetLabel
+                    }
+                }
+            }
+        }
+
+        // Replace goto targets
+        for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
+            var newLabel = replaceBy.findFirst[key == (goto as Goto).targetLabel]
+
+            if (newLabel != null) {
+                (goto as Goto).targetLabel = newLabel.value
+            }
+        }
+
+        sSeq
+    }
+
+    /*
+       * Applies all optimizations until fixed-point is reached
+       */
+    def StatementSequence optimizeAll(StatementSequence sSeq) {
+        var StatementSequence oldSseq
+        do {
+            oldSseq = EcoreUtil.copy(sSeq)
+            sSeq.removeSuperfluousGotos
+            sSeq.optimizeLabels
+            sSeq.removeUnreachableCode
+            sSeq.removeSubseqeuentLabels
+            sSeq.removeDoubleJumps
+        } while (!EcoreUtil.equals(oldSseq, sSeq))
+
+        sSeq
+    }
 }

@@ -40,272 +40,264 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class FunctionImpl extends MinimalEObjectImpl.Container implements Function
 {
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
   protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getIdList() <em>Id List</em>}' containment reference list.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getIdList() <em>Id List</em>}' containment reference list.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getIdList()
-   * @generated
-   * @ordered
-   */
+     * @see #getIdList()
+     * @generated
+     * @ordered
+     */
   protected EList<TypeIdentifier> idList;
 
   /**
-   * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getType()
-   * @generated
-   * @ordered
-   */
+     * @see #getType()
+     * @generated
+     * @ordered
+     */
   protected TypeIdentifier type;
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected FunctionImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.FUNCTION;
-  }
+        return EsterelPackage.Literals.FUNCTION;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public String getName()
   {
-    return name;
-  }
+        return name;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public void setName(String newName)
   {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.FUNCTION__NAME, oldName, name));
-  }
+        String oldName = name;
+        name = newName;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.FUNCTION__NAME, oldName, name));
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public EList<TypeIdentifier> getIdList()
   {
-    if (idList == null)
-    {
-      idList = new EObjectContainmentEList<TypeIdentifier>(TypeIdentifier.class, this, EsterelPackage.FUNCTION__ID_LIST);
+        if (idList == null) {
+            idList = new EObjectContainmentEList<TypeIdentifier>(TypeIdentifier.class, this, EsterelPackage.FUNCTION__ID_LIST);
+        }
+        return idList;
     }
-    return idList;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public TypeIdentifier getType()
   {
-    return type;
-  }
+        return type;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public NotificationChain basicSetType(TypeIdentifier newType, NotificationChain msgs)
   {
-    TypeIdentifier oldType = type;
-    type = newType;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.FUNCTION__TYPE, oldType, newType);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+        TypeIdentifier oldType = type;
+        type = newType;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.FUNCTION__TYPE, oldType, newType);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
     }
-    return msgs;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public void setType(TypeIdentifier newType)
   {
-    if (newType != type)
-    {
-      NotificationChain msgs = null;
-      if (type != null)
-        msgs = ((InternalEObject)type).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.FUNCTION__TYPE, null, msgs);
-      if (newType != null)
-        msgs = ((InternalEObject)newType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.FUNCTION__TYPE, null, msgs);
-      msgs = basicSetType(newType, msgs);
-      if (msgs != null) msgs.dispatch();
+        if (newType != type) {
+            NotificationChain msgs = null;
+            if (type != null)
+                msgs = ((InternalEObject)type).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.FUNCTION__TYPE, null, msgs);
+            if (newType != null)
+                msgs = ((InternalEObject)newType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.FUNCTION__TYPE, null, msgs);
+            msgs = basicSetType(newType, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.FUNCTION__TYPE, newType, newType));
     }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.FUNCTION__TYPE, newType, newType));
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.FUNCTION__ID_LIST:
-        return ((InternalEList<?>)getIdList()).basicRemove(otherEnd, msgs);
-      case EsterelPackage.FUNCTION__TYPE:
-        return basicSetType(null, msgs);
+        switch (featureID) {
+            case EsterelPackage.FUNCTION__ID_LIST:
+                return ((InternalEList<?>)getIdList()).basicRemove(otherEnd, msgs);
+            case EsterelPackage.FUNCTION__TYPE:
+                return basicSetType(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.FUNCTION__NAME:
-        return getName();
-      case EsterelPackage.FUNCTION__ID_LIST:
-        return getIdList();
-      case EsterelPackage.FUNCTION__TYPE:
-        return getType();
+        switch (featureID) {
+            case EsterelPackage.FUNCTION__NAME:
+                return getName();
+            case EsterelPackage.FUNCTION__ID_LIST:
+                return getIdList();
+            case EsterelPackage.FUNCTION__TYPE:
+                return getType();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.FUNCTION__NAME:
-        setName((String)newValue);
-        return;
-      case EsterelPackage.FUNCTION__ID_LIST:
-        getIdList().clear();
-        getIdList().addAll((Collection<? extends TypeIdentifier>)newValue);
-        return;
-      case EsterelPackage.FUNCTION__TYPE:
-        setType((TypeIdentifier)newValue);
-        return;
+        switch (featureID) {
+            case EsterelPackage.FUNCTION__NAME:
+                setName((String)newValue);
+                return;
+            case EsterelPackage.FUNCTION__ID_LIST:
+                getIdList().clear();
+                getIdList().addAll((Collection<? extends TypeIdentifier>)newValue);
+                return;
+            case EsterelPackage.FUNCTION__TYPE:
+                setType((TypeIdentifier)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.FUNCTION__NAME:
-        setName(NAME_EDEFAULT);
-        return;
-      case EsterelPackage.FUNCTION__ID_LIST:
-        getIdList().clear();
-        return;
-      case EsterelPackage.FUNCTION__TYPE:
-        setType((TypeIdentifier)null);
-        return;
+        switch (featureID) {
+            case EsterelPackage.FUNCTION__NAME:
+                setName(NAME_EDEFAULT);
+                return;
+            case EsterelPackage.FUNCTION__ID_LIST:
+                getIdList().clear();
+                return;
+            case EsterelPackage.FUNCTION__TYPE:
+                setType((TypeIdentifier)null);
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.FUNCTION__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case EsterelPackage.FUNCTION__ID_LIST:
-        return idList != null && !idList.isEmpty();
-      case EsterelPackage.FUNCTION__TYPE:
-        return type != null;
+        switch (featureID) {
+            case EsterelPackage.FUNCTION__NAME:
+                return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case EsterelPackage.FUNCTION__ID_LIST:
+                return idList != null && !idList.isEmpty();
+            case EsterelPackage.FUNCTION__TYPE:
+                return type != null;
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(')');
-    return result.toString();
-  }
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (name: ");
+        result.append(name);
+        result.append(')');
+        return result.toString();
+    }
 
 } //FunctionImpl

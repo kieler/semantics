@@ -1,0 +1,4646 @@
+module ARB_3:
+input ERR1;
+input ERR2;
+input ERR3;
+output ERR;
+
+loop
+  await 
+    case ERR1
+    case ERR2
+    case ERR3
+  end await;
+  emit ERR
+end loop
+
+end module
+
+module ARBITER:
+constant HARD : integer;
+constant MED : integer;
+constant SOFT : integer;
+input RESET;
+input CTRL_1 : integer;
+input CTRL_2 : integer;
+input CTRL_3 : integer;
+input CTRL_4 : integer;
+input CTRL_5 : integer;
+input CTRL_6 : integer;
+input CTRL_7 : integer;
+input CTRL_8 : integer;
+output CTRL : integer;
+
+var CTRL_1_VAL : integer,
+    CTRL_2_VAL : integer,
+    CTRL_3_VAL : integer,
+    CTRL_4_VAL : integer,
+    CTRL_5_VAL : integer,
+    CTRL_6_VAL : integer,
+    CTRL_7_VAL : integer,
+    CTRL_8_VAL : integer,
+    CTRL_VAL : integer in
+  loop
+    CTRL_1_VAL := SOFT;
+    CTRL_2_VAL := SOFT;
+    CTRL_3_VAL := SOFT;
+    CTRL_4_VAL := SOFT;
+    CTRL_5_VAL := SOFT;
+    CTRL_6_VAL := SOFT;
+    CTRL_7_VAL := SOFT;
+    CTRL_8_VAL := SOFT;
+    CTRL_VAL := SOFT;
+    do
+      loop
+        emit CTRL(CTRL_VAL);
+        await 
+          case CTRL_1 do
+            CTRL_1_VAL := ?CTRL_1
+          case CTRL_2 do
+            CTRL_2_VAL := ?CTRL_2
+          case CTRL_3 do
+            CTRL_3_VAL := ?CTRL_3
+          case CTRL_4 do
+            CTRL_4_VAL := ?CTRL_4
+          case CTRL_5 do
+            CTRL_5_VAL := ?CTRL_5
+          case CTRL_6 do
+            CTRL_6_VAL := ?CTRL_6
+          case CTRL_7 do
+            CTRL_7_VAL := ?CTRL_7
+          case CTRL_8 do
+            CTRL_8_VAL := ?CTRL_8
+        end await;
+        if CTRL_1_VAL = HARD or CTRL_2_VAL = HARD or CTRL_3_VAL = HARD or CTRL_4_VAL = HARD or CTRL_5_VAL = HARD or CTRL_6_VAL = HARD or CTRL_7_VAL = HARD or CTRL_8_VAL = HARD then
+          CTRL_VAL := HARD
+        else
+          if CTRL_1_VAL = MED or CTRL_2_VAL = MED or CTRL_3_VAL = MED or CTRL_4_VAL = MED or CTRL_5_VAL = MED or CTRL_6_VAL = MED or CTRL_7_VAL = MED or CTRL_8_VAL = MED then
+            CTRL_VAL := MED
+          else
+            CTRL_VAL := SOFT
+          end if
+        end if
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module BAT_DIAG:
+constant UP : integer;
+constant DOWN : integer;
+constant HHVBAT : integer;
+constant LHVBAT : integer;
+constant HLVBAT : integer;
+constant LLVBAT : integer;
+constant BAT_TIME_OUT : integer;
+constant TIME_RECOVERY : integer;
+input RESET;
+input CLOCK_24;
+input VBAT : integer;
+output BAT_MOT_RES;
+output BAT_ERR;
+output BAT_MOT_HARD;
+
+var VBAT_VALUE : integer,
+    OLD_VALUE : integer,
+    VBAT_OUT_TIME : integer,
+    DIRECTION : integer,
+    RECOVERY_STATE : boolean in
+  loop
+    VBAT_VALUE := 0;
+    OLD_VALUE := 0;
+    VBAT_OUT_TIME := 0;
+    DIRECTION := UP;
+    RECOVERY_STATE := false;
+    do
+      loop
+        await 
+          case VBAT do
+            VBAT_VALUE := ?VBAT;
+            if VBAT_VALUE > OLD_VALUE then
+              DIRECTION := UP
+            else
+              if VBAT_VALUE < OLD_VALUE then
+                DIRECTION := DOWN
+              end if
+            end if;
+            OLD_VALUE := VBAT_VALUE
+          case CLOCK_24 do
+            if DIRECTION = UP and (VBAT_VALUE > HHVBAT or VBAT_VALUE < HLVBAT) or DIRECTION = DOWN and (VBAT_VALUE > LHVBAT or VBAT_VALUE < LLVBAT) then
+              VBAT_OUT_TIME := VBAT_OUT_TIME + 1;
+              if not RECOVERY_STATE and VBAT_OUT_TIME >= BAT_TIME_OUT then
+                RECOVERY_STATE := true;
+                emit BAT_MOT_HARD;
+                VBAT_OUT_TIME := 0
+              else
+                if RECOVERY_STATE and VBAT_OUT_TIME >= TIME_RECOVERY then
+                  emit BAT_ERR;
+                  halt
+                end if
+              end if
+            else
+              VBAT_OUT_TIME := 0;
+              if RECOVERY_STATE then
+                emit BAT_MOT_RES;
+                RECOVERY_STATE := false
+              end if
+            end if
+        end await
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module CURVE_FRONT:
+constant HARD : integer;
+constant MED : integer;
+constant SOFT : integer;
+constant UP : integer;
+constant DOWN : integer;
+constant V1_1 : integer;
+constant V1_2 : integer;
+constant V1_3 : integer;
+constant V1_4 : integer;
+constant V1_5 : integer;
+constant V1_6 : integer;
+constant V1_7 : integer;
+constant V1_8 : integer;
+constant V1_9 : integer;
+constant V1_10 : integer;
+constant V1_11 : integer;
+constant V1_12 : integer;
+constant V1_13 : integer;
+constant V1_14 : integer;
+constant V1_15 : integer;
+constant V1_16 : integer;
+constant V1_17 : integer;
+constant V1_18 : integer;
+constant V1_19 : integer;
+constant V1_20 : integer;
+constant V1_21 : integer;
+constant V1_22 : integer;
+constant V1_23 : integer;
+constant V1_24 : integer;
+constant V1_25 : integer;
+constant V2_1 : integer;
+constant V2_2 : integer;
+constant V2_3 : integer;
+constant V2_4 : integer;
+constant V2_5 : integer;
+constant V2_6 : integer;
+constant V2_7 : integer;
+constant V2_8 : integer;
+constant V2_9 : integer;
+constant V2_10 : integer;
+constant V2_11 : integer;
+constant V2_12 : integer;
+constant V2_13 : integer;
+constant V2_14 : integer;
+constant V2_15 : integer;
+constant V2_16 : integer;
+constant V2_17 : integer;
+constant V2_18 : integer;
+constant V2_19 : integer;
+constant V2_20 : integer;
+constant V2_21 : integer;
+constant V2_22 : integer;
+constant V2_23 : integer;
+constant V2_24 : integer;
+constant V2_25 : integer;
+constant SPEED_10_KM : integer;
+constant SPEED_20_KM : integer;
+constant SPEED_30_KM : integer;
+constant SPEED_40_KM : integer;
+constant SPEED_50_KM : integer;
+constant SPEED_60_KM : integer;
+constant SPEED_70_KM : integer;
+constant SPEED_80_KM : integer;
+constant SPEED_90_KM : integer;
+constant SPEED_100_KM : integer;
+constant SPEED_110_KM : integer;
+constant SPEED_120_KM : integer;
+constant SPEED_130_KM : integer;
+constant SPEED_140_KM : integer;
+constant SPEED_150_KM : integer;
+constant SPEED_160_KM : integer;
+constant SPEED_170_KM : integer;
+constant SPEED_180_KM : integer;
+constant SPEED_190_KM : integer;
+constant SPEED_200_KM : integer;
+constant SPEED_210_KM : integer;
+constant SPEED_220_KM : integer;
+constant SPEED_230_KM : integer;
+constant SPEED_240_KM : integer;
+constant SPEED_250_KM : integer;
+constant T1 : integer;
+constant T2 : integer;
+input RESET;
+input VALUE : integer;
+input SPEED : integer;
+output CONTROL : integer;
+
+var CURRENT_VALUE : integer,
+    OLD_VALUE : integer,
+    SPEED_VALUE : integer,
+    CONTROL_VALUE : integer,
+    DIRECTION : integer,
+    V1 : integer,
+    V2 : integer,
+    TIME1 : integer,
+    TIME2 : integer in
+  loop
+    CURRENT_VALUE := 0;
+    OLD_VALUE := 0;
+    CONTROL_VALUE := SOFT;
+    DIRECTION := UP;
+    V1 := V1_1;
+    V2 := V2_1;
+    do
+      loop
+        emit CONTROL(CONTROL_VALUE);
+        OLD_VALUE := CURRENT_VALUE;
+        await 
+          case SPEED do
+            SPEED_VALUE := ?SPEED;
+            if SPEED_VALUE < SPEED_10_KM then
+              V1 := V1_1;
+              V2 := V2_1
+            else
+              if SPEED_VALUE < SPEED_20_KM then
+                V1 := V1_2;
+                V2 := V2_2
+              else
+                if SPEED_VALUE < SPEED_30_KM then
+                  V1 := V1_3;
+                  V2 := V2_3
+                else
+                  if SPEED_VALUE < SPEED_40_KM then
+                    V1 := V1_4;
+                    V2 := V2_4
+                  else
+                    if SPEED_VALUE < SPEED_50_KM then
+                      V1 := V1_5;
+                      V2 := V2_5
+                    else
+                      if SPEED_VALUE < SPEED_60_KM then
+                        V1 := V1_6;
+                        V2 := V2_6
+                      else
+                        if SPEED_VALUE < SPEED_70_KM then
+                          V1 := V1_7;
+                          V2 := V2_7
+                        else
+                          if SPEED_VALUE < SPEED_80_KM then
+                            V1 := V1_8;
+                            V2 := V2_8
+                          else
+                            if SPEED_VALUE < SPEED_90_KM then
+                              V1 := V1_9;
+                              V2 := V2_9
+                            else
+                              if SPEED_VALUE < SPEED_100_KM then
+                                V1 := V1_10;
+                                V2 := V2_10
+                              else
+                                if SPEED_VALUE < SPEED_110_KM then
+                                  V1 := V1_11;
+                                  V2 := V2_11
+                                else
+                                  if SPEED_VALUE < SPEED_120_KM then
+                                    V1 := V1_12;
+                                    V2 := V2_12
+                                  else
+                                    if SPEED_VALUE < SPEED_130_KM then
+                                      V1 := V1_13;
+                                      V2 := V2_13
+                                    else
+                                      if SPEED_VALUE < SPEED_140_KM then
+                                        V1 := V1_14;
+                                        V2 := V2_14
+                                      else
+                                        if SPEED_VALUE < SPEED_150_KM then
+                                          V1 := V1_15;
+                                          V2 := V2_15
+                                        else
+                                          if SPEED_VALUE < SPEED_160_KM then
+                                            V1 := V1_16;
+                                            V2 := V2_16
+                                          else
+                                            if SPEED_VALUE < SPEED_170_KM then
+                                              V1 := V1_17;
+                                              V2 := V2_17
+                                            else
+                                              if SPEED_VALUE < SPEED_180_KM then
+                                                V1 := V1_18;
+                                                V2 := V2_18
+                                              else
+                                                if SPEED_VALUE < SPEED_190_KM then
+                                                  V1 := V1_19;
+                                                  V2 := V2_19
+                                                else
+                                                  if SPEED_VALUE < SPEED_200_KM then
+                                                    V1 := V1_20;
+                                                    V2 := V2_20
+                                                  else
+                                                    if SPEED_VALUE < SPEED_210_KM then
+                                                      V1 := V1_21;
+                                                      V2 := V2_21
+                                                    else
+                                                      if SPEED_VALUE < SPEED_220_KM then
+                                                        V1 := V1_22;
+                                                        V2 := V2_22
+                                                      else
+                                                        if SPEED_VALUE < SPEED_230_KM then
+                                                          V1 := V1_23;
+                                                          V2 := V2_23
+                                                        else
+                                                          if SPEED_VALUE < SPEED_240_KM then
+                                                            V1 := V1_24;
+                                                            V2 := V2_24
+                                                          else
+                                                            V1 := V1_25;
+                                                            V2 := V2_25
+                                                          end if
+                                                        end if
+                                                      end if
+                                                    end if
+                                                  end if
+                                                end if
+                                              end if
+                                            end if
+                                          end if
+                                        end if
+                                      end if
+                                    end if
+                                  end if
+                                end if
+                              end if
+                            end if
+                          end if
+                        end if
+                      end if
+                    end if
+                  end if
+                end if
+              end if
+            end if
+          case VALUE do
+            CURRENT_VALUE := ?VALUE;
+            if CURRENT_VALUE < OLD_VALUE then
+              DIRECTION := DOWN
+            else
+              if CURRENT_VALUE > OLD_VALUE then
+                DIRECTION := UP
+              end if
+            end if;
+            if DIRECTION = UP then
+              if CURRENT_VALUE < V1 then
+                CONTROL_VALUE := SOFT
+              else
+                if CURRENT_VALUE < V2 then
+                  CONTROL_VALUE := MED
+                else
+                  CONTROL_VALUE := HARD
+                end if
+              end if
+            else
+              if CURRENT_VALUE > V2 then
+                CONTROL_VALUE := HARD
+              else
+                if CURRENT_VALUE > V1 then
+                  if CONTROL_VALUE <> MED then
+                    if OLD_VALUE > V2 then
+                      TIME1 := 0
+                    else
+                      TIME1 := TIME1 + 1;
+                      if TIME1 > T1 then
+                        CONTROL_VALUE := MED
+                      end if
+                    end if
+                  end if
+                else
+                  if CONTROL_VALUE <> SOFT then
+                    if OLD_VALUE > V1 then
+                      TIME2 := 0
+                    else
+                      TIME2 := TIME2 + 1;
+                      if TIME2 > T2 then
+                        CONTROL_VALUE := SOFT
+                      end if
+                    end if
+                  end if
+                end if
+              end if
+            end if
+        end await
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module CURVE_REAR:
+constant HARD : integer;
+constant MED : integer;
+constant SOFT : integer;
+constant UP : integer;
+constant DOWN : integer;
+constant V1_1 : integer;
+constant V1_2 : integer;
+constant V1_3 : integer;
+constant V1_4 : integer;
+constant V1_5 : integer;
+constant V1_6 : integer;
+constant V1_7 : integer;
+constant V1_8 : integer;
+constant V1_9 : integer;
+constant V1_10 : integer;
+constant V1_11 : integer;
+constant V1_12 : integer;
+constant V1_13 : integer;
+constant V1_14 : integer;
+constant V1_15 : integer;
+constant V1_16 : integer;
+constant V1_17 : integer;
+constant V1_18 : integer;
+constant V1_19 : integer;
+constant V1_20 : integer;
+constant V1_21 : integer;
+constant V1_22 : integer;
+constant V1_23 : integer;
+constant V1_24 : integer;
+constant V1_25 : integer;
+constant V2_1 : integer;
+constant V2_2 : integer;
+constant V2_3 : integer;
+constant V2_4 : integer;
+constant V2_5 : integer;
+constant V2_6 : integer;
+constant V2_7 : integer;
+constant V2_8 : integer;
+constant V2_9 : integer;
+constant V2_10 : integer;
+constant V2_11 : integer;
+constant V2_12 : integer;
+constant V2_13 : integer;
+constant V2_14 : integer;
+constant V2_15 : integer;
+constant V2_16 : integer;
+constant V2_17 : integer;
+constant V2_18 : integer;
+constant V2_19 : integer;
+constant V2_20 : integer;
+constant V2_21 : integer;
+constant V2_22 : integer;
+constant V2_23 : integer;
+constant V2_24 : integer;
+constant V2_25 : integer;
+constant SPEED_10_KM : integer;
+constant SPEED_20_KM : integer;
+constant SPEED_30_KM : integer;
+constant SPEED_40_KM : integer;
+constant SPEED_50_KM : integer;
+constant SPEED_60_KM : integer;
+constant SPEED_70_KM : integer;
+constant SPEED_80_KM : integer;
+constant SPEED_90_KM : integer;
+constant SPEED_100_KM : integer;
+constant SPEED_110_KM : integer;
+constant SPEED_120_KM : integer;
+constant SPEED_130_KM : integer;
+constant SPEED_140_KM : integer;
+constant SPEED_150_KM : integer;
+constant SPEED_160_KM : integer;
+constant SPEED_170_KM : integer;
+constant SPEED_180_KM : integer;
+constant SPEED_190_KM : integer;
+constant SPEED_200_KM : integer;
+constant SPEED_210_KM : integer;
+constant SPEED_220_KM : integer;
+constant SPEED_230_KM : integer;
+constant SPEED_240_KM : integer;
+constant SPEED_250_KM : integer;
+constant DELT_1 : integer;
+constant DELT_2 : integer;
+constant DELT_3 : integer;
+constant DELT_4 : integer;
+constant DELT_5 : integer;
+constant DELT_6 : integer;
+constant DELT_7 : integer;
+constant DELT_8 : integer;
+constant DELT_9 : integer;
+constant DELT_10 : integer;
+constant DELT_11 : integer;
+constant DELT_12 : integer;
+constant DELT_13 : integer;
+constant DELT_14 : integer;
+constant DELT_15 : integer;
+constant DELT_16 : integer;
+constant DELT_17 : integer;
+constant DELT_18 : integer;
+constant DELT_19 : integer;
+constant DELT_20 : integer;
+constant DELT_21 : integer;
+constant DELT_22 : integer;
+constant DELT_23 : integer;
+constant DELT_24 : integer;
+constant DELT_25 : integer;
+constant T1 : integer;
+constant T2 : integer;
+input RESET;
+input VALUE : integer;
+input SPEED : integer;
+output CONTROL : integer;
+
+var CURRENT_VALUE : integer,
+    OLD_VALUE : integer,
+    SPEED_VALUE : integer,
+    CONTROL_VALUE : integer,
+    DIRECTION : integer,
+    V1 : integer,
+    V2 : integer,
+    D : integer,
+    TIME : integer in
+  loop
+    CURRENT_VALUE := 0;
+    OLD_VALUE := 0;
+    CONTROL_VALUE := SOFT;
+    DIRECTION := UP;
+    V1 := V1_1;
+    V2 := V2_1;
+    D := DELT_1;
+    do
+      loop
+        emit CONTROL(CONTROL_VALUE);
+        OLD_VALUE := CURRENT_VALUE;
+        await 
+          case SPEED do
+            SPEED_VALUE := ?SPEED;
+            if SPEED_VALUE < SPEED_10_KM then
+              V1 := V1_1;
+              V2 := V2_1;
+              D := DELT_1
+            else
+              if SPEED_VALUE < SPEED_20_KM then
+                V1 := V1_2;
+                V2 := V2_2;
+                D := DELT_2
+              else
+                if SPEED_VALUE < SPEED_30_KM then
+                  V1 := V1_3;
+                  V2 := V2_3;
+                  D := DELT_3
+                else
+                  if SPEED_VALUE < SPEED_40_KM then
+                    V1 := V1_4;
+                    V2 := V2_4;
+                    D := DELT_4
+                  else
+                    if SPEED_VALUE < SPEED_50_KM then
+                      V1 := V1_5;
+                      V2 := V2_5;
+                      D := DELT_5
+                    else
+                      if SPEED_VALUE < SPEED_60_KM then
+                        V1 := V1_6;
+                        V2 := V2_6;
+                        D := DELT_6
+                      else
+                        if SPEED_VALUE < SPEED_70_KM then
+                          V1 := V1_7;
+                          V2 := V2_7;
+                          D := DELT_7
+                        else
+                          if SPEED_VALUE < SPEED_80_KM then
+                            V1 := V1_8;
+                            V2 := V2_8;
+                            D := DELT_8
+                          else
+                            if SPEED_VALUE < SPEED_90_KM then
+                              V1 := V1_9;
+                              V2 := V2_9;
+                              D := DELT_9
+                            else
+                              if SPEED_VALUE < SPEED_100_KM then
+                                V1 := V1_10;
+                                V2 := V2_10;
+                                D := DELT_10
+                              else
+                                if SPEED_VALUE < SPEED_110_KM then
+                                  V1 := V1_11;
+                                  V2 := V2_11;
+                                  D := DELT_11
+                                else
+                                  if SPEED_VALUE < SPEED_120_KM then
+                                    V1 := V1_12;
+                                    V2 := V2_12;
+                                    D := DELT_12
+                                  else
+                                    if SPEED_VALUE < SPEED_130_KM then
+                                      V1 := V1_13;
+                                      V2 := V2_13;
+                                      D := DELT_13
+                                    else
+                                      if SPEED_VALUE < SPEED_140_KM then
+                                        V1 := V1_14;
+                                        V2 := V2_14;
+                                        D := DELT_14
+                                      else
+                                        if SPEED_VALUE < SPEED_150_KM then
+                                          V1 := V1_15;
+                                          V2 := V2_15;
+                                          D := DELT_15
+                                        else
+                                          if SPEED_VALUE < SPEED_160_KM then
+                                            V1 := V1_16;
+                                            V2 := V2_16;
+                                            D := DELT_16
+                                          else
+                                            if SPEED_VALUE < SPEED_170_KM then
+                                              V1 := V1_17;
+                                              V2 := V2_17;
+                                              D := DELT_17
+                                            else
+                                              if SPEED_VALUE < SPEED_180_KM then
+                                                V1 := V1_18;
+                                                V2 := V2_18;
+                                                D := DELT_18
+                                              else
+                                                if SPEED_VALUE < SPEED_190_KM then
+                                                  V1 := V1_19;
+                                                  V2 := V2_19;
+                                                  D := DELT_19
+                                                else
+                                                  if SPEED_VALUE < SPEED_200_KM then
+                                                    V1 := V1_20;
+                                                    V2 := V2_20;
+                                                    D := DELT_20
+                                                  else
+                                                    if SPEED_VALUE < SPEED_210_KM then
+                                                      V1 := V1_21;
+                                                      V2 := V2_21;
+                                                      D := DELT_21
+                                                    else
+                                                      if SPEED_VALUE < SPEED_220_KM then
+                                                        V1 := V1_22;
+                                                        V2 := V2_22;
+                                                        D := DELT_22
+                                                      else
+                                                        if SPEED_VALUE < SPEED_230_KM then
+                                                          V1 := V1_23;
+                                                          V2 := V2_23;
+                                                          D := DELT_23
+                                                        else
+                                                          if SPEED_VALUE < SPEED_240_KM then
+                                                            V1 := V1_24;
+                                                            V2 := V2_24;
+                                                            D := DELT_24
+                                                          else
+                                                            V1 := V1_25;
+                                                            V2 := V2_25;
+                                                            D := DELT_25
+                                                          end if
+                                                        end if
+                                                      end if
+                                                    end if
+                                                  end if
+                                                end if
+                                              end if
+                                            end if
+                                          end if
+                                        end if
+                                      end if
+                                    end if
+                                  end if
+                                end if
+                              end if
+                            end if
+                          end if
+                        end if
+                      end if
+                    end if
+                  end if
+                end if
+              end if
+            end if
+          case VALUE do
+            CURRENT_VALUE := ?VALUE;
+            if CURRENT_VALUE < OLD_VALUE then
+              DIRECTION := DOWN
+            else
+              if CURRENT_VALUE > OLD_VALUE then
+                DIRECTION := UP
+              end if
+            end if;
+            if DIRECTION = UP then
+              if CURRENT_VALUE < V1 then
+                CONTROL_VALUE := SOFT
+              else
+                if CURRENT_VALUE < V2 then
+                  if CONTROL_VALUE <> MED then
+                    if OLD_VALUE < V1 then
+                      TIME := 0
+                    else
+                      TIME := TIME + 1;
+                      if TIME > D then
+                        CONTROL_VALUE := MED
+                      end if
+                    end if
+                  end if
+                else
+                  if CONTROL_VALUE <> HARD then
+                    if OLD_VALUE < V2 then
+                      TIME := 0
+                    else
+                      TIME := TIME + 1;
+                      if TIME > D then
+                        CONTROL_VALUE := HARD
+                      end if
+                    end if
+                  end if
+                end if
+              end if
+            else
+              if CURRENT_VALUE > V2 then
+                CONTROL_VALUE := HARD
+              else
+                if CURRENT_VALUE > V1 then
+                  if CONTROL_VALUE <> MED then
+                    if OLD_VALUE > V2 then
+                      TIME := 0
+                    else
+                      TIME := TIME + 1;
+                      if TIME > T1 + D then
+                        CONTROL_VALUE := MED
+                      end if
+                    end if
+                  end if
+                else
+                  if CONTROL_VALUE <> SOFT then
+                    if OLD_VALUE > V1 then
+                      TIME := 0
+                    else
+                      TIME := TIME + 1;
+                      if TIME > T2 + D then
+                        CONTROL_VALUE := SOFT
+                      end if
+                    end if
+                  end if
+                end if
+              end if
+            end if
+        end await
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module CURVE:
+constant HARD : integer;
+constant MED : integer;
+constant SOFT : integer;
+constant UP : integer;
+constant DOWN : integer;
+constant V1_1 : integer;
+constant V1_2 : integer;
+constant V1_3 : integer;
+constant V1_4 : integer;
+constant V1_5 : integer;
+constant V1_6 : integer;
+constant V1_7 : integer;
+constant V1_8 : integer;
+constant V1_9 : integer;
+constant V1_10 : integer;
+constant V1_11 : integer;
+constant V1_12 : integer;
+constant V1_13 : integer;
+constant V1_14 : integer;
+constant V1_15 : integer;
+constant V1_16 : integer;
+constant V1_17 : integer;
+constant V1_18 : integer;
+constant V1_19 : integer;
+constant V1_20 : integer;
+constant V1_21 : integer;
+constant V1_22 : integer;
+constant V1_23 : integer;
+constant V1_24 : integer;
+constant V1_25 : integer;
+constant V2_1 : integer;
+constant V2_2 : integer;
+constant V2_3 : integer;
+constant V2_4 : integer;
+constant V2_5 : integer;
+constant V2_6 : integer;
+constant V2_7 : integer;
+constant V2_8 : integer;
+constant V2_9 : integer;
+constant V2_10 : integer;
+constant V2_11 : integer;
+constant V2_12 : integer;
+constant V2_13 : integer;
+constant V2_14 : integer;
+constant V2_15 : integer;
+constant V2_16 : integer;
+constant V2_17 : integer;
+constant V2_18 : integer;
+constant V2_19 : integer;
+constant V2_20 : integer;
+constant V2_21 : integer;
+constant V2_22 : integer;
+constant V2_23 : integer;
+constant V2_24 : integer;
+constant V2_25 : integer;
+constant SPEED_10_KM : integer;
+constant SPEED_20_KM : integer;
+constant SPEED_30_KM : integer;
+constant SPEED_40_KM : integer;
+constant SPEED_50_KM : integer;
+constant SPEED_60_KM : integer;
+constant SPEED_70_KM : integer;
+constant SPEED_80_KM : integer;
+constant SPEED_90_KM : integer;
+constant SPEED_100_KM : integer;
+constant SPEED_110_KM : integer;
+constant SPEED_120_KM : integer;
+constant SPEED_130_KM : integer;
+constant SPEED_140_KM : integer;
+constant SPEED_150_KM : integer;
+constant SPEED_160_KM : integer;
+constant SPEED_170_KM : integer;
+constant SPEED_180_KM : integer;
+constant SPEED_190_KM : integer;
+constant SPEED_200_KM : integer;
+constant SPEED_210_KM : integer;
+constant SPEED_220_KM : integer;
+constant SPEED_230_KM : integer;
+constant SPEED_240_KM : integer;
+constant SPEED_250_KM : integer;
+constant T1 : integer;
+constant T2 : integer;
+input RESET;
+input VALUE : integer;
+input SPEED : integer;
+output CONTROL : integer;
+
+var CURRENT_VALUE : integer,
+    OLD_VALUE : integer,
+    SPEED_VALUE : integer,
+    CONTROL_VALUE : integer,
+    DIRECTION : integer,
+    V1 : integer,
+    V2 : integer,
+    TIME1 : integer,
+    TIME2 : integer in
+  loop
+    CURRENT_VALUE := 0;
+    OLD_VALUE := 0;
+    CONTROL_VALUE := SOFT;
+    DIRECTION := UP;
+    V1 := V1_1;
+    V2 := V2_1;
+    do
+      loop
+        emit CONTROL(CONTROL_VALUE);
+        OLD_VALUE := CURRENT_VALUE;
+        await 
+          case SPEED do
+            SPEED_VALUE := ?SPEED;
+            if SPEED_VALUE < SPEED_10_KM then
+              V1 := V1_1;
+              V2 := V2_1
+            else
+              if SPEED_VALUE < SPEED_20_KM then
+                V1 := V1_2;
+                V2 := V2_2
+              else
+                if SPEED_VALUE < SPEED_30_KM then
+                  V1 := V1_3;
+                  V2 := V2_3
+                else
+                  if SPEED_VALUE < SPEED_40_KM then
+                    V1 := V1_4;
+                    V2 := V2_4
+                  else
+                    if SPEED_VALUE < SPEED_50_KM then
+                      V1 := V1_5;
+                      V2 := V2_5
+                    else
+                      if SPEED_VALUE < SPEED_60_KM then
+                        V1 := V1_6;
+                        V2 := V2_6
+                      else
+                        if SPEED_VALUE < SPEED_70_KM then
+                          V1 := V1_7;
+                          V2 := V2_7
+                        else
+                          if SPEED_VALUE < SPEED_80_KM then
+                            V1 := V1_8;
+                            V2 := V2_8
+                          else
+                            if SPEED_VALUE < SPEED_90_KM then
+                              V1 := V1_9;
+                              V2 := V2_9
+                            else
+                              if SPEED_VALUE < SPEED_100_KM then
+                                V1 := V1_10;
+                                V2 := V2_10
+                              else
+                                if SPEED_VALUE < SPEED_110_KM then
+                                  V1 := V1_11;
+                                  V2 := V2_11
+                                else
+                                  if SPEED_VALUE < SPEED_120_KM then
+                                    V1 := V1_12;
+                                    V2 := V2_12
+                                  else
+                                    if SPEED_VALUE < SPEED_130_KM then
+                                      V1 := V1_13;
+                                      V2 := V2_13
+                                    else
+                                      if SPEED_VALUE < SPEED_140_KM then
+                                        V1 := V1_14;
+                                        V2 := V2_14
+                                      else
+                                        if SPEED_VALUE < SPEED_150_KM then
+                                          V1 := V1_15;
+                                          V2 := V2_15
+                                        else
+                                          if SPEED_VALUE < SPEED_160_KM then
+                                            V1 := V1_16;
+                                            V2 := V2_16
+                                          else
+                                            if SPEED_VALUE < SPEED_170_KM then
+                                              V1 := V1_17;
+                                              V2 := V2_17
+                                            else
+                                              if SPEED_VALUE < SPEED_180_KM then
+                                                V1 := V1_18;
+                                                V2 := V2_18
+                                              else
+                                                if SPEED_VALUE < SPEED_190_KM then
+                                                  V1 := V1_19;
+                                                  V2 := V2_19
+                                                else
+                                                  if SPEED_VALUE < SPEED_200_KM then
+                                                    V1 := V1_20;
+                                                    V2 := V2_20
+                                                  else
+                                                    if SPEED_VALUE < SPEED_210_KM then
+                                                      V1 := V1_21;
+                                                      V2 := V2_21
+                                                    else
+                                                      if SPEED_VALUE < SPEED_220_KM then
+                                                        V1 := V1_22;
+                                                        V2 := V2_22
+                                                      else
+                                                        if SPEED_VALUE < SPEED_230_KM then
+                                                          V1 := V1_23;
+                                                          V2 := V2_23
+                                                        else
+                                                          if SPEED_VALUE < SPEED_240_KM then
+                                                            V1 := V1_24;
+                                                            V2 := V2_24
+                                                          else
+                                                            V1 := V1_25;
+                                                            V2 := V2_25
+                                                          end if
+                                                        end if
+                                                      end if
+                                                    end if
+                                                  end if
+                                                end if
+                                              end if
+                                            end if
+                                          end if
+                                        end if
+                                      end if
+                                    end if
+                                  end if
+                                end if
+                              end if
+                            end if
+                          end if
+                        end if
+                      end if
+                    end if
+                  end if
+                end if
+              end if
+            end if
+          case VALUE do
+            CURRENT_VALUE := ?VALUE;
+            if CURRENT_VALUE < OLD_VALUE then
+              DIRECTION := DOWN
+            else
+              if CURRENT_VALUE > OLD_VALUE then
+                DIRECTION := UP
+              end if
+            end if;
+            if DIRECTION = UP then
+              if CURRENT_VALUE < V1 then
+                CONTROL_VALUE := SOFT
+              else
+                if CURRENT_VALUE < V2 then
+                  CONTROL_VALUE := MED
+                else
+                  CONTROL_VALUE := HARD
+                end if
+              end if
+            else
+              if CURRENT_VALUE > V2 then
+                CONTROL_VALUE := HARD
+              else
+                if CURRENT_VALUE > V1 then
+                  if CONTROL_VALUE <> MED then
+                    if OLD_VALUE > V2 then
+                      TIME1 := 0
+                    else
+                      TIME1 := TIME1 + 1;
+                      if TIME1 > T1 then
+                        CONTROL_VALUE := MED
+                      end if
+                    end if
+                  end if
+                else
+                  if CONTROL_VALUE <> SOFT then
+                    if OLD_VALUE > V1 then
+                      TIME2 := 0
+                    else
+                      TIME2 := TIME2 + 1;
+                      if TIME2 > T2 then
+                        CONTROL_VALUE := SOFT
+                      end if
+                    end if
+                  end if
+                end if
+              end if
+            end if
+        end await
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module DRIVER:
+constant SOFT : integer;
+constant MED : integer;
+constant HARD : integer;
+constant TIME_START : integer;
+constant TIME_STOP : integer;
+constant TIME_45 : integer;
+constant TIME_30 : integer;
+constant TIME_15 : integer;
+constant VBAT_10_V : integer;
+constant VBAT_12_V : integer;
+constant VBAT_13_V : integer;
+input RESET;
+input CLOCK_500;
+input COMMAND : integer;
+input DAMAGE : integer;
+input POS_A : boolean;
+input POS_B : boolean;
+input VBAT : integer;
+output CHANNEL_P : boolean;
+output CHANNEL_N : boolean;
+
+var CHANNEL_P_VALUE : boolean,
+    CHANNEL_N_VALUE : boolean,
+    POS_A_VALUE : boolean,
+    POS_B_VALUE : boolean,
+    POS_VALUE : integer,
+    COM_VALUE : integer,
+    DAM_VALUE : integer,
+    VBAT_VALUE : integer,
+    START_TIMER : integer,
+    STOP_TIMER : integer,
+    TIME_ADD : integer in
+  loop
+    CHANNEL_P_VALUE := false;
+    CHANNEL_N_VALUE := true;
+    POS_VALUE := SOFT;
+    COM_VALUE := SOFT;
+    DAM_VALUE := SOFT;
+    START_TIMER := 0;
+    STOP_TIMER := 0;
+    do
+      loop
+        emit CHANNEL_P(CHANNEL_P_VALUE);
+        emit CHANNEL_N(CHANNEL_N_VALUE);
+        await 
+          case CLOCK_500 do
+            if POS_VALUE <> COM_VALUE and not CHANNEL_P_VALUE then
+              START_TIMER := START_TIMER + 1
+            else
+              if POS_VALUE = COM_VALUE and not CHANNEL_N_VALUE then
+                STOP_TIMER := STOP_TIMER + 1
+              end if
+            end if
+          case COMMAND do
+            COM_VALUE := ?COMMAND;
+            if DAM_VALUE > COM_VALUE then
+              COM_VALUE := DAM_VALUE
+            end if
+          case DAMAGE do
+            DAM_VALUE := ?DAMAGE;
+            if DAM_VALUE > COM_VALUE then
+              COM_VALUE := DAM_VALUE
+            end if
+          case POS_A do
+            POS_A_VALUE := ?POS_A;
+            if POS_A_VALUE and not POS_B_VALUE then
+              POS_VALUE := HARD
+            else
+              if POS_B_VALUE and not POS_A_VALUE then
+                POS_VALUE := SOFT
+              else
+                POS_VALUE := MED
+              end if
+            end if
+          case POS_B do
+            POS_B_VALUE := ?POS_B;
+            if POS_A_VALUE and not POS_B_VALUE then
+              POS_VALUE := HARD
+            else
+              if POS_B_VALUE and not POS_A_VALUE then
+                POS_VALUE := SOFT
+              else
+                POS_VALUE := MED
+              end if
+            end if
+          case VBAT do
+            VBAT_VALUE := ?VBAT;
+            if VBAT_VALUE < VBAT_10_V then
+              TIME_ADD := TIME_45
+            else
+              if VBAT_VALUE < VBAT_12_V then
+                TIME_ADD := TIME_30
+              else
+                if VBAT_VALUE < VBAT_13_V then
+                  TIME_ADD := TIME_15
+                else
+                  TIME_ADD := 0
+                end if
+              end if
+            end if
+        end await;
+        if POS_VALUE <> COM_VALUE then
+          if START_TIMER > TIME_START then
+            CHANNEL_P_VALUE := true;
+            START_TIMER := 0
+          else
+            CHANNEL_N_VALUE := false
+          end if
+        else
+          if STOP_TIMER > TIME_STOP + TIME_ADD then
+            CHANNEL_N_VALUE := true;
+            STOP_TIMER := 0
+          else
+            CHANNEL_P_VALUE := false
+          end if
+        end if
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module FILTER_FREQ:
+constant B0 : integer;
+constant B1 : integer;
+constant B2 : integer;
+constant A0 : integer;
+constant A1 : integer;
+function POLIS_RSH(integer, integer) : integer;
+input RESET;
+input VALUE : integer;
+output FILT_VALUE : integer;
+
+var VAL_0 : integer,
+    VAL_1 : integer,
+    VAL_2 : integer,
+    FILT_VAL_0 : integer,
+    FILT_VAL_1 : integer,
+    FILT_VAL_2 : integer in
+  loop
+    VAL_0 := 0;
+    VAL_1 := 0;
+    VAL_2 := 0;
+    FILT_VAL_0 := 0;
+    FILT_VAL_1 := 0;
+    FILT_VAL_2 := 0;
+    do
+      loop
+        FILT_VAL_0 := POLIS_RSH(B0 * VAL_0 + B1 * VAL_1 + B2 * VAL_2 + A0 * FILT_VAL_1 + A1 * FILT_VAL_2, 14);
+        emit FILT_VALUE(FILT_VAL_0);
+        VAL_2 := VAL_1;
+        VAL_1 := VAL_0;
+        FILT_VAL_2 := FILT_VAL_1;
+        FILT_VAL_1 := FILT_VAL_0;
+        await VALUE;
+        VAL_0 := ?VALUE
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module FILTER:
+constant K : integer;
+input RESET;
+input VALUE : integer;
+output FILT_VALUE : integer;
+
+var VAL : integer,
+    FILT_VAL : integer in
+  loop
+    FILT_VAL := 0;
+    do
+      loop
+        emit FILT_VALUE(FILT_VAL);
+        await VALUE;
+        VAL := ?VALUE;
+        FILT_VAL := FILT_VAL + (VAL - FILT_VAL) / K
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module LONG_ACC_CAL:
+input RESET;
+input CLOCK_24;
+input LONG_SPEED_FILT : integer;
+output ACC : integer;
+
+var SPEED_VAL_0 : integer,
+    SPEED_VAL_1 : integer,
+    SPEED_VAL_2 : integer,
+    SPEED_VAL_3 : integer,
+    SPEED_VAL_4 : integer,
+    SPEED_VAL_5 : integer,
+    SPEED_VAL_6 : integer,
+    SPEED_VAL_7 : integer,
+    SPEED_VAL_8 : integer,
+    ACC_VALUE : integer in
+  loop
+    SPEED_VAL_0 := 0;
+    SPEED_VAL_1 := 0;
+    SPEED_VAL_2 := 0;
+    SPEED_VAL_3 := 0;
+    SPEED_VAL_4 := 0;
+    SPEED_VAL_5 := 0;
+    SPEED_VAL_6 := 0;
+    SPEED_VAL_7 := 0;
+    SPEED_VAL_8 := 0;
+    do
+      loop
+        await 
+          case LONG_SPEED_FILT do
+            SPEED_VAL_0 := ?LONG_SPEED_FILT
+          case CLOCK_24 do
+            ACC_VALUE := SPEED_VAL_0 - SPEED_VAL_8;
+            emit ACC(ACC_VALUE);
+            SPEED_VAL_8 := SPEED_VAL_7;
+            SPEED_VAL_7 := SPEED_VAL_6;
+            SPEED_VAL_6 := SPEED_VAL_5;
+            SPEED_VAL_5 := SPEED_VAL_4;
+            SPEED_VAL_4 := SPEED_VAL_3;
+            SPEED_VAL_3 := SPEED_VAL_2;
+            SPEED_VAL_2 := SPEED_VAL_1;
+            SPEED_VAL_1 := SPEED_VAL_0
+        end await
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module LONG_ACC_DER:
+input RESET;
+input ACC_FILT : integer;
+output ACC_DER : integer;
+
+var ACC_VALUE_0 : integer,
+    ACC_VALUE_1 : integer,
+    ACC_VALUE_2 : integer,
+    ACC_VALUE_3 : integer,
+    ACC_VALUE_4 : integer,
+    ACC_VALUE_5 : integer,
+    ACC_VALUE_6 : integer,
+    ACC_VALUE_7 : integer,
+    ACC_VALUE_8 : integer,
+    ACC_VALUE_9 : integer,
+    ACC_VALUE_10 : integer,
+    ACC_VALUE_11 : integer,
+    ACC_VALUE_12 : integer,
+    ACC_DER_VALUE : integer in
+  loop
+    ACC_VALUE_0 := 0;
+    ACC_VALUE_1 := 0;
+    ACC_VALUE_2 := 0;
+    ACC_VALUE_3 := 0;
+    ACC_VALUE_4 := 0;
+    ACC_VALUE_5 := 0;
+    ACC_VALUE_6 := 0;
+    ACC_VALUE_7 := 0;
+    ACC_VALUE_8 := 0;
+    ACC_VALUE_9 := 0;
+    ACC_VALUE_10 := 0;
+    ACC_VALUE_11 := 0;
+    ACC_VALUE_12 := 0;
+    do
+      loop
+        ACC_DER_VALUE := ACC_VALUE_0 - ACC_VALUE_12;
+        emit ACC_DER(ACC_DER_VALUE);
+        ACC_VALUE_12 := ACC_VALUE_11;
+        ACC_VALUE_11 := ACC_VALUE_10;
+        ACC_VALUE_10 := ACC_VALUE_9;
+        ACC_VALUE_9 := ACC_VALUE_8;
+        ACC_VALUE_8 := ACC_VALUE_7;
+        ACC_VALUE_7 := ACC_VALUE_6;
+        ACC_VALUE_6 := ACC_VALUE_5;
+        ACC_VALUE_5 := ACC_VALUE_4;
+        ACC_VALUE_4 := ACC_VALUE_3;
+        ACC_VALUE_3 := ACC_VALUE_2;
+        ACC_VALUE_2 := ACC_VALUE_1;
+        ACC_VALUE_1 := ACC_VALUE_0;
+        await ACC_FILT;
+        ACC_VALUE_0 := ?ACC_FILT
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module LONG_SPEED_CAL_TRS:
+constant SPEED_STOP : integer;
+input RESET;
+input CLOCK_32;
+input SPEED_SENS;
+output TRS_A : integer;
+output TRS_B : integer;
+output SPEED_OFF;
+
+var D_TIME : integer,
+    D_TIME_0 : integer,
+    D_TIME_1 : integer,
+    D_TIME_2 : integer,
+    D_TIME_3 : integer,
+    D_TIME_4 : integer,
+    D_TIME_5 : integer,
+    D_TIME_6 : integer,
+    D_TIME_7 : integer,
+    TIME_A : integer,
+    TIME_B : integer in
+  loop
+    await RESET;
+    D_TIME := 0;
+    D_TIME_0 := 0;
+    D_TIME_1 := 0;
+    D_TIME_2 := 0;
+    D_TIME_3 := 0;
+    D_TIME_4 := 0;
+    D_TIME_5 := 0;
+    D_TIME_6 := 0;
+    D_TIME_7 := 0;
+    TIME_A := 0;
+    TIME_B := 0;
+    do
+      loop
+        TIME_A := TIME_A - D_TIME_3 + D_TIME;
+        TIME_B := TIME_B - D_TIME_7 + D_TIME;
+        if D_TIME < SPEED_STOP then
+          emit TRS_A(TIME_A);
+          emit TRS_B(TIME_B)
+        end if;
+        D_TIME_7 := D_TIME_6;
+        D_TIME_6 := D_TIME_5;
+        D_TIME_5 := D_TIME_4;
+        D_TIME_4 := D_TIME_3;
+        D_TIME_3 := D_TIME_2;
+        D_TIME_2 := D_TIME_1;
+        D_TIME_1 := D_TIME_0;
+        D_TIME_0 := D_TIME;
+        D_TIME := 0;
+        loop
+          await CLOCK_32;
+          D_TIME := D_TIME + 1;
+          if D_TIME > SPEED_STOP then
+            emit SPEED_OFF;
+            halt
+          end if
+        end loop
+      each SPEED_SENS
+    watching RESET
+  end loop
+end var
+
+end module
+
+module LONG_SPEED_CAL_VAL:
+constant A : integer;
+constant B : integer;
+constant TIME_REF_A : integer;
+constant TIME_REF_B : integer;
+constant LPERIOD : integer;
+constant HPERIOD : integer;
+input RESET;
+input TRS_A : integer;
+input TRS_B : integer;
+input SPEED_OFF;
+output SPEED_INST : integer;
+
+var STRATEGY : integer,
+    TRS_A_VALUE : integer,
+    TRS_B_VALUE : integer,
+    SPEED_VALUE : integer in
+  loop
+    STRATEGY := A;
+    SPEED_VALUE := 0;
+    TRS_A_VALUE := 0;
+    TRS_B_VALUE := 0;
+    do
+      loop
+        emit SPEED_INST(SPEED_VALUE);
+        await [TRS_A or TRS_B];
+        present TRS_A then
+          TRS_A_VALUE := ?TRS_A
+        end present;
+        present TRS_B then
+          TRS_B_VALUE := ?TRS_B
+        end present;
+        if STRATEGY = A then
+          if TRS_A_VALUE > LPERIOD then
+            SPEED_VALUE := TIME_REF_A / TRS_A_VALUE
+          else
+            if TRS_B_VALUE <> 0 then
+              STRATEGY := B;
+              SPEED_VALUE := TIME_REF_B / TRS_B_VALUE
+            end if
+          end if
+        else
+          if TRS_A_VALUE < HPERIOD then
+            SPEED_VALUE := TIME_REF_B / TRS_B_VALUE
+          else
+            if TRS_A_VALUE <> 0 then
+              STRATEGY := A;
+              SPEED_VALUE := TIME_REF_A / TRS_A_VALUE
+            end if
+          end if
+        end if
+      end loop
+    watching [RESET or SPEED_OFF]
+  end loop
+end var
+
+end module
+
+module LONG_SPEED_DIAG_ACC:
+constant MAX_ACC_VALUE : integer;
+constant MAX_OUT_TIME : integer;
+constant MAX_ABN_NUM : integer;
+constant MAX_OUT_ERR_NUM : integer;
+input RESET;
+input CLOCK_24;
+input VER_ACC_FREQ_MED : integer;
+input SPEED_INST : integer;
+input SPEED_OFF;
+output ERR_ACC;
+
+var SPEED_VALUE : integer,
+    ACC_VALUE : integer,
+    ACC_OUT_TIME : integer,
+    ACC_OUT_ERR_NUM : integer,
+    ABNORM_NUM : integer in
+  loop
+    SPEED_VALUE := 0;
+    ACC_VALUE := 0;
+    ACC_OUT_TIME := 0;
+    ACC_OUT_ERR_NUM := 0;
+    ABNORM_NUM := 0;
+    do
+      loop
+        await [SPEED_OFF or SPEED_INST or VER_ACC_FREQ_MED or CLOCK_24];
+        present SPEED_INST then
+          SPEED_VALUE := ?SPEED_INST
+        end present;
+        present SPEED_OFF then
+          SPEED_VALUE := 0
+        end present;
+        present VER_ACC_FREQ_MED then
+          ACC_VALUE := ?VER_ACC_FREQ_MED
+        end present;
+        present CLOCK_24 then
+          ACC_OUT_TIME := ACC_OUT_TIME + 1;
+          if ACC_OUT_TIME > MAX_OUT_TIME then
+            ACC_OUT_TIME := 0;
+            ACC_OUT_ERR_NUM := 0
+          end if;
+          if ACC_VALUE > MAX_ACC_VALUE and SPEED_VALUE = 0 then
+            ACC_OUT_ERR_NUM := ACC_OUT_ERR_NUM + 1;
+            if ACC_OUT_ERR_NUM > MAX_OUT_ERR_NUM then
+              ABNORM_NUM := ABNORM_NUM + 1;
+              ACC_OUT_ERR_NUM := 0;
+              ACC_OUT_TIME := 0;
+              if ABNORM_NUM > MAX_ABN_NUM then
+                emit ERR_ACC;
+                halt
+              end if
+            end if
+          end if
+        end present
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module LONG_SPEED_DIAG_OPEN:
+constant D_TIME_10_MS : integer;
+constant D_TIME_1_S : integer;
+constant D_TIME_20_MS : integer;
+constant D_TIME_4_S : integer;
+input RESET;
+input CLOCK_32;
+input SPEED_SENS;
+output ERR_OPEN;
+
+var D_TIME : integer,
+    D_TIME_OLD : integer in
+  loop
+    D_TIME := 0;
+    D_TIME_OLD := 0;
+    do
+      loop
+        await 
+          case SPEED_SENS do
+            if D_TIME_OLD < D_TIME_10_MS and D_TIME > D_TIME_1_S or D_TIME_OLD < D_TIME_20_MS and D_TIME > D_TIME_4_S then
+              emit ERR_OPEN;
+              halt
+            else
+              D_TIME_OLD := D_TIME;
+              D_TIME := 0
+            end if
+          case CLOCK_32 do
+            D_TIME := D_TIME + 1
+        end await
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module LONG_SPEED_DIAG_PAR:
+constant MIN_TPAR : integer;
+constant MAX_MIN_TPAR_NUM : integer;
+input RESET;
+input CLOCK_500;
+input SPEED_SENS;
+output ERR_PAR;
+
+var D_TIME : integer,
+    MIN_TPAR_NUM : integer in
+  loop
+    D_TIME := MIN_TPAR;
+    MIN_TPAR_NUM := 0;
+    do
+      trap ERROR in
+        loop
+          if D_TIME < MIN_TPAR then
+            MIN_TPAR_NUM := MIN_TPAR_NUM + 1;
+            if MIN_TPAR_NUM > MAX_MIN_TPAR_NUM then
+              exit ERROR
+            end if
+          end if;
+          D_TIME := 0;
+          every CLOCK_500 do
+            D_TIME := D_TIME + 1
+          end every
+        each SPEED_SENS
+      end trap;
+      emit ERR_PAR;
+      halt
+    watching RESET
+  end loop
+end var
+
+end module
+
+module LONG_SPEED_KM:
+input RESET;
+input LONG_SPEED_FILT : integer;
+output LONG_SPEED_KM : integer;
+
+var VALUE : integer,
+    VALUE_KM : integer in
+  loop
+    VALUE_KM := 0;
+    do
+      loop
+        emit LONG_SPEED_KM(VALUE_KM);
+        await LONG_SPEED_FILT;
+        VALUE := ?LONG_SPEED_FILT;
+        VALUE_KM := VALUE / 256
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module LONG_SPEED_STRAT:
+constant HARD : integer;
+constant MED : integer;
+constant SOFT : integer;
+constant UP : integer;
+constant DOWN : integer;
+constant HHHARD : integer;
+constant HLHARD : integer;
+constant HHMED : integer;
+constant HLMED : integer;
+constant LHMED : integer;
+constant LLMED : integer;
+constant LHHARD : integer;
+constant LLHARD : integer;
+input RESET;
+input LONG_SPEED_KM : integer;
+output LONG_SPEED_MOT : integer;
+
+var OLD_SPEED_VALUE : integer,
+    SPEED_VALUE : integer,
+    LONG_SPEED_MOT_VALUE : integer,
+    DIRECTION : integer in
+  loop
+    SPEED_VALUE := 0;
+    OLD_SPEED_VALUE := 0;
+    LONG_SPEED_MOT_VALUE := HARD;
+    DIRECTION := UP;
+    do
+      loop
+        emit LONG_SPEED_MOT(LONG_SPEED_MOT_VALUE);
+        OLD_SPEED_VALUE := SPEED_VALUE;
+        await LONG_SPEED_KM;
+        SPEED_VALUE := ?LONG_SPEED_KM;
+        if SPEED_VALUE < OLD_SPEED_VALUE then
+          DIRECTION := DOWN
+        else
+          if SPEED_VALUE > OLD_SPEED_VALUE then
+            DIRECTION := UP
+          end if
+        end if;
+        if DIRECTION = UP then
+          if SPEED_VALUE < LHHARD then
+            LONG_SPEED_MOT_VALUE := HARD
+          else
+            if SPEED_VALUE < LHMED then
+              LONG_SPEED_MOT_VALUE := MED
+            else
+              if SPEED_VALUE < HHMED then
+                LONG_SPEED_MOT_VALUE := SOFT
+              else
+                if SPEED_VALUE < HHHARD then
+                  LONG_SPEED_MOT_VALUE := MED
+                else
+                  LONG_SPEED_MOT_VALUE := HARD
+                end if
+              end if
+            end if
+          end if
+        else
+          if SPEED_VALUE > HLHARD then
+            LONG_SPEED_MOT_VALUE := HARD
+          else
+            if SPEED_VALUE > HLMED then
+              LONG_SPEED_MOT_VALUE := MED
+            else
+              if SPEED_VALUE > LLMED then
+                LONG_SPEED_MOT_VALUE := SOFT
+              else
+                if SPEED_VALUE > LLHARD then
+                  LONG_SPEED_MOT_VALUE := MED
+                else
+                  LONG_SPEED_MOT_VALUE := HARD
+                end if
+              end if
+            end if
+          end if
+        end if
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module mca200_sim:
+input RESET;
+input CLOCK_500;
+input CLOCK_24;
+input CLOCK_32;
+input CLOCK_16;
+input ANG_INPUT : integer;
+input VELSTER : integer;
+input VELINST : integer;
+input ACC_SENS : integer;
+input VBAT : integer;
+input MOT_POS_A1 : boolean;
+input MOT_POS_B1 : boolean;
+input MOT_POS_A2 : boolean;
+input MOT_POS_B2 : boolean;
+input MOT_POS_A3 : boolean;
+input MOT_POS_B3 : boolean;
+input MOT_POS_A4 : boolean;
+input MOT_POS_B4 : boolean;
+output MOT_CHANNEL_P1 : boolean;
+output MOT_CHANNEL_N1 : boolean;
+output MOT_CHANNEL_P2 : boolean;
+output MOT_CHANNEL_N2 : boolean;
+output MOT_CHANNEL_P3 : boolean;
+output MOT_CHANNEL_N3 : boolean;
+output MOT_CHANNEL_P4 : boolean;
+output MOT_CHANNEL_N4 : boolean;
+
+signal STEER_ANG_MOT_REAR : integer,
+       LONG_SPEED_KM : integer,
+       VER_ACC_FREQ_MED : integer,
+       STEER_ANG_DAMAGE : integer,
+       STEER_SPEED_ERR,
+       STEER1_SENS : boolean,
+       LONG_DECC_MOT_FRONT : integer,
+       BAT_ERR,
+       STEER2_SENS : boolean,
+       LONG_SPEED_MOT : integer,
+       VER_ACC_MED_MOT_REAR : integer,
+       LONG_SPEED_ERR,
+       VER_ACC_ERR,
+       VER_ACC_LOW_MOT_FRONT : integer,
+       BAT_MOT_RES,
+       STEER_SPEED_NO_SOFT,
+       VER_ACC_MED_MOT_FRONT : integer,
+       LONG_ACC_MOT_FRONT : integer,
+       STEER_SPEED_MOT_REAR : integer,
+       LONG_ACC_MOT_REAR : integer,
+       BAT_MOT_HARD,
+       STEER_ANG_MOT_FRONT : integer,
+       VER_ACC_LOW_MOT_REAR : integer,
+       LONG_DECC_MOT_REAR : integer,
+       STEER_SPEED_MOT_FRONT : integer,
+       LONG_ACC_DER_MOT_REAR : integer,
+       SPEED_SENS,
+       STEER_ANG_ERR,
+       LONG_SPEED_FILT : integer,
+       LONG_ACC_DER_MOT_FRONT : integer,
+       STEER_SENS : boolean,
+       ignored in
+    run SPEED_SENS [
+      signal RESET / RESET,
+             CLOCK_32 / CLOCK_32,
+             VELINST / VELINST,
+             SPEED_SENS / SPEED_SENS ]
+  ||
+    run STEER_WHEEL [
+      signal RESET / RESET,
+             CLOCK_16 / CLOCK_16,
+             ANG_INPUT / ANG_INPUT,
+             VELSTER / VELSTER,
+             STEER1_SENS / STEER1_SENS,
+             STEER2_SENS / STEER2_SENS,
+             STEER_SENS / STEER_SENS ]
+  ||
+    run BAT_DIAG [
+      signal RESET / RESET,
+             CLOCK_24 / CLOCK_24,
+             VBAT / VBAT,
+             BAT_MOT_RES / BAT_MOT_RES,
+             BAT_ERR / BAT_ERR,
+             BAT_MOT_HARD / BAT_MOT_HARD ]
+  ||
+    run long_speed [
+      signal RESET / RESET,
+             CLOCK_500 / CLOCK_500,
+             CLOCK_24 / CLOCK_24,
+             CLOCK_32 / CLOCK_32,
+             SPEED_SENS / SPEED_SENS,
+             VER_ACC_FREQ_MED / VER_ACC_FREQ_MED,
+             LONG_SPEED_KM / LONG_SPEED_KM,
+             LONG_SPEED_FILT / LONG_SPEED_FILT,
+             LONG_SPEED_MOT / LONG_SPEED_MOT,
+             LONG_SPEED_ERR / LONG_SPEED_ERR ]
+  ||
+    run long_acc [
+      signal RESET / RESET,
+             CLOCK_24 / CLOCK_24,
+             LONG_SPEED_FILT / LONG_SPEED_FILT,
+             LONG_SPEED_KM / LONG_SPEED_KM,
+             LONG_ACC_MOT_FRONT / LONG_ACC_MOT_FRONT,
+             LONG_ACC_MOT_REAR / LONG_ACC_MOT_REAR,
+             LONG_DECC_MOT_FRONT / LONG_DECC_MOT_FRONT,
+             LONG_DECC_MOT_REAR / LONG_DECC_MOT_REAR,
+             LONG_ACC_DER_MOT_FRONT / LONG_ACC_DER_MOT_FRONT,
+             LONG_ACC_DER_MOT_REAR / LONG_ACC_DER_MOT_REAR ]
+  ||
+    run ver_acc [
+      signal RESET / RESET,
+             ACC_SENS / ACC_SENS,
+             LONG_SPEED_KM / LONG_SPEED_KM,
+             VER_ACC_LOW_MOT_FRONT / VER_ACC_LOW_MOT_FRONT,
+             VER_ACC_LOW_MOT_REAR / VER_ACC_LOW_MOT_REAR,
+             VER_ACC_MED_MOT_FRONT / VER_ACC_MED_MOT_FRONT,
+             VER_ACC_MED_MOT_REAR / VER_ACC_MED_MOT_REAR,
+             VER_ACC_FREQ_MED / VER_ACC_FREQ_MED,
+             VER_ACC_ERR / VER_ACC_ERR ]
+  ||
+    run steer_ang [
+      signal RESET / RESET,
+             CLOCK_24 / CLOCK_24,
+             STEER1_SENS / STEER1_SENS,
+             STEER2_SENS / STEER2_SENS,
+             STEER_SENS / STEER_SENS,
+             LONG_SPEED_FILT / LONG_SPEED_FILT,
+             LONG_SPEED_KM / LONG_SPEED_KM,
+             STEER_ANG_MOT_FRONT / STEER_ANG_MOT_FRONT,
+             STEER_ANG_MOT_REAR / STEER_ANG_MOT_REAR,
+             STEER_ANG_DAMAGE / STEER_ANG_DAMAGE,
+             STEER_ANG_ERR / ANG_ERR ]
+  ||
+    run steer_speed [
+      signal RESET / RESET,
+             CLOCK_16 / CLOCK_16,
+             STEER1_SENS / STEER1_SENS,
+             STEER2_SENS / STEER2_SENS,
+             LONG_SPEED_KM / LONG_SPEED_KM,
+             STEER_SPEED_NO_SOFT / STEER_NO_SOFT,
+             STEER_SPEED_ERR / STEER_SPEED_ERR,
+             STEER_SPEED_MOT_FRONT / STEER_SPEED_MOT_FRONT,
+             STEER_SPEED_MOT_REAR / STEER_SPEED_MOT_REAR ]
+  ||
+    run mot_ctrl [
+      signal RESET / RESET,
+             CLOCK_500 / CLOCK_500,
+             LONG_SPEED_MOT / LONG_SPEED_MOT,
+             LONG_ACC_MOT_FRONT / LONG_ACC_MOT_FRONT,
+             LONG_DECC_MOT_FRONT / LONG_DECC_MOT_FRONT,
+             LONG_ACC_DER_MOT_FRONT / LONG_ACC_DER_MOT_FRONT,
+             VER_ACC_LOW_MOT_FRONT / VER_ACC_LOW_MOT_FRONT,
+             VER_ACC_MED_MOT_FRONT / VER_ACC_MED_MOT_FRONT,
+             STEER_ANG_MOT_FRONT / STEER_ANG_MOT_FRONT,
+             STEER_SPEED_MOT_FRONT / STEER_SPEED_MOT_FRONT,
+             LONG_ACC_MOT_REAR / LONG_ACC_MOT_REAR,
+             LONG_DECC_MOT_REAR / LONG_DECC_MOT_REAR,
+             LONG_ACC_DER_MOT_REAR / LONG_ACC_DER_MOT_REAR,
+             VER_ACC_LOW_MOT_REAR / VER_ACC_LOW_MOT_REAR,
+             VER_ACC_MED_MOT_REAR / VER_ACC_MED_MOT_REAR,
+             STEER_ANG_MOT_REAR / STEER_ANG_MOT_REAR,
+             STEER_SPEED_MOT_REAR / STEER_SPEED_MOT_REAR,
+             LONG_SPEED_ERR / LONG_SPEED_ERR,
+             VER_ACC_ERR / VER_ACC_ERR,
+             STEER_ANG_ERR / STEER_ANG_ERR,
+             STEER_SPEED_ERR / STEER_SPEED_ERR,
+             BAT_ERR / BAT_ERR,
+             BAT_MOT_HARD / BAT_MOT_HARD,
+             BAT_MOT_RES / BAT_MOT_RES,
+             STEER_ANG_DAMAGE / STEER_ANG_DAMAGE,
+             STEER_SPEED_NO_SOFT / STEER_SPEED_NO_SOFT,
+             VBAT / VBAT,
+             MOT_POS_A1 / MOT_POS_A1,
+             MOT_POS_B1 / MOT_POS_B1,
+             MOT_POS_A2 / MOT_POS_A2,
+             MOT_POS_B2 / MOT_POS_B2,
+             MOT_POS_A3 / MOT_POS_A3,
+             MOT_POS_B3 / MOT_POS_B3,
+             MOT_POS_A4 / MOT_POS_A4,
+             MOT_POS_B4 / MOT_POS_B4,
+             MOT_CHANNEL_P1 / MOT_CHANNEL_P1,
+             MOT_CHANNEL_N1 / MOT_CHANNEL_N1,
+             MOT_CHANNEL_P2 / MOT_CHANNEL_P2,
+             MOT_CHANNEL_N2 / MOT_CHANNEL_N2,
+             MOT_CHANNEL_P3 / MOT_CHANNEL_P3,
+             MOT_CHANNEL_N3 / MOT_CHANNEL_N3,
+             MOT_CHANNEL_P4 / MOT_CHANNEL_P4,
+             MOT_CHANNEL_N4 / MOT_CHANNEL_N4 ]
+end signal
+
+end module
+
+module long_speed:
+constant K1 : integer;
+input RESET;
+input CLOCK_500;
+input CLOCK_24;
+input CLOCK_32;
+input SPEED_SENS;
+input VER_ACC_FREQ_MED : integer;
+output LONG_SPEED_KM : integer;
+output LONG_SPEED_FILT : integer;
+output LONG_SPEED_MOT : integer;
+output LONG_SPEED_ERR;
+
+signal SPEED_OFF,
+       SPEED_INST : integer,
+       ignored in
+    run long_speed_cal [
+      signal RESET / RESET,
+             CLOCK_32 / CLOCK_32,
+             SPEED_SENS / SPEED_SENS,
+             SPEED_INST / SPEED_INST,
+             SPEED_OFF / SPEED_OFF ]
+  ||
+    run long_speed_diag [
+      signal RESET / RESET,
+             CLOCK_500 / CLOCK_500,
+             CLOCK_24 / CLOCK_24,
+             CLOCK_32 / CLOCK_32,
+             SPEED_SENS / SPEED_SENS,
+             SPEED_INST / SPEED_INST,
+             VER_ACC_FREQ_MED / VER_ACC_FREQ_MED,
+             SPEED_OFF / SPEED_OFF,
+             LONG_SPEED_ERR / LONG_SPEED_ERR ]
+  ||
+    run FILTER [
+      constant K1 / K;
+      signal RESET / RESET,
+             SPEED_INST / VALUE,
+             LONG_SPEED_FILT / FILT_VALUE ]
+  ||
+    run LONG_SPEED_KM [
+      signal RESET / RESET,
+             LONG_SPEED_FILT / LONG_SPEED_FILT,
+             LONG_SPEED_KM / LONG_SPEED_KM ]
+  ||
+    run LONG_SPEED_STRAT [
+      signal RESET / RESET,
+             LONG_SPEED_KM / LONG_SPEED_KM,
+             LONG_SPEED_MOT / LONG_SPEED_MOT ]
+end signal
+
+end module
+
+module long_speed_cal:
+input RESET;
+input CLOCK_32;
+input SPEED_SENS;
+output SPEED_INST : integer;
+output SPEED_OFF;
+
+signal TRS_B : integer,
+       TRS_A : integer,
+       ignored in
+    run LONG_SPEED_CAL_TRS [
+      signal RESET / RESET,
+             CLOCK_32 / CLOCK_32,
+             SPEED_SENS / SPEED_SENS,
+             TRS_A / TRS_A,
+             TRS_B / TRS_B,
+             SPEED_OFF / SPEED_OFF ]
+  ||
+    run LONG_SPEED_CAL_VAL [
+      signal RESET / RESET,
+             TRS_A / TRS_A,
+             TRS_B / TRS_B,
+             SPEED_OFF / SPEED_OFF,
+             SPEED_INST / SPEED_INST ]
+end signal
+
+end module
+
+module long_speed_diag:
+input RESET;
+input CLOCK_500;
+input CLOCK_24;
+input CLOCK_32;
+input SPEED_SENS;
+input VER_ACC_FREQ_MED : integer;
+input SPEED_INST : integer;
+input SPEED_OFF;
+output LONG_SPEED_ERR;
+
+signal ERR_OPEN,
+       ERR_ACC,
+       ERR_PAR,
+       ignored in
+    run LONG_SPEED_DIAG_ACC [
+      signal RESET / RESET,
+             CLOCK_24 / CLOCK_24,
+             VER_ACC_FREQ_MED / VER_ACC_FREQ_MED,
+             SPEED_INST / SPEED_INST,
+             SPEED_OFF / SPEED_OFF,
+             ERR_ACC / ERR_ACC ]
+  ||
+    run LONG_SPEED_DIAG_PAR [
+      signal RESET / RESET,
+             CLOCK_500 / CLOCK_500,
+             SPEED_SENS / SPEED_SENS,
+             ERR_PAR / ERR_PAR ]
+  ||
+    run LONG_SPEED_DIAG_OPEN [
+      signal RESET / RESET,
+             CLOCK_32 / CLOCK_32,
+             SPEED_SENS / SPEED_SENS,
+             ERR_OPEN / ERR_OPEN ]
+  ||
+    run ARB_3 [
+      signal ERR_ACC / ERR1,
+             ERR_OPEN / ERR2,
+             ERR_PAR / ERR3,
+             LONG_SPEED_ERR / ERR ]
+end signal
+
+end module
+
+module long_acc:
+constant DDEHF_4 : integer;
+constant DDEHF_5 : integer;
+constant ACHR_20 : integer;
+constant DDEHF_6 : integer;
+constant ACHR_21 : integer;
+constant DDEHF_7 : integer;
+constant ACHR_22 : integer;
+constant DDEHF_8 : integer;
+constant ACHR_23 : integer;
+constant DDEHF_9 : integer;
+constant ACHR_24 : integer;
+constant ACHR_25 : integer;
+constant ACMR_20 : integer;
+constant ACMR_21 : integer;
+constant ACMR_22 : integer;
+constant ACMR_23 : integer;
+constant ACMR_24 : integer;
+constant ACMR_25 : integer;
+constant DDEHF_10 : integer;
+constant DEHR_10 : integer;
+constant DDEHF_11 : integer;
+constant DEHR_11 : integer;
+constant DDEHF_12 : integer;
+constant DEHR_12 : integer;
+constant DDELFMD : integer;
+constant DDEHF_13 : integer;
+constant DEHR_13 : integer;
+constant DDEHF_14 : integer;
+constant DEHR_14 : integer;
+constant DDEHF_15 : integer;
+constant DDEMF_10 : integer;
+constant DEHR_15 : integer;
+constant DEMR_10 : integer;
+constant DDEHF_16 : integer;
+constant DDEMF_11 : integer;
+constant DEHR_16 : integer;
+constant DEMR_11 : integer;
+constant ACMR_1 : integer;
+constant Kd : integer;
+constant DDEHF_17 : integer;
+constant DDEMF_12 : integer;
+constant DEHR_17 : integer;
+constant DEMR_12 : integer;
+constant ACMR_2 : integer;
+constant DDEHF_18 : integer;
+constant DDEMF_13 : integer;
+constant DEHR_18 : integer;
+constant DEMR_13 : integer;
+constant ACMR_3 : integer;
+constant DDEHF_19 : integer;
+constant DDEMF_14 : integer;
+constant DEHR_19 : integer;
+constant DEMR_14 : integer;
+constant ACMR_4 : integer;
+constant DDEMF_15 : integer;
+constant DEMR_15 : integer;
+constant ACMR_5 : integer;
+constant DDEMF_16 : integer;
+constant DEMR_16 : integer;
+constant ACMR_6 : integer;
+constant DDEMF_17 : integer;
+constant DEMR_17 : integer;
+constant ACMR_7 : integer;
+constant DDEMF_18 : integer;
+constant DEMR_18 : integer;
+constant DELRHA : integer;
+constant ACMR_8 : integer;
+constant DDEMF_19 : integer;
+constant DEMR_19 : integer;
+constant DEHF_1 : integer;
+constant ACMR_9 : integer;
+constant DEHF_2 : integer;
+constant DELRHD : integer;
+constant DEHF_3 : integer;
+constant DEHF_4 : integer;
+constant DEHF_5 : integer;
+constant DEHF_6 : integer;
+constant DEHF_7 : integer;
+constant DEHF_8 : integer;
+constant DEHF_9 : integer;
+constant DDEHF_20 : integer;
+constant DEHR_20 : integer;
+constant DDEHF_21 : integer;
+constant DEHR_21 : integer;
+constant DDEHF_22 : integer;
+constant DEHR_22 : integer;
+constant DDEHF_23 : integer;
+constant DEHR_23 : integer;
+constant DDEHF_24 : integer;
+constant DEHR_24 : integer;
+constant DDEHF_25 : integer;
+constant DDEMF_20 : integer;
+constant DEHR_25 : integer;
+constant DEMR_20 : integer;
+constant DELFMA : integer;
+constant DDEMF_21 : integer;
+constant DEMR_21 : integer;
+constant DDEMF_22 : integer;
+constant DEMR_22 : integer;
+constant DDEMF_23 : integer;
+constant DEMR_23 : integer;
+constant DELFMD : integer;
+constant DDEMF_24 : integer;
+constant DEMR_24 : integer;
+constant DDEMF_25 : integer;
+constant DEMR_25 : integer;
+constant DDELFHD : integer;
+constant ACHR_1 : integer;
+constant ACHR_2 : integer;
+constant ACHR_3 : integer;
+constant ACHR_4 : integer;
+constant ACHR_5 : integer;
+constant ACHR_6 : integer;
+constant ACHR_7 : integer;
+constant ACHR_8 : integer;
+constant ACHR_9 : integer;
+constant ACHF_10 : integer;
+constant ACHF_11 : integer;
+constant ACHF_12 : integer;
+constant ACHF_13 : integer;
+constant ACHF_14 : integer;
+constant ACHF_15 : integer;
+constant ACMF_10 : integer;
+constant DDEMR_1 : integer;
+constant ACHF_16 : integer;
+constant ACMF_11 : integer;
+constant DDEMR_2 : integer;
+constant ACHF_17 : integer;
+constant ACMF_12 : integer;
+constant DDEMR_3 : integer;
+constant ACHF_18 : integer;
+constant ACMF_13 : integer;
+constant DDEMR_4 : integer;
+constant ACHF_19 : integer;
+constant ACMF_14 : integer;
+constant DDEMR_5 : integer;
+constant ACMF_15 : integer;
+constant DDEMR_6 : integer;
+constant ACMF_16 : integer;
+constant DDEMR_7 : integer;
+constant ACMF_17 : integer;
+constant DDEMR_8 : integer;
+constant ACMF_18 : integer;
+constant DDEMR_9 : integer;
+constant ACMF_19 : integer;
+constant ACMF_1 : integer;
+constant ACMF_2 : integer;
+constant ACMF_3 : integer;
+constant ACMF_4 : integer;
+constant ACMF_5 : integer;
+constant ACMF_6 : integer;
+constant ACMF_7 : integer;
+constant DELFHA : integer;
+constant ACMF_8 : integer;
+constant ACMF_9 : integer;
+constant DELFHD : integer;
+constant ACHF_20 : integer;
+constant ACHF_21 : integer;
+constant DDEHR_10 : integer;
+constant ACHF_22 : integer;
+constant DDEHR_11 : integer;
+constant ACHF_23 : integer;
+constant DDEHR_12 : integer;
+constant ACHF_24 : integer;
+constant DDEHR_13 : integer;
+constant ACHF_25 : integer;
+constant ACMF_20 : integer;
+constant DDEHR_14 : integer;
+constant ACMF_21 : integer;
+constant DDEHR_15 : integer;
+constant DDEMR_10 : integer;
+constant ACMF_22 : integer;
+constant DDEHR_16 : integer;
+constant DDEMR_11 : integer;
+constant ACMF_23 : integer;
+constant DDEHR_17 : integer;
+constant DDEMR_12 : integer;
+constant ACMF_24 : integer;
+constant DDEHR_18 : integer;
+constant DDEMR_13 : integer;
+constant ACMF_25 : integer;
+constant DDEHR_19 : integer;
+constant DDEMR_14 : integer;
+constant DEMR_1 : integer;
+constant DDEMR_15 : integer;
+constant DEMR_2 : integer;
+constant DDEMR_16 : integer;
+constant DEMR_3 : integer;
+constant DDEMR_17 : integer;
+constant DEMR_4 : integer;
+constant DDEMR_18 : integer;
+constant DEMR_5 : integer;
+constant DDEMR_19 : integer;
+constant DEMR_6 : integer;
+constant DEMR_7 : integer;
+constant DEMR_8 : integer;
+constant DEHF_10 : integer;
+constant DEMR_9 : integer;
+constant DEHF_11 : integer;
+constant DDEHR_1 : integer;
+constant DEHF_12 : integer;
+constant DDEHR_2 : integer;
+constant DEHF_13 : integer;
+constant DDEHR_3 : integer;
+constant DEHF_14 : integer;
+constant DDEHR_4 : integer;
+constant DEHF_15 : integer;
+constant DEMF_10 : integer;
+constant DDEHR_5 : integer;
+constant DEHF_16 : integer;
+constant DEMF_11 : integer;
+constant DDEHR_6 : integer;
+constant DEHF_17 : integer;
+constant DEMF_12 : integer;
+constant DDEHR_7 : integer;
+constant DEHF_18 : integer;
+constant DEMF_13 : integer;
+constant DDEHR_8 : integer;
+constant DEHF_19 : integer;
+constant DEMF_14 : integer;
+constant DDEHR_9 : integer;
+constant DEMF_15 : integer;
+constant DEMF_16 : integer;
+constant ACHF_1 : integer;
+constant DEMF_17 : integer;
+constant ACHF_2 : integer;
+constant DEMF_18 : integer;
+constant ACHF_3 : integer;
+constant DEMF_19 : integer;
+constant ACHF_4 : integer;
+constant DDEHR_20 : integer;
+constant ACHF_5 : integer;
+constant DDEHR_21 : integer;
+constant ACHF_6 : integer;
+constant DDEHR_22 : integer;
+constant ACHF_7 : integer;
+constant DDEHR_23 : integer;
+constant ACHF_8 : integer;
+constant DDEHR_24 : integer;
+constant ACHF_9 : integer;
+constant DDEHR_25 : integer;
+constant DDEMR_20 : integer;
+constant DDEMR_21 : integer;
+constant DDEMR_22 : integer;
+constant DDEMR_23 : integer;
+constant DDEMR_24 : integer;
+constant DDEMR_25 : integer;
+constant DDEMF_1 : integer;
+constant DDEMF_2 : integer;
+constant DDELRMD : integer;
+constant DDEMF_3 : integer;
+constant DDEMF_4 : integer;
+constant DDEMF_5 : integer;
+constant DDEMF_6 : integer;
+constant DDEMF_7 : integer;
+constant DEHF_20 : integer;
+constant DDEMF_8 : integer;
+constant DEHF_21 : integer;
+constant DDEMF_9 : integer;
+constant DEHF_22 : integer;
+constant DEHF_23 : integer;
+constant DEHF_24 : integer;
+constant DEHF_25 : integer;
+constant DEMF_20 : integer;
+constant DEMF_21 : integer;
+constant DEHR_1 : integer;
+constant DEMF_22 : integer;
+constant DEHR_2 : integer;
+constant DEMF_23 : integer;
+constant DEHR_3 : integer;
+constant DEMF_24 : integer;
+constant DEHR_4 : integer;
+constant DEMF_25 : integer;
+constant DEHR_5 : integer;
+constant DEHR_6 : integer;
+constant ACHR_10 : integer;
+constant DEHR_7 : integer;
+constant ACHR_11 : integer;
+constant DEHR_8 : integer;
+constant ACHR_12 : integer;
+constant DEHR_9 : integer;
+constant ACHR_13 : integer;
+constant ACHR_14 : integer;
+constant ACHR_15 : integer;
+constant ACMR_10 : integer;
+constant ACHR_16 : integer;
+constant ACMR_11 : integer;
+constant ACHR_17 : integer;
+constant ACMR_12 : integer;
+constant ACHR_18 : integer;
+constant ACMR_13 : integer;
+constant ACHR_19 : integer;
+constant ACMR_14 : integer;
+constant ACMR_15 : integer;
+constant ACMR_16 : integer;
+constant ACMR_17 : integer;
+constant ACMR_18 : integer;
+constant ACMR_19 : integer;
+constant DELRMA : integer;
+constant DEMF_1 : integer;
+constant DEMF_2 : integer;
+constant DELRMD : integer;
+constant DEMF_3 : integer;
+constant DEMF_4 : integer;
+constant DEMF_5 : integer;
+constant DEMF_6 : integer;
+constant DEMF_7 : integer;
+constant DEMF_8 : integer;
+constant DEMF_9 : integer;
+constant DDEHF_1 : integer;
+constant DDEHF_2 : integer;
+constant DDELRHD : integer;
+constant DDEHF_3 : integer;
+input RESET;
+input CLOCK_24;
+input LONG_SPEED_FILT : integer;
+input LONG_SPEED_KM : integer;
+output LONG_ACC_MOT_FRONT : integer;
+output LONG_ACC_MOT_REAR : integer;
+output LONG_DECC_MOT_FRONT : integer;
+output LONG_DECC_MOT_REAR : integer;
+output LONG_ACC_DER_MOT_FRONT : integer;
+output LONG_ACC_DER_MOT_REAR : integer;
+
+signal ACC_DER : integer,
+       ACC : integer,
+       ACC_FILT : integer,
+       ignored in
+    run LONG_ACC_CAL [
+      signal RESET / RESET,
+             CLOCK_24 / CLOCK_24,
+             LONG_SPEED_FILT / LONG_SPEED_FILT,
+             ACC / ACC ]
+  ||
+    run FILTER [
+      constant Kd / K;
+      signal RESET / RESET,
+             ACC / VALUE,
+             ACC_FILT / FILT_VALUE ]
+  ||
+    run LONG_ACC_DER [
+      signal RESET / RESET,
+             ACC_FILT / ACC_FILT,
+             ACC_DER / ACC_DER ]
+  ||
+    run CURVE [
+      constant ACMF_1 / V1_1,
+               ACMF_2 / V1_2,
+               ACMF_3 / V1_3,
+               ACMF_4 / V1_4,
+               ACMF_5 / V1_5,
+               ACMF_6 / V1_6,
+               ACMF_7 / V1_7,
+               ACMF_8 / V1_8,
+               ACMF_9 / V1_9,
+               ACMF_10 / V1_10,
+               ACMF_11 / V1_11,
+               ACMF_12 / V1_12,
+               ACMF_13 / V1_13,
+               ACMF_14 / V1_14,
+               ACMF_15 / V1_15,
+               ACMF_16 / V1_16,
+               ACMF_17 / V1_17,
+               ACMF_18 / V1_18,
+               ACMF_19 / V1_19,
+               ACMF_20 / V1_20,
+               ACMF_21 / V1_21,
+               ACMF_22 / V1_22,
+               ACMF_23 / V1_23,
+               ACMF_24 / V1_24,
+               ACMF_25 / V1_25,
+               ACHF_1 / V2_1,
+               ACHF_2 / V2_2,
+               ACHF_3 / V2_3,
+               ACHF_4 / V2_4,
+               ACHF_5 / V2_5,
+               ACHF_6 / V2_6,
+               ACHF_7 / V2_7,
+               ACHF_8 / V2_8,
+               ACHF_9 / V2_9,
+               ACHF_10 / V2_10,
+               ACHF_11 / V2_11,
+               ACHF_12 / V2_12,
+               ACHF_13 / V2_13,
+               ACHF_14 / V2_14,
+               ACHF_15 / V2_15,
+               ACHF_16 / V2_16,
+               ACHF_17 / V2_17,
+               ACHF_18 / V2_18,
+               ACHF_19 / V2_19,
+               ACHF_20 / V2_20,
+               ACHF_21 / V2_21,
+               ACHF_22 / V2_22,
+               ACHF_23 / V2_23,
+               ACHF_24 / V2_24,
+               ACHF_25 / V2_25,
+               DELFHA / T1,
+               DELFMA / T2;
+      signal RESET / RESET,
+             ACC_FILT / VALUE,
+             LONG_SPEED_KM / SPEED,
+             LONG_ACC_MOT_FRONT / CONTROL ]
+  ||
+    run CURVE [
+      constant ACMR_1 / V1_1,
+               ACMR_2 / V1_2,
+               ACMR_3 / V1_3,
+               ACMR_4 / V1_4,
+               ACMR_5 / V1_5,
+               ACMR_6 / V1_6,
+               ACMR_7 / V1_7,
+               ACMR_8 / V1_8,
+               ACMR_9 / V1_9,
+               ACMR_10 / V1_10,
+               ACMR_11 / V1_11,
+               ACMR_12 / V1_12,
+               ACMR_13 / V1_13,
+               ACMR_14 / V1_14,
+               ACMR_15 / V1_15,
+               ACMR_16 / V1_16,
+               ACMR_17 / V1_17,
+               ACMR_18 / V1_18,
+               ACMR_19 / V1_19,
+               ACMR_20 / V1_20,
+               ACMR_21 / V1_21,
+               ACMR_22 / V1_22,
+               ACMR_23 / V1_23,
+               ACMR_24 / V1_24,
+               ACMR_25 / V1_25,
+               ACHR_1 / V2_1,
+               ACHR_2 / V2_2,
+               ACHR_3 / V2_3,
+               ACHR_4 / V2_4,
+               ACHR_5 / V2_5,
+               ACHR_6 / V2_6,
+               ACHR_7 / V2_7,
+               ACHR_8 / V2_8,
+               ACHR_9 / V2_9,
+               ACHR_10 / V2_10,
+               ACHR_11 / V2_11,
+               ACHR_12 / V2_12,
+               ACHR_13 / V2_13,
+               ACHR_14 / V2_14,
+               ACHR_15 / V2_15,
+               ACHR_16 / V2_16,
+               ACHR_17 / V2_17,
+               ACHR_18 / V2_18,
+               ACHR_19 / V2_19,
+               ACHR_20 / V2_20,
+               ACHR_21 / V2_21,
+               ACHR_22 / V2_22,
+               ACHR_23 / V2_23,
+               ACHR_24 / V2_24,
+               ACHR_25 / V2_25,
+               DELRHA / T1,
+               DELRMA / T2;
+      signal RESET / RESET,
+             ACC_FILT / VALUE,
+             LONG_SPEED_KM / SPEED,
+             LONG_ACC_MOT_REAR / CONTROL ]
+  ||
+    run CURVE [
+      constant DEMF_1 / V1_1,
+               DEMF_2 / V1_2,
+               DEMF_3 / V1_3,
+               DEMF_4 / V1_4,
+               DEMF_5 / V1_5,
+               DEMF_6 / V1_6,
+               DEMF_7 / V1_7,
+               DEMF_8 / V1_8,
+               DEMF_9 / V1_9,
+               DEMF_10 / V1_10,
+               DEMF_11 / V1_11,
+               DEMF_12 / V1_12,
+               DEMF_13 / V1_13,
+               DEMF_14 / V1_14,
+               DEMF_15 / V1_15,
+               DEMF_16 / V1_16,
+               DEMF_17 / V1_17,
+               DEMF_18 / V1_18,
+               DEMF_19 / V1_19,
+               DEMF_20 / V1_20,
+               DEMF_21 / V1_21,
+               DEMF_22 / V1_22,
+               DEMF_23 / V1_23,
+               DEMF_24 / V1_24,
+               DEMF_25 / V1_25,
+               DEHF_1 / V2_1,
+               DEHF_2 / V2_2,
+               DEHF_3 / V2_3,
+               DEHF_4 / V2_4,
+               DEHF_5 / V2_5,
+               DEHF_6 / V2_6,
+               DEHF_7 / V2_7,
+               DEHF_8 / V2_8,
+               DEHF_9 / V2_9,
+               DEHF_10 / V2_10,
+               DEHF_11 / V2_11,
+               DEHF_12 / V2_12,
+               DEHF_13 / V2_13,
+               DEHF_14 / V2_14,
+               DEHF_15 / V2_15,
+               DEHF_16 / V2_16,
+               DEHF_17 / V2_17,
+               DEHF_18 / V2_18,
+               DEHF_19 / V2_19,
+               DEHF_20 / V2_20,
+               DEHF_21 / V2_21,
+               DEHF_22 / V2_22,
+               DEHF_23 / V2_23,
+               DEHF_24 / V2_24,
+               DEHF_25 / V2_25,
+               DELFHD / T1,
+               DELFMD / T2;
+      signal RESET / RESET,
+             ACC_FILT / VALUE,
+             LONG_SPEED_KM / SPEED,
+             LONG_DECC_MOT_FRONT / CONTROL ]
+  ||
+    run CURVE [
+      constant DEMR_1 / V1_1,
+               DEMR_2 / V1_2,
+               DEMR_3 / V1_3,
+               DEMR_4 / V1_4,
+               DEMR_5 / V1_5,
+               DEMR_6 / V1_6,
+               DEMR_7 / V1_7,
+               DEMR_8 / V1_8,
+               DEMR_9 / V1_9,
+               DEMR_10 / V1_10,
+               DEMR_11 / V1_11,
+               DEMR_12 / V1_12,
+               DEMR_13 / V1_13,
+               DEMR_14 / V1_14,
+               DEMR_15 / V1_15,
+               DEMR_16 / V1_16,
+               DEMR_17 / V1_17,
+               DEMR_18 / V1_18,
+               DEMR_19 / V1_19,
+               DEMR_20 / V1_20,
+               DEMR_21 / V1_21,
+               DEMR_22 / V1_22,
+               DEMR_23 / V1_23,
+               DEMR_24 / V1_24,
+               DEMR_25 / V1_25,
+               DEHR_1 / V2_1,
+               DEHR_2 / V2_2,
+               DEHR_3 / V2_3,
+               DEHR_4 / V2_4,
+               DEHR_5 / V2_5,
+               DEHR_6 / V2_6,
+               DEHR_7 / V2_7,
+               DEHR_8 / V2_8,
+               DEHR_9 / V2_9,
+               DEHR_10 / V2_10,
+               DEHR_11 / V2_11,
+               DEHR_12 / V2_12,
+               DEHR_13 / V2_13,
+               DEHR_14 / V2_14,
+               DEHR_15 / V2_15,
+               DEHR_16 / V2_16,
+               DEHR_17 / V2_17,
+               DEHR_18 / V2_18,
+               DEHR_19 / V2_19,
+               DEHR_20 / V2_20,
+               DEHR_21 / V2_21,
+               DEHR_22 / V2_22,
+               DEHR_23 / V2_23,
+               DEHR_24 / V2_24,
+               DEHR_25 / V2_25,
+               DELRHD / T1,
+               DELRMD / T2;
+      signal RESET / RESET,
+             ACC_FILT / VALUE,
+             LONG_SPEED_KM / SPEED,
+             LONG_DECC_MOT_REAR / CONTROL ]
+  ||
+    run CURVE [
+      constant DDEMF_1 / V1_1,
+               DDEMF_2 / V1_2,
+               DDEMF_3 / V1_3,
+               DDEMF_4 / V1_4,
+               DDEMF_5 / V1_5,
+               DDEMF_6 / V1_6,
+               DDEMF_7 / V1_7,
+               DDEMF_8 / V1_8,
+               DDEMF_9 / V1_9,
+               DDEMF_10 / V1_10,
+               DDEMF_11 / V1_11,
+               DDEMF_12 / V1_12,
+               DDEMF_13 / V1_13,
+               DDEMF_14 / V1_14,
+               DDEMF_15 / V1_15,
+               DDEMF_16 / V1_16,
+               DDEMF_17 / V1_17,
+               DDEMF_18 / V1_18,
+               DDEMF_19 / V1_19,
+               DDEMF_20 / V1_20,
+               DDEMF_21 / V1_21,
+               DDEMF_22 / V1_22,
+               DDEMF_23 / V1_23,
+               DDEMF_24 / V1_24,
+               DDEMF_25 / V1_25,
+               DDEHF_1 / V2_1,
+               DDEHF_2 / V2_2,
+               DDEHF_3 / V2_3,
+               DDEHF_4 / V2_4,
+               DDEHF_5 / V2_5,
+               DDEHF_6 / V2_6,
+               DDEHF_7 / V2_7,
+               DDEHF_8 / V2_8,
+               DDEHF_9 / V2_9,
+               DDEHF_10 / V2_10,
+               DDEHF_11 / V2_11,
+               DDEHF_12 / V2_12,
+               DDEHF_13 / V2_13,
+               DDEHF_14 / V2_14,
+               DDEHF_15 / V2_15,
+               DDEHF_16 / V2_16,
+               DDEHF_17 / V2_17,
+               DDEHF_18 / V2_18,
+               DDEHF_19 / V2_19,
+               DDEHF_20 / V2_20,
+               DDEHF_21 / V2_21,
+               DDEHF_22 / V2_22,
+               DDEHF_23 / V2_23,
+               DDEHF_24 / V2_24,
+               DDEHF_25 / V2_25,
+               DDELFHD / T1,
+               DDELFMD / T2;
+      signal RESET / RESET,
+             ACC_DER / VALUE,
+             LONG_SPEED_KM / SPEED,
+             LONG_ACC_DER_MOT_FRONT / CONTROL ]
+  ||
+    run CURVE [
+      constant DDEMR_1 / V1_1,
+               DDEMR_2 / V1_2,
+               DDEMR_3 / V1_3,
+               DDEMR_4 / V1_4,
+               DDEMR_5 / V1_5,
+               DDEMR_6 / V1_6,
+               DDEMR_7 / V1_7,
+               DDEMR_8 / V1_8,
+               DDEMR_9 / V1_9,
+               DDEMR_10 / V1_10,
+               DDEMR_11 / V1_11,
+               DDEMR_12 / V1_12,
+               DDEMR_13 / V1_13,
+               DDEMR_14 / V1_14,
+               DDEMR_15 / V1_15,
+               DDEMR_16 / V1_16,
+               DDEMR_17 / V1_17,
+               DDEMR_18 / V1_18,
+               DDEMR_19 / V1_19,
+               DDEMR_20 / V1_20,
+               DDEMR_21 / V1_21,
+               DDEMR_22 / V1_22,
+               DDEMR_23 / V1_23,
+               DDEMR_24 / V1_24,
+               DDEMR_25 / V1_25,
+               DDEHR_1 / V2_1,
+               DDEHR_2 / V2_2,
+               DDEHR_3 / V2_3,
+               DDEHR_4 / V2_4,
+               DDEHR_5 / V2_5,
+               DDEHR_6 / V2_6,
+               DDEHR_7 / V2_7,
+               DDEHR_8 / V2_8,
+               DDEHR_9 / V2_9,
+               DDEHR_10 / V2_10,
+               DDEHR_11 / V2_11,
+               DDEHR_12 / V2_12,
+               DDEHR_13 / V2_13,
+               DDEHR_14 / V2_14,
+               DDEHR_15 / V2_15,
+               DDEHR_16 / V2_16,
+               DDEHR_17 / V2_17,
+               DDEHR_18 / V2_18,
+               DDEHR_19 / V2_19,
+               DDEHR_20 / V2_20,
+               DDEHR_21 / V2_21,
+               DDEHR_22 / V2_22,
+               DDEHR_23 / V2_23,
+               DDEHR_24 / V2_24,
+               DDEHR_25 / V2_25,
+               DDELRHD / T1,
+               DDELRMD / T2;
+      signal RESET / RESET,
+             ACC_DER / VALUE,
+             LONG_SPEED_KM / SPEED,
+             LONG_ACC_DER_MOT_REAR / CONTROL ]
+end signal
+
+end module
+
+module ver_acc:
+constant DELCOM_18 : integer;
+constant DELCOM_1 : integer;
+constant ACLOWH_1 : integer;
+constant ACLOWM_15 : integer;
+constant DELCOM_19 : integer;
+constant DELCOM_2 : integer;
+constant DELCOL_10 : integer;
+constant ACLOWH_2 : integer;
+constant ACLOWM_16 : integer;
+constant DELCOM_3 : integer;
+constant DELFMME : integer;
+constant DELCOL_11 : integer;
+constant ACLOWH_3 : integer;
+constant ACLOWM_17 : integer;
+constant DELCOM_4 : integer;
+constant DELCOL_12 : integer;
+constant ACLOWH_4 : integer;
+constant ACLOWM_18 : integer;
+constant DELCOM_5 : integer;
+constant DELCOL_13 : integer;
+constant ACLOWH_5 : integer;
+constant ACLOWM_19 : integer;
+constant DELCOM_6 : integer;
+constant DELCOL_14 : integer;
+constant ACLOWH_6 : integer;
+constant ACLOWM_1 : integer;
+constant DELCOM_7 : integer;
+constant DELCOL_15 : integer;
+constant ACLOWH_7 : integer;
+constant ACLOWM_2 : integer;
+constant DELCOM_8 : integer;
+constant DELCOL_16 : integer;
+constant ACLOWH_8 : integer;
+constant ACLOWM_3 : integer;
+constant DELCOM_9 : integer;
+constant DELCOL_17 : integer;
+constant ACLOWH_9 : integer;
+constant ACLOWM_4 : integer;
+constant DELCOL_18 : integer;
+constant ACLOWM_5 : integer;
+constant DELCOL_19 : integer;
+constant ACLOWM_6 : integer;
+constant ACLOWM_7 : integer;
+constant ACLOWM_8 : integer;
+constant ACLOWM_9 : integer;
+constant DELCOM_20 : integer;
+constant DELCOM_21 : integer;
+constant DELCOM_22 : integer;
+constant DELCOM_23 : integer;
+constant ACLOWM_20 : integer;
+constant DELCOM_24 : integer;
+constant ACLOWM_21 : integer;
+constant DELCOM_25 : integer;
+constant ACLOWM_22 : integer;
+constant ACLOWM_23 : integer;
+constant ACLOWM_24 : integer;
+constant ACLOWM_25 : integer;
+constant DELCOL_20 : integer;
+constant DELCOL_21 : integer;
+constant DELCOL_22 : integer;
+constant DELCOL_23 : integer;
+constant DELCOL_24 : integer;
+constant DELCOL_25 : integer;
+constant DELCOL_1 : integer;
+constant DELCOL_2 : integer;
+constant ACLOWH_10 : integer;
+constant DELCOL_3 : integer;
+constant ACLOWH_11 : integer;
+constant DELCOL_4 : integer;
+constant ACLOWH_12 : integer;
+constant DELCOL_5 : integer;
+constant ACLOWH_13 : integer;
+constant DELCOL_6 : integer;
+constant ACLOWH_14 : integer;
+constant DELCOL_7 : integer;
+constant ACLOWH_15 : integer;
+constant DELCOL_8 : integer;
+constant ACLOWH_16 : integer;
+constant DELCOL_9 : integer;
+constant ACLOWH_17 : integer;
+constant ACLOWH_18 : integer;
+constant ACLOWH_19 : integer;
+constant MA0 : integer;
+constant MA1 : integer;
+constant ACMEDM_10 : integer;
+constant ACMEDM_11 : integer;
+constant ACMEDM_12 : integer;
+constant ACMEDM_13 : integer;
+constant ACMEDM_14 : integer;
+constant ACLOWH_20 : integer;
+constant ACMEDM_15 : integer;
+constant ACLOWH_21 : integer;
+constant ACMEDM_16 : integer;
+constant ACLOWH_22 : integer;
+constant ACMEDM_17 : integer;
+constant ACLOWH_23 : integer;
+constant ACMEDM_18 : integer;
+constant ACLOWH_24 : integer;
+constant ACMEDM_19 : integer;
+constant ACLOWH_25 : integer;
+constant MB0 : integer;
+constant MB1 : integer;
+constant MB2 : integer;
+constant ACMEDM_20 : integer;
+constant ACMEDM_21 : integer;
+constant LA0 : integer;
+constant ACMEDM_22 : integer;
+constant LA1 : integer;
+constant ACMEDM_23 : integer;
+constant ACMEDM_24 : integer;
+constant ACMEDM_25 : integer;
+constant ACMEDH_10 : integer;
+constant ACMEDH_1 : integer;
+constant ACMEDH_11 : integer;
+constant ACMEDH_2 : integer;
+constant ACMEDH_12 : integer;
+constant ACMEDH_3 : integer;
+constant ACMEDH_13 : integer;
+constant ACMEDH_4 : integer;
+constant ACMEDH_14 : integer;
+constant ACMEDH_5 : integer;
+constant ACMEDH_15 : integer;
+constant ACMEDH_6 : integer;
+constant ACMEDM_1 : integer;
+constant ACMEDH_16 : integer;
+constant ACMEDH_7 : integer;
+constant ACMEDM_2 : integer;
+constant ACMEDH_17 : integer;
+constant ACMEDH_8 : integer;
+constant ACMEDM_3 : integer;
+constant ACMEDH_18 : integer;
+constant ACMEDH_9 : integer;
+constant ACMEDM_4 : integer;
+constant ACMEDH_19 : integer;
+constant ACMEDM_5 : integer;
+constant ACMEDM_6 : integer;
+constant ACMEDM_7 : integer;
+constant ACMEDM_8 : integer;
+constant ACMEDM_9 : integer;
+constant LB0 : integer;
+constant LB1 : integer;
+constant LB2 : integer;
+constant ACMEDH_20 : integer;
+constant ACMEDH_21 : integer;
+constant ACMEDH_22 : integer;
+constant ACMEDH_23 : integer;
+constant ACMEDH_24 : integer;
+constant ACMEDH_25 : integer;
+constant DELFHLO : integer;
+constant DELFMLO : integer;
+constant DELCOM_10 : integer;
+constant DELCOM_11 : integer;
+constant DELCOM_12 : integer;
+constant DELCOM_13 : integer;
+constant ACLOWM_10 : integer;
+constant DELCOM_14 : integer;
+constant ACLOWM_11 : integer;
+constant DELCOM_15 : integer;
+constant DELFHME : integer;
+constant ACLOWM_12 : integer;
+constant DELCOM_16 : integer;
+constant ACLOWM_13 : integer;
+constant DELCOM_17 : integer;
+constant ACLOWM_14 : integer;
+input RESET;
+input ACC_SENS : integer;
+input LONG_SPEED_KM : integer;
+output VER_ACC_LOW_MOT_FRONT : integer;
+output VER_ACC_LOW_MOT_REAR : integer;
+output VER_ACC_MED_MOT_FRONT : integer;
+output VER_ACC_MED_MOT_REAR : integer;
+output VER_ACC_FREQ_MED : integer;
+output VER_ACC_ERR;
+
+signal ACC : integer,
+       ACC_FREQ_LOW : integer,
+       ignored in
+    run VER_ACC_CAL [
+      signal RESET / RESET,
+             ACC_SENS / ACC_SENS,
+             ACC / ACC ]
+  ||
+    run VER_ACC_DIAG [
+      signal RESET / RESET,
+             ACC_SENS / ACC_SENS,
+             VER_ACC_ERR / VER_ACC_ERR ]
+  ||
+    run FILTER_FREQ [
+      constant LB0 / B0,
+               LB1 / B1,
+               LB2 / B2,
+               LA0 / A0,
+               LA1 / A1;
+      signal RESET / RESET,
+             ACC / VALUE,
+             ACC_FREQ_LOW / FILT_VALUE ]
+  ||
+    run FILTER_FREQ [
+      constant MB0 / B0,
+               MB1 / B1,
+               MB2 / B2,
+               MA0 / A0,
+               MA1 / A1;
+      signal RESET / RESET,
+             ACC / VALUE,
+             VER_ACC_FREQ_MED / FILT_VALUE ]
+  ||
+    run CURVE_FRONT [
+      constant ACLOWM_1 / V1_1,
+               ACLOWM_2 / V1_2,
+               ACLOWM_3 / V1_3,
+               ACLOWM_4 / V1_4,
+               ACLOWM_5 / V1_5,
+               ACLOWM_6 / V1_6,
+               ACLOWM_7 / V1_7,
+               ACLOWM_8 / V1_8,
+               ACLOWM_9 / V1_9,
+               ACLOWM_10 / V1_10,
+               ACLOWM_11 / V1_11,
+               ACLOWM_12 / V1_12,
+               ACLOWM_13 / V1_13,
+               ACLOWM_14 / V1_14,
+               ACLOWM_15 / V1_15,
+               ACLOWM_16 / V1_16,
+               ACLOWM_17 / V1_17,
+               ACLOWM_18 / V1_18,
+               ACLOWM_19 / V1_19,
+               ACLOWM_20 / V1_20,
+               ACLOWM_21 / V1_21,
+               ACLOWM_22 / V1_22,
+               ACLOWM_23 / V1_23,
+               ACLOWM_24 / V1_24,
+               ACLOWM_25 / V1_25,
+               ACLOWH_1 / V2_1,
+               ACLOWH_2 / V2_2,
+               ACLOWH_3 / V2_3,
+               ACLOWH_4 / V2_4,
+               ACLOWH_5 / V2_5,
+               ACLOWH_6 / V2_6,
+               ACLOWH_7 / V2_7,
+               ACLOWH_8 / V2_8,
+               ACLOWH_9 / V2_9,
+               ACLOWH_10 / V2_10,
+               ACLOWH_11 / V2_11,
+               ACLOWH_12 / V2_12,
+               ACLOWH_13 / V2_13,
+               ACLOWH_14 / V2_14,
+               ACLOWH_15 / V2_15,
+               ACLOWH_16 / V2_16,
+               ACLOWH_17 / V2_17,
+               ACLOWH_18 / V2_18,
+               ACLOWH_19 / V2_19,
+               ACLOWH_20 / V2_20,
+               ACLOWH_21 / V2_21,
+               ACLOWH_22 / V2_22,
+               ACLOWH_23 / V2_23,
+               ACLOWH_24 / V2_24,
+               ACLOWH_25 / V2_25,
+               DELFHLO / T1,
+               DELFMLO / T2;
+      signal RESET / RESET,
+             ACC_FREQ_LOW / VALUE,
+             LONG_SPEED_KM / SPEED,
+             VER_ACC_LOW_MOT_FRONT / CONTROL ]
+  ||
+    run CURVE_REAR [
+      constant ACLOWM_1 / V1_1,
+               ACLOWM_2 / V1_2,
+               ACLOWM_3 / V1_3,
+               ACLOWM_4 / V1_4,
+               ACLOWM_5 / V1_5,
+               ACLOWM_6 / V1_6,
+               ACLOWM_7 / V1_7,
+               ACLOWM_8 / V1_8,
+               ACLOWM_9 / V1_9,
+               ACLOWM_10 / V1_10,
+               ACLOWM_11 / V1_11,
+               ACLOWM_12 / V1_12,
+               ACLOWM_13 / V1_13,
+               ACLOWM_14 / V1_14,
+               ACLOWM_15 / V1_15,
+               ACLOWM_16 / V1_16,
+               ACLOWM_17 / V1_17,
+               ACLOWM_18 / V1_18,
+               ACLOWM_19 / V1_19,
+               ACLOWM_20 / V1_20,
+               ACLOWM_21 / V1_21,
+               ACLOWM_22 / V1_22,
+               ACLOWM_23 / V1_23,
+               ACLOWM_24 / V1_24,
+               ACLOWM_25 / V1_25,
+               ACLOWH_1 / V2_1,
+               ACLOWH_2 / V2_2,
+               ACLOWH_3 / V2_3,
+               ACLOWH_4 / V2_4,
+               ACLOWH_5 / V2_5,
+               ACLOWH_6 / V2_6,
+               ACLOWH_7 / V2_7,
+               ACLOWH_8 / V2_8,
+               ACLOWH_9 / V2_9,
+               ACLOWH_10 / V2_10,
+               ACLOWH_11 / V2_11,
+               ACLOWH_12 / V2_12,
+               ACLOWH_13 / V2_13,
+               ACLOWH_14 / V2_14,
+               ACLOWH_15 / V2_15,
+               ACLOWH_16 / V2_16,
+               ACLOWH_17 / V2_17,
+               ACLOWH_18 / V2_18,
+               ACLOWH_19 / V2_19,
+               ACLOWH_20 / V2_20,
+               ACLOWH_21 / V2_21,
+               ACLOWH_22 / V2_22,
+               ACLOWH_23 / V2_23,
+               ACLOWH_24 / V2_24,
+               ACLOWH_25 / V2_25,
+               DELCOL_1 / DELT_1,
+               DELCOL_2 / DELT_2,
+               DELCOL_3 / DELT_3,
+               DELCOL_4 / DELT_4,
+               DELCOL_5 / DELT_5,
+               DELCOL_6 / DELT_6,
+               DELCOL_7 / DELT_7,
+               DELCOL_8 / DELT_8,
+               DELCOL_9 / DELT_9,
+               DELCOL_10 / DELT_10,
+               DELCOL_11 / DELT_11,
+               DELCOL_12 / DELT_12,
+               DELCOL_13 / DELT_13,
+               DELCOL_14 / DELT_14,
+               DELCOL_15 / DELT_15,
+               DELCOL_16 / DELT_16,
+               DELCOL_17 / DELT_17,
+               DELCOL_18 / DELT_18,
+               DELCOL_19 / DELT_19,
+               DELCOL_20 / DELT_20,
+               DELCOL_21 / DELT_21,
+               DELCOL_22 / DELT_22,
+               DELCOL_23 / DELT_23,
+               DELCOL_24 / DELT_24,
+               DELCOL_25 / DELT_25,
+               DELFHLO / T1,
+               DELFMLO / T2;
+      signal RESET / RESET,
+             ACC_FREQ_LOW / VALUE,
+             LONG_SPEED_KM / SPEED,
+             VER_ACC_LOW_MOT_REAR / CONTROL ]
+  ||
+    run CURVE_FRONT [
+      constant ACMEDM_1 / V1_1,
+               ACMEDM_2 / V1_2,
+               ACMEDM_3 / V1_3,
+               ACMEDM_4 / V1_4,
+               ACMEDM_5 / V1_5,
+               ACMEDM_6 / V1_6,
+               ACMEDM_7 / V1_7,
+               ACMEDM_8 / V1_8,
+               ACMEDM_9 / V1_9,
+               ACMEDM_10 / V1_10,
+               ACMEDM_11 / V1_11,
+               ACMEDM_12 / V1_12,
+               ACMEDM_13 / V1_13,
+               ACMEDM_14 / V1_14,
+               ACMEDM_15 / V1_15,
+               ACMEDM_16 / V1_16,
+               ACMEDM_17 / V1_17,
+               ACMEDM_18 / V1_18,
+               ACMEDM_19 / V1_19,
+               ACMEDM_20 / V1_20,
+               ACMEDM_21 / V1_21,
+               ACMEDM_22 / V1_22,
+               ACMEDM_23 / V1_23,
+               ACMEDM_24 / V1_24,
+               ACMEDM_25 / V1_25,
+               ACMEDH_1 / V2_1,
+               ACMEDH_2 / V2_2,
+               ACMEDH_3 / V2_3,
+               ACMEDH_4 / V2_4,
+               ACMEDH_5 / V2_5,
+               ACMEDH_6 / V2_6,
+               ACMEDH_7 / V2_7,
+               ACMEDH_8 / V2_8,
+               ACMEDH_9 / V2_9,
+               ACMEDH_10 / V2_10,
+               ACMEDH_11 / V2_11,
+               ACMEDH_12 / V2_12,
+               ACMEDH_13 / V2_13,
+               ACMEDH_14 / V2_14,
+               ACMEDH_15 / V2_15,
+               ACMEDH_16 / V2_16,
+               ACMEDH_17 / V2_17,
+               ACMEDH_18 / V2_18,
+               ACMEDH_19 / V2_19,
+               ACMEDH_20 / V2_20,
+               ACMEDH_21 / V2_21,
+               ACMEDH_22 / V2_22,
+               ACMEDH_23 / V2_23,
+               ACMEDH_24 / V2_24,
+               ACMEDH_25 / V2_25,
+               DELFHME / T1,
+               DELFMME / T2;
+      signal RESET / RESET,
+             VER_ACC_FREQ_MED / VALUE,
+             LONG_SPEED_KM / SPEED,
+             VER_ACC_MED_MOT_FRONT / CONTROL ]
+  ||
+    run CURVE_REAR [
+      constant ACMEDM_1 / V1_1,
+               ACMEDM_2 / V1_2,
+               ACMEDM_3 / V1_3,
+               ACMEDM_4 / V1_4,
+               ACMEDM_5 / V1_5,
+               ACMEDM_6 / V1_6,
+               ACMEDM_7 / V1_7,
+               ACMEDM_8 / V1_8,
+               ACMEDM_9 / V1_9,
+               ACMEDM_10 / V1_10,
+               ACMEDM_11 / V1_11,
+               ACMEDM_12 / V1_12,
+               ACMEDM_13 / V1_13,
+               ACMEDM_14 / V1_14,
+               ACMEDM_15 / V1_15,
+               ACMEDM_16 / V1_16,
+               ACMEDM_17 / V1_17,
+               ACMEDM_18 / V1_18,
+               ACMEDM_19 / V1_19,
+               ACMEDM_20 / V1_20,
+               ACMEDM_21 / V1_21,
+               ACMEDM_22 / V1_22,
+               ACMEDM_23 / V1_23,
+               ACMEDM_24 / V1_24,
+               ACMEDM_25 / V1_25,
+               ACMEDH_1 / V2_1,
+               ACMEDH_2 / V2_2,
+               ACMEDH_3 / V2_3,
+               ACMEDH_4 / V2_4,
+               ACMEDH_5 / V2_5,
+               ACMEDH_6 / V2_6,
+               ACMEDH_7 / V2_7,
+               ACMEDH_8 / V2_8,
+               ACMEDH_9 / V2_9,
+               ACMEDH_10 / V2_10,
+               ACMEDH_11 / V2_11,
+               ACMEDH_12 / V2_12,
+               ACMEDH_13 / V2_13,
+               ACMEDH_14 / V2_14,
+               ACMEDH_15 / V2_15,
+               ACMEDH_16 / V2_16,
+               ACMEDH_17 / V2_17,
+               ACMEDH_18 / V2_18,
+               ACMEDH_19 / V2_19,
+               ACMEDH_20 / V2_20,
+               ACMEDH_21 / V2_21,
+               ACMEDH_22 / V2_22,
+               ACMEDH_23 / V2_23,
+               ACMEDH_24 / V2_24,
+               ACMEDH_25 / V2_25,
+               DELCOM_1 / DELT_1,
+               DELCOM_2 / DELT_2,
+               DELCOM_3 / DELT_3,
+               DELCOM_4 / DELT_4,
+               DELCOM_5 / DELT_5,
+               DELCOM_6 / DELT_6,
+               DELCOM_7 / DELT_7,
+               DELCOM_8 / DELT_8,
+               DELCOM_9 / DELT_9,
+               DELCOM_10 / DELT_10,
+               DELCOM_11 / DELT_11,
+               DELCOM_12 / DELT_12,
+               DELCOM_13 / DELT_13,
+               DELCOM_14 / DELT_14,
+               DELCOM_15 / DELT_15,
+               DELCOM_16 / DELT_16,
+               DELCOM_17 / DELT_17,
+               DELCOM_18 / DELT_18,
+               DELCOM_19 / DELT_19,
+               DELCOM_20 / DELT_20,
+               DELCOM_21 / DELT_21,
+               DELCOM_22 / DELT_22,
+               DELCOM_23 / DELT_23,
+               DELCOM_24 / DELT_24,
+               DELCOM_25 / DELT_25,
+               DELFHME / T1,
+               DELFMME / T2;
+      signal RESET / RESET,
+             VER_ACC_FREQ_MED / VALUE,
+             LONG_SPEED_KM / SPEED,
+             VER_ACC_MED_MOT_REAR / CONTROL ]
+end signal
+
+end module
+
+module steer_ang:
+constant ANHR_1 : integer;
+constant ANHR_2 : integer;
+constant ANHR_3 : integer;
+constant ANHR_4 : integer;
+constant ANHR_5 : integer;
+constant ANHR_6 : integer;
+constant ANHR_7 : integer;
+constant ANHR_8 : integer;
+constant ANHR_9 : integer;
+constant ANMF_1 : integer;
+constant ANMF_2 : integer;
+constant ANMF_3 : integer;
+constant ANMF_4 : integer;
+constant ANMF_5 : integer;
+constant ANMF_6 : integer;
+constant ANMF_7 : integer;
+constant ANHR_10 : integer;
+constant ANMF_8 : integer;
+constant ANHR_11 : integer;
+constant ANMF_9 : integer;
+constant ANHR_12 : integer;
+constant ANHR_13 : integer;
+constant DELFHAN : integer;
+constant ANHR_14 : integer;
+constant ANHR_15 : integer;
+constant ANMR_10 : integer;
+constant ANHR_16 : integer;
+constant ANMR_11 : integer;
+constant ANHR_17 : integer;
+constant ANMR_12 : integer;
+constant ANHR_18 : integer;
+constant ANMR_13 : integer;
+constant DELFMAN : integer;
+constant ANHR_19 : integer;
+constant ANMR_14 : integer;
+constant ANMR_15 : integer;
+constant ANMR_16 : integer;
+constant ANMR_17 : integer;
+constant ANMR_18 : integer;
+constant ANMR_19 : integer;
+constant ANHR_20 : integer;
+constant ANHR_21 : integer;
+constant ANHR_22 : integer;
+constant ANHR_23 : integer;
+constant ANHR_24 : integer;
+constant ANHR_25 : integer;
+constant ANMR_20 : integer;
+constant ANMR_21 : integer;
+constant ANMR_22 : integer;
+constant ANHF_1 : integer;
+constant ANMR_23 : integer;
+constant ANHF_2 : integer;
+constant ANMR_24 : integer;
+constant ANHF_3 : integer;
+constant ANMR_25 : integer;
+constant ANHF_4 : integer;
+constant ANHF_5 : integer;
+constant ANHF_6 : integer;
+constant ANHF_7 : integer;
+constant ANHF_8 : integer;
+constant ANHF_9 : integer;
+constant DELRHAN : integer;
+constant DELRMAN : integer;
+constant ANHF_10 : integer;
+constant ANHF_11 : integer;
+constant ANHF_12 : integer;
+constant ANHF_13 : integer;
+constant ANHF_14 : integer;
+constant ANHF_15 : integer;
+constant ANMF_10 : integer;
+constant ANHF_16 : integer;
+constant ANMF_11 : integer;
+constant ANHF_17 : integer;
+constant ANMF_12 : integer;
+constant ANHF_18 : integer;
+constant ANMF_13 : integer;
+constant ANHF_19 : integer;
+constant ANMF_14 : integer;
+constant ANMF_15 : integer;
+constant ANMF_16 : integer;
+constant ANMF_17 : integer;
+constant ANMF_18 : integer;
+constant ANMF_19 : integer;
+constant ANMR_1 : integer;
+constant ANMR_2 : integer;
+constant ANMR_3 : integer;
+constant ANMR_4 : integer;
+constant ANMR_5 : integer;
+constant ANMR_6 : integer;
+constant ANMR_7 : integer;
+constant ANMR_8 : integer;
+constant ANMR_9 : integer;
+constant ANHF_20 : integer;
+constant ANHF_21 : integer;
+constant ANHF_22 : integer;
+constant ANHF_23 : integer;
+constant ANHF_24 : integer;
+constant ANHF_25 : integer;
+constant ANMF_20 : integer;
+constant ANMF_21 : integer;
+constant ANMF_22 : integer;
+constant ANMF_23 : integer;
+constant ANMF_24 : integer;
+constant ANMF_25 : integer;
+input RESET;
+input CLOCK_24;
+input STEER1_SENS : boolean;
+input STEER2_SENS : boolean;
+input STEER_SENS : boolean;
+input LONG_SPEED_FILT : integer;
+input LONG_SPEED_KM : integer;
+output STEER_ANG_MOT_FRONT : integer;
+output STEER_ANG_MOT_REAR : integer;
+output STEER_ANG_DAMAGE : integer;
+output ANG_ERR;
+
+signal CORR_ERR,
+       ANG : integer,
+       ANG_CORR : integer,
+       CAL_ERR,
+       DIAG_ERR,
+       ignored in
+    run steer_ang_cal [
+      signal RESET / RESET,
+             CLOCK_24 / CLOCK_24,
+             STEER1_SENS / STEER1_SENS,
+             STEER2_SENS / STEER2_SENS,
+             STEER_SENS / STEER_SENS,
+             LONG_SPEED_FILT / LONG_SPEED_FILT,
+             ANG / ANG,
+             CAL_ERR / CAL_ERR ]
+  ||
+    run STEER_ANG_CORR [
+      signal RESET / RESET,
+             LONG_SPEED_FILT / LONG_SPEED_FILT,
+             ANG / ANG,
+             ANG_CORR / ANG_CORR,
+             CORR_ERR / CORR_ERR ]
+  ||
+    run CURVE [
+      constant ANMF_1 / V1_1,
+               ANMF_2 / V1_2,
+               ANMF_3 / V1_3,
+               ANMF_4 / V1_4,
+               ANMF_5 / V1_5,
+               ANMF_6 / V1_6,
+               ANMF_7 / V1_7,
+               ANMF_8 / V1_8,
+               ANMF_9 / V1_9,
+               ANMF_10 / V1_10,
+               ANMF_11 / V1_11,
+               ANMF_12 / V1_12,
+               ANMF_13 / V1_13,
+               ANMF_14 / V1_14,
+               ANMF_15 / V1_15,
+               ANMF_16 / V1_16,
+               ANMF_17 / V1_17,
+               ANMF_18 / V1_18,
+               ANMF_19 / V1_19,
+               ANMF_20 / V1_20,
+               ANMF_21 / V1_21,
+               ANMF_22 / V1_22,
+               ANMF_23 / V1_23,
+               ANMF_24 / V1_24,
+               ANMF_25 / V1_25,
+               ANHF_1 / V2_1,
+               ANHF_2 / V2_2,
+               ANHF_3 / V2_3,
+               ANHF_4 / V2_4,
+               ANHF_5 / V2_5,
+               ANHF_6 / V2_6,
+               ANHF_7 / V2_7,
+               ANHF_8 / V2_8,
+               ANHF_9 / V2_9,
+               ANHF_10 / V2_10,
+               ANHF_11 / V2_11,
+               ANHF_12 / V2_12,
+               ANHF_13 / V2_13,
+               ANHF_14 / V2_14,
+               ANHF_15 / V2_15,
+               ANHF_16 / V2_16,
+               ANHF_17 / V2_17,
+               ANHF_18 / V2_18,
+               ANHF_19 / V2_19,
+               ANHF_20 / V2_20,
+               ANHF_21 / V2_21,
+               ANHF_22 / V2_22,
+               ANHF_23 / V2_23,
+               ANHF_24 / V2_24,
+               ANHF_25 / V2_25,
+               DELFHAN / T1,
+               DELFMAN / T2;
+      signal RESET / RESET,
+             ANG_CORR / VALUE,
+             LONG_SPEED_KM / SPEED,
+             STEER_ANG_MOT_FRONT / CONTROL ]
+  ||
+    run CURVE [
+      constant ANMR_1 / V1_1,
+               ANMR_2 / V1_2,
+               ANMR_3 / V1_3,
+               ANMR_4 / V1_4,
+               ANMR_5 / V1_5,
+               ANMR_6 / V1_6,
+               ANMR_7 / V1_7,
+               ANMR_8 / V1_8,
+               ANMR_9 / V1_9,
+               ANMR_10 / V1_10,
+               ANMR_11 / V1_11,
+               ANMR_12 / V1_12,
+               ANMR_13 / V1_13,
+               ANMR_14 / V1_14,
+               ANMR_15 / V1_15,
+               ANMR_16 / V1_16,
+               ANMR_17 / V1_17,
+               ANMR_18 / V1_18,
+               ANMR_19 / V1_19,
+               ANMR_20 / V1_20,
+               ANMR_21 / V1_21,
+               ANMR_22 / V1_22,
+               ANMR_23 / V1_23,
+               ANMR_24 / V1_24,
+               ANMR_25 / V1_25,
+               ANHR_1 / V2_1,
+               ANHR_2 / V2_2,
+               ANHR_3 / V2_3,
+               ANHR_4 / V2_4,
+               ANHR_5 / V2_5,
+               ANHR_6 / V2_6,
+               ANHR_7 / V2_7,
+               ANHR_8 / V2_8,
+               ANHR_9 / V2_9,
+               ANHR_10 / V2_10,
+               ANHR_11 / V2_11,
+               ANHR_12 / V2_12,
+               ANHR_13 / V2_13,
+               ANHR_14 / V2_14,
+               ANHR_15 / V2_15,
+               ANHR_16 / V2_16,
+               ANHR_17 / V2_17,
+               ANHR_18 / V2_18,
+               ANHR_19 / V2_19,
+               ANHR_20 / V2_20,
+               ANHR_21 / V2_21,
+               ANHR_22 / V2_22,
+               ANHR_23 / V2_23,
+               ANHR_24 / V2_24,
+               ANHR_25 / V2_25,
+               DELRHAN / T1,
+               DELRMAN / T2;
+      signal RESET / RESET,
+             ANG_CORR / VALUE,
+             LONG_SPEED_KM / SPEED,
+             STEER_ANG_MOT_REAR / CONTROL ]
+  ||
+    run STEER_ANG_DIAG [
+      signal RESET / RESET,
+             CLOCK_24 / CLOCK_24,
+             STEER1_SENS / STEER1_SENS,
+             STEER2_SENS / STEER2_SENS,
+             LONG_SPEED_FILT / LONG_SPEED_FILT,
+             DIAG_ERR / DIAG_ERR,
+             STEER_ANG_DAMAGE / STEER_ANG_DAMAGE ]
+  ||
+    run ARB_3 [
+      signal CAL_ERR / ERR1,
+             CORR_ERR / ERR2,
+             DIAG_ERR / ERR3,
+             ANG_ERR / ERR ]
+end signal
+
+end module
+
+module steer_ang_cal:
+input RESET;
+input CLOCK_24;
+input STEER1_SENS : boolean;
+input STEER2_SENS : boolean;
+input STEER_SENS : boolean;
+input LONG_SPEED_FILT : integer;
+output ANG : integer;
+output CAL_ERR;
+
+signal INIT,
+       ignored in
+    run STEER_ANG_CAL_INIT [
+      signal RESET / RESET,
+             CLOCK_24 / CLOCK_24,
+             STEER1_SENS / STEER1_SENS,
+             STEER2_SENS / STEER2_SENS,
+             STEER_SENS / STEER_SENS,
+             LONG_SPEED_FILT / LONG_SPEED_FILT,
+             INIT / INIT ]
+  ||
+    run STEER_ANG_CAL_VAL [
+      signal RESET / RESET,
+             CLOCK_24 / CLOCK_24,
+             INIT / INIT,
+             STEER1_SENS / STEER1_SENS,
+             STEER2_SENS / STEER2_SENS,
+             STEER_SENS / STEER_SENS,
+             ANG / ANG,
+             CAL_ERR / CAL_ERR ]
+end signal
+
+end module
+
+module steer_speed:
+constant VAHR_2 : integer;
+constant VAHF_13 : integer;
+constant VAHR_3 : integer;
+constant VAHF_14 : integer;
+constant VAHR_4 : integer;
+constant VAHF_15 : integer;
+constant VAMF_10 : integer;
+constant VAHR_5 : integer;
+constant VAHF_16 : integer;
+constant VAMF_11 : integer;
+constant VAHR_6 : integer;
+constant VAHF_17 : integer;
+constant VAMF_12 : integer;
+constant VAHR_7 : integer;
+constant VAHF_18 : integer;
+constant VAMF_13 : integer;
+constant VAHR_8 : integer;
+constant VAHF_19 : integer;
+constant VAMF_14 : integer;
+constant VAHR_9 : integer;
+constant VAMF_15 : integer;
+constant VAMF_16 : integer;
+constant VAMF_17 : integer;
+constant VAMF_18 : integer;
+constant VAMF_19 : integer;
+constant VAMF_1 : integer;
+constant VAMF_2 : integer;
+constant VAMF_3 : integer;
+constant VAMF_4 : integer;
+constant VAMF_5 : integer;
+constant VAMF_6 : integer;
+constant VAHF_20 : integer;
+constant VAMF_7 : integer;
+constant VAHF_21 : integer;
+constant VAMF_8 : integer;
+constant VAHF_22 : integer;
+constant VAMF_9 : integer;
+constant VAHF_23 : integer;
+constant VAHF_24 : integer;
+constant VAHF_25 : integer;
+constant VAMF_20 : integer;
+constant VAMF_21 : integer;
+constant VAMF_22 : integer;
+constant VAMF_23 : integer;
+constant VAMF_24 : integer;
+constant VAMF_25 : integer;
+constant Kv : integer;
+constant VAHF_1 : integer;
+constant VAHF_2 : integer;
+constant VAHF_3 : integer;
+constant VAHF_4 : integer;
+constant VAHF_5 : integer;
+constant DELFHVA : integer;
+constant VAHF_6 : integer;
+constant VAHF_7 : integer;
+constant VAHF_8 : integer;
+constant VAHF_9 : integer;
+constant DELFMVA : integer;
+constant VAHR_10 : integer;
+constant VAHR_11 : integer;
+constant VAHR_12 : integer;
+constant VAHR_13 : integer;
+constant VAHR_14 : integer;
+constant VAHR_15 : integer;
+constant VAMR_10 : integer;
+constant VAHR_16 : integer;
+constant VAMR_11 : integer;
+constant VAHR_17 : integer;
+constant VAMR_12 : integer;
+constant VAHR_18 : integer;
+constant VAMR_13 : integer;
+constant VAHR_19 : integer;
+constant VAMR_14 : integer;
+constant VAMR_15 : integer;
+constant VAMR_16 : integer;
+constant VAMR_17 : integer;
+constant VAMR_18 : integer;
+constant VAMR_19 : integer;
+constant VAHR_20 : integer;
+constant VAHR_21 : integer;
+constant VAHR_22 : integer;
+constant VAHR_23 : integer;
+constant VAHR_24 : integer;
+constant VAHR_25 : integer;
+constant VAMR_20 : integer;
+constant VAMR_21 : integer;
+constant VAMR_22 : integer;
+constant VAMR_23 : integer;
+constant VAMR_24 : integer;
+constant VAMR_25 : integer;
+constant VAMR_1 : integer;
+constant VAMR_2 : integer;
+constant VAMR_3 : integer;
+constant VAMR_4 : integer;
+constant VAMR_5 : integer;
+constant VAMR_6 : integer;
+constant VAMR_7 : integer;
+constant VAMR_8 : integer;
+constant VAMR_9 : integer;
+constant DELRHVA : integer;
+constant DELRMVA : integer;
+constant VAHF_10 : integer;
+constant VAHF_11 : integer;
+constant VAHR_1 : integer;
+constant VAHF_12 : integer;
+input RESET;
+input CLOCK_16;
+input STEER1_SENS : boolean;
+input STEER2_SENS : boolean;
+input LONG_SPEED_KM : integer;
+output STEER_NO_SOFT;
+output STEER_SPEED_ERR;
+output STEER_SPEED_MOT_FRONT : integer;
+output STEER_SPEED_MOT_REAR : integer;
+
+signal SPEED : integer,
+       SPEED_FILT : integer,
+       ignored in
+    run STEER_SPEED_CAL [
+      signal RESET / RESET,
+             CLOCK_16 / CLOCK_16,
+             STEER1_SENS / STEER1_SENS,
+             STEER2_SENS / STEER2_SENS,
+             SPEED / SPEED ]
+  ||
+    run FILTER [
+      constant Kv / K;
+      signal RESET / RESET,
+             SPEED / VALUE,
+             SPEED_FILT / FILT_VALUE ]
+  ||
+    run STEER_SPEED_DIAG [
+      signal RESET / RESET,
+             SPEED / SPEED,
+             STEER_NO_SOFT / STEER_NO_SOFT,
+             STEER_SPEED_ERR / STEER_SPEED_ERR ]
+  ||
+    run CURVE [
+      constant VAMF_1 / V1_1,
+               VAMF_2 / V1_2,
+               VAMF_3 / V1_3,
+               VAMF_4 / V1_4,
+               VAMF_5 / V1_5,
+               VAMF_6 / V1_6,
+               VAMF_7 / V1_7,
+               VAMF_8 / V1_8,
+               VAMF_9 / V1_9,
+               VAMF_10 / V1_10,
+               VAMF_11 / V1_11,
+               VAMF_12 / V1_12,
+               VAMF_13 / V1_13,
+               VAMF_14 / V1_14,
+               VAMF_15 / V1_15,
+               VAMF_16 / V1_16,
+               VAMF_17 / V1_17,
+               VAMF_18 / V1_18,
+               VAMF_19 / V1_19,
+               VAMF_20 / V1_20,
+               VAMF_21 / V1_21,
+               VAMF_22 / V1_22,
+               VAMF_23 / V1_23,
+               VAMF_24 / V1_24,
+               VAMF_25 / V1_25,
+               VAHF_1 / V2_1,
+               VAHF_2 / V2_2,
+               VAHF_3 / V2_3,
+               VAHF_4 / V2_4,
+               VAHF_5 / V2_5,
+               VAHF_6 / V2_6,
+               VAHF_7 / V2_7,
+               VAHF_8 / V2_8,
+               VAHF_9 / V2_9,
+               VAHF_10 / V2_10,
+               VAHF_11 / V2_11,
+               VAHF_12 / V2_12,
+               VAHF_13 / V2_13,
+               VAHF_14 / V2_14,
+               VAHF_15 / V2_15,
+               VAHF_16 / V2_16,
+               VAHF_17 / V2_17,
+               VAHF_18 / V2_18,
+               VAHF_19 / V2_19,
+               VAHF_20 / V2_20,
+               VAHF_21 / V2_21,
+               VAHF_22 / V2_22,
+               VAHF_23 / V2_23,
+               VAHF_24 / V2_24,
+               VAHF_25 / V2_25,
+               DELFHVA / T1,
+               DELFMVA / T2;
+      signal RESET / RESET,
+             SPEED_FILT / VALUE,
+             LONG_SPEED_KM / SPEED,
+             STEER_SPEED_MOT_FRONT / CONTROL ]
+  ||
+    run CURVE [
+      constant VAMR_1 / V1_1,
+               VAMR_2 / V1_2,
+               VAMR_3 / V1_3,
+               VAMR_4 / V1_4,
+               VAMR_5 / V1_5,
+               VAMR_6 / V1_6,
+               VAMR_7 / V1_7,
+               VAMR_8 / V1_8,
+               VAMR_9 / V1_9,
+               VAMR_10 / V1_10,
+               VAMR_11 / V1_11,
+               VAMR_12 / V1_12,
+               VAMR_13 / V1_13,
+               VAMR_14 / V1_14,
+               VAMR_15 / V1_15,
+               VAMR_16 / V1_16,
+               VAMR_17 / V1_17,
+               VAMR_18 / V1_18,
+               VAMR_19 / V1_19,
+               VAMR_20 / V1_20,
+               VAMR_21 / V1_21,
+               VAMR_22 / V1_22,
+               VAMR_23 / V1_23,
+               VAMR_24 / V1_24,
+               VAMR_25 / V1_25,
+               VAHR_1 / V2_1,
+               VAHR_2 / V2_2,
+               VAHR_3 / V2_3,
+               VAHR_4 / V2_4,
+               VAHR_5 / V2_5,
+               VAHR_6 / V2_6,
+               VAHR_7 / V2_7,
+               VAHR_8 / V2_8,
+               VAHR_9 / V2_9,
+               VAHR_10 / V2_10,
+               VAHR_11 / V2_11,
+               VAHR_12 / V2_12,
+               VAHR_13 / V2_13,
+               VAHR_14 / V2_14,
+               VAHR_15 / V2_15,
+               VAHR_16 / V2_16,
+               VAHR_17 / V2_17,
+               VAHR_18 / V2_18,
+               VAHR_19 / V2_19,
+               VAHR_20 / V2_20,
+               VAHR_21 / V2_21,
+               VAHR_22 / V2_22,
+               VAHR_23 / V2_23,
+               VAHR_24 / V2_24,
+               VAHR_25 / V2_25,
+               DELRHVA / T1,
+               DELRMVA / T2;
+      signal RESET / RESET,
+             SPEED_FILT / VALUE,
+             LONG_SPEED_KM / SPEED,
+             STEER_SPEED_MOT_REAR / CONTROL ]
+end signal
+
+end module
+
+module mot_ctrl:
+input RESET;
+input CLOCK_500;
+input LONG_SPEED_MOT : integer;
+input LONG_ACC_MOT_FRONT : integer;
+input LONG_DECC_MOT_FRONT : integer;
+input LONG_ACC_DER_MOT_FRONT : integer;
+input VER_ACC_LOW_MOT_FRONT : integer;
+input VER_ACC_MED_MOT_FRONT : integer;
+input STEER_ANG_MOT_FRONT : integer;
+input STEER_SPEED_MOT_FRONT : integer;
+input LONG_ACC_MOT_REAR : integer;
+input LONG_DECC_MOT_REAR : integer;
+input LONG_ACC_DER_MOT_REAR : integer;
+input VER_ACC_LOW_MOT_REAR : integer;
+input VER_ACC_MED_MOT_REAR : integer;
+input STEER_ANG_MOT_REAR : integer;
+input STEER_SPEED_MOT_REAR : integer;
+input LONG_SPEED_ERR;
+input VER_ACC_ERR;
+input STEER_ANG_ERR;
+input STEER_SPEED_ERR;
+input BAT_ERR;
+input BAT_MOT_HARD;
+input BAT_MOT_RES;
+input STEER_ANG_DAMAGE : integer;
+input STEER_SPEED_NO_SOFT;
+input VBAT : integer;
+input MOT_POS_A1 : boolean;
+input MOT_POS_B1 : boolean;
+input MOT_POS_A2 : boolean;
+input MOT_POS_B2 : boolean;
+input MOT_POS_A3 : boolean;
+input MOT_POS_B3 : boolean;
+input MOT_POS_A4 : boolean;
+input MOT_POS_B4 : boolean;
+output MOT_CHANNEL_P1 : boolean;
+output MOT_CHANNEL_N1 : boolean;
+output MOT_CHANNEL_P2 : boolean;
+output MOT_CHANNEL_N2 : boolean;
+output MOT_CHANNEL_P3 : boolean;
+output MOT_CHANNEL_N3 : boolean;
+output MOT_CHANNEL_P4 : boolean;
+output MOT_CHANNEL_N4 : boolean;
+
+signal MOT_DAMAGE : integer,
+       MOT_REAR : integer,
+       MOT_FRONT : integer,
+       ignored in
+    run ARBITER [
+      signal RESET / RESET,
+             LONG_SPEED_MOT / CTRL_1,
+             LONG_ACC_MOT_FRONT / CTRL_2,
+             LONG_DECC_MOT_FRONT / CTRL_3,
+             LONG_ACC_DER_MOT_FRONT / CTRL_4,
+             VER_ACC_LOW_MOT_FRONT / CTRL_5,
+             VER_ACC_MED_MOT_FRONT / CTRL_6,
+             STEER_ANG_MOT_FRONT / CTRL_7,
+             STEER_SPEED_MOT_FRONT / CTRL_8,
+             MOT_FRONT / CTRL ]
+  ||
+    run ARBITER [
+      signal RESET / RESET,
+             LONG_SPEED_MOT / CTRL_1,
+             LONG_ACC_MOT_REAR / CTRL_2,
+             LONG_DECC_MOT_REAR / CTRL_3,
+             LONG_ACC_DER_MOT_REAR / CTRL_4,
+             VER_ACC_LOW_MOT_REAR / CTRL_5,
+             VER_ACC_MED_MOT_REAR / CTRL_6,
+             STEER_ANG_MOT_REAR / CTRL_7,
+             STEER_SPEED_MOT_REAR / CTRL_8,
+             MOT_REAR / CTRL ]
+  ||
+    run MOT_CTRL_DAMAGE [
+      signal RESET / RESET,
+             LONG_SPEED_ERR / LONG_SPEED_ERR,
+             VER_ACC_ERR / VER_ACC_ERR,
+             STEER_ANG_ERR / STEER_ANG_ERR,
+             STEER_SPEED_ERR / STEER_SPEED_ERR,
+             BAT_ERR / BAT_ERR,
+             BAT_MOT_HARD / BAT_MOT_HARD,
+             BAT_MOT_RES / BAT_MOT_RES,
+             STEER_ANG_DAMAGE / STEER_ANG_DAMAGE,
+             STEER_SPEED_NO_SOFT / STEER_SPEED_NO_SOFT,
+             MOT_DAMAGE / MOT_DAMAGE ]
+  ||
+    run DRIVER [
+      signal RESET / RESET,
+             CLOCK_500 / CLOCK_500,
+             MOT_FRONT / COMMAND,
+             MOT_DAMAGE / DAMAGE,
+             MOT_POS_A1 / POS_A,
+             MOT_POS_B1 / POS_B,
+             VBAT / VBAT,
+             MOT_CHANNEL_P1 / CHANNEL_P,
+             MOT_CHANNEL_N1 / CHANNEL_N ]
+  ||
+    run DRIVER [
+      signal RESET / RESET,
+             CLOCK_500 / CLOCK_500,
+             MOT_FRONT / COMMAND,
+             MOT_DAMAGE / DAMAGE,
+             MOT_POS_A2 / POS_A,
+             MOT_POS_B2 / POS_B,
+             VBAT / VBAT,
+             MOT_CHANNEL_P2 / CHANNEL_P,
+             MOT_CHANNEL_N2 / CHANNEL_N ]
+  ||
+    run DRIVER [
+      signal RESET / RESET,
+             CLOCK_500 / CLOCK_500,
+             MOT_REAR / COMMAND,
+             MOT_DAMAGE / DAMAGE,
+             MOT_POS_A3 / POS_A,
+             MOT_POS_B3 / POS_B,
+             VBAT / VBAT,
+             MOT_CHANNEL_P3 / CHANNEL_P,
+             MOT_CHANNEL_N3 / CHANNEL_N ]
+  ||
+    run DRIVER [
+      signal RESET / RESET,
+             CLOCK_500 / CLOCK_500,
+             MOT_REAR / COMMAND,
+             MOT_DAMAGE / DAMAGE,
+             MOT_POS_A4 / POS_A,
+             MOT_POS_B4 / POS_B,
+             VBAT / VBAT,
+             MOT_CHANNEL_P4 / CHANNEL_P,
+             MOT_CHANNEL_N4 / CHANNEL_N ]
+end signal
+
+end module
+
+module MOT_CTRL_DAMAGE:
+constant SOFT : integer;
+constant MED : integer;
+constant HARD : integer;
+input RESET;
+input LONG_SPEED_ERR;
+input VER_ACC_ERR;
+input STEER_ANG_ERR;
+input STEER_SPEED_ERR;
+input BAT_ERR;
+input BAT_MOT_HARD;
+input BAT_MOT_RES;
+input STEER_ANG_DAMAGE : integer;
+input STEER_SPEED_NO_SOFT;
+output MOT_DAMAGE : integer;
+
+var LONG_SPEED_ERR_VALUE : integer,
+    VER_ACC_ERR_VALUE : integer,
+    STEER_ANG_ERR_VALUE : integer,
+    STEER_SPEED_ERR_VALUE : integer,
+    BAT_ERR_VALUE : integer,
+    BAT_MOT_HARD_VALUE : integer,
+    STEER_ANG_DAMAGE_VALUE : integer,
+    MOT_DAMAGE_VALUE : integer in
+  loop
+    LONG_SPEED_ERR_VALUE := SOFT;
+    VER_ACC_ERR_VALUE := SOFT;
+    STEER_ANG_ERR_VALUE := SOFT;
+    STEER_SPEED_ERR_VALUE := SOFT;
+    BAT_ERR_VALUE := SOFT;
+    BAT_MOT_HARD_VALUE := SOFT;
+    STEER_ANG_DAMAGE_VALUE := SOFT;
+    MOT_DAMAGE_VALUE := SOFT;
+    do
+      loop
+        emit MOT_DAMAGE(MOT_DAMAGE_VALUE);
+        await 
+          case LONG_SPEED_ERR do
+            LONG_SPEED_ERR_VALUE := HARD
+          case VER_ACC_ERR do
+            VER_ACC_ERR_VALUE := HARD
+          case STEER_ANG_ERR do
+            STEER_ANG_ERR_VALUE := HARD
+          case STEER_SPEED_ERR do
+            STEER_SPEED_ERR_VALUE := HARD
+          case BAT_ERR do
+            BAT_ERR_VALUE := HARD
+          case BAT_MOT_HARD do
+            BAT_MOT_HARD_VALUE := HARD
+          case BAT_MOT_RES do
+            BAT_ERR_VALUE := SOFT;
+            BAT_MOT_HARD_VALUE := SOFT
+          case STEER_SPEED_NO_SOFT do
+            if STEER_SPEED_ERR_VALUE <> HARD then
+              STEER_SPEED_ERR_VALUE := MED
+            end if
+          case STEER_ANG_DAMAGE do
+            STEER_ANG_DAMAGE_VALUE := ?STEER_ANG_DAMAGE
+        end await;
+        if LONG_SPEED_ERR_VALUE = HARD or VER_ACC_ERR_VALUE = HARD or STEER_ANG_ERR_VALUE = HARD or STEER_SPEED_ERR_VALUE = HARD or BAT_ERR_VALUE = HARD or STEER_ANG_DAMAGE_VALUE = HARD then
+          MOT_DAMAGE_VALUE := HARD
+        else
+          if STEER_SPEED_ERR_VALUE = MED or STEER_ANG_DAMAGE_VALUE = MED then
+            MOT_DAMAGE_VALUE := MED
+          else
+            MOT_DAMAGE_VALUE := SOFT
+          end if
+        end if
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module SPEED_SENS:
+constant TIME_3_Km : integer;
+constant K_SENS : integer;
+input RESET;
+input CLOCK_32;
+input VELINST : integer;
+output SPEED_SENS;
+
+var VELINST_VAL : integer,
+    TIME : integer,
+    TRS : integer in
+  loop
+    TIME := TIME_3_Km;
+    TRS := TIME_3_Km;
+    VELINST_VAL := 0;
+    do
+      loop
+        await [CLOCK_32 or VELINST];
+        present VELINST then
+          VELINST_VAL := ?VELINST;
+          if VELINST_VAL = 0 then
+            TRS := TIME_3_Km;
+            TIME := TIME_3_Km
+          else
+            TRS := K_SENS / VELINST_VAL
+          end if
+        end present;
+        present CLOCK_32 then
+          TIME := TIME - 1;
+          if TIME <= 0 then
+            emit SPEED_SENS;
+            TIME := TRS
+          end if
+        end present
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module STEER_ANG_CAL_INIT:
+constant MAX_INIT_TIME : integer;
+constant INIT_SPEED1 : integer;
+constant INIT_SPEED2 : integer;
+input RESET;
+input CLOCK_24;
+input STEER1_SENS : boolean;
+input STEER2_SENS : boolean;
+input STEER_SENS : boolean;
+input LONG_SPEED_FILT : integer;
+output INIT;
+
+var STEER1_VALUE : boolean,
+    STEER2_VALUE : boolean,
+    STEER_VALUE : boolean,
+    SPEED_VALUE : integer,
+    INIT_TIME : integer in
+  loop
+    STEER1_VALUE := false;
+    STEER2_VALUE := false;
+    STEER_VALUE := false;
+    SPEED_VALUE := 0;
+    INIT_TIME := 0;
+    do
+      loop
+        await [STEER1_SENS or STEER2_SENS or STEER_SENS or LONG_SPEED_FILT or CLOCK_24];
+        present STEER1_SENS then
+          STEER1_VALUE := ?STEER1_SENS
+        end present;
+        present STEER2_SENS then
+          STEER2_VALUE := ?STEER2_SENS
+        end present;
+        present STEER_SENS then
+          STEER_VALUE := ?STEER_SENS
+        end present;
+        present LONG_SPEED_FILT then
+          SPEED_VALUE := ?LONG_SPEED_FILT
+        end present;
+        present CLOCK_24 then
+          INIT_TIME := INIT_TIME + 1
+        end present;
+        if STEER1_VALUE = false and STEER2_VALUE = false and STEER_VALUE = false then
+          if INIT_TIME < MAX_INIT_TIME and SPEED_VALUE > INIT_SPEED1 or INIT_TIME >= MAX_INIT_TIME and SPEED_VALUE > INIT_SPEED2 then
+            emit INIT;
+            halt
+          end if
+        end if
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module STEER_ANG_CAL_VAL:
+constant MIN_ANG_VALUE : integer;
+constant MAX_ANG_VALUE : integer;
+constant ANG_INCR_INIT : integer;
+constant ANG_INCR : integer;
+input RESET;
+input CLOCK_24;
+input INIT;
+input STEER1_SENS : boolean;
+input STEER2_SENS : boolean;
+input STEER_SENS : boolean;
+output ANG : integer;
+output CAL_ERR;
+
+var STEER1_VALUE : boolean,
+    STEER2_VALUE : boolean,
+    STEER1_VALUE_OLD : boolean,
+    STEER2_VALUE_OLD : boolean,
+    STEER_VALUE : boolean,
+    INCR : integer,
+    ANG_VALUE : integer in
+  loop
+    STEER1_VALUE := false;
+    STEER2_VALUE := false;
+    STEER1_VALUE_OLD := false;
+    STEER2_VALUE_OLD := false;
+    STEER_VALUE := false;
+    INCR := ANG_INCR_INIT;
+    ANG_VALUE := 0;
+    await INIT;
+    do
+      emit ANG(ANG_VALUE);
+      loop
+        await [CLOCK_24 or STEER1_SENS or STEER2_SENS or STEER_SENS];
+        present STEER1_SENS then
+          STEER1_VALUE := ?STEER1_SENS;
+          if STEER1_VALUE_OLD = false and STEER1_VALUE = true then
+            if STEER1_VALUE_OLD = STEER2_VALUE then
+              ANG_VALUE := ANG_VALUE + INCR
+            else
+              ANG_VALUE := ANG_VALUE - INCR
+            end if
+          end if;
+          STEER1_VALUE_OLD := STEER1_VALUE
+        end present;
+        present STEER2_SENS then
+          STEER2_VALUE := ?STEER2_SENS;
+          if STEER2_VALUE_OLD = false and STEER2_VALUE = true then
+            if STEER1_VALUE = STEER2_VALUE_OLD then
+              ANG_VALUE := ANG_VALUE - INCR
+            else
+              ANG_VALUE := ANG_VALUE + INCR
+            end if
+          end if;
+          STEER2_VALUE_OLD := STEER2_VALUE
+        end present;
+        present STEER_SENS then
+          STEER_VALUE := ?STEER_SENS
+        end present;
+        if not STEER_VALUE and (ANG_VALUE < MIN_ANG_VALUE or ANG_VALUE > MAX_ANG_VALUE) then
+          emit CAL_ERR;
+          halt
+        end if;
+        emit ANG(ANG_VALUE);
+        INCR := ANG_INCR
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module STEER_ANG_CORR:
+constant Kz : integer;
+constant T_Kz : integer;
+constant MAX_SPEED_VALUE : integer;
+constant MIN_CORR_Kz : integer;
+constant T_Kt : integer;
+constant MAX_CORR : integer;
+constant Ky : integer;
+constant T_Ky : integer;
+constant MIN_CORR_Ky : integer;
+function POLIS_RSH(integer, integer) : integer;
+input RESET;
+input LONG_SPEED_FILT : integer;
+input ANG : integer;
+output ANG_CORR : integer;
+output CORR_ERR;
+
+var ANG_CORR_VALUE : integer,
+    SPEED_VALUE_OLD : integer,
+    SPEED_VALUE : integer,
+    ANG_VALUE : integer,
+    ZVOL : integer,
+    ZVOL_Kt : integer,
+    ZVOLM : integer,
+    K : integer,
+    T_K : integer,
+    MIN_CORR_K : integer,
+    INIT : boolean,
+    TIME : integer,
+    TIME_Kt : integer in
+  loop
+    ANG_CORR_VALUE := 0;
+    SPEED_VALUE_OLD := 0;
+    SPEED_VALUE := 0;
+    ANG_VALUE := 0;
+    ZVOL := 0;
+    ZVOL_Kt := 0;
+    ZVOLM := 0;
+    K := Kz;
+    T_K := T_Kz;
+    MIN_CORR_K := MIN_CORR_Kz;
+    do
+      loop
+        emit ANG_CORR(ANG_CORR_VALUE);
+        await [LONG_SPEED_FILT or ANG];
+        present LONG_SPEED_FILT then
+          SPEED_VALUE_OLD := SPEED_VALUE;
+          SPEED_VALUE := ?LONG_SPEED_FILT;
+          if SPEED_VALUE_OLD < MAX_SPEED_VALUE and SPEED_VALUE > MAX_SPEED_VALUE then
+            INIT := true;
+            TIME := 0;
+            TIME_Kt := 0
+          end if
+        end present;
+        present ANG then
+          ANG_VALUE := ?ANG;
+          if SPEED_VALUE > MAX_SPEED_VALUE then
+            TIME_Kt := TIME_Kt + 1;
+            if TIME_Kt = T_Kt then
+              ZVOL := ZVOL_Kt + K * (ANG_VALUE - POLIS_RSH(ZVOL_Kt, 8));
+              if ZVOL > MAX_CORR then
+                emit CORR_ERR;
+                halt
+              end if;
+              ZVOL_Kt := ZVOL;
+              TIME_Kt := 0
+            end if;
+            TIME := TIME + 1;
+            if TIME = T_K then
+              if ZVOL > MIN_CORR_K then
+                ZVOLM := ZVOLM + ZVOL;
+                ZVOL_Kt := 0
+              end if;
+              if INIT = true then
+                INIT := false;
+                K := Ky;
+                T_K := T_Ky;
+                MIN_CORR_K := MIN_CORR_Ky
+              end if;
+              TIME := 0
+            end if;
+            ANG_CORR_VALUE := ANG_VALUE + POLIS_RSH(ZVOLM, 8)
+          else
+            ANG_CORR_VALUE := ANG_VALUE
+          end if
+        end present
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module STEER_ANG_DIAG:
+constant SOFT : integer;
+constant MED : integer;
+constant HARD : integer;
+constant TIME_A_1 : integer;
+constant TIME_A_2 : integer;
+constant TIME_A_3 : integer;
+constant TIME_B_1 : integer;
+constant TIME_B_2 : integer;
+constant TIME_B_3 : integer;
+input RESET;
+input CLOCK_24;
+input STEER1_SENS : boolean;
+input STEER2_SENS : boolean;
+input LONG_SPEED_FILT : integer;
+output DIAG_ERR;
+output STEER_ANG_DAMAGE : integer;
+
+var TIME_STEER1 : integer,
+    TIME_STEER2 : integer,
+    SPEED_VALUE : integer,
+    STEER_ANG_DAMAGE_VALUE : integer in
+  loop
+    TIME_STEER1 := 0;
+    TIME_STEER2 := 0;
+    SPEED_VALUE := 0;
+    STEER_ANG_DAMAGE_VALUE := SOFT;
+    do
+      loop
+        emit STEER_ANG_DAMAGE(STEER_ANG_DAMAGE_VALUE);
+        await 
+          case LONG_SPEED_FILT do
+            SPEED_VALUE := ?LONG_SPEED_FILT;
+            if SPEED_VALUE = 0 then
+              TIME_STEER1 := 0;
+              TIME_STEER2 := 0
+            end if
+          case STEER1_SENS do
+            TIME_STEER1 := 0
+          case STEER2_SENS do
+            TIME_STEER2 := 0
+          case CLOCK_24 do
+            TIME_STEER1 := TIME_STEER1 + 1;
+            TIME_STEER2 := TIME_STEER2 + 1
+        end await;
+        if TIME_STEER1 > TIME_A_3 and TIME_STEER2 > TIME_A_3 or TIME_STEER1 > TIME_B_3 or TIME_STEER1 > TIME_B_3 then
+          emit DIAG_ERR;
+          halt
+        else
+          if TIME_STEER1 > TIME_A_2 and TIME_STEER2 > TIME_A_2 or TIME_STEER1 > TIME_B_2 or TIME_STEER1 > TIME_B_2 then
+            STEER_ANG_DAMAGE_VALUE := HARD
+          else
+            if TIME_STEER1 > TIME_A_1 and TIME_STEER2 > TIME_A_1 or TIME_STEER1 > TIME_B_1 or TIME_STEER1 > TIME_B_1 then
+              STEER_ANG_DAMAGE_VALUE := MED
+            else
+              STEER_ANG_DAMAGE_VALUE := SOFT
+            end if
+          end if
+        end if
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module STEER_SPEED_CAL:
+constant COANG : integer;
+input RESET;
+input CLOCK_16;
+input STEER1_SENS : boolean;
+input STEER2_SENS : boolean;
+output SPEED : integer;
+
+var TIME_ANG : integer,
+    STEER1_VAL : boolean,
+    STEER1_VAL_OLD : boolean,
+    STEER2_VAL : boolean,
+    STEER2_VAL_OLD : boolean,
+    SPEED_VALUE : integer in
+  loop
+    TIME_ANG := 0;
+    STEER1_VAL := false;
+    STEER1_VAL_OLD := false;
+    STEER2_VAL := false;
+    STEER2_VAL_OLD := false;
+    SPEED_VALUE := 0;
+    do
+      loop
+        await [CLOCK_16 or STEER1_SENS or STEER2_SENS];
+        present CLOCK_16 then
+          TIME_ANG := TIME_ANG + 1;
+          emit SPEED(SPEED_VALUE)
+        end present;
+        present STEER1_SENS then
+          STEER1_VAL := ?STEER1_SENS;
+          if STEER1_VAL_OLD <> STEER1_VAL and TIME_ANG <> 0 then
+            SPEED_VALUE := COANG / TIME_ANG * 2;
+            TIME_ANG := 0
+          end if;
+          STEER1_VAL_OLD := STEER1_VAL
+        end present;
+        present STEER2_SENS then
+          STEER2_VAL := ?STEER2_SENS;
+          if STEER2_VAL_OLD <> STEER2_VAL and TIME_ANG <> 0 then
+            SPEED_VALUE := COANG / TIME_ANG * 2;
+            TIME_ANG := 0
+          end if;
+          STEER2_VAL_OLD := STEER2_VAL
+        end present
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module STEER_SPEED_DIAG:
+constant MAX_SPEED_VAL : integer;
+constant MAX_NUM_SPEED_VAL_OUT : integer;
+input RESET;
+input SPEED : integer;
+output STEER_NO_SOFT;
+output STEER_SPEED_ERR;
+
+var NUM_SPEED_VAL_OUT : integer,
+    SPEED_VALUE : integer in
+  loop
+    NUM_SPEED_VAL_OUT := 0;
+    SPEED_VALUE := 0;
+    do
+      loop
+        await SPEED do
+          SPEED_VALUE := ?SPEED
+        end await;
+        if SPEED_VALUE > MAX_SPEED_VAL then
+          emit STEER_NO_SOFT;
+          NUM_SPEED_VAL_OUT := NUM_SPEED_VAL_OUT + 1;
+          if NUM_SPEED_VAL_OUT > MAX_NUM_SPEED_VAL_OUT then
+            emit STEER_SPEED_ERR;
+            halt
+          end if
+        end if
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module STEER_WHEEL:
+constant MINUS_9 : integer;
+constant PLUS_9 : integer;
+constant INCR : integer;
+constant COANG : integer;
+input RESET;
+input CLOCK_16;
+input ANG_INPUT : integer;
+input VELSTER : integer;
+output STEER1_SENS : boolean;
+output STEER2_SENS : boolean;
+output STEER_SENS : boolean;
+
+var ANG_VAL : integer,
+    VELSTER_VAL : integer,
+    STR_VAL : boolean,
+    STR1_VAL : boolean,
+    STR2_VAL : boolean,
+    TIME : integer,
+    Q_TEANG : integer,
+    DIR : integer,
+    ANG_CUR : integer in
+  loop
+    ANG_VAL := 0;
+    VELSTER_VAL := 0;
+    STR_VAL := false;
+    STR1_VAL := false;
+    STR2_VAL := false;
+    TIME := 0;
+    Q_TEANG := 0;
+    DIR := 0;
+    ANG_CUR := 0;
+    do
+      loop
+        await 
+          case CLOCK_16 do
+            TIME := TIME + 1;
+            if TIME > Q_TEANG then
+              emit STEER_SENS(STR_VAL);
+              emit STEER1_SENS(STR1_VAL);
+              emit STEER2_SENS(STR2_VAL);
+              if DIR <> 0 then
+                if not STR1_VAL and not STR2_VAL then
+                  if DIR = 1 or DIR = 3 then
+                    STR1_VAL := true;
+                    ANG_CUR := ANG_CUR + INCR
+                  else
+                    STR2_VAL := true;
+                    ANG_CUR := ANG_CUR - INCR
+                  end if
+                else
+                  if not STR1_VAL and STR2_VAL then
+                    if DIR = 1 or DIR = 3 then
+                      STR2_VAL := false
+                    else
+                      STR1_VAL := true;
+                      ANG_CUR := ANG_CUR - INCR
+                    end if
+                  else
+                    if STR1_VAL and not STR2_VAL then
+                      if DIR = 1 or DIR = 3 then
+                        STR2_VAL := true;
+                        ANG_CUR := ANG_CUR + INCR
+                      else
+                        STR1_VAL := false
+                      end if
+                    else
+                      if DIR = 1 then
+                        STR1_VAL := false
+                      else
+                        if DIR = 2 then
+                          STR2_VAL := false
+                        else
+                          STR1_VAL := false;
+                          STR2_VAL := false;
+                          if DIR = 3 then
+                            DIR := 2
+                          else
+                            DIR := 1
+                          end if
+                        end if
+                      end if
+                    end if
+                  end if
+                end if
+              end if;
+              TIME := 0;
+              if ANG_VAL > ANG_CUR - INCR and ANG_VAL < ANG_CUR + INCR then
+                DIR := 0
+              end if;
+              if ANG_CUR <= MINUS_9 or ANG_CUR >= PLUS_9 then
+                STR_VAL := true
+              else
+                if ANG_CUR > MINUS_9 and ANG_CUR < PLUS_9 then
+                  STR_VAL := false
+                end if
+              end if
+            end if
+          case ANG_INPUT do
+            ANG_VAL := ?ANG_INPUT;
+            if DIR = 1 and ANG_VAL < ANG_CUR - INCR then
+              DIR := 3
+            else
+              if DIR = 2 and ANG_VAL > ANG_CUR + INCR then
+                DIR := 4
+              else
+                if ANG_VAL > ANG_CUR - INCR and ANG_VAL < ANG_CUR + INCR then
+                  DIR := 0
+                else
+                  if ANG_VAL < ANG_CUR - INCR then
+                    DIR := 2
+                  else
+                    DIR := 1
+                  end if
+                end if
+              end if
+            end if
+          case VELSTER do
+            VELSTER_VAL := ?VELSTER;
+            Q_TEANG := COANG / 2 * VELSTER_VAL
+        end await
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module VER_ACC_CAL:
+constant ZERO_ACC : integer;
+constant GME_ACC : integer;
+input RESET;
+input ACC_SENS : integer;
+output ACC : integer;
+
+var ACC_SENS_VAL : integer,
+    ACC_VALUE : integer in
+  loop
+    ACC_VALUE := 0;
+    do
+      loop
+        emit ACC(ACC_VALUE);
+        await ACC_SENS;
+        ACC_SENS_VAL := ?ACC_SENS;
+        ACC_VALUE := (ACC_SENS_VAL - ZERO_ACC) * GME_ACC
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module
+
+module VER_ACC_DIAG:
+constant ZERO_ACC : integer;
+constant MAX_ACC : integer;
+constant MIN_ACC : integer;
+constant MAX_R_ACC : integer;
+constant MIN_R_ACC : integer;
+constant TIME_OUT : integer;
+constant TIME_R_OUT : integer;
+constant MAX_ABNORM_NUM : integer;
+input RESET;
+input ACC_SENS : integer;
+output VER_ACC_ERR;
+
+var ACC_OUT_TIME : integer,
+    ACC_OUT_R_TIME : integer,
+    SENS_VAL : integer,
+    ABNORM_NUM : integer in
+  loop
+    SENS_VAL := ZERO_ACC;
+    ACC_OUT_TIME := 0;
+    ACC_OUT_R_TIME := 0;
+    ABNORM_NUM := 0;
+    do
+      loop
+        await ACC_SENS;
+        SENS_VAL := ?ACC_SENS;
+        if SENS_VAL > MAX_R_ACC or SENS_VAL < MIN_R_ACC then
+          ACC_OUT_R_TIME := ACC_OUT_R_TIME + 1;
+          ACC_OUT_TIME := ACC_OUT_TIME + 1;
+          if ACC_OUT_R_TIME >= TIME_R_OUT or ACC_OUT_TIME >= TIME_OUT then
+            ABNORM_NUM := ABNORM_NUM + 1;
+            ACC_OUT_R_TIME := 0;
+            ACC_OUT_TIME := 0
+          end if
+        else
+          ACC_OUT_R_TIME := 0;
+          if SENS_VAL > MAX_ACC or SENS_VAL < MIN_ACC then
+            ACC_OUT_TIME := ACC_OUT_TIME + 1;
+            if ACC_OUT_TIME >= TIME_OUT then
+              ABNORM_NUM := ABNORM_NUM + 1;
+              ACC_OUT_TIME := 0
+            end if
+          else
+            ACC_OUT_TIME := 0
+          end if
+        end if;
+        if ABNORM_NUM >= MAX_ABNORM_NUM then
+          emit VER_ACC_ERR;
+          halt
+        end if
+      end loop
+    watching RESET
+  end loop
+end var
+
+end module

@@ -21,24 +21,24 @@ import org.eclipse.emf.ecore.EClass;
 public class ConstantImpl extends ValuedObjectImpl implements Constant
 {
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected ConstantImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.CONSTANT;
-  }
+        return EsterelPackage.Literals.CONSTANT;
+    }
 
 } //ConstantImpl

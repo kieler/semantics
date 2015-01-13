@@ -37,13 +37,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * @generated
  */
 public class DuringActionItemProvider
-    extends LocalActionItemProvider
-    implements
-        IEditingDomainItemProvider,
-        IStructuredItemContentProvider,
-        ITreeItemContentProvider,
-        IItemLabelProvider,
-        IItemPropertySource {
+    extends LocalActionItemProvider {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

@@ -19,24 +19,24 @@ import org.eclipse.emf.ecore.EClass;
 public class HaltImpl extends StatementImpl implements Halt
 {
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected HaltImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.HALT;
-  }
+        return EsterelPackage.Literals.HALT;
+    }
 
 } //HaltImpl

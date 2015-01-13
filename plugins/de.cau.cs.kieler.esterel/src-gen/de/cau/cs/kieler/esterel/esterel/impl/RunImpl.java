@@ -32,234 +32,225 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class RunImpl extends StatementImpl implements Run
 {
   /**
-   * The cached value of the '{@link #getModule() <em>Module</em>}' containment reference.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getModule() <em>Module</em>}' containment reference.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getModule()
-   * @generated
-   * @ordered
-   */
+     * @see #getModule()
+     * @generated
+     * @ordered
+     */
   protected ModuleRenaming module;
 
   /**
-   * The cached value of the '{@link #getList() <em>List</em>}' containment reference.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getList() <em>List</em>}' containment reference.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getList()
-   * @generated
-   * @ordered
-   */
+     * @see #getList()
+     * @generated
+     * @ordered
+     */
   protected RenamingList list;
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected RunImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.RUN;
-  }
+        return EsterelPackage.Literals.RUN;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ModuleRenaming getModule()
   {
-    return module;
-  }
+        return module;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public NotificationChain basicSetModule(ModuleRenaming newModule, NotificationChain msgs)
   {
-    ModuleRenaming oldModule = module;
-    module = newModule;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.RUN__MODULE, oldModule, newModule);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+        ModuleRenaming oldModule = module;
+        module = newModule;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.RUN__MODULE, oldModule, newModule);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
     }
-    return msgs;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public void setModule(ModuleRenaming newModule)
   {
-    if (newModule != module)
-    {
-      NotificationChain msgs = null;
-      if (module != null)
-        msgs = ((InternalEObject)module).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.RUN__MODULE, null, msgs);
-      if (newModule != null)
-        msgs = ((InternalEObject)newModule).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.RUN__MODULE, null, msgs);
-      msgs = basicSetModule(newModule, msgs);
-      if (msgs != null) msgs.dispatch();
+        if (newModule != module) {
+            NotificationChain msgs = null;
+            if (module != null)
+                msgs = ((InternalEObject)module).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.RUN__MODULE, null, msgs);
+            if (newModule != null)
+                msgs = ((InternalEObject)newModule).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.RUN__MODULE, null, msgs);
+            msgs = basicSetModule(newModule, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.RUN__MODULE, newModule, newModule));
     }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.RUN__MODULE, newModule, newModule));
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public RenamingList getList()
   {
-    return list;
-  }
+        return list;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public NotificationChain basicSetList(RenamingList newList, NotificationChain msgs)
   {
-    RenamingList oldList = list;
-    list = newList;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.RUN__LIST, oldList, newList);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+        RenamingList oldList = list;
+        list = newList;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.RUN__LIST, oldList, newList);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
     }
-    return msgs;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public void setList(RenamingList newList)
   {
-    if (newList != list)
-    {
-      NotificationChain msgs = null;
-      if (list != null)
-        msgs = ((InternalEObject)list).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.RUN__LIST, null, msgs);
-      if (newList != null)
-        msgs = ((InternalEObject)newList).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.RUN__LIST, null, msgs);
-      msgs = basicSetList(newList, msgs);
-      if (msgs != null) msgs.dispatch();
+        if (newList != list) {
+            NotificationChain msgs = null;
+            if (list != null)
+                msgs = ((InternalEObject)list).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.RUN__LIST, null, msgs);
+            if (newList != null)
+                msgs = ((InternalEObject)newList).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.RUN__LIST, null, msgs);
+            msgs = basicSetList(newList, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.RUN__LIST, newList, newList));
     }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.RUN__LIST, newList, newList));
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.RUN__MODULE:
-        return basicSetModule(null, msgs);
-      case EsterelPackage.RUN__LIST:
-        return basicSetList(null, msgs);
+        switch (featureID) {
+            case EsterelPackage.RUN__MODULE:
+                return basicSetModule(null, msgs);
+            case EsterelPackage.RUN__LIST:
+                return basicSetList(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.RUN__MODULE:
-        return getModule();
-      case EsterelPackage.RUN__LIST:
-        return getList();
+        switch (featureID) {
+            case EsterelPackage.RUN__MODULE:
+                return getModule();
+            case EsterelPackage.RUN__LIST:
+                return getList();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.RUN__MODULE:
-        setModule((ModuleRenaming)newValue);
-        return;
-      case EsterelPackage.RUN__LIST:
-        setList((RenamingList)newValue);
-        return;
+        switch (featureID) {
+            case EsterelPackage.RUN__MODULE:
+                setModule((ModuleRenaming)newValue);
+                return;
+            case EsterelPackage.RUN__LIST:
+                setList((RenamingList)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.RUN__MODULE:
-        setModule((ModuleRenaming)null);
-        return;
-      case EsterelPackage.RUN__LIST:
-        setList((RenamingList)null);
-        return;
+        switch (featureID) {
+            case EsterelPackage.RUN__MODULE:
+                setModule((ModuleRenaming)null);
+                return;
+            case EsterelPackage.RUN__LIST:
+                setList((RenamingList)null);
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.RUN__MODULE:
-        return module != null;
-      case EsterelPackage.RUN__LIST:
-        return list != null;
+        switch (featureID) {
+            case EsterelPackage.RUN__MODULE:
+                return module != null;
+            case EsterelPackage.RUN__LIST:
+                return list != null;
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
 } //RunImpl

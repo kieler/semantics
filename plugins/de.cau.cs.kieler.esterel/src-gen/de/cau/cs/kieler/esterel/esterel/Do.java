@@ -23,29 +23,29 @@ import org.eclipse.emf.ecore.EObject;
 public interface Do extends StatementContainer, Statement
 {
   /**
-   * Returns the value of the '<em><b>End</b></em>' containment reference.
-   * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>End</b></em>' containment reference.
+     * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>End</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>End</em>' containment reference.
-   * @see #setEnd(EObject)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDo_End()
-   * @model containment="true"
-   * @generated
-   */
+     * @return the value of the '<em>End</em>' containment reference.
+     * @see #setEnd(EObject)
+     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDo_End()
+     * @model containment="true"
+     * @generated
+     */
   EObject getEnd();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Do#getEnd <em>End</em>}' containment reference.
-   * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Do#getEnd <em>End</em>}' containment reference.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>End</em>' containment reference.
-   * @see #getEnd()
-   * @generated
-   */
+     * @param value the new value of the '<em>End</em>' containment reference.
+     * @see #getEnd()
+     * @generated
+     */
   void setEnd(EObject value);
 
 } // Do

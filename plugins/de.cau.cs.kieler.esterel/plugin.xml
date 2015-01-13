@@ -10,6 +10,15 @@
        genModel = "de/cau/cs/kieler/esterel/Esterel.genmodel" /> 
 	
   </extension>
+  <extension
+        point="de.cau.cs.kieler.kico.extension">
+     <ExtensionInformation
+           className="Program"
+           editor_id="de.cau.cs.kieler.esterel.Esterel"
+           extensionName="strl"
+           isXMI="false">
+     </ExtensionInformation>
+  </extension>
   <!--extension
         point="org.eclipse.ui.menus">
      <menuContribution

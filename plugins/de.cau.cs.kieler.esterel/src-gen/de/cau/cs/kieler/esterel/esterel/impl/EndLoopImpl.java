@@ -28,150 +28,146 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class EndLoopImpl extends MinimalEObjectImpl.Container implements EndLoop
 {
   /**
-   * The default value of the '{@link #getEndOpt() <em>End Opt</em>}' attribute.
-   * <!-- begin-user-doc -->
+     * The default value of the '{@link #getEndOpt() <em>End Opt</em>}' attribute.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getEndOpt()
-   * @generated
-   * @ordered
-   */
+     * @see #getEndOpt()
+     * @generated
+     * @ordered
+     */
   protected static final String END_OPT_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getEndOpt() <em>End Opt</em>}' attribute.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getEndOpt() <em>End Opt</em>}' attribute.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getEndOpt()
-   * @generated
-   * @ordered
-   */
+     * @see #getEndOpt()
+     * @generated
+     * @ordered
+     */
   protected String endOpt = END_OPT_EDEFAULT;
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected EndLoopImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.END_LOOP;
-  }
+        return EsterelPackage.Literals.END_LOOP;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public String getEndOpt()
   {
-    return endOpt;
-  }
+        return endOpt;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public void setEndOpt(String newEndOpt)
   {
-    String oldEndOpt = endOpt;
-    endOpt = newEndOpt;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.END_LOOP__END_OPT, oldEndOpt, endOpt));
-  }
+        String oldEndOpt = endOpt;
+        endOpt = newEndOpt;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.END_LOOP__END_OPT, oldEndOpt, endOpt));
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.END_LOOP__END_OPT:
-        return getEndOpt();
+        switch (featureID) {
+            case EsterelPackage.END_LOOP__END_OPT:
+                return getEndOpt();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.END_LOOP__END_OPT:
-        setEndOpt((String)newValue);
-        return;
+        switch (featureID) {
+            case EsterelPackage.END_LOOP__END_OPT:
+                setEndOpt((String)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.END_LOOP__END_OPT:
-        setEndOpt(END_OPT_EDEFAULT);
-        return;
+        switch (featureID) {
+            case EsterelPackage.END_LOOP__END_OPT:
+                setEndOpt(END_OPT_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.END_LOOP__END_OPT:
-        return END_OPT_EDEFAULT == null ? endOpt != null : !END_OPT_EDEFAULT.equals(endOpt);
+        switch (featureID) {
+            case EsterelPackage.END_LOOP__END_OPT:
+                return END_OPT_EDEFAULT == null ? endOpt != null : !END_OPT_EDEFAULT.equals(endOpt);
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (endOpt: ");
-    result.append(endOpt);
-    result.append(')');
-    return result.toString();
-  }
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (endOpt: ");
+        result.append(endOpt);
+        result.append(')');
+        return result.toString();
+    }
 
 } //EndLoopImpl

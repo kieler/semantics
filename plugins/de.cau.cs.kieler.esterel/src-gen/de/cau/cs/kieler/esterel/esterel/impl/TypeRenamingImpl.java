@@ -34,278 +34,270 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class TypeRenamingImpl extends MinimalEObjectImpl.Container implements TypeRenaming
 {
   /**
-   * The cached value of the '{@link #getNewName() <em>New Name</em>}' reference.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getNewName() <em>New Name</em>}' reference.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getNewName()
-   * @generated
-   * @ordered
-   */
+     * @see #getNewName()
+     * @generated
+     * @ordered
+     */
   protected Type newName;
 
   /**
-   * The default value of the '{@link #getNewType() <em>New Type</em>}' attribute.
-   * <!-- begin-user-doc -->
+     * The default value of the '{@link #getNewType() <em>New Type</em>}' attribute.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getNewType()
-   * @generated
-   * @ordered
-   */
+     * @see #getNewType()
+     * @generated
+     * @ordered
+     */
   protected static final ValueType NEW_TYPE_EDEFAULT = ValueType.PURE;
 
   /**
-   * The cached value of the '{@link #getNewType() <em>New Type</em>}' attribute.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getNewType() <em>New Type</em>}' attribute.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getNewType()
-   * @generated
-   * @ordered
-   */
+     * @see #getNewType()
+     * @generated
+     * @ordered
+     */
   protected ValueType newType = NEW_TYPE_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getOldName() <em>Old Name</em>}' reference.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getOldName() <em>Old Name</em>}' reference.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOldName()
-   * @generated
-   * @ordered
-   */
+     * @see #getOldName()
+     * @generated
+     * @ordered
+     */
   protected Type oldName;
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected TypeRenamingImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.TYPE_RENAMING;
-  }
+        return EsterelPackage.Literals.TYPE_RENAMING;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Type getNewName()
   {
-    if (newName != null && newName.eIsProxy())
-    {
-      InternalEObject oldNewName = (InternalEObject)newName;
-      newName = (Type)eResolveProxy(oldNewName);
-      if (newName != oldNewName)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.TYPE_RENAMING__NEW_NAME, oldNewName, newName));
-      }
+        if (newName != null && newName.eIsProxy()) {
+            InternalEObject oldNewName = (InternalEObject)newName;
+            newName = (Type)eResolveProxy(oldNewName);
+            if (newName != oldNewName) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.TYPE_RENAMING__NEW_NAME, oldNewName, newName));
+            }
+        }
+        return newName;
     }
-    return newName;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Type basicGetNewName()
   {
-    return newName;
-  }
+        return newName;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public void setNewName(Type newNewName)
   {
-    Type oldNewName = newName;
-    newName = newNewName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.TYPE_RENAMING__NEW_NAME, oldNewName, newName));
-  }
+        Type oldNewName = newName;
+        newName = newNewName;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.TYPE_RENAMING__NEW_NAME, oldNewName, newName));
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ValueType getNewType()
   {
-    return newType;
-  }
+        return newType;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public void setNewType(ValueType newNewType)
   {
-    ValueType oldNewType = newType;
-    newType = newNewType == null ? NEW_TYPE_EDEFAULT : newNewType;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.TYPE_RENAMING__NEW_TYPE, oldNewType, newType));
-  }
+        ValueType oldNewType = newType;
+        newType = newNewType == null ? NEW_TYPE_EDEFAULT : newNewType;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.TYPE_RENAMING__NEW_TYPE, oldNewType, newType));
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Type getOldName()
   {
-    if (oldName != null && oldName.eIsProxy())
-    {
-      InternalEObject oldOldName = (InternalEObject)oldName;
-      oldName = (Type)eResolveProxy(oldOldName);
-      if (oldName != oldOldName)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.TYPE_RENAMING__OLD_NAME, oldOldName, oldName));
-      }
+        if (oldName != null && oldName.eIsProxy()) {
+            InternalEObject oldOldName = (InternalEObject)oldName;
+            oldName = (Type)eResolveProxy(oldOldName);
+            if (oldName != oldOldName) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.TYPE_RENAMING__OLD_NAME, oldOldName, oldName));
+            }
+        }
+        return oldName;
     }
-    return oldName;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Type basicGetOldName()
   {
-    return oldName;
-  }
+        return oldName;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public void setOldName(Type newOldName)
   {
-    Type oldOldName = oldName;
-    oldName = newOldName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.TYPE_RENAMING__OLD_NAME, oldOldName, oldName));
-  }
+        Type oldOldName = oldName;
+        oldName = newOldName;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.TYPE_RENAMING__OLD_NAME, oldOldName, oldName));
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.TYPE_RENAMING__NEW_NAME:
-        if (resolve) return getNewName();
-        return basicGetNewName();
-      case EsterelPackage.TYPE_RENAMING__NEW_TYPE:
-        return getNewType();
-      case EsterelPackage.TYPE_RENAMING__OLD_NAME:
-        if (resolve) return getOldName();
-        return basicGetOldName();
+        switch (featureID) {
+            case EsterelPackage.TYPE_RENAMING__NEW_NAME:
+                if (resolve) return getNewName();
+                return basicGetNewName();
+            case EsterelPackage.TYPE_RENAMING__NEW_TYPE:
+                return getNewType();
+            case EsterelPackage.TYPE_RENAMING__OLD_NAME:
+                if (resolve) return getOldName();
+                return basicGetOldName();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.TYPE_RENAMING__NEW_NAME:
-        setNewName((Type)newValue);
-        return;
-      case EsterelPackage.TYPE_RENAMING__NEW_TYPE:
-        setNewType((ValueType)newValue);
-        return;
-      case EsterelPackage.TYPE_RENAMING__OLD_NAME:
-        setOldName((Type)newValue);
-        return;
+        switch (featureID) {
+            case EsterelPackage.TYPE_RENAMING__NEW_NAME:
+                setNewName((Type)newValue);
+                return;
+            case EsterelPackage.TYPE_RENAMING__NEW_TYPE:
+                setNewType((ValueType)newValue);
+                return;
+            case EsterelPackage.TYPE_RENAMING__OLD_NAME:
+                setOldName((Type)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.TYPE_RENAMING__NEW_NAME:
-        setNewName((Type)null);
-        return;
-      case EsterelPackage.TYPE_RENAMING__NEW_TYPE:
-        setNewType(NEW_TYPE_EDEFAULT);
-        return;
-      case EsterelPackage.TYPE_RENAMING__OLD_NAME:
-        setOldName((Type)null);
-        return;
+        switch (featureID) {
+            case EsterelPackage.TYPE_RENAMING__NEW_NAME:
+                setNewName((Type)null);
+                return;
+            case EsterelPackage.TYPE_RENAMING__NEW_TYPE:
+                setNewType(NEW_TYPE_EDEFAULT);
+                return;
+            case EsterelPackage.TYPE_RENAMING__OLD_NAME:
+                setOldName((Type)null);
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.TYPE_RENAMING__NEW_NAME:
-        return newName != null;
-      case EsterelPackage.TYPE_RENAMING__NEW_TYPE:
-        return newType != NEW_TYPE_EDEFAULT;
-      case EsterelPackage.TYPE_RENAMING__OLD_NAME:
-        return oldName != null;
+        switch (featureID) {
+            case EsterelPackage.TYPE_RENAMING__NEW_NAME:
+                return newName != null;
+            case EsterelPackage.TYPE_RENAMING__NEW_TYPE:
+                return newType != NEW_TYPE_EDEFAULT;
+            case EsterelPackage.TYPE_RENAMING__OLD_NAME:
+                return oldName != null;
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (newType: ");
-    result.append(newType);
-    result.append(')');
-    return result.toString();
-  }
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (newType: ");
+        result.append(newType);
+        result.append(')');
+        return result.toString();
+    }
 
 } //TypeRenamingImpl

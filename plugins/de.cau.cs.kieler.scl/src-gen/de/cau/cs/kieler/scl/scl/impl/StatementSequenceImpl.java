@@ -25,12 +25,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * An implementation of the model object '<em><b>Statement Sequence</b></em>'.
  * <!-- end-user-doc -->
  * <p>
- * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementSequenceImpl#getStatements <em>Statements</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */

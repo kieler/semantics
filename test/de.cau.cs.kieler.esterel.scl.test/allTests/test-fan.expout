@@ -1,0 +1,18 @@
+module FAN:
+input switch_on;
+input switch_off;
+input regulator : integer;
+output speed : integer;
+relation switch_on # switch_off;
+relation switch_on # regulator;
+relation switch_off # regulator;
+
+loop
+  every switch_on do
+    abort
+      emit speed(?regulator * 5)
+    when immediate switch_off
+  end every
+end loop
+
+end module

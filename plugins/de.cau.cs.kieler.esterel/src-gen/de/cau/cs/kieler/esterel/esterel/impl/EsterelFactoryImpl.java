@@ -21,1322 +21,1354 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
 {
   /**
-   * Creates the default factory implementation.
-   * <!-- begin-user-doc -->
+     * Creates the default factory implementation.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public static EsterelFactory init()
   {
-    try
-    {
-      EsterelFactory theEsterelFactory = (EsterelFactory)EPackage.Registry.INSTANCE.getEFactory(EsterelPackage.eNS_URI);
-      if (theEsterelFactory != null)
-      {
-        return theEsterelFactory;
-      }
+        try {
+            EsterelFactory theEsterelFactory = (EsterelFactory)EPackage.Registry.INSTANCE.getEFactory(EsterelPackage.eNS_URI);
+            if (theEsterelFactory != null) {
+                return theEsterelFactory;
+            }
+        }
+        catch (Exception exception) {
+            EcorePlugin.INSTANCE.log(exception);
+        }
+        return new EsterelFactoryImpl();
     }
-    catch (Exception exception)
-    {
-      EcorePlugin.INSTANCE.log(exception);
-    }
-    return new EsterelFactoryImpl();
-  }
 
   /**
-   * Creates an instance of the factory.
-   * <!-- begin-user-doc -->
+     * Creates an instance of the factory.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public EsterelFactoryImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public EObject create(EClass eClass)
   {
-    switch (eClass.getClassifierID())
-    {
-      case EsterelPackage.PROGRAM: return createProgram();
-      case EsterelPackage.MODULE: return createModule();
-      case EsterelPackage.MODULE_BODY: return createModuleBody();
-      case EsterelPackage.MODULE_INTERFACE: return createModuleInterface();
-      case EsterelPackage.CHANNEL_DESCRIPTION: return createChannelDescription();
-      case EsterelPackage.TYPE_IDENTIFIER: return createTypeIdentifier();
-      case EsterelPackage.LOCAL_SIGNAL_DECL: return createLocalSignalDecl();
-      case EsterelPackage.LOCAL_SIGNAL_LIST: return createLocalSignalList();
-      case EsterelPackage.SENSOR_DECL: return createSensorDecl();
-      case EsterelPackage.SENSOR_WITH_TYPE: return createSensorWithType();
-      case EsterelPackage.RELATION_DECL: return createRelationDecl();
-      case EsterelPackage.RELATION_TYPE: return createRelationType();
-      case EsterelPackage.RELATION_IMPLICATION: return createRelationImplication();
-      case EsterelPackage.RELATION_INCOMPATIBILITY: return createRelationIncompatibility();
-      case EsterelPackage.TYPE_DECL: return createTypeDecl();
-      case EsterelPackage.TYPE: return createType();
-      case EsterelPackage.CONSTANT_DECLS: return createConstantDecls();
-      case EsterelPackage.ONE_TYPE_CONSTANT_DECLS: return createOneTypeConstantDecls();
-      case EsterelPackage.CONSTANT_WITH_VALUE: return createConstantWithValue();
-      case EsterelPackage.FUNCTION_DECL: return createFunctionDecl();
-      case EsterelPackage.FUNCTION: return createFunction();
-      case EsterelPackage.PROCEDURE_DECL: return createProcedureDecl();
-      case EsterelPackage.PROCEDURE: return createProcedure();
-      case EsterelPackage.TASK_DECL: return createTaskDecl();
-      case EsterelPackage.TASK: return createTask();
-      case EsterelPackage.STATEMENT_CONTAINER: return createStatementContainer();
-      case EsterelPackage.STATEMENT: return createStatement();
-      case EsterelPackage.BLOCK: return createBlock();
-      case EsterelPackage.ASSIGNMENT: return createAssignment();
-      case EsterelPackage.ABORT: return createAbort();
-      case EsterelPackage.ABORT_BODY: return createAbortBody();
-      case EsterelPackage.ABORT_INSTANCE: return createAbortInstance();
-      case EsterelPackage.ABORT_CASE: return createAbortCase();
-      case EsterelPackage.ABORT_CASE_SINGLE: return createAbortCaseSingle();
-      case EsterelPackage.WEAK_ABORT_BODY: return createWeakAbortBody();
-      case EsterelPackage.WEAK_ABORT_END: return createWeakAbortEnd();
-      case EsterelPackage.WEAK_ABORT_END_ALT: return createWeakAbortEndAlt();
-      case EsterelPackage.AWAIT: return createAwait();
-      case EsterelPackage.AWAIT_BODY: return createAwaitBody();
-      case EsterelPackage.AWAIT_INSTANCE: return createAwaitInstance();
-      case EsterelPackage.AWAIT_CASE: return createAwaitCase();
-      case EsterelPackage.PROC_CALL: return createProcCall();
-      case EsterelPackage.DO: return createDo();
-      case EsterelPackage.DO_UPTO: return createDoUpto();
-      case EsterelPackage.DO_WATCHING: return createDoWatching();
-      case EsterelPackage.DO_WATCHING_END: return createDoWatchingEnd();
-      case EsterelPackage.EMIT: return createEmit();
-      case EsterelPackage.EVERY_DO: return createEveryDo();
-      case EsterelPackage.EXIT: return createExit();
-      case EsterelPackage.HALT: return createHalt();
-      case EsterelPackage.IF_TEST: return createIfTest();
-      case EsterelPackage.ELS_IF: return createElsIf();
-      case EsterelPackage.THEN_PART: return createThenPart();
-      case EsterelPackage.ELSE_PART: return createElsePart();
-      case EsterelPackage.LOOP: return createLoop();
-      case EsterelPackage.END_LOOP: return createEndLoop();
-      case EsterelPackage.LOOP_EACH: return createLoopEach();
-      case EsterelPackage.LOOP_DELAY: return createLoopDelay();
-      case EsterelPackage.LOOP_BODY: return createLoopBody();
-      case EsterelPackage.NOTHING: return createNothing();
-      case EsterelPackage.PAUSE: return createPause();
-      case EsterelPackage.PRESENT: return createPresent();
-      case EsterelPackage.PRESENT_BODY: return createPresentBody();
-      case EsterelPackage.PRESENT_EVENT_BODY: return createPresentEventBody();
-      case EsterelPackage.PRESENT_CASE_LIST: return createPresentCaseList();
-      case EsterelPackage.PRESENT_CASE: return createPresentCase();
-      case EsterelPackage.PRESENT_EVENT: return createPresentEvent();
-      case EsterelPackage.REPEAT: return createRepeat();
-      case EsterelPackage.RUN: return createRun();
-      case EsterelPackage.MODULE_RENAMING: return createModuleRenaming();
-      case EsterelPackage.RENAMING_LIST: return createRenamingList();
-      case EsterelPackage.RENAMING: return createRenaming();
-      case EsterelPackage.TYPE_RENAMING: return createTypeRenaming();
-      case EsterelPackage.CONSTANT_RENAMING: return createConstantRenaming();
-      case EsterelPackage.FUNCTION_RENAMING: return createFunctionRenaming();
-      case EsterelPackage.PROCEDURE_RENAMING: return createProcedureRenaming();
-      case EsterelPackage.TASK_RENAMING: return createTaskRenaming();
-      case EsterelPackage.SIGNAL_RENAMING: return createSignalRenaming();
-      case EsterelPackage.SUSPEND: return createSuspend();
-      case EsterelPackage.SUSTAIN: return createSustain();
-      case EsterelPackage.TRAP: return createTrap();
-      case EsterelPackage.TRAP_DECL_LIST: return createTrapDeclList();
-      case EsterelPackage.TRAP_HANDLER: return createTrapHandler();
-      case EsterelPackage.LOCAL_VARIABLE: return createLocalVariable();
-      case EsterelPackage.DELAY_EXPR: return createDelayExpr();
-      case EsterelPackage.DELAY_EVENT: return createDelayEvent();
-      case EsterelPackage.EXEC: return createExec();
-      case EsterelPackage.EXEC_BODY: return createExecBody();
-      case EsterelPackage.EXEC_CASE: return createExecCase();
-      case EsterelPackage.ESTEREL_TYPE_IDENTIFIER: return createEsterelTypeIdentifier();
-      case EsterelPackage.ESTEREL_TYPE: return createEsterelType();
-      case EsterelPackage.LOCAL_SIGNAL: return createLocalSignal();
-      case EsterelPackage.RELATION: return createRelation();
-      case EsterelPackage.CONSTANT: return createConstant();
-      case EsterelPackage.PARALLEL: return createParallel();
-      case EsterelPackage.SEQUENCE: return createSequence();
-      case EsterelPackage.WEAK_ABORT: return createWeakAbort();
-      case EsterelPackage.WEAK_ABORT_INSTANCE: return createWeakAbortInstance();
-      case EsterelPackage.WEAK_ABORT_CASE: return createWeakAbortCase();
-      case EsterelPackage.TRAP_DECL: return createTrapDecl();
-      case EsterelPackage.TRAP_EXPRESSION: return createTrapExpression();
-      case EsterelPackage.FUNCTION_EXPRESSION: return createFunctionExpression();
-      case EsterelPackage.CONSTANT_EXPRESSION: return createConstantExpression();
-      case EsterelPackage.TRAP_REFERENCE_EXPR: return createTrapReferenceExpr();
-      default:
-        throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+        switch (eClass.getClassifierID()) {
+            case EsterelPackage.PROGRAM: return createProgram();
+            case EsterelPackage.MODULE: return createModule();
+            case EsterelPackage.MODULE_BODY: return createModuleBody();
+            case EsterelPackage.MODULE_INTERFACE: return createModuleInterface();
+            case EsterelPackage.CHANNEL_DESCRIPTION: return createChannelDescription();
+            case EsterelPackage.TYPE_IDENTIFIER: return createTypeIdentifier();
+            case EsterelPackage.LOCAL_SIGNAL_DECL: return createLocalSignalDecl();
+            case EsterelPackage.LOCAL_SIGNAL_LIST: return createLocalSignalList();
+            case EsterelPackage.SENSOR_DECL: return createSensorDecl();
+            case EsterelPackage.SENSOR_WITH_TYPE: return createSensorWithType();
+            case EsterelPackage.RELATION_DECL: return createRelationDecl();
+            case EsterelPackage.RELATION_TYPE: return createRelationType();
+            case EsterelPackage.RELATION_IMPLICATION: return createRelationImplication();
+            case EsterelPackage.RELATION_INCOMPATIBILITY: return createRelationIncompatibility();
+            case EsterelPackage.TYPE_DECL: return createTypeDecl();
+            case EsterelPackage.TYPE: return createType();
+            case EsterelPackage.CONSTANT_DECLS: return createConstantDecls();
+            case EsterelPackage.ONE_TYPE_CONSTANT_DECLS: return createOneTypeConstantDecls();
+            case EsterelPackage.CONSTANT_WITH_VALUE: return createConstantWithValue();
+            case EsterelPackage.FUNCTION_DECL: return createFunctionDecl();
+            case EsterelPackage.FUNCTION: return createFunction();
+            case EsterelPackage.PROCEDURE_DECL: return createProcedureDecl();
+            case EsterelPackage.PROCEDURE: return createProcedure();
+            case EsterelPackage.TASK_DECL: return createTaskDecl();
+            case EsterelPackage.TASK: return createTask();
+            case EsterelPackage.STATEMENT_CONTAINER: return createStatementContainer();
+            case EsterelPackage.STATEMENT: return createStatement();
+            case EsterelPackage.BLOCK: return createBlock();
+            case EsterelPackage.ASSIGNMENT: return createAssignment();
+            case EsterelPackage.ABORT: return createAbort();
+            case EsterelPackage.ABORT_BODY: return createAbortBody();
+            case EsterelPackage.ABORT_INSTANCE: return createAbortInstance();
+            case EsterelPackage.ABORT_CASE: return createAbortCase();
+            case EsterelPackage.ABORT_CASE_SINGLE: return createAbortCaseSingle();
+            case EsterelPackage.WEAK_ABORT_BODY: return createWeakAbortBody();
+            case EsterelPackage.WEAK_ABORT_END: return createWeakAbortEnd();
+            case EsterelPackage.WEAK_ABORT_END_ALT: return createWeakAbortEndAlt();
+            case EsterelPackage.AWAIT: return createAwait();
+            case EsterelPackage.AWAIT_BODY: return createAwaitBody();
+            case EsterelPackage.AWAIT_INSTANCE: return createAwaitInstance();
+            case EsterelPackage.AWAIT_CASE: return createAwaitCase();
+            case EsterelPackage.PROC_CALL: return createProcCall();
+            case EsterelPackage.DO: return createDo();
+            case EsterelPackage.DO_UPTO: return createDoUpto();
+            case EsterelPackage.DO_WATCHING: return createDoWatching();
+            case EsterelPackage.DO_WATCHING_END: return createDoWatchingEnd();
+            case EsterelPackage.EMIT: return createEmit();
+            case EsterelPackage.EVERY_DO: return createEveryDo();
+            case EsterelPackage.EXIT: return createExit();
+            case EsterelPackage.HALT: return createHalt();
+            case EsterelPackage.IF_TEST: return createIfTest();
+            case EsterelPackage.ELS_IF: return createElsIf();
+            case EsterelPackage.THEN_PART: return createThenPart();
+            case EsterelPackage.ELSE_PART: return createElsePart();
+            case EsterelPackage.LOOP: return createLoop();
+            case EsterelPackage.END_LOOP: return createEndLoop();
+            case EsterelPackage.LOOP_EACH: return createLoopEach();
+            case EsterelPackage.LOOP_DELAY: return createLoopDelay();
+            case EsterelPackage.LOOP_BODY: return createLoopBody();
+            case EsterelPackage.NOTHING: return createNothing();
+            case EsterelPackage.PAUSE: return createPause();
+            case EsterelPackage.PRESENT: return createPresent();
+            case EsterelPackage.PRESENT_BODY: return createPresentBody();
+            case EsterelPackage.PRESENT_EVENT_BODY: return createPresentEventBody();
+            case EsterelPackage.PRESENT_CASE_LIST: return createPresentCaseList();
+            case EsterelPackage.PRESENT_CASE: return createPresentCase();
+            case EsterelPackage.PRESENT_EVENT: return createPresentEvent();
+            case EsterelPackage.REPEAT: return createRepeat();
+            case EsterelPackage.RUN: return createRun();
+            case EsterelPackage.MODULE_RENAMING: return createModuleRenaming();
+            case EsterelPackage.RENAMING_LIST: return createRenamingList();
+            case EsterelPackage.RENAMING: return createRenaming();
+            case EsterelPackage.TYPE_RENAMING: return createTypeRenaming();
+            case EsterelPackage.CONSTANT_RENAMING: return createConstantRenaming();
+            case EsterelPackage.FUNCTION_RENAMING: return createFunctionRenaming();
+            case EsterelPackage.PROCEDURE_RENAMING: return createProcedureRenaming();
+            case EsterelPackage.TASK_RENAMING: return createTaskRenaming();
+            case EsterelPackage.SIGNAL_RENAMING: return createSignalRenaming();
+            case EsterelPackage.SUSPEND: return createSuspend();
+            case EsterelPackage.WEAK_SUSPEND: return createWeakSuspend();
+            case EsterelPackage.SUSTAIN: return createSustain();
+            case EsterelPackage.TRAP: return createTrap();
+            case EsterelPackage.TRAP_DECL_LIST: return createTrapDeclList();
+            case EsterelPackage.TRAP_HANDLER: return createTrapHandler();
+            case EsterelPackage.LOCAL_VARIABLE: return createLocalVariable();
+            case EsterelPackage.GOTO: return createGoto();
+            case EsterelPackage.LABEL: return createLabel();
+            case EsterelPackage.DELAY_EXPR: return createDelayExpr();
+            case EsterelPackage.DELAY_EVENT: return createDelayEvent();
+            case EsterelPackage.EXEC: return createExec();
+            case EsterelPackage.EXEC_BODY: return createExecBody();
+            case EsterelPackage.EXEC_CASE: return createExecCase();
+            case EsterelPackage.ESTEREL_TYPE_IDENTIFIER: return createEsterelTypeIdentifier();
+            case EsterelPackage.ESTEREL_TYPE: return createEsterelType();
+            case EsterelPackage.LOCAL_SIGNAL: return createLocalSignal();
+            case EsterelPackage.RELATION: return createRelation();
+            case EsterelPackage.CONSTANT: return createConstant();
+            case EsterelPackage.PARALLEL: return createParallel();
+            case EsterelPackage.SEQUENCE: return createSequence();
+            case EsterelPackage.WEAK_ABORT: return createWeakAbort();
+            case EsterelPackage.WEAK_ABORT_INSTANCE: return createWeakAbortInstance();
+            case EsterelPackage.WEAK_ABORT_CASE: return createWeakAbortCase();
+            case EsterelPackage.TRAP_DECL: return createTrapDecl();
+            case EsterelPackage.TRAP_EXPRESSION: return createTrapExpression();
+            case EsterelPackage.FUNCTION_EXPRESSION: return createFunctionExpression();
+            case EsterelPackage.CONSTANT_EXPRESSION: return createConstantExpression();
+            case EsterelPackage.TRAP_REFERENCE_EXPR: return createTrapReferenceExpr();
+            default:
+                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+        }
     }
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Program createProgram()
   {
-    ProgramImpl program = new ProgramImpl();
-    return program;
-  }
+        ProgramImpl program = new ProgramImpl();
+        return program;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Module createModule()
   {
-    ModuleImpl module = new ModuleImpl();
-    return module;
-  }
+        ModuleImpl module = new ModuleImpl();
+        return module;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ModuleBody createModuleBody()
   {
-    ModuleBodyImpl moduleBody = new ModuleBodyImpl();
-    return moduleBody;
-  }
+        ModuleBodyImpl moduleBody = new ModuleBodyImpl();
+        return moduleBody;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ModuleInterface createModuleInterface()
   {
-    ModuleInterfaceImpl moduleInterface = new ModuleInterfaceImpl();
-    return moduleInterface;
-  }
+        ModuleInterfaceImpl moduleInterface = new ModuleInterfaceImpl();
+        return moduleInterface;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ChannelDescription createChannelDescription()
   {
-    ChannelDescriptionImpl channelDescription = new ChannelDescriptionImpl();
-    return channelDescription;
-  }
+        ChannelDescriptionImpl channelDescription = new ChannelDescriptionImpl();
+        return channelDescription;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public TypeIdentifier createTypeIdentifier()
   {
-    TypeIdentifierImpl typeIdentifier = new TypeIdentifierImpl();
-    return typeIdentifier;
-  }
+        TypeIdentifierImpl typeIdentifier = new TypeIdentifierImpl();
+        return typeIdentifier;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public LocalSignalDecl createLocalSignalDecl()
   {
-    LocalSignalDeclImpl localSignalDecl = new LocalSignalDeclImpl();
-    return localSignalDecl;
-  }
+        LocalSignalDeclImpl localSignalDecl = new LocalSignalDeclImpl();
+        return localSignalDecl;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public LocalSignalList createLocalSignalList()
   {
-    LocalSignalListImpl localSignalList = new LocalSignalListImpl();
-    return localSignalList;
-  }
+        LocalSignalListImpl localSignalList = new LocalSignalListImpl();
+        return localSignalList;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public SensorDecl createSensorDecl()
   {
-    SensorDeclImpl sensorDecl = new SensorDeclImpl();
-    return sensorDecl;
-  }
+        SensorDeclImpl sensorDecl = new SensorDeclImpl();
+        return sensorDecl;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public SensorWithType createSensorWithType()
   {
-    SensorWithTypeImpl sensorWithType = new SensorWithTypeImpl();
-    return sensorWithType;
-  }
+        SensorWithTypeImpl sensorWithType = new SensorWithTypeImpl();
+        return sensorWithType;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public RelationDecl createRelationDecl()
   {
-    RelationDeclImpl relationDecl = new RelationDeclImpl();
-    return relationDecl;
-  }
+        RelationDeclImpl relationDecl = new RelationDeclImpl();
+        return relationDecl;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public RelationType createRelationType()
   {
-    RelationTypeImpl relationType = new RelationTypeImpl();
-    return relationType;
-  }
+        RelationTypeImpl relationType = new RelationTypeImpl();
+        return relationType;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public RelationImplication createRelationImplication()
   {
-    RelationImplicationImpl relationImplication = new RelationImplicationImpl();
-    return relationImplication;
-  }
+        RelationImplicationImpl relationImplication = new RelationImplicationImpl();
+        return relationImplication;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public RelationIncompatibility createRelationIncompatibility()
   {
-    RelationIncompatibilityImpl relationIncompatibility = new RelationIncompatibilityImpl();
-    return relationIncompatibility;
-  }
+        RelationIncompatibilityImpl relationIncompatibility = new RelationIncompatibilityImpl();
+        return relationIncompatibility;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public TypeDecl createTypeDecl()
   {
-    TypeDeclImpl typeDecl = new TypeDeclImpl();
-    return typeDecl;
-  }
+        TypeDeclImpl typeDecl = new TypeDeclImpl();
+        return typeDecl;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Type createType()
   {
-    TypeImpl type = new TypeImpl();
-    return type;
-  }
+        TypeImpl type = new TypeImpl();
+        return type;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ConstantDecls createConstantDecls()
   {
-    ConstantDeclsImpl constantDecls = new ConstantDeclsImpl();
-    return constantDecls;
-  }
+        ConstantDeclsImpl constantDecls = new ConstantDeclsImpl();
+        return constantDecls;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public OneTypeConstantDecls createOneTypeConstantDecls()
   {
-    OneTypeConstantDeclsImpl oneTypeConstantDecls = new OneTypeConstantDeclsImpl();
-    return oneTypeConstantDecls;
-  }
+        OneTypeConstantDeclsImpl oneTypeConstantDecls = new OneTypeConstantDeclsImpl();
+        return oneTypeConstantDecls;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ConstantWithValue createConstantWithValue()
   {
-    ConstantWithValueImpl constantWithValue = new ConstantWithValueImpl();
-    return constantWithValue;
-  }
+        ConstantWithValueImpl constantWithValue = new ConstantWithValueImpl();
+        return constantWithValue;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public FunctionDecl createFunctionDecl()
   {
-    FunctionDeclImpl functionDecl = new FunctionDeclImpl();
-    return functionDecl;
-  }
+        FunctionDeclImpl functionDecl = new FunctionDeclImpl();
+        return functionDecl;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Function createFunction()
   {
-    FunctionImpl function = new FunctionImpl();
-    return function;
-  }
+        FunctionImpl function = new FunctionImpl();
+        return function;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ProcedureDecl createProcedureDecl()
   {
-    ProcedureDeclImpl procedureDecl = new ProcedureDeclImpl();
-    return procedureDecl;
-  }
+        ProcedureDeclImpl procedureDecl = new ProcedureDeclImpl();
+        return procedureDecl;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Procedure createProcedure()
   {
-    ProcedureImpl procedure = new ProcedureImpl();
-    return procedure;
-  }
+        ProcedureImpl procedure = new ProcedureImpl();
+        return procedure;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public TaskDecl createTaskDecl()
   {
-    TaskDeclImpl taskDecl = new TaskDeclImpl();
-    return taskDecl;
-  }
+        TaskDeclImpl taskDecl = new TaskDeclImpl();
+        return taskDecl;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Task createTask()
   {
-    TaskImpl task = new TaskImpl();
-    return task;
-  }
+        TaskImpl task = new TaskImpl();
+        return task;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public StatementContainer createStatementContainer()
   {
-    StatementContainerImpl statementContainer = new StatementContainerImpl();
-    return statementContainer;
-  }
+        StatementContainerImpl statementContainer = new StatementContainerImpl();
+        return statementContainer;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Statement createStatement()
   {
-    StatementImpl statement = new StatementImpl();
-    return statement;
-  }
+        StatementImpl statement = new StatementImpl();
+        return statement;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Block createBlock()
   {
-    BlockImpl block = new BlockImpl();
-    return block;
-  }
+        BlockImpl block = new BlockImpl();
+        return block;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Assignment createAssignment()
   {
-    AssignmentImpl assignment = new AssignmentImpl();
-    return assignment;
-  }
+        AssignmentImpl assignment = new AssignmentImpl();
+        return assignment;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Abort createAbort()
   {
-    AbortImpl abort = new AbortImpl();
-    return abort;
-  }
+        AbortImpl abort = new AbortImpl();
+        return abort;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public AbortBody createAbortBody()
   {
-    AbortBodyImpl abortBody = new AbortBodyImpl();
-    return abortBody;
-  }
+        AbortBodyImpl abortBody = new AbortBodyImpl();
+        return abortBody;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public AbortInstance createAbortInstance()
   {
-    AbortInstanceImpl abortInstance = new AbortInstanceImpl();
-    return abortInstance;
-  }
+        AbortInstanceImpl abortInstance = new AbortInstanceImpl();
+        return abortInstance;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public AbortCase createAbortCase()
   {
-    AbortCaseImpl abortCase = new AbortCaseImpl();
-    return abortCase;
-  }
+        AbortCaseImpl abortCase = new AbortCaseImpl();
+        return abortCase;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public AbortCaseSingle createAbortCaseSingle()
   {
-    AbortCaseSingleImpl abortCaseSingle = new AbortCaseSingleImpl();
-    return abortCaseSingle;
-  }
+        AbortCaseSingleImpl abortCaseSingle = new AbortCaseSingleImpl();
+        return abortCaseSingle;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public WeakAbortBody createWeakAbortBody()
   {
-    WeakAbortBodyImpl weakAbortBody = new WeakAbortBodyImpl();
-    return weakAbortBody;
-  }
+        WeakAbortBodyImpl weakAbortBody = new WeakAbortBodyImpl();
+        return weakAbortBody;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public WeakAbortEnd createWeakAbortEnd()
   {
-    WeakAbortEndImpl weakAbortEnd = new WeakAbortEndImpl();
-    return weakAbortEnd;
-  }
+        WeakAbortEndImpl weakAbortEnd = new WeakAbortEndImpl();
+        return weakAbortEnd;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public WeakAbortEndAlt createWeakAbortEndAlt()
   {
-    WeakAbortEndAltImpl weakAbortEndAlt = new WeakAbortEndAltImpl();
-    return weakAbortEndAlt;
-  }
+        WeakAbortEndAltImpl weakAbortEndAlt = new WeakAbortEndAltImpl();
+        return weakAbortEndAlt;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Await createAwait()
   {
-    AwaitImpl await = new AwaitImpl();
-    return await;
-  }
+        AwaitImpl await = new AwaitImpl();
+        return await;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public AwaitBody createAwaitBody()
   {
-    AwaitBodyImpl awaitBody = new AwaitBodyImpl();
-    return awaitBody;
-  }
+        AwaitBodyImpl awaitBody = new AwaitBodyImpl();
+        return awaitBody;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public AwaitInstance createAwaitInstance()
   {
-    AwaitInstanceImpl awaitInstance = new AwaitInstanceImpl();
-    return awaitInstance;
-  }
+        AwaitInstanceImpl awaitInstance = new AwaitInstanceImpl();
+        return awaitInstance;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public AwaitCase createAwaitCase()
   {
-    AwaitCaseImpl awaitCase = new AwaitCaseImpl();
-    return awaitCase;
-  }
+        AwaitCaseImpl awaitCase = new AwaitCaseImpl();
+        return awaitCase;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ProcCall createProcCall()
   {
-    ProcCallImpl procCall = new ProcCallImpl();
-    return procCall;
-  }
+        ProcCallImpl procCall = new ProcCallImpl();
+        return procCall;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Do createDo()
   {
-    DoImpl do_ = new DoImpl();
-    return do_;
-  }
+        DoImpl do_ = new DoImpl();
+        return do_;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public DoUpto createDoUpto()
   {
-    DoUptoImpl doUpto = new DoUptoImpl();
-    return doUpto;
-  }
+        DoUptoImpl doUpto = new DoUptoImpl();
+        return doUpto;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public DoWatching createDoWatching()
   {
-    DoWatchingImpl doWatching = new DoWatchingImpl();
-    return doWatching;
-  }
+        DoWatchingImpl doWatching = new DoWatchingImpl();
+        return doWatching;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public DoWatchingEnd createDoWatchingEnd()
   {
-    DoWatchingEndImpl doWatchingEnd = new DoWatchingEndImpl();
-    return doWatchingEnd;
-  }
+        DoWatchingEndImpl doWatchingEnd = new DoWatchingEndImpl();
+        return doWatchingEnd;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Emit createEmit()
   {
-    EmitImpl emit = new EmitImpl();
-    return emit;
-  }
+        EmitImpl emit = new EmitImpl();
+        return emit;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public EveryDo createEveryDo()
   {
-    EveryDoImpl everyDo = new EveryDoImpl();
-    return everyDo;
-  }
+        EveryDoImpl everyDo = new EveryDoImpl();
+        return everyDo;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Exit createExit()
   {
-    ExitImpl exit = new ExitImpl();
-    return exit;
-  }
+        ExitImpl exit = new ExitImpl();
+        return exit;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Halt createHalt()
   {
-    HaltImpl halt = new HaltImpl();
-    return halt;
-  }
+        HaltImpl halt = new HaltImpl();
+        return halt;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public IfTest createIfTest()
   {
-    IfTestImpl ifTest = new IfTestImpl();
-    return ifTest;
-  }
+        IfTestImpl ifTest = new IfTestImpl();
+        return ifTest;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ElsIf createElsIf()
   {
-    ElsIfImpl elsIf = new ElsIfImpl();
-    return elsIf;
-  }
+        ElsIfImpl elsIf = new ElsIfImpl();
+        return elsIf;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ThenPart createThenPart()
   {
-    ThenPartImpl thenPart = new ThenPartImpl();
-    return thenPart;
-  }
+        ThenPartImpl thenPart = new ThenPartImpl();
+        return thenPart;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ElsePart createElsePart()
   {
-    ElsePartImpl elsePart = new ElsePartImpl();
-    return elsePart;
-  }
+        ElsePartImpl elsePart = new ElsePartImpl();
+        return elsePart;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Loop createLoop()
   {
-    LoopImpl loop = new LoopImpl();
-    return loop;
-  }
+        LoopImpl loop = new LoopImpl();
+        return loop;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public EndLoop createEndLoop()
   {
-    EndLoopImpl endLoop = new EndLoopImpl();
-    return endLoop;
-  }
+        EndLoopImpl endLoop = new EndLoopImpl();
+        return endLoop;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public LoopEach createLoopEach()
   {
-    LoopEachImpl loopEach = new LoopEachImpl();
-    return loopEach;
-  }
+        LoopEachImpl loopEach = new LoopEachImpl();
+        return loopEach;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public LoopDelay createLoopDelay()
   {
-    LoopDelayImpl loopDelay = new LoopDelayImpl();
-    return loopDelay;
-  }
+        LoopDelayImpl loopDelay = new LoopDelayImpl();
+        return loopDelay;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public LoopBody createLoopBody()
   {
-    LoopBodyImpl loopBody = new LoopBodyImpl();
-    return loopBody;
-  }
+        LoopBodyImpl loopBody = new LoopBodyImpl();
+        return loopBody;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Nothing createNothing()
   {
-    NothingImpl nothing = new NothingImpl();
-    return nothing;
-  }
+        NothingImpl nothing = new NothingImpl();
+        return nothing;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Pause createPause()
   {
-    PauseImpl pause = new PauseImpl();
-    return pause;
-  }
+        PauseImpl pause = new PauseImpl();
+        return pause;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Present createPresent()
   {
-    PresentImpl present = new PresentImpl();
-    return present;
-  }
+        PresentImpl present = new PresentImpl();
+        return present;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public PresentBody createPresentBody()
   {
-    PresentBodyImpl presentBody = new PresentBodyImpl();
-    return presentBody;
-  }
+        PresentBodyImpl presentBody = new PresentBodyImpl();
+        return presentBody;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public PresentEventBody createPresentEventBody()
   {
-    PresentEventBodyImpl presentEventBody = new PresentEventBodyImpl();
-    return presentEventBody;
-  }
+        PresentEventBodyImpl presentEventBody = new PresentEventBodyImpl();
+        return presentEventBody;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public PresentCaseList createPresentCaseList()
   {
-    PresentCaseListImpl presentCaseList = new PresentCaseListImpl();
-    return presentCaseList;
-  }
+        PresentCaseListImpl presentCaseList = new PresentCaseListImpl();
+        return presentCaseList;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public PresentCase createPresentCase()
   {
-    PresentCaseImpl presentCase = new PresentCaseImpl();
-    return presentCase;
-  }
+        PresentCaseImpl presentCase = new PresentCaseImpl();
+        return presentCase;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public PresentEvent createPresentEvent()
   {
-    PresentEventImpl presentEvent = new PresentEventImpl();
-    return presentEvent;
-  }
+        PresentEventImpl presentEvent = new PresentEventImpl();
+        return presentEvent;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Repeat createRepeat()
   {
-    RepeatImpl repeat = new RepeatImpl();
-    return repeat;
-  }
+        RepeatImpl repeat = new RepeatImpl();
+        return repeat;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Run createRun()
   {
-    RunImpl run = new RunImpl();
-    return run;
-  }
+        RunImpl run = new RunImpl();
+        return run;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ModuleRenaming createModuleRenaming()
   {
-    ModuleRenamingImpl moduleRenaming = new ModuleRenamingImpl();
-    return moduleRenaming;
-  }
+        ModuleRenamingImpl moduleRenaming = new ModuleRenamingImpl();
+        return moduleRenaming;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public RenamingList createRenamingList()
   {
-    RenamingListImpl renamingList = new RenamingListImpl();
-    return renamingList;
-  }
+        RenamingListImpl renamingList = new RenamingListImpl();
+        return renamingList;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Renaming createRenaming()
   {
-    RenamingImpl renaming = new RenamingImpl();
-    return renaming;
-  }
+        RenamingImpl renaming = new RenamingImpl();
+        return renaming;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public TypeRenaming createTypeRenaming()
   {
-    TypeRenamingImpl typeRenaming = new TypeRenamingImpl();
-    return typeRenaming;
-  }
+        TypeRenamingImpl typeRenaming = new TypeRenamingImpl();
+        return typeRenaming;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ConstantRenaming createConstantRenaming()
   {
-    ConstantRenamingImpl constantRenaming = new ConstantRenamingImpl();
-    return constantRenaming;
-  }
+        ConstantRenamingImpl constantRenaming = new ConstantRenamingImpl();
+        return constantRenaming;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public FunctionRenaming createFunctionRenaming()
   {
-    FunctionRenamingImpl functionRenaming = new FunctionRenamingImpl();
-    return functionRenaming;
-  }
+        FunctionRenamingImpl functionRenaming = new FunctionRenamingImpl();
+        return functionRenaming;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ProcedureRenaming createProcedureRenaming()
   {
-    ProcedureRenamingImpl procedureRenaming = new ProcedureRenamingImpl();
-    return procedureRenaming;
-  }
+        ProcedureRenamingImpl procedureRenaming = new ProcedureRenamingImpl();
+        return procedureRenaming;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public TaskRenaming createTaskRenaming()
   {
-    TaskRenamingImpl taskRenaming = new TaskRenamingImpl();
-    return taskRenaming;
-  }
+        TaskRenamingImpl taskRenaming = new TaskRenamingImpl();
+        return taskRenaming;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public SignalRenaming createSignalRenaming()
   {
-    SignalRenamingImpl signalRenaming = new SignalRenamingImpl();
-    return signalRenaming;
-  }
+        SignalRenamingImpl signalRenaming = new SignalRenamingImpl();
+        return signalRenaming;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Suspend createSuspend()
   {
-    SuspendImpl suspend = new SuspendImpl();
-    return suspend;
-  }
+        SuspendImpl suspend = new SuspendImpl();
+        return suspend;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
+  public WeakSuspend createWeakSuspend()
+  {
+        WeakSuspendImpl weakSuspend = new WeakSuspendImpl();
+        return weakSuspend;
+    }
+
+  /**
+     * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+     * @generated
+     */
   public Sustain createSustain()
   {
-    SustainImpl sustain = new SustainImpl();
-    return sustain;
-  }
+        SustainImpl sustain = new SustainImpl();
+        return sustain;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Trap createTrap()
   {
-    TrapImpl trap = new TrapImpl();
-    return trap;
-  }
+        TrapImpl trap = new TrapImpl();
+        return trap;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public TrapDeclList createTrapDeclList()
   {
-    TrapDeclListImpl trapDeclList = new TrapDeclListImpl();
-    return trapDeclList;
-  }
+        TrapDeclListImpl trapDeclList = new TrapDeclListImpl();
+        return trapDeclList;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public TrapHandler createTrapHandler()
   {
-    TrapHandlerImpl trapHandler = new TrapHandlerImpl();
-    return trapHandler;
-  }
+        TrapHandlerImpl trapHandler = new TrapHandlerImpl();
+        return trapHandler;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public LocalVariable createLocalVariable()
   {
-    LocalVariableImpl localVariable = new LocalVariableImpl();
-    return localVariable;
-  }
+        LocalVariableImpl localVariable = new LocalVariableImpl();
+        return localVariable;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
+  public Goto createGoto()
+  {
+        GotoImpl goto_ = new GotoImpl();
+        return goto_;
+    }
+
+  /**
+     * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+     * @generated
+     */
+  public Label createLabel()
+  {
+        LabelImpl label = new LabelImpl();
+        return label;
+    }
+
+  /**
+     * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+     * @generated
+     */
   public DelayExpr createDelayExpr()
   {
-    DelayExprImpl delayExpr = new DelayExprImpl();
-    return delayExpr;
-  }
+        DelayExprImpl delayExpr = new DelayExprImpl();
+        return delayExpr;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public DelayEvent createDelayEvent()
   {
-    DelayEventImpl delayEvent = new DelayEventImpl();
-    return delayEvent;
-  }
+        DelayEventImpl delayEvent = new DelayEventImpl();
+        return delayEvent;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Exec createExec()
   {
-    ExecImpl exec = new ExecImpl();
-    return exec;
-  }
+        ExecImpl exec = new ExecImpl();
+        return exec;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ExecBody createExecBody()
   {
-    ExecBodyImpl execBody = new ExecBodyImpl();
-    return execBody;
-  }
+        ExecBodyImpl execBody = new ExecBodyImpl();
+        return execBody;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ExecCase createExecCase()
   {
-    ExecCaseImpl execCase = new ExecCaseImpl();
-    return execCase;
-  }
+        ExecCaseImpl execCase = new ExecCaseImpl();
+        return execCase;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public EsterelTypeIdentifier createEsterelTypeIdentifier()
   {
-    EsterelTypeIdentifierImpl esterelTypeIdentifier = new EsterelTypeIdentifierImpl();
-    return esterelTypeIdentifier;
-  }
+        EsterelTypeIdentifierImpl esterelTypeIdentifier = new EsterelTypeIdentifierImpl();
+        return esterelTypeIdentifier;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public EsterelType createEsterelType()
   {
-    EsterelTypeImpl esterelType = new EsterelTypeImpl();
-    return esterelType;
-  }
+        EsterelTypeImpl esterelType = new EsterelTypeImpl();
+        return esterelType;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public LocalSignal createLocalSignal()
   {
-    LocalSignalImpl localSignal = new LocalSignalImpl();
-    return localSignal;
-  }
+        LocalSignalImpl localSignal = new LocalSignalImpl();
+        return localSignal;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Relation createRelation()
   {
-    RelationImpl relation = new RelationImpl();
-    return relation;
-  }
+        RelationImpl relation = new RelationImpl();
+        return relation;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Constant createConstant()
   {
-    ConstantImpl constant = new ConstantImpl();
-    return constant;
-  }
+        ConstantImpl constant = new ConstantImpl();
+        return constant;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Parallel createParallel()
   {
-    ParallelImpl parallel = new ParallelImpl();
-    return parallel;
-  }
+        ParallelImpl parallel = new ParallelImpl();
+        return parallel;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Sequence createSequence()
   {
-    SequenceImpl sequence = new SequenceImpl();
-    return sequence;
-  }
+        SequenceImpl sequence = new SequenceImpl();
+        return sequence;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public WeakAbort createWeakAbort()
   {
-    WeakAbortImpl weakAbort = new WeakAbortImpl();
-    return weakAbort;
-  }
+        WeakAbortImpl weakAbort = new WeakAbortImpl();
+        return weakAbort;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public WeakAbortInstance createWeakAbortInstance()
   {
-    WeakAbortInstanceImpl weakAbortInstance = new WeakAbortInstanceImpl();
-    return weakAbortInstance;
-  }
+        WeakAbortInstanceImpl weakAbortInstance = new WeakAbortInstanceImpl();
+        return weakAbortInstance;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public WeakAbortCase createWeakAbortCase()
   {
-    WeakAbortCaseImpl weakAbortCase = new WeakAbortCaseImpl();
-    return weakAbortCase;
-  }
+        WeakAbortCaseImpl weakAbortCase = new WeakAbortCaseImpl();
+        return weakAbortCase;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public TrapDecl createTrapDecl()
   {
-    TrapDeclImpl trapDecl = new TrapDeclImpl();
-    return trapDecl;
-  }
+        TrapDeclImpl trapDecl = new TrapDeclImpl();
+        return trapDecl;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public TrapExpression createTrapExpression()
   {
-    TrapExpressionImpl trapExpression = new TrapExpressionImpl();
-    return trapExpression;
-  }
+        TrapExpressionImpl trapExpression = new TrapExpressionImpl();
+        return trapExpression;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public FunctionExpression createFunctionExpression()
   {
-    FunctionExpressionImpl functionExpression = new FunctionExpressionImpl();
-    return functionExpression;
-  }
+        FunctionExpressionImpl functionExpression = new FunctionExpressionImpl();
+        return functionExpression;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ConstantExpression createConstantExpression()
   {
-    ConstantExpressionImpl constantExpression = new ConstantExpressionImpl();
-    return constantExpression;
-  }
+        ConstantExpressionImpl constantExpression = new ConstantExpressionImpl();
+        return constantExpression;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public TrapReferenceExpr createTrapReferenceExpr()
   {
-    TrapReferenceExprImpl trapReferenceExpr = new TrapReferenceExprImpl();
-    return trapReferenceExpr;
-  }
+        TrapReferenceExprImpl trapReferenceExpr = new TrapReferenceExprImpl();
+        return trapReferenceExpr;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public EsterelPackage getEsterelPackage()
   {
-    return (EsterelPackage)getEPackage();
-  }
+        return (EsterelPackage)getEPackage();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @deprecated
-   * @generated
-   */
+     * @deprecated
+     * @generated
+     */
   @Deprecated
   public static EsterelPackage getPackage()
   {
-    return EsterelPackage.eINSTANCE;
-  }
+        return EsterelPackage.eINSTANCE;
+    }
 
 } //EsterelFactoryImpl

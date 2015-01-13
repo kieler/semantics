@@ -37,7 +37,7 @@
             uri="http://kieler.cs.cau.de/scgsched/0.1.0">
       </package>
    </extension>
-   <extension
+    <extension
          point="de.cau.cs.kieler.kico.transformation">
       <transformationMethod
             class="de.cau.cs.kieler.scg.transformations.DependencyTransformation"
@@ -48,14 +48,14 @@
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scg.transformations.BasicBlockTransformation"
-            dependencies="SCGGC"
+            dependencies="SCGSCHEDGROUP"
             id="SCGBB"
             method="transform"
             name="BasicBlocks">
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scg.transformations.BasicBlockTransformationSCplus"
-            dependencies="SCGGC"
+            dependencies="SCGSCHEDGROUP"
             id="SCGBBSCPLUS"
             method="transform"
             name="BasicBlocksSCplus">
@@ -66,26 +66,74 @@
             name="Basic Blocks"
             transformations="SCGBB, SCGBBSCPLUS">
       </transformationGroup>
+      <transformationGroup
+            alternatives="true"
+            id="SCGSCHEDGROUP"
+            name="Scheduler"
+            transformations="SCGSCHEDDELAYAWARE, SCGSCHEDSIMPLE, SCGSCHEDTHREADAWARE">
+      </transformationGroup>
       <transformationMethod
-            class="de.cau.cs.kieler.scg.guardCreation.GuardCreator"
-            dependencies="SCGSCHEDULE"
-            id="SCGGC"
-            method="transform"
-            name="Guards">
-      </transformationMethod>
-      <transformationMethod
-            class="de.cau.cs.kieler.scg.schedulers.GuardScheduler"
-            dependencies="SCGSEQUENTIALIZE"
-            id="SCGSCHEDULE"
+            class="de.cau.cs.kieler.scg.schedulers.SimpleScheduler"
+            dependencies="SCGSEQGROUP"
+            id="SCGSCHEDSIMPLE"
             method="schedule"
-            name="Scheduling">
+            name="Simple">
       </transformationMethod>
       <transformationMethod
-            class="de.cau.cs.kieler.scg.sequentializer.GuardSequentializer"
+            class="de.cau.cs.kieler.scg.schedulers.DelayAwareScheduler"
+            dependencies="SCGSEQGROUP"
+            id="SCGSCHEDDELAYAWARE"
+            method="schedule"
+            name="Delay Aware">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.schedulers.ThreadAwareScheduler"
+            dependencies="SCGSEQGROUP"
+            id="SCGSCHEDTHREADAWARE"
+            method="schedule"
+            name="Thread Aware">
+      </transformationMethod>
+      <transformationGroup
+            alternatives="true"
+            id="SCGSEQGROUP"
+            name="Sequentializer"
+            transformations="SCGSEQSIMPLE, SCGSEQHYBRID">
+      </transformationGroup>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.sequentializer.SimpleSequentializer"
             dependencies="SCG2S"
-            id="SCGSEQUENTIALIZE"
+            id="SCGSEQSIMPLE"
             method="sequentialize"
-            name="Sequentialize">
+            name="Simple">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.sequentializer.HybridSequentializer"
+            dependencies="SCG2S"
+            id="SCGSEQHYBRID"
+            method="sequentialize"
+            name="Hybrid">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.optimizations.ConstantConditionals"
+            id="CONSTCONDS"
+            method="transform">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.optimizations.UnreachableNodes"
+            id="UNREACHABLE_NODES"
+            method="transform">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.optimizations.Optimize"
+            dependencies="SCGDEP"
+            id="SCGOPT"
+            method="transform"
+            name="SCG Optimization">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.optimizations.ReplaceUnusedVariables"
+            id="UNUSED_VARIABLES"
+            method="transform">
       </transformationMethod>
    </extension>
 

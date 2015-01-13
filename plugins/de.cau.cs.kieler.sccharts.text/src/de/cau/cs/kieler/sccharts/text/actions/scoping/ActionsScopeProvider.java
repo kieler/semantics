@@ -36,6 +36,8 @@ public class ActionsScopeProvider extends AbstractDeclarativeScopeProvider {
 
     @Override
     public IScope getScope(EObject context, EReference reference) {
+        System.out.println("Context: " + context);
+        System.out.println("Static parent: " + parent);
         if (parent != null){
                 IScope scope = createHierarchicScope(parent);
                 return scope;
@@ -46,21 +48,23 @@ public class ActionsScopeProvider extends AbstractDeclarativeScopeProvider {
 
     @SuppressWarnings("unchecked")
     private Iterable<IEObjectDescription> getElements(EObject parent){
+        System.out.println("Parent: " + parent);
         ArrayList<IEObjectDescription> elements = new ArrayList<IEObjectDescription>();
                 if (parent != null && parent instanceof Scope) {
-                		List<Declaration> declarations = ((Scope) parent).getDeclarations();
-                		for (Declaration declaration : declarations) {
-                			List<ValuedObject> valuedObjects = declaration.getValuedObjects();
-                			for (ValuedObject valuedObject : valuedObjects) {
-                				elements.add(new EObjectDescription(QualifiedName.create(
+                                List<Declaration> declarations = ((Scope) parent).getDeclarations();
+                                for (Declaration declaration : declarations) {
+                                        List<ValuedObject> valuedObjects = declaration.getValuedObjects();
+                                        for (ValuedObject valuedObject : valuedObjects) {
+                                                elements.add(new EObjectDescription(QualifiedName.create(
                                         valuedObject.getName()), valuedObject, Collections.EMPTY_MAP));
-                			}
-                		}
+                                        }
+                                }
                 }
                 return elements;
     }
 
     private IScope createHierarchicScope(EObject child){
+        System.out.println("Child: " + child);
         if(child.eContainer()!=null){
                 IScope parentScope = createHierarchicScope(child.eContainer());
                 SimpleScope scope = new SimpleScope(parentScope, this.getElements(child));

@@ -1,0 +1,35 @@
+.model various2
+
+.outputs inv1 inv2 inv3
+
+.latch c4q c4 0
+.latch c2q c2 0
+.latch c1q c1 0
+ 
+.names c1 c1q
+0 1
+ 
+.names c1 c2inv
+1 1
+ 
+.names c2inv c2 c2q
+01 1
+10 1
+ 
+.names c1 c2 c4inv
+11 1
+ 
+.names c4inv c4 c4q
+00 0
+11 0
+
+.names c1 inv1
+0 1
+
+.names inv1 inv2
+1 0
+
+.names inv2 inv3
+1 1
+
+.end

@@ -1,0 +1,179 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2014 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+package de.cau.cs.kieler.esterel.scl.transformations
+
+import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
+import de.cau.cs.kieler.esterel.esterel.ConstantDecls
+import de.cau.cs.kieler.esterel.esterel.ModuleInterface
+import de.cau.cs.kieler.esterel.esterel.SensorDecl
+import de.cau.cs.kieler.esterel.kexpressions.Input
+import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl
+import de.cau.cs.kieler.esterel.kexpressions.Output
+import de.cau.cs.kieler.esterel.kexpressions.VariableDecl
+import de.cau.cs.kieler.scl.scl.SCLProgram
+import org.eclipse.xtext.xbase.lib.InputOutput
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import java.util.LinkedList
+import java.util.HashMap
+
+/**
+ * @author krat
+ *
+ */
+class TransformInterface {
+
+    @Inject
+    extension KExpressionsExtension
+
+    @Inject
+    extension EsterelToSclExtensions
+    
+    @Inject
+    extension EsterelToSclTransformation
+
+    @Inject
+    extension TransformExpression
+
+    /*
+     * Transforms an Esterel module interface to Kexpression declarations
+     */
+    def transformInterface(ModuleInterface modInterface, SCLProgram program,
+        LinkedList<Pair<String, ValuedObject>> signalMap) {
+        if (modInterface != null) {
+            modInterface.intConstantDecls.forEach[ transformSingleDeclartion(it, program, signalMap) ]
+            modInterface.intSignalDecls.forEach[ transformSingleDeclartion(it, program, signalMap) ]
+            modInterface.intSensorDecls.forEach[ transformSingleDeclartion(it, program, signalMap) ]
+        }
+    }
+
+    def transformSingleDeclartion(InterfaceSignalDecl decl, SCLProgram program, 
+        LinkedList<Pair<String, ValuedObject>> signalMap) {
+        for (sig : decl.signals) {
+            val pureSig = createValuedObject(sig.name)
+            signalMap.add(sig.name -> pureSig)
+            program.declarations += createDeclaration => [
+                input = (decl instanceof Input) || (decl instanceof de.cau.cs.kieler.esterel.kexpressions.InputOutput)
+                output = (decl instanceof Output) || (decl instanceof de.cau.cs.kieler.esterel.kexpressions.InputOutput)
+                type = ValueType::BOOL
+                valuedObjects += pureSig
+            ]
+
+            // If it is a valued signal add a variable for the value
+            if (sig.channelDescr != null) {
+                val s_val = createValuedObject(sig.name + "_val")
+                val type = sig.channelDescr.type.type
+                s_val.combineOperator = sig.channelDescr.type.operator.transformCombineOperator
+                valuedMap.put(pureSig, s_val)
+
+                // Initial value?
+                if (sig.channelDescr.expression != null) {
+                    s_val.initialValue = sig.channelDescr.expression.transformExp(type.toString)
+                }
+                program.declarations += createDeclaration => [
+                    input = decl instanceof Input || decl instanceof InputOutput
+                    output = decl instanceof Output || decl instanceof InputOutput
+                    valuedObjects += s_val
+                    // Check for hostcode type
+                    if (sig.type.name == "PURE" && sig.channelDescr.type.typeID != null) {
+                        it.type = ValueType::HOST
+                        it.hostType = sig.channelDescr.type.typeID
+                    } else {
+                        it.type = ValueType::getByName(type.name)
+                    }
+                ]
+            }
+        }
+    }
+
+    def transformSingleDeclartion(ConstantDecls decl, SCLProgram program,
+        LinkedList<Pair<String, ValuedObject>> signalMap) {
+        for (singleDecl : decl.constants) {
+            // Type of the constant
+            val type = singleDecl.type.type
+            for (constant : singleDecl.constants) {
+                val s_val = createValuedObject(constant.constant.name)
+                signalMap.add(constant.constant.name -> s_val)
+                valuedMap.put(s_val, s_val)
+
+                if (constant.value != null) {
+                    s_val.initialValue = constant.value.transformExp(type.toString)
+                }
+
+                program.declarations += createDeclaration => [
+                    valuedObjects += s_val
+                    it.const = true
+                    if (type.name == "PURE" && singleDecl.type.typeID != null) {
+                        it.type = ValueType::HOST
+                        it.hostType = singleDecl.type.typeID
+                    } else {
+                        it.type = ValueType::getByName(type.name)
+                    }
+                ]
+            }
+        }
+
+    }
+    
+    def transformSingleDeclartion(SensorDecl decl, SCLProgram program,
+        LinkedList<Pair<String, ValuedObject>> signalMap) {
+        for (singleDecl : decl.sensors) {
+                val type = singleDecl.type.type
+                val s_val = createValuedObject(singleDecl.sensor.name)
+                signalMap.add(singleDecl.sensor.name -> s_val)
+                valuedMap.put(s_val, s_val)
+                program.declarations += createDeclaration => [
+                    valuedObjects += s_val
+                    it.type = ValueType::getByName(type.name)
+                    if (type.name == "PURE" && singleDecl.type.typeID != null) {
+                        it.type = ValueType::HOST
+                        it.hostType = singleDecl.type.typeID
+                    } else {
+                        it.type = ValueType::getByName(type.name)
+                    }
+                ]
+        }
+    }
+
+    /*
+     * Transforms a local variable declaration
+     * @param sig The variable to be declared
+     * @param name The resulting variable (should be unique)
+     */
+    def Declaration transformIntVarDeclaration(VariableDecl declaration, LinkedList<Pair<String, ValuedObject>> signals,
+        LinkedList<Pair<String, ValuedObject>> signalMap) {
+        val decl = createDeclaration => [
+            if (declaration.type.type.name != "PURE") {
+                type = ValueType::getByName(declaration.type.type.name)
+            } else {
+                type = ValueType::HOST
+                hostType = declaration.type.typeID
+            }
+        ]
+
+        declaration.variables.forEach [
+            val s_val = createValuedObject(uniqueName(signalMap, it.name))
+            signals.add(it.name -> s_val)
+            signalMap.add(it.name -> s_val)
+            valuedMap.put(s_val, s_val)
+            if (it.expression != null)
+                s_val.initialValue = it.expression.transformExp(declaration.type.type.literal)
+            decl.valuedObjects += s_val
+        ]
+
+        decl
+    }
+}

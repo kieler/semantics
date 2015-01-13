@@ -19,24 +19,24 @@ import org.eclipse.emf.ecore.EClass;
 public class BlockImpl extends StatementContainerImpl implements Block
 {
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected BlockImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.BLOCK;
-  }
+        return EsterelPackage.Literals.BLOCK;
+    }
 
 } //BlockImpl

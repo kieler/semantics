@@ -31,116 +31,111 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 public class RelationIncompatibilityImpl extends RelationTypeImpl implements RelationIncompatibility
 {
   /**
-   * The cached value of the '{@link #getIncomp() <em>Incomp</em>}' reference list.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getIncomp() <em>Incomp</em>}' reference list.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getIncomp()
-   * @generated
-   * @ordered
-   */
+     * @see #getIncomp()
+     * @generated
+     * @ordered
+     */
   protected EList<ISignal> incomp;
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected RelationIncompatibilityImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.RELATION_INCOMPATIBILITY;
-  }
+        return EsterelPackage.Literals.RELATION_INCOMPATIBILITY;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public EList<ISignal> getIncomp()
   {
-    if (incomp == null)
-    {
-      incomp = new EObjectResolvingEList<ISignal>(ISignal.class, this, EsterelPackage.RELATION_INCOMPATIBILITY__INCOMP);
+        if (incomp == null) {
+            incomp = new EObjectResolvingEList<ISignal>(ISignal.class, this, EsterelPackage.RELATION_INCOMPATIBILITY__INCOMP);
+        }
+        return incomp;
     }
-    return incomp;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.RELATION_INCOMPATIBILITY__INCOMP:
-        return getIncomp();
+        switch (featureID) {
+            case EsterelPackage.RELATION_INCOMPATIBILITY__INCOMP:
+                return getIncomp();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.RELATION_INCOMPATIBILITY__INCOMP:
-        getIncomp().clear();
-        getIncomp().addAll((Collection<? extends ISignal>)newValue);
-        return;
+        switch (featureID) {
+            case EsterelPackage.RELATION_INCOMPATIBILITY__INCOMP:
+                getIncomp().clear();
+                getIncomp().addAll((Collection<? extends ISignal>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.RELATION_INCOMPATIBILITY__INCOMP:
-        getIncomp().clear();
-        return;
+        switch (featureID) {
+            case EsterelPackage.RELATION_INCOMPATIBILITY__INCOMP:
+                getIncomp().clear();
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.RELATION_INCOMPATIBILITY__INCOMP:
-        return incomp != null && !incomp.isEmpty();
+        switch (featureID) {
+            case EsterelPackage.RELATION_INCOMPATIBILITY__INCOMP:
+                return incomp != null && !incomp.isEmpty();
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
 } //RelationIncompatibilityImpl

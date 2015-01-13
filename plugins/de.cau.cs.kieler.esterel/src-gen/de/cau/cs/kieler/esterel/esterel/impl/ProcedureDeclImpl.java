@@ -36,132 +36,126 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class ProcedureDeclImpl extends MinimalEObjectImpl.Container implements ProcedureDecl
 {
   /**
-   * The cached value of the '{@link #getProcedures() <em>Procedures</em>}' containment reference list.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getProcedures() <em>Procedures</em>}' containment reference list.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getProcedures()
-   * @generated
-   * @ordered
-   */
+     * @see #getProcedures()
+     * @generated
+     * @ordered
+     */
   protected EList<Procedure> procedures;
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected ProcedureDeclImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.PROCEDURE_DECL;
-  }
+        return EsterelPackage.Literals.PROCEDURE_DECL;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public EList<Procedure> getProcedures()
   {
-    if (procedures == null)
-    {
-      procedures = new EObjectContainmentEList<Procedure>(Procedure.class, this, EsterelPackage.PROCEDURE_DECL__PROCEDURES);
+        if (procedures == null) {
+            procedures = new EObjectContainmentEList<Procedure>(Procedure.class, this, EsterelPackage.PROCEDURE_DECL__PROCEDURES);
+        }
+        return procedures;
     }
-    return procedures;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.PROCEDURE_DECL__PROCEDURES:
-        return ((InternalEList<?>)getProcedures()).basicRemove(otherEnd, msgs);
+        switch (featureID) {
+            case EsterelPackage.PROCEDURE_DECL__PROCEDURES:
+                return ((InternalEList<?>)getProcedures()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.PROCEDURE_DECL__PROCEDURES:
-        return getProcedures();
+        switch (featureID) {
+            case EsterelPackage.PROCEDURE_DECL__PROCEDURES:
+                return getProcedures();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.PROCEDURE_DECL__PROCEDURES:
-        getProcedures().clear();
-        getProcedures().addAll((Collection<? extends Procedure>)newValue);
-        return;
+        switch (featureID) {
+            case EsterelPackage.PROCEDURE_DECL__PROCEDURES:
+                getProcedures().clear();
+                getProcedures().addAll((Collection<? extends Procedure>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.PROCEDURE_DECL__PROCEDURES:
-        getProcedures().clear();
-        return;
+        switch (featureID) {
+            case EsterelPackage.PROCEDURE_DECL__PROCEDURES:
+                getProcedures().clear();
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.PROCEDURE_DECL__PROCEDURES:
-        return procedures != null && !procedures.isEmpty();
+        switch (featureID) {
+            case EsterelPackage.PROCEDURE_DECL__PROCEDURES:
+                return procedures != null && !procedures.isEmpty();
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
 } //ProcedureDeclImpl

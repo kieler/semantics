@@ -30,15 +30,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * An implementation of the model object '<em><b>Conditional</b></em>'.
  * <!-- end-user-doc -->
  * <p>
- * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getStatements <em>Statements</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ConditionalImpl#getElseStatements <em>Else Statements</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */

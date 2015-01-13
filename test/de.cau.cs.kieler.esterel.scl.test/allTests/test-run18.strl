@@ -1,0 +1,25 @@
+module test_run18:
+input A;
+output C;
+
+run mod1 [
+   signal A / B ]
+
+end module
+
+module mod1:
+input B;
+output C;
+
+run mod2
+
+end module
+
+module mod2:
+input B;
+output C;
+
+await B;
+emit C
+
+end module

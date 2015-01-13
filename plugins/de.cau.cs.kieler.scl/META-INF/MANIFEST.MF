@@ -35,8 +35,9 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0",
  de.cau.cs.kieler.sccharts.text.ui,
  de.cau.cs.kieler.scg,
  de.cau.cs.kieler.s
-Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Import-Package: de.cau.cs.kieler.kico,
+ org.apache.log4j
 Export-Package: de.cau.cs.kieler.scl,
  de.cau.cs.kieler.scl.extensions,
  de.cau.cs.kieler.scl.formatting,

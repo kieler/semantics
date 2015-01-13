@@ -45,400 +45,388 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class ExecImpl extends StatementContainerImpl implements Exec
 {
   /**
-   * The cached value of the '{@link #getTask() <em>Task</em>}' reference.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getTask() <em>Task</em>}' reference.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getTask()
-   * @generated
-   * @ordered
-   */
+     * @see #getTask()
+     * @generated
+     * @ordered
+     */
   protected Task task;
 
   /**
-   * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getBody()
-   * @generated
-   * @ordered
-   */
+     * @see #getBody()
+     * @generated
+     * @ordered
+     */
   protected ExecBody body;
 
   /**
-   * The cached value of the '{@link #getRetSignal() <em>Ret Signal</em>}' reference.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getRetSignal() <em>Ret Signal</em>}' reference.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getRetSignal()
-   * @generated
-   * @ordered
-   */
+     * @see #getRetSignal()
+     * @generated
+     * @ordered
+     */
   protected ISignal retSignal;
 
   /**
-   * The cached value of the '{@link #getExecCaseList() <em>Exec Case List</em>}' containment reference list.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getExecCaseList() <em>Exec Case List</em>}' containment reference list.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExecCaseList()
-   * @generated
-   * @ordered
-   */
+     * @see #getExecCaseList()
+     * @generated
+     * @ordered
+     */
   protected EList<ExecCase> execCaseList;
 
   /**
-   * The default value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
-   * <!-- begin-user-doc -->
+     * The default value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOptEnd()
-   * @generated
-   * @ordered
-   */
+     * @see #getOptEnd()
+     * @generated
+     * @ordered
+     */
   protected static final String OPT_END_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
-   * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOptEnd()
-   * @generated
-   * @ordered
-   */
+     * @see #getOptEnd()
+     * @generated
+     * @ordered
+     */
   protected String optEnd = OPT_END_EDEFAULT;
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   protected ExecImpl()
   {
-    super();
-  }
+        super();
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.EXEC;
-  }
+        return EsterelPackage.Literals.EXEC;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Task getTask()
   {
-    if (task != null && task.eIsProxy())
-    {
-      InternalEObject oldTask = (InternalEObject)task;
-      task = (Task)eResolveProxy(oldTask);
-      if (task != oldTask)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.EXEC__TASK, oldTask, task));
-      }
+        if (task != null && task.eIsProxy()) {
+            InternalEObject oldTask = (InternalEObject)task;
+            task = (Task)eResolveProxy(oldTask);
+            if (task != oldTask) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.EXEC__TASK, oldTask, task));
+            }
+        }
+        return task;
     }
-    return task;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public Task basicGetTask()
   {
-    return task;
-  }
+        return task;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public void setTask(Task newTask)
   {
-    Task oldTask = task;
-    task = newTask;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EXEC__TASK, oldTask, task));
-  }
+        Task oldTask = task;
+        task = newTask;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EXEC__TASK, oldTask, task));
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ExecBody getBody()
   {
-    return body;
-  }
+        return body;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public NotificationChain basicSetBody(ExecBody newBody, NotificationChain msgs)
   {
-    ExecBody oldBody = body;
-    body = newBody;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.EXEC__BODY, oldBody, newBody);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+        ExecBody oldBody = body;
+        body = newBody;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.EXEC__BODY, oldBody, newBody);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
     }
-    return msgs;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public void setBody(ExecBody newBody)
   {
-    if (newBody != body)
-    {
-      NotificationChain msgs = null;
-      if (body != null)
-        msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.EXEC__BODY, null, msgs);
-      if (newBody != null)
-        msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.EXEC__BODY, null, msgs);
-      msgs = basicSetBody(newBody, msgs);
-      if (msgs != null) msgs.dispatch();
+        if (newBody != body) {
+            NotificationChain msgs = null;
+            if (body != null)
+                msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.EXEC__BODY, null, msgs);
+            if (newBody != null)
+                msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.EXEC__BODY, null, msgs);
+            msgs = basicSetBody(newBody, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EXEC__BODY, newBody, newBody));
     }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EXEC__BODY, newBody, newBody));
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ISignal getRetSignal()
   {
-    if (retSignal != null && retSignal.eIsProxy())
-    {
-      InternalEObject oldRetSignal = (InternalEObject)retSignal;
-      retSignal = (ISignal)eResolveProxy(oldRetSignal);
-      if (retSignal != oldRetSignal)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.EXEC__RET_SIGNAL, oldRetSignal, retSignal));
-      }
+        if (retSignal != null && retSignal.eIsProxy()) {
+            InternalEObject oldRetSignal = (InternalEObject)retSignal;
+            retSignal = (ISignal)eResolveProxy(oldRetSignal);
+            if (retSignal != oldRetSignal) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.EXEC__RET_SIGNAL, oldRetSignal, retSignal));
+            }
+        }
+        return retSignal;
     }
-    return retSignal;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public ISignal basicGetRetSignal()
   {
-    return retSignal;
-  }
+        return retSignal;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public void setRetSignal(ISignal newRetSignal)
   {
-    ISignal oldRetSignal = retSignal;
-    retSignal = newRetSignal;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EXEC__RET_SIGNAL, oldRetSignal, retSignal));
-  }
+        ISignal oldRetSignal = retSignal;
+        retSignal = newRetSignal;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EXEC__RET_SIGNAL, oldRetSignal, retSignal));
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public EList<ExecCase> getExecCaseList()
   {
-    if (execCaseList == null)
-    {
-      execCaseList = new EObjectContainmentEList<ExecCase>(ExecCase.class, this, EsterelPackage.EXEC__EXEC_CASE_LIST);
+        if (execCaseList == null) {
+            execCaseList = new EObjectContainmentEList<ExecCase>(ExecCase.class, this, EsterelPackage.EXEC__EXEC_CASE_LIST);
+        }
+        return execCaseList;
     }
-    return execCaseList;
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public String getOptEnd()
   {
-    return optEnd;
-  }
+        return optEnd;
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   public void setOptEnd(String newOptEnd)
   {
-    String oldOptEnd = optEnd;
-    optEnd = newOptEnd;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EXEC__OPT_END, oldOptEnd, optEnd));
-  }
+        String oldOptEnd = optEnd;
+        optEnd = newOptEnd;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EXEC__OPT_END, oldOptEnd, optEnd));
+    }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.EXEC__BODY:
-        return basicSetBody(null, msgs);
-      case EsterelPackage.EXEC__EXEC_CASE_LIST:
-        return ((InternalEList<?>)getExecCaseList()).basicRemove(otherEnd, msgs);
+        switch (featureID) {
+            case EsterelPackage.EXEC__BODY:
+                return basicSetBody(null, msgs);
+            case EsterelPackage.EXEC__EXEC_CASE_LIST:
+                return ((InternalEList<?>)getExecCaseList()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
     }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.EXEC__TASK:
-        if (resolve) return getTask();
-        return basicGetTask();
-      case EsterelPackage.EXEC__BODY:
-        return getBody();
-      case EsterelPackage.EXEC__RET_SIGNAL:
-        if (resolve) return getRetSignal();
-        return basicGetRetSignal();
-      case EsterelPackage.EXEC__EXEC_CASE_LIST:
-        return getExecCaseList();
-      case EsterelPackage.EXEC__OPT_END:
-        return getOptEnd();
+        switch (featureID) {
+            case EsterelPackage.EXEC__TASK:
+                if (resolve) return getTask();
+                return basicGetTask();
+            case EsterelPackage.EXEC__BODY:
+                return getBody();
+            case EsterelPackage.EXEC__RET_SIGNAL:
+                if (resolve) return getRetSignal();
+                return basicGetRetSignal();
+            case EsterelPackage.EXEC__EXEC_CASE_LIST:
+                return getExecCaseList();
+            case EsterelPackage.EXEC__OPT_END:
+                return getOptEnd();
+        }
+        return super.eGet(featureID, resolve, coreType);
     }
-    return super.eGet(featureID, resolve, coreType);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.EXEC__TASK:
-        setTask((Task)newValue);
-        return;
-      case EsterelPackage.EXEC__BODY:
-        setBody((ExecBody)newValue);
-        return;
-      case EsterelPackage.EXEC__RET_SIGNAL:
-        setRetSignal((ISignal)newValue);
-        return;
-      case EsterelPackage.EXEC__EXEC_CASE_LIST:
-        getExecCaseList().clear();
-        getExecCaseList().addAll((Collection<? extends ExecCase>)newValue);
-        return;
-      case EsterelPackage.EXEC__OPT_END:
-        setOptEnd((String)newValue);
-        return;
+        switch (featureID) {
+            case EsterelPackage.EXEC__TASK:
+                setTask((Task)newValue);
+                return;
+            case EsterelPackage.EXEC__BODY:
+                setBody((ExecBody)newValue);
+                return;
+            case EsterelPackage.EXEC__RET_SIGNAL:
+                setRetSignal((ISignal)newValue);
+                return;
+            case EsterelPackage.EXEC__EXEC_CASE_LIST:
+                getExecCaseList().clear();
+                getExecCaseList().addAll((Collection<? extends ExecCase>)newValue);
+                return;
+            case EsterelPackage.EXEC__OPT_END:
+                setOptEnd((String)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
     }
-    super.eSet(featureID, newValue);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.EXEC__TASK:
-        setTask((Task)null);
-        return;
-      case EsterelPackage.EXEC__BODY:
-        setBody((ExecBody)null);
-        return;
-      case EsterelPackage.EXEC__RET_SIGNAL:
-        setRetSignal((ISignal)null);
-        return;
-      case EsterelPackage.EXEC__EXEC_CASE_LIST:
-        getExecCaseList().clear();
-        return;
-      case EsterelPackage.EXEC__OPT_END:
-        setOptEnd(OPT_END_EDEFAULT);
-        return;
+        switch (featureID) {
+            case EsterelPackage.EXEC__TASK:
+                setTask((Task)null);
+                return;
+            case EsterelPackage.EXEC__BODY:
+                setBody((ExecBody)null);
+                return;
+            case EsterelPackage.EXEC__RET_SIGNAL:
+                setRetSignal((ISignal)null);
+                return;
+            case EsterelPackage.EXEC__EXEC_CASE_LIST:
+                getExecCaseList().clear();
+                return;
+            case EsterelPackage.EXEC__OPT_END:
+                setOptEnd(OPT_END_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
     }
-    super.eUnset(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case EsterelPackage.EXEC__TASK:
-        return task != null;
-      case EsterelPackage.EXEC__BODY:
-        return body != null;
-      case EsterelPackage.EXEC__RET_SIGNAL:
-        return retSignal != null;
-      case EsterelPackage.EXEC__EXEC_CASE_LIST:
-        return execCaseList != null && !execCaseList.isEmpty();
-      case EsterelPackage.EXEC__OPT_END:
-        return OPT_END_EDEFAULT == null ? optEnd != null : !OPT_END_EDEFAULT.equals(optEnd);
+        switch (featureID) {
+            case EsterelPackage.EXEC__TASK:
+                return task != null;
+            case EsterelPackage.EXEC__BODY:
+                return body != null;
+            case EsterelPackage.EXEC__RET_SIGNAL:
+                return retSignal != null;
+            case EsterelPackage.EXEC__EXEC_CASE_LIST:
+                return execCaseList != null && !execCaseList.isEmpty();
+            case EsterelPackage.EXEC__OPT_END:
+                return OPT_END_EDEFAULT == null ? optEnd != null : !OPT_END_EDEFAULT.equals(optEnd);
+        }
+        return super.eIsSet(featureID);
     }
-    return super.eIsSet(featureID);
-  }
 
   /**
-   * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+     * @generated
+     */
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (optEnd: ");
-    result.append(optEnd);
-    result.append(')');
-    return result.toString();
-  }
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (optEnd: ");
+        result.append(optEnd);
+        result.append(')');
+        return result.toString();
+    }
 
 } //ExecImpl

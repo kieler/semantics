@@ -45,13 +45,10 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEffectsEffectParserRuleCall_7_2_1_0 = (RuleCall)cEffectsAssignment_7_2_1.eContents().get(0);
 		
 		//// haf: We need a Rule for transitions in order to serialize them
-		//
 		//// here we only want to have the features isImmediate, delay, trigger and effects
-		//
 		//// the features type, targetState, priority, isHistory are ignored and set as transient
-		//
 		//// you need to override the rule to support transitions properly
-		// Transition returns sccharts::Transition:
+		//Transition returns sccharts::Transition:
 		//	{sccharts::Transition} annotations+=Annotation* immediate?="immediate"? delay=INT? deferred?="deferred"?
 		//	history=HistoryType? trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)?;
 		public ParserRule getRule() { return rule; }
@@ -142,29 +139,24 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		////// chsch: The action rule is used in Kits.xtext for entry-, during-, exitActions, suspensionTrigger 
-		//
 		////Action returns sccharts::Action:
-		// //    {sccharts::Action}
-		// ////    (annotations += Annotation)*
-		//
+		////    {sccharts::Action}
+		//////    (annotations += Annotation)*
 		////	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?; 		
-		//
 		//EntryAction returns sccharts::EntryAction:
 		//	{sccharts::EntryAction} //    (annotations += Annotation)*
-		// "entry" trigger=BoolExpression? ("/" effects+=Effect (";"
-		//	effects+=Effect)*)? ";"?;
+		//	"entry" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::EntryAction} //    (annotations += Annotation)*
-		// "entry" trigger=BoolExpression? ("/" effects+=Effect (";"
-		//effects+=Effect)*)? ";"?
+		//"entry" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::EntryAction}
 		public Action getEntryActionAction_0() { return cEntryActionAction_0; }
 
 		////    (annotations += Annotation)*
-		// "entry"
+		//"entry"
 		public Keyword getEntryKeyword_1() { return cEntryKeyword_1; }
 
 		//trigger=BoolExpression?
@@ -222,13 +214,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DuringAction returns sccharts::DuringAction:
 		//	{sccharts::DuringAction} //    (annotations += Annotation)*
-		// immediate?="immediate"? "during" trigger=BoolExpression?
-		//	("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
+		//	immediate?="immediate"? "during" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::DuringAction} //    (annotations += Annotation)*
-		// immediate?="immediate"? "during" trigger=BoolExpression?
-		//("/" effects+=Effect (";" effects+=Effect)*)? ";"?
+		//immediate?="immediate"? "during" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::DuringAction}
@@ -296,20 +286,18 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ExitAction returns sccharts::ExitAction:
 		//	{sccharts::ExitAction} //    (annotations += Annotation)*
-		// "exit" trigger=BoolExpression? ("/" effects+=Effect (";"
-		//	effects+=Effect)*)? ";"?;
+		//	"exit" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::ExitAction} //    (annotations += Annotation)*
-		// "exit" trigger=BoolExpression? ("/" effects+=Effect (";"
-		//effects+=Effect)*)? ";"?
+		//"exit" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::ExitAction}
 		public Action getExitActionAction_0() { return cExitActionAction_0; }
 
 		////    (annotations += Annotation)*
-		// "exit"
+		//"exit"
 		public Keyword getExitKeyword_1() { return cExitKeyword_1; }
 
 		//trigger=BoolExpression?
@@ -361,13 +349,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SuspendAction returns sccharts::SuspendAction:
 		//	{sccharts::SuspendAction} //    (annotations += Annotation)*
-		// immediate?="immediate"? weak?="weak"? "suspend"
-		//	trigger=BoolExpression? ";"?;
+		//	immediate?="immediate"? weak?="weak"? "suspend" trigger=BoolExpression? ";"?;
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::SuspendAction} //    (annotations += Annotation)*
-		// immediate?="immediate"? weak?="weak"? "suspend"
-		//trigger=BoolExpression? ";"?
+		//immediate?="immediate"? weak?="weak"? "suspend" trigger=BoolExpression? ";"?
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::SuspendAction}
@@ -695,42 +681,29 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getDEEPHistoryKeyword_2_0() { return cDEEPHistoryKeyword_2_0; }
 	}
 	
-	private final TransitionElements pTransition;
-	private final EntryActionElements pEntryAction;
-	private final DuringActionElements pDuringAction;
-	private final ExitActionElements pExitAction;
-	private final SuspendActionElements pSuspendAction;
-	private final EffectElements pEffect;
-	private final EmissionElements pEmission;
-	private final AssignmentElements pAssignment;
-	private final TextEffectElements pTextEffect;
-	private final FunctionCallEffectElements pFunctionCallEffect;
-	private final ParameterElements pParameter;
-	private final DivOperatorElements unknownRuleDivOperator;
-	private final HistoryTypeElements unknownRuleHistoryType;
+	private TransitionElements pTransition;
+	private EntryActionElements pEntryAction;
+	private DuringActionElements pDuringAction;
+	private ExitActionElements pExitAction;
+	private SuspendActionElements pSuspendAction;
+	private EffectElements pEffect;
+	private EmissionElements pEmission;
+	private AssignmentElements pAssignment;
+	private TextEffectElements pTextEffect;
+	private FunctionCallEffectElements pFunctionCallEffect;
+	private ParameterElements pParameter;
+	private DivOperatorElements unknownRuleDivOperator;
+	private HistoryTypeElements unknownRuleHistoryType;
 	
 	private final Grammar grammar;
 
-	private final KExpressionsGrammarAccess gaKExpressions;
+	private KExpressionsGrammarAccess gaKExpressions;
 
 	@Inject
 	public ActionsGrammarAccess(GrammarProvider grammarProvider,
 		KExpressionsGrammarAccess gaKExpressions) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaKExpressions = gaKExpressions;
-		this.pTransition = new TransitionElements();
-		this.pEntryAction = new EntryActionElements();
-		this.pDuringAction = new DuringActionElements();
-		this.pExitAction = new ExitActionElements();
-		this.pSuspendAction = new SuspendActionElements();
-		this.pEffect = new EffectElements();
-		this.pEmission = new EmissionElements();
-		this.pAssignment = new AssignmentElements();
-		this.pTextEffect = new TextEffectElements();
-		this.pFunctionCallEffect = new FunctionCallEffectElements();
-		this.pParameter = new ParameterElements();
-		this.unknownRuleDivOperator = new DivOperatorElements();
-		this.unknownRuleHistoryType = new HistoryTypeElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -761,17 +734,14 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//// haf: We need a Rule for transitions in order to serialize them
-	//
 	//// here we only want to have the features isImmediate, delay, trigger and effects
-	//
 	//// the features type, targetState, priority, isHistory are ignored and set as transient
-	//
 	//// you need to override the rule to support transitions properly
-	// Transition returns sccharts::Transition:
+	//Transition returns sccharts::Transition:
 	//	{sccharts::Transition} annotations+=Annotation* immediate?="immediate"? delay=INT? deferred?="deferred"?
 	//	history=HistoryType? trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)?;
 	public TransitionElements getTransitionAccess() {
-		return pTransition;
+		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
 	}
 	
 	public ParserRule getTransitionRule() {
@@ -779,19 +749,15 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////// chsch: The action rule is used in Kits.xtext for entry-, during-, exitActions, suspensionTrigger 
-	//
 	////Action returns sccharts::Action:
-	// //    {sccharts::Action}
-	// ////    (annotations += Annotation)*
-	//
+	////    {sccharts::Action}
+	//////    (annotations += Annotation)*
 	////	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?; 		
-	//
 	//EntryAction returns sccharts::EntryAction:
 	//	{sccharts::EntryAction} //    (annotations += Annotation)*
-	// "entry" trigger=BoolExpression? ("/" effects+=Effect (";"
-	//	effects+=Effect)*)? ";"?;
+	//	"entry" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
 	public EntryActionElements getEntryActionAccess() {
-		return pEntryAction;
+		return (pEntryAction != null) ? pEntryAction : (pEntryAction = new EntryActionElements());
 	}
 	
 	public ParserRule getEntryActionRule() {
@@ -800,10 +766,9 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//DuringAction returns sccharts::DuringAction:
 	//	{sccharts::DuringAction} //    (annotations += Annotation)*
-	// immediate?="immediate"? "during" trigger=BoolExpression?
-	//	("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
+	//	immediate?="immediate"? "during" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
 	public DuringActionElements getDuringActionAccess() {
-		return pDuringAction;
+		return (pDuringAction != null) ? pDuringAction : (pDuringAction = new DuringActionElements());
 	}
 	
 	public ParserRule getDuringActionRule() {
@@ -812,10 +777,9 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ExitAction returns sccharts::ExitAction:
 	//	{sccharts::ExitAction} //    (annotations += Annotation)*
-	// "exit" trigger=BoolExpression? ("/" effects+=Effect (";"
-	//	effects+=Effect)*)? ";"?;
+	//	"exit" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
 	public ExitActionElements getExitActionAccess() {
-		return pExitAction;
+		return (pExitAction != null) ? pExitAction : (pExitAction = new ExitActionElements());
 	}
 	
 	public ParserRule getExitActionRule() {
@@ -824,10 +788,9 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SuspendAction returns sccharts::SuspendAction:
 	//	{sccharts::SuspendAction} //    (annotations += Annotation)*
-	// immediate?="immediate"? weak?="weak"? "suspend"
-	//	trigger=BoolExpression? ";"?;
+	//	immediate?="immediate"? weak?="weak"? "suspend" trigger=BoolExpression? ";"?;
 	public SuspendActionElements getSuspendActionAccess() {
-		return pSuspendAction;
+		return (pSuspendAction != null) ? pSuspendAction : (pSuspendAction = new SuspendActionElements());
 	}
 	
 	public ParserRule getSuspendActionRule() {
@@ -837,7 +800,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//Effect returns sccharts::Effect:
 	//	Emission | Assignment | TextEffect | FunctionCallEffect;
 	public EffectElements getEffectAccess() {
-		return pEffect;
+		return (pEffect != null) ? pEffect : (pEffect = new EffectElements());
 	}
 	
 	public ParserRule getEffectRule() {
@@ -847,7 +810,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//Emission returns sccharts::Emission:
 	//	valuedObject=[kexpressions::ValuedObject] ("(" newValue=Expression ")")?;
 	public EmissionElements getEmissionAccess() {
-		return pEmission;
+		return (pEmission != null) ? pEmission : (pEmission = new EmissionElements());
 	}
 	
 	public ParserRule getEmissionRule() {
@@ -857,7 +820,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//Assignment returns sccharts::Assignment:
 	//	valuedObject=[kexpressions::ValuedObject] ("[" indices+=Expression "]")* "=" expression=Expression;
 	public AssignmentElements getAssignmentAccess() {
-		return pAssignment;
+		return (pAssignment != null) ? pAssignment : (pAssignment = new AssignmentElements());
 	}
 	
 	public ParserRule getAssignmentRule() {
@@ -867,7 +830,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//TextEffect returns sccharts::TextEffect:
 	//	text=HOSTCODE;
 	public TextEffectElements getTextEffectAccess() {
-		return pTextEffect;
+		return (pTextEffect != null) ? pTextEffect : (pTextEffect = new TextEffectElements());
 	}
 	
 	public ParserRule getTextEffectRule() {
@@ -877,7 +840,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//FunctionCallEffect returns sccharts::FunctionCallEffect:
 	//	"<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" | "()")? ">";
 	public FunctionCallEffectElements getFunctionCallEffectAccess() {
-		return pFunctionCallEffect;
+		return (pFunctionCallEffect != null) ? pFunctionCallEffect : (pFunctionCallEffect = new FunctionCallEffectElements());
 	}
 	
 	public ParserRule getFunctionCallEffectRule() {
@@ -887,7 +850,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//Parameter returns kexpressions::Parameter:
 	//	callByReference?="&"? expression=Expression;
 	public ParameterElements getParameterAccess() {
-		return pParameter;
+		return (pParameter != null) ? pParameter : (pParameter = new ParameterElements());
 	}
 	
 	public ParserRule getParameterRule() {
@@ -897,7 +860,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum DivOperator returns kexpressions::OperatorType:
 	//	DIV=":";
 	public DivOperatorElements getDivOperatorAccess() {
-		return unknownRuleDivOperator;
+		return (unknownRuleDivOperator != null) ? unknownRuleDivOperator : (unknownRuleDivOperator = new DivOperatorElements());
 	}
 	
 	public EnumRule getDivOperatorRule() {
@@ -907,7 +870,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//enum HistoryType returns sccharts::HistoryType:
 	//	RESET="reset" | SHALLOW="shallow history" | DEEP="history";
 	public HistoryTypeElements getHistoryTypeAccess() {
-		return unknownRuleHistoryType;
+		return (unknownRuleHistoryType != null) ? unknownRuleHistoryType : (unknownRuleHistoryType = new HistoryTypeElements());
 	}
 	
 	public EnumRule getHistoryTypeRule() {
@@ -1319,6 +1282,16 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getValueTypeAccess().getRule();
 	}
 
+	//enum HostType returns ValueType:
+	//	HOST="host";
+	public KExpressionsGrammarAccess.HostTypeElements getHostTypeAccess() {
+		return gaKExpressions.getHostTypeAccess();
+	}
+	
+	public EnumRule getHostTypeRule() {
+		return getHostTypeAccess().getRule();
+	}
+
 	//enum CombineOperator:
 	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="|" | AND="&" | HOST="host";
 	public KExpressionsGrammarAccess.CombineOperatorElements getCombineOperatorAccess() {
@@ -1337,11 +1310,11 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//// --------------------------
-	// //
-	// //   ANNOTATIONS
-	// //
-	// // --------------------------
-	// Annotation:
+	////
+	////   ANNOTATIONS
+	////
+	//// --------------------------
+	//Annotation:
 	//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
 	//	KeyBooleanValueAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation;
 	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
@@ -1364,7 +1337,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: / ** semantic comment * /
-	// CommentAnnotation returns StringAnnotation:
+	//CommentAnnotation returns StringAnnotation:
 	//	value=COMMENT_ANNOTATION;
 	public AnnotationsGrammarAccess.CommentAnnotationElements getCommentAnnotationAccess() {
 		return gaKExpressions.getCommentAnnotationAccess();
@@ -1375,7 +1348,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @HVlayout
-	// TagAnnotation returns Annotation:
+	//TagAnnotation returns Annotation:
 	//	"@" name=ExtendedID ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.TagAnnotationElements getTagAnnotationAccess() {
 		return gaKExpressions.getTagAnnotationAccess();
@@ -1386,7 +1359,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @layouter dot;   
-	// KeyStringValueAnnotation returns StringAnnotation:
+	//KeyStringValueAnnotation returns StringAnnotation:
 	//	"@" name=ExtendedID value=EString ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return gaKExpressions.getKeyStringValueAnnotationAccess();
@@ -1397,8 +1370,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
-	// TypedKeyStringValueAnnotation returns
-	//TypedStringAnnotation:
+	//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
 	//	"@" name=ExtendedID "[" type=ExtendedID "]" value=EString ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaKExpressions.getTypedKeyStringValueAnnotationAccess();
@@ -1409,7 +1381,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @visible true;
-	// KeyBooleanValueAnnotation returns BooleanAnnotation:
+	//KeyBooleanValueAnnotation returns BooleanAnnotation:
 	//	"@" name=ExtendedID value=BOOLEAN ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
 		return gaKExpressions.getKeyBooleanValueAnnotationAccess();
@@ -1420,7 +1392,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @minSpace 10;    
-	// KeyIntValueAnnotation returns IntAnnotation:
+	//KeyIntValueAnnotation returns IntAnnotation:
 	//	"@" name=ExtendedID value=INT ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyIntValueAnnotationElements getKeyIntValueAnnotationAccess() {
 		return gaKExpressions.getKeyIntValueAnnotationAccess();
@@ -1431,7 +1403,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @minSpace 10.0;    
-	// KeyFloatValueAnnotation returns FloatAnnotation:
+	//KeyFloatValueAnnotation returns FloatAnnotation:
 	//	"@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
 		return gaKExpressions.getKeyFloatValueAnnotationAccess();
@@ -1442,7 +1414,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// needed for importing other resources
-	// ImportAnnotation:
+	//ImportAnnotation:
 	//	"import" importURI=STRING;
 	public AnnotationsGrammarAccess.ImportAnnotationElements getImportAnnotationAccess() {
 		return gaKExpressions.getImportAnnotationAccess();
@@ -1453,7 +1425,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// allow strings without quotes as they don'c contain spaces
-	// EString returns ecore::EString:
+	//EString returns ecore::EString:
 	//	STRING | ID;
 	public AnnotationsGrammarAccess.EStringElements getEStringAccess() {
 		return gaKExpressions.getEStringAccess();
@@ -1474,22 +1446,20 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// --------------------------
-	// //
-	// //  Terminals...
-	// //
-	// // --------------------------
-	// // custom terminals
-	//
+	////
+	////  Terminals...
+	////
+	//// --------------------------
+	//// custom terminals
 	//// custom terminal rule introducing semantic comments
-	// terminal COMMENT_ANNOTATION:
+	//terminal COMMENT_ANNOTATION:
 	//	"/ **"->"* /";
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
 		return gaKExpressions.getCOMMENT_ANNOTATIONRule();
 	} 
 
 	//// modified version of Terminals.ML_COMMENT as
-	// // COMMENT_ANNOTATION is not recognized correctly with original one 
-	//
+	//// COMMENT_ANNOTATION is not recognized correctly with original one 
 	//terminal ML_COMMENT:
 	//	"/ *" !"*"->"* /";
 	public TerminalRule getML_COMMENTRule() {
@@ -1497,35 +1467,35 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//// generic terminals
-	// terminal fragment NUMBER:
+	//terminal fragment NUMBER:
 	//	"0".."9";
 	public TerminalRule getNUMBERRule() {
 		return gaKExpressions.getNUMBERRule();
 	} 
 
 	//// redefine INT terminal to allow negative numbers
-	// terminal INT returns ecore::EInt:
+	//terminal INT returns ecore::EInt:
 	//	"-"? NUMBER+;
 	public TerminalRule getINTRule() {
 		return gaKExpressions.getINTRule();
 	} 
 
 	//// make sure the Float rule does not shadow the INT rule
-	// terminal FLOAT returns ecore::EFloatObject:
+	//terminal FLOAT returns ecore::EFloatObject:
 	//	"-"? NUMBER+ ("." NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? "f"? | "-"? NUMBER+ "f";
 	public TerminalRule getFLOATRule() {
 		return gaKExpressions.getFLOATRule();
 	} 
 
 	//// introduce boolean values
-	// terminal BOOLEAN returns ecore::EBooleanObject:
+	//terminal BOOLEAN returns ecore::EBooleanObject:
 	//	"true" | "false";
 	public TerminalRule getBOOLEANRule() {
 		return gaKExpressions.getBOOLEANRule();
 	} 
 
 	//// custom terminal rule for strings
-	// terminal STRING:
+	//terminal STRING:
 	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"";
 	public TerminalRule getSTRINGRule() {
 		return gaKExpressions.getSTRINGRule();

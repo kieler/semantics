@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               commandId="de.cau.cs.kieler.esterel.scl.EsterelToScl"
+               label="Transform to SCL"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IResource">
+                     <test
+                           property="org.eclipse.core.resources.extension"
+                           value="strl">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="de.cau.cs.kieler.esterel.scl.handlers.EsterelToSclHandler"
+            id="de.cau.cs.kieler.esterel.scl.EsterelToScl"
+            name="Tranform to SCL">
+      </command>
+      <command
+            defaultHandler="de.cau.cs.kieler.esterel.scl.handlers.EsterelToScgHandler"
+            id="de.cau.cs.kieler.esterel.scl.EsterelToScg"
+            name="Transform to SCG">
+      </command>
+      <command
+            defaultHandler="de.cau.cs.kieler.esterel.scl.handlers.SclToEsterelHandler"
+            id="de.cau.cs.kieler.esterel.scl.SclToEsterel"
+            name="Transform to Esterel">
+      </command>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <transformationMethod
+            class="de.cau.cs.kieler.esterel.scl.transformations.EsterelToSclTransformation"
+            dependencies="SCLTOSCG"
+            id="ESTERELTOSCL"
+            method="transform"
+            name="SCL">
+      </transformationMethod>
+      <transformationGroup
+            alternatives="true"
+            id="SCLGROUP"
+            name="SCL"
+            transformations="ESTERELTOSCL_OPT,ESTERELTOSCL">
+      </transformationGroup>
+      <transformationMethod
+            class="de.cau.cs.kieler.esterel.scl.transformations.EsterelToSclTransformation"
+            id="SCLOPT"
+            method="transform"
+            name="SCL Optimizations">
+      </transformationMethod>
+      <transformationGroup
+            id="SCLSCGGROUP"
+            name="SCGraph"
+            transformations="SCLTOSCG,SCGDEP, SCGBBGROUP, SCGSCHEDGROUP,SCGSEQGROUP">
+      </transformationGroup>
+      <transformationMethod
+            class="de.cau.cs.kieler.esterel.scl.transformations.EsterelToSclTransformation"
+            dependencies="SCLTOSCG"
+            id="ESTERELTOSCL_OPT"
+            method="transformOpt"
+            name="SCL Optimized">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.esterel.scl.transformations.SclToEsterelTransformation"
+            id="SCL_TO_ESTEREL"
+            method="transform"
+            name="Esterel">
+      </transformationMethod>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kico.ui.transformation">
+      <editor
+            editor="de.cau.cs.kieler.esterel.Esterel"
+            transformations="SCLGROUP,ESTERELTOSCL_OPT, ESTERELTOSCL,   SCLSCGGROUP,SCLTOSCG, SCGDEP, SCGBB, SCGBBSCPLUS, SCGSCHEDSIMPLE, SCGSCHEDCLUSTER, SCGSCHEDHYBRID, SCGSEQ, SCGBBGROUP, SCGSCHEDGROUP,SCGSEQGROUP,SCGSEQSIMPLE,SCGSCHEDDELAYAWARE,SCGSCHEDTHREADAWARE,SCGSEQGROUP,SCGSEQHYBRID,SCGSEQHYBRID,CODEGENERATION, SCG2S,SCG2C,S2TARGET,S2C,S2JAVA">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               commandId="de.cau.cs.kieler.esterel.scl.EsterelToScg"
+               label="Transform to SCG"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IResource">
+                     <test
+                           property="org.eclipse.core.resources.extension"
+                           value="strl">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+
+</plugin>

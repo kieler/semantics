@@ -1,0 +1,12 @@
+module Test_Run5:
+type t1;
+type t2;
+type t3;
+type t5;
+
+var a : t3,
+    b : t2 in
+  nothing
+end var
+
+end module

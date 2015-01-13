@@ -26,45 +26,45 @@ import org.eclipse.emf.common.util.EList;
 public interface FunctionExpression extends Expression
 {
   /**
-   * Returns the value of the '<em><b>Function</b></em>' reference.
-   * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Function</b></em>' reference.
+     * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Function</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Function</em>' reference.
-   * @see #setFunction(Function)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getFunctionExpression_Function()
-   * @model
-   * @generated
-   */
+     * @return the value of the '<em>Function</em>' reference.
+     * @see #setFunction(Function)
+     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getFunctionExpression_Function()
+     * @model
+     * @generated
+     */
   Function getFunction();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.FunctionExpression#getFunction <em>Function</em>}' reference.
-   * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.FunctionExpression#getFunction <em>Function</em>}' reference.
+     * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Function</em>' reference.
-   * @see #getFunction()
-   * @generated
-   */
+     * @param value the new value of the '<em>Function</em>' reference.
+     * @see #getFunction()
+     * @generated
+     */
   void setFunction(Function value);
 
   /**
-   * Returns the value of the '<em><b>Kexpressions</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.esterel.kexpressions.Expression}.
-   * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Kexpressions</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.esterel.kexpressions.Expression}.
+     * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Kexpressions</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Kexpressions</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getFunctionExpression_Kexpressions()
-   * @model containment="true"
-   * @generated
-   */
+     * @return the value of the '<em>Kexpressions</em>' containment reference list.
+     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getFunctionExpression_Kexpressions()
+     * @model containment="true"
+     * @generated
+     */
   EList<Expression> getKexpressions();
 
 } // FunctionExpression

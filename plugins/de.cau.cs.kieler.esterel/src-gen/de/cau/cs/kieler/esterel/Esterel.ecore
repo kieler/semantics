@@ -340,6 +340,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="delay" eType="#//DelayExpr"
         containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WeakSuspend" eSuperTypes="#//StatementContainer #//Statement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="delay" eType="#//DelayExpr"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Sustain" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signal" eType="ecore:EClass ../../../../../../../de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.ecore#//ISignal"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="tick" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -366,6 +370,12 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="var" eType="ecore:EClass ../../../../../../../de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.ecore#//InterfaceVariableDecl"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="optEnd" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Goto">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetLabel" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Label">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DelayExpr">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="ecore:EClass ../../../../../../../de.cau.cs.kieler.esterel.kexpressions/model/kexpressions.ecore#//Expression"
