@@ -21,24 +21,24 @@ import org.eclipse.emf.ecore.EClass;
 public class TrapReferenceExprImpl extends ValuedObjectReferenceImpl implements TrapReferenceExpr
 {
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   protected TrapReferenceExprImpl()
   {
-        super();
-    }
+    super();
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-        return EsterelPackage.Literals.TRAP_REFERENCE_EXPR;
-    }
+    return EsterelPackage.Literals.TRAP_REFERENCE_EXPR;
+  }
 
 } //TrapReferenceExprImpl

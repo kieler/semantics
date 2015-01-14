@@ -19,24 +19,24 @@ import org.eclipse.emf.ecore.EClass;
 public class WeakAbortImpl extends AbortImpl implements WeakAbort
 {
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   protected WeakAbortImpl()
   {
-        super();
-    }
+    super();
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-        return EsterelPackage.Literals.WEAK_ABORT;
-    }
+    return EsterelPackage.Literals.WEAK_ABORT;
+  }
 
 } //WeakAbortImpl

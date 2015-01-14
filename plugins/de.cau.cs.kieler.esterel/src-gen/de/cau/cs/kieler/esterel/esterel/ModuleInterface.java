@@ -34,131 +34,131 @@ import org.eclipse.emf.ecore.EObject;
 public interface ModuleInterface extends EObject
 {
   /**
-     * Returns the value of the '<em><b>Int Signal Decls</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl}.
-     * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Int Signal Decls</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Int Signal Decls</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>Int Signal Decls</em>' containment reference list.
-     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModuleInterface_IntSignalDecls()
-     * @model containment="true"
-     * @generated
-     */
+   * @return the value of the '<em>Int Signal Decls</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModuleInterface_IntSignalDecls()
+   * @model containment="true"
+   * @generated
+   */
   EList<InterfaceSignalDecl> getIntSignalDecls();
 
   /**
-     * Returns the value of the '<em><b>Int Type Decls</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.TypeDecl}.
-     * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Int Type Decls</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.TypeDecl}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Int Type Decls</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>Int Type Decls</em>' containment reference list.
-     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModuleInterface_IntTypeDecls()
-     * @model containment="true"
-     * @generated
-     */
+   * @return the value of the '<em>Int Type Decls</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModuleInterface_IntTypeDecls()
+   * @model containment="true"
+   * @generated
+   */
   EList<TypeDecl> getIntTypeDecls();
 
   /**
-     * Returns the value of the '<em><b>Int Sensor Decls</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.SensorDecl}.
-     * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Int Sensor Decls</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.SensorDecl}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Int Sensor Decls</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>Int Sensor Decls</em>' containment reference list.
-     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModuleInterface_IntSensorDecls()
-     * @model containment="true"
-     * @generated
-     */
+   * @return the value of the '<em>Int Sensor Decls</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModuleInterface_IntSensorDecls()
+   * @model containment="true"
+   * @generated
+   */
   EList<SensorDecl> getIntSensorDecls();
 
   /**
-     * Returns the value of the '<em><b>Int Constant Decls</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.ConstantDecls}.
-     * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Int Constant Decls</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.ConstantDecls}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Int Constant Decls</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>Int Constant Decls</em>' containment reference list.
-     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModuleInterface_IntConstantDecls()
-     * @model containment="true"
-     * @generated
-     */
+   * @return the value of the '<em>Int Constant Decls</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModuleInterface_IntConstantDecls()
+   * @model containment="true"
+   * @generated
+   */
   EList<ConstantDecls> getIntConstantDecls();
 
   /**
-     * Returns the value of the '<em><b>Int Relation Decls</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.RelationDecl}.
-     * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Int Relation Decls</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.RelationDecl}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Int Relation Decls</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>Int Relation Decls</em>' containment reference list.
-     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModuleInterface_IntRelationDecls()
-     * @model containment="true"
-     * @generated
-     */
+   * @return the value of the '<em>Int Relation Decls</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModuleInterface_IntRelationDecls()
+   * @model containment="true"
+   * @generated
+   */
   EList<RelationDecl> getIntRelationDecls();
 
   /**
-     * Returns the value of the '<em><b>Int Task Decls</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.TaskDecl}.
-     * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Int Task Decls</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.TaskDecl}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Int Task Decls</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>Int Task Decls</em>' containment reference list.
-     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModuleInterface_IntTaskDecls()
-     * @model containment="true"
-     * @generated
-     */
+   * @return the value of the '<em>Int Task Decls</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModuleInterface_IntTaskDecls()
+   * @model containment="true"
+   * @generated
+   */
   EList<TaskDecl> getIntTaskDecls();
 
   /**
-     * Returns the value of the '<em><b>Int Function Decls</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.FunctionDecl}.
-     * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Int Function Decls</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.FunctionDecl}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Int Function Decls</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>Int Function Decls</em>' containment reference list.
-     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModuleInterface_IntFunctionDecls()
-     * @model containment="true"
-     * @generated
-     */
+   * @return the value of the '<em>Int Function Decls</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModuleInterface_IntFunctionDecls()
+   * @model containment="true"
+   * @generated
+   */
   EList<FunctionDecl> getIntFunctionDecls();
 
   /**
-     * Returns the value of the '<em><b>Int Procedure Decls</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.ProcedureDecl}.
-     * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Int Procedure Decls</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.ProcedureDecl}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Int Procedure Decls</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>Int Procedure Decls</em>' containment reference list.
-     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModuleInterface_IntProcedureDecls()
-     * @model containment="true"
-     * @generated
-     */
+   * @return the value of the '<em>Int Procedure Decls</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModuleInterface_IntProcedureDecls()
+   * @model containment="true"
+   * @generated
+   */
   EList<ProcedureDecl> getIntProcedureDecls();
 
 } // ModuleInterface

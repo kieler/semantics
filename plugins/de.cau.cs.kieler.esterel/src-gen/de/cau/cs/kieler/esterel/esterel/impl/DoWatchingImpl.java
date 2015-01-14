@@ -33,225 +33,234 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class DoWatchingImpl extends MinimalEObjectImpl.Container implements DoWatching
 {
   /**
-     * The cached value of the '{@link #getDelay() <em>Delay</em>}' containment reference.
-     * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getDelay() <em>Delay</em>}' containment reference.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getDelay()
-     * @generated
-     * @ordered
-     */
+   * @see #getDelay()
+   * @generated
+   * @ordered
+   */
   protected DelayExpr delay;
 
   /**
-     * The cached value of the '{@link #getEnd() <em>End</em>}' containment reference.
-     * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getEnd() <em>End</em>}' containment reference.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getEnd()
-     * @generated
-     * @ordered
-     */
+   * @see #getEnd()
+   * @generated
+   * @ordered
+   */
   protected DoWatchingEnd end;
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   protected DoWatchingImpl()
   {
-        super();
-    }
+    super();
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-        return EsterelPackage.Literals.DO_WATCHING;
-    }
+    return EsterelPackage.Literals.DO_WATCHING;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public DelayExpr getDelay()
   {
-        return delay;
-    }
+    return delay;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public NotificationChain basicSetDelay(DelayExpr newDelay, NotificationChain msgs)
   {
-        DelayExpr oldDelay = delay;
-        delay = newDelay;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DO_WATCHING__DELAY, oldDelay, newDelay);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
+    DelayExpr oldDelay = delay;
+    delay = newDelay;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DO_WATCHING__DELAY, oldDelay, newDelay);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
     }
+    return msgs;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public void setDelay(DelayExpr newDelay)
   {
-        if (newDelay != delay) {
-            NotificationChain msgs = null;
-            if (delay != null)
-                msgs = ((InternalEObject)delay).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO_WATCHING__DELAY, null, msgs);
-            if (newDelay != null)
-                msgs = ((InternalEObject)newDelay).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO_WATCHING__DELAY, null, msgs);
-            msgs = basicSetDelay(newDelay, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DO_WATCHING__DELAY, newDelay, newDelay));
+    if (newDelay != delay)
+    {
+      NotificationChain msgs = null;
+      if (delay != null)
+        msgs = ((InternalEObject)delay).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO_WATCHING__DELAY, null, msgs);
+      if (newDelay != null)
+        msgs = ((InternalEObject)newDelay).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO_WATCHING__DELAY, null, msgs);
+      msgs = basicSetDelay(newDelay, msgs);
+      if (msgs != null) msgs.dispatch();
     }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DO_WATCHING__DELAY, newDelay, newDelay));
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public DoWatchingEnd getEnd()
   {
-        return end;
-    }
+    return end;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public NotificationChain basicSetEnd(DoWatchingEnd newEnd, NotificationChain msgs)
   {
-        DoWatchingEnd oldEnd = end;
-        end = newEnd;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DO_WATCHING__END, oldEnd, newEnd);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
+    DoWatchingEnd oldEnd = end;
+    end = newEnd;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DO_WATCHING__END, oldEnd, newEnd);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
     }
+    return msgs;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public void setEnd(DoWatchingEnd newEnd)
   {
-        if (newEnd != end) {
-            NotificationChain msgs = null;
-            if (end != null)
-                msgs = ((InternalEObject)end).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO_WATCHING__END, null, msgs);
-            if (newEnd != null)
-                msgs = ((InternalEObject)newEnd).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO_WATCHING__END, null, msgs);
-            msgs = basicSetEnd(newEnd, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DO_WATCHING__END, newEnd, newEnd));
+    if (newEnd != end)
+    {
+      NotificationChain msgs = null;
+      if (end != null)
+        msgs = ((InternalEObject)end).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO_WATCHING__END, null, msgs);
+      if (newEnd != null)
+        msgs = ((InternalEObject)newEnd).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO_WATCHING__END, null, msgs);
+      msgs = basicSetEnd(newEnd, msgs);
+      if (msgs != null) msgs.dispatch();
     }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DO_WATCHING__END, newEnd, newEnd));
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-        switch (featureID) {
-            case EsterelPackage.DO_WATCHING__DELAY:
-                return basicSetDelay(null, msgs);
-            case EsterelPackage.DO_WATCHING__END:
-                return basicSetEnd(null, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
+    switch (featureID)
+    {
+      case EsterelPackage.DO_WATCHING__DELAY:
+        return basicSetDelay(null, msgs);
+      case EsterelPackage.DO_WATCHING__END:
+        return basicSetEnd(null, msgs);
     }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-        switch (featureID) {
-            case EsterelPackage.DO_WATCHING__DELAY:
-                return getDelay();
-            case EsterelPackage.DO_WATCHING__END:
-                return getEnd();
-        }
-        return super.eGet(featureID, resolve, coreType);
+    switch (featureID)
+    {
+      case EsterelPackage.DO_WATCHING__DELAY:
+        return getDelay();
+      case EsterelPackage.DO_WATCHING__END:
+        return getEnd();
     }
+    return super.eGet(featureID, resolve, coreType);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-        switch (featureID) {
-            case EsterelPackage.DO_WATCHING__DELAY:
-                setDelay((DelayExpr)newValue);
-                return;
-            case EsterelPackage.DO_WATCHING__END:
-                setEnd((DoWatchingEnd)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
+    switch (featureID)
+    {
+      case EsterelPackage.DO_WATCHING__DELAY:
+        setDelay((DelayExpr)newValue);
+        return;
+      case EsterelPackage.DO_WATCHING__END:
+        setEnd((DoWatchingEnd)newValue);
+        return;
     }
+    super.eSet(featureID, newValue);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
-        switch (featureID) {
-            case EsterelPackage.DO_WATCHING__DELAY:
-                setDelay((DelayExpr)null);
-                return;
-            case EsterelPackage.DO_WATCHING__END:
-                setEnd((DoWatchingEnd)null);
-                return;
-        }
-        super.eUnset(featureID);
+    switch (featureID)
+    {
+      case EsterelPackage.DO_WATCHING__DELAY:
+        setDelay((DelayExpr)null);
+        return;
+      case EsterelPackage.DO_WATCHING__END:
+        setEnd((DoWatchingEnd)null);
+        return;
     }
+    super.eUnset(featureID);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {
-        switch (featureID) {
-            case EsterelPackage.DO_WATCHING__DELAY:
-                return delay != null;
-            case EsterelPackage.DO_WATCHING__END:
-                return end != null;
-        }
-        return super.eIsSet(featureID);
+    switch (featureID)
+    {
+      case EsterelPackage.DO_WATCHING__DELAY:
+        return delay != null;
+      case EsterelPackage.DO_WATCHING__END:
+        return end != null;
     }
+    return super.eIsSet(featureID);
+  }
 
 } //DoWatchingImpl

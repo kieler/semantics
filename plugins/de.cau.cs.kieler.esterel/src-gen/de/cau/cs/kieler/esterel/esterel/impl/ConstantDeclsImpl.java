@@ -36,126 +36,132 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class ConstantDeclsImpl extends MinimalEObjectImpl.Container implements ConstantDecls
 {
   /**
-     * The cached value of the '{@link #getConstants() <em>Constants</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getConstants() <em>Constants</em>}' containment reference list.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getConstants()
-     * @generated
-     * @ordered
-     */
+   * @see #getConstants()
+   * @generated
+   * @ordered
+   */
   protected EList<OneTypeConstantDecls> constants;
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   protected ConstantDeclsImpl()
   {
-        super();
-    }
+    super();
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-        return EsterelPackage.Literals.CONSTANT_DECLS;
-    }
+    return EsterelPackage.Literals.CONSTANT_DECLS;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public EList<OneTypeConstantDecls> getConstants()
   {
-        if (constants == null) {
-            constants = new EObjectContainmentEList<OneTypeConstantDecls>(OneTypeConstantDecls.class, this, EsterelPackage.CONSTANT_DECLS__CONSTANTS);
-        }
-        return constants;
+    if (constants == null)
+    {
+      constants = new EObjectContainmentEList<OneTypeConstantDecls>(OneTypeConstantDecls.class, this, EsterelPackage.CONSTANT_DECLS__CONSTANTS);
     }
+    return constants;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-        switch (featureID) {
-            case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
-                return ((InternalEList<?>)getConstants()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
+    switch (featureID)
+    {
+      case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
+        return ((InternalEList<?>)getConstants()).basicRemove(otherEnd, msgs);
     }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-        switch (featureID) {
-            case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
-                return getConstants();
-        }
-        return super.eGet(featureID, resolve, coreType);
+    switch (featureID)
+    {
+      case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
+        return getConstants();
     }
+    return super.eGet(featureID, resolve, coreType);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
-        switch (featureID) {
-            case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
-                getConstants().clear();
-                getConstants().addAll((Collection<? extends OneTypeConstantDecls>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
+    switch (featureID)
+    {
+      case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
+        getConstants().clear();
+        getConstants().addAll((Collection<? extends OneTypeConstantDecls>)newValue);
+        return;
     }
+    super.eSet(featureID, newValue);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
-        switch (featureID) {
-            case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
-                getConstants().clear();
-                return;
-        }
-        super.eUnset(featureID);
+    switch (featureID)
+    {
+      case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
+        getConstants().clear();
+        return;
     }
+    super.eUnset(featureID);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {
-        switch (featureID) {
-            case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
-                return constants != null && !constants.isEmpty();
-        }
-        return super.eIsSet(featureID);
+    switch (featureID)
+    {
+      case EsterelPackage.CONSTANT_DECLS__CONSTANTS:
+        return constants != null && !constants.isEmpty();
     }
+    return super.eIsSet(featureID);
+  }
 
 } //ConstantDeclsImpl

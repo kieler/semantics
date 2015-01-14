@@ -29,35 +29,35 @@ import org.eclipse.emf.ecore.EObject;
 public interface ExecBody extends EObject
 {
   /**
-     * Returns the value of the '<em><b>Vars</b></em>' reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.esterel.kexpressions.IVariable}.
-     * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Vars</b></em>' reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.kexpressions.IVariable}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Vars</em>' reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>Vars</em>' reference list.
-     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getExecBody_Vars()
-     * @model
-     * @generated
-     */
+   * @return the value of the '<em>Vars</em>' reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getExecBody_Vars()
+   * @model
+   * @generated
+   */
   EList<IVariable> getVars();
 
   /**
-     * Returns the value of the '<em><b>Kexpressions</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.esterel.kexpressions.Expression}.
-     * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Kexpressions</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.kexpressions.Expression}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Kexpressions</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>Kexpressions</em>' containment reference list.
-     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getExecBody_Kexpressions()
-     * @model containment="true"
-     * @generated
-     */
+   * @return the value of the '<em>Kexpressions</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getExecBody_Kexpressions()
+   * @model containment="true"
+   * @generated
+   */
   EList<Expression> getKexpressions();
 
 } // ExecBody

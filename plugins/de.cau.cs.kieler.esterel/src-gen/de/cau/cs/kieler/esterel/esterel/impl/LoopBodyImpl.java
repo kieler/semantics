@@ -19,24 +19,24 @@ import org.eclipse.emf.ecore.EClass;
 public class LoopBodyImpl extends StatementContainerImpl implements LoopBody
 {
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   protected LoopBodyImpl()
   {
-        super();
-    }
+    super();
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-        return EsterelPackage.Literals.LOOP_BODY;
-    }
+    return EsterelPackage.Literals.LOOP_BODY;
+  }
 
 } //LoopBodyImpl

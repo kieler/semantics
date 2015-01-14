@@ -33,270 +33,278 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implements ConstantRenaming
 {
   /**
-     * The cached value of the '{@link #getNewName() <em>New Name</em>}' reference.
-     * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getNewName() <em>New Name</em>}' reference.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getNewName()
-     * @generated
-     * @ordered
-     */
+   * @see #getNewName()
+   * @generated
+   * @ordered
+   */
   protected ValuedObject newName;
 
   /**
-     * The default value of the '{@link #getNewValue() <em>New Value</em>}' attribute.
-     * <!-- begin-user-doc -->
+   * The default value of the '{@link #getNewValue() <em>New Value</em>}' attribute.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getNewValue()
-     * @generated
-     * @ordered
-     */
+   * @see #getNewValue()
+   * @generated
+   * @ordered
+   */
   protected static final String NEW_VALUE_EDEFAULT = null;
 
   /**
-     * The cached value of the '{@link #getNewValue() <em>New Value</em>}' attribute.
-     * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getNewValue() <em>New Value</em>}' attribute.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getNewValue()
-     * @generated
-     * @ordered
-     */
+   * @see #getNewValue()
+   * @generated
+   * @ordered
+   */
   protected String newValue = NEW_VALUE_EDEFAULT;
 
   /**
-     * The cached value of the '{@link #getOldName() <em>Old Name</em>}' reference.
-     * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getOldName() <em>Old Name</em>}' reference.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getOldName()
-     * @generated
-     * @ordered
-     */
+   * @see #getOldName()
+   * @generated
+   * @ordered
+   */
   protected ValuedObject oldName;
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   protected ConstantRenamingImpl()
   {
-        super();
-    }
+    super();
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-        return EsterelPackage.Literals.CONSTANT_RENAMING;
-    }
+    return EsterelPackage.Literals.CONSTANT_RENAMING;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public ValuedObject getNewName()
   {
-        if (newName != null && newName.eIsProxy()) {
-            InternalEObject oldNewName = (InternalEObject)newName;
-            newName = (ValuedObject)eResolveProxy(oldNewName);
-            if (newName != oldNewName) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.CONSTANT_RENAMING__NEW_NAME, oldNewName, newName));
-            }
-        }
-        return newName;
+    if (newName != null && newName.eIsProxy())
+    {
+      InternalEObject oldNewName = (InternalEObject)newName;
+      newName = (ValuedObject)eResolveProxy(oldNewName);
+      if (newName != oldNewName)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.CONSTANT_RENAMING__NEW_NAME, oldNewName, newName));
+      }
     }
+    return newName;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public ValuedObject basicGetNewName()
   {
-        return newName;
-    }
+    return newName;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public void setNewName(ValuedObject newNewName)
   {
-        ValuedObject oldNewName = newName;
-        newName = newNewName;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.CONSTANT_RENAMING__NEW_NAME, oldNewName, newName));
-    }
+    ValuedObject oldNewName = newName;
+    newName = newNewName;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.CONSTANT_RENAMING__NEW_NAME, oldNewName, newName));
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public String getNewValue()
   {
-        return newValue;
-    }
+    return newValue;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public void setNewValue(String newNewValue)
   {
-        String oldNewValue = newValue;
-        newValue = newNewValue;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.CONSTANT_RENAMING__NEW_VALUE, oldNewValue, newValue));
-    }
+    String oldNewValue = newValue;
+    newValue = newNewValue;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.CONSTANT_RENAMING__NEW_VALUE, oldNewValue, newValue));
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public ValuedObject getOldName()
   {
-        if (oldName != null && oldName.eIsProxy()) {
-            InternalEObject oldOldName = (InternalEObject)oldName;
-            oldName = (ValuedObject)eResolveProxy(oldOldName);
-            if (oldName != oldOldName) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.CONSTANT_RENAMING__OLD_NAME, oldOldName, oldName));
-            }
-        }
-        return oldName;
+    if (oldName != null && oldName.eIsProxy())
+    {
+      InternalEObject oldOldName = (InternalEObject)oldName;
+      oldName = (ValuedObject)eResolveProxy(oldOldName);
+      if (oldName != oldOldName)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.CONSTANT_RENAMING__OLD_NAME, oldOldName, oldName));
+      }
     }
+    return oldName;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public ValuedObject basicGetOldName()
   {
-        return oldName;
-    }
+    return oldName;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public void setOldName(ValuedObject newOldName)
   {
-        ValuedObject oldOldName = oldName;
-        oldName = newOldName;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.CONSTANT_RENAMING__OLD_NAME, oldOldName, oldName));
-    }
+    ValuedObject oldOldName = oldName;
+    oldName = newOldName;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.CONSTANT_RENAMING__OLD_NAME, oldOldName, oldName));
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-        switch (featureID) {
-            case EsterelPackage.CONSTANT_RENAMING__NEW_NAME:
-                if (resolve) return getNewName();
-                return basicGetNewName();
-            case EsterelPackage.CONSTANT_RENAMING__NEW_VALUE:
-                return getNewValue();
-            case EsterelPackage.CONSTANT_RENAMING__OLD_NAME:
-                if (resolve) return getOldName();
-                return basicGetOldName();
-        }
-        return super.eGet(featureID, resolve, coreType);
+    switch (featureID)
+    {
+      case EsterelPackage.CONSTANT_RENAMING__NEW_NAME:
+        if (resolve) return getNewName();
+        return basicGetNewName();
+      case EsterelPackage.CONSTANT_RENAMING__NEW_VALUE:
+        return getNewValue();
+      case EsterelPackage.CONSTANT_RENAMING__OLD_NAME:
+        if (resolve) return getOldName();
+        return basicGetOldName();
     }
+    return super.eGet(featureID, resolve, coreType);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-        switch (featureID) {
-            case EsterelPackage.CONSTANT_RENAMING__NEW_NAME:
-                setNewName((ValuedObject)newValue);
-                return;
-            case EsterelPackage.CONSTANT_RENAMING__NEW_VALUE:
-                setNewValue((String)newValue);
-                return;
-            case EsterelPackage.CONSTANT_RENAMING__OLD_NAME:
-                setOldName((ValuedObject)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
+    switch (featureID)
+    {
+      case EsterelPackage.CONSTANT_RENAMING__NEW_NAME:
+        setNewName((ValuedObject)newValue);
+        return;
+      case EsterelPackage.CONSTANT_RENAMING__NEW_VALUE:
+        setNewValue((String)newValue);
+        return;
+      case EsterelPackage.CONSTANT_RENAMING__OLD_NAME:
+        setOldName((ValuedObject)newValue);
+        return;
     }
+    super.eSet(featureID, newValue);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
-        switch (featureID) {
-            case EsterelPackage.CONSTANT_RENAMING__NEW_NAME:
-                setNewName((ValuedObject)null);
-                return;
-            case EsterelPackage.CONSTANT_RENAMING__NEW_VALUE:
-                setNewValue(NEW_VALUE_EDEFAULT);
-                return;
-            case EsterelPackage.CONSTANT_RENAMING__OLD_NAME:
-                setOldName((ValuedObject)null);
-                return;
-        }
-        super.eUnset(featureID);
+    switch (featureID)
+    {
+      case EsterelPackage.CONSTANT_RENAMING__NEW_NAME:
+        setNewName((ValuedObject)null);
+        return;
+      case EsterelPackage.CONSTANT_RENAMING__NEW_VALUE:
+        setNewValue(NEW_VALUE_EDEFAULT);
+        return;
+      case EsterelPackage.CONSTANT_RENAMING__OLD_NAME:
+        setOldName((ValuedObject)null);
+        return;
     }
+    super.eUnset(featureID);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {
-        switch (featureID) {
-            case EsterelPackage.CONSTANT_RENAMING__NEW_NAME:
-                return newName != null;
-            case EsterelPackage.CONSTANT_RENAMING__NEW_VALUE:
-                return NEW_VALUE_EDEFAULT == null ? newValue != null : !NEW_VALUE_EDEFAULT.equals(newValue);
-            case EsterelPackage.CONSTANT_RENAMING__OLD_NAME:
-                return oldName != null;
-        }
-        return super.eIsSet(featureID);
+    switch (featureID)
+    {
+      case EsterelPackage.CONSTANT_RENAMING__NEW_NAME:
+        return newName != null;
+      case EsterelPackage.CONSTANT_RENAMING__NEW_VALUE:
+        return NEW_VALUE_EDEFAULT == null ? newValue != null : !NEW_VALUE_EDEFAULT.equals(newValue);
+      case EsterelPackage.CONSTANT_RENAMING__OLD_NAME:
+        return oldName != null;
     }
+    return super.eIsSet(featureID);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public String toString()
   {
-        if (eIsProxy()) return super.toString();
+    if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (newValue: ");
-        result.append(newValue);
-        result.append(')');
-        return result.toString();
-    }
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (newValue: ");
+    result.append(newValue);
+    result.append(')');
+    return result.toString();
+  }
 
 } //ConstantRenamingImpl

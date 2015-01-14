@@ -24,55 +24,55 @@ import de.cau.cs.kieler.esterel.kexpressions.InterfaceVariableDecl;
 public interface LocalVariable extends StatementContainer, Statement
 {
   /**
-     * Returns the value of the '<em><b>Var</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Var</b></em>' containment reference.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Var</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>Var</em>' containment reference.
-     * @see #setVar(InterfaceVariableDecl)
-     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getLocalVariable_Var()
-     * @model containment="true"
-     * @generated
-     */
+   * @return the value of the '<em>Var</em>' containment reference.
+   * @see #setVar(InterfaceVariableDecl)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getLocalVariable_Var()
+   * @model containment="true"
+   * @generated
+   */
   InterfaceVariableDecl getVar();
 
   /**
-     * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.LocalVariable#getVar <em>Var</em>}' containment reference.
-     * <!-- begin-user-doc -->
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.LocalVariable#getVar <em>Var</em>}' containment reference.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Var</em>' containment reference.
-     * @see #getVar()
-     * @generated
-     */
+   * @param value the new value of the '<em>Var</em>' containment reference.
+   * @see #getVar()
+   * @generated
+   */
   void setVar(InterfaceVariableDecl value);
 
   /**
-     * Returns the value of the '<em><b>Opt End</b></em>' attribute.
-     * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Opt End</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Opt End</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>Opt End</em>' attribute.
-     * @see #setOptEnd(String)
-     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getLocalVariable_OptEnd()
-     * @model
-     * @generated
-     */
+   * @return the value of the '<em>Opt End</em>' attribute.
+   * @see #setOptEnd(String)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getLocalVariable_OptEnd()
+   * @model
+   * @generated
+   */
   String getOptEnd();
 
   /**
-     * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.LocalVariable#getOptEnd <em>Opt End</em>}' attribute.
-     * <!-- begin-user-doc -->
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.LocalVariable#getOptEnd <em>Opt End</em>}' attribute.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Opt End</em>' attribute.
-     * @see #getOptEnd()
-     * @generated
-     */
+   * @param value the new value of the '<em>Opt End</em>' attribute.
+   * @see #getOptEnd()
+   * @generated
+   */
   void setOptEnd(String value);
 
 } // LocalVariable

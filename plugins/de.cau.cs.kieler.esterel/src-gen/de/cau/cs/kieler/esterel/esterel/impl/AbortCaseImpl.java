@@ -38,196 +38,202 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class AbortCaseImpl extends AbortBodyImpl implements AbortCase
 {
   /**
-     * The cached value of the '{@link #getCases() <em>Cases</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getCases() <em>Cases</em>}' containment reference list.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getCases()
-     * @generated
-     * @ordered
-     */
+   * @see #getCases()
+   * @generated
+   * @ordered
+   */
   protected EList<AbortCaseSingle> cases;
 
   /**
-     * The default value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
-     * <!-- begin-user-doc -->
+   * The default value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getOptEnd()
-     * @generated
-     * @ordered
-     */
+   * @see #getOptEnd()
+   * @generated
+   * @ordered
+   */
   protected static final String OPT_END_EDEFAULT = null;
 
   /**
-     * The cached value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
-     * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getOptEnd()
-     * @generated
-     * @ordered
-     */
+   * @see #getOptEnd()
+   * @generated
+   * @ordered
+   */
   protected String optEnd = OPT_END_EDEFAULT;
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   protected AbortCaseImpl()
   {
-        super();
-    }
+    super();
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-        return EsterelPackage.Literals.ABORT_CASE;
-    }
+    return EsterelPackage.Literals.ABORT_CASE;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public EList<AbortCaseSingle> getCases()
   {
-        if (cases == null) {
-            cases = new EObjectContainmentEList<AbortCaseSingle>(AbortCaseSingle.class, this, EsterelPackage.ABORT_CASE__CASES);
-        }
-        return cases;
+    if (cases == null)
+    {
+      cases = new EObjectContainmentEList<AbortCaseSingle>(AbortCaseSingle.class, this, EsterelPackage.ABORT_CASE__CASES);
     }
+    return cases;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public String getOptEnd()
   {
-        return optEnd;
-    }
+    return optEnd;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public void setOptEnd(String newOptEnd)
   {
-        String oldOptEnd = optEnd;
-        optEnd = newOptEnd;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ABORT_CASE__OPT_END, oldOptEnd, optEnd));
-    }
+    String oldOptEnd = optEnd;
+    optEnd = newOptEnd;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ABORT_CASE__OPT_END, oldOptEnd, optEnd));
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-        switch (featureID) {
-            case EsterelPackage.ABORT_CASE__CASES:
-                return ((InternalEList<?>)getCases()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
+    switch (featureID)
+    {
+      case EsterelPackage.ABORT_CASE__CASES:
+        return ((InternalEList<?>)getCases()).basicRemove(otherEnd, msgs);
     }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-        switch (featureID) {
-            case EsterelPackage.ABORT_CASE__CASES:
-                return getCases();
-            case EsterelPackage.ABORT_CASE__OPT_END:
-                return getOptEnd();
-        }
-        return super.eGet(featureID, resolve, coreType);
+    switch (featureID)
+    {
+      case EsterelPackage.ABORT_CASE__CASES:
+        return getCases();
+      case EsterelPackage.ABORT_CASE__OPT_END:
+        return getOptEnd();
     }
+    return super.eGet(featureID, resolve, coreType);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
-        switch (featureID) {
-            case EsterelPackage.ABORT_CASE__CASES:
-                getCases().clear();
-                getCases().addAll((Collection<? extends AbortCaseSingle>)newValue);
-                return;
-            case EsterelPackage.ABORT_CASE__OPT_END:
-                setOptEnd((String)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
+    switch (featureID)
+    {
+      case EsterelPackage.ABORT_CASE__CASES:
+        getCases().clear();
+        getCases().addAll((Collection<? extends AbortCaseSingle>)newValue);
+        return;
+      case EsterelPackage.ABORT_CASE__OPT_END:
+        setOptEnd((String)newValue);
+        return;
     }
+    super.eSet(featureID, newValue);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
-        switch (featureID) {
-            case EsterelPackage.ABORT_CASE__CASES:
-                getCases().clear();
-                return;
-            case EsterelPackage.ABORT_CASE__OPT_END:
-                setOptEnd(OPT_END_EDEFAULT);
-                return;
-        }
-        super.eUnset(featureID);
+    switch (featureID)
+    {
+      case EsterelPackage.ABORT_CASE__CASES:
+        getCases().clear();
+        return;
+      case EsterelPackage.ABORT_CASE__OPT_END:
+        setOptEnd(OPT_END_EDEFAULT);
+        return;
     }
+    super.eUnset(featureID);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {
-        switch (featureID) {
-            case EsterelPackage.ABORT_CASE__CASES:
-                return cases != null && !cases.isEmpty();
-            case EsterelPackage.ABORT_CASE__OPT_END:
-                return OPT_END_EDEFAULT == null ? optEnd != null : !OPT_END_EDEFAULT.equals(optEnd);
-        }
-        return super.eIsSet(featureID);
+    switch (featureID)
+    {
+      case EsterelPackage.ABORT_CASE__CASES:
+        return cases != null && !cases.isEmpty();
+      case EsterelPackage.ABORT_CASE__OPT_END:
+        return OPT_END_EDEFAULT == null ? optEnd != null : !OPT_END_EDEFAULT.equals(optEnd);
     }
+    return super.eIsSet(featureID);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public String toString()
   {
-        if (eIsProxy()) return super.toString();
+    if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (optEnd: ");
-        result.append(optEnd);
-        result.append(')');
-        return result.toString();
-    }
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (optEnd: ");
+    result.append(optEnd);
+    result.append(')');
+    return result.toString();
+  }
 
 } //AbortCaseImpl

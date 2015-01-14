@@ -21,24 +21,24 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class StatementImpl extends MinimalEObjectImpl.Container implements Statement
 {
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   protected StatementImpl()
   {
-        super();
-    }
+    super();
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-        return EsterelPackage.Literals.STATEMENT;
-    }
+    return EsterelPackage.Literals.STATEMENT;
+  }
 
 } //StatementImpl

@@ -25,19 +25,19 @@ import org.eclipse.emf.ecore.EObject;
 public interface ConstantDecls extends EObject
 {
   /**
-     * Returns the value of the '<em><b>Constants</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls}.
-     * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Constants</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Constants</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>Constants</em>' containment reference list.
-     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getConstantDecls_Constants()
-     * @model containment="true"
-     * @generated
-     */
+   * @return the value of the '<em>Constants</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getConstantDecls_Constants()
+   * @model containment="true"
+   * @generated
+   */
   EList<OneTypeConstantDecls> getConstants();
 
 } // ConstantDecls

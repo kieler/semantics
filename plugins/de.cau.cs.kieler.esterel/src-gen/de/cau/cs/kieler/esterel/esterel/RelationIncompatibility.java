@@ -25,19 +25,19 @@ import org.eclipse.emf.common.util.EList;
 public interface RelationIncompatibility extends RelationType
 {
   /**
-     * Returns the value of the '<em><b>Incomp</b></em>' reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.esterel.kexpressions.ISignal}.
-     * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Incomp</b></em>' reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.kexpressions.ISignal}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Incomp</em>' reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>Incomp</em>' reference list.
-     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getRelationIncompatibility_Incomp()
-     * @model
-     * @generated
-     */
+   * @return the value of the '<em>Incomp</em>' reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getRelationIncompatibility_Incomp()
+   * @model
+   * @generated
+   */
   EList<ISignal> getIncomp();
 
 } // RelationIncompatibility

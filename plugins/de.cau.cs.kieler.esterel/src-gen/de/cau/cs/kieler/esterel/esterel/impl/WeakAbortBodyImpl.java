@@ -21,24 +21,24 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class WeakAbortBodyImpl extends MinimalEObjectImpl.Container implements WeakAbortBody
 {
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   protected WeakAbortBodyImpl()
   {
-        super();
-    }
+    super();
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-        return EsterelPackage.Literals.WEAK_ABORT_BODY;
-    }
+    return EsterelPackage.Literals.WEAK_ABORT_BODY;
+  }
 
 } //WeakAbortBodyImpl

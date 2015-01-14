@@ -33,219 +33,228 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class AssignmentImpl extends StatementImpl implements Assignment
 {
   /**
-     * The cached value of the '{@link #getVar() <em>Var</em>}' reference.
-     * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getVar() <em>Var</em>}' reference.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getVar()
-     * @generated
-     * @ordered
-     */
+   * @see #getVar()
+   * @generated
+   * @ordered
+   */
   protected IVariable var;
 
   /**
-     * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
-     * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getExpr()
-     * @generated
-     * @ordered
-     */
+   * @see #getExpr()
+   * @generated
+   * @ordered
+   */
   protected Expression expr;
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   protected AssignmentImpl()
   {
-        super();
-    }
+    super();
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-        return EsterelPackage.Literals.ASSIGNMENT;
-    }
+    return EsterelPackage.Literals.ASSIGNMENT;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public IVariable getVar()
   {
-        if (var != null && var.eIsProxy()) {
-            InternalEObject oldVar = (InternalEObject)var;
-            var = (IVariable)eResolveProxy(oldVar);
-            if (var != oldVar) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.ASSIGNMENT__VAR, oldVar, var));
-            }
-        }
-        return var;
+    if (var != null && var.eIsProxy())
+    {
+      InternalEObject oldVar = (InternalEObject)var;
+      var = (IVariable)eResolveProxy(oldVar);
+      if (var != oldVar)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.ASSIGNMENT__VAR, oldVar, var));
+      }
     }
+    return var;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public IVariable basicGetVar()
   {
-        return var;
-    }
+    return var;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public void setVar(IVariable newVar)
   {
-        IVariable oldVar = var;
-        var = newVar;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ASSIGNMENT__VAR, oldVar, var));
-    }
+    IVariable oldVar = var;
+    var = newVar;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ASSIGNMENT__VAR, oldVar, var));
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public Expression getExpr()
   {
-        return expr;
-    }
+    return expr;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public NotificationChain basicSetExpr(Expression newExpr, NotificationChain msgs)
   {
-        Expression oldExpr = expr;
-        expr = newExpr;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.ASSIGNMENT__EXPR, oldExpr, newExpr);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
+    Expression oldExpr = expr;
+    expr = newExpr;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.ASSIGNMENT__EXPR, oldExpr, newExpr);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
     }
+    return msgs;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public void setExpr(Expression newExpr)
   {
-        if (newExpr != expr) {
-            NotificationChain msgs = null;
-            if (expr != null)
-                msgs = ((InternalEObject)expr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ASSIGNMENT__EXPR, null, msgs);
-            if (newExpr != null)
-                msgs = ((InternalEObject)newExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ASSIGNMENT__EXPR, null, msgs);
-            msgs = basicSetExpr(newExpr, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ASSIGNMENT__EXPR, newExpr, newExpr));
+    if (newExpr != expr)
+    {
+      NotificationChain msgs = null;
+      if (expr != null)
+        msgs = ((InternalEObject)expr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ASSIGNMENT__EXPR, null, msgs);
+      if (newExpr != null)
+        msgs = ((InternalEObject)newExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ASSIGNMENT__EXPR, null, msgs);
+      msgs = basicSetExpr(newExpr, msgs);
+      if (msgs != null) msgs.dispatch();
     }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ASSIGNMENT__EXPR, newExpr, newExpr));
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-        switch (featureID) {
-            case EsterelPackage.ASSIGNMENT__EXPR:
-                return basicSetExpr(null, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
+    switch (featureID)
+    {
+      case EsterelPackage.ASSIGNMENT__EXPR:
+        return basicSetExpr(null, msgs);
     }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-        switch (featureID) {
-            case EsterelPackage.ASSIGNMENT__VAR:
-                if (resolve) return getVar();
-                return basicGetVar();
-            case EsterelPackage.ASSIGNMENT__EXPR:
-                return getExpr();
-        }
-        return super.eGet(featureID, resolve, coreType);
+    switch (featureID)
+    {
+      case EsterelPackage.ASSIGNMENT__VAR:
+        if (resolve) return getVar();
+        return basicGetVar();
+      case EsterelPackage.ASSIGNMENT__EXPR:
+        return getExpr();
     }
+    return super.eGet(featureID, resolve, coreType);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-        switch (featureID) {
-            case EsterelPackage.ASSIGNMENT__VAR:
-                setVar((IVariable)newValue);
-                return;
-            case EsterelPackage.ASSIGNMENT__EXPR:
-                setExpr((Expression)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
+    switch (featureID)
+    {
+      case EsterelPackage.ASSIGNMENT__VAR:
+        setVar((IVariable)newValue);
+        return;
+      case EsterelPackage.ASSIGNMENT__EXPR:
+        setExpr((Expression)newValue);
+        return;
     }
+    super.eSet(featureID, newValue);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
-        switch (featureID) {
-            case EsterelPackage.ASSIGNMENT__VAR:
-                setVar((IVariable)null);
-                return;
-            case EsterelPackage.ASSIGNMENT__EXPR:
-                setExpr((Expression)null);
-                return;
-        }
-        super.eUnset(featureID);
+    switch (featureID)
+    {
+      case EsterelPackage.ASSIGNMENT__VAR:
+        setVar((IVariable)null);
+        return;
+      case EsterelPackage.ASSIGNMENT__EXPR:
+        setExpr((Expression)null);
+        return;
     }
+    super.eUnset(featureID);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {
-        switch (featureID) {
-            case EsterelPackage.ASSIGNMENT__VAR:
-                return var != null;
-            case EsterelPackage.ASSIGNMENT__EXPR:
-                return expr != null;
-        }
-        return super.eIsSet(featureID);
+    switch (featureID)
+    {
+      case EsterelPackage.ASSIGNMENT__VAR:
+        return var != null;
+      case EsterelPackage.ASSIGNMENT__EXPR:
+        return expr != null;
     }
+    return super.eIsSet(featureID);
+  }
 
 } //AssignmentImpl

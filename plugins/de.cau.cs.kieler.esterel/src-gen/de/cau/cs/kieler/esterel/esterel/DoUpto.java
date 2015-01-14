@@ -23,29 +23,29 @@ import org.eclipse.emf.ecore.EObject;
 public interface DoUpto extends EObject
 {
   /**
-     * Returns the value of the '<em><b>Expr</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Expr</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>Expr</em>' containment reference.
-     * @see #setExpr(DelayExpr)
-     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDoUpto_Expr()
-     * @model containment="true"
-     * @generated
-     */
+   * @return the value of the '<em>Expr</em>' containment reference.
+   * @see #setExpr(DelayExpr)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDoUpto_Expr()
+   * @model containment="true"
+   * @generated
+   */
   DelayExpr getExpr();
 
   /**
-     * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DoUpto#getExpr <em>Expr</em>}' containment reference.
-     * <!-- begin-user-doc -->
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DoUpto#getExpr <em>Expr</em>}' containment reference.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Expr</em>' containment reference.
-     * @see #getExpr()
-     * @generated
-     */
+   * @param value the new value of the '<em>Expr</em>' containment reference.
+   * @see #getExpr()
+   * @generated
+   */
   void setExpr(DelayExpr value);
 
 } // DoUpto

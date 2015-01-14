@@ -22,29 +22,29 @@ package de.cau.cs.kieler.esterel.esterel;
 public interface WeakAbortCase extends AbortCase
 {
   /**
-     * Returns the value of the '<em><b>End</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>End</b></em>' containment reference.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>End</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>End</em>' containment reference.
-     * @see #setEnd(WeakAbortEnd)
-     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getWeakAbortCase_End()
-     * @model containment="true"
-     * @generated
-     */
+   * @return the value of the '<em>End</em>' containment reference.
+   * @see #setEnd(WeakAbortEnd)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getWeakAbortCase_End()
+   * @model containment="true"
+   * @generated
+   */
   WeakAbortEnd getEnd();
 
   /**
-     * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.WeakAbortCase#getEnd <em>End</em>}' containment reference.
-     * <!-- begin-user-doc -->
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.WeakAbortCase#getEnd <em>End</em>}' containment reference.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @param value the new value of the '<em>End</em>' containment reference.
-     * @see #getEnd()
-     * @generated
-     */
+   * @param value the new value of the '<em>End</em>' containment reference.
+   * @see #getEnd()
+   * @generated
+   */
   void setEnd(WeakAbortEnd value);
 
 } // WeakAbortCase

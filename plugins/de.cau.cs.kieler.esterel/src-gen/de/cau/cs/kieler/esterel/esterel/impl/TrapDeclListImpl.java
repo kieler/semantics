@@ -37,126 +37,132 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class TrapDeclListImpl extends MinimalEObjectImpl.Container implements TrapDeclList
 {
   /**
-     * The cached value of the '{@link #getTrapDecls() <em>Trap Decls</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getTrapDecls() <em>Trap Decls</em>}' containment reference list.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getTrapDecls()
-     * @generated
-     * @ordered
-     */
+   * @see #getTrapDecls()
+   * @generated
+   * @ordered
+   */
   protected EList<ISignal> trapDecls;
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   protected TrapDeclListImpl()
   {
-        super();
-    }
+    super();
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-        return EsterelPackage.Literals.TRAP_DECL_LIST;
-    }
+    return EsterelPackage.Literals.TRAP_DECL_LIST;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public EList<ISignal> getTrapDecls()
   {
-        if (trapDecls == null) {
-            trapDecls = new EObjectContainmentEList<ISignal>(ISignal.class, this, EsterelPackage.TRAP_DECL_LIST__TRAP_DECLS);
-        }
-        return trapDecls;
+    if (trapDecls == null)
+    {
+      trapDecls = new EObjectContainmentEList<ISignal>(ISignal.class, this, EsterelPackage.TRAP_DECL_LIST__TRAP_DECLS);
     }
+    return trapDecls;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-        switch (featureID) {
-            case EsterelPackage.TRAP_DECL_LIST__TRAP_DECLS:
-                return ((InternalEList<?>)getTrapDecls()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
+    switch (featureID)
+    {
+      case EsterelPackage.TRAP_DECL_LIST__TRAP_DECLS:
+        return ((InternalEList<?>)getTrapDecls()).basicRemove(otherEnd, msgs);
     }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-        switch (featureID) {
-            case EsterelPackage.TRAP_DECL_LIST__TRAP_DECLS:
-                return getTrapDecls();
-        }
-        return super.eGet(featureID, resolve, coreType);
+    switch (featureID)
+    {
+      case EsterelPackage.TRAP_DECL_LIST__TRAP_DECLS:
+        return getTrapDecls();
     }
+    return super.eGet(featureID, resolve, coreType);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
-        switch (featureID) {
-            case EsterelPackage.TRAP_DECL_LIST__TRAP_DECLS:
-                getTrapDecls().clear();
-                getTrapDecls().addAll((Collection<? extends ISignal>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
+    switch (featureID)
+    {
+      case EsterelPackage.TRAP_DECL_LIST__TRAP_DECLS:
+        getTrapDecls().clear();
+        getTrapDecls().addAll((Collection<? extends ISignal>)newValue);
+        return;
     }
+    super.eSet(featureID, newValue);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
-        switch (featureID) {
-            case EsterelPackage.TRAP_DECL_LIST__TRAP_DECLS:
-                getTrapDecls().clear();
-                return;
-        }
-        super.eUnset(featureID);
+    switch (featureID)
+    {
+      case EsterelPackage.TRAP_DECL_LIST__TRAP_DECLS:
+        getTrapDecls().clear();
+        return;
     }
+    super.eUnset(featureID);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {
-        switch (featureID) {
-            case EsterelPackage.TRAP_DECL_LIST__TRAP_DECLS:
-                return trapDecls != null && !trapDecls.isEmpty();
-        }
-        return super.eIsSet(featureID);
+    switch (featureID)
+    {
+      case EsterelPackage.TRAP_DECL_LIST__TRAP_DECLS:
+        return trapDecls != null && !trapDecls.isEmpty();
     }
+    return super.eIsSet(featureID);
+  }
 
 } //TrapDeclListImpl

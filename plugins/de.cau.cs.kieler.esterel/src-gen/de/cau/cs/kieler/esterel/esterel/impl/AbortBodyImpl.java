@@ -21,24 +21,24 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class AbortBodyImpl extends MinimalEObjectImpl.Container implements AbortBody
 {
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   protected AbortBodyImpl()
   {
-        super();
-    }
+    super();
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-        return EsterelPackage.Literals.ABORT_BODY;
-    }
+    return EsterelPackage.Literals.ABORT_BODY;
+  }
 
 } //AbortBodyImpl

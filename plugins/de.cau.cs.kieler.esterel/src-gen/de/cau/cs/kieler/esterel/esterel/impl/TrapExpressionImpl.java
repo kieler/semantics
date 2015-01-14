@@ -32,138 +32,144 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class TrapExpressionImpl extends ExpressionImpl implements TrapExpression
 {
   /**
-     * The cached value of the '{@link #getTrap() <em>Trap</em>}' reference.
-     * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getTrap() <em>Trap</em>}' reference.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getTrap()
-     * @generated
-     * @ordered
-     */
+   * @see #getTrap()
+   * @generated
+   * @ordered
+   */
   protected ISignal trap;
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   protected TrapExpressionImpl()
   {
-        super();
-    }
+    super();
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-        return EsterelPackage.Literals.TRAP_EXPRESSION;
-    }
+    return EsterelPackage.Literals.TRAP_EXPRESSION;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public ISignal getTrap()
   {
-        if (trap != null && trap.eIsProxy()) {
-            InternalEObject oldTrap = (InternalEObject)trap;
-            trap = (ISignal)eResolveProxy(oldTrap);
-            if (trap != oldTrap) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.TRAP_EXPRESSION__TRAP, oldTrap, trap));
-            }
-        }
-        return trap;
+    if (trap != null && trap.eIsProxy())
+    {
+      InternalEObject oldTrap = (InternalEObject)trap;
+      trap = (ISignal)eResolveProxy(oldTrap);
+      if (trap != oldTrap)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.TRAP_EXPRESSION__TRAP, oldTrap, trap));
+      }
     }
+    return trap;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public ISignal basicGetTrap()
   {
-        return trap;
-    }
+    return trap;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public void setTrap(ISignal newTrap)
   {
-        ISignal oldTrap = trap;
-        trap = newTrap;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.TRAP_EXPRESSION__TRAP, oldTrap, trap));
-    }
+    ISignal oldTrap = trap;
+    trap = newTrap;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.TRAP_EXPRESSION__TRAP, oldTrap, trap));
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-        switch (featureID) {
-            case EsterelPackage.TRAP_EXPRESSION__TRAP:
-                if (resolve) return getTrap();
-                return basicGetTrap();
-        }
-        return super.eGet(featureID, resolve, coreType);
+    switch (featureID)
+    {
+      case EsterelPackage.TRAP_EXPRESSION__TRAP:
+        if (resolve) return getTrap();
+        return basicGetTrap();
     }
+    return super.eGet(featureID, resolve, coreType);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-        switch (featureID) {
-            case EsterelPackage.TRAP_EXPRESSION__TRAP:
-                setTrap((ISignal)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
+    switch (featureID)
+    {
+      case EsterelPackage.TRAP_EXPRESSION__TRAP:
+        setTrap((ISignal)newValue);
+        return;
     }
+    super.eSet(featureID, newValue);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
-        switch (featureID) {
-            case EsterelPackage.TRAP_EXPRESSION__TRAP:
-                setTrap((ISignal)null);
-                return;
-        }
-        super.eUnset(featureID);
+    switch (featureID)
+    {
+      case EsterelPackage.TRAP_EXPRESSION__TRAP:
+        setTrap((ISignal)null);
+        return;
     }
+    super.eUnset(featureID);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {
-        switch (featureID) {
-            case EsterelPackage.TRAP_EXPRESSION__TRAP:
-                return trap != null;
-        }
-        return super.eIsSet(featureID);
+    switch (featureID)
+    {
+      case EsterelPackage.TRAP_EXPRESSION__TRAP:
+        return trap != null;
     }
+    return super.eIsSet(featureID);
+  }
 
 } //TrapExpressionImpl

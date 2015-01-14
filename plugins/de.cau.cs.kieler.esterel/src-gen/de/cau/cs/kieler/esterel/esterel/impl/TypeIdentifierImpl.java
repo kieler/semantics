@@ -19,24 +19,24 @@ import org.eclipse.emf.ecore.EClass;
 public class TypeIdentifierImpl extends de.cau.cs.kieler.esterel.kexpressions.impl.TypeIdentifierImpl implements TypeIdentifier
 {
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   protected TypeIdentifierImpl()
   {
-        super();
-    }
+    super();
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-        return EsterelPackage.Literals.TYPE_IDENTIFIER;
-    }
+    return EsterelPackage.Literals.TYPE_IDENTIFIER;
+  }
 
 } //TypeIdentifierImpl

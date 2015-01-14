@@ -36,126 +36,132 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class RenamingListImpl extends MinimalEObjectImpl.Container implements RenamingList
 {
   /**
-     * The cached value of the '{@link #getList() <em>List</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getList() <em>List</em>}' containment reference list.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getList()
-     * @generated
-     * @ordered
-     */
+   * @see #getList()
+   * @generated
+   * @ordered
+   */
   protected EList<Renaming> list;
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   protected RenamingListImpl()
   {
-        super();
-    }
+    super();
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-        return EsterelPackage.Literals.RENAMING_LIST;
-    }
+    return EsterelPackage.Literals.RENAMING_LIST;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public EList<Renaming> getList()
   {
-        if (list == null) {
-            list = new EObjectContainmentEList<Renaming>(Renaming.class, this, EsterelPackage.RENAMING_LIST__LIST);
-        }
-        return list;
+    if (list == null)
+    {
+      list = new EObjectContainmentEList<Renaming>(Renaming.class, this, EsterelPackage.RENAMING_LIST__LIST);
     }
+    return list;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-        switch (featureID) {
-            case EsterelPackage.RENAMING_LIST__LIST:
-                return ((InternalEList<?>)getList()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
+    switch (featureID)
+    {
+      case EsterelPackage.RENAMING_LIST__LIST:
+        return ((InternalEList<?>)getList()).basicRemove(otherEnd, msgs);
     }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-        switch (featureID) {
-            case EsterelPackage.RENAMING_LIST__LIST:
-                return getList();
-        }
-        return super.eGet(featureID, resolve, coreType);
+    switch (featureID)
+    {
+      case EsterelPackage.RENAMING_LIST__LIST:
+        return getList();
     }
+    return super.eGet(featureID, resolve, coreType);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
-        switch (featureID) {
-            case EsterelPackage.RENAMING_LIST__LIST:
-                getList().clear();
-                getList().addAll((Collection<? extends Renaming>)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
+    switch (featureID)
+    {
+      case EsterelPackage.RENAMING_LIST__LIST:
+        getList().clear();
+        getList().addAll((Collection<? extends Renaming>)newValue);
+        return;
     }
+    super.eSet(featureID, newValue);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
-        switch (featureID) {
-            case EsterelPackage.RENAMING_LIST__LIST:
-                getList().clear();
-                return;
-        }
-        super.eUnset(featureID);
+    switch (featureID)
+    {
+      case EsterelPackage.RENAMING_LIST__LIST:
+        getList().clear();
+        return;
     }
+    super.eUnset(featureID);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {
-        switch (featureID) {
-            case EsterelPackage.RENAMING_LIST__LIST:
-                return list != null && !list.isEmpty();
-        }
-        return super.eIsSet(featureID);
+    switch (featureID)
+    {
+      case EsterelPackage.RENAMING_LIST__LIST:
+        return list != null && !list.isEmpty();
     }
+    return super.eIsSet(featureID);
+  }
 
 } //RenamingListImpl

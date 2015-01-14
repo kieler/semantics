@@ -19,24 +19,24 @@ import org.eclipse.emf.ecore.EClass;
 public class PauseImpl extends StatementImpl implements Pause
 {
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   protected PauseImpl()
   {
-        super();
-    }
+    super();
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-        return EsterelPackage.Literals.PAUSE;
-    }
+    return EsterelPackage.Literals.PAUSE;
+  }
 
 } //PauseImpl

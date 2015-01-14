@@ -29,138 +29,144 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class EsterelTypeImpl extends TypeIdentifierImpl implements EsterelType
 {
   /**
-     * The cached value of the '{@link #getEstType() <em>Est Type</em>}' reference.
-     * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getEstType() <em>Est Type</em>}' reference.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getEstType()
-     * @generated
-     * @ordered
-     */
+   * @see #getEstType()
+   * @generated
+   * @ordered
+   */
   protected Type estType;
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   protected EsterelTypeImpl()
   {
-        super();
-    }
+    super();
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-        return EsterelPackage.Literals.ESTEREL_TYPE;
-    }
+    return EsterelPackage.Literals.ESTEREL_TYPE;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public Type getEstType()
   {
-        if (estType != null && estType.eIsProxy()) {
-            InternalEObject oldEstType = (InternalEObject)estType;
-            estType = (Type)eResolveProxy(oldEstType);
-            if (estType != oldEstType) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.ESTEREL_TYPE__EST_TYPE, oldEstType, estType));
-            }
-        }
-        return estType;
+    if (estType != null && estType.eIsProxy())
+    {
+      InternalEObject oldEstType = (InternalEObject)estType;
+      estType = (Type)eResolveProxy(oldEstType);
+      if (estType != oldEstType)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.ESTEREL_TYPE__EST_TYPE, oldEstType, estType));
+      }
     }
+    return estType;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public Type basicGetEstType()
   {
-        return estType;
-    }
+    return estType;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public void setEstType(Type newEstType)
   {
-        Type oldEstType = estType;
-        estType = newEstType;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ESTEREL_TYPE__EST_TYPE, oldEstType, estType));
-    }
+    Type oldEstType = estType;
+    estType = newEstType;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ESTEREL_TYPE__EST_TYPE, oldEstType, estType));
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-        switch (featureID) {
-            case EsterelPackage.ESTEREL_TYPE__EST_TYPE:
-                if (resolve) return getEstType();
-                return basicGetEstType();
-        }
-        return super.eGet(featureID, resolve, coreType);
+    switch (featureID)
+    {
+      case EsterelPackage.ESTEREL_TYPE__EST_TYPE:
+        if (resolve) return getEstType();
+        return basicGetEstType();
     }
+    return super.eGet(featureID, resolve, coreType);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-        switch (featureID) {
-            case EsterelPackage.ESTEREL_TYPE__EST_TYPE:
-                setEstType((Type)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
+    switch (featureID)
+    {
+      case EsterelPackage.ESTEREL_TYPE__EST_TYPE:
+        setEstType((Type)newValue);
+        return;
     }
+    super.eSet(featureID, newValue);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
-        switch (featureID) {
-            case EsterelPackage.ESTEREL_TYPE__EST_TYPE:
-                setEstType((Type)null);
-                return;
-        }
-        super.eUnset(featureID);
+    switch (featureID)
+    {
+      case EsterelPackage.ESTEREL_TYPE__EST_TYPE:
+        setEstType((Type)null);
+        return;
     }
+    super.eUnset(featureID);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {
-        switch (featureID) {
-            case EsterelPackage.ESTEREL_TYPE__EST_TYPE:
-                return estType != null;
-        }
-        return super.eIsSet(featureID);
+    switch (featureID)
+    {
+      case EsterelPackage.ESTEREL_TYPE__EST_TYPE:
+        return estType != null;
     }
+    return super.eIsSet(featureID);
+  }
 
 } //EsterelTypeImpl

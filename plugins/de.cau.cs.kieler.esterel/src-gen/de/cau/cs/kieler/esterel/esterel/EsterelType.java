@@ -22,29 +22,29 @@ package de.cau.cs.kieler.esterel.esterel;
 public interface EsterelType extends TypeIdentifier
 {
   /**
-     * Returns the value of the '<em><b>Est Type</b></em>' reference.
-     * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Est Type</b></em>' reference.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Est Type</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>Est Type</em>' reference.
-     * @see #setEstType(Type)
-     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getEsterelType_EstType()
-     * @model
-     * @generated
-     */
+   * @return the value of the '<em>Est Type</em>' reference.
+   * @see #setEstType(Type)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getEsterelType_EstType()
+   * @model
+   * @generated
+   */
   Type getEstType();
 
   /**
-     * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.EsterelType#getEstType <em>Est Type</em>}' reference.
-     * <!-- begin-user-doc -->
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.EsterelType#getEstType <em>Est Type</em>}' reference.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Est Type</em>' reference.
-     * @see #getEstType()
-     * @generated
-     */
+   * @param value the new value of the '<em>Est Type</em>' reference.
+   * @see #getEstType()
+   * @generated
+   */
   void setEstType(Type value);
 
 } // EsterelType

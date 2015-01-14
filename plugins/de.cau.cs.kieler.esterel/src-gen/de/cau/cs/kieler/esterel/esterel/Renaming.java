@@ -25,19 +25,19 @@ import org.eclipse.emf.ecore.EObject;
 public interface Renaming extends EObject
 {
   /**
-     * Returns the value of the '<em><b>Renamings</b></em>' containment reference list.
-     * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
-     * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Renamings</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Renamings</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>Renamings</em>' containment reference list.
-     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getRenaming_Renamings()
-     * @model containment="true"
-     * @generated
-     */
+   * @return the value of the '<em>Renamings</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getRenaming_Renamings()
+   * @model containment="true"
+   * @generated
+   */
   EList<EObject> getRenamings();
 
 } // Renaming

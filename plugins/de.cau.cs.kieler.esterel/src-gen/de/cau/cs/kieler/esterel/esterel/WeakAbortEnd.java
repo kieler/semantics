@@ -23,29 +23,29 @@ import org.eclipse.emf.ecore.EObject;
 public interface WeakAbortEnd extends EObject
 {
   /**
-     * Returns the value of the '<em><b>Opt End</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Opt End</b></em>' containment reference.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Opt End</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-     * @return the value of the '<em>Opt End</em>' containment reference.
-     * @see #setOptEnd(WeakAbortEndAlt)
-     * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getWeakAbortEnd_OptEnd()
-     * @model containment="true"
-     * @generated
-     */
+   * @return the value of the '<em>Opt End</em>' containment reference.
+   * @see #setOptEnd(WeakAbortEndAlt)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getWeakAbortEnd_OptEnd()
+   * @model containment="true"
+   * @generated
+   */
   WeakAbortEndAlt getOptEnd();
 
   /**
-     * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.WeakAbortEnd#getOptEnd <em>Opt End</em>}' containment reference.
-     * <!-- begin-user-doc -->
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.WeakAbortEnd#getOptEnd <em>Opt End</em>}' containment reference.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Opt End</em>' containment reference.
-     * @see #getOptEnd()
-     * @generated
-     */
+   * @param value the new value of the '<em>Opt End</em>' containment reference.
+   * @see #getOptEnd()
+   * @generated
+   */
   void setOptEnd(WeakAbortEndAlt value);
 
 } // WeakAbortEnd

@@ -21,24 +21,24 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class LoopEachImpl extends MinimalEObjectImpl.Container implements LoopEach
 {
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   protected LoopEachImpl()
   {
-        super();
-    }
+    super();
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-        return EsterelPackage.Literals.LOOP_EACH;
-    }
+    return EsterelPackage.Literals.LOOP_EACH;
+  }
 
 } //LoopEachImpl

@@ -34,289 +34,298 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class EmitImpl extends StatementImpl implements Emit
 {
   /**
-     * The cached value of the '{@link #getSignal() <em>Signal</em>}' reference.
-     * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getSignal() <em>Signal</em>}' reference.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getSignal()
-     * @generated
-     * @ordered
-     */
+   * @see #getSignal()
+   * @generated
+   * @ordered
+   */
   protected ISignal signal;
 
   /**
-     * The default value of the '{@link #getTick() <em>Tick</em>}' attribute.
-     * <!-- begin-user-doc -->
+   * The default value of the '{@link #getTick() <em>Tick</em>}' attribute.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getTick()
-     * @generated
-     * @ordered
-     */
+   * @see #getTick()
+   * @generated
+   * @ordered
+   */
   protected static final String TICK_EDEFAULT = null;
 
   /**
-     * The cached value of the '{@link #getTick() <em>Tick</em>}' attribute.
-     * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getTick() <em>Tick</em>}' attribute.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getTick()
-     * @generated
-     * @ordered
-     */
+   * @see #getTick()
+   * @generated
+   * @ordered
+   */
   protected String tick = TICK_EDEFAULT;
 
   /**
-     * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
-     * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @see #getExpr()
-     * @generated
-     * @ordered
-     */
+   * @see #getExpr()
+   * @generated
+   * @ordered
+   */
   protected Expression expr;
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   protected EmitImpl()
   {
-        super();
-    }
+    super();
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   protected EClass eStaticClass()
   {
-        return EsterelPackage.Literals.EMIT;
-    }
+    return EsterelPackage.Literals.EMIT;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public ISignal getSignal()
   {
-        if (signal != null && signal.eIsProxy()) {
-            InternalEObject oldSignal = (InternalEObject)signal;
-            signal = (ISignal)eResolveProxy(oldSignal);
-            if (signal != oldSignal) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.EMIT__SIGNAL, oldSignal, signal));
-            }
-        }
-        return signal;
+    if (signal != null && signal.eIsProxy())
+    {
+      InternalEObject oldSignal = (InternalEObject)signal;
+      signal = (ISignal)eResolveProxy(oldSignal);
+      if (signal != oldSignal)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.EMIT__SIGNAL, oldSignal, signal));
+      }
     }
+    return signal;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public ISignal basicGetSignal()
   {
-        return signal;
-    }
+    return signal;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public void setSignal(ISignal newSignal)
   {
-        ISignal oldSignal = signal;
-        signal = newSignal;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EMIT__SIGNAL, oldSignal, signal));
-    }
+    ISignal oldSignal = signal;
+    signal = newSignal;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EMIT__SIGNAL, oldSignal, signal));
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public String getTick()
   {
-        return tick;
-    }
+    return tick;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public void setTick(String newTick)
   {
-        String oldTick = tick;
-        tick = newTick;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EMIT__TICK, oldTick, tick));
-    }
+    String oldTick = tick;
+    tick = newTick;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EMIT__TICK, oldTick, tick));
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public Expression getExpr()
   {
-        return expr;
-    }
+    return expr;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public NotificationChain basicSetExpr(Expression newExpr, NotificationChain msgs)
   {
-        Expression oldExpr = expr;
-        expr = newExpr;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.EMIT__EXPR, oldExpr, newExpr);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
+    Expression oldExpr = expr;
+    expr = newExpr;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.EMIT__EXPR, oldExpr, newExpr);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
     }
+    return msgs;
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   public void setExpr(Expression newExpr)
   {
-        if (newExpr != expr) {
-            NotificationChain msgs = null;
-            if (expr != null)
-                msgs = ((InternalEObject)expr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.EMIT__EXPR, null, msgs);
-            if (newExpr != null)
-                msgs = ((InternalEObject)newExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.EMIT__EXPR, null, msgs);
-            msgs = basicSetExpr(newExpr, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EMIT__EXPR, newExpr, newExpr));
+    if (newExpr != expr)
+    {
+      NotificationChain msgs = null;
+      if (expr != null)
+        msgs = ((InternalEObject)expr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.EMIT__EXPR, null, msgs);
+      if (newExpr != null)
+        msgs = ((InternalEObject)newExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.EMIT__EXPR, null, msgs);
+      msgs = basicSetExpr(newExpr, msgs);
+      if (msgs != null) msgs.dispatch();
     }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EMIT__EXPR, newExpr, newExpr));
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-        switch (featureID) {
-            case EsterelPackage.EMIT__EXPR:
-                return basicSetExpr(null, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
+    switch (featureID)
+    {
+      case EsterelPackage.EMIT__EXPR:
+        return basicSetExpr(null, msgs);
     }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-        switch (featureID) {
-            case EsterelPackage.EMIT__SIGNAL:
-                if (resolve) return getSignal();
-                return basicGetSignal();
-            case EsterelPackage.EMIT__TICK:
-                return getTick();
-            case EsterelPackage.EMIT__EXPR:
-                return getExpr();
-        }
-        return super.eGet(featureID, resolve, coreType);
+    switch (featureID)
+    {
+      case EsterelPackage.EMIT__SIGNAL:
+        if (resolve) return getSignal();
+        return basicGetSignal();
+      case EsterelPackage.EMIT__TICK:
+        return getTick();
+      case EsterelPackage.EMIT__EXPR:
+        return getExpr();
     }
+    return super.eGet(featureID, resolve, coreType);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-        switch (featureID) {
-            case EsterelPackage.EMIT__SIGNAL:
-                setSignal((ISignal)newValue);
-                return;
-            case EsterelPackage.EMIT__TICK:
-                setTick((String)newValue);
-                return;
-            case EsterelPackage.EMIT__EXPR:
-                setExpr((Expression)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
+    switch (featureID)
+    {
+      case EsterelPackage.EMIT__SIGNAL:
+        setSignal((ISignal)newValue);
+        return;
+      case EsterelPackage.EMIT__TICK:
+        setTick((String)newValue);
+        return;
+      case EsterelPackage.EMIT__EXPR:
+        setExpr((Expression)newValue);
+        return;
     }
+    super.eSet(featureID, newValue);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public void eUnset(int featureID)
   {
-        switch (featureID) {
-            case EsterelPackage.EMIT__SIGNAL:
-                setSignal((ISignal)null);
-                return;
-            case EsterelPackage.EMIT__TICK:
-                setTick(TICK_EDEFAULT);
-                return;
-            case EsterelPackage.EMIT__EXPR:
-                setExpr((Expression)null);
-                return;
-        }
-        super.eUnset(featureID);
+    switch (featureID)
+    {
+      case EsterelPackage.EMIT__SIGNAL:
+        setSignal((ISignal)null);
+        return;
+      case EsterelPackage.EMIT__TICK:
+        setTick(TICK_EDEFAULT);
+        return;
+      case EsterelPackage.EMIT__EXPR:
+        setExpr((Expression)null);
+        return;
     }
+    super.eUnset(featureID);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public boolean eIsSet(int featureID)
   {
-        switch (featureID) {
-            case EsterelPackage.EMIT__SIGNAL:
-                return signal != null;
-            case EsterelPackage.EMIT__TICK:
-                return TICK_EDEFAULT == null ? tick != null : !TICK_EDEFAULT.equals(tick);
-            case EsterelPackage.EMIT__EXPR:
-                return expr != null;
-        }
-        return super.eIsSet(featureID);
+    switch (featureID)
+    {
+      case EsterelPackage.EMIT__SIGNAL:
+        return signal != null;
+      case EsterelPackage.EMIT__TICK:
+        return TICK_EDEFAULT == null ? tick != null : !TICK_EDEFAULT.equals(tick);
+      case EsterelPackage.EMIT__EXPR:
+        return expr != null;
     }
+    return super.eIsSet(featureID);
+  }
 
   /**
-     * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-     * @generated
-     */
+   * @generated
+   */
   @Override
   public String toString()
   {
-        if (eIsProxy()) return super.toString();
+    if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (tick: ");
-        result.append(tick);
-        result.append(')');
-        return result.toString();
-    }
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (tick: ");
+    result.append(tick);
+    result.append(')');
+    return result.toString();
+  }
 
 } //EmitImpl
