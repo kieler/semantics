@@ -200,6 +200,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     // -------------------------------------------------------------------------
     // The Main entry transform function   
     override transform(Scope model) {
+        usedContext.setProperty(KlighdProperties.EDGES_FIRST, true);
+        
 //        var transformed = model;
 
         // Visualization of compiled SCCharts with kico.klighd not here
