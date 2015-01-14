@@ -66,7 +66,7 @@ public class KLighD {
                             + "Example 2:\n"
                             + "  java -jar KLighD.jar 4444 -f FILE.sct -o model.png \n"
                             + "Example 3:\n"
-                            + "  java -jar KLighD.jar render.sccharts.com -f FILE.sct -o model.png \n" + "\n"
+                            + "  java -jar KLighD.jar render.sccharts.com -f FILE.sct -o model.png \n" 
                             + "Example 4:\n"
                             + "  java -jar KLighD.jar localhost:4444 FILE.sct -o model.kgx -r kgx \n" + "\n"
                             + "Options:\n" + "-f <filename> : Use a specific input file\n"
