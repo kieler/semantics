@@ -50,7 +50,7 @@ class TimingAnnotationProvider {
     /* This method checks, whether we have timing information for this SCChart. If yes, it provides all 
      * regions of the SCChart with two timing value annotations, one including,
      * one excluding the WCRT for child regions. If no, the method checks whether SCChart and KTM have 
-     * already been assigned with Timing Domains and handels this, if not.
+     * already been assigned with Timing Domains and handles this, if not.
      */
     def public doTimingAnnotations(State scchart, /* ModelWrapper KTMRoot,*/ String fileName) {
 
@@ -339,10 +339,10 @@ class TimingAnnotationProvider {
                         Integer.parseInt(currentResult.result.get(0)))
                 }
                 case RequestType::WCP: {
-                    // do nothing, here we are interested in timing values, not in paths
+                    // do nothing, for now we are interested in timing values, not in paths
                 }
                 case RequestType::BCP: {
-                    // do nothing, here we are interested in timing values, not in paths
+                    // do nothing, for now we are interested in timing values, not in paths
                 }
             }
         }

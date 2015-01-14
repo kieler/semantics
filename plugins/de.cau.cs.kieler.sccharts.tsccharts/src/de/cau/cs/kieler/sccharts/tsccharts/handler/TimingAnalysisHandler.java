@@ -199,67 +199,67 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 Integer domainNumber =
                         annotationProvider.setTimingDomainsWithS(scchart, 0, threadTree, null);
 
-//                13.01.2015
-//                CompilationResult transformed =
-//                        KielerCompiler.compile("SCGRAPH", scchart, true, true);
-//                EObject transformedEObject = transformed.getEObject();
-//                SCGraph sequentialSCG = (SCGraph) transformedEObject;
+                CompilationResult transformed =
+                        KielerCompiler.compile("SCGRAPH", scchart, true, true);
+                EObject transformedEObject = transformed.getEObject();
+                SCGraph sequentialSCG = (SCGraph) transformedEObject;
+                
 //                HashMultimap<EObject, EObject> testMappingSCC2SCG= getTestMapping(1);
-//                EList<Node> nodeList = sequentialSCG.getNodes();
-//                Iterator<Node> nodeListIterator = nodeList.iterator();
-//                // collect all edges with their source nodes
-//                HashMap<ControlFlow, Node> edgesWithSource = new HashMap<ControlFlow, Node>();
-//                while (nodeListIterator.hasNext()) {
-//                    Node node = nodeListIterator.next();
-//                    if (node instanceof Conditional) {
-//                        Conditional conditional = (Conditional) node;
-//                        edgesWithSource.put(conditional.getElse(), node);
-//                        edgesWithSource.put(conditional.getThen(), node);
-//                    } else {
-//                        if (node instanceof Depth) {
-//                            Depth depth = (Depth) node;
-//                            edgesWithSource.put(depth.getNext(), node);
-//                        } else {
-//                            if (node instanceof Assignment) {
-//                                Assignment assignment = (Assignment) node;
-//                                edgesWithSource.put(assignment.getNext(), node);
-//                            } else {
-//                                if (node instanceof Join) {
-//                                    Join join = (Join) node;
-//                                    edgesWithSource.put(join.getNext(), node);
-//                                } else {
-//                                    if (node instanceof Fork) {
-//                                        Fork fork = (Fork) node;
-//                                        EList<ControlFlow> forkEdges = fork.getNext();
-//                                        Iterator<ControlFlow> forkEdgesIterator =
-//                                                forkEdges.iterator();
-//                                        while (forkEdgesIterator.hasNext()) {
-//                                            edgesWithSource.put(forkEdgesIterator.next(), node);
-//                                        }
-//                                    } else {
-//                                        if (node instanceof Entry) {
-//                                            Entry entry = (Entry) node;
-//                                            edgesWithSource.put(entry.getNext(), node);
-//                                        } else {
-//                                            if (node instanceof Exit) {
-//                                                Exit exit = (Exit) node;
-//                                                edgesWithSource.put(exit.getNext(), node);
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//                Iterator<ControlFlow> edgeIterator = edgesWithSource.keySet().iterator();
-//                while(edgeIterator.hasNext()){
-//                  
-//                }
-//                
+                EList<Node> nodeList = sequentialSCG.getNodes();
+                Iterator<Node> nodeListIterator = nodeList.iterator();
+                // collect all edges with their source nodes
+                HashMap<ControlFlow, Node> edgesWithSource = new HashMap<ControlFlow, Node>();
+                while (nodeListIterator.hasNext()) {
+                    Node node = nodeListIterator.next();
+                    if (node instanceof Conditional) {
+                        Conditional conditional = (Conditional) node;
+                        edgesWithSource.put(conditional.getElse(), node);
+                        edgesWithSource.put(conditional.getThen(), node);
+                    } else {
+                        if (node instanceof Depth) {
+                            Depth depth = (Depth) node;
+                            edgesWithSource.put(depth.getNext(), node);
+                        } else {
+                            if (node instanceof Assignment) {
+                                Assignment assignment = (Assignment) node;
+                                edgesWithSource.put(assignment.getNext(), node);
+                            } else {
+                                if (node instanceof Join) {
+                                    Join join = (Join) node;
+                                    edgesWithSource.put(join.getNext(), node);
+                                } else {
+                                    if (node instanceof Fork) {
+                                        Fork fork = (Fork) node;
+                                        EList<ControlFlow> forkEdges = fork.getNext();
+                                        Iterator<ControlFlow> forkEdgesIterator =
+                                                forkEdges.iterator();
+                                        while (forkEdgesIterator.hasNext()) {
+                                            edgesWithSource.put(forkEdgesIterator.next(), node);
+                                        }
+                                    } else {
+                                        if (node instanceof Entry) {
+                                            Entry entry = (Entry) node;
+                                            edgesWithSource.put(entry.getNext(), node);
+                                        } else {
+                                            if (node instanceof Exit) {
+                                                Exit exit = (Exit) node;
+                                                edgesWithSource.put(exit.getNext(), node);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }//                13.01.2015
+                }
+                Iterator<ControlFlow> edgeIterator = edgesWithSource.keySet().iterator();
+                while(edgeIterator.hasNext()){
+                  
+                }
+                
 //                CompilationResult codeGeneration =
 //                        KielerCompiler.compile("CodeGeneration", sequentialSCG, true, true);
-//              End 13.01.2015
+              //End 13.01.2015
 
                 State state = scchart;// rootRegionStates.get(0);
                 IFile file = ResourceUtil.getFile(maybe.get().eResource());
