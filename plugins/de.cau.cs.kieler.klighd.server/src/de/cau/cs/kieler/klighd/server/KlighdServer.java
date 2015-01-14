@@ -208,10 +208,6 @@ public class KlighdServer extends HttpServer {
 
             debug("Model rendered");
 
-            // try {
-            // } catch (IOException e) {
-            // e.printStackTrace();
-            // }
 
             byte[] serializedRenderedModel = null;
             String errors = "";
