@@ -24,7 +24,7 @@ SCLProgram:
 ;
 
 Declaration returns kexpressions::Declaration:
-    (annotations+=Annotation)*
+//    (annotations+=Annotation)*
 	(const?='const')?
     (input?='input')?
     (output?='output')?

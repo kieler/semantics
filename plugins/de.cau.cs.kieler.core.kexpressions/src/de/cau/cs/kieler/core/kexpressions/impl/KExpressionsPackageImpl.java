@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.core.kexpressions.impl;
 
@@ -11,7 +7,6 @@ import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.kexpressions.BoolValue;
 import de.cau.cs.kieler.core.kexpressions.CombineOperator;
 import de.cau.cs.kieler.core.kexpressions.Declaration;
-import de.cau.cs.kieler.core.kexpressions.DoubleValue;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;
 import de.cau.cs.kieler.core.kexpressions.FunctionCall;
@@ -243,26 +238,26 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getValuedObject_CombineOperator() {
+        return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EReference getValuedObject_InitialValue() {
         return (EReference)valuedObjectEClass.getEStructuralFeatures().get(2);
     }
 
     /**
      * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public EAttribute getValuedObject_Cardinalities() {
-        return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(3);
-    }
-
-				/**
-     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getValuedObject_CombineOperator() {
-        return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(1);
+    public EAttribute getValuedObject_Cardinalities() {
+        return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -486,8 +481,17 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getDeclaration_HostType() {
+    public EAttribute getDeclaration_Volatile() {
         return (EAttribute)declarationEClass.getEStructuralFeatures().get(8);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDeclaration_HostType() {
+        return (EAttribute)declarationEClass.getEStructuralFeatures().get(9);
     }
 
     /**
@@ -638,6 +642,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         createEAttribute(declarationEClass, DECLARATION__SIGNAL);
         createEAttribute(declarationEClass, DECLARATION__CONST);
         createEAttribute(declarationEClass, DECLARATION__EXTERN);
+        createEAttribute(declarationEClass, DECLARATION__VOLATILE);
         createEAttribute(declarationEClass, DECLARATION__HOST_TYPE);
 
         functionCallEClass = createEClass(FUNCTION_CALL);
@@ -736,6 +741,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEAttribute(getDeclaration_Signal(), ecorePackage.getEBoolean(), "signal", null, 1, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDeclaration_Const(), ecorePackage.getEBoolean(), "const", null, 1, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDeclaration_Extern(), ecorePackage.getEBoolean(), "extern", null, 1, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDeclaration_Volatile(), ecorePackage.getEBoolean(), "volatile", null, 1, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDeclaration_HostType(), ecorePackage.getEString(), "hostType", null, 0, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(functionCallEClass, FunctionCall.class, "FunctionCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

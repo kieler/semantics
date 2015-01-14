@@ -80,18 +80,27 @@ class SCGToSTransformation {
 
         val timestamp = System.currentTimeMillis
 
+//        for (declaration : scg.declarations) {
+//            val newDeclaration = createDeclaration => [setType(declaration.type)]
+//            sProgram.declarations += newDeclaration
+//            for (valuedObject : declaration.valuedObjects) {
+//
+//                //val newValuedObject = valuedObject.copy
+//                val newValuedObject = createValuedObject(valuedObject.name)
+//                newDeclaration.valuedObjects += newValuedObject
+//                newValuedObject.applyAttributes(valuedObject)
+//                valuedObjectMapping.put(valuedObject, newValuedObject)
+//            }
+//        }
         for (declaration : scg.declarations) {
-            val newDeclaration = createDeclaration => [setType(declaration.type); setHostType(declaration.hostType)]
-            sProgram.declarations += newDeclaration
-            for (valuedObject : declaration.valuedObjects) {
-
-                //val newValuedObject = valuedObject.copy
-                val newValuedObject = createValuedObject(valuedObject.name)
-                newDeclaration.valuedObjects += newValuedObject
-                newValuedObject.applyAttributes(valuedObject)
-                valuedObjectMapping.put(valuedObject, newValuedObject)
-            }
-        }
+    		val newDeclaration = createDeclaration(declaration)
+    		declaration.valuedObjects.forEach[ 
+    			val newObject = it.copy
+    			newDeclaration.valuedObjects += newObject
+    			valuedObjectMapping.put(it, newObject)
+    		]
+    		sProgram.declarations += newDeclaration
+    	}
 
         var time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Preparation for S transformation finished (time used: " + (time / 1000) + "s).")

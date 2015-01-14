@@ -37,7 +37,7 @@
             uri="http://kieler.cs.cau.de/scgsched/0.1.0">
       </package>
    </extension>
-   <extension
+    <extension
          point="de.cau.cs.kieler.kico.transformation">
       <transformationMethod
             class="de.cau.cs.kieler.scg.transformations.DependencyTransformation"

@@ -26,6 +26,7 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.scg,
  de.cau.cs.kieler.scg.analyzer,
  de.cau.cs.kieler.scg.extensions,
+ de.cau.cs.kieler.scg.guardCreation,
  de.cau.cs.kieler.scg.impl,
  de.cau.cs.kieler.scg.optimizer,
  de.cau.cs.kieler.scg.schedulers,

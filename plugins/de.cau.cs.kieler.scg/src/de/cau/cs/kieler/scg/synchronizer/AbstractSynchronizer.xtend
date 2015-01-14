@@ -30,6 +30,9 @@ import de.cau.cs.kieler.kico.AbstractKielerCompilerAncillaryData
 import java.util.List
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.BasicBlock
+import de.cau.cs.kieler.scg.Guard
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.guardCreation.AbstractGuardCreator
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -78,6 +81,8 @@ abstract class AbstractSynchronizer {
 	
 	protected var KielerCompilerContext compilerContext = null
 	protected var Map<Node, SchedulingBlock> schedulingCache = null
+	
+	protected val newGuards = <Guard> newHashSet
    
     /**
      * This function has to be overwritten in the derived class. It is called by the 
@@ -90,15 +95,15 @@ abstract class AbstractSynchronizer {
      * 		data to construct a guard expression for the join node in question.
      * @abstract 
      */
-    protected abstract def SynchronizerData build(Join join);
+    protected abstract def void build(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg);
     
     public abstract def boolean isSynchronizable(Iterable<ThreadPathType> threadPathTypes);
     
-    public abstract def Set<Predecessor> getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
-    	List<AbstractKielerCompilerAncillaryData> ancillaryData);
-    	
-    public abstract def Set<Predecessor> getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
-    	List<AbstractKielerCompilerAncillaryData> ancillaryData);
+//    public abstract def Set<Predecessor> getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
+//    	List<AbstractKielerCompilerAncillaryData> ancillaryData);
+//    	
+//    public abstract def Set<Predecessor> getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, 
+//    	List<AbstractKielerCompilerAncillaryData> ancillaryData);
     
     public abstract def String getId();
     
@@ -111,10 +116,14 @@ abstract class AbstractSynchronizer {
      * @return Returns a {@code SynchronizerData} class which includes all mandatory 
      * 		data to construct a guard expression for the join node in question.
      */
-    public def SynchronizerData synchronize(Join join, KielerCompilerContext context, Map<Node, SchedulingBlock> schedulingBlockCache) {
+    public def void synchronize(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg, 
+    	AbstractGuardCreator guardCreator, 
+    	KielerCompilerContext context, Map<Node, SchedulingBlock> schedulingBlockCache
+    ) {
         schedulingCache = schedulingBlockCache
         compilerContext = context
-        build(join) => [ synchronizerId = getId ]
+        newGuards.clear
+        build(join, guard, schedulingBlock, scg) 
     }    
     
     public def boolean isSynchronizable(Join join) {
@@ -133,5 +142,9 @@ abstract class AbstractSynchronizer {
     
     protected def getEntryNodes(Join join) {
         join.allPrevious.map[ eContainer ].filter(typeof(Exit)).map[ entry ]
+    }
+    
+    public def getNewGuards() {
+        return newGuards
     }
 }

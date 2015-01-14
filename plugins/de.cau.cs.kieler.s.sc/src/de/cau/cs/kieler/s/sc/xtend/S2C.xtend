@@ -231,8 +231,8 @@ class S2C {
        «FOR state : program.states»
        «state.expand»
        «ENDFOR»
-       _GO = 0;
        «program.setPreVariables»
+       _GO = 0;
        return;
     }
     '''

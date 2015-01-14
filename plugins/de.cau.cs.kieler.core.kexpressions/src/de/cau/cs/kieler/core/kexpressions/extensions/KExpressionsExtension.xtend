@@ -353,6 +353,8 @@ class KExpressionsExtension {
             const = declaration.const
             extern = declaration.extern
             hostType = declaration.hostType
+            volatile = declaration.volatile
+            hostType = declaration.hostType
         ]
     }
 
@@ -492,7 +494,22 @@ class KExpressionsExtension {
         }
         expression
     }
-
+    
+    // In an Expression replace one expression by another
+    def Expression replace(Expression expression, ValuedObject valuedObject, Expression replaceExpression) {
+        if (expression instanceof ValuedObjectReference) {
+            if ((expression as ValuedObjectReference).valuedObject == valuedObject) {
+            	return replaceExpression
+            }
+        } else if (expression instanceof OperatorExpression) {
+            val operatorExpression = expression as OperatorExpression
+            for (Expression subExpression : operatorExpression.subExpressions) {
+                subExpression.replace(valuedObject, replaceExpression)
+            }
+        }
+        expression
+    }    
+   
     // Trim all AND/OR Expressions if it contains only a single sub expression
     def dispatch Expression trim(Expression expression) {
         expression

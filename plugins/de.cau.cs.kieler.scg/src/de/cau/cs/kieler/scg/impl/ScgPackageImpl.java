@@ -1,9 +1,22 @@
 /**
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.scg.impl;
 
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+
 import de.cau.cs.kieler.scg.AbsoluteWrite_Read;
 import de.cau.cs.kieler.scg.AbsoluteWrite_RelativeWrite;
 import de.cau.cs.kieler.scg.Assignment;
@@ -26,15 +39,17 @@ import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.ScgPackage;
 import de.cau.cs.kieler.scg.Schedule;
-import de.cau.cs.kieler.scg.ScheduledBlock;
+import de.cau.cs.kieler.scg.ScheduleBlock;
 import de.cau.cs.kieler.scg.SchedulingBlock;
 import de.cau.cs.kieler.scg.Surface;
 import de.cau.cs.kieler.scg.Write_Write;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -44,175 +59,175 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  * @generated
  */
 public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass nodeEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass conditionalEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass surfaceEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass depthEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass assignmentEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass forkEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass joinEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass linkEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass scGraphEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass entryEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass exitEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass controlFlowEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass dependencyEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass absoluteWrite_ReadEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass relativeWrite_ReadEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass absoluteWrite_RelativeWriteEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass write_WriteEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass basicBlockEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass schedulingBlockEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass predecessorEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass scheduleEClass = null;
-
-    /**
+	/**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
-	private EClass scheduledBlockEClass = null;
+	private EClass scGraphEClass = null;
 
-				/**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    private EClass guardEClass = null;
+	private EClass nodeEClass = null;
 
-                /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    private EEnum branchTypeEEnum = null;
+	private EClass conditionalEClass = null;
 
-    /**
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass surfaceEClass = null;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass depthEClass = null;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass assignmentEClass = null;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass forkEClass = null;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass joinEClass = null;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass linkEClass = null;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass entryEClass = null;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass exitEClass = null;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass controlFlowEClass = null;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass dependencyEClass = null;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass absoluteWrite_ReadEClass = null;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass relativeWrite_ReadEClass = null;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass absoluteWrite_RelativeWriteEClass = null;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass write_WriteEClass = null;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass basicBlockEClass = null;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass schedulingBlockEClass = null;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass predecessorEClass = null;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass scheduleBlockEClass = null;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass scheduleEClass = null;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EClass guardEClass = null;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	private EEnum branchTypeEEnum = null;
+
+	/**
      * Creates an instance of the model <b>Package</b>, registered with
      * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
      * package URI value.
@@ -221,36 +236,36 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
      * initialization of the package, or returns the registered package,
      * if one already exists.
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @see org.eclipse.emf.ecore.EPackage.Registry
      * @see de.cau.cs.kieler.scg.ScgPackage#eNS_URI
      * @see #init()
      * @generated
      */
-    private ScgPackageImpl() {
+	private ScgPackageImpl() {
         super(eNS_URI, ScgFactory.eINSTANCE);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    private static boolean isInited = false;
+	private static boolean isInited = false;
 
-    /**
+	/**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
      * 
      * <p>This method is used to initialize {@link ScgPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @see #eNS_URI
      * @see #createPackageContents()
      * @see #initializePackageContents()
      * @generated
      */
-    public static ScgPackage init() {
+	public static ScgPackage init() {
         if (isInited) return (ScgPackage)EPackage.Registry.INSTANCE.getEPackage(ScgPackage.eNS_URI);
 
         // Obtain or create and register package
@@ -276,160 +291,223 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         return theScgPackage;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getNode() {
+	public EClass getSCGraph() {
+        return scGraphEClass;
+    }
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EReference getSCGraph_Nodes() {
+        return (EReference)scGraphEClass.getEStructuralFeatures().get(0);
+    }
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EReference getSCGraph_Declarations() {
+        return (EReference)scGraphEClass.getEStructuralFeatures().get(1);
+    }
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EReference getSCGraph_BasicBlocks() {
+        return (EReference)scGraphEClass.getEStructuralFeatures().get(2);
+    }
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EReference getSCGraph_Schedules() {
+        return (EReference)scGraphEClass.getEStructuralFeatures().get(3);
+    }
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EReference getSCGraph_Guards() {
+        return (EReference)scGraphEClass.getEStructuralFeatures().get(4);
+    }
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EAttribute getSCGraph_Label() {
+        return (EAttribute)scGraphEClass.getEStructuralFeatures().get(5);
+    }
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EClass getNode() {
         return nodeEClass;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getNode_Incoming() {
+	public EReference getNode_Incoming() {
         return (EReference)nodeEClass.getEStructuralFeatures().get(0);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getNode_IsInitial() {
+	public EAttribute getNode_IsInitial() {
         return (EAttribute)nodeEClass.getEStructuralFeatures().get(1);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getNode_Dependencies() {
+	public EReference getNode_Dependencies() {
         return (EReference)nodeEClass.getEStructuralFeatures().get(2);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getConditional() {
+	public EClass getConditional() {
         return conditionalEClass;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getConditional_Then() {
+	public EReference getConditional_Then() {
         return (EReference)conditionalEClass.getEStructuralFeatures().get(0);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getConditional_Else() {
+	public EReference getConditional_Else() {
         return (EReference)conditionalEClass.getEStructuralFeatures().get(1);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getConditional_Condition() {
+	public EReference getConditional_Condition() {
         return (EReference)conditionalEClass.getEStructuralFeatures().get(2);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getSurface() {
+	public EClass getSurface() {
         return surfaceEClass;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getSurface_Depth() {
+	public EReference getSurface_Depth() {
         return (EReference)surfaceEClass.getEStructuralFeatures().get(0);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getDepth() {
+	public EClass getDepth() {
         return depthEClass;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getDepth_Surface() {
+	public EReference getDepth_Surface() {
         return (EReference)depthEClass.getEStructuralFeatures().get(0);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getDepth_Next() {
+	public EReference getDepth_Next() {
         return (EReference)depthEClass.getEStructuralFeatures().get(1);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getAssignment() {
+	public EClass getAssignment() {
         return assignmentEClass;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getAssignment_Next() {
+	public EReference getAssignment_Next() {
         return (EReference)assignmentEClass.getEStructuralFeatures().get(0);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getAssignment_Assignment() {
+	public EReference getAssignment_Assignment() {
         return (EReference)assignmentEClass.getEStructuralFeatures().get(1);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getAssignment_ValuedObject() {
+	public EReference getAssignment_ValuedObject() {
         return (EReference)assignmentEClass.getEStructuralFeatures().get(2);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -438,322 +516,259 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         return (EReference)assignmentEClass.getEStructuralFeatures().get(3);
     }
 
-				/**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getFork() {
+	public EClass getFork() {
         return forkEClass;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getFork_Join() {
+	public EReference getFork_Join() {
         return (EReference)forkEClass.getEStructuralFeatures().get(0);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getFork_Next() {
+	public EReference getFork_Next() {
         return (EReference)forkEClass.getEStructuralFeatures().get(1);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getJoin() {
+	public EClass getJoin() {
         return joinEClass;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getJoin_Fork() {
+	public EReference getJoin_Fork() {
         return (EReference)joinEClass.getEStructuralFeatures().get(0);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getJoin_Next() {
+	public EReference getJoin_Next() {
         return (EReference)joinEClass.getEStructuralFeatures().get(1);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getLink() {
+	public EClass getLink() {
         return linkEClass;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getLink_Target() {
+	public EReference getLink_Target() {
         return (EReference)linkEClass.getEStructuralFeatures().get(0);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getSCGraph() {
-        return scGraphEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getSCGraph_Nodes() {
-        return (EReference)scGraphEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getSCGraph_Declarations() {
-        return (EReference)scGraphEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getSCGraph_BasicBlocks() {
-        return (EReference)scGraphEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getSCGraph_Schedules() {
-        return (EReference)scGraphEClass.getEStructuralFeatures().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getSCGraph_Guards() {
-        return (EReference)scGraphEClass.getEStructuralFeatures().get(4);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getSCGraph_Label() {
-        return (EAttribute)scGraphEClass.getEStructuralFeatures().get(5);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getEntry() {
+	public EClass getEntry() {
         return entryEClass;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getEntry_Exit() {
+	public EReference getEntry_Exit() {
         return (EReference)entryEClass.getEStructuralFeatures().get(0);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getEntry_Next() {
+	public EReference getEntry_Next() {
         return (EReference)entryEClass.getEStructuralFeatures().get(1);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getExit() {
+	public EClass getExit() {
         return exitEClass;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getExit_Entry() {
+	public EReference getExit_Entry() {
         return (EReference)exitEClass.getEStructuralFeatures().get(0);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getExit_Next() {
+	public EReference getExit_Next() {
         return (EReference)exitEClass.getEStructuralFeatures().get(1);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getControlFlow() {
+	public EClass getControlFlow() {
         return controlFlowEClass;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getDependency() {
+	public EClass getDependency() {
         return dependencyEClass;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getDependency_Concurrent() {
+	public EAttribute getDependency_Concurrent() {
         return (EAttribute)dependencyEClass.getEStructuralFeatures().get(0);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getDependency_Confluent() {
+	public EAttribute getDependency_Confluent() {
         return (EAttribute)dependencyEClass.getEStructuralFeatures().get(1);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getAbsoluteWrite_Read() {
+	public EClass getAbsoluteWrite_Read() {
         return absoluteWrite_ReadEClass;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getRelativeWrite_Read() {
+	public EClass getRelativeWrite_Read() {
         return relativeWrite_ReadEClass;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getAbsoluteWrite_RelativeWrite() {
+	public EClass getAbsoluteWrite_RelativeWrite() {
         return absoluteWrite_RelativeWriteEClass;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getWrite_Write() {
+	public EClass getWrite_Write() {
         return write_WriteEClass;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getBasicBlock() {
+	public EClass getBasicBlock() {
         return basicBlockEClass;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getBasicBlock_SchedulingBlocks() {
+	public EReference getBasicBlock_SchedulingBlocks() {
         return (EReference)basicBlockEClass.getEStructuralFeatures().get(0);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getBasicBlock_Predecessors() {
+	public EReference getBasicBlock_Predecessors() {
         return (EReference)basicBlockEClass.getEStructuralFeatures().get(1);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getBasicBlock_GoBlock() {
+	public EAttribute getBasicBlock_GoBlock() {
         return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(2);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getBasicBlock_DepthBlock() {
+	public EAttribute getBasicBlock_DepthBlock() {
         return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(3);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getBasicBlock_SynchronizerBlock() {
+	public EAttribute getBasicBlock_SynchronizerBlock() {
         return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(4);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -762,88 +777,97 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(5);
     }
 
-				/**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getBasicBlock_DeadBlock() {
+	public EAttribute getBasicBlock_DeadBlock() {
         return (EAttribute)basicBlockEClass.getEStructuralFeatures().get(6);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getBasicBlock_PreGuard() {
+	public EReference getBasicBlock_PreGuard() {
         return (EReference)basicBlockEClass.getEStructuralFeatures().get(7);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getSchedulingBlock() {
+	public EClass getSchedulingBlock() {
         return schedulingBlockEClass;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getSchedulingBlock_Nodes() {
+	public EReference getSchedulingBlock_Nodes() {
         return (EReference)schedulingBlockEClass.getEStructuralFeatures().get(0);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getSchedulingBlock_Dependencies() {
+	public EReference getSchedulingBlock_Dependencies() {
         return (EReference)schedulingBlockEClass.getEStructuralFeatures().get(1);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getSchedulingBlock_Guard() {
+	public EReference getSchedulingBlock_Guard() {
         return (EReference)schedulingBlockEClass.getEStructuralFeatures().get(2);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getPredecessor() {
+    public EAttribute getSchedulingBlock_Label() {
+        return (EAttribute)schedulingBlockEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EClass getPredecessor() {
         return predecessorEClass;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getPredecessor_BasicBlock() {
+	public EReference getPredecessor_BasicBlock() {
         return (EReference)predecessorEClass.getEStructuralFeatures().get(0);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getPredecessor_Conditional() {
+	public EReference getPredecessor_Conditional() {
         return (EReference)predecessorEClass.getEStructuralFeatures().get(1);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -852,111 +876,156 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         return (EAttribute)predecessorEClass.getEStructuralFeatures().get(2);
     }
 
-				/**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getSchedule() {
+	public EClass getScheduleBlock() {
+        return scheduleBlockEClass;
+    }
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EReference getScheduleBlock_SchedulingBlock() {
+        return (EReference)scheduleBlockEClass.getEStructuralFeatures().get(0);
+    }
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EReference getScheduleBlock_AdditionalGuards() {
+        return (EReference)scheduleBlockEClass.getEStructuralFeatures().get(1);
+    }
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EClass getSchedule() {
         return scheduleEClass;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getSchedule_ScheduledBlocks() {
+	public EReference getSchedule_ScheduleBlocks() {
         return (EReference)scheduleEClass.getEStructuralFeatures().get(0);
     }
 
-				/**
+	/**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getScheduledBlock() {
-        return scheduledBlockEClass;
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public EReference getScheduledBlock_SchedulingBlock() {
-        return (EReference)scheduledBlockEClass.getEStructuralFeatures().get(0);
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public EAttribute getScheduledBlock_Schizophrenic() {
-        return (EAttribute)scheduledBlockEClass.getEStructuralFeatures().get(1);
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getGuard() {
+	public EClass getGuard() {
         return guardEClass;
     }
 
-                /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getGuard_ValuedObject() {
+	public EReference getGuard_ValuedObject() {
         return (EReference)guardEClass.getEStructuralFeatures().get(0);
     }
 
-                /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getGuard_Expression() {
+	public EReference getGuard_Expression() {
         return (EReference)guardEClass.getEStructuralFeatures().get(1);
     }
 
-                /**
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EAttribute getGuard_Schizophrenic() {
+        return (EAttribute)guardEClass.getEStructuralFeatures().get(2);
+    }
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EReference getGuard_SchedulingBlockLink() {
+        return (EReference)guardEClass.getEStructuralFeatures().get(3);
+    }
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EReference getGuard_OriginalObject() {
+        return (EReference)guardEClass.getEStructuralFeatures().get(4);
+    }
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EAttribute getGuard_Sequentialize() {
+        return (EAttribute)guardEClass.getEStructuralFeatures().get(5);
+    }
+
+	/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public EEnum getBranchType() {
+    public EAttribute getGuard_Dead() {
+        return (EAttribute)guardEClass.getEStructuralFeatures().get(6);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public EEnum getBranchType() {
         return branchTypeEEnum;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public ScgFactory getScgFactory() {
+	public ScgFactory getScgFactory() {
         return (ScgFactory)getEFactoryInstance();
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    private boolean isCreated = false;
+	private boolean isCreated = false;
 
-    /**
+	/**
      * Creates the meta-model objects for the package.  This method is
      * guarded to have no affect on any invocation but its first.
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public void createPackageContents() {
+	public void createPackageContents() {
         if (isCreated) return;
         isCreated = true;
 
@@ -1039,42 +1108,48 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         createEReference(schedulingBlockEClass, SCHEDULING_BLOCK__NODES);
         createEReference(schedulingBlockEClass, SCHEDULING_BLOCK__DEPENDENCIES);
         createEReference(schedulingBlockEClass, SCHEDULING_BLOCK__GUARD);
+        createEAttribute(schedulingBlockEClass, SCHEDULING_BLOCK__LABEL);
 
         predecessorEClass = createEClass(PREDECESSOR);
         createEReference(predecessorEClass, PREDECESSOR__BASIC_BLOCK);
         createEReference(predecessorEClass, PREDECESSOR__CONDITIONAL);
         createEAttribute(predecessorEClass, PREDECESSOR__BRANCH_TYPE);
 
-        scheduleEClass = createEClass(SCHEDULE);
-        createEReference(scheduleEClass, SCHEDULE__SCHEDULED_BLOCKS);
+        scheduleBlockEClass = createEClass(SCHEDULE_BLOCK);
+        createEReference(scheduleBlockEClass, SCHEDULE_BLOCK__SCHEDULING_BLOCK);
+        createEReference(scheduleBlockEClass, SCHEDULE_BLOCK__ADDITIONAL_GUARDS);
 
-        scheduledBlockEClass = createEClass(SCHEDULED_BLOCK);
-        createEReference(scheduledBlockEClass, SCHEDULED_BLOCK__SCHEDULING_BLOCK);
-        createEAttribute(scheduledBlockEClass, SCHEDULED_BLOCK__SCHIZOPHRENIC);
+        scheduleEClass = createEClass(SCHEDULE);
+        createEReference(scheduleEClass, SCHEDULE__SCHEDULE_BLOCKS);
 
         guardEClass = createEClass(GUARD);
         createEReference(guardEClass, GUARD__VALUED_OBJECT);
         createEReference(guardEClass, GUARD__EXPRESSION);
+        createEAttribute(guardEClass, GUARD__SCHIZOPHRENIC);
+        createEReference(guardEClass, GUARD__SCHEDULING_BLOCK_LINK);
+        createEReference(guardEClass, GUARD__ORIGINAL_OBJECT);
+        createEAttribute(guardEClass, GUARD__SEQUENTIALIZE);
+        createEAttribute(guardEClass, GUARD__DEAD);
 
         // Create enums
         branchTypeEEnum = createEEnum(BRANCH_TYPE);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    private boolean isInitialized = false;
+	private boolean isInitialized = false;
 
-    /**
+	/**
      * Complete the initialization of the package and its meta-model.  This
      * method is guarded to have no affect on any invocation but its first.
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public void initializePackageContents() {
+	public void initializePackageContents() {
         if (isInitialized) return;
         isInitialized = true;
 
@@ -1189,22 +1264,28 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         initEReference(getSchedulingBlock_Nodes(), this.getNode(), null, "nodes", null, 0, -1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSchedulingBlock_Dependencies(), this.getDependency(), null, "dependencies", null, 0, -1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSchedulingBlock_Guard(), this.getGuard(), null, "guard", null, 1, 1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getSchedulingBlock_Label(), ecorePackage.getEString(), "label", null, 0, 1, SchedulingBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(predecessorEClass, Predecessor.class, "Predecessor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getPredecessor_BasicBlock(), this.getBasicBlock(), null, "basicBlock", null, 1, 1, Predecessor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getPredecessor_Conditional(), this.getConditional(), null, "conditional", null, 0, 1, Predecessor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getPredecessor_BranchType(), this.getBranchType(), "branchType", null, 0, 1, Predecessor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(scheduleEClass, Schedule.class, "Schedule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getSchedule_ScheduledBlocks(), this.getScheduledBlock(), null, "scheduledBlocks", null, 0, -1, Schedule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(scheduleBlockEClass, ScheduleBlock.class, "ScheduleBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getScheduleBlock_SchedulingBlock(), this.getSchedulingBlock(), null, "schedulingBlock", null, 0, 1, ScheduleBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getScheduleBlock_AdditionalGuards(), this.getGuard(), null, "additionalGuards", null, 0, -1, ScheduleBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(scheduledBlockEClass, ScheduledBlock.class, "ScheduledBlock", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getScheduledBlock_SchedulingBlock(), this.getSchedulingBlock(), null, "schedulingBlock", null, 0, 1, ScheduledBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getScheduledBlock_Schizophrenic(), ecorePackage.getEBoolean(), "schizophrenic", null, 0, 1, ScheduledBlock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(scheduleEClass, Schedule.class, "Schedule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getSchedule_ScheduleBlocks(), this.getScheduleBlock(), null, "scheduleBlocks", null, 0, -1, Schedule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(guardEClass, Guard.class, "Guard", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getGuard_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, Guard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getGuard_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Guard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getGuard_Schizophrenic(), ecorePackage.getEBoolean(), "schizophrenic", null, 1, 1, Guard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getGuard_SchedulingBlockLink(), this.getSchedulingBlock(), null, "schedulingBlockLink", null, 0, 1, Guard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getGuard_OriginalObject(), theKExpressionsPackage.getValuedObject(), null, "originalObject", null, 0, -1, Guard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getGuard_Sequentialize(), ecorePackage.getEBoolean(), "sequentialize", "true", 1, 1, Guard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getGuard_Dead(), ecorePackage.getEBoolean(), "dead", null, 0, 1, Guard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(branchTypeEEnum, BranchType.class, "BranchType");
