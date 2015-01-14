@@ -22,7 +22,6 @@ import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Conditional
 import org.eclipse.emf.ecore.util.EcoreUtil
-import org.eclipse.emf.common.util.EList
 
 /**
  * SCL Extensions.
@@ -40,47 +39,31 @@ class SCLExtensions {
         val toDelete = <Goto>newLinkedList
         for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
             var statement = goto.eContainer
-            var EList<Statement> stmList
-
-            // Check if in Conditional as if so we have to distinguish if we are in the else branch as this is not a sSeq
-            if ((statement.eContainer instanceof Conditional) &&
-                ((statement.eContainer as Conditional).elseStatements).contains(statement)) {
-                stmList = (statement.eContainer as Conditional).elseStatements
-            } else {
-                stmList = (statement.eContainer as StatementSequence).statements
-            }
             var parent = statement.eContainer as StatementSequence
-            var index = stmList.indexOf(statement)
+            var index = parent.statements.indexOf(statement)
             var justLabel = true
             var oldSseq = parent
-            while ((stmList.size > index + 1 && justLabel) || parent instanceof Conditional) {
-
-                // Check conditional following if in if-then-else branch
-                if (stmList.size == index + 1 && justLabel && parent instanceof Conditional) {
-                    oldSseq = parent
-                    if ((parent.eContainer instanceof Conditional) &&
-                        ((parent.eContainer as Conditional).elseStatements).contains(oldSseq.eContainer)) {
-                        stmList = (parent.eContainer as Conditional).elseStatements
-                    } else {
-                        stmList = (parent.eContainer.eContainer as StatementSequence).statements
-                    }
-
-                    parent = parent.eContainer.eContainer as StatementSequence
-                    index = stmList.indexOf(oldSseq.eContainer)
-                }
-                if (stmList.size > index + 1) {
-                    val nextStatement = stmList.get(index + 1) as Statement
-                    if (nextStatement instanceof EmptyStatement &&
-                        (nextStatement as EmptyStatement).label == goto.targetLabel) {
-                        toDelete.add(goto)
-                    }
-                    if (!(nextStatement instanceof EmptyStatement)) {
-                        justLabel = false
-                    }
-                    index = index + 1
-                }
-
-            }
+//            while ((parent.statements.size > index + 1 && justLabel) || parent instanceof Conditional) {
+//
+//                // Check conditional following if in if-then-else branch
+//                if (parent.statements.size == index + 1 && justLabel && parent instanceof Conditional) {
+//                    oldSseq = parent
+//                    parent = parent.eContainer.eContainer as StatementSequence
+//                    index = parent.statements.indexOf(oldSseq.eContainer)
+//                }
+//                if (parent.statements.length > index + 1) {
+//                    val nextStatement = parent.statements.get(index + 1) as Statement
+//                    if (nextStatement instanceof EmptyStatement &&
+//                        (nextStatement as EmptyStatement).label == goto.targetLabel) {
+//                        toDelete.add(goto)
+//                    }
+//                    if (!(nextStatement instanceof EmptyStatement)) {
+//                        justLabel = false
+//                    }
+//                    index = index + 1
+//                }
+//
+//            }
         }
         toDelete.forEach[it.eContainer.remove]
 
@@ -181,7 +164,6 @@ class SCLExtensions {
                     val goto = ((nextStatement as InstructionStatement).instruction as Goto)
                     replaceBy += emptyStm.label -> goto.targetLabel
                 }
-
             // Check whether at end of conditonal branch and "look outside"
             } else if (parent instanceof Conditional) {
                 val cond = parent as Conditional
