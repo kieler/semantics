@@ -385,7 +385,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	
 	/**
 	 * Constraint:
-	 *     (functionName=ExtendedID (parameters+=Parameter parameters+=Parameter*)?)
+	 *     (functionName=ID (parameters+=Parameter parameters+=Parameter*)?)
 	 */
 	protected void sequence_FunctionCall(EObject context, FunctionCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

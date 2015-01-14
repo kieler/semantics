@@ -25,8 +25,6 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 import java.util.List
 import java.util.Map
-import de.cau.cs.kieler.scg.Guard
-import de.cau.cs.kieler.scg.SCGraph
 
 /** 
  * This class is part of the SCG transformation chain. In particular a synchronizer is called by the scheduler
@@ -91,7 +89,7 @@ class InstantaneousSynchronizer extends AbstractSynchronizer {
 	 * @return
 	 * 		Returns a {@code SynchronizerData} class including all mandatory data for the scheduler.
 	 */  
-    override protected build(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
+    override protected SynchronizerData build(Join join) {
         var data = new SynchronizerData()
 		
 		val joinSB = join.getCachedSchedulingBlock
@@ -102,6 +100,7 @@ class InstantaneousSynchronizer extends AbstractSynchronizer {
                 
         data.guardExpression.expression = exitNodes.head.getCachedSchedulingBlock.guard.valuedObject.reference
 
+        data 
     }
        
     override getId() {
@@ -118,13 +117,13 @@ class InstantaneousSynchronizer extends AbstractSynchronizer {
         synchronizable
     }
     
-//    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache,
-//    	List<AbstractKielerCompilerAncillaryData> ancillaryData) {
-//        <Predecessor> newHashSet
-//    }
-//	
-//	override getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, List<AbstractKielerCompilerAncillaryData> ancillaryData) {
-//		<Predecessor> newHashSet
-//	}
+    override getExcludedPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache,
+    	List<AbstractKielerCompilerAncillaryData> ancillaryData) {
+        <Predecessor> newHashSet
+    }
+	
+	override getAdditionalPredecessors(Join join, Map<Node, SchedulingBlock> schedulingBlockCache, List<AbstractKielerCompilerAncillaryData> ancillaryData) {
+		<Predecessor> newHashSet
+	}
     
 }

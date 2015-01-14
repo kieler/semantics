@@ -29,7 +29,6 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopAnalyzer
 import com.google.inject.Guice
 import de.cau.cs.kieler.scg.ScheduledBlock
-import de.cau.cs.kieler.scg.analyzer.PotentialInstantaneousLoopResult
 
 /** 
  * This class is part of the SCG transformation chain. 
@@ -142,10 +141,10 @@ class SimpleScheduler extends AbstractScheduler {
             }
             
             if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg)) {
-//            	val scheduledBlock = ScgFactory.eINSTANCE.createScheduledBlock => [
-//            		it.schedulingBlock = schedulingBlock
-//            	]
-//                schedule.add(scheduledBlock)
+            	val scheduledBlock = ScgFactory.eINSTANCE.createScheduledBlock => [
+            		it.schedulingBlock = schedulingBlock
+            	]
+                schedule.add(scheduledBlock)
                 placedBlocks.add(schedulingBlock)
             }
         } 
@@ -190,11 +189,9 @@ class SimpleScheduler extends AbstractScheduler {
     	// Create a new schedule using the scgsched factory.
         val schedule = ScgFactory::eINSTANCE.createSchedule
         
-//        val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = 
-//            Guice.createInjector().getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
-//        context.compilationResult.ancillaryData += potentialInstantaneousLoopAnalyzer.analyze(scg)
-        val pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
-        
+        val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = 
+            Guice.createInjector().getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
+        context.compilationResult.ancillaryData += potentialInstantaneousLoopAnalyzer.analyze(scg)
 
         // Create and fill a list for all scheduling blocks.
         val schedulingConstraints = scg.orderSchedulingBlocks
@@ -203,7 +200,7 @@ class SimpleScheduler extends AbstractScheduler {
         
         val sBlockList = <ScheduledBlock> newLinkedList
         var schedulable = scg.createSchedule(sBlockList, schedulingConstraints, context)
-//		schedule.scheduledBlocks += sBlockList
+		schedule.scheduledBlocks += sBlockList
         
         // Print out results on the console
         // and add the scheduling information to the graph.

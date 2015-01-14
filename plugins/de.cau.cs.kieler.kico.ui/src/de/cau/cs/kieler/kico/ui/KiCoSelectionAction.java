@@ -97,7 +97,7 @@ public class KiCoSelectionAction extends KiCoKlighdAction implements IAction {
 
             KiCoSelectionView.addRequiredTransformationVisualization(activeEditorID);
 
-            System.out.println(Arrays.toString(KiCoSelectionView.getSelectedAndDisabledTransformations(
+            System.out.println(Arrays.toString(KiCoSelectionView.getSelectedTransformations(
                     KiCoSelectionView.getActiveEditorID()).toArray()));
 
             // notify listeners about currently active transformations

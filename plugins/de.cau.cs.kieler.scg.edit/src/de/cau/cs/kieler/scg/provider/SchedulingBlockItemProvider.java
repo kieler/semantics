@@ -15,7 +15,6 @@ package de.cau.cs.kieler.scg.provider;
 
 
 import de.cau.cs.kieler.scg.ScgPackage;
-import de.cau.cs.kieler.scg.SchedulingBlock;
 import java.util.Collection;
 import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -28,9 +27,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
-import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
  * This is the item provider adapter for a {@link de.cau.cs.kieler.scg.SchedulingBlock} object.
@@ -70,7 +67,6 @@ public class SchedulingBlockItemProvider
             addNodesPropertyDescriptor(object);
             addDependenciesPropertyDescriptor(object);
             addGuardPropertyDescriptor(object);
-            addLabelPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -142,28 +138,6 @@ public class SchedulingBlockItemProvider
     }
 
     /**
-     * This adds a property descriptor for the Label feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addLabelPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_SchedulingBlock_label_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_SchedulingBlock_label_feature", "_UI_SchedulingBlock_type"),
-                 ScgPackage.Literals.SCHEDULING_BLOCK__LABEL,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-    /**
      * This returns SchedulingBlock.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -182,10 +156,7 @@ public class SchedulingBlockItemProvider
      */
     @Override
     public String getText(Object object) {
-        String label = ((SchedulingBlock)object).getLabel();
-        return label == null || label.length() == 0 ?
-            getString("_UI_SchedulingBlock_type") :
-            getString("_UI_SchedulingBlock_type") + " " + label;
+        return getString("_UI_SchedulingBlock_type");
     }
     
 
@@ -199,12 +170,6 @@ public class SchedulingBlockItemProvider
     @Override
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
-
-        switch (notification.getFeatureID(SchedulingBlock.class)) {
-            case ScgPackage.SCHEDULING_BLOCK__LABEL:
-                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-                return;
-        }
         super.notifyChanged(notification);
     }
 

@@ -40,7 +40,13 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class SuspendActionItemProvider
-    extends LocalActionItemProvider {
+    extends LocalActionItemProvider
+    implements
+        IEditingDomainItemProvider,
+        IStructuredItemContentProvider,
+        ITreeItemContentProvider,
+        IItemLabelProvider,
+        IItemPropertySource {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

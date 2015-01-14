@@ -16,7 +16,6 @@ package de.cau.cs.kieler.scg;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -29,11 +28,6 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scg.Guard#getValuedObject <em>Valued Object</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Guard#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.Guard#isSchizophrenic <em>Schizophrenic</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.Guard#getSchedulingBlockLink <em>Scheduling Block Link</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.Guard#getOriginalObject <em>Original Object</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.Guard#isSequentialize <em>Sequentialize</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.Guard#isDead <em>Dead</em>}</li>
  * </ul>
  * </p>
  *
@@ -93,126 +87,5 @@ public interface Guard extends EObject {
      * @generated
      */
     void setExpression(Expression value);
-
-				/**
-     * Returns the value of the '<em><b>Schizophrenic</b></em>' attribute.
-     * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Schizophrenic</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Schizophrenic</em>' attribute.
-     * @see #setSchizophrenic(boolean)
-     * @see de.cau.cs.kieler.scg.ScgPackage#getGuard_Schizophrenic()
-     * @model required="true"
-     * @generated
-     */
-	boolean isSchizophrenic();
-
-				/**
-     * Sets the value of the '{@link de.cau.cs.kieler.scg.Guard#isSchizophrenic <em>Schizophrenic</em>}' attribute.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Schizophrenic</em>' attribute.
-     * @see #isSchizophrenic()
-     * @generated
-     */
-	void setSchizophrenic(boolean value);
-
-				/**
-     * Returns the value of the '<em><b>Scheduling Block Link</b></em>' reference.
-     * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Scheduling Block Link</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Scheduling Block Link</em>' reference.
-     * @see #setSchedulingBlockLink(SchedulingBlock)
-     * @see de.cau.cs.kieler.scg.ScgPackage#getGuard_SchedulingBlockLink()
-     * @model
-     * @generated
-     */
-	SchedulingBlock getSchedulingBlockLink();
-
-				/**
-     * Sets the value of the '{@link de.cau.cs.kieler.scg.Guard#getSchedulingBlockLink <em>Scheduling Block Link</em>}' reference.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Scheduling Block Link</em>' reference.
-     * @see #getSchedulingBlockLink()
-     * @generated
-     */
-	void setSchedulingBlockLink(SchedulingBlock value);
-
-				/**
-     * Returns the value of the '<em><b>Original Object</b></em>' reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
-     * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Original Object</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Original Object</em>' reference list.
-     * @see de.cau.cs.kieler.scg.ScgPackage#getGuard_OriginalObject()
-     * @model
-     * @generated
-     */
-	EList<ValuedObject> getOriginalObject();
-
-				/**
-     * Returns the value of the '<em><b>Sequentialize</b></em>' attribute.
-     * The default value is <code>"true"</code>.
-     * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Sequentialize</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Sequentialize</em>' attribute.
-     * @see #setSequentialize(boolean)
-     * @see de.cau.cs.kieler.scg.ScgPackage#getGuard_Sequentialize()
-     * @model default="true" required="true"
-     * @generated
-     */
-	boolean isSequentialize();
-
-				/**
-     * Sets the value of the '{@link de.cau.cs.kieler.scg.Guard#isSequentialize <em>Sequentialize</em>}' attribute.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Sequentialize</em>' attribute.
-     * @see #isSequentialize()
-     * @generated
-     */
-	void setSequentialize(boolean value);
-
-                /**
-     * Returns the value of the '<em><b>Dead</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Dead</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Dead</em>' attribute.
-     * @see #setDead(boolean)
-     * @see de.cau.cs.kieler.scg.ScgPackage#getGuard_Dead()
-     * @model
-     * @generated
-     */
-    boolean isDead();
-
-                /**
-     * Sets the value of the '{@link de.cau.cs.kieler.scg.Guard#isDead <em>Dead</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Dead</em>' attribute.
-     * @see #isDead()
-     * @generated
-     */
-    void setDead(boolean value);
 
 } // Guard

@@ -76,7 +76,7 @@ public class ActionsFormatter extends KExpressionsFormatter {
        
        c.setNoSpace().after(f.getFunctionCallEffectAccess().getLessThanSignKeyword_0());
        c.setNoSpace().before(f.getFunctionCallEffectAccess().getGreaterThanSignKeyword_3());
-       c.setNoSpace().before(f.getFunctionCallEffectAccess().getLeftParenthesisKeyword_2_0_0());
+       c.setNoSpace().before(f.getFunctionCallEffectAccess().getLeftParenthesisKeyword_2_0());
        c.setNoSpace().after(f.getParameterAccess().getCallByReferenceAmpersandKeyword_0_0());
        
        for (Keyword comma : f.findKeywords(",")) {

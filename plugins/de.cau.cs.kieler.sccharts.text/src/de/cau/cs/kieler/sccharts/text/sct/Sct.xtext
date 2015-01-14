@@ -5,7 +5,7 @@ import "http://kieler.cs.cau.de/annotations" as annotations
 import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions 
 import "http://kieler.cs.cau.de/sccharts/0.1.0" as sccharts
 
-//generate sct "http://kieler.cs.cau.de/sccharts/textual/0.1.0"
+generate sct "http://kieler.cs.cau.de/sccharts/textual/0.1.0"
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -67,17 +67,17 @@ SCChart returns sccharts::State:
      )?
 ;
 
-//ImportDecl: 
-//    'import' 
-//        (importedType=[sccharts::State|QualifiedName] 
-//        | importedNamespace=QualifiedNameWithWildcard)
-//;
-//
-//QualifiedName:
-//  ID ('.' ID)*;
-//
-//QualifiedNameWithWildcard :
-//    QualifiedName  '.' '*';
+ImportDecl: 
+    'import' 
+        (importedType=[sccharts::State|QualifiedName] 
+        | importedNamespace=QualifiedNameWithWildcard)
+;
+
+QualifiedName:
+  ID ('.' ID)*;
+
+QualifiedNameWithWildcard :
+    QualifiedName  '.' '*';
 
 // ---------------------------------------------------------------------------------------------------
 

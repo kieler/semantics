@@ -42,5 +42,8 @@ Export-Package: de.cau.cs.kieler.sccharts.text.actions,
  de.cau.cs.kieler.sccharts.text.sct.parser.antlr.internal,
  de.cau.cs.kieler.sccharts.text.sct.validation,
  de.cau.cs.kieler.sccharts.text.sct.scoping,
- de.cau.cs.kieler.sccharts.text.sct.formatting
+ de.cau.cs.kieler.sccharts.text.sct.formatting,
+ de.cau.cs.kieler.sccharts.text.sct.sct,
+ de.cau.cs.kieler.sccharts.text.sct.sct.impl,
+ de.cau.cs.kieler.sccharts.text.sct.sct.util
 

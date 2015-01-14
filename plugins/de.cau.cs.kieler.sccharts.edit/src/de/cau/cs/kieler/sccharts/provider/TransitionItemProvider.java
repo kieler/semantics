@@ -40,7 +40,13 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class TransitionItemProvider
-    extends ActionItemProvider {
+    extends ActionItemProvider
+    implements
+        IEditingDomainItemProvider,
+        IStructuredItemContentProvider,
+        ITreeItemContentProvider,
+        IItemLabelProvider,
+        IItemPropertySource {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

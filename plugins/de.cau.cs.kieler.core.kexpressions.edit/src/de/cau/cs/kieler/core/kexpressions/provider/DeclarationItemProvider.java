@@ -21,7 +21,12 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
+import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -31,7 +36,8 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * @generated
  */
-public class DeclarationItemProvider extends AnnotatableItemProvider {
+public class DeclarationItemProvider
+    extends AnnotatableItemProvider {
     /**
      * This constructs an instance from a factory and a notifier.
      * <!-- begin-user-doc -->
@@ -60,7 +66,6 @@ public class DeclarationItemProvider extends AnnotatableItemProvider {
             addSignalPropertyDescriptor(object);
             addConstPropertyDescriptor(object);
             addExternPropertyDescriptor(object);
-            addVolatilePropertyDescriptor(object);
             addHostTypePropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
@@ -221,28 +226,6 @@ public class DeclarationItemProvider extends AnnotatableItemProvider {
     }
 
     /**
-     * This adds a property descriptor for the Volatile feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addVolatilePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_Declaration_volatile_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_Declaration_volatile_feature", "_UI_Declaration_type"),
-                 KExpressionsPackage.Literals.DECLARATION__VOLATILE,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-    /**
      * This adds a property descriptor for the Host Type feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -319,7 +302,6 @@ public class DeclarationItemProvider extends AnnotatableItemProvider {
             getString("_UI_Declaration_type") :
             getString("_UI_Declaration_type") + " " + label;
     }
-    
 
     /**
      * This handles model notifications by calling {@link #updateChildren} to update any cached
@@ -340,7 +322,6 @@ public class DeclarationItemProvider extends AnnotatableItemProvider {
             case KExpressionsPackage.DECLARATION__SIGNAL:
             case KExpressionsPackage.DECLARATION__CONST:
             case KExpressionsPackage.DECLARATION__EXTERN:
-            case KExpressionsPackage.DECLARATION__VOLATILE:
             case KExpressionsPackage.DECLARATION__HOST_TYPE:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;

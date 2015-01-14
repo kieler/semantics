@@ -39,7 +39,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl#isSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl#isConst <em>Const</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl#isExtern <em>Extern</em>}</li>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl#isVolatile <em>Volatile</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.impl.DeclarationImpl#getHostType <em>Host Type</em>}</li>
  * </ul>
  * </p>
@@ -196,26 +195,6 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
      * @ordered
      */
     protected boolean extern = EXTERN_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #isVolatile() <em>Volatile</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isVolatile()
-     * @generated
-     * @ordered
-     */
-    protected static final boolean VOLATILE_EDEFAULT = false;
-
-    /**
-     * The cached value of the '{@link #isVolatile() <em>Volatile</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isVolatile()
-     * @generated
-     * @ordered
-     */
-    protected boolean volatile_ = VOLATILE_EDEFAULT;
 
     /**
      * The default value of the '{@link #getHostType() <em>Host Type</em>}' attribute.
@@ -420,27 +399,6 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
      * <!-- end-user-doc -->
      * @generated
      */
-    public boolean isVolatile() {
-        return volatile_;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setVolatile(boolean newVolatile) {
-        boolean oldVolatile = volatile_;
-        volatile_ = newVolatile;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.DECLARATION__VOLATILE, oldVolatile, volatile_));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public String getHostType() {
         return hostType;
     }
@@ -495,8 +453,6 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
                 return isConst();
             case KExpressionsPackage.DECLARATION__EXTERN:
                 return isExtern();
-            case KExpressionsPackage.DECLARATION__VOLATILE:
-                return isVolatile();
             case KExpressionsPackage.DECLARATION__HOST_TYPE:
                 return getHostType();
         }
@@ -537,9 +493,6 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
             case KExpressionsPackage.DECLARATION__EXTERN:
                 setExtern((Boolean)newValue);
                 return;
-            case KExpressionsPackage.DECLARATION__VOLATILE:
-                setVolatile((Boolean)newValue);
-                return;
             case KExpressionsPackage.DECLARATION__HOST_TYPE:
                 setHostType((String)newValue);
                 return;
@@ -579,9 +532,6 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
             case KExpressionsPackage.DECLARATION__EXTERN:
                 setExtern(EXTERN_EDEFAULT);
                 return;
-            case KExpressionsPackage.DECLARATION__VOLATILE:
-                setVolatile(VOLATILE_EDEFAULT);
-                return;
             case KExpressionsPackage.DECLARATION__HOST_TYPE:
                 setHostType(HOST_TYPE_EDEFAULT);
                 return;
@@ -613,8 +563,6 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
                 return const_ != CONST_EDEFAULT;
             case KExpressionsPackage.DECLARATION__EXTERN:
                 return extern != EXTERN_EDEFAULT;
-            case KExpressionsPackage.DECLARATION__VOLATILE:
-                return volatile_ != VOLATILE_EDEFAULT;
             case KExpressionsPackage.DECLARATION__HOST_TYPE:
                 return HOST_TYPE_EDEFAULT == null ? hostType != null : !HOST_TYPE_EDEFAULT.equals(hostType);
         }
@@ -645,8 +593,6 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
         result.append(const_);
         result.append(", extern: ");
         result.append(extern);
-        result.append(", volatile: ");
-        result.append(volatile_);
         result.append(", hostType: ");
         result.append(hostType);
         result.append(')');

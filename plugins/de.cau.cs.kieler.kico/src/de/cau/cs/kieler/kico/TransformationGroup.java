@@ -66,17 +66,6 @@ public class TransformationGroup extends Transformation {
     }
 
     // -------------------------------------------------------------------------
-    
-    public boolean isDisabled(String transformationID, List<String> disabledTransformationIDs) {
-       for (String disabled : disabledTransformationIDs) {
-           if (disabled.equals(transformationID)) {
-               return true;
-           }
-       }
-       return false;
-    }
-    
-    
 
     /**
      * Gets the selected dependencies. For alternative groups return the first match of dependencies
@@ -84,56 +73,32 @@ public class TransformationGroup extends Transformation {
      * prioritizedTransformationIDs is null then return the first element of dependencies. A group
      * may never have an empty list here.
      * 
-     * @param selectedTransformationIDs
+     * @param prioritizedTransformationIDs
      *            the prioritized transformationIDs
      * @return the dependencies
      */
-    public String getSelectedDependency(List<String> selectedTransformationIDs, List<String> disabledTransformationIDs, List<String> priorizedTransformationIDs) {
+    public String getSelectedDependency(List<String> prioritizedTransformationIDs) {
         if (!alternatives) {
             return super.getDependencies().get(0);
         } else {
-            // return the first transformation only (that is not disabled!)
+            // return the first transformation only
             List<String> dependencies = super.getDependencies();
-            if (selectedTransformationIDs == null || selectedTransformationIDs.size() == 0) {
-                for (String dependency : dependencies) {
-                    System.out.println("### Check" + dependency);
-                    if (!isDisabled(dependency, disabledTransformationIDs)) {
-                        System.out.println("### NOT DISABLED -> RETURN " + dependency);
-                        return dependency;
-                    }
-                }
-                // IF we do not find any enabled, return null
-                return null;
+            if (prioritizedTransformationIDs == null || prioritizedTransformationIDs.size() == 0) {
+                return dependencies.get(0);
             } else {
                 // try to find one of the transformations listed in dependencies in
                 // prioritizedTransformationIDs
                 // and return the a list with only the first one
-                for (String selectedDependency : selectedTransformationIDs) {
+                for (String prioDependency : prioritizedTransformationIDs) {
                     for (String dependency : dependencies) {
-                        boolean isDisabled  = isDisabled(dependency, disabledTransformationIDs);
-                        if (dependency.equals(selectedDependency) && !isDisabled) {
+                        if (dependency.equals(prioDependency)) {
                             return dependency;
                         }
                     }
 
                 }
-                for (String prioDependency : priorizedTransformationIDs) {
-                    for (String dependency : dependencies) {
-                        boolean isDisabled  = isDisabled(dependency, disabledTransformationIDs);
-                        if (dependency.equals(prioDependency) && !isDisabled) {
-                            return dependency;
-                        }
-                    }
-
-                }
-                // If nothing was found, also stick to the default and return the first element (that is enabled)
-                for (String dependency : dependencies) {
-                    boolean isDisabled  = isDisabled(dependency, disabledTransformationIDs);
-                    if (!isDisabled) {
-                        return dependency;
-                    }
-                }
-                return null; // THIS PROBABLY IS INCICATES AN ERRONOUS SELECTION
+                // If nothing was found, also stick to the default and return the first element
+                return dependencies.get(0);
             }
         }
     }

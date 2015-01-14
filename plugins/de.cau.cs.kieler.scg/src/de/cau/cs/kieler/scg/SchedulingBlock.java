@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.scg.SchedulingBlock#getNodes <em>Nodes</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.SchedulingBlock#getDependencies <em>Dependencies</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.SchedulingBlock#getGuard <em>Guard</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.SchedulingBlock#getLabel <em>Label</em>}</li>
  * </ul>
  * </p>
  *
@@ -93,31 +92,5 @@ public interface SchedulingBlock extends EObject {
      * @generated
      */
     void setGuard(Guard value);
-
-    /**
-     * Returns the value of the '<em><b>Label</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Label</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Label</em>' attribute.
-     * @see #setLabel(String)
-     * @see de.cau.cs.kieler.scg.ScgPackage#getSchedulingBlock_Label()
-     * @model
-     * @generated
-     */
-    String getLabel();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.scg.SchedulingBlock#getLabel <em>Label</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Label</em>' attribute.
-     * @see #getLabel()
-     * @generated
-     */
-    void setLabel(String value);
 
 } // SchedulingBlock

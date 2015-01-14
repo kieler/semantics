@@ -454,6 +454,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExpressionsSemanticS
 	/**
 	 * Constraint:
 	 *     (
+	 *         annotations+=Annotation* 
 	 *         const?='const'? 
 	 *         input?='input'? 
 	 *         output?='output'? 

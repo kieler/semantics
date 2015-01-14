@@ -79,7 +79,7 @@ public class KiCoDisabledSelectionAction extends KiCoKlighdAction implements IAc
                         KiCoSelectionView.getActiveEditorID());
             }
 
-            System.out.println(Arrays.toString(KiCoSelectionView.getSelectedAndDisabledTransformations(
+            System.out.println(Arrays.toString(KiCoSelectionView.getSelectedTransformations(
                     KiCoSelectionView.getActiveEditorID()).toArray()));
 
             // notify listeners about currently active transformations

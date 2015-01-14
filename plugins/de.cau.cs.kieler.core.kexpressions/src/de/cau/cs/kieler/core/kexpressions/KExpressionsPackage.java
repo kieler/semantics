@@ -1,4 +1,8 @@
 /**
+ * <copyright>
+ * </copyright>
+ *
+ * $Id$
  */
 package de.cau.cs.kieler.core.kexpressions;
 
@@ -126,13 +130,13 @@ public interface KExpressionsPackage extends EPackage {
     /**
      * The feature id for the '<em><b>Cardinalities</b></em>' attribute list.
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT__CARDINALITIES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+	int VALUED_OBJECT__CARDINALITIES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
-    /**
+				/**
      * The number of structural features of the '<em>Valued Object</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -438,22 +442,13 @@ public interface KExpressionsPackage extends EPackage {
     int DECLARATION__EXTERN = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
-     * The feature id for the '<em><b>Volatile</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DECLARATION__VOLATILE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
-
-    /**
      * The feature id for the '<em><b>Host Type</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DECLARATION__HOST_TYPE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 9;
+    int DECLARATION__HOST_TYPE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
 
     /**
      * The number of structural features of the '<em>Declaration</em>' class.
@@ -462,7 +457,7 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DECLARATION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 10;
+    int DECLARATION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 9;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.impl.FunctionCallImpl <em>Function Call</em>}' class.
@@ -601,17 +596,6 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getValuedObject_Name();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getCombineOperator <em>Combine Operator</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Combine Operator</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.ValuedObject#getCombineOperator()
-     * @see #getValuedObject()
-     * @generated
-     */
-    EAttribute getValuedObject_CombineOperator();
-
-    /**
      * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getInitialValue <em>Initial Value</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -625,13 +609,24 @@ public interface KExpressionsPackage extends EPackage {
     /**
      * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getCardinalities <em>Cardinalities</em>}'.
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @return the meta object for the attribute list '<em>Cardinalities</em>'.
      * @see de.cau.cs.kieler.core.kexpressions.ValuedObject#getCardinalities()
      * @see #getValuedObject()
      * @generated
      */
-    EAttribute getValuedObject_Cardinalities();
+	EAttribute getValuedObject_Cardinalities();
+
+				/**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject#getCombineOperator <em>Combine Operator</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Combine Operator</em>'.
+     * @see de.cau.cs.kieler.core.kexpressions.ValuedObject#getCombineOperator()
+     * @see #getValuedObject()
+     * @generated
+     */
+    EAttribute getValuedObject_CombineOperator();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference <em>Valued Object Reference</em>}'.
@@ -890,17 +885,6 @@ public interface KExpressionsPackage extends EPackage {
     EAttribute getDeclaration_Extern();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.Declaration#isVolatile <em>Volatile</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Volatile</em>'.
-     * @see de.cau.cs.kieler.core.kexpressions.Declaration#isVolatile()
-     * @see #getDeclaration()
-     * @generated
-     */
-    EAttribute getDeclaration_Volatile();
-
-    /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.kexpressions.Declaration#getHostType <em>Host Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1056,14 +1040,6 @@ public interface KExpressionsPackage extends EPackage {
         EAttribute VALUED_OBJECT__NAME = eINSTANCE.getValuedObject_Name();
 
         /**
-         * The meta object literal for the '<em><b>Combine Operator</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute VALUED_OBJECT__COMBINE_OPERATOR = eINSTANCE.getValuedObject_CombineOperator();
-
-        /**
          * The meta object literal for the '<em><b>Initial Value</b></em>' containment reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1074,10 +1050,18 @@ public interface KExpressionsPackage extends EPackage {
         /**
          * The meta object literal for the '<em><b>Cardinalities</b></em>' attribute list feature.
          * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+         * @generated
+         */
+		EAttribute VALUED_OBJECT__CARDINALITIES = eINSTANCE.getValuedObject_Cardinalities();
+
+								/**
+         * The meta object literal for the '<em><b>Combine Operator</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute VALUED_OBJECT__CARDINALITIES = eINSTANCE.getValuedObject_Cardinalities();
+        EAttribute VALUED_OBJECT__COMBINE_OPERATOR = eINSTANCE.getValuedObject_CombineOperator();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.ValuedObjectReferenceImpl <em>Valued Object Reference</em>}' class.
@@ -1286,14 +1270,6 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EAttribute DECLARATION__EXTERN = eINSTANCE.getDeclaration_Extern();
-
-        /**
-         * The meta object literal for the '<em><b>Volatile</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute DECLARATION__VOLATILE = eINSTANCE.getDeclaration_Volatile();
 
         /**
          * The meta object literal for the '<em><b>Host Type</b></em>' attribute feature.

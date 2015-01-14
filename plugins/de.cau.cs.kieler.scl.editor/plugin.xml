@@ -33,4 +33,5 @@
             contributorClass="de.cau.cs.kieler.scl.scl.presentation.SclActionBarContributor">
       </editor>
    </extension>
+
 </plugin>

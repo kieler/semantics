@@ -41,7 +41,7 @@ import org.eclipse.xtext.scoping.impl.SimpleScope
  * @kieler.rating 2014-06-08 proposed yellow
  *
  */
-class SctScopeProvider2 extends AbstractDeclarativeScopeProvider {
+class SctScopeProvider extends AbstractDeclarativeScopeProvider {
 
     private val static final SCChartsPackage pack = SCChartsPackage.eINSTANCE;
 

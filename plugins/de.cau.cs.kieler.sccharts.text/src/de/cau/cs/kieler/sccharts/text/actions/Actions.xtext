@@ -60,7 +60,7 @@ TextEffect returns sccharts::TextEffect:
  	text=HOSTCODE;
  	
 FunctionCallEffect returns sccharts::FunctionCallEffect:
-    '<' functionName=ExtendedID (('(' parameters += Parameter (',' parameters += Parameter)* ')')|'()')? '>'
+    '<' functionName=ID ('(' parameters += Parameter (',' parameters += Parameter)* ')')? '>'
 ;
 
 Parameter returns kexpressions::Parameter:

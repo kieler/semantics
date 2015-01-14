@@ -140,16 +140,16 @@ class ThreadAwareScheduler extends SimpleScheduler {
                 }
             }
             
-//            if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg)) {
-//            	val scheduledBlock = ScgFactory.eINSTANCE.createScheduledBlock => [
-//            		it.schedulingBlock = schedulingBlock
-//            	]
-//                schedule.add(scheduledBlock)
+            if (schedulingBlock.isPlaceable(schedulingBlocks, schedule, scg)) {
+            	val scheduledBlock = ScgFactory.eINSTANCE.createScheduledBlock => [
+            		it.schedulingBlock = schedulingBlock
+            	]
+                schedule.add(scheduledBlock)
                 placedBlocks.add(schedulingBlock)
                 constraints.schedulingBlockClusters.get(clusterPosition).remove(schedulingBlock)
                 placed = placed + 1
             }
-//        } 
+        } 
         placed
     }	
 	

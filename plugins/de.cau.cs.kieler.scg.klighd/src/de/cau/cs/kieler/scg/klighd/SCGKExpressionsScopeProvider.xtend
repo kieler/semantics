@@ -51,9 +51,6 @@ class SCGKExpressionsScopeProvider extends KExpressionsScopeProvider {
         for(tg : parent.declarations) {
         	valuedObjects.addAll(tg.valuedObjects)
         }
-        for(g : parent.guards) {
-        	valuedObjects += g.valuedObject
-        }
     }
     
 	/**
@@ -98,14 +95,6 @@ class SCGKExpressionsScopeProvider extends KExpressionsScopeProvider {
     
      def IScope scope_FunctionCall(EObject context, EReference reference) {
         Scopes.scopeFor(valuedObjects)
-    }
-    
-    def IScope scope_Guard(EObject context, EReference reference) {
-        Scopes.scopeFor(valuedObjects)
-    }
-    
-    def IScope scope_ValuedObjectReference(EObject context, EReference reference) {
-		Scopes.scopeFor(valuedObjects)
     }
 
 }
