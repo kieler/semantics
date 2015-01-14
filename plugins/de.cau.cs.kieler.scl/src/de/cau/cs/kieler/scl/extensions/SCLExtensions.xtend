@@ -172,28 +172,32 @@ class SCLExtensions {
     def StatementSequence removeDoubleJumps(StatementSequence sSeq) {
         val replaceBy = <Pair<String, String>>newLinkedList
         for (emptyStm : sSeq.eAllContents.toList.filter(typeof(EmptyStatement))) {
+            var EList<Statement> stmList
             var parent = emptyStm.eContainer as StatementSequence
-            var index = parent.statements.indexOf(emptyStm)
-            if (parent.statements.size > index + 1) {
-                val nextStatement = parent.statements.get(index + 1) as Statement
-                if (nextStatement instanceof InstructionStatement &&
-                    (nextStatement as InstructionStatement).instruction instanceof Goto) {
-                    val goto = ((nextStatement as InstructionStatement).instruction as Goto)
-                    replaceBy += emptyStm.label -> goto.targetLabel
+            // Continue if in conditional
+            var continue = true
+            // Check whether label is in conditional and in which branch
+            while (continue) {
+                if ((parent instanceof Conditional) && (parent as Conditional).elseStatements.contains(emptyStm)) {
+                    stmList = (parent as Conditional).elseStatements
+                } else {
+                    stmList = parent.statements
                 }
-
-            // Check whether at end of conditonal branch and "look outside"
-            } else if (parent instanceof Conditional) {
-                val cond = parent as Conditional
-                parent = parent.eContainer.eContainer as StatementSequence
-                index = parent.statements.indexOf(cond.eContainer)
-                if (parent.statements.size > index + 1) {
-                    val nextStatement = parent.statements.get(index + 1) as Statement
+                var index = stmList.indexOf(emptyStm)
+                if (stmList.size > index + 1) {
+                    val nextStatement = stmList.get(index + 1) as Statement
                     if (nextStatement instanceof InstructionStatement &&
                         (nextStatement as InstructionStatement).instruction instanceof Goto) {
                         val goto = ((nextStatement as InstructionStatement).instruction as Goto)
                         replaceBy += emptyStm.label -> goto.targetLabel
                     }
+                    continue = false;
+                //TODO what if label in else branch?
+                // Check whether at end of conditonal branch and "look outside"
+                } else if (parent instanceof Conditional) {
+                    val cond = parent as Conditional
+                    parent = parent.eContainer.eContainer as StatementSequence
+                    index = parent.statements.indexOf(cond.eContainer)
                 }
             }
         }
@@ -201,7 +205,6 @@ class SCLExtensions {
         // Replace goto targets
         for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
             var newLabel = replaceBy.findFirst[key == (goto as Goto).targetLabel]
-
             if (newLabel != null) {
                 (goto as Goto).targetLabel = newLabel.value
             }
