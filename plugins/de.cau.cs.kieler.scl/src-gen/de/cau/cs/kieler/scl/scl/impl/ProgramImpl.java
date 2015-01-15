@@ -29,14 +29,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * An implementation of the model object '<em><b>Program</b></em>'.
  * <!-- end-user-doc -->
  * <p>
- * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.ProgramImpl#getDeclarations <em>Declarations</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */

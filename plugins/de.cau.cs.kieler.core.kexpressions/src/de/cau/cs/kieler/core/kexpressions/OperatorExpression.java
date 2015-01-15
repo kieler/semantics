@@ -24,11 +24,11 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.OperatorExpression#getOperator <em>Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.kexpressions.OperatorExpression#getSubExpressions <em>Sub Expressions</em>}</li>
  * </ul>
+ * </p>
  *
  * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getOperatorExpression()
  * @model
@@ -36,48 +36,48 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface OperatorExpression extends Expression {
     /**
-	 * Returns the value of the '<em><b>Operator</b></em>' attribute.
-	 * The literals are from the enumeration {@link de.cau.cs.kieler.core.kexpressions.OperatorType}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Operator</b></em>' attribute.
+     * The literals are from the enumeration {@link de.cau.cs.kieler.core.kexpressions.OperatorType}.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Operator</em>' attribute isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Operator</em>' attribute.
-	 * @see de.cau.cs.kieler.core.kexpressions.OperatorType
-	 * @see #setOperator(OperatorType)
-	 * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getOperatorExpression_Operator()
-	 * @model
-	 * @generated
-	 */
+     * @return the value of the '<em>Operator</em>' attribute.
+     * @see de.cau.cs.kieler.core.kexpressions.OperatorType
+     * @see #setOperator(OperatorType)
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getOperatorExpression_Operator()
+     * @model
+     * @generated
+     */
     OperatorType getOperator();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.OperatorExpression#getOperator <em>Operator</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.OperatorExpression#getOperator <em>Operator</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Operator</em>' attribute.
-	 * @see de.cau.cs.kieler.core.kexpressions.OperatorType
-	 * @see #getOperator()
-	 * @generated
-	 */
+     * @param value the new value of the '<em>Operator</em>' attribute.
+     * @see de.cau.cs.kieler.core.kexpressions.OperatorType
+     * @see #getOperator()
+     * @generated
+     */
     void setOperator(OperatorType value);
 
     /**
-	 * Returns the value of the '<em><b>Sub Expressions</b></em>' containment reference list.
-	 * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Expression}.
-	 * <!-- begin-user-doc -->
+     * Returns the value of the '<em><b>Sub Expressions</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Expression}.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Sub Expressions</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @return the value of the '<em>Sub Expressions</em>' containment reference list.
-	 * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getOperatorExpression_SubExpressions()
-	 * @model containment="true"
-	 * @generated
-	 */
+     * @return the value of the '<em>Sub Expressions</em>' containment reference list.
+     * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getOperatorExpression_SubExpressions()
+     * @model containment="true"
+     * @generated
+     */
     EList<Expression> getSubExpressions();
 
 } // OperatorExpression

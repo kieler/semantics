@@ -32,6 +32,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import de.cau.cs.kieler.core.kexpressions.Parameter
 import java.util.List
+import de.cau.cs.kieler.core.kexpressions.StringValue
 
 /**
  * KExpressions Extensions. 
@@ -1026,6 +1027,12 @@ class KExpressionsExtension {
     // Create a boolean value.
     def BoolValue createBoolValue(boolean value) {
         val expression = KExpressionsFactory::eINSTANCE.createBoolValue()
+        expression.setValue(value)
+        expression
+    }
+
+    def StringValue createStringValue(String value) {
+        val expression = KExpressionsFactory::eINSTANCE.createStringValue()
         expression.setValue(value)
         expression
     }

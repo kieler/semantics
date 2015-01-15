@@ -18,11 +18,11 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public abstract class AbstractKExpressionsSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected KExpressionsGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_2_0_p__q;
+	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0_p__q;
 	protected AbstractElementAlias match_AtomicExpression_LeftParenthesisKeyword_2_0_a;
 	protected AbstractElementAlias match_AtomicExpression_LeftParenthesisKeyword_2_0_p;
-	protected AbstractElementAlias match_AtomicValuedExpression_LeftParenthesisKeyword_2_0_a;
-	protected AbstractElementAlias match_AtomicValuedExpression_LeftParenthesisKeyword_2_0_p;
+	protected AbstractElementAlias match_AtomicValuedExpression_LeftParenthesisKeyword_3_0_a;
+	protected AbstractElementAlias match_AtomicValuedExpression_LeftParenthesisKeyword_3_0_p;
 	protected AbstractElementAlias match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q;
 	protected AbstractElementAlias match_KeyBooleanValueAnnotation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q;
 	protected AbstractElementAlias match_KeyFloatValueAnnotation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q;
@@ -34,11 +34,11 @@ public abstract class AbstractKExpressionsSyntacticSequencer extends AbstractSyn
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (KExpressionsGrammarAccess) access;
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_2_0_p__q = new GroupAlias(false, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(true, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()));
+		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0_p__q = new GroupAlias(false, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(true, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()));
 		match_AtomicExpression_LeftParenthesisKeyword_2_0_a = new TokenAlias(true, true, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0());
 		match_AtomicExpression_LeftParenthesisKeyword_2_0_p = new TokenAlias(true, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0());
-		match_AtomicValuedExpression_LeftParenthesisKeyword_2_0_a = new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0());
-		match_AtomicValuedExpression_LeftParenthesisKeyword_2_0_p = new TokenAlias(true, false, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0());
+		match_AtomicValuedExpression_LeftParenthesisKeyword_3_0_a = new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_3_0());
+		match_AtomicValuedExpression_LeftParenthesisKeyword_3_0_p = new TokenAlias(true, false, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_3_0());
 		match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getFunctionCallAccess().getLeftParenthesisRightParenthesisKeyword_2_1());
 		match_KeyBooleanValueAnnotation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getKeyBooleanValueAnnotationAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getKeyBooleanValueAnnotationAccess().getRightParenthesisKeyword_3_2()));
 		match_KeyFloatValueAnnotation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getKeyFloatValueAnnotationAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getKeyFloatValueAnnotationAccess().getRightParenthesisKeyword_3_2()));
@@ -60,16 +60,16 @@ public abstract class AbstractKExpressionsSyntacticSequencer extends AbstractSyn
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if(match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_2_0_p__q.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_2_0_p__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			if(match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0_p__q.equals(syntax))
+				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0_p__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_AtomicExpression_LeftParenthesisKeyword_2_0_a.equals(syntax))
 				emit_AtomicExpression_LeftParenthesisKeyword_2_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_AtomicExpression_LeftParenthesisKeyword_2_0_p.equals(syntax))
 				emit_AtomicExpression_LeftParenthesisKeyword_2_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_AtomicValuedExpression_LeftParenthesisKeyword_2_0_a.equals(syntax))
-				emit_AtomicValuedExpression_LeftParenthesisKeyword_2_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if(match_AtomicValuedExpression_LeftParenthesisKeyword_2_0_p.equals(syntax))
-				emit_AtomicValuedExpression_LeftParenthesisKeyword_2_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_AtomicValuedExpression_LeftParenthesisKeyword_3_0_a.equals(syntax))
+				emit_AtomicValuedExpression_LeftParenthesisKeyword_3_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_AtomicValuedExpression_LeftParenthesisKeyword_3_0_p.equals(syntax))
+				emit_AtomicValuedExpression_LeftParenthesisKeyword_3_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q.equals(syntax))
 				emit_FunctionCall_LeftParenthesisRightParenthesisKeyword_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if(match_KeyBooleanValueAnnotation___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q.equals(syntax))
@@ -92,7 +92,7 @@ public abstract class AbstractKExpressionsSyntacticSequencer extends AbstractSyn
 	 * Syntax:
 	 *     ('('* '('+)?
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_a_LeftParenthesisKeyword_2_0_p__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_3_0_a_LeftParenthesisKeyword_2_0_p__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -116,7 +116,7 @@ public abstract class AbstractKExpressionsSyntacticSequencer extends AbstractSyn
 	 * Syntax:
 	 *     '('*
 	 */
-	protected void emit_AtomicValuedExpression_LeftParenthesisKeyword_2_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AtomicValuedExpression_LeftParenthesisKeyword_3_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -124,7 +124,7 @@ public abstract class AbstractKExpressionsSyntacticSequencer extends AbstractSyn
 	 * Syntax:
 	 *     '('+
 	 */
-	protected void emit_AtomicValuedExpression_LeftParenthesisKeyword_2_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AtomicValuedExpression_LeftParenthesisKeyword_3_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

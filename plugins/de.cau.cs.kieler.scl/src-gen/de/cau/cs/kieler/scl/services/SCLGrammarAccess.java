@@ -1313,7 +1313,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AtomicValuedExpression returns Expression:
-	//	IntValue | FloatValue | "(" ValuedExpression ")" | AtomicExpression;
+	//	IntValue | FloatValue | StringValue | "(" ValuedExpression ")" | AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
 		return gaKExpressions.getAtomicValuedExpressionAccess();
 	}
@@ -1404,6 +1404,16 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getBoolValueRule() {
 		return getBoolValueAccess().getRule();
+	}
+
+	//StringValue:
+	//	value=STRING;
+	public KExpressionsGrammarAccess.StringValueElements getStringValueAccess() {
+		return gaKExpressions.getStringValueAccess();
+	}
+	
+	public ParserRule getStringValueRule() {
+		return getStringValueAccess().getRule();
 	}
 
 	//// data type rule allowing any kind of value to be accepted,
