@@ -67,10 +67,12 @@ public class KLighD {
                             + "  java -jar KLighD.jar 4444 -f FILE.sct -o model.png \n"
                             + "Example 3:\n"
                             + "  java -jar KLighD.jar render.sccharts.com -f FILE.sct -o model.png \n" + "\n"
+                            + "Example 4:\n"
+                            + "  java -jar KLighD.jar localhost:4444 FILE.sct -o model.kgx -r kgx \n" + "\n"
                             + "Options:\n" + "-f <filename> : Use a specific input file\n"
                             + "-i <filename> : Include additional input files\n"
                             + "-o <filename> : Use a specific output file\n"
-                            + "-r            : Render as png or svg, default is png\n"
+                            + "-r            : Render as png or svg or kgx, default is png\n"
                             + "-s            : Use a specific scale factor, default is 1\n");
             return;
         }
