@@ -253,9 +253,14 @@ public class TimingAnalysisHandler extends AbstractHandler {
                     }//                13.01.2015
                 }
                 Iterator<ControlFlow> edgeIterator = edgesWithSource.keySet().iterator();
-                while(edgeIterator.hasNext()){
-                  
-                }
+//                while(edgeIterator.hasNext()){
+//                  - check for each node, to which region it maps and insert a TTP node ('TTP(n);' into
+//                    the edge, if it is a different region than the one before
+//                  - store the domain Number of the Region together with the TTP number in a List, this 
+//                    is done to keep the relation of TTPs and Regions (as TTP numbers have to be unique
+//                    in the new interface version). For each Region domain there should be a List of 
+//                    TTP numbers, which can be used to look the values up in a TimeValueTable
+//                }
                 
 //                CompilationResult codeGeneration =
 //                        KielerCompiler.compile("CodeGeneration", sequentialSCG, true, true);

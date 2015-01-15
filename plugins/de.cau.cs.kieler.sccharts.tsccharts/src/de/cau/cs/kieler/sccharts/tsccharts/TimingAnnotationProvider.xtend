@@ -168,7 +168,23 @@ class TimingAnnotationProvider {
         // Return the highest DomainNumber assigned by the Method
         return domainNumber;
     }
-
+/**
+ * The Method annotates each region of a given State with a unique domainNumber. It also stores the 
+ * information about region nesting in the threadTree HashMap, which can be used for hierarchical  
+ * aggregation of timing values (for example in cases that involve the search of a maximum value among 
+ * sibling regions). The method is recursive.
+ * 
+ * @param state
+ *        The State. In most cases for the first call of this function this will be an SCChart.
+ * @param currentDomainNumber
+ *        The domain number to start with (domain numbers increment)
+ * @param threadTree
+ *        Hashmap to store the information about nesting of threads in, for every region there will be a 
+ *        list of child regions, both identified by their timing domain numbers.
+ * @param parentDomain
+ *        The domain number of the parent region of state
+ * @return Returns the highest domain number set during the recursion, incremented by 1.
+ */
     def Integer setTimingDomainsWithS(State state, Integer currentDomainNumber,
         HashMap<Integer, LinkedList<Integer>> threadTree, Integer parentDomain) {
         var domainNumber = currentDomainNumber;
@@ -188,7 +204,7 @@ class TimingAnnotationProvider {
             // prepare descendant list for this region in the thread tree
             threadTree.put(domainNumber, new LinkedList<Integer>);
 
-            // save this regions domain number for the registrations of its children in the thread tree
+            // save this region's domain number for the registrations of its children in the thread tree
             val regionDomain = domainNumber;
             domainNumber = domainNumber + 1;
             val childStates = region.states;
@@ -255,7 +271,7 @@ class TimingAnnotationProvider {
         return retValue;
     }
 
-    /** Method retrieves the timing information from the .ta.out file and stores them in a result 
+    /** Retrieves the timing information from the .ta.out file and stores them in a result 
          * map under the according requests.
          *  @param resultList 
          *            A list of TimingRequestResults, where the values are to be (re)set. The ordering 
@@ -339,10 +355,12 @@ class TimingAnnotationProvider {
                         Integer.parseInt(currentResult.result.get(0)))
                 }
                 case RequestType::WCP: {
-                    // do nothing, for now we are interested in timing values, not in paths
+                    // do nothing, for the moment we are interested in timing values, not in paths
+                    // can be amended in future
                 }
                 case RequestType::BCP: {
-                    // do nothing, for now we are interested in timing values, not in paths
+                    // do nothing, for the moment we are interested in timing values, not in paths
+                    // can be amended in future
                 }
             }
         }
