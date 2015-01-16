@@ -250,9 +250,10 @@ public class TimingAnalysisHandler extends AbstractHandler {
                                 }
                             }
                         }
-                    }//                13.01.2015
+                    }
                 }
                 Iterator<ControlFlow> edgeIterator = edgesWithSource.keySet().iterator();
+//Start 13.01.2015               
 //                while(edgeIterator.hasNext()){
 //                  - check for each node, to which region it maps and insert a TTP node ('TTP(n);' into
 //                    the edge, if it is a different region than the one before
@@ -260,11 +261,10 @@ public class TimingAnalysisHandler extends AbstractHandler {
 //                    is done to keep the relation of TTPs and Regions (as TTP numbers have to be unique
 //                    in the new interface version). For each Region domain there should be a List of 
 //                    TTP numbers, which can be used to look the values up in a TimeValueTable
-//                }
-                
+//                }              
 //                CompilationResult codeGeneration =
 //                        KielerCompiler.compile("CodeGeneration", sequentialSCG, true, true);
-              //End 13.01.2015
+//End 13.01.2015
 
                 State state = scchart;// rootRegionStates.get(0);
                 IFile file = ResourceUtil.getFile(maybe.get().eResource());
@@ -313,13 +313,13 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 return Status.OK_STATUS;
             }
 
-            /* CAUTION: do not use but for test reasons
+            /* CAUTION: do not use but for test reasons, not for master branch version
              * 
              * This method generates a test mapping done by hand as an interim solution until the KTM 
              * mapping is integrated into KIELER
              * the parameter i specifies the number of the model for which the task is done
-             * 1: ABO (TODO)
-             * 2:...
+             * 1: robot (TODO)
+             * 2: ...
              */
             private HashMultimap<EObject, EObject> getTestMapping(int i) {
                 // TODO Auto-generated method stub
