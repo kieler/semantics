@@ -82,6 +82,7 @@ import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.xtext.xbase.lib.Pair
+import de.cau.cs.kieler.core.kexpressions.Expression
 
 /**
  * @author krat
@@ -109,7 +110,10 @@ class EsterelToSclTransformation extends Transformation {
 
     // State variables for weak suspension
     var LinkedList<Pair<Integer, String>> waStates
-
+    
+    // Associates counting variables to the corresponding delay event
+    var HashMap<String, ValuedObject> counterMap
+    
     // Flag indicating if optimized transformations should be used
     var boolean opt
 
@@ -147,16 +151,18 @@ class EsterelToSclTransformation extends Transformation {
 
         labelMap = HashMultimap.create()
 
-        exitMap = new HashMap<ISignal, Pair<ValuedObject, String>>()
+        exitMap = new HashMap<ISignal, Pair<ValuedObject, String>>
 
         localDeclarations = new LinkedList<Declaration>
 
         signalMap = new LinkedList<Pair<String, ValuedObject>>
 
-        valuedMap = new HashMap<ValuedObject, ValuedObject>()
+        valuedMap = new HashMap<ValuedObject, ValuedObject>
 
         waStates = new LinkedList<Pair<Integer, String>>
-
+        
+        counterMap = new HashMap<String, ValuedObject>        
+        
         pauseTransformation = new Stack<(StatementSequence)=>StatementSequence>
         joinTransformation = new Stack<(StatementSequence)=>StatementSequence>
 
@@ -731,10 +737,22 @@ class EsterelToSclTransformation extends Transformation {
             for (singleCase : saveAbort.cases) {
                 sSeq.add(
                     createConditional => [
+                        val eventExpr = singleCase.delay.event.expr
                         if (singleCase.delay.isImmediate) {
-                            expression = singleCase.delay.event.expr.transformExp
+                            if (singleCase.delay.expr != null){
+                                expression = createAnd(eventExpr.transformExp, 
+                                    signalMap.findLast[key == (singleCase.delay.event.expr as ValuedObject).name].value.createValObjRef
+                                )
+                            } else {
+                                expression = eventExpr.transformExp
+                            }
                         } else {
-                            expression = createAnd(singleCase.delay.event.expr.transformExp, createValObjRef(f_depth))
+                            if (singleCase.delay.expr != null){
+                                expression = createAnd(eventExpr.transformExp, 
+                                    createLEQ(singleCase.delay.expr.transformExp("int"), counterMap.get((singleCase.delay.event.expr as de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference).valuedObject.name).createValObjRef))
+                            } else {
+                                expression = createAnd(eventExpr.transformExp, createValObjRef(f_depth))
+                            }
                         }
                         statements += singleCase.statement.transformStm(newSseq).statements
                         statements += createGotoStm(l_end)
@@ -761,6 +779,8 @@ class EsterelToSclTransformation extends Transformation {
         if (delayExpression) {
             counterVar = createFreshVar("i", ValueType::INT)
             sSeq.add(createAssignment(counterVar, 0.createIntValue))
+            counterMap.put(((abort.body as AbortInstance).delay.event.expr as de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference).valuedObject.name,
+                counterVar)
         }
         val counter = counterVar
 

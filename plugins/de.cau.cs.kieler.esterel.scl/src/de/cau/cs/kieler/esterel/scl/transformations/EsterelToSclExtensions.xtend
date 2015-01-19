@@ -488,6 +488,32 @@ class EsterelToSclExtensions {
         ]
     }
     
+    /**
+     * Create an greater equal than expression
+     * @param arg1 first argument
+     * @param arg2 second argument
+     */
+    def createGEQ(Expression arg1, Expression arg2) {
+        KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+            operator = OperatorType::GEQ
+            subExpressions.add(arg1)
+            subExpressions.add(arg2)
+        ]
+    }
+    
+    /**
+     * Create an less equal than expression
+     * @param arg1 first argument
+     * @param arg2 second argument
+     */
+    def createLEQ(Expression arg1, Expression arg2) {
+        KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+            operator = OperatorType::LEQ
+            subExpressions.add(arg1)
+            subExpressions.add(arg2)
+        ]
+    }
+    
     def createConditional() {
         SclFactory::eINSTANCE.createConditional
     }
