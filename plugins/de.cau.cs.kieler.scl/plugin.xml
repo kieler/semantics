@@ -208,18 +208,13 @@
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scl.extensions.SCLExtensions"
-            id="REMOVE_DOUBLE_JUMPS"
-            method="removeDoubleJumps">
-      </transformationMethod>
-      <transformationMethod
-            class="de.cau.cs.kieler.scl.extensions.SCLExtensions"
             id="REMOVE_SUBSEQUENT_LABELS"
             method="removeSubseqeuentLabels"
             name="Remove subsequent labels">
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scl.extensions.SCLExtensions"
-            id="REMOVE_DOUBLE_JUMPSs"
+            id="REMOVE_DOUBLE_JUMPS"
             method="removeDoubleJumps"
             name="Remove double jumps">
       </transformationMethod>
