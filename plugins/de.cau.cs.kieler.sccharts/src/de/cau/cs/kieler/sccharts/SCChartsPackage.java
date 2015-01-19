@@ -262,7 +262,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getScope()
      * @generated
      */
-    int SCOPE = 16;
+    int SCOPE = 22;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -363,7 +363,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getBinding()
      * @generated
      */
-    int BINDING = 14;
+    int BINDING = 20;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.StateImpl <em>State</em>}' class.
@@ -774,13 +774,31 @@ public interface SCChartsPackage extends EPackage {
 	int NODE__RECEIVERS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
 				/**
+     * The feature id for the '<em><b>Test Senders</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NODE__TEST_SENDERS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+
+    /**
+     * The feature id for the '<em><b>Test Receivers</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NODE__TEST_RECEIVERS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+
+                /**
      * The number of structural features of the '<em>Node</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int NODE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+    int NODE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.InputNodeImpl <em>Input Node</em>}' class.
@@ -791,6 +809,26 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     int INPUT_NODE = 8;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ReferencedNodeImpl <em>Referenced Node</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.ReferencedNodeImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getReferencedNode()
+     * @generated
+     */
+    int REFERENCED_NODE = 9;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.OutputNodeImpl <em>Output Node</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.OutputNodeImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getOutputNode()
+     * @generated
+     */
+    int OUTPUT_NODE = 14;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -837,24 +875,32 @@ public interface SCChartsPackage extends EPackage {
      */
 	int INPUT_NODE__RECEIVERS = NODE__RECEIVERS;
 
-				/**
-     * The number of structural features of the '<em>Input Node</em>' class.
+    /**
+     * The feature id for the '<em><b>Test Senders</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INPUT_NODE_FEATURE_COUNT = NODE_FEATURE_COUNT + 0;
+    int INPUT_NODE__TEST_SENDERS = NODE__TEST_SENDERS;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ReferencedNodeImpl <em>Referenced Node</em>}' class.
+     * The feature id for the '<em><b>Test Receivers</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.ReferencedNodeImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getReferencedNode()
      * @generated
+     * @ordered
      */
-    int REFERENCED_NODE = 9;
+    int INPUT_NODE__TEST_RECEIVERS = NODE__TEST_RECEIVERS;
+
+    /**
+     * The number of structural features of the '<em>Input Node</em>' class.
+     * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+   int INPUT_NODE_FEATURE_COUNT = NODE_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -901,14 +947,32 @@ public interface SCChartsPackage extends EPackage {
      */
 	int REFERENCED_NODE__RECEIVERS = NODE__RECEIVERS;
 
-				/**
-     * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
+    /**
+     * The feature id for the '<em><b>Test Senders</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REFERENCED_NODE__REFERENCED_SCOPE = NODE_FEATURE_COUNT + 0;
+    int REFERENCED_NODE__TEST_SENDERS = NODE__TEST_SENDERS;
+
+    /**
+     * The feature id for the '<em><b>Test Receivers</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REFERENCED_NODE__TEST_RECEIVERS = NODE__TEST_RECEIVERS;
+
+    /**
+     * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
+     * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+   int REFERENCED_NODE__REFERENCED_SCOPE = NODE_FEATURE_COUNT + 0;
 
     /**
      * The number of structural features of the '<em>Referenced Node</em>' class.
@@ -920,14 +984,386 @@ public interface SCChartsPackage extends EPackage {
     int REFERENCED_NODE_FEATURE_COUNT = NODE_FEATURE_COUNT + 1;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.OutputNodeImpl <em>Output Node</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TestReferenceNodeImpl <em>Test Reference Node</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.OutputNodeImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getOutputNode()
+     * @see de.cau.cs.kieler.sccharts.impl.TestReferenceNodeImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTestReferenceNode()
      * @generated
      */
-    int OUTPUT_NODE = 10;
+    int TEST_REFERENCE_NODE = 10;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEST_REFERENCE_NODE__ANNOTATIONS = NODE__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEST_REFERENCE_NODE__ID = NODE__ID;
+
+    /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEST_REFERENCE_NODE__LABEL = NODE__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Senders</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEST_REFERENCE_NODE__SENDERS = NODE__SENDERS;
+
+    /**
+     * The feature id for the '<em><b>Receivers</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEST_REFERENCE_NODE__RECEIVERS = NODE__RECEIVERS;
+
+    /**
+     * The feature id for the '<em><b>Test Senders</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEST_REFERENCE_NODE__TEST_SENDERS = NODE__TEST_SENDERS;
+
+    /**
+     * The feature id for the '<em><b>Test Receivers</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEST_REFERENCE_NODE__TEST_RECEIVERS = NODE__TEST_RECEIVERS;
+
+    /**
+     * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEST_REFERENCE_NODE__REFERENCED_SCOPE = NODE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEST_REFERENCE_NODE__PARAMETERS = NODE_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Test Reference Node</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEST_REFERENCE_NODE_FEATURE_COUNT = NODE_FEATURE_COUNT + 2;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.CallNodeImpl <em>Call Node</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.CallNodeImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getCallNode()
+     * @generated
+     */
+    int CALL_NODE = 11;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CALL_NODE__ANNOTATIONS = NODE__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CALL_NODE__ID = NODE__ID;
+
+    /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CALL_NODE__LABEL = NODE__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Senders</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CALL_NODE__SENDERS = NODE__SENDERS;
+
+    /**
+     * The feature id for the '<em><b>Receivers</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CALL_NODE__RECEIVERS = NODE__RECEIVERS;
+
+    /**
+     * The feature id for the '<em><b>Test Senders</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CALL_NODE__TEST_SENDERS = NODE__TEST_SENDERS;
+
+    /**
+     * The feature id for the '<em><b>Test Receivers</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CALL_NODE__TEST_RECEIVERS = NODE__TEST_RECEIVERS;
+
+    /**
+     * The feature id for the '<em><b>Call Reference</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CALL_NODE__CALL_REFERENCE = NODE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CALL_NODE__PARAMETERS = NODE_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CALL_NODE__REFERENCED_SCOPE = NODE_FEATURE_COUNT + 2;
+
+    /**
+     * The number of structural features of the '<em>Call Node</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CALL_NODE_FEATURE_COUNT = NODE_FEATURE_COUNT + 3;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowFeatureImpl <em>Dataflow Feature</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.DataflowFeatureImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDataflowFeature()
+     * @generated
+     */
+    int DATAFLOW_FEATURE = 12;
+
+    /**
+     * The feature id for the '<em><b>Expression</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_FEATURE__EXPRESSION = 0;
+
+    /**
+     * The feature id for the '<em><b>Node</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_FEATURE__NODE = 1;
+
+    /**
+     * The feature id for the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_FEATURE__VALUED_OBJECT = 2;
+
+    /**
+     * The number of structural features of the '<em>Dataflow Feature</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_FEATURE_FEATURE_COUNT = 3;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.DefineNodeImpl <em>Define Node</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.DefineNodeImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDefineNode()
+     * @generated
+     */
+    int DEFINE_NODE = 13;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINE_NODE__ANNOTATIONS = NODE__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINE_NODE__ID = NODE__ID;
+
+    /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINE_NODE__LABEL = NODE__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Senders</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINE_NODE__SENDERS = NODE__SENDERS;
+
+    /**
+     * The feature id for the '<em><b>Receivers</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINE_NODE__RECEIVERS = NODE__RECEIVERS;
+
+    /**
+     * The feature id for the '<em><b>Test Senders</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINE_NODE__TEST_SENDERS = NODE__TEST_SENDERS;
+
+    /**
+     * The feature id for the '<em><b>Test Receivers</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINE_NODE__TEST_RECEIVERS = NODE__TEST_RECEIVERS;
+
+    /**
+     * The feature id for the '<em><b>Inputs</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINE_NODE__INPUTS = NODE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Outputs</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINE_NODE__OUTPUTS = NODE_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Valued Objects</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINE_NODE__VALUED_OBJECTS = NODE_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>Expressions</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINE_NODE__EXPRESSIONS = NODE_FEATURE_COUNT + 3;
+
+    /**
+     * The feature id for the '<em><b>States</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINE_NODE__STATES = NODE_FEATURE_COUNT + 4;
+
+    /**
+     * The number of structural features of the '<em>Define Node</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINE_NODE_FEATURE_COUNT = NODE_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -974,7 +1410,25 @@ public interface SCChartsPackage extends EPackage {
      */
 	int OUTPUT_NODE__RECEIVERS = NODE__RECEIVERS;
 
-				/**
+    /**
+     * The feature id for the '<em><b>Test Senders</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OUTPUT_NODE__TEST_SENDERS = NODE__TEST_SENDERS;
+
+    /**
+     * The feature id for the '<em><b>Test Receivers</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OUTPUT_NODE__TEST_RECEIVERS = NODE__TEST_RECEIVERS;
+
+    /**
      * The feature id for the '<em><b>Valued Object</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1000,7 +1454,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDataflow()
      * @generated
      */
-    int DATAFLOW = 11;
+    int DATAFLOW = 15;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1093,13 +1547,40 @@ public interface SCChartsPackage extends EPackage {
     int DATAFLOW__NODES = CONCURRENCY_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Expressions</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW__EXPRESSIONS = CONCURRENCY_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Valued Objects</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW__VALUED_OBJECTS = CONCURRENCY_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>Features</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW__FEATURES = CONCURRENCY_FEATURE_COUNT + 3;
+
+    /**
      * The number of structural features of the '<em>Dataflow</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATAFLOW_FEATURE_COUNT = CONCURRENCY_FEATURE_COUNT + 1;
+    int DATAFLOW_FEATURE_COUNT = CONCURRENCY_FEATURE_COUNT + 4;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.SenderImpl <em>Sender</em>}' class.
@@ -1109,7 +1590,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSender()
      * @generated
      */
-    int SENDER = 12;
+    int SENDER = 16;
 
     /**
      * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -1146,7 +1627,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getReceiver()
      * @generated
      */
-    int RECEIVER = 13;
+    int RECEIVER = 17;
 
     /**
      * The feature id for the '<em><b>Valued Object</b></em>' reference.
@@ -1185,6 +1666,188 @@ public interface SCChartsPackage extends EPackage {
     int RECEIVER_FEATURE_COUNT = 3;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TestSenderImpl <em>Test Sender</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.TestSenderImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTestSender()
+     * @generated
+     */
+    int TEST_SENDER = 18;
+
+    /**
+     * The feature id for the '<em><b>Receiver</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEST_SENDER__RECEIVER = 0;
+
+    /**
+     * The feature id for the '<em><b>Node</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEST_SENDER__NODE = 1;
+
+    /**
+     * The number of structural features of the '<em>Test Sender</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEST_SENDER_FEATURE_COUNT = 2;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TestReceiverImpl <em>Test Receiver</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.TestReceiverImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTestReceiver()
+     * @generated
+     */
+    int TEST_RECEIVER = 19;
+
+    /**
+     * The feature id for the '<em><b>Sender</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEST_RECEIVER__SENDER = 0;
+
+    /**
+     * The feature id for the '<em><b>Node</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEST_RECEIVER__NODE = 1;
+
+    /**
+     * The feature id for the '<em><b>Valued Object</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEST_RECEIVER__VALUED_OBJECT = 2;
+
+    /**
+     * The feature id for the '<em><b>Output Value</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEST_RECEIVER__OUTPUT_VALUE = 3;
+
+    /**
+     * The number of structural features of the '<em>Test Receiver</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEST_RECEIVER_FEATURE_COUNT = 4;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.TransitionImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransition()
+     * @generated
+     */
+    int TRANSITION = 21;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TextEffectImpl <em>Text Effect</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.TextEffectImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTextEffect()
+     * @generated
+     */
+    int TEXT_EFFECT = 23;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.FunctionCallEffectImpl <em>Function Call Effect</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.FunctionCallEffectImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getFunctionCallEffect()
+     * @generated
+     */
+    int FUNCTION_CALL_EFFECT = 24;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.LocalActionImpl <em>Local Action</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.LocalActionImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getLocalAction()
+     * @generated
+     */
+    int LOCAL_ACTION = 25;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.EntryActionImpl <em>Entry Action</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.EntryActionImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEntryAction()
+     * @generated
+     */
+    int ENTRY_ACTION = 26;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.DuringActionImpl <em>During Action</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.DuringActionImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDuringAction()
+     * @generated
+     */
+    int DURING_ACTION = 27;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ExitActionImpl <em>Exit Action</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.ExitActionImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getExitAction()
+     * @generated
+     */
+    int EXIT_ACTION = 28;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.SuspendActionImpl <em>Suspend Action</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.SuspendActionImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSuspendAction()
+     * @generated
+     */
+    int SUSPEND_ACTION = 29;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ForImpl <em>For</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.ForImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getFor()
+     * @generated
+     */
+    int FOR = 30;
+
+    /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1219,16 +1882,6 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int BINDING_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.TransitionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransition()
-     * @generated
-     */
-    int TRANSITION = 15;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1348,16 +2001,6 @@ public interface SCChartsPackage extends EPackage {
     int TRANSITION_FEATURE_COUNT = ACTION_FEATURE_COUNT + 6;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TextEffectImpl <em>Text Effect</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.TextEffectImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTextEffect()
-     * @generated
-     */
-    int TEXT_EFFECT = 17;
-
-    /**
      * The feature id for the '<em><b>Text</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1374,16 +2017,6 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int TEXT_EFFECT_FEATURE_COUNT = KExpressionsPackage.TEXT_EXPRESSION_FEATURE_COUNT + 0;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.FunctionCallEffectImpl <em>Function Call Effect</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.FunctionCallEffectImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getFunctionCallEffect()
-     * @generated
-     */
-    int FUNCTION_CALL_EFFECT = 18;
 
     /**
      * The feature id for the '<em><b>Function Name</b></em>' attribute.
@@ -1411,16 +2044,6 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int FUNCTION_CALL_EFFECT_FEATURE_COUNT = KExpressionsPackage.FUNCTION_CALL_FEATURE_COUNT + 0;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.LocalActionImpl <em>Local Action</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.LocalActionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getLocalAction()
-     * @generated
-     */
-    int LOCAL_ACTION = 19;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1486,16 +2109,6 @@ public interface SCChartsPackage extends EPackage {
     int LOCAL_ACTION_FEATURE_COUNT = ACTION_FEATURE_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.EntryActionImpl <em>Entry Action</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.EntryActionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEntryAction()
-     * @generated
-     */
-    int ENTRY_ACTION = 20;
-
-    /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1557,16 +2170,6 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int ENTRY_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.DuringActionImpl <em>During Action</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.DuringActionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDuringAction()
-     * @generated
-     */
-    int DURING_ACTION = 21;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1632,16 +2235,6 @@ public interface SCChartsPackage extends EPackage {
     int DURING_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ExitActionImpl <em>Exit Action</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.ExitActionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getExitAction()
-     * @generated
-     */
-    int EXIT_ACTION = 22;
-
-    /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1703,16 +2296,6 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int EXIT_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.SuspendActionImpl <em>Suspend Action</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.SuspendActionImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSuspendAction()
-     * @generated
-     */
-    int SUSPEND_ACTION = 23;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1787,16 +2370,6 @@ public interface SCChartsPackage extends EPackage {
     int SUSPEND_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 1;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ForImpl <em>For</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.ForImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getFor()
-     * @generated
-     */
-    int FOR = 24;
-
-    /**
      * The feature id for the '<em><b>Loop Variable</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1849,7 +2422,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getStateType()
      * @generated
      */
-    int STATE_TYPE = 25;
+    int STATE_TYPE = 31;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.TransitionType <em>Transition Type</em>}' enum.
@@ -1859,7 +2432,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransitionType()
      * @generated
      */
-    int TRANSITION_TYPE = 26;
+    int TRANSITION_TYPE = 32;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
@@ -1869,7 +2442,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
      * @generated
      */
-    int HISTORY_TYPE = 27;
+    int HISTORY_TYPE = 33;
 
     /**
      * The meta object id for the '<em>Parsable</em>' data type.
@@ -1879,7 +2452,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getParsable()
      * @generated
      */
-    int PARSABLE = 28;
+    int PARSABLE = 34;
 
 
     /**
@@ -2108,6 +2681,28 @@ public interface SCChartsPackage extends EPackage {
 	EReference getNode_Receivers();
 
 				/**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Node#getTestSenders <em>Test Senders</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Test Senders</em>'.
+     * @see de.cau.cs.kieler.sccharts.Node#getTestSenders()
+     * @see #getNode()
+     * @generated
+     */
+    EReference getNode_TestSenders();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Node#getTestReceivers <em>Test Receivers</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Test Receivers</em>'.
+     * @see de.cau.cs.kieler.sccharts.Node#getTestReceivers()
+     * @see #getNode()
+     * @generated
+     */
+    EReference getNode_TestReceivers();
+
+                /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.InputNode <em>Input Node</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2137,6 +2732,189 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EReference getReferencedNode_ReferencedScope();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.TestReferenceNode <em>Test Reference Node</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Test Reference Node</em>'.
+     * @see de.cau.cs.kieler.sccharts.TestReferenceNode
+     * @generated
+     */
+    EClass getTestReferenceNode();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.TestReferenceNode#getReferencedScope <em>Referenced Scope</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Referenced Scope</em>'.
+     * @see de.cau.cs.kieler.sccharts.TestReferenceNode#getReferencedScope()
+     * @see #getTestReferenceNode()
+     * @generated
+     */
+    EReference getTestReferenceNode_ReferencedScope();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.TestReferenceNode#getParameters <em>Parameters</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Parameters</em>'.
+     * @see de.cau.cs.kieler.sccharts.TestReferenceNode#getParameters()
+     * @see #getTestReferenceNode()
+     * @generated
+     */
+    EReference getTestReferenceNode_Parameters();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.CallNode <em>Call Node</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Call Node</em>'.
+     * @see de.cau.cs.kieler.sccharts.CallNode
+     * @generated
+     */
+    EClass getCallNode();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.CallNode#getCallReference <em>Call Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Call Reference</em>'.
+     * @see de.cau.cs.kieler.sccharts.CallNode#getCallReference()
+     * @see #getCallNode()
+     * @generated
+     */
+    EReference getCallNode_CallReference();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.CallNode#getParameters <em>Parameters</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Parameters</em>'.
+     * @see de.cau.cs.kieler.sccharts.CallNode#getParameters()
+     * @see #getCallNode()
+     * @generated
+     */
+    EReference getCallNode_Parameters();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.CallNode#getReferencedScope <em>Referenced Scope</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Referenced Scope</em>'.
+     * @see de.cau.cs.kieler.sccharts.CallNode#getReferencedScope()
+     * @see #getCallNode()
+     * @generated
+     */
+    EReference getCallNode_ReferencedScope();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.DataflowFeature <em>Dataflow Feature</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Dataflow Feature</em>'.
+     * @see de.cau.cs.kieler.sccharts.DataflowFeature
+     * @generated
+     */
+    EClass getDataflowFeature();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.DataflowFeature#getExpression <em>Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Expression</em>'.
+     * @see de.cau.cs.kieler.sccharts.DataflowFeature#getExpression()
+     * @see #getDataflowFeature()
+     * @generated
+     */
+    EReference getDataflowFeature_Expression();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.DataflowFeature#getNode <em>Node</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Node</em>'.
+     * @see de.cau.cs.kieler.sccharts.DataflowFeature#getNode()
+     * @see #getDataflowFeature()
+     * @generated
+     */
+    EReference getDataflowFeature_Node();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.DataflowFeature#getValuedObject <em>Valued Object</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Valued Object</em>'.
+     * @see de.cau.cs.kieler.sccharts.DataflowFeature#getValuedObject()
+     * @see #getDataflowFeature()
+     * @generated
+     */
+    EReference getDataflowFeature_ValuedObject();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.DefineNode <em>Define Node</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Define Node</em>'.
+     * @see de.cau.cs.kieler.sccharts.DefineNode
+     * @generated
+     */
+    EClass getDefineNode();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.DefineNode#getInputs <em>Inputs</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Inputs</em>'.
+     * @see de.cau.cs.kieler.sccharts.DefineNode#getInputs()
+     * @see #getDefineNode()
+     * @generated
+     */
+    EReference getDefineNode_Inputs();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.DefineNode#getOutputs <em>Outputs</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Outputs</em>'.
+     * @see de.cau.cs.kieler.sccharts.DefineNode#getOutputs()
+     * @see #getDefineNode()
+     * @generated
+     */
+    EReference getDefineNode_Outputs();
+
+    /**
+     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.sccharts.DefineNode#getValuedObjects <em>Valued Objects</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference list '<em>Valued Objects</em>'.
+     * @see de.cau.cs.kieler.sccharts.DefineNode#getValuedObjects()
+     * @see #getDefineNode()
+     * @generated
+     */
+    EReference getDefineNode_ValuedObjects();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.DefineNode#getExpressions <em>Expressions</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Expressions</em>'.
+     * @see de.cau.cs.kieler.sccharts.DefineNode#getExpressions()
+     * @see #getDefineNode()
+     * @generated
+     */
+    EReference getDefineNode_Expressions();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.DefineNode#getStates <em>States</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>States</em>'.
+     * @see de.cau.cs.kieler.sccharts.DefineNode#getStates()
+     * @see #getDefineNode()
+     * @generated
+     */
+    EReference getDefineNode_States();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.OutputNode <em>Output Node</em>}'.
@@ -2179,6 +2957,39 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EReference getDataflow_Nodes();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Dataflow#getExpressions <em>Expressions</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Expressions</em>'.
+     * @see de.cau.cs.kieler.sccharts.Dataflow#getExpressions()
+     * @see #getDataflow()
+     * @generated
+     */
+    EReference getDataflow_Expressions();
+
+    /**
+     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.sccharts.Dataflow#getValuedObjects <em>Valued Objects</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference list '<em>Valued Objects</em>'.
+     * @see de.cau.cs.kieler.sccharts.Dataflow#getValuedObjects()
+     * @see #getDataflow()
+     * @generated
+     */
+    EReference getDataflow_ValuedObjects();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Dataflow#getFeatures <em>Features</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Features</em>'.
+     * @see de.cau.cs.kieler.sccharts.Dataflow#getFeatures()
+     * @see #getDataflow()
+     * @generated
+     */
+    EReference getDataflow_Features();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Sender <em>Sender</em>}'.
@@ -2254,6 +3065,92 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EReference getReceiver_Node();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.TestSender <em>Test Sender</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Test Sender</em>'.
+     * @see de.cau.cs.kieler.sccharts.TestSender
+     * @generated
+     */
+    EClass getTestSender();
+
+    /**
+     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.sccharts.TestSender#getReceiver <em>Receiver</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference list '<em>Receiver</em>'.
+     * @see de.cau.cs.kieler.sccharts.TestSender#getReceiver()
+     * @see #getTestSender()
+     * @generated
+     */
+    EReference getTestSender_Receiver();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.TestSender#getNode <em>Node</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Node</em>'.
+     * @see de.cau.cs.kieler.sccharts.TestSender#getNode()
+     * @see #getTestSender()
+     * @generated
+     */
+    EReference getTestSender_Node();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.TestReceiver <em>Test Receiver</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Test Receiver</em>'.
+     * @see de.cau.cs.kieler.sccharts.TestReceiver
+     * @generated
+     */
+    EClass getTestReceiver();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.TestReceiver#getSender <em>Sender</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Sender</em>'.
+     * @see de.cau.cs.kieler.sccharts.TestReceiver#getSender()
+     * @see #getTestReceiver()
+     * @generated
+     */
+    EReference getTestReceiver_Sender();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.TestReceiver#getNode <em>Node</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Node</em>'.
+     * @see de.cau.cs.kieler.sccharts.TestReceiver#getNode()
+     * @see #getTestReceiver()
+     * @generated
+     */
+    EReference getTestReceiver_Node();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.TestReceiver#getValuedObject <em>Valued Object</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Valued Object</em>'.
+     * @see de.cau.cs.kieler.sccharts.TestReceiver#getValuedObject()
+     * @see #getTestReceiver()
+     * @generated
+     */
+    EReference getTestReceiver_ValuedObject();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.TestReceiver#getOutputValue <em>Output Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Output Value</em>'.
+     * @see de.cau.cs.kieler.sccharts.TestReceiver#getOutputValue()
+     * @see #getTestReceiver()
+     * @generated
+     */
+    EReference getTestReceiver_OutputValue();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Binding <em>Binding</em>}'.
@@ -2937,6 +3834,22 @@ public interface SCChartsPackage extends EPackage {
 		EReference NODE__RECEIVERS = eINSTANCE.getNode_Receivers();
 
 								/**
+         * The meta object literal for the '<em><b>Test Senders</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference NODE__TEST_SENDERS = eINSTANCE.getNode_TestSenders();
+
+        /**
+         * The meta object literal for the '<em><b>Test Receivers</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference NODE__TEST_RECEIVERS = eINSTANCE.getNode_TestReceivers();
+
+                                /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.InputNodeImpl <em>Input Node</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2963,6 +3876,150 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference REFERENCED_NODE__REFERENCED_SCOPE = eINSTANCE.getReferencedNode_ReferencedScope();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TestReferenceNodeImpl <em>Test Reference Node</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.TestReferenceNodeImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTestReferenceNode()
+         * @generated
+         */
+        EClass TEST_REFERENCE_NODE = eINSTANCE.getTestReferenceNode();
+
+        /**
+         * The meta object literal for the '<em><b>Referenced Scope</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TEST_REFERENCE_NODE__REFERENCED_SCOPE = eINSTANCE.getTestReferenceNode_ReferencedScope();
+
+        /**
+         * The meta object literal for the '<em><b>Parameters</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TEST_REFERENCE_NODE__PARAMETERS = eINSTANCE.getTestReferenceNode_Parameters();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.CallNodeImpl <em>Call Node</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.CallNodeImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getCallNode()
+         * @generated
+         */
+        EClass CALL_NODE = eINSTANCE.getCallNode();
+
+        /**
+         * The meta object literal for the '<em><b>Call Reference</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference CALL_NODE__CALL_REFERENCE = eINSTANCE.getCallNode_CallReference();
+
+        /**
+         * The meta object literal for the '<em><b>Parameters</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference CALL_NODE__PARAMETERS = eINSTANCE.getCallNode_Parameters();
+
+        /**
+         * The meta object literal for the '<em><b>Referenced Scope</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference CALL_NODE__REFERENCED_SCOPE = eINSTANCE.getCallNode_ReferencedScope();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowFeatureImpl <em>Dataflow Feature</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.DataflowFeatureImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDataflowFeature()
+         * @generated
+         */
+        EClass DATAFLOW_FEATURE = eINSTANCE.getDataflowFeature();
+
+        /**
+         * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATAFLOW_FEATURE__EXPRESSION = eINSTANCE.getDataflowFeature_Expression();
+
+        /**
+         * The meta object literal for the '<em><b>Node</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATAFLOW_FEATURE__NODE = eINSTANCE.getDataflowFeature_Node();
+
+        /**
+         * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATAFLOW_FEATURE__VALUED_OBJECT = eINSTANCE.getDataflowFeature_ValuedObject();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.DefineNodeImpl <em>Define Node</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.DefineNodeImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDefineNode()
+         * @generated
+         */
+        EClass DEFINE_NODE = eINSTANCE.getDefineNode();
+
+        /**
+         * The meta object literal for the '<em><b>Inputs</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DEFINE_NODE__INPUTS = eINSTANCE.getDefineNode_Inputs();
+
+        /**
+         * The meta object literal for the '<em><b>Outputs</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DEFINE_NODE__OUTPUTS = eINSTANCE.getDefineNode_Outputs();
+
+        /**
+         * The meta object literal for the '<em><b>Valued Objects</b></em>' reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DEFINE_NODE__VALUED_OBJECTS = eINSTANCE.getDefineNode_ValuedObjects();
+
+        /**
+         * The meta object literal for the '<em><b>Expressions</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DEFINE_NODE__EXPRESSIONS = eINSTANCE.getDefineNode_Expressions();
+
+        /**
+         * The meta object literal for the '<em><b>States</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DEFINE_NODE__STATES = eINSTANCE.getDefineNode_States();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.OutputNodeImpl <em>Output Node</em>}' class.
@@ -2999,6 +4056,30 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference DATAFLOW__NODES = eINSTANCE.getDataflow_Nodes();
+
+        /**
+         * The meta object literal for the '<em><b>Expressions</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATAFLOW__EXPRESSIONS = eINSTANCE.getDataflow_Expressions();
+
+        /**
+         * The meta object literal for the '<em><b>Valued Objects</b></em>' reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATAFLOW__VALUED_OBJECTS = eINSTANCE.getDataflow_ValuedObjects();
+
+        /**
+         * The meta object literal for the '<em><b>Features</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DATAFLOW__FEATURES = eINSTANCE.getDataflow_Features();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.SenderImpl <em>Sender</em>}' class.
@@ -3059,6 +4140,74 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference RECEIVER__NODE = eINSTANCE.getReceiver_Node();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TestSenderImpl <em>Test Sender</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.TestSenderImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTestSender()
+         * @generated
+         */
+        EClass TEST_SENDER = eINSTANCE.getTestSender();
+
+        /**
+         * The meta object literal for the '<em><b>Receiver</b></em>' reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TEST_SENDER__RECEIVER = eINSTANCE.getTestSender_Receiver();
+
+        /**
+         * The meta object literal for the '<em><b>Node</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TEST_SENDER__NODE = eINSTANCE.getTestSender_Node();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TestReceiverImpl <em>Test Receiver</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.TestReceiverImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTestReceiver()
+         * @generated
+         */
+        EClass TEST_RECEIVER = eINSTANCE.getTestReceiver();
+
+        /**
+         * The meta object literal for the '<em><b>Sender</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TEST_RECEIVER__SENDER = eINSTANCE.getTestReceiver_Sender();
+
+        /**
+         * The meta object literal for the '<em><b>Node</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TEST_RECEIVER__NODE = eINSTANCE.getTestReceiver_Node();
+
+        /**
+         * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TEST_RECEIVER__VALUED_OBJECT = eINSTANCE.getTestReceiver_ValuedObject();
+
+        /**
+         * The meta object literal for the '<em><b>Output Value</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference TEST_RECEIVER__OUTPUT_VALUE = eINSTANCE.getTestReceiver_OutputValue();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.BindingImpl <em>Binding</em>}' class.

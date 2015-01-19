@@ -84,10 +84,16 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.NODE: return createNode();
             case SCChartsPackage.INPUT_NODE: return createInputNode();
             case SCChartsPackage.REFERENCED_NODE: return createReferencedNode();
+            case SCChartsPackage.TEST_REFERENCE_NODE: return createTestReferenceNode();
+            case SCChartsPackage.CALL_NODE: return createCallNode();
+            case SCChartsPackage.DATAFLOW_FEATURE: return createDataflowFeature();
+            case SCChartsPackage.DEFINE_NODE: return createDefineNode();
             case SCChartsPackage.OUTPUT_NODE: return createOutputNode();
             case SCChartsPackage.DATAFLOW: return createDataflow();
             case SCChartsPackage.SENDER: return createSender();
             case SCChartsPackage.RECEIVER: return createReceiver();
+            case SCChartsPackage.TEST_SENDER: return createTestSender();
+            case SCChartsPackage.TEST_RECEIVER: return createTestReceiver();
             case SCChartsPackage.BINDING: return createBinding();
             case SCChartsPackage.TRANSITION: return createTransition();
             case SCChartsPackage.TEXT_EFFECT: return createTextEffect();
@@ -219,6 +225,46 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    public TestReferenceNode createTestReferenceNode() {
+        TestReferenceNodeImpl testReferenceNode = new TestReferenceNodeImpl();
+        return testReferenceNode;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public CallNode createCallNode() {
+        CallNodeImpl callNode = new CallNodeImpl();
+        return callNode;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DataflowFeature createDataflowFeature() {
+        DataflowFeatureImpl dataflowFeature = new DataflowFeatureImpl();
+        return dataflowFeature;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DefineNode createDefineNode() {
+        DefineNodeImpl defineNode = new DefineNodeImpl();
+        return defineNode;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public OutputNode createOutputNode() {
         OutputNodeImpl outputNode = new OutputNodeImpl();
         return outputNode;
@@ -252,6 +298,26 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     public Receiver createReceiver() {
         ReceiverImpl receiver = new ReceiverImpl();
         return receiver;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public TestSender createTestSender() {
+        TestSenderImpl testSender = new TestSenderImpl();
+        return testSender;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public TestReceiver createTestReceiver() {
+        TestReceiverImpl testReceiver = new TestReceiverImpl();
+        return testReceiver;
     }
 
     /**

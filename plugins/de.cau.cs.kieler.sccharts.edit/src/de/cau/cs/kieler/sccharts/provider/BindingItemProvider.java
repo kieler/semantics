@@ -41,13 +41,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
  * @generated
  */
 public class BindingItemProvider
-    extends AnnotatableItemProvider
-    implements
-        IEditingDomainItemProvider,
-        IStructuredItemContentProvider,
-        ITreeItemContentProvider,
-        IItemLabelProvider,
-        IItemPropertySource {
+    extends AnnotatableItemProvider {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

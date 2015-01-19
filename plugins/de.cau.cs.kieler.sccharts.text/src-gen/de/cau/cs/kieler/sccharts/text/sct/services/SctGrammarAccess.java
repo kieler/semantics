@@ -25,8 +25,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSCChartParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		// Root returns
-		//sccharts::State:
+		//Root returns sccharts::State:
 		//	SCChart;
 		public ParserRule getRule() { return rule; }
 
@@ -58,16 +57,15 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatesStateParserRuleCall_2_0 = (RuleCall)cStatesAssignment_2.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		// SingleRegion
-		//returns sccharts::Region:
+		//SingleRegion returns sccharts::Region:
 		//	{sccharts::Region} (annotations+=Annotation* "region" id=ID? label=STRING? ("[" for=For "]")? ":"
 		//	declarations+=Declaration*)? //      (bodyText+=TextualCode)* 
-		// states+=State*;
+		//	states+=State*;
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::Region} (annotations+=Annotation* "region" id=ID? label=STRING? ("[" for=For "]")? ":"
 		//declarations+=Declaration*)? //      (bodyText+=TextualCode)* 
-		// states+=State*
+		//states+=State*
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::Region}
@@ -148,18 +146,27 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColonKeyword_1_5 = (Keyword)cGroup_1.eContents().get(5);
 		private final Assignment cDeclarationsAssignment_1_6 = (Assignment)cGroup_1.eContents().get(6);
 		private final RuleCall cDeclarationsDeclarationParserRuleCall_1_6_0 = (RuleCall)cDeclarationsAssignment_1_6.eContents().get(0);
-		private final Assignment cNodesAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cNodesNodeParserRuleCall_2_0 = (RuleCall)cNodesAssignment_2.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Assignment cValuedObjectsAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
+		private final CrossReference cValuedObjectsValuedObjectCrossReference_2_0_0 = (CrossReference)cValuedObjectsAssignment_2_0.eContents().get(0);
+		private final RuleCall cValuedObjectsValuedObjectIDTerminalRuleCall_2_0_0_1 = (RuleCall)cValuedObjectsValuedObjectCrossReference_2_0_0.eContents().get(1);
+		private final Keyword cEqualsSignKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
+		private final Assignment cExpressionsAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
+		private final RuleCall cExpressionsExpressionParserRuleCall_2_2_0 = (RuleCall)cExpressionsAssignment_2_2.eContents().get(0);
+		private final Keyword cSemicolonKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
+		private final Assignment cNodesAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cNodesNodeParserRuleCall_3_0 = (RuleCall)cNodesAssignment_3.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		// SingleDataflow
-		//returns sccharts::Dataflow:
+		//SingleDataflow returns sccharts::Dataflow:
 		//	{sccharts::Dataflow} (annotations+=Annotation* "dataflow" id=ID? label=STRING? ("[" for=For "]")? ":"
-		//	declarations+=Declaration*)? nodes+=Node*;
+		//	declarations+=Declaration*)? (valuedObjects+=[kexpressions::ValuedObject] "=" expressions+=Expression ";")*
+		//	nodes+=Node*;
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::Dataflow} (annotations+=Annotation* "dataflow" id=ID? label=STRING? ("[" for=For "]")? ":"
-		//declarations+=Declaration*)? nodes+=Node*
+		//declarations+=Declaration*)? (valuedObjects+=[kexpressions::ValuedObject] "=" expressions+=Expression ";")*
+		//nodes+=Node*
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::Dataflow}
@@ -213,11 +220,35 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//Declaration
 		public RuleCall getDeclarationsDeclarationParserRuleCall_1_6_0() { return cDeclarationsDeclarationParserRuleCall_1_6_0; }
 
+		//(valuedObjects+=[kexpressions::ValuedObject] "=" expressions+=Expression ";")*
+		public Group getGroup_2() { return cGroup_2; }
+
+		//valuedObjects+=[kexpressions::ValuedObject]
+		public Assignment getValuedObjectsAssignment_2_0() { return cValuedObjectsAssignment_2_0; }
+
+		//[kexpressions::ValuedObject]
+		public CrossReference getValuedObjectsValuedObjectCrossReference_2_0_0() { return cValuedObjectsValuedObjectCrossReference_2_0_0; }
+
+		//ID
+		public RuleCall getValuedObjectsValuedObjectIDTerminalRuleCall_2_0_0_1() { return cValuedObjectsValuedObjectIDTerminalRuleCall_2_0_0_1; }
+
+		//"="
+		public Keyword getEqualsSignKeyword_2_1() { return cEqualsSignKeyword_2_1; }
+
+		//expressions+=Expression
+		public Assignment getExpressionsAssignment_2_2() { return cExpressionsAssignment_2_2; }
+
+		//Expression
+		public RuleCall getExpressionsExpressionParserRuleCall_2_2_0() { return cExpressionsExpressionParserRuleCall_2_2_0; }
+
+		//";"
+		public Keyword getSemicolonKeyword_2_3() { return cSemicolonKeyword_2_3; }
+
 		//nodes+=Node*
-		public Assignment getNodesAssignment_2() { return cNodesAssignment_2; }
+		public Assignment getNodesAssignment_3() { return cNodesAssignment_3; }
 
 		//Node
-		public RuleCall getNodesNodeParserRuleCall_2_0() { return cNodesNodeParserRuleCall_2_0; }
+		public RuleCall getNodesNodeParserRuleCall_3_0() { return cNodesNodeParserRuleCall_3_0; }
 	}
 
 	public class ForElements extends AbstractParserRuleElementFinder {
@@ -234,8 +265,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cToINTTerminalRuleCall_5_0 = (RuleCall)cToAssignment_5.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		// For returns
-		//sccharts::For:
+		//For returns sccharts::For:
 		//	{sccharts::For} valuedObject=ValuedObject "=" from=INT ".." to=INT;
 		public ParserRule getRule() { return rule; }
 
@@ -293,8 +323,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatesStateParserRuleCall_8_0 = (RuleCall)cStatesAssignment_8.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		// Region returns
-		//sccharts::Region:
+		//Region returns sccharts::Region:
 		//	{sccharts::Region} annotations+=Annotation* "region" id=ID? label=STRING? ("[" for=For "]")? ":"
 		//	declarations+=Declaration* states+=State+;
 		public ParserRule getRule() { return rule; }
@@ -377,18 +406,30 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		private final Assignment cDeclarationsAssignment_7 = (Assignment)cGroup.eContents().get(7);
 		private final RuleCall cDeclarationsDeclarationParserRuleCall_7_0 = (RuleCall)cDeclarationsAssignment_7.eContents().get(0);
-		private final Assignment cNodesAssignment_8 = (Assignment)cGroup.eContents().get(8);
-		private final RuleCall cNodesNodeParserRuleCall_8_0 = (RuleCall)cNodesAssignment_8.eContents().get(0);
+		private final Assignment cFeaturesAssignment_8 = (Assignment)cGroup.eContents().get(8);
+		private final RuleCall cFeaturesFeatureParserRuleCall_8_0 = (RuleCall)cFeaturesAssignment_8.eContents().get(0);
+		private final Assignment cNodesAssignment_9 = (Assignment)cGroup.eContents().get(9);
+		private final RuleCall cNodesNodeParserRuleCall_9_0 = (RuleCall)cNodesAssignment_9.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		// Dataflow returns
-		//sccharts::Dataflow:
+		//Dataflow returns sccharts::Dataflow:
 		//	{sccharts::Dataflow} annotations+=Annotation* "dataflow" id=ID? label=STRING? ("[" for=For "]")? ":"
-		//	declarations+=Declaration* nodes+=Node+;
+		//	declarations+=Declaration* //    (
+		//	//        (valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += Expression) ';'
+		//	//        |
+		//	//        (valuedObjects += [kexpressions::ValuedObject]) '=' / *(nodes+=TestReferenceNode|ID'.')?* / (expressions += ValuedObjectReference) ';'
+		//	//    )*
+		//	features+=Feature* nodes+=Node* // alt: + statt *
+		//;
 		public ParserRule getRule() { return rule; }
 
 		//{sccharts::Dataflow} annotations+=Annotation* "dataflow" id=ID? label=STRING? ("[" for=For "]")? ":"
-		//declarations+=Declaration* nodes+=Node+
+		//declarations+=Declaration* //    (
+		////        (valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += Expression) ';'
+		////        |
+		////        (valuedObjects += [kexpressions::ValuedObject]) '=' / *(nodes+=TestReferenceNode|ID'.')?* / (expressions += ValuedObjectReference) ';'
+		////    )*
+		//features+=Feature* nodes+=Node* // alt: + statt *
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::Dataflow}
@@ -439,11 +480,145 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//Declaration
 		public RuleCall getDeclarationsDeclarationParserRuleCall_7_0() { return cDeclarationsDeclarationParserRuleCall_7_0; }
 
-		//nodes+=Node+
-		public Assignment getNodesAssignment_8() { return cNodesAssignment_8; }
+		//features+=Feature*
+		public Assignment getFeaturesAssignment_8() { return cFeaturesAssignment_8; }
+
+		//Feature
+		public RuleCall getFeaturesFeatureParserRuleCall_8_0() { return cFeaturesFeatureParserRuleCall_8_0; }
+
+		//nodes+=Node*
+		public Assignment getNodesAssignment_9() { return cNodesAssignment_9; }
 
 		//Node
-		public RuleCall getNodesNodeParserRuleCall_8_0() { return cNodesNodeParserRuleCall_8_0; }
+		public RuleCall getNodesNodeParserRuleCall_9_0() { return cNodesNodeParserRuleCall_9_0; }
+	}
+
+	public class FeatureElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Feature");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cDataflowFeatureAction_0 = (Action)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
+		private final Assignment cValuedObjectAssignment_1_0_0 = (Assignment)cGroup_1_0.eContents().get(0);
+		private final CrossReference cValuedObjectValuedObjectCrossReference_1_0_0_0 = (CrossReference)cValuedObjectAssignment_1_0_0.eContents().get(0);
+		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_1_0_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_1_0_0_0.eContents().get(1);
+		private final Keyword cEqualsSignKeyword_1_0_1 = (Keyword)cGroup_1_0.eContents().get(1);
+		private final Assignment cExpressionAssignment_1_0_2 = (Assignment)cGroup_1_0.eContents().get(2);
+		private final RuleCall cExpressionExpressionParserRuleCall_1_0_2_0 = (RuleCall)cExpressionAssignment_1_0_2.eContents().get(0);
+		private final Keyword cSemicolonKeyword_1_0_3 = (Keyword)cGroup_1_0.eContents().get(3);
+		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
+		private final Assignment cValuedObjectAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final CrossReference cValuedObjectValuedObjectCrossReference_1_1_0_0 = (CrossReference)cValuedObjectAssignment_1_1_0.eContents().get(0);
+		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_1_1_0_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_1_1_0_0.eContents().get(1);
+		private final Keyword cEqualsSignKeyword_1_1_1 = (Keyword)cGroup_1_1.eContents().get(1);
+		private final Group cGroup_1_1_2 = (Group)cGroup_1_1.eContents().get(2);
+		private final Assignment cNodeAssignment_1_1_2_0 = (Assignment)cGroup_1_1_2.eContents().get(0);
+		private final CrossReference cNodeNodeCrossReference_1_1_2_0_0 = (CrossReference)cNodeAssignment_1_1_2_0.eContents().get(0);
+		private final RuleCall cNodeNodeIDTerminalRuleCall_1_1_2_0_0_1 = (RuleCall)cNodeNodeCrossReference_1_1_2_0_0.eContents().get(1);
+		private final Keyword cFullStopKeyword_1_1_2_1 = (Keyword)cGroup_1_1_2.eContents().get(1);
+		private final Assignment cExpressionAssignment_1_1_3 = (Assignment)cGroup_1_1.eContents().get(3);
+		private final RuleCall cExpressionValuedObjectReferenceParserRuleCall_1_1_3_0 = (RuleCall)cExpressionAssignment_1_1_3.eContents().get(0);
+		private final Keyword cSemicolonKeyword_1_1_4 = (Keyword)cGroup_1_1.eContents().get(4);
+		
+		//Feature returns sccharts::DataflowFeature:
+		//	{sccharts::DataflowFeature} (valuedObject=[kexpressions::ValuedObject] //(valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += Expression) ';'
+		//	"=" expression=Expression ";" | valuedObject=[kexpressions::ValuedObject] //(valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += ValuedObjectReference) ';'
+		//	//(valuedObject = [kexpressions::ValuedObject]) '=' (expressions += ValuedObjectReference) ';'
+		//	//|
+		//	//node = [sccharts::Node|ID] ('.' valuedObject = [kexpressions::ValuedObject])?
+		//	//(valuedObjects += [kexpressions::ValuedObject]) '=' (node = [sccharts::Node|ID] '.')? (expressions += ValuedObjectReference) ';'
+		//	"=" (node=[sccharts::Node] ".")? expression=ValuedObjectReference ";");
+		public ParserRule getRule() { return rule; }
+
+		//{sccharts::DataflowFeature} (valuedObject=[kexpressions::ValuedObject] //(valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += Expression) ';'
+		//"=" expression=Expression ";" | valuedObject=[kexpressions::ValuedObject] //(valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += ValuedObjectReference) ';'
+		////(valuedObject = [kexpressions::ValuedObject]) '=' (expressions += ValuedObjectReference) ';'
+		////|
+		////node = [sccharts::Node|ID] ('.' valuedObject = [kexpressions::ValuedObject])?
+		////(valuedObjects += [kexpressions::ValuedObject]) '=' (node = [sccharts::Node|ID] '.')? (expressions += ValuedObjectReference) ';'
+		//"=" (node=[sccharts::Node] ".")? expression=ValuedObjectReference ";")
+		public Group getGroup() { return cGroup; }
+
+		//{sccharts::DataflowFeature}
+		public Action getDataflowFeatureAction_0() { return cDataflowFeatureAction_0; }
+
+		//valuedObject=[kexpressions::ValuedObject] //(valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += Expression) ';'
+		//"=" expression=Expression ";" | valuedObject=[kexpressions::ValuedObject] //(valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += ValuedObjectReference) ';'
+		////(valuedObject = [kexpressions::ValuedObject]) '=' (expressions += ValuedObjectReference) ';'
+		////|
+		////node = [sccharts::Node|ID] ('.' valuedObject = [kexpressions::ValuedObject])?
+		////(valuedObjects += [kexpressions::ValuedObject]) '=' (node = [sccharts::Node|ID] '.')? (expressions += ValuedObjectReference) ';'
+		//"=" (node=[sccharts::Node] ".")? expression=ValuedObjectReference ";"
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+
+		//valuedObject=[kexpressions::ValuedObject] //(valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += Expression) ';'
+		//"=" expression=Expression ";"
+		public Group getGroup_1_0() { return cGroup_1_0; }
+
+		//valuedObject=[kexpressions::ValuedObject]
+		public Assignment getValuedObjectAssignment_1_0_0() { return cValuedObjectAssignment_1_0_0; }
+
+		//[kexpressions::ValuedObject]
+		public CrossReference getValuedObjectValuedObjectCrossReference_1_0_0_0() { return cValuedObjectValuedObjectCrossReference_1_0_0_0; }
+
+		//ID
+		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_1_0_0_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_1_0_0_0_1; }
+
+		//"="
+		public Keyword getEqualsSignKeyword_1_0_1() { return cEqualsSignKeyword_1_0_1; }
+
+		//expression=Expression
+		public Assignment getExpressionAssignment_1_0_2() { return cExpressionAssignment_1_0_2; }
+
+		//Expression
+		public RuleCall getExpressionExpressionParserRuleCall_1_0_2_0() { return cExpressionExpressionParserRuleCall_1_0_2_0; }
+
+		//";"
+		public Keyword getSemicolonKeyword_1_0_3() { return cSemicolonKeyword_1_0_3; }
+
+		//valuedObject=[kexpressions::ValuedObject] //(valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += ValuedObjectReference) ';'
+		////(valuedObject = [kexpressions::ValuedObject]) '=' (expressions += ValuedObjectReference) ';'
+		////|
+		////node = [sccharts::Node|ID] ('.' valuedObject = [kexpressions::ValuedObject])?
+		////(valuedObjects += [kexpressions::ValuedObject]) '=' (node = [sccharts::Node|ID] '.')? (expressions += ValuedObjectReference) ';'
+		//"=" (node=[sccharts::Node] ".")? expression=ValuedObjectReference ";"
+		public Group getGroup_1_1() { return cGroup_1_1; }
+
+		//valuedObject=[kexpressions::ValuedObject]
+		public Assignment getValuedObjectAssignment_1_1_0() { return cValuedObjectAssignment_1_1_0; }
+
+		//[kexpressions::ValuedObject]
+		public CrossReference getValuedObjectValuedObjectCrossReference_1_1_0_0() { return cValuedObjectValuedObjectCrossReference_1_1_0_0; }
+
+		//ID
+		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_1_1_0_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_1_1_0_0_1; }
+
+		//"="
+		public Keyword getEqualsSignKeyword_1_1_1() { return cEqualsSignKeyword_1_1_1; }
+
+		//(node=[sccharts::Node] ".")?
+		public Group getGroup_1_1_2() { return cGroup_1_1_2; }
+
+		//node=[sccharts::Node]
+		public Assignment getNodeAssignment_1_1_2_0() { return cNodeAssignment_1_1_2_0; }
+
+		//[sccharts::Node]
+		public CrossReference getNodeNodeCrossReference_1_1_2_0_0() { return cNodeNodeCrossReference_1_1_2_0_0; }
+
+		//ID
+		public RuleCall getNodeNodeIDTerminalRuleCall_1_1_2_0_0_1() { return cNodeNodeIDTerminalRuleCall_1_1_2_0_0_1; }
+
+		//"."
+		public Keyword getFullStopKeyword_1_1_2_1() { return cFullStopKeyword_1_1_2_1; }
+
+		//expression=ValuedObjectReference
+		public Assignment getExpressionAssignment_1_1_3() { return cExpressionAssignment_1_1_3; }
+
+		//ValuedObjectReference
+		public RuleCall getExpressionValuedObjectReferenceParserRuleCall_1_1_3_0() { return cExpressionValuedObjectReferenceParserRuleCall_1_1_3_0; }
+
+		//";"
+		public Keyword getSemicolonKeyword_1_1_4() { return cSemicolonKeyword_1_1_4; }
 	}
 
 	public class SCChartElements extends AbstractParserRuleElementFinder {
@@ -489,36 +664,27 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_4_1_2 = (Keyword)cGroup_4_1.eContents().get(2);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		// SCChart returns
-		//sccharts::State:
+		//SCChart returns sccharts::State:
 		//	annotations+=Annotation* //    ('package' name = QualifiedName)?
-		// //    imports += ImportDecl*
-		// //    
-		// "scchart"
-		//	id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
-		//	bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion
-		//	//                (concurrencies+=SingleRegion)|
-		// //             	(concurrencies+=SingleDataflow)|
-		//
+		//	//    imports += ImportDecl*
+		//	//    
+		//	"scchart" id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
+		//	bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion //                (concurrencies+=SingleRegion)|
+		//	//             	(concurrencies+=SingleDataflow)|
 		//	//             	(concurrencies+=Concurrency)*
-		// //				(concurrencies+=SingleRegion)(concurrencies+=Region)*
-		// |
-		//	concurrencies+=SingleDataflow) concurrencies+=Concurrency*)?) "}")?;
+		//	//				(concurrencies+=SingleRegion)(concurrencies+=Region)*
+		//	| concurrencies+=SingleDataflow) concurrencies+=Concurrency*)?) "}")?;
 		public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* //    ('package' name = QualifiedName)?
-		// //    imports += ImportDecl*
-		// //    
-		// "scchart" id=ID
-		//label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding ("," bindings+=Binding)*)? |
-		//"{" ((declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion
-		////                (concurrencies+=SingleRegion)|
-		// //             	(concurrencies+=SingleDataflow)|
-		//
+		////    imports += ImportDecl*
+		////    
+		//"scchart" id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
+		//bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion //                (concurrencies+=SingleRegion)|
+		////             	(concurrencies+=SingleDataflow)|
 		////             	(concurrencies+=Concurrency)*
-		// //				(concurrencies+=SingleRegion)(concurrencies+=Region)*
-		// |
-		//concurrencies+=SingleDataflow) concurrencies+=Concurrency*)?) "}")?
+		////				(concurrencies+=SingleRegion)(concurrencies+=Region)*
+		//| concurrencies+=SingleDataflow) concurrencies+=Concurrency*)?) "}")?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -543,14 +709,11 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getLabelSTRINGTerminalRuleCall_3_0() { return cLabelSTRINGTerminalRuleCall_3_0; }
 
 		//("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding ("," bindings+=Binding)*)? | "{"
-		//((declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion
-		////                (concurrencies+=SingleRegion)|
-		// //             	(concurrencies+=SingleDataflow)|
-		//
+		//((declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion //                (concurrencies+=SingleRegion)|
+		////             	(concurrencies+=SingleDataflow)|
 		////             	(concurrencies+=Concurrency)*
-		// //				(concurrencies+=SingleRegion)(concurrencies+=Region)*
-		// |
-		//concurrencies+=SingleDataflow) concurrencies+=Concurrency*)?) "}")?
+		////				(concurrencies+=SingleRegion)(concurrencies+=Region)*
+		//| concurrencies+=SingleDataflow) concurrencies+=Concurrency*)?) "}")?
 		public Alternatives getAlternatives_4() { return cAlternatives_4; }
 
 		//"references" referencedScope=[sccharts::State] ("bind" bindings+=Binding ("," bindings+=Binding)*)?
@@ -592,27 +755,21 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//Binding
 		public RuleCall getBindingsBindingParserRuleCall_4_0_2_2_1_0() { return cBindingsBindingParserRuleCall_4_0_2_2_1_0; }
 
-		//"{" ((declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion
-		////                (concurrencies+=SingleRegion)|
-		// //             	(concurrencies+=SingleDataflow)|
-		//
+		//"{" ((declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion //                (concurrencies+=SingleRegion)|
+		////             	(concurrencies+=SingleDataflow)|
 		////             	(concurrencies+=Concurrency)*
-		// //				(concurrencies+=SingleRegion)(concurrencies+=Region)*
-		// |
-		//concurrencies+=SingleDataflow) concurrencies+=Concurrency*)?) "}"
+		////				(concurrencies+=SingleRegion)(concurrencies+=Region)*
+		//| concurrencies+=SingleDataflow) concurrencies+=Concurrency*)?) "}"
 		public Group getGroup_4_1() { return cGroup_4_1; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_4_1_0() { return cLeftCurlyBracketKeyword_4_1_0; }
 
-		//(declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion
-		////                (concurrencies+=SingleRegion)|
-		// //             	(concurrencies+=SingleDataflow)|
-		//
+		//(declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion //                (concurrencies+=SingleRegion)|
+		////             	(concurrencies+=SingleDataflow)|
 		////             	(concurrencies+=Concurrency)*
-		// //				(concurrencies+=SingleRegion)(concurrencies+=Region)*
-		// |
-		//concurrencies+=SingleDataflow) concurrencies+=Concurrency*)?
+		////				(concurrencies+=SingleRegion)(concurrencies+=Region)*
+		//| concurrencies+=SingleDataflow) concurrencies+=Concurrency*)?
 		public Group getGroup_4_1_1() { return cGroup_4_1_1; }
 
 		//(declarations+=Declaration | localActions+=LocalAction)*
@@ -631,22 +788,17 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getLocalActionsLocalActionParserRuleCall_4_1_1_0_1_0() { return cLocalActionsLocalActionParserRuleCall_4_1_1_0_1_0; }
 
 		//((concurrencies+=SingleRegion //                (concurrencies+=SingleRegion)|
-		//
 		////             	(concurrencies+=SingleDataflow)|
-		// //             	(concurrencies+=Concurrency)*
-		//
+		////             	(concurrencies+=Concurrency)*
 		////				(concurrencies+=SingleRegion)(concurrencies+=Region)*
-		// | concurrencies+=SingleDataflow)
-		//concurrencies+=Concurrency*)?
+		//| concurrencies+=SingleDataflow) concurrencies+=Concurrency*)?
 		public Group getGroup_4_1_1_1() { return cGroup_4_1_1_1; }
 
 		//concurrencies+=SingleRegion //                (concurrencies+=SingleRegion)|
-		//
 		////             	(concurrencies+=SingleDataflow)|
-		// //             	(concurrencies+=Concurrency)*
-		//
+		////             	(concurrencies+=Concurrency)*
 		////				(concurrencies+=SingleRegion)(concurrencies+=Region)*
-		// | concurrencies+=SingleDataflow
+		//| concurrencies+=SingleDataflow
 		public Alternatives getAlternatives_4_1_1_1_0() { return cAlternatives_4_1_1_1_0; }
 
 		//concurrencies+=SingleRegion
@@ -842,30 +994,23 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		// State returns
-		//sccharts::State:
+		//State returns sccharts::State:
 		//	annotations+=Annotation* (initial?="initial" final?="final"? | final?="final" initial?="initial"?)? type=StateType?
 		//	"state" id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
-		//	bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion
-		//	//                (concurrencies+=SingleRegion)|
-		// //             	(concurrencies+=SingleDataflow)|
-		//
+		//	bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion //                (concurrencies+=SingleRegion)|
+		//	//             	(concurrencies+=SingleDataflow)|
 		//	//             	(concurrencies+=Concurrency)*
-		// | concurrencies+=SingleDataflow) concurrencies+=Concurrency*)) "}")?
-		//	// The semicolon is mandatory for backtracking!
-		// outgoingTransitions+=Transition* ";";
+		//	| concurrencies+=SingleDataflow) concurrencies+=Concurrency*)) "}")? // The semicolon is mandatory for backtracking!
+		//	outgoingTransitions+=Transition* ";";
 		public ParserRule getRule() { return rule; }
 
 		//annotations+=Annotation* (initial?="initial" final?="final"? | final?="final" initial?="initial"?)? type=StateType?
 		//"state" id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
-		//bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion
-		////                (concurrencies+=SingleRegion)|
-		// //             	(concurrencies+=SingleDataflow)|
-		//
+		//bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion //                (concurrencies+=SingleRegion)|
+		////             	(concurrencies+=SingleDataflow)|
 		////             	(concurrencies+=Concurrency)*
-		// | concurrencies+=SingleDataflow) concurrencies+=Concurrency*)) "}")?
-		//// The semicolon is mandatory for backtracking!
-		// outgoingTransitions+=Transition* ";"
+		//| concurrencies+=SingleDataflow) concurrencies+=Concurrency*)) "}")? // The semicolon is mandatory for backtracking!
+		//outgoingTransitions+=Transition* ";"
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -929,12 +1074,10 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getLabelSTRINGTerminalRuleCall_5_0() { return cLabelSTRINGTerminalRuleCall_5_0; }
 
 		//("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding ("," bindings+=Binding)*)? | "{"
-		//((declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion
-		////                (concurrencies+=SingleRegion)|
-		// //             	(concurrencies+=SingleDataflow)|
-		//
+		//((declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion //                (concurrencies+=SingleRegion)|
+		////             	(concurrencies+=SingleDataflow)|
 		////             	(concurrencies+=Concurrency)*
-		// | concurrencies+=SingleDataflow) concurrencies+=Concurrency*)) "}")?
+		//| concurrencies+=SingleDataflow) concurrencies+=Concurrency*)) "}")?
 		public Alternatives getAlternatives_6() { return cAlternatives_6; }
 
 		//"references" referencedScope=[sccharts::State] ("bind" bindings+=Binding ("," bindings+=Binding)*)?
@@ -976,23 +1119,19 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//Binding
 		public RuleCall getBindingsBindingParserRuleCall_6_0_2_2_1_0() { return cBindingsBindingParserRuleCall_6_0_2_2_1_0; }
 
-		//"{" ((declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion
-		////                (concurrencies+=SingleRegion)|
-		// //             	(concurrencies+=SingleDataflow)|
-		//
+		//"{" ((declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion //                (concurrencies+=SingleRegion)|
+		////             	(concurrencies+=SingleDataflow)|
 		////             	(concurrencies+=Concurrency)*
-		// | concurrencies+=SingleDataflow) concurrencies+=Concurrency*)) "}"
+		//| concurrencies+=SingleDataflow) concurrencies+=Concurrency*)) "}"
 		public Group getGroup_6_1() { return cGroup_6_1; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_6_1_0() { return cLeftCurlyBracketKeyword_6_1_0; }
 
-		//(declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion
-		////                (concurrencies+=SingleRegion)|
-		// //             	(concurrencies+=SingleDataflow)|
-		//
+		//(declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion //                (concurrencies+=SingleRegion)|
+		////             	(concurrencies+=SingleDataflow)|
 		////             	(concurrencies+=Concurrency)*
-		// | concurrencies+=SingleDataflow) concurrencies+=Concurrency*)
+		//| concurrencies+=SingleDataflow) concurrencies+=Concurrency*)
 		public Group getGroup_6_1_1() { return cGroup_6_1_1; }
 
 		//(declarations+=Declaration | localActions+=LocalAction)*
@@ -1011,19 +1150,15 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getLocalActionsLocalActionParserRuleCall_6_1_1_0_1_0() { return cLocalActionsLocalActionParserRuleCall_6_1_1_0_1_0; }
 
 		//(concurrencies+=SingleRegion //                (concurrencies+=SingleRegion)|
-		//
 		////             	(concurrencies+=SingleDataflow)|
-		// //             	(concurrencies+=Concurrency)*
-		// |
-		//concurrencies+=SingleDataflow) concurrencies+=Concurrency*
+		////             	(concurrencies+=Concurrency)*
+		//| concurrencies+=SingleDataflow) concurrencies+=Concurrency*
 		public Group getGroup_6_1_1_1() { return cGroup_6_1_1_1; }
 
 		//concurrencies+=SingleRegion //                (concurrencies+=SingleRegion)|
-		//
 		////             	(concurrencies+=SingleDataflow)|
-		// //             	(concurrencies+=Concurrency)*
-		// |
-		//concurrencies+=SingleDataflow
+		////             	(concurrencies+=Concurrency)*
+		//| concurrencies+=SingleDataflow
 		public Alternatives getAlternatives_6_1_1_1_0() { return cAlternatives_6_1_1_1_0; }
 
 		//concurrencies+=SingleRegion
@@ -1063,12 +1198,17 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cInputNodeParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cOutputNodeParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cReferencedNodeParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cTestReferenceNodeParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cCallNodeParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cDefineNodeParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		
 		//Node returns sccharts::Node:
-		//	InputNode | OutputNode | ReferencedNode;
+		//	InputNode | OutputNode | ReferencedNode | TestReferenceNode | CallNode | //| Out
+		//	DefineNode;
 		public ParserRule getRule() { return rule; }
 
-		//InputNode | OutputNode | ReferencedNode
+		//InputNode | OutputNode | ReferencedNode | TestReferenceNode | CallNode | //| Out
+		//DefineNode
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//InputNode
@@ -1079,6 +1219,248 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ReferencedNode
 		public RuleCall getReferencedNodeParserRuleCall_2() { return cReferencedNodeParserRuleCall_2; }
+
+		//TestReferenceNode
+		public RuleCall getTestReferenceNodeParserRuleCall_3() { return cTestReferenceNodeParserRuleCall_3; }
+
+		//CallNode
+		public RuleCall getCallNodeParserRuleCall_4() { return cCallNodeParserRuleCall_4; }
+
+		////| Out
+		//DefineNode
+		public RuleCall getDefineNodeParserRuleCall_5() { return cDefineNodeParserRuleCall_5; }
+	}
+
+	public class CallNodeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "CallNode");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cCallNodeAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cIdAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cIdIDTerminalRuleCall_1_0 = (RuleCall)cIdAssignment_1.eContents().get(0);
+		private final Keyword cEqualsSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cCallReferenceAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final CrossReference cCallReferenceDefineNodeCrossReference_3_0 = (CrossReference)cCallReferenceAssignment_3.eContents().get(0);
+		private final RuleCall cCallReferenceDefineNodeIDTerminalRuleCall_3_0_1 = (RuleCall)cCallReferenceDefineNodeCrossReference_3_0.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cParametersAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cParametersExpressionParserRuleCall_5_0 = (RuleCall)cParametersAssignment_5.eContents().get(0);
+		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
+		private final Keyword cCommaKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Assignment cParametersAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final RuleCall cParametersExpressionParserRuleCall_6_1_0 = (RuleCall)cParametersAssignment_6_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_7 = (Keyword)cGroup.eContents().get(7);
+		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
+		
+		//CallNode returns sccharts::CallNode:
+		//	{sccharts::CallNode} id=ID "=" callReference=[sccharts::DefineNode] //    (( 
+		//	//        callReference = [sccharts::DefineNode|ID]
+		//	//        
+		//	//        )?
+		//	//    |
+		//	//        (
+		//	//        referencedScope = [sccharts::State|ID]
+		//	//        )?
+		//	//    )
+		//	"(" parameters+=Expression? ("," parameters+=Expression)* ")" //'(' (parameters+=Para)* ')'
+		//	";";
+		public ParserRule getRule() { return rule; }
+
+		//{sccharts::CallNode} id=ID "=" callReference=[sccharts::DefineNode] //    (( 
+		////        callReference = [sccharts::DefineNode|ID]
+		////        
+		////        )?
+		////    |
+		////        (
+		////        referencedScope = [sccharts::State|ID]
+		////        )?
+		////    )
+		//"(" parameters+=Expression? ("," parameters+=Expression)* ")" //'(' (parameters+=Para)* ')'
+		//";"
+		public Group getGroup() { return cGroup; }
+
+		//{sccharts::CallNode}
+		public Action getCallNodeAction_0() { return cCallNodeAction_0; }
+
+		//id=ID
+		public Assignment getIdAssignment_1() { return cIdAssignment_1; }
+
+		//ID
+		public RuleCall getIdIDTerminalRuleCall_1_0() { return cIdIDTerminalRuleCall_1_0; }
+
+		//"="
+		public Keyword getEqualsSignKeyword_2() { return cEqualsSignKeyword_2; }
+
+		//callReference=[sccharts::DefineNode]
+		public Assignment getCallReferenceAssignment_3() { return cCallReferenceAssignment_3; }
+
+		//[sccharts::DefineNode]
+		public CrossReference getCallReferenceDefineNodeCrossReference_3_0() { return cCallReferenceDefineNodeCrossReference_3_0; }
+
+		//ID
+		public RuleCall getCallReferenceDefineNodeIDTerminalRuleCall_3_0_1() { return cCallReferenceDefineNodeIDTerminalRuleCall_3_0_1; }
+
+		////    (( 
+		////        callReference = [sccharts::DefineNode|ID]
+		////        
+		////        )?
+		////    |
+		////        (
+		////        referencedScope = [sccharts::State|ID]
+		////        )?
+		////    )
+		//"("
+		public Keyword getLeftParenthesisKeyword_4() { return cLeftParenthesisKeyword_4; }
+
+		//parameters+=Expression?
+		public Assignment getParametersAssignment_5() { return cParametersAssignment_5; }
+
+		//Expression
+		public RuleCall getParametersExpressionParserRuleCall_5_0() { return cParametersExpressionParserRuleCall_5_0; }
+
+		//("," parameters+=Expression)*
+		public Group getGroup_6() { return cGroup_6; }
+
+		//","
+		public Keyword getCommaKeyword_6_0() { return cCommaKeyword_6_0; }
+
+		//parameters+=Expression
+		public Assignment getParametersAssignment_6_1() { return cParametersAssignment_6_1; }
+
+		//Expression
+		public RuleCall getParametersExpressionParserRuleCall_6_1_0() { return cParametersExpressionParserRuleCall_6_1_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_7() { return cRightParenthesisKeyword_7; }
+
+		////'(' (parameters+=Para)* ')'
+		//";"
+		public Keyword getSemicolonKeyword_8() { return cSemicolonKeyword_8; }
+	}
+
+	public class DefineNodeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DefineNode");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cDefineNodeAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cNodeKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cIdAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cIdIDTerminalRuleCall_2_0 = (RuleCall)cIdAssignment_2.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cInputsAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cInputsDeclarationParserRuleCall_4_0 = (RuleCall)cInputsAssignment_4.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Keyword cReturnsKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		private final Keyword cLeftParenthesisKeyword_7 = (Keyword)cGroup.eContents().get(7);
+		private final Assignment cOutputsAssignment_8 = (Assignment)cGroup.eContents().get(8);
+		private final RuleCall cOutputsDeclarationParserRuleCall_8_0 = (RuleCall)cOutputsAssignment_8.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_9 = (Keyword)cGroup.eContents().get(9);
+		private final Keyword cLeftCurlyBracketKeyword_10 = (Keyword)cGroup.eContents().get(10);
+		private final Group cGroup_11 = (Group)cGroup.eContents().get(11);
+		private final Assignment cValuedObjectsAssignment_11_0 = (Assignment)cGroup_11.eContents().get(0);
+		private final CrossReference cValuedObjectsValuedObjectCrossReference_11_0_0 = (CrossReference)cValuedObjectsAssignment_11_0.eContents().get(0);
+		private final RuleCall cValuedObjectsValuedObjectIDTerminalRuleCall_11_0_0_1 = (RuleCall)cValuedObjectsValuedObjectCrossReference_11_0_0.eContents().get(1);
+		private final Keyword cEqualsSignKeyword_11_1 = (Keyword)cGroup_11.eContents().get(1);
+		private final Assignment cExpressionsAssignment_11_2 = (Assignment)cGroup_11.eContents().get(2);
+		private final RuleCall cExpressionsExpressionParserRuleCall_11_2_0 = (RuleCall)cExpressionsAssignment_11_2.eContents().get(0);
+		private final Keyword cSemicolonKeyword_11_3 = (Keyword)cGroup_11.eContents().get(3);
+		private final Assignment cStatesAssignment_12 = (Assignment)cGroup.eContents().get(12);
+		private final RuleCall cStatesStateParserRuleCall_12_0 = (RuleCall)cStatesAssignment_12.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_13 = (Keyword)cGroup.eContents().get(13);
+		
+		////Para returns sccharts::Param:
+		////    ParaExpr | ParaRef
+		////;
+		////ParaExpr returns sccharts::Param:
+		////    expression = Expression
+		////;
+		////ParaRef returns sccharts::Param:
+		////    //expression = ValuedObjectReference
+		////    paraRef = [sccharts::Node|ID]
+		////;
+		//DefineNode returns sccharts::DefineNode:
+		//	{sccharts::DefineNode} "node" id=ID "(" inputs+=Declaration* ")" "returns" "(" outputs+=Declaration* ")" "{"
+		//	(valuedObjects+=[kexpressions::ValuedObject] "=" expressions+=Expression ";")* // keep that?
+		//	states+=State* "}";
+		public ParserRule getRule() { return rule; }
+
+		//{sccharts::DefineNode} "node" id=ID "(" inputs+=Declaration* ")" "returns" "(" outputs+=Declaration* ")" "{"
+		//(valuedObjects+=[kexpressions::ValuedObject] "=" expressions+=Expression ";")* // keep that?
+		//states+=State* "}"
+		public Group getGroup() { return cGroup; }
+
+		//{sccharts::DefineNode}
+		public Action getDefineNodeAction_0() { return cDefineNodeAction_0; }
+
+		//"node"
+		public Keyword getNodeKeyword_1() { return cNodeKeyword_1; }
+
+		//id=ID
+		public Assignment getIdAssignment_2() { return cIdAssignment_2; }
+
+		//ID
+		public RuleCall getIdIDTerminalRuleCall_2_0() { return cIdIDTerminalRuleCall_2_0; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_3() { return cLeftParenthesisKeyword_3; }
+
+		//inputs+=Declaration*
+		public Assignment getInputsAssignment_4() { return cInputsAssignment_4; }
+
+		//Declaration
+		public RuleCall getInputsDeclarationParserRuleCall_4_0() { return cInputsDeclarationParserRuleCall_4_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_5() { return cRightParenthesisKeyword_5; }
+
+		//"returns"
+		public Keyword getReturnsKeyword_6() { return cReturnsKeyword_6; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_7() { return cLeftParenthesisKeyword_7; }
+
+		//outputs+=Declaration*
+		public Assignment getOutputsAssignment_8() { return cOutputsAssignment_8; }
+
+		//Declaration
+		public RuleCall getOutputsDeclarationParserRuleCall_8_0() { return cOutputsDeclarationParserRuleCall_8_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_9() { return cRightParenthesisKeyword_9; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_10() { return cLeftCurlyBracketKeyword_10; }
+
+		//(valuedObjects+=[kexpressions::ValuedObject] "=" expressions+=Expression ";")*
+		public Group getGroup_11() { return cGroup_11; }
+
+		//valuedObjects+=[kexpressions::ValuedObject]
+		public Assignment getValuedObjectsAssignment_11_0() { return cValuedObjectsAssignment_11_0; }
+
+		//[kexpressions::ValuedObject]
+		public CrossReference getValuedObjectsValuedObjectCrossReference_11_0_0() { return cValuedObjectsValuedObjectCrossReference_11_0_0; }
+
+		//ID
+		public RuleCall getValuedObjectsValuedObjectIDTerminalRuleCall_11_0_0_1() { return cValuedObjectsValuedObjectIDTerminalRuleCall_11_0_0_1; }
+
+		//"="
+		public Keyword getEqualsSignKeyword_11_1() { return cEqualsSignKeyword_11_1; }
+
+		//expressions+=Expression
+		public Assignment getExpressionsAssignment_11_2() { return cExpressionsAssignment_11_2; }
+
+		//Expression
+		public RuleCall getExpressionsExpressionParserRuleCall_11_2_0() { return cExpressionsExpressionParserRuleCall_11_2_0; }
+
+		//";"
+		public Keyword getSemicolonKeyword_11_3() { return cSemicolonKeyword_11_3; }
+
+		//states+=State*
+		public Assignment getStatesAssignment_12() { return cStatesAssignment_12; }
+
+		//State
+		public RuleCall getStatesStateParserRuleCall_12_0() { return cStatesStateParserRuleCall_12_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_13() { return cRightCurlyBracketKeyword_13; }
 	}
 
 	public class InputNodeElements extends AbstractParserRuleElementFinder {
@@ -1151,13 +1533,17 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValuedObjectAssignment_6 = (Assignment)cGroup.eContents().get(6);
 		private final CrossReference cValuedObjectValuedObjectCrossReference_6_0 = (CrossReference)cValuedObjectAssignment_6.eContents().get(0);
 		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_6_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_6_0.eContents().get(1);
-		private final Keyword cSemicolonKeyword_7 = (Keyword)cGroup.eContents().get(7);
+		private final Assignment cTestReceiversAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final RuleCall cTestReceiversReceiverOutputParserRuleCall_7_0 = (RuleCall)cTestReceiversAssignment_7.eContents().get(0);
+		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
 		//OutputNode returns sccharts::OutputNode:
-		//	{sccharts::OutputNode} "node" id=ID label=STRING? "output" ":" valuedObject=[kexpressions::ValuedObject] ";";
+		//	{sccharts::OutputNode} "node" id=ID label=STRING? "output" ":" valuedObject=[kexpressions::ValuedObject]
+		//	testReceivers+=ReceiverOutput? ";";
 		public ParserRule getRule() { return rule; }
 
-		//{sccharts::OutputNode} "node" id=ID label=STRING? "output" ":" valuedObject=[kexpressions::ValuedObject] ";"
+		//{sccharts::OutputNode} "node" id=ID label=STRING? "output" ":" valuedObject=[kexpressions::ValuedObject]
+		//testReceivers+=ReceiverOutput? ";"
 		public Group getGroup() { return cGroup; }
 
 		//{sccharts::OutputNode}
@@ -1193,8 +1579,14 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_6_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_6_0_1; }
 
+		//testReceivers+=ReceiverOutput?
+		public Assignment getTestReceiversAssignment_7() { return cTestReceiversAssignment_7; }
+
+		//ReceiverOutput
+		public RuleCall getTestReceiversReceiverOutputParserRuleCall_7_0() { return cTestReceiversReceiverOutputParserRuleCall_7_0; }
+
 		//";"
-		public Keyword getSemicolonKeyword_7() { return cSemicolonKeyword_7; }
+		public Keyword getSemicolonKeyword_8() { return cSemicolonKeyword_8; }
 	}
 
 	public class ReferencedNodeElements extends AbstractParserRuleElementFinder {
@@ -1259,6 +1651,252 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 		//";"
 		public Keyword getSemicolonKeyword_7() { return cSemicolonKeyword_7; }
+	}
+
+	public class TestReferenceNodeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TestReferenceNode");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cTestReferenceNodeAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cIdAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cIdIDTerminalRuleCall_1_0 = (RuleCall)cIdAssignment_1.eContents().get(0);
+		private final Assignment cLabelAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cLabelSTRINGTerminalRuleCall_2_0 = (RuleCall)cLabelAssignment_2.eContents().get(0);
+		private final Keyword cEqualsSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Keyword cRefKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cReferencedScopeAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final CrossReference cReferencedScopeStateCrossReference_5_0 = (CrossReference)cReferencedScopeAssignment_5.eContents().get(0);
+		private final RuleCall cReferencedScopeStateIDTerminalRuleCall_5_0_1 = (RuleCall)cReferencedScopeStateCrossReference_5_0.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		private final Assignment cParametersAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final RuleCall cParametersExpressionParserRuleCall_7_0 = (RuleCall)cParametersAssignment_7.eContents().get(0);
+		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
+		private final Keyword cCommaKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
+		private final Assignment cParametersAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
+		private final RuleCall cParametersExpressionParserRuleCall_8_1_0 = (RuleCall)cParametersAssignment_8_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_9 = (Keyword)cGroup.eContents().get(9);
+		private final Keyword cSemicolonKeyword_10 = (Keyword)cGroup.eContents().get(10);
+		
+		/// *
+		// * alte (erste) Testreferenz, mit umgedrehter Notation
+		// * / //TestReferenceNode returns sccharts::TestReferenceNode:
+		////    {sccharts::TestReferenceNode}
+		////    'node' (id=ID) (label=STRING)? 'testRef' ':'
+		////    referencedScope = [sccharts::State|ID]
+		////    '(' (testReceivers += ReceiverTest)* ')'
+		////    ';'
+		////;
+		//TestReferenceNode returns sccharts::TestReferenceNode:
+		//	{sccharts::TestReferenceNode} id=ID label=STRING? "=" "ref" referencedScope=[sccharts::State] "("
+		//	parameters+=Expression? ("," parameters+=Expression)* ")" ";";
+		public ParserRule getRule() { return rule; }
+
+		//{sccharts::TestReferenceNode} id=ID label=STRING? "=" "ref" referencedScope=[sccharts::State] "("
+		//parameters+=Expression? ("," parameters+=Expression)* ")" ";"
+		public Group getGroup() { return cGroup; }
+
+		//{sccharts::TestReferenceNode}
+		public Action getTestReferenceNodeAction_0() { return cTestReferenceNodeAction_0; }
+
+		//id=ID
+		public Assignment getIdAssignment_1() { return cIdAssignment_1; }
+
+		//ID
+		public RuleCall getIdIDTerminalRuleCall_1_0() { return cIdIDTerminalRuleCall_1_0; }
+
+		//label=STRING?
+		public Assignment getLabelAssignment_2() { return cLabelAssignment_2; }
+
+		//STRING
+		public RuleCall getLabelSTRINGTerminalRuleCall_2_0() { return cLabelSTRINGTerminalRuleCall_2_0; }
+
+		//"="
+		public Keyword getEqualsSignKeyword_3() { return cEqualsSignKeyword_3; }
+
+		//"ref"
+		public Keyword getRefKeyword_4() { return cRefKeyword_4; }
+
+		//referencedScope=[sccharts::State]
+		public Assignment getReferencedScopeAssignment_5() { return cReferencedScopeAssignment_5; }
+
+		//[sccharts::State]
+		public CrossReference getReferencedScopeStateCrossReference_5_0() { return cReferencedScopeStateCrossReference_5_0; }
+
+		//ID
+		public RuleCall getReferencedScopeStateIDTerminalRuleCall_5_0_1() { return cReferencedScopeStateIDTerminalRuleCall_5_0_1; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_6() { return cLeftParenthesisKeyword_6; }
+
+		//parameters+=Expression?
+		public Assignment getParametersAssignment_7() { return cParametersAssignment_7; }
+
+		//Expression
+		public RuleCall getParametersExpressionParserRuleCall_7_0() { return cParametersExpressionParserRuleCall_7_0; }
+
+		//("," parameters+=Expression)*
+		public Group getGroup_8() { return cGroup_8; }
+
+		//","
+		public Keyword getCommaKeyword_8_0() { return cCommaKeyword_8_0; }
+
+		//parameters+=Expression
+		public Assignment getParametersAssignment_8_1() { return cParametersAssignment_8_1; }
+
+		//Expression
+		public RuleCall getParametersExpressionParserRuleCall_8_1_0() { return cParametersExpressionParserRuleCall_8_1_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_9() { return cRightParenthesisKeyword_9; }
+
+		//";"
+		public Keyword getSemicolonKeyword_10() { return cSemicolonKeyword_10; }
+	}
+
+	public class ReceiverOutputElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ReceiverOutput");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cTestReceiverAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cColonKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cNodeAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final CrossReference cNodeNodeCrossReference_2_0 = (CrossReference)cNodeAssignment_2.eContents().get(0);
+		private final RuleCall cNodeNodeIDTerminalRuleCall_2_0_1 = (RuleCall)cNodeNodeCrossReference_2_0.eContents().get(1);
+		private final Keyword cEqualsSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cSenderAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final CrossReference cSenderNodeCrossReference_4_0 = (CrossReference)cSenderAssignment_4.eContents().get(0);
+		private final RuleCall cSenderNodeIDTerminalRuleCall_4_0_1 = (RuleCall)cSenderNodeCrossReference_4_0.eContents().get(1);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cFullStopKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cValuedObjectAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final CrossReference cValuedObjectValuedObjectCrossReference_5_1_0 = (CrossReference)cValuedObjectAssignment_5_1.eContents().get(0);
+		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_5_1_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_5_1_0.eContents().get(1);
+		
+		////Out returns sccharts::OutputNode:
+		////    {sccharts::OutputNode}
+		////    //valuedObject = [kexpressions::ValuedObject]
+		////    testReceivers+=ReceiverOutput2
+		////;
+		//ReceiverOutput returns sccharts::TestReceiver:
+		//	{sccharts::TestReceiver} ":" node=[sccharts::Node] "=" sender=[sccharts::Node] ("."
+		//	valuedObject=[kexpressions::ValuedObject])?;
+		public ParserRule getRule() { return rule; }
+
+		//{sccharts::TestReceiver} ":" node=[sccharts::Node] "=" sender=[sccharts::Node] ("."
+		//valuedObject=[kexpressions::ValuedObject])?
+		public Group getGroup() { return cGroup; }
+
+		//{sccharts::TestReceiver}
+		public Action getTestReceiverAction_0() { return cTestReceiverAction_0; }
+
+		//":"
+		public Keyword getColonKeyword_1() { return cColonKeyword_1; }
+
+		//node=[sccharts::Node]
+		public Assignment getNodeAssignment_2() { return cNodeAssignment_2; }
+
+		//[sccharts::Node]
+		public CrossReference getNodeNodeCrossReference_2_0() { return cNodeNodeCrossReference_2_0; }
+
+		//ID
+		public RuleCall getNodeNodeIDTerminalRuleCall_2_0_1() { return cNodeNodeIDTerminalRuleCall_2_0_1; }
+
+		//"="
+		public Keyword getEqualsSignKeyword_3() { return cEqualsSignKeyword_3; }
+
+		//sender=[sccharts::Node]
+		public Assignment getSenderAssignment_4() { return cSenderAssignment_4; }
+
+		//[sccharts::Node]
+		public CrossReference getSenderNodeCrossReference_4_0() { return cSenderNodeCrossReference_4_0; }
+
+		//ID
+		public RuleCall getSenderNodeIDTerminalRuleCall_4_0_1() { return cSenderNodeIDTerminalRuleCall_4_0_1; }
+
+		//("." valuedObject=[kexpressions::ValuedObject])?
+		public Group getGroup_5() { return cGroup_5; }
+
+		//"."
+		public Keyword getFullStopKeyword_5_0() { return cFullStopKeyword_5_0; }
+
+		//valuedObject=[kexpressions::ValuedObject]
+		public Assignment getValuedObjectAssignment_5_1() { return cValuedObjectAssignment_5_1; }
+
+		//[kexpressions::ValuedObject]
+		public CrossReference getValuedObjectValuedObjectCrossReference_5_1_0() { return cValuedObjectValuedObjectCrossReference_5_1_0; }
+
+		//ID
+		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_5_1_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_5_1_0_1; }
+	}
+
+	public class ReceiverTestElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ReceiverTest");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cTestReceiverAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cNodeAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cNodeNodeCrossReference_1_0 = (CrossReference)cNodeAssignment_1.eContents().get(0);
+		private final RuleCall cNodeNodeIDTerminalRuleCall_1_0_1 = (RuleCall)cNodeNodeCrossReference_1_0.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cFullStopKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cValuedObjectAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final CrossReference cValuedObjectValuedObjectCrossReference_2_1_0 = (CrossReference)cValuedObjectAssignment_2_1.eContents().get(0);
+		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_2_1_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_2_1_0.eContents().get(1);
+		private final Keyword cEqualsSignKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cSenderAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final CrossReference cSenderNodeCrossReference_4_0 = (CrossReference)cSenderAssignment_4.eContents().get(0);
+		private final RuleCall cSenderNodeIDTerminalRuleCall_4_0_1 = (RuleCall)cSenderNodeCrossReference_4_0.eContents().get(1);
+		
+		////ReceiverOutput2 returns sccharts::TestReceiver:
+		////    {sccharts::TestReceiver}
+		////    //node = [sccharts::Node|ID]
+		////    outputValue = [kexpressions::ValuedObject]
+		////    '=' sender = [sccharts::Node|ID] ('.' valuedObject = [kexpressions::ValuedObject])?
+		////;
+		//ReceiverTest returns sccharts::TestReceiver:
+		//	{sccharts::TestReceiver} node=[sccharts::Node] ("." valuedObject=[kexpressions::ValuedObject])? "="
+		//	sender=[sccharts::Node];
+		public ParserRule getRule() { return rule; }
+
+		//{sccharts::TestReceiver} node=[sccharts::Node] ("." valuedObject=[kexpressions::ValuedObject])? "="
+		//sender=[sccharts::Node]
+		public Group getGroup() { return cGroup; }
+
+		//{sccharts::TestReceiver}
+		public Action getTestReceiverAction_0() { return cTestReceiverAction_0; }
+
+		//node=[sccharts::Node]
+		public Assignment getNodeAssignment_1() { return cNodeAssignment_1; }
+
+		//[sccharts::Node]
+		public CrossReference getNodeNodeCrossReference_1_0() { return cNodeNodeCrossReference_1_0; }
+
+		//ID
+		public RuleCall getNodeNodeIDTerminalRuleCall_1_0_1() { return cNodeNodeIDTerminalRuleCall_1_0_1; }
+
+		//("." valuedObject=[kexpressions::ValuedObject])?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//"."
+		public Keyword getFullStopKeyword_2_0() { return cFullStopKeyword_2_0; }
+
+		//valuedObject=[kexpressions::ValuedObject]
+		public Assignment getValuedObjectAssignment_2_1() { return cValuedObjectAssignment_2_1; }
+
+		//[kexpressions::ValuedObject]
+		public CrossReference getValuedObjectValuedObjectCrossReference_2_1_0() { return cValuedObjectValuedObjectCrossReference_2_1_0; }
+
+		//ID
+		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_2_1_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_2_1_0_1; }
+
+		//"="
+		public Keyword getEqualsSignKeyword_3() { return cEqualsSignKeyword_3; }
+
+		//sender=[sccharts::Node]
+		public Assignment getSenderAssignment_4() { return cSenderAssignment_4; }
+
+		//[sccharts::Node]
+		public CrossReference getSenderNodeCrossReference_4_0() { return cSenderNodeCrossReference_4_0; }
+
+		//ID
+		public RuleCall getSenderNodeIDTerminalRuleCall_4_0_1() { return cSenderNodeIDTerminalRuleCall_4_0_1; }
 	}
 
 	public class SenderInputElements extends AbstractParserRuleElementFinder {
@@ -1398,8 +2036,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSuspendActionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		// LocalAction
-		//returns sccharts::LocalAction:
+		//LocalAction returns sccharts::LocalAction:
 		//	EntryAction | DuringAction | ExitAction | SuspendAction;
 		public ParserRule getRule() { return rule; }
 
@@ -1465,20 +2102,15 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLabelSTRINGTerminalRuleCall_3_3_1_1_0 = (RuleCall)cLabelAssignment_3_3_1_1.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		// Transition
-		//returns sccharts::Transition:
-		//	annotations+=Annotation* (type=TransitionTypeLegacy | type=TransitionType) targetState=[sccharts::State]
-		//	//	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
-		// (immediate?="immediate"?
-		//	deferred?="deferred"? history=HistoryType? (("with" delay=INT? trigger=BoolExpression | "with")? (("/" | "do")
-		//	effects+=Effect (";" effects+=Effect)*)? | "with" label=STRING)?)?;
+		//Transition returns sccharts::Transition:
+		//	annotations+=Annotation* (type=TransitionTypeLegacy | type=TransitionType) targetState=[sccharts::State] //	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
+		//	(immediate?="immediate"? deferred?="deferred"? history=HistoryType? (("with" delay=INT? trigger=BoolExpression |
+		//	"with")? (("/" | "do") effects+=Effect (";" effects+=Effect)*)? | "with" label=STRING)?)?;
 		public ParserRule getRule() { return rule; }
 
-		//annotations+=Annotation* (type=TransitionTypeLegacy | type=TransitionType) targetState=[sccharts::State]
-		////	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
-		// (immediate?="immediate"?
-		//deferred?="deferred"? history=HistoryType? (("with" delay=INT? trigger=BoolExpression | "with")? (("/" | "do")
-		//effects+=Effect (";" effects+=Effect)*)? | "with" label=STRING)?)?
+		//annotations+=Annotation* (type=TransitionTypeLegacy | type=TransitionType) targetState=[sccharts::State] //	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
+		//(immediate?="immediate"? deferred?="deferred"? history=HistoryType? (("with" delay=INT? trigger=BoolExpression |
+		//"with")? (("/" | "do") effects+=Effect (";" effects+=Effect)*)? | "with" label=STRING)?)?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=Annotation*
@@ -1656,8 +2288,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		// Declaration
-		//returns kexpressions::Declaration:
+		//Declaration returns kexpressions::Declaration:
 		//	annotations+=Annotation* (extern?="extern"? static?="static"? const?="const"? input?="input"? output?="output"?
 		//	(signal?="signal"? type=ValueType | signal?="signal") | extern?="extern" static?="static"? const?="const"?
 		//	input?="input"? output?="output"? signal?="signal"? type=ValueType?) valuedObjects+=ValuedObject (","
@@ -1826,8 +2457,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_3_1_0 = (RuleCall)cCombineOperatorAssignment_3_1.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		// ValuedObject
-		//returns kexpressions::ValuedObject:
+		//ValuedObject returns kexpressions::ValuedObject:
 		//	name=ID ("[" cardinalities+=INT "]")* ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)?;
 		public ParserRule getRule() { return rule; }
 
@@ -1888,8 +2518,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		// TextualCode
-		//returns kexpressions::TextExpression:
+		//TextualCode returns kexpressions::TextExpression:
 		//	text=HOSTCODE ";";
 		public ParserRule getRule() { return rule; }
 
@@ -1920,8 +2549,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cActualValuedObjectIDTerminalRuleCall_3_0_1 = (RuleCall)cActualValuedObjectCrossReference_3_0.eContents().get(1);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		// Binding returns
-		//sccharts::Binding:
+		//Binding returns sccharts::Binding:
 		//	annotations+=Annotation* formal=[kexpressions::ValuedObject] "to" actual=[kexpressions::ValuedObject];
 		public ParserRule getRule() { return rule; }
 
@@ -1970,10 +2598,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cTEXTUALTextualKeyword_3_0 = (Keyword)cTEXTUALEnumLiteralDeclaration_3.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		//
 		//// ---------------------------------------------------------------------------------------------------
-		// enum StateType
-		//returns sccharts::StateType:
+		//enum StateType returns sccharts::StateType:
 		//	NORMAL="normal" | CONNECTOR="connector" | REFERENCE="reference" | TEXTUAL="textual";
 		public EnumRule getRule() { return rule; }
 
@@ -2083,6 +2709,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	private ForElements pFor;
 	private RegionElements pRegion;
 	private DataflowElements pDataflow;
+	private FeatureElements pFeature;
 	private SCChartElements pSCChart;
 	private ConcurrencyElements pConcurrency;
 	private ImportDeclElements pImportDecl;
@@ -2090,9 +2717,14 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	private QualifiedNameWithWildcardElements pQualifiedNameWithWildcard;
 	private StateElements pState;
 	private NodeElements pNode;
+	private CallNodeElements pCallNode;
+	private DefineNodeElements pDefineNode;
 	private InputNodeElements pInputNode;
 	private OutputNodeElements pOutputNode;
 	private ReferencedNodeElements pReferencedNode;
+	private TestReferenceNodeElements pTestReferenceNode;
+	private ReceiverOutputElements pReceiverOutput;
+	private ReceiverTestElements pReceiverTest;
 	private SenderInputElements pSenderInput;
 	private SenderElements pSender;
 	private ReceiverElements pReceiver;
@@ -2145,8 +2777,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//// ---------------------------------------------------------------------------------------------------
-	// Root returns
-	//sccharts::State:
+	//Root returns sccharts::State:
 	//	SCChart;
 	public RootElements getRootAccess() {
 		return (pRoot != null) ? pRoot : (pRoot = new RootElements());
@@ -2157,11 +2788,10 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	// SingleRegion
-	//returns sccharts::Region:
+	//SingleRegion returns sccharts::Region:
 	//	{sccharts::Region} (annotations+=Annotation* "region" id=ID? label=STRING? ("[" for=For "]")? ":"
 	//	declarations+=Declaration*)? //      (bodyText+=TextualCode)* 
-	// states+=State*;
+	//	states+=State*;
 	public SingleRegionElements getSingleRegionAccess() {
 		return (pSingleRegion != null) ? pSingleRegion : (pSingleRegion = new SingleRegionElements());
 	}
@@ -2171,10 +2801,10 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	// SingleDataflow
-	//returns sccharts::Dataflow:
+	//SingleDataflow returns sccharts::Dataflow:
 	//	{sccharts::Dataflow} (annotations+=Annotation* "dataflow" id=ID? label=STRING? ("[" for=For "]")? ":"
-	//	declarations+=Declaration*)? nodes+=Node*;
+	//	declarations+=Declaration*)? (valuedObjects+=[kexpressions::ValuedObject] "=" expressions+=Expression ";")*
+	//	nodes+=Node*;
 	public SingleDataflowElements getSingleDataflowAccess() {
 		return (pSingleDataflow != null) ? pSingleDataflow : (pSingleDataflow = new SingleDataflowElements());
 	}
@@ -2184,8 +2814,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	// For returns
-	//sccharts::For:
+	//For returns sccharts::For:
 	//	{sccharts::For} valuedObject=ValuedObject "=" from=INT ".." to=INT;
 	public ForElements getForAccess() {
 		return (pFor != null) ? pFor : (pFor = new ForElements());
@@ -2196,8 +2825,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	// Region returns
-	//sccharts::Region:
+	//Region returns sccharts::Region:
 	//	{sccharts::Region} annotations+=Annotation* "region" id=ID? label=STRING? ("[" for=For "]")? ":"
 	//	declarations+=Declaration* states+=State+;
 	public RegionElements getRegionAccess() {
@@ -2209,10 +2837,15 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	// Dataflow returns
-	//sccharts::Dataflow:
+	//Dataflow returns sccharts::Dataflow:
 	//	{sccharts::Dataflow} annotations+=Annotation* "dataflow" id=ID? label=STRING? ("[" for=For "]")? ":"
-	//	declarations+=Declaration* nodes+=Node+;
+	//	declarations+=Declaration* //    (
+	//	//        (valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += Expression) ';'
+	//	//        |
+	//	//        (valuedObjects += [kexpressions::ValuedObject]) '=' / *(nodes+=TestReferenceNode|ID'.')?* / (expressions += ValuedObjectReference) ';'
+	//	//    )*
+	//	features+=Feature* nodes+=Node* // alt: + statt *
+	//;
 	public DataflowElements getDataflowAccess() {
 		return (pDataflow != null) ? pDataflow : (pDataflow = new DataflowElements());
 	}
@@ -2221,22 +2854,33 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		return getDataflowAccess().getRule();
 	}
 
+	//Feature returns sccharts::DataflowFeature:
+	//	{sccharts::DataflowFeature} (valuedObject=[kexpressions::ValuedObject] //(valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += Expression) ';'
+	//	"=" expression=Expression ";" | valuedObject=[kexpressions::ValuedObject] //(valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += ValuedObjectReference) ';'
+	//	//(valuedObject = [kexpressions::ValuedObject]) '=' (expressions += ValuedObjectReference) ';'
+	//	//|
+	//	//node = [sccharts::Node|ID] ('.' valuedObject = [kexpressions::ValuedObject])?
+	//	//(valuedObjects += [kexpressions::ValuedObject]) '=' (node = [sccharts::Node|ID] '.')? (expressions += ValuedObjectReference) ';'
+	//	"=" (node=[sccharts::Node] ".")? expression=ValuedObjectReference ";");
+	public FeatureElements getFeatureAccess() {
+		return (pFeature != null) ? pFeature : (pFeature = new FeatureElements());
+	}
+	
+	public ParserRule getFeatureRule() {
+		return getFeatureAccess().getRule();
+	}
+
 	//// ---------------------------------------------------------------------------------------------------
-	// SCChart returns
-	//sccharts::State:
+	//SCChart returns sccharts::State:
 	//	annotations+=Annotation* //    ('package' name = QualifiedName)?
-	// //    imports += ImportDecl*
-	// //    
-	// "scchart"
-	//	id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
-	//	bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion
-	//	//                (concurrencies+=SingleRegion)|
-	// //             	(concurrencies+=SingleDataflow)|
-	//
+	//	//    imports += ImportDecl*
+	//	//    
+	//	"scchart" id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
+	//	bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion //                (concurrencies+=SingleRegion)|
+	//	//             	(concurrencies+=SingleDataflow)|
 	//	//             	(concurrencies+=Concurrency)*
-	// //				(concurrencies+=SingleRegion)(concurrencies+=Region)*
-	// |
-	//	concurrencies+=SingleDataflow) concurrencies+=Concurrency*)?) "}")?;
+	//	//				(concurrencies+=SingleRegion)(concurrencies+=Region)*
+	//	| concurrencies+=SingleDataflow) concurrencies+=Concurrency*)?) "}")?;
 	public SCChartElements getSCChartAccess() {
 		return (pSCChart != null) ? pSCChart : (pSCChart = new SCChartElements());
 	}
@@ -2286,18 +2930,14 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	// State returns
-	//sccharts::State:
+	//State returns sccharts::State:
 	//	annotations+=Annotation* (initial?="initial" final?="final"? | final?="final" initial?="initial"?)? type=StateType?
 	//	"state" id=ID label=STRING? ("references" referencedScope=[sccharts::State] ("bind" bindings+=Binding (","
-	//	bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion
-	//	//                (concurrencies+=SingleRegion)|
-	// //             	(concurrencies+=SingleDataflow)|
-	//
+	//	bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* ((concurrencies+=SingleRegion //                (concurrencies+=SingleRegion)|
+	//	//             	(concurrencies+=SingleDataflow)|
 	//	//             	(concurrencies+=Concurrency)*
-	// | concurrencies+=SingleDataflow) concurrencies+=Concurrency*)) "}")?
-	//	// The semicolon is mandatory for backtracking!
-	// outgoingTransitions+=Transition* ";";
+	//	| concurrencies+=SingleDataflow) concurrencies+=Concurrency*)) "}")? // The semicolon is mandatory for backtracking!
+	//	outgoingTransitions+=Transition* ";";
 	public StateElements getStateAccess() {
 		return (pState != null) ? pState : (pState = new StateElements());
 	}
@@ -2307,13 +2947,56 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Node returns sccharts::Node:
-	//	InputNode | OutputNode | ReferencedNode;
+	//	InputNode | OutputNode | ReferencedNode | TestReferenceNode | CallNode | //| Out
+	//	DefineNode;
 	public NodeElements getNodeAccess() {
 		return (pNode != null) ? pNode : (pNode = new NodeElements());
 	}
 	
 	public ParserRule getNodeRule() {
 		return getNodeAccess().getRule();
+	}
+
+	//CallNode returns sccharts::CallNode:
+	//	{sccharts::CallNode} id=ID "=" callReference=[sccharts::DefineNode] //    (( 
+	//	//        callReference = [sccharts::DefineNode|ID]
+	//	//        
+	//	//        )?
+	//	//    |
+	//	//        (
+	//	//        referencedScope = [sccharts::State|ID]
+	//	//        )?
+	//	//    )
+	//	"(" parameters+=Expression? ("," parameters+=Expression)* ")" //'(' (parameters+=Para)* ')'
+	//	";";
+	public CallNodeElements getCallNodeAccess() {
+		return (pCallNode != null) ? pCallNode : (pCallNode = new CallNodeElements());
+	}
+	
+	public ParserRule getCallNodeRule() {
+		return getCallNodeAccess().getRule();
+	}
+
+	////Para returns sccharts::Param:
+	////    ParaExpr | ParaRef
+	////;
+	////ParaExpr returns sccharts::Param:
+	////    expression = Expression
+	////;
+	////ParaRef returns sccharts::Param:
+	////    //expression = ValuedObjectReference
+	////    paraRef = [sccharts::Node|ID]
+	////;
+	//DefineNode returns sccharts::DefineNode:
+	//	{sccharts::DefineNode} "node" id=ID "(" inputs+=Declaration* ")" "returns" "(" outputs+=Declaration* ")" "{"
+	//	(valuedObjects+=[kexpressions::ValuedObject] "=" expressions+=Expression ";")* // keep that?
+	//	states+=State* "}";
+	public DefineNodeElements getDefineNodeAccess() {
+		return (pDefineNode != null) ? pDefineNode : (pDefineNode = new DefineNodeElements());
+	}
+	
+	public ParserRule getDefineNodeRule() {
+		return getDefineNodeAccess().getRule();
 	}
 
 	//InputNode returns sccharts::InputNode:
@@ -2327,7 +3010,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//OutputNode returns sccharts::OutputNode:
-	//	{sccharts::OutputNode} "node" id=ID label=STRING? "output" ":" valuedObject=[kexpressions::ValuedObject] ";";
+	//	{sccharts::OutputNode} "node" id=ID label=STRING? "output" ":" valuedObject=[kexpressions::ValuedObject]
+	//	testReceivers+=ReceiverOutput? ";";
 	public OutputNodeElements getOutputNodeAccess() {
 		return (pOutputNode != null) ? pOutputNode : (pOutputNode = new OutputNodeElements());
 	}
@@ -2344,6 +3028,59 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getReferencedNodeRule() {
 		return getReferencedNodeAccess().getRule();
+	}
+
+	/// *
+	// * alte (erste) Testreferenz, mit umgedrehter Notation
+	// * / //TestReferenceNode returns sccharts::TestReferenceNode:
+	////    {sccharts::TestReferenceNode}
+	////    'node' (id=ID) (label=STRING)? 'testRef' ':'
+	////    referencedScope = [sccharts::State|ID]
+	////    '(' (testReceivers += ReceiverTest)* ')'
+	////    ';'
+	////;
+	//TestReferenceNode returns sccharts::TestReferenceNode:
+	//	{sccharts::TestReferenceNode} id=ID label=STRING? "=" "ref" referencedScope=[sccharts::State] "("
+	//	parameters+=Expression? ("," parameters+=Expression)* ")" ";";
+	public TestReferenceNodeElements getTestReferenceNodeAccess() {
+		return (pTestReferenceNode != null) ? pTestReferenceNode : (pTestReferenceNode = new TestReferenceNodeElements());
+	}
+	
+	public ParserRule getTestReferenceNodeRule() {
+		return getTestReferenceNodeAccess().getRule();
+	}
+
+	////Out returns sccharts::OutputNode:
+	////    {sccharts::OutputNode}
+	////    //valuedObject = [kexpressions::ValuedObject]
+	////    testReceivers+=ReceiverOutput2
+	////;
+	//ReceiverOutput returns sccharts::TestReceiver:
+	//	{sccharts::TestReceiver} ":" node=[sccharts::Node] "=" sender=[sccharts::Node] ("."
+	//	valuedObject=[kexpressions::ValuedObject])?;
+	public ReceiverOutputElements getReceiverOutputAccess() {
+		return (pReceiverOutput != null) ? pReceiverOutput : (pReceiverOutput = new ReceiverOutputElements());
+	}
+	
+	public ParserRule getReceiverOutputRule() {
+		return getReceiverOutputAccess().getRule();
+	}
+
+	////ReceiverOutput2 returns sccharts::TestReceiver:
+	////    {sccharts::TestReceiver}
+	////    //node = [sccharts::Node|ID]
+	////    outputValue = [kexpressions::ValuedObject]
+	////    '=' sender = [sccharts::Node|ID] ('.' valuedObject = [kexpressions::ValuedObject])?
+	////;
+	//ReceiverTest returns sccharts::TestReceiver:
+	//	{sccharts::TestReceiver} node=[sccharts::Node] ("." valuedObject=[kexpressions::ValuedObject])? "="
+	//	sender=[sccharts::Node];
+	public ReceiverTestElements getReceiverTestAccess() {
+		return (pReceiverTest != null) ? pReceiverTest : (pReceiverTest = new ReceiverTestElements());
+	}
+	
+	public ParserRule getReceiverTestRule() {
+		return getReceiverTestAccess().getRule();
 	}
 
 	//SenderInput returns sccharts::Sender:
@@ -2377,8 +3114,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	// LocalAction
-	//returns sccharts::LocalAction:
+	//LocalAction returns sccharts::LocalAction:
 	//	EntryAction | DuringAction | ExitAction | SuspendAction;
 	public LocalActionElements getLocalActionAccess() {
 		return (pLocalAction != null) ? pLocalAction : (pLocalAction = new LocalActionElements());
@@ -2389,13 +3125,10 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	// Transition
-	//returns sccharts::Transition:
-	//	annotations+=Annotation* (type=TransitionTypeLegacy | type=TransitionType) targetState=[sccharts::State]
-	//	//	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
-	// (immediate?="immediate"?
-	//	deferred?="deferred"? history=HistoryType? (("with" delay=INT? trigger=BoolExpression | "with")? (("/" | "do")
-	//	effects+=Effect (";" effects+=Effect)*)? | "with" label=STRING)?)?;
+	//Transition returns sccharts::Transition:
+	//	annotations+=Annotation* (type=TransitionTypeLegacy | type=TransitionType) targetState=[sccharts::State] //	type=TransitionType (priority=INT)? targetState=[sccharts::State|ID] 
+	//	(immediate?="immediate"? deferred?="deferred"? history=HistoryType? (("with" delay=INT? trigger=BoolExpression |
+	//	"with")? (("/" | "do") effects+=Effect (";" effects+=Effect)*)? | "with" label=STRING)?)?;
 	public TransitionElements getTransitionAccess() {
 		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
 	}
@@ -2405,8 +3138,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	// Declaration
-	//returns kexpressions::Declaration:
+	//Declaration returns kexpressions::Declaration:
 	//	annotations+=Annotation* (extern?="extern"? static?="static"? const?="const"? input?="input"? output?="output"?
 	//	(signal?="signal"? type=ValueType | signal?="signal") | extern?="extern" static?="static"? const?="const"?
 	//	input?="input"? output?="output"? signal?="signal"? type=ValueType?) valuedObjects+=ValuedObject (","
@@ -2420,8 +3152,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	// ValuedObject
-	//returns kexpressions::ValuedObject:
+	//ValuedObject returns kexpressions::ValuedObject:
 	//	name=ID ("[" cardinalities+=INT "]")* ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)?;
 	public ValuedObjectElements getValuedObjectAccess() {
 		return (pValuedObject != null) ? pValuedObject : (pValuedObject = new ValuedObjectElements());
@@ -2432,8 +3163,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	// TextualCode
-	//returns kexpressions::TextExpression:
+	//TextualCode returns kexpressions::TextExpression:
 	//	text=HOSTCODE ";";
 	public TextualCodeElements getTextualCodeAccess() {
 		return (pTextualCode != null) ? pTextualCode : (pTextualCode = new TextualCodeElements());
@@ -2444,8 +3174,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	// Binding returns
-	//sccharts::Binding:
+	//Binding returns sccharts::Binding:
 	//	annotations+=Annotation* formal=[kexpressions::ValuedObject] "to" actual=[kexpressions::ValuedObject];
 	public BindingElements getBindingAccess() {
 		return (pBinding != null) ? pBinding : (pBinding = new BindingElements());
@@ -2456,10 +3185,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	//
 	//// ---------------------------------------------------------------------------------------------------
-	// enum StateType
-	//returns sccharts::StateType:
+	//enum StateType returns sccharts::StateType:
 	//	NORMAL="normal" | CONNECTOR="connector" | REFERENCE="reference" | TEXTUAL="textual";
 	public StateTypeElements getStateTypeAccess() {
 		return (unknownRuleStateType != null) ? unknownRuleStateType : (unknownRuleStateType = new StateTypeElements());
@@ -2490,17 +3217,13 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////// chsch: The action rule is used in Kits.xtext for entry-, during-, exitActions, suspensionTrigger 
-	//
 	////Action returns sccharts::Action:
-	// //    {sccharts::Action}
-	// ////    (annotations += Annotation)*
-	//
+	////    {sccharts::Action}
+	//////    (annotations += Annotation)*
 	////	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((';') effects+=Effect)*)?; 		
-	//
 	//EntryAction returns sccharts::EntryAction:
 	//	{sccharts::EntryAction} //    (annotations += Annotation)*
-	// "entry" trigger=BoolExpression? ("/" effects+=Effect (";"
-	//	effects+=Effect)*)? ";"?;
+	//	"entry" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
 	public ActionsGrammarAccess.EntryActionElements getEntryActionAccess() {
 		return gaActions.getEntryActionAccess();
 	}
@@ -2511,8 +3234,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//DuringAction returns sccharts::DuringAction:
 	//	{sccharts::DuringAction} //    (annotations += Annotation)*
-	// immediate?="immediate"? "during" trigger=BoolExpression?
-	//	("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
+	//	immediate?="immediate"? "during" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
 	public ActionsGrammarAccess.DuringActionElements getDuringActionAccess() {
 		return gaActions.getDuringActionAccess();
 	}
@@ -2523,8 +3245,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ExitAction returns sccharts::ExitAction:
 	//	{sccharts::ExitAction} //    (annotations += Annotation)*
-	// "exit" trigger=BoolExpression? ("/" effects+=Effect (";"
-	//	effects+=Effect)*)? ";"?;
+	//	"exit" trigger=BoolExpression? ("/" effects+=Effect (";" effects+=Effect)*)? ";"?;
 	public ActionsGrammarAccess.ExitActionElements getExitActionAccess() {
 		return gaActions.getExitActionAccess();
 	}
@@ -2535,8 +3256,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 
 	//SuspendAction returns sccharts::SuspendAction:
 	//	{sccharts::SuspendAction} //    (annotations += Annotation)*
-	// immediate?="immediate"? weak?="weak"? "suspend"
-	//	trigger=BoolExpression? ";"?;
+	//	immediate?="immediate"? weak?="weak"? "suspend" trigger=BoolExpression? ";"?;
 	public ActionsGrammarAccess.SuspendActionElements getSuspendActionAccess() {
 		return gaActions.getSuspendActionAccess();
 	}
@@ -3038,11 +3758,11 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//// --------------------------
-	// //
-	// //   ANNOTATIONS
-	// //
-	// // --------------------------
-	// Annotation:
+	////
+	////   ANNOTATIONS
+	////
+	//// --------------------------
+	//Annotation:
 	//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
 	//	KeyBooleanValueAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation;
 	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
@@ -3065,7 +3785,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: / ** semantic comment * /
-	// CommentAnnotation returns StringAnnotation:
+	//CommentAnnotation returns StringAnnotation:
 	//	value=COMMENT_ANNOTATION;
 	public AnnotationsGrammarAccess.CommentAnnotationElements getCommentAnnotationAccess() {
 		return gaActions.getCommentAnnotationAccess();
@@ -3076,7 +3796,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @HVlayout
-	// TagAnnotation returns Annotation:
+	//TagAnnotation returns Annotation:
 	//	"@" name=ExtendedID ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.TagAnnotationElements getTagAnnotationAccess() {
 		return gaActions.getTagAnnotationAccess();
@@ -3087,7 +3807,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @layouter dot;   
-	// KeyStringValueAnnotation returns StringAnnotation:
+	//KeyStringValueAnnotation returns StringAnnotation:
 	//	"@" name=ExtendedID value=EString ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return gaActions.getKeyStringValueAnnotationAccess();
@@ -3098,8 +3818,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
-	// TypedKeyStringValueAnnotation returns
-	//TypedStringAnnotation:
+	//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
 	//	"@" name=ExtendedID "[" type=ExtendedID "]" value=EString ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaActions.getTypedKeyStringValueAnnotationAccess();
@@ -3110,7 +3829,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @visible true;
-	// KeyBooleanValueAnnotation returns BooleanAnnotation:
+	//KeyBooleanValueAnnotation returns BooleanAnnotation:
 	//	"@" name=ExtendedID value=BOOLEAN ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
 		return gaActions.getKeyBooleanValueAnnotationAccess();
@@ -3121,7 +3840,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @minSpace 10;    
-	// KeyIntValueAnnotation returns IntAnnotation:
+	//KeyIntValueAnnotation returns IntAnnotation:
 	//	"@" name=ExtendedID value=INT ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyIntValueAnnotationElements getKeyIntValueAnnotationAccess() {
 		return gaActions.getKeyIntValueAnnotationAccess();
@@ -3132,7 +3851,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @minSpace 10.0;    
-	// KeyFloatValueAnnotation returns FloatAnnotation:
+	//KeyFloatValueAnnotation returns FloatAnnotation:
 	//	"@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
 		return gaActions.getKeyFloatValueAnnotationAccess();
@@ -3143,7 +3862,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// needed for importing other resources
-	// ImportAnnotation:
+	//ImportAnnotation:
 	//	"import" importURI=STRING;
 	public AnnotationsGrammarAccess.ImportAnnotationElements getImportAnnotationAccess() {
 		return gaActions.getImportAnnotationAccess();
@@ -3154,7 +3873,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// allow strings without quotes as they don'c contain spaces
-	// EString returns ecore::EString:
+	//EString returns ecore::EString:
 	//	STRING | ID;
 	public AnnotationsGrammarAccess.EStringElements getEStringAccess() {
 		return gaActions.getEStringAccess();
@@ -3175,22 +3894,20 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// --------------------------
-	// //
-	// //  Terminals...
-	// //
-	// // --------------------------
-	// // custom terminals
-	//
+	////
+	////  Terminals...
+	////
+	//// --------------------------
+	//// custom terminals
 	//// custom terminal rule introducing semantic comments
-	// terminal COMMENT_ANNOTATION:
+	//terminal COMMENT_ANNOTATION:
 	//	"/ **"->"* /";
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
 		return gaActions.getCOMMENT_ANNOTATIONRule();
 	} 
 
 	//// modified version of Terminals.ML_COMMENT as
-	// // COMMENT_ANNOTATION is not recognized correctly with original one 
-	//
+	//// COMMENT_ANNOTATION is not recognized correctly with original one 
 	//terminal ML_COMMENT:
 	//	"/ *" !"*"->"* /";
 	public TerminalRule getML_COMMENTRule() {
@@ -3198,35 +3915,35 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//// generic terminals
-	// terminal fragment NUMBER:
+	//terminal fragment NUMBER:
 	//	"0".."9";
 	public TerminalRule getNUMBERRule() {
 		return gaActions.getNUMBERRule();
 	} 
 
 	//// redefine INT terminal to allow negative numbers
-	// terminal INT returns ecore::EInt:
+	//terminal INT returns ecore::EInt:
 	//	"-"? NUMBER+;
 	public TerminalRule getINTRule() {
 		return gaActions.getINTRule();
 	} 
 
 	//// make sure the Float rule does not shadow the INT rule
-	// terminal FLOAT returns ecore::EFloatObject:
+	//terminal FLOAT returns ecore::EFloatObject:
 	//	"-"? NUMBER+ ("." NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? "f"? | "-"? NUMBER+ "f";
 	public TerminalRule getFLOATRule() {
 		return gaActions.getFLOATRule();
 	} 
 
 	//// introduce boolean values
-	// terminal BOOLEAN returns ecore::EBooleanObject:
+	//terminal BOOLEAN returns ecore::EBooleanObject:
 	//	"true" | "false";
 	public TerminalRule getBOOLEANRule() {
 		return gaActions.getBOOLEANRule();
 	} 
 
 	//// custom terminal rule for strings
-	// terminal STRING:
+	//terminal STRING:
 	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"";
 	public TerminalRule getSTRINGRule() {
 		return gaActions.getSTRINGRule();

@@ -36,13 +36,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * @generated
  */
 public class ConcurrencyItemProvider
-    extends ScopeItemProvider
-    implements
-        IEditingDomainItemProvider,
-        IStructuredItemContentProvider,
-        ITreeItemContentProvider,
-        IItemLabelProvider,
-        IItemPropertySource {
+    extends ScopeItemProvider {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

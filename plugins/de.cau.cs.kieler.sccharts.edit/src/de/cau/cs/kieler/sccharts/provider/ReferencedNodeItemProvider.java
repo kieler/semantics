@@ -38,13 +38,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * @generated
  */
 public class ReferencedNodeItemProvider
-    extends NodeItemProvider
-    implements
-        IEditingDomainItemProvider,
-        IStructuredItemContentProvider,
-        ITreeItemContentProvider,
-        IItemLabelProvider,
-        IItemPropertySource {
+    extends NodeItemProvider {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

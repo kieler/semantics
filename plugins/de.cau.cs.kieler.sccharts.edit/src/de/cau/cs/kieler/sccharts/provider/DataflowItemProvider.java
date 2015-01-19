@@ -42,13 +42,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class DataflowItemProvider
-    extends ConcurrencyItemProvider
-    implements
-        IEditingDomainItemProvider,
-        IStructuredItemContentProvider,
-        ITreeItemContentProvider,
-        IItemLabelProvider,
-        IItemPropertySource {
+    extends ConcurrencyItemProvider {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -180,6 +174,11 @@ public class DataflowItemProvider
             (createChildParameter
                 (SCChartsPackage.Literals.DATAFLOW__NODES,
                  SCChartsFactory.eINSTANCE.createReferencedNode()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SCChartsPackage.Literals.DATAFLOW__NODES,
+                 SCChartsFactory.eINSTANCE.createTestReferenceNode()));
 
         newChildDescriptors.add
             (createChildParameter

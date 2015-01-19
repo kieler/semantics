@@ -41,13 +41,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class RegionItemProvider
-    extends ConcurrencyItemProvider
-    implements
-        IEditingDomainItemProvider,
-        IStructuredItemContentProvider,
-        ITreeItemContentProvider,
-        IItemLabelProvider,
-        IItemPropertySource {
+    extends ConcurrencyItemProvider {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

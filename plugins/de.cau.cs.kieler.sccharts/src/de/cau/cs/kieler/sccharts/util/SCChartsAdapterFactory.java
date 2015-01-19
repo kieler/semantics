@@ -132,6 +132,22 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createReferencedNodeAdapter();
             }
             @Override
+            public Adapter caseTestReferenceNode(TestReferenceNode object) {
+                return createTestReferenceNodeAdapter();
+            }
+            @Override
+            public Adapter caseCallNode(CallNode object) {
+                return createCallNodeAdapter();
+            }
+            @Override
+            public Adapter caseDataflowFeature(DataflowFeature object) {
+                return createDataflowFeatureAdapter();
+            }
+            @Override
+            public Adapter caseDefineNode(DefineNode object) {
+                return createDefineNodeAdapter();
+            }
+            @Override
             public Adapter caseOutputNode(OutputNode object) {
                 return createOutputNodeAdapter();
             }
@@ -146,6 +162,14 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseReceiver(Receiver object) {
                 return createReceiverAdapter();
+            }
+            @Override
+            public Adapter caseTestSender(TestSender object) {
+                return createTestSenderAdapter();
+            }
+            @Override
+            public Adapter caseTestReceiver(TestReceiver object) {
+                return createTestReceiverAdapter();
             }
             @Override
             public Adapter caseBinding(Binding object) {
@@ -340,6 +364,62 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.TestReferenceNode <em>Test Reference Node</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.TestReferenceNode
+     * @generated
+     */
+    public Adapter createTestReferenceNodeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.CallNode <em>Call Node</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.CallNode
+     * @generated
+     */
+    public Adapter createCallNodeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.DataflowFeature <em>Dataflow Feature</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.DataflowFeature
+     * @generated
+     */
+    public Adapter createDataflowFeatureAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.DefineNode <em>Define Node</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.DefineNode
+     * @generated
+     */
+    public Adapter createDefineNodeAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.OutputNode <em>Output Node</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -392,6 +472,34 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createReceiverAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.TestSender <em>Test Sender</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.TestSender
+     * @generated
+     */
+    public Adapter createTestSenderAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.TestReceiver <em>Test Receiver</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.TestReceiver
+     * @generated
+     */
+    public Adapter createTestReceiverAdapter() {
         return null;
     }
 

@@ -78,10 +78,48 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="senders" upperBound="-1"
         eType="#//Sender" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="receivers" eType="#//Receiver"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="testSenders" upperBound="-1"
+        eType="#//TestSender" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="testReceivers" upperBound="-1"
+        eType="#//TestReceiver" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="InputNode" eSuperTypes="#//Node"/>
   <eClassifiers xsi:type="ecore:EClass" name="ReferencedNode" eSuperTypes="#//Node">
     <eStructuralFeatures xsi:type="ecore:EReference" name="referencedScope" eType="#//Scope"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TestReferenceNode" eSuperTypes="#//Node">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referencedScope" eType="#//Scope"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CallNode" eSuperTypes="#//Node">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="callReference" eType="#//DefineNode"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referencedScope" eType="#//Scope"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataflowFeature">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="node" eType="#//Node"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DefineNode" eSuperTypes="#//Node">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Declaration"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Declaration"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObjects" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expressions" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="states" upperBound="-1"
+        eType="#//State" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OutputNode" eSuperTypes="#//Node">
     <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
@@ -92,6 +130,13 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
         eType="#//Node" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expressions" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObjects" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"
+        eType="#//DataflowFeature" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Sender">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
@@ -105,6 +150,18 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="sender" lowerBound="1"
         eType="#//Sender" eOpposite="#//Sender/receivers"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="node" lowerBound="1" eType="#//Node"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TestSender">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="receiver" upperBound="-1"
+        eType="#//TestReceiver"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="node" eType="#//Node"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TestReceiver">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sender" lowerBound="1"
+        eType="#//Node"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="node" eType="#//Node"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObject" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputValue" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Binding" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotatable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="formal" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject"/>

@@ -40,6 +40,8 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.sccharts.Node#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Node#getSenders <em>Senders</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Node#getReceivers <em>Receivers</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Node#getTestSenders <em>Test Senders</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Node#getTestReceivers <em>Test Receivers</em>}</li>
  * </ul>
  * </p>
  *
@@ -148,5 +150,37 @@ public interface Node extends Annotatable {
      * @generated
      */
 	void setReceivers(Receiver value);
+
+                /**
+     * Returns the value of the '<em><b>Test Senders</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.sccharts.TestSender}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Test Senders</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Test Senders</em>' containment reference list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getNode_TestSenders()
+     * @model containment="true"
+     * @generated
+     */
+    EList<TestSender> getTestSenders();
+
+                /**
+     * Returns the value of the '<em><b>Test Receivers</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.sccharts.TestReceiver}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Test Receivers</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Test Receivers</em>' containment reference list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getNode_TestReceivers()
+     * @model containment="true"
+     * @generated
+     */
+    EList<TestReceiver> getTestReceivers();
 
 } // Node

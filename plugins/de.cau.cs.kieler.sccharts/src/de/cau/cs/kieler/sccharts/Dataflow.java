@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.sccharts;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -35,6 +37,9 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.Dataflow#getNodes <em>Nodes</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Dataflow#getExpressions <em>Expressions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Dataflow#getValuedObjects <em>Valued Objects</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Dataflow#getFeatures <em>Features</em>}</li>
  * </ul>
  * </p>
  *
@@ -65,5 +70,53 @@ public interface Dataflow extends Concurrency {
      * @generated
      */
     EList<Node> getNodes();
+
+    /**
+     * Returns the value of the '<em><b>Expressions</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Expression}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Expressions</em>' reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Expressions</em>' containment reference list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getDataflow_Expressions()
+     * @model containment="true"
+     * @generated
+     */
+    EList<Expression> getExpressions();
+
+    /**
+     * Returns the value of the '<em><b>Valued Objects</b></em>' reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObject}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Valued Objects</em>' reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Valued Objects</em>' reference list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getDataflow_ValuedObjects()
+     * @model
+     * @generated
+     */
+    EList<ValuedObject> getValuedObjects();
+
+    /**
+     * Returns the value of the '<em><b>Features</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.sccharts.DataflowFeature}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Features</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Features</em>' containment reference list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getDataflow_Features()
+     * @model containment="true"
+     * @generated
+     */
+    EList<DataflowFeature> getFeatures();
 
 } // Dataflow

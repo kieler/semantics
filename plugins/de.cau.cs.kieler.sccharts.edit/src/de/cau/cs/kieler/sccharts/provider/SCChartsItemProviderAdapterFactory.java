@@ -251,6 +251,29 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.TestReferenceNode} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected TestReferenceNodeItemProvider testReferenceNodeItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.TestReferenceNode}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createTestReferenceNodeAdapter() {
+        if (testReferenceNodeItemProvider == null) {
+            testReferenceNodeItemProvider = new TestReferenceNodeItemProvider(this);
+        }
+
+        return testReferenceNodeItemProvider;
+    }
+
+    /**
      * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.OutputNode} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -703,6 +726,7 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
         if (nodeItemProvider != null) nodeItemProvider.dispose();
         if (inputNodeItemProvider != null) inputNodeItemProvider.dispose();
         if (referencedNodeItemProvider != null) referencedNodeItemProvider.dispose();
+        if (testReferenceNodeItemProvider != null) testReferenceNodeItemProvider.dispose();
         if (outputNodeItemProvider != null) outputNodeItemProvider.dispose();
         if (dataflowItemProvider != null) dataflowItemProvider.dispose();
         if (senderItemProvider != null) senderItemProvider.dispose();

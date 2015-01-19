@@ -165,6 +165,36 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case SCChartsPackage.TEST_REFERENCE_NODE: {
+                TestReferenceNode testReferenceNode = (TestReferenceNode)theEObject;
+                T result = caseTestReferenceNode(testReferenceNode);
+                if (result == null) result = caseNode(testReferenceNode);
+                if (result == null) result = caseAnnotatable(testReferenceNode);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.CALL_NODE: {
+                CallNode callNode = (CallNode)theEObject;
+                T result = caseCallNode(callNode);
+                if (result == null) result = caseNode(callNode);
+                if (result == null) result = caseAnnotatable(callNode);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.DATAFLOW_FEATURE: {
+                DataflowFeature dataflowFeature = (DataflowFeature)theEObject;
+                T result = caseDataflowFeature(dataflowFeature);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.DEFINE_NODE: {
+                DefineNode defineNode = (DefineNode)theEObject;
+                T result = caseDefineNode(defineNode);
+                if (result == null) result = caseNode(defineNode);
+                if (result == null) result = caseAnnotatable(defineNode);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case SCChartsPackage.OUTPUT_NODE: {
                 OutputNode outputNode = (OutputNode)theEObject;
                 T result = caseOutputNode(outputNode);
@@ -191,6 +221,18 @@ public class SCChartsSwitch<T> extends Switch<T> {
             case SCChartsPackage.RECEIVER: {
                 Receiver receiver = (Receiver)theEObject;
                 T result = caseReceiver(receiver);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.TEST_SENDER: {
+                TestSender testSender = (TestSender)theEObject;
+                T result = caseTestSender(testSender);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.TEST_RECEIVER: {
+                TestReceiver testReceiver = (TestReceiver)theEObject;
+                T result = caseTestReceiver(testReceiver);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -409,6 +451,66 @@ public class SCChartsSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Test Reference Node</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Test Reference Node</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseTestReferenceNode(TestReferenceNode object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Call Node</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Call Node</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseCallNode(CallNode object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Dataflow Feature</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Dataflow Feature</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDataflowFeature(DataflowFeature object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Define Node</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Define Node</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDefineNode(DefineNode object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Output Node</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -465,6 +567,36 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseReceiver(Receiver object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Test Sender</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Test Sender</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseTestSender(TestSender object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Test Receiver</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Test Receiver</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseTestReceiver(TestReceiver object) {
         return null;
     }
 

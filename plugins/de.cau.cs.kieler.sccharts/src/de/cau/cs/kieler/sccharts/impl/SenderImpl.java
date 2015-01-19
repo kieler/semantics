@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
 
+import de.cau.cs.kieler.sccharts.Node;
 import de.cau.cs.kieler.sccharts.Receiver;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Sender;

@@ -35,9 +35,10 @@ SingleDataflow returns sccharts::Dataflow:
       'dataflow' (id=ID)? (label=STRING)? ('['for=For']')?  ':'
       (declarations+=Declaration)*
      )?
-    (nodes+=Node)*;
     
-    
+    ((valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += Expression) ';')*
+    (nodes+=Node)*
+    ;
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -63,7 +64,30 @@ Dataflow returns sccharts::Dataflow:
     (annotations += Annotation)*
     'dataflow' (id=ID)? (label=STRING)? ('['for=For']')? ':'
       (declarations+=Declaration)*
-    (nodes+=Node)+;
+//    (
+//        (valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += Expression) ';'
+//        |
+//        (valuedObjects += [kexpressions::ValuedObject]) '=' /*(nodes+=TestReferenceNode|ID'.')?*/ (expressions += ValuedObjectReference) ';'
+//    )*
+    (features += Feature)* 
+    
+    (nodes+=Node)* // alt: + statt *
+;
+
+Feature returns sccharts::DataflowFeature:
+    {sccharts::DataflowFeature}
+    (
+        //(valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += Expression) ';'
+        (valuedObject = [kexpressions::ValuedObject]) '=' (expression = Expression) ';'
+        |
+        //(valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += ValuedObjectReference) ';'
+        //(valuedObject = [kexpressions::ValuedObject]) '=' (expressions += ValuedObjectReference) ';'
+        //|
+        //node = [sccharts::Node|ID] ('.' valuedObject = [kexpressions::ValuedObject])?
+        //(valuedObjects += [kexpressions::ValuedObject]) '=' (node = [sccharts::Node|ID] '.')? (expressions += ValuedObjectReference) ';'
+        (valuedObject = [kexpressions::ValuedObject]) '=' (node = [sccharts::Node|ID] '.')? (expression = ValuedObjectReference) ';'
+    )
+;
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -146,28 +170,111 @@ State returns sccharts::State:
 
 
 Node returns sccharts::Node:
-    InputNode | OutputNode | ReferencedNode
+    InputNode | OutputNode | ReferencedNode | TestReferenceNode | CallNode | DefineNode //| Out
+;
+
+CallNode returns sccharts::CallNode:
+    {sccharts::CallNode}
+    (id=ID) '=' callReference = [sccharts::DefineNode|ID]
+//    (( 
+//        callReference = [sccharts::DefineNode|ID]
+//        
+//        )?
+//    |
+//        (
+//        referencedScope = [sccharts::State|ID]
+//        )?
+//    )
+    '(' (parameters+=Expression)? (',' parameters+=Expression)* ')'
+
+    //'(' (parameters+=Para)* ')'
+    ';'
+;
+//Para returns sccharts::Param:
+//    ParaExpr | ParaRef
+//;
+//ParaExpr returns sccharts::Param:
+//    expression = Expression
+//;
+//ParaRef returns sccharts::Param:
+//    //expression = ValuedObjectReference
+//    paraRef = [sccharts::Node|ID]
+//;
+
+DefineNode returns sccharts::DefineNode:
+    {sccharts::DefineNode}
+    'node' (id=ID) '(' (inputs+=Declaration)* ')'
+    'returns' '(' (outputs+=Declaration)* ')' '{'
+    
+    ((valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += Expression) ';')*
+    // keep that?
+    (states+=State)*
+    
+    '}'
 ;
 
 InputNode returns sccharts::InputNode:
     {sccharts::InputNode}
     'node' (id=ID) (label=STRING)? 'input' ':'
-    (senders += SenderInput) ';' 
+    (senders += SenderInput) ';'
 ;
 
 OutputNode returns sccharts::OutputNode:
     {sccharts::OutputNode}
     'node' (id=ID) (label=STRING)? 'output' ':'
-    valuedObject = [kexpressions::ValuedObject] ';' 
+    valuedObject = [kexpressions::ValuedObject]
+    (testReceivers+=ReceiverOutput)?
+    ';'
 ;
 
 ReferencedNode returns sccharts::ReferencedNode:
     {sccharts::ReferencedNode}
     'node' (id=ID) (label=STRING)? ':'
-    referencedScope = [sccharts::State|ID] 
+    referencedScope = [sccharts::State|ID]
     (senders += Sender)* ';'
 ;
 
+/*
+ * alte (erste) Testreferenz, mit umgedrehter Notation
+ */
+//TestReferenceNode returns sccharts::TestReferenceNode:
+//    {sccharts::TestReferenceNode}
+//    'node' (id=ID) (label=STRING)? 'testRef' ':'
+//    referencedScope = [sccharts::State|ID]
+//    '(' (testReceivers += ReceiverTest)* ')'
+//    ';'
+//;
+
+TestReferenceNode returns sccharts::TestReferenceNode:
+    {sccharts::TestReferenceNode}
+    (id=ID) (label=STRING)? '=' 'ref' referencedScope = [sccharts::State|ID]
+    '(' (parameters+=Expression)? (',' parameters+=Expression)* ')'
+    ';'
+;
+
+//Out returns sccharts::OutputNode:
+//    {sccharts::OutputNode}
+//    //valuedObject = [kexpressions::ValuedObject]
+//    testReceivers+=ReceiverOutput2
+//;
+
+ReceiverOutput returns sccharts::TestReceiver:
+    {sccharts::TestReceiver}
+    ':' node = [sccharts::Node|ID]
+    '=' sender = [sccharts::Node|ID] ('.' valuedObject = [kexpressions::ValuedObject])?
+;
+//ReceiverOutput2 returns sccharts::TestReceiver:
+//    {sccharts::TestReceiver}
+//    //node = [sccharts::Node|ID]
+//    outputValue = [kexpressions::ValuedObject]
+//    '=' sender = [sccharts::Node|ID] ('.' valuedObject = [kexpressions::ValuedObject])?
+//;
+
+ReceiverTest returns sccharts::TestReceiver:
+    {sccharts::TestReceiver}
+    node = [sccharts::Node|ID] ('.' valuedObject = [kexpressions::ValuedObject])?
+    '=' sender = [sccharts::Node|ID] 
+;
 
 SenderInput returns sccharts::Sender:
     {sccharts::Sender}
@@ -185,7 +292,6 @@ Receiver returns sccharts::Receiver:
     {sccharts::Receiver}
     node = [sccharts::Node|ID] ('.' valuedObject = [kexpressions::ValuedObject])?
 ;
-
     
 // ---------------------------------------------------------------------------------------------------
 

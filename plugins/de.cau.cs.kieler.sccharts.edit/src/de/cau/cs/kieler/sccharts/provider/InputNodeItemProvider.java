@@ -43,13 +43,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class InputNodeItemProvider
-    extends NodeItemProvider
-    implements
-        IEditingDomainItemProvider,
-        IStructuredItemContentProvider,
-        ITreeItemContentProvider,
-        IItemLabelProvider,
-        IItemPropertySource {
+    extends NodeItemProvider {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

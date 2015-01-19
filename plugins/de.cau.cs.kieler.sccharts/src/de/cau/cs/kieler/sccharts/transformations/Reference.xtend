@@ -33,6 +33,7 @@ import de.cau.cs.kieler.sccharts.Node
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.sccharts.OutputNode
 import de.cau.cs.kieler.sccharts.SCChartsFactory
+import de.cau.cs.kieler.sccharts.TestReferenceNode
 
 /**
  * SCCharts Reference Transformation.
@@ -188,7 +189,48 @@ class Reference {
     		
     		var regionCounter = 0;
 			var idCounter = 0
+			//neu:
+			for(trn: dataflow.nodes.filter(typeof(TestReferenceNode))) {
+			    val rRegion = parentState.createRegion("_"+dataflow.id+regionCounter)
+			    rRegion.label = dataflow.label + regionCounter
+			    val newState = rRegion.createState("_"+trn.ID+idCounter)
+			    newState.label = trn.label + idCounter
+			    regionCounter = regionCounter +1
+			    idCounter = idCounter +1
+			    newState.setInitial
+			    newState.referencedScope = trn.referencedScope
+			    
+			    nodeMapping.put(trn, newState)
+			    
+			    var exprCounter = 0
+			    var wireCounter = 0
+			    for (expr: trn.parameters) {
+			        //println("trn.expr: " + expr)
+			        val newBinding = SCChartsFactory.eINSTANCE.createBinding
+			        val wire = state.createVariable("_wire"+wireCounter).setTypeBool
+			        
+			        val l = trn.referencedScope.declarations.filter[it.input]
+			        println("l.get: " + l.get(exprCounter).valuedObjects.get(0))
+			        newBinding.actual = trn.referencedScope.declarations.filter[it.input].get(exprCounter).valuedObjects.get(0)
+			        exprCounter = exprCounter +1
+			        newBinding.actual
+			        newBinding.formal = (expr as ValuedObjectReference).valuedObject
+			        
+			        
+//			        val rState = nodeMapping.get(receiver.node as ReferencedNode)
+//                  newBinding.formal = receiver.valuedObject
+//                  newBinding.actual = (sender.expression as ValuedObjectReference).valuedObject
+//                  rState.bindings += newBinding
+			        
+			        val rState = nodeMapping.get(trn)
+			        rState.bindings += newBinding
+			        println("nb: " + newBinding)
+			    }
+			}
+			// ende von neu
+			
     		for(rn : dataflow.nodes.filter(typeof(ReferencedNode))) {
+    		//for(rn : dataflow.nodes.filter(typeof(TestReferenceNode))) {
                 val rRegion = parentState.createRegion("_"+dataflow.id+regionCounter) 
                 rRegion.label = dataflow.label + regionCounter
     			val newState = rRegion.createState("_"+rn.ID+idCounter) 
