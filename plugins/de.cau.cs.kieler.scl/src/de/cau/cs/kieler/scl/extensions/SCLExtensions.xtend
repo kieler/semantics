@@ -192,11 +192,14 @@ class SCLExtensions {
                         replaceBy += emptyStm.label -> goto.targetLabel
                     }
                     continue = false;
+                //TODO what if label in else branch?
                 // Check whether at end of conditonal branch and "look outside"
                 } else if (parent instanceof Conditional) {
                     val cond = parent as Conditional
                     parent = parent.eContainer.eContainer as StatementSequence
                     index = parent.statements.indexOf(cond.eContainer)
+                } else {
+                    continue = false
                 }
             }
         }
