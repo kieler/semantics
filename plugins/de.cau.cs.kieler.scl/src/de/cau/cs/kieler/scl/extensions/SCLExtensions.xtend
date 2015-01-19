@@ -174,30 +174,38 @@ class SCLExtensions {
         for (emptyStm : sSeq.eAllContents.toList.filter(typeof(EmptyStatement))) {
             var EList<Statement> stmList
             var parent = emptyStm.eContainer as StatementSequence
+
             // Continue if in conditional
             var continue = true
+
             // Check whether label is in conditional and in which branch
+            if ((parent instanceof Conditional) && (parent as Conditional).elseStatements.contains(emptyStm)) {
+                stmList = (parent as Conditional).elseStatements
+            } else {
+                stmList = parent.statements
+            }
+            var index = stmList.indexOf(emptyStm) + 1
+            var Statement curStm = emptyStm
             while (continue) {
-                if ((parent instanceof Conditional) && (parent as Conditional).elseStatements.contains(emptyStm)) {
-                    stmList = (parent as Conditional).elseStatements
-                } else {
-                    stmList = parent.statements
-                }
-                var index = stmList.indexOf(emptyStm)
-                if (stmList.size > index + 1) {
-                    val nextStatement = stmList.get(index + 1) as Statement
+                if (stmList.size > index) {
+                    val nextStatement = stmList.get(index) as Statement
                     if (nextStatement instanceof InstructionStatement &&
                         (nextStatement as InstructionStatement).instruction instanceof Goto) {
                         val goto = ((nextStatement as InstructionStatement).instruction as Goto)
                         replaceBy += emptyStm.label -> goto.targetLabel
                     }
                     continue = false;
-                //TODO what if label in else branch?
+
                 // Check whether at end of conditonal branch and "look outside"
                 } else if (parent instanceof Conditional) {
-                    val cond = parent as Conditional
+                    curStm = parent.eContainer as Statement
                     parent = parent.eContainer.eContainer as StatementSequence
-                    index = parent.statements.indexOf(cond.eContainer)
+                    if ((parent instanceof Conditional) && (parent as Conditional).elseStatements.contains(curStm)) {
+                        stmList = (parent as Conditional).elseStatements
+                    } else {
+                        stmList = parent.statements
+                    }
+                    index = stmList.indexOf(curStm) + 1
                 } else {
                     continue = false
                 }
