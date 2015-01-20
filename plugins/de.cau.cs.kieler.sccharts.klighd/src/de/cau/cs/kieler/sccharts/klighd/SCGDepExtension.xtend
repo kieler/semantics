@@ -18,6 +18,7 @@ import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KLabel
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.Colors
+import de.cau.cs.kieler.core.krendering.KRectangle
 import de.cau.cs.kieler.core.krendering.KRenderingFactory
 import de.cau.cs.kieler.core.krendering.LineStyle
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
@@ -29,7 +30,7 @@ import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.internal.TracingEdgeNode
 import de.cau.cs.kieler.kitt.tracing.TracingManager
-import de.cau.cs.kieler.klighd.ViewContext
+import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.Action
@@ -41,11 +42,12 @@ import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.RelativeWrite_Read
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Write_Write
-import org.eclipse.emf.ecore.EObject
+import java.util.Collection
 import java.util.HashMap
+import org.eclipse.emf.ecore.EObject
+
 import static extension com.google.common.base.Predicates.*
-import de.cau.cs.kieler.core.krendering.KText
-import de.cau.cs.kieler.core.krendering.KRectangle
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 
 /**
  * @author als
@@ -82,21 +84,39 @@ class SCGDepExtension {
             val result = KielerCompiler.compile("SCGDEP", scc, true, false);
             val compiledModel = result.object;
             val attachNode = rootNode.children.head;
+            val equivalenceClasses = new TracingMapping(null);
+
+            scc.eAllContents.forEach [
+                var elements = tracking.getTargetElements(it);
+                //If no diagram element is associated with the given model element its container is used to find an appropriate representation
+                if (elements.empty && it instanceof EObject) {
+                    var next = (it as EObject)
+                    while (elements.empty && next != null) {
+                        next = next.eContainer;
+                        elements = tracking.getTargetElements(next);
+                    }
+                    equivalenceClasses.putAll(it, elements);
+                }
+            ];
+
             if (compiledModel instanceof SCGraph && attachNode != null) {
                 val scg = compiledModel as SCGraph;
 
                 val mapping = TracingManager.getMapping(scg, scc);
                 if (mapping != null) {
-                    val filterPredicate = KLabel.instanceOf.or(KRectangle.instanceOf);
-                    for (Assignment ass : scg.nodes.filter(Assignment)) {
-                        val sources = mapping.get(ass).filter(Action).fold(newHashSet()) [ list, item |
-                            list.addAll(tracking.getTargetElements(item).filter(filterPredicate));
+                    val filterDiagramPredicate = KLabel.instanceOf.or(KRectangle.instanceOf);
+                    val filterModelPredicate = Action.instanceOf.or(ValuedObject.instanceOf);
+                    for (Assignment asng : scg.nodes.filter(Assignment)) {
+                        val sources = mapping.get(asng).filter(filterModelPredicate).fold(newHashSet()) [ list, item |
+                            list.addAll(tracking.getTargetElements(item).filter(filterDiagramPredicate));
+                            list.addAll(equivalenceClasses.getTargets(item).filter(EObject).filter(filterDiagramPredicate).toList);
                             list;
                         ];
-                        for (Dependency dep : ass.dependencies) {
+                        for (Dependency dep : asng.dependencies) {
                             if (!dep.confluent && dep.concurrent) {
-                                val targets = mapping.get(dep.target).filter(Action).fold(newHashSet()) [ list, item |
-                                    list.addAll(tracking.getTargetElements(item).filter(filterPredicate));
+                                val targets = mapping.get(dep.target).filter(filterModelPredicate).fold(newHashSet()) [ list, item |
+                                    list.addAll(tracking.getTargetElements(item).filter(filterDiagramPredicate));
+                                    list.addAll(equivalenceClasses.getTargets(item).filter(EObject).filter(filterDiagramPredicate));
                                     list;
                                 ];
                                 for (EObject source : sources) {

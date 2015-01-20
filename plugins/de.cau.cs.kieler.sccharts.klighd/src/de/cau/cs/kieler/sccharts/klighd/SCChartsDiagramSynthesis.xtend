@@ -72,6 +72,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.serializer.ISerializer
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
