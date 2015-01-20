@@ -1078,10 +1078,11 @@ public class KielerCompiler {
             //Perform transformation and traces all steps
             TransformationTracing.startTransformationTracing(transformedObject, transformationID);
             object = transformation.doTransform(transformedObject, context);
-            TransformationTracing.finishTransformationTracing(transformedObject, object);
         } catch (Exception exception) {
             context.getCompilationResult().addPostponedError(
                     new KielerCompilerException(transformationID, exception));
+        } finally{
+            TransformationTracing.finishTransformationTracing(transformedObject, object);
         }
 
         if (object != null) {
