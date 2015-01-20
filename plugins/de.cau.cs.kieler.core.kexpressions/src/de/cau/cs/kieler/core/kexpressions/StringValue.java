@@ -1,15 +1,11 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.core.kexpressions;
 
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Int Value</b></em>'.
+ * A representation of the model object '<em><b>String Value</b></em>'.
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
@@ -19,15 +15,15 @@ package de.cau.cs.kieler.core.kexpressions;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.core.kexpressions.IntValue#getValue <em>Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.kexpressions.StringValue#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getIntValue()
+ * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getStringValue()
  * @model
  * @generated
  */
-public interface IntValue extends Value {
+public interface StringValue extends Value {
     /**
 	 * Returns the value of the '<em><b>Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -37,21 +33,21 @@ public interface IntValue extends Value {
      * </p>
      * <!-- end-user-doc -->
 	 * @return the value of the '<em>Value</em>' attribute.
-	 * @see #setValue(Integer)
-	 * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getIntValue_Value()
+	 * @see #setValue(String)
+	 * @see de.cau.cs.kieler.core.kexpressions.KExpressionsPackage#getStringValue_Value()
 	 * @model required="true"
 	 * @generated
 	 */
-    Integer getValue();
+    String getValue();
 
     /**
-	 * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.IntValue#getValue <em>Value</em>}' attribute.
+	 * Sets the value of the '{@link de.cau.cs.kieler.core.kexpressions.StringValue#getValue <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Value</em>' attribute.
 	 * @see #getValue()
 	 * @generated
 	 */
-    void setValue(Integer value);
+    void setValue(String value);
 
-} // IntValue
+} // StringValue

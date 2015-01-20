@@ -7990,8 +7990,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
     static final String DFA1_specialS =
         "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\2\uffff}>";
     static final String[] DFA1_transitionS = {
-            "\1\10\1\12\1\2\1\3\1\5\7\uffff\1\4\3\uffff\1\11\11\uffff\1\6"+
-            "\1\uffff\1\13\1\uffff\1\1\3\uffff\1\7",
+            "\1\10\1\12\1\2\1\3\1\5\7\uffff\1\4\3\uffff\1\11\11\uffff\1\6\1\uffff\1\13\1\uffff\1\1\3\uffff\1\7",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -8213,8 +8212,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
     static final String DFA7_specialS =
         "\4\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\uffff}>";
     static final String[] DFA7_transitionS = {
-            "\1\10\1\12\2\1\1\5\7\uffff\1\4\3\uffff\1\11\11\uffff\1\6\1\uffff"+
-            "\1\13\1\uffff\1\1\3\uffff\1\7",
+            "\1\10\1\12\2\1\1\5\7\uffff\1\4\3\uffff\1\11\11\uffff\1\6\1\uffff\1\13\1\uffff\1\1\3\uffff\1\7",
             "",
             "",
             "",
@@ -8406,8 +8404,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
     static final String DFA8_specialS =
         "\4\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\uffff}>";
     static final String[] DFA8_transitionS = {
-            "\1\10\1\12\2\1\1\5\7\uffff\1\4\3\uffff\1\11\11\uffff\1\6\1\uffff"+
-            "\1\13\1\uffff\1\1\3\uffff\1\7",
+            "\1\10\1\12\2\1\1\5\7\uffff\1\4\3\uffff\1\11\11\uffff\1\6\1\uffff\1\13\1\uffff\1\1\3\uffff\1\7",
             "",
             "",
             "",
@@ -8583,8 +8580,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
     static final String DFA17_specialS =
         "\3\uffff\1\0\7\uffff}>";
     static final String[] DFA17_transitionS = {
-            "\2\4\1\1\1\2\1\4\7\uffff\1\3\3\uffff\1\4\11\uffff\1\4\7\uffff"+
-            "\1\4",
+            "\2\4\1\1\1\2\1\4\7\uffff\1\3\3\uffff\1\4\11\uffff\1\4\7\uffff\1\4",
             "",
             "",
             "\1\uffff",
@@ -8672,8 +8668,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             "\1\1\16\uffff\1\2",
             "",
             "\1\3",
-            "\1\12\1\uffff\1\10\1\11\1\7\1\6\1\12\5\uffff\2\6\1\5\5\uffff"+
-            "\1\6\1\4",
+            "\1\12\1\uffff\1\10\1\11\1\7\1\6\1\12\5\uffff\2\6\1\5\5\uffff\1\6\1\4",
             "\1\13",
             "",
             "",
@@ -8681,8 +8676,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             "",
             "",
             "",
-            "\1\12\1\uffff\1\10\1\11\1\7\1\6\1\12\5\uffff\2\6\1\5\5\uffff"+
-            "\1\6\1\4"
+            "\1\12\1\uffff\1\10\1\11\1\7\1\6\1\12\5\uffff\2\6\1\5\5\uffff\1\6\1\4"
     };
 
     static final short[] DFA24_eot = DFA.unpackEncodedString(DFA24_eotS);
