@@ -22,7 +22,8 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.HashMap
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * SCCharts Abort Transformation.
@@ -303,6 +304,7 @@ class Abort {
 
     // Traverse all states 
     def void transformAbortNoWTO(State state, State targetRootState) {
+        state.setDefaultTrace;
         // (a) more than one transitions outgoing OR
         // (b) ONE outgoing transition AND
         //     + not a termination transition without any trigger
@@ -352,6 +354,7 @@ class Abort {
                 var strongImmediateTrigger = false;
                 var Expression weakAbortTrigger = null;
                 for (transition : outgoingTransitions) {
+                    transition.setDefaultTrace;
                     if (transition.typeStrongAbort) {
                             strongAbortTrigger = strongAbortTrigger.or2(transition.trigger.copy)
                             strongImmediateTrigger = strongImmediateTrigger || transition.immediate2
@@ -374,6 +377,7 @@ class Abort {
 
                 var Expression terminationTrigger;
 
+                state.setDefaultTrace;
                 // For each region encapsulate it into a _Main state and add a _Term variable
                 // also to the terminationTrigger
                 for (region : regions) {
@@ -426,6 +430,7 @@ class Abort {
                 // we do not need a ctrlRegion iff there are no conditional terminations or
                 // delayed terminations
                 for (transition : outgoingTransitions) {
+                    transition.setDefaultTrace;
                     if (needCtrlRegion) {
                         //(transition.typeTermination && (!(transition.immediate2) || (transition.trigger != null)))
                         //||
@@ -462,6 +467,7 @@ class Abort {
 
             }
 
+            state.setDefaultTrace;
             // Create a single outgoing normal termination to a new connector state
             val outgoingConnectorState = state.parentRegion.createState(GENERATED_PREFIX + "C").uniqueNameCached(nameCache).
                 setTypeConnector
@@ -472,7 +478,8 @@ class Abort {
             val defaultTransition = outgoingTransitions.last
             
             for (transition : outgoingTransitions) {
-
+                transition.setDefaultTrace;
+                
                 // Modify the outgoing transition
                 transition.setSourceState(outgoingConnectorState)
 
@@ -506,8 +513,10 @@ class Abort {
                 transition.setTypeTermination
                 transition.setTrigger(null)
                 val transitionToDelete = outgoingConnectorState.incomingTransitions.get(0)
+                transitionToDelete.trace(transition)
                 state.outgoingTransitions.remove(transitionToDelete)
                 state.outgoingTransitions.add(transition)
+                outgoingConnectorState.trace(transition)
                 state.parentRegion.states.remove(outgoingConnectorState)
             }
 

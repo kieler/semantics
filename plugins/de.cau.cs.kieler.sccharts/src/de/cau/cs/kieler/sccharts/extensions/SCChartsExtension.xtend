@@ -42,17 +42,15 @@ import de.cau.cs.kieler.sccharts.TextEffect
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.TransitionType
 import java.util.ArrayList
-import java.util.Collection
 import java.util.Iterator
 import java.util.List
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.util.EcoreUtil
 
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.sccharts.iterators.StateIterator.*
 import static extension java.util.Collections.*
-import java.util.Comparator
 
 /**
  * SCCharts Extensions.
@@ -214,7 +212,7 @@ class SCChartsExtension {
     
     def State createSCChart() {
         val state = SCChartsFactory::eINSTANCE.createState();
-        return state.traceToDefault;
+        return state;
     }
 
     // Gets the list of non-empty regions
@@ -257,20 +255,20 @@ class SCChartsExtension {
         val state = SCChartsFactory::eINSTANCE.createState();
         state.setId(id)
         state.setLabel("")
-        state.traceToDefault
+        state
     }
 
     def State createState(Region region, String id, String label) {
         val state = createState(id)
         region.states.add(state)
-        state.traceToDefault
+        state
     }
 
     def State createState(Region region, String id) {
         val state = createState(id)
         state.setLabel(id)
         region.states.add(state)
-        state.traceToDefault
+        state
     }
 
 
@@ -419,19 +417,19 @@ class SCChartsExtension {
     }
 
     def State createInitialState(String id) {
-        createState(id).setInitial.traceToDefault
+        createState(id).setInitial
     }
     
     def State createFinalState(String id) {
-        createState(id).setFinal.traceToDefault
+        createState(id).setFinal
     }
     
     def State createInitialState(Region region, String id) {
-        region.createState(id).setInitial.traceToDefault
+        region.createState(id).setInitial
     }
     
     def State createFinalState(Region region, String id) {
-        region.createState(id).setFinal.traceToDefault
+        region.createState(id).setFinal
     }
     
     def State getInitialState(Region region) {
@@ -465,7 +463,7 @@ class SCChartsExtension {
         if (finalState != null) {
             return finalState
         }
-        region.createState(id).setFinal.traceToDefault
+        region.createState(id).setFinal
     }
 
     def State setLabel2(State state, String label) {
@@ -507,7 +505,7 @@ class SCChartsExtension {
         val region = SCChartsFactory::eINSTANCE.createRegion();
         region.setId(id)
         region.setLabel(id)
-        region.traceToDefault
+        region
     }
 
     def Region createRegion(State state, String id) {
@@ -559,11 +557,11 @@ class SCChartsExtension {
 
     def Transition createTransition() {
         val transition = SCChartsFactory::eINSTANCE.createTransition()
-        transition.setPriority2(1).traceToDefault
+        transition.setPriority2(1)
     }
     
     def Transition createImmediateTransition() {
-        createTransition.setImmediate.traceToDefault
+        createTransition.setImmediate
     }
     
     def Transition createTransitionTo(State sourceState, State targetState) {
@@ -662,7 +660,7 @@ class SCChartsExtension {
 //                containedState.outgoingTransitions.add(transition) 
 //                transition.setPriority(0)
 //            }
-            //als: New implementation avoids ADD / REMOVE events on eList improving performance
+            //als: New implementation avoids calls of remove and add
             containedState.outgoingTransitions.sort([first, second | first.priority - second.priority ]);
         }
         state
@@ -717,7 +715,7 @@ class SCChartsExtension {
     def DuringAction createDuringAction(State state) {
         val action = SCChartsFactory::eINSTANCE.createDuringAction
         state.localActions.add(action);
-        action.traceToDefault
+        action
     }
     
     // Retrieves the first during action if there is any or returns a new one
@@ -743,7 +741,7 @@ class SCChartsExtension {
     def EntryAction createEntryAction(State state) {
         val action = SCChartsFactory::eINSTANCE.createEntryAction
         state.localActions.add(action);
-        action.traceToDefault
+        action
     }
 
     // Create an immediate entry action for a state.
@@ -757,7 +755,7 @@ class SCChartsExtension {
     def ExitAction createExitAction(State state) {
         val action = SCChartsFactory::eINSTANCE.createExitAction
         state.localActions.add(action);
-        action.traceToDefault
+        action
     }
 
     // Create an immediate exit action for a state.
@@ -771,7 +769,7 @@ class SCChartsExtension {
     def SuspendAction createSuspendAction(State state) {
         val action = SCChartsFactory::eINSTANCE.createSuspendAction
         state.localActions.add(action);
-        action.traceToDefault
+        action
     }
 
     // Create an immediate suspend action for a state.
@@ -805,14 +803,14 @@ class SCChartsExtension {
     //Create a during action for a state.
     def Emission createEmission() {
         val emission = SCChartsFactory::eINSTANCE.createEmission
-        emission.traceToDefault
+        emission
     } 
     
     // Create an Assignment.
     def Assignment assign(ValuedObject valuedObject) {
         val assignment = SCChartsFactory::eINSTANCE.createAssignment()
         assignment.setValuedObject(valuedObject)
-        assignment.traceToDefault
+        assignment
     }
 
     // Create an Assignment and add it sequentially to an action's effects list.
@@ -856,14 +854,14 @@ class SCChartsExtension {
     def TextEffect createTextEffect(String text) {
         val extEffect = SCChartsFactory::eINSTANCE.createTextEffect
         extEffect.setText(text)
-        extEffect.traceToDefault
+        extEffect
     }
     
     // Create an Emission.
     def Emission emit(ValuedObject valuedObject) {
         val emission = SCChartsFactory::eINSTANCE.createEmission()
         emission.setValuedObject(valuedObject)
-        emission.traceToDefault
+        emission
     }
 
     // Create an Emission and add it sequentially to an action's effects list.
@@ -1296,20 +1294,4 @@ class SCChartsExtension {
         newState
     }
     
-    //-----------------------------------------
-    //--              TRACING                --
-    //-----------------------------------------
-    
-    def <T extends EObject> T copy(T original) {
-        return original.tracedCopy;
-    }
-
-    def <T extends EObject> Collection<T> copyAll(Iterable<T> originals) {
-        return originals.map[it.tracedCopy].toList;
-    }
-
-    def replace(EObject eObject, EObject replacementEObject) {
-        EcoreUtil.replace(eObject, replacementEObject);
-    }
-
 }

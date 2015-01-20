@@ -21,6 +21,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
 import de.cau.cs.kieler.sccharts.extensions.SCChartsOptimization
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * SCCharts SurfaceDepth Transformation.
