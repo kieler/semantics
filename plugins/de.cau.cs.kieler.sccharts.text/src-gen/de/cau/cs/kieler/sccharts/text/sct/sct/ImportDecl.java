@@ -26,55 +26,55 @@ import org.eclipse.emf.ecore.EObject;
 public interface ImportDecl extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Imported Type</b></em>' reference.
-   * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Imported Type</b></em>' reference.
+	 * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Imported Type</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Imported Type</em>' reference.
-   * @see #setImportedType(State)
-   * @see de.cau.cs.kieler.sccharts.text.sct.sct.SctPackage#getImportDecl_ImportedType()
-   * @model
-   * @generated
-   */
+	 * @return the value of the '<em>Imported Type</em>' reference.
+	 * @see #setImportedType(State)
+	 * @see de.cau.cs.kieler.sccharts.text.sct.sct.SctPackage#getImportDecl_ImportedType()
+	 * @model
+	 * @generated
+	 */
   State getImportedType();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.sccharts.text.sct.sct.ImportDecl#getImportedType <em>Imported Type</em>}' reference.
-   * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.text.sct.sct.ImportDecl#getImportedType <em>Imported Type</em>}' reference.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Imported Type</em>' reference.
-   * @see #getImportedType()
-   * @generated
-   */
+	 * @param value the new value of the '<em>Imported Type</em>' reference.
+	 * @see #getImportedType()
+	 * @generated
+	 */
   void setImportedType(State value);
 
   /**
-   * Returns the value of the '<em><b>Imported Namespace</b></em>' attribute.
-   * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Imported Namespace</b></em>' attribute.
+	 * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Imported Namespace</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Imported Namespace</em>' attribute.
-   * @see #setImportedNamespace(String)
-   * @see de.cau.cs.kieler.sccharts.text.sct.sct.SctPackage#getImportDecl_ImportedNamespace()
-   * @model
-   * @generated
-   */
+	 * @return the value of the '<em>Imported Namespace</em>' attribute.
+	 * @see #setImportedNamespace(String)
+	 * @see de.cau.cs.kieler.sccharts.text.sct.sct.SctPackage#getImportDecl_ImportedNamespace()
+	 * @model
+	 * @generated
+	 */
   String getImportedNamespace();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.sccharts.text.sct.sct.ImportDecl#getImportedNamespace <em>Imported Namespace</em>}' attribute.
-   * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.sccharts.text.sct.sct.ImportDecl#getImportedNamespace <em>Imported Namespace</em>}' attribute.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Imported Namespace</em>' attribute.
-   * @see #getImportedNamespace()
-   * @generated
-   */
+	 * @param value the new value of the '<em>Imported Namespace</em>' attribute.
+	 * @see #getImportedNamespace()
+	 * @generated
+	 */
   void setImportedNamespace(String value);
 
 } // ImportDecl

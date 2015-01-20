@@ -17,16 +17,30 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 //import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import de.cau.cs.kieler.core.kgraph.KGraphData;
+import de.cau.cs.kieler.core.kgraph.KGraphElement;
+import de.cau.cs.kieler.core.kgraph.KNode;
+import de.cau.cs.kieler.core.kgraph.impl.KGraphDataImpl;
 import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.kiml.util.KimlUtil;
 import de.cau.cs.kieler.klighd.IOffscreenRenderer;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
+import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.piccolo.export.SVGOffscreenRenderer;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
+import de.cau.cs.kieler.klighd.util.ModelingUtil;
 import de.cau.cs.kieler.server.HttpHeader;
 import de.cau.cs.kieler.server.HttpQuery;
 import de.cau.cs.kieler.server.HttpRequest;
@@ -129,31 +143,75 @@ public class KlighdServer extends HttpServer {
             }
             debug("Model parsed");
 
-            // Render model
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            final EObject mainModelParam = mainModel;
-            final String renderParam = render;
-            final ByteArrayOutputStream outputStreamParam = outputStream;
-            final KlighdSynthesisProperties properties =
-                    KlighdSynthesisProperties
-                            .create()
-                            .setProperty2(SVGOffscreenRenderer.GENERATOR,
-                                    "de.cau.cs.kieler.klighd.piccolo.svggen.freeHEP")
-                            .setProperty2(IOffscreenRenderer.IMAGE_SCALE, scaleInteger);
-            renderingResult =
-                    LightDiagramServices.renderOffScreen(mainModelParam, renderParam,
-                            outputStreamParam, properties);
+            ByteArrayOutputStream outputStream  = new ByteArrayOutputStream();
+            // ========= KGX ========
+            if (render2.equals("kgx")) {
+                // build up a corresponding view context
+                final ViewContext viewContext =
+                        LightDiagramServices.translateModel2(mainModel, null);
+                ResourceSet rs = new ResourceSetImpl();
+                Resource r = rs.createResource(URI.createPlatformResourceURI("Dummy.kgx", true));
+                // write a copy of the view model kgraph to the selected file
+                EObject copy = EcoreUtil.copy(viewContext.getViewModel());
+                // persist layout options and friends
+                KimlUtil.persistDataElements((KNode) copy);
+                // remove transient klighd state
+                @SuppressWarnings("unchecked")
+                Iterator<KGraphElement> kgeIt =
+                        (Iterator<KGraphElement>) (Iterator<?>) ModelingUtil
+                                .selfAndEAllContentsOfType2(copy, KGraphElement.class);
+                try {
+                    while (kgeIt.hasNext()) {
+                        KGraphElement kge = kgeIt.next();
+                        Iterator<KGraphData> dataIt = kge.getData().iterator();
+                        while (dataIt.hasNext()) {
+                            KGraphData d = dataIt.next();
+                            // RenderinContextData
+                            if (d.getClass().equals(KGraphDataImpl.class)) {
+                                dataIt.remove();
+                            }
+                        }
+                    }
+                } catch (Throwable t) {
+                    t.printStackTrace();
+                }
+                r.getContents().add(copy);
+                try {
+                    // Render KGX model and save it to output stream
+                    r.save(outputStream, Collections.emptyMap());
+                    outputStream.flush();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            } else {
+                final ByteArrayOutputStream outputStreamParam = outputStream;
+                // // Render model
+                // ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                // final ByteArrayOutputStream outputStreamParam = outputStream;
+                final EObject mainModelParam = mainModel;
+                final String renderParam = render;
+                final KlighdSynthesisProperties properties =
+                        KlighdSynthesisProperties
+                                .create()
+                                .setProperty2(SVGOffscreenRenderer.GENERATOR,
+                                        "de.cau.cs.kieler.klighd.piccolo.svggen.freeHEP")
+                                .setProperty2(IOffscreenRenderer.IMAGE_SCALE, scaleInteger);
+                renderingResult =
+                        LightDiagramServices.renderOffScreen(mainModelParam, renderParam,
+                                outputStreamParam, properties);
+                try {
+                    outputStreamParam.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
             debug("Model rendered");
 
-            try {
-                outputStreamParam.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
             byte[] serializedRenderedModel = null;
             String errors = "";
-            if (renderingResult != null && renderingResult.getCode() == IStatus.OK) {
+            if ((renderingResult != null && renderingResult.getCode() == IStatus.OK) || render2.equals("kgx")) {
                 // everything ok, return output stream
                 serializedRenderedModel = outputStream.toByteArray();
                 // String bla = new String(serializedRenderedModel);
@@ -168,6 +226,7 @@ public class KlighdServer extends HttpServer {
                 errors = serializedRenderedModelString;
             }
             debug("Model serialized");
+            errors = "";
 
             HttpHeader responseHeader = new HttpHeader();
             responseHeader.setStatusOk();
@@ -182,15 +241,17 @@ public class KlighdServer extends HttpServer {
             if (errors.length() > 0) {
                 responseHeader.setHeaderField("render-error", HttpUtils.encodeURL(errors));
             }
-            
+
             responseHeader.setHeaderField("Access-Control-Allow-Origin", "*");
-            responseHeader.setHeaderField("Access-Control-Expose-Headers", "compile-error,compile-warning");
-            
+            responseHeader.setHeaderField("Access-Control-Expose-Headers",
+                    "compile-error,compile-warning");
+
             if (query.getValue("encoding").toLowerCase().equals("base64")) {
                 responseHeader.setHeaderField("Content-Transfer-Encoding", "base64");
-                serializedRenderedModel = (HttpUtils.encodeBase64(serializedRenderedModel)).getBytes();
-            } 
-              
+                serializedRenderedModel =
+                        (HttpUtils.encodeBase64(serializedRenderedModel)).getBytes();
+            }
+
             responseHeader.setContentLength(serializedRenderedModel.length);
             response.setBody(serializedRenderedModel, false);
 
@@ -207,6 +268,7 @@ public class KlighdServer extends HttpServer {
             // response.setBody(responeBody);
 
             return response;
+
         }
 
         return null;

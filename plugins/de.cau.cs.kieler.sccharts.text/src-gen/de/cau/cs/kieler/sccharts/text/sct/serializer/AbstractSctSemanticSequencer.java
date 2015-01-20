@@ -18,6 +18,7 @@ import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.Parameter;
+import de.cau.cs.kieler.core.kexpressions.StringValue;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
@@ -266,6 +267,28 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 			case KExpressionsPackage.PARAMETER:
 				if(context == grammarAccess.getParameterRule()) {
 					sequence_Parameter(context, (Parameter) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.STRING_VALUE:
+				if(context == grammarAccess.getAddExpressionRule() ||
+				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAtomicValuedExpressionRule() ||
+				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
+				   context == grammarAccess.getDivExpressionRule() ||
+				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getExpressionRule() ||
+				   context == grammarAccess.getModExpressionRule() ||
+				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getMultExpressionRule() ||
+				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getNegExpressionRule() ||
+				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getStringValueRule() ||
+				   context == grammarAccess.getSubExpressionRule() ||
+				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getValuedExpressionRule()) {
+					sequence_StringValue(context, (StringValue) semanticObject); 
 					return; 
 				}
 				else break;

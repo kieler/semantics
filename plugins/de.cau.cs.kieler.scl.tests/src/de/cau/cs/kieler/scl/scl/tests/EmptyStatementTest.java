@@ -16,55 +16,55 @@ import junit.textui.TestRunner;
 public class EmptyStatementTest extends StatementTest {
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static void main(String[] args) {
-        TestRunner.run(EmptyStatementTest.class);
-    }
+		TestRunner.run(EmptyStatementTest.class);
+	}
 
     /**
-     * Constructs a new Empty Statement test case with the given name.
-     * <!-- begin-user-doc -->
+	 * Constructs a new Empty Statement test case with the given name.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EmptyStatementTest(String name) {
-        super(name);
-    }
+		super(name);
+	}
 
     /**
-     * Returns the fixture for this Empty Statement test case.
-     * <!-- begin-user-doc -->
+	 * Returns the fixture for this Empty Statement test case.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EmptyStatement getFixture() {
-        return (EmptyStatement)fixture;
-    }
+		return (EmptyStatement)fixture;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see junit.framework.TestCase#setUp()
-     * @generated
-     */
+	 * @see junit.framework.TestCase#setUp()
+	 * @generated
+	 */
     @Override
     protected void setUp() throws Exception {
-        setFixture(SclFactory.eINSTANCE.createEmptyStatement());
-    }
+		setFixture(SclFactory.eINSTANCE.createEmptyStatement());
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see junit.framework.TestCase#tearDown()
-     * @generated
-     */
+	 * @see junit.framework.TestCase#tearDown()
+	 * @generated
+	 */
     @Override
     protected void tearDown() throws Exception {
-        setFixture(null);
-    }
+		setFixture(null);
+	}
 
 } //EmptyStatementTest

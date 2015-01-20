@@ -459,6 +459,9 @@ public class DeclarationImpl extends AnnotatableImpl implements Declaration {
 
 				/**
 	 * <!-- begin-user-doc -->
+=======
+     * <!-- begin-user-doc -->
+>>>>>>> refs/remotes/origin/master
      * <!-- end-user-doc -->
 	 * @generated
 	 */

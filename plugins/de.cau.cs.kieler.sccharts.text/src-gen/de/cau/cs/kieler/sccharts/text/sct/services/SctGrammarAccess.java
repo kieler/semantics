@@ -1419,34 +1419,52 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0() { return cTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0; }
 	}
 	
-	private RootElements pRoot;
-	private SingleRegionElements pSingleRegion;
-	private ForElements pFor;
-	private RegionElements pRegion;
-	private SCChartElements pSCChart;
-	private ImportDeclElements pImportDecl;
-	private QualifiedNameElements pQualifiedName;
-	private QualifiedNameWithWildcardElements pQualifiedNameWithWildcard;
-	private StateElements pState;
-	private LocalActionElements pLocalAction;
-	private TransitionElements pTransition;
-	private DeclarationElements pDeclaration;
-	private ValuedObjectElements pValuedObject;
-	private TextualCodeElements pTextualCode;
-	private BindingElements pBinding;
-	private StateTypeElements unknownRuleStateType;
-	private TransitionTypeElements unknownRuleTransitionType;
-	private TransitionTypeLegacyElements unknownRuleTransitionTypeLegacy;
+	private final RootElements pRoot;
+	private final SingleRegionElements pSingleRegion;
+	private final ForElements pFor;
+	private final RegionElements pRegion;
+	private final SCChartElements pSCChart;
+	private final ImportDeclElements pImportDecl;
+	private final QualifiedNameElements pQualifiedName;
+	private final QualifiedNameWithWildcardElements pQualifiedNameWithWildcard;
+	private final StateElements pState;
+	private final LocalActionElements pLocalAction;
+	private final TransitionElements pTransition;
+	private final DeclarationElements pDeclaration;
+	private final ValuedObjectElements pValuedObject;
+	private final TextualCodeElements pTextualCode;
+	private final BindingElements pBinding;
+	private final StateTypeElements unknownRuleStateType;
+	private final TransitionTypeElements unknownRuleTransitionType;
+	private final TransitionTypeLegacyElements unknownRuleTransitionTypeLegacy;
 	
 	private final Grammar grammar;
 
-	private ActionsGrammarAccess gaActions;
+	private final ActionsGrammarAccess gaActions;
 
 	@Inject
 	public SctGrammarAccess(GrammarProvider grammarProvider,
 		ActionsGrammarAccess gaActions) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaActions = gaActions;
+		this.pRoot = new RootElements();
+		this.pSingleRegion = new SingleRegionElements();
+		this.pFor = new ForElements();
+		this.pRegion = new RegionElements();
+		this.pSCChart = new SCChartElements();
+		this.pImportDecl = new ImportDeclElements();
+		this.pQualifiedName = new QualifiedNameElements();
+		this.pQualifiedNameWithWildcard = new QualifiedNameWithWildcardElements();
+		this.pState = new StateElements();
+		this.pLocalAction = new LocalActionElements();
+		this.pTransition = new TransitionElements();
+		this.pDeclaration = new DeclarationElements();
+		this.pValuedObject = new ValuedObjectElements();
+		this.pTextualCode = new TextualCodeElements();
+		this.pBinding = new BindingElements();
+		this.unknownRuleStateType = new StateTypeElements();
+		this.unknownRuleTransitionType = new TransitionTypeElements();
+		this.unknownRuleTransitionTypeLegacy = new TransitionTypeLegacyElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -1480,7 +1498,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//Root returns sccharts::State:
 	//	SCChart;
 	public RootElements getRootAccess() {
-		return (pRoot != null) ? pRoot : (pRoot = new RootElements());
+		return pRoot;
 	}
 	
 	public ParserRule getRootRule() {
@@ -1493,7 +1511,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//	declarations+=Declaration*)? //      (bodyText+=TextualCode)* 
 	//	states+=State*;
 	public SingleRegionElements getSingleRegionAccess() {
-		return (pSingleRegion != null) ? pSingleRegion : (pSingleRegion = new SingleRegionElements());
+		return pSingleRegion;
 	}
 	
 	public ParserRule getSingleRegionRule() {
@@ -1504,7 +1522,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//For returns sccharts::For:
 	//	{sccharts::For} valuedObject=ValuedObject "=" from=INT ".." to=INT;
 	public ForElements getForAccess() {
-		return (pFor != null) ? pFor : (pFor = new ForElements());
+		return pFor;
 	}
 	
 	public ParserRule getForRule() {
@@ -1516,7 +1534,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//	{sccharts::Region} annotations+=Annotation* "region" id=ID? label=STRING? ("[" for=For "]")? ":"
 	//	declarations+=Declaration* states+=State+;
 	public RegionElements getRegionAccess() {
-		return (pRegion != null) ? pRegion : (pRegion = new RegionElements());
+		return pRegion;
 	}
 	
 	public ParserRule getRegionRule() {
@@ -1532,7 +1550,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//	bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion
 	//	regions+=Region*)?) "}")?;
 	public SCChartElements getSCChartAccess() {
-		return (pSCChart != null) ? pSCChart : (pSCChart = new SCChartElements());
+		return pSCChart;
 	}
 	
 	public ParserRule getSCChartRule() {
@@ -1542,7 +1560,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//ImportDecl:
 	//	"import" (importedType=[sccharts::State|QualifiedName] | importedNamespace=QualifiedNameWithWildcard);
 	public ImportDeclElements getImportDeclAccess() {
-		return (pImportDecl != null) ? pImportDecl : (pImportDecl = new ImportDeclElements());
+		return pImportDecl;
 	}
 	
 	public ParserRule getImportDeclRule() {
@@ -1552,7 +1570,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//QualifiedName:
 	//	ID ("." ID)*;
 	public QualifiedNameElements getQualifiedNameAccess() {
-		return (pQualifiedName != null) ? pQualifiedName : (pQualifiedName = new QualifiedNameElements());
+		return pQualifiedName;
 	}
 	
 	public ParserRule getQualifiedNameRule() {
@@ -1562,7 +1580,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//QualifiedNameWithWildcard:
 	//	QualifiedName "." "*";
 	public QualifiedNameWithWildcardElements getQualifiedNameWithWildcardAccess() {
-		return (pQualifiedNameWithWildcard != null) ? pQualifiedNameWithWildcard : (pQualifiedNameWithWildcard = new QualifiedNameWithWildcardElements());
+		return pQualifiedNameWithWildcard;
 	}
 	
 	public ParserRule getQualifiedNameWithWildcardRule() {
@@ -1577,7 +1595,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//	regions+=Region*)?) "}")? // The semicolon is mandatory for the backtracking!
 	//	outgoingTransitions+=Transition* ";";
 	public StateElements getStateAccess() {
-		return (pState != null) ? pState : (pState = new StateElements());
+		return pState;
 	}
 	
 	public ParserRule getStateRule() {
@@ -1588,7 +1606,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//LocalAction returns sccharts::LocalAction:
 	//	EntryAction | DuringAction | ExitAction | SuspendAction;
 	public LocalActionElements getLocalActionAccess() {
-		return (pLocalAction != null) ? pLocalAction : (pLocalAction = new LocalActionElements());
+		return pLocalAction;
 	}
 	
 	public ParserRule getLocalActionRule() {
@@ -1601,7 +1619,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//	(immediate?="immediate"? deferred?="deferred"? history=HistoryType? (("with" delay=INT? trigger=BoolExpression |
 	//	"with")? (("/" | "do") effects+=Effect (";" effects+=Effect)*)? | "with" label=STRING)?)?;
 	public TransitionElements getTransitionAccess() {
-		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
+		return pTransition;
 	}
 	
 	public ParserRule getTransitionRule() {
@@ -1615,7 +1633,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//	input?="input"? output?="output"? signal?="signal"? type=ValueType?) valuedObjects+=ValuedObject (","
 	//	valuedObjects+=ValuedObject)* ";"?;
 	public DeclarationElements getDeclarationAccess() {
-		return (pDeclaration != null) ? pDeclaration : (pDeclaration = new DeclarationElements());
+		return pDeclaration;
 	}
 	
 	public ParserRule getDeclarationRule() {
@@ -1626,7 +1644,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//ValuedObject returns kexpressions::ValuedObject:
 	//	name=ID ("[" cardinalities+=INT "]")* ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)?;
 	public ValuedObjectElements getValuedObjectAccess() {
-		return (pValuedObject != null) ? pValuedObject : (pValuedObject = new ValuedObjectElements());
+		return pValuedObject;
 	}
 	
 	public ParserRule getValuedObjectRule() {
@@ -1637,7 +1655,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//TextualCode returns kexpressions::TextExpression:
 	//	text=HOSTCODE ";";
 	public TextualCodeElements getTextualCodeAccess() {
-		return (pTextualCode != null) ? pTextualCode : (pTextualCode = new TextualCodeElements());
+		return pTextualCode;
 	}
 	
 	public ParserRule getTextualCodeRule() {
@@ -1648,7 +1666,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//Binding returns sccharts::Binding:
 	//	annotations+=Annotation* formal=[kexpressions::ValuedObject] "to" actual=[kexpressions::ValuedObject];
 	public BindingElements getBindingAccess() {
-		return (pBinding != null) ? pBinding : (pBinding = new BindingElements());
+		return pBinding;
 	}
 	
 	public ParserRule getBindingRule() {
@@ -1659,7 +1677,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//enum StateType returns sccharts::StateType:
 	//	NORMAL="normal" | CONNECTOR="connector" | REFERENCE="reference" | TEXTUAL="textual";
 	public StateTypeElements getStateTypeAccess() {
-		return (unknownRuleStateType != null) ? unknownRuleStateType : (unknownRuleStateType = new StateTypeElements());
+		return unknownRuleStateType;
 	}
 	
 	public EnumRule getStateTypeRule() {
@@ -1669,7 +1687,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//enum TransitionType returns sccharts::TransitionType:
 	//	WEAKABORT="goto" | STRONGABORT="abort to" | TERMINATION="join to";
 	public TransitionTypeElements getTransitionTypeAccess() {
-		return (unknownRuleTransitionType != null) ? unknownRuleTransitionType : (unknownRuleTransitionType = new TransitionTypeElements());
+		return unknownRuleTransitionType;
 	}
 	
 	public EnumRule getTransitionTypeRule() {
@@ -1679,7 +1697,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//enum TransitionTypeLegacy returns sccharts::TransitionType:
 	//	WEAKABORT="-->" | STRONGABORT="o->" | TERMINATION=">->";
 	public TransitionTypeLegacyElements getTransitionTypeLegacyAccess() {
-		return (unknownRuleTransitionTypeLegacy != null) ? unknownRuleTransitionTypeLegacy : (unknownRuleTransitionTypeLegacy = new TransitionTypeLegacyElements());
+		return unknownRuleTransitionTypeLegacy;
 	}
 	
 	public EnumRule getTransitionTypeLegacyRule() {
@@ -1982,7 +2000,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AtomicValuedExpression returns Expression:
-	//	IntValue | FloatValue | "(" ValuedExpression ")" | AtomicExpression;
+	//	IntValue | FloatValue | StringValue | "(" ValuedExpression ")" | AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
 		return gaActions.getAtomicValuedExpressionAccess();
 	}
@@ -2063,6 +2081,16 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getBoolValueRule() {
 		return getBoolValueAccess().getRule();
+	}
+
+	//StringValue:
+	//	value=STRING;
+	public KExpressionsGrammarAccess.StringValueElements getStringValueAccess() {
+		return gaActions.getStringValueAccess();
+	}
+	
+	public ParserRule getStringValueRule() {
+		return getStringValueAccess().getRule();
 	}
 
 	//// data type rule allowing any kind of value to be accepted,

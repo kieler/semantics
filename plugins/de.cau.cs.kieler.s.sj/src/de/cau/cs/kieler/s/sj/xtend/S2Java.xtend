@@ -50,6 +50,7 @@ import de.cau.cs.kieler.core.kexpressions.FunctionCall
 import static de.cau.cs.kieler.s.sj.xtend.S2Java.*
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.core.annotations.StringAnnotation
+import de.cau.cs.kieler.core.kexpressions.StringValue
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -592,6 +593,12 @@ class S2Java {
    def dispatch CharSequence expand(FloatValue expression) {
         '''«expression.value.toString»'''
    }
+   
+   
+   def dispatch CharSequence expand(StringValue expression) {
+        '''"«expression.value»"'''
+   }
+   
 
    // Expand a boolean expression value (true or false).
    def dispatch CharSequence expand(BoolValue expression) {

@@ -18,72 +18,72 @@ import junit.textui.TestRunner;
 public class ValuedObjectTest extends TestCase {
 
     /**
-     * The fixture for this Valued Object test case.
-     * <!-- begin-user-doc -->
+	 * The fixture for this Valued Object test case.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ValuedObject fixture = null;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static void main(String[] args) {
-        TestRunner.run(ValuedObjectTest.class);
-    }
+		TestRunner.run(ValuedObjectTest.class);
+	}
 
     /**
-     * Constructs a new Valued Object test case with the given name.
-     * <!-- begin-user-doc -->
+	 * Constructs a new Valued Object test case with the given name.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ValuedObjectTest(String name) {
-        super(name);
-    }
+		super(name);
+	}
 
     /**
-     * Sets the fixture for this Valued Object test case.
-     * <!-- begin-user-doc -->
+	 * Sets the fixture for this Valued Object test case.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected void setFixture(ValuedObject fixture) {
-        this.fixture = fixture;
-    }
+		this.fixture = fixture;
+	}
 
     /**
-     * Returns the fixture for this Valued Object test case.
-     * <!-- begin-user-doc -->
+	 * Returns the fixture for this Valued Object test case.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ValuedObject getFixture() {
-        return fixture;
-    }
+		return fixture;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see junit.framework.TestCase#setUp()
-     * @generated
-     */
+	 * @see junit.framework.TestCase#setUp()
+	 * @generated
+	 */
     @Override
     protected void setUp() throws Exception {
-        setFixture(KExpressionsFactory.eINSTANCE.createValuedObject());
-    }
+		setFixture(KExpressionsFactory.eINSTANCE.createValuedObject());
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see junit.framework.TestCase#tearDown()
-     * @generated
-     */
+	 * @see junit.framework.TestCase#tearDown()
+	 * @generated
+	 */
     @Override
     protected void tearDown() throws Exception {
-        setFixture(null);
-    }
+		setFixture(null);
+	}
 
 } //ValuedObjectTest

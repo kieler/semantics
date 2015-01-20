@@ -509,6 +509,9 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
 				/**
 	 * <!-- begin-user-doc -->
+=======
+     * <!-- begin-user-doc -->
+>>>>>>> refs/remotes/origin/master
      * <!-- end-user-doc -->
 	 * @generated
 	 */

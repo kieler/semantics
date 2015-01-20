@@ -21,86 +21,82 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 public class SctFactoryImpl extends EFactoryImpl implements SctFactory
 {
   /**
-   * Creates the default factory implementation.
-   * <!-- begin-user-doc -->
+	 * Creates the default factory implementation.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public static SctFactory init()
   {
-    try
-    {
-      SctFactory theSctFactory = (SctFactory)EPackage.Registry.INSTANCE.getEFactory(SctPackage.eNS_URI);
-      if (theSctFactory != null)
-      {
-        return theSctFactory;
-      }
-    }
-    catch (Exception exception)
-    {
-      EcorePlugin.INSTANCE.log(exception);
-    }
-    return new SctFactoryImpl();
-  }
+		try {
+			SctFactory theSctFactory = (SctFactory)EPackage.Registry.INSTANCE.getEFactory(SctPackage.eNS_URI);
+			if (theSctFactory != null) {
+				return theSctFactory;
+			}
+		}
+		catch (Exception exception) {
+			EcorePlugin.INSTANCE.log(exception);
+		}
+		return new SctFactoryImpl();
+	}
 
   /**
-   * Creates an instance of the factory.
-   * <!-- begin-user-doc -->
+	 * Creates an instance of the factory.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public SctFactoryImpl()
   {
-    super();
-  }
+		super();
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public EObject create(EClass eClass)
   {
-    switch (eClass.getClassifierID())
-    {
-      case SctPackage.IMPORT_DECL: return createImportDecl();
-      default:
-        throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-    }
-  }
+		switch (eClass.getClassifierID()) {
+			case SctPackage.IMPORT_DECL: return createImportDecl();
+			default:
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		}
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public ImportDecl createImportDecl()
   {
-    ImportDeclImpl importDecl = new ImportDeclImpl();
-    return importDecl;
-  }
+		ImportDeclImpl importDecl = new ImportDeclImpl();
+		return importDecl;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public SctPackage getSctPackage()
   {
-    return (SctPackage)getEPackage();
-  }
+		return (SctPackage)getEPackage();
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @deprecated
-   * @generated
-   */
+	 * @deprecated
+	 * @generated
+	 */
   @Deprecated
   public static SctPackage getPackage()
   {
-    return SctPackage.eINSTANCE;
-  }
+		return SctPackage.eINSTANCE;
+	}
 
 } //SctFactoryImpl

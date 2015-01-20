@@ -487,5 +487,4 @@ public class KExpressionsItemProviderAdapterFactory extends KExpressionsAdapterF
 		if (parameterItemProvider != null) parameterItemProvider.dispose();
 		if (stringValueItemProvider != null) stringValueItemProvider.dispose();
 	}
-
 }

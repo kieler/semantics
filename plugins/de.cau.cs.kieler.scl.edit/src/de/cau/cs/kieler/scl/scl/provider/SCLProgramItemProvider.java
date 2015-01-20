@@ -31,193 +31,193 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  */
 public class SCLProgramItemProvider extends StatementSequenceItemProvider {
     /**
-     * This constructs an instance from a factory and a notifier.
-     * <!-- begin-user-doc -->
+	 * This constructs an instance from a factory and a notifier.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public SCLProgramItemProvider(AdapterFactory adapterFactory) {
-        super(adapterFactory);
-    }
+		super(adapterFactory);
+	}
 
     /**
-     * This returns the property descriptors for the adapted class.
-     * <!-- begin-user-doc -->
+	 * This returns the property descriptors for the adapted class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-        if (itemPropertyDescriptors == null) {
-            super.getPropertyDescriptors(object);
+		if (itemPropertyDescriptors == null) {
+			super.getPropertyDescriptors(object);
 
-            addNamePropertyDescriptor(object);
-        }
-        return itemPropertyDescriptors;
-    }
+			addNamePropertyDescriptor(object);
+		}
+		return itemPropertyDescriptors;
+	}
 
     /**
-     * This adds a property descriptor for the Name feature.
-     * <!-- begin-user-doc -->
+	 * This adds a property descriptor for the Name feature.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected void addNamePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_SCLProgram_name_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_SCLProgram_name_feature", "_UI_SCLProgram_type"),
-                 SclPackage.Literals.SCL_PROGRAM__NAME,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_SCLProgram_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_SCLProgram_name_feature", "_UI_SCLProgram_type"),
+				 SclPackage.Literals.SCL_PROGRAM__NAME,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
 
     /**
-     * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-     * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-     * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-     * <!-- begin-user-doc -->
+	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-        if (childrenFeatures == null) {
-            super.getChildrenFeatures(object);
-            childrenFeatures.add(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS);
-            childrenFeatures.add(SclPackage.Literals.SCL_PROGRAM__DECLARATIONS);
-        }
-        return childrenFeatures;
-    }
+		if (childrenFeatures == null) {
+			super.getChildrenFeatures(object);
+			childrenFeatures.add(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS);
+			childrenFeatures.add(SclPackage.Literals.SCL_PROGRAM__DECLARATIONS);
+		}
+		return childrenFeatures;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EStructuralFeature getChildFeature(Object object, Object child) {
-        // Check the type of the specified child object and return the proper feature to use for
-        // adding (see {@link AddCommand}) it as a child.
+		// Check the type of the specified child object and return the proper feature to use for
+		// adding (see {@link AddCommand}) it as a child.
 
-        return super.getChildFeature(object, child);
-    }
+		return super.getChildFeature(object, child);
+	}
 
     /**
-     * This returns SCLProgram.gif.
-     * <!-- begin-user-doc -->
+	 * This returns SCLProgram.gif.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/SCLProgram"));
-    }
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/SCLProgram"));
+	}
 
     /**
-     * This returns the label text for the adapted class.
-     * <!-- begin-user-doc -->
+	 * This returns the label text for the adapted class.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public String getText(Object object) {
-        String label = ((SCLProgram)object).getName();
-        return label == null || label.length() == 0 ?
-            getString("_UI_SCLProgram_type") :
-            getString("_UI_SCLProgram_type") + " " + label;
-    }
+		String label = ((SCLProgram)object).getName();
+		return label == null || label.length() == 0 ?
+			getString("_UI_SCLProgram_type") :
+			getString("_UI_SCLProgram_type") + " " + label;
+	}
     
 
     /**
-     * This handles model notifications by calling {@link #updateChildren} to update any cached
-     * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-     * <!-- begin-user-doc -->
+	 * This handles model notifications by calling {@link #updateChildren} to update any cached
+	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void notifyChanged(Notification notification) {
-        updateChildren(notification);
+		updateChildren(notification);
 
-        switch (notification.getFeatureID(SCLProgram.class)) {
-            case SclPackage.SCL_PROGRAM__NAME:
-                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-                return;
-            case SclPackage.SCL_PROGRAM__ANNOTATIONS:
-            case SclPackage.SCL_PROGRAM__DECLARATIONS:
-                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
-                return;
-        }
-        super.notifyChanged(notification);
-    }
+		switch (notification.getFeatureID(SCLProgram.class)) {
+			case SclPackage.SCL_PROGRAM__NAME:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
+			case SclPackage.SCL_PROGRAM__ANNOTATIONS:
+			case SclPackage.SCL_PROGRAM__DECLARATIONS:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+				return;
+		}
+		super.notifyChanged(notification);
+	}
 
     /**
-     * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-     * that can be created under this object.
-     * <!-- begin-user-doc -->
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
-        super.collectNewChildDescriptors(newChildDescriptors, object);
+		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-        newChildDescriptors.add
-            (createChildParameter
-                (SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
-                 AnnotationsFactory.eINSTANCE.createAnnotation()));
+		newChildDescriptors.add
+			(createChildParameter
+				(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
+				 AnnotationsFactory.eINSTANCE.createAnnotation()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
-                 AnnotationsFactory.eINSTANCE.createStringAnnotation()));
+		newChildDescriptors.add
+			(createChildParameter
+				(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
+				 AnnotationsFactory.eINSTANCE.createStringAnnotation()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
-                 AnnotationsFactory.eINSTANCE.createReferenceAnnotation()));
+		newChildDescriptors.add
+			(createChildParameter
+				(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
+				 AnnotationsFactory.eINSTANCE.createReferenceAnnotation()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
-                 AnnotationsFactory.eINSTANCE.createBooleanAnnotation()));
+		newChildDescriptors.add
+			(createChildParameter
+				(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
+				 AnnotationsFactory.eINSTANCE.createBooleanAnnotation()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
-                 AnnotationsFactory.eINSTANCE.createIntAnnotation()));
+		newChildDescriptors.add
+			(createChildParameter
+				(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
+				 AnnotationsFactory.eINSTANCE.createIntAnnotation()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
-                 AnnotationsFactory.eINSTANCE.createFloatAnnotation()));
+		newChildDescriptors.add
+			(createChildParameter
+				(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
+				 AnnotationsFactory.eINSTANCE.createFloatAnnotation()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
-                 AnnotationsFactory.eINSTANCE.createContainmentAnnotation()));
+		newChildDescriptors.add
+			(createChildParameter
+				(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
+				 AnnotationsFactory.eINSTANCE.createContainmentAnnotation()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
-                 AnnotationsFactory.eINSTANCE.createImportAnnotation()));
+		newChildDescriptors.add
+			(createChildParameter
+				(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
+				 AnnotationsFactory.eINSTANCE.createImportAnnotation()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
-                 AnnotationsFactory.eINSTANCE.createTypedStringAnnotation()));
+		newChildDescriptors.add
+			(createChildParameter
+				(SclPackage.Literals.SCL_PROGRAM__ANNOTATIONS,
+				 AnnotationsFactory.eINSTANCE.createTypedStringAnnotation()));
 
-        newChildDescriptors.add
-            (createChildParameter
-                (SclPackage.Literals.SCL_PROGRAM__DECLARATIONS,
-                 KExpressionsFactory.eINSTANCE.createDeclaration()));
-    }
+		newChildDescriptors.add
+			(createChildParameter
+				(SclPackage.Literals.SCL_PROGRAM__DECLARATIONS,
+				 KExpressionsFactory.eINSTANCE.createDeclaration()));
+	}
 
 }

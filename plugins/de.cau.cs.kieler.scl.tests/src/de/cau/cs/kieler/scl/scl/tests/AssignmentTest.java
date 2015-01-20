@@ -16,55 +16,55 @@ import junit.textui.TestRunner;
 public class AssignmentTest extends InstructionTest {
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static void main(String[] args) {
-        TestRunner.run(AssignmentTest.class);
-    }
+		TestRunner.run(AssignmentTest.class);
+	}
 
     /**
-     * Constructs a new Assignment test case with the given name.
-     * <!-- begin-user-doc -->
+	 * Constructs a new Assignment test case with the given name.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public AssignmentTest(String name) {
-        super(name);
-    }
+		super(name);
+	}
 
     /**
-     * Returns the fixture for this Assignment test case.
-     * <!-- begin-user-doc -->
+	 * Returns the fixture for this Assignment test case.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected Assignment getFixture() {
-        return (Assignment)fixture;
-    }
+		return (Assignment)fixture;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see junit.framework.TestCase#setUp()
-     * @generated
-     */
+	 * @see junit.framework.TestCase#setUp()
+	 * @generated
+	 */
     @Override
     protected void setUp() throws Exception {
-        setFixture(SclFactory.eINSTANCE.createAssignment());
-    }
+		setFixture(SclFactory.eINSTANCE.createAssignment());
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see junit.framework.TestCase#tearDown()
-     * @generated
-     */
+	 * @see junit.framework.TestCase#tearDown()
+	 * @generated
+	 */
     @Override
     protected void tearDown() throws Exception {
-        setFixture(null);
-    }
+		setFixture(null);
+	}
 
 } //AssignmentTest

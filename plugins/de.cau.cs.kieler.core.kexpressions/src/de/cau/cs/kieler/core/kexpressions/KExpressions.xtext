@@ -119,6 +119,7 @@ AtomicExpression returns Expression:
 AtomicValuedExpression returns Expression:
     IntValue
     | FloatValue 
+    | StringValue
     | '(' ValuedExpression ')'
     | AtomicExpression 
 ;
@@ -153,9 +154,11 @@ IntValue returns IntValue:
 FloatValue returns FloatValue:
 	value=FLOAT;
 
-
 BoolValue returns BoolValue:
 	value=BOOLEAN;
+	
+StringValue returns StringValue:
+    value=STRING;
 
 
 // data type rule allowing any kind of value to be accepted,

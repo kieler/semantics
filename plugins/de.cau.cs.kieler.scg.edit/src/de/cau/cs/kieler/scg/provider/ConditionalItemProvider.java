@@ -205,6 +205,11 @@ public class ConditionalItemProvider extends NodeItemProvider implements IEditin
             (createChildParameter
                 (ScgPackage.Literals.CONDITIONAL__CONDITION,
                  KExpressionsFactory.eINSTANCE.createFunctionCall()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.CONDITIONAL__CONDITION,
+                 KExpressionsFactory.eINSTANCE.createStringValue()));
     }
 
     /**

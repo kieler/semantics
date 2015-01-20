@@ -21,24 +21,24 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class InstructionImpl extends MinimalEObjectImpl.Container implements Instruction
 {
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   protected InstructionImpl()
   {
-    super();
-  }
+		super();
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   protected EClass eStaticClass()
   {
-    return SclPackage.Literals.INSTRUCTION;
-  }
+		return SclPackage.Literals.INSTRUCTION;
+	}
 
 } //InstructionImpl

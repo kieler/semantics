@@ -16,55 +16,55 @@ import junit.textui.TestRunner;
 public class InstructionStatementTest extends StatementTest {
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static void main(String[] args) {
-        TestRunner.run(InstructionStatementTest.class);
-    }
+		TestRunner.run(InstructionStatementTest.class);
+	}
 
     /**
-     * Constructs a new Instruction Statement test case with the given name.
-     * <!-- begin-user-doc -->
+	 * Constructs a new Instruction Statement test case with the given name.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public InstructionStatementTest(String name) {
-        super(name);
-    }
+		super(name);
+	}
 
     /**
-     * Returns the fixture for this Instruction Statement test case.
-     * <!-- begin-user-doc -->
+	 * Returns the fixture for this Instruction Statement test case.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected InstructionStatement getFixture() {
-        return (InstructionStatement)fixture;
-    }
+		return (InstructionStatement)fixture;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see junit.framework.TestCase#setUp()
-     * @generated
-     */
+	 * @see junit.framework.TestCase#setUp()
+	 * @generated
+	 */
     @Override
     protected void setUp() throws Exception {
-        setFixture(SclFactory.eINSTANCE.createInstructionStatement());
-    }
+		setFixture(SclFactory.eINSTANCE.createInstructionStatement());
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see junit.framework.TestCase#tearDown()
-     * @generated
-     */
+	 * @see junit.framework.TestCase#tearDown()
+	 * @generated
+	 */
     @Override
     protected void tearDown() throws Exception {
-        setFixture(null);
-    }
+		setFixture(null);
+	}
 
 } //InstructionStatementTest

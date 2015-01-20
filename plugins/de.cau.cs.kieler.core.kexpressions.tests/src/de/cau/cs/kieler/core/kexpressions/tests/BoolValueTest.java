@@ -16,55 +16,55 @@ import junit.textui.TestRunner;
 public class BoolValueTest extends ValueTest {
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static void main(String[] args) {
-        TestRunner.run(BoolValueTest.class);
-    }
+		TestRunner.run(BoolValueTest.class);
+	}
 
     /**
-     * Constructs a new Bool Value test case with the given name.
-     * <!-- begin-user-doc -->
+	 * Constructs a new Bool Value test case with the given name.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public BoolValueTest(String name) {
-        super(name);
-    }
+		super(name);
+	}
 
     /**
-     * Returns the fixture for this Bool Value test case.
-     * <!-- begin-user-doc -->
+	 * Returns the fixture for this Bool Value test case.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected BoolValue getFixture() {
-        return (BoolValue)fixture;
-    }
+		return (BoolValue)fixture;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see junit.framework.TestCase#setUp()
-     * @generated
-     */
+	 * @see junit.framework.TestCase#setUp()
+	 * @generated
+	 */
     @Override
     protected void setUp() throws Exception {
-        setFixture(KExpressionsFactory.eINSTANCE.createBoolValue());
-    }
+		setFixture(KExpressionsFactory.eINSTANCE.createBoolValue());
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see junit.framework.TestCase#tearDown()
-     * @generated
-     */
+	 * @see junit.framework.TestCase#tearDown()
+	 * @generated
+	 */
     @Override
     protected void tearDown() throws Exception {
-        setFixture(null);
-    }
+		setFixture(null);
+	}
 
 } //BoolValueTest

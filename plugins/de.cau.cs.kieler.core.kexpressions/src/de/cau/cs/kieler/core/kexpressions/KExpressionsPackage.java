@@ -946,6 +946,10 @@ public interface KExpressionsPackage extends EPackage {
 				/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.FunctionCall <em>Function Call</em>}'.
 	 * <!-- begin-user-doc -->
+=======
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.FunctionCall <em>Function Call</em>}'.
+     * <!-- begin-user-doc -->
+>>>>>>> refs/remotes/origin/master
      * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Function Call</em>'.
 	 * @see de.cau.cs.kieler.core.kexpressions.FunctionCall
@@ -1359,6 +1363,10 @@ public interface KExpressionsPackage extends EPackage {
 								/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.FunctionCallImpl <em>Function Call</em>}' class.
 		 * <!-- begin-user-doc -->
+=======
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.impl.FunctionCallImpl <em>Function Call</em>}' class.
+         * <!-- begin-user-doc -->
+>>>>>>> refs/remotes/origin/master
          * <!-- end-user-doc -->
 		 * @see de.cau.cs.kieler.core.kexpressions.impl.FunctionCallImpl
 		 * @see de.cau.cs.kieler.core.kexpressions.impl.KExpressionsPackageImpl#getFunctionCall()

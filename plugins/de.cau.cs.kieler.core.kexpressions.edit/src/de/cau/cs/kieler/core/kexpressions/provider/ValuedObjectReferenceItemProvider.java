@@ -215,5 +215,4 @@ public class ValuedObjectReferenceItemProvider
 				(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__INDICES,
 				 KExpressionsFactory.eINSTANCE.createStringValue()));
 	}
-
 }

@@ -15,29 +15,29 @@ import org.eclipse.emf.ecore.EFactory;
 public interface SctFactory extends EFactory
 {
   /**
-   * The singleton instance of the factory.
-   * <!-- begin-user-doc -->
+	 * The singleton instance of the factory.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   SctFactory eINSTANCE = de.cau.cs.kieler.sccharts.text.sct.sct.impl.SctFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Import Decl</em>'.
-   * <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Import Decl</em>'.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Import Decl</em>'.
-   * @generated
-   */
+	 * @return a new object of class '<em>Import Decl</em>'.
+	 * @generated
+	 */
   ImportDecl createImportDecl();
 
   /**
-   * Returns the package supported by this factory.
-   * <!-- begin-user-doc -->
+	 * Returns the package supported by this factory.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the package supported by this factory.
-   * @generated
-   */
+	 * @return the package supported by this factory.
+	 * @generated
+	 */
   SctPackage getSctPackage();
 
 } //SctFactory

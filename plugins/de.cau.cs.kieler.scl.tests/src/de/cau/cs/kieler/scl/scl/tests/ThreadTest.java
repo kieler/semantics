@@ -15,55 +15,55 @@ import junit.textui.TestRunner;
 public class ThreadTest extends StatementSequenceTest {
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static void main(String[] args) {
-        TestRunner.run(ThreadTest.class);
-    }
+		TestRunner.run(ThreadTest.class);
+	}
 
     /**
-     * Constructs a new Thread test case with the given name.
-     * <!-- begin-user-doc -->
+	 * Constructs a new Thread test case with the given name.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ThreadTest(String name) {
-        super(name);
-    }
+		super(name);
+	}
 
     /**
-     * Returns the fixture for this Thread test case.
-     * <!-- begin-user-doc -->
+	 * Returns the fixture for this Thread test case.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected de.cau.cs.kieler.scl.scl.Thread getFixture() {
-        return (de.cau.cs.kieler.scl.scl.Thread)fixture;
-    }
+		return (de.cau.cs.kieler.scl.scl.Thread)fixture;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see junit.framework.TestCase#setUp()
-     * @generated
-     */
+	 * @see junit.framework.TestCase#setUp()
+	 * @generated
+	 */
     @Override
     protected void setUp() throws Exception {
-        setFixture(SclFactory.eINSTANCE.createThread());
-    }
+		setFixture(SclFactory.eINSTANCE.createThread());
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see junit.framework.TestCase#tearDown()
-     * @generated
-     */
+	 * @see junit.framework.TestCase#tearDown()
+	 * @generated
+	 */
     @Override
     protected void tearDown() throws Exception {
-        setFixture(null);
-    }
+		setFixture(null);
+	}
 
 } //ThreadTest

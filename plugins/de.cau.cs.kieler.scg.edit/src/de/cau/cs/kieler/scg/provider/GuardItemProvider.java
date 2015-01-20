@@ -211,6 +211,11 @@ public class GuardItemProvider
             (createChildParameter
                 (ScgPackage.Literals.GUARD__EXPRESSION,
                  KExpressionsFactory.eINSTANCE.createFunctionCall()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.GUARD__EXPRESSION,
+                 KExpressionsFactory.eINSTANCE.createStringValue()));
     }
 
     /**

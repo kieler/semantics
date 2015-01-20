@@ -32,214 +32,208 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class ImportDeclImpl extends MinimalEObjectImpl.Container implements ImportDecl
 {
   /**
-   * The cached value of the '{@link #getImportedType() <em>Imported Type</em>}' reference.
-   * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getImportedType() <em>Imported Type</em>}' reference.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getImportedType()
-   * @generated
-   * @ordered
-   */
+	 * @see #getImportedType()
+	 * @generated
+	 * @ordered
+	 */
   protected State importedType;
 
   /**
-   * The default value of the '{@link #getImportedNamespace() <em>Imported Namespace</em>}' attribute.
-   * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getImportedNamespace() <em>Imported Namespace</em>}' attribute.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getImportedNamespace()
-   * @generated
-   * @ordered
-   */
+	 * @see #getImportedNamespace()
+	 * @generated
+	 * @ordered
+	 */
   protected static final String IMPORTED_NAMESPACE_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getImportedNamespace() <em>Imported Namespace</em>}' attribute.
-   * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getImportedNamespace() <em>Imported Namespace</em>}' attribute.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getImportedNamespace()
-   * @generated
-   * @ordered
-   */
+	 * @see #getImportedNamespace()
+	 * @generated
+	 * @ordered
+	 */
   protected String importedNamespace = IMPORTED_NAMESPACE_EDEFAULT;
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   protected ImportDeclImpl()
   {
-    super();
-  }
+		super();
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   protected EClass eStaticClass()
   {
-    return SctPackage.Literals.IMPORT_DECL;
-  }
+		return SctPackage.Literals.IMPORT_DECL;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public State getImportedType()
   {
-    if (importedType != null && importedType.eIsProxy())
-    {
-      InternalEObject oldImportedType = (InternalEObject)importedType;
-      importedType = (State)eResolveProxy(oldImportedType);
-      if (importedType != oldImportedType)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SctPackage.IMPORT_DECL__IMPORTED_TYPE, oldImportedType, importedType));
-      }
-    }
-    return importedType;
-  }
+		if (importedType != null && importedType.eIsProxy()) {
+			InternalEObject oldImportedType = (InternalEObject)importedType;
+			importedType = (State)eResolveProxy(oldImportedType);
+			if (importedType != oldImportedType) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, SctPackage.IMPORT_DECL__IMPORTED_TYPE, oldImportedType, importedType));
+			}
+		}
+		return importedType;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public State basicGetImportedType()
   {
-    return importedType;
-  }
+		return importedType;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public void setImportedType(State newImportedType)
   {
-    State oldImportedType = importedType;
-    importedType = newImportedType;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SctPackage.IMPORT_DECL__IMPORTED_TYPE, oldImportedType, importedType));
-  }
+		State oldImportedType = importedType;
+		importedType = newImportedType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SctPackage.IMPORT_DECL__IMPORTED_TYPE, oldImportedType, importedType));
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public String getImportedNamespace()
   {
-    return importedNamespace;
-  }
+		return importedNamespace;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public void setImportedNamespace(String newImportedNamespace)
   {
-    String oldImportedNamespace = importedNamespace;
-    importedNamespace = newImportedNamespace;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SctPackage.IMPORT_DECL__IMPORTED_NAMESPACE, oldImportedNamespace, importedNamespace));
-  }
+		String oldImportedNamespace = importedNamespace;
+		importedNamespace = newImportedNamespace;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SctPackage.IMPORT_DECL__IMPORTED_NAMESPACE, oldImportedNamespace, importedNamespace));
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case SctPackage.IMPORT_DECL__IMPORTED_TYPE:
-        if (resolve) return getImportedType();
-        return basicGetImportedType();
-      case SctPackage.IMPORT_DECL__IMPORTED_NAMESPACE:
-        return getImportedNamespace();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
+		switch (featureID) {
+			case SctPackage.IMPORT_DECL__IMPORTED_TYPE:
+				if (resolve) return getImportedType();
+				return basicGetImportedType();
+			case SctPackage.IMPORT_DECL__IMPORTED_NAMESPACE:
+				return getImportedNamespace();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case SctPackage.IMPORT_DECL__IMPORTED_TYPE:
-        setImportedType((State)newValue);
-        return;
-      case SctPackage.IMPORT_DECL__IMPORTED_NAMESPACE:
-        setImportedNamespace((String)newValue);
-        return;
-    }
-    super.eSet(featureID, newValue);
-  }
+		switch (featureID) {
+			case SctPackage.IMPORT_DECL__IMPORTED_TYPE:
+				setImportedType((State)newValue);
+				return;
+			case SctPackage.IMPORT_DECL__IMPORTED_NAMESPACE:
+				setImportedNamespace((String)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case SctPackage.IMPORT_DECL__IMPORTED_TYPE:
-        setImportedType((State)null);
-        return;
-      case SctPackage.IMPORT_DECL__IMPORTED_NAMESPACE:
-        setImportedNamespace(IMPORTED_NAMESPACE_EDEFAULT);
-        return;
-    }
-    super.eUnset(featureID);
-  }
+		switch (featureID) {
+			case SctPackage.IMPORT_DECL__IMPORTED_TYPE:
+				setImportedType((State)null);
+				return;
+			case SctPackage.IMPORT_DECL__IMPORTED_NAMESPACE:
+				setImportedNamespace(IMPORTED_NAMESPACE_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case SctPackage.IMPORT_DECL__IMPORTED_TYPE:
-        return importedType != null;
-      case SctPackage.IMPORT_DECL__IMPORTED_NAMESPACE:
-        return IMPORTED_NAMESPACE_EDEFAULT == null ? importedNamespace != null : !IMPORTED_NAMESPACE_EDEFAULT.equals(importedNamespace);
-    }
-    return super.eIsSet(featureID);
-  }
+		switch (featureID) {
+			case SctPackage.IMPORT_DECL__IMPORTED_TYPE:
+				return importedType != null;
+			case SctPackage.IMPORT_DECL__IMPORTED_NAMESPACE:
+				return IMPORTED_NAMESPACE_EDEFAULT == null ? importedNamespace != null : !IMPORTED_NAMESPACE_EDEFAULT.equals(importedNamespace);
+		}
+		return super.eIsSet(featureID);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+		if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (importedNamespace: ");
-    result.append(importedNamespace);
-    result.append(')');
-    return result.toString();
-  }
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (importedNamespace: ");
+		result.append(importedNamespace);
+		result.append(')');
+		return result.toString();
+	}
 
 } //ImportDeclImpl

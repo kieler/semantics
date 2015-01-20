@@ -97,7 +97,7 @@ public class ActionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getModExpressionAccess().getGroup_1(), "rule__ModExpression__Group_1__0");
 					put(grammarAccess.getNegExpressionAccess().getGroup_0(), "rule__NegExpression__Group_0__0");
 					put(grammarAccess.getAtomicExpressionAccess().getGroup_2(), "rule__AtomicExpression__Group_2__0");
-					put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_2(), "rule__AtomicValuedExpression__Group_2__0");
+					put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_3(), "rule__AtomicValuedExpression__Group_3__0");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");
 					put(grammarAccess.getValuedObjectReferenceAccess().getGroup(), "rule__ValuedObjectReference__Group__0");
 					put(grammarAccess.getValuedObjectReferenceAccess().getGroup_1(), "rule__ValuedObjectReference__Group_1__0");
@@ -182,6 +182,7 @@ public class ActionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIntValueAccess().getValueAssignment(), "rule__IntValue__ValueAssignment");
 					put(grammarAccess.getFloatValueAccess().getValueAssignment(), "rule__FloatValue__ValueAssignment");
 					put(grammarAccess.getBoolValueAccess().getValueAssignment(), "rule__BoolValue__ValueAssignment");
+					put(grammarAccess.getStringValueAccess().getValueAssignment(), "rule__StringValue__ValueAssignment");
 					put(grammarAccess.getCommentAnnotationAccess().getValueAssignment(), "rule__CommentAnnotation__ValueAssignment");
 					put(grammarAccess.getTagAnnotationAccess().getNameAssignment_1(), "rule__TagAnnotation__NameAssignment_1");
 					put(grammarAccess.getTagAnnotationAccess().getAnnotationsAssignment_2_1(), "rule__TagAnnotation__AnnotationsAssignment_2_1");

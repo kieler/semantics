@@ -1024,32 +1024,48 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getSTRINGStringKeyword_5_0() { return cSTRINGStringKeyword_5_0; }
 	}
 	
-	private SCLProgramElements pSCLProgram;
-	private DeclarationElements pDeclaration;
-	private ValueTypeElements unknownRuleValueType;
-	private ValuedObjectElements pValuedObject;
-	private StatementElements pStatement;
-	private EmptyStatementElements pEmptyStatement;
-	private InstructionStatementElements pInstructionStatement;
-	private InstructionElements pInstruction;
-	private AssignmentElements pAssignment;
-	private ConditionalElements pConditional;
-	private GotoElements pGoto;
-	private StatementSequenceElements pStatementSequence;
-	private ThreadElements pThread;
-	private ParallelElements pParallel;
-	private PauseElements pPause;
-	private StatementScopeElements pStatementScope;
+	private final SCLProgramElements pSCLProgram;
+	private final DeclarationElements pDeclaration;
+	private final ValueTypeElements unknownRuleValueType;
+	private final ValuedObjectElements pValuedObject;
+	private final StatementElements pStatement;
+	private final EmptyStatementElements pEmptyStatement;
+	private final InstructionStatementElements pInstructionStatement;
+	private final InstructionElements pInstruction;
+	private final AssignmentElements pAssignment;
+	private final ConditionalElements pConditional;
+	private final GotoElements pGoto;
+	private final StatementSequenceElements pStatementSequence;
+	private final ThreadElements pThread;
+	private final ParallelElements pParallel;
+	private final PauseElements pPause;
+	private final StatementScopeElements pStatementScope;
 	
 	private final Grammar grammar;
 
-	private KExpressionsGrammarAccess gaKExpressions;
+	private final KExpressionsGrammarAccess gaKExpressions;
 
 	@Inject
 	public SCLGrammarAccess(GrammarProvider grammarProvider,
 		KExpressionsGrammarAccess gaKExpressions) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaKExpressions = gaKExpressions;
+		this.pSCLProgram = new SCLProgramElements();
+		this.pDeclaration = new DeclarationElements();
+		this.unknownRuleValueType = new ValueTypeElements();
+		this.pValuedObject = new ValuedObjectElements();
+		this.pStatement = new StatementElements();
+		this.pEmptyStatement = new EmptyStatementElements();
+		this.pInstructionStatement = new InstructionStatementElements();
+		this.pInstruction = new InstructionElements();
+		this.pAssignment = new AssignmentElements();
+		this.pConditional = new ConditionalElements();
+		this.pGoto = new GotoElements();
+		this.pStatementSequence = new StatementSequenceElements();
+		this.pThread = new ThreadElements();
+		this.pParallel = new ParallelElements();
+		this.pPause = new PauseElements();
+		this.pStatementScope = new StatementScopeElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -1083,7 +1099,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//	annotations+=Annotation* "module" name=ID declarations+=Declaration* "{" ((statements+=InstructionStatement ";" |
 	//	statements+=EmptyStatement)* (statements+=InstructionStatement statements+=EmptyStatement*)?) "}";
 	public SCLProgramElements getSCLProgramAccess() {
-		return (pSCLProgram != null) ? pSCLProgram : (pSCLProgram = new SCLProgramElements());
+		return pSCLProgram;
 	}
 	
 	public ParserRule getSCLProgramRule() {
@@ -1095,7 +1111,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//	(type=HostType hostType=STRING valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";" // TODO There have to be a hostType if type is HOST
 	//	| type=ValueType valuedObjects+=ValuedObject ("," valuedObjects+=ValuedObject)* ";");
 	public DeclarationElements getDeclarationAccess() {
-		return (pDeclaration != null) ? pDeclaration : (pDeclaration = new DeclarationElements());
+		return pDeclaration;
 	}
 	
 	public ParserRule getDeclarationRule() {
@@ -1106,7 +1122,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//enum ValueType returns kexpressions::ValueType:
 	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | STRING="string";
 	public ValueTypeElements getValueTypeAccess() {
-		return (unknownRuleValueType != null) ? unknownRuleValueType : (unknownRuleValueType = new ValueTypeElements());
+		return unknownRuleValueType;
 	}
 	
 	public EnumRule getValueTypeRule() {
@@ -1116,7 +1132,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//ValuedObject returns kexpressions::ValuedObject: //    (annotations+=Annotation)* // Parser does not like this
 	//	name=ID ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)?;
 	public ValuedObjectElements getValuedObjectAccess() {
-		return (pValuedObject != null) ? pValuedObject : (pValuedObject = new ValuedObjectElements());
+		return pValuedObject;
 	}
 	
 	public ParserRule getValuedObjectRule() {
@@ -1126,7 +1142,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//Statement:
 	//	EmptyStatement | InstructionStatement;
 	public StatementElements getStatementAccess() {
-		return (pStatement != null) ? pStatement : (pStatement = new StatementElements());
+		return pStatement;
 	}
 	
 	public ParserRule getStatementRule() {
@@ -1136,7 +1152,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//EmptyStatement:
 	//	annotations+=Annotation* (label=ID ":");
 	public EmptyStatementElements getEmptyStatementAccess() {
-		return (pEmptyStatement != null) ? pEmptyStatement : (pEmptyStatement = new EmptyStatementElements());
+		return pEmptyStatement;
 	}
 	
 	public ParserRule getEmptyStatementRule() {
@@ -1146,7 +1162,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//InstructionStatement:
 	//	annotations+=Annotation* instruction=(Assignment | Conditional | Goto | Parallel | Pause | StatementScope);
 	public InstructionStatementElements getInstructionStatementAccess() {
-		return (pInstructionStatement != null) ? pInstructionStatement : (pInstructionStatement = new InstructionStatementElements());
+		return pInstructionStatement;
 	}
 	
 	public ParserRule getInstructionStatementRule() {
@@ -1156,7 +1172,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//Instruction:
 	//	Assignment | Conditional | Goto | Parallel | Pause | StatementScope;
 	public InstructionElements getInstructionAccess() {
-		return (pInstruction != null) ? pInstruction : (pInstruction = new InstructionElements());
+		return pInstruction;
 	}
 	
 	public ParserRule getInstructionRule() {
@@ -1166,7 +1182,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//Assignment: //    assignment = kexpressions::Expression
 	//	valuedObject=[kexpressions::ValuedObject] "=" expression=Expression;
 	public AssignmentElements getAssignmentAccess() {
-		return (pAssignment != null) ? pAssignment : (pAssignment = new AssignmentElements());
+		return pAssignment;
 	}
 	
 	public ParserRule getAssignmentRule() {
@@ -1179,7 +1195,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//	declarations+=Declaration* ((elseStatements+=InstructionStatement ";" | elseStatements+=EmptyStatement)*
 	//	(elseStatements+=InstructionStatement elseStatements+=EmptyStatement*)?))? "end";
 	public ConditionalElements getConditionalAccess() {
-		return (pConditional != null) ? pConditional : (pConditional = new ConditionalElements());
+		return pConditional;
 	}
 	
 	public ParserRule getConditionalRule() {
@@ -1189,7 +1205,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//Goto:
 	//	"goto" targetLabel=ID;
 	public GotoElements getGotoAccess() {
-		return (pGoto != null) ? pGoto : (pGoto = new GotoElements());
+		return pGoto;
 	}
 	
 	public ParserRule getGotoRule() {
@@ -1199,7 +1215,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//StatementSequence:
 	//	Thread | SCLProgram | Conditional | StatementScope;
 	public StatementSequenceElements getStatementSequenceAccess() {
-		return (pStatementSequence != null) ? pStatementSequence : (pStatementSequence = new StatementSequenceElements());
+		return pStatementSequence;
 	}
 	
 	public ParserRule getStatementSequenceRule() {
@@ -1210,7 +1226,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//	{Thread} ((statements+=InstructionStatement ";" | statements+=EmptyStatement)* (statements+=InstructionStatement
 	//	statements+=EmptyStatement*)?);
 	public ThreadElements getThreadAccess() {
-		return (pThread != null) ? pThread : (pThread = new ThreadElements());
+		return pThread;
 	}
 	
 	public ParserRule getThreadRule() {
@@ -1220,7 +1236,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//Parallel:
 	//	"fork" (threads+=Thread ("par" threads+=Thread)*) "join";
 	public ParallelElements getParallelAccess() {
-		return (pParallel != null) ? pParallel : (pParallel = new ParallelElements());
+		return pParallel;
 	}
 	
 	public ParserRule getParallelRule() {
@@ -1230,7 +1246,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//Pause:
 	//	"pause" {Pause};
 	public PauseElements getPauseAccess() {
-		return (pPause != null) ? pPause : (pPause = new PauseElements());
+		return pPause;
 	}
 	
 	public ParserRule getPauseRule() {
@@ -1241,7 +1257,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//	{StatementScope} "{" declarations+=Declaration* ((statements+=InstructionStatement ";" | statements+=EmptyStatement)*
 	//	(statements+=InstructionStatement statements+=EmptyStatement*)?) "}";
 	public StatementScopeElements getStatementScopeAccess() {
-		return (pStatementScope != null) ? pStatementScope : (pStatementScope = new StatementScopeElements());
+		return pStatementScope;
 	}
 	
 	public ParserRule getStatementScopeRule() {
@@ -1425,7 +1441,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AtomicValuedExpression returns Expression:
-	//	IntValue | FloatValue | "(" ValuedExpression ")" | AtomicExpression;
+	//	IntValue | FloatValue | StringValue | "(" ValuedExpression ")" | AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
 		return gaKExpressions.getAtomicValuedExpressionAccess();
 	}
@@ -1516,6 +1532,16 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getBoolValueRule() {
 		return getBoolValueAccess().getRule();
+	}
+
+	//StringValue:
+	//	value=STRING;
+	public KExpressionsGrammarAccess.StringValueElements getStringValueAccess() {
+		return gaKExpressions.getStringValueAccess();
+	}
+	
+	public ParserRule getStringValueRule() {
+		return getStringValueAccess().getRule();
 	}
 
 	//// data type rule allowing any kind of value to be accepted,
