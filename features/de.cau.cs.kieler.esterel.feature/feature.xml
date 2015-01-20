@@ -219,7 +219,7 @@ litigation.
    </url>
 
    <requires>
-      <import feature="com.google.guava.runtime.feature" version="9.0.0" match="greaterOrEqual"/>
+      <import plugin="com.google.guava" version="9.0.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.emf" version="2.6.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.xtext.runtime" version="2.1.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.xtext.ui" version="2.1.0" match="greaterOrEqual"/>

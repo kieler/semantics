@@ -2,11 +2,11 @@
  */
 package de.cau.cs.kieler.s.s;
 
+import de.cau.cs.kieler.core.annotations.Annotatable;
+
 import de.cau.cs.kieler.core.kexpressions.Declaration;
 
 import org.eclipse.emf.common.util.EList;
-
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Program extends EObject
+public interface Program extends Annotatable
 {
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.

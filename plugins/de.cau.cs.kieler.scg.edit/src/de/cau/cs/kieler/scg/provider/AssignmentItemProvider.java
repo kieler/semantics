@@ -222,6 +222,11 @@ public class AssignmentItemProvider extends NodeItemProvider {
 
         newChildDescriptors.add
             (createChildParameter
+                (ScgPackage.Literals.ASSIGNMENT__ASSIGNMENT,
+                 KExpressionsFactory.eINSTANCE.createStringValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
                 (ScgPackage.Literals.ASSIGNMENT__INDICES,
                  KExpressionsFactory.eINSTANCE.createExpression()));
 
@@ -264,6 +269,11 @@ public class AssignmentItemProvider extends NodeItemProvider {
             (createChildParameter
                 (ScgPackage.Literals.ASSIGNMENT__INDICES,
                  KExpressionsFactory.eINSTANCE.createFunctionCall()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ScgPackage.Literals.ASSIGNMENT__INDICES,
+                 KExpressionsFactory.eINSTANCE.createStringValue()));
     }
 
     /**

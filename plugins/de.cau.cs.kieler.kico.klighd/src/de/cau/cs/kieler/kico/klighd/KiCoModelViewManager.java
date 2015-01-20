@@ -337,12 +337,13 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
     private int isValidModelEditor(IEditorPart editor) {
         EObject model = getModelFromModelEditor(editor);
         if (model != null) {
-            if (!Iterables.isEmpty(KlighdDataManager.getInstance().getAvailableSyntheses(
-                    model.getClass()))) {
-                return 1;
-            } else {
-                return 0;
-            }
+//            if (!Iterables.isEmpty(KlighdDataManager.getInstance().getAvailableSyntheses(
+//                    model.getClass()))) {
+//                return 1;
+//            } else {
+//                return 0;
+//            }
+          return 1;
         }
         return 2;// Undecidable if model is null
     }

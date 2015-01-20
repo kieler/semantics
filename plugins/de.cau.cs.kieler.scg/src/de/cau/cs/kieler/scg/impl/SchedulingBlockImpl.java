@@ -37,6 +37,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *   <li>{@link de.cau.cs.kieler.scg.impl.SchedulingBlockImpl#getNodes <em>Nodes</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SchedulingBlockImpl#getDependencies <em>Dependencies</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SchedulingBlockImpl#getGuard <em>Guard</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.SchedulingBlockImpl#getLabel <em>Label</em>}</li>
  * </ul>
  * </p>
  *
@@ -72,6 +73,26 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
      * @ordered
      */
     protected Guard guard;
+
+    /**
+     * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getLabel()
+     * @generated
+     * @ordered
+     */
+    protected static final String LABEL_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getLabel()
+     * @generated
+     * @ordered
+     */
+    protected String label = LABEL_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -159,6 +180,27 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getLabel() {
+        return label;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setLabel(String newLabel) {
+        String oldLabel = label;
+        label = newLabel;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.SCHEDULING_BLOCK__LABEL, oldLabel, label));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
@@ -169,6 +211,8 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
             case ScgPackage.SCHEDULING_BLOCK__GUARD:
                 if (resolve) return getGuard();
                 return basicGetGuard();
+            case ScgPackage.SCHEDULING_BLOCK__LABEL:
+                return getLabel();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -193,6 +237,9 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
             case ScgPackage.SCHEDULING_BLOCK__GUARD:
                 setGuard((Guard)newValue);
                 return;
+            case ScgPackage.SCHEDULING_BLOCK__LABEL:
+                setLabel((String)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -214,6 +261,9 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
             case ScgPackage.SCHEDULING_BLOCK__GUARD:
                 setGuard((Guard)null);
                 return;
+            case ScgPackage.SCHEDULING_BLOCK__LABEL:
+                setLabel(LABEL_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -232,8 +282,26 @@ public class SchedulingBlockImpl extends MinimalEObjectImpl.Container implements
                 return dependencies != null && !dependencies.isEmpty();
             case ScgPackage.SCHEDULING_BLOCK__GUARD:
                 return guard != null;
+            case ScgPackage.SCHEDULING_BLOCK__LABEL:
+                return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (label: ");
+        result.append(label);
+        result.append(')');
+        return result.toString();
     }
 
 } //SchedulingBlockImpl

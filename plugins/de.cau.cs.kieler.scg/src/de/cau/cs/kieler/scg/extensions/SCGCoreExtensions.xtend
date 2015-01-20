@@ -129,11 +129,11 @@ class SCGCoreExtensions {
 	 * 			the schedule in question
 	 * @return Returns a list of nodes.
 	 */            
-    def List<Node> getScheduleNodes(Schedule schedule) {
-        val nodeList = <Node> newLinkedList
-        schedule.scheduledBlocks.forEach[ nodeList += it.schedulingBlock.nodes ]
-        nodeList
-    }
+//    def List<Node> getScheduleNodes(Schedule schedule) {
+//        val nodeList = <Node> newLinkedList
+//        schedule.scheduledBlocks.forEach[ nodeList += it.schedulingBlock.nodes ]
+//        nodeList
+//    }
     
     def List<SchedulingBlock> getAllSchedulingBlocks(SCGraph scg) {
         <SchedulingBlock> newArrayList => [ list | 

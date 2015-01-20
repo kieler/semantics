@@ -14,7 +14,6 @@ Require-Bundle: org.eclipse.ui,
  org.apache.batik.util;bundle-version="1.6.0",
  org.w3c.dom.svg;bundle-version="1.1.0",
  org.apache.xerces;bundle-version="2.9.0",
- org.apache.batik.swing;bundle-version="1.6.0",
  org.apache.batik.dom;bundle-version="1.6.0",
  org.apache.batik.css;bundle-version="1.6.0",
  org.apache.batik.transcoder;bundle-version="1.6.0",
@@ -38,3 +37,5 @@ Export-Package: de.cau.cs.kieler.kev.mapping;uses:="org.eclipse.emf.ecore,org.ec
 Import-Package: de.cau.cs.kieler.core.util,
  org.eclipse.emf.ecore.xmi.impl,
  org.eclipse.ui.part
+Bundle-ClassPath: .,
+ lib/org.apache.batik.swing_1.6.0.v201011041432.jar

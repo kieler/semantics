@@ -73,9 +73,15 @@ import org.eclipse.xtext.serializer.ISerializer
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtension
+import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
+import de.cau.cs.kieler.sccharts.LocalAction
 
 /**
- * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
+ * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts)
  * 
  * @author cmot ssm
  * @kieler.design 2012-10-08 proposed cmot
@@ -342,24 +348,34 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         return returnValue
     }
 
-    // Return the action name entry.
-    def dispatch String getActionName(EntryAction action) {
-        "entry"
-    }
-
-    // Return the action name during.
-    def dispatch String getActionName(DuringAction action) {
-        "during"
-    }
+//    // Return the action name entry.
+//    def dispatch String getActionName(EntryAction action) {
+//        "entry"
+//    }
+//
+//    // Return the action name during.
+//    def dispatch String getActionName(DuringAction action) {
+//        "during"
+//    }
+//
+//    // Return the action name exit.
+//    def dispatch String getActionName(ExitAction action) {
+//        "exit"
+//    }
 
     // Return the action name exit.
-    def dispatch String getActionName(ExitAction action) {
-        "exit"
+    def dispatch String getActionName(LocalAction action) {
+        // will be serialized automatically from grammar (iff not suspend action!)
+        return ""
     }
 
     // Return the action name suspend.
     def dispatch String getActionName(SuspendAction action) {
-        "suspend"
+        if (!(action as SuspendAction).weak) {
+        "suspend "
+        } else {
+        "weak suspend "
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -697,6 +713,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                                 it.setPointPlacementData(createKPosition(LEFT, 8, 0, TOP, 0, 0), H_LEFT, V_TOP, 8, 0, 0,
                                     0);
                                 var text = action.serialize as String//serializer.serialize(action.copy);
+                                text = action.actionName +  text
                                 text = text.replace("'", "")
                                 if (text.length > 1 && text.substring(text.length - 1, text.length).equals(";")) {
                                     text = text.substring(0, text.length - 1)

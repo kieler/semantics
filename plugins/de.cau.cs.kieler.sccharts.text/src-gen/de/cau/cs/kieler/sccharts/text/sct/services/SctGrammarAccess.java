@@ -24,6 +24,8 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Root");
 		private final RuleCall cSCChartParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
+		////generate sct "http://kieler.cs.cau.de/sccharts/textual/0.1.0"
+		//
 		//// ---------------------------------------------------------------------------------------------------
 		// Root returns
 		//sccharts::State:
@@ -432,98 +434,6 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getRightCurlyBracketKeyword_4_1_2() { return cRightCurlyBracketKeyword_4_1_2; }
 	}
 
-	public class ImportDeclElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ImportDecl");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cImportKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
-		private final Assignment cImportedTypeAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
-		private final CrossReference cImportedTypeStateCrossReference_1_0_0 = (CrossReference)cImportedTypeAssignment_1_0.eContents().get(0);
-		private final RuleCall cImportedTypeStateQualifiedNameParserRuleCall_1_0_0_1 = (RuleCall)cImportedTypeStateCrossReference_1_0_0.eContents().get(1);
-		private final Assignment cImportedNamespaceAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
-		private final RuleCall cImportedNamespaceQualifiedNameWithWildcardParserRuleCall_1_1_0 = (RuleCall)cImportedNamespaceAssignment_1_1.eContents().get(0);
-		
-		//ImportDecl:
-		//	"import" (importedType=[sccharts::State|QualifiedName] | importedNamespace=QualifiedNameWithWildcard);
-		public ParserRule getRule() { return rule; }
-
-		//"import" (importedType=[sccharts::State|QualifiedName] | importedNamespace=QualifiedNameWithWildcard)
-		public Group getGroup() { return cGroup; }
-
-		//"import"
-		public Keyword getImportKeyword_0() { return cImportKeyword_0; }
-
-		//importedType=[sccharts::State|QualifiedName] | importedNamespace=QualifiedNameWithWildcard
-		public Alternatives getAlternatives_1() { return cAlternatives_1; }
-
-		//importedType=[sccharts::State|QualifiedName]
-		public Assignment getImportedTypeAssignment_1_0() { return cImportedTypeAssignment_1_0; }
-
-		//[sccharts::State|QualifiedName]
-		public CrossReference getImportedTypeStateCrossReference_1_0_0() { return cImportedTypeStateCrossReference_1_0_0; }
-
-		//QualifiedName
-		public RuleCall getImportedTypeStateQualifiedNameParserRuleCall_1_0_0_1() { return cImportedTypeStateQualifiedNameParserRuleCall_1_0_0_1; }
-
-		//importedNamespace=QualifiedNameWithWildcard
-		public Assignment getImportedNamespaceAssignment_1_1() { return cImportedNamespaceAssignment_1_1; }
-
-		//QualifiedNameWithWildcard
-		public RuleCall getImportedNamespaceQualifiedNameWithWildcardParserRuleCall_1_1_0() { return cImportedNamespaceQualifiedNameWithWildcardParserRuleCall_1_1_0; }
-	}
-
-	public class QualifiedNameElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "QualifiedName");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cIDTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cFullStopKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final RuleCall cIDTerminalRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
-		
-		//QualifiedName:
-		//	ID ("." ID)*;
-		public ParserRule getRule() { return rule; }
-
-		//ID ("." ID)*
-		public Group getGroup() { return cGroup; }
-
-		//ID
-		public RuleCall getIDTerminalRuleCall_0() { return cIDTerminalRuleCall_0; }
-
-		//("." ID)*
-		public Group getGroup_1() { return cGroup_1; }
-
-		//"."
-		public Keyword getFullStopKeyword_1_0() { return cFullStopKeyword_1_0; }
-
-		//ID
-		public RuleCall getIDTerminalRuleCall_1_1() { return cIDTerminalRuleCall_1_1; }
-	}
-
-	public class QualifiedNameWithWildcardElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "QualifiedNameWithWildcard");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cQualifiedNameParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
-		private final Keyword cFullStopKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Keyword cAsteriskKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		
-		//QualifiedNameWithWildcard:
-		//	QualifiedName "." "*";
-		public ParserRule getRule() { return rule; }
-
-		//QualifiedName "." "*"
-		public Group getGroup() { return cGroup; }
-
-		//QualifiedName
-		public RuleCall getQualifiedNameParserRuleCall_0() { return cQualifiedNameParserRuleCall_0; }
-
-		//"."
-		public Keyword getFullStopKeyword_1() { return cFullStopKeyword_1; }
-
-		//"*"
-		public Keyword getAsteriskKeyword_2() { return cAsteriskKeyword_2; }
-	}
-
 	public class StateElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "State");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -579,6 +489,20 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOutgoingTransitionsTransitionParserRuleCall_7_0 = (RuleCall)cOutgoingTransitionsAssignment_7.eContents().get(0);
 		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
+		////ImportDecl: 
+		// //    'import' 
+		// //        (importedType=[sccharts::State|QualifiedName] 
+		//
+		////        | importedNamespace=QualifiedNameWithWildcard)
+		// //;
+		// //
+		// //QualifiedName:
+		// //  ID ('.' ID)*;
+		// //
+		//
+		////QualifiedNameWithWildcard :
+		// //    QualifiedName  '.' '*';
+		//
 		//// ---------------------------------------------------------------------------------------------------
 		// State returns
 		//sccharts::State:
@@ -1437,34 +1361,46 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0() { return cTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0; }
 	}
 	
-	private RootElements pRoot;
-	private SingleRegionElements pSingleRegion;
-	private ForElements pFor;
-	private RegionElements pRegion;
-	private SCChartElements pSCChart;
-	private ImportDeclElements pImportDecl;
-	private QualifiedNameElements pQualifiedName;
-	private QualifiedNameWithWildcardElements pQualifiedNameWithWildcard;
-	private StateElements pState;
-	private LocalActionElements pLocalAction;
-	private TransitionElements pTransition;
-	private DeclarationElements pDeclaration;
-	private ValuedObjectElements pValuedObject;
-	private TextualCodeElements pTextualCode;
-	private BindingElements pBinding;
-	private StateTypeElements unknownRuleStateType;
-	private TransitionTypeElements unknownRuleTransitionType;
-	private TransitionTypeLegacyElements unknownRuleTransitionTypeLegacy;
+	private final RootElements pRoot;
+	private final SingleRegionElements pSingleRegion;
+	private final ForElements pFor;
+	private final RegionElements pRegion;
+	private final SCChartElements pSCChart;
+	private final StateElements pState;
+	private final LocalActionElements pLocalAction;
+	private final TransitionElements pTransition;
+	private final DeclarationElements pDeclaration;
+	private final ValuedObjectElements pValuedObject;
+	private final TextualCodeElements pTextualCode;
+	private final BindingElements pBinding;
+	private final StateTypeElements unknownRuleStateType;
+	private final TransitionTypeElements unknownRuleTransitionType;
+	private final TransitionTypeLegacyElements unknownRuleTransitionTypeLegacy;
 	
 	private final Grammar grammar;
 
-	private ActionsGrammarAccess gaActions;
+	private final ActionsGrammarAccess gaActions;
 
 	@Inject
 	public SctGrammarAccess(GrammarProvider grammarProvider,
 		ActionsGrammarAccess gaActions) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaActions = gaActions;
+		this.pRoot = new RootElements();
+		this.pSingleRegion = new SingleRegionElements();
+		this.pFor = new ForElements();
+		this.pRegion = new RegionElements();
+		this.pSCChart = new SCChartElements();
+		this.pState = new StateElements();
+		this.pLocalAction = new LocalActionElements();
+		this.pTransition = new TransitionElements();
+		this.pDeclaration = new DeclarationElements();
+		this.pValuedObject = new ValuedObjectElements();
+		this.pTextualCode = new TextualCodeElements();
+		this.pBinding = new BindingElements();
+		this.unknownRuleStateType = new StateTypeElements();
+		this.unknownRuleTransitionType = new TransitionTypeElements();
+		this.unknownRuleTransitionTypeLegacy = new TransitionTypeLegacyElements();
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -1494,12 +1430,14 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
+	////generate sct "http://kieler.cs.cau.de/sccharts/textual/0.1.0"
+	//
 	//// ---------------------------------------------------------------------------------------------------
 	// Root returns
 	//sccharts::State:
 	//	SCChart;
 	public RootElements getRootAccess() {
-		return (pRoot != null) ? pRoot : (pRoot = new RootElements());
+		return pRoot;
 	}
 	
 	public ParserRule getRootRule() {
@@ -1513,7 +1451,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//	declarations+=Declaration*)? //      (bodyText+=TextualCode)* 
 	// states+=State*;
 	public SingleRegionElements getSingleRegionAccess() {
-		return (pSingleRegion != null) ? pSingleRegion : (pSingleRegion = new SingleRegionElements());
+		return pSingleRegion;
 	}
 	
 	public ParserRule getSingleRegionRule() {
@@ -1525,7 +1463,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//sccharts::For:
 	//	{sccharts::For} valuedObject=ValuedObject "=" from=INT ".." to=INT;
 	public ForElements getForAccess() {
-		return (pFor != null) ? pFor : (pFor = new ForElements());
+		return pFor;
 	}
 	
 	public ParserRule getForRule() {
@@ -1538,7 +1476,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//	{sccharts::Region} annotations+=Annotation* "region" id=ID? label=STRING? ("[" for=For "]")? ":"
 	//	declarations+=Declaration* states+=State+;
 	public RegionElements getRegionAccess() {
-		return (pRegion != null) ? pRegion : (pRegion = new RegionElements());
+		return pRegion;
 	}
 	
 	public ParserRule getRegionRule() {
@@ -1556,43 +1494,27 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//	bindings+=Binding)*)? | "{" ((declarations+=Declaration | localActions+=LocalAction)* (regions+=SingleRegion
 	//	regions+=Region*)?) "}")?;
 	public SCChartElements getSCChartAccess() {
-		return (pSCChart != null) ? pSCChart : (pSCChart = new SCChartElements());
+		return pSCChart;
 	}
 	
 	public ParserRule getSCChartRule() {
 		return getSCChartAccess().getRule();
 	}
 
-	//ImportDecl:
-	//	"import" (importedType=[sccharts::State|QualifiedName] | importedNamespace=QualifiedNameWithWildcard);
-	public ImportDeclElements getImportDeclAccess() {
-		return (pImportDecl != null) ? pImportDecl : (pImportDecl = new ImportDeclElements());
-	}
-	
-	public ParserRule getImportDeclRule() {
-		return getImportDeclAccess().getRule();
-	}
-
-	//QualifiedName:
-	//	ID ("." ID)*;
-	public QualifiedNameElements getQualifiedNameAccess() {
-		return (pQualifiedName != null) ? pQualifiedName : (pQualifiedName = new QualifiedNameElements());
-	}
-	
-	public ParserRule getQualifiedNameRule() {
-		return getQualifiedNameAccess().getRule();
-	}
-
-	//QualifiedNameWithWildcard:
-	//	QualifiedName "." "*";
-	public QualifiedNameWithWildcardElements getQualifiedNameWithWildcardAccess() {
-		return (pQualifiedNameWithWildcard != null) ? pQualifiedNameWithWildcard : (pQualifiedNameWithWildcard = new QualifiedNameWithWildcardElements());
-	}
-	
-	public ParserRule getQualifiedNameWithWildcardRule() {
-		return getQualifiedNameWithWildcardAccess().getRule();
-	}
-
+	////ImportDecl: 
+	// //    'import' 
+	// //        (importedType=[sccharts::State|QualifiedName] 
+	//
+	////        | importedNamespace=QualifiedNameWithWildcard)
+	// //;
+	// //
+	// //QualifiedName:
+	// //  ID ('.' ID)*;
+	// //
+	//
+	////QualifiedNameWithWildcard :
+	// //    QualifiedName  '.' '*';
+	//
 	//// ---------------------------------------------------------------------------------------------------
 	// State returns
 	//sccharts::State:
@@ -1602,7 +1524,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//	regions+=Region*)?) "}")? // The semicolon is mandatory for the backtracking!
 	// outgoingTransitions+=Transition* ";";
 	public StateElements getStateAccess() {
-		return (pState != null) ? pState : (pState = new StateElements());
+		return pState;
 	}
 	
 	public ParserRule getStateRule() {
@@ -1614,7 +1536,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//returns sccharts::LocalAction:
 	//	EntryAction | DuringAction | ExitAction | SuspendAction;
 	public LocalActionElements getLocalActionAccess() {
-		return (pLocalAction != null) ? pLocalAction : (pLocalAction = new LocalActionElements());
+		return pLocalAction;
 	}
 	
 	public ParserRule getLocalActionRule() {
@@ -1630,7 +1552,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//	deferred?="deferred"? history=HistoryType? (("with" delay=INT? trigger=BoolExpression | "with")? (("/" | "do")
 	//	effects+=Effect (";" effects+=Effect)*)? | "with" label=STRING)?)?;
 	public TransitionElements getTransitionAccess() {
-		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
+		return pTransition;
 	}
 	
 	public ParserRule getTransitionRule() {
@@ -1645,7 +1567,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//	input?="input"? output?="output"? signal?="signal"? type=ValueType?) valuedObjects+=ValuedObject (","
 	//	valuedObjects+=ValuedObject)* ";"?;
 	public DeclarationElements getDeclarationAccess() {
-		return (pDeclaration != null) ? pDeclaration : (pDeclaration = new DeclarationElements());
+		return pDeclaration;
 	}
 	
 	public ParserRule getDeclarationRule() {
@@ -1657,7 +1579,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//returns kexpressions::ValuedObject:
 	//	name=ID ("[" cardinalities+=INT "]")* ("=" initialValue=Expression)? ("combine" combineOperator=CombineOperator)?;
 	public ValuedObjectElements getValuedObjectAccess() {
-		return (pValuedObject != null) ? pValuedObject : (pValuedObject = new ValuedObjectElements());
+		return pValuedObject;
 	}
 	
 	public ParserRule getValuedObjectRule() {
@@ -1669,7 +1591,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//returns kexpressions::TextExpression:
 	//	text=HOSTCODE ";";
 	public TextualCodeElements getTextualCodeAccess() {
-		return (pTextualCode != null) ? pTextualCode : (pTextualCode = new TextualCodeElements());
+		return pTextualCode;
 	}
 	
 	public ParserRule getTextualCodeRule() {
@@ -1681,7 +1603,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//sccharts::Binding:
 	//	annotations+=Annotation* formal=[kexpressions::ValuedObject] "to" actual=[kexpressions::ValuedObject];
 	public BindingElements getBindingAccess() {
-		return (pBinding != null) ? pBinding : (pBinding = new BindingElements());
+		return pBinding;
 	}
 	
 	public ParserRule getBindingRule() {
@@ -1693,7 +1615,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//returns sccharts::StateType:
 	//	NORMAL="normal" | CONNECTOR="connector" | REFERENCE="reference" | TEXTUAL="textual";
 	public StateTypeElements getStateTypeAccess() {
-		return (unknownRuleStateType != null) ? unknownRuleStateType : (unknownRuleStateType = new StateTypeElements());
+		return unknownRuleStateType;
 	}
 	
 	public EnumRule getStateTypeRule() {
@@ -1703,7 +1625,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//enum TransitionType returns sccharts::TransitionType:
 	//	WEAKABORT="goto" | STRONGABORT="abort to" | TERMINATION="join to";
 	public TransitionTypeElements getTransitionTypeAccess() {
-		return (unknownRuleTransitionType != null) ? unknownRuleTransitionType : (unknownRuleTransitionType = new TransitionTypeElements());
+		return unknownRuleTransitionType;
 	}
 	
 	public EnumRule getTransitionTypeRule() {
@@ -1713,7 +1635,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	//enum TransitionTypeLegacy returns sccharts::TransitionType:
 	//	WEAKABORT="-->" | STRONGABORT="o->" | TERMINATION=">->";
 	public TransitionTypeLegacyElements getTransitionTypeLegacyAccess() {
-		return (unknownRuleTransitionTypeLegacy != null) ? unknownRuleTransitionTypeLegacy : (unknownRuleTransitionTypeLegacy = new TransitionTypeLegacyElements());
+		return unknownRuleTransitionTypeLegacy;
 	}
 	
 	public EnumRule getTransitionTypeLegacyRule() {
@@ -1817,7 +1739,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//FunctionCallEffect returns sccharts::FunctionCallEffect:
-	//	"<" functionName=ID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")")? ">";
+	//	"<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" | "()")? ">";
 	public ActionsGrammarAccess.FunctionCallEffectElements getFunctionCallEffectAccess() {
 		return gaActions.getFunctionCallEffectAccess();
 	}
@@ -2023,7 +1945,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AtomicValuedExpression returns Expression:
-	//	IntValue | FloatValue | "(" ValuedExpression ")" | AtomicExpression;
+	//	IntValue | FloatValue | StringValue | "(" ValuedExpression ")" | AtomicExpression;
 	public KExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
 		return gaActions.getAtomicValuedExpressionAccess();
 	}
@@ -2056,7 +1978,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//FunctionCall:
-	//	"<" functionName=ID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")")? ">";
+	//	"<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" | "()")? ">";
 	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
 		return gaActions.getFunctionCallAccess();
 	}
@@ -2104,6 +2026,16 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getBoolValueRule() {
 		return getBoolValueAccess().getRule();
+	}
+
+	//StringValue:
+	//	value=STRING;
+	public KExpressionsGrammarAccess.StringValueElements getStringValueAccess() {
+		return gaActions.getStringValueAccess();
+	}
+	
+	public ParserRule getStringValueRule() {
+		return getStringValueAccess().getRule();
 	}
 
 	//// data type rule allowing any kind of value to be accepted,

@@ -83,7 +83,7 @@ public class ScheduleItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
-            childrenFeatures.add(ScgPackage.Literals.SCHEDULE__SCHEDULED_BLOCKS);
+            childrenFeatures.add(ScgPackage.Literals.SCHEDULE__SCHEDULE_BLOCKS);
         }
         return childrenFeatures;
     }
@@ -136,7 +136,7 @@ public class ScheduleItemProvider
         updateChildren(notification);
 
         switch (notification.getFeatureID(Schedule.class)) {
-            case ScgPackage.SCHEDULE__SCHEDULED_BLOCKS:
+            case ScgPackage.SCHEDULE__SCHEDULE_BLOCKS:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -156,8 +156,8 @@ public class ScheduleItemProvider
 
         newChildDescriptors.add
             (createChildParameter
-                (ScgPackage.Literals.SCHEDULE__SCHEDULED_BLOCKS,
-                 ScgFactory.eINSTANCE.createScheduledBlock()));
+                (ScgPackage.Literals.SCHEDULE__SCHEDULE_BLOCKS,
+                 ScgFactory.eINSTANCE.createScheduleBlock()));
     }
 
     /**

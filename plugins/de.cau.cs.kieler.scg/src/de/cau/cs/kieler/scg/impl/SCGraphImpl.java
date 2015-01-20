@@ -1,20 +1,41 @@
 /**
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2013 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.scg.impl;
 
 import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
+
 import de.cau.cs.kieler.core.kexpressions.Declaration;
+
 import de.cau.cs.kieler.scg.BasicBlock;
 import de.cau.cs.kieler.scg.Guard;
 import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scg.SCGraph;
 import de.cau.cs.kieler.scg.ScgPackage;
 import de.cau.cs.kieler.scg.Schedule;
+
 import java.util.Collection;
+
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -30,148 +51,190 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getBasicBlocks <em>Basic Blocks</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getSchedules <em>Schedules</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getGuards <em>Guards</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.SCGraphImpl#getLabel <em>Label</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
-    /**
+	/**
      * The cached value of the '{@link #getNodes() <em>Nodes</em>}' containment reference list.
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @see #getNodes()
      * @generated
      * @ordered
      */
-    protected EList<Node> nodes;
+	protected EList<Node> nodes;
 
-    /**
+	/**
      * The cached value of the '{@link #getDeclarations() <em>Declarations</em>}' containment reference list.
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @see #getDeclarations()
      * @generated
      * @ordered
      */
-    protected EList<Declaration> declarations;
+	protected EList<Declaration> declarations;
 
-    /**
+	/**
      * The cached value of the '{@link #getBasicBlocks() <em>Basic Blocks</em>}' containment reference list.
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @see #getBasicBlocks()
      * @generated
      * @ordered
      */
-    protected EList<BasicBlock> basicBlocks;
+	protected EList<BasicBlock> basicBlocks;
 
-    /**
+	/**
      * The cached value of the '{@link #getSchedules() <em>Schedules</em>}' containment reference list.
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @see #getSchedules()
      * @generated
      * @ordered
      */
-    protected EList<Schedule> schedules;
+	protected EList<Schedule> schedules;
 
-    /**
+	/**
      * The cached value of the '{@link #getGuards() <em>Guards</em>}' containment reference list.
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @see #getGuards()
      * @generated
      * @ordered
      */
-    protected EList<Guard> guards;
+	protected EList<Guard> guards;
 
-    /**
+	/**
+     * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
+     * @see #getLabel()
+     * @generated
+     * @ordered
+     */
+	protected static final String LABEL_EDEFAULT = null;
+
+	/**
+     * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @see #getLabel()
+     * @generated
+     * @ordered
+     */
+	protected String label = LABEL_EDEFAULT;
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    protected SCGraphImpl() {
+	protected SCGraphImpl() {
         super();
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    @Override
-    protected EClass eStaticClass() {
+	@Override
+	protected EClass eStaticClass() {
         return ScgPackage.Literals.SC_GRAPH;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Node> getNodes() {
+	public EList<Node> getNodes() {
         if (nodes == null) {
             nodes = new EObjectContainmentEList<Node>(Node.class, this, ScgPackage.SC_GRAPH__NODES);
         }
         return nodes;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Declaration> getDeclarations() {
+	public EList<Declaration> getDeclarations() {
         if (declarations == null) {
             declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, ScgPackage.SC_GRAPH__DECLARATIONS);
         }
         return declarations;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EList<BasicBlock> getBasicBlocks() {
+	public EList<BasicBlock> getBasicBlocks() {
         if (basicBlocks == null) {
             basicBlocks = new EObjectContainmentEList<BasicBlock>(BasicBlock.class, this, ScgPackage.SC_GRAPH__BASIC_BLOCKS);
         }
         return basicBlocks;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Schedule> getSchedules() {
+	public EList<Schedule> getSchedules() {
         if (schedules == null) {
             schedules = new EObjectContainmentEList<Schedule>(Schedule.class, this, ScgPackage.SC_GRAPH__SCHEDULES);
         }
         return schedules;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Guard> getGuards() {
+	public EList<Guard> getGuards() {
         if (guards == null) {
             guards = new EObjectContainmentEList<Guard>(Guard.class, this, ScgPackage.SC_GRAPH__GUARDS);
         }
         return guards;
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    @Override
-    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public String getLabel() {
+        return label;
+    }
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	public void setLabel(String newLabel) {
+        String oldLabel = label;
+        label = newLabel;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.SC_GRAPH__LABEL, oldLabel, label));
+    }
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case ScgPackage.SC_GRAPH__NODES:
                 return ((InternalEList<?>)getNodes()).basicRemove(otherEnd, msgs);
@@ -187,13 +250,13 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    @Override
-    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case ScgPackage.SC_GRAPH__NODES:
                 return getNodes();
@@ -205,18 +268,20 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
                 return getSchedules();
             case ScgPackage.SC_GRAPH__GUARDS:
                 return getGuards();
+            case ScgPackage.SC_GRAPH__LABEL:
+                return getLabel();
         }
         return super.eGet(featureID, resolve, coreType);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    @SuppressWarnings("unchecked")
-    @Override
-    public void eSet(int featureID, Object newValue) {
+	@SuppressWarnings("unchecked")
+	@Override
+	public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case ScgPackage.SC_GRAPH__NODES:
                 getNodes().clear();
@@ -238,17 +303,20 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
                 getGuards().clear();
                 getGuards().addAll((Collection<? extends Guard>)newValue);
                 return;
+            case ScgPackage.SC_GRAPH__LABEL:
+                setLabel((String)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    @Override
-    public void eUnset(int featureID) {
+	@Override
+	public void eUnset(int featureID) {
         switch (featureID) {
             case ScgPackage.SC_GRAPH__NODES:
                 getNodes().clear();
@@ -265,17 +333,20 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
             case ScgPackage.SC_GRAPH__GUARDS:
                 getGuards().clear();
                 return;
+            case ScgPackage.SC_GRAPH__LABEL:
+                setLabel(LABEL_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
 
-    /**
+	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+	 * <!-- end-user-doc -->
      * @generated
      */
-    @Override
-    public boolean eIsSet(int featureID) {
+	@Override
+	public boolean eIsSet(int featureID) {
         switch (featureID) {
             case ScgPackage.SC_GRAPH__NODES:
                 return nodes != null && !nodes.isEmpty();
@@ -287,8 +358,26 @@ public class SCGraphImpl extends AnnotatableImpl implements SCGraph {
                 return schedules != null && !schedules.isEmpty();
             case ScgPackage.SC_GRAPH__GUARDS:
                 return guards != null && !guards.isEmpty();
+            case ScgPackage.SC_GRAPH__LABEL:
+                return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
         }
         return super.eIsSet(featureID);
+    }
+
+	/**
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	@Override
+	public String toString() {
+        if (eIsProxy()) return super.toString();
+
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (label: ");
+        result.append(label);
+        result.append(')');
+        return result.toString();
     }
 
 } //SCGraphImpl

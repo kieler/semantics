@@ -56,6 +56,10 @@ abstract class AbstractSequentializer extends Transformation {
     /** Name of the go signal. */
     protected static val String GOGUARDNAME = "_GO"
     
+    public static val String ANNOTATION_SEQUENTIALIZED = "sequentialized" 
+    
+    public static val String ANNOTATION_CONDITIONALASSIGNMENT = "conditional"
+    
     
     // -------------------------------------------------------------------------
     // -- Sequentializer 

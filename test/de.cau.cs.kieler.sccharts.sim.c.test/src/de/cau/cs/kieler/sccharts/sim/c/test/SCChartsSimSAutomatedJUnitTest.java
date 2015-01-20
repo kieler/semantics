@@ -47,7 +47,7 @@ public class SCChartsSimSAutomatedJUnitTest extends KiemAutomatedJUnitTest {
      * {@inheritDoc}
      */
     protected IPath getBundleTestPath() {
-//        return new Path("activetests");
+//        return new Path("knowntofail");
         return new Path("testdata");
     }
 

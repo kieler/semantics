@@ -49,6 +49,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.scg.synchronizer.DepthJoinSynchronizer
 import de.cau.cs.kieler.scg.synchronizer.SynchronizerData
+import de.cau.cs.kieler.core.annotations.StringAnnotation
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -94,7 +95,8 @@ class SimpleSequentializer extends AbstractSequentializer {
     // -- Globals
     // -------------------------------------------------------------------------
     
-    private static val ANNOTATION_SEQUENTIALIZED = "sequentialized" 
+    public static val ANNOTATION_SEQUENTIALIZED = "sequentialized" 
+    private static val String ANNOTATION_HOSTCODE = "hostcode"
     
     protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
     protected var KielerCompilerContext compilerContext
@@ -142,7 +144,12 @@ class SimpleSequentializer extends AbstractSequentializer {
          */
         val newSCG = ScgFactory::eINSTANCE.createSCGraph => [
         	annotations += createStringAnnotation(ANNOTATION_SEQUENTIALIZED, "")
+        	label = scg.label
         ]
+        val hostcodeAnnotations = scg.getStringAnnotations(ANNOTATION_HOSTCODE)
+        hostcodeAnnotations.forEach[
+            newSCG.addAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).value)
+        ]        
         schizoDeclaration = createDeclaration=>[ setType(ValueType::BOOL) ]
 		val predecessorList = <Predecessor> newArrayList
 		val basicBlockList = <BasicBlock> newArrayList
@@ -226,60 +233,60 @@ class SimpleSequentializer extends AbstractSequentializer {
     	
     	
     	// For each scheduling block in the schedule iterate.
-    	for (sb : schedule.scheduledBlocks) {
-    		val sBlock = sb.schedulingBlock
-	  	   /**
-   			 * For each guard a guard expression exists.
-   		     * Retrieve the expression and test it for null. 
-	  	     * If the guard expression is null, the scheduler could not create an expression for this guard. This is bad. Perhaps the SCG is erroneous. Throw an exception.
-		     * Otherwise, it is possible that the guard expression houses empty expressions for a synchronizer. Add them as well.
-		     */    		
-   			// Retrieve the guard expression from the scheduling information.
-       		sb.createAndAddGuardExpression(nextControlFlows, schedule, scg, nodeCache) 
-    		
-    		/**
-    		 * If the scheduling block includes assignment nodes, they must be executed if the corresponding guard 
-    		 * evaluates to true. Therefore, create a conditional for the guard and add the assignment to the
-    		 * true branch. They will execute their expression if the guard is active in this tick instance. 
-    		 */
-    		if (sBlock.nodes.filter(typeof(Assignment)).size>0)
-    		{
-    			// Create a conditional and set a reference of the guard as condition.
-    			val conditional = ScgFactory::eINSTANCE.createConditional
-                conditional.condition = sBlock.guard.valuedObject.reference.copySCGExpression
-                if (sb.schizophrenic) {
-                    conditional.condition = scg.fixSchizophrenicExpression(conditional.condition)
-                }
-    			
-    			// Create control flows for the two branches and set the actual control flow to the conditional.
-    			conditional.then = ScgFactory::eINSTANCE.createControlFlow
-    			conditional.^else = ScgFactory::eINSTANCE.createControlFlow
-    			nextControlFlows.forEach[ target = conditional ]
-    			nextControlFlows.clear
-    			
-    			// Add the conditional.
-                nodeCache.add(conditional)
-    			
-    			// Now, use the SCG copy extensions to copy the assignment and connect them appropriately
-    			// in the true branch of the conditional.
-    			var nextControlFlow = conditional.then
-    			for (assignment : sBlock.nodes.filter(typeof(Assignment))) {
-    				val Assignment conditionalAssignment = assignment.copySCGNode(scg) as Assignment
-    				nextControlFlow.target = conditionalAssignment
-                    nodeCache.add(conditionalAssignment)
-    				nextControlFlow = ScgFactory::eINSTANCE.createControlFlow
-    				conditionalAssignment.next = nextControlFlow
-    			}
-    			nextControlFlows.add(nextControlFlow)
-    			
-    			// Subsequently, add the last control flow of the true branch and the control flow of the
-    			// else branch to the control flow list. These are the new entry flows for the next assignment
-    			// or the return value (in which case they will be connected to the exit node by the caller). 
-    			nextControlFlows.add(conditional.^else)
-
-    		}
-    		
-     	}
+//    	for (sb : schedule.scheduledBlocks) {
+//    		val sBlock = sb.schedulingBlock
+//	  	   /**
+//   			 * For each guard a guard expression exists.
+//   		     * Retrieve the expression and test it for null. 
+//	  	     * If the guard expression is null, the scheduler could not create an expression for this guard. This is bad. Perhaps the SCG is erroneous. Throw an exception.
+//		     * Otherwise, it is possible that the guard expression houses empty expressions for a synchronizer. Add them as well.
+//		     */    		
+//   			// Retrieve the guard expression from the scheduling information.
+//       		sb.createAndAddGuardExpression(nextControlFlows, schedule, scg, nodeCache) 
+//    		
+//    		/**
+//    		 * If the scheduling block includes assignment nodes, they must be executed if the corresponding guard 
+//    		 * evaluates to true. Therefore, create a conditional for the guard and add the assignment to the
+//    		 * true branch. They will execute their expression if the guard is active in this tick instance. 
+//    		 */
+//    		if (sBlock.nodes.filter(typeof(Assignment)).size>0)
+//    		{
+//    			// Create a conditional and set a reference of the guard as condition.
+//    			val conditional = ScgFactory::eINSTANCE.createConditional
+//                conditional.condition = sBlock.guard.valuedObject.reference.copySCGExpression
+//                if (sb.schizophrenic) {
+//                    conditional.condition = scg.fixSchizophrenicExpression(conditional.condition)
+//                }
+//    			
+//    			// Create control flows for the two branches and set the actual control flow to the conditional.
+//    			conditional.then = ScgFactory::eINSTANCE.createControlFlow
+//    			conditional.^else = ScgFactory::eINSTANCE.createControlFlow
+//    			nextControlFlows.forEach[ target = conditional ]
+//    			nextControlFlows.clear
+//    			
+//    			// Add the conditional.
+//                nodeCache.add(conditional)
+//    			
+//    			// Now, use the SCG copy extensions to copy the assignment and connect them appropriately
+//    			// in the true branch of the conditional.
+//    			var nextControlFlow = conditional.then
+//    			for (assignment : sBlock.nodes.filter(typeof(Assignment))) {
+//    				val Assignment conditionalAssignment = assignment.copySCGNode(scg) as Assignment
+//    				nextControlFlow.target = conditionalAssignment
+//                    nodeCache.add(conditionalAssignment)
+//    				nextControlFlow = ScgFactory::eINSTANCE.createControlFlow
+//    				conditionalAssignment.next = nextControlFlow
+//    			}
+//    			nextControlFlows.add(nextControlFlow)
+//    			
+//    			// Subsequently, add the last control flow of the true branch and the control flow of the
+//    			// else branch to the control flow list. These are the new entry flows for the next assignment
+//    			// or the return value (in which case they will be connected to the exit node by the caller). 
+//    			nextControlFlows.add(conditional.^else)
+//
+//    		}
+//    		
+//     	}
     	
     	// Return any remaining control flows for the caller.
     	nextControlFlows
@@ -406,7 +413,9 @@ class SimpleSequentializer extends AbstractSequentializer {
                 scheduledBlock.handleSynchronizerBlockGuardExpression(assignment, nextControlFlows, schedule,
                     scg, nodeCache)   
                 
-                if (joinData.synchronizerId == DepthJoinSynchronizer::SYNCHRONIZER_ID) {
+                if (joinData.synchronizerId == DepthJoinSynchronizer::SYNCHRONIZER_ID ||
+                	scheduledBlock.schizophrenic
+                ) {
                     assignment.assignment = scg.fixSchizophrenicExpression(assignment.assignment)
                 }
             } else {
@@ -502,14 +511,14 @@ class SimpleSequentializer extends AbstractSequentializer {
     protected def GuardExpression createSynchronizerBlockGuardExpression(SchedulingBlock schedulingBlock, Schedule schedule, SCGraph scg) {
         // The simple scheduler uses the SurfaceSynchronizer. 
         // The result of the synchronizer is stored in the synchronizerData class joinData.
-        val synchronizer = (schedulingBlock.nodes.head as Join).getSynchronizer
-        System.out.println("Sequentializing join with " + synchronizer.id)
-        if (synchronizer.id == DepthJoinSynchronizer::SYNCHRONIZER_ID) {
-            (synchronizer as DepthJoinSynchronizer).schizophrenicDeclaration = schizoDeclaration
-        }
-        joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join, compilerContext, schedulingBlockCache)
-        
-        joinData.guardExpression
+//        val synchronizer = (schedulingBlock.nodes.head as Join).getSynchronizer
+//        System.out.println("Sequentializing join with " + synchronizer.id)
+//        if (synchronizer.id == DepthJoinSynchronizer::SYNCHRONIZER_ID) {
+//            (synchronizer as DepthJoinSynchronizer).schizophrenicDeclaration = schizoDeclaration
+//        }
+//        joinData = synchronizer.synchronize(schedulingBlock.nodes.head as Join, compilerContext, schedulingBlockCache)
+//        
+//        joinData.guardExpression
     }
     
     

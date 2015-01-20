@@ -543,6 +543,29 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.ScheduleBlock} instances.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	protected ScheduleBlockItemProvider scheduleBlockItemProvider;
+
+				/**
+     * This creates an adapter for a {@link de.cau.cs.kieler.scg.ScheduleBlock}.
+     * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+     * @generated
+     */
+	@Override
+	public Adapter createScheduleBlockAdapter() {
+        if (scheduleBlockItemProvider == null) {
+            scheduleBlockItemProvider = new ScheduleBlockItemProvider(this);
+        }
+
+        return scheduleBlockItemProvider;
+    }
+
+				/**
      * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Schedule} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -566,29 +589,6 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.ScheduledBlock} instances.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	protected ScheduledBlockItemProvider scheduledBlockItemProvider;
-
-				/**
-     * This creates an adapter for a {@link de.cau.cs.kieler.scg.ScheduledBlock}.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	@Override
-	public Adapter createScheduledBlockAdapter() {
-        if (scheduledBlockItemProvider == null) {
-            scheduledBlockItemProvider = new ScheduledBlockItemProvider(this);
-        }
-
-        return scheduledBlockItemProvider;
-    }
-
-				/**
      * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.scg.Guard} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -730,8 +730,8 @@ public class ScgItemProviderAdapterFactory extends ScgAdapterFactory implements 
         if (basicBlockItemProvider != null) basicBlockItemProvider.dispose();
         if (schedulingBlockItemProvider != null) schedulingBlockItemProvider.dispose();
         if (predecessorItemProvider != null) predecessorItemProvider.dispose();
+        if (scheduleBlockItemProvider != null) scheduleBlockItemProvider.dispose();
         if (scheduleItemProvider != null) scheduleItemProvider.dispose();
-        if (scheduledBlockItemProvider != null) scheduledBlockItemProvider.dispose();
         if (guardItemProvider != null) guardItemProvider.dispose();
     }
 

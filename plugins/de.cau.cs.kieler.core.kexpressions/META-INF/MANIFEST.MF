@@ -27,7 +27,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.apache.commons.logging,
  org.eclipse.emf.mwe2.launch;bundle-version="1.0.0",
  org.antlr.runtime,
- de.cau.cs.kieler.core.annotations,
+ de.cau.cs.kieler.core.annotations;visibility:=reexport,
  de.cau.cs.kieler.core.annotations.text,
  de.cau.cs.kieler.kitt
 Bundle-ActivationPolicy: lazy

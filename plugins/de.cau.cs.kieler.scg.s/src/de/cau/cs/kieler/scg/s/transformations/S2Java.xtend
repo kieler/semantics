@@ -27,7 +27,7 @@ import de.cau.cs.kieler.scg.s.PrimitiveBeautifier
 class S2Java {
     
         /**
-         * Transform the incoming SCG to C code. If the eObject is not an SCG then just return it.
+         * Transform the incoming SCG to Java code. If the eObject is not an SCG then just return it.
          *
          * @param eObject the e object
          * @return the object

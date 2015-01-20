@@ -18,6 +18,7 @@ import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.Parameter;
+import de.cau.cs.kieler.core.kexpressions.StringValue;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
@@ -280,6 +281,30 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 					return; 
 				}
 				else break;
+			case KExpressionsPackage.STRING_VALUE:
+				if(context == grammarAccess.getAddExpressionRule() ||
+				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAtomicValuedExpressionRule() ||
+				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
+				   context == grammarAccess.getDivExpressionRule() ||
+				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getExpressionRule() ||
+				   context == grammarAccess.getModExpressionRule() ||
+				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getMultExpressionRule() ||
+				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getNegExpressionRule() ||
+				   context == grammarAccess.getNotOrValuedExpressionRule() ||
+				   context == grammarAccess.getRootRule() ||
+				   context == grammarAccess.getSExpressionRule() ||
+				   context == grammarAccess.getStringValueRule() ||
+				   context == grammarAccess.getSubExpressionRule() ||
+				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getValuedExpressionRule()) {
+					sequence_StringValue(context, (StringValue) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.TEXT_EXPRESSION:
 				if(context == grammarAccess.getAddExpressionRule() ||
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
@@ -436,7 +461,8 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 				}
 				else break;
 			case SPackage.PROGRAM:
-				if(context == grammarAccess.getProgramRule()) {
+				if(context == grammarAccess.getMetamodelManipulationRuleRule() ||
+				   context == grammarAccess.getProgramRule()) {
 					sequence_Program(context, (Program) semanticObject); 
 					return; 
 				}
@@ -495,6 +521,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	/**
 	 * Constraint:
 	 *     (
+	 *         annotations+=Annotation* 
 	 *         (
 	 *             (
 	 *                 extern?='extern'? 
@@ -630,7 +657,14 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (name=ID priority=INT declarations+=Declaration* globalHostCodeInstruction=HOSTCODE? states+=State+)
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         name=ID 
+	 *         priority=INT 
+	 *         declarations+=Declaration* 
+	 *         globalHostCodeInstruction=HOSTCODE? 
+	 *         states+=State+
+	 *     )
 	 */
 	protected void sequence_Program(EObject context, Program semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -639,7 +673,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (name=ID declarations+=Declaration* instructions+=Instruction*)
+	 *     (annotations+=Annotation* name=ID declarations+=Declaration* instructions+=Instruction*)
 	 */
 	protected void sequence_State(EObject context, State semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -673,7 +707,7 @@ public abstract class AbstractSSemanticSequencer extends KExpressionsSemanticSeq
 	
 	/**
 	 * Constraint:
-	 *     (name=ID cardinalities+=INT* initialValue=Expression? combineOperator=CombineOperator?)
+	 *     (annotations+=Annotation* name=ID cardinalities+=INT* initialValue=Expression? combineOperator=CombineOperator?)
 	 */
 	protected void sequence_ValuedObject(EObject context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
