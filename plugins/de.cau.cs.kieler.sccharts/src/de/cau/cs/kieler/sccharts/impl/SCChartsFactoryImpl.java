@@ -92,8 +92,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.DATAFLOW: return createDataflow();
             case SCChartsPackage.SENDER: return createSender();
             case SCChartsPackage.RECEIVER: return createReceiver();
-            case SCChartsPackage.TEST_SENDER: return createTestSender();
-            case SCChartsPackage.TEST_RECEIVER: return createTestReceiver();
             case SCChartsPackage.BINDING: return createBinding();
             case SCChartsPackage.TRANSITION: return createTransition();
             case SCChartsPackage.TEXT_EFFECT: return createTextEffect();
@@ -298,26 +296,6 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     public Receiver createReceiver() {
         ReceiverImpl receiver = new ReceiverImpl();
         return receiver;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public TestSender createTestSender() {
-        TestSenderImpl testSender = new TestSenderImpl();
-        return testSender;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public TestReceiver createTestReceiver() {
-        TestReceiverImpl testReceiver = new TestReceiverImpl();
-        return testReceiver;
     }
 
     /**

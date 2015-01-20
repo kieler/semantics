@@ -224,18 +224,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case SCChartsPackage.TEST_SENDER: {
-                TestSender testSender = (TestSender)theEObject;
-                T result = caseTestSender(testSender);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.TEST_RECEIVER: {
-                TestReceiver testReceiver = (TestReceiver)theEObject;
-                T result = caseTestReceiver(testReceiver);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
             case SCChartsPackage.BINDING: {
                 Binding binding = (Binding)theEObject;
                 T result = caseBinding(binding);
@@ -567,36 +555,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseReceiver(Receiver object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Test Sender</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Test Sender</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseTestSender(TestSender object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Test Receiver</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Test Receiver</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseTestReceiver(TestReceiver object) {
         return null;
     }
 

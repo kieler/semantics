@@ -199,38 +199,41 @@ class Reference {
 			    idCounter = idCounter +1
 			    newState.setInitial
 			    newState.referencedScope = trn.referencedScope
-			    
 			    nodeMapping.put(trn, newState)
 			    
 			    var exprCounter = 0
-			    var wireCounter = 0
+			    //var wireCounter = 0
+			    val refedInputs = <ValuedObject>newArrayList
+			    trn.referencedScope.declarations.filter[it.input].forEach[
+                    refedInputs+=valuedObjects
+                ]
 			    for (expr: trn.parameters) {
-			        //println("trn.expr: " + expr)
+			        //val wire = state.createVariable("_wire"+wireCounter).setTypeBool
 			        val newBinding = SCChartsFactory.eINSTANCE.createBinding
-			        val wire = state.createVariable("_wire"+wireCounter).setTypeBool
-			        
-			        val l = trn.referencedScope.declarations.filter[it.input]
-			        println("l.get: " + l.get(exprCounter).valuedObjects.get(0))
-			        newBinding.actual = trn.referencedScope.declarations.filter[it.input].get(exprCounter).valuedObjects.get(0)
+			        newBinding.actual = (expr as ValuedObjectReference).valuedObject
+			        newBinding.formal = refedInputs.get(exprCounter)
 			        exprCounter = exprCounter +1
-			        newBinding.actual
-			        newBinding.formal = (expr as ValuedObjectReference).valuedObject
-			        
-			        
-//			        val rState = nodeMapping.get(receiver.node as ReferencedNode)
-//                  newBinding.formal = receiver.valuedObject
-//                  newBinding.actual = (sender.expression as ValuedObjectReference).valuedObject
-//                  rState.bindings += newBinding
-			        
 			        val rState = nodeMapping.get(trn)
 			        rState.bindings += newBinding
-			        println("nb: " + newBinding)
 			    }
 			}
+			for (f: dataflow.features) {
+                    if (f.node != null) {
+                        val newBinding = SCChartsFactory.eINSTANCE.createBinding
+                        newBinding.actual = f.valuedObject
+                        newBinding.formal = (f.expression as ValuedObjectReference).valuedObject
+                        //println("f.node: " + f.node)
+                        val sState = nodeMapping.get(f.node)
+                        sState.bindings += newBinding
+                        //println("f.node: " + f.node)
+                        //println("updated")
+                    } else {
+                        println("keine node beim feature angegeben")
+                    }
+                }
 			// ende von neu
 			
     		for(rn : dataflow.nodes.filter(typeof(ReferencedNode))) {
-    		//for(rn : dataflow.nodes.filter(typeof(TestReferenceNode))) {
                 val rRegion = parentState.createRegion("_"+dataflow.id+regionCounter) 
                 rRegion.label = dataflow.label + regionCounter
     			val newState = rRegion.createState("_"+rn.ID+idCounter) 

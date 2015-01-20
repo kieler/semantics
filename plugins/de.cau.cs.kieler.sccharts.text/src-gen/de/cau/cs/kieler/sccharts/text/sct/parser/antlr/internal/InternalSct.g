@@ -2309,27 +2309,9 @@ ruleOutputNode returns [EObject current=null]
 	}
 
 )
-)(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getOutputNodeAccess().getTestReceiversReceiverOutputParserRuleCall_7_0()); 
-	    }
-		lv_testReceivers_7_0=ruleReceiverOutput		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getOutputNodeRule());
-	        }
-       		add(
-       			$current, 
-       			"testReceivers",
-        		lv_testReceivers_7_0, 
-        		"ReceiverOutput");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)?	otherlv_8=';' 
+)	otherlv_7=';' 
     {
-    	newLeafNode(otherlv_8, grammarAccess.getOutputNodeAccess().getSemicolonKeyword_8());
+    	newLeafNode(otherlv_7, grammarAccess.getOutputNodeAccess().getSemicolonKeyword_7());
     }
 )
 ;
@@ -2587,98 +2569,6 @@ ruleTestReferenceNode returns [EObject current=null]
     }
 )
 ;
-
-
-
-
-
-// Entry rule entryRuleReceiverOutput
-entryRuleReceiverOutput returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getReceiverOutputRule()); }
-	 iv_ruleReceiverOutput=ruleReceiverOutput 
-	 { $current=$iv_ruleReceiverOutput.current; } 
-	 EOF 
-;
-
-// Rule ReceiverOutput
-ruleReceiverOutput returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-((
-	{ 
-	  /* */ 
-	}
-    {
-        $current = forceCreateModelElement(
-            grammarAccess.getReceiverOutputAccess().getTestReceiverAction_0(),
-            $current);
-    }
-)	otherlv_1=':' 
-    {
-    	newLeafNode(otherlv_1, grammarAccess.getReceiverOutputAccess().getColonKeyword_1());
-    }
-(
-(
-		{ 
-		  /* */ 
-		}
-		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getReceiverOutputRule());
-	        }
-        }
-	otherlv_2=RULE_ID
-	{
-		newLeafNode(otherlv_2, grammarAccess.getReceiverOutputAccess().getNodeNodeCrossReference_2_0()); 
-	}
-
-)
-)	otherlv_3='=' 
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getReceiverOutputAccess().getEqualsSignKeyword_3());
-    }
-(
-(
-		{ 
-		  /* */ 
-		}
-		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getReceiverOutputRule());
-	        }
-        }
-	otherlv_4=RULE_ID
-	{
-		newLeafNode(otherlv_4, grammarAccess.getReceiverOutputAccess().getSenderNodeCrossReference_4_0()); 
-	}
-
-)
-)(	otherlv_5='.' 
-    {
-    	newLeafNode(otherlv_5, grammarAccess.getReceiverOutputAccess().getFullStopKeyword_5_0());
-    }
-(
-(
-		{ 
-		  /* */ 
-		}
-		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getReceiverOutputRule());
-	        }
-        }
-	otherlv_6=RULE_ID
-	{
-		newLeafNode(otherlv_6, grammarAccess.getReceiverOutputAccess().getValuedObjectValuedObjectCrossReference_5_1_0()); 
-	}
-
-)
-))?)
-;
-
-
 
 
 

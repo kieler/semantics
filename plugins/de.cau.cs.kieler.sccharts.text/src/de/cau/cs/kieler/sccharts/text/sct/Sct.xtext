@@ -170,7 +170,7 @@ State returns sccharts::State:
 
 
 Node returns sccharts::Node:
-    InputNode | OutputNode | ReferencedNode | TestReferenceNode | CallNode | DefineNode //| Out
+    InputNode | OutputNode | ReferencedNode | TestReferenceNode | CallNode | DefineNode
 ;
 
 CallNode returns sccharts::CallNode:
@@ -186,20 +186,8 @@ CallNode returns sccharts::CallNode:
 //        )?
 //    )
     '(' (parameters+=Expression)? (',' parameters+=Expression)* ')'
-
-    //'(' (parameters+=Para)* ')'
     ';'
 ;
-//Para returns sccharts::Param:
-//    ParaExpr | ParaRef
-//;
-//ParaExpr returns sccharts::Param:
-//    expression = Expression
-//;
-//ParaRef returns sccharts::Param:
-//    //expression = ValuedObjectReference
-//    paraRef = [sccharts::Node|ID]
-//;
 
 DefineNode returns sccharts::DefineNode:
     {sccharts::DefineNode}
@@ -223,7 +211,6 @@ OutputNode returns sccharts::OutputNode:
     {sccharts::OutputNode}
     'node' (id=ID) (label=STRING)? 'output' ':'
     valuedObject = [kexpressions::ValuedObject]
-    (testReceivers+=ReceiverOutput)?
     ';'
 ;
 
@@ -250,30 +237,6 @@ TestReferenceNode returns sccharts::TestReferenceNode:
     (id=ID) (label=STRING)? '=' 'ref' referencedScope = [sccharts::State|ID]
     '(' (parameters+=Expression)? (',' parameters+=Expression)* ')'
     ';'
-;
-
-//Out returns sccharts::OutputNode:
-//    {sccharts::OutputNode}
-//    //valuedObject = [kexpressions::ValuedObject]
-//    testReceivers+=ReceiverOutput2
-//;
-
-ReceiverOutput returns sccharts::TestReceiver:
-    {sccharts::TestReceiver}
-    ':' node = [sccharts::Node|ID]
-    '=' sender = [sccharts::Node|ID] ('.' valuedObject = [kexpressions::ValuedObject])?
-;
-//ReceiverOutput2 returns sccharts::TestReceiver:
-//    {sccharts::TestReceiver}
-//    //node = [sccharts::Node|ID]
-//    outputValue = [kexpressions::ValuedObject]
-//    '=' sender = [sccharts::Node|ID] ('.' valuedObject = [kexpressions::ValuedObject])?
-//;
-
-ReceiverTest returns sccharts::TestReceiver:
-    {sccharts::TestReceiver}
-    node = [sccharts::Node|ID] ('.' valuedObject = [kexpressions::ValuedObject])?
-    '=' sender = [sccharts::Node|ID] 
 ;
 
 SenderInput returns sccharts::Sender:

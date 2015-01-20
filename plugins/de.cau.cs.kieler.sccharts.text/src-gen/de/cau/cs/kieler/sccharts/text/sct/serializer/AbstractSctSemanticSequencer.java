@@ -42,7 +42,6 @@ import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Sender;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.SuspendAction;
-import de.cau.cs.kieler.sccharts.TestReceiver;
 import de.cau.cs.kieler.sccharts.TestReferenceNode;
 import de.cau.cs.kieler.sccharts.TextEffect;
 import de.cau.cs.kieler.sccharts.Transition;
@@ -502,16 +501,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 					return; 
 				}
 				else break;
-			case SCChartsPackage.TEST_RECEIVER:
-				if(context == grammarAccess.getReceiverOutputRule()) {
-					sequence_ReceiverOutput(context, (TestReceiver) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getReceiverTestRule()) {
-					sequence_ReceiverTest(context, (TestReceiver) semanticObject); 
-					return; 
-				}
-				else break;
 			case SCChartsPackage.TEST_REFERENCE_NODE:
 				if(context == grammarAccess.getNodeRule() ||
 				   context == grammarAccess.getTestReferenceNodeRule()) {
@@ -658,27 +647,9 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (id=ID label=STRING? valuedObject=[ValuedObject|ID] testReceivers+=ReceiverOutput?)
+	 *     (id=ID label=STRING? valuedObject=[ValuedObject|ID])
 	 */
 	protected void sequence_OutputNode(EObject context, OutputNode semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (node=[Node|ID] sender=[Node|ID] valuedObject=[ValuedObject|ID]?)
-	 */
-	protected void sequence_ReceiverOutput(EObject context, TestReceiver semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (node=[Node|ID] valuedObject=[ValuedObject|ID]? sender=[Node|ID])
-	 */
-	protected void sequence_ReceiverTest(EObject context, TestReceiver semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

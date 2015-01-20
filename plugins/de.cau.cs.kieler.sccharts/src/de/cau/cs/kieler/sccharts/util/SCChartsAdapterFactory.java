@@ -164,14 +164,6 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createReceiverAdapter();
             }
             @Override
-            public Adapter caseTestSender(TestSender object) {
-                return createTestSenderAdapter();
-            }
-            @Override
-            public Adapter caseTestReceiver(TestReceiver object) {
-                return createTestReceiverAdapter();
-            }
-            @Override
             public Adapter caseBinding(Binding object) {
                 return createBindingAdapter();
             }
@@ -472,34 +464,6 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createReceiverAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.TestSender <em>Test Sender</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.TestSender
-     * @generated
-     */
-    public Adapter createTestSenderAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.TestReceiver <em>Test Receiver</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.TestReceiver
-     * @generated
-     */
-    public Adapter createTestReceiverAdapter() {
         return null;
     }
 

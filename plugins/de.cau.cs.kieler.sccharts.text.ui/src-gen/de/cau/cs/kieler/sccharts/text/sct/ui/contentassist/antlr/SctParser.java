@@ -124,10 +124,6 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getReferencedNodeAccess().getGroup(), "rule__ReferencedNode__Group__0");
 					put(grammarAccess.getTestReferenceNodeAccess().getGroup(), "rule__TestReferenceNode__Group__0");
 					put(grammarAccess.getTestReferenceNodeAccess().getGroup_8(), "rule__TestReferenceNode__Group_8__0");
-					put(grammarAccess.getReceiverOutputAccess().getGroup(), "rule__ReceiverOutput__Group__0");
-					put(grammarAccess.getReceiverOutputAccess().getGroup_5(), "rule__ReceiverOutput__Group_5__0");
-					put(grammarAccess.getReceiverTestAccess().getGroup(), "rule__ReceiverTest__Group__0");
-					put(grammarAccess.getReceiverTestAccess().getGroup_2(), "rule__ReceiverTest__Group_2__0");
 					put(grammarAccess.getSenderInputAccess().getGroup(), "rule__SenderInput__Group__0");
 					put(grammarAccess.getSenderInputAccess().getGroup_2(), "rule__SenderInput__Group_2__0");
 					put(grammarAccess.getSenderAccess().getGroup(), "rule__Sender__Group__0");
@@ -291,7 +287,6 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getOutputNodeAccess().getIdAssignment_2(), "rule__OutputNode__IdAssignment_2");
 					put(grammarAccess.getOutputNodeAccess().getLabelAssignment_3(), "rule__OutputNode__LabelAssignment_3");
 					put(grammarAccess.getOutputNodeAccess().getValuedObjectAssignment_6(), "rule__OutputNode__ValuedObjectAssignment_6");
-					put(grammarAccess.getOutputNodeAccess().getTestReceiversAssignment_7(), "rule__OutputNode__TestReceiversAssignment_7");
 					put(grammarAccess.getReferencedNodeAccess().getIdAssignment_2(), "rule__ReferencedNode__IdAssignment_2");
 					put(grammarAccess.getReferencedNodeAccess().getLabelAssignment_3(), "rule__ReferencedNode__LabelAssignment_3");
 					put(grammarAccess.getReferencedNodeAccess().getReferencedScopeAssignment_5(), "rule__ReferencedNode__ReferencedScopeAssignment_5");
@@ -301,12 +296,6 @@ public class SctParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTestReferenceNodeAccess().getReferencedScopeAssignment_5(), "rule__TestReferenceNode__ReferencedScopeAssignment_5");
 					put(grammarAccess.getTestReferenceNodeAccess().getParametersAssignment_7(), "rule__TestReferenceNode__ParametersAssignment_7");
 					put(grammarAccess.getTestReferenceNodeAccess().getParametersAssignment_8_1(), "rule__TestReferenceNode__ParametersAssignment_8_1");
-					put(grammarAccess.getReceiverOutputAccess().getNodeAssignment_2(), "rule__ReceiverOutput__NodeAssignment_2");
-					put(grammarAccess.getReceiverOutputAccess().getSenderAssignment_4(), "rule__ReceiverOutput__SenderAssignment_4");
-					put(grammarAccess.getReceiverOutputAccess().getValuedObjectAssignment_5_1(), "rule__ReceiverOutput__ValuedObjectAssignment_5_1");
-					put(grammarAccess.getReceiverTestAccess().getNodeAssignment_1(), "rule__ReceiverTest__NodeAssignment_1");
-					put(grammarAccess.getReceiverTestAccess().getValuedObjectAssignment_2_1(), "rule__ReceiverTest__ValuedObjectAssignment_2_1");
-					put(grammarAccess.getReceiverTestAccess().getSenderAssignment_4(), "rule__ReceiverTest__SenderAssignment_4");
 					put(grammarAccess.getSenderInputAccess().getExpressionAssignment_1(), "rule__SenderInput__ExpressionAssignment_1");
 					put(grammarAccess.getSenderInputAccess().getReceiversAssignment_2_1(), "rule__SenderInput__ReceiversAssignment_2_1");
 					put(grammarAccess.getSenderAccess().getExpressionAssignment_1(), "rule__Sender__ExpressionAssignment_1");

@@ -20,8 +20,6 @@ import de.cau.cs.kieler.sccharts.Receiver;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Sender;
 
-import de.cau.cs.kieler.sccharts.TestReceiver;
-import de.cau.cs.kieler.sccharts.TestSender;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -47,8 +45,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.NodeImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.NodeImpl#getSenders <em>Senders</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.NodeImpl#getReceivers <em>Receivers</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.NodeImpl#getTestSenders <em>Test Senders</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.NodeImpl#getTestReceivers <em>Test Receivers</em>}</li>
  * </ul>
  * </p>
  *
@@ -123,26 +119,6 @@ public class NodeImpl extends AnnotatableImpl implements Node {
 	protected Receiver receivers;
 
 				/**
-     * The cached value of the '{@link #getTestSenders() <em>Test Senders</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getTestSenders()
-     * @generated
-     * @ordered
-     */
-    protected EList<TestSender> testSenders;
-
-    /**
-     * The cached value of the '{@link #getTestReceivers() <em>Test Receivers</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getTestReceivers()
-     * @generated
-     * @ordered
-     */
-    protected EList<TestReceiver> testReceivers;
-
-                /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -258,39 +234,11 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<TestSender> getTestSenders() {
-        if (testSenders == null) {
-            testSenders = new EObjectContainmentEList<TestSender>(TestSender.class, this, SCChartsPackage.NODE__TEST_SENDERS);
-        }
-        return testSenders;
-    }
-
-                /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<TestReceiver> getTestReceivers() {
-        if (testReceivers == null) {
-            testReceivers = new EObjectContainmentEList<TestReceiver>(TestReceiver.class, this, SCChartsPackage.NODE__TEST_RECEIVERS);
-        }
-        return testReceivers;
-    }
-
-                /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case SCChartsPackage.NODE__SENDERS:
                 return ((InternalEList<?>)getSenders()).basicRemove(otherEnd, msgs);
-            case SCChartsPackage.NODE__TEST_SENDERS:
-                return ((InternalEList<?>)getTestSenders()).basicRemove(otherEnd, msgs);
-            case SCChartsPackage.NODE__TEST_RECEIVERS:
-                return ((InternalEList<?>)getTestReceivers()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -312,10 +260,6 @@ public class NodeImpl extends AnnotatableImpl implements Node {
             case SCChartsPackage.NODE__RECEIVERS:
                 if (resolve) return getReceivers();
                 return basicGetReceivers();
-            case SCChartsPackage.NODE__TEST_SENDERS:
-                return getTestSenders();
-            case SCChartsPackage.NODE__TEST_RECEIVERS:
-                return getTestReceivers();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -342,14 +286,6 @@ public class NodeImpl extends AnnotatableImpl implements Node {
             case SCChartsPackage.NODE__RECEIVERS:
                 setReceivers((Receiver)newValue);
                 return;
-            case SCChartsPackage.NODE__TEST_SENDERS:
-                getTestSenders().clear();
-                getTestSenders().addAll((Collection<? extends TestSender>)newValue);
-                return;
-            case SCChartsPackage.NODE__TEST_RECEIVERS:
-                getTestReceivers().clear();
-                getTestReceivers().addAll((Collection<? extends TestReceiver>)newValue);
-                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -374,12 +310,6 @@ public class NodeImpl extends AnnotatableImpl implements Node {
             case SCChartsPackage.NODE__RECEIVERS:
                 setReceivers((Receiver)null);
                 return;
-            case SCChartsPackage.NODE__TEST_SENDERS:
-                getTestSenders().clear();
-                return;
-            case SCChartsPackage.NODE__TEST_RECEIVERS:
-                getTestReceivers().clear();
-                return;
         }
         super.eUnset(featureID);
     }
@@ -400,10 +330,6 @@ public class NodeImpl extends AnnotatableImpl implements Node {
                 return senders != null && !senders.isEmpty();
             case SCChartsPackage.NODE__RECEIVERS:
                 return receivers != null;
-            case SCChartsPackage.NODE__TEST_SENDERS:
-                return testSenders != null && !testSenders.isEmpty();
-            case SCChartsPackage.NODE__TEST_RECEIVERS:
-                return testReceivers != null && !testReceivers.isEmpty();
         }
         return super.eIsSet(featureID);
     }

@@ -262,7 +262,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getScope()
      * @generated
      */
-    int SCOPE = 22;
+    int SCOPE = 20;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -363,7 +363,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getBinding()
      * @generated
      */
-    int BINDING = 20;
+    int BINDING = 18;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.StateImpl <em>State</em>}' class.
@@ -774,31 +774,13 @@ public interface SCChartsPackage extends EPackage {
 	int NODE__RECEIVERS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
 				/**
-     * The feature id for the '<em><b>Test Senders</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int NODE__TEST_SENDERS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
-
-    /**
-     * The feature id for the '<em><b>Test Receivers</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int NODE__TEST_RECEIVERS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
-
-                /**
      * The number of structural features of the '<em>Node</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int NODE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+    int NODE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.InputNodeImpl <em>Input Node</em>}' class.
@@ -876,24 +858,6 @@ public interface SCChartsPackage extends EPackage {
 	int INPUT_NODE__RECEIVERS = NODE__RECEIVERS;
 
     /**
-     * The feature id for the '<em><b>Test Senders</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INPUT_NODE__TEST_SENDERS = NODE__TEST_SENDERS;
-
-    /**
-     * The feature id for the '<em><b>Test Receivers</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int INPUT_NODE__TEST_RECEIVERS = NODE__TEST_RECEIVERS;
-
-    /**
      * The number of structural features of the '<em>Input Node</em>' class.
      * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -946,24 +910,6 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
 	int REFERENCED_NODE__RECEIVERS = NODE__RECEIVERS;
-
-    /**
-     * The feature id for the '<em><b>Test Senders</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REFERENCED_NODE__TEST_SENDERS = NODE__TEST_SENDERS;
-
-    /**
-     * The feature id for the '<em><b>Test Receivers</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REFERENCED_NODE__TEST_RECEIVERS = NODE__TEST_RECEIVERS;
 
     /**
      * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
@@ -1037,24 +983,6 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int TEST_REFERENCE_NODE__RECEIVERS = NODE__RECEIVERS;
-
-    /**
-     * The feature id for the '<em><b>Test Senders</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TEST_REFERENCE_NODE__TEST_SENDERS = NODE__TEST_SENDERS;
-
-    /**
-     * The feature id for the '<em><b>Test Receivers</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TEST_REFERENCE_NODE__TEST_RECEIVERS = NODE__TEST_RECEIVERS;
 
     /**
      * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
@@ -1137,24 +1065,6 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int CALL_NODE__RECEIVERS = NODE__RECEIVERS;
-
-    /**
-     * The feature id for the '<em><b>Test Senders</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CALL_NODE__TEST_SENDERS = NODE__TEST_SENDERS;
-
-    /**
-     * The feature id for the '<em><b>Test Receivers</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CALL_NODE__TEST_RECEIVERS = NODE__TEST_RECEIVERS;
 
     /**
      * The feature id for the '<em><b>Call Reference</b></em>' reference.
@@ -1294,24 +1204,6 @@ public interface SCChartsPackage extends EPackage {
     int DEFINE_NODE__RECEIVERS = NODE__RECEIVERS;
 
     /**
-     * The feature id for the '<em><b>Test Senders</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DEFINE_NODE__TEST_SENDERS = NODE__TEST_SENDERS;
-
-    /**
-     * The feature id for the '<em><b>Test Receivers</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DEFINE_NODE__TEST_RECEIVERS = NODE__TEST_RECEIVERS;
-
-    /**
      * The feature id for the '<em><b>Inputs</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1409,24 +1301,6 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
 	int OUTPUT_NODE__RECEIVERS = NODE__RECEIVERS;
-
-    /**
-     * The feature id for the '<em><b>Test Senders</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int OUTPUT_NODE__TEST_SENDERS = NODE__TEST_SENDERS;
-
-    /**
-     * The feature id for the '<em><b>Test Receivers</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int OUTPUT_NODE__TEST_RECEIVERS = NODE__TEST_RECEIVERS;
 
     /**
      * The feature id for the '<em><b>Valued Object</b></em>' reference.
@@ -1666,98 +1540,6 @@ public interface SCChartsPackage extends EPackage {
     int RECEIVER_FEATURE_COUNT = 3;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TestSenderImpl <em>Test Sender</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.TestSenderImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTestSender()
-     * @generated
-     */
-    int TEST_SENDER = 18;
-
-    /**
-     * The feature id for the '<em><b>Receiver</b></em>' reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TEST_SENDER__RECEIVER = 0;
-
-    /**
-     * The feature id for the '<em><b>Node</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TEST_SENDER__NODE = 1;
-
-    /**
-     * The number of structural features of the '<em>Test Sender</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TEST_SENDER_FEATURE_COUNT = 2;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TestReceiverImpl <em>Test Receiver</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.TestReceiverImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTestReceiver()
-     * @generated
-     */
-    int TEST_RECEIVER = 19;
-
-    /**
-     * The feature id for the '<em><b>Sender</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TEST_RECEIVER__SENDER = 0;
-
-    /**
-     * The feature id for the '<em><b>Node</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TEST_RECEIVER__NODE = 1;
-
-    /**
-     * The feature id for the '<em><b>Valued Object</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TEST_RECEIVER__VALUED_OBJECT = 2;
-
-    /**
-     * The feature id for the '<em><b>Output Value</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TEST_RECEIVER__OUTPUT_VALUE = 3;
-
-    /**
-     * The number of structural features of the '<em>Test Receiver</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TEST_RECEIVER_FEATURE_COUNT = 4;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1765,7 +1547,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransition()
      * @generated
      */
-    int TRANSITION = 21;
+    int TRANSITION = 19;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TextEffectImpl <em>Text Effect</em>}' class.
@@ -1775,7 +1557,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTextEffect()
      * @generated
      */
-    int TEXT_EFFECT = 23;
+    int TEXT_EFFECT = 21;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.FunctionCallEffectImpl <em>Function Call Effect</em>}' class.
@@ -1785,7 +1567,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getFunctionCallEffect()
      * @generated
      */
-    int FUNCTION_CALL_EFFECT = 24;
+    int FUNCTION_CALL_EFFECT = 22;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.LocalActionImpl <em>Local Action</em>}' class.
@@ -1795,7 +1577,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getLocalAction()
      * @generated
      */
-    int LOCAL_ACTION = 25;
+    int LOCAL_ACTION = 23;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.EntryActionImpl <em>Entry Action</em>}' class.
@@ -1805,7 +1587,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEntryAction()
      * @generated
      */
-    int ENTRY_ACTION = 26;
+    int ENTRY_ACTION = 24;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.DuringActionImpl <em>During Action</em>}' class.
@@ -1815,7 +1597,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDuringAction()
      * @generated
      */
-    int DURING_ACTION = 27;
+    int DURING_ACTION = 25;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ExitActionImpl <em>Exit Action</em>}' class.
@@ -1825,7 +1607,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getExitAction()
      * @generated
      */
-    int EXIT_ACTION = 28;
+    int EXIT_ACTION = 26;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.SuspendActionImpl <em>Suspend Action</em>}' class.
@@ -1835,7 +1617,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getSuspendAction()
      * @generated
      */
-    int SUSPEND_ACTION = 29;
+    int SUSPEND_ACTION = 27;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ForImpl <em>For</em>}' class.
@@ -1845,7 +1627,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getFor()
      * @generated
      */
-    int FOR = 30;
+    int FOR = 28;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -2422,7 +2204,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getStateType()
      * @generated
      */
-    int STATE_TYPE = 31;
+    int STATE_TYPE = 29;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.TransitionType <em>Transition Type</em>}' enum.
@@ -2432,7 +2214,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTransitionType()
      * @generated
      */
-    int TRANSITION_TYPE = 32;
+    int TRANSITION_TYPE = 30;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
@@ -2442,7 +2224,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
      * @generated
      */
-    int HISTORY_TYPE = 33;
+    int HISTORY_TYPE = 31;
 
     /**
      * The meta object id for the '<em>Parsable</em>' data type.
@@ -2452,7 +2234,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getParsable()
      * @generated
      */
-    int PARSABLE = 34;
+    int PARSABLE = 32;
 
 
     /**
@@ -2681,28 +2463,6 @@ public interface SCChartsPackage extends EPackage {
 	EReference getNode_Receivers();
 
 				/**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Node#getTestSenders <em>Test Senders</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Test Senders</em>'.
-     * @see de.cau.cs.kieler.sccharts.Node#getTestSenders()
-     * @see #getNode()
-     * @generated
-     */
-    EReference getNode_TestSenders();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Node#getTestReceivers <em>Test Receivers</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Test Receivers</em>'.
-     * @see de.cau.cs.kieler.sccharts.Node#getTestReceivers()
-     * @see #getNode()
-     * @generated
-     */
-    EReference getNode_TestReceivers();
-
-                /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.InputNode <em>Input Node</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3065,92 +2825,6 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EReference getReceiver_Node();
-
-    /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.TestSender <em>Test Sender</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Test Sender</em>'.
-     * @see de.cau.cs.kieler.sccharts.TestSender
-     * @generated
-     */
-    EClass getTestSender();
-
-    /**
-     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.sccharts.TestSender#getReceiver <em>Receiver</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference list '<em>Receiver</em>'.
-     * @see de.cau.cs.kieler.sccharts.TestSender#getReceiver()
-     * @see #getTestSender()
-     * @generated
-     */
-    EReference getTestSender_Receiver();
-
-    /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.TestSender#getNode <em>Node</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Node</em>'.
-     * @see de.cau.cs.kieler.sccharts.TestSender#getNode()
-     * @see #getTestSender()
-     * @generated
-     */
-    EReference getTestSender_Node();
-
-    /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.TestReceiver <em>Test Receiver</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Test Receiver</em>'.
-     * @see de.cau.cs.kieler.sccharts.TestReceiver
-     * @generated
-     */
-    EClass getTestReceiver();
-
-    /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.TestReceiver#getSender <em>Sender</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Sender</em>'.
-     * @see de.cau.cs.kieler.sccharts.TestReceiver#getSender()
-     * @see #getTestReceiver()
-     * @generated
-     */
-    EReference getTestReceiver_Sender();
-
-    /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.TestReceiver#getNode <em>Node</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Node</em>'.
-     * @see de.cau.cs.kieler.sccharts.TestReceiver#getNode()
-     * @see #getTestReceiver()
-     * @generated
-     */
-    EReference getTestReceiver_Node();
-
-    /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.TestReceiver#getValuedObject <em>Valued Object</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Valued Object</em>'.
-     * @see de.cau.cs.kieler.sccharts.TestReceiver#getValuedObject()
-     * @see #getTestReceiver()
-     * @generated
-     */
-    EReference getTestReceiver_ValuedObject();
-
-    /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.TestReceiver#getOutputValue <em>Output Value</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Output Value</em>'.
-     * @see de.cau.cs.kieler.sccharts.TestReceiver#getOutputValue()
-     * @see #getTestReceiver()
-     * @generated
-     */
-    EReference getTestReceiver_OutputValue();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Binding <em>Binding</em>}'.
@@ -3834,22 +3508,6 @@ public interface SCChartsPackage extends EPackage {
 		EReference NODE__RECEIVERS = eINSTANCE.getNode_Receivers();
 
 								/**
-         * The meta object literal for the '<em><b>Test Senders</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference NODE__TEST_SENDERS = eINSTANCE.getNode_TestSenders();
-
-        /**
-         * The meta object literal for the '<em><b>Test Receivers</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference NODE__TEST_RECEIVERS = eINSTANCE.getNode_TestReceivers();
-
-                                /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.InputNodeImpl <em>Input Node</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -4140,74 +3798,6 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference RECEIVER__NODE = eINSTANCE.getReceiver_Node();
-
-        /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TestSenderImpl <em>Test Sender</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.TestSenderImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTestSender()
-         * @generated
-         */
-        EClass TEST_SENDER = eINSTANCE.getTestSender();
-
-        /**
-         * The meta object literal for the '<em><b>Receiver</b></em>' reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference TEST_SENDER__RECEIVER = eINSTANCE.getTestSender_Receiver();
-
-        /**
-         * The meta object literal for the '<em><b>Node</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference TEST_SENDER__NODE = eINSTANCE.getTestSender_Node();
-
-        /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.TestReceiverImpl <em>Test Receiver</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.TestReceiverImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getTestReceiver()
-         * @generated
-         */
-        EClass TEST_RECEIVER = eINSTANCE.getTestReceiver();
-
-        /**
-         * The meta object literal for the '<em><b>Sender</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference TEST_RECEIVER__SENDER = eINSTANCE.getTestReceiver_Sender();
-
-        /**
-         * The meta object literal for the '<em><b>Node</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference TEST_RECEIVER__NODE = eINSTANCE.getTestReceiver_Node();
-
-        /**
-         * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference TEST_RECEIVER__VALUED_OBJECT = eINSTANCE.getTestReceiver_ValuedObject();
-
-        /**
-         * The meta object literal for the '<em><b>Output Value</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference TEST_RECEIVER__OUTPUT_VALUE = eINSTANCE.getTestReceiver_OutputValue();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.BindingImpl <em>Binding</em>}' class.

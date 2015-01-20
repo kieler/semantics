@@ -89,7 +89,7 @@ import de.cau.cs.kieler.sccharts.Receiver
 import de.cau.cs.kieler.klay.layered.p4nodes.NodePlacementStrategy
 import de.cau.cs.kieler.klay.layered.properties.LayerConstraint
 import de.cau.cs.kieler.klay.layered.properties.Properties
-import de.cau.cs.kieler.klay.layered.properties.Properties
+//import de.cau.cs.kieler.klay.layered.properties.Properties
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.Path
 import javax.imageio.ImageIO
@@ -100,10 +100,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtens
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeExtension
-import de.cau.cs.kieler.sccharts.TestNode
-import de.cau.cs.kieler.sccharts.TestInput
 import de.cau.cs.kieler.sccharts.TestReferenceNode
-import de.cau.cs.kieler.sccharts.TestReceiver
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.sccharts.CallNode
 import de.cau.cs.kieler.sccharts.DefineNode
@@ -111,7 +108,7 @@ import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.FloatValue
 import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.sccharts.Param
+import de.cau.cs.kieler.sccharts.DataflowFeature
 
 /**
  * KLighD visualization for KIELER SCCharts (Sequentially Constructive Charts).
@@ -964,7 +961,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             node.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::BRANDES_KOEPF)
             
             val senders = <Sender> newArrayList
-            val trs = <TestReceiver> newArrayList
+            //val trs = <TestReceiver> newArrayList
             
             for (n : d.nodes) {
                 if (n instanceof DefineNode) {
@@ -972,7 +969,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 } else {
                     node.children += n.translate;
                     senders += n.senders
-                    trs += n.testReceivers
+                    //trs += n.testReceivers
                 }
             }
             for (v: d.valuedObjects) {
@@ -1013,9 +1010,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             for (s : senders) {
             	s.translateSender
             }
-            for (tr: trs) {
-                tr.translateTestReceiver
-            }
+//            for (tr: trs) {
+//                tr.translateTestReceiver
+//            }
             
             node.addCollapseExpand(d.label)
         ]
@@ -1035,7 +1032,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 it.setSurroundingSpace(2, 0);
                 it.invisible = false;
                 it.foreground = "gray".color
-                it.lineWidth = 2//1;
+                it.lineWidth = 2 //1;
                 //it.addText("[-]" + if(d.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(d) => [
                 it.addText("[-]" + if(regionLabel.nullOrEmpty) "" else " " + regionLabel) => [//.putToLookUpWith(d) => [
                     it.foreground = "dimGray".color
@@ -1050,10 +1047,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             n.addRectangle() => [
                 it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
                 it.setBackgroundGradient("white".color, SCCHARTSGRAY, 90);
-                it.setSurroundingSpace(4, 0);
+                it.setSurroundingSpace(2, 0) //(4, 0);
                 it.invisible = false;
                 it.foreground = "gray".color
-                it.lineWidth = 1;
+                it.lineWidth = 2 //1;
                 //it.addText("[+]" + if(d.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(d) => [
                 it.addText("[+]" + if(regionLabel.nullOrEmpty) "" else " " + regionLabel) => [//.putToLookUpWith(d) => [
                     it.foreground = "dimGray".color
@@ -1070,7 +1067,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     
     private def dispatch KNode translate(Expression expr, int index, KNode parentNode, Dataflow d) {
         val nNode = expr.createNode(parentNode).putToLookUpWith(expr)
-        //println("expr: " + expr)
         switch(expr) {
             OperatorExpression: {
                 val op = expr.operator
@@ -1085,11 +1081,12 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 nNode.createLabel(nNode).configureInsideTopCenteredNodeLabel(
                     op.toString(), 6, KlighdConstants::DEFAULT_FONT_NAME 
                 )
+                //println("op: " + op)
                 expr.subExpressions.forEach[ se|
                     //println("se: " + se)
                     nNode.addPort(se, PortSide::WEST)
                     if (se instanceof ValuedObjectReference) {
-                        // skip for the moment, still?
+                        // skip for the moment, still? no?
                         
                         val subVo = (se as ValuedObjectReference).valuedObject
                         val decl = (subVo.eContainer as Declaration)
@@ -1124,15 +1121,21 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                             ]
                             parentNode.children += inputNode
                         } else {
-                            
                             // whats still to do here?
                             // re: trennen zwischen df und opExpr!!!!
                             //re2: statt df casten einfach d mit uebergeben und verwenden
-                            
                             //val df = expr.eContainer as Dataflow
-                            val refVo = d.valuedObjects.get(d.valuedObjects.indexOf(subVo))
-                            val refExpr = d.expressions.get(d.valuedObjects.indexOf(subVo))
+                            var findex = 0
+                            for (f: d.features) {
+                                if (f.valuedObject.equals(subVo)) {
+                                    findex = d.features.indexOf(f)
+                                }
+                            }
+                            //println("subVo.eC: " + subVo.eContainer)
                             
+                            val refVo = d.features.get(findex).valuedObject//d.valuedObjects.get(d.valuedObjects.indexOf(subVo))
+                            val refExpr = d.features.get(findex).expression//d.expressions.get(d.valuedObjects.indexOf(subVo))
+                            //println("refVO: " + refVo + ", refExpr: " + refExpr)
                             
                             nNode.createEdge(se) => [
                                 it.source = refExpr.getNode(parentNode) 
@@ -1154,10 +1157,12 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         parentNode.children += se.translate(index, parentNode, d)
                     }
                 ]
-                
-                if (expr.eContainer instanceof Dataflow) {
-                    val df = expr.eContainer as Dataflow
-                    val vo = df.valuedObjects.get(index)
+                //println("ecpr.eC: " + expr.eContainer)
+                if (expr.eContainer instanceof DataflowFeature) {
+                //if (expr.eContainer instanceof Dataflow) { // <-- alte Variante, jetzt DF-Feature
+                    //val df = expr.eContainer as Dataflow // <-- dataflow d is already a parameter?!
+                    //val vo = df.valuedObjects.get(index) // <-- alte Variante, jetzt DF-Feature
+                    val vo = d.features.get(index).valuedObject
                     nNode.addPort(vo, PortSide::EAST)
                     nNode.createEdge(parentNode) => [
                         it.source = nNode
@@ -1201,93 +1206,79 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 nNode.translateConstExpression(expr, parentNode)
             }
             ValuedObjectReference: {
-                // expr = current valued object reference (input)
-                
+                // expr = ValuedObjectReference: it.valuedObject = current input
                 val vo = expr.valuedObject
-//                val df = expr.eContainer as Dataflow
                 val voRef = d.features.get(index).valuedObject
-                //val old_voRef = d.valuedObjects.get(index) 
-                //println("voRef: " + voRef)
-//
-//                
-//                nNode.addPolygon.createOutputNodeShape
-//                nNode.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
-//                nNode.addDefaultLayoutParameter
-//                //add port
-//                nNode.addPort(voRef, PortSide::WEST) => [
-//                    it.addLayoutParam(LayoutOptions::OFFSET, -2.0f)
-//                ]
-                
-                //println("d: " + d)
-                var ValuedObject refVo = null
-                var TestReferenceNode trn = null
+                //val voRef = d.valuedObjects.get(index) // <-- alte Variante
 
-                for (n: d.nodes) {
-                    if (n instanceof TestReferenceNode) {
-                        for (decl: (n as TestReferenceNode).referencedScope.declarations) {
-                            if (decl.output) {
-                                for (cvo: decl.valuedObjects) {
-                                    if (vo.equals(cvo)) {
-                                        println("vo: " + vo + ", cvo: " + cvo)
-                                        refVo = cvo
-                                        trn = (n as TestReferenceNode)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                
-                if (refVo == null) {
-                val inputNode = vo.createNode(parentNode) => [
-                    it.addPolygon.createInputNodeShape
-                    it.addDefaultLayoutParameter
-                    it.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
-                    it.addPort(vo, PortSide::EAST)
-                      .addLayoutParam(LayoutOptions::OFFSET, -2.0f)
-                    it.createLabel(it).configureInsideTopCenteredNodeLabel(
-                        vo.serialize as String, 6, KlighdConstants::DEFAULT_FONT_NAME)
+                if (d.features.get(index).node == null) {
+                    val inputNode = vo.createNode(parentNode) => [
+                        it.addPolygon.createInputNodeShape
+                        it.addDefaultLayoutParameter
+                        it.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
+                        it.addPort(vo, PortSide::EAST)
+                            .addLayoutParam(LayoutOptions::OFFSET, -2.0f)
+                        it.createLabel(it).configureInsideTopCenteredNodeLabel(
+                            vo.serialize as String, 6, KlighdConstants::DEFAULT_FONT_NAME)
 
-                    it.createEdge(vo) => [
-                        it.source = vo.getNode(parentNode)
-                        //it.target = nNode
-                        it.target = voRef.getNode(parentNode)
-//                        println("sn: " + vo.getNode(parentNode))
-//                        println("tn: " + voRef.getNode(parentNode))
-                        it.sourcePort = vo.getNode(parentNode).getPort(vo.reference.portMap)
-                        //it.targetPort = nNode.getPort(voRef.reference.portMap)
-                        it.targetPort = voRef.getNode(parentNode).getPort(voRef.reference.portMap)
-                        it.addRoundedBendsPolyline(4, 1) => [
-                            // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
-                            it.addArrowDecorator() => [
+                        it.createEdge(vo) => [
+                            it.source = vo.getNode(parentNode)
+                            //it.target = nNode
+                            it.target = voRef.getNode(parentNode)
+//                            println("sn: " + vo.getNode(parentNode))
+//                            println("tn: " + voRef.getNode(parentNode))
+                            it.sourcePort = vo.getNode(parentNode).getPort(vo.reference.portMap)
+                            //it.targetPort = nNode.getPort(voRef.reference.portMap)
+                            it.targetPort = voRef.getNode(parentNode).getPort(voRef.reference.portMap)
+                            
+                            println("src: " + vo.getNode(parentNode) + ", tar: " + voRef.getNode(parentNode))
+                            
+                            it.addRoundedBendsPolyline(4, 1) => [
+                                // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
+                                it.addArrowDecorator() => [
+                                ]
                             ]
                         ]
                     ]
-                ]
-                
-                
-                parentNode.children += inputNode
-                //println("vor.... expr: " + expr)
-                return inputNode
-                
+                    
+                    parentNode.children += inputNode
+                    //println("vor.... expr: " + expr)
+                    return inputNode
                 } else {
-                    println("trn node: " + trn.getNode())
-                    val trn_node = trn.getNode()
-                    val trn_vo = refVo
-                    trn.getNode().createEdge(vo) => [
-                        it.source = trn_node
-                        it.target = voRef.getNode(parentNode)
-                        it.sourcePort = trn_node.getPort(trn_vo.reference.portMap)
-                        it.targetPort = voRef.getNode(parentNode).getPort(voRef.reference.portMap)
-                    ]
+                    val fNode = d.features.get(index).node
+                    if (fNode instanceof CallNode) {
+                        val cNode = d.features.get(index).node as CallNode
+                        val dNode = cNode.referencedScope as DefineNode
+//                        dNode.outputs.forEach[valuedObjects.forEach[
+//                        println("outputs.vo: " + it)
+//                        ]]
+//                        println("current expr: " + expr + ", expr.vo: " + expr.valuedObject)
+                          //println("expr.vo: " + expr.valuedObject)
+                          //println("cNode.ports: " + cNode.getNode().ports)
+                        cNode.getNode().createEdge(vo) => [
+                            it.source = cNode.getNode()
+                            it.target = voRef.getNode(parentNode)
+                            it.sourcePort = cNode.getNode().getPort(expr.valuedObject.reference.portMap)
+                            it.targetPort = voRef.getNode(parentNode).getPort(voRef.reference.portMap)
+                        ]
+                    }
+                    if (fNode instanceof TestReferenceNode) {
+                        //println("trn node: " + trn.getNode())
+                        val trn_node = (fNode as TestReferenceNode).getNode()//trn.getNode()
+                        //val trn_vo = refVo
+                        trn_node.createEdge(vo) => [ //trn.getNode().createEdge(vo) => [
+                            it.source = trn_node
+                            it.target = voRef.getNode(parentNode)
+                            it.sourcePort = trn_node.getPort(expr.valuedObject.reference.portMap) //trn_vo.reference.portMap)
+                            it.targetPort = voRef.getNode(parentNode).getPort(voRef.reference.portMap)
+                        ]
+                    }
                 }
-                
             }
             default: {
                 println("default... expr: " + expr)
             }
         }
-        
         return nNode
     }
     
@@ -1616,7 +1607,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             // create input nodes for call parameters
             // need to be improved if parameter is not an global/local input
             val dNode = ref.eContainer.node
-            println("ref.rs.size: " + (ref.referencedScope.declarations.filter[it.input].size))
+            //println("ref.rs.size: " + (ref.referencedScope.declarations.filter[it.input].size))
             ref.parameters.forEach[ p|
                 if (ref.parameters.indexOf(p) >= (ref.referencedScope.declarations.filter[it.input].size)) {
                     // if a call has more parameters than the called node: skip 
@@ -1696,31 +1687,31 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     ]
                 ]]
                 
-                //create output node 
-                val pNode = call.eContainer.node
-                pNode.children += call.createNode(pNode) => [ node|
-                    node.addPolygon.createOutputNodeShape
-                    node.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
-                    node.addDefaultLayoutParameter
-                    node.addPort("", 0f, 0f, 2, PortSide::WEST)
-                    println("port: " + node.addPort("", 0f, 0f, 2, PortSide::WEST))
-                    node.createLabel(node).configureInsideCenteredNodeLabel(
-                         call.id, 6, KlighdConstants::DEFAULT_FONT_NAME)
-                    
-                    //create Edge
-                    pNode.createEdge(call) => [
-                        it.source = nNode
-                        it.target = node
-                        it.sourcePort = nNode.getPort(ref.outputs.get(0).valuedObjects.get(0).reference.portMap)
-                        it.targetPort = node.ports.get(0)
-                        it.addRoundedBendsPolyline(4, 1) => [
-                            // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
-                            it.addArrowDecorator() => [
-                            ]
-                        ]
-                    ]
-                    //println("pNode.child: " + node)
-                ]
+                //create output node  // not used for the moment
+//                val pNode = call.eContainer.node
+//                pNode.children += call.createNode(pNode) => [ node|
+//                    node.addPolygon.createOutputNodeShape
+//                    node.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
+//                    node.addDefaultLayoutParameter
+//                    node.addPort("", 0f, 0f, 2, PortSide::WEST)
+//                    println("port: " + node.addPort("", 0f, 0f, 2, PortSide::WEST))
+//                    node.createLabel(node).configureInsideCenteredNodeLabel(
+//                         call.id, 6, KlighdConstants::DEFAULT_FONT_NAME)
+//                    
+//                    //create Edge
+//                    pNode.createEdge(call) => [
+//                        it.source = nNode
+//                        it.target = node
+//                        it.sourcePort = nNode.getPort(ref.outputs.get(0).valuedObjects.get(0).reference.portMap)
+//                        it.targetPort = node.ports.get(0)
+//                        it.addRoundedBendsPolyline(4, 1) => [
+//                            // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
+//                            it.addArrowDecorator() => [
+//                            ]
+//                        ]
+//                    ]
+//                    //println("pNode.child: " + node)
+//                ]
                 
                 ref.states.forEach[ s|
                     nNode.children += s.translate
@@ -1894,39 +1885,39 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         return sEdge
     }
     
-    def KEdge translateTestReceiver(TestReceiver tr) {
-        val sNode = tr.sender
-        val rNode = tr.node
-        
-        var Object recPort = null
-        var Object srcPort = null
-        if (tr.node instanceof OutputNode) {
-            recPort = (tr.node as OutputNode).valuedObject.reference.portMap
-        } else {
-            recPort = tr.valuedObject.reference.portMap
-        }
-        if (tr.sender instanceof InputNode) {
-            srcPort = (tr.sender as InputNode).senders.head.expression.portMap
-        } else if (tr.sender instanceof TestReferenceNode) {
-            srcPort = tr.valuedObject.reference.portMap
-        } else if (tr.sender instanceof CallNode) {
-            srcPort = tr.valuedObject.reference.portMap
-        }
-        val sPort = sNode.node.getPort(srcPort)
-        val rPort = rNode.node.getPort(recPort)
-        val sEdge = tr.createEdge(tr.sender).putToLookUpWith(tr) => [ edge |
-            edge.source = sNode.node
-            edge.target = rNode.node
-            edge.sourcePort = sPort
-            edge.targetPort = rPort
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
-            edge.addRoundedBendsPolyline(4, 1) => [
-                it.addArrowDecorator() => [
-                ]
-            ]
-        ]
-        return sEdge
-    }
+//    def KEdge translateTestReceiver(TestReceiver tr) {
+//        val sNode = tr.sender
+//        val rNode = tr.node
+//        
+//        var Object recPort = null
+//        var Object srcPort = null
+//        if (tr.node instanceof OutputNode) {
+//            recPort = (tr.node as OutputNode).valuedObject.reference.portMap
+//        } else {
+//            recPort = tr.valuedObject.reference.portMap
+//        }
+//        if (tr.sender instanceof InputNode) {
+//            srcPort = (tr.sender as InputNode).senders.head.expression.portMap
+//        } else if (tr.sender instanceof TestReferenceNode) {
+//            srcPort = tr.valuedObject.reference.portMap
+//        } else if (tr.sender instanceof CallNode) {
+//            srcPort = tr.valuedObject.reference.portMap
+//        }
+//        val sPort = sNode.node.getPort(srcPort)
+//        val rPort = rNode.node.getPort(recPort)
+//        val sEdge = tr.createEdge(tr.sender).putToLookUpWith(tr) => [ edge |
+//            edge.source = sNode.node
+//            edge.target = rNode.node
+//            edge.sourcePort = sPort
+//            edge.targetPort = rPort
+//            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
+//            edge.addRoundedBendsPolyline(4, 1) => [
+//                it.addArrowDecorator() => [
+//                ]
+//            ]
+//        ]
+//        return sEdge
+//    }
     
     def Object portMap(Expression expression) {
 		var Object obj = null

@@ -175,24 +175,6 @@ public interface SCChartsFactory extends EFactory {
     Receiver createReceiver();
 
     /**
-     * Returns a new object of class '<em>Test Sender</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Test Sender</em>'.
-     * @generated
-     */
-    TestSender createTestSender();
-
-    /**
-     * Returns a new object of class '<em>Test Receiver</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Test Receiver</em>'.
-     * @generated
-     */
-    TestReceiver createTestReceiver();
-
-    /**
      * Returns a new object of class '<em>Binding</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
