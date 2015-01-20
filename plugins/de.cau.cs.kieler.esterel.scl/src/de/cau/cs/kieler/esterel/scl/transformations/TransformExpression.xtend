@@ -47,7 +47,7 @@ class TransformExpression {
      * Transforms Esterel Operator Expression to KExpression Operator Expression
      */
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(OperatorExpression exp) {
-        val opType = OperatorType::getByName(exp.operator.name)
+        val opType = OperatorType::getByName(exp.operator.getName())
 
         // ? Operator: Return variable holding the value
         if (opType == OperatorType::VAL) {

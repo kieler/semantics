@@ -697,7 +697,7 @@ class EsterelToSclTransformation extends Transformation {
 
             // Valued signal
             if (s.channelDescr != null) {
-                val s_val = createFreshVar(s.name + "_val", ValueType::getByName(s.channelDescr.type.type.name)) => [
+                val s_val = createFreshVar(s.name + "_val", ValueType::getByName(s.channelDescr.type.type.getName())) => [
                     if (s.channelDescr.expression != null) {
                         initialValue = s.channelDescr.expression.transformExp(s.channelDescr.type.type.toString)
                     }

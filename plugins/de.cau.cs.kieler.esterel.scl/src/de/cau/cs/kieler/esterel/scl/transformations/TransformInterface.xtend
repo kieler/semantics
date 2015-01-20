@@ -88,11 +88,11 @@ class TransformInterface {
                     output = decl instanceof Output || decl instanceof InputOutput
                     valuedObjects += s_val
                     // Check for hostcode type
-                    if (sig.type.name == "PURE" && sig.channelDescr.type.typeID != null) {
+                    if (sig.type.getName() == "PURE" && sig.channelDescr.type.typeID != null) {
                         it.type = ValueType::HOST
                         it.hostType = sig.channelDescr.type.typeID
                     } else {
-                        it.type = ValueType::getByName(type.name)
+                        it.type = ValueType::getByName(type.getName())
                     }
                 ]
             }
@@ -116,11 +116,11 @@ class TransformInterface {
                 program.declarations += createDeclaration => [
                     valuedObjects += s_val
                     it.const = true
-                    if (type.name == "PURE" && singleDecl.type.typeID != null) {
+                    if (type.getName() == "PURE" && singleDecl.type.typeID != null) {
                         it.type = ValueType::HOST
                         it.hostType = singleDecl.type.typeID
                     } else {
-                        it.type = ValueType::getByName(type.name)
+                        it.type = ValueType::getByName(type.getName())
                     }
                 ]
             }
@@ -137,12 +137,12 @@ class TransformInterface {
                 valuedMap.put(s_val, s_val)
                 program.declarations += createDeclaration => [
                     valuedObjects += s_val
-                    it.type = ValueType::getByName(type.name)
-                    if (type.name == "PURE" && singleDecl.type.typeID != null) {
+                    it.type = ValueType::getByName(type.getName())
+                    if (type.getName() == "PURE" && singleDecl.type.typeID != null) {
                         it.type = ValueType::HOST
                         it.hostType = singleDecl.type.typeID
                     } else {
-                        it.type = ValueType::getByName(type.name)
+                        it.type = ValueType::getByName(type.getName())
                     }
                 ]
         }
@@ -156,8 +156,8 @@ class TransformInterface {
     def Declaration transformIntVarDeclaration(VariableDecl declaration, LinkedList<Pair<String, ValuedObject>> signals,
         LinkedList<Pair<String, ValuedObject>> signalMap) {
         val decl = createDeclaration => [
-            if (declaration.type.type.name != "PURE") {
-                type = ValueType::getByName(declaration.type.type.name)
+            if (declaration.type.type.getName() != "PURE") {
+                type = ValueType::getByName(declaration.type.type.getName())
             } else {
                 type = ValueType::HOST
                 hostType = declaration.type.typeID
