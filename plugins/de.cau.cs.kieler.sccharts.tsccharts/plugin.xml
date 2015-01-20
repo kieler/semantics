@@ -3,10 +3,6 @@
 <plugin>
    <extension
          point="de.cau.cs.kieler.klighd.extensions">
-      <action
-            class="de.cau.cs.kieler.sccharts.tsccharts.action.TimingAction"
-            id="de.cau.cs.kieler.sccharts.tsccharts.TimingAction">
-      </action>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -14,22 +10,8 @@
             allPopups="false"
             locationURI="toolbar:de.cau.cs.kieler.layout.toolbar">
          <command
-               commandId="de.cau.cs.kieler.klighd.ui.actionExecution"
-               label="TA"
-               style="push"
-               tooltip="Show WCET values (old Version)">
-            <parameter
-                  name="de.cau.cs.kieler.klighd.ui.action"
-                  value="de.cau.cs.kieler.sccharts.tsccharts.TimingAction">
-            </parameter>
-         </command>
-      </menuContribution>
-      <menuContribution
-            allPopups="false"
-            locationURI="toolbar:de.cau.cs.kieler.layout.toolbar">
-         <command
                commandId="de.cau.cs.kieler.sccharts.tsccharts.TimingAnalysis"
-               icon="icons/wcet.svg"
+               icon="icons/wcet.png"
                label="TH"
                style="push"
                tooltip="Show WCET values (handler, under construction)">
