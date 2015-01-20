@@ -181,6 +181,26 @@ public class TransformationTracing {
         }
         return eObject;
     }
+    
+    public static <T extends EObject> List<T> trace(final List<T> eObjectList, final EObject origin) {
+        for (EObject eObject : eObjectList) {
+            if (origin != null) {
+                trace(eObject, origin);
+            }
+        }
+        return eObjectList;
+    }
+    
+    public static <T extends EObject> List<T> trace(final List<T> eObjectList, final EObject... origins) {
+        for (EObject eObject : eObjectList) {
+            for (EObject origin : origins) {
+                if (origin != null) {
+                    trace(eObject, origin);
+                }
+            }
+        }
+        return eObjectList;
+    }
 
     /**
      * Traced given object to the DefaultTrace is set. Does not override exiting explicit taring

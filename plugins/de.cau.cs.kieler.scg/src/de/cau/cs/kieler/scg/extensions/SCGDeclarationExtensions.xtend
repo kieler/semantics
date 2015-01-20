@@ -82,7 +82,6 @@ class SCGDeclarationExtensions {
      */
     def ValuedObject createValuedObject(SCGraph scg, String valuedObjectName) {
          createValuedObject(valuedObjectName) => [
-             traceToDefault
              scg.valuedObjects.add(it)
          ]
     }

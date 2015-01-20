@@ -390,7 +390,7 @@ class TracingVisualizer {
         TracingMapping equivalenceClasses) {
         var elements = viewContext.getTargetElements(modelElement);
 
-        //If no diagram element is associated with the given model element its container is used to find an approbate representation
+        //If no diagram element is associated with the given model element its container is used to find an appropriate representation
         if (elements.empty && modelElement instanceof EObject) {
             var next = (modelElement as EObject)
             while (elements.empty && next != null) {

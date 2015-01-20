@@ -56,6 +56,7 @@ import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import java.util.Set
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -197,7 +198,7 @@ class SCGTransformation {
 //            valuedObjectSCG.map(valuedObject)
 //        }
 		for(declaration : state.declarations) {
-			val newDeclaration = createDeclaration(declaration)
+			val newDeclaration = createDeclaration(declaration).trace(declaration)
 			declaration.valuedObjects.forEach[
 				val newValuedObject = it.copy
 				newDeclaration.valuedObjects += newValuedObject
@@ -235,7 +236,7 @@ class SCGTransformation {
           rootState.transformSCGGenerateNodes(sCGraph)
           rootState.transformSCGConnectNodes(sCGraph)       
           
-        rootState.mappedNode.createControlFlow => [ rootStateEntry.setNext(it) ]
+        rootState.mappedNode.createControlFlow.trace(rootState) => [ rootStateEntry.setNext(it) ]
         
         time = (System.currentTimeMillis - timestamp) as float
         System.out.println("SCG generation finished (overall time elapsed: "+(time / 1000)+"s).")
@@ -323,63 +324,54 @@ class SCGTransformation {
            
    def Surface addSurface(SCGraph sCGraph) {
         val node = ScgFactory::eINSTANCE.createSurface
-        node.traceToDefault
         sCGraph.nodes.add(node)
         node       
    }     
 
    def Depth addDepth(SCGraph sCGraph) {
         val node = ScgFactory::eINSTANCE.createDepth
-        node.traceToDefault
         sCGraph.nodes.add(node)
         node       
    }     
 
    def Assignment addAssignment(SCGraph sCGraph) {
         val node = ScgFactory::eINSTANCE.createAssignment
-        node.traceToDefault
         sCGraph.nodes.add(node)
         node       
    }     
 
    def Conditional addConditional(SCGraph sCGraph) {
         val node = ScgFactory::eINSTANCE.createConditional
-        node.traceToDefault
         sCGraph.nodes.add(node)
         node       
    }     
 
    def Fork addFork(SCGraph sCGraph) {
         val node = ScgFactory::eINSTANCE.createFork
-        node.traceToDefault
         sCGraph.nodes.add(node)
         node       
    }     
 
    def Join addJoin(SCGraph sCGraph) {
         val node = ScgFactory::eINSTANCE.createJoin
-        node.traceToDefault
         sCGraph.nodes.add(node)
         node       
    }     
 
    def Entry addEntry(SCGraph sCGraph) {
         val node = ScgFactory::eINSTANCE.createEntry
-        node.traceToDefault
         sCGraph.nodes.add(node)
         node       
    }     
 
    def Exit addExit(SCGraph sCGraph) {
         val node = ScgFactory::eINSTANCE.createExit
-        node.traceToDefault
         sCGraph.nodes.add(node)
         node       
    }     
    
    def ControlFlow createControlFlow(Node secondNode) {
        val controlFlow = ScgFactory::eINSTANCE.createControlFlow
-       controlFlow.traceToDefault
        controlFlow.setTarget(secondNode)
        controlFlow
    }
@@ -395,16 +387,20 @@ class SCGTransformation {
        val superfluousExitNodes = exitNodes.filter(e | e.next != null && e.next.target instanceof Exit).toList
        for (exitNode : superfluousExitNodes.immutableCopy) {
        	  val links = <ControlFlow> newArrayList
-       	  exitNode.incoming.filter(typeof(ControlFlow)).forEach[ links += it ]
+       	  links.addAll(exitNode.incoming.filter(typeof(ControlFlow)))
           for (link : links) {
               link.setTarget(exitNode.next.target)
-          }                             
+          }                       
+
+          val link = exitNode.next
           
-          if (exitNode.next != null) {
-              val link = exitNode.next
-              // The removal of the EOpposite relation is necessary
-              link.target.incoming.remove(link)
-          }
+          //KITT redirect tracing origins
+          links.trace(link)
+          exitNode.next.target.trace(exitNode)
+
+          // The removal of the EOpposite relation is necessary
+          link.target.incoming.remove(link)
+          // Remove superfluous exit node
           sCGraph.nodes.remove(exitNode)
        }                    
        sCGraph
@@ -435,7 +431,14 @@ class SCGTransformation {
               // The removal of the EOpposite relation is necessary
               linkThen.target.incoming.remove(linkThen)
               linkElse.target.incoming.remove(linkElse)
+              
+              //KITT redirect tracing origins
+              links.trace(linkThen, linkElse)
           }
+          
+          //KITT redirect tracing origins          
+          conditionalNode.getElse.target.trace(conditionalNode)    
+          //Remove superfluous conditional      
           sCGraph.nodes.remove(conditionalNode)
        }                    
        sCGraph
@@ -480,10 +483,8 @@ class SCGTransformation {
             assignment.trace(state,transition)
             transition.setDefaultTrace
             scopeProvider.parent = transition.sourceState
-            val transitionCopy = transition.copy
-            transitionCopy.setImmediate(false)
             // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
-            val effect = transitionCopy.effects.get(0) as de.cau.cs.kieler.sccharts.Effect
+            val effect = transition.effects.get(0) as de.cau.cs.kieler.sccharts.Effect
             if (effect instanceof de.cau.cs.kieler.sccharts.Assignment) {
                 // For hostcode e.g. there is no need for a valued object - it is allowed to be null
                 val sCChartAssignment = (effect as de.cau.cs.kieler.sccharts.Assignment)
@@ -512,10 +513,8 @@ class SCGTransformation {
             val transition = state.outgoingTransitions.get(0)
             conditional.trace(state, transition)
             scopeProvider.parent = transition.sourceState
-            val transitionCopy = transition.copy
-            transitionCopy.setImmediate(false)
             // TODO  Test if this works correct? Was before:  conditional.setCondition(serializer.serialize(transitionCopy))
-            conditional.setCondition(transitionCopy.trigger.convertToSCGExpression.trace(transition))
+            conditional.setCondition(transition.trigger.convertToSCGExpression.trace(transition))
         }
         else if (stateTypeCache.get(state).contains(PatternType::FORK)) {
             val fork = sCGraph.addFork
@@ -559,7 +558,12 @@ class SCGTransformation {
    def void transformSCGConnectNodes(State state, SCGraph sCGraph) {
         //System.out.println("Connect Node for State " + state.id)
         
-        state.setDefaultTrace //KITT: All following SCG elements will be trace to state by default
+        //KITT: All following SCG elements will be trace to state or transition by default
+        if(!state.outgoingTransitions.nullOrEmpty){
+            state.outgoingTransitions.get(0).setDefaultTrace
+        }else{
+            state.setDefaultTrace
+        }        
         
         if (stateTypeCache.get(state).contains(PatternType::PAUSE)) {
             // Connect the depth with the node that belongs to the target of
@@ -600,11 +604,11 @@ class SCGTransformation {
             val otherNodeThen = transitionThen.targetState.mappedNode
             val otherNodeElse = transitionElse.targetState.mappedNode
             if (otherNodeThen != null) {
-                val controlFlowThen = otherNodeThen.createControlFlow
+                val controlFlowThen = otherNodeThen.createControlFlow.trace(transitionThen)
                 conditional.setThen(controlFlowThen)
             }
             if (otherNodeElse != null) {
-                val controlFlowElse = otherNodeElse.createControlFlow
+                val controlFlowElse = otherNodeElse.createControlFlow.trace(transitionElse)
                 conditional.setElse(controlFlowElse)
             }
         }
@@ -682,6 +686,7 @@ class SCGTransformation {
     // Create a new reference Expression to the corresponding sValuedObject of the expression
     def dispatch Expression convertToSCGExpression(ValuedObjectReference expression) {
         expression.valuedObject.SCGValuedObject.reference => [ vor |
+        	vor.trace(expression)
         	expression.indices.forEach[
         		vor.indices += it.convertToSCGExpression
         	]
@@ -699,35 +704,35 @@ class SCGTransformation {
 
     // Apply conversion to integer values
     def dispatch Expression convertToSCGExpression(IntValue expression) {
-        createIntValue(expression.value).traceToDefault
+        createIntValue(new Integer(expression.value)).trace(expression)
     }
 
     // Apply conversion to float values
     def dispatch Expression convertToSCGExpression(FloatValue expression) {
-        createFloatValue(expression.value).traceToDefault
+        createFloatValue(new Float(expression.value)).trace(expression)
     }
 
     // Apply conversion to boolean values
     def dispatch Expression convertToSCGExpression(BoolValue expression) {
-        createBoolValue(expression.value).traceToDefault
+        createBoolValue(new Boolean(expression.value)).trace(expression)
     }    
 
     // Apply conversion to textual host code 
     def dispatch Expression convertToSCGExpression(TextExpression expression) {
-        val textExpression = createTextExpression.traceToDefault
-        textExpression.setText(expression.text.removeEnclosingQuotes)
+        val textExpression = createTextExpression.trace(expression)
+        textExpression.setText(new String(expression.text).removeEnclosingQuotes)
         textExpression
     }    
 
     def dispatch Expression convertToSCGExpression(FunctionCall expression) {
-        createFunctionCall => [ fc |
+        createFunctionCall.trace(expression) => [ fc |
             fc.functionName = expression.functionName
             expression.parameters.forEach[ fc.parameters += it.convertToSCGParameter ]
         ]
     }    
     
     def Parameter convertToSCGParameter(Parameter parameter) {
-        createParameter => [
+        createParameter.trace(parameter) => [
             callByReference = parameter.callByReference
             expression = parameter.expression.convertToSCGExpression
         ]
@@ -735,7 +740,7 @@ class SCGTransformation {
     
     // Apply conversion to the default case
     def dispatch Expression convertToSCGExpression(Expression expression) {
-        createExpression.traceToDefault
+        createExpression.trace(expression)
     }
 
    // -------------------------------------------------------------------------   
