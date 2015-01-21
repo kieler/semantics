@@ -484,9 +484,10 @@ public abstract class AbstractSCLSemanticSequencer extends KExpressionsSemanticS
 	 *         output?='output'? 
 	 *         static?='static'? 
 	 *         signal?='signal'? 
-	 *         type=ValueType 
-	 *         valuedObjects+=ValuedObject 
-	 *         valuedObjects+=ValuedObject*
+	 *         (
+	 *             (type=HostType hostType=STRING valuedObjects+=ValuedObject valuedObjects+=ValuedObject*) | 
+	 *             (type=ValueType valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)
+	 *         )
 	 *     )
 	 */
 	protected void sequence_Declaration(EObject context, Declaration semanticObject) {

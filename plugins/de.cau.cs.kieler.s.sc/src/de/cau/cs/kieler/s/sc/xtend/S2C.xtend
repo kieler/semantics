@@ -47,6 +47,7 @@ import de.cau.cs.kieler.s.extensions.SExtension
 import java.util.List
 import java.util.HashMap
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
+import de.cau.cs.kieler.core.kexpressions.Declaration
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -164,7 +165,7 @@ class S2C {
                 «ENDIF»«ENDIF»;
             
             «IF program.usesPre(signal)»
-                «signal.type.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
+                «signal.type.expand»«signal.declaration.expand» PRE_«signal.name» «IF signal.initialValue != null» = «signal.initialValue.expand» «ENDIF»;
             «ENDIF»
         «ENDFOR»
         «ENDFOR»
@@ -203,8 +204,18 @@ class S2C {
        if (valueType == ValueType::BOOL) {
            return '''int'''
        }
-       else {
+       else if (valueType != ValueType::HOST) {
            return '''«valueType»'''
+       } else {
+           return null
+       }
+   }
+   
+   def dispatch CharSequence expand(Declaration declaration) {
+       if (declaration.type != ValueType.HOST) {
+           return null
+       } else {
+           return '''«declaration.hostType»'''
        }
    }
 

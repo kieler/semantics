@@ -354,6 +354,7 @@ class KExpressionsExtension {
             const = declaration.const
             extern = declaration.extern
             volatile = declaration.volatile
+            hostType = declaration.hostType
         ]
     }
 

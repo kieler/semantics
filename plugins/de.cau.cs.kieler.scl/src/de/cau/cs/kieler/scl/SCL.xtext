@@ -30,9 +30,8 @@ Declaration returns kexpressions::Declaration:
     (output?='output')?
     (static?='static')?
     (signal?='signal')?
-    // TODO There have to be a hostType if type is HOST
     (
-//        type = HostType hostType = STRING valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';' |
+        type = HostType hostType = STRING valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';' |
         type = ValueType valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
     )
 ;
