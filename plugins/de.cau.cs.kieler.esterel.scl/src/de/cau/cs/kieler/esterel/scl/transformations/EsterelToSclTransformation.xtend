@@ -1047,19 +1047,24 @@ class EsterelToSclTransformation extends Transformation {
      */
     def dispatch StatementSequence transformStm(Trap trap, StatementSequence sSeq) {
 
-        val f_s = createFreshVar(trap.trapDeclList.trapDecls.head.name, ValueType::BOOL)
-        sSeq.add(createAssignment(f_s, false.createBoolValue))
         val l = createFreshLabel
         labelMap.put(curLabel, l)
-
-        for (decl : trap.trapDeclList.trapDecls) 
-            exitMap.put(decl, (f_s -> l))
+		val exitVars = new LinkedList<ValuedObject>
+		trap.trapDeclList.trapDecls.forEach [ 
+			val singleExit = createFreshVar(it.name, ValueType::BOOL)
+			exitVars += singleExit
+			exitMap.put(it, (singleExit -> l))
+	        sSeq.add(createAssignment(singleExit, false.createBoolValue))
+		]
+		val exitExpr = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+			operator = OperatorType::OR
+			for (^var : exitVars) { subExpressions += ^var.createValObjRef }
+		]
 
         val trans = [ boolean pause, StatementSequence seq |
             val stm = new LinkedList<Statement>
-            val flagRef = createValObjRef(f_s)
             stm.add(createStmFromInstr(createConditional => [
-                expression = flagRef
+                expression = EcoreUtil.copy(exitExpr)
                 statements.add(createGotoj(l, curLabel, labelMap))
             ]))
             if (pause) {
@@ -1082,14 +1087,12 @@ class EsterelToSclTransformation extends Transformation {
         pauseTransformation.pop
         joinTransformation.pop
         sSeq.addLabel(l)
-        if (!trap.trapHandler.empty) {
-            sSeq.add(
-                SclFactory::eINSTANCE.createConditional => [
-                    expression = createValObjRef(f_s)
-                    statements += trap.trapHandler.head.statement.transformStm(newSseq).statements
-                ])
+        for (trapHandler : trap.trapHandler) {
+        	sSeq.add(createConditional => [
+        		expression = trapHandler.trapExpr.transformExp
+        		statements += trapHandler.statement.transformStm(newSseq).statements
+        	])
         }
-
         sSeq
     }
 
