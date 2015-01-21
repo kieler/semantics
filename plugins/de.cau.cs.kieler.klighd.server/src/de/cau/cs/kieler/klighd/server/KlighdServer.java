@@ -185,8 +185,6 @@ public class KlighdServer extends HttpServer {
                     e1.printStackTrace();
                 }
             } else {
-                // DUE TO GRAPHIZ BUG
-                GraphvizLayoutProvider.renewProcess = true;
                 final ByteArrayOutputStream outputStreamParam = outputStream;
                 // // Render model
                 // ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -207,7 +205,6 @@ public class KlighdServer extends HttpServer {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                GraphvizLayoutProvider.renewProcess = false;
             }
 
             debug("Model rendered");
