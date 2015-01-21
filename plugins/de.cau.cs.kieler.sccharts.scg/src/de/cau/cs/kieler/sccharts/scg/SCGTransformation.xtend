@@ -57,6 +57,7 @@ import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import java.util.Set
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.core.annotations.StringAnnotation
+import de.cau.cs.kieler.core.kexpressions.StringValue
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -703,6 +704,10 @@ class SCGTransformation {
     def dispatch Expression convertToSCGExpression(BoolValue expression) {
         createBoolValue(expression.value)
     }    
+    
+    def dispatch Expression convertToSCGExpression(StringValue expression) {
+        createStringValue(expression.value)
+    }       
 
     // Apply conversion to textual host code 
     def dispatch Expression convertToSCGExpression(TextExpression expression) {

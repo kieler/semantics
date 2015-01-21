@@ -11,10 +11,10 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.Parallel#getThreads <em>Threads</em>}</li>
  * </ul>
+ * </p>
  *
  * @see de.cau.cs.kieler.scl.scl.SclPackage#getParallel()
  * @model

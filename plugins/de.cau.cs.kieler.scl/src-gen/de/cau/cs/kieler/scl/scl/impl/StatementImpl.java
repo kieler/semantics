@@ -26,12 +26,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * An implementation of the model object '<em><b>Statement</b></em>'.
  * <!-- end-user-doc -->
  * <p>
- * <p>
  * The following features are implemented:
- * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.impl.StatementImpl#getAnnotations <em>Annotations</em>}</li>
  * </ul>
+ * </p>
  *
  * @generated
  */

@@ -15,10 +15,10 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.Statement#getAnnotations <em>Annotations</em>}</li>
  * </ul>
+ * </p>
  *
  * @see de.cau.cs.kieler.scl.scl.SclPackage#getStatement()
  * @model

@@ -10,10 +10,10 @@ package de.cau.cs.kieler.scl.scl;
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.InstructionStatement#getInstruction <em>Instruction</em>}</li>
  * </ul>
+ * </p>
  *
  * @see de.cau.cs.kieler.scl.scl.SclPackage#getInstructionStatement()
  * @model
