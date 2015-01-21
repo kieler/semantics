@@ -136,7 +136,7 @@ ValuedObjectReference returns ValuedObjectReference:
 	valuedObject=[ValuedObject|ID] ('[' indices+=Expression ']')*;
 
 FunctionCall returns FunctionCall:
-    '<' functionName=ID ('(' parameters += Parameter (',' parameters += Parameter)* ')')? '>'
+    '<' functionName=ExtendedID (('(' parameters += Parameter (',' parameters += Parameter)* ')')|'()')? '>'
 ;
 
 Parameter returns Parameter:
@@ -214,10 +214,9 @@ enum ValueType returns ValueType:
 	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned"	| 
 	INT="int" | FLOAT="float" |
 	STRING="string" | HOST="host";
-
+	
 enum HostType returns ValueType:
     HOST="host";
-
 
 enum CombineOperator returns CombineOperator:
 	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
@@ -227,3 +226,4 @@ enum CombineOperator returns CombineOperator:
 // custom terminal rule allowing to save transition label string as they are
 terminal HOSTCODE returns ecore::EString: 
 	"'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|"'") )* "'";
+	

@@ -24,6 +24,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Root");
 		private final RuleCall cSCChartParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
+		////generate sct "http://kieler.cs.cau.de/sccharts/textual/0.1.0"
 		//// ---------------------------------------------------------------------------------------------------
 		//Root returns sccharts::State:
 		//	SCChart;
@@ -426,98 +427,6 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getRightCurlyBracketKeyword_4_1_2() { return cRightCurlyBracketKeyword_4_1_2; }
 	}
 
-	public class ImportDeclElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ImportDecl");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cImportKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
-		private final Assignment cImportedTypeAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
-		private final CrossReference cImportedTypeStateCrossReference_1_0_0 = (CrossReference)cImportedTypeAssignment_1_0.eContents().get(0);
-		private final RuleCall cImportedTypeStateQualifiedNameParserRuleCall_1_0_0_1 = (RuleCall)cImportedTypeStateCrossReference_1_0_0.eContents().get(1);
-		private final Assignment cImportedNamespaceAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
-		private final RuleCall cImportedNamespaceQualifiedNameWithWildcardParserRuleCall_1_1_0 = (RuleCall)cImportedNamespaceAssignment_1_1.eContents().get(0);
-		
-		//ImportDecl:
-		//	"import" (importedType=[sccharts::State|QualifiedName] | importedNamespace=QualifiedNameWithWildcard);
-		public ParserRule getRule() { return rule; }
-
-		//"import" (importedType=[sccharts::State|QualifiedName] | importedNamespace=QualifiedNameWithWildcard)
-		public Group getGroup() { return cGroup; }
-
-		//"import"
-		public Keyword getImportKeyword_0() { return cImportKeyword_0; }
-
-		//importedType=[sccharts::State|QualifiedName] | importedNamespace=QualifiedNameWithWildcard
-		public Alternatives getAlternatives_1() { return cAlternatives_1; }
-
-		//importedType=[sccharts::State|QualifiedName]
-		public Assignment getImportedTypeAssignment_1_0() { return cImportedTypeAssignment_1_0; }
-
-		//[sccharts::State|QualifiedName]
-		public CrossReference getImportedTypeStateCrossReference_1_0_0() { return cImportedTypeStateCrossReference_1_0_0; }
-
-		//QualifiedName
-		public RuleCall getImportedTypeStateQualifiedNameParserRuleCall_1_0_0_1() { return cImportedTypeStateQualifiedNameParserRuleCall_1_0_0_1; }
-
-		//importedNamespace=QualifiedNameWithWildcard
-		public Assignment getImportedNamespaceAssignment_1_1() { return cImportedNamespaceAssignment_1_1; }
-
-		//QualifiedNameWithWildcard
-		public RuleCall getImportedNamespaceQualifiedNameWithWildcardParserRuleCall_1_1_0() { return cImportedNamespaceQualifiedNameWithWildcardParserRuleCall_1_1_0; }
-	}
-
-	public class QualifiedNameElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "QualifiedName");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cIDTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cFullStopKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final RuleCall cIDTerminalRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
-		
-		//QualifiedName:
-		//	ID ("." ID)*;
-		public ParserRule getRule() { return rule; }
-
-		//ID ("." ID)*
-		public Group getGroup() { return cGroup; }
-
-		//ID
-		public RuleCall getIDTerminalRuleCall_0() { return cIDTerminalRuleCall_0; }
-
-		//("." ID)*
-		public Group getGroup_1() { return cGroup_1; }
-
-		//"."
-		public Keyword getFullStopKeyword_1_0() { return cFullStopKeyword_1_0; }
-
-		//ID
-		public RuleCall getIDTerminalRuleCall_1_1() { return cIDTerminalRuleCall_1_1; }
-	}
-
-	public class QualifiedNameWithWildcardElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "QualifiedNameWithWildcard");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cQualifiedNameParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
-		private final Keyword cFullStopKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Keyword cAsteriskKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		
-		//QualifiedNameWithWildcard:
-		//	QualifiedName "." "*";
-		public ParserRule getRule() { return rule; }
-
-		//QualifiedName "." "*"
-		public Group getGroup() { return cGroup; }
-
-		//QualifiedName
-		public RuleCall getQualifiedNameParserRuleCall_0() { return cQualifiedNameParserRuleCall_0; }
-
-		//"."
-		public Keyword getFullStopKeyword_1() { return cFullStopKeyword_1; }
-
-		//"*"
-		public Keyword getAsteriskKeyword_2() { return cAsteriskKeyword_2; }
-	}
-
 	public class StateElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "State");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -573,6 +482,17 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOutgoingTransitionsTransitionParserRuleCall_7_0 = (RuleCall)cOutgoingTransitionsAssignment_7.eContents().get(0);
 		private final Keyword cSemicolonKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
+		////ImportDecl: 
+		////    'import' 
+		////        (importedType=[sccharts::State|QualifiedName] 
+		////        | importedNamespace=QualifiedNameWithWildcard)
+		////;
+		////
+		////QualifiedName:
+		////  ID ('.' ID)*;
+		////
+		////QualifiedNameWithWildcard :
+		////    QualifiedName  '.' '*';
 		//// ---------------------------------------------------------------------------------------------------
 		//State returns sccharts::State:
 		//	annotations+=Annotation* (initial?="initial" final?="final"? | final?="final" initial?="initial"?)? type=StateType?
@@ -1424,9 +1344,6 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	private final ForElements pFor;
 	private final RegionElements pRegion;
 	private final SCChartElements pSCChart;
-	private final ImportDeclElements pImportDecl;
-	private final QualifiedNameElements pQualifiedName;
-	private final QualifiedNameWithWildcardElements pQualifiedNameWithWildcard;
 	private final StateElements pState;
 	private final LocalActionElements pLocalAction;
 	private final TransitionElements pTransition;
@@ -1452,9 +1369,6 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		this.pFor = new ForElements();
 		this.pRegion = new RegionElements();
 		this.pSCChart = new SCChartElements();
-		this.pImportDecl = new ImportDeclElements();
-		this.pQualifiedName = new QualifiedNameElements();
-		this.pQualifiedNameWithWildcard = new QualifiedNameWithWildcardElements();
 		this.pState = new StateElements();
 		this.pLocalAction = new LocalActionElements();
 		this.pTransition = new TransitionElements();
@@ -1494,6 +1408,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
+	////generate sct "http://kieler.cs.cau.de/sccharts/textual/0.1.0"
 	//// ---------------------------------------------------------------------------------------------------
 	//Root returns sccharts::State:
 	//	SCChart;
@@ -1557,36 +1472,17 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 		return getSCChartAccess().getRule();
 	}
 
-	//ImportDecl:
-	//	"import" (importedType=[sccharts::State|QualifiedName] | importedNamespace=QualifiedNameWithWildcard);
-	public ImportDeclElements getImportDeclAccess() {
-		return pImportDecl;
-	}
-	
-	public ParserRule getImportDeclRule() {
-		return getImportDeclAccess().getRule();
-	}
-
-	//QualifiedName:
-	//	ID ("." ID)*;
-	public QualifiedNameElements getQualifiedNameAccess() {
-		return pQualifiedName;
-	}
-	
-	public ParserRule getQualifiedNameRule() {
-		return getQualifiedNameAccess().getRule();
-	}
-
-	//QualifiedNameWithWildcard:
-	//	QualifiedName "." "*";
-	public QualifiedNameWithWildcardElements getQualifiedNameWithWildcardAccess() {
-		return pQualifiedNameWithWildcard;
-	}
-	
-	public ParserRule getQualifiedNameWithWildcardRule() {
-		return getQualifiedNameWithWildcardAccess().getRule();
-	}
-
+	////ImportDecl: 
+	////    'import' 
+	////        (importedType=[sccharts::State|QualifiedName] 
+	////        | importedNamespace=QualifiedNameWithWildcard)
+	////;
+	////
+	////QualifiedName:
+	////  ID ('.' ID)*;
+	////
+	////QualifiedNameWithWildcard :
+	////    QualifiedName  '.' '*';
 	//// ---------------------------------------------------------------------------------------------------
 	//State returns sccharts::State:
 	//	annotations+=Annotation* (initial?="initial" final?="final"? | final?="final" initial?="initial"?)? type=StateType?
@@ -1794,7 +1690,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//FunctionCallEffect returns sccharts::FunctionCallEffect:
-	//	"<" functionName=ID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")")? ">";
+	//	"<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" | "()")? ">";
 	public ActionsGrammarAccess.FunctionCallEffectElements getFunctionCallEffectAccess() {
 		return gaActions.getFunctionCallEffectAccess();
 	}
@@ -2033,7 +1929,7 @@ public class SctGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//FunctionCall:
-	//	"<" functionName=ID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")")? ">";
+	//	"<" functionName=ExtendedID ("(" parameters+=Parameter ("," parameters+=Parameter)* ")" | "()")? ">";
 	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
 		return gaActions.getFunctionCallAccess();
 	}

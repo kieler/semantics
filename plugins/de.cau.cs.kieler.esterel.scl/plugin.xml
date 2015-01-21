@@ -69,7 +69,7 @@
       <transformationGroup
             id="SCLSCGGROUP"
             name="SCGraph"
-            transformations="SCLTOSCG,SCGDEP, SCGBBGROUP, SCGSCHEDGROUP,SCGSEQGROUP">
+            transformations="SCLTOSCG,SCGDEP, SCGBBGROUP, SCGSCHEDULE, SCGSEQUENTIALIZE, SCGGC">
       </transformationGroup>
       <transformationMethod
             class="de.cau.cs.kieler.esterel.scl.transformations.EsterelToSclTransformation"
@@ -89,7 +89,7 @@
          point="de.cau.cs.kieler.kico.ui.transformation">
       <editor
             editor="de.cau.cs.kieler.esterel.Esterel"
-            transformations="SCLGROUP,ESTERELTOSCL_OPT, ESTERELTOSCL,   SCLSCGGROUP,SCLTOSCG, SCGDEP, SCGBB, SCGBBSCPLUS, SCGSCHEDSIMPLE, SCGSCHEDCLUSTER, SCGSCHEDHYBRID, SCGSEQ, SCGBBGROUP, SCGSCHEDGROUP,SCGSEQGROUP,SCGSEQSIMPLE,SCGSCHEDDELAYAWARE,SCGSCHEDTHREADAWARE,SCGSEQGROUP,SCGSEQHYBRID,SCGSEQHYBRID,CODEGENERATION, SCG2S,SCG2C,S2TARGET,S2C,S2JAVA">
+            transformations="SCLGROUP,ESTERELTOSCL_OPT, ESTERELTOSCL,   SCLSCGGROUP,SCLTOSCG,SCGDEP, SCGBBGROUP, SCGBB,SCGBBSCPLUS,SCGSCHEDULE, SCGSEQUENTIALIZE, SCGGC,CODEGENERATION, SCG2S,SCG2C,S2TARGET,S2C,S2JAVA">
       </editor>
    </extension>
    <extension

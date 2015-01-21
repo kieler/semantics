@@ -23,6 +23,11 @@
                name="SCG (Tree) Editor"
                priority="100">
          </editor>
+         <editor
+               id=" de.cau.cs.kieler.scl.SCL"
+               name="SCL (Textual) Editor"
+               priority="100">
+         </editor>
       </executionFile>
       <executionFile
             file="execution/sccharts_c_no_visualization.execution">
@@ -34,6 +39,11 @@
          <editor
                id="de.cau.cs.kieler.scg.presentation.ScgEditorID"
                name="SCG (Tree) Editor"
+               priority="101">
+         </editor>
+         <editor
+               id=" de.cau.cs.kieler.scl.SCL"
+               name="SCL (Textual) Editor"
                priority="101">
          </editor>
       </executionFile>

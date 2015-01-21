@@ -15,7 +15,7 @@ package de.cau.cs.kieler.scg.impl;
 
 import de.cau.cs.kieler.scg.ScgPackage;
 import de.cau.cs.kieler.scg.Schedule;
-import de.cau.cs.kieler.scg.ScheduledBlock;
+import de.cau.cs.kieler.scg.ScheduleBlock;
 import java.util.Collection;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.scg.impl.ScheduleImpl#getScheduledBlocks <em>Scheduled Blocks</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.impl.ScheduleImpl#getScheduleBlocks <em>Schedule Blocks</em>}</li>
  * </ul>
  * </p>
  *
@@ -40,14 +40,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class ScheduleImpl extends MinimalEObjectImpl.Container implements Schedule {
     /**
-     * The cached value of the '{@link #getScheduledBlocks() <em>Scheduled Blocks</em>}' containment reference list.
+     * The cached value of the '{@link #getScheduleBlocks() <em>Schedule Blocks</em>}' containment reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-     * @see #getScheduledBlocks()
+     * @see #getScheduleBlocks()
      * @generated
      * @ordered
      */
-	protected EList<ScheduledBlock> scheduledBlocks;
+	protected EList<ScheduleBlock> scheduleBlocks;
 				/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -72,11 +72,11 @@ public class ScheduleImpl extends MinimalEObjectImpl.Container implements Schedu
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EList<ScheduledBlock> getScheduledBlocks() {
-        if (scheduledBlocks == null) {
-            scheduledBlocks = new EObjectContainmentEList<ScheduledBlock>(ScheduledBlock.class, this, ScgPackage.SCHEDULE__SCHEDULED_BLOCKS);
+	public EList<ScheduleBlock> getScheduleBlocks() {
+        if (scheduleBlocks == null) {
+            scheduleBlocks = new EObjectContainmentEList<ScheduleBlock>(ScheduleBlock.class, this, ScgPackage.SCHEDULE__SCHEDULE_BLOCKS);
         }
-        return scheduledBlocks;
+        return scheduleBlocks;
     }
 
 				/**
@@ -87,8 +87,8 @@ public class ScheduleImpl extends MinimalEObjectImpl.Container implements Schedu
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case ScgPackage.SCHEDULE__SCHEDULED_BLOCKS:
-                return ((InternalEList<?>)getScheduledBlocks()).basicRemove(otherEnd, msgs);
+            case ScgPackage.SCHEDULE__SCHEDULE_BLOCKS:
+                return ((InternalEList<?>)getScheduleBlocks()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -101,8 +101,8 @@ public class ScheduleImpl extends MinimalEObjectImpl.Container implements Schedu
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case ScgPackage.SCHEDULE__SCHEDULED_BLOCKS:
-                return getScheduledBlocks();
+            case ScgPackage.SCHEDULE__SCHEDULE_BLOCKS:
+                return getScheduleBlocks();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -116,9 +116,9 @@ public class ScheduleImpl extends MinimalEObjectImpl.Container implements Schedu
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case ScgPackage.SCHEDULE__SCHEDULED_BLOCKS:
-                getScheduledBlocks().clear();
-                getScheduledBlocks().addAll((Collection<? extends ScheduledBlock>)newValue);
+            case ScgPackage.SCHEDULE__SCHEDULE_BLOCKS:
+                getScheduleBlocks().clear();
+                getScheduleBlocks().addAll((Collection<? extends ScheduleBlock>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -132,8 +132,8 @@ public class ScheduleImpl extends MinimalEObjectImpl.Container implements Schedu
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case ScgPackage.SCHEDULE__SCHEDULED_BLOCKS:
-                getScheduledBlocks().clear();
+            case ScgPackage.SCHEDULE__SCHEDULE_BLOCKS:
+                getScheduleBlocks().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -147,8 +147,8 @@ public class ScheduleImpl extends MinimalEObjectImpl.Container implements Schedu
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case ScgPackage.SCHEDULE__SCHEDULED_BLOCKS:
-                return scheduledBlocks != null && !scheduledBlocks.isEmpty();
+            case ScgPackage.SCHEDULE__SCHEDULE_BLOCKS:
+                return scheduleBlocks != null && !scheduleBlocks.isEmpty();
         }
         return super.eIsSet(featureID);
     }

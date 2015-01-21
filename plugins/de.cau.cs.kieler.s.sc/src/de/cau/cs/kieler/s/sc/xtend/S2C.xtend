@@ -47,7 +47,6 @@ import de.cau.cs.kieler.s.extensions.SExtension
 import java.util.List
 import java.util.HashMap
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
-import de.cau.cs.kieler.core.kexpressions.Declaration
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -155,7 +154,7 @@ class S2C {
    def sVariables(Program program) {
        '''«FOR declaration : program.declarations.filter[e|!e.isSignal&&!e.isExtern]»
           «FOR signal : declaration.valuedObjects»
-            «signal.type.expand»«signal.declaration.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
+            «signal.type.expand» «signal.name»«IF signal.isArray»«FOR card : signal.cardinalities»[«card»]«ENDFOR»«ENDIF»«IF signal.initialValue != null /* WILL ALWAYS BE NULL BECAUSE */»
               «IF signal.isArray»
                 «FOR card : signal.cardinalities»{int i«card.hashCode» = 0; for(i«card.hashCode»=0; i«card.hashCode» < «card.intValue»; i«card.hashCode»++) {«ENDFOR»
                 «signal.name»«FOR card : signal.cardinalities»[i«card.hashCode»]«ENDFOR» = «signal.initialValue.expand»;
@@ -204,10 +203,8 @@ class S2C {
        if (valueType == ValueType::BOOL) {
            return '''int'''
        }
-       else if (valueType != ValueType::HOST) {
+       else {
            return '''«valueType»'''
-       } else {
-           return null
        }
    }
 
@@ -231,8 +228,8 @@ class S2C {
        «FOR state : program.states»
        «state.expand»
        «ENDFOR»
-       _GO = 0;
        «program.setPreVariables»
+       _GO = 0;
        return;
     }
     '''
@@ -598,14 +595,6 @@ class S2C {
         }
         funcCall = funcCall + ")"
         funcCall
-   }
-   
-   def dispatch CharSequence expand(Declaration declaration) {
-       if (declaration.type != ValueType.HOST) {
-           return null
-       } else {
-           return '''«declaration.hostType»'''
-       }
    }
    
    // -------------------------------------------------------------------------   

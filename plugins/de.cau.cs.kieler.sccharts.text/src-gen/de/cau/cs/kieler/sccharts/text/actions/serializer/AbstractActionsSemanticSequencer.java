@@ -456,7 +456,7 @@ public abstract class AbstractActionsSemanticSequencer extends KExpressionsSeman
 	
 	/**
 	 * Constraint:
-	 *     (functionName=ID (parameters+=Parameter parameters+=Parameter*)?)
+	 *     (functionName=ExtendedID (parameters+=Parameter parameters+=Parameter*)?)
 	 */
 	protected void sequence_FunctionCallEffect(EObject context, FunctionCallEffect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
