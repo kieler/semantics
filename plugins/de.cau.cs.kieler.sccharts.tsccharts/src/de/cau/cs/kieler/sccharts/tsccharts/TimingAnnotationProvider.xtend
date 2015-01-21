@@ -221,39 +221,41 @@ class TimingAnnotationProvider {
         return domainNumber + 1;
     }
 
-    /*  This method is a test method that sets the timing Domains for regions, but not for the 
-     * elements of the according S model. To test the "upwards" timing information path*/
-    def Integer setTimingDomainsWithS(Region region, Integer currentDomainNumber,
-        HashMap<Integer, LinkedList<Integer>> threadTree, Integer parentDomain) {
-        var domainNumber = currentDomainNumber;
-        if (!region.hasChildRegions) {
-            region.setTimeDomain(domainNumber);
-
-            // Save this region in the threadTree in the List of its parent
-            if (parentDomain != null) {
-                threadTree.get(parentDomain).add(domainNumber);
-            }
-        } else {
-            region.setTimeDomain(domainNumber);
-
-            // Prepare descendant list for this region and add it to the thread tree
-            threadTree.put(domainNumber, new LinkedList<Integer>);
-            val regionDomain = domainNumber;
-            domainNumber = domainNumber + 1;
-            val stateList = region.states;
-            val stateListIterator = stateList.iterator;
-            while (stateListIterator.hasNext()) {
-                val State child = stateListIterator.next();
-                val childRegionList = child.regions;
-                val childRegionListIterator = childRegionList.iterator;
-                while (childRegionListIterator.hasNext()) {
-                    val childRegion = childRegionListIterator.next();
-                    domainNumber = setTimingDomainsWithS(childRegion, domainNumber, threadTree, regionDomain);
-                }
-            }
-        }
-        return (domainNumber + 1);
-    }
+// Start 21.1.2015 remove?
+//    /*  This method is a test method that sets the timing Domains for regions, but not for the 
+//     * elements of the according S model. To test the "upwards" timing information path*/
+//    def Integer setTimingDomainsWithS(Region region, Integer currentDomainNumber,
+//        HashMap<Integer, LinkedList<Integer>> threadTree, Integer parentDomain) {
+//        var domainNumber = currentDomainNumber;
+//        if (!region.hasChildRegions) {
+//            region.setTimeDomain(domainNumber);
+//
+//            // Save this region in the threadTree in the List of its parent
+//            if (parentDomain != null) {
+//                threadTree.get(parentDomain).add(domainNumber);
+//            }
+//        } else {
+//            region.setTimeDomain(domainNumber);
+//
+//            // Prepare descendant list for this region and add it to the thread tree
+//            threadTree.put(domainNumber, new LinkedList<Integer>);
+//            val regionDomain = domainNumber;
+//            domainNumber = domainNumber + 1;
+//            val stateList = region.states;
+//            val stateListIterator = stateList.iterator;
+//            while (stateListIterator.hasNext()) {
+//                val State child = stateListIterator.next();
+//                val childRegionList = child.regions;
+//                val childRegionListIterator = childRegionList.iterator;
+//                while (childRegionListIterator.hasNext()) {
+//                    val childRegion = childRegionListIterator.next();
+//                    domainNumber = setTimingDomainsWithS(childRegion, domainNumber, threadTree, regionDomain);
+//                }
+//            }
+//        }
+//        return (domainNumber + 1);
+//    }
+// end 21.1.2015 remove?
 
     /* Determines, whether the region contains states with regions (return true) 
          * or not (return false)

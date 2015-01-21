@@ -14,10 +14,11 @@
 
 package de.cau.cs.kieler.sccharts.tsccharts.handler;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.HashMap;
 
 import javax.inject.Inject;
 
@@ -41,10 +42,8 @@ import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.util.ResourceUtil;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
-import com.google.common.collect.HashMultimap;
 import com.google.inject.Guice;
 
-import de.cau.cs.kieler.core.kexpressions.impl.TextExpressionImpl;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.krendering.HorizontalAlignment;
 import de.cau.cs.kieler.core.krendering.KContainerRendering;
@@ -54,18 +53,13 @@ import de.cau.cs.kieler.core.krendering.VerticalAlignment;
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions;
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
 import de.cau.cs.kieler.core.util.Maybe;
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kico.CompilationResult;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.klighd.KlighdTreeSelection;
 import de.cau.cs.kieler.klighd.ViewContext;
-import de.cau.cs.kieler.ktm.extensions.TransformationTreeExtensions;
-import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension;
-//import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation;
-import de.cau.cs.kieler.sccharts.scg.SCGTransformation;
 //import de.cau.cs.kieler.sccharts.text.sct.sct.impl.SCChartImpl;
 import de.cau.cs.kieler.sccharts.tsccharts.TimingAnnotationProvider;
 import de.cau.cs.kieler.sccharts.tsccharts.annotation.extensions.TSCChartsAnnotationExtension;
@@ -77,15 +71,10 @@ import de.cau.cs.kieler.scg.Entry;
 import de.cau.cs.kieler.scg.Exit;
 import de.cau.cs.kieler.scg.Fork;
 import de.cau.cs.kieler.scg.Join;
-import de.cau.cs.kieler.scg.Link;
 import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scg.SCGraph;
+//import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation;
 //import de.cau.cs.kieler.scg.c.SCG2C;
-import de.cau.cs.kieler.scg.impl.AssignmentImpl;
-import de.cau.cs.kieler.scg.impl.ControlFlowImpl;
-import de.cau.cs.kieler.scg.impl.EntryImpl;
-import de.cau.cs.kieler.scg.impl.LinkImpl;
-import de.cau.cs.kieler.scg.s.transformations.SCGToSTransformation;
 
 /**
  * This class handles the interactive timing analysis for modeling with SCCharts. It generates C
@@ -111,7 +100,7 @@ public class TimingAnalysisHandler extends AbstractHandler {
     @Inject
     private TimingAnnotationProvider annotationProvider;
 
-//    private SCG2C scg2c = new SCG2C();
+    // private SCG2C scg2c = new SCG2C();
 
     // @Inject
     // private SCChartsCoreTransformation SCCtransformation;
@@ -136,22 +125,22 @@ public class TimingAnalysisHandler extends AbstractHandler {
             return null;
         }
 
-// 20.01.2015 Check whether still needed
-//        // final State state;
-//        final Iterator<?> it = kts.sourceElementIterator();
-//
-//        if (it.hasNext()) {
-//            Object o = it.next();
-//
-//            if (o instanceof State || o instanceof Region ) {
-//                // state = (State) o;
-//            } else {
-//                return null;
-//            }
-//        } else {
-//            return null;
-//        }
-// End 20.01.2015
+        // 20.01.2015 Check whether still needed
+        // // final State state;
+        // final Iterator<?> it = kts.sourceElementIterator();
+        //
+        // if (it.hasNext()) {
+        // Object o = it.next();
+        //
+        // if (o instanceof State || o instanceof Region ) {
+        // // state = (State) o;
+        // } else {
+        // return null;
+        // }
+        // } else {
+        // return null;
+        // }
+        // End 20.01.2015
 
         Job job = new Job("TimingAnalysis") {
 
@@ -165,7 +154,7 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 } else {
                     return Status.CANCEL_STATUS;
                 }
-                
+
                 final Maybe<State> maybe = new Maybe<>();
                 document.readOnly(new IUnitOfWork.Void<XtextResource>() {
                     @Override
@@ -179,14 +168,15 @@ public class TimingAnalysisHandler extends AbstractHandler {
                         maybe.set((State) resource.getContents().get(0));
 
                     }
-                }); 
-                
+                });
+
                 State scchart;
                 State maybeGet = (State) maybe.get();
-                if (scchartsExtension.isRootState(maybeGet)){
+                if (scchartsExtension.isRootState(maybeGet)) {
                     scchart = maybeGet;
-                } else return Status.CANCEL_STATUS;
-                
+                } else
+                    return Status.CANCEL_STATUS;
+
                 // ///////////////Setting of timing domains in both SCChart and S code with the help
                 // of the KTM tree.////
                 // ///////////////Get thread tree on the
@@ -204,12 +194,12 @@ public class TimingAnalysisHandler extends AbstractHandler {
                         KielerCompiler.compile("SCGRAPH", scchart, true, true);
                 EObject transformedEObject = transformed.getEObject();
                 SCGraph sequentialSCG = (SCGraph) transformedEObject;
-                
-//                HashMultimap<EObject, EObject> testMappingSCC2SCG= getTestMapping(1);
+
+                // HashMultimap<EObject, EObject> testMappingSCC2SCG= getTestMapping(1);
                 EList<Node> nodeList = sequentialSCG.getNodes();
                 Iterator<Node> nodeListIterator = nodeList.iterator();
                 // collect all edges with their source nodes
-                HashMap<ControlFlow, Node> edgesWithSource = new HashMap<ControlFlow, Node>();
+                HashMap<ControlFlow, Node> edgesWithSource = new LinkedHashMap<ControlFlow, Node>();
                 while (nodeListIterator.hasNext()) {
                     Node node = nodeListIterator.next();
                     if (node instanceof Conditional) {
@@ -254,18 +244,26 @@ public class TimingAnalysisHandler extends AbstractHandler {
                     }
                 }
                 Iterator<ControlFlow> edgeIterator = edgesWithSource.keySet().iterator();
-//Start 13.01.2015               
-//                while(edgeIterator.hasNext()){
-//                  - check for each node, to which region it maps and insert a TTP node ('TTP(n);' into
-//                    the edge, if it is a different region than the one before
-//                  - store the domain Number of the Region together with the TTP number in a List, this 
-//                    is done to keep the relation of TTPs and Regions (as TTP numbers have to be unique
-//                    in the new interface version). For each Region domain there should be a List of 
-//                    TTP numbers, which can be used to look the values up in a TimeValueTable
-//                }              
-//                CompilationResult codeGeneration =
-//                        KielerCompiler.compile("CodeGeneration", sequentialSCG, true, true);
-//End 13.01.2015
+
+                while (edgeIterator.hasNext()) {
+                    ControlFlow edge = edgeIterator.next();
+                    ControlFlow test = edge;
+                    modifySequentialSCGWithHandMapping(edgeIterator, edgesWithSource, sequentialSCG);
+                    // - check for each node, to which region it maps and insert a TTP node
+                    // ('TTP(n);' into
+                    // the edge, if it is a different region than the one before
+                    // - store the domain Number of the Region together with the TTP number in a
+                    // List, this
+                    // is done to keep the relation of TTPs and Regions (as TTP numbers have to be
+                    // unique
+                    // in the new interface version). For each Region domain there should be a List
+                    // of
+                    // TTP numbers, which can be used to look the values up in a TimeValueTable
+                }
+                // Start 13.01.2015
+                // CompilationResult codeGeneration =
+                // KielerCompiler.compile("CodeGeneration", sequentialSCG, true, true);
+                // End 13.01.2015
 
                 State state = scchart;// rootRegionStates.get(0);
                 IFile file = ResourceUtil.getFile(maybe.get().eResource());
@@ -314,17 +312,15 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 return Status.OK_STATUS;
             }
 
-            /* CAUTION: do not use but for test reasons, not for master branch version
-             * 
-             * This method generates a test mapping done by hand as an interim solution until the KTM 
-             * mapping is integrated into KIELER
-             * the parameter i specifies the number of the model for which the task is done
-             * 1: robot (TODO)
-             * 2: ...
+            /* Caution: This is only a test method that involves a hard coded mapping for only one model:
+             * robot.sct, the lead example for ITA. This method will be used only for test reasons as 
+             * long as the automatic mapping is not fully implemented and integrated.
+             * @
              */
-            private HashMultimap<EObject, EObject> getTestMapping(int i) {
+            private void modifySequentialSCGWithHandMapping(Iterator<ControlFlow> edgeIterator,
+                    HashMap<ControlFlow, Node> edgesWithSource, SCGraph sequentialSCG) {
                 // TODO Auto-generated method stub
-                return null;
+                
             }
         };
 
