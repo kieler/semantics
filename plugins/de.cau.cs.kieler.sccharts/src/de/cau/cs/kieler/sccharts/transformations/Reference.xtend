@@ -202,7 +202,7 @@ class Reference {
 			    nodeMapping.put(trn, newState)
 			    
 			    var exprCounter = 0
-			    //var wireCounter = 0
+			    // bind inputs
 			    val refedInputs = <ValuedObject>newArrayList
 			    trn.referencedScope.declarations.filter[it.input].forEach[
                     refedInputs+=valuedObjects
@@ -216,21 +216,40 @@ class Reference {
 			        val rState = nodeMapping.get(trn)
 			        rState.bindings += newBinding
 			    }
+			    // bind outputs
+			    trn.referencedScope.declarations.filter[it.output].forEach[valuedObjects.forEach[
+			        for (f: dataflow.features) {
+			            if (f.expression instanceof ValuedObjectReference) {
+			                if ((f.expression as ValuedObjectReference).valuedObject.equals(it)) {
+			                    //println("found match: " + it + ", " + f.expression as ValuedObjectReference)
+			                    val newBinding = SCChartsFactory.eINSTANCE.createBinding
+			                    newBinding.actual = f.valuedObject
+			                    newBinding.formal = (f.expression as ValuedObjectReference).valuedObject
+			                    val sState = nodeMapping.get(f.node)
+			                    sState.bindings += newBinding
+			                }
+			            }
+			        }
+			    ]]
+                
+			    (trn.referencedScope as State).transformDataflows
 			}
 			for (f: dataflow.features) {
-                    if (f.node != null) {
-                        val newBinding = SCChartsFactory.eINSTANCE.createBinding
-                        newBinding.actual = f.valuedObject
-                        newBinding.formal = (f.expression as ValuedObjectReference).valuedObject
-                        //println("f.node: " + f.node)
-                        val sState = nodeMapping.get(f.node)
-                        sState.bindings += newBinding
-                        //println("f.node: " + f.node)
-                        //println("updated")
-                    } else {
-                        println("keine node beim feature angegeben")
-                    }
+                println("f: " + f)
+                if (f.node != null) {
+                    println("f hat ne node")
+                } else {
+                    println("keine node beim feature angegeben")
+                    //val newAction = SCChartsFactory.eINSTANCE.createEntryAction
+                    val newAssignment = SCChartsFactory.eINSTANCE.createAssignment
+                    newAssignment.valuedObject = f.valuedObject
+                    newAssignment.expression = f.expression
+                    //newAction.addAssignment(newAssignment)
+                    println("ps: " + parentState)
+                    //parentState.entryActions += newAction
+                    parentState.createEntryAction.addAssignment(newAssignment)
                 }
+            }
 			// ende von neu
 			
     		for(rn : dataflow.nodes.filter(typeof(ReferencedNode))) {

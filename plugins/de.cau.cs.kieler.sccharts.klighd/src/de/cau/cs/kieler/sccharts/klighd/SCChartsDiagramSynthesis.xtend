@@ -1608,8 +1608,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             // need to be improved if parameter is not an global/local input
             val dNode = ref.eContainer.node
             //println("ref.rs.size: " + (ref.referencedScope.declarations.filter[it.input].size))
+            val refInputs = <ValuedObject>newArrayList
+            ref.referencedScope.declarations.filter[it.input].forEach[
+                refInputs += valuedObjects
+            ]
+            val refInputSize = refInputs.size
+            //println(refInputSize)
             ref.parameters.forEach[ p|
-                if (ref.parameters.indexOf(p) >= (ref.referencedScope.declarations.filter[it.input].size)) {
+                if (ref.parameters.indexOf(p) >= refInputSize) {
                     // if a call has more parameters than the called node: skip 
                     
                 } else {
@@ -1729,8 +1735,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             // create input nodes for call parameters
             // need to be improved if parameter is not an global/local input
             val dNode = call.eContainer.node
+            val refInputs = <ValuedObject>newArrayList
+            val callRef = call.callReference as DefineNode
+            callRef.inputs.forEach[
+                refInputs += valuedObjects
+            ]
+            val refInputSize = refInputs.size
             call.parameters.forEach[ p|
-                if (call.parameters.indexOf(p) > (call.callReference as DefineNode).inputs.size) {
+                if (call.parameters.indexOf(p) >= refInputSize) {
                     // if a call has more parameters than the called node: skip 
                 } else {
                     // else: add child nodes and edges if not already created
