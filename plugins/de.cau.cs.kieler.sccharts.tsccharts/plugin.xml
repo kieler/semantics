@@ -14,7 +14,7 @@
                icon="icons/wcet.png"
                label="TH"
                style="push"
-               tooltip="Show WCET values (handler, under construction)">
+               tooltip="Show WCET values, Legend: (flat WCET/deep WCET)">
          </command>
       </menuContribution>
    </extension>

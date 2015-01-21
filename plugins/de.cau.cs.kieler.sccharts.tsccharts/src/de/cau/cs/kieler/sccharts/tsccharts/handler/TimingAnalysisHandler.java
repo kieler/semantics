@@ -136,21 +136,22 @@ public class TimingAnalysisHandler extends AbstractHandler {
             return null;
         }
 
-        // final State state;
-        final Iterator<?> it = kts.sourceElementIterator();
-
-        if (it.hasNext()) {
-            Object o = it.next();
-
-            if (o instanceof State || o instanceof Region //|| o instanceof SCChartImpl
-                    ) {
-                // state = (State) o;
-            } else {
-                return null;
-            }
-        } else {
-            return null;
-        }
+// 20.01.2015 Check whether still needed
+//        // final State state;
+//        final Iterator<?> it = kts.sourceElementIterator();
+//
+//        if (it.hasNext()) {
+//            Object o = it.next();
+//
+//            if (o instanceof State || o instanceof Region ) {
+//                // state = (State) o;
+//            } else {
+//                return null;
+//            }
+//        } else {
+//            return null;
+//        }
+// End 20.01.2015
 
         Job job = new Job("TimingAnalysis") {
 
