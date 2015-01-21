@@ -36,9 +36,14 @@ SingleDataflow returns sccharts::Dataflow:
       (declarations+=Declaration)*
      )?
     
-    ((valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += Expression) ';')*
-    (nodes+=Node)*
-    ;
+//    ((valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += Expression) ';')*
+//    (nodes+=Node)*
+    (
+        (features += Feature) 
+        |
+        (nodes+=Node) // alt: + (nodes+=Node)+
+    )*
+;
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -69,9 +74,11 @@ Dataflow returns sccharts::Dataflow:
 //        |
 //        (valuedObjects += [kexpressions::ValuedObject]) '=' /*(nodes+=TestReferenceNode|ID'.')?*/ (expressions += ValuedObjectReference) ';'
 //    )*
-    (features += Feature)* 
-    
-    (nodes+=Node)* // alt: + statt *
+    (
+        (features += Feature) 
+        |
+        (nodes+=Node) // alt: + (nodes+=Node)+
+    )*
 ;
 
 Feature returns sccharts::DataflowFeature:

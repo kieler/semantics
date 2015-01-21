@@ -559,8 +559,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         label=STRING? 
 	 *         for=For? 
 	 *         declarations+=Declaration* 
-	 *         features+=Feature* 
-	 *         nodes+=Node*
+	 *         (features+=Feature | nodes+=Node)*
 	 *     )
 	 */
 	protected void sequence_Dataflow(EObject context, Dataflow semanticObject) {
@@ -728,11 +727,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (
-	 *         (annotations+=Annotation* id=ID? label=STRING? for=For? declarations+=Declaration*)? 
-	 *         (valuedObjects+=[ValuedObject|ID] expressions+=Expression)* 
-	 *         nodes+=Node*
-	 *     )
+	 *     ((annotations+=Annotation* id=ID? label=STRING? for=For? declarations+=Declaration*)? (features+=Feature | nodes+=Node)*)
 	 */
 	protected void sequence_SingleDataflow(EObject context, Dataflow semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

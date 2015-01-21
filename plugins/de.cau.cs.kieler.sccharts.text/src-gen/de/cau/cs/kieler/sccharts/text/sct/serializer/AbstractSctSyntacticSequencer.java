@@ -271,7 +271,7 @@ public abstract class AbstractSctSyntacticSequencer extends AbstractSyntacticSeq
 	
 	/**
 	 * Syntax:
-	 *     '/' | 'do'
+	 *     'do' | '/'
 	 */
 	protected void emit_Transition_DoKeyword_3_3_0_1_0_1_or_SolidusKeyword_3_3_0_1_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

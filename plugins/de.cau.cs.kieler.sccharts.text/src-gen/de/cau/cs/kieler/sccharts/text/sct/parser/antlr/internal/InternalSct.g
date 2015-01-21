@@ -389,64 +389,41 @@ ruleSingleDataflow returns [EObject current=null]
 )*)?((
 (
 		{ 
-		  /* */ 
-		}
-		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getSingleDataflowRule());
-	        }
-        }
-	otherlv_10=RULE_ID
-	{
-		newLeafNode(otherlv_10, grammarAccess.getSingleDataflowAccess().getValuedObjectsValuedObjectCrossReference_2_0_0()); 
-	}
-
-)
-)	otherlv_11='=' 
-    {
-    	newLeafNode(otherlv_11, grammarAccess.getSingleDataflowAccess().getEqualsSignKeyword_2_1());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getSingleDataflowAccess().getExpressionsExpressionParserRuleCall_2_2_0()); 
+	        newCompositeNode(grammarAccess.getSingleDataflowAccess().getFeaturesFeatureParserRuleCall_2_0_0()); 
 	    }
-		lv_expressions_12_0=ruleExpression		{
+		lv_features_10_0=ruleFeature		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSingleDataflowRule());
 	        }
        		add(
        			$current, 
-       			"expressions",
-        		lv_expressions_12_0, 
-        		"Expression");
+       			"features",
+        		lv_features_10_0, 
+        		"Feature");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)	otherlv_13=';' 
-    {
-    	newLeafNode(otherlv_13, grammarAccess.getSingleDataflowAccess().getSemicolonKeyword_2_3());
-    }
-)*(
+)
+    |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSingleDataflowAccess().getNodesNodeParserRuleCall_3_0()); 
+	        newCompositeNode(grammarAccess.getSingleDataflowAccess().getNodesNodeParserRuleCall_2_1_0()); 
 	    }
-		lv_nodes_14_0=ruleNode		{
+		lv_nodes_11_0=ruleNode		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSingleDataflowRule());
 	        }
        		add(
        			$current, 
        			"nodes",
-        		lv_nodes_14_0, 
+        		lv_nodes_11_0, 
         		"Node");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)*)
+))*)
 ;
 
 
@@ -828,10 +805,10 @@ ruleDataflow returns [EObject current=null]
 	    }
 
 )
-)*(
+)*((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDataflowAccess().getFeaturesFeatureParserRuleCall_8_0()); 
+	        newCompositeNode(grammarAccess.getDataflowAccess().getFeaturesFeatureParserRuleCall_8_0_0()); 
 	    }
 		lv_features_10_0=ruleFeature		{
 	        if ($current==null) {
@@ -846,10 +823,11 @@ ruleDataflow returns [EObject current=null]
 	    }
 
 )
-)*(
+)
+    |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDataflowAccess().getNodesNodeParserRuleCall_9_0()); 
+	        newCompositeNode(grammarAccess.getDataflowAccess().getNodesNodeParserRuleCall_8_1_0()); 
 	    }
 		lv_nodes_11_0=ruleNode		{
 	        if ($current==null) {
@@ -864,7 +842,7 @@ ruleDataflow returns [EObject current=null]
 	    }
 
 )
-)*)
+))*)
 ;
 
 
