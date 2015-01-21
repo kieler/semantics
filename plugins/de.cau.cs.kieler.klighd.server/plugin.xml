@@ -15,5 +15,18 @@
          </run>
       </application>
    </extension>
+   <extension
+         id="KlighdServerApplication"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="de.cau.cs.kieler.klighd.server.headless"
+            description="%productDescription"
+            name="KIELER KlighdServerApplication">
+         <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini">
+         </property>
+      </product>
+   </extension>
 
 </plugin>
