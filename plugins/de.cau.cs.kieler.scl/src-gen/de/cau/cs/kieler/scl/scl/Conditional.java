@@ -14,12 +14,12 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.scl.scl.Conditional#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.Conditional#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scl.scl.Conditional#getElseStatements <em>Else Statements</em>}</li>
  * </ul>
+ * </p>
  *
  * @see de.cau.cs.kieler.scl.scl.SclPackage#getConditional()
  * @model

@@ -17,13 +17,13 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
- * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.State#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.State#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.State#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.State#getInstructions <em>Instructions</em>}</li>
  * </ul>
+ * </p>
  *
  * @see de.cau.cs.kieler.s.s.SPackage#getState()
  * @model

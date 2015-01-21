@@ -27,6 +27,7 @@ import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.FloatValue
 import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
+import de.cau.cs.kieler.core.kexpressions.StringValue
 
 /**
  * @author ssm
@@ -185,6 +186,10 @@ class KExpressionsSerializeExtension {
    // Expand a float expression value.
    def dispatch CharSequence serialize(FloatValue expression) {
         expression.value.toString
+   }
+   
+   def dispatch CharSequence serialize(StringValue expression) {
+       expression.value
    }
 
    // Expand a boolean expression value (true or false).
