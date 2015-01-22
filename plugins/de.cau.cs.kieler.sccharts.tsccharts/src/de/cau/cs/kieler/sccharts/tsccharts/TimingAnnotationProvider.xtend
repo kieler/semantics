@@ -185,7 +185,7 @@ class TimingAnnotationProvider {
  *        The domain number of the parent region of state
  * @return Returns the highest domain number set during the recursion, incremented by 1.
  */
-    def Integer setTimingDomainsWithS(State state, Integer currentDomainNumber,
+    def Integer setTimingDomains(State state, Integer currentDomainNumber,
         HashMap<Integer, LinkedList<Integer>> threadTree, Integer parentDomain) {
         var domainNumber = currentDomainNumber;
         val stateRegions = state.regions;
@@ -210,7 +210,7 @@ class TimingAnnotationProvider {
             val childStates = region.states;
             val childStatesIterator = childStates.iterator;
             while (childStatesIterator.hasNext()) {
-                setTimingDomainsWithS(
+                setTimingDomains(
                     childStatesIterator.next(),
                     domainNumber,
                     threadTree,

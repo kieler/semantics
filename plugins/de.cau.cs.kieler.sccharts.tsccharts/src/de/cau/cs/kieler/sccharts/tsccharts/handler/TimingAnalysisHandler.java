@@ -33,7 +33,6 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ISelection;
-//import org.eclipse.swt.program.Program;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.xtext.resource.XtextResource;
@@ -60,7 +59,6 @@ import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension;
-//import de.cau.cs.kieler.sccharts.text.sct.sct.impl.SCChartImpl;
 import de.cau.cs.kieler.sccharts.tsccharts.TimingAnnotationProvider;
 import de.cau.cs.kieler.sccharts.tsccharts.annotation.extensions.TSCChartsAnnotationExtension;
 import de.cau.cs.kieler.scg.Assignment;
@@ -73,8 +71,6 @@ import de.cau.cs.kieler.scg.Fork;
 import de.cau.cs.kieler.scg.Join;
 import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scg.SCGraph;
-//import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreTransformation;
-//import de.cau.cs.kieler.scg.c.SCG2C;
 
 /**
  * This class handles the interactive timing analysis for modeling with SCCharts. It generates C
@@ -164,9 +160,7 @@ public class TimingAnalysisHandler extends AbstractHandler {
                                 || (!(resource.getContents().get(0) instanceof State))) {
                             return;
                         }
-
                         maybe.set((State) resource.getContents().get(0));
-
                     }
                 });
 
@@ -177,10 +171,6 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 } else
                     return Status.CANCEL_STATUS;
 
-                // ///////////////Setting of timing domains in both SCChart and S code with the help
-                // of the KTM tree.////
-                // ///////////////Get thread tree on the
-                // fly.//////////////////////////////////////////////////// CompilationResult
                 // transformed2 = KielerCompiler.compile("ALL", result1, true, true);
                 // //////
 
@@ -188,14 +178,15 @@ public class TimingAnalysisHandler extends AbstractHandler {
                         new HashMap<Integer, LinkedList<Integer>>();
 
                 Integer domainNumber =
-                        annotationProvider.setTimingDomainsWithS(scchart, 0, threadTree, null);
-
+                        annotationProvider.setTimingDomains(scchart, 0, threadTree, null);
+                // Transform the SCChart into a sequential SCG, using "SCGRAPH" as selected and
+                // disabled
+                // Transformations ID, which induces all SCG transformations (incl.
+                // sequentialization)
                 CompilationResult transformed =
                         KielerCompiler.compile("SCGRAPH", scchart, true, true);
                 EObject transformedEObject = transformed.getEObject();
                 SCGraph sequentialSCG = (SCGraph) transformedEObject;
-
-                // HashMultimap<EObject, EObject> testMappingSCC2SCG= getTestMapping(1);
                 EList<Node> nodeList = sequentialSCG.getNodes();
                 Iterator<Node> nodeListIterator = nodeList.iterator();
                 // collect all edges with their source nodes
@@ -260,14 +251,24 @@ public class TimingAnalysisHandler extends AbstractHandler {
                     // of
                     // TTP numbers, which can be used to look the values up in a TimeValueTable
                 }
-                // Start 13.01.2015
-                // CompilationResult codeGeneration =
-                // KielerCompiler.compile("CodeGeneration", sequentialSCG, true, true);
-                // End 13.01.2015
-
-                State state = scchart;// rootRegionStates.get(0);
+                CompilationResult codeGeneration =
+                        KielerCompiler.compile("S2C", sequentialSCG, true, true);
+                Object code = codeGeneration.getObject();
+                String codeString = code.toString();
+                if (code != null) {
+                    System.out.print(codeString);
+                }
+                //Write the generated code to file
                 IFile file = ResourceUtil.getFile(maybe.get().eResource());
                 String uri = file.getLocationURI().toString();
+                String codeTargetFile = uri.replace(".sct", ".c");
+                String codeTargetFilePath = codeTargetFile.replace("file:", "");
+                
+                FileWriter.main(codeString, codeTargetFilePath);
+
+                State state = scchart;// rootRegionStates.get(0);
+              
+                
                 String taFile = uri.replace(".sct", ".ta.out");
                 String taPath = taFile.replace("file:", "");
                 annotationProvider.doTimingAnnotations(state, taPath);
@@ -312,15 +313,17 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 return Status.OK_STATUS;
             }
 
-            /* Caution: This is only a test method that involves a hard coded mapping for only one model:
-             * robot.sct, the lead example for ITA. This method will be used only for test reasons as 
-             * long as the automatic mapping is not fully implemented and integrated.
+            /*
+             * Caution: This is only a test method that involves a hard coded mapping for only one
+             * model: robot.sct, the lead example for ITA. This method will be used only for test
+             * reasons as long as the automatic mapping is not fully implemented and integrated.
+             * 
              * @
              */
             private void modifySequentialSCGWithHandMapping(Iterator<ControlFlow> edgeIterator,
                     HashMap<ControlFlow, Node> edgesWithSource, SCGraph sequentialSCG) {
                 // TODO Auto-generated method stub
-                
+
             }
         };
 
