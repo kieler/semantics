@@ -575,6 +575,15 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                         it.foreground = REGIONLABEL.copy;
                                         if (USE_ADAPTIVEZOOM.booleanValue) it.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70)
                                     ]
+				// added by cbu    
+				if (entry.tsID != null){
+                                        addInsideTopLeftNodeLabel(entry.tsID.toString, 8, KlighdConstants::DEFAULT_FONT_NAME) => [
+                                            var c = "black".color
+                                            it.foreground(c) 
+                                        ]
+                                        
+                                        }  
+
                                     
                                     
                             ]
@@ -668,6 +677,26 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 1, PortSide::EAST)
                 node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 19, 1, PortSide::WEST)
                 node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST)
+            }
+            //added by cbu 
+            var prio = assignment.getNodePriority
+            System.out.println("Priority for KLighD is: "+prio)
+            if (prio != null){
+                var container = node.KContainerRendering
+                var txt = container.addText(prio.toString)
+                txt.setAreaPlacementData.from(LEFT, 0, 0.85f, TOP, 0, 0.45f).to(RIGHT, 0, 0, BOTTOM, 0, 0)
+                txt.setForeground("blue".color)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+            }
+            var prioID = assignment.getPrioID
+            if (prioID != null){
+                var container = node.KContainerRendering
+                var txt = container.addText(prioID.toString)
+                txt.setAreaPlacementData.from(LEFT, 0, 0.85f, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0.45f)
+                txt.setForeground("red".color)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
             }
         ]
     }
@@ -774,6 +803,26 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST)
                 port.addLayoutParam(LayoutOptions::OFFSET, 0f)
             }
+            //added by cbu 
+            var prio = conditional.getNodePriority
+            System.out.println("Priority for KLighD is: "+prio)
+            if (prio != null){
+                var container = node.KContainerRendering
+                var txt = container.addText(prio.toString)
+                txt.setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0.6f).to(RIGHT, 0, 0, BOTTOM, 0, 0)
+                txt.setForeground("blue".color)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+            }
+            var prioID = conditional.getPrioID
+            if (prioID != null){
+                var container = node.KContainerRendering
+                var txt = container.addText(prioID.toString)
+                txt.setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0.6f)
+                txt.setForeground("red".color)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+            }
         ]
     }
 
@@ -819,6 +868,26 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 val port = node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
                 port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+            }
+            //added by cbu 
+            var prio = surface.getNodePriority
+            System.out.println("Priority for KLighD is: "+prio)
+            if (prio != null){
+                var container = node.KContainerRendering
+                var txt = container.addText(prio.toString)
+                txt.setAreaPlacementData.from(LEFT, 0, 0.75f, TOP, 0, 0.4f).to(RIGHT, 0, 0, BOTTOM, 0, 0)
+                txt.setForeground("blue".color)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+            }
+            var prioID = surface.getPrioID
+            if (prioID != null){
+                var container = node.KContainerRendering
+                var txt = container.addText(prioID.toString)
+                txt.setAreaPlacementData.from(LEFT, 0, 0.75f, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0.2f)
+                txt.setForeground("red".color)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
             }
         ]
     }
@@ -869,6 +938,27 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 val port = node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
                 port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
             }
+            //added by cbu
+            var prio = depth.getNodePriority
+            System.out.println("Priority for KLighD is: "+prio)
+            if (prio != null){
+                var container = node.KContainerRendering
+                var txt = container.addText(prio.toString)
+                txt.setAreaPlacementData.from(LEFT, 0, 0.6f, TOP, 0, 0.2f).to(RIGHT, 0, 0, BOTTOM, 0, 0)
+                txt.setForeground("blue".color)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+            }
+            var prioID = depth.getPrioID
+            System.out.println("Priority for KLighD is: "+prio)
+            if (prioID != null){
+                var container = node.KContainerRendering
+                var txt = container.addText(prioID.toString)
+                txt.setAreaPlacementData.from(LEFT, 0, 0.6f, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0.4f)
+                txt.setForeground("red".color)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+            }
         ]
     }
 
@@ -905,6 +995,26 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
             }
+            //added by cbu 
+            var prio = entry.getNodePriority
+            System.out.println("Priority for KLighD is: "+prio)
+            if (prio != null){
+                var container = node.KContainerRendering
+                var txt = container.addText(prio.toString)
+                txt.setAreaPlacementData.from(LEFT, 0, 0.6f, TOP, 0, 0.4f).to(RIGHT, 0, 0, BOTTOM, 0, 0)
+                txt.setForeground("blue".color)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+            }
+            var prioID = entry.getPrioID
+            if (prioID != null){
+                var container = node.KContainerRendering
+                var txt = container.addText(prioID.toString)
+                txt.setAreaPlacementData.from(LEFT, 0, 0.6f, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0.4f)
+                txt.setForeground("red".color)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+            }
         ]
     }
 
@@ -940,6 +1050,27 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             } else {
                 node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST)
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
+            }
+            //added by cbu 
+            var prio = exit.getNodePriority
+            System.out.println("Priority for KLighD is: "+prio)
+            if (prio != null){
+                var container = node.KContainerRendering
+                var txt = container.addText(prio.toString)
+                txt.setAreaPlacementData.from(LEFT, 0, 0.5f, TOP, 0, 0.4f).to(RIGHT, 0, 0, BOTTOM, 0, 0)
+                txt.setForeground("blue".color)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+            }
+            var prioID = exit.getPrioID
+            System.out.println("Priority for KLighD is: "+prio)
+            if (prioID != null){
+                var container = node.KContainerRendering
+                var txt = container.addText(prioID.toString)
+                txt.setAreaPlacementData.from(LEFT, 0, 0.5f, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0.4f)
+                txt.setForeground("red".color)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
             }
         ]
     }
@@ -988,6 +1119,26 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             } else {
                 val port = node.addPort(SCGPORTID_INCOMING, 0, 37.5f, 1, PortSide::WEST)
                 port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
+            }
+            //added by cbu 
+            var prio = fork.getNodePriority
+            System.out.println("Priority for KLighD is: "+prio)
+            if (prio != null){
+                var container = node.KContainerRendering
+                var txt = container.addText(prio.toString)
+                txt.setAreaPlacementData.from(LEFT, 0, 0.4f, TOP, 0, 0.5f).to(RIGHT, 0, 0, BOTTOM, 0, 0)
+                txt.setForeground("blue".color)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+            }
+            var prioID = fork.getPrioID
+            if (prioID != null){
+                var container = node.KContainerRendering
+                var txt = container.addText(prioID.toString)
+                txt.setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0.5f)
+                txt.setForeground("red".color)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
             }
         ]
     }
@@ -1038,6 +1189,26 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             } else {
                 val port = node.addPort(SCGPORTID_OUTGOING, 0, 37.5f, 0, PortSide::EAST)
                 port.addLayoutParam(LayoutOptions::OFFSET, -0.5f)
+            }
+            //added by cbu
+            var prio = join.getNodePriority
+            System.out.println("Priority for KLighD is: "+prio)
+            if (prio != null){
+                var container = node.KContainerRendering
+                var txt = container.addText(prio.toString)
+                txt.setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0.45f).to(RIGHT, 0, 0, BOTTOM, 0, 0)
+                txt.setForeground("blue".color)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
+            }
+            var prioID = join.getPrioID
+            if (prioID != null){
+                var container = node.KContainerRendering
+                var txt = container.addText(prioID.toString)
+                txt.setAreaPlacementData.from(LEFT, 0, 0.4f, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0.5f)
+                txt.setForeground("red".color)
+                txt.setFontBold(true)
+                txt.setFontSize(7)
             }
         ]
     }
