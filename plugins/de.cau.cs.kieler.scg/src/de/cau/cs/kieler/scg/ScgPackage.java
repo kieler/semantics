@@ -198,13 +198,40 @@ public interface ScgPackage extends EPackage {
 	int NODE__DEPENDENCIES = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
 	/**
+     * The feature id for the '<em><b>Prio ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NODE__PRIO_ID = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+
+    /**
+     * The feature id for the '<em><b>Ts ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NODE__TS_ID = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+
+    /**
+     * The feature id for the '<em><b>Node Priority</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int NODE__NODE_PRIORITY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+
+    /**
      * The number of structural features of the '<em>Node</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-	int NODE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+	int NODE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ConditionalImpl <em>Conditional</em>}' class.
@@ -253,6 +280,33 @@ public interface ScgPackage extends EPackage {
 	int CONDITIONAL__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
+     * The feature id for the '<em><b>Prio ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL__PRIO_ID = NODE__PRIO_ID;
+
+    /**
+     * The feature id for the '<em><b>Ts ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL__TS_ID = NODE__TS_ID;
+
+    /**
+     * The feature id for the '<em><b>Node Priority</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONDITIONAL__NODE_PRIORITY = NODE__NODE_PRIORITY;
+
+    /**
      * The feature id for the '<em><b>Then</b></em>' containment reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -335,6 +389,33 @@ public interface ScgPackage extends EPackage {
 	int SURFACE__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
+     * The feature id for the '<em><b>Prio ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SURFACE__PRIO_ID = NODE__PRIO_ID;
+
+    /**
+     * The feature id for the '<em><b>Ts ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SURFACE__TS_ID = NODE__TS_ID;
+
+    /**
+     * The feature id for the '<em><b>Node Priority</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SURFACE__NODE_PRIORITY = NODE__NODE_PRIORITY;
+
+    /**
      * The feature id for the '<em><b>Depth</b></em>' reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -399,6 +480,33 @@ public interface ScgPackage extends EPackage {
 	int DEPTH__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
+     * The feature id for the '<em><b>Prio ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPTH__PRIO_ID = NODE__PRIO_ID;
+
+    /**
+     * The feature id for the '<em><b>Ts ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPTH__TS_ID = NODE__TS_ID;
+
+    /**
+     * The feature id for the '<em><b>Node Priority</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPTH__NODE_PRIORITY = NODE__NODE_PRIORITY;
+
+    /**
      * The feature id for the '<em><b>Surface</b></em>' reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -472,6 +580,33 @@ public interface ScgPackage extends EPackage {
 	int ASSIGNMENT__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
+     * The feature id for the '<em><b>Prio ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__PRIO_ID = NODE__PRIO_ID;
+
+    /**
+     * The feature id for the '<em><b>Ts ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__TS_ID = NODE__TS_ID;
+
+    /**
+     * The feature id for the '<em><b>Node Priority</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSIGNMENT__NODE_PRIORITY = NODE__NODE_PRIORITY;
+
+    /**
      * The feature id for the '<em><b>Next</b></em>' containment reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -563,6 +698,33 @@ public interface ScgPackage extends EPackage {
 	int FORK__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
+     * The feature id for the '<em><b>Prio ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FORK__PRIO_ID = NODE__PRIO_ID;
+
+    /**
+     * The feature id for the '<em><b>Ts ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FORK__TS_ID = NODE__TS_ID;
+
+    /**
+     * The feature id for the '<em><b>Node Priority</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int FORK__NODE_PRIORITY = NODE__NODE_PRIORITY;
+
+    /**
      * The feature id for the '<em><b>Join</b></em>' reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -636,6 +798,33 @@ public interface ScgPackage extends EPackage {
 	int JOIN__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
+     * The feature id for the '<em><b>Prio ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int JOIN__PRIO_ID = NODE__PRIO_ID;
+
+    /**
+     * The feature id for the '<em><b>Ts ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int JOIN__TS_ID = NODE__TS_ID;
+
+    /**
+     * The feature id for the '<em><b>Node Priority</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int JOIN__NODE_PRIORITY = NODE__NODE_PRIORITY;
+
+    /**
      * The feature id for the '<em><b>Fork</b></em>' reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -746,6 +935,33 @@ public interface ScgPackage extends EPackage {
 	int ENTRY__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
+     * The feature id for the '<em><b>Prio ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY__PRIO_ID = NODE__PRIO_ID;
+
+    /**
+     * The feature id for the '<em><b>Ts ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY__TS_ID = NODE__TS_ID;
+
+    /**
+     * The feature id for the '<em><b>Node Priority</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY__NODE_PRIORITY = NODE__NODE_PRIORITY;
+
+    /**
      * The feature id for the '<em><b>Exit</b></em>' reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -819,6 +1035,33 @@ public interface ScgPackage extends EPackage {
 	int EXIT__DEPENDENCIES = NODE__DEPENDENCIES;
 
 	/**
+     * The feature id for the '<em><b>Prio ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT__PRIO_ID = NODE__PRIO_ID;
+
+    /**
+     * The feature id for the '<em><b>Ts ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT__TS_ID = NODE__TS_ID;
+
+    /**
+     * The feature id for the '<em><b>Node Priority</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT__NODE_PRIORITY = NODE__NODE_PRIORITY;
+
+    /**
      * The feature id for the '<em><b>Entry</b></em>' reference.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1627,6 +1870,39 @@ public interface ScgPackage extends EPackage {
 	EReference getNode_Dependencies();
 
 	/**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.Node#getPrioID <em>Prio ID</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Prio ID</em>'.
+     * @see de.cau.cs.kieler.scg.Node#getPrioID()
+     * @see #getNode()
+     * @generated
+     */
+    EAttribute getNode_PrioID();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.Node#getTsID <em>Ts ID</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Ts ID</em>'.
+     * @see de.cau.cs.kieler.scg.Node#getTsID()
+     * @see #getNode()
+     * @generated
+     */
+    EAttribute getNode_TsID();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.scg.Node#getNodePriority <em>Node Priority</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Node Priority</em>'.
+     * @see de.cau.cs.kieler.scg.Node#getNodePriority()
+     * @see #getNode()
+     * @generated
+     */
+    EAttribute getNode_NodePriority();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Conditional <em>Conditional</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2467,6 +2743,30 @@ public interface ScgPackage extends EPackage {
 		EReference NODE__DEPENDENCIES = eINSTANCE.getNode_Dependencies();
 
 		/**
+         * The meta object literal for the '<em><b>Prio ID</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute NODE__PRIO_ID = eINSTANCE.getNode_PrioID();
+
+        /**
+         * The meta object literal for the '<em><b>Ts ID</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute NODE__TS_ID = eINSTANCE.getNode_TsID();
+
+        /**
+         * The meta object literal for the '<em><b>Node Priority</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute NODE__NODE_PRIORITY = eINSTANCE.getNode_NodePriority();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ConditionalImpl <em>Conditional</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->

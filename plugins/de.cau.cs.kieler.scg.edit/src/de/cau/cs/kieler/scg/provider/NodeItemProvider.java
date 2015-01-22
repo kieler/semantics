@@ -59,6 +59,9 @@ public class NodeItemProvider extends AnnotatableItemProvider {
 
             addIncomingPropertyDescriptor(object);
             addIsInitialPropertyDescriptor(object);
+            addPrioIDPropertyDescriptor(object);
+            addTsIDPropertyDescriptor(object);
+            addNodePriorityPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -103,6 +106,72 @@ public class NodeItemProvider extends AnnotatableItemProvider {
                  false,
                  false,
                  ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Prio ID feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addPrioIDPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_Node_prioID_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Node_prioID_feature", "_UI_Node_type"),
+                 ScgPackage.Literals.NODE__PRIO_ID,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Ts ID feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addTsIDPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_Node_tsID_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Node_tsID_feature", "_UI_Node_type"),
+                 ScgPackage.Literals.NODE__TS_ID,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This adds a property descriptor for the Node Priority feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addNodePriorityPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_Node_nodePriority_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Node_nodePriority_feature", "_UI_Node_type"),
+                 ScgPackage.Literals.NODE__NODE_PRIORITY,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
                  null,
                  null));
     }
@@ -174,6 +243,9 @@ public class NodeItemProvider extends AnnotatableItemProvider {
 
         switch (notification.getFeatureID(Node.class)) {
             case ScgPackage.NODE__IS_INITIAL:
+            case ScgPackage.NODE__PRIO_ID:
+            case ScgPackage.NODE__TS_ID:
+            case ScgPackage.NODE__NODE_PRIORITY:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
             case ScgPackage.NODE__DEPENDENCIES:

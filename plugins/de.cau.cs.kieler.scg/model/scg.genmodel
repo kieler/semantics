@@ -25,6 +25,9 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Node/incoming"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//Node/isInitial"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Node/dependencies"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//Node/prioID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//Node/tsID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//Node/nodePriority"/>
     </genClasses>
     <genClasses ecoreClass="scg.ecore#//Conditional">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Conditional/then"/>
@@ -93,7 +96,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//Predecessor/branchType"/>
     </genClasses>
     <genClasses ecoreClass="scg.ecore#//Schedule">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Schedule/scheduledBlocks"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Schedule/scheduleBlocks"/>
     </genClasses>
     <genClasses ecoreClass="scg.ecore#//ScheduledBlock">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//ScheduledBlock/schedulingBlock"/>

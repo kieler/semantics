@@ -28,6 +28,9 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.scg.Node#getIncoming <em>Incoming</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Node#isIsInitial <em>Is Initial</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.Node#getDependencies <em>Dependencies</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.Node#getPrioID <em>Prio ID</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.Node#getTsID <em>Ts ID</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.scg.Node#getNodePriority <em>Node Priority</em>}</li>
  * </ul>
  * </p>
  *
@@ -95,5 +98,83 @@ public interface Node extends Annotatable {
      * @generated
      */
     EList<Dependency> getDependencies();
+
+    /**
+     * Returns the value of the '<em><b>Prio ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Prio ID</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Prio ID</em>' attribute.
+     * @see #setPrioID(Integer)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getNode_PrioID()
+     * @model
+     * @generated
+     */
+    Integer getPrioID();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.Node#getPrioID <em>Prio ID</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Prio ID</em>' attribute.
+     * @see #getPrioID()
+     * @generated
+     */
+    void setPrioID(Integer value);
+
+    /**
+     * Returns the value of the '<em><b>Ts ID</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Ts ID</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Ts ID</em>' attribute.
+     * @see #setTsID(Integer)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getNode_TsID()
+     * @model
+     * @generated
+     */
+    Integer getTsID();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.Node#getTsID <em>Ts ID</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Ts ID</em>' attribute.
+     * @see #getTsID()
+     * @generated
+     */
+    void setTsID(Integer value);
+
+    /**
+     * Returns the value of the '<em><b>Node Priority</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Node Priority</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Node Priority</em>' attribute.
+     * @see #setNodePriority(Integer)
+     * @see de.cau.cs.kieler.scg.ScgPackage#getNode_NodePriority()
+     * @model
+     * @generated
+     */
+    Integer getNodePriority();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.scg.Node#getNodePriority <em>Node Priority</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Node Priority</em>' attribute.
+     * @see #getNodePriority()
+     * @generated
+     */
+    void setNodePriority(Integer value);
 
 } // Node
