@@ -240,7 +240,6 @@ class SCLExtensions {
             sSeq.removeSubseqeuentLabels
             sSeq.removeDoubleJumps
         } while (!EcoreUtil.equals(oldSseq, sSeq))
-		sSeq.removeLocalDeclarations
         sSeq
     }
     
