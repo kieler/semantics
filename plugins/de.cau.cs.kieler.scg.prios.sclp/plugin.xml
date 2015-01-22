@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <transformationMethod
+            class="de.cau.cs.kieler.scg.prios.sclp.transform.SCGPRIOtoSCLP"
+            id="SCLP"
+            method="transform"
+            name="SCL_P">
+      </transformationMethod>
+   </extension>
+
+</plugin>

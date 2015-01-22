@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension
+         point="de.cau.cs.kieler.kico.transformation">
+      <transformationMethod
+            class="de.cau.cs.kieler.scgprios.transform.NodePrioritiesTransformation"
+            dependencies="SCLP"
+            id="SCGPRIO"
+            method="transform"
+            name="Priorities">
+      </transformationMethod>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated scgprio -->
+      <package
+            uri="http://kieler.cs.cau.de/scgprio/0.1.0"
+            class="scgprio.ScgprioPackage"
+            genModel="model/scgprio.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated scgprios -->
+      <package
+            uri="http://kieler.cs.cau.de/scgprios/0.1.0"
+            class="de.cau.cs.kieler.scgprios.ScgpriosPackage"
+            genModel="model/scgprios.genmodel"/>
+   </extension>
+
+</plugin>

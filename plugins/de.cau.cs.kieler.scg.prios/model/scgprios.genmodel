@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.scg.prios/src" modelPluginID="de.cau.cs.kieler.scg.prios"
+    modelName="Scgprios" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    usedGenPackages="../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>scgprios.ecore</foreignModel>
+  <genPackages prefix="Scgprios" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
+      ecorePackage="scgprios.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="scgprios.ecore#//BranchType_P">
+      <genEnumLiterals ecoreEnumLiteral="scgprios.ecore#//BranchType_P/NORMAL"/>
+      <genEnumLiterals ecoreEnumLiteral="scgprios.ecore#//BranchType_P/TRUEBRANCH"/>
+      <genEnumLiterals ecoreEnumLiteral="scgprios.ecore#//BranchType_P/ELSEBRANCH"/>
+    </genEnums>
+    <genClasses ecoreClass="scgprios.ecore#//SCGraph_P">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//SCGraph_P/nodes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//SCGraph_P/declarations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//SCGraph_P/basicBlocks"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//SCGraph_P/schedules"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//SCGraph_P/guards"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scgprios.ecore#//SCGraph_P/label"/>
+    </genClasses>
+    <genClasses ecoreClass="scgprios.ecore#//Node_P">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scgprios.ecore#//Node_P/incoming"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scgprios.ecore#//Node_P/isInitial"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//Node_P/dependencies"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scgprios.ecore#//Node_P/nodePriority"/>
+    </genClasses>
+    <genClasses ecoreClass="scgprios.ecore#//Conditional_P">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//Conditional_P/then"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//Conditional_P/else"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//Conditional_P/condition"/>
+    </genClasses>
+    <genClasses ecoreClass="scgprios.ecore#//Surface_P">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scgprios.ecore#//Surface_P/depth"/>
+    </genClasses>
+    <genClasses ecoreClass="scgprios.ecore#//Depth_P">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scgprios.ecore#//Depth_P/surface"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//Depth_P/next"/>
+    </genClasses>
+    <genClasses ecoreClass="scgprios.ecore#//Assignment_P">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//Assignment_P/next"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//Assignment_P/assignment"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scgprios.ecore#//Assignment_P/valuedObject"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//Assignment_P/indices"/>
+    </genClasses>
+    <genClasses ecoreClass="scgprios.ecore#//Fork_P">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scgprios.ecore#//Fork_P/join"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//Fork_P/next"/>
+    </genClasses>
+    <genClasses ecoreClass="scgprios.ecore#//Join_P">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scgprios.ecore#//Join_P/fork"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//Join_P/next"/>
+    </genClasses>
+    <genClasses ecoreClass="scgprios.ecore#//Link_P">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scgprios.ecore#//Link_P/target"/>
+    </genClasses>
+    <genClasses ecoreClass="scgprios.ecore#//Entry_P">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scgprios.ecore#//Entry_P/exit"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//Entry_P/next"/>
+    </genClasses>
+    <genClasses ecoreClass="scgprios.ecore#//Exit_P">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scgprios.ecore#//Exit_P/entry"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//Exit_P/next"/>
+    </genClasses>
+    <genClasses ecoreClass="scgprios.ecore#//ControlFlow_P"/>
+    <genClasses ecoreClass="scgprios.ecore#//Dependency_P">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scgprios.ecore#//Dependency_P/concurrent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scgprios.ecore#//Dependency_P/confluent"/>
+    </genClasses>
+    <genClasses ecoreClass="scgprios.ecore#//AbsoluteWrite_Read_P"/>
+    <genClasses ecoreClass="scgprios.ecore#//RelativeWrite_Read_P"/>
+    <genClasses ecoreClass="scgprios.ecore#//AbsoluteWrite_RelativeWrite_P"/>
+    <genClasses ecoreClass="scgprios.ecore#//Write_Write_P"/>
+    <genClasses ecoreClass="scgprios.ecore#//BasicBlock_P">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//BasicBlock_P/schedulingBlocks"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//BasicBlock_P/predecessors"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scgprios.ecore#//BasicBlock_P/goBlock"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scgprios.ecore#//BasicBlock_P/depthBlock"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scgprios.ecore#//BasicBlock_P/synchronizerBlock"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scgprios.ecore#//BasicBlock_P/entryBlock"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scgprios.ecore#//BasicBlock_P/deadBlock"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scgprios.ecore#//BasicBlock_P/preGuard"/>
+    </genClasses>
+    <genClasses ecoreClass="scgprios.ecore#//SchedulingBlock_P">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scgprios.ecore#//SchedulingBlock_P/nodes"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scgprios.ecore#//SchedulingBlock_P/dependencies"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scgprios.ecore#//SchedulingBlock_P/guard"/>
+    </genClasses>
+    <genClasses ecoreClass="scgprios.ecore#//Predecessor_P">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scgprios.ecore#//Predecessor_P/basicBlock"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scgprios.ecore#//Predecessor_P/conditional"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scgprios.ecore#//Predecessor_P/branchType"/>
+    </genClasses>
+    <genClasses ecoreClass="scgprios.ecore#//Schedule_P">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//Schedule_P/scheduledBlocks"/>
+    </genClasses>
+    <genClasses ecoreClass="scgprios.ecore#//ScheduledBlock_P">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scgprios.ecore#//ScheduledBlock_P/schedulingBlock"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scgprios.ecore#//ScheduledBlock_P/schizophrenic"/>
+    </genClasses>
+    <genClasses ecoreClass="scgprios.ecore#//Guard_P">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//Guard_P/valuedObject"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scgprios.ecore#//Guard_P/expression"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
