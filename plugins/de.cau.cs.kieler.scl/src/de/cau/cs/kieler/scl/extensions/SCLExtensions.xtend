@@ -230,7 +230,7 @@ class SCLExtensions {
     /*
        * Applies all optimizations until fixed-point is reached
        */
-    def StatementSequence optimizeAll(SCLProgram sSeq) {
+    def StatementSequence optimizeAll(StatementSequence sSeq) {
         var StatementSequence oldSseq
         do {
             oldSseq = EcoreUtil.copy(sSeq)
