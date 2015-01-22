@@ -23,6 +23,10 @@ import de.cau.cs.kieler.scl.scl.InstructionStatement
 import de.cau.cs.kieler.scl.scl.Conditional
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import java.util.LinkedList
+import de.cau.cs.kieler.scl.scl.StatementScope
+import de.cau.cs.kieler.core.kexpressions.Declaration
 
 /**
  * SCL Extensions.
@@ -225,18 +229,67 @@ class SCLExtensions {
 
     /*
        * Applies all optimizations until fixed-point is reached
+       * TODO repair
        */
-    def StatementSequence optimizeAll(StatementSequence sSeq) {
-        var StatementSequence oldSseq
-        do {
-            oldSseq = EcoreUtil.copy(sSeq)
-            sSeq.removeSuperfluousGotos
-            sSeq.optimizeLabels
-            sSeq.removeUnreachableCode
-            sSeq.removeSubseqeuentLabels
-            sSeq.removeDoubleJumps
-        } while (!EcoreUtil.equals(oldSseq, sSeq))
-
+    def StatementSequence optimizeAll(SCLProgram sSeq) {
+//        var StatementSequence oldSseq
+//        do {
+//            oldSseq = EcoreUtil.copy(sSeq)
+//            sSeq.removeSuperfluousGotos
+//            sSeq.optimizeLabels
+//            sSeq.removeUnreachableCode
+//            sSeq.removeSubseqeuentLabels
+//            sSeq.removeDoubleJumps
+//        } while (!EcoreUtil.equals(oldSseq, sSeq))
+		sSeq.removeLocalDeclarations
         sSeq
     }
-}
+    
+    /*
+     * Remove local variable declarations
+     */
+     def removeLocalDeclarations(SCLProgram sclProgram) {
+     	// Collect all ValuedObject names
+     	val names = new LinkedList<String>
+     	sclProgram.declarations.forEach[ valuedObjects.forEach [ names += name ] ]
+     	
+     	val sScopes = sclProgram.eAllContents.toList.filter(typeof(StatementScope))
+     	val newDecls = new LinkedList<Declaration>
+     	for (sScope : sScopes) {
+     		sScope.declarations.forEach [
+     			valuedObjects.forEach [
+     				// Check whether variable name is already defined
+     				if (names.contains(it.name)) {
+     					val oldName = it.name
+     					it.name = it.name.makeUnique(names)
+     					sScope.rename(oldName, it.name)
+     				}
+     			]
+     			newDecls += it
+     		]
+     		sScope.declarations.clear
+     	}
+     	sclProgram.declarations += newDecls
+     	
+     	sclProgram
+     }
+
+	def rename(StatementScope sScope, String oldName, String newName) {
+		for (valObj : sScope.eAllContents.toList.filter(typeof(ValuedObject))) {
+			if (valObj.name.equals(oldName)) {
+				valObj.name = newName
+			}
+		}
+	}
+	
+	def makeUnique(String name, LinkedList<String> names) {
+		var nameVar = name
+		while (names.contains(nameVar)) {
+			nameVar = nameVar + "_"
+		}
+		names.add(nameVar)
+		
+		nameVar
+	}
+	
+	}

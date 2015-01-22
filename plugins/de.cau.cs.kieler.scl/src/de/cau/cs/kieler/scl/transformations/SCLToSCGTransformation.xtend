@@ -36,25 +36,20 @@ import de.cau.cs.kieler.scl.extensions.SCLExtensions
 import de.cau.cs.kieler.scl.scl.EmptyStatement
 import de.cau.cs.kieler.scl.scl.Goto
 import de.cau.cs.kieler.scl.scl.InstructionStatement
-import de.cau.cs.kieler.scl.scl.StatementSequence
 import de.cau.cs.kieler.scl.scl.Parallel
 import de.cau.cs.kieler.scl.scl.Pause
+import de.cau.cs.kieler.scl.scl.SCLProgram
+import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.scl.scl.Statement
+import java.util.ArrayList
 import java.util.HashMap
+import java.util.LinkedList
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scl.scl.StatementSequence
 import de.cau.cs.kieler.scl.scl.StatementScope
-import java.util.LinkedList
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
-import de.cau.cs.kieler.core.kexpressions.ValueType
-import java.util.ArrayList
-import com.google.common.collect.HashMultimap
-import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.scl.scl.Thread
-import de.cau.cs.kieler.scl.scl.SclFactory
-import de.cau.cs.kieler.scl.scl.SCLProgram
 
 /** 
  * SCL to SCG Transformation 
@@ -94,9 +89,11 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
 
     /*
 	 * Initialize transformation by removing double jumps and explicitly set initial values
+	 * Removes local declarations (StatementScopes)
 	 */
     def SCLProgram initialize(SCLProgram scl) {
         scl.removeDoubleJumps
+        scl.removeLocalDeclarations
 
         // Variable initialization
         scl.declarations.forEach [
@@ -115,11 +112,12 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
 
         scl
     }
-
+    
     /*
      * Transformation method
      */
     def SCGraph transformSCLToSCG(SCLProgram scl) {
+    	scl.initialize
 
         // Create new SCG...
         val scg = ScgFactory::eINSTANCE.createSCGraph
@@ -145,7 +143,6 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
         val entry = ScgFactory::eINSTANCE.createEntry.createNodeList(program) as Entry => [
             scg.nodes += it
         ]
-        program.initialize
         program.statements.transform(scg, entry.createControlFlow.toList) => [ continuation |
             ScgFactory::eINSTANCE.createExit.createNodeList(program) as Exit => [
                 scg.nodes += it
@@ -297,6 +294,10 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
                 }
             }
         ]
+    }
+    
+    private dispatch def SCLContinuation transform(StatementScope sScope, SCGraph scg, List<ControlFlow> incoming) {
+    	transform(sScope.statements, scg, incoming)
     }
 
     // Valued objects must be set according to the mapping!
