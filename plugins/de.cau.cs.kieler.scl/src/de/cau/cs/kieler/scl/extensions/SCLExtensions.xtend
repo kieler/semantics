@@ -229,18 +229,17 @@ class SCLExtensions {
 
     /*
        * Applies all optimizations until fixed-point is reached
-       * TODO repair
        */
     def StatementSequence optimizeAll(SCLProgram sSeq) {
-//        var StatementSequence oldSseq
-//        do {
-//            oldSseq = EcoreUtil.copy(sSeq)
-//            sSeq.removeSuperfluousGotos
-//            sSeq.optimizeLabels
-//            sSeq.removeUnreachableCode
-//            sSeq.removeSubseqeuentLabels
-//            sSeq.removeDoubleJumps
-//        } while (!EcoreUtil.equals(oldSseq, sSeq))
+        var StatementSequence oldSseq
+        do {
+            oldSseq = EcoreUtil.copy(sSeq)
+            sSeq.removeSuperfluousGotos
+            sSeq.optimizeLabels
+            sSeq.removeUnreachableCode
+            sSeq.removeSubseqeuentLabels
+            sSeq.removeDoubleJumps
+        } while (!EcoreUtil.equals(oldSseq, sSeq))
 		sSeq.removeLocalDeclarations
         sSeq
     }
