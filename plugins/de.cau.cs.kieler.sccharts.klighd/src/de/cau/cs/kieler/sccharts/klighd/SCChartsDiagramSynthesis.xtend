@@ -166,8 +166,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     override public getDisplayedLayoutOptions() {
         return newLinkedList(
             //new Pair<IProperty<?>, List<?>>(LayoutOptions::ALGORITHM, emptyList), //not supported by klighd
-            new Pair<IProperty<?>, List<?>>(LayoutOptions::DIRECTION, Direction::values.drop(1).sortBy[it.name]),
-            new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 150))
+            new Pair<IProperty<?>, List<?>>(LayoutOptions::DIRECTION, Direction::values.drop(1).sortBy[it.name])
+            ,new Pair<IProperty<?>, List<?>>(LayoutOptions::SPACING, newArrayList(0, 150))
         );
     }
 
@@ -200,6 +200,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     // -------------------------------------------------------------------------
     // The Main entry transform function   
     override transform(Scope model) {
+        usedContext.setProperty(KlighdProperties.EDGES_FIRST, true);
+        
 //        var transformed = model;
 
         // Visualization of compiled SCCharts with kico.klighd not here
@@ -242,6 +244,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         val regionNode = r.createNode() => [ node |
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot")
             node.addLayoutParam(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES)
+            node.setLayoutOption(LayoutOptions::SPACING, 40f);
             if (loadLazy) {
                 node.setLayoutOption(KlighdProperties::EXPAND, false);       
                      
@@ -434,6 +437,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
         return s.createNode().putToLookUpWith(s) => [ node |
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.box")
+            node.setLayoutOption(LayoutOptions::BORDER_SPACING, 2f);
+            node.setLayoutOption(LayoutOptions::SPACING, 1f);
             node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
             if (s.isInitial) {
                 node.setParent(node.parent)

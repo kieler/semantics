@@ -34,6 +34,7 @@ import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.kgraph.impl.KGraphDataImpl;
 import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.kiml.graphviz.layouter.GraphvizLayoutProvider;
 import de.cau.cs.kieler.kiml.util.KimlUtil;
 import de.cau.cs.kieler.klighd.IOffscreenRenderer;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
@@ -193,9 +194,9 @@ public class KlighdServer extends HttpServer {
                 final KlighdSynthesisProperties properties =
                         KlighdSynthesisProperties
                                 .create()
-                                .setProperty2(SVGOffscreenRenderer.GENERATOR,
+                                .setProperty(SVGOffscreenRenderer.GENERATOR,
                                         "de.cau.cs.kieler.klighd.piccolo.svggen.freeHEP")
-                                .setProperty2(IOffscreenRenderer.IMAGE_SCALE, scaleInteger);
+                                .setProperty(IOffscreenRenderer.IMAGE_SCALE, scaleInteger);
                 renderingResult =
                         LightDiagramServices.renderOffScreen(mainModelParam, renderParam,
                                 outputStreamParam, properties);
