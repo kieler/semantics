@@ -76,7 +76,7 @@ class SCGtoSCGwithNodePrios {
                 var Long prioi = nodesWithPrioIDs.get(node)
                 node.setNodePriority(inti)
                 node.setTsID(threadi)
-                node.setPrioID(prioi)
+                node.setPrioID(prioi.intValue)
                 System.out.println("calcPrios: Prios:"+node+" "+optimizedNodePrios.get(node).intValue)
             }
         }

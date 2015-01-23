@@ -184,9 +184,9 @@ class SCGPRIOtoSCLP{
     
     
     private def String setPrioStatementIfRequired(Node parent, Node child){
-        if (parent.prioID.longValue != child.prioID.longValue){
+        if (parent.prioID.intValue != child.prioID.intValue){
             '''
-            prio(«child.prioID.longValue»)
+            prio(«child.prioID.intValue»)
             '''
         } 
     }
@@ -390,7 +390,7 @@ class SCGPRIOtoSCLP{
         var newString = new String
         
         if (! threads.empty){
-            var newList = <Long> newLinkedList
+            var newList = <Integer> newLinkedList
         for (t : threads){
             newList.add((t as Entry).exit.prioID)
         }
@@ -453,9 +453,9 @@ class SCGPRIOtoSCLP{
     }
     
     private def String transformOperators(OperatorType operatortype){
-        if (operatortype.name == "AND"){
+        if (operatortype.getName() == "AND"){
             '''&&'''
-        } else if (operatortype.name == "OR"){
+        } else if (operatortype.getName() == "OR"){
             '''||'''
         } else {
             '''«operatortype»'''

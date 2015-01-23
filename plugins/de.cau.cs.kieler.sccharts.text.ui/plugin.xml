@@ -376,6 +376,12 @@
             priority="80"
             transformations="ALL">
       </editor>
+      <editor
+            editor="de.cau.cs.kieler.sccharts.text.sct.Sct"
+            label="Priority Based Compilation II"
+            priority="99"
+            transformations="HISTORY, WEAKSUSPEND,DEFERRED,STATIC,SIGNAL,COUNTDELAY,PRE,SUSPEND,COMPLEXFINALSTATE,ABORT,ABORTDEFAULT,ABORTNOWTO,DURING,INITIALIZATION,ENTRY,EXIT,CONNECTOR,SCADEQUARTZESTEREL, STATECHARTS, SYNCCHARTS, EXTENDED, CORE, TRIGGEREFFECT, SURFACEDEPTH, SCG, SCGDEP, MAP, FOR, REFERENCE, CONST, EXPANSIONS, SCGPRIO, SCLP">
+      </editor>
    </extension>
        
     

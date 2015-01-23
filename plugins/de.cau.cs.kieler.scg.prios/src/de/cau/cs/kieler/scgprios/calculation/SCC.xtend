@@ -131,7 +131,7 @@ class SCC {
         //create a new partition
         if (lowlink.get(currentNode).intValue == number.get(currentNode).intValue) {
             var ssc = new LinkedList<Node>
-            while ((!pointStack.empty) && (number.get(pointStack.peek).intValue >= number.get(currentNode).intValue)) {
+            while ((!pointStack.isEmpty()) && (number.get(pointStack.peek).intValue >= number.get(currentNode).intValue)) {
                 ssc.addLast(pointStack.pop())
             }
             sccList.addLast(ssc)
