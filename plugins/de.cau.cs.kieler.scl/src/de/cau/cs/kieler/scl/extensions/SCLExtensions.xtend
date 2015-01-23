@@ -265,7 +265,6 @@ class SCLExtensions {
      			]
      			newDecls += it
      		]
-     		println("Econti: " + sScope.eContainer)
      		// Replace sScope by its statements
      		val parent = sScope.eContainer.eContainer as StatementSequence
      		val index = parent.statements.indexOf(sScope.eContainer)

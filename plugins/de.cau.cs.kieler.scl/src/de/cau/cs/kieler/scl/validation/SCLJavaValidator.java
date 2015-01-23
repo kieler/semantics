@@ -119,6 +119,9 @@ public class SCLJavaValidator extends de.cau.cs.kieler.scl.validation.AbstractSC
                 exists = exists || labelExisting(((Conditional) ((InstructionStatement) stm).getInstruction()).getStatements(), l)
                         || labelExisting(((Conditional) ((InstructionStatement) stm).getInstruction()).getElseStatements(), l);
             }
+            else if (stm instanceof InstructionStatement && ((InstructionStatement) stm).getInstruction() instanceof StatementSequence) {
+            	exists = exists || labelExisting(((StatementScope) ((InstructionStatement) stm).getInstruction()).getStatements(), l);
+            }
         }
         
         return exists;
