@@ -43,6 +43,8 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 import com.google.inject.Guice;
 
+import de.cau.cs.kieler.core.kexpressions.TextExpression;
+import de.cau.cs.kieler.core.kexpressions.impl.TextExpressionImpl;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.krendering.HorizontalAlignment;
 import de.cau.cs.kieler.core.krendering.KContainerRendering;
@@ -71,6 +73,8 @@ import de.cau.cs.kieler.scg.Fork;
 import de.cau.cs.kieler.scg.Join;
 import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scg.SCGraph;
+import de.cau.cs.kieler.scg.impl.AssignmentImpl;
+import de.cau.cs.kieler.scg.impl.ControlFlowImpl;
 
 /**
  * This class handles the interactive timing analysis for modeling with SCCharts. It generates C
@@ -189,7 +193,8 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 SCGraph sequentialSCG = (SCGraph) transformedEObject;
                 EList<Node> nodeList = sequentialSCG.getNodes();
                 Iterator<Node> nodeListIterator = nodeList.iterator();
-                // collect all edges with their source nodes
+                // collect all edges with their source nodes, use LinkedHashMap, because order
+                // matters
                 HashMap<ControlFlow, Node> edgesWithSource = new LinkedHashMap<ControlFlow, Node>();
                 while (nodeListIterator.hasNext()) {
                     Node node = nodeListIterator.next();
@@ -225,7 +230,10 @@ public class TimingAnalysisHandler extends AbstractHandler {
                                         } else {
                                             if (node instanceof Exit) {
                                                 Exit exit = (Exit) node;
-                                                edgesWithSource.put(exit.getNext(), node);
+                                                ControlFlow next = exit.getNext();
+                                                if (next != null) {
+                                                    edgesWithSource.put(next, node);
+                                                }
                                             }
                                         }
                                     }
@@ -235,22 +243,37 @@ public class TimingAnalysisHandler extends AbstractHandler {
                     }
                 }
                 Iterator<ControlFlow> edgeIterator = edgesWithSource.keySet().iterator();
+                modifySequentialSCGWithHandMapping(edgeIterator, edgesWithSource, sequentialSCG);
 
-                while (edgeIterator.hasNext()) {
-                    ControlFlow edge = edgeIterator.next();
-                    ControlFlow test = edge;
-                    modifySequentialSCGWithHandMapping(edgeIterator, edgesWithSource, sequentialSCG);
-                    // - check for each node, to which region it maps and insert a TTP node
-                    // ('TTP(n);' into
-                    // the edge, if it is a different region than the one before
-                    // - store the domain Number of the Region together with the TTP number in a
-                    // List, this
-                    // is done to keep the relation of TTPs and Regions (as TTP numbers have to be
-                    // unique
-                    // in the new interface version). For each Region domain there should be a List
-                    // of
-                    // TTP numbers, which can be used to look the values up in a TimeValueTable
-                }
+                // just for checking TTP insertion as such, may be removed any time, 23.1.2015
+                // if(edgeIterator.hasNext()){
+                // ControlFlow testEdge = edgeIterator.next();
+                // Node target = testEdge.getTarget();
+                // ControlFlow newEdge = new ControlFlowImpl();
+                // newEdge.setTarget(target);
+                // Assignment ttp = new AssignmentImpl();
+                // TextExpression ttpText = new TextExpressionImpl();
+                // ttpText.setText("TTP(1)");
+                // ttp.setAssignment(ttpText);
+                // ttp.setNext(newEdge);
+                // testEdge.setTarget(ttp);
+                // sequentialSCG.getNodes().add(ttp);
+                // }
+                // end checking TTP insertion as such
+
+                EList<Node> newNodeList = sequentialSCG.getNodes();
+                // while (edgeIterator.hasNext()) {
+                // // - check for each node, to which region it maps and insert a TTP node
+                // // ('TTP(n);' into
+                // // the edge, if it is a different region than the one before
+                // // - store the domain Number of the Region together with the TTP number in a
+                // // List, this
+                // // is done to keep the relation of TTPs and Regions (as TTP numbers have to be
+                // // unique
+                // // in the new interface version). For each Region domain there should be a List
+                // // of
+                // // TTP numbers, which can be used to look the values up in a TimeValueTable
+                // }
                 CompilationResult codeGeneration =
                         KielerCompiler.compile("S2C", sequentialSCG, true, true);
                 Object code = codeGeneration.getObject();
@@ -258,17 +281,16 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 if (code != null) {
                     System.out.print(codeString);
                 }
-                //Write the generated code to file
+                // Write the generated code to file
                 IFile file = ResourceUtil.getFile(maybe.get().eResource());
                 String uri = file.getLocationURI().toString();
                 String codeTargetFile = uri.replace(".sct", ".c");
                 String codeTargetFilePath = codeTargetFile.replace("file:", "");
-                
+
                 FileWriter.main(codeString, codeTargetFilePath);
 
                 State state = scchart;// rootRegionStates.get(0);
-              
-                
+
                 String taFile = uri.replace(".sct", ".ta.out");
                 String taPath = taFile.replace("file:", "");
                 annotationProvider.doTimingAnnotations(state, taPath);
@@ -322,8 +344,46 @@ public class TimingAnalysisHandler extends AbstractHandler {
              */
             private void modifySequentialSCGWithHandMapping(Iterator<ControlFlow> edgeIterator,
                     HashMap<ControlFlow, Node> edgesWithSource, SCGraph sequentialSCG) {
-                // TODO Auto-generated method stub
-
+                // hardcoding a mapping with the help of an edge counter to keep track on which edge
+                // is
+                // the current one (note that the edge order is reliable (keys of LinkedHashMap))
+                int edgecounter = 1;
+                // Assign unique numbers to Timing Program Points
+                int ttpcounter = 1;
+                Assignment saveConditionalTTP = null;
+                Conditional saveContainer = null;
+                while (edgeIterator.hasNext()) {
+                    // Avoid using the TTP number 13, as this has a special meaning for the analysis
+                    // tool
+                    if (ttpcounter == 13) {
+                        ttpcounter = ttpcounter + 1;
+                    }
+                    ControlFlow testEdge = edgeIterator.next();
+                    switch (edgecounter) {
+                    case 1:
+                    case 3:
+                    case 7:
+                    case 13:
+                    case 26:
+                    case 27:
+                    case 34:
+                        Node target = testEdge.getTarget();
+                        ControlFlow newEdge = new ControlFlowImpl();
+                        newEdge.setTarget(target);
+                        Assignment ttp = new AssignmentImpl();
+                        TextExpression ttpText = new TextExpressionImpl();
+                        ttpText.setText("TTP(" + ttpcounter + ")");
+                        ttp.setAssignment(ttpText);
+                        ttp.setNext(newEdge);
+                        testEdge.setTarget(ttp);
+                        sequentialSCG.getNodes().add(ttp);
+                        ttpcounter = ttpcounter + 1;
+                        break;
+                    default:
+                        break;
+                    }
+                    edgecounter = edgecounter + 1;
+                }
             }
         };
 
