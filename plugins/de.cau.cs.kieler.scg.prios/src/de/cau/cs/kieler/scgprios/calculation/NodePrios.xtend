@@ -13,14 +13,10 @@
  */
 package de.cau.cs.kieler.scgprios.calculation
 
-import com.google.inject.Inject
 import java.util.List
 import java.util.LinkedList
 import de.cau.cs.kieler.scg.Node
-import java.math.BigInteger
 import java.util.HashMap
-import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.Assignment
 
 /**
  * @author cbu
@@ -46,64 +42,7 @@ class NodePrios {
         System.out.println("calcNodePrios finished")
         nodePriorityList
     }
-    
-//    // warnung: der graph ist nicht zusammenhängend... oder doch???
-//    private def LinkedList<Node> longestPath (LinkedList<LinkedList<Node>> sccs, Node firstNode){
-//        var children = new LinkedList<Node>
-//        var dependencies = new LinkedList<Node>
-//        var scc = getSCCOfNode(sccs, firstNode)
-//        var isInSCC = scc.empty
-//        System.out.println("longestPrioPath: SCC = "+isInSCC)
-//        if (isInSCC){
-//            children.addAll(helper.getChildrenOfNode(firstNode))
-//            dependencies.addAll(helper.getDependencyNodes(firstNode))
-//        } else {
-//            children.addAll(getChildrenFromSCC(scc))
-//            dependencies.addAll(helper.getDependenciesFromSCC(scc))            
-//        }
-//        
-//        var currentDependencyList = new LinkedList<Node>
-//        for (child : children){
-//            if (!dependencyTable.containsKey(child)){
-//                currentDependencyList.addAll(longestPath(sccs,child))
-//                //i = helper.max(i,longestPrioPath(sccs, child))
-//            } else {
-//                currentDependencyList.addAll(dependencyTable.get(child))
-//                //i = helper.max(i,nodePrios.get(child))
-//                
-//            }
-//        }
-//        
-//        var newDependenciesList = new LinkedList<Node>
-//        for (dep :  dependencies){
-//            System.out.println("longestPrioPath: DDDDDEEEEEPPPPENNNDENNNCYYYYYYYY")
-//            if (!dependencyTable.containsKey(dep)){
-//                currentDependencyList.addAll(longestPath(sccs,dep))
-//                newDependenciesList.add(dep)
-//                //i = (helper.max(i,longestPrioPath(sccs, dep)))+1
-//            } else {
-//                currentDependencyList.addAll(dependencyTable.get(dep))
-//                newDependenciesList.add(dep)
-//                //i = (helper.max(i,nodePrios.get(dep)))+1
-//            }
-//        }
-//        var cleanNewDependenciesList = newDependenciesList//removeMultipleConditionalAndAssignmentDependencies(newDependenciesList)
-//        currentDependencyList.addAll(cleanNewDependenciesList)
-//        var dependencyList = helper.removeDoubleElements(currentDependencyList)
-//        dependencyTable.put(firstNode,dependencyList)
-//        var l = new Integer(0)
-//        for(d : dependencyList){
-//            l = l+1
-//        }
-//        nodePriorityList.put(firstNode,l)
-//        if (isInSCC){
-//            for (s : scc){
-//                dependencyTable.put(s,dependencyList)
-//                nodePriorityList.put(s,l)
-//            }
-//        }
-//        dependencyList
-//    }
+
 
     // warnung: der graph ist nicht zusammenhängend... oder doch???
     private def void longestPath (LinkedList<LinkedList<Node>> sccs, Node firstNode){
@@ -199,55 +138,5 @@ class NodePrios {
     
     
     
-//    private def removeMultipleConditionalAndAssignmentDependencies (LinkedList<Node> list) {
-//        var assignmentList = new LinkedList<Node>
-//        var conditionalList = new LinkedList<Node>
-//        var returnList = new LinkedList<Node>
-//      
-//        for (l : list){
-//            if (l instanceof Assignment){
-//                assignmentList.add(l)
-//            } else if (l instanceof Conditional){
-//                conditionalList.add(l)
-//            } else {
-//                returnList.add(l)
-//            }
-//        }
-//        var newAssignmentList = new LinkedList<Node>
-//        var cleanAssignmentList = helper.removeDoubleElements(assignmentList)
-//        System.out.println("AssignmentList "+assignmentList.length)
-//        for (a : cleanAssignmentList){
-//            var maxAssignment = a
-//            cleanAssignmentList.remove(a)
-//            for (b : cleanAssignmentList){
-//                if ((b as Assignment).valuedObject == (a as Assignment).valuedObject){
-//                    cleanAssignmentList.remove(b)
-//                    if (nodePriorityList.get(b)>nodePriorityList.get(a)){
-//                        maxAssignment = b
-//                    }
-//                }
-//            }
-//            newAssignmentList.add(maxAssignment)
-//        } 
-//        // TODO: improve, when condition grammar is fixed!!!
-//        var newConditionalList = new LinkedList<Node>
-//        System.out.println("ConditionalList "+conditionalList.length)
-//        for (c : conditionalList){
-//            var maxConditional = c
-//            conditionalList.remove(c)
-//            for (d : conditionalList){
-//                if ((d as Conditional).condition == (c as Conditional).condition){
-//                    conditionalList.remove(d)
-//                    if (nodePriorityList.get(d)>nodePriorityList.get(c)){
-//                        maxConditional = d
-//                    }
-//                }
-//            }
-//            newAssignmentList.add(maxConditional)
-//        }
-//        returnList.addAll(newConditionalList)
-//        returnList.addAll(newAssignmentList)
-//        returnList
-//    }
-  
+
 }

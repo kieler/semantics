@@ -17,7 +17,6 @@ import java.util.HashMap
 import de.cau.cs.kieler.scg.Node
 import java.util.Set
 import de.cau.cs.kieler.scg.Entry
-import java.util.Queue
 import java.util.LinkedList
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Exit
@@ -26,7 +25,6 @@ import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Assignment
-import java.util.List
 
 /**
  * @author cbu
@@ -41,29 +39,15 @@ class CalcTSIDs {
     def HashMap<Node, Integer> calcTSIDs(HashMap<Node,Integer> nodePrios, LinkedList<LinkedList<Node>> sccs){
         tsIDs.clear
         optimizedTsIDs.clear
-        var i = 1
         var nodes = nodePrios.keySet
         var parents = getParentsOfNodes(nodes)
         var entrynodes = nodes.filter[it instanceof Entry]
         var rootnode = findRootNode(entrynodes)
         var forknodes = nodes.filter[it instanceof Fork]//getForkNodes(nodes)
-        //forknodes.remove(rootnode)
-        
-        //set TSID for thread segment
+
         numberTSNodes(rootnode, 1)
-        
-//        for (f : forknodes){
-//            var entryList = new LinkedList<Node>
-//            var entryCFList = (f as Fork).next
-//            for (cf : entryCFList){
-//                entryList.add(cf.target)
-//            }
-//            i = numberEntryNodeList(entryList, i)
-//        }
         numberThreadSegments(forknodes, nodePrios)
         
-//        var entrynodes = getEntryNodes(nodePrios.keySet)
-//        numberAllEntryNodes(entrynodes)
         optimizeTSIDs(rootnode, nodes, parents, nodePrios, sccs)
         for (k : optimizedTsIDs.keySet){
             tsIDs.put(k, optimizedTsIDs.get(k))
@@ -101,76 +85,7 @@ class CalcTSIDs {
         }
         joiningnode
     }
-    
-//    private def Node findFirstEntryNode(LinkedList<Node> entries, HashMap<Node,Integer> nodePriorities){
-//        var entrynode = entries.head
-//        for (e : entries){
-//            
-//            if (nodePriorities.get(e).intValue > nodePriorities.get(entrynode).intValue){
-//                entrynode = e
-//            } else if (nodePriorities.get(e).intValue == nodePriorities.get(entrynode).intValue){
-//                if (nodePriorities.get((e as Entry).exit).intValue > nodePriorities.get((entrynode as Entry).exit).intValue){
-//                    entrynode = e
-//                }
-//            }
-//        }
-//        entrynode
-//    }
-    
-    private def Node findLastEntryNode(Node firstEntry, LinkedList<Node> entries, HashMap<Node,Integer> nodePriorities){
-        var entrynode = entries.head
-        for (e : entries){
-            
-            if (nodePriorities.get((e as Entry).exit).intValue < nodePriorities.get((entrynode as Entry).exit).intValue){
-                entrynode = e
-            } else if (nodePriorities.get((e as Entry).exit).intValue == nodePriorities.get((entrynode as Entry).exit).intValue){
-                if (!e.equals(firstEntry)){
-                    entrynode = e
-                }
-            }
-        }
-        entrynode
-    }
-    
-    
-     private def LinkedList<Node> getForkNodes(Set<Node> nodes){
-        val list = new LinkedList<Node>
-        for (n : nodes){
-            if (n instanceof Fork){
-                list.add(n)
-            }
-        }
-        list
-    }
-    
-    private def LinkedList<Node> getEntryNodes(Set<Node> nodes){
-        val list = new LinkedList<Node>
-        for (n : nodes){
-            if (n instanceof Entry){
-                list.add(n)
-            }
-        }
-        list
-    }
-    
-    private def int numberEntryNodeList (LinkedList<Node> entrynodes, Integer i){
-        var currentI = i
-        for (e : entrynodes){
-            tsIDs.put(e,currentI)
-            currentI = currentI + 1
-        }
-        return currentI
-    }
-    
-//    private def numberAllEntryNodes(LinkedList<Node> entrynodes){
-//        for (e : entrynodes){
-//            var children = getChildrenOfNode(e)
-//            children.add((e as Entry).exit)
-//            for (child : children){
-//                numberAllNodes(child,tsIDs.get(e))
-//            }
-//        }
-//    }
+
     
     private def void numberTSNodes(Node node, Integer i) {
         if (!tsIDs.containsKey(node)) {
@@ -190,20 +105,6 @@ class CalcTSIDs {
 
     }
     
-//    private def numberAllNodes(Node node, Integer i) {
-//        if (!tsIDs.containsKey(node)) {
-//            tsIDs.put(node, i)
-//            if (node instanceof Fork) {
-//                numberAllNodes((node as Fork).join, i)
-//            } else if (!(node instanceof Exit)) {
-//                var children = getChildrenOfNode(node)
-//                for (child : children) {
-//                    numberAllNodes(child, i)
-//                }
-//            }
-//        }
-//
-//    }
   
     private def Node findRootNode(Iterable<Node> nodes){
         for (node : nodes){
@@ -273,15 +174,6 @@ class CalcTSIDs {
 
     }
     
-//    private def LinkedList<Node> findAllJoinNodes(Set<Node> nodes){
-//        var joinlist = new LinkedList<Node>
-//        for (n : nodes){
-//            if (n instanceof Join){
-//                joinlist.add(n)
-//            }
-//        }
-//        joinlist
-//    }
     
     var NodesFromRootToEntryList = new LinkedList<Node>
     var EntryNodesFromRoot = new LinkedList<Node>
@@ -354,7 +246,7 @@ class CalcTSIDs {
     
    
     
-    private def NodesFromRootToEntry(HashMap<Node, Integer> nodePrios, Node node) {
+    private def void NodesFromRootToEntry(HashMap<Node, Integer> nodePrios, Node node) {
         System.out.println("starting NodesFromRootToEntry") 
         var children = getChildrenOfNode(node)
         {
