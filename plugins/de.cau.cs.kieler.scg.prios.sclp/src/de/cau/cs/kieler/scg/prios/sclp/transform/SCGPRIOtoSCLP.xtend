@@ -29,14 +29,10 @@ import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.Link
 import java.util.LinkedList
 import de.cau.cs.kieler.scg.ControlFlow
-import java.util.Set
-import java.util.HashMap
 import java.util.List
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.Value
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.TextExpression
 import de.cau.cs.kieler.core.kexpressions.FunctionCall
@@ -46,6 +42,7 @@ import de.cau.cs.kieler.core.kexpressions.FloatValue
 import de.cau.cs.kieler.core.kexpressions.Parameter
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.StringValue
 
 /**
  * @author cbu
@@ -74,7 +71,9 @@ class SCGPRIOtoSCLP{
         val code = 
         '''
         «header()»
+        «generateForkAndJoinMacros(scg)»
         «declarations(scg.declarations)»
+                                                                  
         int tick()
         {
             tickstart(«rootNode.prioID»);
@@ -102,9 +101,51 @@ class SCGPRIOtoSCLP{
     /* This code is provided under the terms of the Eclipse Public License (EPL).*/
     /*****************************************************************************/
     
-    #include "sclp.h"
+    #include "scl_p.h"
+                          
     '''
     }
+    
+    def String generateForkAndJoinMacros(SCGraph scg){
+        var forknodes = scg.nodes.filter[it instanceof Fork]
+        var macros = <Integer> newArrayList
+        
+        for (f : forknodes){
+            var entrynodes = (f as Fork).next.length
+            if (entrynodes > 2 && (!macros.contains(entrynodes))){
+                macros.add(entrynodes - 1)
+            }
+        }
+        '''
+        «FOR m : macros»
+        «generateForkMacro(m)»
+                                                     
+        «generateJoinMacro(m)»
+                              
+        «ENDFOR»
+        '''
+    }
+    
+    def String generateForkMacro(int n){
+        '''
+        #define fork«n»(«FOR i : 1 ..< n»label«i», p«i»,«ENDFOR»label«n», p«n») \
+            «FOR j : 1 ..< n»
+            fork1(label«j», p«j»)       \
+            «ENDFOR»
+            fork1(label«n», p«n») 
+        '''
+    }
+    
+    def String generateJoinMacro(int n){
+        '''
+        #define join«n»(«FOR i : 1 ..< n-1»sib«i», «ENDFOR»sib«n»)\
+            trace0t("JOIN:", (isEnabledAnyOf( («FOR i : 1 ..< n»(u2b(sib«i»)) | «ENDFOR»(u2b(sib«n»)) ))) ? "waits\n" : "joins\n") \
+            __LABEL__: if (isEnabledAnyOf( («FOR i : 1 ..< n»(u2b(sib«i»)) | «ENDFOR»(u2b(sib«n»)) ))) {   \
+            PAUSEG_(__LABEL__); }
+        '''
+    }
+    
+  
     
     // is the first case really necessary? - yes!
     // extern and static exclude each other
@@ -431,6 +472,9 @@ class SCGPRIOtoSCLP{
     private def dispatch String transformExpression(FloatValue value){
         '''«value.value»'''     
     }
+    private def dispatch String transformExpression(StringValue value){
+        '''«value.value»'''
+    }
     
     private def dispatch String transformExpression(OperatorExpression opExp){
         var operator = transformOperators(opExp.operator)
@@ -444,7 +488,7 @@ class SCGPRIOtoSCLP{
         }
     }
     
-    private def dispatch String transformExpressions(List<Expression> indices){
+    private def String transformExpressions(List<Expression> indices){
         '''[«FOR i : indices»«transformExpression(i)»«ENDFOR»]'''
     }
     
@@ -463,9 +507,22 @@ class SCGPRIOtoSCLP{
         
     }
     
-  // does not exist!
-//    private def dispatch transformExpression(FunctionCall funcCall){
-//    }
+  // does this really exist?
+    private def dispatch String transformExpression(FunctionCall funcCall){
+        var newString = ""
+        for (p : funcCall.parameters){
+            newString = newString + transformParameter(p) + ","
+        }
+        '''«funcCall.functionName»(«newString.substring(0, newString.length()-1)»)'''
+    }
+    
+    private def String transformParameter(Parameter p){
+        if (p.callByReference){
+            '''*«transformExpression(p.expression)»'''
+        } else {
+            '''«transformExpression(p.expression)»'''
+        }
+    }
 
     def LinkedList<Node> getChildrenOfNode(Node node) {
         System.out.println("starting getChildrenOfNode")
