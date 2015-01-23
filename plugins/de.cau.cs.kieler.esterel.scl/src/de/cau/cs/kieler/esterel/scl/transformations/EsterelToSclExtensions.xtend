@@ -47,6 +47,7 @@ import java.util.LinkedList
 import javax.xml.transform.TransformerException
 import org.eclipse.emf.common.util.EList
 import org.eclipse.xtext.xbase.lib.Pair
+import de.cau.cs.kieler.scl.scl.StatementScope
 
 /**
  * @author krat
@@ -129,6 +130,18 @@ class EsterelToSclExtensions {
 
         ret
     }
+    
+    /*
+     * Returns a fresh variable without register the local declaration
+     */
+    def createFreshVarNoDecl(String name, ValueType t) {
+        val ret = createValuedObject(uniqueName(signalMap, name))
+
+        signalMap.add(name -> ret)
+
+        ret
+    }
+    
 
     def resetLabelCount() {
         labelCount = 0;
@@ -329,6 +342,14 @@ class EsterelToSclExtensions {
     
     def StatementSequence newSseq() {
         SclFactory::eINSTANCE.createStatementSequence
+    }
+    
+    def StatementScope newSscope() {
+        SclFactory::eINSTANCE.createStatementScope
+    }
+    
+    def de.cau.cs.kieler.scl.scl.Thread newThread() {
+        SclFactory::eINSTANCE.createThread
     }
     
      /**

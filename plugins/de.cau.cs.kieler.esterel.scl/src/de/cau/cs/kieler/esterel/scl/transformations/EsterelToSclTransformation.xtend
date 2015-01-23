@@ -246,8 +246,7 @@ class EsterelToSclTransformation extends Transformation {
         }
 
         if (!opt || terms) {
-            th.statements.add(
-                createStmFromInstr(ifThenGoto(createNot(f_term.createValObjRef), l, false)))
+            th.add(ifThenGoto(createNot(f_term.createValObjRef), l, false))
         } else if (opt && !terms) {
             th.createSclPause
             th.addGoto(l)
@@ -689,29 +688,59 @@ class EsterelToSclTransformation extends Transformation {
      * signal s in p end
      */
     def dispatch StatementSequence transformStm(LocalSignalDecl signal, StatementSequence sSeq) {
-        // Remember created signals to remove them after body transformation
-        val signals = new LinkedList<Pair<String, ValuedObject>>
+    	val signals = new LinkedList<Pair<String, ValuedObject>>
+    	val sScope = newSscope
+    	val f_term = createFreshVarNoDecl("f_term", ValueType::BOOL)
+    	sScope.add(createAssignment(f_term, createBoolValue(false)))
+        sScope.declarations += createDeclaration => [ valuedObjects += f_term; type = ValueType::BOOL ]
         for (s : (signal.signalList as LocalSignal).signal) {
-            val obj = createFreshVar(s.name, ValueType::BOOL)
-            signals += s.name -> obj
+            val obj = createValuedObject(s.name)
+            sScope.add(createAssignment(obj, createBoolValue(false)))
+            signalMap.add(obj.name -> obj)
+            signals.add(obj.name -> obj)
+            sScope.declarations += createDeclaration => [ valuedObjects += obj; type = ValueType::BOOL ]
 
             // Valued signal
             if (s.channelDescr != null) {
-                val s_val = createFreshVar(s.name + "_val", ValueType::getByName(s.channelDescr.type.type.getName())) => [
+                val s_val = createValuedObject(s.name + "_val") => [
                     if (s.channelDescr.expression != null) {
                         initialValue = s.channelDescr.expression.transformExp(s.channelDescr.type.type.toString)
                     }
                     if (s.channelDescr.type.operator != null)
                         combineOperator = s.channelDescr.type.operator.transformCombineOperator
                 ]
-                signals += s.name+"_val" -> s_val
+                sScope.declarations += createDeclaration => [ 
+                	valuedObjects += s_val
+                	type = ValueType::getByName(s.channelDescr.type.type.getName())
+                ]
                 valuedMap.put(obj, s_val)
             }
         }
-
-        transformStm(signal.statement, sSeq)
+        val th = newThread
+        transformStm(signal.statement, th)
+        th.add(createAssignment(f_term, createBoolValue(true)))
+        
+        // Create Thread to reset all locally declared signals in each tick
+        val resetTh = newThread
+        val l_reset = createFreshLabel
+        resetTh.addLabel(l_reset)
+        resetTh.createSclPause
+        val terms = signal.statement.checkTerminate
+        signals.forEach[ resetTh.add(createAssignment(it.value, createBoolValue(false))) ]
+		if (!opt || terms) {
+            resetTh.add(ifThenGoto(createNot(f_term.createValObjRef), l_reset, true))
+        } else if (opt && !terms) {
+            resetTh.addGoto(l_reset)
+        }
+        val par = createParallel
+        par.threads += th
+        par.threads += resetTh
+        sScope.statements += par.createStmFromInstr
+		        
         signalMap.removeAll(signals)
 
+        sSeq.statements += sScope.createStmFromInstr
+        
         sSeq
     }
 
@@ -1056,10 +1085,16 @@ class EsterelToSclTransformation extends Transformation {
 			exitMap.put(it, (singleExit -> l))
 	        sSeq.add(createAssignment(singleExit, false.createBoolValue))
 		]
-		val exitExpr = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+		var Expression exitExprVar
+		if (exitVars.length == 1) 
+			exitExprVar = exitVars.get(0).createValObjRef
+		else {
+			exitExprVar = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
 			operator = OperatorType::OR
 			for (^var : exitVars) { subExpressions += ^var.createValObjRef }
-		]
+			]
+		}
+		val exitExpr = exitExprVar
 
         val trans = [ boolean pause, StatementSequence seq |
             val stm = new LinkedList<Statement>
