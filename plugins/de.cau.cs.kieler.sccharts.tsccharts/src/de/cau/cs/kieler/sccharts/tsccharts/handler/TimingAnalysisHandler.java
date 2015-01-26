@@ -292,7 +292,18 @@ public class TimingAnalysisHandler extends AbstractHandler {
 
                     FileWriter.main(codeString, codeTargetFilePath);
                 }
-
+                
+                // get assumptions
+                String assumptionFile = uri.replace(".sct", ".ass");
+                String assumptionFilePath = assumptionFile.replace("file:", "");
+                StringBuilder stringBuilder = new StringBuilder();
+                annotationProvider.getAssumptions(assumptionFilePath, stringBuilder);
+                // just debug, may be removed
+                System.out.println(stringBuilder.toString());
+                
+                //write timing requests appended to the assumptionString
+                annotationProvider.writeTimingRequests(highestUsedTTPNumber, stringBuilder);
+                
                 State state = scchart;// rootRegionStates.get(0);
 
                 String taFile = uri.replace(".sct", ".ta.out");

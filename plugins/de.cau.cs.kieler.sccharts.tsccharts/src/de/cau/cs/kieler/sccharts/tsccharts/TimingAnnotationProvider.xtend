@@ -46,6 +46,8 @@ class TimingAnnotationProvider {
     extension TSCChartsKTMExtension;
     @Inject
     extension TSCChartsAnnotationExtension;
+    
+    StringBuilder stringBuilder
 
     /* This method checks, whether we have timing information for this SCChart. If yes, it provides all 
      * regions of the SCChart with two timing value annotations, one including,
@@ -168,7 +170,8 @@ class TimingAnnotationProvider {
         // Return the highest DomainNumber assigned by the Method
         return domainNumber;
     }
-/**
+
+    /**
  * The Method annotates each region of a given State with a unique domainNumber. It also stores the 
  * information about region nesting in the threadTree HashMap, which can be used for hierarchical  
  * aggregation of timing values (for example in cases that involve the search of a maximum value among 
@@ -221,42 +224,41 @@ class TimingAnnotationProvider {
         return domainNumber + 1;
     }
 
-// Start 21.1.2015 remove?
-//    /*  This method is a test method that sets the timing Domains for regions, but not for the 
-//     * elements of the according S model. To test the "upwards" timing information path*/
-//    def Integer setTimingDomainsWithS(Region region, Integer currentDomainNumber,
-//        HashMap<Integer, LinkedList<Integer>> threadTree, Integer parentDomain) {
-//        var domainNumber = currentDomainNumber;
-//        if (!region.hasChildRegions) {
-//            region.setTimeDomain(domainNumber);
-//
-//            // Save this region in the threadTree in the List of its parent
-//            if (parentDomain != null) {
-//                threadTree.get(parentDomain).add(domainNumber);
-//            }
-//        } else {
-//            region.setTimeDomain(domainNumber);
-//
-//            // Prepare descendant list for this region and add it to the thread tree
-//            threadTree.put(domainNumber, new LinkedList<Integer>);
-//            val regionDomain = domainNumber;
-//            domainNumber = domainNumber + 1;
-//            val stateList = region.states;
-//            val stateListIterator = stateList.iterator;
-//            while (stateListIterator.hasNext()) {
-//                val State child = stateListIterator.next();
-//                val childRegionList = child.regions;
-//                val childRegionListIterator = childRegionList.iterator;
-//                while (childRegionListIterator.hasNext()) {
-//                    val childRegion = childRegionListIterator.next();
-//                    domainNumber = setTimingDomainsWithS(childRegion, domainNumber, threadTree, regionDomain);
-//                }
-//            }
-//        }
-//        return (domainNumber + 1);
-//    }
-// end 21.1.2015 remove?
-
+    // Start 21.1.2015 remove?
+    //    /*  This method is a test method that sets the timing Domains for regions, but not for the 
+    //     * elements of the according S model. To test the "upwards" timing information path*/
+    //    def Integer setTimingDomainsWithS(Region region, Integer currentDomainNumber,
+    //        HashMap<Integer, LinkedList<Integer>> threadTree, Integer parentDomain) {
+    //        var domainNumber = currentDomainNumber;
+    //        if (!region.hasChildRegions) {
+    //            region.setTimeDomain(domainNumber);
+    //
+    //            // Save this region in the threadTree in the List of its parent
+    //            if (parentDomain != null) {
+    //                threadTree.get(parentDomain).add(domainNumber);
+    //            }
+    //        } else {
+    //            region.setTimeDomain(domainNumber);
+    //
+    //            // Prepare descendant list for this region and add it to the thread tree
+    //            threadTree.put(domainNumber, new LinkedList<Integer>);
+    //            val regionDomain = domainNumber;
+    //            domainNumber = domainNumber + 1;
+    //            val stateList = region.states;
+    //            val stateListIterator = stateList.iterator;
+    //            while (stateListIterator.hasNext()) {
+    //                val State child = stateListIterator.next();
+    //                val childRegionList = child.regions;
+    //                val childRegionListIterator = childRegionList.iterator;
+    //                while (childRegionListIterator.hasNext()) {
+    //                    val childRegion = childRegionListIterator.next();
+    //                    domainNumber = setTimingDomainsWithS(childRegion, domainNumber, threadTree, regionDomain);
+    //                }
+    //            }
+    //        }
+    //        return (domainNumber + 1);
+    //    }
+    // end 21.1.2015 remove?
     /* Determines, whether the region contains states with regions (return true) 
          * or not (return false)
          */
@@ -417,5 +419,49 @@ class TimingAnnotationProvider {
             }
         }
         return retMap;
+    }
+
+    /**
+     * Reads the assumptions for the interactive timing analysis timing request file from the 
+     * assumptions file to a stringBuilder
+     * 
+     * @param uri
+     *     The location of the assumptions file
+     * @param stringBuilder
+     *     The StringBuilder to which the content of the assumptions file will be appended
+     * @return
+     *     The content of the assumptions file as a string, may be empty string, if no such file exists
+     */
+    def void getAssumptions(String uri, StringBuilder stringBuilder) {
+        var BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(uri));
+            var String line = null;
+
+            //var Integer lineNumber = 0;
+            while ((line = br.readLine()) != null) {
+                stringBuilder.append("\n");
+                stringBuilder.append(line);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Timing information could not be found.");
+            e.printStackTrace();
+            return;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return;
+    }
+    
+    def void writeTimingRequests(int highestTTP, StringBuilder stringBuilder){
+        
     }
 }
