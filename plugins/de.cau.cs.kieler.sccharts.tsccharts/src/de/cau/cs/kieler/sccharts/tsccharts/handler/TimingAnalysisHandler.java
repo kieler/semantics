@@ -243,7 +243,9 @@ public class TimingAnalysisHandler extends AbstractHandler {
                     }
                 }
                 Iterator<ControlFlow> edgeIterator = edgesWithSource.keySet().iterator();
-                modifySequentialSCGWithHandMapping(edgeIterator, edgesWithSource, sequentialSCG);
+                int highestUsedTTPNumber =
+                        modifySequentialSCGWithHandMapping(edgeIterator, edgesWithSource,
+                                sequentialSCG);
 
                 // just for checking TTP insertion as such, may be removed any time, 23.1.2015
                 // if(edgeIterator.hasNext()){
@@ -277,17 +279,19 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 CompilationResult codeGeneration =
                         KielerCompiler.compile("S2C", sequentialSCG, true, true);
                 Object code = codeGeneration.getObject();
-                String codeString = code.toString();
-                if (code != null) {
-                    System.out.print(codeString);
-                }
-                // Write the generated code to file
                 IFile file = ResourceUtil.getFile(maybe.get().eResource());
                 String uri = file.getLocationURI().toString();
-                String codeTargetFile = uri.replace(".sct", ".c");
-                String codeTargetFilePath = codeTargetFile.replace("file:", "");
 
-                FileWriter.main(codeString, codeTargetFilePath);
+                if (code != null) {
+                    String codeString = code.toString();
+                    System.out.print(codeString);
+                    // Write the generated code to file
+
+                    String codeTargetFile = uri.replace(".sct", ".c");
+                    String codeTargetFilePath = codeTargetFile.replace("file:", "");
+
+                    FileWriter.main(codeString, codeTargetFilePath);
+                }
 
                 State state = scchart;// rootRegionStates.get(0);
 
@@ -342,7 +346,7 @@ public class TimingAnalysisHandler extends AbstractHandler {
              * 
              * @
              */
-            private void modifySequentialSCGWithHandMapping(Iterator<ControlFlow> edgeIterator,
+            private int modifySequentialSCGWithHandMapping(Iterator<ControlFlow> edgeIterator,
                     HashMap<ControlFlow, Node> edgesWithSource, SCGraph sequentialSCG) {
                 // hardcoding a mapping with the help of an edge counter to keep track on which edge
                 // is
@@ -384,6 +388,7 @@ public class TimingAnalysisHandler extends AbstractHandler {
                     }
                     edgecounter = edgecounter + 1;
                 }
+                return (ttpcounter - 1);
             }
         };
 
