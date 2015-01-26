@@ -2029,7 +2029,7 @@ ruleDefineNode returns [EObject current=null]
     {
     	newLeafNode(otherlv_10, grammarAccess.getDefineNodeAccess().getLeftCurlyBracketKeyword_10());
     }
-((
+(((
 (
 		{ 
 		  /* */ 
@@ -2041,18 +2041,18 @@ ruleDefineNode returns [EObject current=null]
         }
 	otherlv_11=RULE_ID
 	{
-		newLeafNode(otherlv_11, grammarAccess.getDefineNodeAccess().getValuedObjectsValuedObjectCrossReference_11_0_0()); 
+		newLeafNode(otherlv_11, grammarAccess.getDefineNodeAccess().getValuedObjectsValuedObjectCrossReference_11_0_0_0()); 
 	}
 
 )
 )	otherlv_12='=' 
     {
-    	newLeafNode(otherlv_12, grammarAccess.getDefineNodeAccess().getEqualsSignKeyword_11_1());
+    	newLeafNode(otherlv_12, grammarAccess.getDefineNodeAccess().getEqualsSignKeyword_11_0_1());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDefineNodeAccess().getExpressionsExpressionParserRuleCall_11_2_0()); 
+	        newCompositeNode(grammarAccess.getDefineNodeAccess().getExpressionsExpressionParserRuleCall_11_0_2_0()); 
 	    }
 		lv_expressions_13_0=ruleExpression		{
 	        if ($current==null) {
@@ -2069,12 +2069,13 @@ ruleDefineNode returns [EObject current=null]
 )
 )	otherlv_14=';' 
     {
-    	newLeafNode(otherlv_14, grammarAccess.getDefineNodeAccess().getSemicolonKeyword_11_3());
+    	newLeafNode(otherlv_14, grammarAccess.getDefineNodeAccess().getSemicolonKeyword_11_0_3());
     }
-)*(
+)*
+    |(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDefineNodeAccess().getStatesStateParserRuleCall_12_0()); 
+	        newCompositeNode(grammarAccess.getDefineNodeAccess().getStatesStateParserRuleCall_11_1_0()); 
 	    }
 		lv_states_15_0=ruleState		{
 	        if ($current==null) {
@@ -2089,9 +2090,9 @@ ruleDefineNode returns [EObject current=null]
 	    }
 
 )
-)*	otherlv_16='}' 
+)*)	otherlv_16='}' 
     {
-    	newLeafNode(otherlv_16, grammarAccess.getDefineNodeAccess().getRightCurlyBracketKeyword_13());
+    	newLeafNode(otherlv_16, grammarAccess.getDefineNodeAccess().getRightCurlyBracketKeyword_12());
     }
 )
 ;

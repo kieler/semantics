@@ -200,11 +200,11 @@ DefineNode returns sccharts::DefineNode:
     {sccharts::DefineNode}
     'node' (id=ID) '(' (inputs+=Declaration)* ')'
     'returns' '(' (outputs+=Declaration)* ')' '{'
-    
-    ((valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += Expression) ';')*
-    // keep that?
-    (states+=State)*
-    
+    (
+        ((valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += Expression) ';')*
+        | // keep that?
+        (states+=State)*
+    )
     '}'
 ;
 

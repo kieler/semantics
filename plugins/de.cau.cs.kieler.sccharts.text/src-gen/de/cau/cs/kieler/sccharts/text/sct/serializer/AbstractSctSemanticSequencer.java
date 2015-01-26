@@ -601,7 +601,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (id=ID inputs+=Declaration* outputs+=Declaration* (valuedObjects+=[ValuedObject|ID] expressions+=Expression)* states+=State*)
+	 *     (id=ID inputs+=Declaration* outputs+=Declaration* ((valuedObjects+=[ValuedObject|ID] expressions+=Expression)* | states+=State*))
 	 */
 	protected void sequence_DefineNode(EObject context, DefineNode semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

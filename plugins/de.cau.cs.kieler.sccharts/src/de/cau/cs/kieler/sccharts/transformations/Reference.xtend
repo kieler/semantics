@@ -34,6 +34,8 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.sccharts.OutputNode
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.TestReferenceNode
+import de.cau.cs.kieler.sccharts.CallNode
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 
 /**
  * SCCharts Reference Transformation.
@@ -70,6 +72,7 @@ class Reference {
 		
 		targetRootState.transformDataflows
         // Traverse all referenced states
+        println("allRefedStates: " + targetRootState.allContainedStates.filter[ referencedState ].toList)
         targetRootState.allContainedStates.filter[ referencedState ].toList.immutableCopy.forEach[
             transformReference(targetRootState)
         ]
@@ -176,6 +179,7 @@ class Reference {
         ]     
     }
     
+    // transform dataflow
     def transformDataflows(State state) {
     	val dataflows = <Dataflow> newHashSet
     	state.getAllContainedStates.forEach[ dataflows += concurrencies.filter(typeof(Dataflow))]
@@ -189,67 +193,184 @@ class Reference {
     		
     		var regionCounter = 0;
 			var idCounter = 0
-			//neu:
-			for(trn: dataflow.nodes.filter(typeof(TestReferenceNode))) {
-			    val rRegion = parentState.createRegion("_"+dataflow.id+regionCounter)
-			    rRegion.label = dataflow.label + regionCounter
-			    val newState = rRegion.createState("_"+trn.ID+idCounter)
-			    newState.label = trn.label + idCounter
-			    regionCounter = regionCounter +1
-			    idCounter = idCounter +1
-			    newState.setInitial
-			    newState.referencedScope = trn.referencedScope
-			    nodeMapping.put(trn, newState)
-			    
-			    var exprCounter = 0
-			    // bind inputs
-			    val refedInputs = <ValuedObject>newArrayList
-			    trn.referencedScope.declarations.filter[it.input].forEach[
-                    refedInputs+=valuedObjects
-                ]
-			    for (expr: trn.parameters) {
-			        //val wire = state.createVariable("_wire"+wireCounter).setTypeBool
-			        val newBinding = SCChartsFactory.eINSTANCE.createBinding
-			        newBinding.actual = (expr as ValuedObjectReference).valuedObject
-			        newBinding.formal = refedInputs.get(exprCounter)
-			        exprCounter = exprCounter +1
-			        val rState = nodeMapping.get(trn)
-			        rState.bindings += newBinding
+			// NEU:
+			
+			// transform CallNodes
+			// TODO
+			for (cn: dataflow.nodes.filter(typeof(CallNode))) {
+			    println("cn: " + cn)
+			    val defNode = cn.callReference
+			    if (defNode.states.nullOrEmpty) {
+			        // DefineNode contains dataflow
+			        // nothing to do here (for the moment)
+			        // entry actions and valued object replacement will be done later
+			    } else {
+			        // DefineNode contains SCChart
+			        println("cn = scchart")
+			        val rRegion = parentState.createRegion("_"+dataflow.id+regionCounter)
+                    rRegion.label = dataflow.label + regionCounter
+                    regionCounter = regionCounter +1
+                    
+                    // what to do with local declarations? 
+                    for (d: dataflow.declarations.immutableCopy) {
+                        println("decl: " + d + ", vo's: " + d.valuedObjects)
+                        rRegion.declarations += d
+                    }
+                    
+                    // copy states from DefineNode to parentState region
+                    for (s: cn.callReference.states.immutableCopy) {
+                        //println("s: " + s)
+                        rRegion.states += s
+                    }
+                    
+                    // replace valued objects
+                    cn.callReference.inputs.forEach[ i|
+                        i.valuedObjects.forEach[ vo|
+                            rRegion.states.forEach[
+                                it.replaceAllOccurrences(vo, (cn.parameters.get(i.valuedObjects.indexOf(vo)) as ValuedObjectReference).valuedObject)
+                            ]
+                        ]
+                    ]
+                    cn.callReference.outputs.forEach[ o|
+                        o.valuedObjects.forEach[ vo|
+                            rRegion.states.forEach[ s|
+                                dataflow.features.filter[node instanceof CallNode].forEach[
+                                    if ((it.expression as ValuedObjectReference).valuedObject.equals(vo)) {
+                                        s.replaceAllOccurrences(vo, it.valuedObject)
+                                    }
+                                ]
+                            ]
+                        ]
+                    ]
+                    // recursive transformation call neccessary?
+//                    for (s: rRegion.states) {
+//                        s.transformDataflows
+//                    }
 			    }
-			    // bind outputs
-			    trn.referencedScope.declarations.filter[it.output].forEach[valuedObjects.forEach[
-			        for (f: dataflow.features) {
-			            if (f.expression instanceof ValuedObjectReference) {
-			                if ((f.expression as ValuedObjectReference).valuedObject.equals(it)) {
-			                    //println("found match: " + it + ", " + f.expression as ValuedObjectReference)
-			                    val newBinding = SCChartsFactory.eINSTANCE.createBinding
-			                    newBinding.actual = f.valuedObject
-			                    newBinding.formal = (f.expression as ValuedObjectReference).valuedObject
-			                    val sState = nodeMapping.get(f.node)
-			                    sState.bindings += newBinding
-			                }
-			            }
-			        }
-			    ]]
-                
-			    (trn.referencedScope as State).transformDataflows
-			}
+			} // end of CallNodes
+			
+			// transform assignments to entry actions
 			for (f: dataflow.features) {
-                println("f: " + f)
                 if (f.node != null) {
-                    println("f hat ne node")
+                    if (f.node instanceof CallNode) {
+                        // Expression contains valued objetcs from a Call/ReferenceNode
+                        val cn = f.node as CallNode
+                        val ref = cn.callReference
+                        
+                        if (ref.states.nullOrEmpty) {
+                            // DefineNode contains dataflow
+                            // create EntryActions first
+                            val newAssignment = SCChartsFactory.eINSTANCE.createAssignment
+                            newAssignment.valuedObject = f.valuedObject
+                            newAssignment.expression = ref.expressions.get(ref.valuedObjects.indexOf((f.expression as ValuedObjectReference).valuedObject))
+                            parentState.createEntryAction => [
+                                it.addAssignment(newAssignment)
+                                val newBool = KExpressionsFactory.eINSTANCE.createBoolValue
+                                newBool.setValue(true)
+                                it.trigger = newBool
+                            ]
+                            // replace input valued objects
+                            val refedIns = <ValuedObject>newArrayList
+                            ref.inputs.forEach[
+                                refedIns += valuedObjects
+                            ]
+                            var exprCounter = 0
+                            for (expr: cn.parameters) {
+                                val newVo = (expr as ValuedObjectReference).valuedObject
+                                parentState.replaceAllOccurrences(refedIns.get(exprCounter), newVo)
+                                exprCounter = exprCounter + 1
+                            }
+                        } else {
+                            // DefineNode contains SCChart
+                            // need to be transformed? not here!
+                        }
+                    } else {
+                        // f.node == ReferenceNode
+                        // need to do anything more here?
+                        // maybe bindings (again) because they dont' work correct for some outputs?
+                    }
                 } else {
-                    println("keine node beim feature angegeben")
-                    //val newAction = SCChartsFactory.eINSTANCE.createEntryAction
+                    // Dataflowfeatue doesn't contain a node,
+                    // so just create a new assignment as EntryAction
+                    
                     val newAssignment = SCChartsFactory.eINSTANCE.createAssignment
                     newAssignment.valuedObject = f.valuedObject
                     newAssignment.expression = f.expression
-                    //newAction.addAssignment(newAssignment)
-                    println("ps: " + parentState)
-                    //parentState.entryActions += newAction
-                    parentState.createEntryAction.addAssignment(newAssignment)
+                    
+                    parentState.createEntryAction => [
+                        it.addAssignment(newAssignment)
+                        val newBool = KExpressionsFactory.eINSTANCE.createBoolValue
+                        newBool.setValue(true)
+                        it.trigger = newBool
+                    ]
                 }
             }
+            
+            // transform reference nodes
+            for(trn: dataflow.nodes.filter(typeof(TestReferenceNode))) {
+                val rRegion = parentState.createRegion("_"+dataflow.id+regionCounter)
+                rRegion.label = dataflow.label + regionCounter
+                val newState = rRegion.createState("_"+trn.ID+idCounter)
+                newState.label = trn.label + idCounter
+                regionCounter = regionCounter +1
+                idCounter = idCounter +1
+                newState.setInitial
+                newState.referencedScope = trn.referencedScope
+                nodeMapping.put(trn, newState)
+                
+                //(trn.referencedScope as State).transformDataflows
+                
+                var exprCounter = 0
+                // bind inputs
+                val refedInputs = <ValuedObject>newArrayList
+                trn.referencedScope.declarations.filter[it.input].forEach[
+                    refedInputs+=valuedObjects
+                ]
+                //println("paras: " + trn.parameters)
+                for (expr: trn.parameters) {
+                    //val wire = state.createVariable("_wire"+wireCounter).setTypeBool
+                    val newBinding = SCChartsFactory.eINSTANCE.createBinding
+                    newBinding.actual = (expr as ValuedObjectReference).valuedObject
+                    newBinding.formal = refedInputs.get(exprCounter)
+                    
+                    val rState = nodeMapping.get(trn)
+                    rState.bindings += newBinding
+                    
+                    exprCounter = exprCounter +1
+                }
+                // bind outputs
+                exprCounter = 0
+                val refedOutputs = <ValuedObject>newArrayList
+                trn.referencedScope.declarations.filter[it.output].forEach[
+                    refedOutputs += valuedObjects
+                ]
+                for (f: dataflow.features) {
+                    if (f.expression instanceof ValuedObjectReference) {
+                        //println("found vor: " + f.expression + ", f.expr.vo: " + (f.expression as ValuedObjectReference).valuedObject)
+                        val refedVo = (f.expression as ValuedObjectReference).valuedObject
+                        //println("f.vo: " + f.valuedObject)
+                        if (refedOutputs.contains(refedVo)) {
+                            //println("!match!")
+                            val newBinding = SCChartsFactory.eINSTANCE.createBinding
+                            val oldVoPos = refedOutputs.indexOf(refedVo)
+                            newBinding.actual = f.valuedObject
+                            newBinding.formal = refedVo//refedOutputs.get(oldVoPos)//refedOutputs.get(refedOutputs.indexOf(refedVo))
+                            val rState = nodeMapping.get(trn)
+                            rState.bindings += newBinding
+                            
+                            //println("rSate: " + rState + ", " + rState.declarations)
+                            //rState.replaceAllOccurrences(refedVo, f.valuedObject)
+                            
+                        }
+                    }
+                }
+                
+                
+
+                // recursive transformation call
+                //(trn.referencedScope as State).transformDataflows
+            }
+            
 			// ende von neu
 			
     		for(rn : dataflow.nodes.filter(typeof(ReferencedNode))) {
@@ -311,7 +432,7 @@ class Reference {
     				}
     			}
     		}
-    		    		
+    		//println("parentState.states: " + parentState.allContainedStates)
     		dataflow.remove
     	}
     	
