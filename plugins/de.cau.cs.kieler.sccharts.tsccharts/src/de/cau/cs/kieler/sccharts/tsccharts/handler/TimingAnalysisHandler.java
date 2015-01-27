@@ -14,6 +14,7 @@
 
 package de.cau.cs.kieler.sccharts.tsccharts.handler;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -27,6 +28,9 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -313,19 +317,35 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 String requestFile = uri.replace(".sct", ".ta");
                 String requestFilePath = requestFile.replace("file:", "");
                 FileWriter.main(stringBuilder.toString(), requestFilePath);
+                
+                
 
                 Runtime rt = Runtime.getRuntime();
                 String command = "/Users/ima/shared/ptc/bin/ptc " + requestFilePath;
                 try {
                     Process pr = rt.exec(command);
+                    // wait for the timing analysis tool to complete its job
+                    pr.waitFor();
                 } catch (IOException e) {
                     System.out.println("Error: Timing analysis tool could not be invoked.");
                     e.printStackTrace();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
                 }
-
-                State state = scchart;// rootRegionStates.get(0);
+                             
+                State state = scchart;
                 String taFile = uri.replace(".sct", ".ta.out");
                 String taPath = taFile.replace("file:", "");
+                
+                // Refresh to make sure the .c file can be found
+                try {
+                    ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
+                } catch (CoreException e) {
+                    System.out.println("The refreshing of files could not be completed.");
+                    e.printStackTrace();
+                }
+                
                 annotationProvider.doTimingAnnotations(state, resultList, taPath, ttpRegionMapping);
                 List<Region> childRegions = state.getRegions();
                 Iterator<Region> childRegionsIterator = childRegions.iterator();
@@ -365,6 +385,12 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 // + "failed.", e));
                 // }
                 // old
+                try {
+                    ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
+                } catch (CoreException e) {
+                    System.out.println("The refreshing of files could not be completed.");
+                    e.printStackTrace();
+                }
                 return Status.OK_STATUS;
             }
 

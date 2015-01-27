@@ -84,8 +84,13 @@ class TimingAnnotationProvider {
         val ttpIterator = ttpRegionMapping.keySet.iterator;
         while(ttpIterator.hasNext){
            val ttp = ttpIterator.next();
-           val value = wcetValues.get(ttp.toString());
-           returnMap.put(ttpRegionMapping.get(ttp), value);
+           val Integer value = wcetValues.get(ttp.toString());
+           var Integer oldValue = 0;
+           if (returnMap.containsKey(ttpRegionMapping.get(ttp))){
+           oldValue = returnMap.get(ttpRegionMapping.get(ttp));
+           }
+           val Integer newValue = value + oldValue;
+           returnMap.put(ttpRegionMapping.get(ttp), newValue);
         }
         return returnMap;
     }
@@ -359,6 +364,25 @@ class TimingAnnotationProvider {
          *           element the timing value is associated to.
          */
     def TimeValueTable extractTimeValueTable(LinkedList<TimingRequestResult> resultList) {
+        var String debugValue = null
+        // debug
+        val StringBuilder stringBuilder = new StringBuilder();
+        val resultListDebugIterator = resultList.iterator();
+        while(resultListDebugIterator.hasNext){
+            val debugResult = resultListDebugIterator.next;
+            val result = debugResult.result;
+            if (result != null){
+            debugValue = debugResult.result.get(0);
+            }
+            if(debugValue == null){
+                stringBuilder.append("null  ");
+            } else{
+                stringBuilder.append(Integer.parseInt(debugValue)+ "  ");
+            }
+        }
+        System.out.println(stringBuilder.toString);
+        // end debug
+        
         val TimeValueTable timeValueTable = new TimeValueTable();
         val resultListIterator = resultList.iterator;
         while (resultListIterator.hasNext) {
