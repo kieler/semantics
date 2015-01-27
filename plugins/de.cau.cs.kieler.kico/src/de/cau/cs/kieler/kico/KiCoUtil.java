@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -221,7 +222,7 @@ public class KiCoUtil {
             try {
 
                 for (String ext : getRegXtext().getExtensionToFactoryMap().keySet()) {
-                    String num = (text.hashCode() + "").replace("-", "");
+                    String num = Math.random()*1000 + System.nanoTime() + (text.hashCode() + "").replace("-", "");
 
                     URI uri = URI.createURI("dummy:/inmemory." + num + "." + ext);
 

@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.swt.widgets.Display;
 
 import de.cau.cs.kieler.core.kgraph.KGraphData;
 import de.cau.cs.kieler.core.kgraph.KGraphElement;
@@ -150,6 +151,7 @@ public class KlighdServer extends HttpServer {
                 // build up a corresponding view context
                 final ViewContext viewContext =
                         LightDiagramServices.translateModel2(mainModel, null);
+                LightDiagramServices.layoutDiagram(viewContext);
                 ResourceSet rs = new ResourceSetImpl();
                 Resource r = rs.createResource(URI.createPlatformResourceURI("Dummy.kgx", true));
                 // write a copy of the view model kgraph to the selected file
@@ -195,11 +197,16 @@ public class KlighdServer extends HttpServer {
                         KlighdSynthesisProperties
                                 .create()
                                 .setProperty(SVGOffscreenRenderer.GENERATOR,
-                                        "de.cau.cs.kieler.klighd.piccolo.svggen.freeHEP")
+                                        "de.cau.cs.kieler.klighd.piccolo.svggen.freeHEPExtended")
                                 .setProperty(IOffscreenRenderer.IMAGE_SCALE, scaleInteger);
-                renderingResult =
-                        LightDiagramServices.renderOffScreen(mainModelParam, renderParam,
-                                outputStreamParam, properties);
+                Display.getDefault().syncExec(new Runnable() {
+                    @Override
+                    public void run() {
+                        renderingResult =
+                                LightDiagramServices.renderOffScreen(mainModelParam, renderParam,
+                                        outputStreamParam, properties);
+                    }
+                });
                 try {
                     outputStreamParam.flush();
                 } catch (IOException e) {
