@@ -46,15 +46,14 @@ class TimingAnnotationProvider {
     extension TSCChartsKTMExtension;
     @Inject
     extension TSCChartsAnnotationExtension;
-    
-    StringBuilder stringBuilder
 
     /* This method checks, whether we have timing information for this SCChart. If yes, it provides all 
      * regions of the SCChart with two timing value annotations, one including,
      * one excluding the WCRT for child regions. If no, the method checks whether SCChart and KTM have 
      * already been assigned with Timing Domains and handles this, if not.
      */
-    def public doTimingAnnotations(State scchart, /* ModelWrapper KTMRoot,*/ String fileName) {
+    def public doTimingAnnotations(State scchart, LinkedList<TimingRequestResult> resultList, 
+        String fileName, HashMap<Integer, Integer> ttpRegionMapping) {
 
         //        // TimingDomains for test reasons
         //        var Integer domainNumber = 0;
@@ -67,10 +66,35 @@ class TimingAnnotationProvider {
         ////            val HashMap<Integer, LinkedList<Integer>> threadTree = new HashMap<Integer, LinkedList<Integer>>;
         ////            domainNumber = setTimingDomainsSimple(childRegion, domainNumber, threadTree, null);
         //        }
-        val Map<Integer, Integer> timingInformation = getTimingInformation(fileName);
-        if (timingInformation != null) {
-            annotateStatesAndRegions(scchart, timingInformation);
+        //val Map<Integer, Integer> timingInformation = getTimingInformation(fileName);
+        getTimingInformation(resultList, fileName);
+        var TimeValueTable timeTable = extractTimeValueTable(resultList);
+        var oldTypeMap = extractValueListOldType(timeTable, ttpRegionMapping);
+        annotateStatesAndRegions(scchart, oldTypeMap);
+        //annotateRegionsFL(scchart, timeTable, ttpRegionMapping);
+
+    //if (timingInformation != null) {
+    //    annotateStatesAndRegions(scchart, timingInformation);
+    //}
+    }
+    
+    def HashMap<Integer,Integer> extractValueListOldType(TimeValueTable table, HashMap<Integer, Integer> ttpRegionMapping) {
+        var returnMap = new HashMap<Integer, Integer>();
+        var wcetValues = table.LWCETMap;
+        val ttpIterator = ttpRegionMapping.keySet.iterator;
+        while(ttpIterator.hasNext){
+           val ttp = ttpIterator.next();
+           val value = wcetValues.get(ttp.toString());
+           returnMap.put(ttpRegionMapping.get(ttp), value);
         }
+        return returnMap;
+    }
+    
+    /**
+     * 
+     */
+    def annotateRegionsFL(State state, TimeValueTable table, HashMap<Integer, Integer> map) {
+        throw new UnsupportedOperationException("TODO: auto-generated method stub")
     }
 
     /*Annotates states and regions of the scchart with flat and hierarchical timing values.*/
@@ -460,8 +484,36 @@ class TimingAnnotationProvider {
         }
         return;
     }
-    
-    def void writeTimingRequests(int highestTTP, StringBuilder stringBuilder){
-        
+
+    /**
+     * Appends Timing Requests for fractional and local WCET for each pair of consecutive 
+     * Timing Program Points (1 and 2, 2 and 3...) to the String 
+     * saved in the stringBuilder. This method is used to build a timing request file.
+     * 
+     * @param highestTTP
+     *      highest TTP number used
+     * @param stringBuilder
+     *      A StringBuilder, will typically already contain the beginning of a .ta file
+     */
+    def LinkedList<TimingRequestResult> writeTimingRequests(int highestTTP, StringBuilder stringBuilder) {
+        val returnList = new LinkedList<TimingRequestResult>();
+        var i = 0 as int
+        stringBuilder.append("\n\n# Analysis Requests");
+        for (i = 1; i < highestTTP; i = i + 1) {
+            var timingRequestResult1 = new TimingRequestResult();
+            var timingRequestResult2 = new TimingRequestResult();
+            var int successor = i + 1;
+            stringBuilder.append("\n");
+            stringBuilder.append("FWCET " + i + " " + successor + "\nLWCET " + i + " " + successor);
+            timingRequestResult1.setRequestType(RequestType.FWCET);
+            timingRequestResult1.setStartPoint(i.toString());
+            timingRequestResult1.setEndPoint(successor.toString());
+            returnList.add(timingRequestResult1);
+            timingRequestResult2.setRequestType(RequestType.LWCET);
+            timingRequestResult2.setStartPoint(i.toString());
+            timingRequestResult2.setEndPoint(successor.toString());
+            returnList.add(timingRequestResult2);
+        }
+        return returnList;
     }
 }

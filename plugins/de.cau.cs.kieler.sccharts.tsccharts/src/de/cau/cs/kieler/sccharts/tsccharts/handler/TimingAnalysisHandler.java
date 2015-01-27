@@ -14,6 +14,7 @@
 
 package de.cau.cs.kieler.sccharts.tsccharts.handler;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -243,9 +244,10 @@ public class TimingAnalysisHandler extends AbstractHandler {
                     }
                 }
                 Iterator<ControlFlow> edgeIterator = edgesWithSource.keySet().iterator();
+                HashMap<Integer, Integer> ttpRegionMapping = new HashMap<Integer, Integer>();
                 int highestUsedTTPNumber =
                         modifySequentialSCGWithHandMapping(edgeIterator, edgesWithSource,
-                                sequentialSCG);
+                                sequentialSCG, ttpRegionMapping);
 
                 // just for checking TTP insertion as such, may be removed any time, 23.1.2015
                 // if(edgeIterator.hasNext()){
@@ -292,7 +294,7 @@ public class TimingAnalysisHandler extends AbstractHandler {
 
                     FileWriter.main(codeString, codeTargetFilePath);
                 }
-                
+
                 // get assumptions
                 String assumptionFile = uri.replace(".sct", ".ass");
                 String assumptionFilePath = assumptionFile.replace("file:", "");
@@ -300,15 +302,31 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 annotationProvider.getAssumptions(assumptionFilePath, stringBuilder);
                 // just debug, may be removed
                 System.out.println(stringBuilder.toString());
-                
-                //write timing requests appended to the assumptionString
-                annotationProvider.writeTimingRequests(highestUsedTTPNumber, stringBuilder);
-                
-                State state = scchart;// rootRegionStates.get(0);
 
+                // write timing requests appended to the assumptionString
+                LinkedList<TimingRequestResult> resultList =
+                        annotationProvider.writeTimingRequests(highestUsedTTPNumber, stringBuilder);
+                // just debug, may be removed
+                System.out.println(stringBuilder.toString());
+
+                // .ta file string complete, write it to file
+                String requestFile = uri.replace(".sct", ".ta");
+                String requestFilePath = requestFile.replace("file:", "");
+                FileWriter.main(stringBuilder.toString(), requestFilePath);
+
+                Runtime rt = Runtime.getRuntime();
+                String command = "/Users/ima/shared/ptc/bin/ptc " + requestFilePath;
+                try {
+                    Process pr = rt.exec(command);
+                } catch (IOException e) {
+                    System.out.println("Error: Timing analysis tool could not be invoked.");
+                    e.printStackTrace();
+                }
+
+                State state = scchart;// rootRegionStates.get(0);
                 String taFile = uri.replace(".sct", ".ta.out");
                 String taPath = taFile.replace("file:", "");
-                annotationProvider.doTimingAnnotations(state, taPath);
+                annotationProvider.doTimingAnnotations(state, resultList, taPath, ttpRegionMapping);
                 List<Region> childRegions = state.getRegions();
                 Iterator<Region> childRegionsIterator = childRegions.iterator();
                 while (childRegionsIterator.hasNext()) {
@@ -358,7 +376,8 @@ public class TimingAnalysisHandler extends AbstractHandler {
              * @
              */
             private int modifySequentialSCGWithHandMapping(Iterator<ControlFlow> edgeIterator,
-                    HashMap<ControlFlow, Node> edgesWithSource, SCGraph sequentialSCG) {
+                    HashMap<ControlFlow, Node> edgesWithSource, SCGraph sequentialSCG,
+                    HashMap<Integer, Integer> ttpRegionMapping) {
                 // hardcoding a mapping with the help of an edge counter to keep track on which edge
                 // is
                 // the current one (note that the edge order is reliable (keys of LinkedHashMap))
@@ -399,6 +418,12 @@ public class TimingAnalysisHandler extends AbstractHandler {
                     }
                     edgecounter = edgecounter + 1;
                 }
+                ttpRegionMapping.put(1, 0);
+                ttpRegionMapping.put(2, 1);
+                ttpRegionMapping.put(3, 2);
+                ttpRegionMapping.put(4, 1);
+                ttpRegionMapping.put(5, 2);
+                ttpRegionMapping.put(6, 0);
                 return (ttpcounter - 1);
             }
         };

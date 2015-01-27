@@ -35,12 +35,16 @@ public class TimingRequestResult{
     private String endPoint;
     private LinkedList<String> result;
     
-    TimingRequestResult
+    public TimingRequestResult
       (RequestType requestType, String startPoint, String endPoint, LinkedList<String> result){
         this.setRequestType(requestType);
         this.setStartPoint(startPoint);
         this.setEndPoint(endPoint);
         this.setResult(result);
+    }
+    
+    public TimingRequestResult(){
+        
     }
 
     public RequestType getRequestType() {
