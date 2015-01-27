@@ -53,6 +53,7 @@ import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.scg.optimizer.CopyPropagation
 import com.google.inject.Guice
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -157,6 +158,10 @@ class GuardSequentializer extends AbstractSequentializer {
         	annotations += createStringAnnotation(ANNOTATION_SEQUENTIALIZED, "")
         	label = scg.label
         ]
+        
+        creationalTransformation(scg,newSCG)
+        scg.setDefaultTrace
+        
         val hostcodeAnnotations = scg.getStringAnnotations(ANNOTATION_HOSTCODE)
         hostcodeAnnotations.forEach[
             newSCG.addAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).value)
