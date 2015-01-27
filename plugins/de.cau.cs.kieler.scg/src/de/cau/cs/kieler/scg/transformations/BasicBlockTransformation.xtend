@@ -40,6 +40,8 @@ import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -135,6 +137,16 @@ class BasicBlockTransformation extends Transformation {
         val basicBlockCache = <BasicBlock> newLinkedList
         scg.createBasicBlocks(scg.nodes.head, 0, basicBlockCache)
         scg.basicBlocks += basicBlockCache
+        
+        //KITT
+        if (isTracingActive()) {
+            for (BasicBlock bb : scg.basicBlocks) {
+                for (SchedulingBlock sb : bb.schedulingBlocks) {
+                    sb.trace(sb.nodes);
+                    bb.trace(sb.nodes);
+                }
+            }
+        }
         
         val time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Basic Block transformation finished (time elapsed: "+(time / 1000)+"s).")    

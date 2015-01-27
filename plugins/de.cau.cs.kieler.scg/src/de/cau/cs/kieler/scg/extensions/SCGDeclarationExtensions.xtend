@@ -22,6 +22,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.scg.SCGraph
 import java.util.HashMap
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
 
 /**
@@ -106,14 +107,14 @@ class SCGDeclarationExtensions {
     
     public def void copyDeclarations(SCGraph source, SCGraph target) {
     	for (declaration : source.declarations) {
-    		val newDeclaration = createDeclaration(declaration)
+    		val newDeclaration = createDeclaration(declaration).trace(declaration)
     		declaration.valuedObjects.forEach[ copyValuedObject(newDeclaration) ]
     		target.declarations += newDeclaration
     	}
 	}     
     
     public def void copyValuedObject(ValuedObject sourceObject, Declaration targetDeclaration) {
-        val newValuedObject = sourceObject.tracedCopy
+        val newValuedObject = sourceObject.copy
         targetDeclaration.valuedObjects += newValuedObject
         valuedObjectMapping.put(sourceObject, newValuedObject)
     }    
@@ -147,7 +148,7 @@ class SCGDeclarationExtensions {
     
     def Expression copySCGExpression(Expression expression) {
     	// Use the ecore utils to copy the expression. 
-        val newExpression = expression.tracedCopy
+        val newExpression = expression.copy
         
         if (newExpression instanceof ValuedObjectReference) {
 	        // If it is a single object reference, simply replace the reference with the object of the target SCG.

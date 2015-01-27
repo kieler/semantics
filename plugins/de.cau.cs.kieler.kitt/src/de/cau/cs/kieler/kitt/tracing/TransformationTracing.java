@@ -134,6 +134,10 @@ public class TransformationTracing {
         appiledDefaultTracings.remove(t);
     }
 
+    public static boolean isTracingActive(){
+        return activeTransformations.get(Thread.currentThread()) != null;
+    }
+    
     // -----------
     // -- TRACING
 
