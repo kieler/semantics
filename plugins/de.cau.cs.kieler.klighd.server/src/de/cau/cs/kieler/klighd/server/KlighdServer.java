@@ -199,7 +199,6 @@ public class KlighdServer extends HttpServer {
                                         "de.cau.cs.kieler.klighd.piccolo.svggen.freeHEPExtended")
                                 .setProperty(IOffscreenRenderer.IMAGE_SCALE, scaleInteger);
                 Display.getDefault().syncExec(new Runnable() {
-                    @Override
                     public void run() {
                         renderingResult =
                                 LightDiagramServices.renderOffScreen(mainModelParam, renderParam,
