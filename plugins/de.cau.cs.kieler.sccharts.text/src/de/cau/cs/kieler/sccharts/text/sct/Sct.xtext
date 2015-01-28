@@ -93,8 +93,14 @@ Feature returns sccharts::DataflowFeature:
         //node = [sccharts::Node|ID] ('.' valuedObject = [kexpressions::ValuedObject])?
         //(valuedObjects += [kexpressions::ValuedObject]) '=' (node = [sccharts::Node|ID] '.')? (expressions += ValuedObjectReference) ';'
         (valuedObject = [kexpressions::ValuedObject]) '=' (node = [sccharts::Node|ID] '.')? (expression = ValuedObjectReference) ';'
+//        |
+//        ((node = [sccharts::Node|ID] '.')? (expression = ValuedObjectReference))
     )
 ;
+
+//Reference returns sccharts::Reference:
+//    (node = [sccharts::Node|ID]) '.' (expression = ValuedObjectReference)
+//;
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -183,15 +189,6 @@ Node returns sccharts::Node:
 CallNode returns sccharts::CallNode:
     {sccharts::CallNode}
     (id=ID) '=' callReference = [sccharts::DefineNode|ID]
-//    (( 
-//        callReference = [sccharts::DefineNode|ID]
-//        
-//        )?
-//    |
-//        (
-//        referencedScope = [sccharts::State|ID]
-//        )?
-//    )
     '(' (parameters+=Expression)? (',' parameters+=Expression)* ')'
     ';'
 ;

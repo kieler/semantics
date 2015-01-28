@@ -961,34 +961,33 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             node.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::BRANDES_KOEPF)
             
             val senders = <Sender> newArrayList
-            //val trs = <TestReceiver> newArrayList
             
             for (n : d.nodes) {
                 if (n instanceof DefineNode) {
                     //skip
                 } else {
+                    // translate input/output/reference/testReference/call nodes
                     node.children += n.translate;
                     senders += n.senders
-                    //trs += n.testReceivers
                 }
             }
-            for (v: d.valuedObjects) {
-                //create node for valuedObject (output)
-                node.children += v.createNode(node) => [
-                    it.addPolygon.createOutputNodeShape
-                    it.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
-                    it.addDefaultLayoutParameter
-                    //add port
-                    it.addPort(v.reference, PortSide::WEST) => [
-                        it.addLayoutParam(LayoutOptions::OFFSET, -2.0f)
-                    ]
-                    it.createLabel(it).configureInsideCenteredNodeLabel(
-                        v.reference.serialize as String, 6, KlighdConstants::DEFAULT_FONT_NAME)
-                    // translate expression
-                    val expr = d.expressions.get(d.valuedObjects.indexOf(v))
-                    node.children += expr.translate(d.valuedObjects.indexOf(v), node, d)
-                ]
-            }
+//            for (v: d.valuedObjects) {
+//                //create node for valuedObject (output)
+//                node.children += v.createNode(node) => [
+//                    it.addPolygon.createOutputNodeShape
+//                    it.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
+//                    it.addDefaultLayoutParameter
+//                    //add port
+//                    it.addPort(v.reference, PortSide::WEST) => [
+//                        it.addLayoutParam(LayoutOptions::OFFSET, -2.0f)
+//                    ]
+//                    it.createLabel(it).configureInsideCenteredNodeLabel(
+//                        v.reference.serialize as String, 6, KlighdConstants::DEFAULT_FONT_NAME)
+//                    // translate expression
+//                    val expr = d.expressions.get(d.valuedObjects.indexOf(v))
+//                    node.children += expr.translate(d.valuedObjects.indexOf(v), node, d)
+//                ]
+//            }
             
             for (f: d.features) {
                 val vo = f.valuedObject
@@ -1010,15 +1009,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             for (s : senders) {
             	s.translateSender
             }
-//            for (tr: trs) {
-//                tr.translateTestReceiver
-//            }
             
             node.addCollapseExpand(d.label)
         ]
-//        d.features.forEach[ f|
-//            println("df.f: " + f + ", f.vo: " + f.valuedObject + ", f.n: " + f.node + ", f.e: " + f.expression)
-//        ]
         return dNode
     }
 
@@ -1081,21 +1074,19 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 nNode.createLabel(nNode).configureInsideTopCenteredNodeLabel(
                     op.toString(), 6, KlighdConstants::DEFAULT_FONT_NAME 
                 )
-                //println("op: " + op)
+                //println("op: " + op + ", expr: " + expr)
                 expr.subExpressions.forEach[ se|
                     //println("se: " + se)
                     nNode.addPort(se, PortSide::WEST)
                     if (se instanceof ValuedObjectReference) {
-                        // skip for the moment, still? no?
                         
                         val subVo = (se as ValuedObjectReference).valuedObject
                         val decl = (subVo.eContainer as Declaration)
-                        
                         //println("se.vor.vo: " + subVo)
-                        
                         //println("decl: " + decl)
+                        
+                        // case: vor is of type input
                         if (decl.isInput) {
-                            
                             val inputNode = subVo.createNode(parentNode) => [
                                 it.addPolygon.createInputNodeShape
                                 it.addDefaultLayoutParameter
@@ -1120,13 +1111,42 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                                 ]
                             ]
                             parentNode.children += inputNode
+                        } else if (decl.isOutput) {
+                            // case vor is output
+                            var fIndex = 0
+                            for (f: d.features) {
+                                if (f.valuedObject.equals(subVo)) {
+                                    fIndex = d.features.indexOf(f)
+                                }
+                            }
+                            
+                            // kante vom temporären wert, sollte nur eine geben
+                            // davon brauch ich die source
+                            val refVo = d.features.get(fIndex).valuedObject
+                            nNode.createEdge(se) => [
+                                //it.source = refVo.getNode(parentNode)
+                                it.source = refVo.getNode(parentNode).incomingEdges.get(0).source 
+                                it.target = nNode
+                                //it.sourcePort = refVo.getNode(parentNode).getPort(refVo.reference.portMap)
+                                it.sourcePort = refVo.getNode(parentNode).incomingEdges.get(0).sourcePort
+                                it.targetPort = nNode.getPort(se.portMap)
+                                it.addRoundedBendsPolyline(4, 1) => [
+                                    // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
+                                    it.addArrowDecorator() => [
+                                    ]
+                                ]
+                            ]
+                            
+                            
                         } else {
+                            // the subVo is not an input (maybe output or both)
                             // whats still to do here?
                             // re: trennen zwischen df und opExpr!!!!
                             //re2: statt df casten einfach d mit uebergeben und verwenden
                             //val df = expr.eContainer as Dataflow
                             var findex = 0
                             for (f: d.features) {
+                                //println("f: " + f)
                                 if (f.valuedObject.equals(subVo)) {
                                     findex = d.features.indexOf(f)
                                 }
@@ -1138,19 +1158,21 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                             //println("refVO: " + refVo + ", refExpr: " + refExpr)
                             
                             nNode.createEdge(se) => [
-                                it.source = refExpr.getNode(parentNode) 
+                                //it.source = refExpr.getNode(parentNode)
+                                it.source = refVo.getNode(parentNode) 
                                 it.target = nNode
+                                //println("src: " + it.source + ", tar: " + it.target)
                                 //println("(nd)sn: " + refExpr.getNode(parentNode))
                                 //println("(nd)tn: " + nNode)
                                 //it.sourcePort = getNode(callNode).getPort(se.portMap)
-                                it.sourcePort = refExpr.getNode(parentNode).getPort(refVo.reference.portMap)
+                                it.sourcePort = refVo.getNode(parentNode).getPort(refVo.reference.portMap)
                                 it.targetPort = nNode.getPort(se.portMap)
                                 it.addRoundedBendsPolyline(4, 1) => [
                                     // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
                                     it.addArrowDecorator() => [
                                     ]
                                 ]
-                            ]   
+                            ]
                         }
                         // handle subExpressions in else case
                     } else {
@@ -1210,8 +1232,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 val vo = expr.valuedObject
                 val voRef = d.features.get(index).valuedObject
                 //val voRef = d.valuedObjects.get(index) // <-- alte Variante
-
-                if (d.features.get(index).node == null) {
+                val feature = d.features.get(index)
+                
+                // current features (expr) is not attached to a call/reference node
+                if (feature.node == null) {
                     val inputNode = vo.createNode(parentNode) => [
                         it.addPolygon.createInputNodeShape
                         it.addDefaultLayoutParameter
@@ -1231,7 +1255,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                             //it.targetPort = nNode.getPort(voRef.reference.portMap)
                             it.targetPort = voRef.getNode(parentNode).getPort(voRef.reference.portMap)
                             
-                            println("src: " + vo.getNode(parentNode) + ", tar: " + voRef.getNode(parentNode))
+                            //println("src: " + vo.getNode(parentNode) + ", tar: " + voRef.getNode(parentNode))
                             
                             it.addRoundedBendsPolyline(4, 1) => [
                                 // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
@@ -1582,7 +1606,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         } 
         else if (n instanceof TestReferenceNode) {
             val ref = (n as TestReferenceNode)
-            //val refID = (ref.referencedScope as State).id
             nNode.createLabel(nNode).configureInsideTopCenteredNodeLabel(
                 if(n.label.nullOrEmpty) ref.id else " " + n.label,
                 6,
@@ -1607,17 +1630,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             // create input nodes for call parameters
             // need to be improved if parameter is not an global/local input
             val dNode = ref.eContainer.node
-            //println("ref.rs.size: " + (ref.referencedScope.declarations.filter[it.input].size))
             val refInputs = <ValuedObject>newArrayList
             ref.referencedScope.declarations.filter[it.input].forEach[
                 refInputs += valuedObjects
             ]
             val refInputSize = refInputs.size
-            //println(refInputSize)
             ref.parameters.forEach[ p|
                 if (ref.parameters.indexOf(p) >= refInputSize) {
-                    // if a call has more parameters than the called node: skip 
-                    
+                    // if a call has more parameters than the referenced node: skip 
                 } else {
                     // else: add child nodes and edges if not already created
                     if (p instanceof ValuedObjectReference) {
@@ -1650,9 +1670,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 }
             ]            
         } // really need to set invisible here? better skip defineNodes when traversing all df nodes
-        else if (n instanceof DefineNode) {
-            nNode.KRendering.invisible = true
-        }
+        // already skipped when traversing all nodes of current df
+//        else if (n instanceof DefineNode) {
+//            nNode.KRendering.invisible = true
+//        }
         else if (n instanceof CallNode) {
             val call = n as CallNode
             val refID = call.callReference.id
@@ -1719,6 +1740,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 //                    //println("pNode.child: " + node)
 //                ]
                 
+                // translate states
                 ref.states.forEach[ s|
                     nNode.children += s.translate
                 ]
