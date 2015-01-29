@@ -82,6 +82,22 @@ import de.cau.cs.kieler.scg.optimizer.CopyPropagation
 
 class GuardCreator extends AbstractGuardCreator {
 
+    static final boolean DEBUG = false;
+
+    def static void debug(String debugText) {
+        debug(debugText, true);
+    }
+
+    def static void debug(String debugText, boolean lineBreak) {
+        if (DEBUG) {
+            if (lineBreak) {
+                System.out.println(debugText);
+            } else {
+                System.out.print(debugText);
+            }
+        }
+    }
+    
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
@@ -215,7 +231,7 @@ class GuardCreator extends AbstractGuardCreator {
                 scg.guards += newGuard
                 
                 conditionalGuards.put(conditional, newGuard)
-                System.out.println("Generated NEW conditional guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize)
+                debug("Generated NEW conditional guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize)
             }
         ]
         
@@ -228,7 +244,7 @@ class GuardCreator extends AbstractGuardCreator {
         
         val CopyPropagation copyPropagation = 
             Guice.createInjector().getInstance(typeof(CopyPropagation))        
-        copyPropagation.optimize(scg)         
+//        copyPropagation.optimize(scg)         
         
         scg     	
     }
@@ -337,7 +353,7 @@ class GuardCreator extends AbstractGuardCreator {
     			volatileText = volatileText + volatile.name + " "
     		}
     	}*/
-        System.out.println("Generated guard " + guard.valuedObject.name + " with expression " + guard.expression.serialize)// + volatileText)      
+        debug("Generated guard " + guard.valuedObject.name + " with expression " + guard.expression.serialize)// + volatileText)      
     }
 //    } // schizo entry
     
@@ -469,7 +485,7 @@ class GuardCreator extends AbstractGuardCreator {
             sync.annotate(join)
         }        
         val synchronizer = join.getSynchronizer
-        System.out.println("Creating join guard " + guard.valuedObject.name + " with " + synchronizer.id)
+        debug("Creating join guard " + guard.valuedObject.name + " with " + synchronizer.id)
 //        if (synchronizer.id == DepthJoinSynchronizer::SYNCHRONIZER_ID) {
 //            (synchronizer as DepthJoinSynchronizer).schizophrenicDeclaration = schizoDeclaration
 //        }

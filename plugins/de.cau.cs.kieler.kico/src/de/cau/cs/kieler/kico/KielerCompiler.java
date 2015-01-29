@@ -35,11 +35,27 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * 
  */
 public class KielerCompiler {
-
+    
     /** The Constant DEBUG. */
-    public static final boolean DEBUG = java.lang.management.ManagementFactory.getRuntimeMXBean()
-            .getInputArguments().toString().contains("-agentlib:jdwp");
+//    public static final boolean DEBUG = java.lang.management.ManagementFactory.getRuntimeMXBean()
+//            .getInputArguments().toString().contains("-agentlib:jdwp");
+    static final boolean DEBUG = false;
 
+    static void debug(String debugText) {
+        debug(debugText, true);
+    }
+
+    static void debug(String debugText, boolean lineBreak) {
+        if (DEBUG) {
+            if (lineBreak) {
+                System.out.println(debugText);
+            } else {
+                System.out.print(debugText);
+            }
+        }
+    }    
+
+    // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
     /** The cached map id to all registered transformations. */
@@ -231,7 +247,7 @@ public class KielerCompiler {
                 if (alternative && !dependencyReferenced && !groupReferenced) {
                     if (transformationDummy.reverseDependencies.size() == 0) {
                         toBeDeleted = transformationDummy;
-                        System.out.println("REMOVE " + transformationDummy.id);
+                        debug("REMOVE " + transformationDummy.id);
                         found = true;
                         break;
                     }
@@ -241,7 +257,7 @@ public class KielerCompiler {
                 context.getGraph().remove(toBeDeleted);
                 for (TransformationDummy transformationDummy : context.getGraph()) {
                     if (transformationDummy.reverseDependencies.contains(toBeDeleted)) {
-                        System.out.println("REMOVE " + toBeDeleted.id + " from "
+                        debug("REMOVE " + toBeDeleted.id + " from "
                                 + transformationDummy.id);
                         transformationDummy.reverseDependencies.remove(toBeDeleted);
                     }
@@ -627,7 +643,7 @@ public class KielerCompiler {
                         if (!exists) {
                             // Add default here because no alternative of this group is yet included
                             // take the first alternative group member that is not disabled! //TODO:
-                            System.out.println("### " + transformation.getName());
+                            debug("### " + transformation.getName());
                             List<String> allPrioDependencies = transformationIDs;
                             String defaultTransformation =
                                     transformationGroup.getSelectedDependency(transformationIDs, disabledTransformationIDs, priorizedTransformationIDs);
@@ -845,6 +861,7 @@ public class KielerCompiler {
      */
     public static CompilationResult compile(KielerCompilerContext context) {
         updateMapping(DEBUG);
+        long start = System.currentTimeMillis();
 
         // as this is a compile run, the following MUST be set
         EObject transformationEObject = context.getTransformationObject();
@@ -961,6 +978,10 @@ public class KielerCompiler {
         if (monitor != null) {
             monitor.done();
         }
+        long end = System.currentTimeMillis();
+        String seconds = (((float)(end-start))/1000) + "";
+        System.out.println("KIELER Compiler compiled in "+seconds+" seconds.");
+        
         context.getCompilationResult().processPostponedWarnings();
         context.getCompilationResult().processPostponedErrors();
         return context.getCompilationResult();
