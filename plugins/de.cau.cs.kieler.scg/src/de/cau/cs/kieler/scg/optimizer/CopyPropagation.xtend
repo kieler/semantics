@@ -34,6 +34,22 @@ import java.util.List
  
 class CopyPropagation extends AbstractOptimizer {
     
+    static final boolean DEBUG = false;
+
+    def static void debug(String debugText) {
+        debug(debugText, true);
+    }
+
+    def static void debug(String debugText, boolean lineBreak) {
+        if (DEBUG) {
+            if (lineBreak) {
+                System.out.println(debugText);
+            } else {
+                System.out.print(debugText);
+            }
+        }
+    }    
+    
     @Inject
     extension KExpressionsExtension
     
@@ -104,11 +120,11 @@ class CopyPropagation extends AbstractOptimizer {
         
         
         
-        System.out.print("Copy propagation: ")
+        debug("Copy propagation: ", false)
         for (del : toDelete.immutableCopy) {
-            System.out.print(del.valuedObject.name + " ")
+            debug(del.valuedObject.name + " ", false)
         }
-        System.out.println("")
+        debug("")
         
         relinkVisited.clear
         replacementMap.clear
@@ -117,7 +133,7 @@ class CopyPropagation extends AbstractOptimizer {
                 del.relink(toDelete, "")
             }
         }
-        System.out.println("")
+        debug("")
         
 //        toDelete -= goGuard
 
@@ -130,7 +146,7 @@ class CopyPropagation extends AbstractOptimizer {
     
     private def Guard relink(Guard guard, List<Guard> deleteList, String debugIndent) {
     	if (!relinkVisited.contains(guard)) {
-            System.out.println(debugIndent + "Copy propagation: relinking " + guard.valuedObject.name)
+            debug(debugIndent + "Copy propagation: relinking " + guard.valuedObject.name)
     		relinkVisited += guard
 	    	val vo = (guard.expression as ValuedObjectReference).valuedObject
         	var Guard newGuard = reverseGuardMap.get(vo)
