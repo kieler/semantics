@@ -27,25 +27,101 @@ public class PrimitiveBeautifier {
     
     //-------------------------------------------------------------------------
 
+    static final String INDENTPART = "...";
+    
+    static String indentStringCache = "";
+    static int indentCache = 0;
+    public static String getIndentString(int indent) {
+        if (indentCache != indent) {
+            indentCache = indent;
+            indentStringCache = "";
+            while (indent > 0) {
+                indentStringCache += INDENTPART;
+                indent--;
+            }
+        }
+        return indentStringCache;
+    }
+    
+    
     public static String beautify(String text) {
+        
         // Do not call the inefficient beautifier for large models
         if (text.length() > SMALL_MODEL) {
             return text;
         }
-        String output = "";
-        String modifiedOutput = text;
-        while (!output.equals(modifiedOutput)) {
-            output = modifiedOutput;
-            modifiedOutput = output.replace("\r\n\r\n","\r\n").replace("\n\n","\n").replace(" ;",";").replace("\r\n;",";").replace("\n;",";");//.replace("(\r\n","(").replace("(\n","(").replace("\r\n)",")").replace("\n)",")");
-        }
+
+        long start = System.currentTimeMillis();
         
-        String[] lines = modifiedOutput.split("\n");
-        modifiedOutput = "";
-        for (String line : lines) {
-            if (line.trim().length() > 0) {
-                modifiedOutput = modifiedOutput + line + "\n";
+        String modifiedOutput = "";
+        int indent = 0;
+        boolean spaceBefore = false;
+        for (int c = 0; c < text.length(); c++) {
+            char character = text.charAt(c);
+            
+            if (character == '\n' || character == '\r') {
+                if (c > 2 && text.substring(c - 2, c).equals("*/")) {
+                    modifiedOutput += "\n";
+                }
+                spaceBefore = true; // no space at line begin
+                continue;
+            }
+            else if (character == ' ') {
+                if (!spaceBefore) {
+                    spaceBefore = true;
+                    modifiedOutput += " ";
+                }
+                continue;
+            }
+            else if (character == '{') {
+                modifiedOutput += "{\n";
+                indent++;
+                if (indent > 0) {
+                    modifiedOutput += getIndentString(indent); 
+                }
+                spaceBefore = true; // no space at line begin
+            }
+            else if (character == '}') {
+                // now we must erase one INDENTPART from the tail of modifiedOUtput
+                modifiedOutput = modifiedOutput.substring(0, modifiedOutput.length() - INDENTPART.length());
+                
+                modifiedOutput += "}\n";
+                indent--;
+                if (indent > 0) {
+                    modifiedOutput += getIndentString(indent); 
+                }
+                spaceBefore = true; // no space at line begin
+            }
+            else if (character == ';') {
+                modifiedOutput += ";\n";
+                if (indent > 0) {
+                    modifiedOutput += getIndentString(indent); 
+                }
+                spaceBefore = true; // no space at line begin
+            }
+            else {
+                spaceBefore = false;
+                modifiedOutput += character;
             }
         }
+        
+        System.out.println("PrimitiveBeautifier took " + (System.currentTimeMillis()-start) + " ms.");
+
+//        
+//        String output = "";
+//        String modifiedOutput = text;
+//        while (!output.equals(modifiedOutput)) {
+//            output = modifiedOutput;
+//            modifiedOutput = output.replace("\r\n\r\n","\r\n").replace("\n\n","\n").replace(" ;",";").replace("\r\n;",";").replace("\n;",";");//.replace("(\r\n","(").replace("(\n","(").replace("\r\n)",")").replace("\n)",")");
+//        }
+//        
+//        String[] lines = modifiedOutput.split("\n");
+//        modifiedOutput = "";
+//        for (String line : lines) {
+//            if (line.trim().length() > 0) {
+//                modifiedOutput = modifiedOutput + line + "\n";
+//            }
+//        }
         return modifiedOutput;
     }    
 
