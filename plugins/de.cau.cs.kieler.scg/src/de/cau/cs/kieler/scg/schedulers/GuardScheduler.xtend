@@ -166,11 +166,11 @@ class GuardScheduler extends AbstractScheduler {
             if (schedulingBlock != null) {
                 val dependencies = schedulingBlock.getAllDependencies(scg)
                 if (!dependencies.empty) {
-                    System.out.print(indent + "Scheduling block" + schedulingBlock.label + " has dependencies: ")
+                    debug(indent + "Scheduling block" + schedulingBlock.label + " has dependencies: ", false)
                     for (dependency : dependencies) {
                         if (dependency.concurrent && !dependency.confluent) {
                             val sb = schedulingBlockCache.get(dependency.eContainer)
-                            System.out.print(sb.label + " (" + sb.guard.valuedObject.name + ")")
+                            debug(sb.label + " (" + sb.guard.valuedObject.name + ")", false)
                             neededNodes += dependency.target
 
                             // TODO: VERIFY!
@@ -295,9 +295,9 @@ class GuardScheduler extends AbstractScheduler {
             }
         }
 
-        System.out.print("Schedule: ")
+        debug("Schedule: ", false)
         for (g : schedule) {
-            System.out.print(g.schedulingBlock.label + " ")
+            debug(g.schedulingBlock.label + " ", false)
         }
         debug("")
 
