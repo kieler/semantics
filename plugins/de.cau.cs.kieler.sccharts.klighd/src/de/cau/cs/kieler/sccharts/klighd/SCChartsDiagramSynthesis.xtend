@@ -1741,9 +1741,16 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 //                ]
                 
                 // translate states
-                ref.states.forEach[ s|
-                    nNode.children += s.translate
-                ]
+//                ref.states.forEach[ s|
+//                    nNode.children += s.translate
+//                ]
+                if (!ref.states.nullOrEmpty) {
+                    val synthesis = delegate.get()
+                    synthesis.use(usedContext)
+                    for (s: ref.states) {
+                        nNode.children += synthesis.translate(s)
+                    }
+                }
                 
             // what is still to do herre?
             } else if (call.callReference instanceof CallNode) {
