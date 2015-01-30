@@ -142,6 +142,21 @@ class EsterelToSclExtensions {
         ret
     }
     
+    /*
+     * Returns a fresh variable without register the local declaration but adding it to give sScope
+     */
+    def createFreshVarNoDecl(StatementScope sScope, String name, ValueType t) {
+        val ret = createValuedObject(uniqueName(signalMap, name))
+        sScope.declarations += createDeclaration => [
+        	valuedObjects += ret
+        	type = t
+        ]
+
+        signalMap.add(name -> ret)
+
+        ret
+    }
+    
 
     def resetLabelCount() {
         labelCount = 0;
