@@ -3,11 +3,11 @@
   <nodes xsi:type="scg:Entry" exit="//@nodes.53">
     <next target="//@nodes.1"/>
   </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.0/@next" valuedObject="//@declarations.17/@valuedObjects.0">
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.0/@next" valuedObject="//@declarations.16/@valuedObjects.0">
     <next target="//@nodes.2"/>
     <assignment xsi:type="kexpressions:IntValue" value="0"/>
   </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.1/@next" valuedObject="//@declarations.16/@valuedObjects.0">
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.1/@next" valuedObject="//@declarations.15/@valuedObjects.0">
     <next target="//@nodes.3"/>
     <assignment xsi:type="kexpressions:IntValue" value="0"/>
   </nodes>
@@ -125,11 +125,11 @@
     <else target="//@nodes.30"/>
     <condition xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.3/@valuedObjects.0"/>
   </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.28/@then" valuedObject="//@declarations.15/@valuedObjects.0">
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.28/@then" valuedObject="//@declarations.17/@valuedObjects.0">
     <next target="//@nodes.31"/>
     <assignment xsi:type="kexpressions:IntValue" value="1"/>
   </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.28/@else" valuedObject="//@declarations.15/@valuedObjects.0">
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.28/@else" valuedObject="//@declarations.17/@valuedObjects.0">
     <next target="//@nodes.31"/>
     <assignment xsi:type="kexpressions:IntValue" value="3"/>
   </nodes>
@@ -170,10 +170,10 @@
   <nodes xsi:type="scg:Depth" surface="//@nodes.37">
     <next target="//@nodes.39"/>
   </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.38/@next" valuedObject="//@declarations.16/@valuedObjects.0">
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.38/@next" valuedObject="//@declarations.15/@valuedObjects.0">
     <next target="//@nodes.40"/>
     <assignment xsi:type="kexpressions:OperatorExpression" operator="+">
-      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.16/@valuedObjects.0"/>
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.15/@valuedObjects.0"/>
       <subExpressions xsi:type="kexpressions:IntValue" value="1"/>
     </assignment>
   </nodes>
@@ -181,7 +181,7 @@
     <then target="//@nodes.41"/>
     <else target="//@nodes.45"/>
     <condition xsi:type="kexpressions:OperatorExpression">
-      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.15/@valuedObjects.0"/>
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.17/@valuedObjects.0"/>
       <subExpressions xsi:type="kexpressions:IntValue" value="1"/>
     </condition>
   </nodes>
@@ -233,10 +233,10 @@
   <nodes xsi:type="scg:Depth" surface="//@nodes.49">
     <next target="//@nodes.51"/>
   </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.50/@next" valuedObject="//@declarations.17/@valuedObjects.0">
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.50/@next" valuedObject="//@declarations.16/@valuedObjects.0">
     <next target="//@nodes.19"/>
     <assignment xsi:type="kexpressions:OperatorExpression" operator="+">
-      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.17/@valuedObjects.0"/>
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.16/@valuedObjects.0"/>
       <subExpressions xsi:type="kexpressions:IntValue" value="1"/>
     </assignment>
   </nodes>
@@ -290,12 +290,12 @@
     <valuedObjects name="CPUTS_val"/>
   </declarations>
   <declarations type="int">
-    <valuedObjects name="t"/>
-  </declarations>
-  <declarations type="int">
     <valuedObjects name="i"/>
   </declarations>
   <declarations type="int">
     <valuedObjects name="i_"/>
+  </declarations>
+  <declarations type="int">
+    <valuedObjects name="t"/>
   </declarations>
 </scg:SCGraph>

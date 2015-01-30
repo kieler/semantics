@@ -3,65 +3,65 @@
   <nodes xsi:type="scg:Entry" exit="//@nodes.33">
     <next target="//@nodes.1"/>
   </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.0/@next" valuedObject="//@declarations.13/@valuedObjects.0">
-    <next target="//@nodes.2"/>
-    <assignment xsi:type="kexpressions:BoolValue" value="true"/>
-  </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.1/@next" valuedObject="//@declarations.12/@valuedObjects.0">
+  <nodes xsi:type="scg:Fork" incoming="//@nodes.0/@next" join="//@nodes.2">
     <next target="//@nodes.3"/>
-    <assignment xsi:type="kexpressions:IntValue" value="4"/>
+    <next target="//@nodes.12"/>
   </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.2/@next" valuedObject="//@declarations.11/@valuedObjects.0">
-    <next target="//@nodes.4"/>
-    <assignment xsi:type="kexpressions:IntValue" value="3"/>
-  </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.3/@next" valuedObject="//@declarations.10/@valuedObjects.0">
-    <next target="//@nodes.5"/>
-    <assignment xsi:type="kexpressions:IntValue" value="2"/>
-  </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.4/@next" valuedObject="//@declarations.9/@valuedObjects.0">
-    <next target="//@nodes.6"/>
-    <assignment xsi:type="kexpressions:IntValue" value="1"/>
-  </nodes>
-  <nodes xsi:type="scg:Fork" incoming="//@nodes.5/@next" join="//@nodes.7">
-    <next target="//@nodes.8"/>
-    <next target="//@nodes.17"/>
-  </nodes>
-  <nodes xsi:type="scg:Join" incoming="//@nodes.16/@next //@nodes.32/@next" fork="//@nodes.6">
+  <nodes xsi:type="scg:Join" incoming="//@nodes.11/@next //@nodes.32/@next" fork="//@nodes.1">
     <next target="//@nodes.33"/>
   </nodes>
-  <nodes xsi:type="scg:Entry" incoming="//@nodes.6/@next.0" exit="//@nodes.16">
-    <next target="//@nodes.9"/>
+  <nodes xsi:type="scg:Entry" incoming="//@nodes.1/@next.0" exit="//@nodes.11">
+    <next target="//@nodes.4"/>
   </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.8/@next //@nodes.15/@next" valuedObject="//@declarations.0/@valuedObjects.0">
-    <next target="//@nodes.10"/>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.3/@next //@nodes.10/@next" valuedObject="//@declarations.0/@valuedObjects.0">
+    <next target="//@nodes.5"/>
     <assignment xsi:type="kexpressions:BoolValue" value="false"/>
   </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.9/@next" valuedObject="//@declarations.1/@valuedObjects.0">
-    <next target="//@nodes.11"/>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.4/@next" valuedObject="//@declarations.1/@valuedObjects.0">
+    <next target="//@nodes.6"/>
     <assignment xsi:type="kexpressions:BoolValue" value="false"/>
   </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.10/@next" valuedObject="//@declarations.3/@valuedObjects.0">
-    <next target="//@nodes.12"/>
-    <assignment xsi:type="kexpressions:BoolValue" value="false"/>
-  </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.11/@next" valuedObject="//@declarations.5/@valuedObjects.0">
-    <next target="//@nodes.13"/>
-    <assignment xsi:type="kexpressions:BoolValue" value="false"/>
-  </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.12/@next" valuedObject="//@declarations.7/@valuedObjects.0">
-    <next target="//@nodes.14"/>
-    <assignment xsi:type="kexpressions:BoolValue" value="false"/>
-  </nodes>
-  <nodes xsi:type="scg:Surface" incoming="//@nodes.13/@next" depth="//@nodes.15"/>
-  <nodes xsi:type="scg:Depth" surface="//@nodes.14">
-    <next target="//@nodes.9"/>
-  </nodes>
-  <nodes xsi:type="scg:Exit" entry="//@nodes.8">
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.5/@next" valuedObject="//@declarations.3/@valuedObjects.0">
     <next target="//@nodes.7"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="false"/>
   </nodes>
-  <nodes xsi:type="scg:Entry" incoming="//@nodes.6/@next.1" exit="//@nodes.32">
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.6/@next" valuedObject="//@declarations.5/@valuedObjects.0">
+    <next target="//@nodes.8"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="false"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.7/@next" valuedObject="//@declarations.7/@valuedObjects.0">
+    <next target="//@nodes.9"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="false"/>
+  </nodes>
+  <nodes xsi:type="scg:Surface" incoming="//@nodes.8/@next" depth="//@nodes.10"/>
+  <nodes xsi:type="scg:Depth" surface="//@nodes.9">
+    <next target="//@nodes.4"/>
+  </nodes>
+  <nodes xsi:type="scg:Exit" entry="//@nodes.3">
+    <next target="//@nodes.2"/>
+  </nodes>
+  <nodes xsi:type="scg:Entry" incoming="//@nodes.1/@next.1" exit="//@nodes.32">
+    <next target="//@nodes.13"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.12/@next" valuedObject="//@declarations.13/@valuedObjects.0">
+    <next target="//@nodes.14"/>
+    <assignment xsi:type="kexpressions:BoolValue" value="true"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.13/@next" valuedObject="//@declarations.12/@valuedObjects.0">
+    <next target="//@nodes.15"/>
+    <assignment xsi:type="kexpressions:IntValue" value="4"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.14/@next" valuedObject="//@declarations.11/@valuedObjects.0">
+    <next target="//@nodes.16"/>
+    <assignment xsi:type="kexpressions:IntValue" value="3"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.15/@next" valuedObject="//@declarations.10/@valuedObjects.0">
+    <next target="//@nodes.17"/>
+    <assignment xsi:type="kexpressions:IntValue" value="2"/>
+  </nodes>
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.16/@next" valuedObject="//@declarations.9/@valuedObjects.0">
     <next target="//@nodes.18"/>
+    <assignment xsi:type="kexpressions:IntValue" value="1"/>
   </nodes>
   <nodes xsi:type="scg:Assignment" incoming="//@nodes.17/@next //@nodes.25/@next" valuedObject="//@declarations.0/@valuedObjects.0">
     <next target="//@nodes.19"/>
@@ -149,10 +149,10 @@
   <nodes xsi:type="scg:Depth" surface="//@nodes.30">
     <next target="//@nodes.32"/>
   </nodes>
-  <nodes xsi:type="scg:Exit" incoming="//@nodes.31/@next" entry="//@nodes.17">
-    <next target="//@nodes.7"/>
+  <nodes xsi:type="scg:Exit" incoming="//@nodes.31/@next" entry="//@nodes.12">
+    <next target="//@nodes.2"/>
   </nodes>
-  <nodes xsi:type="scg:Exit" incoming="//@nodes.7/@next" entry="//@nodes.0"/>
+  <nodes xsi:type="scg:Exit" incoming="//@nodes.2/@next" entry="//@nodes.0"/>
   <declarations type="bool" output="true">
     <valuedObjects name="A"/>
   </declarations>

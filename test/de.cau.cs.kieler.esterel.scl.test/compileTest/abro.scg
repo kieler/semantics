@@ -27,7 +27,7 @@
   <nodes xsi:type="scg:Entry" incoming="//@nodes.1/@next.1" exit="//@nodes.32">
     <next target="//@nodes.9"/>
   </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.8/@next //@nodes.26/@then //@nodes.31/@next" valuedObject="//@declarations.4/@valuedObjects.0">
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.8/@next" valuedObject="//@declarations.4/@valuedObjects.0">
     <next target="//@nodes.10"/>
     <assignment xsi:type="kexpressions:BoolValue" value="false"/>
   </nodes>
@@ -91,7 +91,7 @@
     <next target="//@nodes.11"/>
   </nodes>
   <nodes xsi:type="scg:Conditional" incoming="//@nodes.11/@next">
-    <then target="//@nodes.9"/>
+    <then target="//@nodes.32"/>
     <else target="//@nodes.27"/>
     <condition xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.4/@valuedObjects.0"/>
   </nodes>
@@ -112,10 +112,10 @@
     <condition xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.2/@valuedObjects.0"/>
   </nodes>
   <nodes xsi:type="scg:Assignment" incoming="//@nodes.30/@then" valuedObject="//@declarations.4/@valuedObjects.0">
-    <next target="//@nodes.9"/>
+    <next target="//@nodes.32"/>
     <assignment xsi:type="kexpressions:BoolValue" value="true"/>
   </nodes>
-  <nodes xsi:type="scg:Exit" entry="//@nodes.8">
+  <nodes xsi:type="scg:Exit" incoming="//@nodes.26/@then //@nodes.31/@next" entry="//@nodes.8">
     <next target="//@nodes.2"/>
   </nodes>
   <nodes xsi:type="scg:Exit" incoming="//@nodes.2/@next" entry="//@nodes.0"/>
