@@ -27,6 +27,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import java.util.LinkedList
 import de.cau.cs.kieler.scl.scl.StatementScope
 import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.scl.scl.SclFactory
 
 /**
  * SCL Extensions.
@@ -37,244 +38,260 @@ import de.cau.cs.kieler.core.kexpressions.Declaration
  */
 class SCLExtensions {
 
-    /*
+	/*
      * Removes all goto instructions, that target a label, that follows that goto.
      */
-    def StatementSequence removeSuperfluousGotos(StatementSequence sSeq) {
-        val toDelete = <Goto>newLinkedList
-        for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
-            var statement = goto.eContainer
-            var EList<Statement> stmList
+	def StatementSequence removeSuperfluousGotos(StatementSequence sSeq) {
+		val toDelete = <Goto>newLinkedList
+		for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
+			var statement = goto.eContainer
+			var EList<Statement> stmList
 
-            // Check if in Conditional as if so we have to distinguish if we are in the else branch as this is not a sSeq
-            if ((statement.eContainer instanceof Conditional) &&
-                ((statement.eContainer as Conditional).elseStatements).contains(statement)) {
-                stmList = (statement.eContainer as Conditional).elseStatements
-            } else {
-                stmList = (statement.eContainer as StatementSequence).statements
-            }
-            var parent = statement.eContainer as StatementSequence
-            var index = stmList.indexOf(statement)
-            var justLabel = true
-            var oldSseq = parent
-            while ((stmList.size > index + 1 && justLabel) || parent instanceof Conditional) {
+			// Check if in Conditional as if so we have to distinguish if we are in the else branch as this is not a sSeq
+			if ((statement.eContainer instanceof Conditional) &&
+				((statement.eContainer as Conditional).elseStatements).contains(statement)) {
+				stmList = (statement.eContainer as Conditional).elseStatements
+			} else {
+				stmList = (statement.eContainer as StatementSequence).statements
+			}
+			var parent = statement.eContainer as StatementSequence
+			var index = stmList.indexOf(statement)
+			var justLabel = true
+			var oldSseq = parent
+			while ((stmList.size > index + 1 && justLabel) || parent instanceof Conditional) {
 
-                // Check conditional following if in if-then-else branch
-                if (stmList.size == index + 1 && justLabel && parent instanceof Conditional) {
-                    oldSseq = parent
-                    if ((parent.eContainer instanceof Conditional) &&
-                        ((parent.eContainer as Conditional).elseStatements).contains(oldSseq.eContainer)) {
-                        stmList = (parent.eContainer as Conditional).elseStatements
-                    } else {
-                        stmList = (parent.eContainer.eContainer as StatementSequence).statements
-                    }
+				// Check conditional following if in if-then-else branch
+				if (stmList.size == index + 1 && justLabel && parent instanceof Conditional) {
+					oldSseq = parent
+					if ((parent.eContainer instanceof Conditional) &&
+						((parent.eContainer as Conditional).elseStatements).contains(oldSseq.eContainer)) {
+						stmList = (parent.eContainer as Conditional).elseStatements
+					} else {
+						stmList = (parent.eContainer.eContainer as StatementSequence).statements
+					}
 
-                    parent = parent.eContainer.eContainer as StatementSequence
-                    index = stmList.indexOf(oldSseq.eContainer)
-                }
-                if (stmList.size > index + 1) {
-                    val nextStatement = stmList.get(index + 1) as Statement
-                    if (nextStatement instanceof EmptyStatement &&
-                        (nextStatement as EmptyStatement).label == goto.targetLabel) {
-                        toDelete.add(goto)
-                    }
-                    if (!(nextStatement instanceof EmptyStatement)) {
-                        justLabel = false
-                    }
-                    index = index + 1
-                }
+					parent = parent.eContainer.eContainer as StatementSequence
+					index = stmList.indexOf(oldSseq.eContainer)
+				}
+				if (stmList.size > index + 1) {
+					val nextStatement = stmList.get(index + 1) as Statement
+					if (nextStatement instanceof EmptyStatement &&
+						(nextStatement as EmptyStatement).label == goto.targetLabel) {
+						toDelete.add(goto)
+					}
+					if (!(nextStatement instanceof EmptyStatement)) {
+						justLabel = false
+					}
+					index = index + 1
+				}
 
-            }
-        }
-        toDelete.forEach[it.eContainer.remove]
+			}
+		}
+		toDelete.forEach[it.eContainer.remove]
 
-        sSeq
-    }
+		sSeq
+	}
 
-    /*
+	/*
      * Removes all labels which are not used
      */
-    def StatementSequence optimizeLabels(StatementSequence sSeq) {
-        val gotos = sSeq.eAllContents.toList.filter(typeof(Goto))
-        val toDelete = <EmptyStatement>newLinkedList
-        sSeq.eAllContents.filter(typeof(EmptyStatement)).forEach [
-            if(!gotos.exists(f|f.targetLabel == it.label)) toDelete.add(it)
-        ]
-        toDelete.forEach[it.remove]
+	def StatementSequence optimizeLabels(StatementSequence sSeq) {
+		val gotos = sSeq.eAllContents.toList.filter(typeof(Goto))
+		val toDelete = <EmptyStatement>newLinkedList
+		sSeq.eAllContents.filter(typeof(EmptyStatement)).forEach [
+			if(!gotos.exists(f|f.targetLabel == it.label)) toDelete.add(it)
+		]
+		toDelete.forEach[it.remove]
 
-        sSeq
-    }
+		sSeq
+	}
 
-    /*
+	/*
      * Removes all statements that follow a goto before any label
      */
-    def StatementSequence removeUnreachableCode(StatementSequence sSeq) {
-        val toDelete = <Statement>newLinkedList
-        for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
-            var statement = goto.eContainer
-            var parent = statement.eContainer as StatementSequence
-            var index = parent.statements.indexOf(statement)
-            var noLabel = true
-            while (parent.statements.size > index + 1 && noLabel) {
-                val nextStatement = parent.statements.get(index + 1) as Statement
+	def StatementSequence removeUnreachableCode(StatementSequence sSeq) {
+		val toDelete = <Statement>newLinkedList
+		for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
+			var statement = goto.eContainer
+			var parent = statement.eContainer as StatementSequence
+			var index = parent.statements.indexOf(statement)
+			var noLabel = true
+			while (parent.statements.size > index + 1 && noLabel) {
+				val nextStatement = parent.statements.get(index + 1) as Statement
 
-                if (nextStatement instanceof EmptyStatement) {
-                    noLabel = false
-                } else {
-                    toDelete.add(nextStatement)
-                }
-                index = index + 1
+				if (nextStatement instanceof EmptyStatement) {
+					noLabel = false
+				} else {
+					toDelete.add(nextStatement)
+				}
+				index = index + 1
 
-            }
+			}
 
-        }
-        toDelete.forEach[it.remove]
+		}
+		toDelete.forEach[it.remove]
 
-        sSeq
-    }
+		sSeq
+	}
 
-    /*
+	/*
      * Removes subsequent labels and changes corresponding gotos
      */
-    def StatementSequence removeSubseqeuentLabels(StatementSequence sSeq) {
-        val toDelete = <Statement>newLinkedList
-        val replaceBy = <Pair<String, String>>newLinkedList
+	def StatementSequence removeSubseqeuentLabels(StatementSequence sSeq) {
+		val toDelete = <Statement>newLinkedList
+		val replaceBy = <Pair<String, String>>newLinkedList
 
-        for (emptyStm : sSeq.eAllContents.toList.filter(typeof(EmptyStatement))) {
-            var parent = emptyStm.eContainer as StatementSequence
-            var index = parent.statements.indexOf(emptyStm)
-            var isLabel = true
-            while (parent.statements.size > index + 1 && isLabel) {
-                val nextStatement = parent.statements.get(index + 1) as Statement
+		for (emptyStm : sSeq.eAllContents.toList.filter(typeof(EmptyStatement))) {
+			var parent = emptyStm.eContainer as StatementSequence
+			var index = parent.statements.indexOf(emptyStm)
+			var isLabel = true
+			while (parent.statements.size > index + 1 && isLabel) {
+				val nextStatement = parent.statements.get(index + 1) as Statement
 
-                if (nextStatement instanceof EmptyStatement) {
-                    toDelete.add(nextStatement)
-                    replaceBy.add((nextStatement as EmptyStatement).label -> emptyStm.label)
-                    index = index + 1
-                } else {
-                    isLabel = false;
-                }
-            }
-        }
-        toDelete.forEach[it.remove]
+				if (nextStatement instanceof EmptyStatement) {
+					toDelete.add(nextStatement)
+					replaceBy.add((nextStatement as EmptyStatement).label -> emptyStm.label)
+					index = index + 1
+				} else {
+					isLabel = false;
+				}
+			}
+		}
+		toDelete.forEach[it.remove]
 
-        // Replace goto targets
-        for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
-            var newLabel = replaceBy.findFirst[key == (goto as Goto).targetLabel]
+		// Replace goto targets
+		for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
+			var newLabel = replaceBy.findFirst[key == (goto as Goto).targetLabel]
 
-            if (newLabel != null) {
-                (goto as Goto).targetLabel = newLabel.value
-            }
-        }
+			if (newLabel != null) {
+				(goto as Goto).targetLabel = newLabel.value
+			}
+		}
 
-        sSeq
-    }
+		sSeq
+	}
 
-    /*
+	/*
       * Removes double jumps
       */
-    def StatementSequence removeDoubleJumps(StatementSequence sSeq) {
-        val replaceBy = <Pair<String, String>>newLinkedList
-        for (emptyStm : sSeq.eAllContents.toList.filter(typeof(EmptyStatement))) {
-            var EList<Statement> stmList
-            var parent = emptyStm.eContainer as StatementSequence
+	def StatementSequence removeDoubleJumps(StatementSequence sSeq) {
+		val replaceBy = <Pair<String, String>>newLinkedList
+		for (emptyStm : sSeq.eAllContents.toList.filter(typeof(EmptyStatement))) {
+			var EList<Statement> stmList
+			var parent = emptyStm.eContainer as StatementSequence
 
-            // Continue if in conditional
-            var continue = true
+			// Continue if in conditional
+			var continue = true
 
-            // Check whether label is in conditional and in which branch
-            if ((parent instanceof Conditional) && (parent as Conditional).elseStatements.contains(emptyStm)) {
-                stmList = (parent as Conditional).elseStatements
-            } else {
-                stmList = parent.statements
-            }
-            var index = stmList.indexOf(emptyStm) + 1
-            var Statement curStm = emptyStm
-            while (continue) {
-                if (stmList.size > index) {
-                    val nextStatement = stmList.get(index) as Statement
-                    if (nextStatement instanceof InstructionStatement &&
-                        (nextStatement as InstructionStatement).instruction instanceof Goto) {
-                        val goto = ((nextStatement as InstructionStatement).instruction as Goto)
-                        replaceBy += emptyStm.label -> goto.targetLabel
-                    }
-                    continue = false;
+			// Check whether label is in conditional and in which branch
+			if ((parent instanceof Conditional) && (parent as Conditional).elseStatements.contains(emptyStm)) {
+				stmList = (parent as Conditional).elseStatements
+			} else {
+				stmList = parent.statements
+			}
+			var index = stmList.indexOf(emptyStm) + 1
+			var Statement curStm = emptyStm
+			while (continue) {
+				if (stmList.size > index) {
+					val nextStatement = stmList.get(index) as Statement
+					if (nextStatement instanceof InstructionStatement &&
+						(nextStatement as InstructionStatement).instruction instanceof Goto) {
+						val goto = ((nextStatement as InstructionStatement).instruction as Goto)
+						replaceBy += emptyStm.label -> goto.targetLabel
+					}
+					continue = false;
 
-                // Check whether at end of conditonal branch and "look outside"
-                } else if (parent instanceof Conditional) {
-                    curStm = parent.eContainer as Statement
-                    parent = parent.eContainer.eContainer as StatementSequence
-                    if ((parent instanceof Conditional) && (parent as Conditional).elseStatements.contains(curStm)) {
-                        stmList = (parent as Conditional).elseStatements
-                    } else {
-                        stmList = parent.statements
-                    }
-                    index = stmList.indexOf(curStm) + 1
-                } else {
-                    continue = false
-                }
-            }
-        }
+				// Check whether at end of conditonal branch and "look outside"
+				} else if (parent instanceof Conditional) {
+					curStm = parent.eContainer as Statement
+					parent = parent.eContainer.eContainer as StatementSequence
+					if ((parent instanceof Conditional) && (parent as Conditional).elseStatements.contains(curStm)) {
+						stmList = (parent as Conditional).elseStatements
+					} else {
+						stmList = parent.statements
+					}
+					index = stmList.indexOf(curStm) + 1
+				} else {
+					continue = false
+				}
+			}
+		}
 
-        // Replace goto targets
-        for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
-            var newLabel = replaceBy.findFirst[key == (goto as Goto).targetLabel]
-            if (newLabel != null) {
-                (goto as Goto).targetLabel = newLabel.value
-            }
-        }
+		// Replace goto targets
+		for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
+			var newLabel = replaceBy.findFirst[key == (goto as Goto).targetLabel]
+			if (newLabel != null) {
+				(goto as Goto).targetLabel = newLabel.value
+			}
+		}
 
-        sSeq
-    }
+		sSeq
+	}
 
-    /*
+	/*
        * Applies all optimizations until fixed-point is reached
        */
-    def StatementSequence optimizeAll(StatementSequence sSeq) {
-        var StatementSequence oldSseq
-        do {
-            oldSseq = EcoreUtil.copy(sSeq)
-            sSeq.removeSuperfluousGotos
-            sSeq.optimizeLabels
-            sSeq.removeUnreachableCode
-            sSeq.removeSubseqeuentLabels
-            sSeq.removeDoubleJumps
-        } while (!EcoreUtil.equals(oldSseq, sSeq))
-        sSeq
-    }
-    
-    /*
+	def StatementSequence optimizeAll(StatementSequence sSeq) {
+		var StatementSequence oldSseq
+		do {
+			oldSseq = EcoreUtil.copy(sSeq)
+			sSeq.removeSuperfluousGotos
+			sSeq.optimizeLabels
+			sSeq.removeUnreachableCode
+			sSeq.removeSubseqeuentLabels
+			sSeq.removeDoubleJumps
+		} while (!EcoreUtil.equals(oldSseq, sSeq))
+		sSeq
+	}
+
+	/*
      * Remove local variable declarations (i.e. StatementScopes)
      */
-     def removeLocalDeclarations(SCLProgram sclProgram) {
-     	// Collect all ValuedObject names
-     	val names = new LinkedList<String>
-     	sclProgram.declarations.forEach[ valuedObjects.forEach [ names += name ] ]
-     	
-     	val sScopes = sclProgram.eAllContents.toList.filter(typeof(StatementScope))
-     	val newDecls = new LinkedList<Declaration>
-     	for (sScope : sScopes) {
-     		sScope.declarations.forEach [
-     			valuedObjects.forEach [
-     				// Check whether variable name is already defined
-     				if (names.contains(it.name)) {
-     					val oldName = it.name
-     					it.name = it.name.makeUnique(names)
-     					sScope.rename(oldName, it.name)
-     				}
-     			]
-     			newDecls += it
-     		]
-     		// Replace sScope by its statements
-     		val parent = sScope.eContainer.eContainer as StatementSequence
-     		val index = parent.statements.indexOf(sScope.eContainer)
-     		parent.statements.remove(index)
-     		parent.statements.addAll(index, sScope.statements)
-     	}
-     	sclProgram.declarations += newDecls
-     	
-     	sclProgram
-     }
+	def removeLocalDeclarations(SCLProgram sclProgram) {
+
+		// Collect all ValuedObject names
+		val names = new LinkedList<String>
+		sclProgram.declarations.forEach[ valuedObjects.forEach[ names += name ] ]
+
+		val sScopes = sclProgram.eAllContents.toList.filter(typeof(StatementScope))
+		val newDecls = new LinkedList<Declaration>
+		for (sScope : sScopes) {
+			sScope.declarations.forEach [
+				for (valObj : valuedObjects) {
+
+					// Check whether variable name is already defined
+					if (names.contains(valObj.name)) {
+						val oldName = valObj.name
+						valObj.name = valObj.name.makeUnique(names)
+						sScope.rename(oldName, valObj.name)
+					}
+					names += valObj.name
+
+					// Add explicit assignment if initial value is given
+					if (valObj.initialValue != null) {
+						sScope.statements.add(0,
+							SclFactory::eINSTANCE.createInstructionStatement => [
+								instruction = SclFactory::eINSTANCE.createAssignment => [
+									valuedObject = valObj
+									expression = valObj.initialValue
+								]
+							])
+					}
+
+				}
+				newDecls += it
+			]
+
+			// Replace sScope by its statements
+			val parent = sScope.eContainer.eContainer as StatementSequence
+			val index = parent.statements.indexOf(sScope.eContainer)
+			parent.statements.remove(index)
+			parent.statements.addAll(index, sScope.statements)
+		}
+		sclProgram.declarations += newDecls
+
+		sclProgram
+	}
 
 	def rename(StatementScope sScope, String oldName, String newName) {
 		for (valObj : sScope.eAllContents.toList.filter(typeof(ValuedObject))) {
@@ -283,15 +300,15 @@ class SCLExtensions {
 			}
 		}
 	}
-	
+
 	def makeUnique(String name, LinkedList<String> names) {
 		var nameVar = name
 		while (names.contains(nameVar)) {
 			nameVar = nameVar + "_"
 		}
 		names.add(nameVar)
-		
+
 		nameVar
 	}
-	
-	}
+
+}
