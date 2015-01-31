@@ -623,14 +623,13 @@ public class KielerCompilerContext {
     public EObject getTransformationObject() {
         if ((getCompilationResult() == null
                 || getCompilationResult().getIntermediateResults().get(0) == null || (!(getCompilationResult()
-                .getIntermediateResults().get(0) instanceof EObject)))) {
+                .getTransformationObject() instanceof EObject)))) {
             // throw new RuntimeException(
             // "compiler(context) must be called with a model to compile as the first elements"
             // + " of intermediate results in the compiled results object");
             return null;
         }
-        EObject transformationObject =
-                (EObject) getCompilationResult().getTransformationObject();
+        EObject transformationObject = (EObject) getCompilationResult().getTransformationObject();
         return transformationObject;
 
     }
