@@ -41,6 +41,7 @@
     <module>de.cau.cs.kieler.esterel.cec.win32.x86</module>
     <module>de.cau.cs.kieler.esterel.examples</module>
     <module>de.cau.cs.kieler.esterel.ui</module>
+    <module>de.cau.cs.kieler.esterel.scl</module>
     <module>de.cau.cs.kieler.kev</module>
     <module>de.cau.cs.kieler.kex</module>
     <module>de.cau.cs.kieler.kico</module>
