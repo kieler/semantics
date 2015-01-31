@@ -313,7 +313,7 @@ public class KielerCompiler {
                 }
             }
             if (performanceString != null && performanceString.length() > 0) {
-                performanceString = "&p=" + URLEncoder.encode(performanceString);
+                performanceString = "&performance=" + URLEncoder.encode(performanceString);
             } else {
                 performanceString = "";
             }
@@ -326,7 +326,7 @@ public class KielerCompiler {
             query += ext + performanceString + "&verbose=" + verbose + "&strict=" + strict + "&transformations=" + transformations;
 
             String urlString = "http://" + host + ":" + port + "?" + query;
-            // System.out.println(urlString);
+            //System.out.println(urlString);
 
             URL url = new URL(urlString);
             URLConnection yc = url.openConnection();
