@@ -183,7 +183,7 @@ public class KiCoServer extends HttpServer {
                         performanceString =
                                 performanceString.replace("%" + transformationID, duration + "");
                     }
-                    serializedCompiledModel = performanceString;
+                    serializedCompiledModel = performanceString + "\n";
                     debug("Model compiled with performance test");
                 } else {
                     // no performance test, serialize
