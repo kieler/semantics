@@ -181,8 +181,10 @@ public class KiCoServer extends HttpServer {
                         IntermediateResult result = (results.get(c));
                         String transformationID = result.getTransformationID();
                         long duration = result.getDuration();
-                        performanceString =
-                                performanceString.replace("%" + transformationID, duration + "");
+                        if (transformationID != null && transformationID.length() > 0) {
+                            performanceString =
+                                    performanceString.replace("%" + transformationID, duration + "");
+                        }
                     }
                     serializedCompiledModel = performanceString + "\n";
                     debug("Model compiled with performance test");
