@@ -33,14 +33,8 @@ import de.cau.cs.kieler.core.util.Pair;
  */
 public class CompilationResult {
 
-    /** The executed transformations. */
-    private List<String> transformations = new ArrayList<String>();
-
-    /** The performance of executed transformations. */
-    private List<Long> transformationDurations = new ArrayList<Long>();
-
     /** The intermediate results. */
-    private List<Object> intermediateResults = new ArrayList<Object>();
+    private List<IntermediateResult> intermediateResults = new ArrayList<IntermediateResult>();
 
     /** The postponed error list transformation id. */
     private List<KielerCompilerException> postponedErrors =
@@ -89,7 +83,19 @@ public class CompilationResult {
      *            the source model
      */
     public CompilationResult(EObject sourceModel) {
-        intermediateResults.add(sourceModel);
+        clear(sourceModel);
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Clear with providing a new source model as the FIRST intermediate result by convention.
+     *
+     * @param sourceModel the source model
+     */
+    public void clear(EObject sourceModel) {
+        intermediateResults.clear();
+        intermediateResults.add(new IntermediateResult("", sourceModel, 0));
     }
 
     // -------------------------------------------------------------------------
@@ -99,44 +105,53 @@ public class CompilationResult {
      * 
      * @return the intermediate results
      */
-    public List<Object> getIntermediateResults() {
+    public List<IntermediateResult> getIntermediateResults() {
         return intermediateResults;
     }
 
     // -------------------------------------------------------------------------
-
+    
     /**
-     * Access the processed transformations in order.
-     * 
-     * @return the transformations
+     * Adds a new intermediate result for a given transformationID.
+     *
+     * @param transformationID the transformation id
+     * @return the intermediate result
      */
-    public List<String> getTransformations() {
-        return transformations;
+    public IntermediateResult addIntermediateResult(String transformationID) {
+        IntermediateResult intermediateResult = new IntermediateResult();
+        intermediateResult.setTransformationId(transformationID);
+        intermediateResults.add(intermediateResult);
+        return intermediateResult;
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the last intermediate transformation result. Returns null if there is no transformation
+     * result at all.
+     * 
+     * @return the e object
+     */
+    public IntermediateResult getLastIntermediateResult() {
+        if (intermediateResults.size() > 0) {
+            IntermediateResult lastResult = intermediateResults.get(intermediateResults.size() - 1);
+            return lastResult;
+        }
+        return null;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Access the durations (in ms) of processed transformations in order.
-     * 
-     * @return the transformations
-     */
-    public List<Long> getTransformationDurations() {
-        return transformationDurations;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the last transformation result as an Object. Returns null if there is no transformation
+     * Gets the last transformation result object. Returns null if there is no transformation
      * result at all.
      * 
      * @return the e object
      */
     public Object getObject() {
-        if (intermediateResults.size() > 0) {
-            Object lastResult = intermediateResults.get(intermediateResults.size() - 1);
-            return lastResult;
+        IntermediateResult intermediateResult = getLastIntermediateResult();
+        if (intermediateResult != null) {
+            return intermediateResult.getResult();
         }
         return null;
     }
@@ -347,5 +362,5 @@ public class CompilationResult {
     }
 
     // -------------------------------------------------------------------------
-
+    
 }

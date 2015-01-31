@@ -880,9 +880,8 @@ public class KielerCompiler {
         // If not inplace then produce a copy of the input EObject
         if (!context.isInplace()) {
             EObject copiedObject = EcoreUtil.copy(transformationEObject);
-            // replace intermediate object
-            context.getCompilationResult().getIntermediateResults().clear();
-            context.getCompilationResult().getIntermediateResults().add(copiedObject);
+            // replace (first) intermediate object
+            context.getCompilationResult().clear(copiedObject);
             // make the new copy the transformedObject
             transformationEObject = copiedObject;
         }
@@ -1009,7 +1008,6 @@ public class KielerCompiler {
             int totalWork) {
         if (transformation != null) {
             String compilationTransformationID = transformation.getId();
-            context.getCompilationResult().getTransformations().add(compilationTransformationID);
 
             // The progress monitor is optional and may be null!
             IProgressMonitor monitor = context.getProgressMonitor();
@@ -1113,11 +1111,14 @@ public class KielerCompiler {
                 context.getCompilationResult().resetPostponedErrors();
             }
 
+            String compilationTransformationID = transformation.getId();
+            IntermediateResult intermediateResult = context.getCompilationResult().addIntermediateResult(compilationTransformationID);
+            
             // Add to compilation result
-            context.getCompilationResult().getIntermediateResults().add(object);
+            intermediateResult.setResut(object);
             
             // Add performance result
-            context.getCompilationResult().getTransformationDurations().add(end-start);
+            intermediateResult.setDuration(end-start);
 
             if (!(object instanceof EObject)) {
                 // in this case we CANNOT do any further transformation calls

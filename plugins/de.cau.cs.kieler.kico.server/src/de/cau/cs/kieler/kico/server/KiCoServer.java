@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 import com.google.inject.Inject;
 
 import de.cau.cs.kieler.kico.CompilationResult;
+import de.cau.cs.kieler.kico.IntermediateResult;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompiler;
@@ -169,17 +170,17 @@ public class KiCoServer extends HttpServer {
                 CompilationResult compilationResult = KielerCompiler.compile(context);
 
                 if (performance) {
-                    List<String> transformations = compilationResult.getTransformations();
-                    List<Long> durations = compilationResult.getTransformationDurations();
+                    List<IntermediateResult> results = compilationResult.getIntermediateResults();
                     long durationAll = 0;
-                    for (int c = 0; c < transformations.size(); c++) {
-                        durationAll += durations.get(c);
+                    for (int c = 0; c < results.size(); c++) {
+                        durationAll += (results.get(c)).getDuration();
                     }
                     performanceString = performanceString.replace("%ALL", durationAll + "");
                     // modelname,durationsum,
-                    for (int c = 0; c < transformations.size(); c++) {
-                        String transformationID = transformations.get(c);
-                        long duration = durations.get(c);
+                    for (int c = 0; c < results.size(); c++) {
+                        IntermediateResult result = (results.get(c));
+                        String transformationID = result.getTransformationID();
+                        long duration = result.getDuration();
                         performanceString =
                                 performanceString.replace("%" + transformationID, duration + "");
                     }
