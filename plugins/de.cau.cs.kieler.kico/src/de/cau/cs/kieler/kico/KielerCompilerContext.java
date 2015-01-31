@@ -630,7 +630,7 @@ public class KielerCompilerContext {
             return null;
         }
         EObject transformationObject =
-                (EObject) getCompilationResult().getIntermediateResults().get(0);
+                (EObject) getCompilationResult().getTransformationObject();
         return transformationObject;
 
     }

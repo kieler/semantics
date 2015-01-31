@@ -139,6 +139,23 @@ public class CompilationResult {
         }
         return null;
     }
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the first intermediate transformation result. Returns null if there is no transformation
+     * result at all.
+     * 
+     * @return the e object
+     */
+    public IntermediateResult getFirstIntermediateResult() {
+        if (intermediateResults.size() > 0) {
+            IntermediateResult lastResult = intermediateResults.get(0);
+            return lastResult;
+        }
+        return null;
+    }
+
 
     // -------------------------------------------------------------------------
 
@@ -156,6 +173,22 @@ public class CompilationResult {
         return null;
     }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the first transformation result object which by convention must be the
+     * getTransformationObject. Returns null if there is no transformation
+     * result at all.
+     * 
+     * @return the e object
+     */
+    public Object getTransformationObject() {
+        IntermediateResult intermediateResult = getFirstIntermediateResult();
+        if (intermediateResult != null) {
+            return intermediateResult.getResult();
+        }
+        return null;
+    }    
     // -------------------------------------------------------------------------
 
     /**
