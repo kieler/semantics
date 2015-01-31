@@ -166,6 +166,18 @@ public class KielerCompiler {
             }
 
         }
+        
+        if (inputFile != null) {
+            if (performanceString != null) {
+                try {
+                    File f = new File(inputFile);
+                    String inputFileName = f.getName();
+                    performanceString = performanceString.replace("%FILENAME", inputFileName);
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
         // System.out.println("host: " + host);
         // System.out.println("port: " + port);
