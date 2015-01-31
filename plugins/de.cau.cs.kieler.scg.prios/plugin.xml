@@ -10,10 +10,45 @@
          point="de.cau.cs.kieler.kico.transformation">
       <transformationMethod
             class="de.cau.cs.kieler.scgprios.transform.NodePrioritiesTransformation"
+            dependencies="SCGOPTNODEPRIOS"
+            id="SCGNODEPRIOS"
+            method="transform"
+            name="NodePriorities">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scgprios.transform.OptimizedNodePriortiesTransformation"
+            dependencies="SCGTSIDS"
+            id="SCGOPTNODEPRIOS"
+            method="transform"
+            name="OptNodePriorities">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scgprios.transform.ThreadSegmentIDsTransformation"
+            dependencies="SCGOPTTSIDS"
+            id="SCGTSIDS"
+            method="transform"
+            name="ThreadSegmentIDs">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scgprios.transform.SCGDEPtoSCGPRIOTransformation"
             dependencies="SCLP"
             id="SCGPRIO"
             method="transform"
             name="Priorities">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scgprios.transform.OptimizedThreadSegmentIDsTransformation"
+            dependencies="SCGOPTPRIOIDS"
+            id="SCGOPTTSIDS"
+            method="transform"
+            name="OptThreadSegmentIDs">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scgprios.transform.OptimizedPrioIDsTransformation"
+            dependencies="SCLP"
+            id="SCGOPTPRIOIDS"
+            method="transform"
+            name="OptPrioIDs">
       </transformationMethod>
    </extension>
 

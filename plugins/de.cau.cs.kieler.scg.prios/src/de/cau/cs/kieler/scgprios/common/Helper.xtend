@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scgprios.calculation
+package de.cau.cs.kieler.scgprios.common
 
 import java.util.List
 import java.util.LinkedList
@@ -24,6 +24,8 @@ import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.Surface
+import java.util.Set
 
 /**
  * @author cbu
@@ -89,7 +91,7 @@ class Helper {
 //    }
 
     // Collect all children of node
-    def List<Node> getChildrenOfNode(Node node) {
+    def List<Node> getInstantChildrenOfNode(Node node) {
         //System.out.println("starting getChildrenOfNode")
         var childNodes = new LinkedList<Node>
         if (node instanceof Entry) {
@@ -153,6 +155,66 @@ class Helper {
 
     }
     
+    def LinkedList<Node> getAllChildrenOfNode(Node node) {
+        System.out.println("starting getChildrenOfNode")
+        var childNodes = new LinkedList<Node>
+        if (node instanceof Entry) {
+            var nextLink = (node as Entry).next
+            if (nextLink != null) {
+                var nextNode = nextLink.target
+                childNodes.addLast(nextNode)
+            }
+        } else if (node instanceof Exit) {
+            var nextLink = (node as Exit).next
+            if (nextLink != null) {
+                var nextNode = nextLink.target
+                childNodes.addLast(nextNode)
+            }
+        } else if (node instanceof Assignment) {
+            var nextLink = (node as Assignment).next
+            if (nextLink != null) {
+                var nextNode = nextLink.target
+                childNodes.addLast(nextNode)
+            }
+        } else if (node instanceof Depth) {
+            var nextLink = (node as Depth).next
+            if (nextLink != null) {
+                var nextNode = nextLink.target
+                childNodes.addLast(nextNode)
+            }
+        } else if (node instanceof Surface) {
+            var nextLink = (node as Surface).depth
+            childNodes.addLast(nextLink)
+        } else if (node instanceof Join) {
+            var nextLink = (node as Join).next
+            if (nextLink != null) {
+                var nextNode = nextLink.target
+                childNodes.addLast(nextNode)
+            }
+        } else if (node instanceof Conditional) {
+            var thenLink = (node as Conditional).then
+            if (thenLink != null) {
+                var nextNode = thenLink.target
+                childNodes.addLast(nextNode)
+            }
+            var elseLink = (node as Conditional).^else
+            if (elseLink != null) {
+                var nextNode = elseLink.target
+                childNodes.addLast(nextNode)
+            }
+        } else if (node instanceof Fork) {
+            var nextLinks = (node as Fork).next
+            if (!nextLinks.empty) {
+                for (nextLink : nextLinks) {
+                    var nextNode = nextLink.target
+                    childNodes.addLast(nextNode)
+                }
+            }
+        }
+        childNodes
+
+    }
+    
     def LinkedList<Node> getDependencyNodes(Node node){
         //System.out.println("starting getDependencyNodes")
         var depNodes = new LinkedList<Node>
@@ -196,6 +258,17 @@ class Helper {
         //System.out.println("removeDoubleElements finished")
         newList
 
+    }
+    
+    // find rootnode
+    public def Node findRootNode(Iterable<Node> nodes){
+        System.out.println("searching for root node")
+        for (node : nodes){
+            if (node instanceof Entry && node.incoming.empty){
+                System.out.println("found rootnode")
+                return node
+            }
+        }
     }
 
     // calculate min value

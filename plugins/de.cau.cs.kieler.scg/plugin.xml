@@ -41,7 +41,7 @@
          point="de.cau.cs.kieler.kico.transformation">
       <transformationMethod
             class="de.cau.cs.kieler.scg.transformations.DependencyTransformation"
-            dependencies="SCGBBGROUP, SCGPRIO"
+            dependencies="SCGBBGROUP, SCGPRIO, SCGNODEPRIOS"
             id="SCGDEP"
             method="transform"
             name="Dependencies">

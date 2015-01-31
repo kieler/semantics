@@ -11,13 +11,14 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scgprios.calculation
+package de.cau.cs.kieler.scgprios.priorities
 
 import com.google.inject.Inject
 import java.util.List
 import de.cau.cs.kieler.scg.Node
 import java.util.Stack
 import java.util.LinkedList
+import de.cau.cs.kieler.scgprios.common.Helper
 //import de.cau.cs.kieler.scl.scl_p.
 
 
@@ -104,7 +105,7 @@ class SCC {
         pointStack.push(currentNode) //add to stack
         
         // get children and dependency nodes of current node
-        var childNodes = helper.getChildrenOfNode(currentNode)
+        var childNodes = helper.getInstantChildrenOfNode(currentNode)
         childNodes.addAll(helper.getDependencyNodes(currentNode))
         
         // for all children and dependency nodes

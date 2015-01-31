@@ -11,17 +11,18 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scgprios.calculation
+package de.cau.cs.kieler.scgprios.transform
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.SCGraph 
 import de.cau.cs.kieler.scg.Node
 import java.util.LinkedList
-import de.cau.cs.kieler.scgprios.calculation.Helper
-import de.cau.cs.kieler.scgprios.calculation.SCC
-import de.cau.cs.kieler.scgprios.calculation.OptimizeNodePriorities
-import de.cau.cs.kieler.scgprios.calculation.CalcTSIDs
-import de.cau.cs.kieler.scgprios.calculation.CalcPrioIDs
+import de.cau.cs.kieler.scgprios.common.Helper
+import de.cau.cs.kieler.scgprios.priorities.SCC
+import de.cau.cs.kieler.scgprios.optimizations.OptimizeNodePriorities
+import de.cau.cs.kieler.scgprios.priorities.CalcTSIDs
+import de.cau.cs.kieler.scgprios.priorities.CalcPrioIDs
+import de.cau.cs.kieler.scgprios.priorities.CalcNodePrios
 
 /**
  * @author cbu
@@ -39,9 +40,10 @@ class SCGtoSCGwithNodePrios {
         var scc = new SCC
         System.out.println("calcPrios: init 1")
         
-        var nodePrioCalculator = new NodePrios
+        var nodePrioCalculator = new CalcNodePrios
         System.out.println("calcPrios: init 2")
         
+        //var nodePriorityOptimizer = new OptimizeNodePriorities
         var nodePriorityOptimizer = new OptimizeNodePriorities
         
         var calcTSIDs = new CalcTSIDs
@@ -64,7 +66,7 @@ class SCGtoSCGwithNodePrios {
             System.out.println("calcPrios: Calculating Node Prios")
             var nodePrios = nodePrioCalculator.calculateNodePriorities(sccs, nodes)
             System.out.println("calcPrios: optimize Prios of Nodes")
-            var optimizedNodePrios = nodePriorityOptimizer.optimizePriorities(nodePrios, sccs)
+            var optimizedNodePrios = nodePriorityOptimizer.optimizeNodePriorities(nodePrios, sccs)
             System.out.println("calcPrios: length of optimizedNodePrios: "+optimizedNodePrios.keySet.length)
             var nodesWithTSIDS = calcTSIDs.calcTSIDs(optimizedNodePrios, sccs)
             System.out.println("calcPrios: length of TSIDs: "+nodesWithTSIDS.keySet.length)
@@ -81,7 +83,8 @@ class SCGtoSCGwithNodePrios {
             }
         }
     }
-   
+    
+ 
     private def boolean dependencyInSCC(LinkedList<LinkedList<Node>> sccs){
         for (scc : sccs){
             for (node : scc){

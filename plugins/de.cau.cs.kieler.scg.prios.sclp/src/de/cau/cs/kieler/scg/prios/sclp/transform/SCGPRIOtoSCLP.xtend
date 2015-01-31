@@ -102,7 +102,7 @@ class SCGPRIOtoSCLP{
     /*****************************************************************************/
     
     #include "scl_p.h"
-                          
+    #include "sc.h"                      
     '''
     }
     
@@ -112,7 +112,7 @@ class SCGPRIOtoSCLP{
         
         for (f : forknodes){
             var entrynodes = (f as Fork).next.length
-            if (entrynodes > 2 && (!macros.contains(entrynodes))){
+            if (entrynodes > 2 && (!macros.contains((entrynodes - 1)))){
                 macros.add(entrynodes - 1)
             }
         }
@@ -138,8 +138,7 @@ class SCGPRIOtoSCLP{
     
     def String generateJoinMacro(int n){
         '''
-        #define join«n»(«FOR i : 1 ..< n-1»sib«i», «ENDFOR»sib«n»)\
-            trace0t("JOIN:", (isEnabledAnyOf( («FOR i : 1 ..< n»(u2b(sib«i»)) | «ENDFOR»(u2b(sib«n»)) ))) ? "waits\n" : "joins\n") \
+        #define join«n»(«FOR i : 1 ..< n»sib«i», «ENDFOR»sib«n»)\
             __LABEL__: if (isEnabledAnyOf( («FOR i : 1 ..< n»(u2b(sib«i»)) | «ENDFOR»(u2b(sib«n»)) ))) {   \
             PAUSEG_(__LABEL__); }
         '''
@@ -227,7 +226,7 @@ class SCGPRIOtoSCLP{
     private def String setPrioStatementIfRequired(Node parent, Node child){
         if (parent.prioID.intValue != child.prioID.intValue){
             '''
-            prio(«child.prioID.intValue»)
+            prio(«child.prioID.intValue»);
             '''
         } 
     }
@@ -252,7 +251,7 @@ class SCGPRIOtoSCLP{
     private def dispatch String transformNode(Fork fork) {
         if (translatedNodes.contains(fork)){
         '''
-        goto(«labelList.get(fork)»);
+        goto «labelList.get(fork)»;
         '''
         } else {
         translatedNodes.add(fork)
@@ -271,7 +270,8 @@ class SCGPRIOtoSCLP{
         } par {
         «ENDFOR»
             «transformNode(joiningNode)»
-        } join«fork.next.length-1»(«listJoinThreads(entrylist, firstNode)»)
+        } join«fork.next.length-1»(«listJoinThreads(entrylist, firstNode)»);
+        «transformNode((fork as Fork).join)»
         '''
         }
     }
@@ -290,7 +290,9 @@ class SCGPRIOtoSCLP{
     }
     
     private def dispatch String transformNode(Join join) {
-        transformNode(join.next.target)
+        '''
+        «setPrioStatementIfRequired(join,join.next.target)»
+        «transformNode(join.next.target)»'''
     }
     
     // TODO: Translate Assignment
@@ -298,7 +300,7 @@ class SCGPRIOtoSCLP{
         System.out.println(assignment.toString)
         if (translatedNodes.contains(assignment)){
         '''
-        goto(«labelList.get(assignment)»);
+        goto «labelList.get(assignment)»;
         '''
         } else { 
         translatedNodes.add(assignment)
@@ -326,7 +328,7 @@ class SCGPRIOtoSCLP{
     private def dispatch String transformNode(Conditional conditional) {
         if (translatedNodes.contains(conditional)){
         '''
-        goto(«labelList.get(conditional)»);
+        goto «labelList.get(conditional)»;
         '''
         } else {
         translatedNodes.add(conditional)
@@ -347,7 +349,7 @@ class SCGPRIOtoSCLP{
         
         if (translatedNodes.contains(surface)){
         '''
-        goto(«labelList.get(surface)»);
+        goto «labelList.get(surface)»;
         '''
         } else {
         translatedNodes.add(surface)
@@ -440,7 +442,7 @@ class SCGPRIOtoSCLP{
         }
         }
         
-        newString = newString + firstThread.prioID
+        newString = newString + (firstThread as Entry).exit.prioID
         
         newString
     }

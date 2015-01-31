@@ -11,18 +11,19 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.scgprios.calculation
+package de.cau.cs.kieler.scgprios.priorities
 
 import java.util.List
 import java.util.LinkedList
 import de.cau.cs.kieler.scg.Node
 import java.util.HashMap
+import de.cau.cs.kieler.scgprios.common.Helper
 
 /**
  * @author cbu
  *
  */
-class NodePrios {
+class CalcNodePrios {
     
 //    @Inject 
 //    extension Helper
@@ -30,7 +31,7 @@ class NodePrios {
     private var nodePriorityList = <Node,Integer>newHashMap
     private var helper = new Helper
     
-    def HashMap<Node,Integer> calculateNodePriorities (LinkedList<LinkedList<Node>> sccs, List<Node> nodelist){
+    public def HashMap<Node,Integer> calculateNodePriorities (LinkedList<LinkedList<Node>> sccs, List<Node> nodelist){
         System.out.println("starting calcNodePrios")
         nodePriorityList.clear
         var remainingNodes = findVerticesWithoutPriority(nodelist)
@@ -56,7 +57,7 @@ class NodePrios {
         System.out.println("longestPrioPath: elements in SCC: "+sccs.length)
         System.out.println("longestPrioPath: number of nodes with known priority: "+nodePriorityList.keySet.length)
         if (isNotInSCC){
-            children.addAll(helper.getChildrenOfNode(firstNode))
+            children.addAll(helper.getInstantChildrenOfNode(firstNode))
             dependencies.addAll(helper.getDependencyNodes(firstNode))
         } else {
             children.addAll(getChildrenFromSCC(scc))
@@ -127,7 +128,7 @@ class NodePrios {
         System.out.println("starting getChildrenFromSCC")
         var children = new LinkedList<Node>
         for (node : scc){
-            children.addAll(helper.getChildrenOfNode(node))
+            children.addAll(helper.getInstantChildrenOfNode(node))
         }
         var newChildren = helper.removeDoubleElements(children)
         for (s : scc){

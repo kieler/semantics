@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.scgprios.calculation
+package de.cau.cs.kieler.scgprios.optimizations
 
 import java.util.HashMap
 import de.cau.cs.kieler.scg.Node
@@ -7,14 +7,11 @@ import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Surface
 import java.util.Set
 import de.cau.cs.kieler.scg.Dependency
-import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scgprios.calculation.Helper
+import de.cau.cs.kieler.scgprios.common.Helper
 import de.cau.cs.kieler.scg.Link
-import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Fork
-import org.eclipse.emf.common.util.BasicEList
 
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
@@ -38,14 +35,15 @@ class OptimizeNodePriorities {
     
     var nodePriorities = <Node, Integer> newHashMap
     var newNodePriorities = <Node, Integer> newHashMap
-    var helper = new Helper
+    var Helper helper
     
-    def optimizePriorities(HashMap<Node,Integer> nodePrios, LinkedList<LinkedList<Node>> sccs){
+    public def optimizeNodePriorities(HashMap<Node,Integer> nodePrios, LinkedList<LinkedList<Node>> sccs){
         
         // initialize global variables
         System.out.println("starting optimizePriorities")
         newNodePriorities.clear
         nodePriorities = nodePrios
+        helper = new Helper
         var parentNodes = getParentsOfNodes(nodePriorities.keySet)
         var surfaceAndExitNodes = nodePriorities.keySet.filter[it instanceof Surface || it instanceof Exit]//getAllSurfaceAndExitNodes(nodePriorities.keySet)
         
@@ -168,16 +166,16 @@ class OptimizeNodePriorities {
     }
     
     
-    private def LinkedList<Node> getAllSurfaceAndExitNodes(Set<Node> nodes) {
-        System.out.println("starting getAllSurfaceAndExitNodes")
-        var surfaceAndExitNodes = new LinkedList<Node>
-        for (n : nodes){
-            if (n instanceof Exit || n instanceof Surface){
-                surfaceAndExitNodes.add(n)
-            }
-        }
-        surfaceAndExitNodes
-    }
+//    private def LinkedList<Node> getAllSurfaceAndExitNodes(Set<Node> nodes) {
+//        System.out.println("starting getAllSurfaceAndExitNodes")
+//        var surfaceAndExitNodes = new LinkedList<Node>
+//        for (n : nodes){
+//            if (n instanceof Exit || n instanceof Surface){
+//                surfaceAndExitNodes.add(n)
+//            }
+//        }
+//        surfaceAndExitNodes
+//    }
    
     
     private  def LinkedList<Node> getParentNodesOfSCC(LinkedList<Node> scc, HashMap<Node, LinkedList<Node>> parents){
@@ -202,7 +200,7 @@ class OptimizeNodePriorities {
             parentNodes.put(key,list)
         }
         for (node : nodes){
-            var children = helper.getChildrenOfNode(node)
+            var children = helper.getInstantChildrenOfNode(node)
             for (child : children){
                 var currentParentList = parentNodes.get(child) 
                 currentParentList.add(node)
