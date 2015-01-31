@@ -42,7 +42,6 @@
     <module>de.cau.cs.kieler.esterel.examples</module>
     <module>de.cau.cs.kieler.esterel.ui</module>
     <module>de.cau.cs.kieler.esterel.scl</module>
-    <module>de.cau.cs.kieler.esterel.scl.test</module>
     <module>de.cau.cs.kieler.kev</module>
     <module>de.cau.cs.kieler.kex</module>
     <module>de.cau.cs.kieler.kico</module>
