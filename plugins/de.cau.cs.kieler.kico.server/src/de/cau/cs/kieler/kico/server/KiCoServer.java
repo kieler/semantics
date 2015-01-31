@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kico.server;
 
 //import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -25,6 +26,7 @@ import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.kico.Transformation;
 import de.cau.cs.kieler.server.HttpHeader;
 import de.cau.cs.kieler.server.HttpQuery;
 import de.cau.cs.kieler.server.HttpRequest;
@@ -79,7 +81,6 @@ public class KiCoServer extends HttpServer {
         if (request.header().isMethodPOST()) {
             query = request.body().getFormQueryData();
         }
-        
 
         // Check the query
         if (query.getValue("model").length() > 0) {
@@ -87,11 +88,23 @@ public class KiCoServer extends HttpServer {
             // Parse options
             boolean verbose = false;
             boolean strict = false;
+            boolean performance = false;
             String verboseString = query.getValue("verbose");
             if (verboseString.toLowerCase().equals("true")
                     || verboseString.toLowerCase().equals("t")
                     || verboseString.toLowerCase().equals("1")) {
                 verbose = true;
+            }
+            String performanceString = query.getValue("performance");
+            if (performanceString.trim().length() > 0) {
+                performanceString = performanceString.trim();
+                // an example performanceString may be "%ALL,%CODEGENERATION,%ENTRY,%SCG"
+                // it includes %ALL or %TRANSFORMATIONID and the return value will be this string
+                // where
+                // %TRANSFORMATIONID is replaced by the time in ms which the transformation with
+                // this id took
+                // or %ALL is replaced by the sum of the overall compilation.
+                performance = true;
             }
             String strictString = query.getValue("strict");
             if (strictString.toLowerCase().equals("true") || strictString.toLowerCase().equals("t")
@@ -117,7 +130,7 @@ public class KiCoServer extends HttpServer {
             debug("Models read");
 
             String transformationIDs = query.getValue("transformations");
-            
+
             // Parse models
             EObject mainModel = null;
             KielerCompilerContext context = new KielerCompilerContext(transformationIDs, mainModel);
@@ -135,19 +148,40 @@ public class KiCoServer extends HttpServer {
             context.setPrerequirements(!strict);
             context.setMainResource(mainModel.eResource());
 
+            String serializedCompiledModel = "";
+
             // process the model
             CompilationResult compilationResult = KielerCompiler.compile(context);
-            debug("Model compiled");
 
-            Object compiledModel = compilationResult.getObject();
-
-            String serializedCompiledModel = "";
-            if (compiledModel != null) {
-                serializedCompiledModel = compiledModel.toString();
-                if (compiledModel instanceof EObject) {
-                    serializedCompiledModel = KiCoUtil.serialize((EObject) compiledModel, context, false);
+            if (performance) {
+                List<String> transformations = compilationResult.getTransformations();
+                List<Long> durations = compilationResult.getTransformationDurations();
+                long durationAll = 0;
+                for (int c = 0; c < transformations.size(); c++) {
+                    durationAll += durations.get(c);
                 }
-                debug("Model serialized");
+                performanceString = performanceString.replace("%ALL", durationAll + "");
+                // modelname,durationsum,
+                for (int c = 0; c < transformations.size(); c++) {
+                    String transformationID = transformations.get(c);
+                    long duration = durations.get(c);
+                    performanceString =
+                            performanceString.replace("%" + transformationID, duration + "");
+                }
+                serializedCompiledModel = performanceString;
+                debug("Model compiled with performance test");
+            } else {
+                // no performance test, serialize
+                debug("Model compiled");
+                Object compiledModel = compilationResult.getObject();
+                if (compiledModel != null) {
+                    serializedCompiledModel = compiledModel.toString();
+                    if (compiledModel instanceof EObject) {
+                        serializedCompiledModel =
+                                KiCoUtil.serialize((EObject) compiledModel, context, false);
+                    }
+                    debug("Model serialized");
+                }
             }
 
             // answer with compiled & serialized model
@@ -170,8 +204,9 @@ public class KiCoServer extends HttpServer {
             responseHeader.setStatusOk();
             responseHeader.setTypeTextPlain();
             responseHeader.setHeaderField("Access-Control-Allow-Origin", "*");
-            responseHeader.setHeaderField("Access-Control-Expose-Headers", "compile-error,compile-warning");
-            //responseHeader.setHeaderField("Access-Control-Allow-Headers", "*");
+            responseHeader.setHeaderField("Access-Control-Expose-Headers",
+                    "compile-error,compile-warning");
+            // responseHeader.setHeaderField("Access-Control-Allow-Headers", "*");
             HttpResponse response = new HttpResponse();
             response.setHeader(responseHeader);
             if (lastError.length() > 0) {
