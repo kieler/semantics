@@ -55,6 +55,7 @@ public class KielerCompiler {
         String performanceString = null;
         String inputFile = null;
         String outputFile = null;
+        String ext = null;
         ArrayList<String> includeFiles = new ArrayList<String>();
 
         if (args.length < 1 || args[0].startsWith("-")) {
@@ -123,6 +124,11 @@ public class KielerCompiler {
                     if (c + 1 < args.length) {
                         inputFile = args[c + 1];
                         c++;
+                        
+                        int i = inputFile.lastIndexOf('.');
+                        if (i > 0) {
+                            ext = inputFile.substring(i+1).toLowerCase();
+                        }
                     }
                 } else if (option.equals("-i") || option.equals("--include")) {
                     if (c + 1 < args.length) {
@@ -181,8 +187,9 @@ public class KielerCompiler {
         }
         // System.out.println("model: " + model);
 
+        
         CompilationResult compilationResult =
-                remoteCompile(host, port, outputFile, verbose, strict, performanceString,  models, transformations);
+                remoteCompile(host, port, outputFile, verbose, strict, performanceString,  models, transformations, ext);
 
         if (outputFile == null || outputFile.trim().equals("")) {
             System.out.println(new String(compilationResult.model));
@@ -280,20 +287,21 @@ public class KielerCompiler {
 
     /**
      * Remote compile.
-     * 
-     * @param host
-     *            the host
-     * @param port
-     *            the port
-     * @param model
-     *            the model
-     * @param transformations
-     *            the transformations
+     *
+     * @param host the host
+     * @param port the port
+     * @param outputFile the output file
+     * @param verbose the verbose
+     * @param strict the strict
+     * @param performanceString the performance string
+     * @param models the models
+     * @param transformations the transformations
+     * @param ext the ext
      * @return the string
      */
     @SuppressWarnings("deprecation")
     public static CompilationResult remoteCompile(String host, int port, String outputFile,
-            boolean verbose, boolean strict, String performanceString, ArrayList<String> models, String transformations) {
+            boolean verbose, boolean strict, String performanceString, ArrayList<String> models, String transformations, String ext) {
         CompilationResult result = new CompilationResult(new byte[0], "");
 
         try {
@@ -309,7 +317,13 @@ public class KielerCompiler {
             } else {
                 performanceString = "";
             }
-            query += performanceString + "&verbose=" + verbose + "&strict=" + strict + "&transformations=" + transformations;
+            if (ext != null && ext.length() > 0) {
+                ext = "&ext=" + ext;
+            } else {
+                ext = "";
+            }
+            
+            query += ext + performanceString + "&verbose=" + verbose + "&strict=" + strict + "&transformations=" + transformations;
 
             String urlString = "http://" + host + ":" + port + "?" + query;
             // System.out.println(urlString);

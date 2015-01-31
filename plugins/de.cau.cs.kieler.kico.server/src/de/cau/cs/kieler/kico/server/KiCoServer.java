@@ -90,6 +90,8 @@ public class KiCoServer extends HttpServer {
             boolean strict = false;
             boolean performance = false;
             String verboseString = query.getValue("verbose");
+            String ext = null; // by default no extension is given, if an extension is given use
+                               // this!
             if (verboseString.toLowerCase().equals("true")
                     || verboseString.toLowerCase().equals("t")
                     || verboseString.toLowerCase().equals("1")) {
@@ -110,6 +112,10 @@ public class KiCoServer extends HttpServer {
             if (strictString.toLowerCase().equals("true") || strictString.toLowerCase().equals("t")
                     || strictString.toLowerCase().equals("1")) {
                 strict = true;
+            }
+            String extString = query.getValue("ext");
+            if (extString.trim().length() > 0) {
+                ext = extString.toLowerCase().trim();
             }
 
             // Read all models in "model" and "include1", "include2", ...
@@ -137,56 +143,68 @@ public class KiCoServer extends HttpServer {
             for (int i = models.size() - 1; i >= 0; i--) {
                 boolean isMainModel = (i == 0);
                 String model = models.get(i);
-                EObject eObject = KiCoUtil.parse(model, context, isMainModel);
+                EObject eObject = KiCoUtil.parse(model, context, isMainModel, ext);
                 if (isMainModel) {
                     mainModel = eObject;
                 }
             }
-            debug("Model parsed");
-
-            context.setVerboseMode(verbose);
-            context.setPrerequirements(!strict);
-            context.setMainResource(mainModel.eResource());
-
+            
+            
+            // answer with compiled & serialized model
+            String lastError = "";
+            String lastWarning = "";
             String serializedCompiledModel = "";
-
-            // process the model
-            CompilationResult compilationResult = KielerCompiler.compile(context);
-
-            if (performance) {
-                List<String> transformations = compilationResult.getTransformations();
-                List<Long> durations = compilationResult.getTransformationDurations();
-                long durationAll = 0;
-                for (int c = 0; c < transformations.size(); c++) {
-                    durationAll += durations.get(c);
-                }
-                performanceString = performanceString.replace("%ALL", durationAll + "");
-                // modelname,durationsum,
-                for (int c = 0; c < transformations.size(); c++) {
-                    String transformationID = transformations.get(c);
-                    long duration = durations.get(c);
-                    performanceString =
-                            performanceString.replace("%" + transformationID, duration + "");
-                }
-                serializedCompiledModel = performanceString;
-                debug("Model compiled with performance test");
+            if (mainModel == null) {
+                lastError = "Model cannot be parsed.";
+                serializedCompiledModel = lastError;
+                lastWarning = "";
+                debug("Model not parsed");
             } else {
-                // no performance test, serialize
-                debug("Model compiled");
-                Object compiledModel = compilationResult.getObject();
-                if (compiledModel != null) {
-                    serializedCompiledModel = compiledModel.toString();
-                    if (compiledModel instanceof EObject) {
-                        serializedCompiledModel =
-                                KiCoUtil.serialize((EObject) compiledModel, context, false);
+                debug("Model parsed");
+                context.setVerboseMode(verbose);
+                context.setPrerequirements(!strict);
+                context.setMainResource(mainModel.eResource());
+
+                // process the model
+                CompilationResult compilationResult = KielerCompiler.compile(context);
+
+                if (performance) {
+                    List<String> transformations = compilationResult.getTransformations();
+                    List<Long> durations = compilationResult.getTransformationDurations();
+                    long durationAll = 0;
+                    for (int c = 0; c < transformations.size(); c++) {
+                        durationAll += durations.get(c);
                     }
-                    debug("Model serialized");
+                    performanceString = performanceString.replace("%ALL", durationAll + "");
+                    // modelname,durationsum,
+                    for (int c = 0; c < transformations.size(); c++) {
+                        String transformationID = transformations.get(c);
+                        long duration = durations.get(c);
+                        performanceString =
+                                performanceString.replace("%" + transformationID, duration + "");
+                    }
+                    serializedCompiledModel = performanceString;
+                    debug("Model compiled with performance test");
+                } else {
+                    // no performance test, serialize
+                    debug("Model compiled");
+                    Object compiledModel = compilationResult.getObject();
+                    if (compiledModel != null) {
+                        serializedCompiledModel = compiledModel.toString();
+                        if (compiledModel instanceof EObject) {
+                            serializedCompiledModel =
+                                    KiCoUtil.serialize((EObject) compiledModel, context, false);
+                        }
+                        debug("Model serialized");
+                    }
                 }
+                
+                lastError = compilationResult.getAllErrors();
+                lastWarning = compilationResult.getAllWarnings();
             }
 
+
             // answer with compiled & serialized model
-            String lastError = compilationResult.getAllErrors();
-            String lastWarning = compilationResult.getAllWarnings();
             if (lastError != null) {
                 debug("Errors serialized:");
                 debug(lastError);
