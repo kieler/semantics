@@ -97,7 +97,6 @@
     <module>de.cau.cs.kieler.scg.editor</module>
     <module>de.cau.cs.kieler.scg.klighd</module>
     <module>de.cau.cs.kieler.scg.s</module>
-    <module>de.cau.cs.kieler.scl</module>
     <module>org.json</module>
   </modules>
 
