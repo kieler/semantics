@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Esterel to Scl Test
+Bundle-Name: KIELER Esterel to Scl Test
 Bundle-SymbolicName: de.cau.cs.kieler.esterel.scl.test;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Require-Bundle: org.eclipse.ui,
