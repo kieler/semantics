@@ -1077,6 +1077,8 @@ public class KielerCompiler {
             final Transformation transformation, final KielerCompilerContext context,
             final KielerCompilerProgressMonitor subMonitor) {
 
+        long start = 0;
+        long end = 0;
         String transformationID = "unknown";
         Object object = null;
         try {
@@ -1094,7 +1096,9 @@ public class KielerCompiler {
                 res = context.getMainResource();
             }
 
+            start = System.currentTimeMillis();
             object = transformation.doTransform(transformedObject, context);
+            end = System.currentTimeMillis();
         } catch (Exception exception) {
             context.getCompilationResult().addPostponedError(
                     new KielerCompilerException(transformationID, exception));
@@ -1111,6 +1115,9 @@ public class KielerCompiler {
 
             // Add to compilation result
             context.getCompilationResult().getIntermediateResults().add(object);
+            
+            // Add performance result
+            context.getCompilationResult().getTransformationDurations().add(end-start);
 
             if (!(object instanceof EObject)) {
                 // in this case we CANNOT do any further transformation calls

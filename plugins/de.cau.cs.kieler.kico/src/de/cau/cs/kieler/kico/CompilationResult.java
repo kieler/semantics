@@ -36,6 +36,9 @@ public class CompilationResult {
     /** The executed transformations. */
     private List<String> transformations = new ArrayList<String>();
 
+    /** The performance of executed transformations. */
+    private List<Long> transformationDurations = new ArrayList<Long>();
+
     /** The intermediate results. */
     private List<Object> intermediateResults = new ArrayList<Object>();
 
@@ -109,6 +112,17 @@ public class CompilationResult {
      */
     public List<String> getTransformations() {
         return transformations;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Access the durations (in ms) of processed transformations in order.
+     * 
+     * @return the transformations
+     */
+    public List<Long> getTransformationDurations() {
+        return transformationDurations;
     }
 
     // -------------------------------------------------------------------------
