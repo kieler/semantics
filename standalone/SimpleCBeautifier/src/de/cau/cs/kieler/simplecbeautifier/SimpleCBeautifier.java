@@ -231,10 +231,10 @@ public class SimpleCBeautifier {
     
     
     /** The characters before which we want to prevent a space character. */
-    static private char[] noSpaceBeforeCharacters = {';', '(', ')', '&', '|', '!', ',' };
+    static private char[] noSpaceBeforeCharacters = {';', '(', ')', '&', '|', '!', ',', '=', '<', '>' };
 
     /** The characters after which we want to prevent a space character. */
-    static private char[] noSpaceAfterCharacters = {';', '(', ')', '&', '|', '!', ',' };
+    static private char[] noSpaceAfterCharacters = {';', '(', ')', '&', '|', '!', ',', '=', '<', '>' };
 
 //    /** The characters before which we want to assure a space character. */
 //    static private char[] spaceBeforeCharacters = {'='};
@@ -243,26 +243,32 @@ public class SimpleCBeautifier {
 //    static private char[] spaceAfterCharacters = {'='};
 
     /**
-     * Beautify incoming C code. Do this by using Java reflection to access
-     * String's internal char array for best performance. Need setAccessible(true)
-     * because the char array is private. Use StringBuilder for building the new
-     * String.
-     * Supports indention 
-     *
-     * @param text the text
-     * @return the string
-     * @throws NoSuchFieldException the no such field exception
-     * @throws SecurityException the security exception
-     * @throws IllegalArgumentException the illegal argument exception
-     * @throws IllegalAccessException the illegal access exception
-     */
+ * Beautify incoming C code. Do this by using Java reflection to access
+ * String's internal char array for best performance. Need setAccessible(true)
+ * because the char array is private. Use StringBuilder for building the new
+ * String.
+ * Supports indention
+ *
+ * @param text the text
+ * @param indentPart the indent part
+ * @return the string
+ * @throws NoSuchFieldException the no such field exception
+ * @throws SecurityException the security exception
+ * @throws IllegalArgumentException the illegal argument exception
+ * @throws IllegalAccessException the illegal access exception
+ */
     public static String beautify(String text, String indentPart) throws NoSuchFieldException, SecurityException,
             IllegalArgumentException, IllegalAccessException {
 
         StringBuilder modifiedOutput = new StringBuilder();
 
         int indent = 0;
+        
         boolean spaceBefore = false;
+
+        // if true, then set spaceBefore to TRUE in the next iteration (because we want to eliminate MORE spaces)
+        boolean nextSpaceBefore = false;
+
         char[] chars = null;
         
         // flag indicating an active long comment '/*' => leave next line break, do not indent or remove spaces
@@ -297,8 +303,13 @@ public class SimpleCBeautifier {
             char character = chars[i];
 
             
+            if (nextSpaceBefore) {
+                nextSpaceBefore = false;
+                spaceBefore = true;
+            }
+            
             // Comment handling start
-            char nextCharacter = ' ';
+            char nextCharacter = '.';
             if (i+1 < len) {
                 nextCharacter = chars[i+1];
             }
@@ -335,18 +346,6 @@ public class SimpleCBeautifier {
             // Comment handling end
             
             // eliminate superfluous space characters
-            if (nextCharacter == ' ')  {
-                boolean found = false;
-                for (char noSpaceAfterCharacter : noSpaceAfterCharacters) {
-                    if (character == noSpaceAfterCharacter) {
-                        found = true;
-                        break;
-                    }
-                }
-                if (found) {
-                    i++; // skip space
-                }
-            }
             if (character == ' ')  {
                 boolean found = false;
                 for (char noSpaceBeforeCharacter : noSpaceBeforeCharacters) {
@@ -358,6 +357,22 @@ public class SimpleCBeautifier {
                 if (found) {
                     i++; // skip space
                     character = nextCharacter;
+                    if (i+1 < len) {
+                        nextCharacter = chars[i+1];
+                    }
+                }
+            }
+            if (nextCharacter == ' ')  {
+                boolean found = false;
+                for (char noSpaceAfterCharacter : noSpaceAfterCharacters) {
+                    if (character == noSpaceAfterCharacter) {
+                        nextSpaceBefore = true;
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) {
+                    i++; // skip space
                 }
             }
 
