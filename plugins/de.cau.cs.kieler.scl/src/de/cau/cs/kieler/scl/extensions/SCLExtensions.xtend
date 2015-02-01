@@ -201,7 +201,12 @@ class SCLExtensions {
 					}
 					continue = false;
 
-				// Check whether at end of conditonal branch and "look outside"
+				// Check whether at end of conditonal branch or StatementScope and "look outside"
+				} else if (parent instanceof StatementScope) {
+					curStm = parent.eContainer as Statement
+					parent = parent.eContainer.eContainer as StatementSequence
+					stmList = parent.statements
+					index = stmList.indexOf(curStm) + 1
 				} else if (parent instanceof Conditional) {
 					curStm = parent.eContainer as Statement
 					parent = parent.eContainer.eContainer as StatementSequence
