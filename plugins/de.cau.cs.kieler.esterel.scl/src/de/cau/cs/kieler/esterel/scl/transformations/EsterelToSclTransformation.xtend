@@ -17,6 +17,7 @@ import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Declaration
+import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.OperatorType
@@ -50,7 +51,6 @@ import de.cau.cs.kieler.esterel.esterel.Loop
 import de.cau.cs.kieler.esterel.esterel.LoopDelay
 import de.cau.cs.kieler.esterel.esterel.Nothing
 import de.cau.cs.kieler.esterel.esterel.Parallel
-import de.cau.cs.kieler.esterel.esterel.Pause
 import de.cau.cs.kieler.esterel.esterel.Present
 import de.cau.cs.kieler.esterel.esterel.PresentCaseList
 import de.cau.cs.kieler.esterel.esterel.PresentEventBody
@@ -65,14 +65,16 @@ import de.cau.cs.kieler.esterel.esterel.Sustain
 import de.cau.cs.kieler.esterel.esterel.Trap
 import de.cau.cs.kieler.esterel.esterel.WeakAbort
 import de.cau.cs.kieler.esterel.esterel.WeakAbortInstance
-import de.cau.cs.kieler.esterel.esterel.WeakSuspend
 import de.cau.cs.kieler.esterel.kexpressions.ISignal
+import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.scl.scl.InstructionStatement
+import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.SCLProgram
 import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.scl.StatementScope
 import de.cau.cs.kieler.scl.scl.StatementSequence
 import de.cau.cs.kieler.scl.scl.Thread
 import java.util.HashMap
@@ -81,9 +83,6 @@ import java.util.Stack
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
-import org.eclipse.xtext.xbase.lib.Pair
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.scl.scl.StatementScope
 
 /**
  * @author krat
@@ -595,7 +594,7 @@ class EsterelToSclTransformation extends Transformation {
     /*
      * pause
      */
-    def dispatch StatementSequence transformStm(Pause pause, StatementSequence sSeq) {
+    def dispatch StatementSequence transformStm(de.cau.cs.kieler.esterel.esterel.Pause pause, StatementSequence sSeq) {
         sSeq.createSclPause
     }
 
@@ -780,7 +779,7 @@ class EsterelToSclTransformation extends Transformation {
                         } else {
                             if (singleCase.delay.expr != null){
                                 expression = createAnd(eventExpr.transformExp, 
-                                    createLEQ(singleCase.delay.expr.transformExp("int"), counterMap.get((singleCase.delay.event.expr as de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference).valuedObject.name).createValObjRef))
+                                    createLEQ(singleCase.delay.expr.transformExp("int"), counterMap.get((singleCase.delay.event.expr as ValuedObjectReference).valuedObject.name).createValObjRef))
                             } else {
                                 expression = createAnd(eventExpr.transformExp, createValObjRef(f_depth))
                             }
@@ -811,7 +810,7 @@ class EsterelToSclTransformation extends Transformation {
         if (delayExpression) {
             counterVar = createFreshVarNoDecl(sScope, "i", ValueType::INT)
             counterVar.initialValue = createIntValue(0)
-            counterMap.put(((abort.body as AbortInstance).delay.event.expr as de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference).valuedObject.name,
+            counterMap.put(((abort.body as AbortInstance).delay.event.expr as ValuedObjectReference).valuedObject.name,
                 counterVar)
         }
         val counter = counterVar
@@ -882,7 +881,7 @@ class EsterelToSclTransformation extends Transformation {
             val idx = seq.statements.indexOf(
                 seq.statements.findFirst [
                     it instanceof InstructionStatement &&
-                        (it as InstructionStatement).instruction instanceof de.cau.cs.kieler.scl.scl.Pause
+                        (it as InstructionStatement).instruction instanceof Pause
                 ])
             // Set f_wa flag if abort condition is true and goto l_exit
             seq.statements.add(idx,
@@ -1113,7 +1112,7 @@ class EsterelToSclTransformation extends Transformation {
                 val idx = seq.statements.indexOf(
                 seq.statements.findFirst [
                     it instanceof InstructionStatement &&
-                        (it as InstructionStatement).instruction instanceof de.cau.cs.kieler.scl.scl.Pause
+                        (it as InstructionStatement).instruction instanceof Pause
                 ])
                 seq.statements.addAll(idx, stm)
             }
