@@ -103,6 +103,7 @@ public class KlighdServer extends HttpServer {
 
             // Parse options
             scale = query.getValue("scale");
+            String ext = null; // by default no extension is given, if an extension is given use this!
             try {
                 scaleInteger = Integer.parseInt(scale);
             } catch (Exception e) {
@@ -112,6 +113,10 @@ public class KlighdServer extends HttpServer {
             if (render2.equals("svg")) {
                 // if this is a valid value (other than the default png) then change it
                 render = render2;
+            }
+            String extString = query.getValue("ext");
+            if (extString.trim().length() > 0) {
+                ext = extString.toLowerCase().trim();
             }
 
             // Read all models in "model" and "include1", "include2", ...
@@ -137,7 +142,7 @@ public class KlighdServer extends HttpServer {
             for (int i = models.size() - 1; i >= 0; i--) {
                 boolean isMainModel = (i == 0);
                 String model = models.get(i);
-                EObject eObject = KiCoUtil.parse(model, context, isMainModel);
+                EObject eObject = KiCoUtil.parse(model, context, isMainModel, ext);
                 if (isMainModel) {
                     mainModel = eObject;
                 }
