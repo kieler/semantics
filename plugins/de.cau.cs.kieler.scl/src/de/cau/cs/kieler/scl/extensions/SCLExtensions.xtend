@@ -30,7 +30,7 @@ import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.scl.scl.SclFactory
 
 /**
- * SCL Extensions.
+ * SCL Extensions. TODO StatementScopes
  * 
  * @author ssm, krat
  * @kieler.design 2013-10-31 proposed 
