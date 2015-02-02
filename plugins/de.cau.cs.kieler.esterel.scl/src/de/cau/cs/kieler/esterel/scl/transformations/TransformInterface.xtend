@@ -16,6 +16,7 @@ package de.cau.cs.kieler.esterel.scl.transformations
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.esterel.esterel.ConstantDecls
 import de.cau.cs.kieler.esterel.esterel.ModuleInterface
@@ -25,10 +26,7 @@ import de.cau.cs.kieler.esterel.kexpressions.InterfaceSignalDecl
 import de.cau.cs.kieler.esterel.kexpressions.Output
 import de.cau.cs.kieler.esterel.kexpressions.VariableDecl
 import de.cau.cs.kieler.scl.scl.SCLProgram
-import org.eclipse.xtext.xbase.lib.InputOutput
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import java.util.LinkedList
-import java.util.HashMap
 
 /**
  * @author krat
@@ -165,7 +163,7 @@ class TransformInterface {
         ]
 
         declaration.variables.forEach [
-            val s_val = createValuedObject(uniqueName(signalMap, it.name))
+            val s_val = createValuedObject(uniqueName(it.name))
             signals.add(it.name -> s_val)
             signalMap.add(it.name -> s_val)
             valuedMap.put(s_val, s_val)

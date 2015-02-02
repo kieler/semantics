@@ -42,12 +42,12 @@ import de.cau.cs.kieler.scl.scl.Conditional
 import de.cau.cs.kieler.scl.scl.Instruction
 import de.cau.cs.kieler.scl.scl.SclFactory
 import de.cau.cs.kieler.scl.scl.Statement
+import de.cau.cs.kieler.scl.scl.StatementScope
 import de.cau.cs.kieler.scl.scl.StatementSequence
+import de.cau.cs.kieler.scl.scl.Thread
 import java.util.LinkedList
 import javax.xml.transform.TransformerException
 import org.eclipse.emf.common.util.EList
-import org.eclipse.xtext.xbase.lib.Pair
-import de.cau.cs.kieler.scl.scl.StatementScope
 
 /**
  * @author krat
@@ -88,7 +88,7 @@ class EsterelToSclExtensions {
     }
 
     /*
-     * Returns a references to valued object valObj
+     * Returns a reference to valued object valObj
      */
     def getValuedObjectRef(EList<Declaration> decls, String valObj) {
         KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
@@ -114,52 +114,33 @@ class EsterelToSclExtensions {
 
         "l" + labelCount
     }
+    
+    def resetLabelCount() {
+        labelCount = 0;
+    }
 
     /*
-     * Returns a fresh variable and registers the local declaration
+     * Returns a fresh variable
      */
     def createFreshVar(String name, ValueType t) {
-        val ret = createValuedObject(uniqueName(signalMap, name))
-
-        localDeclarations.add(
-            KExpressionsFactory::eINSTANCE.createDeclaration => [
-                type = t
-                valuedObjects.add(ret)
-            ])
+        val ret = createValuedObject(uniqueName(name))
         signalMap.add(name -> ret)
 
         ret
     }
     
     /*
-     * Returns a fresh variable without register the local declaration
+     * Returns a fresh variable and adds it to give sScope
      */
-    def createFreshVarNoDecl(String name, ValueType t) {
-        val ret = createValuedObject(uniqueName(signalMap, name))
-
-        signalMap.add(name -> ret)
-
-        ret
-    }
-    
-    /*
-     * Returns a fresh variable without register the local declaration but adding it to give sScope
-     */
-    def createFreshVarNoDecl(StatementScope sScope, String name, ValueType t) {
-        val ret = createValuedObject(uniqueName(signalMap, name))
+    def createFreshVar(StatementScope sScope, String name, ValueType t) {
+        val ret = createValuedObject(uniqueName(name))
         sScope.declarations += createDeclaration => [
         	valuedObjects += ret
         	type = t
         ]
-
         signalMap.add(name -> ret)
 
         ret
-    }
-    
-
-    def resetLabelCount() {
-        labelCount = 0;
     }
 
     def createEmptyStm(String l) {
@@ -172,14 +153,13 @@ class EsterelToSclExtensions {
      * Takes a variable name and a list of existing variables and
      * adds "_" until variable name is new
      */
-    def String uniqueName(LinkedList<Pair<String, ValuedObject>> variables, String s) {
+    def String uniqueName(String s) {
 
         // The variable should neither be on the current signalMap nor locally defined
-        if ((variables.findFirst[value.name == s] == null) &&
-            (localDeclarations.filter[valuedObjects.findFirst[name == s] != null].empty)) {
+        if (!signalMap.contains(s)) {
             return s
         } else {
-            return uniqueName(variables, s + "_")
+            return uniqueName(s + "_")
         }
     }
 
@@ -192,7 +172,6 @@ class EsterelToSclExtensions {
     }
 
 
-
     /**
     * Checks whether an Esterel statement terminates. Not complete: May return true even
     * if a program does not terminate.
@@ -200,6 +179,7 @@ class EsterelToSclExtensions {
     * @return True if program terminates, else false
     */
     def dispatch boolean checkTerminate(de.cau.cs.kieler.esterel.esterel.Statement stm) {
+    	var terms = true;
         if (stm instanceof Halt) {
             return false;
         } else if (stm instanceof Loop) {
@@ -208,14 +188,12 @@ class EsterelToSclExtensions {
             return false;
         } else if (stm instanceof Parallel) {
             val par = stm as Parallel
-            var terms = true;
             for (th : par.list) {
                 terms = terms && th.checkTerminate
             }
             return terms
         } else if (stm instanceof Sequence) {
             val seq = stm as Sequence
-            var terms = true;
             for (s : seq.list) {
                 terms = terms && s.checkTerminate
             }
@@ -224,7 +202,6 @@ class EsterelToSclExtensions {
             val pres = stm as Present
             if (pres.body instanceof PresentEventBody) {
                 val presBody = pres.body as PresentEventBody
-                var terms = true
                 if (presBody.thenPart != null)
                     terms = presBody.thenPart.statement.checkTerminate
                 if (pres.elsePart != null)
@@ -233,7 +210,6 @@ class EsterelToSclExtensions {
                 return terms
             } else if (pres.body instanceof PresentCaseList) {
                 val presBody = pres.body as PresentCaseList
-                var terms = true
                 for (singleCase : presBody.cases) {
                     terms = terms && singleCase.statement.checkTerminate
                 }
@@ -247,7 +223,6 @@ class EsterelToSclExtensions {
         } else if (stm instanceof Await) {
             val await = stm as Await
             if (await.body instanceof AwaitCase) {
-                var terms = true
                 val awaitCase = await.body as AwaitCase
                 for (singleCase : awaitCase.cases) {
                     terms = terms && singleCase.statement.checkTerminate
@@ -305,7 +280,6 @@ class EsterelToSclExtensions {
      * Checks for valid names. The suffix "_val" is reserved for valued signals.
      */
     def boolean validateNames(Program esterelProgram) {
-        System.out.println("Name: " + esterelProgram.modules.head.name)
         esterelProgram.modules.forEach [
             if (interface != null) {
             interface.intSignalDecls.forEach [
@@ -339,13 +313,6 @@ class EsterelToSclExtensions {
      * Checks, whether a variable is already declared
      */
      def boolean alreadyDefined(String n) {
-         for (decl : localDeclarations) {
-             for (valObj : decl.valuedObjects) {
-                 if (valObj.name == n) {
-                    return true
-                 }
-             }
-         }
          if (!signalMap.filter[ key == n ].nullOrEmpty)
             return true
          false
@@ -363,7 +330,7 @@ class EsterelToSclExtensions {
         SclFactory::eINSTANCE.createStatementScope
     }
     
-    def de.cau.cs.kieler.scl.scl.Thread newThread() {
+    def Thread newThread() {
         SclFactory::eINSTANCE.createThread
     }
     
@@ -405,7 +372,7 @@ class EsterelToSclExtensions {
      * @param l The target label 
      */
     def addGoto(StatementSequence sSeq, String l) {
-        sSeq.statements.add(createGotoStm(l))
+        sSeq.add(createGotoStm(l))
     }
     
     /**

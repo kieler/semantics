@@ -100,16 +100,13 @@ class EsterelToSclTransformation extends Transformation {
     var HashMap<ISignal, Pair<ValuedObject, String>> exitMap
 
     // List of all locally used variables, used to add them as global declaration after transformation
-    var protected LinkedList<Declaration> localDeclarations
+//    var protected LinkedList<Declaration> localDeclarations
 
     // Connecting a signal name with a valuedObject. Allows "scoping" and shadowing out
     var protected LinkedList<Pair<String, ValuedObject>> signalMap
 
     // Maps valued variables to signal
     var protected HashMap<ValuedObject, ValuedObject> valuedMap
-
-    // State variables for weak suspension
-    var LinkedList<Pair<Integer, String>> waStates
     
     // Associates counting variables to the corresponding delay event
     var HashMap<String, ValuedObject> counterMap
@@ -153,14 +150,10 @@ class EsterelToSclTransformation extends Transformation {
 
         exitMap = new HashMap<ISignal, Pair<ValuedObject, String>>
 
-        localDeclarations = new LinkedList<Declaration>
-
         signalMap = new LinkedList<Pair<String, ValuedObject>>
 
         valuedMap = new HashMap<ValuedObject, ValuedObject>
 
-        waStates = new LinkedList<Pair<Integer, String>>
-        
         counterMap = new HashMap<String, ValuedObject>        
         
         pauseTransformation = new Stack<(StatementSequence)=>StatementSequence>
@@ -190,11 +183,8 @@ class EsterelToSclTransformation extends Transformation {
         esterelMod.body.statements.forEach[transformStm(sSeq)]
         sSeq.addLabel("root")
 
-        // Add local variable declarations
-        program.declarations.addAll(localDeclarations)
-
         // Add reset thread for outputs
-        val f_term = createValuedObject(uniqueName(signalMap, "f_term"))
+        val f_term = createValuedObject(uniqueName("f_term"))
         if (!opt || terminates) {
             f_term.initialValue = createBoolValue(false)
             val decl = createDeclaration => [
@@ -690,7 +680,7 @@ class EsterelToSclTransformation extends Transformation {
     def dispatch StatementSequence transformStm(LocalSignalDecl signal, StatementSequence sSeq) {
     	val signals = new LinkedList<Pair<String, ValuedObject>>
     	val sScope = newSscope
-    	val f_term = createFreshVarNoDecl("f_term", ValueType::BOOL)
+    	val f_term = createFreshVar("f_term", ValueType::BOOL)
     	sScope.add(createAssignment(f_term, createBoolValue(false)))
         sScope.declarations += createDeclaration => [ valuedObjects += f_term; type = ValueType::BOOL ]
         for (s : (signal.signalList as LocalSignal).signal) {
@@ -756,7 +746,7 @@ class EsterelToSclTransformation extends Transformation {
             val l_end = createFreshLabel
             labelMap.put(curLabel, l_end)
             // Create a depth flag
-            val f_depth = createFreshVarNoDecl(sScope, "f_depth", ValueType::BOOL)
+            val f_depth = createFreshVar(sScope, "f_depth", ValueType::BOOL)
             f_depth.initialValue = createBoolValue(false)
             // Set depth flag to true when pause is taken
             pauseTransformation.push([StatementSequence seq|seq.add(createAssignment(f_depth, createBoolValue(true)))])
@@ -808,7 +798,7 @@ class EsterelToSclTransformation extends Transformation {
         // Add a counting variable, if delay.expr is set; 
         var ValuedObject counterVar
         if (delayExpression) {
-            counterVar = createFreshVarNoDecl(sScope, "i", ValueType::INT)
+            counterVar = createFreshVar(sScope, "i", ValueType::INT)
             counterVar.initialValue = createIntValue(0)
             counterMap.put(((abort.body as AbortInstance).delay.event.expr as ValuedObjectReference).valuedObject.name,
                 counterVar)
@@ -857,12 +847,12 @@ class EsterelToSclTransformation extends Transformation {
 
         // Delay Expression?
         val delayExpression = (abort.body as AbortInstance).delay.expr != null
-        val f_wa = createFreshVarNoDecl(sScope, "f_wa", ValueType::BOOL)
+        val f_wa = createFreshVar(sScope, "f_wa", ValueType::BOOL)
         f_wa.initialValue = createBoolValue(false)
         // If delayed add depth flag
         var ValuedObject f_depthVar
         if (!(abort.body as AbortInstance).delay.isImmediate) {
-            f_depthVar = createFreshVarNoDecl(sScope, "f_depth", ValueType::BOOL)
+            f_depthVar = createFreshVar(sScope, "f_depth", ValueType::BOOL)
             f_depthVar.initialValue = createBoolValue(false)
         }
         val f_depth = f_depthVar
@@ -932,7 +922,7 @@ class EsterelToSclTransformation extends Transformation {
         OperatorExpression countExp) {
         val abortExpr = (abort.body as AbortInstance).delay.event.expr
         // Create abort flag and set to false
-        val f_a = createFreshVarNoDecl(sScope, "f_a", ValueType::BOOL)
+        val f_a = createFreshVar(sScope, "f_a", ValueType::BOOL)
         f_a.initialValue = createBoolValue(false)
         // If abort is immediate directly check for abort condition
         if ((abort.body as AbortInstance).delay.isImmediate) {
@@ -1085,7 +1075,7 @@ class EsterelToSclTransformation extends Transformation {
         labelMap.put(curLabel, l)
 		val exitVars = new LinkedList<ValuedObject>
 		trap.trapDeclList.trapDecls.forEach [ 
-			val singleExit = createFreshVarNoDecl(it.name, ValueType::BOOL)
+			val singleExit = createFreshVar(it.name, ValueType::BOOL)
 			singleExit.initialValue = createBoolValue(false)
 			sScope.declarations += createDeclaration => [ valuedObjects += singleExit; type =  ValueType::BOOL ]
 			exitVars += singleExit
@@ -1159,14 +1149,17 @@ class EsterelToSclTransformation extends Transformation {
      */
     def dispatch StatementSequence transformStm(Run run, StatementSequence sSeq) {
         // Signal declared in run module have to be copied, but only if not already done
+        val sScope = newSscope
         val p = SclFactory::eINSTANCE.createSCLProgram
         transformInterface(run.module.module.interface, p, new LinkedList<Pair<String, ValuedObject>>)
+		val collectDecls = new LinkedList<Declaration>
         p.declarations.forEach [
             if (!(alreadyDefined(it.valuedObjects.head.name))) {
-                localDeclarations += it
+                collectDecls += it
                 signalMap += it.valuedObjects.head.name -> it.valuedObjects.head
             }
         ]
+        sScope.declarations += collectDecls
 
         // Rename signals (only if renaming happens) and remember to delete afterwards
         val signals = new LinkedList<Pair<String, ValuedObject>>
@@ -1190,9 +1183,10 @@ class EsterelToSclTransformation extends Transformation {
 
         // Copy the body in case of multiple calls for the same module
         val statements = EcoreUtil.copy(run.module.module.body)
-        statements.statements.forEach[transformStm(sSeq)]
+        statements.statements.forEach[transformStm(sScope)]
 
         signalMap.removeAll(signals)
+        sSeq.add(sScope)
 
         sSeq
     }
@@ -1279,7 +1273,9 @@ class EsterelToSclTransformation extends Transformation {
      * Procedure calls
      */
     def dispatch StatementSequence transformStm(ProcCall procCall, StatementSequence sSeq) {
+    	val sScope = newSscope
         val valObj = createFreshVar("procDummy", ValueType::BOOL)
+        sScope.declarations.add(createDeclaration => [ valuedObjects += valObj; type = ValueType::BOOL] )
 
         val res = KExpressionsFactory::eINSTANCE.createFunctionCall
         res.functionName = procCall.proc.name
@@ -1309,7 +1305,8 @@ class EsterelToSclTransformation extends Transformation {
         }
 
         // Create dummy assignment
-        sSeq.add(createAssignment(valObj, res))
+        sScope.add(createAssignment(valObj, res))
+        sSeq.add(sScope)
 
         sSeq
     }
