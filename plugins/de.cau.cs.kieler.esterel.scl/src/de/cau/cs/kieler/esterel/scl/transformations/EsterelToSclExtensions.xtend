@@ -156,7 +156,7 @@ class EsterelToSclExtensions {
     def String uniqueName(String s) {
 
         // The variable should neither be on the current signalMap nor locally defined
-        if (!signalMap.contains(s)) {
+        if (signalMap.filter[ key == s ].nullOrEmpty) {
             return s
         } else {
             return uniqueName(s + "_")
@@ -313,7 +313,7 @@ class EsterelToSclExtensions {
      * Checks, whether a variable is already declared
      */
      def boolean alreadyDefined(String n) {
-         if (!signalMap.filter[ key == n ].nullOrEmpty)
+         if ((!signalMap.filter[ key == n ].nullOrEmpty) || (!valuedMap.values.filter[ name == n ].nullOrEmpty))
             return true
          false
      }
