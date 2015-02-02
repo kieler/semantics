@@ -35,7 +35,6 @@ import de.cau.cs.kieler.sccharts.OutputNode
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.TestReferenceNode
 import de.cau.cs.kieler.sccharts.CallNode
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.sccharts.Transition
 
 /**
@@ -73,7 +72,6 @@ class Reference {
 		
 		targetRootState.transformDataflows
         // Traverse all referenced states
-        //println("allRefedStates: " + targetRootState.allContainedStates.filter[ referencedState ].toList)
         targetRootState.allContainedStates.filter[ referencedState ].toList.immutableCopy.forEach[
             transformReference(targetRootState)
         ]
@@ -181,10 +179,6 @@ class Reference {
     }
     
     // transform dataflow
-    
-    // ??? order reference -> call -> assignments ???
-    // CallNodes can maybe skipped
-    
     def transformDataflows(State state) {
     	val dataflows = <Dataflow> newHashSet
     	state.getAllContainedStates.forEach[ dataflows += concurrencies.filter(typeof(Dataflow))]
@@ -198,8 +192,13 @@ class Reference {
     		
     		var regionCounter = 0
 			var idCounter = 0
+			
 			// NEU:
-			// transform reference nodes
+			/*
+			 * Transform ReferenceNodes first
+			 * => create new region and state, copy referenced scope
+			 * an bind all valued objects accordingly
+			 */
             for(trn: dataflow.nodes.filter(typeof(TestReferenceNode))) {
                 val rRegion = parentState.createRegion("_"+dataflow.id+regionCounter)
                 rRegion.label = dataflow.label + regionCounter
@@ -218,14 +217,11 @@ class Reference {
                     refedInputs+=valuedObjects
                 ]
                 for (expr: trn.parameters) {
-                    //val wire = state.createVariable("_wire"+wireCounter).setTypeBool
                     val newBinding = SCChartsFactory.eINSTANCE.createBinding
                     newBinding.actual = (expr as ValuedObjectReference).valuedObject
                     newBinding.formal = refedInputs.get(exprCounter)
-                    
                     val rState = nodeMapping.get(trn)
                     rState.bindings += newBinding
-                    
                     exprCounter = exprCounter +1
                 }
                 // bind outputs
@@ -236,21 +232,13 @@ class Reference {
                 ]
                 for (f: dataflow.features) {
                     if (f.expression instanceof ValuedObjectReference) {
-                        //println("found vor: " + f.expression + ", f.expr.vo: " + (f.expression as ValuedObjectReference).valuedObject)
                         val refedVo = (f.expression as ValuedObjectReference).valuedObject
-                        //println("f.vo: " + f.valuedObject)
                         if (refedOutputs.contains(refedVo)) {
-                            //println("!match!")
                             val newBinding = SCChartsFactory.eINSTANCE.createBinding
-                            val oldVoPos = refedOutputs.indexOf(refedVo)
                             newBinding.actual = f.valuedObject
-                            newBinding.formal = refedVo//refedOutputs.get(oldVoPos)//refedOutputs.get(refedOutputs.indexOf(refedVo))
+                            newBinding.formal = refedVo
                             val rState = nodeMapping.get(trn)
                             rState.bindings += newBinding
-                            
-                            //println("rSate: " + rState + ", " + rState.declarations)
-                            //rState.replaceAllOccurrences(refedVo, f.valuedObject)
-                            
                         }
                     }
                 }
@@ -258,59 +246,67 @@ class Reference {
                 (trn.referencedScope as State).transformDataflows
             }
 			
-			// transform assignments to entry actions
-			println("df.features: " + dataflow.features)
+			/*
+			 * Traverse all DataflowFeatures of current Dataflow
+			 * and transform it to already implemented extended sccharts features
+			 */
 			for (f: dataflow.features.immutableCopy) {
-			    println("test f: " + f)
 			    if (f.node != null) {
-			        println("HERE... f mit node")
+			        // DataflowFeature has a valued object which is part of another node
 			        if (f.node instanceof CallNode) {
-			            println("f.node == CallNode")
+                        // DataflowFeature: f.node is a CallNode
                         val cn = f.node as CallNode
-                        println("cn: " + cn)
                         val defNode = cn.callReference
-                        println("defNode: " + defNode)
-                        println("defNode.states: " + defNode.states)
                         if (defNode.states.nullOrEmpty) {
-                            // DefineNode has no states => contains df
-                            println("DefNode contains DF")
+                            /*
+                             * DefineNode contains dataflow
+                             * => create new region with initial and final state for each expression
+                             * and an assignment as transition effect 
+                             */
                             val refedVo = (f.expression as ValuedObjectReference).valuedObject
                             val exprIndex = defNode.valuedObjects.indexOf(refedVo)
                             val newExpr = defNode.expressions.get(exprIndex).copy
-                            // create assignment as entry action
+                            
                             val newAssignment = SCChartsFactory.eINSTANCE.createAssignment
                             newAssignment.valuedObject = f.valuedObject
                             newAssignment.expression = newExpr
-                            parentState.createEntryAction => [
-                                it.addAssignment(newAssignment)
-                                val newBool = KExpressionsFactory.eINSTANCE.createBoolValue
-                                newBool.setValue(true)
-                                it.trigger = newBool
-                            ]
-//                            println("newExpr: " + newExpr + ", allRefs: " + newExpr.allReferences)
                             
-                            // ersetzen der vo's entsprechend der aufrufe... funzt noch nicht
-                            val cnvo = <ValuedObject>newArrayList
-                            cn.parameters.forEach[
-                                cnvo += (it as ValuedObjectReference).valuedObject
-                            ]
-                            //println("cnvo: " + cnvo)
+                            val rRegion = parentState.createRegion("_"+dataflow.id+regionCounter)
+                            rRegion.label = dataflow.label + regionCounter
+                    
+                            val newState = rRegion.createState("_"+dataflow.ID+idCounter)
+                            newState.label = dataflow.label + idCounter + "_start"
+                            newState.setInitial
+                    
+                            val newState2 = rRegion.createState("_"+dataflow.id+idCounter)
+                            newState2.label = dataflow.label + idCounter + "_end"
+                            newState2.setFinal
                             
-                            var voi = 0
-//                            newExpr.allReferences.forEach[
-                            for (ref: newExpr.allReferences) {
-                                //println("ref: " + ref + ", vo's: " + ref.valuedObject)
-//                                ref.replaceAllOccurrences(ref.valuedObject, cnvo.get(voi))
-                                if (cnvo.contains(ref.valuedObject)) {
-                                    //println("tasdtzasdzt")
-                                }
-                                voi = voi+1
-                                
+                            regionCounter = regionCounter +1
+                            idCounter = idCounter+1
+                            
+                            val transition = SCChartsFactory.eINSTANCE.createTransition
+                            transition.sourceState = newState
+                            transition.targetState = newState2
+                            transition.effects += newAssignment
+                            
+                            //replace valued objects according to call parameters
+                            val refedInputs = <ValuedObject>newArrayList
+                            defNode.inputs.forEach[
+                                refedInputs += valuedObjects
+                            ]
+                            var exprCounter = 0
+                            for (p: cn.parameters) {
+                                val in = (p as ValuedObjectReference).valuedObject
+                                newState.replaceAllOccurrences(refedInputs.get(exprCounter), in)
+                                exprCounter = exprCounter +1
                             }
-                            //]
                         } else {
-                            // DefineNode contains SCChart
-                            println("DefineNode contains SCChart")
+                            /*
+                             * DefineNode contains SCChart:
+                             * create a new region for it, copy the content and replace all
+                             * valued objects accordingly 
+                             */
                             val rRegion = parentState.createRegion("_"+dataflow.id+regionCounter)
                             rRegion.label = dataflow.label + regionCounter
                             regionCounter = regionCounter +1
@@ -331,6 +327,7 @@ class Reference {
                                     }
                                     newTrans.targetState = newState
                                     newState.incomingTransitions += newTrans
+                                    
                                 }
                                 for (t: s.outgoingTransitions) {
                                     var newTrans = SCChartsFactory.eINSTANCE.createTransition
@@ -340,13 +337,10 @@ class Reference {
                                         newTrans = t.copy
                                         transitionMapping.put(t, newTrans)
                                     }
-                                    
                                     newTrans.sourceState = newState
                                     newState.outgoingTransitions += newTrans
                                 }
-                                
                                 rRegion.states += newState
-                                
                             }
                             // replace input valued objects
                             defNode.inputs.forEach[ i|
@@ -361,25 +355,60 @@ class Reference {
                             for (s: rRegion.states) {
                                 s.replaceAllOccurrences(refedVo, f.valuedObject)
                             }
+                            /*
+                             * remove transitions with no source or target state attached
+                             * because they are not visualized
+                             * and cannot be transformed to core sccharts
+                             * (but has been maybe created when copying transitions from DefineNodes)
+                             */
+                            rRegion.states.forEach[ s|
+                                s.incomingTransitions.forEach[
+                                    if (it.sourceState == null || it.targetState == null) {
+                                        it.remove
+                                    }
+                                ]
+                                s.outgoingTransitions.forEach[
+                                    if (it.sourceState == null || it.targetState == null) {
+                                        it.remove
+                                    }
+                                ]
+                            ]
                         }
 			        } else {
-			            // f.node should be referenced node
-			            println("f.node == was anderes")
+			            /*
+			             * DataflowFeature: f.node is a ReferenceNode
+			             * transformation already done at the beginning
+			             * => skip this case at this place
+			             */
 			        }
 			    } else {
-			        // f.node == null
-			        // => just create Assignment as entry action
-			        println("node == null: es geht bis hierhin")
-			        val newAssignment = SCChartsFactory.eINSTANCE.createAssignment
+			        /*
+			         * DataflowFeature: f.node == null
+			         * => create new region with initial and final state for each expression
+			         * and create new assignment as transition effect
+			         */
+                    val rRegion = parentState.createRegion("_"+dataflow.id+regionCounter)
+                    rRegion.label = dataflow.label + regionCounter
+                    
+                    val newState = rRegion.createState("_"+dataflow.ID+idCounter)
+                    newState.label = dataflow.label + idCounter + "_start"
+                    newState.setInitial
+                    
+                    val newState2 = rRegion.createState("_"+dataflow.id+idCounter)
+                    newState2.label = dataflow.label + idCounter + "_end"
+                    newState2.setFinal
+                    
+                    regionCounter = regionCounter +1
+                    idCounter = idCounter+1
+                    
+                    val newAssignment = SCChartsFactory.eINSTANCE.createAssignment
                     newAssignment.valuedObject = f.valuedObject
                     newAssignment.expression = f.expression
                     
-                    parentState.createEntryAction => [
-                        it.addAssignment(newAssignment)
-                        val newBool = KExpressionsFactory.eINSTANCE.createBoolValue
-                        newBool.setValue(true)
-                        it.trigger = newBool
-                    ]
+                    val transition = SCChartsFactory.eINSTANCE.createTransition
+                    transition.sourceState = newState
+                    transition.targetState = newState2
+                    transition.effects += newAssignment
 			    }
 			}
 			
@@ -444,13 +473,20 @@ class Reference {
     				}
     			}
     		}
-    		//println("parentState.states: " + parentState.allContainedStates)
+            // remove (old) dataflow and empty regions
     		dataflow.remove
-    		
+    		for (r: parentState.regions.immutableCopy) {
+    		    if (r.states.size == 0) {
+    		        r.remove
+    		    }
+    		}
     	}
     	
+    	// remove empty regions
     	for(r : state.regions.immutableCopy) {
-    		if (r.states.size == 0) r.remove
+    		if (r.states.size == 0) {
+    		    r.remove
+    		}
     	}
    	}
     	
