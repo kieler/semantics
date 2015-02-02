@@ -80,7 +80,7 @@ class EsterelToSclExtensions {
 
     def getValuedObject(String n) {
         for (variable : signalMap) {
-            val ret = signalMap.findLast[key == n]
+            val ret = signalMap.findLast[ key == n ]
             if (ret != null)
                 return ret.value
         }
@@ -125,6 +125,7 @@ class EsterelToSclExtensions {
     def createFreshVar(String name, ValueType t) {
         val ret = createValuedObject(uniqueName(name))
         signalMap.add(name -> ret)
+        signalMap.add(ret.name -> ret)
 
         ret
     }
@@ -139,6 +140,7 @@ class EsterelToSclExtensions {
         	type = t
         ]
         signalMap.add(name -> ret)
+        signalMap.add(ret.name -> ret)
 
         ret
     }
@@ -150,19 +152,18 @@ class EsterelToSclExtensions {
     }
 
     /*
-     * Takes a variable name and a list of existing variables and
+     * Takes a variable name and
      * adds "_" until variable name is new
      */
     def String uniqueName(String s) {
-
-        // The variable should neither be on the current signalMap nor locally defined
+        // The variable should not be on the current signalMap
         if (signalMap.filter[ key == s ].nullOrEmpty) {
             return s
         } else {
             return uniqueName(s + "_")
         }
     }
-
+    
     def String uniqueNameByList(LinkedList<String> variables, String s) {
         if (!variables.contains(s)) {
             return s;

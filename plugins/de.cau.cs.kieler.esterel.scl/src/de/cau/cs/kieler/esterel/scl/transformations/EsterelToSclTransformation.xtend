@@ -111,9 +111,12 @@ class EsterelToSclTransformation extends Transformation {
     // Associates counting variables to the corresponding delay event
     var HashMap<String, ValuedObject> counterMap
     
+    // Created flags
+    var LinkedList<ValuedObject> flags
+    
     // Flag indicating if optimized transformations should be used
     var boolean opt
-
+    
     // List of transformation function to manipulate pauses and join
     var Stack<(StatementSequence)=>StatementSequence> pauseTransformation
     var Stack<(StatementSequence)=>StatementSequence> joinTransformation
@@ -154,7 +157,9 @@ class EsterelToSclTransformation extends Transformation {
 
         valuedMap = new HashMap<ValuedObject, ValuedObject>
 
-        counterMap = new HashMap<String, ValuedObject>        
+        counterMap = new HashMap<String, ValuedObject>   
+        
+        flags = new LinkedList<ValuedObject>
         
         pauseTransformation = new Stack<(StatementSequence)=>StatementSequence>
         joinTransformation = new Stack<(StatementSequence)=>StatementSequence>
@@ -180,7 +185,7 @@ class EsterelToSclTransformation extends Transformation {
 
         // Body transformations
         val sSeq = createSseq
-        esterelMod.body.statements.forEach[transformStm(sSeq)]
+        esterelMod.body.statements.forEach[ transformStm(sSeq) ]
         sSeq.addLabel("root")
 
         // Add reset thread for outputs
@@ -204,6 +209,13 @@ class EsterelToSclTransformation extends Transformation {
                 }
             ])
         program.add(par)
+    	
+    	// Add declarations for flags
+    	if (!flags.nullOrEmpty) {
+	    	val declFlags = createDeclaration => [ type = ValueType::BOOL ]
+	    	declFlags.valuedObjects += flags
+	    	program.declarations += declFlags
+    	}
 
         // Reset labelcount
         resetLabelCount
@@ -387,6 +399,7 @@ class EsterelToSclTransformation extends Transformation {
 
         // Flag indicating, if also delayed await cases may be taken
         val delayedFlag = createFreshVar("f_depth", ValueType::BOOL)
+        flags += delayedFlag
         sSeq.add(createAssignment(delayedFlag, createBoolValue(false)))
 
         sSeq.addLabel(l_start)
@@ -409,6 +422,8 @@ class EsterelToSclTransformation extends Transformation {
 
                 // i counts occurrences of the signal
                 val counter = createFreshVar("i", ValueType::INT)
+                counterMap.put(counter.name, counter)
+                flags += counter
                 counter.initialValue = 0.createIntValue
 
                 // Increment counter if guard holds
@@ -474,6 +489,8 @@ class EsterelToSclTransformation extends Transformation {
         // i counts
         if (await.delay.expr != null) {
             i = createFreshVar("i", ValueType::INT)
+            counterMap.put(i.name, i)
+            flags += i
             i.initialValue = 0.createIntValue
 
             // if a present increment counter
@@ -680,9 +697,8 @@ class EsterelToSclTransformation extends Transformation {
     def dispatch StatementSequence transformStm(LocalSignalDecl signal, StatementSequence sSeq) {
     	val signals = new LinkedList<Pair<String, ValuedObject>>
     	val sScope = newSscope
-    	val f_term = createFreshVar("f_term", ValueType::BOOL)
+    	val f_term = createFreshVar(sScope, "f_term", ValueType::BOOL)
     	sScope.add(createAssignment(f_term, createBoolValue(false)))
-        sScope.declarations += createDeclaration => [ valuedObjects += f_term; type = ValueType::BOOL ]
         for (s : (signal.signalList as LocalSignal).signal) {
             val obj = createValuedObject(s.name)
             sScope.add(createAssignment(obj, createBoolValue(false)))
@@ -797,8 +813,9 @@ class EsterelToSclTransformation extends Transformation {
         // Add a counting variable, if delay.expr is set; 
         var ValuedObject counterVar
         if (delayExpression) {
-            counterVar = createFreshVar(sScope, "i", ValueType::INT)
+            counterVar = createFreshVar("i", ValueType::INT)
             counterVar.initialValue = createIntValue(0)
+            flags += counterVar
             counterMap.put(((abort.body as AbortInstance).delay.event.expr as ValuedObjectReference).valuedObject.name,
                 counterVar)
         }
@@ -1013,6 +1030,8 @@ class EsterelToSclTransformation extends Transformation {
         var ValuedObject counterVar
         if (delayExpression) {
             counterVar = createFreshVar("i", ValueType::INT)
+            counterMap.put(counterVar.name, counterVar)
+            flags += counterVar
             sSeq.add(createAssignment(counterVar, 0.createIntValue))
         }
         val counter = counterVar
@@ -1074,9 +1093,8 @@ class EsterelToSclTransformation extends Transformation {
         labelMap.put(curLabel, l)
 		val exitVars = new LinkedList<ValuedObject>
 		trap.trapDeclList.trapDecls.forEach [ 
-			val singleExit = createFreshVar(it.name, ValueType::BOOL)
+			val singleExit = createFreshVar(sScope, it.name, ValueType::BOOL)
 			singleExit.initialValue = createBoolValue(false)
-			sScope.declarations += createDeclaration => [ valuedObjects += singleExit; type =  ValueType::BOOL ]
 			exitVars += singleExit
 			exitMap.put(it, (singleExit -> l))
 		]
@@ -1111,8 +1129,8 @@ class EsterelToSclTransformation extends Transformation {
         ]
         pauseTransformation.push[StatementSequence stm|trans.apply(true, stm)]
         joinTransformation.push[StatementSequence stm|trans.apply(false, stm)]
-
-        trap.statement.transformStm(sScope)
+		if (trap.statement != null)
+        	trap.statement.transformStm(sScope)
 
         pauseTransformation.pop
         joinTransformation.pop
@@ -1244,6 +1262,7 @@ class EsterelToSclTransformation extends Transformation {
         // If not marked as positive and non positive value is given do nothing
         val l_end = createFreshLabel
         labelMap.put(curLabel, l_end)
+        val sScope = newSscope
         if (!repeat.positive) {
             val exprVal = EcoreUtil.copy(repeat.expression.transformExp("int"))
             val op = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
@@ -1251,19 +1270,20 @@ class EsterelToSclTransformation extends Transformation {
                 subExpressions += createIntValue(0)
                 subExpressions += exprVal
             ]
-            sSeq.add(ifThenGoto(op, l_end, true))
+            sScope.add(ifThenGoto(op, l_end, true))
         }
-        val i = createFreshVar("i", ValueType::INT)
-        sSeq.add(createAssignment(i, 0.createIntValue))
+        val i = createFreshVar(sScope, "i", ValueType::INT)
+        sScope.add(createAssignment(i, 0.createIntValue))
 
         val l = createFreshLabel
         labelMap.put(curLabel, l)
-        sSeq.addLabel(l)
-        repeat.statement.transformStm(sSeq)
-        sSeq.add(incrementInt(i))
-        sSeq.add(ifThenGoto(createGT(repeat.expression.transformExp("int"), i.createValObjRef), l, true))
+        sScope.addLabel(l)
+        repeat.statement.transformStm(sScope)
+        sScope.add(incrementInt(i))
+        sScope.add(ifThenGoto(createGT(repeat.expression.transformExp("int"), i.createValObjRef), l, true))
 
-        sSeq.addLabel(l_end)
+        sScope.addLabel(l_end)
+        sSeq.add(sScope)
 
         sSeq
     }
@@ -1273,8 +1293,7 @@ class EsterelToSclTransformation extends Transformation {
      */
     def dispatch StatementSequence transformStm(ProcCall procCall, StatementSequence sSeq) {
     	val sScope = newSscope
-        val valObj = createFreshVar("procDummy", ValueType::BOOL)
-        sScope.declarations.add(createDeclaration => [ valuedObjects += valObj; type = ValueType::BOOL] )
+        val valObj = createFreshVar(sScope, "procDummy", ValueType::BOOL)
 
         val res = KExpressionsFactory::eINSTANCE.createFunctionCall
         res.functionName = procCall.proc.name
