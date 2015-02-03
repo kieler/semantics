@@ -66,13 +66,13 @@ class SCC {
         }
         // return only those sccs, which contain more than one element
         // necessary?
-        var finalSccList = <LinkedList<Node>> newLinkedList
-        for (scc : sccList){
-            if (!(scc.empty || scc.length==1)){
-                finalSccList.add(scc)
-            }
-        }
-        finalSccList
+//        var finalSccList = <LinkedList<Node>> newLinkedList
+//        for (scc : sccList){
+//            if (!(scc.empty || scc.length==1)){
+//                finalSccList.add(scc)
+//            }
+//        }
+        sccList
     }
     
     /**

@@ -34,10 +34,10 @@ class CalcPrioIDs {
             //System.out.println("tsid :"+tsIDs.get(node).intValue)
             if (!tsIDs.containsKey(node)){
                 System.out.println("Missing TSID for node "+node)
-            }
+            } else{
             if (tsIDs.get(node).intValue > biggestTSID){
                 biggestTSID = tsIDs.get(node).intValue
-            }
+            }}
         }
         biggestTSID = biggestTSID + 1
         for (n : nodeList){
