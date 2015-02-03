@@ -118,7 +118,7 @@ public class SimpleCBeautifier {
             Scanner scanner = new Scanner(f);
             String input = scanner.useDelimiter("\\Z").next();
             scanner.close();
-            
+
             verbosePrint(" DONE", verbose);
 
             verbosePrint("Beautifying ...", verbose, false);
@@ -200,12 +200,14 @@ public class SimpleCBeautifier {
     private static String indentPartChache = null;
 
     /**
-     * Gets the indent string using a specific indentPart. This method builds up a cache
-     * in order to be able to quickly respond. If the indentPart changes this method
-     * automatically revokes the cache.
-     *
-     * @param indent the indent
-     * @param indentPart the indent part
+     * Gets the indent string using a specific indentPart. This method builds up a cache in order to
+     * be able to quickly respond. If the indentPart changes this method automatically revokes the
+     * cache.
+     * 
+     * @param indent
+     *            the indent
+     * @param indentPart
+     *            the indent part
      * @return the indent string
      */
     private static String getIndentString(int indent, String indentPart) {
@@ -228,125 +230,153 @@ public class SimpleCBeautifier {
     }
 
     // -------------------------------------------------------------------------
-    
-    
+
     /** The characters before which we want to prevent a space character. */
-    static private char[] noSpaceBeforeCharacters = {';', '(', ')', '&', '|', '!', ',', '=', '<', '>' };
+    static private char[] noSpaceBeforeCharacters = { ';', '(', ')', '&', '|', '!', ',', '=', '<',
+            '>' };
 
     /** The characters after which we want to prevent a space character. */
-    static private char[] noSpaceAfterCharacters = {';', '(', ')', '&', '|', '!', ',', '=', '<', '>' };
+    static private char[] noSpaceAfterCharacters = { ';', '(', ')', '&', '|', '!', ',', '=', '<',
+            '>' };
 
-//    /** The characters before which we want to assure a space character. */
-//    static private char[] spaceBeforeCharacters = {'='};
-//
-//    /** The characters after which we want to assure a space character. */
-//    static private char[] spaceAfterCharacters = {'='};
+    // /** The characters before which we want to assure a space character. */
+    // static private char[] spaceBeforeCharacters = {'='};
+    //
+    // /** The characters after which we want to assure a space character. */
+    // static private char[] spaceAfterCharacters = {'='};
 
     /**
- * Beautify incoming C code. Do this by using Java reflection to access
- * String's internal char array for best performance. Need setAccessible(true)
- * because the char array is private. Use StringBuilder for building the new
- * String.
- * Supports indention
- *
- * @param text the text
- * @param indentPart the indent part
- * @return the string
- * @throws NoSuchFieldException the no such field exception
- * @throws SecurityException the security exception
- * @throws IllegalArgumentException the illegal argument exception
- * @throws IllegalAccessException the illegal access exception
- */
-    public static String beautify(String text, String indentPart) throws NoSuchFieldException, SecurityException,
-            IllegalArgumentException, IllegalAccessException {
+     * Beautify incoming C code. Do this by using Java reflection to access String's internal char
+     * array for best performance. Need setAccessible(true) because the char array is private. Use
+     * StringBuilder for building the new String. Supports indention
+     * 
+     * @param text
+     *            the text
+     * @return the string
+     * @throws NoSuchFieldException
+     *             the no such field exception
+     * @throws SecurityException
+     *             the security exception
+     * @throws IllegalArgumentException
+     *             the illegal argument exception
+     * @throws IllegalAccessException
+     *             the illegal access exception
+     */
+    public static String beautify(String text, String indentPart) throws NoSuchFieldException,
+            SecurityException, IllegalArgumentException, IllegalAccessException {
 
         StringBuilder modifiedOutput = new StringBuilder();
 
         int indent = 0;
-        
+
+        boolean stringMode = false;
+
+        int brackets = 0;
+
         boolean spaceBefore = false;
 
-        // if true, then set spaceBefore to TRUE in the next iteration (because we want to eliminate MORE spaces)
+        // if true, then set spaceBefore to TRUE in the next iteration (because we want to eliminate
+        // MORE spaces)
         boolean nextSpaceBefore = false;
 
         char[] chars = null;
-        
-        // flag indicating an active long comment '/*' => leave next line break, do not indent or remove spaces
+
+        // flag indicating an active long comment '/*' => leave next line break, do not indent or
+        // remove spaces
         // stop ONLY at comment end '*/'
         boolean longComment = false;
-        
-        // if a long comment ended, we want to accept the NEXT line break. if this flag is true this means we
+
+        // if a long comment ended, we want to accept the NEXT line break. if this flag is true this
+        // means we
         // have an ended long comment without a next line break yet which we are searching for
         boolean lineBreakAfterLongComment = false;
-        
-        // flag indicating an active short comment '//' => leave next line break, do not indent or remove spaces
-        // stop at next line break 
+
+        // flag indicating an active short comment '//' => leave next line break, do not indent or
+        // remove spaces
+        // stop at next line break
         boolean shortComment = false;
-        
+
         int indentPartLength = indentPart.length();
-        
-        //Field field = (Field) String.class.getField("value");
+
+        // Field field = (Field) String.class.getField("value");
         Class<String> c = String.class;
         for (Field f : c.getDeclaredFields()) {
-                f.setAccessible(true);  // bye-bye "private"
+            f.setAccessible(true); // bye-bye "private"
 
-                // ALthough String.class.getField("value") throws a
-                // NoSuchField exception, this way works, alas.
-                if ("value" == f.getName()) {
-                        chars = (char[])f.get(text);
-                        break;
-                }
+            // ALthough String.class.getField("value") throws a
+            // NoSuchField exception, this way works, alas.
+            if ("value" == f.getName()) {
+                chars = (char[]) f.get(text);
+                break;
+            }
         }
-        
+
         final int len = chars.length;
         for (int i = 0; i < len; i++) {
             char character = chars[i];
 
-            
+            if (!stringMode) {
+                if (character == '(') {
+                    brackets++;
+                }
+                if (character == ')') {
+                    brackets--;
+                }
+            }
+
             if (nextSpaceBefore) {
                 nextSpaceBefore = false;
                 spaceBefore = true;
             }
-            
+
             // Comment handling start
             char nextCharacter = '.';
-            if (i+1 < len) {
-                nextCharacter = chars[i+1];
+            if (i + 1 < len) {
+                nextCharacter = chars[i + 1];
             }
             if (character == '/' && nextCharacter == '*') {
                 longComment = true;
-            }
-            else if (character == '/' && nextCharacter == '/' && !longComment) {
-                shortComment = true; 
-            }
-            else if (character == '*' && nextCharacter == '/' && longComment) {
+            } else if (character == '/' && nextCharacter == '/' && !longComment) {
+                shortComment = true;
+            } else if (character == '*' && nextCharacter == '/' && longComment) {
                 longComment = false;
                 lineBreakAfterLongComment = true;
                 i++;
                 modifiedOutput.append(character);
                 modifiedOutput.append(nextCharacter);
                 continue;
-            }
-            else if (character == '\n' && shortComment) {
+            } else if (character == '\n' && shortComment) {
                 shortComment = false;
                 modifiedOutput.append(character);
                 continue;
-            }
-            else if (character == '\n' && lineBreakAfterLongComment) {
+            } else if (character == '\n' && lineBreakAfterLongComment) {
                 lineBreakAfterLongComment = false;
-                // accept this line break 
+                // accept this line break
                 modifiedOutput.append(character);
                 continue;
             }
-            
+
             if (shortComment || longComment) {
                 modifiedOutput.append(character);
                 continue;
             }
             // Comment handling end
-            
+
+            // handle strings
+            if (character == '"' && !stringMode) {
+                stringMode = true;
+            }
+            if (stringMode) {
+                if (character == '"' && stringMode) {
+                    stringMode = false;
+                }
+                // in stringMode, just copy the characters
+                modifiedOutput.append(character);
+                continue;
+            }
+
             // eliminate superfluous space characters
-            if (character == ' ')  {
+            if (character == ' ') {
                 boolean found = false;
                 for (char noSpaceBeforeCharacter : noSpaceBeforeCharacters) {
                     if (nextCharacter == noSpaceBeforeCharacter) {
@@ -357,12 +387,12 @@ public class SimpleCBeautifier {
                 if (found) {
                     i++; // skip space
                     character = nextCharacter;
-                    if (i+1 < len) {
-                        nextCharacter = chars[i+1];
+                    if (i + 1 < len) {
+                        nextCharacter = chars[i + 1];
                     }
                 }
             }
-            if (nextCharacter == ' ')  {
+            if (nextCharacter == ' ') {
                 boolean found = false;
                 for (char noSpaceAfterCharacter : noSpaceAfterCharacters) {
                     if (character == noSpaceAfterCharacter) {
@@ -408,11 +438,16 @@ public class SimpleCBeautifier {
                     modifiedOutput.append(getIndentString(indent, indentPart));
                 }
                 spaceBefore = true; // no space at line begin
-            } else if (character == ';') {
+            } else if (character == ';' && brackets <= 0) { // && brackets == 0 because we do not
+                                                            // want to break within for loops
                 modifiedOutput.append(";\n");
                 if (indent > 0) {
                     modifiedOutput.append(getIndentString(indent, indentPart));
                 }
+                spaceBefore = true; // no space at line begin
+            } else if (character == ';' && brackets > 0) { // && brackets == 0 because we do not
+                                                           // want to break within for loops
+                modifiedOutput.append("; ");
                 spaceBefore = true; // no space at line begin
             } else {
                 spaceBefore = false;
@@ -422,7 +457,7 @@ public class SimpleCBeautifier {
 
         return modifiedOutput.toString();
     }
-    
+
     // -------------------------------------------------------------------------
-    
+
 }

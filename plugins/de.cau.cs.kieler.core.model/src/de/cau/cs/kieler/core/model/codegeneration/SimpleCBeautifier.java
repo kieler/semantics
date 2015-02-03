@@ -266,6 +266,10 @@ public class SimpleCBeautifier {
 
         int indent = 0;
 
+        boolean stringMode = false;
+
+        int brackets = 0;
+
         boolean spaceBefore = false;
 
         // if true, then set spaceBefore to TRUE in the next iteration (because we want to eliminate
@@ -308,6 +312,15 @@ public class SimpleCBeautifier {
         for (int i = 0; i < len; i++) {
             char character = chars[i];
 
+            if (!stringMode) {
+                if (character == '(') {
+                    brackets++;
+                }
+                if (character == ')') {
+                    brackets--;
+                }
+            }
+
             if (nextSpaceBefore) {
                 nextSpaceBefore = false;
                 spaceBefore = true;
@@ -345,6 +358,19 @@ public class SimpleCBeautifier {
                 continue;
             }
             // Comment handling end
+
+            // handle strings
+            if (character == '"' && !stringMode) {
+                stringMode = true;
+            }
+            if (stringMode) {
+                if (character == '"' && stringMode) {
+                    stringMode = false;
+                }
+                // in stringMode, just copy the characters
+                modifiedOutput.append(character);
+                continue;
+            }
 
             // eliminate superfluous space characters
             if (character == ' ') {
@@ -409,11 +435,16 @@ public class SimpleCBeautifier {
                     modifiedOutput.append(getIndentString(indent, indentPart));
                 }
                 spaceBefore = true; // no space at line begin
-            } else if (character == ';') {
+            } else if (character == ';' && brackets <= 0) { // && brackets == 0 because we do not
+                                                            // want to break within for loops
                 modifiedOutput.append(";\n");
                 if (indent > 0) {
                     modifiedOutput.append(getIndentString(indent, indentPart));
                 }
+                spaceBefore = true; // no space at line begin
+            } else if (character == ';' && brackets > 0) { // && brackets == 0 because we do not
+                                                           // want to break within for loops
+                modifiedOutput.append("; ");
                 spaceBefore = true; // no space at line begin
             } else {
                 spaceBefore = false;
