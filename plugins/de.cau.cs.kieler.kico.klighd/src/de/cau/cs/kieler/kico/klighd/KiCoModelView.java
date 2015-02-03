@@ -164,11 +164,6 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     /** Flag if side-by-side display mode is active. */
     private boolean displaySideBySide = false;
     
-    /** The action for toggling chain display mode. */
-    private Action actionChainToggle;
-    /** Flag if chain display mode is active. */
-    private boolean displayChain = false;
-    
     /** The action for toggling compile. */
     private Action actionCompileToggle;
     /** Flag if compile mode is active. */
@@ -201,7 +196,12 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
     /** The action for toggling tracing. */
     private Action actionTracingToggle;
     /** Flag if tracing is activated. */
-    private boolean doTracing = true;
+    private boolean doTracing = false;
+    
+    /** The action for toggling chain display mode. */
+    private Action actionTracingChainToggle;
+    /** Flag if chain display mode is active. */
+    private boolean displayTracingChain = false;
 
     // Models
 
@@ -318,11 +318,11 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
         toolBarManager.add(getActionCompile());
         toolBarManager.add(getActionPin());
         toolBarManager.add(getActionSideBySide());
-        toolBarManager.add(getActionChain());
         
         IMenuManager menu = bars.getMenuManager();
         menu.add(new Separator());
         menu.add(getActionTracing());
+        menu.add(getActionTracingChain());
         menu.add(getActionPauseSync());
         menu.add(getActionNoDiagram());
 
@@ -496,13 +496,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
         }
         actionSideBySideToggle = new Action("", IAction.AS_CHECK_BOX) {
             public void run() {
-                if (isChecked()) {
-                    displaySideBySide = true;
-                    displayChain = false;
-                    actionChainToggle.setChecked(displayChain);
-                }else{
-                    displaySideBySide = false;
-                }
+                displaySideBySide = isChecked();
                 updateModel(ChangeEvent.DISPLAY_MODE);
             }
         };
@@ -512,35 +506,6 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
         actionSideBySideToggle.setImageDescriptor(ICON_SIDE_BY_SIDE);
         actionSideBySideToggle.setChecked(displaySideBySide);
         return actionSideBySideToggle;
-    }
-    
-    /**
-     * Gets the action to toggle chain display mode and side-by-side display mode accordingly.
-     * 
-     * @return the action
-     */
-    private Action getActionChain() {
-        if (actionChainToggle != null) {
-            return actionChainToggle;
-        }
-        actionChainToggle = new Action("", IAction.AS_CHECK_BOX) {
-            public void run() {
-                if (isChecked()) {
-                    displayChain = true;
-                    displaySideBySide = false;
-                    actionSideBySideToggle.setChecked(displaySideBySide);
-                }else{
-                    displayChain = false;
-                }
-                updateModel(ChangeEvent.DISPLAY_MODE);
-            }
-        };
-        actionChainToggle.setText("Enable tranformation chain display mode");
-        actionChainToggle.setToolTipText("Enable tranformation chain display mode");
-        // actionSideBySideToggle.setToolTipText("Enables side-by-side display mode of compiled and source model.");
-        actionChainToggle.setImageDescriptor(ICON_CHAIN);
-        actionChainToggle.setChecked(displayChain);
-        return actionChainToggle;
     }
 
     /**
@@ -644,6 +609,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
         actionTracingToggle = new Action("", IAction.AS_CHECK_BOX) {
             public void run() {
                 doTracing = isChecked();
+                updateModel(ChangeEvent.COMPILE);
             }
         };
         actionTracingToggle.setChecked(doTracing);
@@ -651,6 +617,28 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
         actionTracingToggle
                 .setToolTipText("Performes tracing during transformations if activated.");
         return actionTracingToggle;
+    }
+    
+    /**
+     * Gets the action to toggle chain display mode instead of side-by-side display mode when tracing is active.
+     * 
+     * @return the action
+     */
+    private Action getActionTracingChain() {
+        if (actionTracingChainToggle != null) {
+            return actionTracingChainToggle;
+        }
+        actionTracingChainToggle = new Action("", IAction.AS_CHECK_BOX) {
+            public void run() {
+                displayTracingChain = isChecked();
+                updateModel(ChangeEvent.DISPLAY_MODE);
+            }
+        };
+        actionTracingChainToggle.setText("Display tranformation chain");
+        actionTracingChainToggle.setToolTipText("Enable tranformation chain view in displaySideBySide display mode");
+        // actionTracingChainToggle.setImageDescriptor(ICON_CHAIN);
+        actionTracingChainToggle.setChecked(displayTracingChain);
+        return actionTracingChainToggle;
     }
 
     // -- Save model
@@ -792,13 +780,15 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 child.actionCompileToggle.setChecked(compileModel);
                 // adopt display mode settings
                 child.displaySideBySide = displaySideBySide;
-                child.displayChain = displayChain;
                 child.actionSideBySideToggle.setChecked(displaySideBySide);
                 // adopt transformation settings
                 child.pinnedTransformations =
                         new WeakHashMap<IEditorPart, KiCoSelection>(pinnedTransformations);
                 // synchronization settings cannot be adopted
 
+                //tracing
+                child.doTracing = doTracing;
+                child.displayTracingChain = displayTracingChain;
                 // TODO update when implemented new toggle buttons
 
                 // update model of forked view
@@ -1040,11 +1030,12 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
             // composite model in given display mode
             if (!noDiagram && displaySideBySide) {
-                currentModel = new KiCoModelChain(sourceModel, currentModel);
-            } else if (!noDiagram && displayChain && currentCompilationResult != null) {
-                currentModel =
-                        new KiCoModelChain(sourceModel, currentCompilationResult, activeEditor.getTitle(),
-                                transformations);
+                if (displayTracingChain && currentCompilationResult != null) {
+                    currentModel = new KiCoModelChain(sourceModel, currentCompilationResult,
+                                    activeEditor.getTitle(), transformations);
+                } else {
+                    currentModel = new KiCoModelChain(sourceModel, currentModel);
+                }
             }
 
             // Indicates if type of model changed and thus the model view has to reinitialize
