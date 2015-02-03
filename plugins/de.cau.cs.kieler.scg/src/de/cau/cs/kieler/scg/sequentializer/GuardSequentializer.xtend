@@ -37,8 +37,6 @@ import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import de.cau.cs.kieler.scg.synchronizer.SynchronizerSelector
 import java.util.HashMap
 import java.util.List
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.ScheduledBlock
@@ -54,6 +52,8 @@ import de.cau.cs.kieler.core.annotations.StringAnnotation
 import de.cau.cs.kieler.scg.optimizer.CopyPropagation
 import com.google.inject.Guice
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.scg.Entry
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -161,11 +161,12 @@ class GuardSequentializer extends AbstractSequentializer {
         
         creationalTransformation(scg,newSCG)
         scg.setDefaultTrace
+        newSCG.trace(scg)
         
         val hostcodeAnnotations = scg.getStringAnnotations(ANNOTATION_HOSTCODE)
         hostcodeAnnotations.forEach[
             newSCG.addAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).value)
-        ]    
+        ]
         schizoDeclaration = createDeclaration=>[ setType(ValueType::BOOL) ]
         
         
@@ -198,8 +199,8 @@ class GuardSequentializer extends AbstractSequentializer {
         System.out.println("Preparation for sequentialization finished (time elapsed: "+(time / 1000)+"s).")          
         
 		// Create the entry node, a control flow for the entry node, add the node.
-        val entry = ScgFactory::eINSTANCE.createEntry
-    	entry.next = ScgFactory::eINSTANCE.createControlFlow
+        val entry = ScgFactory::eINSTANCE.createEntry.trace(scg.nodes.get(0))
+    	entry.next = ScgFactory::eINSTANCE.createControlFlow.trace(entry)
         newSCG.nodes.add(entry)
         
         // Now, call the worker method. It returns the last control flows which have to be connected to the exit node.
@@ -207,7 +208,7 @@ class GuardSequentializer extends AbstractSequentializer {
         val exitControlFlows = scg.schedules.head.transformSchedule(newSCG, entry.next, nodeCache)
         
         // Create an exit node and connect the control flow. Add the node.
-        val exit = ScgFactory::eINSTANCE.createExit
+        val exit = ScgFactory::eINSTANCE.createExit.trace((scg.nodes.get(0) as Entry).exit)
         exitControlFlows.forEach[ it.target = exit ]
         nodeCache.add(exit)
         
@@ -259,7 +260,7 @@ class GuardSequentializer extends AbstractSequentializer {
 			for (guard : guards) {
 				System.out.println("Sequentializing guard " + guard.valuedObject.name)
 				if (!placedGuards.contains(guard)) {
-			    	val assignment2 = ScgFactory::eINSTANCE.createAssignment
+			    	val assignment2 = ScgFactory::eINSTANCE.createAssignment.trace(sBlock)
 					assignment2.addGuardExpression(guard, nextControlFlows, scg, nodeCache)
 					placedGuards += guard
 				}
@@ -286,15 +287,15 @@ class GuardSequentializer extends AbstractSequentializer {
     		if (sBlock != null /* && guard.sequentialize */ && sBlock.nodes.filter(typeof(Assignment)).size>0)
     		{
     			// Create a conditional and set a reference of the guard as condition.
-    			val conditional = ScgFactory::eINSTANCE.createConditional
+    			val conditional = ScgFactory::eINSTANCE.createConditional.trace(sBlock)
                 conditional.condition = sBlock.guard.valuedObject.reference.copySCGExpression
 //                if (sb.schizophrenic) {
 //                    conditional.condition = scg.fixSchizophrenicExpression(conditional.condition)
 //                }
     			
     			// Create control flows for the two branches and set the actual control flow to the conditional.
-    			conditional.then = ScgFactory::eINSTANCE.createControlFlow
-    			conditional.^else = ScgFactory::eINSTANCE.createControlFlow
+    			conditional.then = ScgFactory::eINSTANCE.createControlFlow.trace(sBlock)
+    			conditional.^else = ScgFactory::eINSTANCE.createControlFlow.trace(sBlock)
     			nextControlFlows.forEach[ target = conditional ]
     			nextControlFlows.clear
     			
@@ -308,7 +309,7 @@ class GuardSequentializer extends AbstractSequentializer {
     				val Assignment conditionalAssignment = assignment.copySCGNode(scg) as Assignment
     				nextControlFlow.target = conditionalAssignment
                     nodeCache.add(conditionalAssignment)
-    				nextControlFlow = ScgFactory::eINSTANCE.createControlFlow
+    				nextControlFlow = ScgFactory::eINSTANCE.createControlFlow.trace(assignment)
     				conditionalAssignment.next = nextControlFlow
     				conditionalAssignment.addAnnotation(ANNOTATION_CONDITIONALASSIGNMENT, sBlock.guard.valuedObject.name)
     			}
@@ -331,6 +332,7 @@ class GuardSequentializer extends AbstractSequentializer {
     
     protected def Assignment copySCGNode(Assignment assignment, SCGraph target) {
     	ScgFactory::eINSTANCE.createAssignment => [
+    	    it.trace(assignment)
             it.assignment = assignment.assignment.copySCGExpression
             it.valuedObject = assignment.valuedObject.getValuedObjectCopyWNULL;
             for(index : assignment.indices) {	
@@ -350,7 +352,7 @@ class GuardSequentializer extends AbstractSequentializer {
 		nextControlFlows.clear
 		// Add the conditional.
         nodeCache.add(assignment)
-        val nextControlFlow = ScgFactory::eINSTANCE.createControlFlow
+        val nextControlFlow = ScgFactory::eINSTANCE.createControlFlow.trace(assignment)
         assignment.next = nextControlFlow
         nextControlFlows.add(nextControlFlow)
             
