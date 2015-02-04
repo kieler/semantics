@@ -54,9 +54,7 @@ public class TextExpressionImpl extends ExpressionImpl implements TextExpression
      * <!-- end-user-doc -->
      * @generated
      */
-
-    // ima: temp: zu Testzwecken public gesetzt
-    public TextExpressionImpl() {
+    protected TextExpressionImpl() {
         super();
     }
 

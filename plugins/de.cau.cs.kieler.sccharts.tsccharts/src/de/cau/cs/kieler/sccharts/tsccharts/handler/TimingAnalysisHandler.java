@@ -48,6 +48,7 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 import com.google.inject.Guice;
 
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.impl.TextExpressionImpl;
 import de.cau.cs.kieler.core.kgraph.KNode;
@@ -78,6 +79,7 @@ import de.cau.cs.kieler.scg.Fork;
 import de.cau.cs.kieler.scg.Join;
 import de.cau.cs.kieler.scg.Node;
 import de.cau.cs.kieler.scg.SCGraph;
+import de.cau.cs.kieler.scg.ScgFactory;
 import de.cau.cs.kieler.scg.impl.AssignmentImpl;
 import de.cau.cs.kieler.scg.impl.ControlFlowImpl;
 
@@ -428,10 +430,10 @@ public class TimingAnalysisHandler extends AbstractHandler {
                     case 27:
                     case 34:
                         Node target = testEdge.getTarget();
-                        ControlFlow newEdge = new ControlFlowImpl();
+                        ControlFlow newEdge = ScgFactory.eINSTANCE.createControlFlow();
                         newEdge.setTarget(target);
-                        Assignment ttp = new AssignmentImpl();
-                        TextExpression ttpText = new TextExpressionImpl();
+                        Assignment ttp = ScgFactory.eINSTANCE.createAssignment();
+                        TextExpression ttpText = KExpressionsFactory.eINSTANCE.createTextExpression();
                         ttpText.setText("TTP(" + ttpcounter + ")");
                         ttp.setAssignment(ttpText);
                         ttp.setNext(newEdge);

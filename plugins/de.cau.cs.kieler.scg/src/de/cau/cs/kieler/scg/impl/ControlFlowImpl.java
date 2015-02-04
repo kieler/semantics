@@ -25,8 +25,8 @@ public class ControlFlowImpl extends LinkImpl implements ControlFlow {
 
 	 * @generated
 	 */
-    // ima: temp: changed visibility for test reasons
-    public ControlFlowImpl() {
+    
+    protected ControlFlowImpl() {
 		super();
 	}
 
