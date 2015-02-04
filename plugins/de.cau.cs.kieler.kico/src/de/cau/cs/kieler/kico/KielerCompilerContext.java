@@ -433,17 +433,16 @@ public class KielerCompilerContext {
                 if (preselectAlternatives) {
                     // If this is an alternative group, then ONLY add the SELECTED alternative
                     // according to the prioritizedTransformationIDs (input)
-                    TransformationGroup group = (TransformationGroup) transformationDummy.transformation;
+                    TransformationGroup group =
+                            (TransformationGroup) transformationDummy.transformation;
                     List<String> priorized = new ArrayList<String>();
-                    
-                    //FIXME: BAD HACK FOR WEIHNACHTSFEIER, USE KICO.UI EXTENSION POINT!!!
-                    //priorized.add("S2ARDUINO");
-                    
-                    
+
+                    // FIXME: BAD HACK FOR WEIHNACHTSFEIER, USE KICO.UI EXTENSION POINT!!!
+                    // priorized.add("S2ARDUINO");
+
                     String selectedAlternative =
-                            (group)
-                                    .getSelectedDependency(prioritizedTransformationIDs,
-                                            disabledTransformationIDs, priorized);
+                            (group).getSelectedDependency(prioritizedTransformationIDs,
+                                    disabledTransformationIDs, priorized);
                     dependencies.add(selectedAlternative);
                 } else {
                     List<String> allAlternative =
@@ -624,14 +623,13 @@ public class KielerCompilerContext {
     public EObject getTransformationObject() {
         if ((getCompilationResult() == null
                 || getCompilationResult().getIntermediateResults().get(0) == null || (!(getCompilationResult()
-                .getIntermediateResults().get(0) instanceof EObject)))) {
+                .getTransformationObject() instanceof EObject)))) {
             // throw new RuntimeException(
             // "compiler(context) must be called with a model to compile as the first elements"
             // + " of intermediate results in the compiled results object");
             return null;
         }
-        EObject transformationObject =
-                (EObject) getCompilationResult().getIntermediateResults().get(0);
+        EObject transformationObject = (EObject) getCompilationResult().getTransformationObject();
         return transformationObject;
 
     }
@@ -650,9 +648,11 @@ public class KielerCompilerContext {
             return;
         } else {
             if (getCompilationResult().getIntermediateResults().size() < 1) {
-                getCompilationResult().getIntermediateResults().add(eObject);
+                getCompilationResult().getIntermediateResults().add(
+                        new IntermediateResult("", eObject, 0));
             } else {
-                getCompilationResult().getIntermediateResults().add(0, eObject);
+                getCompilationResult().getIntermediateResults().add(0,
+                        new IntermediateResult("", eObject, 0));
             }
         }
     }

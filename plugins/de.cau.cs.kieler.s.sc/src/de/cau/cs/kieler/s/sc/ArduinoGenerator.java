@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 
 import com.google.inject.Guice;
 
+import de.cau.cs.kieler.core.model.codegeneration.SimpleCBeautifier;
 import de.cau.cs.kieler.core.model.util.ModelUtil;
 import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
@@ -156,7 +157,22 @@ public class ArduinoGenerator {
                     existingProgram[3];
         }
         
-        return PrimitiveBeautifier.beautify(returnProgram);
+        try {
+            returnProgram = SimpleCBeautifier.beautify(returnProgram, "   ");
+        } catch (NoSuchFieldException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return returnProgram;
     }
 
     // -------------------------------------------------------------------------

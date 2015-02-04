@@ -73,7 +73,23 @@ import de.cau.cs.kieler.scg.Depth
  */
 
 class SurfaceSynchronizer extends AbstractSynchronizer {
- 
+
+    static final boolean DEBUG = false;
+
+    def static void debug(String debugText) {
+        debug(debugText, true);
+    }
+
+    def static void debug(String debugText, boolean lineBreak) {
+        if (DEBUG) {
+            if (lineBreak) {
+                System.out.println(debugText);
+            } else {
+                System.out.print(debugText);
+            }
+        }
+    }
+     
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
@@ -152,7 +168,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
             newGuard.expression = emptyExp.expression
             scg.guards += newGuard
             
-            System.out.println("Generated NEW guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize)
+            debug("Generated NEW guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize)
 		}
     }
     

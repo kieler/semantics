@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -194,14 +195,14 @@ public class KiCoUtil {
     /**
      * Parse the model provided as a serialized String. This is implemented by finding the first
      * suitable XtextResourceProvider that is able to parse the model to an EObject.
-     * 
-     * @param text
-     *            the text
-     * @param context
-     *            the context may be null, otherwise the resource is added to the context
+     *
+     * @param text the text
+     * @param context the context may be null, otherwise the resource is added to the context
+     * @param mainModel the main model
+     * @param extension the extension may be null if unknown
      * @return the e object
      */
-    public static EObject parse(String text, KielerCompilerContext context, boolean mainModel) {
+    public static EObject parse(String text, KielerCompilerContext context, boolean mainModel, String extension) {
         EObject returnEObject = null;
 
         boolean done = false;
@@ -221,7 +222,13 @@ public class KiCoUtil {
             try {
 
                 for (String ext : getRegXtext().getExtensionToFactoryMap().keySet()) {
-                    String num = (text.hashCode() + "").replace("-", "");
+//                    System.out.println("Testing extension ''"+ext+"''");
+                    if (extension != null && !extension.equals(ext)) {
+                        // if an extension is given, then continue if this is not the right extension!
+                        continue;
+                    }
+
+                    String num = Math.random()*1000 + System.nanoTime() + (text.hashCode() + "").replace("-", "");
 
                     URI uri = URI.createURI("dummy:/inmemory." + num + "." + ext);
 

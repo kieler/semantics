@@ -49,6 +49,22 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  */
 class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationDummy>> {
 
+    static final boolean DEBUG = false;
+
+    def static void debug(String debugText) {
+        debug(debugText, true);
+    }
+
+    def static void debug(String debugText, boolean lineBreak) {
+        if (DEBUG) {
+            if (lineBreak) {
+                System.out.println(debugText);
+            } else {
+                System.out.print(debugText);
+            }
+        }
+    }
+     
     // -------------------------------------------------------------------------
     // We need some extensions 
     @Inject
@@ -304,7 +320,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
 
                         if (transSource != null && transDest != null) {
 
-                            System.out.println(" CHK  CONT '" + transSource.id + "' TO '" + transDest.id + "'" )
+                            debug(" CHK  CONT '" + transSource.id + "' TO '" + transDest.id + "'" )
                             if (!(connected.contains(transSource.hashCode + transDest.hashCode))) {
                                 //System.out.println(" DO   CONT '" + transSource.id + "' TO '" + transDest.id + "'  ::: " + connected.toString);
                                 connected.add(transSource.hashCode + transDest.hashCode)

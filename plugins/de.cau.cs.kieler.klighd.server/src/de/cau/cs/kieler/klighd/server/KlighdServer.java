@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.swt.widgets.Display;
 
 import de.cau.cs.kieler.core.kgraph.KGraphData;
 import de.cau.cs.kieler.core.kgraph.KGraphElement;
@@ -34,7 +35,6 @@ import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.kgraph.impl.KGraphDataImpl;
 import de.cau.cs.kieler.kico.KiCoUtil;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
-import de.cau.cs.kieler.kiml.graphviz.layouter.GraphvizLayoutProvider;
 import de.cau.cs.kieler.kiml.util.KimlUtil;
 import de.cau.cs.kieler.klighd.IOffscreenRenderer;
 import de.cau.cs.kieler.klighd.LightDiagramServices;
@@ -103,6 +103,7 @@ public class KlighdServer extends HttpServer {
 
             // Parse options
             scale = query.getValue("scale");
+            String ext = null; // by default no extension is given, if an extension is given use this!
             try {
                 scaleInteger = Integer.parseInt(scale);
             } catch (Exception e) {
@@ -112,6 +113,10 @@ public class KlighdServer extends HttpServer {
             if (render2.equals("svg")) {
                 // if this is a valid value (other than the default png) then change it
                 render = render2;
+            }
+            String extString = query.getValue("ext");
+            if (extString.trim().length() > 0) {
+                ext = extString.toLowerCase().trim();
             }
 
             // Read all models in "model" and "include1", "include2", ...
@@ -137,7 +142,7 @@ public class KlighdServer extends HttpServer {
             for (int i = models.size() - 1; i >= 0; i--) {
                 boolean isMainModel = (i == 0);
                 String model = models.get(i);
-                EObject eObject = KiCoUtil.parse(model, context, isMainModel);
+                EObject eObject = KiCoUtil.parse(model, context, isMainModel, ext);
                 if (isMainModel) {
                     mainModel = eObject;
                 }
@@ -150,6 +155,7 @@ public class KlighdServer extends HttpServer {
                 // build up a corresponding view context
                 final ViewContext viewContext =
                         LightDiagramServices.translateModel2(mainModel, null);
+                LightDiagramServices.layoutDiagram(viewContext);
                 ResourceSet rs = new ResourceSetImpl();
                 Resource r = rs.createResource(URI.createPlatformResourceURI("Dummy.kgx", true));
                 // write a copy of the view model kgraph to the selected file
@@ -195,11 +201,15 @@ public class KlighdServer extends HttpServer {
                         KlighdSynthesisProperties
                                 .create()
                                 .setProperty(SVGOffscreenRenderer.GENERATOR,
-                                        "de.cau.cs.kieler.klighd.piccolo.svggen.freeHEP")
+                                        "de.cau.cs.kieler.klighd.piccolo.svggen.freeHEPExtended")
                                 .setProperty(IOffscreenRenderer.IMAGE_SCALE, scaleInteger);
-                renderingResult =
-                        LightDiagramServices.renderOffScreen(mainModelParam, renderParam,
-                                outputStreamParam, properties);
+                Display.getDefault().syncExec(new Runnable() {
+                    public void run() {
+                        renderingResult =
+                                LightDiagramServices.renderOffScreen(mainModelParam, renderParam,
+                                        outputStreamParam, properties);
+                    }
+                });
                 try {
                     outputStreamParam.flush();
                 } catch (IOException e) {

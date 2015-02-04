@@ -51,8 +51,11 @@ public class KielerCompiler {
 
         boolean verbose = false;
         boolean strict = false;
+        boolean append = false;
+        String performanceString = null;
         String inputFile = null;
         String outputFile = null;
+        String ext = null;
         ArrayList<String> includeFiles = new ArrayList<String>();
 
         if (args.length < 1 || args[0].startsWith("-")) {
@@ -69,13 +72,17 @@ public class KielerCompiler {
                             + "  java -jar KielerCompiler.jar 5555 -f FILE.sct -o code.c CODEGENERATION \n"
                             + "Example 3:\n"
                             + "  java -jar KielerCompiler.jar compile.sccharts.com -f FILE.sct -o code.c CODEGENERATION \n"
+                            + "Example 4:\n"
+                            + "  java -jar KielerCompiler.jar compile.sccharts.com -f FILE.sct -a results.csv -p \"%FILENAME,%ALL,%ENTRY\" CODEGENERATION \n"
                             + "\n"
                             + "Options:\n"
                             + "-f <filename> : Use a specific input file\n"
                             + "-i <filename> : Use each specific additional included input file that is referenced\n"
                             + "-o <filename> : Use a specific output file\n"
+                            + "-a <filename> : Use a specific output file to append\n"
                             + "-v            : Use verbose compilation, more error messages\n"
-                            + "-s            : Use strict mode in which only selected transformations are applied\n");
+                            + "-s            : Use strict mode in which only selected transformations are applied\n"
+                            + "-p pattern    : Make a performance test where pattern is a string in which %TRANSFORMATIONID will be replaced by the ms that the transformation with this ID took during compilation.\n");
             return;
         }
 
@@ -117,6 +124,11 @@ public class KielerCompiler {
                     if (c + 1 < args.length) {
                         inputFile = args[c + 1];
                         c++;
+                        
+                        int i = inputFile.lastIndexOf('.');
+                        if (i > 0) {
+                            ext = inputFile.substring(i+1).toLowerCase();
+                        }
                     }
                 } else if (option.equals("-i") || option.equals("--include")) {
                     if (c + 1 < args.length) {
@@ -126,7 +138,19 @@ public class KielerCompiler {
                     }
                 } else if (option.equals("-o") || option.equals("--output")) {
                     if (c + 1 < args.length) {
+                        append = false;
                         outputFile = args[c + 1];
+                        c++;
+                    }
+                } else if (option.equals("-a") || option.equals("--output")) {
+                    if (c + 1 < args.length) {
+                        append = true;
+                        outputFile = args[c + 1];
+                        c++;
+                    }
+                } else if (option.equals("-p") || option.equals("--performance")) {
+                    if (c + 1 < args.length) {
+                        performanceString = args[c + 1];
                         c++;
                     }
                 } else if (option.equals("-v") || option.equals("--verbose")) {
@@ -141,6 +165,18 @@ public class KielerCompiler {
                 transformations += args[c];
             }
 
+        }
+        
+        if (inputFile != null) {
+            if (performanceString != null) {
+                try {
+                    File f = new File(inputFile);
+                    String inputFileName = f.getName();
+                    performanceString = performanceString.replace("%FILENAME", inputFileName);
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         // System.out.println("host: " + host);
@@ -163,13 +199,14 @@ public class KielerCompiler {
         }
         // System.out.println("model: " + model);
 
+        
         CompilationResult compilationResult =
-                remoteCompile(host, port, outputFile, verbose, strict, models, transformations);
+                remoteCompile(host, port, outputFile, verbose, strict, performanceString,  models, transformations, ext);
 
         if (outputFile == null || outputFile.trim().equals("")) {
             System.out.println(new String(compilationResult.model));
         } else {
-            writeOutputModel(outputFile, compilationResult.model);
+            writeOutputModel(outputFile, compilationResult.model, append);
         }
         if (compilationResult.error != null && compilationResult.error.length() > 0) {
             if (verbose || compilationResult.model.length == 0) {
@@ -245,10 +282,10 @@ public class KielerCompiler {
      * @param modelAsText
      *            the model as text
      */
-    private static void writeOutputModel(String outputFile, byte[] model) {
+    private static void writeOutputModel(String outputFile, byte[] model, boolean append) {
         FileOutputStream out;
         try {
-            out = new FileOutputStream(outputFile);
+            out = new FileOutputStream(outputFile, append);
             out.write(model);
             out.close();
         } catch (FileNotFoundException e) {
@@ -262,20 +299,21 @@ public class KielerCompiler {
 
     /**
      * Remote compile.
-     * 
-     * @param host
-     *            the host
-     * @param port
-     *            the port
-     * @param model
-     *            the model
-     * @param transformations
-     *            the transformations
+     *
+     * @param host the host
+     * @param port the port
+     * @param outputFile the output file
+     * @param verbose the verbose
+     * @param strict the strict
+     * @param performanceString the performance string
+     * @param models the models
+     * @param transformations the transformations
+     * @param ext the ext
      * @return the string
      */
     @SuppressWarnings("deprecation")
     public static CompilationResult remoteCompile(String host, int port, String outputFile,
-            boolean verbose, boolean strict, ArrayList<String> models, String transformations) {
+            boolean verbose, boolean strict, String performanceString, ArrayList<String> models, String transformations, String ext) {
         CompilationResult result = new CompilationResult(new byte[0], "");
 
         try {
@@ -286,10 +324,21 @@ public class KielerCompiler {
                     query += "&include" + (c - 1) + "=" + URLEncoder.encode(models.get(1));
                 }
             }
-            query += "&verbose=" + verbose + "&strict=" + strict + "&transformations=" + transformations;
+            if (performanceString != null && performanceString.length() > 0) {
+                performanceString = "&performance=" + URLEncoder.encode(performanceString);
+            } else {
+                performanceString = "";
+            }
+            if (ext != null && ext.length() > 0) {
+                ext = "&ext=" + ext;
+            } else {
+                ext = "";
+            }
+            
+            query += ext + performanceString + "&verbose=" + verbose + "&strict=" + strict + "&transformations=" + transformations;
 
             String urlString = "http://" + host + ":" + port + "?" + query;
-            // System.out.println(urlString);
+            //System.out.println(urlString);
 
             URL url = new URL(urlString);
             URLConnection yc = url.openConnection();
