@@ -161,44 +161,46 @@ class TimingAnnotationProvider {
         return macroChildren;
     }
 
-    /* This method assigns time domains for each region of a state chart and annotates the 
-     * the corresponding S-Code-Objects in the KTM accordingly.
-     */
-    // old method, deprecated
-    def Integer setTimingDomains(State state, ModelWrapper model, Integer currentDomainNumber) {
-        var domainNumber = currentDomainNumber;
-        val regionList = state.regions;
-        val regionListIterator = regionList.iterator;
-        while (regionListIterator.hasNext()) {
-            val region = regionListIterator.next();
-            region.setTimeDomain(domainNumber);
-            val stateList = region.states;
-            val simpleStates = stateList.filter[it.regions.empty];
-            val macroStates = stateList.filter[!(it.regions.empty)];
-            val simpleStateListIterator = simpleStates.iterator;
-            while (simpleStateListIterator.hasNext()) {
-                var simpleState = simpleStateListIterator.next();
-                simpleState.setTimingDomainForSElements("@T" + domainNumber, model);
-            }
-            val macroStateListIterator = macroStates.iterator;
-            while (macroStateListIterator.hasNext()) {
-
-                // If the state has regions of its own, they belong to a new time domain
-                val childState = macroStateListIterator.next();
-
-                // recursive call, retrieve the highest DomainNumber that is not free anymore
-                domainNumber = setTimingDomains(childState, model, domainNumber + 1);
-            }
-
-            // Count up the DomainNumber for the next region, if there is one
-            if (regionListIterator.hasNext()) {
-                domainNumber = domainNumber + 1;
-            }
-        }
-
-        // Return the highest DomainNumber assigned by the Method
-        return domainNumber;
-    }
+// 4.2.2015 remove?
+//    /* This method assigns time domains for each region of a state chart and annotates the 
+//     * the corresponding S-Code-Objects in the KTM accordingly.
+//     */
+//    // old method, deprecated
+//    def Integer setTimingDomains(State state, ModelWrapper model, Integer currentDomainNumber) {
+//        var domainNumber = currentDomainNumber;
+//        val regionList = state.regions;
+//        val regionListIterator = regionList.iterator;
+//        while (regionListIterator.hasNext()) {
+//            val region = regionListIterator.next();
+//            region.setTimeDomain(domainNumber);
+//            val stateList = region.states;
+//            val simpleStates = stateList.filter[it.regions.empty];
+//            val macroStates = stateList.filter[!(it.regions.empty)];
+//            val simpleStateListIterator = simpleStates.iterator;
+//            while (simpleStateListIterator.hasNext()) {
+//                var simpleState = simpleStateListIterator.next();
+//                simpleState.setTimingDomainForSElements("@T" + domainNumber, model);
+//            }
+//            val macroStateListIterator = macroStates.iterator;
+//            while (macroStateListIterator.hasNext()) {
+//
+//                // If the state has regions of its own, they belong to a new time domain
+//                val childState = macroStateListIterator.next();
+//
+//                // recursive call, retrieve the highest DomainNumber that is not free anymore
+//                domainNumber = setTimingDomains(childState, model, domainNumber + 1);
+//            }
+//
+//            // Count up the DomainNumber for the next region, if there is one
+//            if (regionListIterator.hasNext()) {
+//                domainNumber = domainNumber + 1;
+//            }
+//        }
+//
+//        // Return the highest DomainNumber assigned by the Method
+//        return domainNumber;
+//    }
+// 4.2.2015 remove?
 
     /**
  * The Method annotates each region of a given State with a unique domainNumber. It also stores the 
