@@ -42,7 +42,7 @@
       <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.0/@valuedObjects.0"/>
     </condition>
   </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.12/@else" valuedObject="//@declarations.5/@valuedObjects.0">
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.12/@else //@nodes.17/@next //@nodes.26/@next //@nodes.31/@next" valuedObject="//@declarations.5/@valuedObjects.0">
     <next target="//@nodes.14"/>
     <assignment xsi:type="kexpressions:BoolValue" value="false"/>
   </nodes>
@@ -56,7 +56,7 @@
     <condition xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.0/@valuedObjects.0"/>
   </nodes>
   <nodes xsi:type="scg:Assignment" incoming="//@nodes.16/@then" valuedObject="//@declarations.5/@valuedObjects.0">
-    <next target="//@nodes.32"/>
+    <next target="//@nodes.13"/>
     <assignment xsi:type="kexpressions:BoolValue" value="true"/>
   </nodes>
   <nodes xsi:type="scg:Conditional" incoming="//@nodes.16/@else">
@@ -99,7 +99,7 @@
     <condition xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.0/@valuedObjects.0"/>
   </nodes>
   <nodes xsi:type="scg:Assignment" incoming="//@nodes.25/@then" valuedObject="//@declarations.5/@valuedObjects.0">
-    <next target="//@nodes.32"/>
+    <next target="//@nodes.13"/>
     <assignment xsi:type="kexpressions:BoolValue" value="true"/>
   </nodes>
   <nodes xsi:type="scg:Assignment" incoming="//@nodes.22/@next" valuedObject="//@declarations.3/@valuedObjects.0">
@@ -119,10 +119,10 @@
     <condition xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.0/@valuedObjects.0"/>
   </nodes>
   <nodes xsi:type="scg:Assignment" incoming="//@nodes.30/@then" valuedObject="//@declarations.5/@valuedObjects.0">
-    <next target="//@nodes.32"/>
+    <next target="//@nodes.13"/>
     <assignment xsi:type="kexpressions:BoolValue" value="true"/>
   </nodes>
-  <nodes xsi:type="scg:Exit" incoming="//@nodes.17/@next //@nodes.26/@next //@nodes.31/@next" entry="//@nodes.9">
+  <nodes xsi:type="scg:Exit" entry="//@nodes.9">
     <next target="//@nodes.2"/>
   </nodes>
   <nodes xsi:type="scg:Exit" incoming="//@nodes.2/@next" entry="//@nodes.0"/>

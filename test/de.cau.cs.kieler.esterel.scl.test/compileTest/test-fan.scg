@@ -38,7 +38,7 @@
       <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.0/@valuedObjects.0"/>
     </condition>
   </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.11/@else" valuedObject="//@declarations.6/@valuedObjects.0">
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.11/@else //@nodes.21/@next" valuedObject="//@declarations.6/@valuedObjects.0">
     <next target="//@nodes.13"/>
     <assignment xsi:type="kexpressions:BoolValue" value="false"/>
   </nodes>
@@ -76,10 +76,10 @@
     <condition xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.0/@valuedObjects.0"/>
   </nodes>
   <nodes xsi:type="scg:Assignment" incoming="//@nodes.20/@then" valuedObject="//@declarations.6/@valuedObjects.0">
-    <next target="//@nodes.22"/>
+    <next target="//@nodes.12"/>
     <assignment xsi:type="kexpressions:BoolValue" value="true"/>
   </nodes>
-  <nodes xsi:type="scg:Exit" incoming="//@nodes.21/@next" entry="//@nodes.8">
+  <nodes xsi:type="scg:Exit" entry="//@nodes.8">
     <next target="//@nodes.2"/>
   </nodes>
   <nodes xsi:type="scg:Exit" incoming="//@nodes.2/@next" entry="//@nodes.0"/>
