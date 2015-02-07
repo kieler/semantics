@@ -27,9 +27,11 @@ import de.cau.cs.kieler.esterel.kexpressions.Expression
 import de.cau.cs.kieler.esterel.kexpressions.IntValue
 import de.cau.cs.kieler.esterel.kexpressions.OperatorExpression
 import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference
+import javax.xml.transform.TransformerException
 
 /**
  * @author krat
+ * Transforms Esterels KExpressions to core KExpressions
  *
  */
 class TransformExpression {
@@ -73,16 +75,28 @@ class TransformExpression {
         return de.cau.cs.kieler.core.kexpressions.CombineOperator::get(op.toString)
     }
 
+	/*
+	 * Transforms a ComplexExpression
+	 * This should either be an OperatorExpression (catched above) or a ValuedObjectReference
+	 */
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(ComplexExpression comp) {
         if (comp instanceof ValuedObjectReference) {
             transformExp(comp as ValuedObjectReference)
+        } else {
+        	throw new TransformerException("Unhandled ComplexExpressions " + comp)
         }
     }
 
+	/*
+	 * Transforms ValuedObjectReferences
+	 */
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(ValuedObjectReference ref) {
         getValuedObjectRef(ref.valuedObject.name)
     }
 
+	/*
+	 * Transforms an Expression given as String with additionalinformation for its type
+	 */
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(String exp, String type) {
         val esterelExp = EsterelFactory::eINSTANCE.createConstantExpression => [
             value = exp
@@ -91,6 +105,11 @@ class TransformExpression {
         esterelExp.transformExp(type)
     }
 
+	/*
+	 * Transforms Expression with additional given String
+	 * This is mainly for the case of ConstantExpressions which are parsed as Strings such that the type
+	 * is only given by context
+	 */
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(Expression exp, String type) {
         
         if (!(exp instanceof ConstantExpression)) {
@@ -121,6 +140,7 @@ class TransformExpression {
                 return KExpressionsFactory::eINSTANCE.createIntValue => [
                     value = Integer.parseInt(constExp.value)
                 ]
+            //No String in SCL...
             case ("string"):
                 return KExpressionsFactory::eINSTANCE.createTextExpression => [
                     text = "'" + constExp.value + "'"
@@ -146,11 +166,17 @@ class TransformExpression {
 //        ]
 //    }
 
-    //TODO other values
+
+	/*
+	 * Transforms BooleanValue
+	 */
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(BooleanValue boolVal) {
         return createBoolValue(boolVal.value)
     }
 
+	/*
+	 * Transforms IntValue
+	 */
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(IntValue intVal) {
         if (intVal.value < 0)
             return KExpressionsFactory::eINSTANCE.createOperatorExpression => [
@@ -160,7 +186,9 @@ class TransformExpression {
         return createIntValue(intVal.value)
     }
 
-
+	/*
+	 * Transforms FunctionExpressions
+	 */
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(FunctionExpression funcExp) {
         val res = KExpressionsFactory::eINSTANCE.createFunctionCall
         res.functionName = funcExp.function.name

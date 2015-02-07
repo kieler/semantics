@@ -173,6 +173,69 @@ class EsterelToSclExtensions {
     }
 
 
+    
+
+    
+    /**
+     * Creates a statement which increments a valued object by 1
+     * @param valObj The valued object to increment
+     * @return A statement which increments valObj
+     */
+    def Statement incrementInt(ValuedObject valObj) {
+        createStmFromInstr(
+            createAssignment(valObj,
+                KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+                    operator = OperatorType::ADD
+                    subExpressions += createValObjRef(valObj)
+                    subExpressions += createIntValue(1)
+                ]))
+    }
+    
+    /*
+     * Checks for valid names. The suffix "_val" is reserved for valued signals.
+     */
+    def boolean validateNames(Program esterelProgram) {
+        esterelProgram.modules.forEach [
+            if (interface != null) {
+            interface.intSignalDecls.forEach [
+                signals.forEach [
+                   if (it.name.endsWith("_val"))
+                        throw new IllegalArgumentException("Variables should not have the suffix _val") 
+                ]
+            ]
+            
+            interface.intSensorDecls.forEach [
+                sensors.forEach [
+                   if (it.sensor.name.endsWith("_val"))
+                        throw new IllegalArgumentException("Variables should not have the suffix _val") 
+                ]
+            ]
+            interface.intConstantDecls.forEach [
+                constants.forEach [
+                    it.constants.forEach [
+                   if (it.constant.name.endsWith("_val"))
+                        throw new IllegalArgumentException("Variables should not have the suffix _val") 
+                        ]
+                ]
+            ]
+            }
+        ]
+        
+        return true;
+    }
+    
+    /*
+     * Checks, whether a variable is already declared
+     */
+     def boolean alreadyDefined(String n) {
+         if ((!signalMap.filter[ key == n ].nullOrEmpty) || (!valuedMap.values.filter[ name == n ].nullOrEmpty))
+            return true
+         false
+     }
+     
+    // -------------------------------------------------------------------------
+    // -- Esterel Termination Check
+    // -------------------------------------------------------------------------
     /**
     * Checks whether an Esterel statement terminates. Not complete: May return true even
     * if a program does not terminate.
@@ -260,64 +323,6 @@ class EsterelToSclExtensions {
     def dispatch boolean checkTerminate(Void x) {
         return true;
     }
-
-    
-    /**
-     * Creates a statement which increments a valued object by 1
-     * @param valObj The valued object to increment
-     * @return A statement which increments valObj
-     */
-    def Statement incrementInt(ValuedObject valObj) {
-        createStmFromInstr(
-            createAssignment(valObj,
-                KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-                    operator = OperatorType::ADD
-                    subExpressions += createValObjRef(valObj)
-                    subExpressions += createIntValue(1)
-                ]))
-    }
-    
-    /*
-     * Checks for valid names. The suffix "_val" is reserved for valued signals.
-     */
-    def boolean validateNames(Program esterelProgram) {
-        esterelProgram.modules.forEach [
-            if (interface != null) {
-            interface.intSignalDecls.forEach [
-                signals.forEach [
-                   if (it.name.endsWith("_val"))
-                        throw new IllegalArgumentException("Variables should not have the suffix _val") 
-                ]
-            ]
-            
-            interface.intSensorDecls.forEach [
-                sensors.forEach [
-                   if (it.sensor.name.endsWith("_val"))
-                        throw new IllegalArgumentException("Variables should not have the suffix _val") 
-                ]
-            ]
-            interface.intConstantDecls.forEach [
-                constants.forEach [
-                    it.constants.forEach [
-                   if (it.constant.name.endsWith("_val"))
-                        throw new IllegalArgumentException("Variables should not have the suffix _val") 
-                        ]
-                ]
-            ]
-            }
-        ]
-        
-        return true;
-    }
-    
-    /*
-     * Checks, whether a variable is already declared
-     */
-     def boolean alreadyDefined(String n) {
-         if ((!signalMap.filter[ key == n ].nullOrEmpty) || (!valuedMap.values.filter[ name == n ].nullOrEmpty))
-            return true
-         false
-     }
      
     // -------------------------------------------------------------------------
     // -- SCL Shortcuts
