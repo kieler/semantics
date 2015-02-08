@@ -406,7 +406,9 @@ class SCCharts2STransformation {
     
     // Convert SyncChart variable assignments and add them to an instructions list.
     def dispatch void convertToSEffect(Assignment effect, List<Instruction> instructions) {
-        // TODO
+        val sValuedObject = effect.valuedObject.sValuedObject
+        val sAssignment = sValuedObject.createAssignment(effect.expression);
+        instructions.add(sAssignment);
     }
 
     // Convert SyncChart text effects and add them to an instructions list.
