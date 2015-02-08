@@ -238,8 +238,11 @@ class DependencyTransformation {
             }
         }
 
+        System.out.println("Consider incoming transitions of state: " + state.id + " (" + state.incomingTransitions.size + ")")  ;
+
         // Control Flow dependencies
         for (transition : state.incomingTransitions) {
+            System.out.println("State: " + state.id + " <- " + transition.sourceState.id);
             if (state.hasInnerStatesOrRegions) {
                 for (region : state.regions) {
                     for (initialState : region.states.filter[isInitial]) {

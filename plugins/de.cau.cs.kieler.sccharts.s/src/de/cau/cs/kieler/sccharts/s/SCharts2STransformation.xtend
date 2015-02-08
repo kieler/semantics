@@ -89,7 +89,7 @@ class SCCharts2STransformation {
         if (dependencyNodes.size != 1) {
             return -1
         }
-        dependencyNodes.get(0).priority
+        dependencyNodes.get(0).priority 
     }
     
     // Get the order of the representation of an SCCharts state.
@@ -172,13 +172,16 @@ class SCCharts2STransformation {
         clearStatesMapping
         clearValuedObjectMapping
         
+        // Fake root state is initial (necessary for proper dependency analysis)
+        //rootState.setInitial(true);
+        
         // Dependency analysis
         dependencyGraph = rootState.dependencyGraph
         val dependencyStates = dependencyGraph.dependencyNodes
-          
-        val sortedDependencyStates = dependencyStates.orderSortedStates
         
-        // Set highest priority
+        val sortedDependencyStates = dependencyStates.orderSortedStates
+
+        // Set highest possible priority (necessary for SC runtime)
         target.setPriority(sortedDependencyStates.get(0).priority);
         
         // Set s program name (as the root state's name)
@@ -194,8 +197,11 @@ class SCCharts2STransformation {
 //            System::out.println("T" + sValuedObject.name + ": I=" + sValuedObject.isInput + ", O="+ sValuedObject.isOutput)
         }
 
+//        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX "); 
+
         // Create all states and a mapping
-        for (dependencyState : sortedDependencyStates) { 
+        for (dependencyState : sortedDependencyStates) {
+//            System.out.println("XXX " + dependencyState.state.hierarchicalName + " > d" + dependencyState.priority + ", o" + dependencyState.order); 
             if (!dependencyState.getIsJoin) {
                 target.createSState(dependencyState.getState.getHierarchicalName("")).map(dependencyState.getState)
             }
