@@ -145,24 +145,24 @@ Fork :
 // Joining Threads
 Join : 
 	{Join}
-	'join' '('continuation=[State]?')'
+	'join' ('('continuation=[State]')')?
 ;
    
 
 // Simple instructions
 Pause :
 	{Pause} 
-	'pause''('continuation=[State]?')'
+	'pause'('('continuation=[State]')')?
 ;
   
 Term : 
 	{Term}
-	'term''('continuation=[State]?')'
+	'term'('('continuation=[State]')')?
 ;
   
 Halt : 
 	{Halt}
-	'halt''('continuation=[State]?')'
+	'halt'('('continuation=[State]')')?
 ;
   
   
@@ -176,7 +176,7 @@ Emit:
   
 Abort : 
 	{Abort}
-	'abort''('continuation=[State]?')'
+	'abort'('('continuation=[State]')')?
 ;
 
 // Conditioned execution of instructions  
