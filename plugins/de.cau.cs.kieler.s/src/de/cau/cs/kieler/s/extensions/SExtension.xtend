@@ -46,6 +46,7 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import com.google.inject.Inject
 import de.cau.cs.kieler.s.s.HostCodeInstruction
 import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.s.s.Assignment
 
 /**
  * S Extensions. 
@@ -159,6 +160,15 @@ class SExtension {
     def Halt createHalt() {
          SFactory::eINSTANCE.createHalt
     }
+    
+    // Create an assignment.
+    def Assignment assign(ValuedObject valuedObject, Expression expression) {
+        val assignmentInstruction = SFactory::eINSTANCE.createAssignment
+        assignmentInstruction.expression = expression;
+        assignmentInstruction.variable = valuedObject;
+        assignmentInstruction
+    }
+    
     
     // Create a pure emission.
     def Emit createEmit(ValuedObject valuedObject) {
