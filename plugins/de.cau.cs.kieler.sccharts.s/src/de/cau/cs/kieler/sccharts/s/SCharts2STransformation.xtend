@@ -172,10 +172,6 @@ class SCCharts2STransformation {
         clearStatesMapping
         clearValuedObjectMapping
         
-        // Fake root state is initial (necessary for proper dependency analysis)
-        //rootState.setInitial(true);
-        rootState.resolveAll();
-        
         // Dependency analysis
         dependencyGraph = rootState.dependencyGraph
         val dependencyStates = dependencyGraph.dependencyNodes
