@@ -61,7 +61,7 @@ class SCCharts2STransformation {
     extension SExtension
     
     @Inject
-    extension SCChartsExtension
+    extension SCChartsExtension 
 
     @Inject
     extension DependencyTransformation
