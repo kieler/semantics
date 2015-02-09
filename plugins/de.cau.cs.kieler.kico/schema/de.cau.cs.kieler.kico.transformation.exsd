@@ -27,6 +27,7 @@ This extension point allowes the contribution of a compiler transformation to th
          <sequence minOccurs="0" maxOccurs="unbounded">
             <element ref="transformationMethod" minOccurs="0" maxOccurs="unbounded"/>
             <element ref="transformationClass" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="processorClass" minOccurs="0" maxOccurs="unbounded"/>
             <element ref="transformationGroup" minOccurs="0" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
@@ -59,7 +60,7 @@ This extension point allowes the contribution of a compiler transformation to th
       </complexType>
    </element>
 
-   <element name="transformationProcessor">
+   <element name="processorClass">
       <annotation>
          <documentation>
             A class file that implements an interface declaring a transform() method, an id() method, a name().
