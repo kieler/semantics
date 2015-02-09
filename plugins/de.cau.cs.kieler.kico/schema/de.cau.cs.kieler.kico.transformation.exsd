@@ -42,17 +42,37 @@ This extension point allowes the contribution of a compiler transformation to th
    <element name="transformationClass">
       <annotation>
          <documentation>
-            A class file that implements an interface declaring a transform() method, an id() method, a name(), and a dependencies() method.
+            A class file that implements an interface declaring a transform() method, an id() method, a name(), and a produces or not handles dependencies() methods.
          </documentation>
       </annotation>
       <complexType>
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The implementing class for this specific transformations. It must satisfy the interface ITransformation.
+                  The implementing class for this specific transformations. It must satisfy the interface ITransformation and implement Transformation.
                </documentation>
                <appinfo>
                   <meta.attribute kind="java" basedOn="de.cau.cs.kieler.kico.Transformation:de.cau.cs.kieler.kico.ITransformation"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="transformationProcessor">
+      <annotation>
+         <documentation>
+            A class file that implements an interface declaring a transform() method, an id() method, a name().
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The implementing class for this specific processor. It must satisfy the interface IProcessor and implement Processor.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.kico.Processor:de.cau.cs.kieler.kico.IProcessor"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -94,7 +114,15 @@ In the provided class there must be a method of type EObject myTransform(EObject
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="dependencies" type="string">
+         <attribute name="producesDependencies" type="string">
+            <annotation>
+               <documentation>
+                  Optional dependencies as comma seperated values, e.g.:
+dep1, dep2, dep3
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="notHandlesDependencies" type="string">
             <annotation>
                <documentation>
                   Optional dependencies as comma seperated values, e.g.:

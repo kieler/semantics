@@ -427,9 +427,10 @@ public class KielerCompilerContext {
         for (Transformation transformation : transformations) {
             TransformationDummy transformationDummy = transformation2graph.get(transformation);
 
-            List<String> dependencies = transformation.getDependencies();
+            List<String> producesDependencies = transformation.getProducesDependencies();
+            List<String> notHandlesDependencies = transformation.getNotHandlesDependencies();
             if (transformationDummy.isAlternative()) {
-                dependencies = new ArrayList<String>();
+                producesDependencies = new ArrayList<String>();
                 if (preselectAlternatives) {
                     // If this is an alternative group, then ONLY add the SELECTED alternative
                     // according to the prioritizedTransformationIDs (input)
@@ -441,22 +442,23 @@ public class KielerCompilerContext {
                     // priorized.add("S2ARDUINO");
 
                     String selectedAlternative =
-                            (group).getSelectedDependency(prioritizedTransformationIDs,
+                            (group).getSelectedNotHandlesDependency(prioritizedTransformationIDs,
                                     disabledTransformationIDs, priorized);
-                    dependencies.add(selectedAlternative);
+                    producesDependencies.add(selectedAlternative);
                 } else {
                     List<String> allAlternative =
                             ((TransformationGroup) transformationDummy.transformation)
-                                    .getDependencies();
+                                    .getNotHandlesDependencies();
                     for (String alternative : allAlternative) {
-                        dependencies.add(alternative);
+                        producesDependencies.add(alternative);
                     }
                 }
             }
 
-            for (String dependencyId : dependencies) {
+            // Handle produces depencencies
+            for (String producesDependencyId : producesDependencies) {
                 Transformation otherTransformationOrGroup =
-                        KielerCompiler.getTransformation(dependencyId);
+                        KielerCompiler.getTransformation(producesDependencyId);
                 if (otherTransformationOrGroup != null) {
                     // System.out.println("Dependencies for " + transformation.getId());
                     // System.out.println("  " + otherTransformationOrGroup.getId());
@@ -469,6 +471,24 @@ public class KielerCompilerContext {
                     otherTransformationDummy.reverseDependencies.add(transformationDummy);
                 }
             }
+
+            // Handle not handles dependencies
+            for (String notHandlesDependencyId : notHandlesDependencies) {
+                Transformation otherTransformationOrGroup =
+                        KielerCompiler.getTransformation(notHandlesDependencyId);
+                if (otherTransformationOrGroup != null) {
+                    // System.out.println("Dependencies for " + transformation.getId());
+                    // System.out.println("  " + otherTransformationOrGroup.getId());
+                    TransformationDummy otherTransformationDummy =
+                            transformation2graph.get(otherTransformationOrGroup);
+
+                    // Insert reverse dependency in dummy
+                    transformationDummy.reverseDependencies.add(otherTransformationDummy);
+                    // Insert dependency in other dummy
+                    otherTransformationDummy.dependencies.add(transformationDummy);
+                }
+            }
+            
         }
 
         // set the graph of this context to the new built graph

@@ -212,7 +212,8 @@ public class KiCoPlugin extends Plugin {
                 String id = transformations[i].getAttribute("id");
                 String name = transformations[i].getAttribute("name");
                 String method = transformations[i].getAttribute("method");
-                String dependenciesString = transformations[i].getAttribute("dependencies");
+                String producesDependenciesString = transformations[i].getAttribute("producesDependencies");
+                String notHandlesDependenciesString = transformations[i].getAttribute("notHandlesDependencies");
                 String transformationsString = transformations[i].getAttribute("transformations");
                 String alternativesString = transformations[i].getAttribute("alternatives");
 
@@ -226,11 +227,12 @@ public class KiCoPlugin extends Plugin {
                     // The Transformation is defined as a GROUP by its dependencies
                     transformation = new TransformationGroup();
 
-                    // Internally transformations of groups are represented as dependencies!
+                    // Internally transformations of groups are represented as produces dependencies!
+                    // Rationale: If a group is selected, these transformations are applied
                     if (transformationsString != null) {
                         String[] dependenciesArray = transformationsString.split(",");
                         for (String dependency : dependenciesArray) {
-                            transformation.getDependencies().add(dependency.trim());
+                            transformation.getProducesDependencies().add(dependency.trim());
                         }
                     }
 
@@ -287,10 +289,17 @@ public class KiCoPlugin extends Plugin {
                     transformation.setMethod(method);
                 }
 
-                if (dependenciesString != null) {
-                    String[] dependenciesArray = dependenciesString.split(",");
+                if (producesDependenciesString != null) {
+                    String[] dependenciesArray = producesDependenciesString.split(",");
                     for (String dependency : dependenciesArray) {
-                        transformation.getDependencies().add(dependency.trim());
+                        transformation.getProducesDependencies().add(dependency.trim());
+                    }
+                }
+
+                if (notHandlesDependenciesString != null) {
+                    String[] dependenciesArray = notHandlesDependenciesString.split(",");
+                    for (String dependency : dependenciesArray) {
+                        transformation.getNotHandlesDependencies().add(dependency.trim());
                     }
                 }
 
