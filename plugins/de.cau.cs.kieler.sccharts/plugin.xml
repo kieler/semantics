@@ -262,7 +262,7 @@
             name="Surface Depth">
       </transformationMethod>
       <transformationGroup
-            id="ALL"
+            id="SCCharts"
             isCategory="false"
             isFeatureGroup="false"
             transformations="EXTENDED, CORE, SCG">
