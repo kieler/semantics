@@ -442,13 +442,14 @@ public class KielerCompilerContext {
                     // priorized.add("S2ARDUINO");
 
                     String selectedAlternative =
-                            (group).getSelectedNotHandlesDependency(prioritizedTransformationIDs,
+                            (group).getSelectedProducesDependency(prioritizedTransformationIDs,
                                     disabledTransformationIDs, priorized);
                     producesDependencies.add(selectedAlternative);
                 } else {
+                    // Also here by convention in GROUP alternatives consider ther produces dependencies
                     List<String> allAlternative =
                             ((TransformationGroup) transformationDummy.transformation)
-                                    .getNotHandlesDependencies();
+                                    .getProducesDependencies();
                     for (String alternative : allAlternative) {
                         producesDependencies.add(alternative);
                     }

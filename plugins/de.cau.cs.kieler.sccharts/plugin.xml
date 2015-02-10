@@ -141,23 +141,15 @@
             alternatives="true"
             id="ABORT"
             name="Abort"
-            transformations="ABORTDEFAULT, ABORTNOWTO, ABORTSPECIAL">
+            transformations="ABORTNOWTO, ABORTWTO">
       </transformationGroup>
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Abort"
             producesDependencies="EXIT, INITIALIZATION"
-            id="ABORTSPECIAL"
-            method="transformAbortSpecial"
-            name="Abort Special">
-      </transformationMethod>
-
-      <transformationMethod
-            class="de.cau.cs.kieler.sccharts.transformations.Abort"
-            producesDependencies="EXIT, INITIALIZATION"
-            id="ABORTDEFAULT"
+            id="ABORTWTO"
             method="transformAbort"
-            name="Abort Default">
+            name="Abort WTO">
       </transformationMethod>
 
       <transformationMethod
@@ -165,7 +157,7 @@
             producesDependencies="EXIT, INITIALIZATION"
             id="ABORTNOWTO"
             method="transformAbortNoWTO"
-            name="Abort No WTO">
+            name="Abort Default">
       </transformationMethod>
 
 
