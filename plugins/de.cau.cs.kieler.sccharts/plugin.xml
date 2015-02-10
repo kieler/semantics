@@ -33,14 +33,14 @@
        <!-- check dependencies -->        
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Const"
-            producesDependencies="INITIALIZATION" 
+            dependencies="INITIALIZATION" 
             id="CONST"
             method="transform"
             name="Const">
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Map"
-            producesDependencies="FOR"
+            dependencies="FOR"
             id="MAP"
             method="transform"
             name="Map">
@@ -49,7 +49,7 @@
        <!-- check dependencies -->        
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.For"
-            producesDependencies="WEAKSUSPEND, HISTORY, SIGNAL, SUSPEND, COUNTDELAY, PRE, CONST" 
+            dependencies="WEAKSUSPEND, HISTORY, SIGNAL, SUSPEND, COUNTDELAY, PRE, CONST" 
             id="FOR"
             method="transform"
             name="For">
@@ -58,7 +58,7 @@
        <!-- check dependencies -->        
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Reference"
-            producesDependencies="MAP" 
+            dependencies="MAP" 
             id="REFERENCE"
             method="transform"
             name="Reference">
@@ -66,7 +66,7 @@
          
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.History"
-            producesDependencies="STATIC"
+            dependencies="STATIC"
             id="HISTORY"
             method="transform"
             name="History">
@@ -74,7 +74,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.WeakSuspend"
-            producesDependencies="DEFERRED, STATIC, COMPLEXFINALSTATE"
+            dependencies="DEFERRED, STATIC, COMPLEXFINALSTATE"
             id="WEAKSUSPEND"
             method="transform"
             name="Weak Suspend">
@@ -82,7 +82,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Deferred"
-            producesDependencies="DURING"
+            dependencies="DURING"
             id="DEFERRED"
             method="transform"
             name="Deferred">
@@ -90,7 +90,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Static"
-            producesDependencies="INITIALIZATION"
+            dependencies="INITIALIZATION"
             id="STATIC"
             method="transform"
             name="Static">
@@ -98,7 +98,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Signal"
-            producesDependencies="DURING"
+            dependencies="DURING"
             id="SIGNAL"
             method="transform"
             name="Signal">
@@ -106,7 +106,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.CountDelay"
-            producesDependencies="DURING, ABORT"
+            dependencies="DURING, ABORT"
             id="COUNTDELAY"
             method="transform"
             name="Count Delay">
@@ -114,7 +114,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Pre"
-            producesDependencies="INITIALIZATION"
+            dependencies="INITIALIZATION"
             id="PRE"
             method="transform"
             name="Pre">
@@ -122,7 +122,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Suspend"
-            producesDependencies="DURING"
+            dependencies="DURING"
             id="SUSPEND"
             method="transform"
             name="Suspend">
@@ -130,7 +130,7 @@
       
      <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.ComplexFinalState"
-            producesDependencies="ABORT"
+            dependencies="ABORT"
             id="COMPLEXFINALSTATE"
             method="transform"
             name="Complex Final State">
@@ -146,7 +146,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Abort"
-            producesDependencies="EXIT, INITIALIZATION"
+            dependencies="EXIT, INITIALIZATION"
             id="ABORTSPECIAL"
             method="transformAbortSpecial"
             name="Abort Special">
@@ -154,7 +154,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Abort"
-            producesDependencies="EXIT, INITIALIZATION"
+            dependencies="EXIT, INITIALIZATION"
             id="ABORTDEFAULT"
             method="transformAbort"
             name="Abort Default">
@@ -162,7 +162,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Abort"
-            producesDependencies="EXIT, INITIALIZATION"
+            dependencies="EXIT, INITIALIZATION"
             id="ABORTNOWTO"
             method="transformAbortNoWTO"
             name="Abort No WTO">
@@ -171,7 +171,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.During"
-            producesDependencies="COMPLEXFINALSTATE"
+            dependencies="COMPLEXFINALSTATE"
             id="DURING"
             method="transform"
             name="During">
@@ -179,7 +179,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Initialization"
-            producesDependencies="ENTRY"
+            dependencies="ENTRY"
             id="INITIALIZATION"
             method="transform"
             name="Initialization">
@@ -187,7 +187,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Entry"
-            producesDependencies="CONNECTOR"
+            dependencies="CONNECTOR"
             id="ENTRY"
             method="transform"
             name="Entry">
@@ -195,7 +195,7 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Exit"
-            producesDependencies="CONNECTOR"
+            dependencies="CONNECTOR"
             id="EXIT"
             method="transform"
             name="Exit">
@@ -205,7 +205,7 @@
             class="de.cau.cs.kieler.sccharts.transformations.Connector"
             id="CONNECTOR"
             method="transform"
-            producesDependencies="TRIGGEREFFECT"
+            dependencies="TRIGGEREFFECT"
             name="Connector">
       </transformationMethod>
 
@@ -258,13 +258,13 @@
             class="de.cau.cs.kieler.sccharts.transformations.TriggerEffect"
             id="TRIGGEREFFECT"
             method="transform"
-            producesDependencies="SURFACEDEPTH"
+            dependencies="SURFACEDEPTH"
             name="Trigger and Effect">
       </transformationMethod>
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.SurfaceDepth"
-            producesDependencies="SCG"
+            dependencies="SCG"
             id="SURFACEDEPTH"
             method="transform"
             name="Surface Depth">
