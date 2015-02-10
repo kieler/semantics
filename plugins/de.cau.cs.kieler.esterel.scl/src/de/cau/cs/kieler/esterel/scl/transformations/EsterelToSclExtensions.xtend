@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2014 by
+ * Copyright 2015 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -63,51 +63,78 @@ class EsterelToSclExtensions {
     @Inject
     extension EsterelToSclTransformation
 
-    // Current lablecount ensures the creation of fresh labels
+    // Current lablecount ensures the creation of fresh labels, i.e. labels are numbered (l1, l2,...)
     var static labelCount = 0;
 
-    /*
-     * Searches a valuedObject in a declarations list
+    /**
+     * Searches a valuedObject in a declarations list by its name
+     * 
+     * @param getValuedObject List of declarations
+     * @param searchedName    The string to search for
+     * @return                The ValuedObject with name n
      */
-    def getValuedObject(EList<Declaration> decls, String n) {
-        for (decl : decls) {
-            val ret = decl.valuedObjects.findFirst[name == n]
+    def getValuedObjectByName(EList<Declaration> sclDeclarationList, String searchedName) {
+        for (sclDeclaration : sclDeclarationList) {
+            val ret = sclDeclaration.valuedObjects.findFirst[ name == searchedName ]
             if (ret != null)
                 return ret
         }
-        throw new TransformerException("getValuedObject: Signal not declared: " + n)
+        throw new TransformerException("getValuedObject: Signal not declared: " + searchedName)
     }
 
-    def getValuedObject(String n) {
+    /**
+     * Searches a valuedObject by name in the signalMap of EsterelToSclTransformation class
+     * 
+     * @param searchedName The ValuedObject name to search for
+     */
+    def getValuedObjectByName(String searchedName) {
         for (variable : signalMap) {
-            val ret = signalMap.findLast[ key == n ]
+            val ret = signalMap.findLast[ key == searchedName ]
             if (ret != null)
                 return ret.value
         }
-        throw new TransformerException("getValuedObject: Signal not declared: " + n)
+        throw new TransformerException("getValuedObject: Signal not declared: " + searchedName)
     }
 
-    /*
-     * Returns a reference to valued object valObj
+    /**
+     * Returns a reference to a valued objects name
+     * 
+     * @param  decls List of declarations
+     * @param  valObj 
+     * @return ValuedObjectReference to given name
      */
-    def getValuedObjectRef(EList<Declaration> decls, String valObj) {
+    def getValuedObjectReferenceByName(EList<Declaration> sclDeclarationList, String searchedName) {
         KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
-            valuedObject = getValuedObject(decls, valObj)
+            valuedObject = getValuedObjectByName(sclDeclarationList, searchedName)
         ]
     }
 
-    def getValuedObjectRef(String valObj) {
-        valObj.getValuedObject.createValObjRef
+    /**
+     * Returns a reference to a valued objects name
+     * 
+     * @param  searchedName The valued objects name
+     * @return ValuedObjectReference to given name
+     */
+    def getValuedObjectReferenceByName(String searchedName) {
+        searchedName.getValuedObjectByName.createValObjRef
     }
 
+    /**
+     * Creates a reference to a ValuedObject
+     * 
+     * @param  valObj The ValuedObject
+     * @reutrn ValuedObjectReference to given ValuedObject
+     */
     def createValObjRef(ValuedObject valObj) {
         KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
             valuedObject = valObj
         ]
     }
 
-    /*
-     * Returns a fresh label
+    /**
+     * Returns a fresh label by appending the labelCount to "l" and incrementing label count
+     * 
+     * @return A fresh label
      */
     def createFreshLabel() {
         labelCount = labelCount + 1
@@ -115,12 +142,18 @@ class EsterelToSclExtensions {
         "l" + labelCount
     }
     
+    /**
+     * Resets the label count, should be called when the transformation is finished
+     */
     def resetLabelCount() {
         labelCount = 0;
     }
 
-    /*
-     * Returns a fresh variable
+    /**
+     * Returns a fresh variable, i.e. one with a name which is not already on the signalMap
+     * 
+     * @param name The desired name, "_" will be appended until it is unqiue
+     * @return     A new ValuedObject with an unused name
      */
     def createFreshVar(String name, ValueType t) {
         val ret = createValuedObject(uniqueName(name))
@@ -130,8 +163,13 @@ class EsterelToSclExtensions {
         ret
     }
     
-    /*
+    /**
      * Returns a fresh variable and adds it to give sScope
+     * 
+     * @param sScope The StatementScope to add it to
+     * @param name   The desired name
+     * @param t      The type of the variable
+     * @return       A new ValuedObject with an unused name
      */
     def createFreshVar(StatementScope sScope, String name, ValueType t) {
         val ret = createValuedObject(uniqueName(name))
@@ -145,15 +183,22 @@ class EsterelToSclExtensions {
         ret
     }
 
+    /**
+     * Creates an EmptyStatement
+     * 
+     * @param l The label of the EmptyStatement
+     */
     def createEmptyStm(String l) {
         SclFactory::eINSTANCE.createEmptyStatement => [
             label = l
         ]
     }
 
-    /*
-     * Takes a variable name and
-     * adds "_" until variable name is new
+    /**
+     * Takes a variable name and adds "_" until variable name is new
+     * 
+     * @param s Desired variable name
+     * @return  An unused variable name
      */
     def String uniqueName(String s) {
         // The variable should not be on the current signalMap
@@ -164,6 +209,13 @@ class EsterelToSclExtensions {
         }
     }
     
+    /**
+     * Creates name that is not on the given list
+     * 
+     * @param variables List of variable names
+     * @param s         The desired String, "_" are added until unique
+     * @return          Name that is not already in the list
+     */
     def String uniqueNameByList(LinkedList<String> variables, String s) {
         if (!variables.contains(s)) {
             return s;
@@ -178,8 +230,9 @@ class EsterelToSclExtensions {
     
     /**
      * Creates a statement which increments a valued object by 1
+     * 
      * @param valObj The valued object to increment
-     * @return A statement which increments valObj
+     * @return       A statement which increments valObj
      */
     def Statement incrementInt(ValuedObject valObj) {
         createStmFromInstr(
@@ -191,8 +244,12 @@ class EsterelToSclExtensions {
                 ]))
     }
     
-    /*
+    /**
      * Checks for valid names. The suffix "_val" is reserved for valued signals.
+     * 
+     * @param esterelProgram The Esterel Program to validate
+     * @return               True if no invalid names
+     * @throws               IllegalArgumentException if variable ending with "_val" exists
      */
     def boolean validateNames(Program esterelProgram) {
         esterelProgram.modules.forEach [
@@ -224,8 +281,11 @@ class EsterelToSclExtensions {
         return true;
     }
     
-    /*
-     * Checks, whether a variable is already declared
+    /**
+     * Checks, whether a variable is already declared even in the signalMap or as a value
+     * 
+     * @param  n The to-be-checked variable name
+     * @return Whether the name is already declared
      */
      def boolean alreadyDefined(String n) {
          if ((!signalMap.filter[ key == n ].nullOrEmpty) || (!valuedMap.values.filter[ name == n ].nullOrEmpty))
@@ -239,6 +299,7 @@ class EsterelToSclExtensions {
     /**
     * Checks whether an Esterel statement terminates. Not complete: May return true even
     * if a program does not terminate.
+    * 
     * @param stm The statement to check
     * @return True if program terminates, else false
     */
@@ -548,8 +609,12 @@ class EsterelToSclExtensions {
         sSeq
     }
     
-    /*
+    /**
      * Creates an assignment
+     * 
+     * @param obj The ValuedObject to be assigned with something
+     * @param ex  The expression that should be assigned
+     * @return    An assignment instruction
      */
     def createAssignment(ValuedObject obj, Expression exp) {
         SclFactory::eINSTANCE.createAssignment => [
