@@ -46,8 +46,12 @@ class TransformInterface {
     @Inject
     extension TransformExpression
 
-    /*
+    /**
      * Transforms an Esterel module interface to Kexpression declarations
+     * 
+     * @param modInterface The Esterel modules interface
+     * @param program      The SCL target program
+     * @param signalMap    The list containing all declared signals
      */
     def transformInterface(ModuleInterface modInterface, SCLProgram program,
         LinkedList<Pair<String, ValuedObject>> signalMap) {
@@ -146,7 +150,7 @@ class TransformInterface {
         }
     }
 
-    /*
+    /**
      * Transforms a local variable declaration
      * @param sig The variable to be declared
      * @param name The resulting variable (should be unique)

@@ -91,7 +91,7 @@ class TransformExpression {
 	 * Transforms ValuedObjectReferences
 	 */
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(ValuedObjectReference ref) {
-        getValuedObjectRef(ref.valuedObject.name)
+        getValuedObjectReferenceByName(ref.valuedObject.name)
     }
 
 	/*
