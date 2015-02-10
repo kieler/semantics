@@ -235,11 +235,14 @@ class GuardCreator extends AbstractGuardCreator {
         for (schedulingBlock : schedulingBlocks) {
             schedulingBlock.guard.createGuardEquation(schedulingBlock, scg)
         }
-
-        val CopyPropagation copyPropagation = Guice.createInjector().getInstance(typeof(CopyPropagation))
-        copyPropagation.optimize(scg)
-
-        scg
+        
+        val CopyPropagation copyPropagation = 
+            Guice.createInjector().getInstance(typeof(CopyPropagation))    
+// FIXME: temporary disabled
+// needs further efficiency improvements and bug-fixing in conditional nodes       
+//        copyPropagation.optimize(scg)         
+        
+        scg     	
     }
 
     /**
