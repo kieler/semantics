@@ -41,8 +41,10 @@ class TracingChain {
 
     /** Model chain */
     val models = new LinkedList<Object>();
+
     /** Mappings for each source model in models mapping to the next model (except the last one) */
     val mappings = new HashMap<Object, TracingMapping>();
+
     /** A cache for already resolved mappings */
     val joinCache = new HashMap<Pair<Object, Object>, Multimap<Object, Object>>();
 
@@ -126,6 +128,11 @@ class TracingChain {
      * Returns a multi-mapping from objects of source model to target model objects.
      */
     def Multimap<Object, Object> getMapping(Object source, Object target) {
+        val cacheKey = new Pair(source, target);
+        if (joinCache.containsKey(cacheKey)) {
+            return joinCache.get(cacheKey);
+        }
+        var join = emptyMultiMap
         val indexOfSource = models.indexOf(source);
         val indexOfTarget = models.indexOf(target);
         if (indexOfSource != -1 && indexOfTarget != -1) {
@@ -133,16 +140,17 @@ class TracingChain {
                 val modelElements = mappings.get(indexOfSource).mapping.keySet;
                 val mapping = HashMultimap.create(modelElements.size, 1);
                 modelElements.forEach[mapping.put(it, it)];
-                return mapping;
+                join = mapping;
             } else if (indexOfSource < indexOfTarget) {
-                return joinChain(models.subList(indexOfSource, indexOfTarget).map[mappings.get(it)].filterNull.toList,
+                join = joinChain(models.subList(indexOfSource, indexOfTarget).map[mappings.get(it)].filterNull.toList,
                     false);
             } else {
-                return joinChain(models.subList(indexOfTarget, indexOfSource).map[mappings.get(it)].filterNull.toList,
+                join = joinChain(models.subList(indexOfTarget, indexOfSource).map[mappings.get(it)].filterNull.toList,
                     true);
             }
+            joinCache.put(cacheKey, join);
         }
-        return emptyMultiMap;
+        return join;
     }
 
     /**
@@ -177,7 +185,7 @@ class TracingChain {
         }
         return null;
     }
-    
+
     /**
      * Returns the pair of model represented by given mapping.
      */
@@ -208,33 +216,28 @@ class TracingChain {
             val mapping = HashMultimap.create();
             if (reverse) {
                 chain.reverse;
+                mapping.putAll(chain.head.reverseMapping);
+            } else {
+                mapping.putAll(chain.head.mapping);
             }
-            chain.forEach [
-                if (mapping.empty) {
-                    if (reverse) {
-                        mapping.putAll(it.reverseMapping);
+            val keys = mapping.keySet.immutableCopy
+            chain.drop(1).forEach [
+                val map = if (reverse) {
+                        it.reverseMapping;
                     } else {
-                        mapping.putAll(it.mapping);
+                        it.mapping;
                     }
-                } else {
-                    val map = if (reverse) {
-                            it.reverseMapping;
-                        } else {
-                            it.mapping;
-                        }
-
-                    //Replace all values by new values of additional joined (next) mapping
-                    mapping.keySet.immutableCopy.forEach [
-                        //resolve elementTransformation for all values and replace value
-                        val values = mapping.get(it).map [
-                            map.get(it)
-                        ].fold(new HashSet) [ first, second | //fold new values into one set
-                            first.addAll(second);
-                            first; //return first as container of next folding
-                        ];
-                        mapping.replaceValues(it, values);
+                //Replace all values by new values of additional joined (next) mapping
+                keys.forEach [
+                    //resolve elementTransformation for all values and replace value
+                    val values = mapping.get(it).map [
+                        map.get(it)
+                    ].fold(new HashSet) [ first, second | //fold new values into one set
+                        first.addAll(second);
+                        first; //return first as container of next folding
                     ];
-                }
+                    mapping.replaceValues(it, values);
+                ];
             ];
             return mapping;
         }

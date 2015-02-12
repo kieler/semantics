@@ -40,7 +40,7 @@ import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
  */
 class TracingMapping extends EContentAdapter {
 
-    /** Internal data-structure for model element relations. Initial capacity 10000 Entries with 10 Values preventing early rehash */
+    /** Internal data-structure for model element relations. */
     private val HashMultimap<Object, Object> mapping;
 
     /** Reverse mapping */
@@ -55,8 +55,9 @@ class TracingMapping extends EContentAdapter {
     private var boolean active = false;
 
     new(String title) {
-        this.mapping = HashMultimap::create(10000, 10);
-        this.rmapping = HashMultimap::create(10000, 10);
+        // Initial capacity 1000 Entries with 5 Values preventing early rehash
+        this.mapping = HashMultimap::create(1000, 5);
+        this.rmapping = HashMultimap::create(1000, 5);
         this.delegate = null;
         this.title = title
     }
