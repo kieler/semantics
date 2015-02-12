@@ -164,13 +164,16 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     private static val SynthesisOption SHOW_SCG_DEPENDENCIES = SynthesisOption::createCheckOption(
         "SCG Dependencies", false);        
 
+    private static val SynthesisOption SHOW_TIMING = SynthesisOption::createCheckOption(
+        "Timing Analysis", false);
+
     DependencyGraph dependencyGraph = null
 
     private static val SynthesisOption SHOW_SHADOW = SynthesisOption::createCheckOption("Shadow", true);
 
     override public getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER,
-            SHOW_REFERENCEEXPANSION, USE_ADAPTIVEZOOM, SHOW_SHADOW, PAPER_BW, SHOW_SCG_DEPENDENCIES);
+            SHOW_REFERENCEEXPANSION, USE_ADAPTIVEZOOM, SHOW_SHADOW, PAPER_BW, SHOW_SCG_DEPENDENCIES, SHOW_TIMING);
     }
 
     override public getDisplayedLayoutOptions() {
@@ -247,6 +250,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             rootNode.addSCGDependcyEdges(model as State);
         }
         
+        if(SHOW_TIMING.booleanValue){
+            TimingAnalysis.startAnalysis((model as State), rootNode);
+        }
+        
         return rootNode
     }
 
@@ -281,6 +288,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 //                return;
 //            }
             node.addRectangle() => [
+                it.associateWith(r)
                 it.setAsExpandedView;
                 it.setBackgroundGradient("white".color, SCCHARTSGRAY, 90);
                 it.setSurroundingSpace(2, 0);
@@ -301,6 +309,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 }
             ];
             node.addRectangle() => [
+                it.associateWith(r)
                 it.setAsCollapsedView;
                 it.setBackgroundGradient("white".color, SCCHARTSGRAY, 90);
                 it.setSurroundingSpace(4, 0);
