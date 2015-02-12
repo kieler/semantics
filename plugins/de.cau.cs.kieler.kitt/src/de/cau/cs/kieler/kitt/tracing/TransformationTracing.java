@@ -134,10 +134,10 @@ public class TransformationTracing {
         appiledDefaultTracings.remove(t);
     }
 
-    public static boolean isTracingActive(){
+    public static boolean isTracingActive() {
         return activeTransformations.get(Thread.currentThread()) != null;
     }
-    
+
     // -----------
     // -- TRACING
 
@@ -167,11 +167,14 @@ public class TransformationTracing {
         TracingMapping mapping = activeTransformations.get(t);
         if (mapping != null) {
             HashMultimap<EObject, EObject> appiledDefaultTracing = appiledDefaultTracings.get(t);
-            // Drop any default tracing if applied
+            // Remove any default tracing if applied
             if (appiledDefaultTracing.containsKey(eObject)) {
-                mapping.remove(eObject, appiledDefaultTracing.get(eObject));
+                for (Object defaultTraceObject : appiledDefaultTracing.get(eObject)) {
+                    mapping.remove(eObject, defaultTraceObject);
+                }
                 appiledDefaultTracing.removeAll(eObject);
             }
+            // Apply explicit tracing
             mapping.smartPut(origin, eObject);
         }
         return eObject;
@@ -185,7 +188,7 @@ public class TransformationTracing {
         }
         return eObject;
     }
-    
+
     public static <T extends EObject> List<T> trace(final List<T> eObjectList, final EObject origin) {
         for (EObject eObject : eObjectList) {
             if (origin != null) {
@@ -194,8 +197,9 @@ public class TransformationTracing {
         }
         return eObjectList;
     }
-    
-    public static <T extends EObject> List<T> trace(final List<T> eObjectList, final EObject... origins) {
+
+    public static <T extends EObject> List<T> trace(final List<T> eObjectList,
+            final EObject... origins) {
         for (EObject eObject : eObjectList) {
             for (EObject origin : origins) {
                 if (origin != null) {
@@ -217,17 +221,22 @@ public class TransformationTracing {
         Thread t = Thread.currentThread();
         if (activeTransformations.containsKey(t) && tracingDefaults.get(t) != null) {
             TracingMapping mapping = activeTransformations.get(t);
+            HashMultimap<EObject, EObject> appiledDefaultTracing = appiledDefaultTracings.get(t);
             List<EObject> tracingDefaultList = tracingDefaults.get(t);
             if (!mapping.contains(eObject)) {
-                appiledDefaultTracings.get(t).putAll(eObject, tracingDefaultList);
+                // If object not already mapped: Apply default tracing
+                appiledDefaultTracing.putAll(eObject, tracingDefaultList);
                 for (EObject tracingDefault : tracingDefaultList) {
                     mapping.smartPut(tracingDefault, eObject);
                 }
             } else if (appiledDefaultTracings.get(t).containsKey(eObject)) {
-                for (EObject tracingDefault : tracingDefaultList) {
+                // If object already mapped to default apply default tracing: Remove current default
+                // mapping and apply new one
+                for (EObject tracingDefault : appiledDefaultTracing.get(eObject)) {
                     mapping.remove(tracingDefault, eObject);
                 }
-                appiledDefaultTracings.get(t).putAll(eObject, tracingDefaultList);
+                appiledDefaultTracing.removeAll(eObject);
+                appiledDefaultTracing.putAll(eObject, tracingDefaultList);
                 for (EObject tracingDefault : tracingDefaultList) {
                     mapping.smartPut(tracingDefault, eObject);
                 }
