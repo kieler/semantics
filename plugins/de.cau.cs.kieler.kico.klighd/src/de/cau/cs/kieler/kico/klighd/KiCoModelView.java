@@ -634,7 +634,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
                 updateModel(ChangeEvent.DISPLAY_MODE);
             }
         };
-        actionTracingChainToggle.setText("Display tranformation chain");
+        actionTracingChainToggle.setText("Display Transformation Chain");
         actionTracingChainToggle.setToolTipText("Enable tranformation chain view in displaySideBySide display mode");
         // actionTracingChainToggle.setImageDescriptor(ICON_CHAIN);
         actionTracingChainToggle.setChecked(displayTracingChain);
