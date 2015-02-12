@@ -31,6 +31,13 @@ public class TracingEcoreUtil extends EcoreUtil {
     public static <T extends EObject> T copy(T eObject) {
         return TransformationTracing.tracedCopy(eObject);
     }
+    
+    /**
+     * @see copy
+     */
+    public static <T extends EObject> T nontracingCopy(T eObject) {
+        return EcoreUtil.copy(eObject);
+    }
 
     /**
      * {@inheritDoc}

@@ -558,16 +558,16 @@ class KExpressionsExtension {
 
             // In this case we do not need the fix
             //            return operatorExpression;
-            val oeCopy = operatorExpression.copy
+            val oeCopy = operatorExpression.nontracingCopy
             oeCopy.subExpressions.clear
             operatorExpression.subExpressions.forEach [
-                oeCopy.subExpressions += it.copy.fix
+                oeCopy.subExpressions += it.nontracingCopy.fix
             ]
             return oeCopy
         }
 
         // Here we apply the fix recursively
-        val operatorExpressionCopy = operatorExpression.copy;
+        val operatorExpressionCopy = operatorExpression.nontracingCopy;
         val newOperatorExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression();
         newOperatorExpression.setOperator(operatorExpression.operator);
         newOperatorExpression.subExpressions.add(operatorExpression.subExpressions.head);
@@ -591,17 +591,17 @@ class KExpressionsExtension {
         if (expression.text.startsWith("'"))
             return expression
         else
-            return expression.copy => [setText("'" + expression.getText + "'")]
+            return expression.nontracingCopy => [setText("'" + expression.getText + "'")]
     }
 
     def Expression fixHostCodeInOperatorExpression(OperatorExpression expression) {
         if (expression == null || expression.subExpressions.nullOrEmpty) {
             return expression
         }
-        val oeCopy = expression.copy
+        val oeCopy = expression.nontracingCopy
         oeCopy.subExpressions.clear
         expression.subExpressions.forEach [
-            oeCopy.subExpressions += it.copy.fixHostCode
+            oeCopy.subExpressions += it.nontracingCopy.fixHostCode
         ]
 
         oeCopy
