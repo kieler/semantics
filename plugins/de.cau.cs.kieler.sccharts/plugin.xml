@@ -146,7 +146,8 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Abort"
-            producesDependencies="EXIT, INITIALIZATION"
+            producesDependencies="ENTRY, INITIALIZATION, CONNECTOR"
+            notHandlesDependencies="DURING"
             id="ABORTWTO"
             method="transformAbort"
             name="Abort WTO">
@@ -154,10 +155,11 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Abort"
-            producesDependencies="EXIT, INITIALIZATION"
             id="ABORTNOWTO"
             method="transformAbortNoWTO"
-            name="Abort Default">
+            name="Abort Default"
+            notHandlesDependencies="DURING"
+            producesDependencies="ENTRY, INITIALIZATION, CONNECTOR">
       </transformationMethod>
 
 
@@ -179,18 +181,20 @@
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Entry"
-            producesDependencies="CONNECTOR"
             id="ENTRY"
             method="transform"
-            name="Entry">
+            name="Entry"
+            notHandlesDependencies="ABORT"
+            producesDependencies="CONNECTOR">
       </transformationMethod>
 
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.transformations.Exit"
-            producesDependencies="CONNECTOR"
             id="EXIT"
             method="transform"
-            name="Exit">
+            name="Exit"
+            notHandlesDependencies="ABORT"
+            producesDependencies="CONNECTOR">
       </transformationMethod>
 
       <transformationMethod
