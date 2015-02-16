@@ -82,6 +82,8 @@ import java.util.Stack
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
+import de.cau.cs.kieler.scl.extensions.SCLExtensions
+import de.cau.cs.kieler.scl.scl.Conditional
 
 /**
  * @author krat
@@ -130,6 +132,9 @@ class EsterelToSclTransformation extends Transformation {
 
     @Inject
     extension TransformExpression
+    
+    @Inject
+    extension SCLExtensions
 
     /**
      * Generic transformation method for KiCo. Compile without optimized ouput variable resetting
@@ -192,7 +197,7 @@ class EsterelToSclTransformation extends Transformation {
         program.name = esterelMod.name
 
         // Interface transformations
-        transformInterface(esterelMod.interface, program, signalMap)
+        transformEsterelInterface(esterelMod.interface, program, signalMap, valuedMap)
 
         // Body transformations
         val sSeq = createSseq
@@ -230,6 +235,9 @@ class EsterelToSclTransformation extends Transformation {
 
         // Reset labelcount
         resetLabelCount
+        
+        // Optimize
+        program.optimizeAll
 
         // Return the transformed program 
         System.out.println("Transformation to SCL finished")
@@ -443,23 +451,12 @@ class EsterelToSclTransformation extends Transformation {
         val l_start = createFreshLabel // Start of the await statement
         val l_end = createFreshLabel // End of the await statement
 
-        // Flag indicating, if also delayed await cases may be taken
-        val delayedFlag = createFreshVar("f_depth", ValueType::BOOL)
-        flags += delayedFlag
-        sSeq.add(createAssignment(delayedFlag, createBoolValue(false)))
-
         sSeq.addLabel(l_start)
+        val delayedAwaits = new LinkedList<Pair <Conditional, String>>
 
         for (singleCase : awaitCase.cases) {
             val cond = createConditional => [
-                // Additional check for f_depth
-                if (!singleCase.delay.isImmediate) {
-                    expression = createAnd(transformExp(singleCase.delay.event.expr), delayedFlag.createValObjRef)
-
-                // Simple check for expression
-                } else {
-                    expression = transformExp(singleCase.delay.event.expr)
-                }
+                expression = transformExp(singleCase.delay.event.expr)
             ]
 
             // If there is an additional delay expression (case n x do) add counting integer
@@ -489,13 +486,17 @@ class EsterelToSclTransformation extends Transformation {
             if (singleCase.statement != null)
                 cond.add(transformStm(singleCase.statement, createSseq))
             cond.add(createGotoStm(l_end))
-            sSeq.add(cond)
-            sSeq.addLabel(caseEnd)
+            if (singleCase.delay.isImmediate) {
+                sSeq.add(cond)
+                sSeq.addLabel(caseEnd)
+            } else {
+                delayedAwaits.add(cond -> caseEnd)
+            }
         }
         sSeq.createSclPause
+        delayedAwaits.forEach[ sSeq.add(key); sSeq.addLabel(value) ]
 
         // Set depth flag
-        sSeq.add(createAssignment(delayedFlag, createBoolValue(true)))
         sSeq.addGoto(l_start)
         sSeq.addLabel(l_end)
 
@@ -944,7 +945,7 @@ class EsterelToSclTransformation extends Transformation {
         var ValuedObject counterVar
         if (delayExpression) {
             counterVar = createFreshVar("i", ValueType::INT)
-            counterVar.initialValue = createIntValue(0)
+            sSeq.add(createAssignment(counterVar, createIntValue(0)))
             flags += counterVar
             counterMap.put(((abort.body as AbortInstance).delay.event.expr as ValuedObjectReference).valuedObject.name,
                 counterVar)
@@ -1293,7 +1294,6 @@ class EsterelToSclTransformation extends Transformation {
         val l = createFreshLabel
         labelMap.put(curLabel, l)
         val exitVars = new LinkedList<ValuedObject>
-
         // Create flags for every trap declaration; add them to the exitMap
         trap.trapDeclList.trapDecls.forEach [
             val singleExit = createFreshVar(sScope, it.name, ValueType::BOOL)
@@ -1354,6 +1354,7 @@ class EsterelToSclTransformation extends Transformation {
         pauseTransformation.pop
         joinTransformation.pop
         sScope.addLabel(l)
+        exitVars.forEach[ sScope.statements.removeInstantaneousGotos(l, it) ]
 
         // Transform trap handlers
         for (trapHandler : trap.trapHandler) {
@@ -1402,15 +1403,24 @@ class EsterelToSclTransformation extends Transformation {
      * @return     The transformed statement
      */
     def dispatch StatementSequence transformStm(Run run, StatementSequence sSeq) {
+        // Thread containing the transformed run module body
+        val runModuleBody = createThread
 
         val sScope = newSscope
+        // Pure signals that have to be set to false in reset thread
+        val pureSignals = new LinkedList<ValuedObject>
         val p = SclFactory::eINSTANCE.createSCLProgram
-        transformInterface(run.module.module.interface, p, new LinkedList<Pair<String, ValuedObject>>)
+        transformEsterelInterface(run.module.module.interface, p, new LinkedList<Pair<String, ValuedObject>>,
+            new HashMap<ValuedObject, ValuedObject>)
         val collectDecls = new LinkedList<Declaration>
 
         // Signal declared in run module have to be copied, but only if not already done
         p.declarations.forEach [
             if (!(alreadyDefined(it.valuedObjects.head.name))) {
+                if (!it.valuedObjects.head.name.endsWith("_val")) {
+                    runModuleBody.add(createAssignment(it.valuedObjects.head, createBoolValue(false)))
+                    pureSignals += it.valuedObjects.head 
+                }
                 collectDecls += it
                 signalMap += it.valuedObjects.head.name -> it.valuedObjects.head
             }
@@ -1439,12 +1449,41 @@ class EsterelToSclTransformation extends Transformation {
 
         // Copy the body in case of multiple calls for the same module
         val statements = EcoreUtil.copy(run.module.module.body)
-        statements.statements.forEach[transformStm(sScope)]
+        statements.statements.forEach[ transformStm(runModuleBody) ]
 
         signalMap.removeAll(signals)
-        sSeq.add(sScope)
-
-        sSeq
+        
+        // Create a parallel if the new StatementScope contains signal declarations to reset them
+        val boolean programTerminates = run.checkTerminate
+        
+        if (!sScope.declarations.nullOrEmpty) {
+            val f_term = createFreshVar(sScope, "f_term", ValueType::BOOL)
+            if (!opt || programTerminates)
+                sScope.statements.add(0, createStmFromInstr(createAssignment(f_term, createBoolValue(false))))
+            val resetSignalsThread = createThread
+            val l_reset = createFreshLabel
+            resetSignalsThread.addLabel(l_reset)
+            resetSignalsThread.createSclPause
+            pureSignals.forEach[ resetSignalsThread.add(createAssignment(it, createBoolValue(false))) ]
+            if (opt && !programTerminates) {
+                resetSignalsThread.addGoto(l_reset)
+            } else {
+                resetSignalsThread.add(ifThenGoto(createNot(f_term.createValObjRef), l_reset, true))
+            }
+            val sclRunModule = createParallel
+            sclRunModule.threads += resetSignalsThread
+            if (!opt || programTerminates)
+                runModuleBody.add(createAssignment(f_term, createBoolValue(true)))
+            sclRunModule.threads += runModuleBody
+            sScope.add(sclRunModule)
+            sSeq.add(sScope)
+            
+            return sSeq
+        } else {
+            sScope.add(runModuleBody)
+            sSeq.add(sScope)
+            return sSeq
+        }
     }
 
     /**

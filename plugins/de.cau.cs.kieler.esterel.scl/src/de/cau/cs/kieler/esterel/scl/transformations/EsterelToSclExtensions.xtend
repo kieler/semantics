@@ -48,6 +48,12 @@ import de.cau.cs.kieler.scl.scl.Thread
 import java.util.LinkedList
 import javax.xml.transform.TransformerException
 import org.eclipse.emf.common.util.EList
+import de.cau.cs.kieler.esterel.esterel.Block
+import de.cau.cs.kieler.scl.scl.InstructionStatement
+import de.cau.cs.kieler.scl.scl.Goto
+import de.cau.cs.kieler.scl.scl.Pause
+import de.cau.cs.kieler.scl.scl.Assignment
+import de.cau.cs.kieler.scl.scl.EmptyStatement
 
 /**
  * @author krat
@@ -75,7 +81,7 @@ class EsterelToSclExtensions {
      */
     def getValuedObjectByName(EList<Declaration> sclDeclarationList, String searchedName) {
         for (sclDeclaration : sclDeclarationList) {
-            val ret = sclDeclaration.valuedObjects.findFirst[ name == searchedName ]
+            val ret = sclDeclaration.valuedObjects.findFirst[name == searchedName]
             if (ret != null)
                 return ret
         }
@@ -89,7 +95,7 @@ class EsterelToSclExtensions {
      */
     def getValuedObjectByName(String searchedName) {
         for (variable : signalMap) {
-            val ret = signalMap.findLast[ key == searchedName ]
+            val ret = signalMap.findLast[key == searchedName]
             if (ret != null)
                 return ret.value
         }
@@ -141,7 +147,7 @@ class EsterelToSclExtensions {
 
         "l" + labelCount
     }
-    
+
     /**
      * Resets the label count, should be called when the transformation is finished
      */
@@ -162,7 +168,7 @@ class EsterelToSclExtensions {
 
         ret
     }
-    
+
     /**
      * Returns a fresh variable and adds it to give sScope
      * 
@@ -174,8 +180,8 @@ class EsterelToSclExtensions {
     def createFreshVar(StatementScope sScope, String name, ValueType t) {
         val ret = createValuedObject(uniqueName(name))
         sScope.declarations += createDeclaration => [
-        	valuedObjects += ret
-        	type = t
+            valuedObjects += ret
+            type = t
         ]
         signalMap.add(name -> ret)
         signalMap.add(ret.name -> ret)
@@ -201,14 +207,15 @@ class EsterelToSclExtensions {
      * @return  An unused variable name
      */
     def String uniqueName(String s) {
+
         // The variable should not be on the current signalMap
-        if (signalMap.filter[ key == s ].nullOrEmpty) {
+        if (signalMap.filter[key == s].nullOrEmpty) {
             return s
         } else {
             return uniqueName(s + "_")
         }
     }
-    
+
     /**
      * Creates name that is not on the given list
      * 
@@ -224,10 +231,6 @@ class EsterelToSclExtensions {
         }
     }
 
-
-    
-
-    
     /**
      * Creates a statement which increments a valued object by 1
      * 
@@ -243,7 +246,7 @@ class EsterelToSclExtensions {
                     subExpressions += createIntValue(1)
                 ]))
     }
-    
+
     /**
      * Checks for valid names. The suffix "_val" is reserved for valued signals.
      * 
@@ -254,45 +257,149 @@ class EsterelToSclExtensions {
     def boolean validateNames(Program esterelProgram) {
         esterelProgram.modules.forEach [
             if (interface != null) {
-            interface.intSignalDecls.forEach [
-                signals.forEach [
-                   if (it.name.endsWith("_val"))
-                        throw new IllegalArgumentException("Variables should not have the suffix _val") 
+                interface.intSignalDecls.forEach [
+                    signals.forEach [
+                        if (it.name.endsWith("_val"))
+                            throw new IllegalArgumentException("Variables should not have the suffix _val")
+                    ]
                 ]
-            ]
-            
-            interface.intSensorDecls.forEach [
-                sensors.forEach [
-                   if (it.sensor.name.endsWith("_val"))
-                        throw new IllegalArgumentException("Variables should not have the suffix _val") 
+
+                interface.intSensorDecls.forEach [
+                    sensors.forEach [
+                        if (it.sensor.name.endsWith("_val"))
+                            throw new IllegalArgumentException("Variables should not have the suffix _val")
+                    ]
                 ]
-            ]
-            interface.intConstantDecls.forEach [
-                constants.forEach [
-                    it.constants.forEach [
-                   if (it.constant.name.endsWith("_val"))
-                        throw new IllegalArgumentException("Variables should not have the suffix _val") 
+                interface.intConstantDecls.forEach [
+                    constants.forEach [
+                        it.constants.forEach [
+                            if (it.constant.name.endsWith("_val"))
+                                throw new IllegalArgumentException("Variables should not have the suffix _val")
                         ]
+                    ]
                 ]
-            ]
             }
         ]
-        
+
         return true;
     }
-    
+
     /**
      * Checks, whether a variable is already declared even in the signalMap or as a value
      * 
      * @param  n The to-be-checked variable name
      * @return Whether the name is already declared
      */
-     def boolean alreadyDefined(String n) {
-         if ((!signalMap.filter[ key == n ].nullOrEmpty) || (!valuedMap.values.filter[ name == n ].nullOrEmpty))
+    def boolean alreadyDefined(String n) {
+        if ((!signalMap.filter[key == n].nullOrEmpty) || (!valuedMap.values.filter[name == n].nullOrEmpty))
             return true
-         false
+        false
+    }
+
+    /**
+      * Removes possible instantaneous reachable gotos.
+      * 
+      * @param sSeq       The list of statements to process
+      * @param label      The label to remove all instantaneous gotos to
+      * @param exitObject The ValuedObject triggering the trap
+      * @return           True if list has an instantaneous path
+      */
+    def boolean removeInstantaneousGotos(EList<Statement> sSeq, String label, ValuedObject exitObject) {
+        var index = 0
+        var continue = true
+        while (index < sSeq.length && continue) {
+            println("is " + sSeq.get(index))
+            if (sSeq.get(index) instanceof InstructionStatement &&
+                (sSeq.get(index) as InstructionStatement).instruction instanceof Pause) {
+                continue = false
+            } else if (sSeq.get(index) instanceof InstructionStatement &&
+                (sSeq.get(index) as InstructionStatement).instruction instanceof Goto &&
+                ((sSeq.get(index) as InstructionStatement).instruction as Goto).targetLabel == label) {
+                sSeq.remove(index)
+            } else if (sSeq.get(index) instanceof InstructionStatement &&
+                (sSeq.get(index) as InstructionStatement).instruction instanceof Conditional) {
+                val conditional = (sSeq.get(index) as InstructionStatement).instruction as Conditional
+                continue = conditional.statements.removeInstantaneousGotos(label, exitObject)
+                continue = conditional.elseStatements.removeInstantaneousGotos(label, exitObject) && continue
+                index++
+            } else if (sSeq.get(index) instanceof InstructionStatement &&
+                (sSeq.get(index) as InstructionStatement).instruction instanceof StatementScope) {
+                continue = ((sSeq.get(index) as InstructionStatement).instruction as StatementScope).statements.
+                    removeInstantaneousGotos(label, exitObject)
+                index++
+            } else if (sSeq.get(index) instanceof InstructionStatement &&
+                (sSeq.get(index) as InstructionStatement).instruction instanceof de.cau.cs.kieler.scl.scl.Parallel) {
+                    println("par")
+                    for (thread : ((sSeq.get(index) as InstructionStatement).instruction as de.cau.cs.kieler.scl.scl.Parallel).threads) {
+                        println("isAssigned " + isAssignedInInitialTick(thread.statements, exitObject))
+                        if (isAssignedInInitialTick(thread.statements, exitObject))
+                            continue = false
+                    }
+                    if (continue) {
+                        println("lets continue")
+                        for (thread : ((sSeq.get(index) as InstructionStatement).instruction as de.cau.cs.kieler.scl.scl.Parallel).threads) {
+                            continue = thread.statements.removeInstantaneousGotos(thread.getSequenceEndLabel, exitObject) && continue
+                            println("return: " + continue)
+                    }
+                    }
+            } else if (sSeq.get(index) instanceof InstructionStatement &&
+                (sSeq.get(index) as InstructionStatement).instruction instanceof Assignment &&
+                ((sSeq.get(index) as InstructionStatement).instruction as Assignment).valuedObject == exitObject) {
+                continue = false
+            } else {
+                index++
+            }
+        }
+
+        return continue
+    }
+
+    /**
+       * Checks whether an ValuedObject is assigned in the initial tick
+       * 
+       * @param statementList The list of statements
+       * @param valObj        The ValuedObject
+       * @return              True if the ValuedObject is assigned in the initial tick
+       */
+    def boolean isAssignedInInitialTick(EList<Statement> statementList, ValuedObject valObj) {
+        var index = 0
+        var boolean wasAssigned = false
+        while (index < statementList.length && !wasAssigned) {
+            if (statementList.get(index) instanceof InstructionStatement &&
+                (statementList.get(index) as InstructionStatement).instruction instanceof Assignment &&
+                ((statementList.get(index) as InstructionStatement).instruction as Assignment).valuedObject == valObj) {
+                return true
+            } else if (statementList.get(index) instanceof InstructionStatement &&
+                (statementList.get(index) as InstructionStatement).instruction instanceof Pause) {
+                return false
+            } else if (statementList.get(index) instanceof InstructionStatement &&
+                (statementList.get(index) as InstructionStatement).instruction instanceof de.cau.cs.kieler.scl.scl.Parallel) {
+                for (thread : ((statementList.get(index) as InstructionStatement).instruction as de.cau.cs.kieler.scl.scl.Parallel).
+                    threads)
+                    wasAssigned = wasAssigned || thread.statements.isAssignedInInitialTick(valObj)
+            } else if (statementList.get(index) instanceof InstructionStatement &&
+                (statementList.get(index) as InstructionStatement).instruction instanceof Conditional) {
+                val cond = (statementList.get(index) as InstructionStatement).instruction as Conditional
+                wasAssigned = cond.elseStatements.isAssignedInInitialTick(valObj) ||
+                    cond.statements.isAssignedInInitialTick(valObj)
+            }
+            index++
+
+        }
+
+        wasAssigned
+    }
+    
+    /**
+     * Returns the label at the end of a StatementSequence
+     * 
+     * @param thread The thread
+     * @return       The label at the end of the given StatementSequence
+     */
+     def getSequenceEndLabel(StatementSequence sSeq) {
+         (sSeq.statements.last as EmptyStatement).label
      }
-     
+
     // -------------------------------------------------------------------------
     // -- Esterel Termination Check
     // -------------------------------------------------------------------------
@@ -304,7 +411,7 @@ class EsterelToSclExtensions {
     * @return True if program terminates, else false
     */
     def dispatch boolean checkTerminate(de.cau.cs.kieler.esterel.esterel.Statement stm) {
-    	var terms = true;
+        var terms = true;
         if (stm instanceof Halt) {
             return false;
         } else if (stm instanceof Loop) {
@@ -360,6 +467,8 @@ class EsterelToSclExtensions {
             return (stm as LocalVariable).statement.checkTerminate
         } else if (stm instanceof Suspend) {
             return (stm as Suspend).statement.checkTerminate
+        } else if (stm instanceof Block) {
+            return (stm as Block).statement.checkTerminate
         }
         return true;
     }
@@ -384,24 +493,23 @@ class EsterelToSclExtensions {
     def dispatch boolean checkTerminate(Void x) {
         return true;
     }
-     
+
     // -------------------------------------------------------------------------
     // -- SCL Shortcuts
     // -------------------------------------------------------------------------
-    
     def StatementSequence newSseq() {
         SclFactory::eINSTANCE.createStatementSequence
     }
-    
+
     def StatementScope newSscope() {
         SclFactory::eINSTANCE.createStatementScope
     }
-    
+
     def Thread newThread() {
         SclFactory::eINSTANCE.createThread
     }
-    
-     /**
+
+    /**
       * Creates "if s then (pause;) goto l"
       * @param s The condition
       * @param l The targetlabel
@@ -441,7 +549,7 @@ class EsterelToSclExtensions {
     def addGoto(StatementSequence sSeq, String l) {
         sSeq.add(createGotoStm(l))
     }
-    
+
     /**
      * Adds a new goto instruction to a StatementSequence
      * @param sSeq The Statement EList to add the empty statement
@@ -507,7 +615,7 @@ class EsterelToSclExtensions {
             subExpressions.add(arg2)
         ]
     }
-    
+
     /**
      * Create an OR expression
      * @param arg1 first argument
@@ -520,7 +628,7 @@ class EsterelToSclExtensions {
             subExpressions.add(arg2)
         ]
     }
-    
+
     /**
      * Create an NOT expression
      * @param arg1 first argument
@@ -531,7 +639,7 @@ class EsterelToSclExtensions {
             subExpressions.add(arg1)
         ]
     }
-    
+
     /**
      * Create an Equals expression
      * @param arg1 first argument
@@ -544,7 +652,7 @@ class EsterelToSclExtensions {
             subExpressions.add(arg2)
         ]
     }
-    
+
     /**
      * Create an greater than expression
      * @param arg1 first argument
@@ -557,7 +665,7 @@ class EsterelToSclExtensions {
             subExpressions.add(arg2)
         ]
     }
-    
+
     /**
      * Create an greater equal than expression
      * @param arg1 first argument
@@ -570,7 +678,7 @@ class EsterelToSclExtensions {
             subExpressions.add(arg2)
         ]
     }
-    
+
     /**
      * Create an less equal than expression
      * @param arg1 first argument
@@ -583,11 +691,11 @@ class EsterelToSclExtensions {
             subExpressions.add(arg2)
         ]
     }
-    
+
     def createConditional() {
         SclFactory::eINSTANCE.createConditional
     }
-    
+
     /*
      * Adds an instruction to a StatementSeqeuence
      */
@@ -608,7 +716,7 @@ class EsterelToSclExtensions {
 
         sSeq
     }
-    
+
     /**
      * Creates an assignment
      * 
@@ -638,14 +746,26 @@ class EsterelToSclExtensions {
         ]
     }
 
+    def createSseq(Instruction instr) {
+        SclFactory::eINSTANCE.createStatementSequence => [
+            statements.add(createStmFromInstr(instr))
+        ]
+    }
+
     def createSseq() {
         SclFactory::eINSTANCE.createStatementSequence
     }
-    
+
     def createThread() {
         SclFactory::eINSTANCE.createThread
     }
-    
+
+    def createThread(Instruction instr) {
+        SclFactory::eINSTANCE.createThread => [
+            statements += createStmFromInstr(instr)
+        ]
+    }
+
     def createParallel() {
         SclFactory::eINSTANCE.createParallel
     }

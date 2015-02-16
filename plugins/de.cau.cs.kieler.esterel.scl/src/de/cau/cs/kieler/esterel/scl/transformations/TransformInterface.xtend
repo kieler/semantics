@@ -27,9 +27,13 @@ import de.cau.cs.kieler.esterel.kexpressions.Output
 import de.cau.cs.kieler.esterel.kexpressions.VariableDecl
 import de.cau.cs.kieler.scl.scl.SCLProgram
 import java.util.LinkedList
+import java.util.HashMap
 
 /**
  * @author krat
+ * 
+ * This class contains a method to transform an Esterel modules interface to KExpressions declarations
+ * and adds them to a given SCL program. Also local variable declarations are handled here.
  *
  */
 class TransformInterface {
@@ -52,16 +56,27 @@ class TransformInterface {
      * @param modInterface The Esterel modules interface
      * @param program      The SCL target program
      * @param signalMap    The list containing all declared signals
+     * @param valuedMap    The map associating a signal variable to the variable holding the value
      */
-    def transformInterface(ModuleInterface modInterface, SCLProgram program,
-        LinkedList<Pair<String, ValuedObject>> signalMap) {
+    def transformEsterelInterface(ModuleInterface modInterface, SCLProgram program,
+        LinkedList<Pair<String, ValuedObject>> signalMap,
+        HashMap<ValuedObject, ValuedObject> valuedMap) {
         if (modInterface != null) {
-            modInterface.intConstantDecls.forEach[ transformSingleDeclartion(it, program, signalMap) ]
+            modInterface.intConstantDecls.forEach[ transformSingleDeclartion(it, program, signalMap, valuedMap) ]
             modInterface.intSignalDecls.forEach[ transformSingleDeclartion(it, program, signalMap) ]
             modInterface.intSensorDecls.forEach[ transformSingleDeclartion(it, program, signalMap) ]
         }
     }
 
+    /**
+     * Transforms a single Esterel signal declaration to KExpressions declaration and adds it to
+     * a SCL programs declarations.
+     * 
+     * @param decl         The Esterel modules signal declaration
+     * @param program      The SCL target program
+     * @param signalMap    The list containing all declared signals
+     * @param valuedMap    The map associating a signal variable to the variable holding the value
+     */
     def transformSingleDeclartion(InterfaceSignalDecl decl, SCLProgram program, 
         LinkedList<Pair<String, ValuedObject>> signalMap) {
         for (sig : decl.signals) {
@@ -101,8 +116,18 @@ class TransformInterface {
         }
     }
 
+    /**
+     * Transforms a single Esterel constant declaration to KExpressions declaration and adds it to
+     * a SCL programs declarations.
+     * 
+     * @param decl         The Esterel modules constant declaration
+     * @param program      The SCL target program
+     * @param signalMap    The list containing all declared signals
+     * @param valuedMap    The map associating a signal variable to the variable holding the value
+     */
     def transformSingleDeclartion(ConstantDecls decl, SCLProgram program,
-        LinkedList<Pair<String, ValuedObject>> signalMap) {
+        LinkedList<Pair<String, ValuedObject>> signalMap,
+        HashMap<ValuedObject, ValuedObject> valuedMap) {
         for (singleDecl : decl.constants) {
             // Type of the constant
             val type = singleDecl.type.type
@@ -130,6 +155,15 @@ class TransformInterface {
 
     }
     
+    /**
+     * Transforms a single Esterel sensor declaration to KExpressions declaration and adds it to
+     * a SCL programs declarations.
+     * 
+     * @param decl         The Esterel modules sensor declaration
+     * @param program      The SCL target program
+     * @param signalMap    The list containing all declared signals
+     * @param valuedMap    The map associating a signal variable to the variable holding the value
+     */
     def transformSingleDeclartion(SensorDecl decl, SCLProgram program,
         LinkedList<Pair<String, ValuedObject>> signalMap) {
         for (singleDecl : decl.sensors) {
@@ -152,10 +186,13 @@ class TransformInterface {
 
     /**
      * Transforms a local variable declaration
-     * @param sig The variable to be declared
-     * @param name The resulting variable (should be unique)
+     * 
+     * @param declaration The Esterel local variable declaration
+     * @param signals     List saving the declared variables to delete them from the signalMap after body
+     * @param signalMap   The list containing all declared signals
      */
-    def Declaration transformIntVarDeclaration(VariableDecl declaration, LinkedList<Pair<String, ValuedObject>> signals,
+    def Declaration transformIntVarDeclaration(VariableDecl declaration, 
+        LinkedList<Pair<String, ValuedObject>> signals,
         LinkedList<Pair<String, ValuedObject>> signalMap) {
         val decl = createDeclaration => [
             if (declaration.type.type.getName() != "PURE") {
