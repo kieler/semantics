@@ -137,11 +137,9 @@ class SCGDepExtension {
 
     protected def KEdge create edge : createEdge() addDependencyEdge(KNode attachNode, EObject source, EObject target,
         Dependency dependency) {
-        edge.source = attachNode;
-        edge.target = attachNode;
         edge.getData(KLayoutData).setProperty(LayoutOptions.NO_LAYOUT, true);
         edge.data += createKCustomRendering => [
-            it.figureObject = new TracingEdgeNode(it, source, target, attachNode);
+            it.figureObject = new TracingEdgeNode(source, target, attachNode);
             it.setProperty(KlighdProperties.NOT_SELECTABLE, true);
             it.addPolyline => [
                 if(dependency instanceof AbsoluteWrite_Read) it.foreground = Colors.GREEN
@@ -153,5 +151,7 @@ class SCGDepExtension {
                 it.addArrowDecorator
             ];
         ];
+        edge.source = attachNode;
+        edge.target = attachNode;
     }
 }
