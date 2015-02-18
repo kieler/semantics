@@ -193,7 +193,7 @@ class SCGTransformation {
             label = if (!rootState.label.nullOrEmpty) rootState.label else rootState.id
         ]
         
-        creationalTransformation(rootState, sCGraph) //Tell KITT that this is not an in-place transformation until now
+        creationalTransformation(rootState, sCGraph) //Tell KITT that this is not an in-place transformation from here on
         sCGraph.trace(rootState)
         
         // Handle declarations

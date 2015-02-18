@@ -256,9 +256,6 @@ class TracingMapping extends EContentAdapter {
         active
     }
 
-    /**
-     * Handles removing of mapping-relations when an element is removed from model,
-     */
     override notifyChanged(Notification notification) {
 
         if (notification.eventType == Notification.SET) {
@@ -266,7 +263,7 @@ class TracingMapping extends EContentAdapter {
             val oldValue = notification.oldValue;
 
             if (newValue instanceof EObject && oldValue instanceof EObject && newValue != oldValue) {
-                smartPut(oldValue as EObject, newValue as EObject);
+                (newValue as EObject).traceToDefault
             }
         }
 
