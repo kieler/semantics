@@ -215,7 +215,7 @@ public class TimingAnalysis extends Job {
 
         for (Node node : nodeRegionMapping.keySet()) {
             Region r = nodeRegionMapping.get(node);
-            if(r == null) {
+            if(r != null) {
                 if (timingResults.containsKey(r)) {
                     timingResults.put(r, timingResults.get(r) + " " + node.toString());
                 } else {
