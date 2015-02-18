@@ -134,7 +134,7 @@ public class TimingAnalysis extends Job {
             // Stop as soon as possible when job canceled
             return Status.CANCEL_STATUS;
         }
-        
+
         Multimap<Object, Object> tracing = TracingManager.getMapping(scg, scchart);
         HashMap<Node, Region> nodeRegionMapping =
                 new HashMap<Node, Region>(tracing.keySet().size());
@@ -148,16 +148,22 @@ public class TimingAnalysis extends Job {
                         if (targetElement instanceof Region) {
                             if (region != null && region != targetElement) {
                                 /*
-                                 * In this case the tracing associates multiple regions with the current node.
-                                 * This case seems only appearing rarely.
-                                 * Ignore case: the possible incorrect region results from a mapping to the superstate of the current region.
-                                 * Because this often happens due to the mapping of exit nodes and can be ignored (hopefully)
-                                 * Due to the arbitrary order of the 'targetElements' collection this case may happen in opposite order and result in an error.
+                                 * In this case the tracing associates multiple regions with the
+                                 * current node. If one of the regions is directly contained (depth
+                                 * 1) in the other take the inner one
                                  */
-                                if(targetObj instanceof State && ((State)targetObj).getRegions().contains(region)) {
+                                if (region.getStates().contains(targetElement.eContainer())) {
+                                    // new one is inner region
+                                    region = (Region) targetElement;
                                     break;
+                                } else if (((Region) targetElement).getStates().contains(
+                                        region.eContainer())) {
+                                    // old one is inner region so keep it
+                                    break;
+                                } else {
+                                    // encapsulation depth higher than 1 or no encapsulation
+                                    throw new Error("Tracing associates multiple inconsistent regions with a scg node");
                                 }
-                                throw new Error("Tracing associates multiple inconsistent regions with a scg node");
                             }
                             region = (Region) targetElement;
                             break;
@@ -165,7 +171,6 @@ public class TimingAnalysis extends Job {
                             targetElement = targetElement.eContainer();
                         }
                     }
-                    // break; //Only break when you are sure that all nodes are always mapped to one region
                 }
                 nodeRegionMapping.put((Node) oringinElement, region);
             }
@@ -215,14 +220,14 @@ public class TimingAnalysis extends Job {
 
         for (Node node : nodeRegionMapping.keySet()) {
             Region r = nodeRegionMapping.get(node);
-            if(r != null) {
+            if (r != null) {
                 if (timingResults.containsKey(r)) {
                     timingResults.put(r, timingResults.get(r) + " " + node.toString());
                 } else {
                     timingResults.put(r, node.toString());
                 }
-            }else{
-                //In this case the node is mapped to the root state and thus to no region
+            } else {
+                // In this case the node is mapped to the root state and thus to no region
             }
         }
 
