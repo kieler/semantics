@@ -239,15 +239,17 @@ class SCLExtensions {
                     continue = false
                 }
             }
-        }
-
-        // Replace goto targets
-        for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
+            // Replace goto targets
+        for (goto : parent.eAllContents.toList.filter(typeof(Goto))) {
             var newLabel = replaceBy.findFirst[key == (goto as Goto).targetLabel]
             if (newLabel != null) {
                 (goto as Goto).targetLabel = newLabel.value
             }
         }
+        replaceBy.clear
+        }
+
+        
 
         sSeq
     }
