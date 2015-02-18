@@ -31,9 +31,7 @@ import com.google.common.collect.Iterators;
 import de.cau.cs.kieler.core.kgraph.KEdge;
 import de.cau.cs.kieler.core.kgraph.KGraphElement;
 import de.cau.cs.kieler.core.kgraph.KNode;
-import de.cau.cs.kieler.core.krendering.KInvisibility;
 import de.cau.cs.kieler.core.krendering.KRendering;
-import de.cau.cs.kieler.core.krendering.KRenderingFactory;
 import de.cau.cs.kieler.core.math.KVector;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
@@ -59,14 +57,9 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
     /** the property for the Piccolo2D representation of a node. */
     private static final IProperty<PNode> REP =
             new Property<PNode>("klighd.piccolo.representation");
-    /** Marks an internal style. */
-    private static final IProperty<Boolean> INTERNAL_STYLE = new Property<Boolean>(
-            "de.cau.cs.kieler.kitt.klighd.tracing.internal.style", false);
     private static final long serialVersionUID = -8894573172549728418L;
     private final HashSet<KChildAreaNode> collapsedParentalChildAreaNodes =
             new HashSet<KChildAreaNode>();
-    private boolean hide = false;
-    private final KRendering parent;
     private final EObject source;
     private final boolean sourceIsEdge;
     private PNode sourceNode = null;
@@ -85,14 +78,11 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
      *            most upper node in the diagram, but not root node where the KEdge of the Rending
      *            is attached.
      */
-    public TracingEdgeNode(final KRendering parent, final EObject source, final EObject target,
-            final KNode attachNode) {
-        Preconditions.checkNotNull(parent, "Parent KRendring is null");
+    public TracingEdgeNode(final EObject source, final EObject target, final KNode attachNode) {
         Preconditions.checkNotNull(source, "Source object is null");
         Preconditions.checkNotNull(target, "Target object is null");
         Preconditions.checkNotNull(attachNode, "Attach node is null");
 
-        this.parent = parent;
         this.source = source;
         this.sourceIsEdge = source instanceof KEdge;
         this.target = target;
@@ -130,7 +120,6 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
                             .addPropertyChangeListener(KChildAreaNode.PROPERTY_EXPANSION, this);
                     if (!childAreaNode.isExpanded()) {
                         collapsedParentalChildAreaNodes.add(childAreaNode);
-                        updateHiding();
                     }
                 }
             }
@@ -148,31 +137,6 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
             collapsedParentalChildAreaNodes.remove(source);
         } else {
             collapsedParentalChildAreaNodes.add(source);
-        }
-        updateHiding();
-    }
-
-    /**
-     * 
-     */
-    private void updateHiding() {
-        Iterable<KInvisibility> invisibilites =
-                Iterables.filter(parent.getStyles(), KInvisibility.class);
-        KInvisibility invisibility;
-        if (invisibilites.iterator().hasNext()) {
-            invisibility = Iterables.getLast(invisibilites);
-        } else {
-            invisibility = KRenderingFactory.eINSTANCE.createKInvisibility();
-            invisibility.setProperty(INTERNAL_STYLE, true);
-            parent.getStyles().add(invisibility);
-        }
-        if (!invisibility.isPropagateToChildren()) {
-            invisibility.setProperty(INTERNAL_STYLE, true);
-            invisibility.setPropagateToChildren(true);
-        }
-        if (invisibility.isInvisible() != (hide || !collapsedParentalChildAreaNodes.isEmpty())) {
-            invisibility.setProperty(INTERNAL_STYLE, true);
-            invisibility.setInvisible(hide || !collapsedParentalChildAreaNodes.isEmpty());
         }
     }
 
@@ -206,7 +170,8 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
     public void setPoints(Point2D[] points) {
         try {
             addExpandPropertyChangeListeners();
-            if (!hide && collapsedParentalChildAreaNodes.isEmpty()) {
+            if (collapsedParentalChildAreaNodes.isEmpty()) {
+                this.setVisible(true);
                 final Point2D[] thePoints =
                         new Point2D[] { new Point2D.Double(), new Point2D.Double() };
 
@@ -276,9 +241,12 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
                         return;
                     }
                 }
+            } else {
+                this.setVisible(false);
             }
         } catch (Exception e) {
             e.printStackTrace();
+            this.setVisible(false);
         }
     }
 
@@ -287,14 +255,6 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
      */
     @Override
     public void applyStyles(Styles styles) {
-        if (styles.invisibility != null) {
-            if (styles.invisibility.getProperty(INTERNAL_STYLE)) {
-                styles.invisibility.setProperty(INTERNAL_STYLE, false);
-            } else {
-                hide = styles.invisibility.isInvisible();
-                updateHiding();
-            }
-        }
     }
 
     private PNode findPNode(final EObject elem) {

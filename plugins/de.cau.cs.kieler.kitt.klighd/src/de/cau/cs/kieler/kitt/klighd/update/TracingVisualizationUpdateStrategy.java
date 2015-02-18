@@ -200,7 +200,7 @@ public class TracingVisualizationUpdateStrategy implements IUpdateStrategy {
         if (viewModel != null) {
             switch (mode) {
             case NO_TRACING:
-                tracingVisualizer.clearTracing(viewModel);
+                tracingVisualizer.clearTracing(viewModel, viewContext.getViewer());
                 break;
             case MODEL_TRACING:
                 tracingVisualizer.traceAll(viewModel, viewContext, force);

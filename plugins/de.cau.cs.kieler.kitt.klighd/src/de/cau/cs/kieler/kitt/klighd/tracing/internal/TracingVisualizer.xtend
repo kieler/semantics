@@ -42,9 +42,11 @@ import java.util.Map
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kitt.klighd.actions.AbstractTracingSelectionAction.*
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingManager.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties
+import de.cau.cs.kieler.klighd.IViewer
 
 /**
  * @author als
@@ -83,7 +85,7 @@ class TracingVisualizer {
         }
     }
 
-    def clearTracing(KNode diagram) {
+    def clearTracing(KNode diagram, IViewer view) {
         diagram.hideTracingSelection;
 
         //Hide all edges marked as TRACING_EDGE
@@ -91,7 +93,7 @@ class TracingVisualizer {
             (it as KNode).outgoingEdges.filter [
                 it.tracingEdge;
             ].toList.forEach [
-                it.KRendering.invisible.invisible = true;
+                view.hide(it);
             ]
         ]
     }
@@ -112,11 +114,12 @@ class TracingVisualizer {
         }
 
         //Show all edges marked as TRACING_EDGE
+        val view = viewContext.viewer;
         diagram.eAllContentsOfType2(typeof(KNode)).forEach [
             (it as KNode).outgoingEdges.filter [
                 it.tracingEdge;
             ].toList.forEach [
-                it.KRendering.invisible.invisible = false;
+                view.show(it);
             ]
         ];
     }
@@ -141,9 +144,9 @@ class TracingVisualizer {
         if (selection != null && !selection.empty) {
             val selectedSourceElements = newHashSet;
             val equivalenceClasses = viewContext.getProperty(InternalTracingProperties.DIAGRAM_EQUIVALENCE_CLASSES);
-            for(EObject obj : selection){
+            for (EObject obj : selection) {
                 val source = viewContext.getSourceElement(obj);
-                if(source != null){
+                if (source != null) {
                     selectedSourceElements.add(source);
                 }
                 if (equivalenceClasses != null) {
@@ -151,7 +154,7 @@ class TracingVisualizer {
                     selectedSourceElements.addAll(boo);
                 }
             }
-            
+
             if (viewContext.inputModel instanceof ModelWrapper) { //In case of displaying a TracingTree
                 selectedSourceElements.forEach [
                     if (it instanceof EObjectWrapper) {
@@ -214,16 +217,21 @@ class TracingVisualizer {
         }
 
         //iterate over all tracing edges and show all edges originated from selected model elements, all others invisible
+        val view = viewContext.viewer;
         diagram.eAllContentsOfType2(typeof(KNode)).forEach [
             (it as KNode).outgoingEdges.filter [
                 it.tracingEdge;
             ].toList.forEach [
                 if (visibleEdgesModelOrigin.empty) {
-                    it.KRendering.invisible.invisible = true;
+                    view.hide(it);
                 } else {
                     val origin = it.getData(KLayoutData).getProperty(InternalTracingProperties.TRACING_EDGE);
-                    it.KRendering.invisible.invisible = !(visibleEdgesModelOrigin.contains(origin.first) &&
-                        visibleEdgesModelOrigin.contains(origin.second));
+                    if (visibleEdgesModelOrigin.contains(origin.first) &&
+                        visibleEdgesModelOrigin.contains(origin.second)) {
+                        view.show(it);
+                    } else {
+                        view.hide(it);
+                    }
                 }
             ]
         ];
@@ -404,37 +412,20 @@ class TracingVisualizer {
 
     private def createTracingEdge(EObject source, EObject target, Pair<Object, Object> origin, KNode attachNode) {
         if (source != null && target != null && origin != null && attachNode != null) {
-
-            //Standard Edge
-            //                createEdge => [
-            //                    it.source = sourceNode;
-            //                    it.target = targetNode;
-            //                    it.getData(KLayoutData).setProperty(LayoutOptions.NO_LAYOUT, true);
-            //                    it.getData(KLayoutData).setProperty(TracingProperties.TRACING_EDGE, origin);
-            //                    it.addPolyline => [
-            //                        it.invisible = true;
-            //                        it.invisible.propagateToChildren = true;
-            //                        it.foreground = Colors.RED;
-            //                        it.addArrowDecorator;
-            //                    ];
-            //                ]
-            //
-            //Advanced Edge
             val edge = createEdge;
-            edge.source = attachNode;
-            edge.target = attachNode;
             edge.getData(KLayoutData).setProperty(LayoutOptions.NO_LAYOUT, true);
             edge.getData(KLayoutData).setProperty(InternalTracingProperties.TRACING_EDGE, origin);
+            edge.initiallyHide;
             edge.data += createKCustomRendering => [
-                it.figureObject = new TracingEdgeNode(it, source, target, attachNode);
+                it.figureObject = new TracingEdgeNode(source, target, attachNode);
                 it.setProperty(KlighdProperties.NOT_SELECTABLE, true);
                 it.addPolyline => [
                     it.foreground = Colors.CHOCOLATE_1;
                     it.addArrowDecorator;
                 ];
-                it.invisible = true;
-                it.invisible.propagateToChildren = true;
             ];
+            edge.source = attachNode;
+            edge.target = attachNode;
         }
 
     }
