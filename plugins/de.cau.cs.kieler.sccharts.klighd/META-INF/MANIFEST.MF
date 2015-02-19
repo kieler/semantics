@@ -27,6 +27,7 @@ Require-Bundle: com.google.guava;bundle-version="10.0.1",
  de.cau.cs.kieler.kitt,
  de.cau.cs.kieler.kitt.klighd,
  de.cau.cs.kieler.scg,
- de.cau.cs.kieler.klighd.piccolo
+ de.cau.cs.kieler.klighd.piccolo,
+ de.cau.cs.kieler.sccharts.tsccharts
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 

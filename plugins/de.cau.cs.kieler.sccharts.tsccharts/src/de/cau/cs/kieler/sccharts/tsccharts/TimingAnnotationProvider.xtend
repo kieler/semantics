@@ -13,9 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.tsccharts
 
-import de.cau.cs.kieler.sccharts.tscharts.ktm.extensions.TSCChartsKTMExtension
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.ktm.transformationtree.ModelWrapper
 import java.util.Map
 import java.util.HashMap
 import java.io.BufferedReader
@@ -42,8 +40,6 @@ import de.cau.cs.kieler.sccharts.tsccharts.handler.RequestType
  * @kieler.rating  
  */
 class TimingAnnotationProvider {
-    @Inject
-    extension TSCChartsKTMExtension;
     @Inject
     extension TSCChartsAnnotationExtension;
 

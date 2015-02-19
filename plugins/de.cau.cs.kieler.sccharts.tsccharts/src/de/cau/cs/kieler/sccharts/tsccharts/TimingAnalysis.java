@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sccharts.klighd;
+package de.cau.cs.kieler.sccharts.tsccharts;
 
 import java.lang.ref.WeakReference;
 import java.util.Collection;
@@ -182,6 +182,8 @@ public class TimingAnalysis extends Job {
             // Stop as soon as possible when job canceled
             return Status.CANCEL_STATUS;
         }
+        
+        //TODO ima
 
         // Step 4: Compile SCG to C code
 
