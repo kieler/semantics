@@ -94,8 +94,8 @@ class EsterelToSclExtensions {
      * @param searchedName The ValuedObject name to search for
      */
     def getValuedObjectByName(String searchedName) {
-        for (variable : signalMap) {
-            val ret = signalMap.findLast[key == searchedName]
+        for (variable : signalToVariableMap) {
+            val ret = signalToVariableMap.findLast[key == searchedName]
             if (ret != null)
                 return ret.value
         }
@@ -163,8 +163,8 @@ class EsterelToSclExtensions {
      */
     def createFreshVar(String name, ValueType t) {
         val ret = createValuedObject(uniqueName(name))
-        signalMap.add(name -> ret)
-        signalMap.add(ret.name -> ret)
+        signalToVariableMap.add(name -> ret)
+        signalToVariableMap.add(ret.name -> ret)
 
         ret
     }
@@ -183,8 +183,8 @@ class EsterelToSclExtensions {
             valuedObjects += ret
             type = t
         ]
-        signalMap.add(name -> ret)
-        signalMap.add(ret.name -> ret)
+        signalToVariableMap.add(name -> ret)
+        signalToVariableMap.add(ret.name -> ret)
 
         ret
     }
@@ -209,7 +209,7 @@ class EsterelToSclExtensions {
     def String uniqueName(String s) {
 
         // The variable should not be on the current signalMap
-        if (signalMap.filter[key == s].nullOrEmpty) {
+        if (signalToVariableMap.filter[key == s].nullOrEmpty) {
             return s
         } else {
             return uniqueName(s + "_")
@@ -291,7 +291,7 @@ class EsterelToSclExtensions {
      * @return Whether the name is already declared
      */
     def boolean alreadyDefined(String n) {
-        if ((!signalMap.filter[key == n].nullOrEmpty) || (!valuedMap.values.filter[name == n].nullOrEmpty))
+        if ((!signalToVariableMap.filter[key == n].nullOrEmpty) || (!signalToValueMap.values.filter[name == n].nullOrEmpty))
             return true
         false
     }
@@ -338,16 +338,21 @@ class EsterelToSclExtensions {
                     if (continue) {
                         println("lets continue")
                         for (thread : ((sSeq.get(index) as InstructionStatement).instruction as de.cau.cs.kieler.scl.scl.Parallel).threads) {
-                            continue = thread.statements.removeInstantaneousGotos(thread.getSequenceEndLabel, exitObject) && continue
+                            println("endlabel " + thread.getSequenceEndLabel)
+                            if (thread.getSequenceEndLabel != null) {
+                                continue = thread.statements.removeInstantaneousGotos(thread.getSequenceEndLabel, exitObject) && continue
+                            }
                             println("return: " + continue)
                     }
                     }
+                    index++
             } else if (sSeq.get(index) instanceof InstructionStatement &&
                 (sSeq.get(index) as InstructionStatement).instruction instanceof Assignment &&
                 ((sSeq.get(index) as InstructionStatement).instruction as Assignment).valuedObject == exitObject) {
                 continue = false
-            } else {
-                index++
+            } 
+            else {         
+                   index++
             }
         }
 
@@ -382,6 +387,10 @@ class EsterelToSclExtensions {
                 val cond = (statementList.get(index) as InstructionStatement).instruction as Conditional
                 wasAssigned = cond.elseStatements.isAssignedInInitialTick(valObj) ||
                     cond.statements.isAssignedInInitialTick(valObj)
+            } else if (statementList.get(index) instanceof InstructionStatement &&
+                (statementList.get(index) as InstructionStatement).instruction instanceof StatementScope) {
+                val sScope = (statementList.get(index) as InstructionStatement).instruction as StatementScope
+                wasAssigned = sScope.statements.isAssignedInInitialTick(valObj)
             }
             index++
 
@@ -397,7 +406,11 @@ class EsterelToSclExtensions {
      * @return       The label at the end of the given StatementSequence
      */
      def getSequenceEndLabel(StatementSequence sSeq) {
-         (sSeq.statements.last as EmptyStatement).label
+         val endLabel = sSeq.statements.findLast[ it instanceof EmptyStatement ]
+         if (endLabel != null)
+            return (endLabel as EmptyStatement).label
+            
+         null
      }
 
     // -------------------------------------------------------------------------
@@ -740,7 +753,7 @@ class EsterelToSclExtensions {
         ]
     }
 
-    def createSseq(Statement stm) {
+    def createSclStatementSequence(Statement stm) {
         SclFactory::eINSTANCE.createStatementSequence => [
             statements.add(stm)
         ]
@@ -752,7 +765,7 @@ class EsterelToSclExtensions {
         ]
     }
 
-    def createSseq() {
+    def createSclStatementSequence() {
         SclFactory::eINSTANCE.createStatementSequence
     }
 

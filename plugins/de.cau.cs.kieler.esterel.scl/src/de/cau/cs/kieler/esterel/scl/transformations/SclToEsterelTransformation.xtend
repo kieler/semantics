@@ -184,7 +184,7 @@ class SclToEsterelTransformation {
             if (foundTarget) {
                 System.out.println("foundit")
                 val gotoParent = goto.eContainer.eContainer as StatementSequence
-                val copyStms = createSseq
+                val copyStms = createSclStatementSequence
                 var gotoStm = false
                 while (index < parent.statements.length && !gotoStm) {
                     copyStms.statements.add(EcoreUtil.copy(parent.statements.get(index)))

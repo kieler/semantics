@@ -94,7 +94,7 @@ class TransformInterface {
                 val s_val = createValuedObject(sig.name + "_val")
                 val type = sig.channelDescr.type.type
                 s_val.combineOperator = sig.channelDescr.type.operator.transformCombineOperator
-                valuedMap.put(pureSig, s_val)
+                signalToValueMap.put(pureSig, s_val)
 
                 // Initial value?
                 if (sig.channelDescr.expression != null) {
@@ -170,7 +170,7 @@ class TransformInterface {
                 val type = singleDecl.type.type
                 val s_val = createValuedObject(singleDecl.sensor.name)
                 signalMap.add(singleDecl.sensor.name -> s_val)
-                valuedMap.put(s_val, s_val)
+                signalToValueMap.put(s_val, s_val)
                 program.declarations += createDeclaration => [
                     valuedObjects += s_val
                     it.type = ValueType::getByName(type.getName())
@@ -207,7 +207,7 @@ class TransformInterface {
             val s_val = createValuedObject(uniqueName(it.name))
             signals.add(it.name -> s_val)
             signalMap.add(it.name -> s_val)
-            valuedMap.put(s_val, s_val)
+            signalToValueMap.put(s_val, s_val)
             if (it.expression != null)
                 s_val.initialValue = it.expression.transformExp(declaration.type.type.literal)
             decl.valuedObjects += s_val

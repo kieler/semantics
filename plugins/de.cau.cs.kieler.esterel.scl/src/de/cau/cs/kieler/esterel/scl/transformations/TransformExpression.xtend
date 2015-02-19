@@ -53,10 +53,10 @@ class TransformExpression {
 
         // ? Operator: Return variable holding the value
         if (opType == OperatorType::VAL) {
-            val sig = signalMap.findLast [
+            val sig = signalToVariableMap.findLast [
                 (exp.subExpressions.head as ValuedObjectReference).valuedObject.name == it.key
             ].value
-            val sig_val = valuedMap.get(sig)
+            val sig_val = signalToValueMap.get(sig)
             return createValObjRef(sig_val)
         }
         
