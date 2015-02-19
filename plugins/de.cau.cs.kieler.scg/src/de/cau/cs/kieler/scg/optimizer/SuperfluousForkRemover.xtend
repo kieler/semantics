@@ -20,9 +20,11 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.SCGraph
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 
 /**
  * 
@@ -42,6 +44,9 @@ class SuperfluousForkRemover extends AbstractOptimizer {
     
     @Inject
     extension SCGControlFlowExtensions
+    
+    @Inject
+    extension SCGThreadExtensions
         
     override optimize(SCGraph scg) {
     	
@@ -53,6 +58,7 @@ class SuperfluousForkRemover extends AbstractOptimizer {
     	val removeControlFlows = <ControlFlow> newArrayList
     	
     	for (fork : singleRegionForks) {
+    	    val ancestorEntry = fork.threadEntry
     		// Entry node of the fork
     		val entry = fork.getAllNext.head.target as Entry
     		
@@ -82,6 +88,13 @@ class SuperfluousForkRemover extends AbstractOptimizer {
     		removeControlFlows += entry.next
     		removeControlFlows += fork.next	
 
+            //KITT redirect tracing relations
+            forkPreviousControlflows.trace(removeControlFlows)
+            exitPreviousControlflows.trace(removeControlFlows)
+            //TODO optimize
+            ancestorEntry.trace(entry, fork)
+            ancestorEntry.exit.trace(entry.exit, fork.join)
+            
 			// Remove the nodes.
     		entry.exit.remove
     		fork.join.remove

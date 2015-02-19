@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.s.s.Program
 import com.google.inject.Guice
 import de.cau.cs.kieler.core.model.codegeneration.SimpleCBeautifier
+import de.cau.cs.kieler.kitt.tracing.TransformationTracing
 
 /**
  * Transform SCG 2 C code via S code. Do basic primitive beautifying for small models
@@ -36,6 +37,8 @@ class S2C {
             
 
             if (eObject instanceof Program) {
+                //KITT Transformation does not support tracing
+                TransformationTracing.finishTransformationTracing(eObject, eObject);
                 
                 val de.cau.cs.kieler.s.sc.xtend.S2C transform2 = Guice.createInjector().getInstance(typeof(de.cau.cs.kieler.s.sc.xtend.S2C));
                 var String cProgram = transform2.transform(eObject as Program).toString();

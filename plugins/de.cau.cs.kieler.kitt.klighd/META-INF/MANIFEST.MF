@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER Transformation Tracing KLighD Intergration
+Bundle-SymbolicName: de.cau.cs.kieler.kitt.klighd;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Require-Bundle: com.google.inject,
+ org.eclipse.ui.ide,
+ org.eclipse.core.resources,
+ org.eclipse.core.expressions,
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.emf.edit.ui,
+ org.eclipse.emf.ecore.edit,
+ org.eclipse.xtext.xbase.lib,
+ de.cau.cs.kieler.core.krendering.extensions,
+ de.cau.cs.kieler.klighd.ui,
+ de.cau.cs.kieler.klighd.piccolo,
+ de.cau.cs.kieler.kitt
+Bundle-Activator: de.cau.cs.kieler.kitt.klighd.KittKlighdPlugin
+Export-Package: de.cau.cs.kieler.kitt.klighd.actions,
+ de.cau.cs.kieler.kitt.klighd.tracing,
+ de.cau.cs.kieler.kitt.klighd.tracing.internal;x-internal:=true

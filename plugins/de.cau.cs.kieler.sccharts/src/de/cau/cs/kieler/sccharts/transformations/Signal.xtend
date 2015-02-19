@@ -23,6 +23,7 @@ import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.Emission
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * SCCharts Signal Transformation.
@@ -74,6 +75,8 @@ class Signal {
 
         // Go thru all signals
         for (ValuedObject signal : allSignals) {
+            signal.setDefaultTrace;
+            
             val isValuedSignal = !signal.pureSignal
 
             val presentVariable = signal
@@ -141,6 +144,7 @@ class Signal {
 
                     // Assign the emitted valued
                     val variableAssignment = presentVariable.assignRelative(TRUE)
+                    variableAssignment.trace(signalEmission)
 
                     // Remove the signal emission value (because it will be the presentValue emission)
                     // Put it in right order

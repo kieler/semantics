@@ -47,8 +47,10 @@ import java.util.List
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.sccharts.iterators.StateIterator.*
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension java.util.Collections.*
 
 /**
  * SCCharts Extensions.
@@ -81,7 +83,6 @@ class SCChartsExtension {
     def <E> ImmutableList<E> immutableCopy(List<E> list) {
          ImmutableList::copyOf(list) as ImmutableList<E>
     }
-    
 
     def static <T> T convertInstanceOfObject(Object o, Class<T> clazz) {
     try {
@@ -210,7 +211,8 @@ class SCChartsExtension {
 
     
     def State createSCChart() {
-         SCChartsFactory::eINSTANCE.createState
+        val state = SCChartsFactory::eINSTANCE.createState();
+        return state;
     }
 
     // Gets the list of non-empty regions
@@ -417,15 +419,15 @@ class SCChartsExtension {
     def State createInitialState(String id) {
         createState(id).setInitial
     }
-
+    
     def State createFinalState(String id) {
         createState(id).setFinal
     }
-
+    
     def State createInitialState(Region region, String id) {
         region.createState(id).setInitial
     }
-
+    
     def State createFinalState(Region region, String id) {
         region.createState(id).setFinal
     }
@@ -557,11 +559,11 @@ class SCChartsExtension {
         val transition = SCChartsFactory::eINSTANCE.createTransition()
         transition.setPriority2(1)
     }
-
+    
     def Transition createImmediateTransition() {
         createTransition.setImmediate
     }
-
+    
     def Transition createTransitionTo(State sourceState, State targetState) {
         val transition = createTransition()
         transition.setTargetState(targetState)
@@ -572,14 +574,14 @@ class SCChartsExtension {
         //sourceState.outgoingTransitions.remove(dummyTransition)
         transition.trimPriorities
     }
-    
+   
     def Transition createTransitionTo(State sourceState, State targetState, int index) {
         val transition = createTransition()
         transition.setTargetState(targetState)
         sourceState.outgoingTransitions.add(index, transition)
 //        targetState.incomingTransitions.add(transition)
         transition.trimPriorities
-    }    
+    }   
 
     def Transition setTargetState2(Transition transition, State targetState) {
 //        transition.targetState.incomingTransitions.remove(transition)
@@ -650,13 +652,16 @@ class SCChartsExtension {
 
     def State fixAllTextualOrdersByPriorities(State state) {
         for (containedState : state.allContainedStatesList) {
-            val transitions = containedState.outgoingTransitions.sortBy[priority].immutableCopy;
-            for (transition : transitions) {
-                //System.out.println(transition.sourceState.id + "->" + transition.targetState.id + " : " + transition.priority)
-                containedState.outgoingTransitions.remove(transition)
-                containedState.outgoingTransitions.add(transition) 
-                transition.setPriority(0)
-            }
+            //Old implementation unnecessarily touching every element every
+//            val transitions = containedState.outgoingTransitions.sortBy[priority].immutableCopy;
+//            for (transition : transitions) {
+//                //System.out.println(transition.sourceState.id + "->" + transition.targetState.id + " : " + transition.priority)
+//                containedState.outgoingTransitions.remove(transition)
+//                containedState.outgoingTransitions.add(transition) 
+//                transition.setPriority(0)
+//            }
+            //als: New implementation avoids calls of remove and add
+            containedState.outgoingTransitions.sort([first, second | first.priority - second.priority ]);
         }
         state
     }
@@ -795,12 +800,11 @@ class SCChartsExtension {
     }
 
     //========== ASSIGNMENTS ============
-   // Create a during action for a state.
+    //Create a during action for a state.
     def Emission createEmission() {
         val emission = SCChartsFactory::eINSTANCE.createEmission
         emission
-    }
-    
+    } 
     
     // Create an Assignment.
     def Assignment assign(ValuedObject valuedObject) {
@@ -1008,8 +1012,8 @@ class SCChartsExtension {
             val originalSource = terminationTransition.sourceState
             val originalTarget = terminationTransition.targetState
             val region = originalSource.parentRegion
-            val auxiliaryState = region.createState("_TE").uniqueName
-            val auxliiaryTransition = auxiliaryState.createImmediateTransitionTo(originalTarget)
+            val auxiliaryState = region.createState("_TE").uniqueName.trace(terminationTransition)
+            val auxliiaryTransition = auxiliaryState.createImmediateTransitionTo(originalTarget).trace(terminationTransition)
             for (effect : terminationTransition.effects.immutableCopy) {
                 auxliiaryTransition.addEffect(effect)
             }
@@ -1017,7 +1021,6 @@ class SCChartsExtension {
         }
         rootState
     }
-    
 
     //-------------------------------------------------------------------------
     //--                F I X   F O R   H A L T   S T A T E S                --
@@ -1027,16 +1030,15 @@ class SCChartsExtension {
         val haltStates = stateList.filter[!hasInnerStatesOrRegions && outgoingTransitions.nullOrEmpty && !final]
         
         for (haltState : haltStates) {
-            haltState.createTransitionTo(haltState)
+            haltState.createTransitionTo(haltState).trace(haltState)
         }
         rootState
     }
 
-
-
     //-------------------------------------------------------------------------
     //--                F I X   F O R   D E A D    C O D E                   --
     //-------------------------------------------------------------------------
+    
     // This fixes halt states and adds an explicit delayed self transition
     def State fixDeadCode(State rootState) {
         val nonReachabledStates = rootState.allContainedStates.filter[!isStateReachable].toList
@@ -1265,6 +1267,7 @@ class SCChartsExtension {
     
     def State copyState(State state) {
 //    	createState(state.id) => [ newState |
+//    		newState.trace(state) // trace before copy to allow correct tracing during tracedCopy
 //    		newState.label = state.label
 //    		newState.type = state.type
 //    		newState.initial = state.initial
@@ -1290,4 +1293,5 @@ class SCChartsExtension {
 //    	]
         newState
     }
+    
 }

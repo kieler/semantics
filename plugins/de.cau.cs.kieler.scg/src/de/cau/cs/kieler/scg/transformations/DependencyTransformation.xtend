@@ -39,7 +39,8 @@ import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -326,8 +327,10 @@ class DependencyTransformation extends Transformation {
                     if (assignment.areConcurrent(node)) dependency.concurrent = true
                     if (assignment.areConfluent(node)) dependency.confluent = true
                     dependency.target = node;
+                    dependency.trace(node);
                     if (SKIPIDENTICALDEPENDENCIES && !assignment.dependencies.dependencyExists(dependency)) {
                         assignment.dependencies.add(dependency);
+                        dependency.trace(assignment);
                         dependencyCounter = dependencyCounter + 1
                         if (dependency.concurrent) concurrentDependencyCounter = concurrentDependencyCounter + 1
                     } else {
@@ -349,8 +352,10 @@ class DependencyTransformation extends Transformation {
             if (dependency != null) {
                 if (assignment.areConcurrent(node)) dependency.concurrent = true
                 dependency.target = node;
+                dependency.trace(node);
                 if (SKIPIDENTICALDEPENDENCIES && !assignment.dependencies.dependencyExists(dependency)) {
                     assignment.dependencies.add(dependency);
+                    dependency.trace(assignment);
                     dependencyCounter = dependencyCounter + 1
                     if (dependency.concurrent) concurrentDependencyCounter = concurrentDependencyCounter + 1
                 } else {

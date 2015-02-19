@@ -23,7 +23,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EcoreUtil;
+
+import de.cau.cs.kieler.kitt.tracing.TransformationTracing;
 
 /**
  * This is the main class of the Kieler Compiler (KiCo) Project that aims to provide an
@@ -879,7 +880,7 @@ public class KielerCompiler {
 
         // If not inplace then produce a copy of the input EObject
         if (!context.isInplace()) {
-            EObject copiedObject = EcoreUtil.copy(transformationEObject);
+            EObject copiedObject = copy(transformationEObject);
             // replace (first) intermediate object
             context.getCompilationResult().clear(copiedObject);
             // make the new copy the transformedObject
@@ -962,11 +963,15 @@ public class KielerCompiler {
             }
 
             // Feed back the last transformation result for the NEXT transformation
-            Object object = context.getCompilationResult().getEObject();
+            EObject object = context.getCompilationResult().getEObject();
             if (object != null) {
-                transformedObject = (EObject) object;
-            }
-            if (!(object instanceof EObject)) {
+                //create copy to create a intermediate result for every selected transformation
+                if (!context.isInplace() && context.getSelectedTransformationIDs().contains(compilationTransformationID)) {
+                    transformedObject = copy(object);
+                }else{
+                    transformedObject = object;
+                }
+            } else {
                 // In this case we CANNOT do any further transformation calls
                 // which require the return value of doTransform to be an EObject
                 break;
@@ -1093,13 +1098,17 @@ public class KielerCompiler {
                 }
                 res = context.getMainResource();
             }
-
+            
+            //Perform transformation and traces all steps
+            TransformationTracing.startTransformationTracing(transformedObject, transformationID);
             start = System.currentTimeMillis();
             object = transformation.doTransform(transformedObject, context);
             end = System.currentTimeMillis();
         } catch (Exception exception) {
             context.getCompilationResult().addPostponedError(
                     new KielerCompilerException(transformationID, exception));
+        } finally{
+            TransformationTracing.finishTransformationTracing(transformedObject, object);
         }
 
         if (object != null) {
@@ -1129,4 +1138,16 @@ public class KielerCompiler {
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Creates and returns a copy of the given model and preserves its tracings if necessary.
+     * @param original model
+     * @return copy model
+     */
+    private static EObject copy(EObject original){
+        TransformationTracing.startTransformationTracing(original, false);
+        EObject copy = TransformationTracing.tracedCopy(original);
+        TransformationTracing.finishTransformationTracing(original, copy); 
+        return copy;
+    }
 }

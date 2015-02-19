@@ -47,6 +47,7 @@ import de.cau.cs.kieler.kico.klighd.KiCoModelView.ChangeEvent;
 import de.cau.cs.kieler.kico.ui.KiCoSelection;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager.KiCoSelectionChangeEventListerner;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionView;
+import de.cau.cs.kieler.kitt.tracing.TracingManager;
 import de.cau.cs.kieler.klighd.KlighdDataManager;
 
 /**
@@ -205,6 +206,9 @@ public class KiCoModelViewManager extends UIJob implements IStartup,
                         // close view if eclipse is not shutting down
                         // Thus open model views will be restored after restart
                         if (!PlatformUI.getWorkbench().isClosing()) {
+                            //This call frees any stored tracing data related to the model extracted from this editor
+                            TracingManager.clearTracing(modelView.getSourceModel());
+                            
                             if (modelView.isPrimaryView()) {
                                 if (editors.isEmpty()) {
                                     modelView.setActiveEditor(null);

@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER Transformation Tracing
+Bundle-SymbolicName: de.cau.cs.kieler.kitt;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-ClassPath: .
+Bundle-Activator: de.cau.cs.kieler.kitt.KiTTPlugin
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.emf.ecore;visibility:=reexport,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.emf.compare,
+ org.eclipse.emf.compare.rcp,
+ com.google.inject,
+ de.cau.cs.kieler.core
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: de.cau.cs.kieler.kitt.tracing,
+ de.cau.cs.kieler.kitt.tracing.internal;x-friends:="de.cau.cs.kieler.kitt.klighd",
+ de.cau.cs.kieler.kitt.tracingtree,
+ de.cau.cs.kieler.kitt.tracingtree.impl,
+ de.cau.cs.kieler.kitt.tracingtree.util
+Bundle-ActivationPolicy: lazy

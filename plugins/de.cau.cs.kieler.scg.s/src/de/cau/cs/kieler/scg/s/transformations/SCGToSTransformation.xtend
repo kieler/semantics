@@ -35,7 +35,8 @@ import de.cau.cs.kieler.scg.SCGraph
 import java.util.HashMap
 import java.util.List
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
  * Transform SCG to S
@@ -76,7 +77,12 @@ class SCGToSTransformation {
         val hostcodeAnnotations = scg.getStringAnnotations(ANNOTATION_HOSTCODE)
         hostcodeAnnotations.forEach[
             sProgram.addAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).value)
-        ]   
+        ]
+        
+        // KITT mapping for not inplace transformations
+        creationalTransformation(scg, sProgram)
+        sProgram.trace(scg)
+        scg.setDefaultTrace
 
         val timestamp = System.currentTimeMillis
 
@@ -93,7 +99,7 @@ class SCGToSTransformation {
 //            }
 //        }
         for (declaration : scg.declarations) {
-    		val newDeclaration = createDeclaration(declaration)
+    		val newDeclaration = createDeclaration(declaration).trace(declaration)
     		declaration.valuedObjects.forEach[ 
     			val newObject = it.copy
     			newDeclaration.valuedObjects += newObject
@@ -144,7 +150,7 @@ class SCGToSTransformation {
         processedNodes.put(assignment, true)
 
         if (assignment.valuedObject != null && assignment.assignment != null) {
-            val sAssignment = SFactory::eINSTANCE.createAssignment
+            val sAssignment = SFactory::eINSTANCE.createAssignment.trace(assignment)
             sAssignment.variable = valuedObjectMapping.get(assignment.valuedObject)
             val expression = assignment.assignment.copyExpression.fix.fixHostCode
             sAssignment.expression = expression
@@ -158,7 +164,7 @@ class SCGToSTransformation {
             val hostCode = (assignment.assignment as TextExpression).text //.copy.fixHostCode as TextExpression
             instructions += hostCode.createHostCode
         } else if (assignment.assignment instanceof FunctionCall) {
-            val sAssignment = SFactory::eINSTANCE.createAssignment
+            val sAssignment = SFactory::eINSTANCE.createAssignment.trace(assignment)
             sAssignment.expression = assignment.assignment.copyExpression.fix
             instructions += sAssignment
         }
@@ -172,7 +178,7 @@ class SCGToSTransformation {
         if(processedNodes.get(conditional) != null) return;
         processedNodes.put(conditional, true)
 
-        val sIf = SFactory::eINSTANCE.createIf
+        val sIf = SFactory::eINSTANCE.createIf.trace(conditional)
         sIf.expression = conditional.condition.copyExpression
         instructions += sIf
 

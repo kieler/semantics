@@ -141,7 +141,7 @@
             alternatives="true"
             id="ABORT"
             name="Abort"
-            transformations="ABORTDEFAULT, ABORTNOWTO, ABORTSPECIAL">
+            transformations="ABORTNOWTO, ABORTDEFAULT, ABORTSPECIAL">
       </transformationGroup>
 
       <transformationMethod

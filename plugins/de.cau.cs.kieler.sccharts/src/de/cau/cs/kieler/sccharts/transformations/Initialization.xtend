@@ -17,8 +17,8 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * SCCharts Initialization Transformation.
@@ -59,6 +59,7 @@ class Initialization {
 
         if (!valuedObjects.nullOrEmpty) {
             for (valuedObject : valuedObjects) {
+                valuedObject.setDefaultTrace
                 val entryAction = state.createEntryAction
                 entryAction.addAssignment(valuedObject.assign(valuedObject.initialValue.copy))
                 valuedObject.setInitialValue(null)
