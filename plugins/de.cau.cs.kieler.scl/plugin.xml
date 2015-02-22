@@ -198,7 +198,7 @@
       <transformationGroup
             id="SCL_OPTIMIZATIONS"
             name="SCL Optimizations"
-            transformations="REMOVE_SUPERFLUOUS_GOTOS, OPTIMIZE_LABELS,REMOVE_UNREACHABLE_CODE,REMOVE_DOUBLE_JUMPS,OPTIMIZE_ALL,REMOVE_SUBSEQUENT_LABELS">
+            transformations="REMOVE_SUPERFLUOUS_GOTOS, REMOVE_SUPERFLUOUS_GOTOS_AND_LABELS,OPTIMIZE_LABELS,REMOVE_UNREACHABLE_CODE,REMOVE_DOUBLE_JUMPS,OPTIMIZE_ALL,REMOVE_SUBSEQUENT_LABELS,REMOVE_UNREACHABLE_CODE_AND_LABELS">
       </transformationGroup>
       <transformationMethod
             class="de.cau.cs.kieler.scl.extensions.SCLExtensions"
@@ -208,12 +208,14 @@
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scl.extensions.SCLExtensions"
+            dependencies="REMOVE_DOUBLE_JUMPS,REMOVE_SUPERFLUOUS_GOTOS,REMOVE_SUPERFLUOUS_GOTOS_AND_LABELS"
             id="REMOVE_SUBSEQUENT_LABELS"
             method="removeSubseqeuentLabels"
             name="Remove subsequent labels">
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scl.extensions.SCLExtensions"
+            dependencies="REMOVE_UNREACHABLE_CODE_AND_LABELS"
             id="REMOVE_DOUBLE_JUMPS"
             method="removeDoubleJumps"
             name="Remove double jumps">
@@ -223,6 +225,19 @@
             id="OPTIMIZE_ALL"
             method="optimizeAll"
             name="Optimize all">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scl.extensions.SCLExtensions"
+            dependencies="REMOVE_SUPERFLUOUS_GOTOS,REMOVE_SUPERFLUOUS_GOTOS_AND_LABELS"
+            id="REMOVE_UNREACHABLE_CODE_AND_LABELS"
+            method="removeUnreachableCodeAndLabels"
+            name="Dead Code and Labels Elimination">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scl.extensions.SCLExtensions"
+            id="REMOVE_SUPERFLUOUS_GOTOS_AND_LABELS"
+            method="removeSuperfluousGotosAndLabels"
+            name="Remove superfluous gotos">
       </transformationMethod>
    </extension>
    <extension

@@ -91,10 +91,26 @@ class SCLExtensions {
 
             }
         }
-        toDelete.forEach[it.eContainer.remove]
+        toDelete.forEach[ it.eContainer.remove ]
 
         sSeq
     }
+    
+    /**
+     * Removes superfluous gotos and redundant labels.
+     * @param sSeq The StatementSequence to optimize
+     * @return     The optimized StatementSequence
+     */
+     def removeSuperfluousGotosAndLabels(StatementSequence sSeq) {
+         var StatementSequence oldSseq
+        do {
+            oldSseq = EcoreUtil.copy(sSeq)
+            sSeq.optimizeLabels
+            sSeq.removeSuperfluousGotos
+        } while (!EcoreUtil.equals(oldSseq, sSeq))
+
+        sSeq
+     }
 
     /**
      * Removes all labels which are not used, i.e. not targeted by a goto.
@@ -108,10 +124,10 @@ class SCLExtensions {
             var parent = it.eContainer
             while (!(parent instanceof Thread) && !(parent instanceof SCLProgram))
                 parent = parent.eContainer
-            if (!((parent.eAllContents.toList.filter(typeof(Goto))).exists(goto | goto.targetLabel == it.label)))
+            if (!((parent.eAllContents.toList.filter(typeof(Goto))).exists(goto|goto.targetLabel == it.label)))
                 toDelete += it
         ]
-        toDelete.forEach[ it.remove ]
+        toDelete.forEach[it.remove]
 
         sSeq
     }
@@ -172,17 +188,18 @@ class SCLExtensions {
                     isLabel = false;
                 }
             }
+
+            // Replace goto targets
+            for (goto : parent.eAllContents.toList.filter(typeof(Goto))) {
+                var newLabel = replaceBy.findFirst[key == (goto as Goto).targetLabel]
+
+                if (newLabel != null) {
+                    (goto as Goto).targetLabel = newLabel.value
+                }
+            }
+            replaceBy.clear
         }
         toDelete.forEach[it.remove]
-
-        // Replace goto targets
-        for (goto : sSeq.eAllContents.toList.filter(typeof(Goto))) {
-            var newLabel = replaceBy.findFirst[key == (goto as Goto).targetLabel]
-
-            if (newLabel != null) {
-                (goto as Goto).targetLabel = newLabel.value
-            }
-        }
 
         sSeq
     }
@@ -239,17 +256,16 @@ class SCLExtensions {
                     continue = false
                 }
             }
-            // Replace goto targets
-        for (goto : parent.eAllContents.toList.filter(typeof(Goto))) {
-            var newLabel = replaceBy.findFirst[key == (goto as Goto).targetLabel]
-            if (newLabel != null) {
-                (goto as Goto).targetLabel = newLabel.value
-            }
-        }
-        replaceBy.clear
-        }
 
-        
+            // Replace goto targets
+            for (goto : parent.eAllContents.toList.filter(typeof(Goto))) {
+                var newLabel = replaceBy.findFirst[key == (goto as Goto).targetLabel]
+                if (newLabel != null) {
+                    (goto as Goto).targetLabel = newLabel.value
+                }
+            }
+            replaceBy.clear
+        }
 
         sSeq
     }
