@@ -133,7 +133,7 @@ public class TraceWriter {
                         + ") signals and state information does not match", true, null);
             }
 
-            outWriter.println("\n! reset;");
+            outWriter.println("! reset;");
             for (int i = 0; i < inputs.size(); i++) {
                 String signalLine = getSignalString(inputs.get(i)).trim();
                 if (signalLine.length() > 0) {
