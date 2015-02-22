@@ -41,6 +41,7 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.execution.TimeoutThread;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeInt;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
@@ -59,8 +60,8 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         IJSONObjectDataComponent, IKiemEventListener {
 
     /** The Constant DATA_REPLAY_COMPONENT_ID. */
-    public static final String DATA_REPLAY_COMPONENT_ID 
-    = "de.cau.cs.kieler.sim.kart.DataReplayComponent";
+    public static final String DATA_REPLAY_COMPONENT_ID =
+            "de.cau.cs.kieler.sim.kart.DataReplayComponent";
 
     /** The Constant for the name of the KIEM property model file selection. */
     public static final String KIEM_PROPERTY_MODEFILE = "ESO Model File";
@@ -94,7 +95,8 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     private ITrace trace;
 
     /** Are we in training mode, i. e. recording, or not. */
-    private boolean trainingMode;
+    private int trainingMode = 0; // 0 == off, 1=manual, 2=automatic (1 manual input, 2 input from
+                                  // existing eso file(
 
     /**
      * Stop the KIEM execution automatically if reaching end of ESO file. This option also updates
@@ -137,7 +139,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             if (prop.getKey().equals(KartConstants.TRACENUM)) {
                 tracenum = prop.getValueAsInt();
             } else if (prop.getKey().equals(KartConstants.TRAINMODE)) {
-                trainingMode = prop.getValueAsBoolean();
+                trainingMode = (Integer) KartConstants.trainModeProperty.getValue(prop);
             } else if (prop.getKey().equals(KartConstants.CONFIGVAR)) {
                 configVarName = prop.getValue();
             } else if (prop.getKey().equals(KartConstants.OUTPUTVAR)) {
@@ -149,8 +151,8 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             }
         }
 
-        if (!trainingMode) {
-            // Read the file
+        if (trainingMode != KartConstants.TRAINING_MODE_MANUAL) {
+            // Read the file in case of NO training mode (validation) or Automatic training mode
             ITraceProvider tracefile = new EsoFile();
             try {
                 List<ITrace> tracelist = tracefile.loadTrace(esoFilePath.toString());
@@ -177,16 +179,18 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      * @throws KiemInitializationException
      */
     private void possiblyDisplayNoTraceFileDialog() throws KiemInitializationException {
-        IConfigurationElement[] contributors = Platform.getExtensionRegistry()
-                .getConfigurationElementsFor(KartConstants.KART_EXTENSION_MESSAGEDIALOG);
+        IConfigurationElement[] contributors =
+                Platform.getExtensionRegistry().getConfigurationElementsFor(
+                        KartConstants.KART_EXTENSION_MESSAGEDIALOG);
 
         if (contributors.length > 0) {
             try {
                 TimeoutThread.setAwaitUserRepsonse(true);
-                IMessageDialog msg = (IMessageDialog) (contributors[0]
-                        .createExecutableExtension("class"));
+                IMessageDialog msg =
+                        (IMessageDialog) (contributors[0].createExecutableExtension("class"));
                 if (msg.question(KartConstants.ERR_NOTFOUND_TITLE, KartConstants.ERR_NOTFOUND)) {
-                    trainingMode = true;
+                    // if no trace file is found, set training mode to MANUAL
+                    trainingMode = KartConstants.TRAINING_MODE_MANUAL;
                 } else {
                     KiemPlugin.getDefault().cancelInitialization();
                     KiemPlugin.getDefault().showError(KartConstants.ERR_NOTFOUND,
@@ -213,8 +217,9 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         IPath modelFilePath = this.getModelFilePath();
         IPath localEsoFilePath = null;
         if (modelFilePath != null) {
-            localEsoFilePath = modelFilePath.removeFileExtension().addFileExtension(
-                    KartConstants.ESO_FILEEXTENSION);
+            localEsoFilePath =
+                    modelFilePath.removeFileExtension().addFileExtension(
+                            KartConstants.ESO_FILEEXTENSION);
         }
         return localEsoFilePath;
     }
@@ -253,6 +258,20 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
 
     }
 
+    // -------------------------------------------------------------------------
+    
+    int getCurrentTrace() {
+        KiemProperty[] properties = this.getProperties();
+        int tracenum = 0;
+        for (KiemProperty prop : properties) {
+            if (prop.getKey().equals(KartConstants.TRACENUM)) {
+                tracenum = prop.getValueAsInt();
+                return tracenum;
+            }
+        }
+        return -1;
+    }
+    
     // -------------------------------------------------------------------------
 
     /**
@@ -335,9 +354,13 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     public JSONObject doStep(final JSONObject obj) throws KiemExecutionException {
         JSONObject retval = new JSONObject();
 
-        if (!trainingMode && trace.getSize() > (step - 1)) {
+        if (trainingMode == KartConstants.TRAINING_MODE_OFF && trace.getSize() > (step - 1)) {
             loadInputs(retval);
             loadOutputs(retval);
+        } else if (trainingMode == KartConstants.TRAINING_MODE_AUTOMATIC
+                && trace.getSize() > (step - 1)) {
+            // only read inputs in this case
+            loadInputs(retval);
         }
 
         loadPreviousInputSignals(obj, retval);
@@ -364,7 +387,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         if (step < 1) {
             return;
         }
-        
+
         ITick tick = trace.get(step - 1);
 
         Iterator<ISignal> signals = tick.getInputs().iterator();
@@ -452,7 +475,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         if (step < 1) {
             return;
         }
-        
+
         ITick curTick = trace.get(step - 1);
         Iterator<ISignal> outputSignals = curTick.getOutputs().iterator();
         JSONObject value = new JSONObject();
@@ -470,8 +493,8 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             }
 
             // Add variables
-            Iterator<Entry<String, Object>> variables = curTick.getExtraInfos().entrySet()
-                    .iterator();
+            Iterator<Entry<String, Object>> variables =
+                    curTick.getExtraInfos().entrySet().iterator();
 
             while (variables.hasNext()) {
                 Entry<String, Object> variable = variables.next();
@@ -500,10 +523,13 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         JSONObject value = new JSONObject();
 
         try {
+            // for the validation component we only have training==(manual||automatic) or not training == off
             value.accumulate(KartConstants.VAR_TRAINMODE, trainingMode);
             value.accumulate(KartConstants.VAR_ESOFILE, esoFilePath.toString());
-            if (!trainingMode && trace.getSize() <= (step - 1)) {
+            // if we read (OFF or AUTOMATIC) and detect end of eso file... what to do
+            if (trainingMode != KartConstants.TRAINING_MODE_MANUAL && trace.getSize() <= (step - 1)) {
                 value.accumulate(KartConstants.VAR_EOT, true);
+                value.accumulate(KartConstants.VAR_TRACE, getCurrentTrace());
                 if (automatic) {
                     // stop execution if this property is set to true and the EOT is reached
                     throw new KiemExecutionException("End of ESO file reached", true, true, true,
@@ -512,6 +538,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                 }
             } else {
                 value.accumulate(KartConstants.VAR_EOT, false);
+                value.accumulate(KartConstants.VAR_TRACE, getCurrentTrace());
             }
 
             json.accumulate(configVarName, value);
@@ -530,18 +557,18 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     @Override
     public KiemProperty[] doProvideProperties() {
         KiemProperty[] properties = new KiemProperty[KartConstants.KIEM_PROPERTY_REPLAY_NUMBER];
-        properties[KartConstants.KIEM_PROPERTY_REPLAY_TRACENUM] = new KiemProperty(
-                KartConstants.TRACENUM, new KiemPropertyTypeInt(), 0);
-        properties[KartConstants.KIEM_PROPERTY_REPLAY_TRAINMODE] = new KiemProperty(
-                KartConstants.TRAINMODE, false);
-        properties[KartConstants.KIEM_PROPERTY_REPLAY_CONFIGVAR] = new KiemProperty(
-                KartConstants.CONFIGVAR, KartConstants.DEF_CONFIGVAR);
-        properties[KartConstants.KIEM_PROPERTY_REPLAY_OUTPUTVAR] = new KiemProperty(
-                KartConstants.OUTPUTVAR, KartConstants.DEF_OUTPUTVAR);
-        properties[KartConstants.KIEM_PROPERTY_REPLAY_PREVINVAR] = new KiemProperty(
-                KartConstants.PREVINVAR, KartConstants.DEF_PREVINVAR);
-        properties[KartConstants.KIEM_PROPERTY_REPLAY_STOPEXECUTION] = new KiemProperty(
-                KartConstants.AUTOMATIC, true);
+        
+        properties[KartConstants.KIEM_PROPERTY_REPLAY_TRACENUM] =
+                new KiemProperty(KartConstants.TRACENUM, new KiemPropertyTypeInt(), 0);
+        properties[KartConstants.KIEM_PROPERTY_REPLAY_TRAINMODE] = new KiemProperty(KartConstants.TRAINMODE, KartConstants.trainModeProperty);
+        properties[KartConstants.KIEM_PROPERTY_REPLAY_CONFIGVAR] =
+                new KiemProperty(KartConstants.CONFIGVAR, KartConstants.DEF_CONFIGVAR);
+        properties[KartConstants.KIEM_PROPERTY_REPLAY_OUTPUTVAR] =
+                new KiemProperty(KartConstants.OUTPUTVAR, KartConstants.DEF_OUTPUTVAR);
+        properties[KartConstants.KIEM_PROPERTY_REPLAY_PREVINVAR] =
+                new KiemProperty(KartConstants.PREVINVAR, KartConstants.DEF_PREVINVAR);
+        properties[KartConstants.KIEM_PROPERTY_REPLAY_STOPEXECUTION] =
+                new KiemProperty(KartConstants.AUTOMATIC, true);
         return properties;
     }
 
