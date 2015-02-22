@@ -10,8 +10,6 @@ import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.scgprios.priorities.SCC
 import de.cau.cs.kieler.scgprios.priorities.CalcNodePrios
 import de.cau.cs.kieler.scgprios.optimizations.OptimizeNodePriorities
-import de.cau.cs.kieler.scgprios.priorities.CalcTSIDs
-import de.cau.cs.kieler.scgprios.optimizations.OptimizeTSIDs
 import de.cau.cs.kieler.scgprios.priorities.CalcPrioIDs
 import de.cau.cs.kieler.scgprios.optimizations.OptimizePrioIDs
 import de.cau.cs.kieler.scgprios.priorities.CalcTSIDsII
