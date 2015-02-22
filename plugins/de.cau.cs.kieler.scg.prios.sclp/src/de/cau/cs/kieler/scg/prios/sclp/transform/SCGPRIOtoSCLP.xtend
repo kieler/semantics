@@ -17,9 +17,6 @@ import de.cau.cs.kieler.scg.SCGraph
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import org.eclipse.emf.common.util.EList
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Fork
@@ -32,19 +29,9 @@ import de.cau.cs.kieler.scg.Node
 import java.util.LinkedList
 import de.cau.cs.kieler.scg.ControlFlow
 import java.util.List
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.kexpressions.FunctionCall
-import de.cau.cs.kieler.core.kexpressions.IntValue
-import de.cau.cs.kieler.core.kexpressions.BoolValue
-import de.cau.cs.kieler.core.kexpressions.FloatValue
-import de.cau.cs.kieler.core.kexpressions.Parameter
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.StringValue
 import java.util.HashMap
 import de.cau.cs.kieler.scgprios.results.PrioIDResult
+import de.cau.cs.kieler.kexpressions.c.transform.KExpressionsToC
 
 /**
  * @author cbu
@@ -58,6 +45,7 @@ class SCGPRIOtoSCLP{
     private var translatedNodes = <Node> newLinkedList  
     private int labelNumber = 0
     private HashMap<Node,Long> prioIDs
+    private KExpressionsToC exp
     
     def Object transform(EObject eObject, KielerCompilerContext context) {
         var program = new Object()
@@ -71,7 +59,8 @@ class SCGPRIOtoSCLP{
 
         // if previous results exist, optimize node priorities
         if (!prioIDsRes.empty){
-            
+        
+        exp = new KExpressionsToC    
            
         prioIDs = (prioIDsRes.head as PrioIDResult).priorityMap
         
@@ -84,7 +73,7 @@ class SCGPRIOtoSCLP{
         '''
         «header(scg)»
         «generateForkAndJoinMacros(scg)»
-        «declarations(scg.declarations)»
+        «exp.transformDeclarations(scg.declarations)»
                                                                   
         int tick()
         {
@@ -171,37 +160,35 @@ class SCGPRIOtoSCLP{
     
   
     
-    // is the first case really necessary? - yes!
-    // extern and static exclude each other
-    def String declarations(EList<Declaration> declarations){
-        '''
-        «FOR d : declarations»
-            «IF d.extern && d.const» 
-            extern const «getValuedObjects(d.type, d.valuedObjects)»
-            «ELSEIF d.static && d.const» 
-            static const «getValuedObjects(d.type, d.valuedObjects)»
-            «ELSEIF d.extern»
-            extern «getValuedObjects(d.type, d.valuedObjects)»
-            «ELSEIF d.static»
-            static «getValuedObjects(d.type, d.valuedObjects)»
-            «ELSEIF d.const»
-            const «getValuedObjects(d.type, d.valuedObjects)»
-            «ELSE»
-            «getValuedObjects(d.type, d.valuedObjects)»
-            «ENDIF»
-        «ENDFOR»
-        '''
-    }
+//    // is the first case really necessary? - yes!
+//    // extern and static exclude each other
+//    def String declarations(EList<Declaration> declarations){
+//        '''
+//        «FOR d : declarations»
+//            «IF d.extern && d.const» 
+//            extern const «getValuedObjects(d.type, d.valuedObjects)»
+//            «ELSEIF d.static && d.const» 
+//            static const «getValuedObjects(d.type, d.valuedObjects)»
+//            «ELSEIF d.extern»
+//            extern «getValuedObjects(d.type, d.valuedObjects)»
+//            «ELSEIF d.static»
+//            static «getValuedObjects(d.type, d.valuedObjects)»
+//            «ELSEIF d.const»
+//            const «getValuedObjects(d.type, d.valuedObjects)»
+//            «ELSE»
+//            «getValuedObjects(d.type, d.valuedObjects)»
+//            «ENDIF»
+//        «ENDFOR»
+//        '''
+//    }
     
-    def String getValuedObjects(ValueType type, EList<ValuedObject> objects){
-        
-        
-       '''
-       «FOR o : objects»
-            «type» «o.name»«IF o.cardinalities.length > 0»«o.cardinalities»«ENDIF»;
-       «ENDFOR» 
-       '''
-    }
+//    def String getValuedObjects(ValueType type, EList<ValuedObject> objects){   
+//       '''
+//       «FOR o : objects»
+//            «type» «o.name»«IF o.cardinalities.length > 0»«o.cardinalities»«ENDIF»;
+//       «ENDFOR» 
+//       '''
+//    }
     
     
     private def setLabelIfRequired(Node node){
@@ -332,14 +319,14 @@ class SCGPRIOtoSCLP{
         if (assignment.valuedObject != null){
          '''
         «setLabelIfRequired(assignment)»
-        «assignment.valuedObject.name»«IF !assignment.indices.empty»«transformExpressions(assignment.indices)»«ENDIF» = «transformExpression(assignment.assignment)»;
+        «assignment.valuedObject.name»«IF !assignment.indices.empty»«exp.transformExpressions(assignment.indices)»«ENDIF» = «exp.transformExpression(assignment.assignment)»;
         «setPrioStatementIfRequired(assignment, assignment.next.target)»
         «transformNode(assignment.next.target)»
         ''' 
         } else {
             '''
         «setLabelIfRequired(assignment)»
-        «transformExpression(assignment.assignment)»;
+        «exp.transformExpression(assignment.assignment)»;
         «setPrioStatementIfRequired(assignment, assignment.next.target)»
         «transformNode(assignment.next.target)»
         '''
@@ -359,7 +346,7 @@ class SCGPRIOtoSCLP{
         translatedNodes.add(conditional)
         '''
         «setLabelIfRequired(conditional)»
-        if («transformExpression(conditional.condition)»){
+        if («exp.transformExpression(conditional.condition)»){
             «setPrioStatementIfRequired(conditional, conditional.then.target)»
             «transformNode(conditional.then.target)»
         } «IF conditional.^else.target != null»else {
@@ -436,23 +423,6 @@ class SCGPRIOtoSCLP{
     }
     
 
-    
-//    private def String listJoinThreads(List<ControlFlow> threads){
-//        var newString = ""
-//        var firstThread = threads.head
-//        var lastThread = threads.last
-//        for (f : threads){
-//            if (! f.equals(firstThread)){
-//            var exitNode = (f.target as Entry).exit
-//            newString = newString+exitNode.prioID.toString
-//            if (! f.equals(lastThread)){
-//                newString = newString+","
-//            }
-//            }
-//        }
-//        newString
-//    }
-
     private def String listJoinThreads(List<Node> threads, Node firstThread){
         
         var newString = new String
@@ -486,85 +456,85 @@ class SCGPRIOtoSCLP{
         joiningnode
     }
     
-    private def dispatch String transformExpression(ValuedObjectReference ref){
-        System.out.println(ref.valuedObject.name)
-        '''«ref.valuedObject.name»«IF !ref.indices.empty»«transformExpressions(ref.indices)»«ENDIF»'''    
-    }
-    
-    private def dispatch String transformExpression(IntValue value){
-        '''«value.value»'''     
-    }
-    private def dispatch String transformExpression(BoolValue value){
-        '''«value.value»'''     
-    }
-    private def dispatch String transformExpression(FloatValue value){
-        '''«value.value»'''     
-    }
-    private def dispatch String transformExpression(StringValue value){
-        '''«value.value»'''
-    }
-    
-
-    
-    private def dispatch String transformExpression(OperatorExpression opExp){
-        
-        var operator = transformOperators(opExp.operator)
-        var subexpressions = opExp.subExpressions
-        if (subexpressions.length == 1){
-            System.out.println(operator+" "+transformExpression(subexpressions.head))
-            '''«transformFirstOperator(opExp.operator)»«transformExpression(subexpressions.head)»'''
-        } else {
-            var lastexpression = subexpressions.last
-            subexpressions.remove(lastexpression)
-            '''«FOR s : subexpressions»«transformExpression(s)» «operator» «ENDFOR»«transformExpression(lastexpression)»'''
-        }
-    }
-    
- 
-    
-    private def String transformExpressions(List<Expression> indices){
-        '''[«FOR i : indices»«transformExpression(i)»«ENDFOR»]'''
-    }
-    
-    private def dispatch String transformExpression(TextExpression textExp){
-        '''«textExp.text»'''
-    }
-    
-    private def String transformOperators(OperatorType operatortype){
-        if (operatortype.getName() == "AND"){
-            '''&&'''
-        } else if (operatortype.getName() == "OR"){
-            '''||'''
-        } else {
-            '''«operatortype»'''
-        }
-        
-    }
-    
-    private def String transformFirstOperator(OperatorType operatortype){
-        if (operatortype.getName() == "NOT" || operatortype.getName() == "SUB" || operatortype.getName() == "ADD"){
-            '''«operatortype»'''
-        } else {
-            ''''''
-        }
-    }
-    
-  // does this really exist?
-    private def dispatch String transformExpression(FunctionCall funcCall){
-        var newString = ""
-        for (p : funcCall.parameters){
-            newString = newString + transformParameter(p) + ","
-        }
-        '''«funcCall.functionName»(«newString.substring(0, newString.length()-1)»)'''
-    }
-    
-    private def String transformParameter(Parameter p){
-        if (p.callByReference){
-            '''*«transformExpression(p.expression)»'''
-        } else {
-            '''«transformExpression(p.expression)»'''
-        }
-    }
+//    private def dispatch String transformExpression(ValuedObjectReference ref){
+//        System.out.println(ref.valuedObject.name)
+//        '''«ref.valuedObject.name»«IF !ref.indices.empty»«transformExpressions(ref.indices)»«ENDIF»'''    
+//    }
+//    
+//    private def dispatch String transformExpression(IntValue value){
+//        '''«value.value»'''     
+//    }
+//    private def dispatch String transformExpression(BoolValue value){
+//        '''«value.value»'''     
+//    }
+//    private def dispatch String transformExpression(FloatValue value){
+//        '''«value.value»'''     
+//    }
+//    private def dispatch String transformExpression(StringValue value){
+//        '''«value.value»'''
+//    }
+//    
+//
+//    
+//    private def dispatch String transformExpression(OperatorExpression opExp){
+//        
+//        var operator = transformOperators(opExp.operator)
+//        var subexpressions = opExp.subExpressions
+//        if (subexpressions.length == 1){
+//            System.out.println(operator+" "+transformExpression(subexpressions.head))
+//            '''«transformFirstOperator(opExp.operator)»«transformExpression(subexpressions.head)»'''
+//        } else {
+//            var lastexpression = subexpressions.last
+//            subexpressions.remove(lastexpression)
+//            '''«FOR s : subexpressions»«transformExpression(s)» «operator» «ENDFOR»«transformExpression(lastexpression)»'''
+//        }
+//    }
+//    
+// 
+//    
+//    private def String transformExpressions(List<Expression> indices){
+//        '''[«FOR i : indices»«transformExpression(i)»«ENDFOR»]'''
+//    }
+//    
+//    private def dispatch String transformExpression(TextExpression textExp){
+//        '''«textExp.text»'''
+//    }
+//    
+//    private def String transformOperators(OperatorType operatortype){
+//        if (operatortype.getName() == "AND"){
+//            '''&&'''
+//        } else if (operatortype.getName() == "OR"){
+//            '''||'''
+//        } else {
+//            '''«operatortype»'''
+//        }
+//        
+//    }
+//    
+//    private def String transformFirstOperator(OperatorType operatortype){
+//        if (operatortype.getName() == "NOT" || operatortype.getName() == "SUB" || operatortype.getName() == "ADD"){
+//            '''«operatortype»'''
+//        } else {
+//            ''''''
+//        }
+//    }
+//    
+//  // does this really exist?
+//    private def dispatch String transformExpression(FunctionCall funcCall){
+//        var newString = ""
+//        for (p : funcCall.parameters){
+//            newString = newString + transformParameter(p) + ","
+//        }
+//        '''«funcCall.functionName»(«newString.substring(0, newString.length()-1)»)'''
+//    }
+//    
+//    private def String transformParameter(Parameter p){
+//        if (p.callByReference){
+//            '''*«transformExpression(p.expression)»'''
+//        } else {
+//            '''«transformExpression(p.expression)»'''
+//        }
+//    }
 
     def LinkedList<Node> getChildrenOfNode(Node node) {
         System.out.println("starting getChildrenOfNode")

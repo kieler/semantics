@@ -38,9 +38,6 @@ class SCGDEPtoSCGPRIOTransformation extends Transformation{
             var calcOptNodePrios = new OptimizeNodePriorities
             var optNodePrios = calcOptNodePrios.optimizeNodePriorities(nodePrios, sccs)
             
-//            for (n : nodes){
-//                n.nodePriority = optNodePrios.get(n)
-//            }
             var nodePriorityResult = new NodePriorityResult()
             nodePriorityResult.priorityMap = optNodePrios
             context.compilationResult.ancillaryData += nodePriorityResult
@@ -48,9 +45,6 @@ class SCGDEPtoSCGPRIOTransformation extends Transformation{
             var calcTSIDs = new CalcTSIDsII
             var optTsids = calcTSIDs.calculateTSIDs(nodes, nodePrios, sccs)
             
-//            for (n : nodes){
-//                n.tsID = optTsids.get(n)
-//            }
             var threadSegmentIDResult = new ThreadSegmentIDResult()
             threadSegmentIDResult.priorityMap = optTsids
             context.compilationResult.ancillaryData += threadSegmentIDResult
@@ -65,10 +59,6 @@ class SCGDEPtoSCGPRIOTransformation extends Transformation{
             prioIDResult.priorityMap = optPrioIDs
             context.compilationResult.ancillaryData += prioIDResult 
             
-//            for (n : nodes){
-//                n.prioID = optPrioIDs.get(n).intValue
-//            }
-
 
         }    
         graph

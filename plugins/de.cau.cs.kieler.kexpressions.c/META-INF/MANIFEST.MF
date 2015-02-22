@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KExpressions2C
+Bundle-SymbolicName: de.cau.cs.kieler.kexpressions.c;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.kexpressions.c.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ de.cau.cs.kieler.core.kexpressions;bundle-version="0.5.1",
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Export-Package: de.cau.cs.kieler.kexpressions.c.transform
+
