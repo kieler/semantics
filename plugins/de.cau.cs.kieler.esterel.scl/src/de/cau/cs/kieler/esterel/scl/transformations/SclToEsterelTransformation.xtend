@@ -133,7 +133,7 @@ class SclToEsterelTransformation {
                 val elseCond = createConditional
                 elseCond.expression = createNot(EcoreUtil.copy(cond.expression))
                 elseCond.statements += elseStms
-                parent.statements.add(index + 1, elseCond.createStmFromInstr)
+                parent.statements.add(index + 1, elseCond.createStatement)
             }
         }
 

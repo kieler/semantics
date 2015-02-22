@@ -142,7 +142,7 @@ class EsterelToSclExtensions {
      * 
      * @return A fresh label
      */
-    def createFreshLabel() {
+    def createNewUniqueLabel() {
         labelCount = labelCount + 1
 
         "l" + labelCount
@@ -161,7 +161,7 @@ class EsterelToSclExtensions {
      * @param name The desired name, "_" will be appended until it is unqiue
      * @return     A new ValuedObject with an unused name
      */
-    def createFreshVar(String name, ValueType t) {
+    def createNewUniqueVariable(String name, ValueType t) {
         val ret = createValuedObject(uniqueName(name))
         signalToVariableMap.add(name -> ret)
         signalToVariableMap.add(ret.name -> ret)
@@ -238,7 +238,7 @@ class EsterelToSclExtensions {
      * @return       A statement which increments valObj
      */
     def Statement incrementInt(ValuedObject valObj) {
-        createStmFromInstr(
+        createStatement(
             createAssignment(valObj,
                 KExpressionsFactory::eINSTANCE.createOperatorExpression => [
                     operator = OperatorType::ADD
@@ -291,7 +291,8 @@ class EsterelToSclExtensions {
      * @return Whether the name is already declared
      */
     def boolean alreadyDefined(String n) {
-        if ((!signalToVariableMap.filter[key == n].nullOrEmpty) || (!signalToValueMap.values.filter[name == n].nullOrEmpty))
+        if ((!signalToVariableMap.filter[key == n].nullOrEmpty) || 
+            (!signalToValueMap.values.filter[name == n].nullOrEmpty))
             return true
         false
     }
@@ -308,7 +309,6 @@ class EsterelToSclExtensions {
         var index = 0
         var continue = true
         while (index < sSeq.length && continue) {
-            println("is " + sSeq.get(index))
             if (sSeq.get(index) instanceof InstructionStatement &&
                 (sSeq.get(index) as InstructionStatement).instruction instanceof Pause) {
                 continue = false
@@ -329,20 +329,15 @@ class EsterelToSclExtensions {
                 index++
             } else if (sSeq.get(index) instanceof InstructionStatement &&
                 (sSeq.get(index) as InstructionStatement).instruction instanceof de.cau.cs.kieler.scl.scl.Parallel) {
-                    println("par")
                     for (thread : ((sSeq.get(index) as InstructionStatement).instruction as de.cau.cs.kieler.scl.scl.Parallel).threads) {
-                        println("isAssigned " + isAssignedInInitialTick(thread.statements, exitObject))
                         if (isAssignedInInitialTick(thread.statements, exitObject))
                             continue = false
                     }
                     if (continue) {
-                        println("lets continue")
                         for (thread : ((sSeq.get(index) as InstructionStatement).instruction as de.cau.cs.kieler.scl.scl.Parallel).threads) {
-                            println("endlabel " + thread.getSequenceEndLabel)
                             if (thread.getSequenceEndLabel != null) {
                                 continue = thread.statements.removeInstantaneousGotos(thread.getSequenceEndLabel, exitObject) && continue
                             }
-                            println("return: " + continue)
                     }
                     }
                     index++
@@ -535,7 +530,7 @@ class EsterelToSclExtensions {
                 statements.addAll(createSclPause.statements)
             }
             statements.add(
-                createStmFromInstr(
+                createStatement(
                     SclFactory::eINSTANCE.createGoto => [
                         targetLabel = l
                     ]))
@@ -610,7 +605,7 @@ class EsterelToSclExtensions {
     * @param l The target label 
     */
     def createGotoStm(String l) {
-        createStmFromInstr(
+        createStatement(
             SclFactory::eINSTANCE.createGoto => [
                 targetLabel = l
             ])
@@ -713,7 +708,7 @@ class EsterelToSclExtensions {
      * Adds an instruction to a StatementSeqeuence
      */
     def dispatch add(StatementSequence sSeq, Instruction instr) {
-        sSeq.statements.add(createStmFromInstr(instr))
+        sSeq.statements.add(createStatement(instr))
 
         sSeq
     }
@@ -747,7 +742,7 @@ class EsterelToSclExtensions {
     /*
      * Creates a Statement from an Instruction
      */
-    def createStmFromInstr(Instruction instr) {
+    def createStatement(Instruction instr) {
         SclFactory::eINSTANCE.createInstructionStatement => [
             instruction = instr
         ]
@@ -761,7 +756,7 @@ class EsterelToSclExtensions {
 
     def createSseq(Instruction instr) {
         SclFactory::eINSTANCE.createStatementSequence => [
-            statements.add(createStmFromInstr(instr))
+            statements.add(createStatement(instr))
         ]
     }
 
@@ -775,7 +770,7 @@ class EsterelToSclExtensions {
 
     def createThread(Instruction instr) {
         SclFactory::eINSTANCE.createThread => [
-            statements += createStmFromInstr(instr)
+            statements += createStatement(instr)
         ]
     }
 

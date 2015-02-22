@@ -63,8 +63,8 @@ class TransformInterface {
         HashMap<ValuedObject, ValuedObject> valuedMap) {
         if (modInterface != null) {
             modInterface.intConstantDecls.forEach[ transformSingleDeclartion(it, program, signalMap, valuedMap) ]
-            modInterface.intSignalDecls.forEach[ transformSingleDeclartion(it, program, signalMap) ]
-            modInterface.intSensorDecls.forEach[ transformSingleDeclartion(it, program, signalMap) ]
+            modInterface.intSignalDecls.forEach[ transformSingleDeclartion(it, program, signalMap, valuedMap) ]
+            modInterface.intSensorDecls.forEach[ transformSingleDeclartion(it, program, signalMap, valuedMap) ]
         }
     }
 
@@ -78,7 +78,8 @@ class TransformInterface {
      * @param valuedMap    The map associating a signal variable to the variable holding the value
      */
     def transformSingleDeclartion(InterfaceSignalDecl decl, SCLProgram program, 
-        LinkedList<Pair<String, ValuedObject>> signalMap) {
+        LinkedList<Pair<String, ValuedObject>> signalMap,
+        HashMap<ValuedObject, ValuedObject> valuedMap) {
         for (sig : decl.signals) {
             val pureSig = createValuedObject(sig.name)
             signalMap.add(sig.name -> pureSig)
@@ -94,7 +95,7 @@ class TransformInterface {
                 val s_val = createValuedObject(sig.name + "_val")
                 val type = sig.channelDescr.type.type
                 s_val.combineOperator = sig.channelDescr.type.operator.transformCombineOperator
-                signalToValueMap.put(pureSig, s_val)
+                valuedMap.put(pureSig, s_val)
 
                 // Initial value?
                 if (sig.channelDescr.expression != null) {
@@ -165,12 +166,13 @@ class TransformInterface {
      * @param valuedMap    The map associating a signal variable to the variable holding the value
      */
     def transformSingleDeclartion(SensorDecl decl, SCLProgram program,
-        LinkedList<Pair<String, ValuedObject>> signalMap) {
+        LinkedList<Pair<String, ValuedObject>> signalMap,
+        HashMap<ValuedObject, ValuedObject> valuedMap) {
         for (singleDecl : decl.sensors) {
                 val type = singleDecl.type.type
                 val s_val = createValuedObject(singleDecl.sensor.name)
                 signalMap.add(singleDecl.sensor.name -> s_val)
-                signalToValueMap.put(s_val, s_val)
+                valuedMap.put(s_val, s_val)
                 program.declarations += createDeclaration => [
                     valuedObjects += s_val
                     it.type = ValueType::getByName(type.getName())
