@@ -21,7 +21,7 @@
   <modules>
     <module>de.cau.cs.kieler.semantics.test.common</module>
     <module>de.cau.cs.kieler.sim.kiem.test</module>
-    <!--  CURRENTLY FAILING  <module>de.cau.cs.kieler.sccharts.sim.c.test</module> -->
+    <module>de.cau.cs.kieler.sccharts.sim.c.test</module>
     
     <!--  ESTEREL IS CURRENTLY FAILING, responsible: cmot <module>de.cau.cs.kieler.esterel.cec.sim.test</module> -->
     <!--  SIM S IS CURRENTLY FAILING, responsible: cmot<module>de.cau.cs.kieler.s.sim.sc.test</module> -->
