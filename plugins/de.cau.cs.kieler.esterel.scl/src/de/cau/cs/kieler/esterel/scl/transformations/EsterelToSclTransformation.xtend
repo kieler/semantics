@@ -523,8 +523,6 @@ class EsterelToSclTransformation extends Transformation {
     def StatementSequence handleAwaitInstance(AwaitInstance await, StatementSequence targetStatementSequence) {
 
         // await 0 s should do nothing (but maybe the do block)
-        println("delay " + await.delay)
-        println("await " + await)
         if ((await.delay.expr instanceof ConstantExpression) && (await.delay.expr as ConstantExpression).value == "0") {
             if (await.statement != null)
                 transformStatement(await.statement, targetStatementSequence)
@@ -565,6 +563,16 @@ class EsterelToSclTransformation extends Transformation {
                 targetStatementSequence.add(condTimes)
             } else {
                 targetStatementSequence.add(incrementInt(i))
+                val cond = createConditional
+                cond.expression = createGT(await.delay.expr.transformExp("int"), i.createValObjRef)
+                if (await.delay.isImmediate) {
+                cond.statements.addAll(createSclPause(createSclStatementSequence).statements)
+            }
+            cond.statements.add(createGotoStm(l))
+
+            targetStatementSequence.add(cond)
+            if (await.delay.expr != null)
+                targetStatementSequence.add(createAssignment(i, createIntValue(0)))
             }
         }
 
@@ -1396,13 +1404,16 @@ class EsterelToSclTransformation extends Transformation {
         exitVars.forEach[sScope.statements.removeInstantaneousGotos(l, it)]
 
         // Transform trap handlers
+        val trapHandlers = createParallel
         for (trapHandler : trap.trapHandler) {
-            sScope.add(
-                createConditional => [
+            trapHandlers.threads += createThread => [
+                add(createConditional => [
                     expression = trapHandler.trapExpr.transformExp
                     statements += trapHandler.statement.transformStatement(newSseq).statements
                 ])
+            ]
         }
+        sScope.add(trapHandlers)
         targetStatementSequence.add(sScope)
 
         targetStatementSequence
