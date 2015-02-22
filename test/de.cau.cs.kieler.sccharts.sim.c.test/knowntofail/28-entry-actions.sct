@@ -1,0 +1,22 @@
+scchart _28_entry_actions "28-entry-actions" {
+  input signal pure I;
+  input signal pure I2;
+  output signal pure O;
+  output signal pure O2;
+  input signal pure R;
+
+  initial state A
+  --> B;
+
+  state B {
+
+    initial state C
+    --> D;
+
+    state D {
+      entry I & I2 / O2;
+      entry I / O;
+    };
+  }
+  --> B with R;
+}
