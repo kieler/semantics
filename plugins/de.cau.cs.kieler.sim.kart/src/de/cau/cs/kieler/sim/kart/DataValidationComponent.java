@@ -77,7 +77,7 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
     private boolean ignoreAdditionalSignals;
 
     /** Are we operating in training mode, i. e. generate an ESO file */
-    private int trainingMode;
+    private boolean trainingMode;
 
     /** A map of all values of all previously recorded output signals in each step. */
     private List<HashMap<String, Object>> esoOutputs;
@@ -154,7 +154,7 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
         step = 0;
         eot = false;
         esoFilePath = null;
-        trainingMode = KartConstants.TRAINING_MODE_OFF;
+        trainingMode = false;
         ignoreAdditionalSignals = false;
         configVarName = KartConstants.DEF_CONFIGVAR;
         outputVarName = KartConstants.DEF_OUTPUTVAR;
@@ -189,7 +189,7 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
         }
 
         // Read the file
-        if (trainingMode != KartConstants.TRAINING_MODE_OFF) {
+        if (!trainingMode) {
             valEngine = new DefaultValidationEngine(ignoreAdditionalSignals);
         }
     }
@@ -204,7 +204,7 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
      *             when TraceWriter.doWrite() throws it
      */
     public void wrapup() throws KiemInitializationException {
-        if (trainingMode != KartConstants.TRAINING_MODE_OFF) {
+        if (trainingMode) {
             // Ask the user if he wants to overwrite the ESO file, if it exists
             File file = new File(esoFilePath.toString());
             if (file.exists()) {
@@ -219,12 +219,7 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
             TraceWriter writer =
                     new TraceWriter(recInputs, simOutputs, simVariables, txtOutputString);
             
-            int updateTrace = -1; //no update, just append is the default
-            if (trainingMode == KartConstants.TRAINING_MODE_AUTOMATIC) {
-                updateTrace = tracenum;
-            }
-            
-            writer.doWrite(updateTrace);
+            writer.doWrite(tracenum);
 
 //            // Set training mode flag to false
 //            List<DataComponentWrapper> components =
@@ -407,7 +402,7 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
         }
 
         JSONObject retval = new JSONObject();
-        if (trainingMode != KartConstants.TRAINING_MODE_OFF && !eot) {
+        if (!trainingMode && !eot) {
             for (Pair<String, String> variable : variables) {
                 valEngine.validateVariable(variable,
                         esoVariables.get((int) step - 1).get(variable.getFirst()),
@@ -458,7 +453,7 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
                     }
                 }
             }
-            trainingMode = ((Integer) config.get(KartConstants.VAR_TRAINMODE)).intValue();
+            trainingMode = ((Boolean) config.get(KartConstants.VAR_TRAINMODE)).booleanValue();
             eot = ((Boolean) config.get(KartConstants.VAR_EOT)).booleanValue();
             tracenum = ((Integer) config.get(KartConstants.VAR_TRACE)).intValue();
         } catch (JSONException e) {
@@ -550,7 +545,7 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
             }
             recInputs.add(inputSignals);
 
-            if (trainingMode != KartConstants.TRAINING_MODE_OFF) {
+            if (!trainingMode) {
                 /*
                  * Record output signals and variables
                  */

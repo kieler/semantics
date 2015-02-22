@@ -113,7 +113,7 @@ public class TraceWriter {
                         traceCnt++;  
                     }
                     if (traceCnt < updateTrace) {
-                        outWriter.write(line);
+                        outWriter.println(line);
                     }
                     if (traceCnt > updateTrace) {
                         tail += line + "\n";
@@ -133,11 +133,17 @@ public class TraceWriter {
                         + ") signals and state information does not match", true, null);
             }
 
-            outWriter.println("! reset;");
+            outWriter.println("\n! reset;");
             for (int i = 0; i < inputs.size(); i++) {
-                outWriter.println(getSignalString(inputs.get(i)));
+                String signalLine = getSignalString(inputs.get(i)).trim();
+                if (signalLine.length() > 0) {
+                    outWriter.println(signalLine);
+                }
                 outWriter.println(getOutputSignalString(outputs.get(i)));
-                outWriter.println(getSpecialString(variables.get(i)));
+                String varLine = getSpecialString(variables.get(i)).trim();
+                if (varLine.length() > 0) {
+                    outWriter.println(varLine);
+                }
                 outWriter.println(";");
             }
             

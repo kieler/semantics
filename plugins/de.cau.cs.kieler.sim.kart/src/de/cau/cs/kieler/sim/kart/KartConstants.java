@@ -199,15 +199,6 @@ public final class KartConstants {
     /** The Constant DEF_SIGNALVAR. */
     public static final String DEF_SIGNALVAR = "errorSignal";
 
-    public static final int TRAINING_MODE_OFF = 0;
-    public static final int TRAINING_MODE_MANUAL = 1; // manual input, output to eso file
-    public static final int TRAINING_MODE_AUTOMATIC = 2; // automatic read eso as input, output:
-                                                         // update eso file
-
-    
-    public static final String[] trainModes = {"Off", "Manual", "Update ESO"};
-    public static final KiemPropertyTypeChoice trainModeProperty = new KiemPropertyTypeChoice(trainModes);
-
     // -------------------------------------------------------------------------
 
     /**
