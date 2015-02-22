@@ -1,9 +1,9 @@
 #ifndef _IMPLEMENTATION_H
 #define _IMPLEMENTATION_H
 
-boolean calc_not (boolean value);
-boolean calc_or (boolean a, boolean b);
-boolean calc_and (boolean a, boolean b);
+int calc_not (int value);
+int calc_or (int a, int b);
+int calc_and (int a, int b);
 
 #ifndef MAIN
 /*
@@ -15,7 +15,7 @@ boolean calc_and (boolean a, boolean b);
 #define true  1
 #define false 0
 
-boolean calc_not (boolean value)
+int calc_not (int value)
 {
 //	printf ("not(%i)\r\n", value);
 	if (value == true)
@@ -29,7 +29,7 @@ boolean calc_not (boolean value)
 }
 
 
-boolean calc_or (boolean a, boolean b)
+int calc_or (int a, int b)
 {
 //	printf ("or(%i,%i)\r\n", a,b);
 	if (a == true)
@@ -47,7 +47,7 @@ boolean calc_or (boolean a, boolean b)
 }
 
 
-boolean calc_and (boolean a, boolean b)
+int calc_and (int a, int b)
 {
 //	printf ("and (%i,%i)\r\n",a,b);
 	if (a == false)
@@ -65,7 +65,7 @@ boolean calc_and (boolean a, boolean b)
 }
 
 
-void dump (boolean a, boolean b)
+void dump (int a, int b)
 {
 /*
 	if (a == b)

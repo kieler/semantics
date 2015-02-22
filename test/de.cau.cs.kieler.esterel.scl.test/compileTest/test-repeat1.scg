@@ -46,7 +46,7 @@
       <subExpressions xsi:type="kexpressions:IntValue" value="5"/>
     </condition>
   </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.11/@else">
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.11/@else" valuedObject="//@declarations.3/@valuedObjects.0">
     <next target="//@nodes.13"/>
     <assignment xsi:type="kexpressions:IntValue" value="0"/>
   </nodes>
@@ -68,10 +68,10 @@
       <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.0/@valuedObjects.0"/>
     </condition>
   </nodes>
-  <nodes xsi:type="scg:Assignment" incoming="//@nodes.16/@else">
+  <nodes xsi:type="scg:Assignment" incoming="//@nodes.16/@else" valuedObject="//@declarations.3/@valuedObjects.0">
     <next target="//@nodes.18"/>
     <assignment xsi:type="kexpressions:OperatorExpression" operator="+">
-      <subExpressions xsi:type="kexpressions:ValuedObjectReference"/>
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.3/@valuedObjects.0"/>
       <subExpressions xsi:type="kexpressions:IntValue" value="1"/>
     </assignment>
   </nodes>
@@ -80,7 +80,7 @@
     <else target="//@nodes.19"/>
     <condition xsi:type="kexpressions:OperatorExpression" operator=">">
       <subExpressions xsi:type="kexpressions:IntValue" value="5"/>
-      <subExpressions xsi:type="kexpressions:ValuedObjectReference"/>
+      <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@declarations.3/@valuedObjects.0"/>
     </condition>
   </nodes>
   <nodes xsi:type="scg:Assignment" incoming="//@nodes.18/@else //@nodes.11/@then" valuedObject="//@declarations.2/@valuedObjects.0">
@@ -99,5 +99,8 @@
   </declarations>
   <declarations type="bool">
     <valuedObjects name="f_term"/>
+  </declarations>
+  <declarations type="int">
+    <valuedObjects name="i"/>
   </declarations>
 </scg:SCGraph>

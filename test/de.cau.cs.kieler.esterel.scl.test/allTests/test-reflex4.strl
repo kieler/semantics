@@ -42,9 +42,9 @@ output AVERAGE_VALUE : integer;
 var TOTAL := 0 : integer,
   NUMBER := 0 : integer in
   every immediate INCREMENT_AVERAGE do
-    TOTAL := TOTAL + ?INCREMENT_AVERAGE;
-    NUMBER := NUMBER + 1;
-    emit AVERAGE_VALUE(TOTAL / NUMBER)
+    TOTAL := (TOTAL + ?INCREMENT_AVERAGE);
+    NUMBER := (NUMBER + 1);
+    emit AVERAGE_VALUE((TOTAL / NUMBER))
   end every
 end var
 
@@ -123,13 +123,13 @@ every COIN do
      AVERAGE_VALUE : integer in
       [
 
-	%{
-	  We use the AVERAGE module via a 'run' instruction, putting it in parallel with 
-	  the body of the END_GAME trap construct.
+  %{
+    We use the AVERAGE module via a 'run' instruction, putting it in parallel with 
+    the body of the END_GAME trap construct.
 
-	  Since AVERAGE is effectively copied inside the body of the main "every
-	  COIN" loop via 'run', it is restarted afresh whenever a new coin is inserted.
-	}%
+    Since AVERAGE is effectively copied inside the body of the main "every
+    COIN" loop via 'run', it is restarted afresh whenever a new coin is inserted.
+  }%
 
        run AVERAGE
 
@@ -156,7 +156,7 @@ every COIN do
             exit ERROR
           end timeout;
 
-	  % Phases 2 and 3: 
+    % Phases 2 and 3: 
 
           trap END_MEASURE in
             [
@@ -212,13 +212,13 @@ every COIN do
 
                   do
                     every MS do
-                      TIME := TIME + 1
+                      TIME := (TIME + 1)
                     end every
                   upto STOP;
 
                   emit DISPLAY(TIME);
 
-		  % Send the AVERAGE module the time via a integer signal:
+      % Send the AVERAGE module the time via a integer signal:
                   emit INCREMENT_AVERAGE(TIME)
 
                 end var
@@ -234,13 +234,13 @@ every COIN do
           end trap
         end repeat;
 
-	% Final display:
+  % Final display:
 
         await PAUSE_LENGTH MS do
 
-	  %{
+    %{
             Display the results of the average value that came from the AVERAGE
-	    module via its output signal:
+      module via its output signal:
           }%
 
           emit DISPLAY(?AVERAGE_VALUE)

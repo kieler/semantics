@@ -272,7 +272,7 @@ signal START_BEEPING in
 
          % normal mode
 
-         do % upto ENTER_SET_ALARM_MODE_COMMAND
+         abort % upto ENTER_SET_ALARM_MODE_COMMAND
 
             loop
                await
@@ -299,7 +299,7 @@ signal START_BEEPING in
                end await
             end loop
 
-         upto ENTER_SET_ALARM_MODE_COMMAND;
+         when ENTER_SET_ALARM_MODE_COMMAND;
 
          % set-alarm mode
          % (one might also accept TOGGLE_24H_MODE_COMMAND
@@ -309,7 +309,7 @@ signal START_BEEPING in
 
          var ALARM_TIME_POSITION : ALARM_TIME_POSITION in
 
-            do % upto EXIT_SET_ALARM_MODE_COMMAND
+            abort % upto EXIT_SET_ALARM_MODE_COMMAND
 
                ALARM_TIME_POSITION := INITIAL_ALARM_TIME_POSITION;
                emit START_ENHANCING (ALARM_TIME_POSITION);
@@ -331,7 +331,7 @@ signal START_BEEPING in
                   end await
                end loop
 
-            upto EXIT_SET_ALARM_MODE_COMMAND;
+            when EXIT_SET_ALARM_MODE_COMMAND;
 
             emit STOP_ENHANCING (ALARM_TIME_POSITION);
             ALARM_STATUS := true;
@@ -346,12 +346,12 @@ signal START_BEEPING in
    % how to beep
 
    every START_BEEPING do
-      do
-         do
+      abort
+         abort
 %            loop emit BEEP (ALARM_BEEP_VALUE) each S
             loop emit BEEP each S
-         upto STOP_ALARM_BEEP_COMMAND
-      watching ALARM_DURATION S
+         when STOP_ALARM_BEEP_COMMAND
+      when ALARM_DURATION S
    end every
 
 end signal
@@ -363,6 +363,9 @@ end module
 % \noindent
 % This is file ``button.strl''.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BUTTON working
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 module BUTTON :
 
 % \SubSection{Declarations of \BUTTON}
@@ -425,21 +428,21 @@ output ALARM_MODE_COMMAND,
 
             % watchmode
 
-            do       % upto UL, that turns to set-watch mode
+            abort       % upto UL, that turns to set-watch mode
                   await LL do exit WATCH_AND_SET_WATCH_MODE end
                ||
                   every LR do emit TOGGLE_24H_MODE_COMMAND end
-            upto UL;
+            when UL;
 
             % set-watch-mode
 
             emit ENTER_SET_WATCH_MODE_COMMAND;
 
-            do       % upto UL, that brings back to watch mode
+            abort       % upto UL, that brings back to watch mode
                   every LL do emit NEXT_WATCH_TIME_POSITION_COMMAND end
                ||
                   every LR do emit SET_WATCH_COMMAND end
-            upto UL;
+            when UL;
 
             emit EXIT_SET_WATCH_MODE_COMMAND
 
@@ -451,11 +454,11 @@ output ALARM_MODE_COMMAND,
 
       emit STOPWATCH_MODE_COMMAND;
 
-      do       % upto LL
+      abort       % upto LL
             every LR do emit START_STOP_COMMAND end
          ||
             every UR do emit LAP_COMMAND end
-      upto LL;
+      when LL;
 
 
       % Alarm and set-alarm mode (exit by LL in alarm mode only, not in set-alarm mode)
@@ -468,23 +471,23 @@ output ALARM_MODE_COMMAND,
 
             % alarm mode
 
-            do       % upto UL, that turns to set-alarm mode
+            abort       % upto UL, that turns to set-alarm mode
                   await LL do exit ALARM_AND_SET_ALARM_MODE end
                ||
                   every LR do emit TOGGLE_CHIME_COMMAND end
                ||
                   every UR do emit TOGGLE_ALARM_COMMAND end
-            upto UL;
+            when UL;
 
             % set-alarm mode
 
             emit ENTER_SET_ALARM_MODE_COMMAND;
 
-            do % upto UL, that returns to alarm mode
+            abort % upto UL, that returns to alarm mode
                   every LL do emit NEXT_ALARM_TIME_POSITION_COMMAND end
                ||
                   every LR do emit SET_ALARM_COMMAND end
-            upto UL;
+            when UL;
 
             emit EXIT_SET_ALARM_MODE_COMMAND
 
@@ -504,7 +507,9 @@ end module
 %
 % \noindent
 % This is file ``display.strl''
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% DISPLAY working
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 module DISPLAY :
 
 % \SubSection{Declarations of \DISPLAY}
@@ -603,7 +608,7 @@ loop
    % In watch mode, the main display shows the regular time
    % and the mini display shows the date
 
-   do       % upto STOPWATCH_MODE_COMMAND
+   abort       % upto STOPWATCH_MODE_COMMAND
 
       loop
          emit MAIN_DISPLAY (WATCH_TIME_TO_MAIN_DISPLAY (? WATCH_TIME));
@@ -623,11 +628,11 @@ loop
                                       (? WATCH_STOP_ENHANCING))
       end every
  
-   upto  STOPWATCH_MODE_COMMAND;
+   when  STOPWATCH_MODE_COMMAND;
 
    % Stopwatch and alarm modes
 
-   do       % upto  WATCH_MODE_COMMAND
+   abort       % upto  WATCH_MODE_COMMAND
 
       % The mini display contains the regular watch time
 
@@ -637,7 +642,7 @@ loop
    ||
       % Stopwatch mode
 
-      do
+      abort
 
 %         emit ALPHABETIC_DISPLAY("ST");
          emit ALPHABETIC_DISPLAY(0);
@@ -647,11 +652,11 @@ loop
                                                   (? STOPWATCH_TIME))
          each STOPWATCH_TIME
 
-      upto  ALARM_MODE_COMMAND;
+      when  ALARM_MODE_COMMAND;
 
       % Alarm mode
 
-      do
+      abort
 
 %         emit ALPHABETIC_DISPLAY ("AL");
          emit ALPHABETIC_DISPLAY (1);
@@ -671,8 +676,8 @@ loop
                                                 (? ALARM_STOP_ENHANCING))
          end every
 
-      upto  WATCH_MODE_COMMAND % for easy extensibility!
-   upto  WATCH_MODE_COMMAND
+      when  WATCH_MODE_COMMAND % for easy extensibility!
+   when  WATCH_MODE_COMMAND
 end loop
 
 end module
@@ -748,14 +753,14 @@ var STOPWATCH_TIME := ZERO_STOPWATCH_TIME : STOPWATCH_TIME_TYPE in
 %      emit BEEP (STOPWATCH_BEEP_VALUE);
     emit BEEP;
 
-      do
+      abort
          every HS do
 %            call INCREMENT_STOPWATCH_TIME (STOPWATCH_TIME) ();
             emit STOPWATCH_TIME (STOPWATCH_TIME);
 %            emit BEEP (STOPWATCH_BEEP (STOPWATCH_TIME))
             emit BEEP
          end every
-      upto START_STOP_COMMAND;
+      when START_STOP_COMMAND;
 
       % stopping the stopwatch
 
@@ -791,13 +796,13 @@ loop
 
    % not in LAP mode
 
-   do
+   abort
 
       loop
          emit STOPWATCH_TIME (? BASIC_STOPWATCH_TIME)
       each BASIC_STOPWATCH_TIME
 
-   upto LAP_COMMAND;
+   when LAP_COMMAND;
 
    % LAP_COMMAND received
 
@@ -835,9 +840,9 @@ loop
 
          loop
 
-            do
+            abort
                sustain STOPWATCH_STOPPED
-            upto START_STOP_COMMAND;
+            when START_STOP_COMMAND;
 
             await START_STOP_COMMAND
 
@@ -1019,7 +1024,7 @@ var WATCH_TIME := INITIAL_WATCH_TIME : WATCH_TIME_TYPE,
 
       % normal mode
 
-      do % upto ENTER_SET_WATCH_MODE_COMMAND
+      abort % upto ENTER_SET_WATCH_MODE_COMMAND
          loop
             await
 
@@ -1039,7 +1044,7 @@ var WATCH_TIME := INITIAL_WATCH_TIME : WATCH_TIME_TYPE,
 
             end await
          end loop
-      upto ENTER_SET_WATCH_MODE_COMMAND;
+      when ENTER_SET_WATCH_MODE_COMMAND;
 
 
       % set-watch mode
@@ -1050,7 +1055,7 @@ var WATCH_TIME := INITIAL_WATCH_TIME : WATCH_TIME_TYPE,
 
       var WATCH_TIME_POSITION : WATCH_TIME_POSITION in
 
-         do % upto  EXIT_SET_WATCH_MODE_COMMAND
+         abort % upto  EXIT_SET_WATCH_MODE_COMMAND
 
             WATCH_TIME_POSITION := INITIAL_WATCH_TIME_POSITION;
             emit START_ENHANCING (WATCH_TIME_POSITION);
@@ -1077,7 +1082,7 @@ var WATCH_TIME := INITIAL_WATCH_TIME : WATCH_TIME_TYPE,
 
                end await
            end loop
-         upto  EXIT_SET_WATCH_MODE_COMMAND;
+         when  EXIT_SET_WATCH_MODE_COMMAND;
 
          emit STOP_ENHANCING (WATCH_TIME_POSITION)
 

@@ -171,6 +171,9 @@ end module
 % \noindent
 % This is file ``alarm.strl''.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ALARM working
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 module ALARM :
 
 % \SubSection{Declarations of \ALARM}
@@ -748,14 +751,14 @@ var STOPWATCH_TIME := ZERO_STOPWATCH_TIME : STOPWATCH_TIME_TYPE in
 %      emit BEEP (STOPWATCH_BEEP_VALUE);
 	emit BEEP;
 
-      do
+      abort
          every HS do
 %            call INCREMENT_STOPWATCH_TIME (STOPWATCH_TIME) ();
             emit STOPWATCH_TIME (STOPWATCH_TIME);
 %            emit BEEP (STOPWATCH_BEEP (STOPWATCH_TIME))
             emit BEEP
          end every
-      upto START_STOP_COMMAND;
+      when START_STOP_COMMAND;
 
       % stopping the stopwatch
 
@@ -791,13 +794,13 @@ loop
 
    % not in LAP mode
 
-   do
+   abort
 
       loop
          emit STOPWATCH_TIME (? BASIC_STOPWATCH_TIME)
       each BASIC_STOPWATCH_TIME
 
-   upto LAP_COMMAND;
+   when LAP_COMMAND;
 
    % LAP_COMMAND received
 
@@ -835,9 +838,9 @@ loop
 
          loop
 
-            do
+            abort
                sustain STOPWATCH_STOPPED
-            upto START_STOP_COMMAND;
+            when START_STOP_COMMAND;
 
             await START_STOP_COMMAND
 
@@ -927,6 +930,9 @@ end module
 % \noindent
 % This is file ``watch.strl''.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% WATCH working
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 module WATCH :
 
 % \SubSection{Declarations of \WATCH}
@@ -1019,7 +1025,7 @@ var WATCH_TIME := INITIAL_WATCH_TIME : WATCH_TIME_TYPE,
 
       % normal mode
 
-      do % upto ENTER_SET_WATCH_MODE_COMMAND
+      abort % upto ENTER_SET_WATCH_MODE_COMMAND
          loop
             await
 
@@ -1039,7 +1045,7 @@ var WATCH_TIME := INITIAL_WATCH_TIME : WATCH_TIME_TYPE,
 
             end await
          end loop
-      upto ENTER_SET_WATCH_MODE_COMMAND;
+      when ENTER_SET_WATCH_MODE_COMMAND;
 
 
       % set-watch mode
@@ -1050,7 +1056,7 @@ var WATCH_TIME := INITIAL_WATCH_TIME : WATCH_TIME_TYPE,
 
       var WATCH_TIME_POSITION : WATCH_TIME_POSITION in
 
-         do % upto  EXIT_SET_WATCH_MODE_COMMAND
+         abort % upto  EXIT_SET_WATCH_MODE_COMMAND
 
             WATCH_TIME_POSITION := INITIAL_WATCH_TIME_POSITION;
             emit START_ENHANCING (WATCH_TIME_POSITION);
@@ -1077,7 +1083,7 @@ var WATCH_TIME := INITIAL_WATCH_TIME : WATCH_TIME_TYPE,
 
                end await
            end loop
-         upto  EXIT_SET_WATCH_MODE_COMMAND;
+         when  EXIT_SET_WATCH_MODE_COMMAND;
 
          emit STOP_ENHANCING (WATCH_TIME_POSITION)
 

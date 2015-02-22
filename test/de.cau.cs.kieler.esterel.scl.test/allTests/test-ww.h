@@ -110,7 +110,7 @@ Equality is never used.
 \SubSection{The \INITIALWATCHTIMEPOSITION\ constant}
 */
 
-#define INITIAL_WATCH_TIME_POSITION 0
+#define INITIAL_WATCH_TIME_POSITION() 0
 
 /*
 \SubSection{The \WATCHBEEPVALUE\ constant}
@@ -236,7 +236,7 @@ Equality is never used.
 \SubSection{The \INITIALALARMTIMEPOSITION\ constant}
 */
 
-#define INITIAL_ALARM_TIME_POSITION 0
+#define INITIAL_ALARM_TIME_POSITION() 0
 
 /*
 \SubSection{The \ALARMDURATION\ constant}
@@ -244,7 +244,7 @@ Equality is never used.
 
 #ifdef SIMUL
 
-#define ALARM_DURATION 3
+#define ALARM_DURATION() 3
 
 #else
 
@@ -418,7 +418,7 @@ ALARM_TIME_POSITION atp; {
 The alarm is initially set a 00:00, \VQH\ mode:
 */
 
-ALARM_TIME_TYPE INITIAL_ALARM_TIME = {0,0,0};
+ALARM_TIME_TYPE INITIAL_ALARM_TIME_val = {0,0,0};
 
 /*
 \SubSection{The \TOGGLEVQHMODEINALARMTIME\ procedure}

@@ -1,15 +1,15 @@
 module test:
 
-input a,b,r;
-output o;
+input A,B,R;
+output O;
 
 loop
 abort 
-[await a
-|| await b
+[await A
+|| await B
 ];
-emit o;
+emit O;
 halt;
-when r;
+when R;
 end
 end module

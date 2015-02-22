@@ -15,12 +15,12 @@ loop
     emit B(b);
     emit C(c);
     emit E(e);
-    b := b + 1;
+    b := (b + 1);
     c := (6 - -2 * 4 )/ (7 mod 6);
     f := not (b = c);
     emit D(f);
     pause;
-end loop
-end var
+end
+end
 
 end module
