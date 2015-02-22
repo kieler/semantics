@@ -1,0 +1,64 @@
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+b 
+% Output: Y1 X2 Y2 X11 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+R 
+% Output: X0 Y0 Z 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+a 
+% Output: Y1 Y2 X10 
+;
+
+% Output: 
+;
+R 
+% Output: X0 Y0 Z 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+R 
+% Output: X0 Y1 Y2 Y0 Z 
+;
+
+% Output: 
+;
+
+% Output: 
+;

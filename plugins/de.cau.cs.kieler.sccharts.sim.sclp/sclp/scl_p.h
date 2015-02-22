@@ -23,7 +23,6 @@ extern int _i;
 // Begin a tick
 #define tickstart(p)			\
   _declState				\
-  _checkTickInit			\
   _signals2vars				\
   if (_notInitial) {			\
     _SC_ERROR_DETECT_NORESET		\
@@ -44,7 +43,7 @@ extern int _i;
   mergedDispatch		        \
   _case _L_TICKEND:			\
   _vars2signals				\
-  return isEnabledNotOnly(_TickEnd);
+  return isEnabledNotOnly_TickEnd();
 
 // Fork off sibling threads
 #define fork1(label, p)			\

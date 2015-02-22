@@ -1,0 +1,31 @@
+scchart test {
+  input signal pure IS;
+  input signal pure IW;
+  output signal pure OS;
+  output signal pure OW;
+  output signal pure ON;
+  input signal pure I1;
+  input signal pure I2;
+  output signal pure O1;
+  output signal pure O2;
+
+  initial state M {
+
+    initial state S1
+    --> S2 with I1 / O1;
+
+    state S2
+    --> S3 with I2 / O2;
+
+    final state S3;
+  }
+  o-> S with IS / OS
+  --> W with IW / OW
+  >-> N / ON;
+
+  state S;
+
+  state W;
+
+  state N;
+}

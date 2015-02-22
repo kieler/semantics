@@ -1,0 +1,40 @@
+scchart _32_exit_actions_charles_andre_paper
+"32-exit-actions-charles-andre-paper" {
+  output signal pure X0;
+  output signal pure X10;
+  output signal pure X11;
+  output signal pure Y0;
+  output signal pure Y1;
+  output signal pure Y2;
+  output signal pure Z;
+  input signal pure a;
+  input signal pure b;
+  input signal pure R;
+  output signal pure X2;
+
+  initial state M0 {
+    exit / Y0;
+
+    initial state M10 {
+      exit / Y1;
+
+      initial state M2 {
+        exit / Y2;
+      }
+      --> _ with b / X2;
+
+      final state _;
+    }
+    o-> done with a / X10
+    >-> done / X11;
+
+    state done;
+
+    region:
+
+    initial state M11 {
+      exit / Z;
+    };
+  }
+  o-> M0 with R / X0;
+}

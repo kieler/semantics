@@ -10,6 +10,7 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.scgprios,
  de.cau.cs.kieler.scgprios.impl,
  de.cau.cs.kieler.scgprios.priorities,
+ de.cau.cs.kieler.scgprios.results,
  de.cau.cs.kieler.scgprios.transform,
  de.cau.cs.kieler.scgprios.util
 Require-Bundle: org.eclipse.core.runtime,

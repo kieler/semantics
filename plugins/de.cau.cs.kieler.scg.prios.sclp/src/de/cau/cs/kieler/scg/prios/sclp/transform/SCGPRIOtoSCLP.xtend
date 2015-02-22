@@ -43,6 +43,8 @@ import de.cau.cs.kieler.core.kexpressions.Parameter
 import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.StringValue
+import java.util.HashMap
+import de.cau.cs.kieler.scgprios.results.PrioIDResult
 
 /**
  * @author cbu
@@ -55,14 +57,24 @@ class SCGPRIOtoSCLP{
     private var createdLabelsList = <String> newLinkedList
     private var translatedNodes = <Node> newLinkedList  
     private int labelNumber = 0
+    private HashMap<Node,Long> prioIDs
     
     def Object transform(EObject eObject, KielerCompilerContext context) {
         var program = new Object()
-        program = transformSCGToSCLP(eObject as SCGraph)
+        program = transformSCGToSCLP(eObject as SCGraph, context)
         return program
     }
     
-    def Object transformSCGToSCLP (SCGraph scg) {
+    def Object transformSCGToSCLP(SCGraph scg, KielerCompilerContext context)  {
+
+        var prioIDsRes = context.compilationResult.ancillaryData.filter[it instanceof PrioIDResult]
+
+        // if previous results exist, optimize node priorities
+        if (!prioIDsRes.empty){
+            
+           
+        prioIDs = (prioIDsRes.head as PrioIDResult).priorityMap
+        
         labelList.clear
         createdLabelsList.clear
         translatedNodes.clear
@@ -70,22 +82,24 @@ class SCGPRIOtoSCLP{
         var rootNode = findRootNode(scg.nodes)
         val code = 
         '''
-        «header()»
+        «header(scg)»
         «generateForkAndJoinMacros(scg)»
         «declarations(scg.declarations)»
                                                                   
         int tick()
         {
-            tickstart(«rootNode.prioID»);
+            tickstart(«prioIDs.get(rootNode)»);
             «transformNode(rootNode)»
             tickreturn();
         }
         '''
         
         code
+        
+        }
     }
     
-    def header() {
+    def header(SCGraph scg) {
        '''
     /*****************************************************************************/
     /*                 G E N E R A T E D       C    C O D E                      */
@@ -101,9 +115,20 @@ class SCGPRIOtoSCLP{
     /* This code is provided under the terms of the Eclipse Public License (EPL).*/
     /*****************************************************************************/
     
+    #define _SC_ID_MAX «getHighestPrioID(scg)»
     #include "scl_p.h"
     #include "sc.h"                      
     '''
+    }
+    
+    def long getHighestPrioID(SCGraph scg){
+        var long maxPrioID = 0
+        for (node : scg.nodes){
+            if (maxPrioID < prioIDs.get(node)){
+                maxPrioID = prioIDs.get(node)
+            }
+        }
+        maxPrioID    
     }
     
     def String generateForkAndJoinMacros(SCGraph scg){
@@ -224,9 +249,9 @@ class SCGPRIOtoSCLP{
     
     
     private def String setPrioStatementIfRequired(Node parent, Node child){
-        if (parent.prioID.intValue != child.prioID.intValue){
+        if (prioIDs.get(parent) != prioIDs.get(child)){
             '''
-            prio(«child.prioID.intValue»);
+            prio(«prioIDs.get(child).toString»);
             '''
         } 
     }
@@ -278,10 +303,10 @@ class SCGPRIOtoSCLP{
     private def Node getFirstThread(LinkedList<Node> nodelist){
         var firstThread = nodelist.head
         for (n : nodelist){
-            if (n.prioID > firstThread.prioID){
+            if (prioIDs.get(n) > prioIDs.get(firstThread)){
                 firstThread = n
-            } else if (n.prioID == firstThread.prioID){
-                if ((n as Entry).exit.prioID > (firstThread as Entry).exit.prioID){
+            } else if (prioIDs.get(n) == prioIDs.get(firstThread)){
+                if (prioIDs.get((n as Entry).exit) > prioIDs.get((firstThread as Entry).exit)){
                     firstThread = n
                 }
             }
@@ -388,7 +413,7 @@ class SCGPRIOtoSCLP{
             
             var newLabel2 = "label_"+labelNumber.toString
             labelNumber = labelNumber+1
-            newString = newString+newLabel2+","+t.prioID.toString+","
+            newString = newString+newLabel2+","+prioIDs.get(t).toString+","
             labelList.put(t,newLabel2)
             
             nextNode = (t as Entry).next.target
@@ -399,7 +424,7 @@ class SCGPRIOtoSCLP{
         }
         var newLabel3 = "label_"+labelNumber.toString
         labelNumber = labelNumber+1
-        newString = newString+newLabel3+","+joiningNode.prioID.toString
+        newString = newString+newLabel3+","+prioIDs.get(joiningNode).toString
         labelList.put(joiningNode,newLabel3)
         
         nextNode = (joiningNode as Entry).next.target
@@ -433,16 +458,16 @@ class SCGPRIOtoSCLP{
         var newString = new String
         
         if (! threads.empty){
-            var newList = <Integer> newLinkedList
+            var newList = <Long> newLinkedList
         for (t : threads){
-            newList.add((t as Entry).exit.prioID)
+            newList.add(prioIDs.get((t as Entry).exit))
         }
         for (n : newList){
             newString = newString + (n.toString)+","
         }
         }
         
-        newString = newString + (firstThread as Entry).exit.prioID
+        newString = newString + prioIDs.get((firstThread as Entry).exit)
         
         newString
     }
@@ -450,10 +475,10 @@ class SCGPRIOtoSCLP{
     private def Node findJoiningNode(LinkedList<Node> entrylist){
         var joiningnode = entrylist.head
         for (e : entrylist){
-            if (((e as Entry).exit).prioID < (joiningnode as Entry).exit.prioID){
+            if (prioIDs.get(((e as Entry).exit)) < prioIDs.get((joiningnode as Entry).exit)){
                 joiningnode = e
-            } else if (((e as Entry).exit).prioID == (joiningnode as Entry).exit.prioID){
-                if (e.prioID < joiningnode.prioID){
+            } else if (prioIDs.get(((e as Entry).exit)) == prioIDs.get((joiningnode as Entry).exit)){
+                if (prioIDs.get(e) < prioIDs.get(joiningnode)){
                     joiningnode = e
                 }
             }
@@ -462,6 +487,7 @@ class SCGPRIOtoSCLP{
     }
     
     private def dispatch String transformExpression(ValuedObjectReference ref){
+        System.out.println(ref.valuedObject.name)
         '''«ref.valuedObject.name»«IF !ref.indices.empty»«transformExpressions(ref.indices)»«ENDIF»'''    
     }
     
@@ -478,17 +504,23 @@ class SCGPRIOtoSCLP{
         '''«value.value»'''
     }
     
+
+    
     private def dispatch String transformExpression(OperatorExpression opExp){
+        
         var operator = transformOperators(opExp.operator)
         var subexpressions = opExp.subExpressions
         if (subexpressions.length == 1){
-            '''«operator»«transformExpression(subexpressions.head)»'''
+            System.out.println(operator+" "+transformExpression(subexpressions.head))
+            '''«transformFirstOperator(opExp.operator)»«transformExpression(subexpressions.head)»'''
         } else {
             var lastexpression = subexpressions.last
             subexpressions.remove(lastexpression)
             '''«FOR s : subexpressions»«transformExpression(s)» «operator» «ENDFOR»«transformExpression(lastexpression)»'''
         }
     }
+    
+ 
     
     private def String transformExpressions(List<Expression> indices){
         '''[«FOR i : indices»«transformExpression(i)»«ENDFOR»]'''
@@ -507,6 +539,14 @@ class SCGPRIOtoSCLP{
             '''«operatortype»'''
         }
         
+    }
+    
+    private def String transformFirstOperator(OperatorType operatortype){
+        if (operatortype.getName() == "NOT" || operatortype.getName() == "SUB" || operatortype.getName() == "ADD"){
+            '''«operatortype»'''
+        } else {
+            ''''''
+        }
     }
     
   // does this really exist?

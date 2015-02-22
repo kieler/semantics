@@ -95,6 +95,9 @@ import de.cau.cs.kieler.core.krendering.Colors
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.klay.layered.properties.InternalProperties
 import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
+import de.cau.cs.kieler.scgprios.results.NodePriorityResult
+import de.cau.cs.kieler.scgprios.results.ThreadSegmentIDResult
+import de.cau.cs.kieler.scgprios.results.PrioIDResult
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -412,6 +415,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     private int sequentializedSCGCounter = 0
     
     private SCGraph SCGraph;
+    
+    // added by cbu
+    private HashMap<Node,Integer> nodePriorities = null
+    private HashMap<Node,Integer> threadSegmentIDs = null
+    private HashMap<Node,Long> prioIDs = null
 
     // -------------------------------------------------------------------------
     // -- Main Entry Point 
@@ -433,6 +441,20 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             val PILR = compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head
             if (PILR != null) PIL_Nodes += PILR.criticalNodes
         }
+        
+        // Get Priorities -- added by cbu
+        var nodePrioRes = compilationResult.ancillaryData.filter[it instanceof NodePriorityResult]
+        var tsIDRes = compilationResult.ancillaryData.filter[it instanceof ThreadSegmentIDResult]
+        var prioIDRes = compilationResult.ancillaryData.filter[it instanceof PrioIDResult]
+        if (!nodePrioRes.empty){
+	    nodePriorities = (nodePrioRes.head as NodePriorityResult).priorityMap
+	}
+	if (!tsIDRes.empty){
+	    threadSegmentIDs = (tsIDRes.head as ThreadSegmentIDResult).priorityMap
+	}
+	if (!prioIDRes.empty){
+	    prioIDs = (prioIDRes.head as PrioIDResult).priorityMap
+	}
 
         // Invoke the synthesis.
         SCGraph = model
@@ -576,8 +598,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                                         if (USE_ADAPTIVEZOOM.booleanValue) it.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70)
                                     ]
 				// added by cbu    
-				if (entry.tsID != null){
-                                        addInsideTopLeftNodeLabel(entry.tsID.toString, 8, KlighdConstants::DEFAULT_FONT_NAME) => [
+				if (threadSegmentIDs != null){
+                                        addInsideTopLeftNodeLabel(threadSegmentIDs.get(entry).toString, 8, KlighdConstants::DEFAULT_FONT_NAME) => [
                                             var c = "black".color
                                             it.foreground(c) 
                                         ]
@@ -679,9 +701,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_OUTGOINGDEPENDENCY, 75, 19, 1, PortSide::EAST)
             }
             //added by cbu 
-            var prio = assignment.getNodePriority
-            System.out.println("Priority for KLighD is: "+prio)
-            if (prio != null){
+            if (nodePriorities != null){
+	        var prio = nodePriorities.get(assignment)
                 var container = node.KContainerRendering
                 var txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT, 0, 0.85f, TOP, 0, 0.45f).to(RIGHT, 0, 0, BOTTOM, 0, 0)
@@ -689,8 +710,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 txt.setFontBold(true)
                 txt.setFontSize(7)
             }
-            var prioID = assignment.getPrioID
-            if (prioID != null){
+            if (prioIDs != null){
+	        var prioID = prioIDs.get(assignment)
                 var container = node.KContainerRendering
                 var txt = container.addText(prioID.toString)
                 txt.setAreaPlacementData.from(LEFT, 0, 0.85f, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0.45f)
@@ -804,9 +825,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 port.addLayoutParam(LayoutOptions::OFFSET, 0f)
             }
             //added by cbu 
-            var prio = conditional.getNodePriority
-            System.out.println("Priority for KLighD is: "+prio)
-            if (prio != null){
+            if (nodePriorities != null){
+	        var prio = nodePriorities.get(conditional)
                 var container = node.KContainerRendering
                 var txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0.6f).to(RIGHT, 0, 0, BOTTOM, 0, 0)
@@ -814,8 +834,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 txt.setFontBold(true)
                 txt.setFontSize(7)
             }
-            var prioID = conditional.getPrioID
-            if (prioID != null){
+            if (prioIDs != null){
+	        var prioID = prioIDs.get(conditional)
                 var container = node.KContainerRendering
                 var txt = container.addText(prioID.toString)
                 txt.setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0.6f)
@@ -870,9 +890,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
             }
             //added by cbu 
-            var prio = surface.getNodePriority
-            System.out.println("Priority for KLighD is: "+prio)
-            if (prio != null){
+            if (nodePriorities != null){
+	        var prio = nodePriorities.get(surface)
                 var container = node.KContainerRendering
                 var txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT, 0, 0.75f, TOP, 0, 0.4f).to(RIGHT, 0, 0, BOTTOM, 0, 0)
@@ -880,8 +899,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 txt.setFontBold(true)
                 txt.setFontSize(7)
             }
-            var prioID = surface.getPrioID
-            if (prioID != null){
+            if (prioIDs != null){
+	        var prioID = prioIDs.get(surface)
                 var container = node.KContainerRendering
                 var txt = container.addText(prioID.toString)
                 txt.setAreaPlacementData.from(LEFT, 0, 0.75f, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0.2f)
@@ -939,9 +958,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
             }
             //added by cbu
-            var prio = depth.getNodePriority
-            System.out.println("Priority for KLighD is: "+prio)
-            if (prio != null){
+            if (nodePriorities != null){
+	        var prio = nodePriorities.get(depth)
                 var container = node.KContainerRendering
                 var txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT, 0, 0.6f, TOP, 0, 0.2f).to(RIGHT, 0, 0, BOTTOM, 0, 0)
@@ -949,9 +967,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 txt.setFontBold(true)
                 txt.setFontSize(7)
             }
-            var prioID = depth.getPrioID
-            System.out.println("Priority for KLighD is: "+prio)
-            if (prioID != null){
+            if (prioIDs != null){
+	        var prioID = prioIDs.get(depth)
                 var container = node.KContainerRendering
                 var txt = container.addText(prioID.toString)
                 txt.setAreaPlacementData.from(LEFT, 0, 0.6f, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0.4f)
@@ -996,9 +1013,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
             }
             //added by cbu 
-            var prio = entry.getNodePriority
-            System.out.println("Priority for KLighD is: "+prio)
-            if (prio != null){
+            if (nodePriorities != null){
+	        var prio = nodePriorities.get(entry)
                 var container = node.KContainerRendering
                 var txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT, 0, 0.6f, TOP, 0, 0.4f).to(RIGHT, 0, 0, BOTTOM, 0, 0)
@@ -1006,8 +1022,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 txt.setFontBold(true)
                 txt.setFontSize(7)
             }
-            var prioID = entry.getPrioID
-            if (prioID != null){
+            if (prioIDs != null){
+	        var prioID = prioIDs.get(entry)
                 var container = node.KContainerRendering
                 var txt = container.addText(prioID.toString)
                 txt.setAreaPlacementData.from(LEFT, 0, 0.6f, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0.4f)
@@ -1052,9 +1068,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 0, PortSide::EAST)
             }
             //added by cbu 
-            var prio = exit.getNodePriority
-            System.out.println("Priority for KLighD is: "+prio)
-            if (prio != null){
+            if (nodePriorities != null){
+	        var prio = nodePriorities.get(exit)
                 var container = node.KContainerRendering
                 var txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT, 0, 0.5f, TOP, 0, 0.4f).to(RIGHT, 0, 0, BOTTOM, 0, 0)
@@ -1062,9 +1077,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 txt.setFontBold(true)
                 txt.setFontSize(7)
             }
-            var prioID = exit.getPrioID
-            System.out.println("Priority for KLighD is: "+prio)
-            if (prioID != null){
+            if (prioIDs != null){
+	        var prioID = prioIDs.get(exit)
                 var container = node.KContainerRendering
                 var txt = container.addText(prioID.toString)
                 txt.setAreaPlacementData.from(LEFT, 0, 0.5f, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0.4f)
@@ -1121,9 +1135,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 port.addLayoutParam(LayoutOptions::OFFSET, 0.5f)
             }
             //added by cbu 
-            var prio = fork.getNodePriority
-            System.out.println("Priority for KLighD is: "+prio)
-            if (prio != null){
+            if (nodePriorities != null){
+	        var prio = nodePriorities.get(fork)
                 var container = node.KContainerRendering
                 var txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT, 0, 0.4f, TOP, 0, 0.5f).to(RIGHT, 0, 0, BOTTOM, 0, 0)
@@ -1131,8 +1144,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 txt.setFontBold(true)
                 txt.setFontSize(7)
             }
-            var prioID = fork.getPrioID
-            if (prioID != null){
+            if (prioIDs != null){
+	        var prioID = prioIDs.get(fork)
                 var container = node.KContainerRendering
                 var txt = container.addText(prioID.toString)
                 txt.setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0.5f)
@@ -1191,9 +1204,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 port.addLayoutParam(LayoutOptions::OFFSET, -0.5f)
             }
             //added by cbu
-            var prio = join.getNodePriority
-            System.out.println("Priority for KLighD is: "+prio)
-            if (prio != null){
+            if (nodePriorities != null){
+	        var prio = nodePriorities.get(join)
                 var container = node.KContainerRendering
                 var txt = container.addText(prio.toString)
                 txt.setAreaPlacementData.from(LEFT, 0, 0, TOP, 0, 0.45f).to(RIGHT, 0, 0, BOTTOM, 0, 0)
@@ -1201,8 +1213,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 txt.setFontBold(true)
                 txt.setFontSize(7)
             }
-            var prioID = join.getPrioID
-            if (prioID != null){
+            if (prioIDs != null){
+	        var prioID = prioIDs.get(join)
                 var container = node.KContainerRendering
                 var txt = container.addText(prioID.toString)
                 txt.setAreaPlacementData.from(LEFT, 0, 0.4f, TOP, 0, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0.5f)

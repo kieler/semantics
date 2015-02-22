@@ -1,0 +1,28 @@
+! reset;
+
+% Output:;
+A0 % Output: U0;
+% Output:;
+A1 % Output: U1;
+% Output:;
+
+% Output:;
+A0 % Output: U0;
+% Output:;
+B1 % Output: V1;
+% Output:;
+
+% Output:;
+A0 % Output: U0;
+% Output:;
+C1 % Output: W1;
+% Output:;
+
+% Output:;
+A0 B1 % Output: U0 V1;
+% Output:;
+
+% Output:;
+B0 B1 % Output: V0 V1;
+B0 B1 % Output: V0 V1;
+B0 % Output: V0;

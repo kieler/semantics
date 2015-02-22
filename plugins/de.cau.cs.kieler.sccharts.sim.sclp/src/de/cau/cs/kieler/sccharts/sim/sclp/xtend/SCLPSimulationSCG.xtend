@@ -159,16 +159,16 @@ int main(int argc, const char* argv[]) {
  * See eg http://graphics.stanford.edu/~seander/bithacks.html#IntegerLog .
  * Which is actually faster depends on application.
  */
- def selectCid(){
-  '''
-    void selectCid() {
-      int act;
-      _cid = 0;
-      for (act = active; act > 1; act >>= 1) //shift right
-        _cid++;
-    }
-  '''
- }
+// def selectCid(){
+//  '''
+//    void selectCid() {
+//      int act;
+//      _cid = 0;
+//      for (act = active; act > 1; act >>= 1) //shift right
+//        _cid++;
+//    }
+//  '''
+// }
    
    // ===================================================================
    

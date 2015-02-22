@@ -17,7 +17,7 @@
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scgprios.transform.OptimizedNodePriortiesTransformation"
-            dependencies="SCGTSIDS"
+            dependencies="SCGOPTTSIDS"
             id="SCGOPTNODEPRIOS"
             method="transform"
             name="OptNodePriorities">
@@ -49,6 +49,13 @@
             id="SCGOPTPRIOIDS"
             method="transform"
             name="OptPrioIDs">
+      </transformationMethod>
+      <transformationMethod
+            class="de.cau.cs.kieler.scgprios.transform.OptimizeSCGTransformation"
+            dependencies="SCGNODEPRIOS, SCGPRIO"
+            id="OPTSCG"
+            method="transform"
+            name="OptimizeSCG">
       </transformationMethod>
    </extension>
 

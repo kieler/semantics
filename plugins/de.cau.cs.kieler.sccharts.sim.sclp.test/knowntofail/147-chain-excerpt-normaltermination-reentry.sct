@@ -1,0 +1,24 @@
+scchart SyncChart {
+  input signal pure I;
+  output signal pure O4;
+  output signal pure O5;
+
+  region _R0:
+
+  initial state Initial
+  --> H;
+
+  state H {
+
+    region _R0:
+
+    initial state A
+    --> B with I;
+
+    final state B;
+  }
+  --> H with I / O4
+  >-> E / O5;
+
+  state E;
+}

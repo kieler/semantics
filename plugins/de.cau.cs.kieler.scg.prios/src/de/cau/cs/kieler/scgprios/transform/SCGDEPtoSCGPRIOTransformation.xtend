@@ -15,6 +15,10 @@ import de.cau.cs.kieler.scgprios.optimizations.OptimizeTSIDs
 import de.cau.cs.kieler.scgprios.priorities.CalcPrioIDs
 import de.cau.cs.kieler.scgprios.optimizations.OptimizePrioIDs
 import de.cau.cs.kieler.scgprios.priorities.CalcTSIDsII
+import de.cau.cs.kieler.scgprios.priorities.Scheduling
+import de.cau.cs.kieler.scgprios.results.ThreadSegmentIDResult
+import de.cau.cs.kieler.scgprios.results.PrioIDResult
+import de.cau.cs.kieler.scgprios.results.NodePriorityResult
 
 /**
  * @author cbu
@@ -22,41 +26,53 @@ import de.cau.cs.kieler.scgprios.priorities.CalcTSIDsII
  */
 class SCGDEPtoSCGPRIOTransformation extends Transformation{
     override transform(EObject eObject, KielerCompilerContext context) {
-        //var scgraph_P = transformSCGToSCG_P(eObject as SCGraph)
-        return transformSCGDEPToSCGOPTPRIOIDs(eObject as SCGraph)
+        return transformSCGDEPToSCGOPTPRIOIDs(eObject as SCGraph, context)
     }
     
-    public def SCGraph transformSCGDEPToSCGOPTPRIOIDs(SCGraph graph) {
+    public def SCGraph transformSCGDEPToSCGOPTPRIOIDs(SCGraph graph, KielerCompilerContext context) {
         var nodes = graph.nodes
         var sccCalc = new SCC
         var sccs = sccCalc.findSCC(nodes)
-        var calcNodePrios = new CalcNodePrios 
-        var nodePrios = calcNodePrios.calculateNodePriorities(sccs, nodes)
-        var calcOptNodePrios = new OptimizeNodePriorities
-        var optNodePrios = calcOptNodePrios.optimizeNodePriorities(nodePrios, sccs)
-        
-        for (n : nodes){
-            n.nodePriority = optNodePrios.get(n)
-        }
-        
-        var calcTSIDs = new CalcTSIDsII
-        var optTsids = calcTSIDs.calculateTSIDs(nodes, nodePrios, sccs)
-        
-        for (n : nodes){
-            n.tsID = optTsids.get(n)
-        }
-        
-        var calcPrioIDs = new CalcPrioIDs
-        var prioIDs = calcPrioIDs.calcPrioIDs(optNodePrios, optTsids)
-        
-        var optimizePrioIDs = new OptimizePrioIDs
-        var optPrioIDs = optimizePrioIDs.optimizePrioIDs(prioIDs, nodes
-        ) 
-        
-        for (n : nodes){
-            n.prioID = optPrioIDs.get(n).intValue
-        }
-        
+        var scheduling = new Scheduling
+        if (scheduling.scheduleexists(sccs)){
+            var calcNodePrios = new CalcNodePrios 
+            var nodePrios = calcNodePrios.calculateNodePriorities(sccs, nodes)
+            var calcOptNodePrios = new OptimizeNodePriorities
+            var optNodePrios = calcOptNodePrios.optimizeNodePriorities(nodePrios, sccs)
+            
+//            for (n : nodes){
+//                n.nodePriority = optNodePrios.get(n)
+//            }
+            var nodePriorityResult = new NodePriorityResult()
+            nodePriorityResult.priorityMap = optNodePrios
+            context.compilationResult.ancillaryData += nodePriorityResult
+            
+            var calcTSIDs = new CalcTSIDsII
+            var optTsids = calcTSIDs.calculateTSIDs(nodes, nodePrios, sccs)
+            
+//            for (n : nodes){
+//                n.tsID = optTsids.get(n)
+//            }
+            var threadSegmentIDResult = new ThreadSegmentIDResult()
+            threadSegmentIDResult.priorityMap = optTsids
+            context.compilationResult.ancillaryData += threadSegmentIDResult
+            
+            var calcPrioIDs = new CalcPrioIDs
+            var prioIDs = calcPrioIDs.calcPrioIDs(optNodePrios, optTsids)
+            
+            var optimizePrioIDs = new OptimizePrioIDs
+            var optPrioIDs = optimizePrioIDs.optimizePrioIDs(prioIDs, nodes)
+            
+            var prioIDResult = new PrioIDResult()
+            prioIDResult.priorityMap = optPrioIDs
+            context.compilationResult.ancillaryData += prioIDResult 
+            
+//            for (n : nodes){
+//                n.prioID = optPrioIDs.get(n).intValue
+//            }
+
+
+        }    
         graph
     }
 }

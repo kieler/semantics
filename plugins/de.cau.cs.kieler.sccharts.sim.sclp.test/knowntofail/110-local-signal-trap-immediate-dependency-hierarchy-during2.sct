@@ -1,0 +1,40 @@
+scchart _102_local_signal_trap_immediate_dependency
+"102-local-signal-trap-immediate-dependency" {
+  output signal pure T;
+  output signal pure O1;
+  output signal pure O2;
+
+  region R0:
+
+  state G;
+
+  initial state F {
+
+    region R0:
+
+    initial state A {
+
+      initial state AA
+      --> AAA immediate / O1;
+
+      state AAA;
+    }
+    --> C;
+
+    state C {
+
+      initial state L
+      --> O immediate / T;
+
+      state O;
+    };
+
+    region R1:
+
+    initial state D
+    --> E with T / O2;
+
+    state E;
+  }
+  --> G with T;
+}

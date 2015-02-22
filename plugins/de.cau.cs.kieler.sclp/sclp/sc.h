@@ -10,6 +10,7 @@
  * @author Reinhard v. Hanxleden,
  * rvh@informatik.uni-kiel.de
  */
+#include <limits.h>
 #include <stdio.h>
 
 /* Definition of the macros for a minimum and a maximum function.
@@ -18,7 +19,7 @@
  */
 
 #define MAX(a, b) a > b ? a : b
-#define MIN(a, b) a < b ? a : b
+#define MIN(a, b) a < b ? a : bid
 
 // ===================================================================
 // Type definitions
@@ -33,19 +34,73 @@ typedef int            labeltype;     //!< switch/case
 typedef void          *labeltype;     //!< Computed goto - a la gcc
 #endif
 
-typedef unsigned int   bitvector;     //!< 32 bits on IA32
-typedef bitvector      signalvector;  //!< 32 signals on IA32
+//typedef unsigned int   bitvector;     //!< 32 bits on IA32
+//typedef bitvector      signalvector;  //!< 32 signals on IA32
 typedef int            threadtype;    //!< Thread id/priority
-typedef bitvector      threadvector;  //!< 32 threads on IA32
+//typedef bitvector      threadvector;  //!< 32 threads on IA32
+
+// ===================================================================
+// Representing sets of thread ids
+
+// Figure out how many bits are in an unsigned int.
+#ifndef WORD_BIT
+# if UINT_MAX == 65535
+#  define WORD_BIT	16
+# elif UINT_MAX == 4294967295
+#   define WORD_BIT	32
+// Else WORD_BIT is left undefined, and this definition must be
+// adapted to whatever strange architecture/compiler this is running
+// on/compiled with
+# endif
+#endif
+
+// Figure out how many bits are in an unsigned long int.
+#ifndef LONG_BIT
+# if ULONG_MAX == 4294967295
+#  define LONG_BIT	32
+# elif UINT_MAX == 18,446,744,073,709,551,615
+#   define LONG_BIT	64
+// Else LONG_BIT is left undefined (see WORD_BIT)
+# endif
+#endif
+
+typedef unsigned long _setPartType;
+#define _setPartSize WORD_BIT //LONG_BIT
+
+
+// ===================================================================
+// Set representations
+
+// If application does not specify highest thread id, use word size
+
+#ifndef _SC_ID_MAX
+#define _SC_ID_MAX   (WORD_BIT - 1)
+#endif
+
+#define _idCnt       (_SC_ID_MAX + 1)             //!< Number of threads
+
+// Determine storage requirements for sets of thread ids
+#if _SC_ID_MAX < WORD_BIT               // Is one unsigned int big enough?
+typedef unsigned int   threadvector;
+#elif _SC_ID_MAX < _setPartSize          // Is one _setPartType big enough?
+typedef unsigned int  threadvector;
+#else
+#define _threadVectorSize  ((_SC_ID_MAX / _setPartSize) + 1)
+typedef unsigned int  threadvector[_threadVectorSize];
+#endif
+
 
 // ===================================================================
 // Global variables
 
-signalvector signals;                //!< Bit mask for signals
+//signalvector signals;                //!< Bit mask for signals
 threadvector enabled;                //!< Bit mask for enabled threads
 threadvector active;                 //!< Bit mask for active threads
 
-#define      _idMax 8*sizeof(threadvector) //!< Number of threads
+//_setPartType *enabledPtr     = (_setPartType *) &enabled;
+
+//#define      _idMax 8*sizeof(threadvector) //!< Number of threads
+#define _idMax       (_SC_ID_MAX + 1) 
 
 int          runCnt;                 //!< Counts program runs
 int          tickCnt;                //!< Counts program ticks
@@ -57,8 +112,49 @@ threadvector _descs[_idMax];         //!< Descendants of thread
 threadtype   _parent[_idMax];        //!< Parent of thread
 labeltype    _returnAddress;         //!< For function calls (eg Exit Actions)
 
-#ifndef _SC_SUPPRESS_ERROR_DETECT
-signalvector _presence_tested;       //!< Signals that have been checked for presence in current tick
+// #ifndef _SC_SUPPRESS_ERROR_DETECT
+// signalvector _presence_tested;       //!< Signals that have been checked for presence in current tick
+// #endif
+
+# if _SC_ID_MAX < WORD_BIT          // Is one _setPartType big enough?
+unsigned int _setPart;
+# else
+_setPartType _setPart;
+# endif
+
+#ifdef _SC_SUPPRESS_ERROR_DETECT
+# define _SC_ERROR_DETECT_NONE_ACTIVE
+#else
+# ifdef _threadVectorSize
+#  define _SC_ERROR_DETECT_NONE_ACTIVE					\
+  if (_i < 0) {								\
+    _SC_ERROR0(_SC_ERROR_NONE_ACTIVE,					\
+	       "SC ERROR (None Active): No active thread!\n");		\
+  }
+# else
+#  define _SC_ERROR_DETECT_NONE_ACTIVE					\
+  if (active == 0) {							\
+    _SC_ERROR0(_SC_ERROR_NONE_ACTIVE,					\
+	       "SC ERROR (None Active): No active thread!\n");		\
+  };
+# endif
+#endif
+  
+//! Check whether PRIO tries to acquire priority that is already in use
+#ifdef _SC_SUPPRESS_ERROR_DETECT
+#define _SC_ERROR_DETECT_PRIO(p)
+#else
+#define _SC_ERROR_DETECT_PRIO(p)					\
+  if ((p < 0) || (p > _SC_ID_MAX)) {					\
+    _SC_ERROR2(_SC_ERROR_PRIORITY_RANGE,				\
+	       "SC ERROR (Priority Range): Priority %d not in range 0 .. %d!\n", \
+	       p, _SC_ID_MAX)						\
+      } else								\
+    if (isEnabled(p)) {							\
+      _SC_ERROR1(_SC_ERROR_PRIORITY_IN_USE,				\
+		 "SC ERROR (Priority Uniqueness): Priority %d already in use!\n", \
+		 p)							\
+      }
 #endif
 
 // ===================================================================
@@ -121,7 +217,7 @@ void printVal(int id);
 int tick();
 
 //! Functions defined in sc.c
-void selectCid();
+//void selectCid();
 
 
 // ===================================================================
@@ -160,22 +256,48 @@ void selectCid();
  * whether we have a BSR assembler instruction at our disposal or not.
  */
 
-#if ((defined __i386__ || defined __amd64__ || defined __x86_64__) && defined __GNUC__ && !defined _SC_NOASSEMBLER)
-// Version 1: x86 + gcc available.
-// Use fast Bit Scan Reverse assembler instruction.
-#define selectCid_()				\
+// #if ((defined __i386__ || defined __amd64__ || defined __x86_64__) && defined __GNUC__ && !defined _SC_NOASSEMBLER)
+// // Version 1: x86 + gcc available.
+// // Use fast Bit Scan Reverse assembler instruction.
+// #define selectCid_()				\
+//   __asm volatile("bsrl %1,%0\n"			\
+// 		 : "=r" (_cid)			\
+// 		 : "c" (active)			\
+// 		 )
+// 
+// #else
+// // Version 2: x86 + gcc not available.
+// // Call function, defined in sc.c.
+// #define selectCid_()   selectCid()
+// #endif
+// 
+#define dispatch()       selectCid(); _goto(_deref(_pc[_cid]))
+
+
+
+#define _BitScanReverse(set, bit)		\
   __asm volatile("bsrl %1,%0\n"			\
-		 : "=r" (_cid)			\
-		 : "c" (active)			\
+		 : "=r" (bit)			\
+		 : "r" (set)			\
 		 )
 
-#else
-// Version 2: x86 + gcc not available.
-// Call function, defined in sc.c.
-#define selectCid_()   selectCid()
-#endif
 
-#define dispatch()       selectCid_(); _goto(_deref(_pc[_cid]))
+
+#if _SC_ID_MAX < _setPartSize          // Is one _setPartType big enough?
+# define selectCid() { _SC_ERROR_DETECT_NONE_ACTIVE \
+  _BitScanReverse((active), _cid); }
+#else
+# define selectCid() {				\
+    for (_i = _threadVectorSize - 1; ; _i--) {		\
+      _SC_ERROR_DETECT_NONE_ACTIVE		\
+	_setPart = active[_i];			\
+      if (_setPart) {				\
+	_BitScanReverse(_setPart, _cid);	\
+	break;					\
+      }}					\
+    _cid += _i * _setPartSize;			\
+  }
+#endif
 
 
 // ===================================================================
@@ -187,46 +309,216 @@ void selectCid();
  */
 #define u2b(u)         (1 << u)
 
+// ===================================================================
+// Set operations based on bit vectors presented by a scalar of type idset/sigset
+// (eg int or long int)
+
+// Simplified for SCL
+//#define _setClear(set)               (set = 0)
+//#define _setInit(set, i)             (set = u2b(i))
+//#define _setAdd(set, i)              (set |= u2b(i))
+//#define _setDel(set, i)              (set &= ~u2b(i))
+//#define _setCopyFrom(set1, set2)     (set1 = set2)
+//#define _setAddSet(set1, set2)       (set1 |= set2)
+//#define _setDelSet(set1, set2)       (set1 &= ~set2)
+#define _setClear(set)               set = 0
+#define _setInit(set, i)             set = (u2b(i))
+#define _setAdd(set, i)              set |= (u2b(i))
+#define _setDel(set, i)              set &= ~(u2b(i))
+#define _setCopyFrom(set1, set2)     set1 = set2
+#define _setAddSet(set1, set2)       set1 |= set2
+#define _setDelSet(set1, set2)       set1 &= ~set2
+#define _setIsEmpty(set)             (set == 0)
+//#define _setContains(set, i)         (printf("set=%ld, u2b=%lu, set & u2b(i)=%ld",set, (unsigne
+#define _setContains(set, i)         ((set & (u2b(i))) != 0)
+#define _setNotOnlyElem0(set)        (set != (u2b(0)))
+#define _setIsDisjoint(set1, set2)   ((set1 & set2) == 0)
+//#define _setIsNotDisjoint(set1, set2) ((set1 & set2) != 0)
+
+// ===================================================================
+// Set operations based on bit vectors presented by an array of type
+// idset[_idsetSize]/sigset[_sigsetSize]
+
+// TYPE is '_id' or '_sig'
+
+//#define _setIsEmpty(set)             (set == 0)
+#define _DEF_setIsEmpty(TYPE)						\
+  int TYPE ## IsEmpty(_setPartType set[]) {				\
+    int flag = 0;							\
+    int i;								\
+    for (i = TYPE ## setSize - 1; i >= 0; i--) {			\
+      flag = set[i];							\
+      if (!flag) break;							\
+    }									\
+    return flag;							\
+  }
+
+//#define _setClear(set)               set = 0
+#define _DEF_setClear(TYPE)						\
+  void TYPE ## Clear(_setPartType set[]) {				\
+    int i;								\
+    for (i = TYPE ## setSize - 1; i >= 0; i--) {			\
+      set[i] = 0;							\
+    }									\
+  }
+
+//#define _setInit(set, i)             set = u2b(i)
+#define _DEF_setInit(TYPE)						\
+  void TYPE ## Init(_setPartType set[], int i) {			\
+    int j;								\
+    for (j = TYPE ## setSize - 1; j >= 0; j--) {			\
+      set[j] = 0;							\
+    }									\
+    set[i / _setPartSize] = u2b(i % _setPartSize);			\
+  }
+
+//#define _setAdd(set, i)              set |= u2b(i)
+#define _DEF_setAdd(TYPE)						\
+  void TYPE ## Add(_setPartType set[], int i) {				\
+    set[i / _setPartSize] |= (u2b(i % _setPartSize));			\
+  }
+
+//#define _setDel(set, i)              set &= ~u2b(i)
+#define _DEF_setDel(TYPE)						\
+  void TYPE ## Del(_setPartType set[], int i) {				\
+    set[i / _setPartSize] &= ~(u2b(i % _setPartSize));			\
+  }
+
+//#define _setAddSet(set1, set2)       set1 |= set2
+#define _DEF_setAddSet(TYPE)						\
+  void TYPE ## AddSet(_setPartType set1[], _setPartType set2[]) {	\
+    int i;								\
+    for (i = TYPE ## setSize - 1; i >= 0; i--) {			\
+      set1[i] |= set2[i];						\
+    }									\
+  }
+
+//#define _setDelSet(set1, set2)       set1 &= ~set2
+#define _DEF_setDelSet(TYPE)						\
+  void TYPE ## DelSet(_setPartType set1[], _setPartType set2[]) {	\
+    int i;								\
+    for (i = TYPE ## setSize - 1; i >= 0; i--) {			\
+      set1[i] &= ~set2[i];						\
+    }									\
+  }
+
+//#define _setContains(set, i)         (set & u2b(i))
+#define _DEF_setContains(TYPE)						\
+  int TYPE ## Contains(_setPartType set[], int i) {			\
+    return (set[i / _setPartSize] & (u2b(i % _setPartSize))) != 0;		\
+  }
+
+//#define _setNotOnlyElem0(set, i)  (set != u2b(0))
+#define _DEF_setNotOnlyElem0(TYPE)					\
+  int TYPE ## NotOnlyElem0(_setPartType set[]) {			\
+    int flag = (set[0] != (u2b(0)));					\
+    int i;								\
+    if (!flag) {							\
+      for (i = TYPE ## setSize - 1; i > 0; i--) {			\
+	flag = (set[i] != 0);						\
+	if (flag) break;						\
+      }									\
+    }									\
+    return flag;							\
+  }
+
+//#define _setIsDisjoint(set1, set2)   ((set1 & set2) == 0)
+#define _DEF_setIsDisjoint(TYPE)					\
+  int TYPE ## IsDisjoint(_setPartType set1[], _setPartType set2[]) {	\
+    int flag;								\
+    int i;								\
+    for (i = TYPE ## setSize - 1; i >= 0; i--) {			\
+      flag = ((set1[i] & set2[i]) == 0);				\
+      if (!flag) break;							\
+    }									\
+    return flag;							\
+  }
+
+//#define _setCopyFrom(set1, set2)     set1 = set2
+#define _DEF_setCopyFrom(TYPE)						\
+  void TYPE ## CopyFrom(_setPartType set1[], _setPartType set2[]) {	\
+    int i;								\
+    for (i = TYPE ## setSize - 1; i>=0; i--) {				\
+      set1[i] = set2[i];						\
+    }									\
+  }
+
+// ===================================================================
+// Set operations for sets of ids
+
+#ifdef _idsetSize
+_DEF_setIsEmpty(_id)
+_DEF_setClear(_id)
+_DEF_setInit(_id)
+_DEF_setAdd(_id)
+_DEF_setDel(_id)
+_DEF_setAddSet(_id)
+_DEF_setDelSet(_id)
+_DEF_setContains(_id)
+_DEF_setNotOnlyElem0(_id)
+_DEF_setIsDisjoint(_id)
+_DEF_setCopyFrom(_id)
+
+#else
+#define _idIsEmpty(set)              _setIsEmpty(set)
+#define _idClear(set)                _setClear(set)
+#define _idInit(set, i)              _setInit(set, i)
+#define _idAdd(set, i)               _setAdd(set, i)
+#define _idDel(set, i)               _setDel(set, i)
+#define _idAddSet(set1, set2)        _setAddSet(set1, set2)
+#define _idDelSet(set1, set2)        _setDelSet(set1, set2)
+#define _idContains(set, i)          _setContains(set, i)
+#define _idNotOnlyElem0(set)         _setNotOnlyElem0(set)
+#define _idIsDisjoint(set1, set2)    _setIsDisjoint(set1, set2)
+#define _idCopyFrom(set1, set2)      _setCopyFrom(set1, set2)
+#endif
+
+#define _id2str(set)                 _set2str(_setstr, _SC_ID_MAX, (void *) &set)
+#define _id2str2(set)                _set2str(_setstr2, _SC_ID_MAX, (void *) &set)
+
+
+
 
 // ===================================================================
 // Keeping track of the thread status
 
-//! Thread enabling/disabling //bitwise OR
+//! Thread enabling/disabling
 #define enable(id) 				\
-  enabled |= u2b(id);				\
-  active  |= u2b(id)
+  _idAdd(enabled, id);				\
+  _idAdd(active, id)
 
 #define enableInit(id) 				\
-  enabled = u2b(id);				\
-  active  = enabled
+  _idInit(enabled, id);				\
+  _idCopyFrom(active, enabled)
 
-#define disable(id)             enabled &= ~u2b(id)
-#define disableSet(idset)       enabled &= ~idset
-#define isEnabled(id)           (enabled & u2b(id))
-#define isEnabledNotOnly(id)    (enabled != u2b(id))
-#define isEnabledNoneOf(idset)  ((enabled & idset) == 0)
-#define isEnabledAnyOf(idset)   ((enabled & idset) != 0)
+#define disable(id)             _idDel(enabled, id)
+#define disableSet(idset)       _idDelSet(enabled, idset)
+#define isEnabled(id)           _idContains(enabled, id)
+#define isEnabledNoneOf(idset)  _idIsDisjoint(enabled, idset)
+#define isEnabledAnyOf(idset)   (!_idIsDisjoint(enabled, idset))
 
 //! Thread (de-)activation
-#define activate(id)            active |= u2b(id)
-#define deactivate(id)          active &= ~u2b(id)
-#define deactivateSet(idset)    active  &= ~idset
-#define isActive(id)            (active & u2b(id))
+#define activate(id)            _idAdd(active, id)
+#define deactivate(id)          _idDel(active, id)
+#define deactivateSet(idset)    _idDelSet(active , idset)
+#define isActive(id)            _idContains(active, id)
 
 
 // ===================================================================
 // Tick start and end
 
 #define _TickEnd 0                    // Priority of TickEnd thread
+#define isEnabledNotOnly_TickEnd()  _idNotOnlyElem0(enabled)
 
 //! Reset automaton. Should be called before first call of tick function.
 
 #define RESET()	do {					\
-    trace0t("RESET:", "reset automaton\n")		\
     _notInitial = 0;					\
     tickCnt = 0;					\
   } while (0)
 
+  //trace0t("RESET:", "reset automaton\n")		\
+  
 //! Start a tick (an instant). 'p' denotes the main thread.
 /*! IF this is the initial tick ('_notInitial' is not set),
  *   THEN initialize things and continue with following instruction,
@@ -297,13 +589,12 @@ void selectCid();
 #ifdef _SC_INLINE_DISPATCH
 #define dispatch_ dispatch()
 #define mergedDispatch
-
 #else                             // Shared dispatch
 #define dispatch_ goto _L_DISPATCH
 #define mergedDispatch							\
-  _L_TERM:   disable(_cid);						\
-_L_PAUSEG:   deactivate(_cid);						\
-_L_DISPATCH: dispatch();
+  _L_TERM: disable(_cid);						\
+  _L_PAUSEG: deactivate(_cid);						\
+  _L_DISPATCH: dispatch();
 
 #endif
 
@@ -346,7 +637,6 @@ _L_DISPATCH: dispatch();
  */
  #define PAUSE								\
    do {									\
-     trace1t("PAUSE:", "pauses, active = 0%o\n", active)			\
      PAUSEG_(__LABEL__); _case __LABEL__: (void) 0;			\
    } while (0)
 
@@ -354,7 +644,6 @@ _L_DISPATCH: dispatch();
 /*! Pause a thread, resume at 'label'.
  */
  #define PAUSEG(label) do {						\
-     trace1t("PAUSEG:", "pauses, active = 0%o\n", active)		\
      PAUSEG_(label);							\
    } while (0)
 
@@ -370,6 +659,8 @@ _L_DISPATCH: dispatch();
     setPC(_cid, label);							\
     goto _L_PAUSEG
 #endif
+
+
 
 
 //! Shorthand for 'label: PAUSE; GOTO(label)'.
@@ -579,16 +870,16 @@ _L_DISPATCH: dispatch();
 //   } while (0)
 
 //! Check whether PRIO tries to acquire priority that is already in use
-#ifdef _SC_SUPPRESS_ERROR_DETECT
-#define _SC_ERROR_DETECT_PRIO(p)
-#else
-#define _SC_ERROR_DETECT_PRIO(p)					\
-  if (isEnabled(p)) {							\
-    _SC_ERROR1(_SC_ERROR_PRIORITY,					\
-	       "SC ERROR (Priority Uniqueness): Priority %d already in use!\n", \
-	       p)							\
-  }
-#endif
+// #ifdef _SC_SUPPRESS_ERROR_DETECT
+// #define _SC_ERROR_DETECT_PRIO(p)
+// #else
+// #define _SC_ERROR_DETECT_PRIO(p)					\
+//   if (isEnabled(p)) {							\
+//     _SC_ERROR1(_SC_ERROR_PRIORITY,					\
+// 	       "SC ERROR (Priority Uniqueness): Priority %d already in use!\n", \
+// 	       p)							\
+//   }
+// #endif
 
 
 //! Helper function (if/else-unsafe) to change priority of a thread, from '_cid' to 'p'
@@ -724,22 +1015,22 @@ _L_DISPATCH: dispatch();
 
 
 //! Check whether an emitted signal has already been checked for presence
-#ifdef _SC_SUPPRESS_ERROR_DETECT
-#define _checkTickInit
-#define _checkPRESENT(s)
-#define _checkPRESENTc(s)
-#define _checkEMIT(s)
-#else
-#define _checkTickInit      _presence_tested = 0;
-#define _checkPRESENT(s)    _presence_tested |= u2b(s);
-#define _checkPRESENTc(s)   _presence_tested |= u2b(s),
-#define _checkEMIT(s)							\
-  if (_presence_tested & u2b(s)) {					\
-  _SC_ERROR2(_SC_ERROR_CAUSALITY,					\
-	     "SC ERROR (Causality): Signal %s/%d emitted after test for presence!\n",\
-	     s2signame[s], s)						\
-  }
-#endif
+// #ifdef _SC_SUPPRESS_ERROR_DETECT
+// #define _checkTickInit
+// #define _checkPRESENT(s)
+// #define _checkPRESENTc(s)
+// #define _checkEMIT(s)
+// #else
+// #define _checkTickInit      _presence_tested = 0;
+// #define _checkPRESENT(s)    _presence_tested |= u2b(s);
+// #define _checkPRESENTc(s)   _presence_tested |= u2b(s),
+// #define _checkEMIT(s)							\
+//   if (_presence_tested & u2b(s)) {					\
+//   _SC_ERROR2(_SC_ERROR_CAUSALITY,					\
+// 	     "SC ERROR (Causality): Signal %s/%d emitted after test for presence!\n",\
+// 	     s2signame[s], s)						\
+//   }
+// #endif
 
 //! Emission of a pure signal 's'
 // #define EMIT(s) do {					        	\
@@ -845,19 +1136,19 @@ _L_DISPATCH: dispatch();
 // The following is compiled conditionally depending on _SC_valSigInt_SIZE.
 // <application>.c must define _SC_valSigInt_SIZE if valued signals are used.
 
-#ifdef _SC_valSigInt_SIZE
-//! At beginning of initial tick:
-//! Initialize valued signals (-1 is for "undefined").
-#define _declindex static int _i;
-
-#define _setValInit						        \
-  for (_i = 0; _i < _SC_valSigInt_SIZE; _i++) 		                \
-    valSigInt[_i] = -1;
-
-#else     // #ifdef _SC_valSigInt_SIZE
-#define _declindex
-#define _setValInit
-#endif
+// #ifdef _SC_valSigInt_SIZE
+// //! At beginning of initial tick:
+// //! Initialize valued signals (-1 is for "undefined").
+// #define _declindex static int _i;
+// 
+// #define _setValInit						        \
+//   for (_i = 0; _i < _SC_valSigInt_SIZE; _i++) 		                \
+//     valSigInt[_i] = -1;
+// 
+// #else     // #ifdef _SC_valSigInt_SIZE
+// #define _declindex
+// #define _setValInit
+// #endif
 
 //! Emission of a valued signal 's', type integer.
 // #define EMITINT(s, val) do {						\
@@ -1112,51 +1403,51 @@ signalvector sigsFreeze; */ //!< Signals that are frozen, due to suspension
 
 /*! Decrement is needed in some places to avoid duplicate counting.
  */
-#ifdef _SC_NOTRACE
-  #define instrCntIncr tickInstrCnt++;
-  #define instrCntIncrc tickInstrCnt++,
-  #define instrCntDecr tickInstrCnt--;
-#else
-  #define instrCntIncr
-  #define instrCntIncrc
-  #define instrCntDecr
-#endif
+// #ifdef _SC_NOTRACE
+//   #define instrCntIncr tickInstrCnt++;
+//   #define instrCntIncrc tickInstrCnt++,
+//   #define instrCntDecr tickInstrCnt--;
+// #else
+//   #define instrCntIncr
+//   #define instrCntIncrc
+//   #define instrCntDecr
+// #endif
 
 
-//! If tracing is turned on, print trace string.
-#ifdef _SC_NOTRACE
-  #define trace0(f)
-  #define trace1(f, a)
-  #define trace2(f, a, b)
-  #define trace3(f, a, b, c)
-  #define trace4(f, a, b, c, d)
-  #define trace5(f, a, b, c, d, e)
-  #define trace6(f, a, b, c, d, e, g)
-  #define trace7(f, a, b, c, d, e, g, h)
-  #define trace8(f, a, b, c, d, e, g, h, i)
-  #define trace0c(f)
-  #define trace1c(f, a)
-  #define trace2c(f, a, b)
-  #define trace3c(f, a, b, c)
-  #define elsetrace
-  #define elsetraceend
-#else
-  #define trace0(f)                printf(f);
-  #define trace1(f, a)             printf(f, a);
-  #define trace2(f, a, b)          printf(f, a, b);
-  #define trace3(f, a, b, c)       printf(f, a, b, c);
-  #define trace4(f, a, b, c, d)    printf(f, a, b, c, d);
-  #define trace5(f, a, b, c, d, e) printf(f, a, b, c, d, e);
-  #define trace6(f, a, b, c, d, e, g) printf(f, a, b, c, d, e, g);
-  #define trace7(f, a, b, c, d, e, g, h) printf(f, a, b, c, d, e, g, h);
-  #define trace8(f, a, b, c, d, e, g, h, i) printf(f, a, b, c, d, e, g, h, i);
-  #define trace0c(f)                printf(f),
-  #define trace1c(f, a)             printf(f, a),
-  #define trace2c(f, a, b)          printf(f, a, b),
-  #define trace3c(f, a, b, c)       printf(f, a, b, c),
-  #define elsetrace else {
-  #define elsetraceend }
-#endif
+// //! If tracing is turned on, print trace string.
+// #ifdef _SC_NOTRACE
+//   #define trace0(f)
+//   #define trace1(f, a)
+//   #define trace2(f, a, b)
+//   #define trace3(f, a, b, c)
+//   #define trace4(f, a, b, c, d)
+//   #define trace5(f, a, b, c, d, e)
+//   #define trace6(f, a, b, c, d, e, g)
+//   #define trace7(f, a, b, c, d, e, g, h)
+//   #define trace8(f, a, b, c, d, e, g, h, i)
+//   #define trace0c(f)
+//   #define trace1c(f, a)
+//   #define trace2c(f, a, b)
+//   #define trace3c(f, a, b, c)
+//   #define elsetrace
+//   #define elsetraceend
+// #else
+//   #define trace0(f)                printf(f);
+//   #define trace1(f, a)             printf(f, a);
+//   #define trace2(f, a, b)          printf(f, a, b);
+//   #define trace3(f, a, b, c)       printf(f, a, b, c);
+//   #define trace4(f, a, b, c, d)    printf(f, a, b, c, d);
+//   #define trace5(f, a, b, c, d, e) printf(f, a, b, c, d, e);
+//   #define trace6(f, a, b, c, d, e, g) printf(f, a, b, c, d, e, g);
+//   #define trace7(f, a, b, c, d, e, g, h) printf(f, a, b, c, d, e, g, h);
+//   #define trace8(f, a, b, c, d, e, g, h, i) printf(f, a, b, c, d, e, g, h, i);
+//   #define trace0c(f)                printf(f),
+//   #define trace1c(f, a)             printf(f, a),
+//   #define trace2c(f, a, b)          printf(f, a, b),
+//   #define trace3c(f, a, b, c)       printf(f, a, b, c),
+//   #define elsetrace else {
+//   #define elsetraceend }
+// #endif
 
 
 //! Count instruction (optionally), print trace string prefix (optionally).
@@ -1164,15 +1455,15 @@ signalvector sigsFreeze; */ //!< Signals that are frozen, due to suspension
 /*! Trace string prefix takes a string s (typically denoting the instruction)
  * and identifies the executing thread, both by name and thread id.
  */
-#define traceThread(s)							\
-  instrCntIncr								\
-  trace3("%-9s %d/%s ", s, _cid, state[_cid])
+// #define traceThread(s)							\
+//   instrCntIncr								\
+//   trace3("%-9s %d/%s ", s, _cid, state[_cid])
 
 //  trace3("%-9s %d/%s ", s, _cid, state[_cid])
 
-#define traceThreadc(s)							\
-  instrCntIncrc								\
-  trace3c("%-9s %d/%s ", s, _cid, state[_cid])
+// #define traceThreadc(s)							\
+//   instrCntIncrc								\
+//   trace3c("%-9s %d/%s ", s, _cid, state[_cid])
 
 
 //! Print trace prefix + suffix
@@ -1181,31 +1472,33 @@ signalvector sigsFreeze; */ //!< Signals that are frozen, due to suspension
  * f is format string for trace suffix
  * a, b, ... are arguments for format string
  */
-#define trace0t(s, f)             traceThread(s) trace0(f)
-#define trace1t(s, f, a)          traceThread(s) trace1(f, a)
-#define trace2t(s, f, a, b)       traceThread(s) trace2(f, a, b)
-#define trace3t(s, f, a, b, c)    traceThread(s) trace3(f, a, b, c)
-#define trace4t(s, f, a, b, c, d) traceThread(s) trace4(f, a, b, c, d)
-#define trace5t(s, f, a, b, c, d, e) traceThread(s) trace5(f, a, b, c, d, e)
-#define trace6t(s, f, a, b, c, d, e, f1) traceThread(s) trace6(f, a, b, c, d, e, f1)
-#define trace7t(s, f, a, b, c, d, e, f1, g) traceThread(s) trace7(f, a, b, c, d, e, f1, g)
-#define trace8t(s, f, a, b, c, d, e, f1, g, h) traceThread(s) trace7(f, a, b, c, d, e, f1, g, h)
-
-
-// Variants with trailig comma insted of semicolon:
-#define trace0tc(s, f)             traceThreadc(s) trace0c(f)
-#define trace1tc(s, f, a)          traceThreadc(s) trace1c(f, a)
-#define trace2tc(s, f, a, b)       traceThreadc(s) trace2c(f, a, b)
-#define trace3tc(s, f, a, b, c)    traceThreadc(s) trace3c(f, a, b, c)
+// #define trace0t(s, f)             traceThread(s) trace0(f)
+// #define trace1t(s, f, a)          traceThread(s) trace1(f, a)
+// #define trace2t(s, f, a, b)       traceThread(s) trace2(f, a, b)
+// #define trace3t(s, f, a, b, c)    traceThread(s) trace3(f, a, b, c)
+// #define trace4t(s, f, a, b, c, d) traceThread(s) trace4(f, a, b, c, d)
+// #define trace5t(s, f, a, b, c, d, e) traceThread(s) trace5(f, a, b, c, d, e)
+// #define trace6t(s, f, a, b, c, d, e, f1) traceThread(s) trace6(f, a, b, c, d, e, f1)
+// #define trace7t(s, f, a, b, c, d, e, f1, g) traceThread(s) trace7(f, a, b, c, d, e, f1, g)
+// #define trace8t(s, f, a, b, c, d, e, f1, g, h) traceThread(s) trace7(f, a, b, c, d, e, f1, g, h)
+// 
+// 
+// // Variants with trailig comma insted of semicolon:
+// #define trace0tc(s, f)             traceThreadc(s) trace0c(f)
+// #define trace1tc(s, f, a)          traceThreadc(s) trace1c(f, a)
+// #define trace2tc(s, f, a, b)       traceThreadc(s) trace2c(f, a, b)
+// #define trace3tc(s, f, a, b, c)    traceThreadc(s) trace3c(f, a, b, c)
 
 
 // ===================================================================
 // Error handling
 
-#define _SC_ERROR_NONE         0
-#define _SC_ERROR_NORESET      1
-#define _SC_ERROR_PRIORITY     2
-#define _SC_ERROR_CAUSALITY    3
+#define _SC_ERROR_NONE             0
+#define _SC_ERROR_NORESET          1
+#define _SC_ERROR_PRIORITY_IN_USE  2 
+//#define _SC_ERROR_CAUSALITY    3
+#define _SC_ERROR_PRIORITY_RANGE   3
+#define _SC_ERROR_NONE_ACTIVE      5
 
 //! Exit on errors
 /*! code: error code
@@ -1217,5 +1510,5 @@ signalvector sigsFreeze; */ //!< Signals that are frozen, due to suspension
 #define _SC_ERROR0(code, f)          fprintf(stderr, f); exit(code);
 #define _SC_ERROR1(code, f, a)       fprintf(stderr, f, a); exit(code);
 #define _SC_ERROR2(code, f, a, b)    fprintf(stderr, f, a, b); exit(code);
-#define _SC_ERROR3(code, f, a, b, c) fprintf(stderr, f, a, b, c); exit(code);
+//#define _SC_ERROR3(code, f, a, b, c) fprintf(stderr, f, a, b, c); exit(code);
 #endif

@@ -36,8 +36,6 @@ class SCLPSimulationSCChart {
        «readInputs(scchart, bufferSize)»
 
        «writeOutputs(scchart)»
-
-       «selectCid()»
  
 	   «/* Generate the main function */»
 	   «mainFunction(scchart)»
@@ -66,11 +64,16 @@ class SCLPSimulationSCChart {
 	#include <string.h>
 	#include <stdlib.h>
 	#include <stdio.h>
-	#include "sc.h"
+	//#include "sc.h"
 
 	#include "cJSON.c"
 	
 	#include "scchart.c"
+	
+	#define RESET()    do {                    \
+	  _notInitial = 0;                    \
+	  tickCnt = 0;                    \
+	  } while (0)
 
 	cJSON* output = 0;
 	''' 
@@ -161,16 +164,16 @@ int main(int argc, const char* argv[]) {
  * See eg http://graphics.stanford.edu/~seander/bithacks.html#IntegerLog .
  * Which is actually faster depends on application.
  */
- def selectCid(){
-  '''
-    void selectCid() {
-      int act;
-      _cid = 0;
-      for (act = active; act > 1; act >>= 1) //shift right
-        _cid++;
-    }
-  '''
- }
+// def selectCid(){
+//  '''
+//    void selectCid() {
+//      int act;
+//      _cid = 0;
+//      for (act = active; act > 1; act >>= 1) //shift right
+//        _cid++;
+//    }
+//  '''
+// }
 
  // ===================================================================
    

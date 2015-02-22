@@ -1,0 +1,32 @@
+! reset;
+% Output: OpenDoorMotorOn;
+DoorIsOpen % Output: OpenDoorMotorOff StartTimer;
+TimerExpired % Output: CloseDoorMotorOn;
+DoorIsClosed % Output: StartOK CloseDoorMotorOff;
+Stop % Output:;
+CabinStopped % Output: OpenDoorMotorOn;
+
+! reset;
+% Output: OpenDoorMotorOn;
+DoorIsOpen % Output: OpenDoorMotorOff StartTimer;
+DoorClose % Output: CloseDoorMotorOn;
+DoorIsClosed % Output: StartOK CloseDoorMotorOff;
+Stop % Output:;
+CabinStopped % Output: OpenDoorMotorOn;
+
+! reset;
+% Output: OpenDoorMotorOn;
+DoorIsOpen % Output: OpenDoorMotorOff StartTimer;
+DoorClose DoorOpen % Output: CloseDoorMotorOff OpenDoorMotorOn;
+
+! reset;
+% Output: OpenDoorMotorOn;
+DoorIsOpen % Output: OpenDoorMotorOff StartTimer;
+DoorClose % Output: CloseDoorMotorOn;
+DoorIsClosed DoorSensor % Output: CloseDoorMotorOff OpenDoorMotorOn;
+
+! reset;
+% Output: OpenDoorMotorOn;
+DoorIsOpen % Output: OpenDoorMotorOff StartTimer;
+DoorClose DoorOpen % Output: CloseDoorMotorOff OpenDoorMotorOn;
+DoorIsOpen DoorSensor % Output: OpenDoorMotorOff StartTimer;

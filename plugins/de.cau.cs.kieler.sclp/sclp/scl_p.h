@@ -23,7 +23,6 @@ extern int _i;
 // Begin a tick
 #define tickstart(p)			\
   _declState				\
-  _checkTickInit			\
   _signals2vars				\
   if (_notInitial) {			\
     _SC_ERROR_DETECT_NORESET		\
@@ -44,20 +43,19 @@ extern int _i;
   mergedDispatch		        \
   _case _L_TICKEND:			\
   _vars2signals				\
-  return isEnabledNotOnly(_TickEnd);
+  return isEnabledNotOnly_TickEnd();
 
 // Fork off sibling threads
 #define fork1(label, p)			\
-  initPC(p, label); enable(p);          \
-  trace3t("FORK_N:", "forks %d/%s, active = 0%d\n", p, #label, active);
+  initPC(p, label); enable(p);          
 
 //#define fork2(label1, p1, label2, p2)	\
 //  initPC(p1, label1); enable(p1);	\
 //  initPC(p2, label2); enable(p2);
 
-#define fork2(label1, p1, label2, p2)   \
-  fork1(label1, p1);                    \
-  fork1(label2, p2);
+// #define fork2(label1, p1, label2, p2)   \
+//   fork1(label1, p1);                    \
+//   fork1(label2, p2);
 
 //#define fork3(label1, p1, label2, p2)	\
 //  initPC(p1, label1); enable(p1);	\
@@ -69,26 +67,24 @@ extern int _i;
 // Eg, if we join just one sibling thread with a fixed priority, we must use join1;
 // if that sibling has 2 possible priority, must use join2, etc.
 #define join1(sib1)	\
-    trace0t("JOIN:", isEnabledAnyOf(u2b(sib1)) ? "waits\n" : "joins\n") \
   __LABEL__: if (isEnabled(sib1)) {	\
-    PAUSEG_(__LABEL__); 0
-
-#define join2(sib1, sib2)					\
-    trace0t("JOIN:", (isEnabledAnyOf(((u2b(sib1)) | (u2b(sib2))))) ? "waits\n" : "joins\n") \
-    __LABEL__: if (isEnabledAnyOf(((u2b(sib1)) | (u2b(sib2))))) {	\
-    PAUSEG_(__LABEL__); }                                          
-
-#define join3(sib1, sib2, sib3)						\
-  __LABEL__: if (isEnabledAnyOf(u2b(sib1) | u2b(sib2) | u2b(sib3))) {	\
     PAUSEG_(__LABEL__); }
 
-#define join4(sib1, sib2, sib3, sib4)					\
-  __LABEL__: if (isEnabledAnyOf(u2b(sib1) | u2b(sib2) | u2b(sib3) | u2b(sib4))) { \
-    PAUSEG_(__LABEL__); }
+// #define join2(sib1, sib2)					\
+//     trace0t("JOIN:", (isEnabledAnyOf(((u2b(sib1)) | (u2b(sib2))))) ? "waits\n" : "joins\n") \
+//     __LABEL__: if (isEnabledAnyOf(((u2b(sib1)) | (u2b(sib2))))) {	\
+//     PAUSEG_(__LABEL__); }                                          
+// 
+// #define join3(sib1, sib2, sib3)						\
+//   __LABEL__: if (isEnabledAnyOf(u2b(sib1) | u2b(sib2) | u2b(sib3))) {	\
+//     PAUSEG_(__LABEL__); }
+// 
+// #define join4(sib1, sib2, sib3, sib4)					\
+//   __LABEL__: if (isEnabledAnyOf(u2b(sib1) | u2b(sib2) | u2b(sib3) | u2b(sib4))) { \
+//     PAUSEG_(__LABEL__); }
 
 // Terminate the thread leading up to "par"
 #define par 								\
-  trace1t("TERM:", "terminates, enabled = 0%d\n", enabled & ~u2b(_cid))	\
   TERM_;
 
 // pause reuses PAUSE from sc
@@ -98,7 +94,6 @@ extern int _i;
 #define prio(p)								\
   if (p != _cid) {							\
     _SC_ERROR_DETECT_PRIO(p);						\
-    trace1t("PRIO:", "set to priority %d\n",p );			\
     deactivate(_cid);							\
     disable(_cid);							\
     _cid = p;								\

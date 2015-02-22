@@ -1,0 +1,65 @@
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+I3 I4 I1 I2 
+% Output: O1 
+;
+
+% Output: 
+;
+
+% Output: 
+;
+! reset;
+
+% Output: 
+;
+I3 I4 I1 I2 
+% Output: O1 
+;
+
+% Output: 
+;
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
+I3 I2 
+% Output: O2 
+;
+
+% Output: 
+;
+! reset;
+
+% Output: 
+;
+
+% Output: 
+;
+I3 I2 
+% Output: O2 
+;
+
+% Output: 
+;
+! reset;
+
+% Output: 
+;
+I3 I2 
+% Output: O3 
+;
+
+% Output: 
+;

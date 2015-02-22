@@ -10,6 +10,9 @@ import de.cau.cs.kieler.scgprios.priorities.CalcNodePrios
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scgprios.optimizations.OptimizeNodePriorities
+import de.cau.cs.kieler.scgprios.priorities.Scheduling
+import de.cau.cs.kieler.scgprios.results.ResultingSCCPartitions
+import de.cau.cs.kieler.scgprios.results.NodePriorityResult
 
 /**
  * @author cbu
@@ -18,22 +21,29 @@ import de.cau.cs.kieler.scgprios.optimizations.OptimizeNodePriorities
 class OptimizedNodePriortiesTransformation extends Transformation{
     
     override transform(EObject eObject, KielerCompilerContext context) {
-        //var scgraph_P = transformSCGToSCG_P(eObject as SCGraph)
-        return transformSCGDEPToSCGOPTNODEPRIO(eObject as SCGraph)
+        return transformSCGDEPToSCGOPTNODEPRIO(eObject as SCGraph, context)
     }
     
-    public def SCGraph transformSCGDEPToSCGOPTNODEPRIO(SCGraph graph) {
-        var nodes = graph.nodes
-        var sccCalc = new SCC
-        var sccs = sccCalc.findSCC(nodes)
-        var calcNodePrios = new CalcNodePrios 
-        var nodePrios = calcNodePrios.calculateNodePriorities(sccs, nodes)
-        var calcOptNodePrios = new OptimizeNodePriorities
-        var optNodePrios = calcOptNodePrios.optimizeNodePriorities(nodePrios, sccs)
+    public def SCGraph transformSCGDEPToSCGOPTNODEPRIO(SCGraph graph, KielerCompilerContext context) {
         
-        for (n : nodes){
-            n.nodePriority = optNodePrios.get(n)
+        // get previous results
+        var sccsRes = context.compilationResult.ancillaryData.filter[it instanceof ResultingSCCPartitions]
+        var nodePriosRes = context.compilationResult.ancillaryData.filter[it instanceof NodePriorityResult]
+        
+        // if previous results exist, optimize node priorities
+        if (!sccsRes.empty || !nodePriosRes.empty){
+            
+            var sccs = (sccsRes.head as ResultingSCCPartitions).SCCPartitions
+            var nodePrios = (nodePriosRes.head as NodePriorityResult).priorityMap
+            
+            // optimize node priorities
+            var calcOptNodePrios = new OptimizeNodePriorities
+            var optNodePrios = calcOptNodePrios.optimizeNodePriorities(nodePrios, sccs)
+            
+            nodePrios = optNodePrios
+            
         }
+       
         graph
     }
 }

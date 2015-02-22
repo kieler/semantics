@@ -45,9 +45,10 @@ class CalcTSIDsII {
             if (!(node instanceof Join)){
                 System.out.println("unknown node and not join")
                 var newNodesOfPath = <Node> newLinkedList
-//                if (node instanceof Exit){
-//                    tsIDs.put(node,i)
-//                }
+                if (node instanceof Exit){
+                    System.out.println("node type of exit")
+                    tsIDs.put(node,i)
+                }
                 if (node instanceof Entry){
                     System.out.println("Node of type entry")
                     tsIDs.put(node,i)
@@ -67,11 +68,12 @@ class CalcTSIDsII {
                     var entrynodes = sortEntryNodes(children, nodePriorities)
                     var firstentry = entrynodes.head
                     entrynodes.remove(firstentry)
-                    var path = numberThreadSegments(firstentry, i, nodePriorities, nodesOfPath)
+                    var emptyPath = <Node> newLinkedList
+                    var path = numberThreadSegments(firstentry, i, nodePriorities, emptyPath)
                     newNodesOfPath.addAll(path)
                     for (e : entrynodes){
                         nextTSID = nextTSID - 1;
-                        path = numberThreadSegments(e, (nextTSID+1), nodePriorities, nodesOfPath)             
+                        path = numberThreadSegments(e, (nextTSID+1), nodePriorities, emptyPath)             
                         //newNodesOfPath.addAll(path)
                     }
                     tsIDs.put((node as Fork).join,tsIDs.get(((entrynodes.last) as Entry).exit))
@@ -86,11 +88,14 @@ class CalcTSIDsII {
                     }
                     
                } for (n : newNodesOfPath){
-//                    if (!nodesOfPath.contains(n)){
+                    if (!nodesOfPath.contains(n)){
                     nodesOfPath.add(n)
-//                    }
+                    }
                 }
                 
+            }
+            else {
+                System.out.println("Node of type join")
             }
         }
         nodesOfPath

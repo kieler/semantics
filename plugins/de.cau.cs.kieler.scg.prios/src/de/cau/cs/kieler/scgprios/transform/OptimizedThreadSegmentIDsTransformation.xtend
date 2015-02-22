@@ -7,13 +7,12 @@ import de.cau.cs.kieler.scg.SCGraph
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kico.Transformation
-import de.cau.cs.kieler.scgprios.priorities.SCC
-import de.cau.cs.kieler.scgprios.priorities.CalcNodePrios
-import de.cau.cs.kieler.scgprios.optimizations.OptimizeNodePriorities
-import de.cau.cs.kieler.scgprios.priorities.CalcTSIDs
 import de.cau.cs.kieler.scgprios.priorities.CalcPrioIDs
-import de.cau.cs.kieler.scgprios.optimizations.OptimizeTSIDs
 import de.cau.cs.kieler.scgprios.priorities.CalcTSIDsII
+import de.cau.cs.kieler.scgprios.results.ResultingSCCPartitions
+import de.cau.cs.kieler.scgprios.results.NodePriorityResult
+import de.cau.cs.kieler.scgprios.results.ThreadSegmentIDResult
+import de.cau.cs.kieler.scgprios.results.PrioIDResult
 
 /**
  * @author cbu
@@ -21,39 +20,40 @@ import de.cau.cs.kieler.scgprios.priorities.CalcTSIDsII
  */
 class OptimizedThreadSegmentIDsTransformation extends Transformation{
     override transform(EObject eObject, KielerCompilerContext context) {
-        //var scgraph_P = transformSCGToSCG_P(eObject as SCGraph)
-        return transformSCGDEPToSCGOPTTSIDs(eObject as SCGraph)
+        return transformSCGDEPToSCGOPTTSIDs(eObject as SCGraph, context)
     }
     
-    public def SCGraph transformSCGDEPToSCGOPTTSIDs(SCGraph graph) {
-        var nodes = graph.nodes
-        var sccCalc = new SCC
-        var sccs = sccCalc.findSCC(nodes)
-        var calcNodePrios = new CalcNodePrios 
-        var nodePrios = calcNodePrios.calculateNodePriorities(sccs, nodes)
-        var calcOptNodePrios = new OptimizeNodePriorities
-        var optNodePrios = calcOptNodePrios.optimizeNodePriorities(nodePrios, sccs)
+    public def SCGraph transformSCGDEPToSCGOPTTSIDs(SCGraph graph, KielerCompilerContext context) {
         
-        for (n : nodes){
-            n.nodePriority = optNodePrios.get(n)
+        // get previous results
+        var sccsRes = context.compilationResult.ancillaryData.filter[it instanceof ResultingSCCPartitions]
+        var nodePriosRes = context.compilationResult.ancillaryData.filter[it instanceof NodePriorityResult]
+        
+        // if previous results exist, optimize node priorities
+        if (!nodePriosRes.empty){
+            
+            var nodes = graph.nodes
+            var sccs = (sccsRes.head as ResultingSCCPartitions).SCCPartitions
+            var nodePrios = (nodePriosRes.head as NodePriorityResult).priorityMap
+            
+            // calculate ThreadSegmentIDs
+            var calcTSIDs = new CalcTSIDsII
+            var optTsids = calcTSIDs.calculateTSIDs(nodes, nodePrios, sccs)
+            var threadSegmentIDResult = new ThreadSegmentIDResult()
+            threadSegmentIDResult.priorityMap = optTsids
+            context.compilationResult.ancillaryData += threadSegmentIDResult
+            
+            // calculate PrioIDs (without optimization)
+            // this should help the user to understand how the threadSegmentIDs 
+            // are calculated
+            var calcPrioIDs = new CalcPrioIDs
+            var prioIDs = calcPrioIDs.calcPrioIDs(nodePrios, optTsids)
+            var prioIDResult = new PrioIDResult()
+            prioIDResult.priorityMap = prioIDs
+            context.compilationResult.ancillaryData += prioIDResult
+            
         }
-        
-        var calcTSIDs = new CalcTSIDsII
-        //var optimizeTSIDs = new OptimizeTSIDs
-        //var tsids = calcTSIDs.calcTSIDs(nodePrios,sccs)
-        var optTsids = calcTSIDs.calculateTSIDs(nodes, nodePrios, sccs)
-        
-        for (n : nodes){
-            n.tsID = optTsids.get(n)
-        }
-        
-        var calcPrioIDs = new CalcPrioIDs
-        var results2 = calcPrioIDs.calcPrioIDs(optNodePrios, optTsids)
-        
-        for (n : nodes){
-            n.prioID = results2.get(n).intValue
-        }
-        
+   
         graph
     }
 }
