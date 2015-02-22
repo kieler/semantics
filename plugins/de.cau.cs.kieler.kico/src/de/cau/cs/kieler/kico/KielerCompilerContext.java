@@ -492,6 +492,12 @@ public class KielerCompilerContext {
                     TransformationDummy otherTransformationDummy =
                             transformation2graph.get(otherTransformationOrGroup);
 
+                    if (preselectAlternatives) {
+                        // If this is an alternative group, then ONLY add the SELECTED alternative
+                        // according to the prioritizedTransformationIDs (input)
+                        break;
+                    }
+
                     HashSet<TransformationDummy> otherResolvedTransformationDummys = resolveTransformationGroup(otherTransformationDummy);
                     for (TransformationDummy otherResolvedTransformationDummy : otherResolvedTransformationDummys) {
                         // Example: dummy=ABORT not handles otherDummy=DURING ==> otherDummy=DURING-->dummy=ABORT

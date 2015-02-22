@@ -120,7 +120,7 @@ public class SCChartsModelFileHandler extends AbstractConvertModelHandler {
                         }
                     }// input
                 }// declaration
-                builder.append("\n% Output: ;\n");
+                builder.append("\n% Output: \n;\n");
 
             }// tick
         }
