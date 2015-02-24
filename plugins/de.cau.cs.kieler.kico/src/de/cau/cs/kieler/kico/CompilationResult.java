@@ -282,7 +282,7 @@ public class CompilationResult {
             allWarnings += exception.getStackTraceString();
 
             KiCoPlugin.getInstance().showWarning(
-                    "An warning occurred while calling transformation with the ID '"
+                    "A warning occurred while calling transformation with the ID '"
                             + transformationID + "'.", KiCoPlugin.PLUGIN_ID, exception, true);
         }
     }
