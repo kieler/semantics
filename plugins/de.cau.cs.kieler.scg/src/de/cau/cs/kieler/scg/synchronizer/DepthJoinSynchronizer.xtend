@@ -149,7 +149,10 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
     
     override protected build(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
         // Create a new SynchronizerData class which holds the data to return.
-        var data = new SynchronizerData() => [ setJoin(join) ]
+        var data = new SynchronizerData() => [ 
+            setJoin(join)
+            setGuard(guard)
+        ]
         
         // Since we are working we completely enriched SCGs, we can use the SCG extensions 
         // to retrieve the scheduling block of the join node in question.
