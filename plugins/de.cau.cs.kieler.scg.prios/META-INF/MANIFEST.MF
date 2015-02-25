@@ -7,12 +7,9 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.cau.cs.kieler.scgprios,
- de.cau.cs.kieler.scgprios.impl,
- de.cau.cs.kieler.scgprios.priorities,
+Export-Package: de.cau.cs.kieler.scgprios.priorities,
  de.cau.cs.kieler.scgprios.results,
- de.cau.cs.kieler.scgprios.transform,
- de.cau.cs.kieler.scgprios.util
+ de.cau.cs.kieler.scgprios.transform
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  de.cau.cs.kieler.core.annotations;visibility:=reexport,

@@ -276,7 +276,7 @@ int tick();
 // #define selectCid_()   selectCid()
 // #endif
 // 
-#define dispatch()       printf("dispatch");selectCid();_goto(_deref(_pc[_cid]))
+#define dispatch()       selectCid();_goto(_deref(_pc[_cid]))
 
 
 
@@ -293,19 +293,15 @@ int tick();
   _BitScanReverse((active), _cid); }
 #else
 # define selectCid() {				\
-    printf("selectCid");			\
     int _j;					\
-    for (_j = _threadVectorSize - 1; ; _j--) {		\
-      printf(" _j = %d ",_j);			\
+    for (_j = _threadVectorSize - 1; ; _j--) {	\
       _SC_ERROR_DETECT_NONE_ACTIVE		\
       _setPartType _setPart;			\
       _setPart = (active[_j]);			\
-      printf(" _setPart = %d ",_setPart);			\
       if (_setPart) {				\
 	_BitScanReverse(_setPart, _cid);	\
 	break;					\
       }}					\
-      printf("chosen cid: %d",(_cid + (_j * _setPartSize)));		\
     _cid += _j * _setPartSize;			\
     }
 #endif
@@ -387,14 +383,12 @@ int tick();
 //#define _setAdd(set, i)              set |= u2b(i)
 #define _DEF_setAdd(TYPE)						\
   void TYPE ## Add(_setPartType set[], int i) {				\
-    printf("idAdd: index: %d number: %d ",(i / _setPartSize),(i % _setPartSize));\
     set[i / _setPartSize] |= u2b(i % _setPartSize);			\
   }
 
 //#define _setDel(set, i)              set &= ~u2b(i)
 #define _DEF_setDel(TYPE)						\
   void TYPE ## Del(_setPartType set[], int i) {				\
-    printf("idDel: index %d, id: %d",(i / _setPartSize),(i % _setPartSize)); \
     set[i / _setPartSize] &= ~u2b(i % _setPartSize);			\
   }
 
@@ -768,14 +762,11 @@ _DEF_setCopyFrom(_id)
 //! Helper function (if/else-unsafe)
 #ifdef _SC_INLINE_DISPATCH
 #define TERM_							\
-    printf("TERM");						\
     disable(_cid);						\
-    printf("disable");						\
     deactivate(_cid);						\
     dispatch_
 #else
 #define TERM_ 		\
-  printf("TERM");	\
   goto _L_TERM
 #endif
 
