@@ -22,7 +22,6 @@ typedef int bool;
 
 // Begin a tick
 #define tickstart(p) {			\
-  printf("tickstart");			\
   _declState				\
   _signals2vars				\
   if (_notInitial) {			\
@@ -48,7 +47,6 @@ typedef int bool;
 
 // Fork off sibling threads
 #define fork1(label, p)			\
-  printf("fork1");			\
   initPC(p, label); enable(p);          
 
 //#define fork2(label1, p1, label2, p2)	\
