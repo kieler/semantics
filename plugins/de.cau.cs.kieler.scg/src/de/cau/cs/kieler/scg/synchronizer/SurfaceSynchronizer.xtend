@@ -139,7 +139,10 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 	 */  
     override protected build(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
     	// Create a new SynchronizerData class which holds the data to return.
-        var data = new SynchronizerData() => [ setJoin(join) ]
+        var data = new SynchronizerData() => [ 
+            setJoin(join)
+            setGuard(guard)
+        ]
 		
 		// Since we are working we completely enriched SCGs, we can use the SCG extensions 
 		// to retrieve the scheduling block of the join node in question.
@@ -360,7 +363,8 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
             while(sExp.subExpressions.size > OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER) {
                 val eExp = new EmptyExpression()  
                 eExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
-                eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
+//                eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
+                eExp.valuedObject.name = data.guard.valuedObject.name + "_fix" + fixcnt
                 data.valuedObjects.add(eExp.valuedObject)
                 val subExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
                 subExp.setOperator(OperatorType::AND)
@@ -380,7 +384,8 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         	    while(tExp.subExpressions.size > OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER) {
     	            val eExp = new EmptyExpression()  
 	                eExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
-                	eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
+//                    eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
+                    eExp.valuedObject.name = data.guard.valuedObject.name + "_fix" + fixcnt
             	    data.valuedObjects.add(eExp.valuedObject)
         	        val subExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
     	            subExp.setOperator(OperatorType::OR)
