@@ -66,6 +66,15 @@ public final class TracingProperties {
 
                     });
 
+    /**
+     * Source model elements which have no associated graph element will be associated with a graph
+     * element of the container element. This property defines the maximum search depth of
+     * eContainer relation. A larger value will associates more source model elements with graph
+     * elements (which have no explicit association).
+     */
+    public static final IProperty<Integer> VISUALIZATION_EQUIVALENCE_CLASS_DEPTH =
+            new Property<Integer>("de.cau.cs.kieler.kitt.klighd.tracing.equivalence.depth", 1);
+
     // -- KGraph Properties --
     // ----------------------------
     // These Properties are added to / used in KGraph including Renderings

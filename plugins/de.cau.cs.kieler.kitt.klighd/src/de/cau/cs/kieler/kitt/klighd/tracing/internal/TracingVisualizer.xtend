@@ -400,8 +400,10 @@ class TracingVisualizer {
 
         //If no diagram element is associated with the given model element its container is used to find an appropriate representation
         if (elements.empty && modelElement instanceof EObject) {
+            val maxDepth = viewContext.getProperty(TracingProperties.VISUALIZATION_EQUIVALENCE_CLASS_DEPTH);
+            var depth = 0;
             var next = (modelElement as EObject)
-            while (elements.empty && next != null) {
+            while (elements.empty && next != null && depth < maxDepth) {
                 next = next.eContainer;
                 elements = viewContext.getTargetElements(next);
             }
