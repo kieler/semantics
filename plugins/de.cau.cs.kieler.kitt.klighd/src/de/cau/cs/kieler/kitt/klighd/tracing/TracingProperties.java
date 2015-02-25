@@ -13,20 +13,14 @@
  */
 package de.cau.cs.kieler.kitt.klighd.tracing;
 
-import java.util.List;
-
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.common.base.Predicate;
 
 import de.cau.cs.kieler.core.kgraph.KGraphElement;
-import de.cau.cs.kieler.core.krendering.KStyle;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption.TracingMode;
-import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping;
 
 /**
  * Contains Properties for marking tracing diagrams.

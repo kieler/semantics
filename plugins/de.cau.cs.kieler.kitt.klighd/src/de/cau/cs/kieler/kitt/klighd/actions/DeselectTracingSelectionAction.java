@@ -19,7 +19,6 @@ import com.google.common.collect.Lists;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties;
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption.TracingMode;
 import de.cau.cs.kieler.kitt.klighd.tracing.internal.InternalTracingProperties;
 import de.cau.cs.kieler.kitt.klighd.update.TracingVisualizationUpdateStrategy;

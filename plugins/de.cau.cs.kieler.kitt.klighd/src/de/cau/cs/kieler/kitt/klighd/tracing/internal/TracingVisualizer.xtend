@@ -49,8 +49,11 @@ import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties
 import de.cau.cs.kieler.klighd.IViewer
 
 /**
+ * Adds tracing edges from mappings to a diagram.
+ * 
  * @author als
- *
+ * @kieler.design 2015-02-25 proposed
+ * @kieler.rating 2015-02-25 proposed yellow
  */
 class TracingVisualizer {
 
@@ -71,6 +74,7 @@ class TracingVisualizer {
     @Inject
     extension TracingTreeExtensions
 
+    /** Checks if tracing information exists for the given model */
     def boolean hasTracingInformation(Object model, KNode diagram, ViewContext viewContext) {
         if (model instanceof EObject && (model as EObject).tracingActivated) {
 
@@ -85,6 +89,7 @@ class TracingVisualizer {
         }
     }
 
+    /** Removed all tracing edges from the diagram  */
     def clearTracing(KNode diagram, IViewer view) {
         diagram.hideTracingSelection;
 
@@ -98,6 +103,7 @@ class TracingVisualizer {
         ]
     }
 
+    /** Shows all tracing edges in the given diagram  */
     def traceAll(KNode diagram, ViewContext viewContext, boolean forceReTrace) {
         diagram.showTracingSelection;
 
@@ -124,6 +130,7 @@ class TracingVisualizer {
         ];
     }
 
+    /** Shows tracing edges in the given diagram for the given selection */
     def traceElements(KNode diagram, ViewContext viewContext, List<EObject> selection, boolean forceReTrace) {
         diagram.showTracingSelection;
 
@@ -143,6 +150,8 @@ class TracingVisualizer {
         val HashSet<Object> visibleEdgesModelOrigin = newHashSet(); //Set of all origins of tracing edges which are selected or related to these
         if (selection != null && !selection.empty) {
             val selectedSourceElements = newHashSet;
+
+            //Get the stored equivalence class element
             val equivalenceClasses = viewContext.getProperty(InternalTracingProperties.DIAGRAM_EQUIVALENCE_CLASSES);
             for (EObject obj : selection) {
                 val source = viewContext.getSourceElement(obj);
@@ -192,7 +201,7 @@ class TracingVisualizer {
                         visibleEdgesModelOrigin.add(it);
                     }
                 ]
-            } else {
+            } else { //In case of displaying a chain
                 val mapping = viewContext.getProperty(InternalTracingProperties.MAPPING);
                 if (mapping != null) {
                     val selectedSourceElementsList = selectedSourceElements.toList;
@@ -237,6 +246,7 @@ class TracingVisualizer {
         ];
     }
 
+    /** Adds all tracing edges to the diagram */
     private def addAllTracingEdges(KNode diagram, ViewContext viewContext) {
 
         //Remove all edges marked as TRACING_EDGE
@@ -330,6 +340,7 @@ class TracingVisualizer {
         }
     }
 
+    /** Adds tracing edges for given source target mapping */
     private def addTracingEdges(Iterator<Map.Entry<Object, Object>> entryIter, ViewContext viewContext, KNode attachNode,
         TracingMapping equivalenceClasses) {
         entryIter.forEach [ entry |
@@ -337,6 +348,7 @@ class TracingVisualizer {
         ]
     }
 
+    /** Adds tracing edges for given source target mapping in a TracingTree */
     private def addTracingTreeEdges(ModelWrapper source, ModelWrapper target, ViewContext viewContext) {
         if (source != null && target != null) {
             val mapping = source.joinWrapperMappings(target);
@@ -374,6 +386,7 @@ class TracingVisualizer {
         }
     }
 
+    /** Adds a tracing edges for given source target pair */
     private def createTracingEdges(Object source, Object target, KNode attachNode, ViewContext viewContext,
         TracingMapping equivalenceClasses) {
         val origin = new Pair(source, target);
@@ -394,6 +407,7 @@ class TracingVisualizer {
         ]
     }
 
+    /** Returns the diagram elements associated with the given model element including appropriate equivalent elements */
     private def Collection<EObject> getDiagramElements(ViewContext viewContext, Object modelElement,
         TracingMapping equivalenceClasses) {
         var elements = viewContext.getTargetElements(modelElement);
@@ -412,6 +426,7 @@ class TracingVisualizer {
         return elements;
     }
 
+    /** Create a single tracing edge and adds it to the diagram hidden */
     private def createTracingEdge(EObject source, EObject target, Pair<Object, Object> origin, KNode attachNode) {
         if (source != null && target != null && origin != null && attachNode != null) {
             val edge = createEdge;
@@ -432,6 +447,7 @@ class TracingVisualizer {
 
     }
 
+    /** Checks if given edge is a tracing edge */
     private def isTracingEdge(KEdge edge) {
         return edge.getData(KLayoutData)?.getProperty(InternalTracingProperties.TRACING_EDGE) != null;
     }

@@ -46,35 +46,46 @@ import de.cau.cs.kieler.klighd.util.RenderingContextData;
 import edu.umd.cs.piccolo.PNode;
 
 /**
- * @author als
+ * FigueNode to represent edges with arbitrary source and target (KGraphElements and KRenderings).
+ * This Node handles its own correct orthogonal routing.
  * 
+ * @author als
+ * @kieler.design 2015-02-25 proposed
+ * @kieler.rating 2015-02-25 proposed yellow
  */
 @SuppressWarnings("restriction")
 public class TracingEdgeNode extends KCustomConnectionFigureNode implements PropertyChangeListener {
 
-    /** the property for the Piccolo2D representation of a node. */
+    /** The property for the Piccolo2D representation of a node. */
     private static final IProperty<PNode> REP =
             new Property<PNode>("klighd.piccolo.representation");
     private static final long serialVersionUID = -8894573172549728418L;
+    /** Set of all collapsed parental child area */
     private final HashSet<KChildAreaNode> collapsedParentalChildAreaNodes =
             new HashSet<KChildAreaNode>();
+    /** Source */
     private final EObject source;
     private final boolean sourceIsEdge;
     private PNode sourceNode = null;
+    /** Target */
     private final EObject target;
     private final boolean targetIsEdge;
     private PNode targetNode = null;
+    /** The node this edge is attached to */
     private final KNode attachNode;
+    /** Flag if this PropertyChangeListener is successfully added to all parental child areas */
     private boolean expandPropertyChangeListenersAdded = false;
 
     /**
+     * Creates a new TracingEdgeNode with given source and target elements for an parent edge
+     * attached to the given node.
      * 
-     * @param parent
      * @param source
+     *            the source element
      * @param target
+     *            the target element
      * @param attachNode
-     *            most upper node in the diagram, but not root node where the KEdge of the Rending
-     *            is attached.
+     *            Most upper node in the diagram, but not root node where the KEdge is attached to.
      */
     public TracingEdgeNode(final EObject source, final EObject target, final KNode attachNode) {
         Preconditions.checkNotNull(source, "Source object is null");
@@ -90,7 +101,7 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
     }
 
     /**
-     * add listeners to hide edge when source or target container is collapsed
+     * Adds listeners to hide edge when any source or target container is collapsed.
      */
     private void addExpandPropertyChangeListeners() {
         if (!expandPropertyChangeListenersAdded) {
@@ -101,7 +112,12 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
     }
 
     /**
-     * @param source2
+     * Adds PropertyChangeListener to all ChildAreaNode of the given startObject and all
+     * eContainers.
+     * 
+     * @param startObject
+     *            EObject to add
+     * @return success of adding the listeners
      */
     private boolean addExpandPropertyChangeListeners(final EObject startObject) {
         KNode node = getKNode(startObject);
@@ -168,6 +184,7 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
     @Override
     public void setPoints(Point2D[] points) {
         try {
+            // If TracingEdgeNode is added at synthesis time the listeners must be added now
             addExpandPropertyChangeListeners();
             if (collapsedParentalChildAreaNodes.isEmpty()) {
                 this.setVisible(true);
@@ -184,7 +201,7 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
 
                 // source position
                 if (sourceNode == null) {
-                    sourceNode = findPNode(source);
+                    sourceNode = getPNode(source);
                 }
                 if (sourceNode != null) {
                     addToPoint(thePoints[0], sourceNode.getGlobalTranslation());
@@ -194,7 +211,7 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
 
                 // target position
                 if (targetNode == null) {
-                    targetNode = findPNode(target);
+                    targetNode = getPNode(target);
                 }
                 if (targetNode != null) {
                     addToPoint(thePoints[1], targetNode.getGlobalTranslation());
@@ -232,7 +249,7 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
                             targetDimension.getWidth(), targetDimension.getHeight(), null));
                 }
 
-                // Apply
+                // Apply points
                 if (thePoints[0] != null && thePoints[1] != null) {
                     for (KlighdPath p : Iterables.filter(this.getChildrenReference(),
                             KlighdPath.class)) {
@@ -256,21 +273,29 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
     public void applyStyles(Styles styles) {
     }
 
-    private PNode findPNode(final EObject elem) {
+    /**
+     * Returns the PNode representation of the given KGraphElement or KRendering
+     * 
+     * @param elem
+     *            graph element
+     * @return PNode representation, null if non found
+     */
+    private PNode getPNode(final EObject elem) {
         if (elem instanceof KGraphElement) {
             return RenderingContextData.get((KGraphElement) elem).getProperty(REP);
         } else if (elem instanceof KRendering) {
-            // find least upper KGraphElement
+            // Find least upper KGraphElement
             KGraphElement graphElement = ModelingUtil.eContainerOfType(elem, KGraphElement.class);
-            // move down to find PNode representing KRending
+            // Find PNode representing KRending
             if (graphElement != null) {
                 PNode graphElementNode = RenderingContextData.get(graphElement).getProperty(REP);
                 if (graphElementNode instanceof IInternalKGraphElementNode) {
-                    AbstractKGERenderingController<?,?> renderingControler =
+                    AbstractKGERenderingController<?, ?> renderingControler =
                             ((IInternalKGraphElementNode<?>) graphElementNode)
                                     .getRenderingController();
-                    Collection<PNodeController<?>> pNodeControllers = renderingControler.getPNodeController((KRendering)elem);
-                    if (!pNodeControllers.isEmpty()){
+                    Collection<PNodeController<?>> pNodeControllers =
+                            renderingControler.getPNodeController((KRendering) elem);
+                    if (!pNodeControllers.isEmpty()) {
                         return pNodeControllers.iterator().next().getNode();
                     }
                 }
@@ -282,8 +307,11 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
     }
 
     /**
-     * @param sourceNode
-     * @return
+     * Returns a point to the middle part of an edge
+     * 
+     * @param node
+     *            edge node
+     * @return point
      */
     private Point2D getAppropiateBendPoint(KEdgeNode node) {
         Point2D[] bendPoints = node.getBendPoints();
@@ -294,16 +322,37 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
         }
     }
 
+    /**
+     * Added given offset point to given point.
+     * 
+     * @param point
+     * @param offset
+     * @return the modified point parameter
+     */
     private static Point2D addToPoint(Point2D point, Point2D offset) {
         point.setLocation(point.getX() + offset.getX(), point.getY() + offset.getY());
         return point;
     }
 
+    /**
+     * Added given offset vector to given point.
+     * 
+     * @param point
+     * @param offset
+     * @return the modified point parameter
+     */
     private static Point2D addToPoint(Point2D point, KVector offset) {
         point.setLocation(point.getX() + offset.x, point.getY() + offset.y);
         return point;
     }
 
+    /**
+     * Returns the least upper container KNode of the given KGraphElement or KRendering.
+     * 
+     * @param object
+     *            KGraphElement or KRendering element
+     * @return knode
+     */
     private KNode getKNode(EObject object) {
         if (object instanceof KNode) {
             return (KNode) object;
