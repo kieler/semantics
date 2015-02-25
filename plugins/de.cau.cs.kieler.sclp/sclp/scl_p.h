@@ -18,15 +18,16 @@ typedef int bool;
 
 #define _notInitialDetect 12345678;
 
-extern int _i;
+//extern int _i;
 
 // Begin a tick
-#define tickstart(p)			\
+#define tickstart(p) {			\
+  printf("tickstart");			\
   _declState				\
   _signals2vars				\
   if (_notInitial) {			\
     _SC_ERROR_DETECT_NORESET		\
-    active = enabled;	\
+    _idCopyFrom(active,enabled);	\
     dispatch_;				\
   } else {				\
     initPC(_TickEnd, _L_TICKEND);	\
@@ -36,7 +37,7 @@ extern int _i;
     enable(_cid);			\
     _setStateInit			\
     _notInitial = _notInitialDetect;	\
-  }
+  }}
 
 // End a tick
 #define tickreturn()			\
@@ -47,6 +48,7 @@ extern int _i;
 
 // Fork off sibling threads
 #define fork1(label, p)			\
+  printf("fork1");			\
   initPC(p, label); enable(p);          
 
 //#define fork2(label1, p1, label2, p2)	\
@@ -85,6 +87,7 @@ extern int _i;
 
 // Terminate the thread leading up to "par"
 #define par 								\
+  printf("par");							\
   TERM_;
 
 // pause reuses PAUSE from sc

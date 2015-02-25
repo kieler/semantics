@@ -23,13 +23,6 @@
             name="OptNodePriorities">
       </transformationMethod>
       <transformationMethod
-            class="de.cau.cs.kieler.scgprios.transform.ThreadSegmentIDsTransformation"
-            dependencies="SCGOPTTSIDS"
-            id="SCGTSIDS"
-            method="transform"
-            name="ThreadSegmentIDs">
-      </transformationMethod>
-      <transformationMethod
             class="de.cau.cs.kieler.scgprios.transform.SCGDEPtoSCGPRIOTransformation"
             dependencies="SCLP"
             id="SCGPRIO"
@@ -57,6 +50,10 @@
             method="transform"
             name="OptimizeSCG">
       </transformationMethod>
+      <transformationGroup
+            id="SCGPRIOS"
+            transformations="OPTSCG,SCGNODEPRIOS,SCGOPTNODEPRIOS,SCGOPTTSIDS,SCGOPTPRIOIDS">
+      </transformationGroup>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.generated_package">

@@ -9,6 +9,11 @@
             method="transform"
             name="SCL_P">
       </transformationMethod>
+      <transformationGroup
+            id="PRIOCODEGEN"
+            name="Priority Code Generation"
+            transformations="SCLP">
+      </transformationGroup>
    </extension>
 
 </plugin>

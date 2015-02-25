@@ -53,6 +53,11 @@
             editor="de.cau.cs.kieler.scg.presentation.ScgEditorID"
             transformations="SCGRAPH, SCG, SCGDEP, SCGBB, SCGBBSCPLUS, SCGGC, SCGSCHEDULE, SCGSEQUENTIALIZE, SCGBBGROUP, SCGSCHEDGROUP,CODEGENERATION, SCG2S, SCG2C">
       </editor>
+      <editor
+            editor="de.cau.cs.kieler.scg.presentation.ScgEditorID"
+            label="SCGPriorityBasedCompilation"
+            transformations="SCGRAPH,SCG, SCGDEP, SCGPRIOS,OPTSCG, SCGNODEPRIOS, SCGOPTNODEPRIOS, SCGOPTTSIDS, SCGOPTPRIOIDS, PRIOCODEGEN,SCLP">
+      </editor>
    </extension>
 
 </plugin>

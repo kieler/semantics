@@ -32,6 +32,7 @@ import java.util.List
 import java.util.HashMap
 import de.cau.cs.kieler.scgprios.results.PrioIDResult
 import de.cau.cs.kieler.kexpressions.c.transform.KExpressionsToC
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 
 /**
  * @author cbu
@@ -40,12 +41,14 @@ import de.cau.cs.kieler.kexpressions.c.transform.KExpressionsToC
 class SCGPRIOtoSCLP{
     
     //String might save a label ??? Necessary? change to linkedlist otherwise
-    private var labelList = <Node,String> newHashMap
-    private var createdLabelsList = <String> newLinkedList
+    private var gotoLabelList = <Node,String> newHashMap
+    private var threadLabelList = <Node,String> newHashMap
     private var translatedNodes = <Node> newLinkedList  
     private int labelNumber = 0
+    private int threadLabelNumber = 0
     private HashMap<Node,Long> prioIDs
     private KExpressionsToC exp
+    private AnnotationsExtensions anno
     
     def Object transform(EObject eObject, KielerCompilerContext context) {
         var program = new Object()
@@ -60,18 +63,20 @@ class SCGPRIOtoSCLP{
         // if previous results exist, optimize node priorities
         if (!prioIDsRes.empty){
         
-        exp = new KExpressionsToC    
+        exp = new KExpressionsToC 
+        anno = new AnnotationsExtensions   
            
         prioIDs = (prioIDsRes.head as PrioIDResult).priorityMap
         
-        labelList.clear
-        createdLabelsList.clear
+        gotoLabelList.clear
+        threadLabelList.clear
         translatedNodes.clear
         labelNumber = 0
+        threadLabelNumber = 0
         var rootNode = findRootNode(scg.nodes)
         val code = 
         '''
-        «header(scg)»
+        «header(getHighestPrioID(scg))»
         «generateForkAndJoinMacros(scg)»
         «exp.transformDeclarations(scg.declarations)»
                                                                   
@@ -88,7 +93,15 @@ class SCGPRIOtoSCLP{
         }
     }
     
-    def header(SCGraph scg) {
+    //////////////////////////////////////////////////////////////////////////////
+    ////////////////////// GENERATE PREPROCESSOR INSTRUCTIONS ////////////////////
+    //////////////////////////////////////////////////////////////////////////////
+    
+    /**
+     * Generate header 
+     * @param highestPrioID: max PrioID
+     */
+    def String header(long maxPrioID) {
        '''
     /*****************************************************************************/
     /*                 G E N E R A T E D       C    C O D E                      */
@@ -104,13 +117,18 @@ class SCGPRIOtoSCLP{
     /* This code is provided under the terms of the Eclipse Public License (EPL).*/
     /*****************************************************************************/
     
-    #define _SC_ID_MAX «getHighestPrioID(scg)»
+    #define _SC_ID_MAX «maxPrioID.toString»
     #include "scl_p.h"
     #include "sc.h"                      
     '''
     }
     
-    def long getHighestPrioID(SCGraph scg){
+    /**
+     * Find highest PrioID
+     * @param scg: SCG
+     * @return highest PrioID of SCG
+     */
+    private def long getHighestPrioID(SCGraph scg){
         var long maxPrioID = 0
         for (node : scg.nodes){
             if (maxPrioID < prioIDs.get(node)){
@@ -119,6 +137,10 @@ class SCGPRIOtoSCLP{
         }
         maxPrioID    
     }
+    
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////// Generate Fork and Join Macros ///////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
     
     def String generateForkAndJoinMacros(SCGraph scg){
         var forknodes = scg.nodes.filter[it instanceof Fork]
@@ -140,93 +162,92 @@ class SCGPRIOtoSCLP{
         '''
     }
     
+    /**
+     * Generate Macro for forkn
+     * 
+     * @param n: number of threads of the fork node
+     */
     def String generateForkMacro(int n){
         '''
         #define fork«n»(«FOR i : 1 ..< n»label«i», p«i»,«ENDFOR»label«n», p«n») \
             «FOR j : 1 ..< n»
-            fork1(label«j», p«j»)       \
+            fork1(label«j», p«j»);       \
             «ENDFOR»
-            fork1(label«n», p«n») 
+            fork1(label«n», p«n»); 
         '''
     }
     
+    /**
+     * Generate Macro for joinn
+     * Depending on the size of the highest prioID two cases have to be respected:
+     * --> highest prioID 
+     * 
+     * @param n: number of prioIDs/threads, that are joined by the join node
+     */
     def String generateJoinMacro(int n){
         '''
+        #ifdef _threadVectorSize
+        #define join«n»(«FOR i : 1 ..< n»sib«i», «ENDFOR»sib«n») { \
+           threadvector emptyVec; \
+           _idClear(emptyVec); \
+           «generateJoinListForMacro(n)»
+           __LABEL__: if (isEnabledAnyOf( (emptyVec))){       \
+           PAUSEG_(__LABEL__); }} 
+        #else
         #define join«n»(«FOR i : 1 ..< n»sib«i», «ENDFOR»sib«n»)\
             __LABEL__: if (isEnabledAnyOf( («FOR i : 1 ..< n»(u2b(sib«i»)) | «ENDFOR»(u2b(sib«n»)) ))) {   \
             PAUSEG_(__LABEL__); }
+        #endif
         '''
     }
     
-  
-    
-//    // is the first case really necessary? - yes!
-//    // extern and static exclude each other
-//    def String declarations(EList<Declaration> declarations){
-//        '''
-//        «FOR d : declarations»
-//            «IF d.extern && d.const» 
-//            extern const «getValuedObjects(d.type, d.valuedObjects)»
-//            «ELSEIF d.static && d.const» 
-//            static const «getValuedObjects(d.type, d.valuedObjects)»
-//            «ELSEIF d.extern»
-//            extern «getValuedObjects(d.type, d.valuedObjects)»
-//            «ELSEIF d.static»
-//            static «getValuedObjects(d.type, d.valuedObjects)»
-//            «ELSEIF d.const»
-//            const «getValuedObjects(d.type, d.valuedObjects)»
-//            «ELSE»
-//            «getValuedObjects(d.type, d.valuedObjects)»
-//            «ENDIF»
-//        «ENDFOR»
-//        '''
-//    }
-    
-//    def String getValuedObjects(ValueType type, EList<ValuedObject> objects){   
-//       '''
-//       «FOR o : objects»
-//            «type» «o.name»«IF o.cardinalities.length > 0»«o.cardinalities»«ENDIF»;
-//       «ENDFOR» 
-//       '''
-//    }
-    
+    private def String generateJoinListForMacro(int n){
+        '''
+        «FOR i : 1 ..< n+1»
+        _idAdd(emptyVec,sib«i»); \
+        «ENDFOR»'''
+    }
+   
+    ////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////// TRANSLATE NODES ////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
     
     private def setLabelIfRequired(Node node){
-        var l = 0
-        for (i : node.incoming){
-            if (i instanceof ControlFlow){
-                l = l + 1
-            }
-        }
-        if (l > 1 || labelList.containsKey(node)){
-            if (!createdLabelsList.contains(labelList.get(node))){
-               setNewLabel(node) 
-            }
+        var l = node.incoming.filter[it instanceof ControlFlow].length
+        if (l > 1 && !gotoLabelList.containsKey(node)){
+            setNewLabel(node) 
+            
         }    
     }
     
-//    private def String setNewLabel(Node node){
-//        if (labelList.containsKey(node)){
-//            '''
-//            «labelList.get(node)»:
-//            ''' 
-//        } else {
-//            var newString = "label_"+labelNumber.toString
-//            labelList.put(node,"label_"+labelNumber.toString)
-//            labelNumber = labelNumber+1
-//            '''
-//            «newString»:
-//            ''' 
-//       
-//       }
-//    }
+    private def String generateThreadLabel(Node node){
+        var regionlabel = anno.getStringAnnotationValue(node,"regionName")
+        if (regionlabel.nullOrEmpty){
+            threadLabelNumber = (threadLabelNumber + 1)
+            '''tLabel_«(threadLabelNumber -1).toString»'''
+        } else {
+            if (threadLabelList.containsValue(regionlabel)){
+                var i = 0
+                var b = true
+                while (b){
+                    i = i+1
+                    if (!threadLabelList.containsValue(regionlabel+i)){
+                        b = false
+                        regionlabel = regionlabel+i
+                    }
+                }
+                '''«regionlabel»'''
+            } else {
+            '''«regionlabel»'''
+            }
+        }
+    }
 
     private def String setNewLabel(Node node){
 
             var newString = "label_"+labelNumber.toString
-            labelList.put(node,"label_"+labelNumber.toString)
+            gotoLabelList.put(node,"label_"+labelNumber.toString)
             labelNumber = labelNumber+1
-            createdLabelsList.add(newString)
             '''
             «newString»:
             ''' 
@@ -247,23 +268,25 @@ class SCGPRIOtoSCLP{
     }
     private def dispatch String transformNode(Entry entry) {
         // there should be no prio statement necessary.
-        if (labelList.containsKey(entry)){
-            createdLabelsList.add(labelList.get(entry))
-        '''
-        «labelList.get(entry)»:
-        «transformNode(entry.next.target)»
-        '''
+        if (entry.incoming.filter[it instanceof ControlFlow].length > 0){
+            var threadLabel = threadLabelList.get(entry)
+            gotoLabelList.put(entry.next.target, threadLabel)
+            '''
+            «threadLabel»:
+            «transformNode(entry.next.target)»
+            '''
         } else {
-        '''
-        «transformNode(entry.next.target)»
-        '''
+            '''
+            «transformNode(entry.next.target)»
+            '''    
         }
     }
+    
     // TODO: generate sclp macro
     private def dispatch String transformNode(Fork fork) {
         if (translatedNodes.contains(fork)){
         '''
-        goto «labelList.get(fork)»;
+        goto «gotoLabelList.get(fork)»;
         '''
         } else {
         translatedNodes.add(fork)
@@ -307,12 +330,10 @@ class SCGPRIOtoSCLP{
         «transformNode(join.next.target)»'''
     }
     
-    // TODO: Translate Assignment
     private def dispatch String transformNode(Assignment assignment) {
-        System.out.println(assignment.toString)
         if (translatedNodes.contains(assignment)){
         '''
-        goto «labelList.get(assignment)»;
+        goto «gotoLabelList.get(assignment)»;
         '''
         } else { 
         translatedNodes.add(assignment)
@@ -340,7 +361,7 @@ class SCGPRIOtoSCLP{
     private def dispatch String transformNode(Conditional conditional) {
         if (translatedNodes.contains(conditional)){
         '''
-        goto «labelList.get(conditional)»;
+        goto «gotoLabelList.get(conditional)»;
         '''
         } else {
         translatedNodes.add(conditional)
@@ -361,7 +382,7 @@ class SCGPRIOtoSCLP{
         
         if (translatedNodes.contains(surface)){
         '''
-        goto «labelList.get(surface)»;
+        goto «gotoLabelList.get(surface)»;
         '''
         } else {
         translatedNodes.add(surface)
@@ -387,38 +408,20 @@ class SCGPRIOtoSCLP{
     private def String listForkThreads(Node firstNode, List<Node> threads, Node joiningNode){
         var newString = ""
         
-        var newLabel = "label_"+labelNumber.toString
-        labelNumber = labelNumber+1
-        labelList.put(firstNode,newLabel)
-        
-        var nextNode = (firstNode as Entry).next.target
-        if (!(nextNode instanceof Exit)){
-            labelList.put(nextNode,newLabel)
-        }
+        var newLabel = generateThreadLabel(firstNode)
+        threadLabelList.put(firstNode,newLabel)
     
         for (t : threads){
             
-            var newLabel2 = "label_"+labelNumber.toString
-            labelNumber = labelNumber+1
-            newString = newString+newLabel2+","+prioIDs.get(t).toString+","
-            labelList.put(t,newLabel2)
-            
-            nextNode = (t as Entry).next.target
-            if (!(nextNode instanceof Exit)){
-                labelList.put(nextNode,newLabel2)
-            }
+            var newLabel2 = generateThreadLabel(t)
+            threadLabelList.put(t,newLabel2)
+            newString = newString + newLabel2 + "," + prioIDs.get(t).toString + ","
             
         }
-        var newLabel3 = "label_"+labelNumber.toString
-        labelNumber = labelNumber+1
-        newString = newString+newLabel3+","+prioIDs.get(joiningNode).toString
-        labelList.put(joiningNode,newLabel3)
-        
-        nextNode = (joiningNode as Entry).next.target
-        if (!(nextNode instanceof Exit)){
-            labelList.put(nextNode,newLabel3)
-        }
-        
+        var newLabel3 = generateThreadLabel(joiningNode)
+        threadLabelList.put(joiningNode,newLabel3)
+        newString = newString + newLabel3 + "," + prioIDs.get(joiningNode).toString
+      
         newString
     }
     
@@ -456,85 +459,10 @@ class SCGPRIOtoSCLP{
         joiningnode
     }
     
-//    private def dispatch String transformExpression(ValuedObjectReference ref){
-//        System.out.println(ref.valuedObject.name)
-//        '''«ref.valuedObject.name»«IF !ref.indices.empty»«transformExpressions(ref.indices)»«ENDIF»'''    
-//    }
-//    
-//    private def dispatch String transformExpression(IntValue value){
-//        '''«value.value»'''     
-//    }
-//    private def dispatch String transformExpression(BoolValue value){
-//        '''«value.value»'''     
-//    }
-//    private def dispatch String transformExpression(FloatValue value){
-//        '''«value.value»'''     
-//    }
-//    private def dispatch String transformExpression(StringValue value){
-//        '''«value.value»'''
-//    }
-//    
-//
-//    
-//    private def dispatch String transformExpression(OperatorExpression opExp){
-//        
-//        var operator = transformOperators(opExp.operator)
-//        var subexpressions = opExp.subExpressions
-//        if (subexpressions.length == 1){
-//            System.out.println(operator+" "+transformExpression(subexpressions.head))
-//            '''«transformFirstOperator(opExp.operator)»«transformExpression(subexpressions.head)»'''
-//        } else {
-//            var lastexpression = subexpressions.last
-//            subexpressions.remove(lastexpression)
-//            '''«FOR s : subexpressions»«transformExpression(s)» «operator» «ENDFOR»«transformExpression(lastexpression)»'''
-//        }
-//    }
-//    
-// 
-//    
-//    private def String transformExpressions(List<Expression> indices){
-//        '''[«FOR i : indices»«transformExpression(i)»«ENDFOR»]'''
-//    }
-//    
-//    private def dispatch String transformExpression(TextExpression textExp){
-//        '''«textExp.text»'''
-//    }
-//    
-//    private def String transformOperators(OperatorType operatortype){
-//        if (operatortype.getName() == "AND"){
-//            '''&&'''
-//        } else if (operatortype.getName() == "OR"){
-//            '''||'''
-//        } else {
-//            '''«operatortype»'''
-//        }
-//        
-//    }
-//    
-//    private def String transformFirstOperator(OperatorType operatortype){
-//        if (operatortype.getName() == "NOT" || operatortype.getName() == "SUB" || operatortype.getName() == "ADD"){
-//            '''«operatortype»'''
-//        } else {
-//            ''''''
-//        }
-//    }
-//    
-//  // does this really exist?
-//    private def dispatch String transformExpression(FunctionCall funcCall){
-//        var newString = ""
-//        for (p : funcCall.parameters){
-//            newString = newString + transformParameter(p) + ","
-//        }
-//        '''«funcCall.functionName»(«newString.substring(0, newString.length()-1)»)'''
-//    }
-//    
-//    private def String transformParameter(Parameter p){
-//        if (p.callByReference){
-//            '''*«transformExpression(p.expression)»'''
-//        } else {
-//            '''«transformExpression(p.expression)»'''
-//        }
-//    }
+    ////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////// HELPER FUNCTIONS /////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////
+    
 
     def LinkedList<Node> getChildrenOfNode(Node node) {
         System.out.println("starting getChildrenOfNode")

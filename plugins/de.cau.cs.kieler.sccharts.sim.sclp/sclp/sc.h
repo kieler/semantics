@@ -64,7 +64,7 @@ typedef int            threadtype;    //!< Thread id/priority
 # endif
 #endif
 
-typedef unsigned long _setPartType;
+typedef unsigned int _setPartType;
 #define _setPartSize WORD_BIT //LONG_BIT
 
 
@@ -82,8 +82,8 @@ typedef unsigned long _setPartType;
 // Determine storage requirements for sets of thread ids
 #if _SC_ID_MAX < WORD_BIT               // Is one unsigned int big enough?
 typedef unsigned int   threadvector;
-#elif _SC_ID_MAX < _setPartSize          // Is one _setPartType big enough?
-typedef unsigned int  threadvector;
+//#elif _SC_ID_MAX < _setPartSize          // Is one _setPartType big enough?
+//typedef unsigned int  threadvector;
 #else
 #define _threadVectorSize  ((_SC_ID_MAX / _setPartSize) + 1)
 typedef unsigned int  threadvector[_threadVectorSize];
@@ -127,6 +127,11 @@ _setPartType _setPart;
 #else
 # ifdef _threadVectorSize
 #  define _SC_ERROR_DETECT_NONE_ACTIVE					\
+  int i;								\
+  int _i = _threadVectorSize - 1; 								\
+  for(i = 0; i < _threadVectorSize; i++) {				\
+    if (active[i] < 1) {_i = _i - 1;}					\
+  }									\
   if (_i < 0) {								\
     _SC_ERROR0(_SC_ERROR_NONE_ACTIVE,					\
 	       "SC ERROR (None Active): No active thread!\n");		\
@@ -271,7 +276,7 @@ int tick();
 // #define selectCid_()   selectCid()
 // #endif
 // 
-#define dispatch()       selectCid(); _goto(_deref(_pc[_cid]))
+#define dispatch()       printf("dispatch");selectCid();_goto(_deref(_pc[_cid]))
 
 
 
@@ -288,15 +293,21 @@ int tick();
   _BitScanReverse((active), _cid); }
 #else
 # define selectCid() {				\
-    for (_i = _threadVectorSize - 1; ; _i--) {		\
+    printf("selectCid");			\
+    int _j;					\
+    for (_j = _threadVectorSize - 1; ; _j--) {		\
+      printf(" _j = %d ",_j);			\
       _SC_ERROR_DETECT_NONE_ACTIVE		\
-	_setPart = active[_i];			\
+      _setPartType _setPart;			\
+      _setPart = (active[_j]);			\
+      printf(" _setPart = %d ",_setPart);			\
       if (_setPart) {				\
 	_BitScanReverse(_setPart, _cid);	\
 	break;					\
       }}					\
-    _cid += _i * _setPartSize;			\
-  }
+      printf("chosen cid: %d",(_cid + (_j * _setPartSize)));		\
+    _cid += _j * _setPartSize;			\
+    }
 #endif
 
 
@@ -307,6 +318,7 @@ int tick();
 /*! This implementation is fast and simple, BUT limits the max thread
  * ID and max signal ID to the word width of the machine (eg 32).
  */
+
 #define u2b(u)         (1 << u)
 
 // ===================================================================
@@ -337,7 +349,7 @@ int tick();
 
 // ===================================================================
 // Set operations based on bit vectors presented by an array of type
-// idset[_idsetSize]/sigset[_sigsetSize]
+// idset[_threadVectorSize]/sigset[_sigsetSize]
 
 // TYPE is '_id' or '_sig'
 
@@ -346,7 +358,7 @@ int tick();
   int TYPE ## IsEmpty(_setPartType set[]) {				\
     int flag = 0;							\
     int i;								\
-    for (i = TYPE ## setSize - 1; i >= 0; i--) {			\
+    for (i = _threadVectorSize - 1; i >= 0; i--) {			\
       flag = set[i];							\
       if (!flag) break;							\
     }									\
@@ -357,7 +369,7 @@ int tick();
 #define _DEF_setClear(TYPE)						\
   void TYPE ## Clear(_setPartType set[]) {				\
     int i;								\
-    for (i = TYPE ## setSize - 1; i >= 0; i--) {			\
+    for (i = _threadVectorSize - 1; i >= 0; i--) {			\
       set[i] = 0;							\
     }									\
   }
@@ -366,7 +378,7 @@ int tick();
 #define _DEF_setInit(TYPE)						\
   void TYPE ## Init(_setPartType set[], int i) {			\
     int j;								\
-    for (j = TYPE ## setSize - 1; j >= 0; j--) {			\
+    for (j = _threadVectorSize - 1; j >= 0; j--) {			\
       set[j] = 0;							\
     }									\
     set[i / _setPartSize] = u2b(i % _setPartSize);			\
@@ -375,20 +387,22 @@ int tick();
 //#define _setAdd(set, i)              set |= u2b(i)
 #define _DEF_setAdd(TYPE)						\
   void TYPE ## Add(_setPartType set[], int i) {				\
-    set[i / _setPartSize] |= (u2b(i % _setPartSize));			\
+    printf("idAdd: index: %d number: %d ",(i / _setPartSize),(i % _setPartSize));\
+    set[i / _setPartSize] |= u2b(i % _setPartSize);			\
   }
 
 //#define _setDel(set, i)              set &= ~u2b(i)
 #define _DEF_setDel(TYPE)						\
   void TYPE ## Del(_setPartType set[], int i) {				\
-    set[i / _setPartSize] &= ~(u2b(i % _setPartSize));			\
+    printf("idDel: index %d, id: %d",(i / _setPartSize),(i % _setPartSize)); \
+    set[i / _setPartSize] &= ~u2b(i % _setPartSize);			\
   }
 
 //#define _setAddSet(set1, set2)       set1 |= set2
 #define _DEF_setAddSet(TYPE)						\
   void TYPE ## AddSet(_setPartType set1[], _setPartType set2[]) {	\
     int i;								\
-    for (i = TYPE ## setSize - 1; i >= 0; i--) {			\
+    for (i = _threadVectorSize - 1; i >= 0; i--) {			\
       set1[i] |= set2[i];						\
     }									\
   }
@@ -397,7 +411,7 @@ int tick();
 #define _DEF_setDelSet(TYPE)						\
   void TYPE ## DelSet(_setPartType set1[], _setPartType set2[]) {	\
     int i;								\
-    for (i = TYPE ## setSize - 1; i >= 0; i--) {			\
+    for (i = _threadVectorSize - 1; i >= 0; i--) {			\
       set1[i] &= ~set2[i];						\
     }									\
   }
@@ -405,16 +419,16 @@ int tick();
 //#define _setContains(set, i)         (set & u2b(i))
 #define _DEF_setContains(TYPE)						\
   int TYPE ## Contains(_setPartType set[], int i) {			\
-    return (set[i / _setPartSize] & (u2b(i % _setPartSize))) != 0;		\
+    return (set[i / _setPartSize] & u2b(i % _setPartSize)) != 0;		\
   }
 
 //#define _setNotOnlyElem0(set, i)  (set != u2b(0))
 #define _DEF_setNotOnlyElem0(TYPE)					\
   int TYPE ## NotOnlyElem0(_setPartType set[]) {			\
-    int flag = (set[0] != (u2b(0)));					\
+    int flag = (set[0] != u2b(0));					\
     int i;								\
     if (!flag) {							\
-      for (i = TYPE ## setSize - 1; i > 0; i--) {			\
+      for (i = _threadVectorSize - 1; i > 0; i--) {			\
 	flag = (set[i] != 0);						\
 	if (flag) break;						\
       }									\
@@ -427,7 +441,7 @@ int tick();
   int TYPE ## IsDisjoint(_setPartType set1[], _setPartType set2[]) {	\
     int flag;								\
     int i;								\
-    for (i = TYPE ## setSize - 1; i >= 0; i--) {			\
+    for (i = _threadVectorSize - 1; i >= 0; i--) {			\
       flag = ((set1[i] & set2[i]) == 0);				\
       if (!flag) break;							\
     }									\
@@ -438,15 +452,16 @@ int tick();
 #define _DEF_setCopyFrom(TYPE)						\
   void TYPE ## CopyFrom(_setPartType set1[], _setPartType set2[]) {	\
     int i;								\
-    for (i = TYPE ## setSize - 1; i>=0; i--) {				\
+    for (i = _threadVectorSize - 1; i>=0; i--) {				\
       set1[i] = set2[i];						\
     }									\
   }
 
+
 // ===================================================================
 // Set operations for sets of ids
 
-#ifdef _idsetSize
+#ifdef _threadVectorSize
 _DEF_setIsEmpty(_id)
 _DEF_setClear(_id)
 _DEF_setInit(_id)
@@ -460,17 +475,31 @@ _DEF_setIsDisjoint(_id)
 _DEF_setCopyFrom(_id)
 
 #else
-#define _idIsEmpty(set)              _setIsEmpty(set)
-#define _idClear(set)                _setClear(set)
-#define _idInit(set, i)              _setInit(set, i)
-#define _idAdd(set, i)               _setAdd(set, i)
-#define _idDel(set, i)               _setDel(set, i)
-#define _idAddSet(set1, set2)        _setAddSet(set1, set2)
-#define _idDelSet(set1, set2)        _setDelSet(set1, set2)
-#define _idContains(set, i)          _setContains(set, i)
-#define _idNotOnlyElem0(set)         _setNotOnlyElem0(set)
-#define _idIsDisjoint(set1, set2)    _setIsDisjoint(set1, set2)
-#define _idCopyFrom(set1, set2)      _setCopyFrom(set1, set2)
+#define _idClear(set)               set = 0
+#define _idInit(set, i)             set = (u2b(i))
+#define _idAdd(set, i)              set |= (u2b(i))
+#define _idDel(set, i)              set &= ~(u2b(i))
+#define _idCopyFrom(set1, set2)     set1 = set2
+#define _idAddSet(set1, set2)       set1 |= set2
+#define _idDelSet(set1, set2)       set1 &= ~set2
+#define _idIsEmpty(set)             (set == 0)
+#define _idContains(set, i)         ((set & (u2b(i))) != 0)
+#define _idNotOnlyElem0(set)        (set != (u2b(0)))
+#define _idIsDisjoint(set1, set2)   ((set1 & set2) == 0)
+
+
+
+//#define _idIsEmpty(set)              _setIsEmpty(set)
+//#define _idClear(set)                _setClear(set)
+//#define _idInit(set, i)              _setInit(set, i)
+//#define _idAdd(set, i)               _setAdd(set, i)
+//#define _idDel(set, i)               _setDel(set, i)
+//#define _idAddSet(set1, set2)        _setAddSet(set1, set2)
+//#define _idDelSet(set1, set2)        _setDelSet(set1, set2)
+//#define _idContains(set, i)          _setContains(set, i)
+//#define _idNotOnlyElem0(set)         _setNotOnlyElem0(set)
+//#define _idIsDisjoint(set1, set2)    _setIsDisjoint(set1, set2)
+//#define _idCopyFrom(set1, set2)      _setCopyFrom(set1, set2)
 #endif
 
 #define _id2str(set)                 _set2str(_setstr, _SC_ID_MAX, (void *) &set)
@@ -652,7 +681,7 @@ _DEF_setCopyFrom(_id)
 #define PAUSEG_(label)							\
   setPC(_cid, label);							\
   deactivate(_cid);							\
-  dispatch_
+  dispatch_ dispatch();
 
 #else
 #define PAUSEG_(label)							\
@@ -739,20 +768,24 @@ _DEF_setCopyFrom(_id)
 //! Helper function (if/else-unsafe)
 #ifdef _SC_INLINE_DISPATCH
 #define TERM_							\
+    printf("TERM");						\
     disable(_cid);						\
+    printf("disable");						\
     deactivate(_cid);						\
     dispatch_
 #else
-#define TERM_ goto _L_TERM
+#define TERM_ 		\
+  printf("TERM");	\
+  goto _L_TERM
 #endif
 
 
-//! Helper function (if/else-unsafe)
-#ifdef _SC_INLINE_DISPATCH
-#define TERM_							\
-#else
-#define TERM_ goto _L_TERM
-#endif
+// //! Helper function (if/else-unsafe)
+// #ifdef _SC_INLINE_DISPATCH
+// #define TERM_							\
+// #else
+// #define TERM_ goto _L_TERM
+// #endif
 
 
 // ===================================================================
