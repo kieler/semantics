@@ -17,16 +17,13 @@ import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
 
-import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
-import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Iterators;
 
 import de.cau.cs.kieler.core.kgraph.KEdge;
 import de.cau.cs.kieler.core.kgraph.KGraphElement;
@@ -36,8 +33,9 @@ import de.cau.cs.kieler.core.math.KVector;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.klighd.internal.macrolayout.AnchorUtil;
-import de.cau.cs.kieler.klighd.piccolo.internal.nodes.IKlighdNode;
-import de.cau.cs.kieler.klighd.piccolo.internal.nodes.INode;
+import de.cau.cs.kieler.klighd.piccolo.internal.controller.AbstractKGERenderingController;
+import de.cau.cs.kieler.klighd.piccolo.internal.controller.PNodeController;
+import de.cau.cs.kieler.klighd.piccolo.internal.nodes.IInternalKGraphElementNode;
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KChildAreaNode;
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KCustomConnectionFigureNode;
 import de.cau.cs.kieler.klighd.piccolo.internal.nodes.KEdgeNode;
@@ -113,8 +111,9 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
                                    // (synthesis time)
                 return false;
             }
-            if (nodeNode instanceof INode) {
-                final KChildAreaNode childAreaNode = ((INode) nodeNode).getChildAreaNode();
+            if (nodeNode instanceof IInternalKGraphElementNode.IKNodeNode) {
+                final KChildAreaNode childAreaNode =
+                        ((IInternalKGraphElementNode.IKNodeNode) nodeNode).getChildAreaNode();
                 if (childAreaNode != null) {
                     childAreaNode
                             .addPropertyChangeListener(KChildAreaNode.PROPERTY_EXPANSION, this);
@@ -262,26 +261,18 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
             return RenderingContextData.get((KGraphElement) elem).getProperty(REP);
         } else if (elem instanceof KRendering) {
             // find least upper KGraphElement
-            EObject findObj = ModelingUtil.eContainerOfType(elem, KGraphElement.class);
-            // move down to find PNode
-            if (findObj != null) {
-                PNode findNode = findPNode(findObj);
-                if (findNode != null) {
-                    return (PNode) Iterators.find(new FunctionalTreeIterator<IKlighdNode>(
-                            (IKlighdNode) findNode, true,
-                            new Function<Object, Iterator<IKlighdNode>>() {
-
-                                public Iterator<IKlighdNode> apply(Object node) {
-                                    return Iterators.filter(((PNode) node).getChildrenIterator(),
-                                            IKlighdNode.class);
-                                }
-
-                            }), new Predicate<IKlighdNode>() {
-
-                        public boolean apply(IKlighdNode node) {
-                            return node.getGraphElement() == elem;
-                        }
-                    }, null);
+            KGraphElement graphElement = ModelingUtil.eContainerOfType(elem, KGraphElement.class);
+            // move down to find PNode representing KRending
+            if (graphElement != null) {
+                PNode graphElementNode = RenderingContextData.get(graphElement).getProperty(REP);
+                if (graphElementNode instanceof IInternalKGraphElementNode) {
+                    AbstractKGERenderingController<?,?> renderingControler =
+                            ((IInternalKGraphElementNode<?>) graphElementNode)
+                                    .getRenderingController();
+                    Collection<PNodeController<?>> pNodeControllers = renderingControler.getPNodeController((KRendering)elem);
+                    if (!pNodeControllers.isEmpty()){
+                        return pNodeControllers.iterator().next().getNode();
+                    }
                 }
             }
             return null;
