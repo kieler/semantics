@@ -11,33 +11,37 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kitt.tracing.internal
+package de.cau.cs.kieler.kitt.tracing
 
+import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.kitt.tracing.TracingManager
-import com.google.common.base.Preconditions
 
 /**
+ * This class analysis a mapping and checks its content against the source and target model of the transformation.
+ * 
  * @author als
- *
+ * @kieler.design 2015-02-25 proposed
+ * @kieler.rating 2015-02-25 proposed yellow
  */
 class TracingReport {
     val TracingMapping mapping;
 
     val EObject source;
-    val sourceElementInMapping = newHashSet();
-    val sourceElementInTragetMapping = newHashSet();
-    val sourceElementNotInMapping = newHashSet();
-    val mappedSourceElementNotInModel = newHashSet();
+    public val sourceElementInMapping = newHashSet();
+    public val sourceElementInTragetMapping = newHashSet();
+    public val sourceElementNotInMapping = newHashSet();
+    public val sourceElementNotInModel = newHashSet();
 
     val EObject target;
-    val targetElementInMapping = newHashSet();
-    val targetElementInTragetMapping = newHashSet();
-    val targetElementNotInMapping = newHashSet();
-    val mappedTargetElementNotInModel = newHashSet();
+    public val targetElementInMapping = newHashSet();
+    public val targetElementInTragetMapping = newHashSet();
+    public val targetElementNotInMapping = newHashSet();
+    public val targetElementNotInModel = newHashSet();
 
     new(Object sourceModel, Object targetModel, TracingMapping tracingMapping) {
         mapping = tracingMapping;
+
+        //find correct source and target models due to inplace transformation delegation
         if (mapping.inPlace) {
             val realSource = TracingManager.getTracingChain(sourceModel).getModels(mapping).first as EObject;
             if (realSource instanceof EObject) {
@@ -55,47 +59,51 @@ class TracingReport {
         } else {
             target = null
         }
-        analyseMapping;
+        analyse();
     }
 
-    private def void analyseMapping() {
+    private def void analyse() {
+
+        //check source elements
         if (source != null) {
             source.eAllContents.fold(newArrayList(source))[list, item|list.add(item); list].forEach [
-                if (mapping.mapping.containsKey(it)) {
+                if (mapping.internalMapping.containsKey(it)) {
                     sourceElementInMapping.add(it);
-                } else if (mapping.reverseMapping.containsKey(it)) {
+                } else if (mapping.internalReverseMapping.containsKey(it)) {
                     sourceElementInTragetMapping.add(it);
                 } else {
                     sourceElementNotInMapping.add(it);
                 }
             ];
-            mappedSourceElementNotInModel.addAll(
-                mapping.mapping.keySet.filter[!sourceElementInMapping.contains(it)]);
+            sourceElementNotInModel.addAll(
+                mapping.internalMapping.keySet.filter[!sourceElementInMapping.contains(it)]);
         }
+
+        //check target elements
         if (target != null) {
             target.eAllContents.fold(newArrayList(target))[list, item|list.add(item); list].forEach [
-                if (mapping.reverseMapping.containsKey(it)) {
+                if (mapping.internalReverseMapping.containsKey(it)) {
                     targetElementInMapping.add(it);
-                } else if (mapping.mapping.containsKey(it)) {
+                } else if (mapping.internalMapping.containsKey(it)) {
                     targetElementInTragetMapping.add(it);
                 } else {
                     targetElementNotInMapping.add(it);
                 }
             ];
-            mappedTargetElementNotInModel.addAll(
-                mapping.reverseMapping.keySet.filter[!targetElementInMapping.contains(it)]);
+            targetElementNotInModel.addAll(
+                mapping.internalReverseMapping.keySet.filter[!targetElementInMapping.contains(it)]);
         }
     }
-    
-    def void failOnIncompleteMapping(){
-       if (sourceElementInTragetMapping.empty && sourceElementNotInMapping.empty && mappedSourceElementNotInModel.empty) {
+
+    def void failOnIncompleteMapping() {
+        if (sourceElementInTragetMapping.empty && sourceElementNotInMapping.empty && sourceElementNotInModel.empty) {
             throw new Exception("Incomplete Mapping");
         }
     }
 
     def void printReport() {
         println("Mapping: " + mapping.title);
-        if (sourceElementInTragetMapping.empty && sourceElementNotInMapping.empty && mappedSourceElementNotInModel.empty) {
+        if (sourceElementInTragetMapping.empty && sourceElementNotInMapping.empty && sourceElementNotInModel.empty) {
             println(" Source Mapping: OK");
         } else {
             println(" Source Mapping:");
@@ -104,9 +112,9 @@ class TracingReport {
             println("  Elements missing in mapping:");
             sourceElementNotInMapping.forEach[println("   " + it)];
             println("  Elements missing in model:");
-            mappedSourceElementNotInModel.forEach[println("   " + it)];
+            sourceElementNotInModel.forEach[println("   " + it)];
         }
-        if (targetElementInTragetMapping.empty && targetElementNotInMapping.empty && mappedTargetElementNotInModel.empty) {
+        if (targetElementInTragetMapping.empty && targetElementNotInMapping.empty && targetElementNotInModel.empty) {
             println(" Target Mapping: OK");
         } else {
             println(" Target Mapping:");
@@ -115,7 +123,7 @@ class TracingReport {
             println("  Elements missing in mapping:");
             targetElementNotInMapping.forEach[println("   " + it)];
             println("  Elements missing in model:");
-            mappedTargetElementNotInModel.forEach[println("   " + it)];
+            targetElementNotInModel.forEach[println("   " + it)];
         }
     }
 }

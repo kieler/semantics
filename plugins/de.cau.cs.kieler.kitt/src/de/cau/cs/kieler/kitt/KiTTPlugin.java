@@ -14,6 +14,10 @@ public class KiTTPlugin extends AbstractUIPlugin {
 	// The shared instance
 	private static KiTTPlugin plugin;
 	
+
+	/** Debug flag */
+	public static boolean DEBUG = true;
+	
 	/**
 	 * The constructor
 	 */

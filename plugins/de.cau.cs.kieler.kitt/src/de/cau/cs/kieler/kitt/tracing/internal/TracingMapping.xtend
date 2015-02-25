@@ -17,28 +17,24 @@ import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import de.cau.cs.kieler.core.util.Pair
 import java.util.Collection
-import java.util.HashMap
 import java.util.List
-import org.eclipse.emf.common.notify.Notification
-import org.eclipse.emf.common.notify.Notifier
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.util.EContentAdapter
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 
 import static com.google.common.base.Preconditions.*
 
 import static extension com.google.common.collect.Multimaps.*
-import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 
 /**
- * 
- * @kieler.design 2014-08-11 proposed
- * @kieler.rating 2014-08-11 proposed yellow
- * 
+ * A mapping used for tracing.
+ * <p>
+ * Offers methods to controls contained tracing relations.
+ *  
  * @author als
- *
+ * @kieler.design 2015-02-25 proposed
+ * @kieler.rating 2015-02-25 proposed yellow
  */
-class TracingMapping extends EContentAdapter {
+class TracingMapping {
 
     /** Internal data-structure for model element relations. */
     private val HashMultimap<Object, Object> mapping;
@@ -46,15 +42,20 @@ class TracingMapping extends EContentAdapter {
     /** Reverse mapping */
     private val HashMultimap<Object, Object> rmapping;
 
-    private val HashMap<EObject, List<Pair<Object, Object>>> removedEntries = newHashMap;
-
+    /** OPtional title of the associated transformation */
     private var String title = null;
 
+    /** 
+     * If deleghate is given the transformation is inplace
+     * and all tracing relations will be applied to the delegated TracingMapping
+     */
     private val TracingMapping delegate;
 
-    private var boolean active = false;
-
+    /**
+     * Creates a new tracing mapping with give title
+     */
     new(String title) {
+
         // Initial capacity 1000 Entries with 5 Values preventing early rehash
         this.mapping = HashMultimap::create(1000, 5);
         this.rmapping = HashMultimap::create(1000, 5);
@@ -62,6 +63,9 @@ class TracingMapping extends EContentAdapter {
         this.title = title
     }
 
+    /**
+     * Creates a new inplace tracing mapping with give title
+     */
     new(TracingMapping mapping, String title) {
         this.mapping = mapping.mapping;
         this.rmapping = mapping.rmapping;
@@ -238,65 +242,7 @@ class TracingMapping extends EContentAdapter {
     }
 
     // -------------------------------------------------------------------------
-    // Adapter
-    /**
-     * Activated or deactivates automatic relation deriving on Notification 
-     * this adapter receives from the observed model.
-     */
-    def setActive(boolean activeState) {
-        active = activeState;
-    }
-
-    /**
-     * Returns the current active state.
-     * If active automatic relation deriving on Notification 
-     * this adapter receives from the observed model are performed.
-     */
-    def isActive() {
-        active
-    }
-
-    override notifyChanged(Notification notification) {
-
-        if (notification.eventType == Notification.SET) {
-            val newValue = notification.newValue;
-            val oldValue = notification.oldValue;
-
-            if (newValue instanceof EObject && oldValue instanceof EObject && newValue != oldValue) {
-                (newValue as EObject).traceToDefault
-            }
-        }
-
-        //super implementation handles selfAdapt calling add/remocveAdapter
-        //thus invoke this behavior after redirecting tracing
-        super.notifyChanged(notification);
-    }
-
-    override void addAdapter(Notifier notifier) {
-        super.addAdapter(notifier);
-        if (active) {
-            val element = notifier as EObject;
-
-            //If element is added which was removed earlier then restore mappings
-            if (removedEntries.containsKey(element)) {
-                removedEntries.get(element).forEach[put(it.first, it.second)];
-                removedEntries.remove(element);
-            } else if (!contains(element)) {
-                element.traceToDefault;
-            }
-        }
-    }
-
-    override void removeAdapter(Notifier notifier) {
-        super.removeAdapter(notifier);
-        if (active) {
-            val element = notifier as EObject;
-            removedEntries.put(element, element.removeAll);
-        }
-    }
-
-    // -------------------------------------------------------------------------
-    // mapping administration
+    // Mapping Administration
     /**
      * Returns true if given object is contain in this mapping. Either as origin or target.
      * @param object object to check for
@@ -333,21 +279,21 @@ class TracingMapping extends EContentAdapter {
     /**
      * Returns the internal origin-to-target mapping.
      */
-    package def getMapping() {
+    def getInternalMapping() {
         return mapping;
     }
 
     /**
      * Returns the internal target-to-origin mapping.
      */
-    package def getReverseMapping() {
+    def getInternalReverseMapping() {
         return rmapping;
     }
 
     /**
      * Returns the internal delegate mapping if this mapping is an in-place mapping.
      */
-    package def getDelegate() {
+    def getInternalDelegate() {
         return delegate;
     }
 
