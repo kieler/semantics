@@ -25,26 +25,51 @@ import de.cau.cs.kieler.scgprios.results.ResultingSCCPartitions
 import de.cau.cs.kieler.scgprios.results.NodePriorityResult
 
 /**
+ * This class is part of the SCGPRIO transformation chain. This chain is used to check the scheduling
+ * and to calculate and optimize the priorities stepwise for the priority based compilation approach.
+ * The transformation can be called manually or used by KiCo to perform a series of transformations.
+ * <pre>
+ * SCGPRIO 
+ *   |-- OptimizeSCG
+ *   |-- NodePriorities                        <== YOU ARE HERE
+ *   |-- OptimizedNodePriorities                   
+ *   |-- ThreadSegmentIDs
+ *   |-- OptimizedThreadSegmentIDs
+ * </pre>
+ * 
  * @author cbu
  *
  */
 class NodePrioritiesTransformation extends Transformation{
     
+    /** 
+     * Generic model transformation interface.
+     * 
+     * @param eObject
+     *          the root element of the input model
+     * @param context
+     *          the context of the input model
+     * @return 
+     *          Returns the root element and context of the transformed model.
+     */
     override transform(EObject eObject, KielerCompilerContext context) {
-        return transformSCGDEPToSCGNODEPRIO(eObject as SCGraph, context)
+        return transformSCGDEPToSCGNODEPRIOS(eObject as SCGraph, context)
     }
     
     /**
      * This transformation calculates the strongly connected components from a graph in order
-     * to determine, if a valid schedule exists. If such the SCG is schedulable, the node 
-     * priorities are calculated
+     * to determine, if a valid schedule exists. If the SCG is schedulable, the node priorities 
+     * are calculated
      * 
-     * @param graph: SCG with dependencies
-     * @param context: KielerCompilerContext
+     * @param graph: 
+     *          SCG with dependencies
+     * @param context: 
+     *          KielerCompilerContext
      * 
-     * @result SCG 
+     * @result 
+     *          unmodified SCG with dependencies
      */
-    public def SCGraph transformSCGDEPToSCGNODEPRIO(SCGraph graph, KielerCompilerContext context) {
+    public def SCGraph transformSCGDEPToSCGNODEPRIOS(SCGraph graph, KielerCompilerContext context) {
         
         // calculate strongly connected components
         var nodes = graph.nodes
@@ -62,7 +87,7 @@ class NodePrioritiesTransformation extends Transformation{
 
             // calculate node priorities
             var calcNodePrios = new CalcNodePrios
-            var results = calcNodePrios.calculateNodePriorities(sccs, nodes)
+            var results = calcNodePrios.calculateNodePriorities(sccs)
             var nodePriorityResult = new NodePriorityResult()
             nodePriorityResult.priorityMap = results
             context.compilationResult.ancillaryData += nodePriorityResult

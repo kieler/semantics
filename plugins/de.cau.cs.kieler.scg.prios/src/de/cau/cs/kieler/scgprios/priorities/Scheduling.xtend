@@ -9,18 +9,26 @@ import de.cau.cs.kieler.scg.Write_Write
 import de.cau.cs.kieler.scg.Dependency
 
 /**
+ * This class contains methods, to decide whether an SCG is schedulable or not
+ * Furthermore a method to reduce the dependencies to those, which are problematic is provided
+ * 
  * @author cbu
  *
  */
 class Scheduling {
     /**
-     * Check, if any strongly connected component contains an iur-edge or if there is any
+     * This method decides about the schedulability of the SCG
+     * It checks, if any strongly connected component contains an iur-edge or if there is any
      * write-write conflict. 
      * 
-     * @param sccPartitions: List of partitions of strongly connected components
-     * @param context: KielerCompilerContext
-     * @param id: ID of current transformation
-     * @return Returns true, if the SCG is schedulable
+     * @param sccPartitions 
+     *          List of partitions of strongly connected components
+     * @param context
+     *          KielerCompilerContext
+     * @param id
+     *          ID of current transformation
+     * @return 
+     *          Returns true, if the SCG is schedulable
      */
     def boolean scheduleexists(LinkedList<LinkedList<Node>> sccPartitions) {
         for (scc : sccPartitions) {
@@ -46,7 +54,8 @@ class Scheduling {
      * Reduces the dependencies to those, which prevent the SCG from being schedulable.
      * This should help the user to understand the problem 
      * 
-     * @param sccPartitions: List of partitions of strongly connected components
+     * @param sccPartitions
+     *          List of partitions of strongly connected components
      */
     def void debugDependencies(LinkedList<LinkedList<Node>> sccPartitions){
         for (scc : sccPartitions){

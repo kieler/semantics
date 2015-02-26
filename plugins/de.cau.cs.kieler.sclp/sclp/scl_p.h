@@ -85,7 +85,6 @@ typedef int bool;
 
 // Terminate the thread leading up to "par"
 #define par 								\
-  printf("par");							\
   TERM_;
 
 // pause reuses PAUSE from sc

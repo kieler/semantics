@@ -13,25 +13,21 @@
  */
 package de.cau.cs.kieler.scgprios.priorities
 
-import com.google.inject.Inject
 import java.util.List
 import de.cau.cs.kieler.scg.Node
 import java.util.Stack
 import java.util.LinkedList
-import de.cau.cs.kieler.scgprios.common.Helper
-//import de.cau.cs.kieler.scl.scl_p.
-
-
+import de.cau.cs.kieler.scgprios.extensions.CommonExtension
 
 /**
+ * This class determines the strongly connected components of an SCG
+ * 
  * @author cbu
  *
  */
 class SCC {
     
-//    @Inject 
-//    extension Helper
-    private var helper = new Helper
+    private var commonExt = new CommonExtension
     private var number = <Node, Integer>newHashMap           // number of node / node has been visited
     private var lowlink = <Node, Integer>newHashMap          // minimal number of node / number of scc
     private var sccList = <LinkedList<Node>> newLinkedList   // list of sccs
@@ -42,14 +38,15 @@ class SCC {
      * Use Tarjan's algorithm to find strongly connected components
      * Returns only partitions with more than one element
      * 
-     * @param list of all nodes of the SCG
-     * @return list that contains sublists, each sublist is a list of strongly connected nodes
-     *          only sublists, that contain more than one node are returned
+     * @param nodelist
+     *          list of all nodes of the SCG
+     * @return 
+     *          list of strongly connected components. 
      * 
      */ 
     def LinkedList<LinkedList<Node>> findSCC(List<Node> nodelist){
         // nodes that have not been visited yet and might not be connected to the graph
-        var remainingVertices = findRemainingVertices(nodelist) 
+        var remainingVertices = nodelist as Iterable<Node>
         sccList.clear
         number.clear
         lowlink.clear
@@ -62,51 +59,30 @@ class SCC {
             //find all nodes which are strongly connected
             strongconnect(remainingVertices.head())
             //update remaining vertices
-            remainingVertices = findRemainingVertices(nodelist) 
+            remainingVertices = remainingVertices.filter[(!number.containsKey(it))]   
         }
-        // return only those sccs, which contain more than one element
-        // necessary?
-//        var finalSccList = <LinkedList<Node>> newLinkedList
-//        for (scc : sccList){
-//            if (!(scc.empty || scc.length==1)){
-//                finalSccList.add(scc)
-//            }
-//        }
         sccList
     }
     
-    /**
-     * This function returns a list of nodes, which have not been visited yet
-     * 
-     * @param list of nodes
-     * @return list of nodes which have not been visited yet
-     */
-    private def List<Node> findRemainingVertices(List<Node> nodelist){
-        var returnNode = new LinkedList<Node>
-        for (node: nodelist){
-            if (!number.containsKey(node)){
-                returnNode.addLast(node)
-            }
-        }
-        returnNode
-    }
+
     
     /**
      * Follows all edges to children and dependency edges (except from edges between surface and depth
      * in order to find the SCCs this node belongs to. Extends the global list with a list of nodes, if
      * this node is the smallest in an SCC.
      * 
-     * @param currentNode: node which is currently visited
+     * @param currentNode
+     *           node which is currently visited
      */
     private def void strongconnect(Node currentNode) {
         i = i + 1
         number.put(currentNode, i) //register node in number
-        lowlink.put(currentNode, i) //register node in lowlink???
-        pointStack.push(currentNode) //add to stack
+        lowlink.put(currentNode, i) //initialize node in lowlink
+        pointStack.push(currentNode) //add node to stack
         
         // get children and dependency nodes of current node
-        var childNodes = helper.getInstantChildrenOfNode(currentNode)
-        childNodes.addAll(helper.getDependencyNodes(currentNode))
+        var childNodes = commonExt.getInstantChildrenOfNode(currentNode)
+        childNodes.addAll(commonExt.getDependencyNodes(currentNode))
         
         // for all children and dependency nodes
         for (child : childNodes) {
@@ -115,7 +91,7 @@ class SCC {
             if (!number.containsKey(child)) {
                 strongconnect(child)
                 // save in list lowlink: current node and min of lowlink of currentnode and child
-                lowlink.put(currentNode, helper.min(lowlink.get(currentNode).intValue(), lowlink.get(child).intValue()))
+                lowlink.put(currentNode, commonExt.min(lowlink.get(currentNode).intValue(), lowlink.get(child).intValue()))
             } else {
 
                 //Node has been visited before
@@ -124,7 +100,7 @@ class SCC {
                 if (number.get(child).intValue() < number.get(currentNode).intValue()) {
                     if (pointStack.contains(child)) {
                         lowlink.put(currentNode,
-                            helper.min(lowlink.get(currentNode).intValue(), number.get(child).intValue()))
+                            commonExt.min(lowlink.get(currentNode).intValue(), number.get(child).intValue()))
                     }
                 }
             }
@@ -139,7 +115,6 @@ class SCC {
 
         }
     }
-        
-        
+          
 }
 

@@ -64,7 +64,6 @@ class SCLPSimulationSCChart {
 	#include <string.h>
 	#include <stdlib.h>
 	#include <stdio.h>
-	//#include "sc.h"
 
 	#include "cJSON.c"
 	
@@ -138,15 +137,10 @@ void writeOutputs() {
    def mainFunction(State scchart) {
    	'''
 int main(int argc, const char* argv[]) {
-        printf("blah");
         RESET();
-        printf("blah1");
 		output = cJSON_CreateObject();
-		printf("blah2");
 		readInputs();
-		printf("blah3");
 		tick();
-		printf("blah4");
 		while(1) {
 			writeOutputs();
 			char* outString = cJSON_Print(output);

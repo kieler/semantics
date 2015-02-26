@@ -56,7 +56,7 @@
       <editor
             editor="de.cau.cs.kieler.scg.presentation.ScgEditorID"
             label="SCGPriorityBasedCompilation"
-            transformations="SCGRAPH,SCG, SCGDEP, SCGPRIOS,OPTSCG, SCGNODEPRIOS, SCGOPTNODEPRIOS, SCGOPTTSIDS, SCGOPTPRIOIDS, PRIOCODEGEN,SCLP">
+            transformations="SCGRAPH,SCG, SCGDEP, SCGPRIOS,OPTSCG, SCGNODEPRIOS, SCGOPTNODEPRIOS, SCGTSIDS, SCGOPTPRIOIDS, PRIOCODEGEN,SCLP">
       </editor>
    </extension>
 

@@ -102,13 +102,9 @@ public class SCLPExecution extends AbstractExecution {
         // building path to bundle
         Bundle bundle = Platform.getBundle(SCLPPlugin.PLUGIN_ID);
         
-        System.out.println("compileCommandLine: got bundle");
-        System.out.println("bundle: "+bundle.toString());
-        
         //include scl_p.h and sc.h
         URL url = null;
         try {
-            System.out.println("compileCommandLine: try to get files:");
             url = FileLocator.toFileURL(FileLocator.find(bundle, new Path(SCLP_PATH), null));
             
         } catch (IOException e) {
@@ -116,9 +112,7 @@ public class SCLPExecution extends AbstractExecution {
             System.out.println("fileLocator failed");
             e.printStackTrace();
         }
-        System.out.println("result of fileLocator: "+url.toString());
         String bundleLocation = url.getFile();
-        System.out.println("result of bundleLocation: "+bundleLocation);
 
         // Windows vs. Linux: Exchange possibly wrong slash/backslash
         bundleLocation = bundleLocation.replaceAll("[/\\\\]+", "\\" + File.separator);
@@ -147,8 +141,7 @@ public class SCLPExecution extends AbstractExecution {
 //            compile += " " + bundleLocation + "cycle.h ";
 //        }
         
-        compile += " " + bundleLocation + "scl_p.h ";
-        compile += " " + bundleLocation + "sc.h ";
+        compile += " -I " + bundleLocation;
 
         compile += " "
                 // + outPath

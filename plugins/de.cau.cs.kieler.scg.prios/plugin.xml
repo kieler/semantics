@@ -17,7 +17,7 @@
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scgprios.transform.OptimizedNodePriortiesTransformation"
-            dependencies="SCGOPTTSIDS"
+            dependencies="SCGTSIDS"
             id="SCGOPTNODEPRIOS"
             method="transform"
             name="OptNodePriorities">
@@ -30,11 +30,11 @@
             name="Priorities">
       </transformationMethod>
       <transformationMethod
-            class="de.cau.cs.kieler.scgprios.transform.OptimizedThreadSegmentIDsTransformation"
+            class="de.cau.cs.kieler.scgprios.transform.ThreadSegmentIDsTransformation"
             dependencies="SCGOPTPRIOIDS"
-            id="SCGOPTTSIDS"
+            id="SCGTSIDS"
             method="transform"
-            name="OptThreadSegmentIDs">
+            name="ThreadSegmentIDs">
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scgprios.transform.OptimizedPrioIDsTransformation"
@@ -52,7 +52,7 @@
       </transformationMethod>
       <transformationGroup
             id="SCGPRIOS"
-            transformations="OPTSCG,SCGNODEPRIOS,SCGOPTNODEPRIOS,SCGOPTTSIDS,SCGOPTPRIOIDS">
+            transformations="OPTSCG,SCGNODEPRIOS,SCGOPTNODEPRIOS,SCGTSIDS,SCGOPTPRIOIDS">
       </transformationGroup>
    </extension>
 

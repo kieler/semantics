@@ -48,7 +48,7 @@ public class SCChartsSimSCLPAutomatedJUnitTest extends KiemAutomatedJUnitTest {
      */
     protected IPath getBundleTestPath() {
 //        return new Path("knowntofail");
-        return new Path("broken");
+        return new Path("testdata");
     }
 
     /**

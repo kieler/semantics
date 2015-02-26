@@ -181,7 +181,6 @@ public class SCChartsSCLPDataComponent extends JSONObjectSimulationDataComponent
         // };
         // properties[KIEM_PROPERTY_RUNTIME] = new KiemProperty(KIEM_PROPERTY_NAME_RUNTIME,
         // new KiemPropertyTypeChoice(items), items[0]);
-        System.out.println("PROPERTIES ACTIVATED OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
         return properties;
     }
 
@@ -509,7 +508,7 @@ public class SCChartsSCLPDataComponent extends JSONObjectSimulationDataComponent
             writeOutputModel(outputFileSimulation, cSimulation.getBytes());
 
             String includePath = getBundlePath("templates");
-            String includeSCLPPath = getBundlePath("sclp");
+            //String includeSCLPPath = getBundlePath("sclp");
             System.out.println("21 " + includePath);
             System.out.println(includePath);
             // Compile
@@ -518,7 +517,8 @@ public class SCChartsSCLPDataComponent extends JSONObjectSimulationDataComponent
             
             generatedSCFiles.add(outputFileSimulation);
             // generatedSCFiles.add(outputFileSCChart);
-            generatedSCFiles.add(" -I " + includePath+ " -I " + includeSCLPPath);
+            //generatedSCFiles.add(" -I " + includePath+ " -I " + includeSCLPPath);
+            generatedSCFiles.add(" -I " + includePath);
             String modelName = "SCG";
             if (myModel instanceof State) {
                 modelName = ((State) myModel).getId();
@@ -526,13 +526,13 @@ public class SCChartsSCLPDataComponent extends JSONObjectSimulationDataComponent
             System.out.println("generated SCLPFiles: "+generatedSCFiles.toString());
             cExecution.compile(generatedSCFiles, modelName);
         } catch (RuntimeException e) {
-            throw new KiemInitializationException("Error compiling S program:\n\n "
+            throw new KiemInitializationException("Error compiling SCL_P program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);
         } catch (IOException e) {
-            throw new KiemInitializationException("Error compiling S program:\n\n "
+            throw new KiemInitializationException("Error compiling SCL_P program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);
         } catch (InterruptedException e) {
-            throw new KiemInitializationException("Error compiling S program:\n\n "
+            throw new KiemInitializationException("Error compiling SCL_P program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);
         }
     }

@@ -13,13 +13,15 @@
  */
 package de.cau.cs.kieler.scgprios.transform
 
-import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.kico.KielerCompilerContext
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.scgprios.optimizations.OptimizeNodePriorities
-import de.cau.cs.kieler.scgprios.results.ResultingSCCPartitions
+import de.cau.cs.kieler.kico.KielerCompilerContext
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.scgprios.priorities.CalcPrioIDs
+import de.cau.cs.kieler.scgprios.priorities.CalcTSIDs
 import de.cau.cs.kieler.scgprios.results.NodePriorityResult
+import de.cau.cs.kieler.scgprios.results.ThreadSegmentIDResult
+import de.cau.cs.kieler.scgprios.results.PrioIDResult
 
 /**
  * This class is part of the SCGPRIO transformation chain. This chain is used to check the scheduling
@@ -29,15 +31,15 @@ import de.cau.cs.kieler.scgprios.results.NodePriorityResult
  * SCGPRIO 
  *   |-- OptimizeSCG
  *   |-- NodePriorities                        
- *   |-- OptimizedNodePriorities               <== YOU ARE HERE    
- *   |-- ThreadSegmentIDs
+ *   |-- OptimizedNodePriorities                   
+ *   |-- ThreadSegmentIDs                      <== YOU ARE HERE
  *   |-- OptimizedThreadSegmentIDs
  * </pre>
  * 
  * @author cbu
  *
  */
-class OptimizedNodePriortiesTransformation extends Transformation{
+class ThreadSegmentIDsTransformation extends Transformation{
     
     /** 
      * Generic model transformation interface.
@@ -50,11 +52,16 @@ class OptimizedNodePriortiesTransformation extends Transformation{
      *          Returns the root element and context of the transformed model.
      */
     override transform(EObject eObject, KielerCompilerContext context) {
-        return transformSCGNODEPRIOSToSCGOPTNODEPRIOS(eObject as SCGraph, context)
+        return transformSCGOPTNODEPRIOSToSCGTSIDS(eObject as SCGraph, context)
     }
     
     /**
-     * This transformation optimizes the node priorities detected during the previous transformation
+     * This transformation calculates the thread segment IDs for a given SCG.
+     * Therefore the node priorities, determined during the previous steps, are required.
+     * This transformation can be used with unoptimized and optimized node priorities.
+     * 
+     * Because the thread segment IDs change, if a region contains another region, the unoptimized
+     * prioIDs are also calculated, so that the user understand, how this transformation works.
      * 
      * @param graph: 
      *          SCG with dependencies
@@ -64,26 +71,35 @@ class OptimizedNodePriortiesTransformation extends Transformation{
      * @result 
      *          unmodified SCG with dependencies
      */
-    public def SCGraph transformSCGNODEPRIOSToSCGOPTNODEPRIOS(SCGraph graph, KielerCompilerContext context) {
+    public def SCGraph transformSCGOPTNODEPRIOSToSCGTSIDS(SCGraph graph, KielerCompilerContext context) {
         
         // get previous results
-        var sccsRes = context.compilationResult.ancillaryData.filter[it instanceof ResultingSCCPartitions]
         var nodePriosRes = context.compilationResult.ancillaryData.filter[it instanceof NodePriorityResult]
         
         // if previous results exist, optimize node priorities
-        if (!sccsRes.empty || !nodePriosRes.empty){
+        if (!nodePriosRes.empty){
             
-            var sccs = (sccsRes.head as ResultingSCCPartitions).SCCPartitions
+            var nodes = graph.nodes
             var nodePrios = (nodePriosRes.head as NodePriorityResult).priorityMap
             
-            // optimize node priorities
-            var calcOptNodePrios = new OptimizeNodePriorities
-            var optNodePrios = calcOptNodePrios.optimizeNodePriorities(nodePrios, sccs)
+            // calculate ThreadSegmentIDs
+            var calcTSIDs = new CalcTSIDs
+            var optTsids = calcTSIDs.calculateTSIDs(nodes, nodePrios)
+            var threadSegmentIDResult = new ThreadSegmentIDResult()
+            threadSegmentIDResult.priorityMap = optTsids
+            context.compilationResult.ancillaryData += threadSegmentIDResult
             
-            nodePrios = optNodePrios
+            // calculate PrioIDs (without optimization)
+            // this should help the user to understand how the threadSegmentIDs 
+            // are calculated
+            var calcPrioIDs = new CalcPrioIDs
+            var prioIDs = calcPrioIDs.calcPrioIDs(nodePrios, optTsids)
+            var prioIDResult = new PrioIDResult()
+            prioIDResult.priorityMap = prioIDs
+            context.compilationResult.ancillaryData += prioIDResult
             
         }
-       
+   
         graph
     }
 }

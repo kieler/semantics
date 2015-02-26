@@ -15,23 +15,30 @@ package de.cau.cs.kieler.scgprios.priorities
 
 import java.util.HashMap
 import de.cau.cs.kieler.scg.Node
-import java.util.Set
-import java.util.LinkedList
 
 /**
+ * This class calculates the prioIDs for all nodes of an SCG
+ * 
  * @author cbu
  *
  */
 class CalcPrioIDs {
     
-    
+    /**
+     * Calculates prioIDs from node priorities and thread segment ids
+     * 
+     * @param nodePriorities
+     *          nodes and their corresponding node priorities
+     * @param tsIDs
+     *          nodes and their corresponding thread segment ids
+     * @return
+     *          HashMap containing nodes and their corresponding prioIDs
+     */
     def public HashMap<Node,Long> calcPrioIDs(HashMap<Node,Integer> nodePriorities, HashMap<Node,Integer> tsIDs){
         var nodeList = nodePriorities.keySet
         var prioIDs = <Node,Long> newHashMap
         var biggestTSID = 0
         for (node : nodeList){
-            //System.out.println("type first "+node)
-            //System.out.println("tsid :"+tsIDs.get(node).intValue)
             if (!tsIDs.containsKey(node)){
                 System.out.println("Missing TSID for node "+node)
             } else{
@@ -41,37 +48,11 @@ class CalcPrioIDs {
         }
         biggestTSID = biggestTSID + 1
         for (n : nodeList){
-            //var long newPrioID = tsIDs.get(n)
             var long newPrioID = (nodePriorities.get(n).intValue as long) * (biggestTSID as long) + (tsIDs.get(n).intValue as long) 
             prioIDs.put(n,new Long(newPrioID))
         }
-        //var optimizedPrioIDs = optimizePrioIDs(prioIDs, nodeList)
-        //optimizedPrioIDs
         prioIDs
         
-    }
-    
-//    // priority 0 will never occur, because the tsid from the concurrent tsids will not be 0
-//    // if there is no concurrent element, it is possible to have priority 0 but there will
-//    // be no threads forked at all
-//    private def HashMap<Node,Long> optimizePrioIDs(HashMap<Node,Long> prioIDs, Set<Node> nodeSet){
-//        var nodeList = new LinkedList<Node>
-//        nodeList.addAll(nodeSet)
-//        var sortedNodeList = nodeList.sortBy[prioIDs.get(it)]
-//        var long newPrioIDOfLastElement = 0
-//        var long prioIDOfLastElement = 0
-//        for (n : sortedNodeList){           
-//            if (prioIDs.get(n).longValue == prioIDOfLastElement){
-//                prioIDs.put(n,newPrioIDOfLastElement)
-//            } else {
-//                prioIDOfLastElement = prioIDs.get(n).longValue
-//                newPrioIDOfLastElement = newPrioIDOfLastElement + 1
-//                prioIDs.put(n,newPrioIDOfLastElement)
-//            }
-//        }
-//        prioIDs
-//    }
-    
-    
+    }  
     
 }

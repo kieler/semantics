@@ -1,5 +1,15 @@
-/**
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
+ * Copyright 2014 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.kexpressions.c.transform
 
@@ -21,6 +31,8 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 
 /**
+ * This class generates C Code for KExpressions
+ * 
  * @author cbu
  *
  */
@@ -28,10 +40,10 @@ class KExpressionsToC {
     
     /**
      * Transforms a list of Declaration
-     * @param declarations: List of declarations
+     * 
+     * @param declarations
+     *          List of declarations
      */
-    // is the first case really necessary? - yes!
-    // extern and static exclude each other
     def String transformDeclarations(EList<Declaration> declarations){
         '''
         «FOR d : declarations»
@@ -54,8 +66,11 @@ class KExpressionsToC {
     
     /**
      * Transforms a list of valuedObjects from a given type for declarations
-     * @param type: Type of valuedObject
-     * @param objects: List of valuedObjects
+     * 
+     * @param type
+     *          Type of valuedObject
+     * @param objects
+     *          List of valuedObjects
      */
     private def String transformValuedObjects(ValueType type, EList<ValuedObject> objects){   
        '''
@@ -67,37 +82,46 @@ class KExpressionsToC {
     
     /**
      * Transforms a ValuedObjectReference
-     * @param ref: ValuedObjectReference
+     * 
+     * @param ref
+     *          ValuedObjectReference
      */
     def dispatch String transformExpression(ValuedObjectReference ref){
-        System.out.println(ref.valuedObject.name)
         '''«ref.valuedObject.name»«IF !ref.indices.empty»«transformExpressions(ref.indices)»«ENDIF»'''    
     }
     
     /**
      * Transforms a IntValue
-     * @param value: IntValue 
+     * 
+     * @param value
+     *          IntValue 
      */
     def dispatch String transformExpression(IntValue value){
         '''«value.value»'''     
     }
      /**
      * Transforms an BoolValue
-     * @param value: BoolValue 
+     * 
+     * @param value
+     *          BoolValue 
      */
     def dispatch String transformExpression(BoolValue value){
         '''«value.value»'''     
     }
      /**
      * Transforms a FloatValue
-     * @param value: FloatValue 
+     * 
+     * @param value
+     *          FloatValue 
      */
     def dispatch String transformExpression(FloatValue value){
         '''«value.value»'''     
     }
      /**
      * Transforms a StringValue
-     * @param value: StringValue 
+     * 
+     * @param value
+     *          StringValue 
      */
     def dispatch String transformExpression(StringValue value){
         '''«value.value»'''
@@ -106,7 +130,9 @@ class KExpressionsToC {
 
     /**
      * Transforms an OperatorExpression
-     * @param opExp: OperatorExpression
+     * 
+     * @param opExp
+     *          OperatorExpression
      */
     def dispatch String transformExpression(OperatorExpression opExp){       
         var operator = transformOperators(opExp.operator)
@@ -123,7 +149,9 @@ class KExpressionsToC {
     
     /**
      * Transforms a TextExpression
-     * @param textExp: TextExpression
+     * 
+     * @param textExp
+     *          TextExpression
      */
     def dispatch String transformExpression(TextExpression textExp){
         '''«textExp.text»'''
@@ -131,7 +159,9 @@ class KExpressionsToC {
     
     /**
      * Transforms FunctionCall
-     * @param funcCall: functionCall
+     * 
+     * @param funcCall
+     *          functionCall
      */
     // does this really exist?
     def dispatch String transformExpression(FunctionCall funcCall){
@@ -144,7 +174,9 @@ class KExpressionsToC {
     
     /**
      * Transforms a list of Expressions
-     * @param indices: List of Expressions
+     * 
+     * @param indices
+     *          List of Expressions
      */
     def String transformExpressions(List<Expression> indices){
         '''[«FOR i : indices»«transformExpression(i)»«ENDFOR»]'''
@@ -152,7 +184,9 @@ class KExpressionsToC {
     
     /**
      * Transforms operators
-     * @param operatortype: Operator
+     * 
+     * @param operatortype
+     *          Operator
      */
     private def String transformOperators(OperatorType operatortype){
         if (operatortype.getName() == "AND"){
@@ -167,7 +201,9 @@ class KExpressionsToC {
     
     /**
      * Transforms operators which are only applied to a single argument
-     * @param operatortype: Operator
+     * 
+     * @param operatortype
+     *          Operator
      */
     private def String transformFirstOperator(OperatorType operatortype){
         if (operatortype.getName() == "NOT" || operatortype.getName() == "SUB" || operatortype.getName() == "ADD"){
@@ -179,7 +215,9 @@ class KExpressionsToC {
     
     /**
      * Transforms Parameter
-     * @param p: parameter
+     * 
+     * @param p
+     *          parameter
      */    
     private def String transformParameter(Parameter p){
         if (p.callByReference){
