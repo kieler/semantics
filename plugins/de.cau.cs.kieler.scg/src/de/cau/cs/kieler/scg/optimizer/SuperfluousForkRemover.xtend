@@ -56,7 +56,6 @@ class SuperfluousForkRemover extends AbstractOptimizer {
         val removeControlFlows = <ControlFlow>newArrayList
 
         for (fork : singleRegionForks) {
-//            val ancestorEntry = fork.threadEntry
 
             // Entry node of the fork
             val entry = fork.getAllNext.head.target as Entry
@@ -82,13 +81,6 @@ class SuperfluousForkRemover extends AbstractOptimizer {
                     flows.target = fork.join.next.target
                 }
             }
-
-            //KITT redirect tracing relations
-//            forkPreviousControlflows.trace(entry.next)
-//            forkPreviousControlflows.trace(fork.next)
-//            exitPreviousControlflows.trace(fork.join.next, entry.exit.next)
-//            ancestorEntry.trace(entry, fork)
-//            ancestorEntry.exit.trace(entry.exit, fork.join)
 
             // Add superfluous control flows to the remove list.
             removeControlFlows += fork.join.next
