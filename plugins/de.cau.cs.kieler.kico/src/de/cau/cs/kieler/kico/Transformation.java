@@ -49,8 +49,17 @@ public abstract class Transformation {
     /** The method. */
     private String method = null;
 
-    /** The dependencies. */
-    private List<String> dependencies = new ArrayList<String>();
+    /** The produces dependencies. */
+    private List<String> producesDependencies = new ArrayList<String>();
+
+    /** The not handles dependencies. */
+    private List<String> notHandlesDependencies = new ArrayList<String>();
+
+    /** The pre processors. */
+    private List<ProcessorOption> preProcessors = new ArrayList<ProcessorOption>();
+
+    /** The post processors. */
+    private List<ProcessorOption> postProcessors = new ArrayList<ProcessorOption>();
 
     // -------------------------------------------------------------------------
 
@@ -183,13 +192,27 @@ public abstract class Transformation {
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the list of transformation IDs that represent dependencies to other transformations.
+     * Sets the list of transformation IDs that represent produces dependencies to other
+     * transformations.
      * 
      * @param dependencies
      *            the new dependencies
      */
-    void setDependencies(List<String> dependencies) {
-        this.dependencies = dependencies;
+    void setProducesDependencies(List<String> dependencies) {
+        this.producesDependencies = dependencies;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the list of transformation IDs that represent not handles dependencies to other
+     * transformations.
+     * 
+     * @param dependencies
+     *            the new dependencies
+     */
+    void setNotHandlesDependencies(List<String> dependencies) {
+        this.notHandlesDependencies = dependencies;
     }
 
     // -------------------------------------------------------------------------
@@ -199,8 +222,42 @@ public abstract class Transformation {
      * 
      * @return the dependencies
      */
-    public List<String> getDependencies() {
-        return dependencies;
+    public List<String> getNotHandlesDependencies() {
+        return notHandlesDependencies;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the list of produces transformation IDs that represent dependencies to other
+     * transformations.
+     * 
+     * @return the dependencies
+     */
+    public List<String> getProducesDependencies() {
+        return producesDependencies;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the list of pre processors.
+     * 
+     * @return the dependencies
+     */
+    public List<ProcessorOption> getPreProcessors() {
+        return preProcessors;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the list of post processors.
+     * 
+     * @return the dependencies
+     */
+    public List<ProcessorOption> getPostProcessors() {
+        return postProcessors;
     }
 
     // -------------------------------------------------------------------------

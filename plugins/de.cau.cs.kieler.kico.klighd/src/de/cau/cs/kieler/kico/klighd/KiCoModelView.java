@@ -90,6 +90,7 @@ import de.cau.cs.kieler.klighd.ViewContext;
 import de.cau.cs.kieler.klighd.internal.ISynthesis;
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager;
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart;
+import de.cau.cs.kieler.klighd.util.KlighdProperties;
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.config.kivi.KIEMExecutionAutoloadCombination;
@@ -1129,11 +1130,12 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
             boolean success = false;
 
             // Update diagram
-            if (modelTypeChanged) { 
-                KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
+            if (modelTypeChanged) {
+                KlighdSynthesisProperties properties = new KlighdSynthesisProperties();  
+                properties.setProperty(KlighdProperties.EDGES_FIRST, true);
                 properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, "de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationUpdateStrategy");
                 
-                //save previous synthesis options to restore later  
+                //save previous synthesis options to restore later
                 if (vc != null) {
                     ISynthesis usedSynthesis = vc.getDiagramSynthesis();
                     if (usedSynthesis != null) {

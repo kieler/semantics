@@ -78,7 +78,23 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsSerializeExtens
  */
 
 class DepthJoinSynchronizer extends SurfaceSynchronizer {
- 
+    
+    static final boolean DEBUG = false;
+
+    def static void debug(String debugText) {
+        debug(debugText, true);
+    }
+
+    def static void debug(String debugText, boolean lineBreak) {
+        if (DEBUG) {
+            if (lineBreak) {
+                System.out.println(debugText);
+            } else {
+                System.out.print(debugText);
+            }
+        }
+    }
+    
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
@@ -133,7 +149,10 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
     
     override protected build(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
         // Create a new SynchronizerData class which holds the data to return.
-        var data = new SynchronizerData() => [ setJoin(join) ]
+        var data = new SynchronizerData() => [ 
+            setJoin(join)
+            setGuard(guard)
+        ]
         
         // Since we are working we completely enriched SCGs, we can use the SCG extensions 
         // to retrieve the scheduling block of the join node in question.
@@ -164,7 +183,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
             newGuard.expression = emptyExp.expression
             scg.guards += newGuard
             
-            System.out.println("Generated NEW guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize)
+            debug("Generated NEW guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize)
 		}        
     }    
     
@@ -194,7 +213,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
                         vor.valuedObject = newGuard.valuedObject 
                     
                         newGuards += newGuard
-                        System.out.println("Generated NEW _SCHIZOPHRENIC_ guard " + newGuard.valuedObject.name)
+                        debug("Generated NEW _SCHIZOPHRENIC_ guard " + newGuard.valuedObject.name)
                     
                     } else {
                         vor.valuedObject = guardExists.head.valuedObject

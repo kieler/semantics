@@ -381,29 +381,46 @@ public class EsoGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	
-	private TracelistElements pTracelist;
-	private TraceElements pTrace;
-	private TickElements pTick;
-	private SignalElements pSignal;
-	private KvpairElements pKvpair;
-	private EsoIntElements pEsoInt;
-	private EsoStringElements pEsoString;
-	private EsoFloatElements pEsoFloat;
-	private EsoBoolElements pEsoBool;
-	private EsoJsonElements pEsoJson;
-	private TerminalRule tSPECIAL;
-	private TerminalRule tBOOL;
-	private TerminalRule tFLOAT;
-	private TerminalRule tINT;
-	private TerminalRule tALPHANUMSPECIAL;
-	private TerminalRule tSTRING;
-	private TerminalRule tWS;
+	private final TracelistElements pTracelist;
+	private final TraceElements pTrace;
+	private final TickElements pTick;
+	private final SignalElements pSignal;
+	private final KvpairElements pKvpair;
+	private final EsoIntElements pEsoInt;
+	private final EsoStringElements pEsoString;
+	private final EsoFloatElements pEsoFloat;
+	private final EsoBoolElements pEsoBool;
+	private final EsoJsonElements pEsoJson;
+	private final TerminalRule tSPECIAL;
+	private final TerminalRule tBOOL;
+	private final TerminalRule tFLOAT;
+	private final TerminalRule tINT;
+	private final TerminalRule tALPHANUMSPECIAL;
+	private final TerminalRule tSTRING;
+	private final TerminalRule tWS;
 	
 	private final Grammar grammar;
 
 	@Inject
 	public EsoGrammarAccess(GrammarProvider grammarProvider) {
 		this.grammar = internalFindGrammar(grammarProvider);
+		this.pTracelist = new TracelistElements();
+		this.pTrace = new TraceElements();
+		this.pTick = new TickElements();
+		this.pSignal = new SignalElements();
+		this.pKvpair = new KvpairElements();
+		this.pEsoInt = new EsoIntElements();
+		this.pEsoString = new EsoStringElements();
+		this.pEsoFloat = new EsoFloatElements();
+		this.pEsoBool = new EsoBoolElements();
+		this.pEsoJson = new EsoJsonElements();
+		this.tSPECIAL = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "SPECIAL");
+		this.tBOOL = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "BOOL");
+		this.tFLOAT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "FLOAT");
+		this.tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "INT");
+		this.tALPHANUMSPECIAL = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ALPHANUMSPECIAL");
+		this.tSTRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "STRING");
+		this.tWS = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "WS");
 	}
 	
 	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
@@ -432,7 +449,7 @@ public class EsoGrammarAccess extends AbstractGrammarElementFinder {
 	//tracelist:
 	//	traces+=trace+;
 	public TracelistElements getTracelistAccess() {
-		return (pTracelist != null) ? pTracelist : (pTracelist = new TracelistElements());
+		return pTracelist;
 	}
 	
 	public ParserRule getTracelistRule() {
@@ -442,7 +459,7 @@ public class EsoGrammarAccess extends AbstractGrammarElementFinder {
 	//trace:
 	//	"!" "reset" ";" ticks+=tick+;
 	public TraceElements getTraceAccess() {
-		return (pTrace != null) ? pTrace : (pTrace = new TraceElements());
+		return pTrace;
 	}
 	
 	public ParserRule getTraceRule() {
@@ -453,7 +470,7 @@ public class EsoGrammarAccess extends AbstractGrammarElementFinder {
 	//	{tick} input+=signal* ("%" ("Output:" | "Output" ":") output+=signal*)? extraInfos+=kvpair* ("%%" ("Output:" |
 	//	"Output" ":") extraInfosOutput+=kvpair*)? ";";
 	public TickElements getTickAccess() {
-		return (pTick != null) ? pTick : (pTick = new TickElements());
+		return pTick;
 	}
 	
 	public ParserRule getTickRule() {
@@ -468,7 +485,7 @@ public class EsoGrammarAccess extends AbstractGrammarElementFinder {
 	// * / signal:
 	//	name=ALPHANUMSPECIAL valued?="("? (val=(EsoInt | EsoFloat | EsoBool | EsoString) ")")?;
 	public SignalElements getSignalAccess() {
-		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());
+		return pSignal;
 	}
 	
 	public ParserRule getSignalRule() {
@@ -478,7 +495,7 @@ public class EsoGrammarAccess extends AbstractGrammarElementFinder {
 	//kvpair:
 	//	{kvpair} "%%" key=ALPHANUMSPECIAL "=" value=(EsoJson | EsoString | EsoFloat | EsoBool | EsoInt);
 	public KvpairElements getKvpairAccess() {
-		return (pKvpair != null) ? pKvpair : (pKvpair = new KvpairElements());
+		return pKvpair;
 	}
 	
 	public ParserRule getKvpairRule() {
@@ -488,7 +505,7 @@ public class EsoGrammarAccess extends AbstractGrammarElementFinder {
 	//EsoInt:
 	//	value=INT;
 	public EsoIntElements getEsoIntAccess() {
-		return (pEsoInt != null) ? pEsoInt : (pEsoInt = new EsoIntElements());
+		return pEsoInt;
 	}
 	
 	public ParserRule getEsoIntRule() {
@@ -498,7 +515,7 @@ public class EsoGrammarAccess extends AbstractGrammarElementFinder {
 	//EsoString:
 	//	value=STRING;
 	public EsoStringElements getEsoStringAccess() {
-		return (pEsoString != null) ? pEsoString : (pEsoString = new EsoStringElements());
+		return pEsoString;
 	}
 	
 	public ParserRule getEsoStringRule() {
@@ -508,7 +525,7 @@ public class EsoGrammarAccess extends AbstractGrammarElementFinder {
 	//EsoFloat:
 	//	value=FLOAT;
 	public EsoFloatElements getEsoFloatAccess() {
-		return (pEsoFloat != null) ? pEsoFloat : (pEsoFloat = new EsoFloatElements());
+		return pEsoFloat;
 	}
 	
 	public ParserRule getEsoFloatRule() {
@@ -518,7 +535,7 @@ public class EsoGrammarAccess extends AbstractGrammarElementFinder {
 	//EsoBool:
 	//	value=BOOL;
 	public EsoBoolElements getEsoBoolAccess() {
-		return (pEsoBool != null) ? pEsoBool : (pEsoBool = new EsoBoolElements());
+		return pEsoBool;
 	}
 	
 	public ParserRule getEsoBoolRule() {
@@ -528,7 +545,7 @@ public class EsoGrammarAccess extends AbstractGrammarElementFinder {
 	//EsoJson:
 	//	value=ALPHANUMSPECIAL;
 	public EsoJsonElements getEsoJsonAccess() {
-		return (pEsoJson != null) ? pEsoJson : (pEsoJson = new EsoJsonElements());
+		return pEsoJson;
 	}
 	
 	public ParserRule getEsoJsonRule() {
@@ -538,43 +555,43 @@ public class EsoGrammarAccess extends AbstractGrammarElementFinder {
 	//terminal SPECIAL:
 	//	"," | "." | "/" | "@" | "#" | "$" | "&" | "*" | ":" | "+" | "-" | "_";
 	public TerminalRule getSPECIALRule() {
-		return (tSPECIAL != null) ? tSPECIAL : (tSPECIAL = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "SPECIAL"));
+		return tSPECIAL;
 	} 
 
 	//terminal BOOL returns ecore::EBoolean:
 	//	"true" | "false";
 	public TerminalRule getBOOLRule() {
-		return (tBOOL != null) ? tBOOL : (tBOOL = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "BOOL"));
+		return tBOOL;
 	} 
 
 	//terminal FLOAT returns ecore::EFloat:
 	//	("+" | "-")? "0".."9"+ "." "0".."9"+;
 	public TerminalRule getFLOATRule() {
-		return (tFLOAT != null) ? tFLOAT : (tFLOAT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "FLOAT"));
+		return tFLOAT;
 	} 
 
 	//terminal INT returns ecore::EInt:
 	//	"0".."9"+;
 	public TerminalRule getINTRule() {
-		return (tINT != null) ? tINT : (tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "INT"));
+		return tINT;
 	} 
 
 	//terminal ALPHANUMSPECIAL:
 	//	"0".."9"* ("a".."z" | "A".."Z" | SPECIAL) ("a".."z" | "A".."Z" | "0".."9" | SPECIAL)*;
 	public TerminalRule getALPHANUMSPECIALRule() {
-		return (tALPHANUMSPECIAL != null) ? tALPHANUMSPECIAL : (tALPHANUMSPECIAL = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ALPHANUMSPECIAL"));
+		return tALPHANUMSPECIAL;
 	} 
 
 	//terminal STRING:
 	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "u" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"" | "\'" ("\\" ("b" | "t" |
 	//	"n" | "f" | "r" | "u" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
 	public TerminalRule getSTRINGRule() {
-		return (tSTRING != null) ? tSTRING : (tSTRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "STRING"));
+		return tSTRING;
 	} 
 
 	//terminal WS:
 	//	(" " | "\t" | "\r" | "\n")+;
 	public TerminalRule getWSRule() {
-		return (tWS != null) ? tWS : (tWS = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "WS"));
+		return tWS;
 	} 
 }

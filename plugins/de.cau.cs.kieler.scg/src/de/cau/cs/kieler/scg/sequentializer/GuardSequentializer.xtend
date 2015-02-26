@@ -258,7 +258,7 @@ class GuardSequentializer extends AbstractSequentializer {
 			guards += sBlock.guard 
 
 			for (guard : guards) {
-				System.out.println("Sequentializing guard " + guard.valuedObject.name)
+//				System.out.println("Sequentializing guard " + guard.valuedObject.name)
 				if (!placedGuards.contains(guard)) {
 			    	val assignment2 = ScgFactory::eINSTANCE.createAssignment.trace(sBlock)
 					assignment2.addGuardExpression(guard, nextControlFlows, scg, nodeCache)

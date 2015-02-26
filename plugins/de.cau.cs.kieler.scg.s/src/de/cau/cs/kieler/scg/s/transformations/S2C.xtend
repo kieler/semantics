@@ -16,7 +16,7 @@ package de.cau.cs.kieler.scg.s.transformations
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.s.s.Program
 import com.google.inject.Guice
-import de.cau.cs.kieler.scg.s.PrimitiveBeautifier
+import de.cau.cs.kieler.core.model.codegeneration.SimpleCBeautifier
 import de.cau.cs.kieler.kitt.tracing.TransformationTracing
 
 /**
@@ -42,7 +42,7 @@ class S2C {
                 val de.cau.cs.kieler.s.sc.xtend.S2C transform2 = Guice.createInjector().getInstance(typeof(de.cau.cs.kieler.s.sc.xtend.S2C));
                 var String cProgram = transform2.transform(eObject as Program).toString();
                 
-                cProgram = PrimitiveBeautifier.beautify(cProgram)
+                cProgram = SimpleCBeautifier.beautify(cProgram, "   ");
                 
                 return cProgram;
             }
