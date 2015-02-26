@@ -113,15 +113,10 @@ class OptimizeNodePriorities {
             
             for (s : scc){
                 var newIncomingList = (s as Node).incoming
-                var removeList = <Link> newLinkedList
                 for (n : newIncomingList){
-                    if (scc.contains(n.eContainer)){
-                        removeList.add(n)
+                    if (!scc.contains(n.eContainer)){
+                        incomingList.add(n)
                     }
-                }
-                // remove nodes from current scc from incomingList
-                for (r : removeList){
-                    incomingList.remove(r)
                 }
             }
             
