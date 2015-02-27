@@ -16,6 +16,7 @@ package de.cau.cs.kieler.scgprios.extensions.export
 import de.cau.cs.kieler.scgprios.extensions.CommonExtension
 import java.util.LinkedList
 import de.cau.cs.kieler.scg.Node
+import com.google.inject.Inject
 
 /**
  * This class provides methods, which are also used by the de.cau.cs.kieler.scg.prios.sclp
@@ -26,7 +27,8 @@ import de.cau.cs.kieler.scg.Node
  */
 class SCGPrioExportExtension {
     
-    private var commonExt = new CommonExtension
+    @Inject
+    extension CommonExtension commonExt
     
     /**
      * Returns all children of a node (including depth nodes).

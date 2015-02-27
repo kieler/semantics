@@ -18,6 +18,7 @@ import de.cau.cs.kieler.scg.Node
 import java.util.HashMap
 import de.cau.cs.kieler.scgprios.extensions.CommonExtension
 import de.cau.cs.kieler.scgprios.extensions.SCCExtension
+import com.google.inject.Inject
 
 /**
  * This class provides functions to determine the node priority for all nodes of an SCG
@@ -26,10 +27,13 @@ import de.cau.cs.kieler.scgprios.extensions.SCCExtension
  *
  */
 class CalcNodePrios {
+    
+    @Inject
+    extension CommonExtension
+    @Inject
+    extension SCCExtension
  
     private var nodePriorityList = <Node,Integer>newHashMap
-    private var sccExt = new SCCExtension
-    private var commonExt = new CommonExtension
     
     /**
      * Starts calculation of the longest path for all nodes. The longest path is equal to the node 
@@ -70,8 +74,8 @@ class CalcNodePrios {
         var dependencies = new LinkedList<Node>
         var int nodePriority = 0
 
-        children.addAll(sccExt.getChildrenFromSCC(sccPartition))
-        dependencies.addAll(sccExt.getDependenciesFromSCC(sccPartition))
+        children.addAll(getChildrenFromSCC(sccPartition))
+        dependencies.addAll(getDependenciesFromSCC(sccPartition))
 
         // calculate longest path for all children
         for (child : children) {
@@ -79,9 +83,9 @@ class CalcNodePrios {
                 // get scc of child
                 var childSCC = sccs.filter[it.contains(child)].head
                 longestPath(childSCC, sccs)
-                nodePriority = commonExt.max(nodePriority, nodePriorityList.get(child))
+                nodePriority = max(nodePriority, nodePriorityList.get(child))
             } else {
-                nodePriority = commonExt.max(nodePriority, nodePriorityList.get(child))
+                nodePriority = max(nodePriority, nodePriorityList.get(child))
 
             }
         }
@@ -91,9 +95,9 @@ class CalcNodePrios {
                 // get scc of dependency node
                 var dependencySCC = sccs.filter[it.contains(d)].head
                 longestPath(dependencySCC, sccs)
-                nodePriority = commonExt.max(nodePriority, nodePriorityList.get(d) + 1)
+                nodePriority = max(nodePriority, nodePriorityList.get(d) + 1)
             } else {
-                nodePriority = commonExt.max(nodePriority, nodePriorityList.get(d) + 1)
+                nodePriority = max(nodePriority, nodePriorityList.get(d) + 1)
             }
         }
         for (s : sccPartition) {

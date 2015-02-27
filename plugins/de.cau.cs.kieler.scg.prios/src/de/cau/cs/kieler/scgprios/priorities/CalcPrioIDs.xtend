@@ -35,6 +35,7 @@ class CalcPrioIDs {
      *          HashMap containing nodes and their corresponding prioIDs
      */
     def public HashMap<Node,Long> calcPrioIDs(HashMap<Node,Integer> nodePriorities, HashMap<Node,Integer> tsIDs){
+        
         var nodeList = nodePriorities.keySet
         var prioIDs = <Node,Long> newHashMap
         var biggestTSID = 0

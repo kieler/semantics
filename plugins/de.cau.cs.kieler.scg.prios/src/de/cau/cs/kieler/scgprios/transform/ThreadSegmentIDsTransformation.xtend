@@ -22,6 +22,7 @@ import de.cau.cs.kieler.scgprios.priorities.CalcTSIDs
 import de.cau.cs.kieler.scgprios.results.NodePriorityResult
 import de.cau.cs.kieler.scgprios.results.ThreadSegmentIDResult
 import de.cau.cs.kieler.scgprios.results.PrioIDResult
+import com.google.inject.Inject
 
 /**
  * This class is part of the SCGPRIO transformation chain. This chain is used to check the scheduling
@@ -40,6 +41,9 @@ import de.cau.cs.kieler.scgprios.results.PrioIDResult
  *
  */
 class ThreadSegmentIDsTransformation extends Transformation{
+    
+    @Inject
+    extension CalcTSIDs
     
     /** 
      * Generic model transformation interface.
@@ -83,8 +87,7 @@ class ThreadSegmentIDsTransformation extends Transformation{
             var nodePrios = (nodePriosRes.head as NodePriorityResult).priorityMap
             
             // calculate ThreadSegmentIDs
-            var calcTSIDs = new CalcTSIDs
-            var optTsids = calcTSIDs.calculateTSIDs(nodes, nodePrios)
+            var optTsids = calculateTSIDs(nodes, nodePrios)
             var threadSegmentIDResult = new ThreadSegmentIDResult()
             threadSegmentIDResult.priorityMap = optTsids
             context.compilationResult.ancillaryData += threadSegmentIDResult

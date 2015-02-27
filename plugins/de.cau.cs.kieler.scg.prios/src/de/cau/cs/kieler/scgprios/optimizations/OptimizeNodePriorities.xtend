@@ -13,6 +13,7 @@ import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scgprios.extensions.CommonExtension
 import de.cau.cs.kieler.scg.Depth
+import com.google.inject.Inject
 
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
@@ -36,7 +37,9 @@ import de.cau.cs.kieler.scg.Depth
  */
 class OptimizeNodePriorities {
     
-    var commonExt = new CommonExtension
+    @Inject 
+    extension CommonExtension
+    
     var nodePriorities = <Node, Integer> newHashMap
     var newNodePriorities = <Node, Integer> newHashMap
     
@@ -205,7 +208,7 @@ class OptimizeNodePriorities {
             for (cf : controlflow) {
                 entrynodes.add(cf.target)
             }
-            var sortedEntryNodes = commonExt.sortEntryNodes(entrynodes, nodePriorities)
+            var sortedEntryNodes = sortEntryNodes(entrynodes, nodePriorities)
              
             var firstentrynode = sortedEntryNodes.head as Entry
             var joiningnode = sortedEntryNodes.last as Entry

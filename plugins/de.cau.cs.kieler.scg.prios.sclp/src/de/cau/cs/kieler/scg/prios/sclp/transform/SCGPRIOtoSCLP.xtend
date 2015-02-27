@@ -32,6 +32,9 @@ import de.cau.cs.kieler.scgprios.results.PrioIDResult
 import de.cau.cs.kieler.kexpressions.c.transform.KExpressionsToC
 import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.scgprios.extensions.export.SCGPrioExportExtension
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import java.util.HashMap
+import com.google.inject.Inject
 
 /**
  * This transformation translates an SCG with prioIDs to SCL_P
@@ -41,6 +44,15 @@ import de.cau.cs.kieler.scgprios.extensions.export.SCGPrioExportExtension
  *
  */
 class SCGPRIOtoSCLP{
+    
+    @Inject
+    extension SCGThreadExtensions
+    @Inject 
+    extension AnnotationsExtensions
+    @Inject
+    extension KExpressionsToC
+    @Inject 
+    extension SCGPrioExportExtension
    
     private var gotoLabelList = <Node,String> newHashMap
     private var threadLabelList = <Node,String> newHashMap
@@ -48,9 +60,7 @@ class SCGPRIOtoSCLP{
     private int labelNumber = 0
     private int threadLabelNumber = 0
     private var prioIDs = <Node,Long> newHashMap
-    private var exp = new KExpressionsToC 
-    private var anno = new  AnnotationsExtensions 
-    private var prioExt = new SCGPrioExportExtension
+    private var joinPrioMap = <Node,LinkedList<Long>> newHashMap
   
     def Object transform(EObject eObject, KielerCompilerContext context) {
         var program = new Object()
@@ -66,6 +76,7 @@ class SCGPRIOtoSCLP{
         if (!prioIDsRes.empty){  
            
         prioIDs = (prioIDsRes.head as PrioIDResult).priorityMap
+        joinPrioMap = createJoinHashMap(scg)
         
         gotoLabelList.clear
         threadLabelList.clear
@@ -77,7 +88,7 @@ class SCGPRIOtoSCLP{
         '''
         «header(getHighestPrioID(scg))»
         «generateForkAndJoinMacros(scg)»
-        «exp.transformDeclarations(scg.declarations)»
+        «transformDeclarations(scg.declarations)»
                                                                   
         int tick()
         {
@@ -148,18 +159,27 @@ class SCGPRIOtoSCLP{
      */
     def String generateForkAndJoinMacros(SCGraph scg){
         var forknodes = scg.nodes.filter[it instanceof Fork]
-        var macros = <Integer> newArrayList
+        var forkmacros = <Integer> newArrayList
+        var joinmacros = <Integer> newArrayList
         
         for (f : forknodes){
             var entrynodes = (f as Fork).next.length
-            if (entrynodes > 2 && (!macros.contains((entrynodes - 1)))){
-                macros.add(entrynodes - 1)
+            if (entrynodes > 2 && (!forkmacros.contains((entrynodes - 1)))){
+                forkmacros.add(entrynodes - 1)
             }
+            var joinprios = joinPrioMap.get((f as Fork).join).length
+            if (joinprios > 1 && (!joinmacros.contains(joinprios))){
+                joinmacros.add(joinprios)
+            }
+            
         }
+        
         '''
-        «FOR m : macros»
+        «FOR m : forkmacros»
         «generateForkMacro(m)»
+        «ENDFOR»
                                                      
+        «FOR m : joinmacros»
         «generateJoinMacro(m)»
                               
         «ENDFOR»
@@ -263,22 +283,22 @@ class SCGPRIOtoSCLP{
             '''
         } else {
             translatedNodes.add(fork)
-            var entrylist = prioExt.getAllChildrenOfNode(fork)
-            var joiningNode = findJoiningNode(entrylist)
-            var firstNode = getFirstThread(entrylist)
-            entrylist.remove(joiningNode)
-            entrylist.remove(firstNode)
+            var threadlist = getAllChildrenOfNode(fork)
+            var joiningNode = findJoiningNode(threadlist)
+            var firstNode = getFirstThread(threadlist)
+            threadlist.remove(joiningNode)
+            threadlist.remove(firstNode)
             '''
                 «setLabelIfRequired(fork)»
-                fork«fork.next.length - 1»(«listForkThreads(firstNode, entrylist, joiningNode)»){
+                fork«fork.next.length - 1»(«listForkThreads(firstNode, threadlist, joiningNode)»){
                     «transformNode(firstNode)»
                 } par {
-                «FOR e : entrylist»
-                    «transformNode(e)»
+                «FOR t : threadlist»
+                    «transformNode(t)»
                     } par {
                 «ENDFOR»
                     «transformNode(joiningNode)»
-                } join«fork.next.length - 1»(«listJoinThreads(entrylist, firstNode)»);
+                } join«joinPrioMap.get(fork.join).length»(«listJoinThreads(joinPrioMap.get(fork.join))»);
                 «transformNode((fork as Fork).join)»
             '''
         }
@@ -313,7 +333,7 @@ class SCGPRIOtoSCLP{
             if (assignment.valuedObject != null) {
                 '''
                     «setLabelIfRequired(assignment)»
-                    «assignment.valuedObject.name»«IF !assignment.indices.empty»«exp.transformExpressions(assignment.indices)»«ENDIF» = «exp.
+                    «assignment.valuedObject.name»«IF !assignment.indices.empty»«transformExpressions(assignment.indices)»«ENDIF» = «
                         transformExpression(assignment.assignment)»;
                     «setPrioStatementIfRequired(assignment, assignment.next.target)»
                     «transformNode(assignment.next.target)»
@@ -321,7 +341,7 @@ class SCGPRIOtoSCLP{
             } else {
                 '''
                     «setLabelIfRequired(assignment)»
-                    «exp.transformExpression(assignment.assignment)»;
+                    «transformExpression(assignment.assignment)»;
                     «setPrioStatementIfRequired(assignment, assignment.next.target)»
                     «transformNode(assignment.next.target)»
                 '''
@@ -346,7 +366,7 @@ class SCGPRIOtoSCLP{
         translatedNodes.add(conditional)
         '''
         «setLabelIfRequired(conditional)»
-        if («exp.transformExpression(conditional.condition)»){
+        if («transformExpression(conditional.condition)»){
             «setPrioStatementIfRequired(conditional, conditional.then.target)»
             «transformNode(conditional.then.target)»
         } «IF conditional.^else.target != null»else {
@@ -439,7 +459,7 @@ class SCGPRIOtoSCLP{
      * 
      */
     private def String generateThreadLabel(Node node){
-        var regionlabel = anno.getStringAnnotationValue(node,"regionName")
+        var regionlabel = getStringAnnotationValue(node,"regionName")
         if (regionlabel.nullOrEmpty){
             threadLabelNumber = (threadLabelNumber + 1)
             '''tLabel_«(threadLabelNumber -1).toString»'''
@@ -516,21 +536,19 @@ class SCGPRIOtoSCLP{
      * @param firstThread
      *          first child 
      */
-    private def String listJoinThreads(List<Node> threads, Node firstThread) {
+    private def String listJoinThreads(List<Long> prios) {
 
         var newString = new String
+        var lastprio = prios.last
+        prios.remove(lastprio)
 
-        if (! threads.empty) {
-            var newList = <Long>newLinkedList
-            for (t : threads) {
-                newList.add(prioIDs.get((t as Entry).exit))
-            }
-            for (n : newList) {
-                newString = newString + (n.toString) + ","
+        if (! prios.empty) {
+            for (p : prios){
+            newString = newString + (p.toString) + ","
             }
         }
 
-        newString = newString + prioIDs.get((firstThread as Entry).exit)
+        newString = newString + lastprio.toString
 
         newString
     }
@@ -558,7 +576,7 @@ class SCGPRIOtoSCLP{
      * @param entrylist
      *          list of entry nodes
      */
-     private def Node getFirstThread(LinkedList<Node> nodelist){
+    private def Node getFirstThread(LinkedList<Node> nodelist){
         var firstThread = nodelist.head
         for (n : nodelist){
             if (prioIDs.get(n) > prioIDs.get(firstThread)){
@@ -566,5 +584,45 @@ class SCGPRIOtoSCLP{
             } 
         }
         firstThread
+    }    
+   
+    /**
+     * Get all priorities from a single thread  which have to be considered by a join node
+     * 
+     * @param entry
+     *          entry node of that thread
+     */
+    private def LinkedList<Long> getAllPriorities(Entry entry){
+        var allNodes = getThreadNodes(entry)
+        var depthAndExitNodes = allNodes.filter[it instanceof Depth || it instanceof Exit]
+        var prioList = <Long> newLinkedList
+        for (d : depthAndExitNodes){
+            if (!prioList.contains(prioIDs.get(d))){
+                prioList.add(prioIDs.get(d))
+            }
+        }
+        prioList
+    }
+    
+   /**
+    * This method creates a list of priorities which have to be joined for each join node
+    *
+    * @param scg 
+    *          current SCG
+    */
+    private def HashMap<Node,LinkedList<Long>> createJoinHashMap(SCGraph scg) {
+        var joinnodes = scg.nodes.filter[it instanceof Join]
+        var joinpriomap = <Node,LinkedList<Long>> newHashMap
+        for (j : joinnodes){
+            var entrylist = getAllChildrenOfNode((j as Join).fork)
+            var joiningnode = findJoiningNode(entrylist)
+            entrylist.remove(joiningnode)
+            var priolist = <Long> newLinkedList
+            for (e : entrylist){
+                priolist.addAll(getAllPriorities(e as Entry))
+            }
+            joinpriomap.put(j,priolist)
+        }
+        joinpriomap
     }
 }

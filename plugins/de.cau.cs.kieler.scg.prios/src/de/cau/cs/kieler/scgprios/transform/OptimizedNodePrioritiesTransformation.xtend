@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.scgprios.optimizations.OptimizeNodePriorities
 import de.cau.cs.kieler.scgprios.results.ResultingSCCPartitions
 import de.cau.cs.kieler.scgprios.results.NodePriorityResult
+import com.google.inject.Inject
 
 /**
  * This class is part of the SCGPRIO transformation chain. This chain is used to check the scheduling
@@ -38,6 +39,9 @@ import de.cau.cs.kieler.scgprios.results.NodePriorityResult
  *
  */
 class OptimizedNodePriortiesTransformation extends Transformation{
+    
+    @Inject
+    extension OptimizeNodePriorities
     
     /** 
      * Generic model transformation interface.
@@ -77,8 +81,7 @@ class OptimizedNodePriortiesTransformation extends Transformation{
             var nodePrios = (nodePriosRes.head as NodePriorityResult).priorityMap
             
             // optimize node priorities
-            var calcOptNodePrios = new OptimizeNodePriorities
-            var optNodePrios = calcOptNodePrios.optimizeNodePriorities(nodePrios, sccs)
+            var optNodePrios = optimizeNodePriorities(nodePrios, sccs)
             
             nodePrios = optNodePrios
             

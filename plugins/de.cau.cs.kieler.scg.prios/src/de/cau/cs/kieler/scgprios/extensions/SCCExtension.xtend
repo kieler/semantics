@@ -5,6 +5,7 @@ package de.cau.cs.kieler.scgprios.extensions
 
 import java.util.LinkedList
 import de.cau.cs.kieler.scg.Node
+import com.google.inject.Inject
 
 /**
  * This class contains common methods, which are working with strongly connected components
@@ -14,7 +15,8 @@ import de.cau.cs.kieler.scg.Node
  */
 class SCCExtension {
     
-    private var commonExt = new CommonExtension
+    @Inject
+    extension CommonExtension
    
     
     /**
@@ -31,9 +33,9 @@ class SCCExtension {
         var children = new LinkedList<Node>
         // get all children from each node
         for (node : sccPartition){
-            children.addAll(commonExt.getInstantChildrenOfNode(node))
+            children.addAll(getInstantChildrenOfNode(node))
         }
-        var newChildren = commonExt.removeMultipleElements(children)
+        var newChildren = removeMultipleElements(children)
         // remove children, which are located inside the sccPartition
         for (s : sccPartition){
             newChildren.remove(s)
@@ -55,9 +57,9 @@ class SCCExtension {
         var depNodes = new LinkedList<Node> 
         // get all dependency nodes for each node
         for (node : sccPartition){
-            depNodes.addAll(commonExt.getDependencyNodes(node))
+            depNodes.addAll(getDependencyNodes(node))
         }
-        var cleanDepNodes = commonExt.removeMultipleElements(depNodes) 
+        var cleanDepNodes = removeMultipleElements(depNodes) 
         // remove dependencies, which are located inside the sccPartition
         for (s : sccPartition){
             cleanDepNodes.remove(s)

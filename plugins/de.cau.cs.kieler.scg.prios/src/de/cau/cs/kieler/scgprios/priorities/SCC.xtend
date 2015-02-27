@@ -18,6 +18,7 @@ import de.cau.cs.kieler.scg.Node
 import java.util.Stack
 import java.util.LinkedList
 import de.cau.cs.kieler.scgprios.extensions.CommonExtension
+import com.google.inject.Inject
 
 /**
  * This class determines the strongly connected components of an SCG
@@ -27,7 +28,9 @@ import de.cau.cs.kieler.scgprios.extensions.CommonExtension
  */
 class SCC {
     
-    private var commonExt = new CommonExtension
+    @Inject
+    extension CommonExtension
+    
     private var number = <Node, Integer>newHashMap           // number of node / node has been visited
     private var lowlink = <Node, Integer>newHashMap          // minimal number of node / number of scc
     private var sccList = <LinkedList<Node>> newLinkedList   // list of sccs
@@ -81,8 +84,8 @@ class SCC {
         pointStack.push(currentNode) //add node to stack
         
         // get children and dependency nodes of current node
-        var childNodes = commonExt.getInstantChildrenOfNode(currentNode)
-        childNodes.addAll(commonExt.getDependencyNodes(currentNode))
+        var childNodes = getInstantChildrenOfNode(currentNode)
+        childNodes.addAll(getDependencyNodes(currentNode))
         
         // for all children and dependency nodes
         for (child : childNodes) {
@@ -91,7 +94,7 @@ class SCC {
             if (!number.containsKey(child)) {
                 strongconnect(child)
                 // save in list lowlink: current node and min of lowlink of currentnode and child
-                lowlink.put(currentNode, commonExt.min(lowlink.get(currentNode).intValue(), lowlink.get(child).intValue()))
+                lowlink.put(currentNode, min(lowlink.get(currentNode).intValue(), lowlink.get(child).intValue()))
             } else {
 
                 //Node has been visited before
@@ -100,7 +103,7 @@ class SCC {
                 if (number.get(child).intValue() < number.get(currentNode).intValue()) {
                     if (pointStack.contains(child)) {
                         lowlink.put(currentNode,
-                            commonExt.min(lowlink.get(currentNode).intValue(), number.get(child).intValue()))
+                            min(lowlink.get(currentNode).intValue(), number.get(child).intValue()))
                     }
                 }
             }

@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.scgprios.optimizations.OptimizePrioIDs
 import de.cau.cs.kieler.scgprios.results.PrioIDResult
+import com.google.inject.Inject
 
 /**
  * This class is part of the SCGPRIO transformation chain. This chain is used to check the scheduling
@@ -37,6 +38,9 @@ import de.cau.cs.kieler.scgprios.results.PrioIDResult
  *
  */
 class OptimizedPrioIDsTransformation extends Transformation{
+    
+    @Inject
+    extension OptimizePrioIDs
     
     /** 
      * Generic model transformation interface.
@@ -75,8 +79,7 @@ class OptimizedPrioIDsTransformation extends Transformation{
             var prioIDs = (prioIDsRes.head as PrioIDResult).priorityMap
             
             // optimize PrioIDs
-            var optimizePrioIDs = new OptimizePrioIDs
-            var optPrioIDs = optimizePrioIDs.optimizePrioIDs(prioIDs, nodes) 
+            var optPrioIDs = optimizePrioIDs(prioIDs, nodes) 
             prioIDs = optPrioIDs
             
         }  

@@ -23,6 +23,7 @@ import de.cau.cs.kieler.scgprios.priorities.Scheduling
 import de.cau.cs.kieler.kico.KielerCompilerException
 import de.cau.cs.kieler.scgprios.results.ResultingSCCPartitions
 import de.cau.cs.kieler.scgprios.results.NodePriorityResult
+import com.google.inject.Inject
 
 /**
  * This class is part of the SCGPRIO transformation chain. This chain is used to check the scheduling
@@ -41,6 +42,11 @@ import de.cau.cs.kieler.scgprios.results.NodePriorityResult
  *
  */
 class NodePrioritiesTransformation extends Transformation{
+    
+    @Inject
+    extension SCC 
+    @Inject
+    extension CalcNodePrios
     
     /** 
      * Generic model transformation interface.
@@ -73,8 +79,7 @@ class NodePrioritiesTransformation extends Transformation{
         
         // calculate strongly connected components
         var nodes = graph.nodes
-        var sccCalc = new SCC
-        var sccs = sccCalc.findSCC(nodes)
+        var sccs = findSCC(nodes)
         
         // check whether valid schedule exists
         var scheduling = new Scheduling
@@ -86,8 +91,7 @@ class NodePrioritiesTransformation extends Transformation{
             context.compilationResult.ancillaryData += resultingSCCPartitions
 
             // calculate node priorities
-            var calcNodePrios = new CalcNodePrios
-            var results = calcNodePrios.calculateNodePriorities(sccs)
+            var results = calculateNodePriorities(sccs)
             var nodePriorityResult = new NodePriorityResult()
             nodePriorityResult.priorityMap = results
             context.compilationResult.ancillaryData += nodePriorityResult

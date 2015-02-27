@@ -22,6 +22,7 @@ import java.util.LinkedList
 import java.util.HashMap
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scgprios.extensions.CommonExtension
+import com.google.inject.Inject
 
 /**
  * This class provides a method to assign the thread segment ID to each node of an SCG
@@ -32,7 +33,9 @@ import de.cau.cs.kieler.scgprios.extensions.CommonExtension
  */
 class CalcTSIDs {
     
-    private var commonExt = new CommonExtension  
+    @Inject
+    extension CommonExtension
+     
     private int nextTSID
     private var tsIDs = <Node, Integer> newHashMap
     
@@ -113,8 +116,8 @@ class CalcTSIDs {
                 // assign minimal tsID to the join node afterwards
                 } else if (node instanceof Fork){
                     tsIDs.put(node,i)
-                    var children = commonExt.getAllChildrenOfNode(node)
-                    var entrynodes = commonExt.sortEntryNodes(children, nodePriorities)
+                    var children = getAllChildrenOfNode(node)
+                    var entrynodes = sortEntryNodes(children, nodePriorities)
                     var firstentry = entrynodes.head
                     entrynodes.remove(firstentry)
                     var emptyPath = <Node> newLinkedList
@@ -136,7 +139,7 @@ class CalcTSIDs {
                 // higher tsID
                 } else {
                     tsIDs.put(node,i)
-                    for (c : commonExt.getAllChildrenOfNode(node)){
+                    for (c : getAllChildrenOfNode(node)){
                         numberThreadSegments(c, i, nodePriorities, newPath)
                     }
                 
