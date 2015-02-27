@@ -1,0 +1,896 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The main WRISTWATCH module for watch, stopwatch1, alarm %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+module WRISTWATCH :
+
+% Data and signal interface
+%--------------------------
+
+% The wristwatch buttons
+
+input UL, % upper-left button
+      UR, % upper-right button
+      LL, % lower-left button
+      LR; % lower-right button
+
+% The time units
+
+input HS, % quartz - 1/100 second
+      S;  % quartz - second
+
+% The input relations
+
+relation UL # UR # LL # LR # HS,
+         S => HS;       
+
+% The main display
+
+type MAIN_DISPLAY_TYPE;
+
+output MAIN_DISPLAY : MAIN_DISPLAY_TYPE;
+
+% The mini display
+
+type MINI_DISPLAY_TYPE;
+
+output MINI_DISPLAY : MINI_DISPLAY_TYPE;
+
+% The alphabetic display
+
+output ALPHABETIC_DISPLAY : string;
+
+% The display positions
+
+type DISPLAY_POSITION;
+
+output START_ENHANCING : DISPLAY_POSITION,
+       STOP_ENHANCING : DISPLAY_POSITION;
+
+% The watch boolean indicators
+
+output CHIME_STATUS : boolean;
+% The stopwatch boolean indicators:
+
+output STOPWATCH_RUN_STATUS : boolean,
+       STOPWATCH_LAP_STATUS : boolean;
+
+% The alarm boolean indicators
+
+output ALARM_STATUS : boolean;
+
+% The beeper and the beep combination function
+
+type BEEP_TYPE;
+
+output BEEP : combine BEEP_TYPE with +;
+
+% Internal types used in submodule communication
+%-----------------------------------------------
+
+% For the watch
+
+type WATCH_TIME_TYPE;
+constant INITIAL_WATCH_TIME : WATCH_TIME_TYPE;
+type WATCH_TIME_POSITION;
+constant INITIAL_WATCH_TIME_POSITION : WATCH_TIME_POSITION;
+
+% For the stopwatch:
+
+type STOPWATCH_TIME_TYPE;
+
+% For the alarm:
+
+type ALARM_TIME_TYPE;
+type ALARM_TIME_POSITION;
+
+% Body of WRISTWATCH
+%-------------------
+
+signal WATCH_MODE_COMMAND, 
+       STOPWATCH_MODE_COMMAND,
+       ALARM_MODE_COMMAND,
+
+       TOGGLE_24H_MODE_COMMAND,
+       TOGGLE_CHIME_COMMAND,
+
+       ENTER_SET_WATCH_MODE_COMMAND,
+       SET_WATCH_COMMAND,
+       NEXT_WATCH_TIME_POSITION_COMMAND,
+       EXIT_SET_WATCH_MODE_COMMAND,
+
+       WATCH_TIME : WATCH_TIME_TYPE,
+       WATCH_BEING_SET,
+
+       WATCH_START_ENHANCING : WATCH_TIME_POSITION,
+       WATCH_STOP_ENHANCING : WATCH_TIME_POSITION,
+
+       START_STOP_COMMAND,
+       LAP_COMMAND,
+       STOPWATCH_TIME : STOPWATCH_TIME_TYPE,
+
+       TOGGLE_ALARM_COMMAND,
+
+       ENTER_SET_ALARM_MODE_COMMAND,
+       NEXT_ALARM_TIME_POSITION_COMMAND,
+       EXIT_SET_ALARM_MODE_COMMAND,
+       SET_ALARM_COMMAND,
+       STOP_ALARM_BEEP_COMMAND,
+
+       ALARM_TIME : ALARM_TIME_TYPE,
+
+       ALARM_START_ENHANCING : ALARM_TIME_POSITION,
+       ALARM_STOP_ENHANCING : ALARM_TIME_POSITION in
+
+%   run BUTTON
+%||
+%   run WATCH [ signal WATCH_START_ENHANCING / START_ENHANCING,
+%                      WATCH_STOP_ENHANCING / STOP_ENHANCING ]
+%||
+%   run STOPWATCH 
+%||
+   run ALARM [ signal ALARM_START_ENHANCING / START_ENHANCING,
+                      ALARM_STOP_ENHANCING / STOP_ENHANCING ]
+||
+   run DISPLAY
+end signal
+
+end module
+
+%%%%%%%%%%%%%%%%%%%%
+% The ALARM module %
+%%%%%%%%%%%%%%%%%%%%
+
+module ALARM :
+
+% To handle the alarm time:
+
+type ALARM_TIME_TYPE;
+constant INITIAL_ALARM_TIME : ALARM_TIME_TYPE;
+function TOGGLE_24H_MODE_IN_ALARM_TIME (ALARM_TIME_TYPE) : ALARM_TIME_TYPE;
+
+% To set the alarm time:
+
+type ALARM_TIME_POSITION;
+constant INITIAL_ALARM_TIME_POSITION : ALARM_TIME_POSITION;
+function NEXT_ALARM_TIME_POSITION (ALARM_TIME_POSITION) : ALARM_TIME_POSITION;
+         % say from hours to 10-minutes to minutes and circularly
+         % (not relevant for ESTEREL)
+function SET_ALARM_TIME (ALARM_TIME_TYPE, ALARM_TIME_POSITION)
+                       : ALARM_TIME_TYPE;
+         % applies a setting command
+
+% To communicate with a watch:
+
+type WATCH_TIME_TYPE;
+function COMPARE_ALARM_TIME_TO_WATCH_TIME
+                          (ALARM_TIME_TYPE, WATCH_TIME_TYPE) : boolean;
+
+% To beep:
+
+type BEEP_TYPE;
+constant ALARM_BEEP_VALUE : BEEP_TYPE;
+constant ALARM_DURATION : integer;
+
+% Interface
+
+input TOGGLE_24H_MODE_COMMAND;
+
+output ALARM_TIME : ALARM_TIME_TYPE;
+
+input ENTER_SET_ALARM_MODE_COMMAND,
+      SET_ALARM_COMMAND,
+      NEXT_ALARM_TIME_POSITION_COMMAND,
+      EXIT_SET_ALARM_MODE_COMMAND;
+
+output START_ENHANCING : ALARM_TIME_POSITION,
+       STOP_ENHANCING : ALARM_TIME_POSITION;
+
+input WATCH_TIME : WATCH_TIME_TYPE;
+input WATCH_BEING_SET;
+
+input S;
+input TOGGLE_ALARM_COMMAND,
+      STOP_ALARM_BEEP_COMMAND;
+
+output ALARM_STATUS : boolean;
+output BEEP : BEEP_TYPE;
+
+relation WATCH_BEING_SET => WATCH_TIME;
+
+         % all the other signals are pairwise incompatible,
+         % except STOP_ALARM_BEEP_COMMAND that may appear anytime
+relation   S
+         # TOGGLE_24H_MODE_COMMAND
+         # TOGGLE_ALARM_COMMAND
+         # ENTER_SET_ALARM_MODE_COMMAND
+         # SET_ALARM_COMMAND
+         # NEXT_ALARM_TIME_POSITION_COMMAND
+         # EXIT_SET_ALARM_MODE_COMMAND;
+
+% Body
+
+signal START_BEEPING in
+
+   % initializations
+
+   emit ALARM_TIME (INITIAL_ALARM_TIME);
+   emit ALARM_STATUS (false);
+
+   % main loop
+
+   loop
+      % normal mode
+      abort % when ENTER_SET_ALARM_MODE_COMMAND
+         loop
+            var preAlarmTime : ALARM_TIME_TYPE, preAlarmStatus : boolean in
+            preAlarmTime := pre(?ALARM_TIME);
+            preAlarmStatus := pre(?ALARM_STATUS);
+            await
+               case TOGGLE_24H_MODE_COMMAND do
+                  emit ALARM_TIME
+                         (TOGGLE_24H_MODE_IN_ALARM_TIME(preAlarmTime))
+               case TOGGLE_ALARM_COMMAND do
+                  emit ALARM_STATUS (not(preAlarmStatus))
+               case WATCH_TIME do
+                  present WATCH_BEING_SET else
+                     if COMPARE_ALARM_TIME_TO_WATCH_TIME
+                                         (?ALARM_TIME, ? WATCH_TIME)
+                        and ?ALARM_STATUS
+                     then 
+                        emit START_BEEPING 
+                     end if
+                  end present
+            end await
+            end
+         end loop
+      when ENTER_SET_ALARM_MODE_COMMAND;
+
+      % set-alarm mode
+      % the currently set position is the value of START_ENHANCING
+      % (one might also accept TOGGLE_24H_MODE_COMMAND
+      % and TOGGLE_ALARM_COMMAND; for this one just has to
+      % copy the corresponding cases above into the next await).
+      % Notice that the alarm does not ring in set mode
+
+      abort % when EXIT_SET_ALARM_MODE_COMMAND
+         emit START_ENHANCING (INITIAL_ALARM_TIME_POSITION);
+         loop
+         var preAlarmTime : ALARM_TIME_TYPE, preStartEnhancing : ALARM_TIME_POSITION in
+            preAlarmTime := pre(?ALARM_TIME);
+            preStartEnhancing := pre(?ALARM_STATUS); 
+            await
+               case SET_ALARM_COMMAND do
+                   emit ALARM_TIME (SET_ALARM_TIME (preAlarmTime,
+                                                    ?START_ENHANCING))
+               case NEXT_ALARM_TIME_POSITION_COMMAND do
+                   emit STOP_ENHANCING (preStartEnhancing);
+                   emit START_ENHANCING 
+                         (NEXT_ALARM_TIME_POSITION(preStartEnhancing))
+            end await
+            end
+         end loop
+      when EXIT_SET_ALARM_MODE_COMMAND;
+      emit STOP_ENHANCING (?START_ENHANCING);
+      emit ALARM_STATUS (true)
+   end loop
+||
+   % beeping sequence
+   every START_BEEPING do
+      abort
+         loop emit BEEP (ALARM_BEEP_VALUE) each S
+      when 
+         case STOP_ALARM_BEEP_COMMAND 
+         case ALARM_DURATION S
+      end abort
+   end every
+end signal
+end module
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The BUTTON module for watch, stopwatch1, alarm %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+module BUTTON :
+
+% Input interface
+
+input UL, % upper-left button
+      UR, % upper-right button
+      LL, % lower-left button
+      LR; % lower-right button
+
+relation UL # UR # LL # LR;    % all buttons are incompatible
+
+% Outputs for the watch mode
+
+output WATCH_MODE_COMMAND;
+
+output ENTER_SET_WATCH_MODE_COMMAND,
+       SET_WATCH_COMMAND,
+       NEXT_WATCH_TIME_POSITION_COMMAND,
+       EXIT_SET_WATCH_MODE_COMMAND;
+
+output TOGGLE_24H_MODE_COMMAND; % also to the alarm
+output TOGGLE_CHIME_COMMAND;
+
+% Outputs for the stopwatch mode
+
+output STOPWATCH_MODE_COMMAND;
+
+output START_STOP_COMMAND,
+       LAP_COMMAND;
+
+% Outputs for the alarm mode
+
+output ALARM_MODE_COMMAND;
+
+output ENTER_SET_ALARM_MODE_COMMAND,
+       SET_ALARM_COMMAND,
+       NEXT_ALARM_TIME_POSITION_COMMAND,
+       EXIT_SET_ALARM_MODE_COMMAND;
+
+output TOGGLE_ALARM_COMMAND,
+       STOP_ALARM_BEEP_COMMAND;
+
+% Body
+
+[
+   loop
+
+      % Watch and set-watch mode (exit by LL in watch mode only, 
+      %                           not in set-watch mode)
+
+      emit WATCH_MODE_COMMAND;
+      trap WATCH_AND_SET_WATCH_MODE in
+         loop
+
+            % watch mode
+
+            abort       % when UL, that turns to set-watch mode
+                  await LL do exit WATCH_AND_SET_WATCH_MODE end
+               ||
+                  every LR do emit TOGGLE_24H_MODE_COMMAND end
+            when UL;
+
+            % set-watch mode
+
+            emit ENTER_SET_WATCH_MODE_COMMAND;
+            abort       % when UL, that brings back to watch mode
+                  every LL do emit NEXT_WATCH_TIME_POSITION_COMMAND end
+               ||
+                  every LR do emit SET_WATCH_COMMAND end
+            when UL;
+            emit EXIT_SET_WATCH_MODE_COMMAND
+         end loop
+      end trap;
+
+      % Stopwatch mode (exit by LL); LR is START/STOP, UR is LAP
+
+      emit STOPWATCH_MODE_COMMAND;
+      abort       % when LL
+            every LR do emit START_STOP_COMMAND end
+         ||
+            every UR do emit LAP_COMMAND end
+      when LL;
+
+      % Alarm and set-alarm mode (exit by LL in alarm mode only, 
+      %                           not in set-alarm mode)
+
+      trap ALARM_AND_SET_ALARM_MODE in
+         emit ALARM_MODE_COMMAND;
+         loop
+
+            % alarm mode
+
+            abort       % when UL, that turns to set-alarm mode
+                  await LL do exit ALARM_AND_SET_ALARM_MODE end
+               ||
+                  every LR do emit TOGGLE_CHIME_COMMAND end
+               ||
+                  every UR do emit TOGGLE_ALARM_COMMAND end
+            when UL;
+
+            % set-alarm mode
+
+            emit ENTER_SET_ALARM_MODE_COMMAND;
+
+            abort % when UL, that returns to alarm mode
+                  every LL do emit NEXT_ALARM_TIME_POSITION_COMMAND end
+               ||
+                  every LR do emit SET_ALARM_COMMAND end
+            when UL;
+            emit EXIT_SET_ALARM_MODE_COMMAND
+         end loop
+      end trap
+   end loop
+
+||
+
+   % transforms permanently UR into STOP_ALARM_BEEP_COMMAND
+
+   every UR do emit STOP_ALARM_BEEP_COMMAND end
+]
+end module
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The DISPLAY module for watch, stopwatch, alarm %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+module DISPLAY :
+
+% For the main display:
+
+type MAIN_DISPLAY_TYPE;
+
+output MAIN_DISPLAY : MAIN_DISPLAY_TYPE;
+
+% For the mini display:
+
+type MINI_DISPLAY_TYPE;
+
+output MINI_DISPLAY : MINI_DISPLAY_TYPE;
+
+% For the alphabetic display:
+
+output ALPHABETIC_DISPLAY : string;
+
+% For display positions:
+
+type DISPLAY_POSITION;
+
+output START_ENHANCING : DISPLAY_POSITION,
+       STOP_ENHANCING : DISPLAY_POSITION;
+
+% To handle the watch:
+
+type WATCH_TIME_TYPE;
+function WATCH_TIME_TO_MAIN_DISPLAY (WATCH_TIME_TYPE) : MAIN_DISPLAY_TYPE,
+         WATCH_TIME_TO_MINI_DISPLAY (WATCH_TIME_TYPE) : MINI_DISPLAY_TYPE,
+         WATCH_DATE_TO_MINI_DISPLAY (WATCH_TIME_TYPE) : MINI_DISPLAY_TYPE,
+         WATCH_DAY_TO_ALPHABETIC_DISPLAY (WATCH_TIME_TYPE) : string;
+
+
+type WATCH_TIME_POSITION;
+function WATCH_DISPLAY_POSITION (WATCH_TIME_POSITION) : DISPLAY_POSITION;
+
+
+input WATCH_MODE_COMMAND;
+input WATCH_TIME : WATCH_TIME_TYPE;
+input WATCH_START_ENHANCING : WATCH_TIME_POSITION,
+      WATCH_STOP_ENHANCING : WATCH_TIME_POSITION;
+
+% To handle the stopwatch:
+
+type STOPWATCH_TIME_TYPE;
+function STOPWATCH_TIME_TO_MAIN_DISPLAY
+                                (STOPWATCH_TIME_TYPE) : MAIN_DISPLAY_TYPE;
+
+
+input STOPWATCH_MODE_COMMAND;
+input STOPWATCH_TIME : STOPWATCH_TIME_TYPE;
+
+% To handle the alarm:
+
+type ALARM_TIME_TYPE;
+function ALARM_TIME_TO_MAIN_DISPLAY (ALARM_TIME_TYPE) : MAIN_DISPLAY_TYPE;
+
+type ALARM_TIME_POSITION;
+function ALARM_DISPLAY_POSITION (ALARM_TIME_POSITION) : DISPLAY_POSITION;
+
+input ALARM_MODE_COMMAND;
+input ALARM_TIME : ALARM_TIME_TYPE;
+input ALARM_START_ENHANCING : ALARM_TIME_POSITION,
+      ALARM_STOP_ENHANCING : ALARM_TIME_POSITION;
+
+% Global input relations; the 3 modes are mutually incompatible:
+
+relation WATCH_MODE_COMMAND # STOPWATCH_MODE_COMMAND # ALARM_MODE_COMMAND; 
+
+% Body of DISPLAY
+
+loop
+
+   % In watch mode, the main display shows the regular time
+   % and the mini display shows the date
+
+   abort  % when STOPWATCH_MODE_COMMAND
+      loop
+      var varWatchTime : WATCH_TIME_TYPE in
+        varWatchTime := (? WATCH_TIME);
+         emit MAIN_DISPLAY (WATCH_TIME_TO_MAIN_DISPLAY (varWatchTime));
+         emit MINI_DISPLAY (WATCH_DATE_TO_MINI_DISPLAY (varWatchTime));
+         emit ALPHABETIC_DISPLAY
+                       (WATCH_DAY_TO_ALPHABETIC_DISPLAY (varWatchTime))
+      end;
+      each WATCH_TIME
+   ||
+      every WATCH_START_ENHANCING do
+      var varWatchStartEnhancing : WATCH_TIME_POSITION in
+         varWatchStartEnhancing := ? WATCH_STOP_ENHANCING;
+         emit START_ENHANCING (WATCH_DISPLAY_POSITION 
+                                      (varWatchStartEnhancing))
+      end
+      end
+   ||
+      every WATCH_STOP_ENHANCING do
+      var varWatchStopEnhancing : WATCH_TIME_POSITION in
+         varWatchStopEnhancing := ? WATCH_STOP_ENHANCING;
+         emit STOP_ENHANCING (WATCH_DISPLAY_POSITION
+                                      (varWatchStopEnhancing))
+      end
+      end
+   when STOPWATCH_MODE_COMMAND;
+
+   % Stopwatch and alarm modes
+
+   abort  % when  WATCH_MODE_COMMAND
+
+      % The mini display contains the regular watch time
+      loop
+         var varWatchTime : WATCH_TIME_TYPE in
+         varWatchTime := ? WATCH_TIME;
+         emit MINI_DISPLAY (WATCH_TIME_TO_MINI_DISPLAY (varWatchTime))
+         end
+      each WATCH_TIME
+   ||
+      % Stopwatch mode
+
+      abort
+         emit ALPHABETIC_DISPLAY("ST");
+         loop
+            var varStopwatchTime : STOPWATCH_TIME_TYPE in
+              varStopwatchTime := ? STOPWATCH_TIME;
+            emit MAIN_DISPLAY (STOPWATCH_TIME_TO_MAIN_DISPLAY
+                                               (varStopwatchTime))
+            end
+         each STOPWATCH_TIME
+      when ALARM_MODE_COMMAND;
+
+      % alarm mode
+      abort
+         emit ALPHABETIC_DISPLAY ("AL");
+         loop
+            var varAlarmTime : ALARM_TIME_TYPE in
+            varAlarmTime := ? ALARM_TIME;
+            emit MAIN_DISPLAY (ALARM_TIME_TO_MAIN_DISPLAY (varAlarmTime))
+            end
+         each ALARM_TIME
+      ||
+         every ALARM_START_ENHANCING do
+         var varAlarmStartEnhancing : ALARM_TIME_POSITION in
+         varAlarmStartEnhancing := ? ALARM_START_ENHANCING;
+            emit START_ENHANCING (ALARM_DISPLAY_POSITION
+                                             (varAlarmStartEnhancing))
+         end
+         end
+      ||
+         every  ALARM_STOP_ENHANCING do
+            emit STOP_ENHANCING (ALARM_DISPLAY_POSITION
+                                             (? ALARM_STOP_ENHANCING))
+         end
+      when WATCH_MODE_COMMAND % for easy extensibility!
+   when WATCH_MODE_COMMAND
+end loop
+end module
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The Esterel split-time stopwatch %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% There are three submodules : a basic stopwatch, which only handles
+% the start/stop command, a lap filter, which handles the lap command,
+% and a reset handler, which determines when to reset the stopwatch. 
+% These modules are put in parallel in the main STOPWATCH module, 
+% with suitable renamings.
+
+% The BASIC_STOPWATCH module
+%---------------------------
+
+module BASIC_STOPWATCH :
+
+% To handle the stopwatch time:
+
+type STOPWATCH_TIME_TYPE;
+constant ZERO_STOPWATCH_TIME : STOPWATCH_TIME_TYPE;
+function INCREMENT_STOPWATCH_TIME (STOPWATCH_TIME_TYPE) : STOPWATCH_TIME_TYPE;
+
+% To beep:
+
+type BEEP_TYPE;
+constant STOPWATCH_BEEP_VALUE : BEEP_TYPE;
+function STOPWATCH_BEEP (STOPWATCH_TIME_TYPE) : BEEP_TYPE;
+         % returns either the value STOPWATCH_BEEP_VALUE if the stopwatch has
+         % to beep or the value NO_BEEP_VALUE otherwise
+
+% Interface
+
+input HS;
+input START_STOP_COMMAND;
+
+relation   HS
+         # START_STOP_COMMAND;
+
+output STOPWATCH_TIME : STOPWATCH_TIME_TYPE;
+output STOPWATCH_RUN_STATUS : boolean;
+output BEEP : BEEP_TYPE;
+
+% Body
+
+emit STOPWATCH_TIME (ZERO_STOPWATCH_TIME);
+
+loop
+
+   % stopwatch not running
+   emit STOPWATCH_RUN_STATUS (false);
+   await START_STOP_COMMAND;
+
+   % starting the stopwatch
+   emit STOPWATCH_RUN_STATUS (true);
+   emit BEEP (STOPWATCH_BEEP_VALUE);
+   var preStopwatchTime : STOPWATCH_TIME_TYPE in
+   preStopwatchTime := pre(STOPWATCH_TIME);
+   abort
+      every HS do
+         emit STOPWATCH_TIME (INCREMENT_STOPWATCH_TIME(preStopwatchTime));
+         emit BEEP (STOPWATCH_BEEP (?STOPWATCH_TIME))
+      end every
+   when START_STOP_COMMAND;
+   end;
+
+   % stopping the stopwatch
+   emit BEEP (STOPWATCH_BEEP_VALUE)
+end loop
+end module
+
+% The LAP_FILTER module
+%----------------------
+
+module LAP_FILTER :
+
+type STOPWATCH_TIME_TYPE;
+
+% Interface
+
+input LAP_COMMAND;
+input BASIC_STOPWATCH_TIME : STOPWATCH_TIME_TYPE;
+
+output STOPWATCH_TIME : STOPWATCH_TIME_TYPE;
+output STOPWATCH_LAP_STATUS : boolean;
+
+% Body
+
+loop
+   emit STOPWATCH_LAP_STATUS (false);
+
+   % not in LAP mode
+   abort
+      loop
+         emit STOPWATCH_TIME (? BASIC_STOPWATCH_TIME)
+      each BASIC_STOPWATCH_TIME
+   when LAP_COMMAND;
+
+   % LAP_COMMAND received, enter LAP mode
+   emit STOPWATCH_LAP_STATUS (true);
+   await LAP_COMMAND
+
+end loop
+end module
+
+% The STOPWATCH_RESET_HANDLER module
+%-----------------------------------
+
+module STOPWATCH_RESET_HANDLER :
+
+% Interface
+
+input START_STOP_COMMAND,
+      LAP_COMMAND;
+
+relation START_STOP_COMMAND # LAP_COMMAND;
+
+output RESET_STOPWATCH_COMMAND;
+
+% Body
+
+loop
+  pause;
+   trap RESET in
+      signal STOPWATCH_STOPPED in
+         loop
+            abort
+               sustain STOPWATCH_STOPPED
+            when START_STOP_COMMAND;
+            await START_STOP_COMMAND
+         end loop
+      ||
+         loop
+            await LAP_COMMAND do
+               % LAP_COMMAND received when not in LAP mode
+               present STOPWATCH_STOPPED then
+                  exit RESET
+               end
+            end await;
+            await LAP_COMMAND
+         end loop
+      end signal
+   end trap;
+   emit RESET_STOPWATCH_COMMAND
+end loop
+end module
+
+% The main STOPWATCH module
+%--------------------------
+
+module STOPWATCH :
+
+% To handle the stopwatch time:
+
+type STOPWATCH_TIME_TYPE;
+
+% To beep:
+
+type BEEP_TYPE;
+
+% Interface
+
+input HS;
+input START_STOP_COMMAND,
+      LAP_COMMAND;
+
+relation   HS
+         # START_STOP_COMMAND
+         # LAP_COMMAND;
+
+output STOPWATCH_TIME : STOPWATCH_TIME_TYPE;
+
+output STOPWATCH_RUN_STATUS : boolean,
+       STOPWATCH_LAP_STATUS : boolean;
+
+output BEEP : BEEP_TYPE;
+
+% Body
+
+signal RESET_STOPWATCH_COMMAND,
+       BASIC_STOPWATCH_TIME : STOPWATCH_TIME_TYPE in
+   loop
+      run BASIC_STOPWATCH [signal BASIC_STOPWATCH_TIME / STOPWATCH_TIME]
+   ||
+      run LAP_FILTER
+   each RESET_STOPWATCH_COMMAND
+||
+   run STOPWATCH_RESET_HANDLER
+end signal
+end module
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Module WATCH : the timekeeper %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+module WATCH :
+
+% To handle the watch time
+
+type WATCH_TIME_TYPE;
+
+constant INITIAL_WATCH_TIME : WATCH_TIME_TYPE;
+
+function INCREMENT_WATCH_TIME (WATCH_TIME_TYPE) : WATCH_TIME_TYPE;
+function TOGGLE_24H_MODE_IN_WATCH_TIME (WATCH_TIME_TYPE) : WATCH_TIME_TYPE;
+
+% To set the watch time
+
+type WATCH_TIME_POSITION;
+constant INITIAL_WATCH_TIME_POSITION : WATCH_TIME_POSITION;
+function NEXT_WATCH_TIME_POSITION (WATCH_TIME_POSITION) 
+                                  : WATCH_TIME_POSITION;
+         % say from seconds to hours to 10 minutes to minutes to month to
+         % day to day in week and circularly ! (not relevant for ESTEREL)
+function SET_WATCH_TIME 
+            (WATCH_TIME_TYPE, WATCH_TIME_POSITION) : WATCH_TIME_TYPE;
+          % applies a setting command to the current time and position
+function INCREMENT_WATCH_TIME_IN_SET_MODE 
+            (WATCH_TIME_TYPE, WATCH_TIME_POSITION) : WATCH_TIME_TYPE;
+          % increments the time only to the position being currently set
+
+% To beep
+
+type BEEP_TYPE;
+function WATCH_BEEP (WATCH_TIME_TYPE, boolean) : BEEP_TYPE;
+         % returns either the value WATCH_BEEP_VALUE if the watch has to beep
+         % and the boolean (CHIME_STATUS) is true,
+         % or the value NO_BEEP_VALUE otherwise
+
+% Interface
+
+input S;
+input TOGGLE_24H_MODE_COMMAND;
+
+output WATCH_TIME : WATCH_TIME_TYPE;
+
+input ENTER_SET_WATCH_MODE_COMMAND,
+      SET_WATCH_COMMAND,
+      NEXT_WATCH_TIME_POSITION_COMMAND,
+      EXIT_SET_WATCH_MODE_COMMAND;
+
+output WATCH_BEING_SET;
+       % Synchronous with WATCH_TIME when the watch is set
+output START_ENHANCING : WATCH_TIME_POSITION,
+       STOP_ENHANCING : WATCH_TIME_POSITION;
+
+input TOGGLE_CHIME_COMMAND;
+output CHIME_STATUS : boolean;
+output BEEP : BEEP_TYPE;
+
+relation   S
+         # TOGGLE_24H_MODE_COMMAND
+         # TOGGLE_CHIME_COMMAND
+         # ENTER_SET_WATCH_MODE_COMMAND
+         # SET_WATCH_COMMAND
+         # NEXT_WATCH_TIME_POSITION_COMMAND
+         # EXIT_SET_WATCH_MODE_COMMAND;
+
+% initializations
+
+emit WATCH_TIME (INITIAL_WATCH_TIME);
+emit CHIME_STATUS (false);
+
+% main loop
+
+loop
+   % normal mode
+   abort % when ENTER_SET_WATCH_MODE_COMMAND
+      loop
+      var preWatchTime : WATCH_TIME_TYPE, preChimeStatus : boolean in
+      preWatchTime := pre(?WATCH_TIME);
+      preChimeStatus := pre(?CHIME_STATUS);
+         await
+            case S do
+               emit WATCH_TIME (INCREMENT_WATCH_TIME(preWatchTime)); 
+               emit BEEP (WATCH_BEEP (?WATCH_TIME, ?CHIME_STATUS))
+            case TOGGLE_24H_MODE_COMMAND do
+               emit WATCH_TIME 
+                      (TOGGLE_24H_MODE_IN_WATCH_TIME (preWatchTime))
+            case TOGGLE_CHIME_COMMAND do
+               emit CHIME_STATUS (not preChimeStatus)
+         end await
+         end
+      end loop
+   when ENTER_SET_WATCH_MODE_COMMAND;
+
+   % set-watch mode
+   % (in set-watch mode one might as well accept the commands 
+   % TOGGLE_24H_MODE_COMMAND and TOGGLE_CHIME_COMMAND; for
+   % this one just could copy the corresponding cases above into
+   % the  select!)
+
+   var preWatchTime : WATCH_TIME_TYPE, preStartEnhancing : WATCH_TIME_POSITION in
+   preWatchTime := pre(?WATCH_TIME);
+   preStartEnhancing := pre(?START_ENHANCING);
+   abort % when  EXIT_SET_WATCH_MODE_COMMAND 
+      emit START_ENHANCING (INITIAL_WATCH_TIME_POSITION);
+      loop
+         await
+            case S do
+               emit WATCH_TIME 
+                        (INCREMENT_WATCH_TIME_IN_SET_MODE(preWatchTime,
+                                                          ?START_ENHANCING));
+               emit WATCH_BEING_SET
+            case SET_WATCH_COMMAND do
+               emit WATCH_TIME (SET_WATCH_TIME(preWatchTime,
+                                               ?START_ENHANCING));
+               emit WATCH_BEING_SET
+            case NEXT_WATCH_TIME_POSITION_COMMAND do
+               emit STOP_ENHANCING (preStartEnhancing);
+               emit START_ENHANCING 
+                       (NEXT_WATCH_TIME_POSITION(preStartEnhancing))
+         end await
+      end loop
+   when  EXIT_SET_WATCH_MODE_COMMAND;
+   end;
+   emit STOP_ENHANCING (pre(?START_ENHANCING))
+end loop
+
+end module
+
