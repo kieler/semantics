@@ -253,16 +253,20 @@ class SCGPRIOtoSCLP{
      *          entry node 
      */
     private def dispatch String transformNode(Entry entry) {
-        // there should be no prio statement necessary.
+        // rootnode?
         if (entry.incoming.filter[it instanceof ControlFlow].length > 0){
             var threadLabel = threadLabelList.get(entry)
-            gotoLabelList.put(entry.next.target, threadLabel)
+            if (!((entry.next.target instanceof Surface) && (prioIDs.get(entry) != prioIDs.get((entry.next.target as Surface).depth)))){
+                gotoLabelList.put(entry.next.target, threadLabel)
+            }
             '''
             «threadLabel»:
+            «setPrioStatementIfRequired(entry, entry.next.target)»
             «transformNode(entry.next.target)»
             '''
         } else {
             '''
+            «setPrioStatementIfRequired(entry, entry.next.target)»
             «transformNode(entry.next.target)»
             '''    
         }
@@ -394,7 +398,6 @@ class SCGPRIOtoSCLP{
         translatedNodes.add(surface)
         '''
         «setLabelIfRequired(surface)»
-        «setPrioStatementIfRequired(surface, surface.depth)»
         pause;
         «transformNode(surface.depth)»
         '''
@@ -490,7 +493,12 @@ class SCGPRIOtoSCLP{
      *          child node
      */
     private def String setPrioStatementIfRequired(Node parent, Node child){
-        if (prioIDs.get(parent) != prioIDs.get(child)){
+        if (child instanceof Surface && (prioIDs.get(parent) != prioIDs.get((child as Surface).depth))){
+            '''
+            prio(«prioIDs.get((child as Surface).depth).toString»);
+            '''
+        }
+        else if ((!(child instanceof Surface)) && (prioIDs.get(parent) != prioIDs.get(child))){
             '''
             prio(«prioIDs.get(child).toString»);
             '''
