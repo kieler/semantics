@@ -28,6 +28,7 @@ import de.cau.cs.kieler.esterel.kexpressions.VariableDecl
 import de.cau.cs.kieler.scl.scl.SCLProgram
 import java.util.LinkedList
 import java.util.HashMap
+import de.cau.cs.kieler.esterel.kexpressions.CombineOperator
 
 /**
  * @author krat
@@ -101,10 +102,18 @@ class TransformInterface {
                 if (sig.channelDescr.expression != null) {
                     s_val.initialValue = sig.channelDescr.expression.transformExp(type.toString)
                 }
+                
                 program.declarations += createDeclaration => [
                     input = decl instanceof Input || decl instanceof InputOutput
                     output = decl instanceof Output || decl instanceof InputOutput
                     valuedObjects += s_val
+                     // If there is a combine function add a variable carrying the neutral element
+                    if (sig.channelDescr.type.operator != CombineOperator::NONE) {
+                        val s_cur = createValuedObject(sig.name + "_cur")
+                        s_cur.combineOperator = s_val.combineOperator
+                        signalToNeutralMap.put(pureSig, s_cur)
+                        valuedObjects += s_cur
+                    }
                     // Check for hostcode type
                     if (sig.type.getName() == "PURE" && sig.channelDescr.type.typeID != null) {
                         it.type = ValueType::HOST

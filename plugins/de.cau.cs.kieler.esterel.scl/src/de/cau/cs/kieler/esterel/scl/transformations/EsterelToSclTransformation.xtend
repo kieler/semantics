@@ -84,7 +84,7 @@ import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.esterel.kexpressions.IVariable
-import de.cau.cs.kieler.esterel.esterel.TrapDecl
+import de.cau.cs.kieler.core.kexpressions.CombineOperator
 
 /**
  * This class contains methods to transform an Esterel program to SCL. The transformation is started
@@ -128,6 +128,9 @@ class EsterelToSclTransformation extends Transformation {
 
     // Maps valued variables to signal
     var protected HashMap<ValuedObject, ValuedObject> signalToValueMap
+    
+    // Maps variables holding the neutral element for a valued, combined signal to the signal and saves combine operator
+    var protected HashMap<ValuedObject, ValuedObject> signalToNeutralMap
 
     // Associates counting variables to the corresponding delay event
     var HashMap<String, ValuedObject> counterToEventMap
@@ -174,6 +177,7 @@ class EsterelToSclTransformation extends Transformation {
         exitToLabelMap = <ISignal, Pair<ValuedObject, String>>newHashMap
         signalToVariableMap = <Pair<String, ValuedObject>>newLinkedList
         signalToValueMap = <ValuedObject, ValuedObject>newHashMap
+        signalToNeutralMap = <ValuedObject, ValuedObject>newHashMap
         counterToEventMap = <String, ValuedObject>newHashMap
         localDeclarations = <ValuedObject>newLinkedList
         pauseTransformation = new Stack<(StatementSequence)=>StatementSequence>
@@ -265,6 +269,34 @@ class EsterelToSclTransformation extends Transformation {
                 }
             }
         }
+        
+        // Set variables holding neutral elements for combined signals to neutral element
+        signalToNeutralMap.values.forEach [
+            switch(it.combineOperator) {
+                case CombineOperator::ADD: 
+                    resetSignalVariablesThread.add(createAssignment(it, createIntValue(0)))
+                case CombineOperator::MULT: 
+                    resetSignalVariablesThread.add(createAssignment(it, createIntValue(1)))
+                case CombineOperator::MAX: 
+                    resetSignalVariablesThread.add(createAssignment(it, createIntValue(0)))
+                case CombineOperator::MIN: 
+                    resetSignalVariablesThread.add(createAssignment(it, createIntValue(Integer.MAX_VALUE)))
+                case CombineOperator::OR: 
+                    resetSignalVariablesThread.add(createAssignment(it, createBoolValue(false)))
+                case CombineOperator::AND: 
+                    resetSignalVariablesThread.add(createAssignment(it, createBoolValue(true)))
+                default: {
+                }
+            }
+        ]
+        // If signal was emitted set value to new value
+        for (signalVariable : signalToNeutralMap.keySet) {
+                resetSignalVariablesThread.add(createConditional => [
+                    expression = signalVariable.createValObjRef
+                    statements += createStatement(
+                        createAssignment(signalToValueMap.get(signalVariable), signalToNeutralMap.get(signalVariable).createValObjRef))
+            ])
+        }
 
         // If optimization flag is not set or program does not terminate create a conditional jump
         if (!optimizeTransformation || terminates) {
@@ -321,22 +353,34 @@ class EsterelToSclTransformation extends Transformation {
 
             // Handle combine operator
             if (emitValueVariable.combineOperator.value != 0) {
-                val combineOrSetValue = createConditional => [
-                    expression = emitVariable.createValObjRef
-                    // If the signal was already emitted in this tick, apply combine function
-                    statements += createStatement(
-                        createAssignment(emitValueVariable,
+                val emitNeutralVariable = signalToNeutralMap.get(emitVariable)
+                targetStatementSequence.add(emitSignal)
+                targetStatementSequence.add(createStatement(
+                        createAssignment(emitNeutralVariable,
                             KExpressionsFactory::eINSTANCE.createOperatorExpression => [
-                                operator = OperatorType::get(emitValueVariable.combineOperator.toString)
-                                subExpressions.add(createValObjRef(emitValueVariable))
+                                operator = OperatorType::get(emitNeutralVariable.combineOperator.toString)
+                                subExpressions.add(createValObjRef(emitNeutralVariable))
                                 subExpressions.add(EcoreUtil.copy(sclEmittedExpression))
-                            ]))
-                    // Else emit signal and set value
-                    elseStatements.add(emitSignal)
-                    elseStatements.add(createStatement(createAssignment(emitValueVariable, sclEmittedExpression)))
-                ]
-                targetStatementSequence.add(combineOrSetValue)
+                            ])))
             }
+            // WAS
+//            if (emitValueVariable.combineOperator.value != 0) {
+//                val combineOrSetValue = createConditional => [
+//                    expression = emitVariable.createValObjRef
+//                    // If the signal was already emitted in this tick, apply combine function
+//                    statements += createStatement(
+//                        createAssignment(emitValueVariable,
+//                            KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+//                                operator = OperatorType::get(emitValueVariable.combineOperator.toString)
+//                                subExpressions.add(createValObjRef(emitValueVariable))
+//                                subExpressions.add(EcoreUtil.copy(sclEmittedExpression))
+//                            ]))
+//                    // Else emit signal and set value
+//                    elseStatements.add(emitSignal)
+//                    elseStatements.add(createStatement(createAssignment(emitValueVariable, sclEmittedExpression)))
+//                ]
+//                targetStatementSequence.add(combineOrSetValue)
+//            }
             // Valued emit without combine function
             else {
                 targetStatementSequence.add(emitSignal)
@@ -963,7 +1007,9 @@ class EsterelToSclTransformation extends Transformation {
                                 expression = createAnd(eventExpr.transformExp, createValObjRef(f_depth))
                             }
                         }
-                        statements += singleCase.statement.transformStatement(newSseq).statements
+                        // If there is a do-block transform it
+                        if (singleCase.statement != null)
+                            statements += singleCase.statement.transformStatement(newSseq).statements
                         statements += createGotoStm(l_end) // goto statements end to ignore not taken cases; break
                     ])
 
@@ -1132,7 +1178,10 @@ class EsterelToSclTransformation extends Transformation {
         signalToVariableMap.remove(f_wa.name -> f_wa)
         if (!(abort.body as AbortInstance).delay.isImmediate) {
             signalToVariableMap.remove(f_depth.name -> f_depth)
+            // Remove gotos in only instantaneously reachable pauses to avoid potentially instantaneous loops
+            removeInstantaneousGotos(sScope.statements, l, createValuedObject("dummy"))
         }
+        
         sScope
     }
 
@@ -1413,7 +1462,8 @@ class EsterelToSclTransformation extends Transformation {
                 ])
             ]
         }
-        sScope.add(trapHandlers)
+        if (!trapHandlers.threads.nullOrEmpty)
+          sScope.add(trapHandlers)
         targetStatementSequence.add(sScope)
 
         targetStatementSequence
@@ -1580,7 +1630,7 @@ class EsterelToSclTransformation extends Transformation {
     */
     def dispatch StatementSequence transformStatement(LocalVariable localVar, StatementSequence targetStatementSequence) {
         // Mark variables with suffix to distinguish from signals
-//        localVar.eAllContents.toList.filter(IVariable).forEach[ name = name + "_var" ]
+        localVar.eAllContents.toList.filter(IVariable).forEach[ name = name + "_var" ]
         
         val sScope = newSscope
 
