@@ -35,9 +35,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getIncoming <em>Incoming</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#isIsInitial <em>Is Initial</em>}</li>
  *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getDependencies <em>Dependencies</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getPrioID <em>Prio ID</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getTsID <em>Ts ID</em>}</li>
- *   <li>{@link de.cau.cs.kieler.scg.impl.NodeImpl#getNodePriority <em>Node Priority</em>}</li>
  * </ul>
  * </p>
  *
@@ -83,66 +80,6 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * @ordered
      */
     protected EList<Dependency> dependencies;
-
-    /**
-     * The default value of the '{@link #getPrioID() <em>Prio ID</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getPrioID()
-     * @generated
-     * @ordered
-     */
-    protected static final Integer PRIO_ID_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getPrioID() <em>Prio ID</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getPrioID()
-     * @generated
-     * @ordered
-     */
-    protected Integer prioID = PRIO_ID_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #getTsID() <em>Ts ID</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getTsID()
-     * @generated
-     * @ordered
-     */
-    protected static final Integer TS_ID_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getTsID() <em>Ts ID</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getTsID()
-     * @generated
-     * @ordered
-     */
-    protected Integer tsID = TS_ID_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #getNodePriority() <em>Node Priority</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getNodePriority()
-     * @generated
-     * @ordered
-     */
-    protected static final Integer NODE_PRIORITY_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getNodePriority() <em>Node Priority</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getNodePriority()
-     * @generated
-     * @ordered
-     */
-    protected Integer nodePriority = NODE_PRIORITY_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -213,69 +150,6 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Integer getPrioID() {
-        return prioID;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setPrioID(Integer newPrioID) {
-        Integer oldPrioID = prioID;
-        prioID = newPrioID;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.NODE__PRIO_ID, oldPrioID, prioID));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Integer getTsID() {
-        return tsID;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setTsID(Integer newTsID) {
-        Integer oldTsID = tsID;
-        tsID = newTsID;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.NODE__TS_ID, oldTsID, tsID));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Integer getNodePriority() {
-        return nodePriority;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setNodePriority(Integer newNodePriority) {
-        Integer oldNodePriority = nodePriority;
-        nodePriority = newNodePriority;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ScgPackage.NODE__NODE_PRIORITY, oldNodePriority, nodePriority));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -316,12 +190,6 @@ public class NodeImpl extends AnnotatableImpl implements Node {
                 return isIsInitial();
             case ScgPackage.NODE__DEPENDENCIES:
                 return getDependencies();
-            case ScgPackage.NODE__PRIO_ID:
-                return getPrioID();
-            case ScgPackage.NODE__TS_ID:
-                return getTsID();
-            case ScgPackage.NODE__NODE_PRIORITY:
-                return getNodePriority();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -346,15 +214,6 @@ public class NodeImpl extends AnnotatableImpl implements Node {
                 getDependencies().clear();
                 getDependencies().addAll((Collection<? extends Dependency>)newValue);
                 return;
-            case ScgPackage.NODE__PRIO_ID:
-                setPrioID((Integer)newValue);
-                return;
-            case ScgPackage.NODE__TS_ID:
-                setTsID((Integer)newValue);
-                return;
-            case ScgPackage.NODE__NODE_PRIORITY:
-                setNodePriority((Integer)newValue);
-                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -376,15 +235,6 @@ public class NodeImpl extends AnnotatableImpl implements Node {
             case ScgPackage.NODE__DEPENDENCIES:
                 getDependencies().clear();
                 return;
-            case ScgPackage.NODE__PRIO_ID:
-                setPrioID(PRIO_ID_EDEFAULT);
-                return;
-            case ScgPackage.NODE__TS_ID:
-                setTsID(TS_ID_EDEFAULT);
-                return;
-            case ScgPackage.NODE__NODE_PRIORITY:
-                setNodePriority(NODE_PRIORITY_EDEFAULT);
-                return;
         }
         super.eUnset(featureID);
     }
@@ -403,12 +253,6 @@ public class NodeImpl extends AnnotatableImpl implements Node {
                 return isInitial != IS_INITIAL_EDEFAULT;
             case ScgPackage.NODE__DEPENDENCIES:
                 return dependencies != null && !dependencies.isEmpty();
-            case ScgPackage.NODE__PRIO_ID:
-                return PRIO_ID_EDEFAULT == null ? prioID != null : !PRIO_ID_EDEFAULT.equals(prioID);
-            case ScgPackage.NODE__TS_ID:
-                return TS_ID_EDEFAULT == null ? tsID != null : !TS_ID_EDEFAULT.equals(tsID);
-            case ScgPackage.NODE__NODE_PRIORITY:
-                return NODE_PRIORITY_EDEFAULT == null ? nodePriority != null : !NODE_PRIORITY_EDEFAULT.equals(nodePriority);
         }
         return super.eIsSet(featureID);
     }
@@ -425,12 +269,6 @@ public class NodeImpl extends AnnotatableImpl implements Node {
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (isInitial: ");
         result.append(isInitial);
-        result.append(", prioID: ");
-        result.append(prioID);
-        result.append(", tsID: ");
-        result.append(tsID);
-        result.append(", nodePriority: ");
-        result.append(nodePriority);
         result.append(')');
         return result.toString();
     }
