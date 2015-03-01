@@ -69,6 +69,8 @@ typedef int bool;
 #define join1(sib1)	\
   __LABEL__: if (isEnabled(sib1)) {	\
     PAUSEG_(__LABEL__); }
+    
+#define join0() 
 
 // #define join2(sib1, sib2)					\
 //     trace0t("JOIN:", (isEnabledAnyOf(((u2b(sib1)) | (u2b(sib2))))) ? "waits\n" : "joins\n") \

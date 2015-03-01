@@ -546,18 +546,19 @@ class SCGPRIOtoSCLP{
      */
     private def String listJoinThreads(List<Long> prios) {
 
-        var newString = new String
-        var lastprio = prios.last
-        prios.remove(lastprio)
+        var newString = ""
+        if (!prios.empty) {
+            var lastprio = prios.last
+            prios.remove(lastprio)
 
-        if (! prios.empty) {
-            for (p : prios){
-            newString = newString + (p.toString) + ","
+            if (! prios.empty) {
+                for (p : prios) {
+                    newString = newString + (p.toString) + ","
+                }
             }
+
+            newString = newString + lastprio.toString
         }
-
-        newString = newString + lastprio.toString
-
         newString
     }
     
@@ -600,13 +601,19 @@ class SCGPRIOtoSCLP{
      * @param entry
      *          entry node of that thread
      */
-    private def LinkedList<Long> getAllPriorities(Entry entry){
+    private def LinkedList<Long> getAllPriorities(Entry entry, long exitPriority) {
         var allNodes = getThreadNodes(entry)
-        var depthAndExitNodes = allNodes.filter[it instanceof Depth || it instanceof Exit]
-        var prioList = <Long> newLinkedList
-        for (d : depthAndExitNodes){
-            if (!prioList.contains(prioIDs.get(d))){
-                prioList.add(prioIDs.get(d))
+        var prioList = <Long>newLinkedList
+        for (a : allNodes) {
+            var priority = prioIDs.get(a)
+            if (!prioList.contains(priority)) {
+                if (a instanceof Depth) {
+                    prioList.add(priority)
+                } else {
+                    if (priority < exitPriority) {
+                        prioList.add(priority)
+                    }
+                }
             }
         }
         prioList
@@ -614,6 +621,21 @@ class SCGPRIOtoSCLP{
     
    /**
     * This method creates a list of priorities which have to be joined for each join node
+    * When the joining thread is called, there are four possibilities, at which points
+    * the other threads might have been stopped: 
+    * - entry node, because thread has not been called yet
+    * - depth node, because thread pauses
+    * - exit node, if thread has already terminated
+    * - after a prio statement
+    * For the entry and exit nodes, and for the case, that a prio statement stopped the
+    * thread, it is enough to wait for those priorities, which are higher than the 
+    * priority of the exit node of the thread which performs the join.
+    * To sum up: 
+    * - all priorities from all nodes of the thread are considered, if they are bigger than
+    *   the priority of the exit node of the thread, which performs the join
+    * - the priorities of all depth nodes are considered
+    * 
+    * all these possible priorities have to be considered
     *
     * @param scg 
     *          current SCG
@@ -627,7 +649,7 @@ class SCGPRIOtoSCLP{
             entrylist.remove(joiningnode)
             var priolist = <Long> newLinkedList
             for (e : entrylist){
-                priolist.addAll(getAllPriorities(e as Entry))
+                priolist.addAll(getAllPriorities((e as Entry),prioIDs.get((joiningnode as Entry).exit)))
             }
             joinpriomap.put(j,priolist)
         }
