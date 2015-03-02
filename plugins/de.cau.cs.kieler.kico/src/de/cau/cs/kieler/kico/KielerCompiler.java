@@ -250,7 +250,7 @@ public class KielerCompiler {
                 if (alternative && !dependencyReferenced && !groupReferenced) {
                     if (transformationDummy.reverseDependencies.size() == 0) {
                         toBeDeleted = transformationDummy;
-                        System.out.println("REMOVE " + transformationDummy.id);
+                        debug("REMOVE " + transformationDummy.id);
                         found = true;
                         break;
                     }
@@ -260,7 +260,7 @@ public class KielerCompiler {
                 context.getGraph().remove(toBeDeleted);
                 for (TransformationDummy transformationDummy : context.getGraph()) {
                     if (transformationDummy.reverseDependencies.contains(toBeDeleted)) {
-                        System.out.println("REMOVE " + toBeDeleted.id + " from "
+                        debug("REMOVE " + toBeDeleted.id + " from "
                                 + transformationDummy.id);
                         transformationDummy.reverseDependencies.remove(toBeDeleted);
                     }
@@ -281,7 +281,8 @@ public class KielerCompiler {
      */
     private static void markGroupNodes(KielerCompilerContext context,
             TransformationGroup transformationGroup) {
-        for (String groupTransformationID : transformationGroup.getDependencies()) {
+        //TODO: Check if this is right!
+        for (String groupTransformationID : transformationGroup.getProducesDependencies()) {
             Transformation groupTransformation = getTransformation(groupTransformationID);
             if (groupTransformation != null) {
                 TransformationDummy groupTransformationDummy =
@@ -1107,6 +1108,7 @@ public class KielerCompiler {
             
             //Perform transformation and traces all steps
             TransformationTracing.startTransformationTracing(transformedObject, transformationID);
+            start = System.currentTimeMillis();
             object = transformation.doTransform(transformedObject, context);
             end = System.currentTimeMillis();
         } catch (Exception exception) {

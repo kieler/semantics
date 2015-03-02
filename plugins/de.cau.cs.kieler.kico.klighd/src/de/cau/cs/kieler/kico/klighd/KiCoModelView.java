@@ -1131,8 +1131,7 @@ public class KiCoModelView extends DiagramViewPart implements ILogListener {
 
             // Update diagram
             if (modelTypeChanged) {
-                KlighdSynthesisProperties properties = new KlighdSynthesisProperties();  
-                properties.setProperty(KlighdProperties.EDGES_FIRST, true);
+                KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
                 properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, "de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationUpdateStrategy");
                 
                 //save previous synthesis options to restore later
