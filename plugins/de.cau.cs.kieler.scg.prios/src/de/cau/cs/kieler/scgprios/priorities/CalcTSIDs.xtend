@@ -23,6 +23,8 @@ import java.util.HashMap
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scgprios.extensions.CommonExtension
 import com.google.inject.Inject
+import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.Assignment
 
 /**
  * This class provides a method to assign the thread segment ID to each node of an SCG
@@ -78,13 +80,12 @@ class CalcTSIDs {
      * @param return
      *          updated list of nodes, that have been visited within the current region
      */
-    private def LinkedList<Node> numberThreadSegments(Node node, int i, HashMap<Node,Integer> nodePriorities, LinkedList<Node> nodesOfPath){
+    private def void numberThreadSegments(Node node, int i, HashMap<Node,Integer> nodePriorities, LinkedList<Node> nodesOfPath){
        
-        var newPath = <Node> newLinkedList
-        newPath.addAll(nodesOfPath)
+        var newPath = new LinkedList(nodesOfPath)
         // prevent from endless loops 
         // (if the node has already been visited during the current pass - terminate)
-        if (!nodesOfPath.contains(node)){
+        if (!nodesOfPath.contains(node) && (!(tsIDs.containsKey(node) && (tsIDs.get(node) < i)))){
             // add node to current path
             newPath.add(node)
             
@@ -129,8 +130,9 @@ class CalcTSIDs {
                         numberThreadSegments(e, newTSID, nodePriorities, emptyPath)             
                   
                     }
-                    tsIDs.put((node as Fork).join,tsIDs.get(((entrynodes.last) as Entry).exit))
-                    numberThreadSegments((node as Fork).join.next.target, tsIDs.get(((entrynodes.last) as Entry).exit), nodePriorities, newPath)
+                    var joinpriority = tsIDs.get((entrynodes.last as Entry).exit)
+                    tsIDs.put((node as Fork).join,joinpriority)
+                    numberThreadSegments((node as Fork).join.next.target, joinpriority, nodePriorities, newPath)
                     entrynodes.addFirst(firstentry)
                 
                 // for all other nodes, assign the delivered ID i as tsID to that node and call
@@ -139,16 +141,18 @@ class CalcTSIDs {
                 // higher tsID
                 } else {
                     tsIDs.put(node,i)
+                    var pathLength = newPath.length
                     for (c : getAllChildrenOfNode(node)){
-                        numberThreadSegments(c, i, nodePriorities, newPath)
+                        var individualPath = <Node> newLinkedList
+                        individualPath.addAll(newPath.subList(0,pathLength))
+                        numberThreadSegments(c, i, nodePriorities, individualPath)
                     }
                 
             }
             
-            }
+            } 
         } 
         
-        newPath
     } 
     
 }
