@@ -52,7 +52,6 @@ public class SuspendActionImpl extends LocalActionImpl implements SuspendAction 
      * @ordered
      */
     protected static final boolean WEAK_EDEFAULT = false;
-
     /**
      * The cached value of the '{@link #isWeak() <em>Weak</em>}' attribute.
      * <!-- begin-user-doc -->

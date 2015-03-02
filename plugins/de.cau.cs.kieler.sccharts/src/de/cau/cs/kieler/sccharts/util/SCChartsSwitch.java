@@ -142,6 +142,15 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case SCChartsPackage.DATAFLOW: {
+                Dataflow dataflow = (Dataflow)theEObject;
+                T result = caseDataflow(dataflow);
+                if (result == null) result = caseConcurrency(dataflow);
+                if (result == null) result = caseScope(dataflow);
+                if (result == null) result = caseAnnotatable(dataflow);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case SCChartsPackage.NODE: {
                 Node node = (Node)theEObject;
                 T result = caseNode(node);
@@ -149,27 +158,11 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case SCChartsPackage.INPUT_NODE: {
-                InputNode inputNode = (InputNode)theEObject;
-                T result = caseInputNode(inputNode);
-                if (result == null) result = caseNode(inputNode);
-                if (result == null) result = caseAnnotatable(inputNode);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.REFERENCED_NODE: {
-                ReferencedNode referencedNode = (ReferencedNode)theEObject;
-                T result = caseReferencedNode(referencedNode);
-                if (result == null) result = caseNode(referencedNode);
-                if (result == null) result = caseAnnotatable(referencedNode);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.TEST_REFERENCE_NODE: {
-                TestReferenceNode testReferenceNode = (TestReferenceNode)theEObject;
-                T result = caseTestReferenceNode(testReferenceNode);
-                if (result == null) result = caseNode(testReferenceNode);
-                if (result == null) result = caseAnnotatable(testReferenceNode);
+            case SCChartsPackage.REFERENCE_NODE: {
+                ReferenceNode referenceNode = (ReferenceNode)theEObject;
+                T result = caseReferenceNode(referenceNode);
+                if (result == null) result = caseNode(referenceNode);
+                if (result == null) result = caseAnnotatable(referenceNode);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -181,12 +174,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case SCChartsPackage.DATAFLOW_FEATURE: {
-                DataflowFeature dataflowFeature = (DataflowFeature)theEObject;
-                T result = caseDataflowFeature(dataflowFeature);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
             case SCChartsPackage.DEFINE_NODE: {
                 DefineNode defineNode = (DefineNode)theEObject;
                 T result = caseDefineNode(defineNode);
@@ -195,32 +182,9 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case SCChartsPackage.OUTPUT_NODE: {
-                OutputNode outputNode = (OutputNode)theEObject;
-                T result = caseOutputNode(outputNode);
-                if (result == null) result = caseNode(outputNode);
-                if (result == null) result = caseAnnotatable(outputNode);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.DATAFLOW: {
-                Dataflow dataflow = (Dataflow)theEObject;
-                T result = caseDataflow(dataflow);
-                if (result == null) result = caseConcurrency(dataflow);
-                if (result == null) result = caseScope(dataflow);
-                if (result == null) result = caseAnnotatable(dataflow);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.SENDER: {
-                Sender sender = (Sender)theEObject;
-                T result = caseSender(sender);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.RECEIVER: {
-                Receiver receiver = (Receiver)theEObject;
-                T result = caseReceiver(receiver);
+            case SCChartsPackage.DATAFLOW_FEATURE: {
+                DataflowFeature dataflowFeature = (DataflowFeature)theEObject;
+                T result = caseDataflowFeature(dataflowFeature);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -409,47 +373,17 @@ public class SCChartsSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Input Node</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Reference Node</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Input Node</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Reference Node</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseInputNode(InputNode object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Referenced Node</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Referenced Node</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseReferencedNode(ReferencedNode object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Test Reference Node</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Test Reference Node</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseTestReferenceNode(TestReferenceNode object) {
+    public T caseReferenceNode(ReferenceNode object) {
         return null;
     }
 
@@ -499,21 +433,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Output Node</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Output Node</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseOutputNode(OutputNode object) {
-        return null;
-    }
-
-    /**
      * Returns the result of interpreting the object as an instance of '<em>Dataflow</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -525,36 +444,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseDataflow(Dataflow object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Sender</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Sender</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseSender(Sender object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Receiver</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Receiver</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseReceiver(Receiver object) {
         return null;
     }
 

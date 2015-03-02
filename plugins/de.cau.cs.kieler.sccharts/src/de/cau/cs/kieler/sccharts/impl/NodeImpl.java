@@ -43,8 +43,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.NodeImpl#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.NodeImpl#getLabel <em>Label</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.NodeImpl#getSenders <em>Senders</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.NodeImpl#getReceivers <em>Receivers</em>}</li>
  * </ul>
  * </p>
  *
@@ -99,26 +97,6 @@ public class NodeImpl extends AnnotatableImpl implements Node {
     protected String label = LABEL_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getSenders() <em>Senders</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getSenders()
-     * @generated
-     * @ordered
-     */
-    protected EList<Sender> senders;
-
-    /**
-     * The cached value of the '{@link #getReceivers() <em>Receivers</em>}' reference.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @see #getReceivers()
-     * @generated
-     * @ordered
-     */
-	protected Receiver receivers;
-
-				/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -184,70 +162,6 @@ public class NodeImpl extends AnnotatableImpl implements Node {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Sender> getSenders() {
-        if (senders == null) {
-            senders = new EObjectContainmentEList<Sender>(Sender.class, this, SCChartsPackage.NODE__SENDERS);
-        }
-        return senders;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public Receiver getReceivers() {
-        if (receivers != null && receivers.eIsProxy()) {
-            InternalEObject oldReceivers = (InternalEObject)receivers;
-            receivers = (Receiver)eResolveProxy(oldReceivers);
-            if (receivers != oldReceivers) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.NODE__RECEIVERS, oldReceivers, receivers));
-            }
-        }
-        return receivers;
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public Receiver basicGetReceivers() {
-        return receivers;
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public void setReceivers(Receiver newReceivers) {
-        Receiver oldReceivers = receivers;
-        receivers = newReceivers;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.NODE__RECEIVERS, oldReceivers, receivers));
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case SCChartsPackage.NODE__SENDERS:
-                return ((InternalEList<?>)getSenders()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
@@ -255,11 +169,6 @@ public class NodeImpl extends AnnotatableImpl implements Node {
                 return getId();
             case SCChartsPackage.NODE__LABEL:
                 return getLabel();
-            case SCChartsPackage.NODE__SENDERS:
-                return getSenders();
-            case SCChartsPackage.NODE__RECEIVERS:
-                if (resolve) return getReceivers();
-                return basicGetReceivers();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -279,13 +188,6 @@ public class NodeImpl extends AnnotatableImpl implements Node {
             case SCChartsPackage.NODE__LABEL:
                 setLabel((String)newValue);
                 return;
-            case SCChartsPackage.NODE__SENDERS:
-                getSenders().clear();
-                getSenders().addAll((Collection<? extends Sender>)newValue);
-                return;
-            case SCChartsPackage.NODE__RECEIVERS:
-                setReceivers((Receiver)newValue);
-                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -304,12 +206,6 @@ public class NodeImpl extends AnnotatableImpl implements Node {
             case SCChartsPackage.NODE__LABEL:
                 setLabel(LABEL_EDEFAULT);
                 return;
-            case SCChartsPackage.NODE__SENDERS:
-                getSenders().clear();
-                return;
-            case SCChartsPackage.NODE__RECEIVERS:
-                setReceivers((Receiver)null);
-                return;
         }
         super.eUnset(featureID);
     }
@@ -326,10 +222,6 @@ public class NodeImpl extends AnnotatableImpl implements Node {
                 return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
             case SCChartsPackage.NODE__LABEL:
                 return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
-            case SCChartsPackage.NODE__SENDERS:
-                return senders != null && !senders.isEmpty();
-            case SCChartsPackage.NODE__RECEIVERS:
-                return receivers != null;
         }
         return super.eIsSet(featureID);
     }

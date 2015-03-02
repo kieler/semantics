@@ -41,22 +41,22 @@ public class SctProposalProvider extends AbstractSctProposalProvider {
         
     }
     
-    @Override
-    public void completeReferencedNode_ReferencedScope(EObject model, Assignment assignment,
-            ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-        lookupCrossReference(((CrossReference)assignment.getTerminal()), context, acceptor, new Predicate<IEObjectDescription>() {
-            
-            public boolean apply(IEObjectDescription arg0) {
-                return 
-                        arg0.getEObjectOrProxy().eIsProxy();
-//                        && arg0.getEObjectOrProxy().eContainer() == null;
-            }
-        });
-        
-    }
+//    @Override
+//    public void completeReferencedNode_ReferencedScope(EObject model, Assignment assignment,
+//            ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+//        lookupCrossReference(((CrossReference)assignment.getTerminal()), context, acceptor, new Predicate<IEObjectDescription>() {
+//            
+//            public boolean apply(IEObjectDescription arg0) {
+//                return 
+//                        arg0.getEObjectOrProxy().eIsProxy();
+////                        && arg0.getEObjectOrProxy().eContainer() == null;
+//            }
+//        });
+//        
+//    }
     
     @Override
-    public void completeTestReferenceNode_ReferencedScope(EObject model, Assignment assignment,
+    public void completeReferenceNode_ReferencedScope(EObject model, Assignment assignment,
             ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         lookupCrossReference(((CrossReference)assignment.getTerminal()), context, acceptor, new Predicate<IEObjectDescription>() {
             

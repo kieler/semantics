@@ -33,16 +33,11 @@ import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.For;
 import de.cau.cs.kieler.sccharts.FunctionCallEffect;
-import de.cau.cs.kieler.sccharts.InputNode;
-import de.cau.cs.kieler.sccharts.OutputNode;
-import de.cau.cs.kieler.sccharts.Receiver;
-import de.cau.cs.kieler.sccharts.ReferencedNode;
+import de.cau.cs.kieler.sccharts.ReferenceNode;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
-import de.cau.cs.kieler.sccharts.Sender;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.SuspendAction;
-import de.cau.cs.kieler.sccharts.TestReferenceNode;
 import de.cau.cs.kieler.sccharts.TextEffect;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.text.actions.serializer.ActionsSemanticSequencer;
@@ -435,30 +430,10 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 					return; 
 				}
 				else break;
-			case SCChartsPackage.INPUT_NODE:
-				if(context == grammarAccess.getInputNodeRule() ||
-				   context == grammarAccess.getNodeRule()) {
-					sequence_InputNode(context, (InputNode) semanticObject); 
-					return; 
-				}
-				else break;
-			case SCChartsPackage.OUTPUT_NODE:
+			case SCChartsPackage.REFERENCE_NODE:
 				if(context == grammarAccess.getNodeRule() ||
-				   context == grammarAccess.getOutputNodeRule()) {
-					sequence_OutputNode(context, (OutputNode) semanticObject); 
-					return; 
-				}
-				else break;
-			case SCChartsPackage.RECEIVER:
-				if(context == grammarAccess.getReceiverRule()) {
-					sequence_Receiver(context, (Receiver) semanticObject); 
-					return; 
-				}
-				else break;
-			case SCChartsPackage.REFERENCED_NODE:
-				if(context == grammarAccess.getNodeRule() ||
-				   context == grammarAccess.getReferencedNodeRule()) {
-					sequence_ReferencedNode(context, (ReferencedNode) semanticObject); 
+				   context == grammarAccess.getReferenceNodeRule()) {
+					sequence_ReferenceNode(context, (ReferenceNode) semanticObject); 
 					return; 
 				}
 				else break;
@@ -470,16 +445,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				}
 				else if(context == grammarAccess.getSingleRegionRule()) {
 					sequence_SingleRegion(context, (Region) semanticObject); 
-					return; 
-				}
-				else break;
-			case SCChartsPackage.SENDER:
-				if(context == grammarAccess.getSenderInputRule()) {
-					sequence_SenderInput(context, (Sender) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getSenderRule()) {
-					sequence_Sender(context, (Sender) semanticObject); 
 					return; 
 				}
 				else break;
@@ -498,13 +463,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				if(context == grammarAccess.getLocalActionRule() ||
 				   context == grammarAccess.getSuspendActionRule()) {
 					sequence_SuspendAction(context, (SuspendAction) semanticObject); 
-					return; 
-				}
-				else break;
-			case SCChartsPackage.TEST_REFERENCE_NODE:
-				if(context == grammarAccess.getNodeRule() ||
-				   context == grammarAccess.getTestReferenceNodeRule()) {
-					sequence_TestReferenceNode(context, (TestReferenceNode) semanticObject); 
 					return; 
 				}
 				else break;
@@ -610,7 +568,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     ((valuedObject=[ValuedObject|ID] expression=Expression) | (valuedObject=[ValuedObject|ID] node=[Node|ID]? expression=ValuedObjectReference))
+	 *     ((valuedObject=[ValuedObject|ID] expression=Expression) | (valuedObject=[ValuedObject|ID] node=[Node|ID] expression=ValuedObjectReference))
 	 */
 	protected void sequence_Feature(EObject context, DataflowFeature semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -637,36 +595,9 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (id=ID label=STRING? senders+=SenderInput)
+	 *     (id=ID label=STRING? referencedScope=[State|ID] parameters+=Expression? parameters+=Expression*)
 	 */
-	protected void sequence_InputNode(EObject context, InputNode semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (id=ID label=STRING? valuedObject=[ValuedObject|ID])
-	 */
-	protected void sequence_OutputNode(EObject context, OutputNode semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (node=[Node|ID] valuedObject=[ValuedObject|ID]?)
-	 */
-	protected void sequence_Receiver(EObject context, Receiver semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (id=ID label=STRING? referencedScope=[State|ID] senders+=Sender*)
-	 */
-	protected void sequence_ReferencedNode(EObject context, ReferencedNode semanticObject) {
+	protected void sequence_ReferenceNode(EObject context, ReferenceNode semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -709,24 +640,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (expression=Expression receivers+=Receiver*)
-	 */
-	protected void sequence_SenderInput(EObject context, Sender semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (expression=ValuedObjectReference receivers+=Receiver*)
-	 */
-	protected void sequence_Sender(EObject context, Sender semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
 	 *     ((annotations+=Annotation* id=ID? label=STRING? for=For? declarations+=Declaration*)? (features+=Feature | nodes+=Node)*)
 	 */
 	protected void sequence_SingleDataflow(EObject context, Dataflow semanticObject) {
@@ -763,15 +676,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *     )
 	 */
 	protected void sequence_State(EObject context, State semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (id=ID label=STRING? referencedScope=[State|ID] parameters+=Expression? parameters+=Expression*)
-	 */
-	protected void sequence_TestReferenceNode(EObject context, TestReferenceNode semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

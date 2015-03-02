@@ -38,8 +38,6 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.Node#getId <em>Id</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Node#getLabel <em>Label</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Node#getSenders <em>Senders</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Node#getReceivers <em>Receivers</em>}</li>
  * </ul>
  * </p>
  *
@@ -106,47 +104,5 @@ public interface Node extends Annotatable {
      * @generated
      */
     void setLabel(String value);
-
-    /**
-     * Returns the value of the '<em><b>Senders</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.sccharts.Sender}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Senders</em>' containment reference list isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Senders</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getNode_Senders()
-     * @model containment="true"
-     * @generated
-     */
-    EList<Sender> getSenders();
-
-				/**
-     * Returns the value of the '<em><b>Receivers</b></em>' reference.
-     * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Receivers</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Receivers</em>' reference.
-     * @see #setReceivers(Receiver)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getNode_Receivers()
-     * @model
-     * @generated
-     */
-	Receiver getReceivers();
-
-				/**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Node#getReceivers <em>Receivers</em>}' reference.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Receivers</em>' reference.
-     * @see #getReceivers()
-     * @generated
-     */
-	void setReceivers(Receiver value);
 
 } // Node

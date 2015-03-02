@@ -14,37 +14,41 @@
 package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
+
+import de.cau.cs.kieler.sccharts.ReferenceNode;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
-import de.cau.cs.kieler.sccharts.TestReferenceNode;
 
 import java.util.Collection;
-import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Test Reference Node</b></em>'.
+ * An implementation of the model object '<em><b>Reference Node</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.TestReferenceNodeImpl#getReferencedScope <em>Referenced Scope</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.TestReferenceNodeImpl#getParameters <em>Parameters</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ReferenceNodeImpl#getReferencedScope <em>Referenced Scope</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ReferenceNodeImpl#getParameters <em>Parameters</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class TestReferenceNodeImpl extends NodeImpl implements TestReferenceNode {
+public class ReferenceNodeImpl extends NodeImpl implements ReferenceNode {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -77,7 +81,7 @@ public class TestReferenceNodeImpl extends NodeImpl implements TestReferenceNode
      * <!-- end-user-doc -->
      * @generated
      */
-    protected TestReferenceNodeImpl() {
+    protected ReferenceNodeImpl() {
         super();
     }
 
@@ -88,7 +92,7 @@ public class TestReferenceNodeImpl extends NodeImpl implements TestReferenceNode
      */
     @Override
     protected EClass eStaticClass() {
-        return SCChartsPackage.Literals.TEST_REFERENCE_NODE;
+        return SCChartsPackage.Literals.REFERENCE_NODE;
     }
 
     /**
@@ -102,7 +106,7 @@ public class TestReferenceNodeImpl extends NodeImpl implements TestReferenceNode
             referencedScope = (Scope)eResolveProxy(oldReferencedScope);
             if (referencedScope != oldReferencedScope) {
                 if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.TEST_REFERENCE_NODE__REFERENCED_SCOPE, oldReferencedScope, referencedScope));
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.REFERENCE_NODE__REFERENCED_SCOPE, oldReferencedScope, referencedScope));
             }
         }
         return referencedScope;
@@ -126,7 +130,7 @@ public class TestReferenceNodeImpl extends NodeImpl implements TestReferenceNode
         Scope oldReferencedScope = referencedScope;
         referencedScope = newReferencedScope;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.TEST_REFERENCE_NODE__REFERENCED_SCOPE, oldReferencedScope, referencedScope));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.REFERENCE_NODE__REFERENCED_SCOPE, oldReferencedScope, referencedScope));
     }
 
     /**
@@ -136,7 +140,7 @@ public class TestReferenceNodeImpl extends NodeImpl implements TestReferenceNode
      */
     public EList<Expression> getParameters() {
         if (parameters == null) {
-            parameters = new EObjectContainmentEList<Expression>(Expression.class, this, SCChartsPackage.TEST_REFERENCE_NODE__PARAMETERS);
+            parameters = new EObjectContainmentEList<Expression>(Expression.class, this, SCChartsPackage.REFERENCE_NODE__PARAMETERS);
         }
         return parameters;
     }
@@ -149,7 +153,7 @@ public class TestReferenceNodeImpl extends NodeImpl implements TestReferenceNode
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case SCChartsPackage.TEST_REFERENCE_NODE__PARAMETERS:
+            case SCChartsPackage.REFERENCE_NODE__PARAMETERS:
                 return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -163,10 +167,10 @@ public class TestReferenceNodeImpl extends NodeImpl implements TestReferenceNode
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case SCChartsPackage.TEST_REFERENCE_NODE__REFERENCED_SCOPE:
+            case SCChartsPackage.REFERENCE_NODE__REFERENCED_SCOPE:
                 if (resolve) return getReferencedScope();
                 return basicGetReferencedScope();
-            case SCChartsPackage.TEST_REFERENCE_NODE__PARAMETERS:
+            case SCChartsPackage.REFERENCE_NODE__PARAMETERS:
                 return getParameters();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -181,10 +185,10 @@ public class TestReferenceNodeImpl extends NodeImpl implements TestReferenceNode
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case SCChartsPackage.TEST_REFERENCE_NODE__REFERENCED_SCOPE:
+            case SCChartsPackage.REFERENCE_NODE__REFERENCED_SCOPE:
                 setReferencedScope((Scope)newValue);
                 return;
-            case SCChartsPackage.TEST_REFERENCE_NODE__PARAMETERS:
+            case SCChartsPackage.REFERENCE_NODE__PARAMETERS:
                 getParameters().clear();
                 getParameters().addAll((Collection<? extends Expression>)newValue);
                 return;
@@ -200,10 +204,10 @@ public class TestReferenceNodeImpl extends NodeImpl implements TestReferenceNode
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case SCChartsPackage.TEST_REFERENCE_NODE__REFERENCED_SCOPE:
+            case SCChartsPackage.REFERENCE_NODE__REFERENCED_SCOPE:
                 setReferencedScope((Scope)null);
                 return;
-            case SCChartsPackage.TEST_REFERENCE_NODE__PARAMETERS:
+            case SCChartsPackage.REFERENCE_NODE__PARAMETERS:
                 getParameters().clear();
                 return;
         }
@@ -218,12 +222,12 @@ public class TestReferenceNodeImpl extends NodeImpl implements TestReferenceNode
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case SCChartsPackage.TEST_REFERENCE_NODE__REFERENCED_SCOPE:
+            case SCChartsPackage.REFERENCE_NODE__REFERENCED_SCOPE:
                 return referencedScope != null;
-            case SCChartsPackage.TEST_REFERENCE_NODE__PARAMETERS:
+            case SCChartsPackage.REFERENCE_NODE__PARAMETERS:
                 return parameters != null && !parameters.isEmpty();
         }
         return super.eIsSet(featureID);
     }
 
-} //TestReferenceNodeImpl
+} //ReferenceNodeImpl

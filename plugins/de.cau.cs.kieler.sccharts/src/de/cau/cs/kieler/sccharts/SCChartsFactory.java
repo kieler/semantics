@@ -85,31 +85,13 @@ public interface SCChartsFactory extends EFactory {
     Node createNode();
 
     /**
-     * Returns a new object of class '<em>Input Node</em>'.
+     * Returns a new object of class '<em>Reference Node</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Input Node</em>'.
+     * @return a new object of class '<em>Reference Node</em>'.
      * @generated
      */
-    InputNode createInputNode();
-
-    /**
-     * Returns a new object of class '<em>Referenced Node</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Referenced Node</em>'.
-     * @generated
-     */
-    ReferencedNode createReferencedNode();
-
-    /**
-     * Returns a new object of class '<em>Test Reference Node</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Test Reference Node</em>'.
-     * @generated
-     */
-    TestReferenceNode createTestReferenceNode();
+    ReferenceNode createReferenceNode();
 
     /**
      * Returns a new object of class '<em>Call Node</em>'.
@@ -139,15 +121,6 @@ public interface SCChartsFactory extends EFactory {
     DefineNode createDefineNode();
 
     /**
-     * Returns a new object of class '<em>Output Node</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Output Node</em>'.
-     * @generated
-     */
-    OutputNode createOutputNode();
-
-    /**
      * Returns a new object of class '<em>Dataflow</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -155,24 +128,6 @@ public interface SCChartsFactory extends EFactory {
      * @generated
      */
     Dataflow createDataflow();
-
-    /**
-     * Returns a new object of class '<em>Sender</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Sender</em>'.
-     * @generated
-     */
-    Sender createSender();
-
-    /**
-     * Returns a new object of class '<em>Receiver</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Receiver</em>'.
-     * @generated
-     */
-    Receiver createReceiver();
 
     /**
      * Returns a new object of class '<em>Binding</em>'.

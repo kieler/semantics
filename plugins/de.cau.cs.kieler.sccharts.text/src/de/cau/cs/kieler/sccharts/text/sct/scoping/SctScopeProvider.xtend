@@ -15,10 +15,17 @@ package de.cau.cs.kieler.sccharts.text.sct.scoping
 
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.sccharts.Binding
+import de.cau.cs.kieler.sccharts.CallNode
+import de.cau.cs.kieler.sccharts.Dataflow
+import de.cau.cs.kieler.sccharts.DataflowFeature
+import de.cau.cs.kieler.sccharts.DefineNode
+import de.cau.cs.kieler.sccharts.Node
+import de.cau.cs.kieler.sccharts.ReferenceNode
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsPackage
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.TestReferenceNode
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.Collections
 import java.util.HashSet
@@ -32,17 +39,6 @@ import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.xtext.scoping.impl.SimpleScope
-import de.cau.cs.kieler.sccharts.Sender
-import de.cau.cs.kieler.sccharts.ReferencedNode
-import de.cau.cs.kieler.sccharts.TestReferenceNode
-import de.cau.cs.kieler.sccharts.Receiver
-import de.cau.cs.kieler.sccharts.InputNode
-import de.cau.cs.kieler.sccharts.OutputNode
-import de.cau.cs.kieler.sccharts.DefineNode
-import de.cau.cs.kieler.sccharts.CallNode
-import de.cau.cs.kieler.core.kexpressions.Declaration
-import de.cau.cs.kieler.sccharts.Dataflow
-import de.cau.cs.kieler.sccharts.DataflowFeature
 
 /**
  * This class implements to scoping for referencedScope (used in KiCoUtil.parse()) and for binding (used in the sct Xtext editor).
@@ -62,8 +58,8 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
     private def boolean isProxy(Object o) {
         return (o as EObject).eIsProxy()
     }
-
-    public def IScope scope_referencedNode_referencedScope(EObject context, EReference reference) {
+    
+    public def IScope scope_referenceNode_referencedScope(EObject context, EReference reference) {
         val superScope = super.getScope(context.eContainer, reference)
 
         val res = context.eResource
@@ -83,81 +79,6 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
             }
         }
         return IScope.NULLSCOPE;
-    }
-    
-    public def IScope scope_testReferenceNode_referencedScope(EObject context, EReference reference) {
-        val superScope = super.getScope(context.eContainer, reference)
-
-        val res = context.eResource
-        if (res != null) {
-            val resSet = res.resourceSet
-            if (resSet != null) {
-                val rIterable = <Scope>newArrayList
-                for (r : resSet.resources) {
-                    val contentList = r.contents.filter(e|e instanceof State).toList
-                    if (!contentList.nullOrEmpty) {
-                        for (content : contentList) {
-                            rIterable += content as Scope
-                        }
-                    }
-                }
-                return Scopes.scopeFor(rIterable, nameProvider, superScope);
-            }
-        }
-        return IScope.NULLSCOPE;
-    }
-
-/*
- * maybe rewrite in case of the return of the parameters reference
- */
- 
-//    public def IScope scope_callNode_parameters(EObject context, EReference reference) {
-//        return IScope.NULLSCOPE
-//    }
-    
-//    public def IScope scope_callNode_parameters(EObject context, EReference reference) {
-//        val superScope = super.getScope(context.eContainer, reference)
-//        
-//        val res = context.eResource
-//        println("res: " + res)
-//        if (res != null) {
-//            val resSet = res.resourceSet
-//            if (resSet != null) {
-//                val rIterable = <Scope>newArrayList
-//                for (r : resSet.resources) {
-//                    val contentList = r.contents.filter(e|e instanceof Declaration).toList
-//                    println("cL: " + contentList)
-//                    if (!contentList.nullOrEmpty) {
-//                        for (content : contentList) {
-//                            if ((content as Declaration).input)
-//                            rIterable += content as Scope
-//                            //rIterable += content as Scope
-//                        }
-//                    }
-//                }
-//                return Scopes.scopeFor(rIterable, nameProvider, superScope);
-//            }
-//        }
-//        return IScope.NULLSCOPE;
-//        //return superScope
-//    }
-    
-    public def IScope referencedNode_SenderScope(EObject context, EReference reference) {
-        var EObject theContext = context;
-
-        val obj = theContext.eGet(pack.referencedNode_ReferencedScope, true);
-        if (!isProxy(obj)) {
-            val refScope = obj as Scope
-
-            val voIterable = <ValuedObject>newArrayList
-            refScope.declarations.forEach[
-            	if (it.output) voIterable += valuedObjects
-            ]
-
-            return Scopes.scopeFor(voIterable);
-        } else {
-            return IScope.NULLSCOPE;
-        }
     }
     
     /*
@@ -238,30 +159,34 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
 //    }
 
 // funzt wie bei der referencedNode
-    public def IScope testReferenceNode_SenderScope(EObject context, EReference reference) {
-        var EObject theContext = context;
-        val obj = theContext.eGet(pack.testReferenceNode_ReferencedScope, true);
-        if (!isProxy(obj)) {
-            val refScope = obj as Scope
-            
-            val voIterable = <ValuedObject>newArrayList
-            refScope.declarations.forEach[
-                //if (it.output) voIterable += valuedObjects
-                if (it.input) voIterable += valuedObjects
-            ]
-            
-            return Scopes.scopeFor(voIterable);
-        } else {
-            return IScope.NULLSCOPE;
-        }
-    }
+            /*was ist hier mit?*/
+//    public def IScope referenceNode_SenderScope(EObject context, EReference reference) {
+//        var EObject theContext = context;
+//        val obj = theContext.eGet(pack.referenceNode_ReferencedScope, true);
+//        if (!isProxy(obj)) {
+//            val refScope = obj as Scope
+//            
+//            val voIterable = <ValuedObject>newArrayList
+//            refScope.declarations.forEach[
+//                //if (it.output) voIterable += valuedObjects
+//                if (it.input) voIterable += valuedObjects
+//            ]
+//            
+//            return Scopes.scopeFor(voIterable);
+//        } else {
+//            return IScope.NULLSCOPE;
+//        }
+//    }
+    
+    
+    
     public def IScope dataflowFeature_ValuedObjectReferenceScope(EObject context, EReference reference) {
         var EObject theContext = context;
         val obj = theContext.eGet(pack.dataflowFeature_Node, true)
         if (!isProxy(obj)) {
-            // case of TRN: get outputs of referencedScope (scchart)
-            if (obj instanceof TestReferenceNode) {
-                var refNode = obj as TestReferenceNode
+            // case of RefNode: get outputs of referencedScope (scchart)
+            if (obj instanceof ReferenceNode) {
+                var refNode = obj as ReferenceNode
                 val voIterable = <ValuedObject>newArrayList
                 refNode.referencedScope.declarations.forEach[
                     if (it.output) {
@@ -284,147 +209,41 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
         }
     }
     
-    public def IScope scope_ValuedObjectReference_valuedObject(EObject context, EReference reference) {
-		if (context instanceof ReferencedNode) {
-			return referencedNode_SenderScope(context, reference)
-		} // neu else if fuer trNode
-		else if (context instanceof TestReferenceNode) {
-		    //return testReferenceNode_SenderScope(context, reference)
-		} // DataflowFeature: direct modelling
-		else if (context instanceof DataflowFeature) {
-		    //val f = context as DataflowFeature
-		    //val fnode = f.node
-		    //println("df feature: " + (context as DataflowFeature).node)
-		    return dataflowFeature_ValuedObjectReferenceScope(context, reference)
-		    //return defineNode_ValuedObjectReferenceScope(context, reference)
-		}
-        return null;
-    }
-    
-//    public def IScope scope_TestReceiver_valuedObject(EObject context, EReference reference) {
-//        val superScope = super.getScope(context.eContainer, reference)
-//        if (context instanceof TestReceiver) {
-//            if ((context as TestReceiver).node instanceof TestReferenceNode) {
-//                var EObject theContext = (context as TestReceiver).node as TestReferenceNode
-//                val obj = theContext.eGet(pack.testReferenceNode_ReferencedScope, true)
-//                if (!isProxy(obj)) {
-//                    val refScope = obj as Scope
-//                    val voIterable = <ValuedObject>newArrayList
-//                    refScope.declarations.forEach[
-//                        if (it.input) voIterable += valuedObjects
-//                    ]
-//                    return Scopes.scopeFor(voIterable)
-//                }  else {
-//                    return superScope
-//                }
-//            } else if ((context as TestReceiver).node instanceof OutputNode) {
-//                if ((context as TestReceiver).sender instanceof TestReferenceNode) {
-//                    var EObject theContext = (context as TestReceiver).sender as TestReferenceNode
-//                    val obj = theContext.eGet(pack.testReferenceNode_ReferencedScope, true)
-//                
-//                    if (!isProxy(obj)) {
-//                        val refScope = obj as Scope
-//                        val voIterable = <ValuedObject>newArrayList
-//                        refScope.declarations.forEach[
-//                            if (it.output) voIterable += valuedObjects
-//                        ]
-//                        return Scopes.scopeFor(voIterable)
-//                    } else {
-//                        return superScope
-//                    }
-//                } else if ((context as TestReceiver).sender instanceof CallNode) {
-//                    var EObject theContext = (context as TestReceiver).sender as CallNode
-//                    val obj = theContext.eGet(pack.callNode_CallReference, true)
-//                    val dn = obj as DefineNode
-//                    val outs = <ValuedObject>newArrayList
-//                    dn.outputs.forEach[ out|
-//                        outs += out.valuedObjects
-//                    ]
-//                    return Scopes.scopeFor(outs)
-//                }
-//                 else {
-//                    var EObject theContext = (context as TestReceiver).sender as DefineNode
-//                    val obj = theContext.eGet(pack.defineNode_Outputs, true)
-//                    
-//                    val dn = theContext as DefineNode
-//                    val outs = <ValuedObject>newArrayList
-//                    dn.outputs.forEach[ out|
-//                        outs += out.valuedObjects
-//                    ]
-//                    return Scopes.scopeFor(outs)
-//                }
-//            } else if ((context as TestReceiver).node instanceof CallNode) {
-//                var EObject theContext = (context as TestReceiver).node as CallNode
-//                //callReference (DefineNode)
-//                val callRef = (theContext.eGet(pack.callNode_CallReference, true)) as DefineNode
-//                //val dn = (callRef as DefineNode).eGet(pack.defineNode_Inputs, true)
-//                val ins = <ValuedObject>newArrayList
-//                callRef.inputs.forEach[ in|
-//                    ins += in.valuedObjects
-//                ]
-//                
-//                return Scopes.scopeFor(ins)
-//                
-//            } else if((context as TestReceiver).node instanceof DefineNode) {
-//                var EObject theContext = (context as TestReceiver).node as DefineNode
-//                val obj = theContext.eGet(pack.defineNode_Inputs, true)
-//                val dn = theContext as DefineNode
-//                val ins = <ValuedObject>newArrayList
-////                println("dn: " + dn.inputs)
-//                dn.inputs.forEach[ in|
-////                    println("in: " + in.valuedObjects)
-//                    ins += in.valuedObjects
-//                ]
-//                return Scopes.scopeFor(ins)
-//            } else {
-//                return superScope
-//            }
-//        }
-//        return null
+//    public def IScope scope_DataflowFeature_node(EObject context, EReference reference) {
+//        
+//        println("test " + context)
+//        val s = context as State
+//        val d = s.concurrencies.filter(typeof(Dataflow)).toList
+//        val nodeList = <Node>newArrayList
+//        d.forEach[
+//            nodeList += it.nodes.filter(typeof(DefineNode))
+//            nodeList += it.nodes.filter(typeof(TestReferenceNode))
+//        ] 
+//        println("nl: " + nodeList)
+//        
+//        return Scopes.scopeFor(nodeList)
 //    }
     
-    public def IScope scope_Receiver_valuedObject(EObject context, EReference reference) {
-    	val superScope = super.getScope(context.eContainer, reference)
-        if (context instanceof Receiver) {
-        	if ((context as Receiver).node instanceof ReferencedNode) {
-	        	var EObject theContext = (context as Receiver).node as ReferencedNode
-        		val obj = theContext.eGet(pack.referencedNode_ReferencedScope, true);
-        		if (!isProxy(obj)) {
-            		val refScope = obj as Scope
-
-            		val voIterable = <ValuedObject>newArrayList
-            		refScope.declarations.forEach[
-            			if (it.input) voIterable += valuedObjects
-            		]
-
-            		return Scopes.scopeFor(voIterable);
-        		} else {
-            		return superScope;
-        		}
-        		// neu: else if mit TestReferenceNode: funktioniert fuer inputs
-       		} else if ((context as Receiver).node instanceof TestReferenceNode) {
-       		    var EObject theContext = (context as Receiver).node as TestReferenceNode
-       		    val obj = theContext.eGet(pack.testReferenceNode_ReferencedScope, true);
-       		    if(!isProxy(obj)) {
-       		        val refScope = obj as Scope
-       		        
-       		        val voIterable = <ValuedObject>newArrayList
-       		        refScope.declarations.forEach[
-       		            if (it.input) voIterable += valuedObjects
-       		        ]
-       		        
-       		        return Scopes.scopeFor(voIterable);
-       		    } else {
-       		        return superScope;
-       		    }
-       		} else {
-       		    
-       			return superScope
-       		}
-   		}
-   		return null
-    }
     
+    public def IScope scope_ValuedObjectReference_valuedObject(EObject context, EReference reference) {
+//		if (context instanceof ReferenceNode) {
+//		    //return testReferenceNode_SenderScope(context, reference)
+//		} // DataflowFeature: direct modelling
+//		else if (context instanceof Dataflow) {
+//		    println("DF: " + context + ", " + reference)
+//		    var df = context as Dataflow
+//		    //println("dfn: " + df.nodes.filter(e|e instanceof DefineNode))
+////		    println("con: " + context.eContainer)
+//		    val s = context.eContainer as State
+////		    println(s.getScope(reference).allElements)
+//		    //return dataflow_ValuedObjectScope(context, reference)
+//		}
+        if (context instanceof DataflowFeature) {
+            return dataflowFeature_ValuedObjectReferenceScope(context, reference)
+        }
+        return null;
+    }
+        
     public def IScope scope_Scope_referencedScope(EObject context, EReference reference) {
         val superScope = super.getScope(context.eContainer, reference)
 

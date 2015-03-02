@@ -14,28 +14,24 @@
 package de.cau.cs.kieler.sccharts.transformations
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.kexpressions.TextExpression
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.Assignment
-import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.core.kexpressions.TextExpression
-import de.cau.cs.kieler.core.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.sccharts.Binding
-import de.cau.cs.kieler.sccharts.Dataflow
-import de.cau.cs.kieler.sccharts.ReferencedNode
-import de.cau.cs.kieler.sccharts.Sender
-import de.cau.cs.kieler.sccharts.InputNode
-import de.cau.cs.kieler.sccharts.Node
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.sccharts.OutputNode
-import de.cau.cs.kieler.sccharts.SCChartsFactory
-import de.cau.cs.kieler.sccharts.TestReferenceNode
 import de.cau.cs.kieler.sccharts.CallNode
+import de.cau.cs.kieler.sccharts.Dataflow
+import de.cau.cs.kieler.sccharts.Node
+import de.cau.cs.kieler.sccharts.ReferenceNode
+import de.cau.cs.kieler.sccharts.SCChartsFactory
+import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * SCCharts Reference Transformation.
@@ -199,7 +195,7 @@ class Reference {
 			 * => create new region and state, copy referenced scope
 			 * an bind all valued objects accordingly
 			 */
-            for(trn: dataflow.nodes.filter(typeof(TestReferenceNode))) {
+            for(trn: dataflow.nodes.filter(typeof(ReferenceNode))) {
                 val rRegion = parentState.createRegion("_"+dataflow.id+regionCounter)
                 rRegion.label = dataflow.label + regionCounter
                 val newState = rRegion.createState("_"+trn.ID+idCounter)
@@ -414,65 +410,66 @@ class Reference {
 			
 			// ende von NEU
 			
-    		for(rn : dataflow.nodes.filter(typeof(ReferencedNode))) {
-                val rRegion = parentState.createRegion("_"+dataflow.id+regionCounter) 
-                rRegion.label = dataflow.label + regionCounter
-    			val newState = rRegion.createState("_"+rn.ID+idCounter) 
-    			newState.label = rn.label + idCounter 
-    			regionCounter = regionCounter + 1
-    			idCounter = idCounter + 1
-    			newState.setInitial
-    			newState.referencedScope = rn.referencedScope
-    			
-    			nodeMapping.put(rn, newState)
-    			
-//    			if (lastState == null) {
-//    				newState.setInitial
-//    			} else {
-//    				(lastState as State).createTransitionTo(newState).setImmediate
-//    			}
+//    		for(rn : dataflow.nodes.filter(typeof(ReferencedNode))) {
+//                val rRegion = parentState.createRegion("_"+dataflow.id+regionCounter) 
+//                rRegion.label = dataflow.label + regionCounter
+//    			val newState = rRegion.createState("_"+rn.ID+idCounter) 
+//    			newState.label = rn.label + idCounter 
+//    			regionCounter = regionCounter + 1
+//    			idCounter = idCounter + 1
+//    			newState.setInitial
+//    			newState.referencedScope = rn.referencedScope
 //    			
-//    			lastState = newState
-    		}
-//    		(lastState as State).createTransitionTo(rRegion.states.get(0))
-    		
-    		var wireCounter = 0
-    		val senders = dataflow.eAllContents.filter(typeof(Sender)).toList
-    		for(sender : senders) {
-    			val senderParent = sender.eContainer as Node
-    			
-    			for(receiver : sender.receivers) {
-   					val newBinding = SCChartsFactory::eINSTANCE.createBinding
-    				if (receiver.node instanceof OutputNode) {
-    					val rState = nodeMapping.get(senderParent as Node)
-    					newBinding.actual = (receiver.node as OutputNode).valuedObject
-    					newBinding.formal = (sender.expression as ValuedObjectReference).valuedObject
-    					rState.bindings += newBinding
-//    					valuedObjectMapping.put(newBinding.actual, newBinding.formal)
-    				} else {
-    					if (senderParent instanceof InputNode) {
-    						val rState = nodeMapping.get(receiver.node as ReferencedNode)
-    						newBinding.formal = receiver.valuedObject
-    						newBinding.actual = (sender.expression as ValuedObjectReference).valuedObject
-	    					rState.bindings += newBinding
-    					} else {
-    						val wire = state.createVariable("_wire"+wireCounter).setTypeBool
-    						wireCounter = wireCounter + 1
-    						
-    						val sState = nodeMapping.get(senderParent as Node)
-    						newBinding.formal = (sender.expression as ValuedObjectReference).valuedObject
-    						newBinding.actual = wire
-	    					sState.bindings += newBinding
-    					
-    						val newBinding2 = SCChartsFactory::eINSTANCE.createBinding
-    						val rState = nodeMapping.get(receiver.node as ReferencedNode)
-    						newBinding2.formal = receiver.valuedObject
-    						newBinding2.actual = wire
-	    					rState.bindings += newBinding2
-    					}
-    				}
-    			}
-    		}
+//    			nodeMapping.put(rn, newState)
+//    			
+////    			if (lastState == null) {
+////    				newState.setInitial
+////    			} else {
+////    				(lastState as State).createTransitionTo(newState).setImmediate
+////    			}
+////    			
+////    			lastState = newState
+//    		}
+////    		(lastState as State).createTransitionTo(rRegion.states.get(0))
+//    		
+//    		var wireCounter = 0
+//    		val senders = dataflow.eAllContents.filter(typeof(Sender)).toList
+//    		for(sender : senders) {
+//    			val senderParent = sender.eContainer as Node
+//    			
+//    			for(receiver : sender.receivers) {
+//   					val newBinding = SCChartsFactory::eINSTANCE.createBinding
+//    				if (receiver.node instanceof OutputNode) {
+//    					val rState = nodeMapping.get(senderParent as Node)
+//    					newBinding.actual = (receiver.node as OutputNode).valuedObject
+//    					newBinding.formal = (sender.expression as ValuedObjectReference).valuedObject
+//    					rState.bindings += newBinding
+////    					valuedObjectMapping.put(newBinding.actual, newBinding.formal)
+//    				} else {
+//    					if (senderParent instanceof InputNode) {
+//    						val rState = nodeMapping.get(receiver.node as ReferencedNode)
+//    						newBinding.formal = receiver.valuedObject
+//    						newBinding.actual = (sender.expression as ValuedObjectReference).valuedObject
+//	    					rState.bindings += newBinding
+//    					} else {
+//    						val wire = state.createVariable("_wire"+wireCounter).setTypeBool
+//    						wireCounter = wireCounter + 1
+//    						
+//    						val sState = nodeMapping.get(senderParent as Node)
+//    						newBinding.formal = (sender.expression as ValuedObjectReference).valuedObject
+//    						newBinding.actual = wire
+//	    					sState.bindings += newBinding
+//    					
+//    						val newBinding2 = SCChartsFactory::eINSTANCE.createBinding
+//    						val rState = nodeMapping.get(receiver.node as ReferencedNode)
+//    						newBinding2.formal = receiver.valuedObject
+//    						newBinding2.actual = wire
+//	    					rState.bindings += newBinding2
+//    					}
+//    				}
+//    			}
+//    		}
+
             // remove (old) dataflow and empty regions
     		dataflow.remove
     		for (r: parentState.regions.immutableCopy) {

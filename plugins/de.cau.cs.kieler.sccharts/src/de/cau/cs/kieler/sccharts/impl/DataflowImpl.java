@@ -45,8 +45,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.DataflowImpl#getNodes <em>Nodes</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.DataflowImpl#getExpressions <em>Expressions</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.DataflowImpl#getValuedObjects <em>Valued Objects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.DataflowImpl#getFeatures <em>Features</em>}</li>
  * </ul>
  * </p>
@@ -70,26 +68,6 @@ public class DataflowImpl extends ConcurrencyImpl implements Dataflow {
      * @ordered
      */
     protected EList<Node> nodes;
-
-    /**
-     * The cached value of the '{@link #getExpressions() <em>Expressions</em>}' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getExpressions()
-     * @generated
-     * @ordered
-     */
-    protected EList<Expression> expressions;
-
-    /**
-     * The cached value of the '{@link #getValuedObjects() <em>Valued Objects</em>}' reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getValuedObjects()
-     * @generated
-     * @ordered
-     */
-    protected EList<ValuedObject> valuedObjects;
 
     /**
      * The cached value of the '{@link #getFeatures() <em>Features</em>}' containment reference list.
@@ -137,30 +115,6 @@ public class DataflowImpl extends ConcurrencyImpl implements Dataflow {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Expression> getExpressions() {
-        if (expressions == null) {
-            expressions = new EObjectContainmentEList<Expression>(Expression.class, this, SCChartsPackage.DATAFLOW__EXPRESSIONS);
-        }
-        return expressions;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EList<ValuedObject> getValuedObjects() {
-        if (valuedObjects == null) {
-            valuedObjects = new EObjectResolvingEList<ValuedObject>(ValuedObject.class, this, SCChartsPackage.DATAFLOW__VALUED_OBJECTS);
-        }
-        return valuedObjects;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EList<DataflowFeature> getFeatures() {
         if (features == null) {
             features = new EObjectContainmentEList<DataflowFeature>(DataflowFeature.class, this, SCChartsPackage.DATAFLOW__FEATURES);
@@ -178,8 +132,6 @@ public class DataflowImpl extends ConcurrencyImpl implements Dataflow {
         switch (featureID) {
             case SCChartsPackage.DATAFLOW__NODES:
                 return ((InternalEList<?>)getNodes()).basicRemove(otherEnd, msgs);
-            case SCChartsPackage.DATAFLOW__EXPRESSIONS:
-                return ((InternalEList<?>)getExpressions()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.DATAFLOW__FEATURES:
                 return ((InternalEList<?>)getFeatures()).basicRemove(otherEnd, msgs);
         }
@@ -196,10 +148,6 @@ public class DataflowImpl extends ConcurrencyImpl implements Dataflow {
         switch (featureID) {
             case SCChartsPackage.DATAFLOW__NODES:
                 return getNodes();
-            case SCChartsPackage.DATAFLOW__EXPRESSIONS:
-                return getExpressions();
-            case SCChartsPackage.DATAFLOW__VALUED_OBJECTS:
-                return getValuedObjects();
             case SCChartsPackage.DATAFLOW__FEATURES:
                 return getFeatures();
         }
@@ -218,14 +166,6 @@ public class DataflowImpl extends ConcurrencyImpl implements Dataflow {
             case SCChartsPackage.DATAFLOW__NODES:
                 getNodes().clear();
                 getNodes().addAll((Collection<? extends Node>)newValue);
-                return;
-            case SCChartsPackage.DATAFLOW__EXPRESSIONS:
-                getExpressions().clear();
-                getExpressions().addAll((Collection<? extends Expression>)newValue);
-                return;
-            case SCChartsPackage.DATAFLOW__VALUED_OBJECTS:
-                getValuedObjects().clear();
-                getValuedObjects().addAll((Collection<? extends ValuedObject>)newValue);
                 return;
             case SCChartsPackage.DATAFLOW__FEATURES:
                 getFeatures().clear();
@@ -246,12 +186,6 @@ public class DataflowImpl extends ConcurrencyImpl implements Dataflow {
             case SCChartsPackage.DATAFLOW__NODES:
                 getNodes().clear();
                 return;
-            case SCChartsPackage.DATAFLOW__EXPRESSIONS:
-                getExpressions().clear();
-                return;
-            case SCChartsPackage.DATAFLOW__VALUED_OBJECTS:
-                getValuedObjects().clear();
-                return;
             case SCChartsPackage.DATAFLOW__FEATURES:
                 getFeatures().clear();
                 return;
@@ -269,10 +203,6 @@ public class DataflowImpl extends ConcurrencyImpl implements Dataflow {
         switch (featureID) {
             case SCChartsPackage.DATAFLOW__NODES:
                 return nodes != null && !nodes.isEmpty();
-            case SCChartsPackage.DATAFLOW__EXPRESSIONS:
-                return expressions != null && !expressions.isEmpty();
-            case SCChartsPackage.DATAFLOW__VALUED_OBJECTS:
-                return valuedObjects != null && !valuedObjects.isEmpty();
             case SCChartsPackage.DATAFLOW__FEATURES:
                 return features != null && !features.isEmpty();
         }

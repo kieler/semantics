@@ -81,17 +81,12 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.STATE: return createState();
             case SCChartsPackage.CONCURRENCY: return createConcurrency();
             case SCChartsPackage.REGION: return createRegion();
-            case SCChartsPackage.NODE: return createNode();
-            case SCChartsPackage.INPUT_NODE: return createInputNode();
-            case SCChartsPackage.REFERENCED_NODE: return createReferencedNode();
-            case SCChartsPackage.TEST_REFERENCE_NODE: return createTestReferenceNode();
-            case SCChartsPackage.CALL_NODE: return createCallNode();
-            case SCChartsPackage.DATAFLOW_FEATURE: return createDataflowFeature();
-            case SCChartsPackage.DEFINE_NODE: return createDefineNode();
-            case SCChartsPackage.OUTPUT_NODE: return createOutputNode();
             case SCChartsPackage.DATAFLOW: return createDataflow();
-            case SCChartsPackage.SENDER: return createSender();
-            case SCChartsPackage.RECEIVER: return createReceiver();
+            case SCChartsPackage.NODE: return createNode();
+            case SCChartsPackage.REFERENCE_NODE: return createReferenceNode();
+            case SCChartsPackage.CALL_NODE: return createCallNode();
+            case SCChartsPackage.DEFINE_NODE: return createDefineNode();
+            case SCChartsPackage.DATAFLOW_FEATURE: return createDataflowFeature();
             case SCChartsPackage.BINDING: return createBinding();
             case SCChartsPackage.TRANSITION: return createTransition();
             case SCChartsPackage.TEXT_EFFECT: return createTextEffect();
@@ -203,29 +198,9 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    public InputNode createInputNode() {
-        InputNodeImpl inputNode = new InputNodeImpl();
-        return inputNode;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ReferencedNode createReferencedNode() {
-        ReferencedNodeImpl referencedNode = new ReferencedNodeImpl();
-        return referencedNode;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public TestReferenceNode createTestReferenceNode() {
-        TestReferenceNodeImpl testReferenceNode = new TestReferenceNodeImpl();
-        return testReferenceNode;
+    public ReferenceNode createReferenceNode() {
+        ReferenceNodeImpl referenceNode = new ReferenceNodeImpl();
+        return referenceNode;
     }
 
     /**
@@ -263,39 +238,9 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    public OutputNode createOutputNode() {
-        OutputNodeImpl outputNode = new OutputNodeImpl();
-        return outputNode;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public Dataflow createDataflow() {
         DataflowImpl dataflow = new DataflowImpl();
         return dataflow;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Sender createSender() {
-        SenderImpl sender = new SenderImpl();
-        return sender;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Receiver createReceiver() {
-        ReceiverImpl receiver = new ReceiverImpl();
-        return receiver;
     }
 
     /**

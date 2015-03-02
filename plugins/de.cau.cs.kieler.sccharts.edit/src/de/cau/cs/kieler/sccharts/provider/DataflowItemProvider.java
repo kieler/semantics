@@ -88,6 +88,7 @@ public class DataflowItemProvider
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
             childrenFeatures.add(SCChartsPackage.Literals.DATAFLOW__NODES);
+            childrenFeatures.add(SCChartsPackage.Literals.DATAFLOW__FEATURES);
         }
         return childrenFeatures;
     }
@@ -143,6 +144,7 @@ public class DataflowItemProvider
 
         switch (notification.getFeatureID(Dataflow.class)) {
             case SCChartsPackage.DATAFLOW__NODES:
+            case SCChartsPackage.DATAFLOW__FEATURES:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -168,22 +170,22 @@ public class DataflowItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SCChartsPackage.Literals.DATAFLOW__NODES,
-                 SCChartsFactory.eINSTANCE.createInputNode()));
+                 SCChartsFactory.eINSTANCE.createReferenceNode()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SCChartsPackage.Literals.DATAFLOW__NODES,
-                 SCChartsFactory.eINSTANCE.createReferencedNode()));
+                 SCChartsFactory.eINSTANCE.createCallNode()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SCChartsPackage.Literals.DATAFLOW__NODES,
-                 SCChartsFactory.eINSTANCE.createTestReferenceNode()));
+                 SCChartsFactory.eINSTANCE.createDefineNode()));
 
         newChildDescriptors.add
             (createChildParameter
-                (SCChartsPackage.Literals.DATAFLOW__NODES,
-                 SCChartsFactory.eINSTANCE.createOutputNode()));
+                (SCChartsPackage.Literals.DATAFLOW__FEATURES,
+                 SCChartsFactory.eINSTANCE.createDataflowFeature()));
     }
 
 }

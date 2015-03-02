@@ -205,95 +205,95 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.InputNode} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.ReferenceNode} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected InputNodeItemProvider inputNodeItemProvider;
+    protected ReferenceNodeItemProvider referenceNodeItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.InputNode}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.ReferenceNode}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
-    public Adapter createInputNodeAdapter() {
-        if (inputNodeItemProvider == null) {
-            inputNodeItemProvider = new InputNodeItemProvider(this);
+    public Adapter createReferenceNodeAdapter() {
+        if (referenceNodeItemProvider == null) {
+            referenceNodeItemProvider = new ReferenceNodeItemProvider(this);
         }
 
-        return inputNodeItemProvider;
+        return referenceNodeItemProvider;
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.ReferencedNode} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.CallNode} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected ReferencedNodeItemProvider referencedNodeItemProvider;
+    protected CallNodeItemProvider callNodeItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.ReferencedNode}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.CallNode}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
-    public Adapter createReferencedNodeAdapter() {
-        if (referencedNodeItemProvider == null) {
-            referencedNodeItemProvider = new ReferencedNodeItemProvider(this);
+    public Adapter createCallNodeAdapter() {
+        if (callNodeItemProvider == null) {
+            callNodeItemProvider = new CallNodeItemProvider(this);
         }
 
-        return referencedNodeItemProvider;
+        return callNodeItemProvider;
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.TestReferenceNode} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.DefineNode} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected TestReferenceNodeItemProvider testReferenceNodeItemProvider;
+    protected DefineNodeItemProvider defineNodeItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.TestReferenceNode}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.DefineNode}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
-    public Adapter createTestReferenceNodeAdapter() {
-        if (testReferenceNodeItemProvider == null) {
-            testReferenceNodeItemProvider = new TestReferenceNodeItemProvider(this);
+    public Adapter createDefineNodeAdapter() {
+        if (defineNodeItemProvider == null) {
+            defineNodeItemProvider = new DefineNodeItemProvider(this);
         }
 
-        return testReferenceNodeItemProvider;
+        return defineNodeItemProvider;
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.OutputNode} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.DataflowFeature} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected OutputNodeItemProvider outputNodeItemProvider;
+    protected DataflowFeatureItemProvider dataflowFeatureItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.OutputNode}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.DataflowFeature}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
-    public Adapter createOutputNodeAdapter() {
-        if (outputNodeItemProvider == null) {
-            outputNodeItemProvider = new OutputNodeItemProvider(this);
+    public Adapter createDataflowFeatureAdapter() {
+        if (dataflowFeatureItemProvider == null) {
+            dataflowFeatureItemProvider = new DataflowFeatureItemProvider(this);
         }
 
-        return outputNodeItemProvider;
+        return dataflowFeatureItemProvider;
     }
 
     /**
@@ -317,52 +317,6 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
         }
 
         return dataflowItemProvider;
-    }
-
-    /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Sender} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected SenderItemProvider senderItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Sender}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createSenderAdapter() {
-        if (senderItemProvider == null) {
-            senderItemProvider = new SenderItemProvider(this);
-        }
-
-        return senderItemProvider;
-    }
-
-    /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Receiver} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected ReceiverItemProvider receiverItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Receiver}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createReceiverAdapter() {
-        if (receiverItemProvider == null) {
-            receiverItemProvider = new ReceiverItemProvider(this);
-        }
-
-        return receiverItemProvider;
     }
 
     /**
@@ -723,14 +677,12 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
         if (stateItemProvider != null) stateItemProvider.dispose();
         if (concurrencyItemProvider != null) concurrencyItemProvider.dispose();
         if (regionItemProvider != null) regionItemProvider.dispose();
-        if (nodeItemProvider != null) nodeItemProvider.dispose();
-        if (inputNodeItemProvider != null) inputNodeItemProvider.dispose();
-        if (referencedNodeItemProvider != null) referencedNodeItemProvider.dispose();
-        if (testReferenceNodeItemProvider != null) testReferenceNodeItemProvider.dispose();
-        if (outputNodeItemProvider != null) outputNodeItemProvider.dispose();
         if (dataflowItemProvider != null) dataflowItemProvider.dispose();
-        if (senderItemProvider != null) senderItemProvider.dispose();
-        if (receiverItemProvider != null) receiverItemProvider.dispose();
+        if (nodeItemProvider != null) nodeItemProvider.dispose();
+        if (referenceNodeItemProvider != null) referenceNodeItemProvider.dispose();
+        if (callNodeItemProvider != null) callNodeItemProvider.dispose();
+        if (defineNodeItemProvider != null) defineNodeItemProvider.dispose();
+        if (dataflowFeatureItemProvider != null) dataflowFeatureItemProvider.dispose();
         if (bindingItemProvider != null) bindingItemProvider.dispose();
         if (transitionItemProvider != null) transitionItemProvider.dispose();
         if (textEffectItemProvider != null) textEffectItemProvider.dispose();
