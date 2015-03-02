@@ -61,8 +61,8 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
             new Property<PNode>("klighd.piccolo.representation");
     private static final long serialVersionUID = -8894573172549728418L;
     /** Set of all collapsed parental child area */
-    private final HashSet<KChildAreaNode> collapsedParentalChildAreaNodes =
-            new HashSet<KChildAreaNode>();
+    private final HashSet<IInternalKGraphElementNode.IKNodeNode> collapsedParentalNodes =
+            new HashSet<IInternalKGraphElementNode.IKNodeNode>();
     /** Source */
     private final EObject source;
     private final boolean sourceIsEdge;
@@ -127,15 +127,10 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
                                    // (synthesis time)
                 return false;
             }
-            if (nodeNode instanceof IInternalKGraphElementNode.IKNodeNode) {
-                final KChildAreaNode childAreaNode =
-                        ((IInternalKGraphElementNode.IKNodeNode) nodeNode).getChildAreaNode();
-                if (childAreaNode != null) {
-                    childAreaNode
-                            .addPropertyChangeListener(KChildAreaNode.PROPERTY_EXPANSION, this);
-                    if (!childAreaNode.isExpanded()) {
-                        collapsedParentalChildAreaNodes.add(childAreaNode);
-                    }
+            if (nodeNode instanceof IKNodeNode) {
+                nodeNode.addPropertyChangeListener(IKNodeNode.PROPERTY_EXPANSION, this);
+                if (!((IKNodeNode) nodeNode).isExpanded()) {
+                    collapsedParentalNodes.add((IKNodeNode) nodeNode);
                 }
             }
             node = node.getParent();
@@ -147,11 +142,11 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
      * {@inheritDoc}
      */
     public void propertyChange(final PropertyChangeEvent event) {
-        KChildAreaNode source = (KChildAreaNode) event.getSource();
+        IKNodeNode source = (IKNodeNode) event.getSource();
         if ((Boolean) event.getNewValue()) {
-            collapsedParentalChildAreaNodes.remove(source);
+            collapsedParentalNodes.remove(source);
         } else {
-            collapsedParentalChildAreaNodes.add(source);
+            collapsedParentalNodes.add(source);
         }
     }
 
@@ -186,7 +181,7 @@ public class TracingEdgeNode extends KCustomConnectionFigureNode implements Prop
         try {
             // If TracingEdgeNode is added at synthesis time the listeners must be added now
             addExpandPropertyChangeListeners();
-            if (collapsedParentalChildAreaNodes.isEmpty()) {
+            if (collapsedParentalNodes.isEmpty()) {
                 this.setVisible(true);
                 final Point2D[] thePoints =
                         new Point2D[] { new Point2D.Double(), new Point2D.Double() };
