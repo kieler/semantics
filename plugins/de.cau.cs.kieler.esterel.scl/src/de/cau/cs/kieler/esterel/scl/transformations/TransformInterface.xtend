@@ -118,6 +118,8 @@ class TransformInterface {
                     if (sig.type.getName() == "PURE" && sig.channelDescr.type.typeID != null) {
                         it.type = ValueType::HOST
                         it.hostType = sig.channelDescr.type.typeID
+                    } else if (type.getName() == "DOUBLE") {
+                        it.type = ValueType::FLOAT
                     } else {
                         it.type = ValueType::getByName(type.getName())
                     }
@@ -156,6 +158,8 @@ class TransformInterface {
                     if (type.getName() == "PURE" && singleDecl.type.typeID != null) {
                         it.type = ValueType::HOST
                         it.hostType = singleDecl.type.typeID
+                    } else if (type.getName() == "DOUBLE") {
+                        it.type = ValueType::FLOAT
                     } else {
                         it.type = ValueType::getByName(type.getName())
                     }
@@ -188,6 +192,8 @@ class TransformInterface {
                     if (type.getName() == "PURE" && singleDecl.type.typeID != null) {
                         it.type = ValueType::HOST
                         it.hostType = singleDecl.type.typeID
+                    } else if (type.getName() == "DOUBLE") {
+                        it.type = ValueType::FLOAT
                     } else {
                         it.type = ValueType::getByName(type.getName())
                     }

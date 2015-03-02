@@ -1179,7 +1179,7 @@ class EsterelToSclTransformation extends Transformation {
         if (!(abort.body as AbortInstance).delay.isImmediate) {
             signalToVariableMap.remove(f_depth.name -> f_depth)
             // Remove gotos in only instantaneously reachable pauses to avoid potentially instantaneous loops
-            removeInstantaneousGotos(sScope.statements, l, createValuedObject("dummy"))
+            removeInstantaneousGotos(sScope.statements, l, newLinkedList)
         }
         
         sScope
@@ -1450,7 +1450,7 @@ class EsterelToSclTransformation extends Transformation {
         pauseTransformation.pop
         joinTransformation.pop
         sScope.addLabel(l)
-        exitVars.forEach[sScope.statements.removeInstantaneousGotos(l, it)]
+        sScope.statements.removeInstantaneousGotos(l, exitVars)
 
         // Transform trap handlers
         val trapHandlers = createParallel

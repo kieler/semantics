@@ -305,7 +305,7 @@ class EsterelToSclExtensions {
       * @param exitObject The ValuedObject triggering the trap
       * @return           True if list has an instantaneous path
       */
-    def boolean removeInstantaneousGotos(EList<Statement> sSeq, String label, ValuedObject exitObject) {
+    def boolean removeInstantaneousGotos(EList<Statement> sSeq, String label, LinkedList<ValuedObject> exitObjects) {
         var index = 0
         var continue = true
         while (index < sSeq.length && continue) {
@@ -319,31 +319,33 @@ class EsterelToSclExtensions {
             } else if (sSeq.get(index) instanceof InstructionStatement &&
                 (sSeq.get(index) as InstructionStatement).instruction instanceof Conditional) {
                 val conditional = (sSeq.get(index) as InstructionStatement).instruction as Conditional
-                continue = conditional.statements.removeInstantaneousGotos(label, exitObject)
-                continue = conditional.elseStatements.removeInstantaneousGotos(label, exitObject) && continue
+                continue = conditional.statements.removeInstantaneousGotos(label, exitObjects)
+                continue = conditional.elseStatements.removeInstantaneousGotos(label, exitObjects) && continue
                 index++
             } else if (sSeq.get(index) instanceof InstructionStatement &&
                 (sSeq.get(index) as InstructionStatement).instruction instanceof StatementScope) {
                 continue = ((sSeq.get(index) as InstructionStatement).instruction as StatementScope).statements.
-                    removeInstantaneousGotos(label, exitObject)
+                    removeInstantaneousGotos(label, exitObjects)
                 index++
             } else if (sSeq.get(index) instanceof InstructionStatement &&
                 (sSeq.get(index) as InstructionStatement).instruction instanceof de.cau.cs.kieler.scl.scl.Parallel) {
                     for (thread : ((sSeq.get(index) as InstructionStatement).instruction as de.cau.cs.kieler.scl.scl.Parallel).threads) {
-                        if (isAssignedInInitialTick(thread.statements, exitObject))
-                            continue = false
+                        for (exitObject : exitObjects) {
+                            if (isAssignedInInitialTick(thread.statements, exitObject))
+                                continue = false
+                        }
                     }
                     if (continue) {
                         for (thread : ((sSeq.get(index) as InstructionStatement).instruction as de.cau.cs.kieler.scl.scl.Parallel).threads) {
                             if (thread.getSequenceEndLabel != null) {
-                                continue = thread.statements.removeInstantaneousGotos(thread.getSequenceEndLabel, exitObject) && continue
+                                continue = thread.statements.removeInstantaneousGotos(thread.getSequenceEndLabel, exitObjects) && continue
                             }
                     }
                     }
                     index++
             } else if (sSeq.get(index) instanceof InstructionStatement &&
                 (sSeq.get(index) as InstructionStatement).instruction instanceof Assignment &&
-                ((sSeq.get(index) as InstructionStatement).instruction as Assignment).valuedObject == exitObject) {
+                exitObjects.contains(((sSeq.get(index) as InstructionStatement).instruction as Assignment).valuedObject)) {
                 continue = false
             } 
             else {         
