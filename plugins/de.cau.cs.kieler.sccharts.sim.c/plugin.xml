@@ -52,7 +52,7 @@
          point="de.cau.cs.kieler.kico.transformation">
       <transformationMethod
             class="de.cau.cs.kieler.sccharts.sim.c.xtend.SimulationVisualization"
-            dependencies="DURING"
+            producesDependencies="DURING"
             id="SCCHARTS_SIMULATION_VISUALIZATION"
             method="transformVisualization"
             name="Visualization">

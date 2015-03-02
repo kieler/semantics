@@ -1317,9 +1317,9 @@ ruleJoin returns [EObject current=null]
     {
     	newLeafNode(otherlv_1, grammarAccess.getJoinAccess().getJoinKeyword_1());
     }
-	otherlv_2='(' 
+(	otherlv_2='(' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getJoinAccess().getLeftParenthesisKeyword_2());
+    	newLeafNode(otherlv_2, grammarAccess.getJoinAccess().getLeftParenthesisKeyword_2_0());
     }
 (
 (
@@ -1333,15 +1333,15 @@ ruleJoin returns [EObject current=null]
         }
 	otherlv_3=RULE_ID
 	{
-		newLeafNode(otherlv_3, grammarAccess.getJoinAccess().getContinuationStateCrossReference_3_0()); 
+		newLeafNode(otherlv_3, grammarAccess.getJoinAccess().getContinuationStateCrossReference_2_1_0()); 
 	}
 
 )
-)?	otherlv_4=')' 
+)	otherlv_4=')' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getJoinAccess().getRightParenthesisKeyword_4());
+    	newLeafNode(otherlv_4, grammarAccess.getJoinAccess().getRightParenthesisKeyword_2_2());
     }
-)
+)?)
 ;
 
 
@@ -1375,9 +1375,9 @@ rulePause returns [EObject current=null]
     {
     	newLeafNode(otherlv_1, grammarAccess.getPauseAccess().getPauseKeyword_1());
     }
-	otherlv_2='(' 
+(	otherlv_2='(' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getPauseAccess().getLeftParenthesisKeyword_2());
+    	newLeafNode(otherlv_2, grammarAccess.getPauseAccess().getLeftParenthesisKeyword_2_0());
     }
 (
 (
@@ -1391,15 +1391,15 @@ rulePause returns [EObject current=null]
         }
 	otherlv_3=RULE_ID
 	{
-		newLeafNode(otherlv_3, grammarAccess.getPauseAccess().getContinuationStateCrossReference_3_0()); 
+		newLeafNode(otherlv_3, grammarAccess.getPauseAccess().getContinuationStateCrossReference_2_1_0()); 
 	}
 
 )
-)?	otherlv_4=')' 
+)	otherlv_4=')' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getPauseAccess().getRightParenthesisKeyword_4());
+    	newLeafNode(otherlv_4, grammarAccess.getPauseAccess().getRightParenthesisKeyword_2_2());
     }
-)
+)?)
 ;
 
 
@@ -1433,9 +1433,9 @@ ruleTerm returns [EObject current=null]
     {
     	newLeafNode(otherlv_1, grammarAccess.getTermAccess().getTermKeyword_1());
     }
-	otherlv_2='(' 
+(	otherlv_2='(' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getTermAccess().getLeftParenthesisKeyword_2());
+    	newLeafNode(otherlv_2, grammarAccess.getTermAccess().getLeftParenthesisKeyword_2_0());
     }
 (
 (
@@ -1449,15 +1449,15 @@ ruleTerm returns [EObject current=null]
         }
 	otherlv_3=RULE_ID
 	{
-		newLeafNode(otherlv_3, grammarAccess.getTermAccess().getContinuationStateCrossReference_3_0()); 
+		newLeafNode(otherlv_3, grammarAccess.getTermAccess().getContinuationStateCrossReference_2_1_0()); 
 	}
 
 )
-)?	otherlv_4=')' 
+)	otherlv_4=')' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getTermAccess().getRightParenthesisKeyword_4());
+    	newLeafNode(otherlv_4, grammarAccess.getTermAccess().getRightParenthesisKeyword_2_2());
     }
-)
+)?)
 ;
 
 
@@ -1491,9 +1491,9 @@ ruleHalt returns [EObject current=null]
     {
     	newLeafNode(otherlv_1, grammarAccess.getHaltAccess().getHaltKeyword_1());
     }
-	otherlv_2='(' 
+(	otherlv_2='(' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getHaltAccess().getLeftParenthesisKeyword_2());
+    	newLeafNode(otherlv_2, grammarAccess.getHaltAccess().getLeftParenthesisKeyword_2_0());
     }
 (
 (
@@ -1507,15 +1507,15 @@ ruleHalt returns [EObject current=null]
         }
 	otherlv_3=RULE_ID
 	{
-		newLeafNode(otherlv_3, grammarAccess.getHaltAccess().getContinuationStateCrossReference_3_0()); 
+		newLeafNode(otherlv_3, grammarAccess.getHaltAccess().getContinuationStateCrossReference_2_1_0()); 
 	}
 
 )
-)?	otherlv_4=')' 
+)	otherlv_4=')' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getHaltAccess().getRightParenthesisKeyword_4());
+    	newLeafNode(otherlv_4, grammarAccess.getHaltAccess().getRightParenthesisKeyword_2_2());
     }
-)
+)?)
 ;
 
 
@@ -1693,9 +1693,9 @@ ruleAbort returns [EObject current=null]
     {
     	newLeafNode(otherlv_1, grammarAccess.getAbortAccess().getAbortKeyword_1());
     }
-	otherlv_2='(' 
+(	otherlv_2='(' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getAbortAccess().getLeftParenthesisKeyword_2());
+    	newLeafNode(otherlv_2, grammarAccess.getAbortAccess().getLeftParenthesisKeyword_2_0());
     }
 (
 (
@@ -1709,15 +1709,15 @@ ruleAbort returns [EObject current=null]
         }
 	otherlv_3=RULE_ID
 	{
-		newLeafNode(otherlv_3, grammarAccess.getAbortAccess().getContinuationStateCrossReference_3_0()); 
+		newLeafNode(otherlv_3, grammarAccess.getAbortAccess().getContinuationStateCrossReference_2_1_0()); 
 	}
 
 )
-)?	otherlv_4=')' 
+)	otherlv_4=')' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getAbortAccess().getRightParenthesisKeyword_4());
+    	newLeafNode(otherlv_4, grammarAccess.getAbortAccess().getRightParenthesisKeyword_2_2());
     }
-)
+)?)
 ;
 
 

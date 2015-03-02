@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.kico;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -27,10 +28,10 @@ import java.util.List;
 public class TransformationDummy {
 
     /** The dependencies. */
-    public ArrayList<TransformationDummy> dependencies = new ArrayList<TransformationDummy>();
+    public HashSet<TransformationDummy> dependencies = new HashSet<TransformationDummy>();
 
     /** The reverse dependencies. */
-    public ArrayList<TransformationDummy> reverseDependencies = new ArrayList<TransformationDummy>();
+    public HashSet<TransformationDummy> reverseDependencies = new HashSet<TransformationDummy>();
 
     /** The transformation. */
     public Transformation transformation;

@@ -20,7 +20,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
+ * A wrapper for implicit tracing in EcoreUtil copy operations.
+ * 
  * @author als
+ * @kieler.design 2015-02-25 proposed
+ * @kieler.rating 2015-02-25 proposed yellow
  * 
  */
 public class TracingEcoreUtil extends EcoreUtil {

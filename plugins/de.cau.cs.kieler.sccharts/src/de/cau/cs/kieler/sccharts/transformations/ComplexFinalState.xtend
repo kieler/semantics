@@ -16,12 +16,9 @@ package de.cau.cs.kieler.sccharts.transformations
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import java.util.ArrayList
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import java.util.List
 
 /**
@@ -46,6 +43,9 @@ class ComplexFinalState {
     //-------------------------------------------------------------------------
     //--              C O M P L E X   F I N A L   S T A T E                  --
     //-------------------------------------------------------------------------
+    //
+    // PRODUCES: ABORTS
+    //
     // ...
     // Optimizations: 
     // (1)   In transitions from one ComplexFinalState (CFS) to another CFS

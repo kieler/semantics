@@ -13,20 +13,14 @@
  */
 package de.cau.cs.kieler.kitt.klighd.tracing;
 
-import java.util.List;
-
 import org.eclipse.emf.ecore.EObject;
 
 import com.google.common.base.Predicate;
 
 import de.cau.cs.kieler.core.kgraph.KGraphElement;
-import de.cau.cs.kieler.core.krendering.KStyle;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData;
-import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption.TracingMode;
-import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping;
 
 /**
  * Contains Properties for marking tracing diagrams.
@@ -65,6 +59,15 @@ public final class TracingProperties {
                         }
 
                     });
+
+    /**
+     * Source model elements which have no associated graph element will be associated with a graph
+     * element of the container element. This property defines the maximum search depth of
+     * eContainer relation. A larger value will associates more source model elements with graph
+     * elements (which have no explicit association).
+     */
+    public static final IProperty<Integer> VISUALIZATION_EQUIVALENCE_CLASS_DEPTH =
+            new Property<Integer>("de.cau.cs.kieler.kitt.klighd.tracing.equivalence.depth", 1);
 
     // -- KGraph Properties --
     // ----------------------------

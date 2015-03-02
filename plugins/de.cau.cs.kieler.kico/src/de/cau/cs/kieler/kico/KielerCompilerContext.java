@@ -16,6 +16,7 @@ package de.cau.cs.kieler.kico;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -427,9 +428,10 @@ public class KielerCompilerContext {
         for (Transformation transformation : transformations) {
             TransformationDummy transformationDummy = transformation2graph.get(transformation);
 
-            List<String> dependencies = transformation.getDependencies();
+            List<String> producesDependencies = transformation.getProducesDependencies();
+            List<String> notHandlesDependencies = transformation.getNotHandlesDependencies();
             if (transformationDummy.isAlternative()) {
-                dependencies = new ArrayList<String>();
+                producesDependencies = new ArrayList<String>();
                 if (preselectAlternatives) {
                     // If this is an alternative group, then ONLY add the SELECTED alternative
                     // according to the prioritizedTransformationIDs (input)
@@ -441,40 +443,98 @@ public class KielerCompilerContext {
                     // priorized.add("S2ARDUINO");
 
                     String selectedAlternative =
-                            (group).getSelectedDependency(prioritizedTransformationIDs,
+                            (group).getSelectedProducesDependency(prioritizedTransformationIDs,
                                     disabledTransformationIDs, priorized);
-                    dependencies.add(selectedAlternative);
+                    producesDependencies.add(selectedAlternative);
                 } else {
+                    // Also here by convention in GROUP alternatives consider ther produces dependencies
                     List<String> allAlternative =
                             ((TransformationGroup) transformationDummy.transformation)
-                                    .getDependencies();
+                                    .getProducesDependencies();
                     for (String alternative : allAlternative) {
-                        dependencies.add(alternative);
+                        producesDependencies.add(alternative);
                     }
                 }
             }
 
-            for (String dependencyId : dependencies) {
+            // Handle produces depencencies
+            for (String producesDependencyId : producesDependencies) {
                 Transformation otherTransformationOrGroup =
-                        KielerCompiler.getTransformation(dependencyId);
+                        KielerCompiler.getTransformation(producesDependencyId);
                 if (otherTransformationOrGroup != null) {
                     // System.out.println("Dependencies for " + transformation.getId());
                     // System.out.println("  " + otherTransformationOrGroup.getId());
                     TransformationDummy otherTransformationDummy =
                             transformation2graph.get(otherTransformationOrGroup);
 
-                    // Insert dependency in dummy
+                    // Example: dummy-ABORT produces otherDummy=INIT ==> dummy=ABORT-->otherDummy=INIT
+                    // Insert dependency in dummy that produces other dummy
                     transformationDummy.dependencies.add(otherTransformationDummy);
                     // Insert reverse dependency in other dummy
                     otherTransformationDummy.reverseDependencies.add(transformationDummy);
                 }
             }
+
+            // Handle not handles dependencies
+            
+            // 14.02.2015: Attention: if we hit a transformation GROUP that is not handled, we mus
+            // fully resolve this group first into sets of transformations:
+            // we resolve group $G$ to the set of transformations $T$ where we follow all pseudo dependencies from $G$ until we hit
+            // the first transformation, which then must be part of $T$. If we hit another group $G_i$ we recursively follow each 
+            // pseudo dependencies of $G_i$.
+            
+            for (String notHandlesDependencyId : notHandlesDependencies) {
+                Transformation otherTransformationOrGroup =
+                        KielerCompiler.getTransformation(notHandlesDependencyId);
+                if (otherTransformationOrGroup != null) {
+                    // System.out.println("Dependencies for " + transformation.getId());
+                    // System.out.println("  " + otherTransformationOrGroup.getId());
+                    TransformationDummy otherTransformationDummy =
+                            transformation2graph.get(otherTransformationOrGroup);
+
+                    if (preselectAlternatives) {
+                        // If this is an alternative group, then ONLY add the SELECTED alternative
+                        // according to the prioritizedTransformationIDs (input)
+                        break;
+                    }
+
+                    HashSet<TransformationDummy> otherResolvedTransformationDummys = resolveTransformationGroup(otherTransformationDummy);
+                    for (TransformationDummy otherResolvedTransformationDummy : otherResolvedTransformationDummys) {
+                        // Example: dummy=ABORT not handles otherDummy=DURING ==> otherDummy=DURING-->dummy=ABORT
+                        // Insert dependency in other dummy
+                        otherResolvedTransformationDummy.dependencies.add(transformationDummy);
+                        // Insert reverse dependency in dummy that
+                        transformationDummy.reverseDependencies.add(otherResolvedTransformationDummy);
+                    }
+                }
+            }
+            
         }
 
         // set the graph of this context to the new built graph
         graph = returnList;
     }
 
+    
+    // -------------------------------------------------------------------------
+    
+    public HashSet<TransformationDummy> resolveTransformationGroup(TransformationDummy transformationDummy) {
+        HashSet<TransformationDummy> returnList = new HashSet<TransformationDummy>();
+        if (transformationDummy.isGroup()) {
+            // follow pseudo dependencies
+            for (TransformationDummy groupTransformationDummy : transformationDummy.dependencies) {
+                 returnList.addAll(resolveTransformationGroup(groupTransformationDummy));
+            }
+        }
+        else {
+            // We arrived at a transformation that is NOT a group. This is the resolved transformation we
+            // are looking for.
+            returnList.add(transformationDummy);
+        }
+        return returnList;
+    }
+
+    
     // -------------------------------------------------------------------------
 
     /**

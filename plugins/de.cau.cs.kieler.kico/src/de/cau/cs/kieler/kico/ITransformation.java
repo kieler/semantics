@@ -31,8 +31,8 @@ public interface ITransformation {
      * @return the string
      */
     public String getId();
-    
-    //-------------------------------------------------------------------------
+
+    // -------------------------------------------------------------------------
 
     /**
      * Optionally supply a name for this transformation. If null is returned then the id will be
@@ -42,23 +42,37 @@ public interface ITransformation {
      */
     public String getName();
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
-     * Optionally supply a list of transformation IDs that this transformation depends on. Be
+     * Optionally supply a list of transformation IDs whose features this transformation produces.
+     * This means that for a full compilation these features must be transformed afterwards. Be
      * advised to use the minimal set of transformation IDs here. Transformations specified here
-     * will be forced to run before. If null is returned then this means there are no dependencies.
+     * will be forced to run afterwards. If null is returned then this means there are no produces
+     * dependencies.
      * 
      * @return the list
      */
-    public List<String> getDependencies();
+    public List<String> getProducesDependencies();
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
-     * Central transform method that implements the transformation. It should
-     * return an EObject if there are any following transformations. A code
-     * generation will finally return a String object.
+     * Optionally supply a list of transformation IDs whose features cannot be handled by this
+     * transformation. Be advised to use the minimal set of transformation IDs here. Transformations
+     * specified here will be forced to run before. If null is returned then this means there are no
+     * not handles dependencies.
+     * 
+     * @return the list
+     */
+    public List<String> getNotHandlesDependencies();
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Central transform method that implements the transformation. It should return an EObject if
+     * there are any following transformations. A code generation will finally return a String
+     * object.
      * 
      * @param eObject
      *            the e object
@@ -66,20 +80,24 @@ public interface ITransformation {
      */
     public Object transform(EObject eObject);
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-    // /**
-    // * The transformation may optionally declare its input type.
-    // *
-    // * @return the class
-    // */
-    // public Class inputType();
-    //
-    // /**
-    // * The transformation may optionally declare its output type.
-    // *
-    // * @return the class
-    // */
-    // public Class outputType();
+    /**
+     * Define a list of post processor IDs that can or must run in the defined order AFTER this
+     * transformation is applied. If null is returned then no post processors should run.
+     * 
+     * @return the list
+     */
+    public List<ProcessorOption> postProcessors();
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Define a list of pre processor IDs that can or must run in the defined order BEFORE the
+     * transformation is applied. If null is returned then no post processors should run.
+     * 
+     * @return the list
+     */
+    public List<ProcessorOption> preProcessors();
 
 }

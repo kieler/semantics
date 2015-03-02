@@ -42,6 +42,9 @@ class During {
     //-------------------------------------------------------------------------
     //--                     D U R I N G       A C T I O N                   --
     //-------------------------------------------------------------------------
+    //
+    // PRODUCES: ComplexFinalStates (in the non-simple case)
+    //
     // Transforming During Actions.
     def State transform(State rootState) {
         val targetRootState = rootState.fixAllPriorities;
@@ -67,10 +70,12 @@ class During {
         // benefit: do not need to handle terminations of concurrent regions any more!
         
         // Modification 27.07.2014: We NEED to reaction to terminations, outgoing of the
-        // current state (if present). In this case we add an axuiliary final state, and
+        // current state (if present). In this case we add an auxiliary final state, and
         // a flag that is made absent when entering the state (entry) and made present 
         // when exiting it
         // calling transformDuringEx()
+        
+        
         if (state.duringActions != null && state.duringActions.size > 0) {
             val outgoingTerminations = state.outgoingTransitions.filter(e|e.typeTermination)
             val hasOutgoingTerminations = outgoingTerminations.length > 0

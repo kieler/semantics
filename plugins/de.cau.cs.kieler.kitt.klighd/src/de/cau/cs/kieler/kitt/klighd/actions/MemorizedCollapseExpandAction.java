@@ -26,8 +26,12 @@ import de.cau.cs.kieler.klighd.IViewer;
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
 
 /**
- * @author als
+ * Collapse Expand Action which memorizes the expansion state and can offers it to the next
+ * synthesis run.
  * 
+ * @author als
+ * @kieler.design 2015-02-25 proposed
+ * @kieler.rating 2015-02-25 proposed yellow
  */
 public class MemorizedCollapseExpandAction implements IAction {
 
@@ -54,7 +58,7 @@ public class MemorizedCollapseExpandAction implements IAction {
                 }, null);
         if (oldRepresentation != null) {
             Boolean returnValue = expandMap.get(oldRepresentation);
-            if(returnValue != null){
+            if (returnValue != null) {
                 return returnValue;
             }
         }
@@ -67,7 +71,7 @@ public class MemorizedCollapseExpandAction implements IAction {
     public ActionResult execute(ActionContext context) {
         IViewer viewer = context.getActiveViewer();
         KNode node = context.getKNode();
-        
+
         viewer.toggleExpansion(node);
         expandMap.put(node, viewer.isExpanded(node));
 

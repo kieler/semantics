@@ -105,7 +105,9 @@ public class KielerCompiler {
             KielerCompilerContext context) {
         for (TransformationDummy otherTransformationDummy : context.getGraph()) {
             if (otherTransformationDummy.isAlternative()) {
-                for (String alternative : otherTransformationDummy.transformation.getDependencies()) {
+                // By convention: Group transformations are internally handled as produce dependencies
+                // Rationale: If a group is selected, these transformations are applied
+                for (String alternative : otherTransformationDummy.transformation.getProducesDependencies()) {
                     if (transformationDummy.id.equals(alternative)) {
                         return true;
                     }
@@ -279,7 +281,8 @@ public class KielerCompiler {
      */
     private static void markGroupNodes(KielerCompilerContext context,
             TransformationGroup transformationGroup) {
-        for (String groupTransformationID : transformationGroup.getDependencies()) {
+        //TODO: Check if this is right!
+        for (String groupTransformationID : transformationGroup.getProducesDependencies()) {
             Transformation groupTransformation = getTransformation(groupTransformationID);
             if (groupTransformation != null) {
                 TransformationDummy groupTransformationDummy =
@@ -627,13 +630,15 @@ public class KielerCompiler {
                     TransformationGroup transformationGroup = (TransformationGroup) transformation;
                     if (!transformationGroup.isAlternatives()) {
                         // Add/expand all NON-alternative group members
-                        for (String otherTransformationID : transformationGroup.getDependencies()) {
+                        //TODO: check if produces dependencies is right!
+                        for (String otherTransformationID : transformationGroup.getProducesDependencies()) {
                             returnList.add(otherTransformationID);
                         }
                     } else {
                         // Add/expand ONE alternative group members (if no other already exists)
                         boolean exists = false;
-                        for (String otherTransformationID : transformationGroup.getDependencies()) {
+                        //TODO: check if produces dependencies is right!
+                        for (String otherTransformationID : transformationGroup.getProducesDependencies()) {
                             for (String returnListItem : transformationIDs) {
                                 if (returnListItem.equals(otherTransformationID)) {
                                     exists = true;
@@ -646,8 +651,9 @@ public class KielerCompiler {
                             // take the first alternative group member that is not disabled! //TODO:
                             debug("### " + transformation.getName());
                             List<String> allPrioDependencies = transformationIDs;
+                            //TODO: check if produces dependencies is right!
                             String defaultTransformation =
-                                    transformationGroup.getSelectedDependency(transformationIDs, disabledTransformationIDs, priorizedTransformationIDs);
+                                    transformationGroup.getSelectedProducesDependency(transformationIDs, disabledTransformationIDs, priorizedTransformationIDs);
                             returnList.add(defaultTransformation);
                         }
                     }
@@ -685,7 +691,8 @@ public class KielerCompiler {
                             returnList.add(transformationID);
                         } else {
                             boolean allMarked = true;
-                            List<String> dependencyIDs = expandGroups(group.getDependencies(), disabledTransformationIDs, context.getPriorizedTransformationsIDs());
+                            //TODO: check if produces dependencies is right!
+                            List<String> dependencyIDs = expandGroups(group.getProducesDependencies(), disabledTransformationIDs, context.getPriorizedTransformationsIDs());
                             for (String dependencyID : dependencyIDs) {
                                 boolean found = false;
                                 for (String searchTransformationID : context

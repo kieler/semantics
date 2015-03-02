@@ -58,8 +58,21 @@ public class TransformationGroup extends Transformation {
      * {@inheritDoc}
      */
     @Override
-    public List<String> getDependencies() {
-        return super.getDependencies();
+    public List<String> getProducesDependencies() {
+        return super.getProducesDependencies();
+//        throw new RuntimeException(
+//                "getDependencies() should not be called on a TransformationGroup. You"
+//                        + "must call getDependencies(List<String> prioritizedTransformationIDs).");
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<String> getNotHandlesDependencies() {
+        return super.getNotHandlesDependencies();
 //        throw new RuntimeException(
 //                "getDependencies() should not be called on a TransformationGroup. You"
 //                        + "must call getDependencies(List<String> prioritizedTransformationIDs).");
@@ -76,10 +89,10 @@ public class TransformationGroup extends Transformation {
        return false;
     }
     
-    
+    //-------------------------------------------------------------------------
 
     /**
-     * Gets the selected dependencies. For alternative groups return the first match of dependencies
+     * Gets the selected produces dependencies. For alternative groups return the first match of dependencies
      * found in prioritizedTransformationIDs, if any. If no match or
      * prioritizedTransformationIDs is null then return the first element of dependencies. A group
      * may never have an empty list here.
@@ -88,12 +101,31 @@ public class TransformationGroup extends Transformation {
      *            the prioritized transformationIDs
      * @return the dependencies
      */
-    public String getSelectedDependency(List<String> selectedTransformationIDs, List<String> disabledTransformationIDs, List<String> priorizedTransformationIDs) {
+    public String getSelectedProducesDependency(List<String> selectedTransformationIDs, List<String> disabledTransformationIDs, List<String> priorizedTransformationIDs) {
+        return getSelectedDependency(super.getProducesDependencies(), selectedTransformationIDs, disabledTransformationIDs, priorizedTransformationIDs);        
+    }
+
+    /**
+     * Gets the selected not handles dependencies. For alternative groups return the first match of dependencies
+     * found in prioritizedTransformationIDs, if any. If no match or
+     * prioritizedTransformationIDs is null then return the first element of dependencies. A group
+     * may never have an empty list here.
+     * 
+     * @param selectedTransformationIDs
+     *            the prioritized transformationIDs
+     * @return the dependencies
+     */
+    public String getSelectedNotHandlesDependency(List<String> selectedTransformationIDs, List<String> disabledTransformationIDs, List<String> priorizedTransformationIDs) {
+       return getSelectedDependency(super.getNotHandlesDependencies(), selectedTransformationIDs, disabledTransformationIDs, priorizedTransformationIDs);        
+    }
+        
+
+    private String getSelectedDependency(List<String> superDependencies, List<String> selectedTransformationIDs, List<String> disabledTransformationIDs, List<String> priorizedTransformationIDs) {
         if (!alternatives) {
-            return super.getDependencies().get(0);
+            return superDependencies.get(0);
         } else {
             // return the first transformation only (that is not disabled!)
-            List<String> dependencies = super.getDependencies();
+            List<String> dependencies = superDependencies;
             if (selectedTransformationIDs == null || selectedTransformationIDs.size() == 0) {
                 for (String dependency : dependencies) {
                     System.out.println("### Check" + dependency);

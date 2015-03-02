@@ -222,7 +222,7 @@ public class KiCoUtil {
             try {
 
                 for (String ext : getRegXtext().getExtensionToFactoryMap().keySet()) {
-//                    System.out.println("Testing extension ''"+ext+"''");
+                    System.out.println("Testing extension ''"+ext+"''");
                     if (extension != null && !extension.equals(ext)) {
                         // if an extension is given, then continue if this is not the right extension!
                         continue;
