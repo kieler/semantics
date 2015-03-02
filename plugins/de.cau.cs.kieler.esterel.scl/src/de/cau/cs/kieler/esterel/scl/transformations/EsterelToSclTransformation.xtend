@@ -137,6 +137,9 @@ class EsterelToSclTransformation extends Transformation {
 
     // Local declared variables which are not in a StatementScope (should be added to global declarations)
     var LinkedList<ValuedObject> localDeclarations
+    
+    // The tick; i.e., tick is true all the time
+    var ValuedObject synchronousTick;
 
     // Flag indicating if optimized transformations should be used
     var boolean optimizeTransformation
@@ -180,6 +183,7 @@ class EsterelToSclTransformation extends Transformation {
         signalToNeutralMap = <ValuedObject, ValuedObject>newHashMap
         counterToEventMap = <String, ValuedObject>newHashMap
         localDeclarations = <ValuedObject>newLinkedList
+        synchronousTick = createValuedObject("synchronousTick")
         pauseTransformation = new Stack<(StatementSequence)=>StatementSequence>
         joinTransformation = new Stack<(StatementSequence)=>StatementSequence>
 
@@ -231,6 +235,13 @@ class EsterelToSclTransformation extends Transformation {
                 valuedObjects += localDeclarations
             ]
         }
+        
+        // Add variable representing tick; is true all the time
+        targetSclProgram.declarations += createDeclaration => [
+            type = ValueType::BOOL
+            valuedObjects += synchronousTick
+            synchronousTick.initialValue = createBoolValue(true)
+        ]
 
         // As the number with which the labels are enumerated is a static variable of the EsterelToSclExtensions
         // class, the numer is resetted to 1 after each transformation for subsequent calls
@@ -685,10 +696,11 @@ class EsterelToSclTransformation extends Transformation {
             body = EsterelFactory::eINSTANCE.createLoopBody => [
                 statement = EsterelFactory::eINSTANCE.createAbort => [
                     body = EsterelFactory::eINSTANCE.createAbortInstance => [
-                        delay = (loop.end as LoopDelay).delay
+                        delay = EcoreUtil.copy((loop.end as LoopDelay).delay)
                     ]
                     statement = EsterelFactory::eINSTANCE.createSequence => [
-                        list.add(loop.body.statement)
+                        println("stm: " + loop.body.statement)
+                        list.add(EcoreUtil.copy(loop.body.statement))
                         list.add(EsterelFactory::eINSTANCE.createHalt)
                     ]
                 ]
@@ -1026,7 +1038,6 @@ class EsterelToSclTransformation extends Transformation {
         val l = createNewUniqueLabel
         labelToThreadMap.put(currentThreadEndLabel, l)
         val abortExpr = (abort.body as AbortInstance).delay.event.expr
-
         // Delay Expression? E.g. abort p when 5 s
         val delayExpression = (abort.body as AbortInstance).delay.expr != null
 
@@ -1506,6 +1517,11 @@ class EsterelToSclTransformation extends Transformation {
 
         // Thread containing the transformed run module body
         val runModuleBody = createThread
+        
+        // Copy module as for the specific case renaming is applied
+        val copier = new EcoreUtil.Copier
+        val runCopy = copier.copy(run) as Run;
+        copier.copyReferences();
 
         // Label at threads end
         val l_exit = createNewUniqueLabel
@@ -1517,7 +1533,7 @@ class EsterelToSclTransformation extends Transformation {
         // Pure signals that have to be set to false in reset thread
         val pureSignals = new LinkedList<ValuedObject>
         val p = SclFactory::eINSTANCE.createSCLProgram
-        transformEsterelInterface(run.module.module.interface, p, new LinkedList<Pair<String, ValuedObject>>,
+        transformEsterelInterface(runCopy.module.module.interface, p, new LinkedList<Pair<String, ValuedObject>>,
             new HashMap<ValuedObject, ValuedObject>)
         val collectDecls = new LinkedList<Declaration>
 
@@ -1547,8 +1563,6 @@ class EsterelToSclTransformation extends Transformation {
 
         // Rename signals (only if renaming happens) and remember to delete afterwards
         val signals = new LinkedList<Pair<String, ValuedObject>>
-        // Copy module as for the specific case renaming is applied
-        val runCopy = EcoreUtil.copy(run)
         if (runCopy.list != null) {
             runCopy.list.list.forEach [
                 for (renaming : renamings) {
@@ -1558,8 +1572,14 @@ class EsterelToSclTransformation extends Transformation {
 //                    oldNamedValuedObject.forEach[ it.name = (renaming as SignalRenaming).newName.name ]
                     
                     if (renaming instanceof SignalRenaming) {
-                        val newName = (renaming as SignalRenaming).oldName.name ->
-                            signalToVariableMap.findLast[key == (renaming as SignalRenaming).newName.name].value
+                        println((renaming as SignalRenaming).newName)
+                        var Pair<String, ValuedObject> newName
+                        if ((renaming as SignalRenaming).newName != null) {
+                            newName = (renaming as SignalRenaming).oldName.name ->
+                                signalToVariableMap.findLast[key == (renaming as SignalRenaming).newName.name].value
+                        } else {
+                            newName = (renaming as SignalRenaming).oldName.name -> synchronousTick
+                        }
                         signalToVariableMap.add(newName)
                         signals.add(newName)
                     } else if (renaming instanceof ConstantRenaming) {
@@ -1659,6 +1679,7 @@ class EsterelToSclTransformation extends Transformation {
     def dispatch StatementSequence transformStatement(Assignment assign, StatementSequence targetStatementSequence) {
 
         // Get the last defined variable with the corresponding name
+        println("varname " + assign.^var.name)
         val arg1 = signalToVariableMap.findLast[ key == assign.^var.name ].value
         val expr = transformExp(assign.expr, arg1.type.toString)
 
@@ -1676,14 +1697,25 @@ class EsterelToSclTransformation extends Transformation {
 	* @return 		 The transformed statement
     */
     def dispatch StatementSequence transformStatement(IfTest ifTest, StatementSequence targetStatementSequence) {
+        val statementEnd = createNewUniqueLabel
         val cond = createConditional => [
             expression = ifTest.expr.transformExp
             if (ifTest.thenPart != null)
                 statements += transformStatement(ifTest.thenPart.statement, newSseq).statements
+            // elsif-List
+            for (elsIf : ifTest.elsif) {
+                elseStatements += createStatement(createConditional => [
+                    expression = elsIf.expr.transformExp
+                    statements += transformStatement(elsIf.thenPart.statement, newSseq).statements
+                    statements += createGotoStm(statementEnd)
+                ])
+            }
+            
             if (ifTest.elsePart != null)
                 elseStatements += transformStatement(ifTest.elsePart.statement, newSseq).statements
         ]
         targetStatementSequence.add(cond)
+        targetStatementSequence.addLabel(statementEnd)
 
         targetStatementSequence
     }
