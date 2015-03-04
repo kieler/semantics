@@ -935,7 +935,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//BoolExpression returns Expression:
-	//	OrAndExpression;
+	//	LogicalOrExpression;
 	public KExpressionsGrammarAccess.BoolExpressionElements getBoolExpressionAccess() {
 		return gaKExpressions.getBoolExpressionAccess();
 	}
@@ -944,28 +944,68 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getBoolExpressionAccess().getRule();
 	}
 
-	//OrAndExpression returns Expression:
-	//	CompareOperation (({OperatorExpression.subExpressions+=current} operator=(OrOperator | LogicalOrOperator)
-	//	subExpressions+=CompareOperation)* | ({OperatorExpression.subExpressions+=current} operator=(AndOperator |
-	//	LogicalAndOperator) subExpressions+=CompareOperation)*);
-	public KExpressionsGrammarAccess.OrAndExpressionElements getOrAndExpressionAccess() {
-		return gaKExpressions.getOrAndExpressionAccess();
+	////OrAndExpression returns Expression:
+	////	CompareOperation 
+	////	(
+	////		({OperatorExpression.subExpressions+=current} (operator=OrOperator subExpressions+=CompareOperation)*)
+	////		|	
+	////		({OperatorExpression.subExpressions+=current} (operator=AndOperator subExpressions+=CompareOperation)*)
+	////		|
+	////        ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator subExpressions+=CompareOperation)*)
+	////        |   
+	////        ({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator subExpressions+=CompareOperation)*)
+	////
+	////	)
+	////;
+	//LogicalOrExpression returns Expression:
+	//	LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
+	//	subExpressions+=LogicalAndExpression)+)?;
+	public KExpressionsGrammarAccess.LogicalOrExpressionElements getLogicalOrExpressionAccess() {
+		return gaKExpressions.getLogicalOrExpressionAccess();
 	}
 	
-	public ParserRule getOrAndExpressionRule() {
-		return getOrAndExpressionAccess().getRule();
+	public ParserRule getLogicalOrExpressionRule() {
+		return getLogicalOrExpressionAccess().getRule();
 	}
 
-	////OrExpression returns Expression:
-	////	CompareOperation ({OperatorExpression.subExpressions+=current} operator=(OrOperator) subExpressions+=CompareOperation)*;
-	//////	{OperatorExpression} subExpressions += CompareOperation (/ *{OperatorExpression.subExpressions+=current}* / operator=(AndOperator|OrOperator) subExpressions+=CompareOperation)*;
-	////
-	////AndExpression returns Expression:
-	////	CompareOperation ({OperatorExpression.subExpressions+=current} operator=(AndOperator) subExpressions+=CompareOperation)*;
+	//LogicalAndExpression returns Expression:
+	//	BitwiseOrExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator
+	//	subExpressions+=BitwiseOrExpression)+)?;
+	public KExpressionsGrammarAccess.LogicalAndExpressionElements getLogicalAndExpressionAccess() {
+		return gaKExpressions.getLogicalAndExpressionAccess();
+	}
+	
+	public ParserRule getLogicalAndExpressionRule() {
+		return getLogicalAndExpressionAccess().getRule();
+	}
+
+	//BitwiseOrExpression returns Expression:
+	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
+	//	subExpressions+=BitwiseAndExpression)+)?;
+	public KExpressionsGrammarAccess.BitwiseOrExpressionElements getBitwiseOrExpressionAccess() {
+		return gaKExpressions.getBitwiseOrExpressionAccess();
+	}
+	
+	public ParserRule getBitwiseOrExpressionRule() {
+		return getBitwiseOrExpressionAccess().getRule();
+	}
+
+	//BitwiseAndExpression returns Expression:
+	//	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
+	//	subExpressions+=CompareOperation)+)?;
+	public KExpressionsGrammarAccess.BitwiseAndExpressionElements getBitwiseAndExpressionAccess() {
+		return gaKExpressions.getBitwiseAndExpressionAccess();
+	}
+	
+	public ParserRule getBitwiseAndExpressionRule() {
+		return getBitwiseAndExpressionAccess().getRule();
+	}
+
 	//// Example: 42 <= val(A)
+	////	| NotExpression
 	//CompareOperation returns Expression:
 	//	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
-	//	subExpressions+=NotOrValuedExpression) | NotExpression;
+	//	subExpressions+=NotOrValuedExpression)?;
 	public KExpressionsGrammarAccess.CompareOperationElements getCompareOperationAccess() {
 		return gaKExpressions.getCompareOperationAccess();
 	}
@@ -1184,6 +1224,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getStringValueAccess().getRule();
 	}
 
+	////terminal POSINT returns ecore::EInt:
+	////    NUMBER+;
 	//// data type rule allowing any kind of value to be accepted,
 	//// e.g. as initialValues of valuedObjects
 	//// used in Kits.xtext 
@@ -1217,24 +1259,24 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getPreOperatorAccess().getRule();
 	}
 
-	//enum OrOperator returns OperatorType:
-	//	OR="|";
-	public KExpressionsGrammarAccess.OrOperatorElements getOrOperatorAccess() {
-		return gaKExpressions.getOrOperatorAccess();
+	//enum BitwiseOrOperator returns OperatorType:
+	//	BITWISE_OR="|";
+	public KExpressionsGrammarAccess.BitwiseOrOperatorElements getBitwiseOrOperatorAccess() {
+		return gaKExpressions.getBitwiseOrOperatorAccess();
 	}
 	
-	public EnumRule getOrOperatorRule() {
-		return getOrOperatorAccess().getRule();
+	public EnumRule getBitwiseOrOperatorRule() {
+		return getBitwiseOrOperatorAccess().getRule();
 	}
 
-	//enum AndOperator returns OperatorType:
-	//	AND="&";
-	public KExpressionsGrammarAccess.AndOperatorElements getAndOperatorAccess() {
-		return gaKExpressions.getAndOperatorAccess();
+	//enum BitwiseAndOperator returns OperatorType:
+	//	BITWISE_AND="&";
+	public KExpressionsGrammarAccess.BitwiseAndOperatorElements getBitwiseAndOperatorAccess() {
+		return gaKExpressions.getBitwiseAndOperatorAccess();
 	}
 	
-	public EnumRule getAndOperatorRule() {
-		return getAndOperatorAccess().getRule();
+	public EnumRule getBitwiseAndOperatorRule() {
+		return getBitwiseAndOperatorAccess().getRule();
 	}
 
 	//enum NotOperator returns OperatorType:
@@ -1431,7 +1473,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @minSpace 10;    
 	// KeyIntValueAnnotation returns IntAnnotation:
-	//	"@" name=ExtendedID value=INT ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=Integer ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyIntValueAnnotationElements getKeyIntValueAnnotationAccess() {
 		return gaKExpressions.getKeyIntValueAnnotationAccess();
 	}
@@ -1442,7 +1484,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @minSpace 10.0;    
 	// KeyFloatValueAnnotation returns FloatAnnotation:
-	//	"@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=Floateger ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
 		return gaKExpressions.getKeyFloatValueAnnotationAccess();
 	}
@@ -1483,6 +1525,26 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getExtendedIDAccess().getRule();
 	}
 
+	//Integer returns ecore::EInt:
+	//	"-"? INT;
+	public AnnotationsGrammarAccess.IntegerElements getIntegerAccess() {
+		return gaKExpressions.getIntegerAccess();
+	}
+	
+	public ParserRule getIntegerRule() {
+		return getIntegerAccess().getRule();
+	}
+
+	//Floateger returns ecore::EFloat:
+	//	"-"? FLOAT;
+	public AnnotationsGrammarAccess.FloategerElements getFloategerAccess() {
+		return gaKExpressions.getFloategerAccess();
+	}
+	
+	public ParserRule getFloategerRule() {
+		return getFloategerAccess().getRule();
+	}
+
 	//// --------------------------
 	// //
 	// //  Terminals...
@@ -1515,19 +1577,28 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// redefine INT terminal to allow negative numbers
 	// terminal INT returns ecore::EInt:
-	//	"-"? NUMBER+;
+	//	NUMBER+;
 	public TerminalRule getINTRule() {
 		return gaKExpressions.getINTRule();
 	} 
 
 	//// make sure the Float rule does not shadow the INT rule
 	// terminal FLOAT returns ecore::EFloatObject:
-	//	"-"? NUMBER+ ("." NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? "f"? | "-"? NUMBER+ "f";
+	//	NUMBER+ ("." NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? "f"? | NUMBER+ "f";
 	public TerminalRule getFLOATRule() {
 		return gaKExpressions.getFLOATRule();
 	} 
 
-	//// introduce boolean values
+	//// redefine INT terminal to allow negative numbers
+	// //terminal NEGINT returns ecore::EInt:
+	// //    '-' INT;
+	// //    
+	//
+	////// make sure the Float rule does not shadow the INT rule
+	// //terminal NEGFLOAT returns ecore::EFloatObject :
+	//
+	////    '-' FLOAT;
+	// // introduce boolean values
 	// terminal BOOLEAN returns ecore::EBooleanObject:
 	//	"true" | "false";
 	public TerminalRule getBOOLEANRule() {

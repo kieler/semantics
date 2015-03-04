@@ -11447,19 +11447,19 @@ ruleKeyIntValueAnnotation returns [EObject current=null]
 )
 )(
 (
-		lv_value_2_0=RULE_INT
-		{
-			newLeafNode(lv_value_2_0, grammarAccess.getKeyIntValueAnnotationAccess().getValueINTTerminalRuleCall_2_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getKeyIntValueAnnotationAccess().getValueIntegerParserRuleCall_2_0()); 
+	    }
+		lv_value_2_0=ruleInteger		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getKeyIntValueAnnotationRule());
+	            $current = createModelElementForParent(grammarAccess.getKeyIntValueAnnotationRule());
 	        }
-       		setWithLastConsumed(
+       		set(
        			$current, 
        			"value",
         		lv_value_2_0, 
-        		"INT");
+        		"Integer");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
@@ -11534,19 +11534,19 @@ ruleKeyFloatValueAnnotation returns [EObject current=null]
 )
 )(
 (
-		lv_value_2_0=RULE_FLOAT
-		{
-			newLeafNode(lv_value_2_0, grammarAccess.getKeyFloatValueAnnotationAccess().getValueFLOATTerminalRuleCall_2_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloategerParserRuleCall_2_0()); 
+	    }
+		lv_value_2_0=ruleFloateger		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getKeyFloatValueAnnotationRule());
+	            $current = createModelElementForParent(grammarAccess.getKeyFloatValueAnnotationRule());
 	        }
-       		setWithLastConsumed(
+       		set(
        			$current, 
        			"value",
         		lv_value_2_0, 
-        		"FLOAT");
+        		"Floateger");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
@@ -11656,6 +11656,74 @@ ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToke
     newLeafNode(this_ID_2, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1()); 
     }
 )*)
+    ;
+
+
+
+
+
+// Entry rule entryRuleInteger
+entryRuleInteger returns [String current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getIntegerRule()); } 
+	 iv_ruleInteger=ruleInteger 
+	 { $current=$iv_ruleInteger.current.getText(); }  
+	 EOF 
+;
+
+// Rule Integer
+ruleInteger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+	kw='-' 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getIntegerAccess().getHyphenMinusKeyword_0()); 
+    }
+)?    this_INT_1=RULE_INT    {
+		$current.merge(this_INT_1);
+    }
+
+    { 
+    newLeafNode(this_INT_1, grammarAccess.getIntegerAccess().getINTTerminalRuleCall_1()); 
+    }
+)
+    ;
+
+
+
+
+
+// Entry rule entryRuleFloateger
+entryRuleFloateger returns [String current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getFloategerRule()); } 
+	 iv_ruleFloateger=ruleFloateger 
+	 { $current=$iv_ruleFloateger.current.getText(); }  
+	 EOF 
+;
+
+// Rule Floateger
+ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+	kw='-' 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getFloategerAccess().getHyphenMinusKeyword_0()); 
+    }
+)?    this_FLOAT_1=RULE_FLOAT    {
+		$current.merge(this_FLOAT_1);
+    }
+
+    { 
+    newLeafNode(this_FLOAT_1, grammarAccess.getFloategerAccess().getFLOATTerminalRuleCall_1()); 
+    }
+)
     ;
 
 
@@ -11959,9 +12027,9 @@ RULE_ML_COMMENT : '/*' ~('*') ( options {greedy=false;} : . )*'*/';
 
 fragment RULE_NUMBER : '0'..'9';
 
-RULE_INT : '-'? RULE_NUMBER+;
+RULE_INT : RULE_NUMBER+;
 
-RULE_FLOAT : ('-'? RULE_NUMBER+ '.' RULE_NUMBER* (('e'|'E') ('+'|'-')? RULE_NUMBER+)? 'f'?|'-'? RULE_NUMBER+ 'f');
+RULE_FLOAT : (RULE_NUMBER+ '.' RULE_NUMBER* (('e'|'E') ('+'|'-')? RULE_NUMBER+)? 'f'?|RULE_NUMBER+ 'f');
 
 RULE_BOOLEAN : ('true'|'false');
 

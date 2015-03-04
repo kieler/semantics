@@ -83,7 +83,7 @@ KeyBooleanValueAnnotation returns BooleanAnnotation:
 
 // e.g.: @minSpace 10;    
 KeyIntValueAnnotation returns IntAnnotation:
-    '@' name=ExtendedID value=INT
+    '@' name=ExtendedID value=Integer
     ('('
         (annotations+=Annotation)*
     ')')?;
@@ -91,7 +91,7 @@ KeyIntValueAnnotation returns IntAnnotation:
 
 // e.g.: @minSpace 10.0;    
 KeyFloatValueAnnotation returns FloatAnnotation:
-    '@' name=ExtendedID value=FLOAT
+    '@' name=ExtendedID value=Floateger
     ('('
         (annotations+=Annotation)*
     ')')?;
@@ -110,7 +110,15 @@ EString returns ecore::EString:
 ExtendedID returns ecore::EString:
   ID ("."ID)*;
   
-  
+
+Integer returns ecore::EInt:
+    '-'? INT
+;
+
+Floateger returns ecore::EFloat:
+    '-'? FLOAT
+;
+
 // --------------------------
 //
 //  Terminals...
@@ -138,12 +146,20 @@ terminal fragment NUMBER :
    
 // redefine INT terminal to allow negative numbers
 terminal INT returns ecore::EInt:
-    '-'? NUMBER+;
-
+    NUMBER+;
+    
 // make sure the Float rule does not shadow the INT rule
 terminal FLOAT returns ecore::EFloatObject :
-    '-'? NUMBER+ ('.' NUMBER*) (("e"|"E") ("+"|"-")? NUMBER+)? 'f'? |
-    '-'? NUMBER+ 'f';
+    NUMBER+ ('.' NUMBER*) (("e"|"E") ("+"|"-")? NUMBER+)? 'f'? |
+    NUMBER+ 'f';
+    
+// redefine INT terminal to allow negative numbers
+//terminal NEGINT returns ecore::EInt:
+//    '-' INT;
+//    
+//// make sure the Float rule does not shadow the INT rule
+//terminal NEGFLOAT returns ecore::EFloatObject :
+//    '-' FLOAT;
     
 // introduce boolean values
 terminal BOOLEAN returns ecore::EBooleanObject :

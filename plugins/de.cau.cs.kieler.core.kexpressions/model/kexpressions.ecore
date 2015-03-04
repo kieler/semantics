@@ -136,6 +136,8 @@
         <details key="documentation" value="Arithmetic modulo operation. (Not commutative!)"/>
       </eAnnotations>
     </eLiterals>
+    <eLiterals name="BITWISE_OR" value="17" literal=""/>
+    <eLiterals name="BITWISE_AND" value="16"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValuedObject" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotatable">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

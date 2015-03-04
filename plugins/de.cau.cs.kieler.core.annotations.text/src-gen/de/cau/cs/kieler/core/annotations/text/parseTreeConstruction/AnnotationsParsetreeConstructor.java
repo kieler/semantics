@@ -1698,11 +1698,11 @@ protected class KeyBooleanValueAnnotation_RightParenthesisKeyword_3_2 extends Ke
  *
  * // e.g.: @minSpace 10;    
  *  KeyIntValueAnnotation returns IntAnnotation:
- * 	"@" name=ExtendedID value=INT ("(" annotations+=Annotation* ")")?;
+ * 	"@" name=ExtendedID value=Integer ("(" annotations+=Annotation* ")")?;
  *
  **/
 
-// "@" name=ExtendedID value=INT ("(" annotations+=Annotation* ")")?
+// "@" name=ExtendedID value=Integer ("(" annotations+=Annotation* ")")?
 protected class KeyIntValueAnnotation_Group extends GroupToken {
 	
 	public KeyIntValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1787,7 +1787,7 @@ protected class KeyIntValueAnnotation_NameAssignment_1 extends AssignmentToken  
 
 }
 
-// value=INT
+// value=Integer
 protected class KeyIntValueAnnotation_ValueAssignment_2 extends AssignmentToken  {
 	
 	public KeyIntValueAnnotation_ValueAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1811,9 +1811,9 @@ protected class KeyIntValueAnnotation_ValueAssignment_2 extends AssignmentToken 
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("value",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("value");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyIntValueAnnotationAccess().getValueINTTerminalRuleCall_2_0(), value, null)) {
-			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getKeyIntValueAnnotationAccess().getValueINTTerminalRuleCall_2_0();
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyIntValueAnnotationAccess().getValueIntegerParserRuleCall_2_0(), value, null)) {
+			type = AssignmentType.DATATYPE_RULE_CALL;
+			element = grammarAccess.getKeyIntValueAnnotationAccess().getValueIntegerParserRuleCall_2_0();
 			return obj;
 		}
 		return null;
@@ -1943,11 +1943,11 @@ protected class KeyIntValueAnnotation_RightParenthesisKeyword_3_2 extends Keywor
  *
  * // e.g.: @minSpace 10.0;    
  *  KeyFloatValueAnnotation returns FloatAnnotation:
- * 	"@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?;
+ * 	"@" name=ExtendedID value=Floateger ("(" annotations+=Annotation* ")")?;
  *
  **/
 
-// "@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?
+// "@" name=ExtendedID value=Floateger ("(" annotations+=Annotation* ")")?
 protected class KeyFloatValueAnnotation_Group extends GroupToken {
 	
 	public KeyFloatValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2032,7 +2032,7 @@ protected class KeyFloatValueAnnotation_NameAssignment_1 extends AssignmentToken
 
 }
 
-// value=FLOAT
+// value=Floateger
 protected class KeyFloatValueAnnotation_ValueAssignment_2 extends AssignmentToken  {
 	
 	public KeyFloatValueAnnotation_ValueAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2056,9 +2056,9 @@ protected class KeyFloatValueAnnotation_ValueAssignment_2 extends AssignmentToke
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("value",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("value");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyFloatValueAnnotationAccess().getValueFLOATTerminalRuleCall_2_0(), value, null)) {
-			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getKeyFloatValueAnnotationAccess().getValueFLOATTerminalRuleCall_2_0();
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloategerParserRuleCall_2_0(), value, null)) {
+			type = AssignmentType.DATATYPE_RULE_CALL;
+			element = grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloategerParserRuleCall_2_0();
 			return obj;
 		}
 		return null;
@@ -2278,6 +2278,8 @@ protected class ImportAnnotation_ImportURIAssignment_1 extends AssignmentToken  
 
 
 /************ end Rule ImportAnnotation ****************/
+
+
 
 
 

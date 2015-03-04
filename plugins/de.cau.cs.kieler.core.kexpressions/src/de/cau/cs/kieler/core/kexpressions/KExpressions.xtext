@@ -26,28 +26,38 @@ Expression returns Expression:
 ;
 
 BoolExpression returns Expression:
-    OrAndExpression;
+    LogicalOrExpression;
 
-OrAndExpression returns Expression:
-	CompareOperation 
-	(
-		({OperatorExpression.subExpressions+=current} operator=(OrOperator|LogicalOrOperator) subExpressions+=CompareOperation)*
-		|	
-		({OperatorExpression.subExpressions+=current} operator=(AndOperator|LogicalAndOperator) subExpressions+=CompareOperation)*
-	)
-;
-	
-//OrExpression returns Expression:
-//	CompareOperation ({OperatorExpression.subExpressions+=current} operator=(OrOperator) subExpressions+=CompareOperation)*;
-////	{OperatorExpression} subExpressions += CompareOperation (/*{OperatorExpression.subExpressions+=current}*/ operator=(AndOperator|OrOperator) subExpressions+=CompareOperation)*;
+//OrAndExpression returns Expression:
+//	CompareOperation 
+//	(
+//		({OperatorExpression.subExpressions+=current} (operator=OrOperator subExpressions+=CompareOperation)*)
+//		|	
+//		({OperatorExpression.subExpressions+=current} (operator=AndOperator subExpressions+=CompareOperation)*)
+//		|
+//        ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator subExpressions+=CompareOperation)*)
+//        |   
+//        ({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator subExpressions+=CompareOperation)*)
 //
-//AndExpression returns Expression:
-//	CompareOperation ({OperatorExpression.subExpressions+=current} operator=(AndOperator) subExpressions+=CompareOperation)*;
+//	)
+//;
+	
+LogicalOrExpression returns Expression:
+    LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator subExpressions+=LogicalAndExpression)+)?;
+
+LogicalAndExpression returns Expression:
+    BitwiseOrExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator subExpressions+=BitwiseOrExpression)+)?;
+    
+BitwiseOrExpression returns Expression:
+	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator subExpressions+=BitwiseAndExpression)+)?;
+
+BitwiseAndExpression returns Expression:
+	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator subExpressions+=CompareOperation)+)?;
 
 // Example: 42 <= val(A)
 CompareOperation returns Expression:
-	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator subExpressions+=NotOrValuedExpression)
-	| NotExpression
+	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator subExpressions+=NotOrValuedExpression)?
+//	| NotExpression
 ;
 
 // order IS IMPORTANT
@@ -161,11 +171,15 @@ StringValue returns StringValue:
     value=STRING;
 
 
+//terminal POSINT returns ecore::EInt:
+//    NUMBER+;
+
 // data type rule allowing any kind of value to be accepted,
 // e.g. as initialValues of valuedObjects
 // used in Kits.xtext 
 AnyType returns ecore::EString:
     BOOLEAN | INT | FLOAT | ID | STRING;
+
 
 
 enum CompareOperator returns OperatorType:
@@ -174,11 +188,11 @@ enum CompareOperator returns OperatorType:
 enum PreOperator returns OperatorType:
     PRE="pre";
 
-enum OrOperator returns OperatorType:
-	OR="|";
+enum BitwiseOrOperator returns OperatorType:
+	BITWISE_OR="|";
 
-enum AndOperator returns OperatorType:
-	AND="&";
+enum BitwiseAndOperator returns OperatorType:
+	BITWISE_AND="&";
 
 enum NotOperator returns OperatorType:
 	NOT="!";

@@ -130,7 +130,7 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     (name=ExtendedID value=FLOAT annotations+=Annotation*)
+	 *     (name=ExtendedID value=Floateger annotations+=Annotation*)
 	 */
 	protected void sequence_KeyFloatValueAnnotation(EObject context, FloatAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -139,7 +139,7 @@ public abstract class AbstractAnnotationsSemanticSequencer extends AbstractDeleg
 	
 	/**
 	 * Constraint:
-	 *     (name=ExtendedID value=INT annotations+=Annotation*)
+	 *     (name=ExtendedID value=Integer annotations+=Annotation*)
 	 */
 	protected void sequence_KeyIntValueAnnotation(EObject context, IntAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

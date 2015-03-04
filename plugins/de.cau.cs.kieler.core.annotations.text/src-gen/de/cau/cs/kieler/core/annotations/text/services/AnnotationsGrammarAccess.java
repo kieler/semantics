@@ -348,7 +348,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cValueINTTerminalRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		private final RuleCall cValueIntegerParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cAnnotationsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
@@ -357,10 +357,10 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// e.g.: @minSpace 10;    
 		// KeyIntValueAnnotation returns IntAnnotation:
-		//	"@" name=ExtendedID value=INT ("(" annotations+=Annotation* ")")?;
+		//	"@" name=ExtendedID value=Integer ("(" annotations+=Annotation* ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//"@" name=ExtendedID value=INT ("(" annotations+=Annotation* ")")?
+		//"@" name=ExtendedID value=Integer ("(" annotations+=Annotation* ")")?
 		public Group getGroup() { return cGroup; }
 
 		//"@"
@@ -372,11 +372,11 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 
-		//value=INT
+		//value=Integer
 		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
 
-		//INT
-		public RuleCall getValueINTTerminalRuleCall_2_0() { return cValueINTTerminalRuleCall_2_0; }
+		//Integer
+		public RuleCall getValueIntegerParserRuleCall_2_0() { return cValueIntegerParserRuleCall_2_0; }
 
 		//("(" annotations+=Annotation* ")")?
 		public Group getGroup_3() { return cGroup_3; }
@@ -401,7 +401,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cValueFLOATTerminalRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		private final RuleCall cValueFloategerParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cAnnotationsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
@@ -410,10 +410,10 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// e.g.: @minSpace 10.0;    
 		// KeyFloatValueAnnotation returns FloatAnnotation:
-		//	"@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?;
+		//	"@" name=ExtendedID value=Floateger ("(" annotations+=Annotation* ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//"@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?
+		//"@" name=ExtendedID value=Floateger ("(" annotations+=Annotation* ")")?
 		public Group getGroup() { return cGroup; }
 
 		//"@"
@@ -425,11 +425,11 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 
-		//value=FLOAT
+		//value=Floateger
 		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
 
-		//FLOAT
-		public RuleCall getValueFLOATTerminalRuleCall_2_0() { return cValueFLOATTerminalRuleCall_2_0; }
+		//Floateger
+		public RuleCall getValueFloategerParserRuleCall_2_0() { return cValueFloategerParserRuleCall_2_0; }
 
 		//("(" annotations+=Annotation* ")")?
 		public Group getGroup_3() { return cGroup_3; }
@@ -520,6 +520,46 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getIDTerminalRuleCall_1_1() { return cIDTerminalRuleCall_1_1; }
 	}
+
+	public class IntegerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Integer");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cHyphenMinusKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final RuleCall cINTTerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		
+		//Integer returns ecore::EInt:
+		//	"-"? INT;
+		public ParserRule getRule() { return rule; }
+
+		//"-"? INT
+		public Group getGroup() { return cGroup; }
+
+		//"-"?
+		public Keyword getHyphenMinusKeyword_0() { return cHyphenMinusKeyword_0; }
+
+		//INT
+		public RuleCall getINTTerminalRuleCall_1() { return cINTTerminalRuleCall_1; }
+	}
+
+	public class FloategerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Floateger");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cHyphenMinusKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final RuleCall cFLOATTerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
+		
+		//Floateger returns ecore::EFloat:
+		//	"-"? FLOAT;
+		public ParserRule getRule() { return rule; }
+
+		//"-"? FLOAT
+		public Group getGroup() { return cGroup; }
+
+		//"-"?
+		public Keyword getHyphenMinusKeyword_0() { return cHyphenMinusKeyword_0; }
+
+		//FLOAT
+		public RuleCall getFLOATTerminalRuleCall_1() { return cFLOATTerminalRuleCall_1; }
+	}
 	
 	
 	private final AnnotationElements pAnnotation;
@@ -534,6 +574,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	private final ImportAnnotationElements pImportAnnotation;
 	private final EStringElements pEString;
 	private final ExtendedIDElements pExtendedID;
+	private final IntegerElements pInteger;
+	private final FloategerElements pFloateger;
 	private final TerminalRule tCOMMENT_ANNOTATION;
 	private final TerminalRule tML_COMMENT;
 	private final TerminalRule tNUMBER;
@@ -563,6 +605,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pImportAnnotation = new ImportAnnotationElements();
 		this.pEString = new EStringElements();
 		this.pExtendedID = new ExtendedIDElements();
+		this.pInteger = new IntegerElements();
+		this.pFloateger = new FloategerElements();
 		this.tCOMMENT_ANNOTATION = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "COMMENT_ANNOTATION");
 		this.tML_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ML_COMMENT");
 		this.tNUMBER = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "NUMBER");
@@ -684,7 +728,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @minSpace 10;    
 	// KeyIntValueAnnotation returns IntAnnotation:
-	//	"@" name=ExtendedID value=INT ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=Integer ("(" annotations+=Annotation* ")")?;
 	public KeyIntValueAnnotationElements getKeyIntValueAnnotationAccess() {
 		return pKeyIntValueAnnotation;
 	}
@@ -695,7 +739,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @minSpace 10.0;    
 	// KeyFloatValueAnnotation returns FloatAnnotation:
-	//	"@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=Floateger ("(" annotations+=Annotation* ")")?;
 	public KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
 		return pKeyFloatValueAnnotation;
 	}
@@ -736,6 +780,26 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getExtendedIDAccess().getRule();
 	}
 
+	//Integer returns ecore::EInt:
+	//	"-"? INT;
+	public IntegerElements getIntegerAccess() {
+		return pInteger;
+	}
+	
+	public ParserRule getIntegerRule() {
+		return getIntegerAccess().getRule();
+	}
+
+	//Floateger returns ecore::EFloat:
+	//	"-"? FLOAT;
+	public FloategerElements getFloategerAccess() {
+		return pFloateger;
+	}
+	
+	public ParserRule getFloategerRule() {
+		return getFloategerAccess().getRule();
+	}
+
 	//// --------------------------
 	// //
 	// //  Terminals...
@@ -768,19 +832,28 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// redefine INT terminal to allow negative numbers
 	// terminal INT returns ecore::EInt:
-	//	"-"? NUMBER+;
+	//	NUMBER+;
 	public TerminalRule getINTRule() {
 		return tINT;
 	} 
 
 	//// make sure the Float rule does not shadow the INT rule
 	// terminal FLOAT returns ecore::EFloatObject:
-	//	"-"? NUMBER+ ("." NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? "f"? | "-"? NUMBER+ "f";
+	//	NUMBER+ ("." NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? "f"? | NUMBER+ "f";
 	public TerminalRule getFLOATRule() {
 		return tFLOAT;
 	} 
 
-	//// introduce boolean values
+	//// redefine INT terminal to allow negative numbers
+	// //terminal NEGINT returns ecore::EInt:
+	// //    '-' INT;
+	// //    
+	//
+	////// make sure the Float rule does not shadow the INT rule
+	// //terminal NEGFLOAT returns ecore::EFloatObject :
+	//
+	////    '-' FLOAT;
+	// // introduce boolean values
 	// terminal BOOLEAN returns ecore::EBooleanObject:
 	//	"true" | "false";
 	public TerminalRule getBOOLEANRule() {

@@ -124,13 +124,21 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getAtomicValuedExpressionRule() ||
+				   context == grammarAccess.getBitwiseAndExpressionRule() ||
+				   context == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getBitwiseOrExpressionRule() ||
+				   context == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getBoolExpressionRule() ||
 				   context == grammarAccess.getBoolValueRule() ||
 				   context == grammarAccess.getCompareOperationRule() ||
-				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
+				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getDivExpressionRule() ||
 				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getExpressionRule() ||
+				   context == grammarAccess.getLogicalAndExpressionRule() ||
+				   context == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getLogicalOrExpressionRule() ||
+				   context == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getModExpressionRule() ||
 				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getMultExpressionRule() ||
@@ -138,9 +146,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getOrAndExpressionRule() ||
-				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0() ||
-				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
@@ -157,17 +162,29 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 			case KExpressionsPackage.FLOAT_VALUE:
 				if(context == grammarAccess.getAddExpressionRule() ||
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getAtomicValuedExpressionRule() ||
-				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
+				   context == grammarAccess.getBitwiseAndExpressionRule() ||
+				   context == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getBitwiseOrExpressionRule() ||
+				   context == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getBoolExpressionRule() ||
+				   context == grammarAccess.getCompareOperationRule() ||
+				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getDivExpressionRule() ||
 				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getExpressionRule() ||
 				   context == grammarAccess.getFloatValueRule() ||
+				   context == grammarAccess.getLogicalAndExpressionRule() ||
+				   context == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getLogicalOrExpressionRule() ||
+				   context == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getModExpressionRule() ||
 				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getMultExpressionRule() ||
 				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getNegExpressionRule() ||
+				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
@@ -181,13 +198,21 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getAtomicValuedExpressionRule() ||
+				   context == grammarAccess.getBitwiseAndExpressionRule() ||
+				   context == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getBitwiseOrExpressionRule() ||
+				   context == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getBoolExpressionRule() ||
 				   context == grammarAccess.getCompareOperationRule() ||
-				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
+				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getDivExpressionRule() ||
 				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getExpressionRule() ||
 				   context == grammarAccess.getFunctionCallRule() ||
+				   context == grammarAccess.getLogicalAndExpressionRule() ||
+				   context == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getLogicalOrExpressionRule() ||
+				   context == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getModExpressionRule() ||
 				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getMultExpressionRule() ||
@@ -195,9 +220,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getOrAndExpressionRule() ||
-				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0() ||
-				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
@@ -208,17 +230,29 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 			case KExpressionsPackage.INT_VALUE:
 				if(context == grammarAccess.getAddExpressionRule() ||
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getAtomicValuedExpressionRule() ||
-				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
+				   context == grammarAccess.getBitwiseAndExpressionRule() ||
+				   context == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getBitwiseOrExpressionRule() ||
+				   context == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getBoolExpressionRule() ||
+				   context == grammarAccess.getCompareOperationRule() ||
+				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getDivExpressionRule() ||
 				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getExpressionRule() ||
 				   context == grammarAccess.getIntValueRule() ||
+				   context == grammarAccess.getLogicalAndExpressionRule() ||
+				   context == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getLogicalOrExpressionRule() ||
+				   context == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getModExpressionRule() ||
 				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getMultExpressionRule() ||
 				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getNegExpressionRule() ||
+				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
@@ -230,31 +264,33 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
 				if(context == grammarAccess.getAddExpressionRule() ||
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getAtomicValuedExpressionRule() ||
-				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
+				   context == grammarAccess.getBitwiseAndExpressionRule() ||
+				   context == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getBitwiseOrExpressionRule() ||
+				   context == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getBoolExpressionRule() ||
+				   context == grammarAccess.getCompareOperationRule() ||
+				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getDivExpressionRule() ||
 				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getExpressionRule() ||
+				   context == grammarAccess.getLogicalAndExpressionRule() ||
+				   context == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getLogicalOrExpressionRule() ||
+				   context == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getModExpressionRule() ||
 				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getMultExpressionRule() ||
 				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getNegExpressionRule() ||
+				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule()) {
-					sequence_AddExpression_CompareOperation_DivExpression_Expression_ModExpression_MultExpression_NegExpression_NotExpression_OrAndExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if(context == grammarAccess.getAtomicExpressionRule() ||
-				   context == grammarAccess.getBoolExpressionRule() ||
-				   context == grammarAccess.getCompareOperationRule() ||
-				   context == grammarAccess.getNotExpressionRule() ||
-				   context == grammarAccess.getOrAndExpressionRule() ||
-				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0() ||
-				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()) {
-					sequence_CompareOperation_NotExpression_OrAndExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_AddExpression_BitwiseAndExpression_BitwiseOrExpression_CompareOperation_DivExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_NotOrValuedExpression_SubExpression_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if(context == grammarAccess.getValuedObjectTestExpressionRule()) {
@@ -271,16 +307,28 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 			case KExpressionsPackage.STRING_VALUE:
 				if(context == grammarAccess.getAddExpressionRule() ||
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getAtomicValuedExpressionRule() ||
-				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
+				   context == grammarAccess.getBitwiseAndExpressionRule() ||
+				   context == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getBitwiseOrExpressionRule() ||
+				   context == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getBoolExpressionRule() ||
+				   context == grammarAccess.getCompareOperationRule() ||
+				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getDivExpressionRule() ||
 				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getExpressionRule() ||
+				   context == grammarAccess.getLogicalAndExpressionRule() ||
+				   context == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getLogicalOrExpressionRule() ||
+				   context == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getModExpressionRule() ||
 				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getMultExpressionRule() ||
 				   context == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getNegExpressionRule() ||
+				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
 				   context == grammarAccess.getStringValueRule() ||
 				   context == grammarAccess.getSubExpressionRule() ||
@@ -295,12 +343,20 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getAtomicValuedExpressionRule() ||
+				   context == grammarAccess.getBitwiseAndExpressionRule() ||
+				   context == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getBitwiseOrExpressionRule() ||
+				   context == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getBoolExpressionRule() ||
 				   context == grammarAccess.getCompareOperationRule() ||
-				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
+				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getDivExpressionRule() ||
 				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getExpressionRule() ||
+				   context == grammarAccess.getLogicalAndExpressionRule() ||
+				   context == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getLogicalOrExpressionRule() ||
+				   context == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getModExpressionRule() ||
 				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getMultExpressionRule() ||
@@ -308,9 +364,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getOrAndExpressionRule() ||
-				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0() ||
-				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getTextExpressionRule() ||
@@ -334,12 +387,20 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				   context == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getAtomicExpressionRule() ||
 				   context == grammarAccess.getAtomicValuedExpressionRule() ||
+				   context == grammarAccess.getBitwiseAndExpressionRule() ||
+				   context == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getBitwiseOrExpressionRule() ||
+				   context == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getBoolExpressionRule() ||
 				   context == grammarAccess.getCompareOperationRule() ||
-				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_0_1_0() ||
+				   context == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getDivExpressionRule() ||
 				   context == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getExpressionRule() ||
+				   context == grammarAccess.getLogicalAndExpressionRule() ||
+				   context == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
+				   context == grammarAccess.getLogicalOrExpressionRule() ||
+				   context == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getModExpressionRule() ||
 				   context == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getMultExpressionRule() ||
@@ -347,9 +408,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				   context == grammarAccess.getNegExpressionRule() ||
 				   context == grammarAccess.getNotExpressionRule() ||
 				   context == grammarAccess.getNotOrValuedExpressionRule() ||
-				   context == grammarAccess.getOrAndExpressionRule() ||
-				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0() ||
-				   context == grammarAccess.getOrAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0() ||
 				   context == grammarAccess.getSubExpressionRule() ||
 				   context == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0() ||
 				   context == grammarAccess.getValuedExpressionRule() ||

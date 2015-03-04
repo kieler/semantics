@@ -187,7 +187,23 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    MOD(13, "MOD", "mod");
+    MOD(13, "MOD", "mod"), /**
+     * The '<em><b>BITWISE OR</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #BITWISE_OR_VALUE
+     * @generated
+     * @ordered
+     */
+    BITWISE_OR(17, "BITWISE_OR", ""), /**
+     * The '<em><b>BITWISE AND</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #BITWISE_AND_VALUE
+     * @generated
+     * @ordered
+     */
+    BITWISE_AND(16, "BITWISE_AND", "BITWISE_AND");
 
     /**
      * The '<em><b>EQ</b></em>' literal value.
@@ -416,6 +432,36 @@ public enum OperatorType implements Enumerator {
     public static final int MOD_VALUE = 13;
 
     /**
+     * The '<em><b>BITWISE OR</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>BITWISE OR</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #BITWISE_OR
+     * @model literal=""
+     * @generated
+     * @ordered
+     */
+    public static final int BITWISE_OR_VALUE = 17;
+
+    /**
+     * The '<em><b>BITWISE AND</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>BITWISE AND</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #BITWISE_AND
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int BITWISE_AND_VALUE = 16;
+
+    /**
      * An array of all the '<em><b>Operator Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -439,6 +485,8 @@ public enum OperatorType implements Enumerator {
             MULT,
             DIV,
             MOD,
+            BITWISE_OR,
+            BITWISE_AND,
         };
 
     /**
@@ -505,6 +553,8 @@ public enum OperatorType implements Enumerator {
             case MULT_VALUE: return MULT;
             case DIV_VALUE: return DIV;
             case MOD_VALUE: return MOD;
+            case BITWISE_OR_VALUE: return BITWISE_OR;
+            case BITWISE_AND_VALUE: return BITWISE_AND;
         }
         return null;
     }

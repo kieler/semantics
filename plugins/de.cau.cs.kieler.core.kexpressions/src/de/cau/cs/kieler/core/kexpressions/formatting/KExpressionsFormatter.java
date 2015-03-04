@@ -35,6 +35,10 @@ public class KExpressionsFormatter extends AnnotationsFormatter {
      */
     @Override
     protected void configureFormatting(FormattingConfig c) {
+        int a, b;
+        
+        a = 1 & 2 | 3;
+        
         customConfigureFormatting(c, (KExpressionsGrammarAccess) getGrammarAccess());
     }
 
