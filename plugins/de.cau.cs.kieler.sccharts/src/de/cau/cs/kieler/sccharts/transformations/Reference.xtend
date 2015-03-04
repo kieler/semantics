@@ -195,35 +195,35 @@ class Reference {
 			 * => create new region and state, copy referenced scope
 			 * an bind all valued objects accordingly
 			 */
-            for(trn: dataflow.nodes.filter(typeof(ReferenceNode))) {
-                val rRegion = parentState.createRegion("_"+dataflow.id+regionCounter)
+            for(refNode: dataflow.nodes.filter(typeof(ReferenceNode))) {
+                val rRegion = parentState.createRegion("_" + dataflow.id + regionCounter)
                 rRegion.label = dataflow.label + regionCounter
-                val newState = rRegion.createState("_"+trn.ID+idCounter)
-                newState.label = trn.label + idCounter
-                regionCounter = regionCounter +1
-                idCounter = idCounter +1
+                val newState = rRegion.createState("_" + refNode.ID + idCounter)
+                newState.label = refNode.label + idCounter
+                regionCounter = regionCounter + 1
+                idCounter = idCounter + 1
                 newState.setInitial
-                newState.referencedScope = trn.referencedScope
-                nodeMapping.put(trn, newState)
+                newState.referencedScope = refNode.referencedScope
+                nodeMapping.put(refNode, newState)
                 
                 // bind inputs
                 var exprCounter = 0
                 val refedInputs = <ValuedObject>newArrayList
-                trn.referencedScope.declarations.filter[it.input].forEach[
-                    refedInputs+=valuedObjects
+                refNode.referencedScope.declarations.filter[it.input].forEach[
+                    refedInputs += valuedObjects
                 ]
-                for (expr: trn.parameters) {
+                for (expr: refNode.parameters) {
                     val newBinding = SCChartsFactory.eINSTANCE.createBinding
                     newBinding.actual = (expr as ValuedObjectReference).valuedObject
                     newBinding.formal = refedInputs.get(exprCounter)
-                    val rState = nodeMapping.get(trn)
+                    val rState = nodeMapping.get(refNode)
                     rState.bindings += newBinding
-                    exprCounter = exprCounter +1
+                    exprCounter = exprCounter + 1
                 }
                 // bind outputs
                 exprCounter = 0
                 val refedOutputs = <ValuedObject>newArrayList
-                trn.referencedScope.declarations.filter[it.output].forEach[
+                refNode.referencedScope.declarations.filter[it.output].forEach[
                     refedOutputs += valuedObjects
                 ]
                 for (f: dataflow.features) {
@@ -233,13 +233,13 @@ class Reference {
                             val newBinding = SCChartsFactory.eINSTANCE.createBinding
                             newBinding.actual = f.valuedObject
                             newBinding.formal = refedVo
-                            val rState = nodeMapping.get(trn)
+                            val rState = nodeMapping.get(refNode)
                             rState.bindings += newBinding
                         }
                     }
                 }
                 // recursive transformation call
-                (trn.referencedScope as State).transformDataflows
+                (refNode.referencedScope as State).transformDataflows
             }
 			
 			/*
@@ -278,8 +278,8 @@ class Reference {
                             newState2.label = dataflow.label + idCounter + "_end"
                             newState2.setFinal
                             
-                            regionCounter = regionCounter +1
-                            idCounter = idCounter+1
+                            regionCounter = regionCounter + 1
+                            idCounter = idCounter + 1
                             
                             val transition = SCChartsFactory.eINSTANCE.createTransition
                             transition.sourceState = newState
@@ -295,7 +295,7 @@ class Reference {
                             for (p: cn.parameters) {
                                 val in = (p as ValuedObjectReference).valuedObject
                                 newState.replaceAllOccurrences(refedInputs.get(exprCounter), in)
-                                exprCounter = exprCounter +1
+                                exprCounter = exprCounter + 1
                             }
                         } else {
                             /*
@@ -303,9 +303,9 @@ class Reference {
                              * create a new region for it, copy the content and replace all
                              * valued objects accordingly 
                              */
-                            val rRegion = parentState.createRegion("_"+dataflow.id+regionCounter)
+                            val rRegion = parentState.createRegion("_" + dataflow.id + regionCounter)
                             rRegion.label = dataflow.label + regionCounter
-                            regionCounter = regionCounter +1
+                            regionCounter = regionCounter + 1
                             
                             val transitionMapping = <Transition, Transition> newHashMap
                             
@@ -383,19 +383,19 @@ class Reference {
 			         * => create new region with initial and final state for each expression
 			         * and create new assignment as transition effect
 			         */
-                    val rRegion = parentState.createRegion("_"+dataflow.id+regionCounter)
+                    val rRegion = parentState.createRegion("_" + dataflow.id + regionCounter)
                     rRegion.label = dataflow.label + regionCounter
                     
-                    val newState = rRegion.createState("_"+dataflow.ID+idCounter)
+                    val newState = rRegion.createState("_" + dataflow.ID + idCounter)
                     newState.label = dataflow.label + idCounter + "_start"
                     newState.setInitial
                     
-                    val newState2 = rRegion.createState("_"+dataflow.id+idCounter)
+                    val newState2 = rRegion.createState("_" + dataflow.id + idCounter)
                     newState2.label = dataflow.label + idCounter + "_end"
                     newState2.setFinal
                     
-                    regionCounter = regionCounter +1
-                    idCounter = idCounter+1
+                    regionCounter = regionCounter + 1
+                    idCounter = idCounter + 1
                     
                     val newAssignment = SCChartsFactory.eINSTANCE.createAssignment
                     newAssignment.valuedObject = f.valuedObject
@@ -486,19 +486,15 @@ class Reference {
     		}
     	}
    	}
-    	
-    	
+    
     private def String findPropagatedName(String name) {
         var newName = name
-        
         for(k : propagatedBindings.keySet) {
             if (k == name) {
                 newName = propagatedBindings.get(k).actual.name
                 return newName.findPropagatedName
             }
         }
-        
         newName
     }
-
 }

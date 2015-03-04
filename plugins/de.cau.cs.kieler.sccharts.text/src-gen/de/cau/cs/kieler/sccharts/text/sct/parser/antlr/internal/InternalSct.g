@@ -1833,9 +1833,9 @@ ruleCallNode returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getCallNodeAccess().getParametersExpressionParserRuleCall_5_0()); 
+	        newCompositeNode(grammarAccess.getCallNodeAccess().getParametersValuedObjectReferenceParserRuleCall_5_0()); 
 	    }
-		lv_parameters_5_0=ruleExpression		{
+		lv_parameters_5_0=ruleValuedObjectReference		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getCallNodeRule());
 	        }
@@ -1843,7 +1843,7 @@ ruleCallNode returns [EObject current=null]
        			$current, 
        			"parameters",
         		lv_parameters_5_0, 
-        		"Expression");
+        		"ValuedObjectReference");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -1855,9 +1855,9 @@ ruleCallNode returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getCallNodeAccess().getParametersExpressionParserRuleCall_6_1_0()); 
+	        newCompositeNode(grammarAccess.getCallNodeAccess().getParametersValuedObjectReferenceParserRuleCall_6_1_0()); 
 	    }
-		lv_parameters_7_0=ruleExpression		{
+		lv_parameters_7_0=ruleValuedObjectReference		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getCallNodeRule());
 	        }
@@ -1865,7 +1865,7 @@ ruleCallNode returns [EObject current=null]
        			$current, 
        			"parameters",
         		lv_parameters_7_0, 
-        		"Expression");
+        		"ValuedObjectReference");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2152,9 +2152,9 @@ ruleReferenceNode returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getReferenceNodeAccess().getParametersExpressionParserRuleCall_7_0()); 
+	        newCompositeNode(grammarAccess.getReferenceNodeAccess().getParametersValuedObjectReferenceParserRuleCall_7_0()); 
 	    }
-		lv_parameters_7_0=ruleExpression		{
+		lv_parameters_7_0=ruleValuedObjectReference		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getReferenceNodeRule());
 	        }
@@ -2162,7 +2162,7 @@ ruleReferenceNode returns [EObject current=null]
        			$current, 
        			"parameters",
         		lv_parameters_7_0, 
-        		"Expression");
+        		"ValuedObjectReference");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -2174,9 +2174,9 @@ ruleReferenceNode returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getReferenceNodeAccess().getParametersExpressionParserRuleCall_8_1_0()); 
+	        newCompositeNode(grammarAccess.getReferenceNodeAccess().getParametersValuedObjectReferenceParserRuleCall_8_1_0()); 
 	    }
-		lv_parameters_9_0=ruleExpression		{
+		lv_parameters_9_0=ruleValuedObjectReference		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getReferenceNodeRule());
 	        }
@@ -2184,7 +2184,7 @@ ruleReferenceNode returns [EObject current=null]
        			$current, 
        			"parameters",
         		lv_parameters_9_0, 
-        		"Expression");
+        		"ValuedObjectReference");
 	        afterParserOrEnumRuleCall();
 	    }
 

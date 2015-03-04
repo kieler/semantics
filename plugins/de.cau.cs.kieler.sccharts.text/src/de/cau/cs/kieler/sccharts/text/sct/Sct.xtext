@@ -68,7 +68,7 @@ Dataflow returns sccharts::Dataflow:
     {sccharts::Dataflow}
     (annotations += Annotation)*
     'dataflow' (id=ID)? (label=STRING)? ('['for=For']')? ':'
-      (declarations+=Declaration)*
+    (declarations+=Declaration)*
     (
         (features += Feature) 
         |
@@ -167,13 +167,14 @@ State returns sccharts::State:
 
 
 Node returns sccharts::Node:
-    ReferenceNode | CallNode | DefineNode //InputNode | OutputNode | ReferencedNode | TestReferenceNode | CallNode | DefineNode
+    ReferenceNode | CallNode | DefineNode
 ;
 
 CallNode returns sccharts::CallNode:
     {sccharts::CallNode}
     (id=ID) '=' callReference = [sccharts::DefineNode|ID]
-    '(' (parameters+=Expression)? (',' parameters+=Expression)* ')'
+    //'(' (parameters+=Expression)? (',' parameters+=Expression)* ')'
+    '(' (parameters+=ValuedObjectReference)? (',' parameters+=ValuedObjectReference)* ')'
     ';'
 ;
 
@@ -189,60 +190,13 @@ DefineNode returns sccharts::DefineNode:
     '}'
 ;
 
-//InputNode returns sccharts::InputNode:
-//    {sccharts::InputNode}
-//    'node' (id=ID) (label=STRING)? 'input' ':'
-//    (senders += SenderInput) ';'
-//;
-
-//OutputNode returns sccharts::OutputNode:
-//    {sccharts::OutputNode}
-//    'node' (id=ID) (label=STRING)? 'output' ':'
-//    valuedObject = [kexpressions::ValuedObject]
-//    ';'
-//;
-
-//ReferencedNode returns sccharts::ReferencedNode:
-//    {sccharts::ReferencedNode}
-//    'node' (id=ID) (label=STRING)? ':'
-//    referencedScope = [sccharts::State|ID]
-//    (senders += Sender)* ';'
-//;
-
-/*
- * alte (erste) Testreferenz, mit umgedrehter Notation
- */
-//TestReferenceNode returns sccharts::TestReferenceNode:
-//    {sccharts::TestReferenceNode}
-//    'node' (id=ID) (label=STRING)? 'testRef' ':'
-//    referencedScope = [sccharts::State|ID]
-//    '(' (testReceivers += ReceiverTest)* ')'
-//    ';'
-//;
-
 ReferenceNode returns sccharts::ReferenceNode:
     {sccharts::ReferenceNode}
     (id=ID) (label=STRING)? '=' 'ref' referencedScope = [sccharts::State|ID]
-    '(' (parameters+=Expression)? (',' parameters+=Expression)* ')'
+    //'(' (parameters+=Expression)? (',' parameters+=Expression)* ')'
+    '(' (parameters+=ValuedObjectReference)? (',' parameters+=ValuedObjectReference)* ')'
     ';'
 ;
-
-//SenderInput returns sccharts::Sender:
-//    {sccharts::Sender}
-//    expression = Expression
-//    ('-->' receivers += Receiver)*
-//;
-
-//Sender returns sccharts::Sender:
-//	{sccharts::Sender}
-//	expression = ValuedObjectReference
-//    ('-->' receivers += Receiver)*
-//;
-
-//Receiver returns sccharts::Receiver:
-//    {sccharts::Receiver}
-//    node = [sccharts::Node|ID] ('.' valuedObject = [kexpressions::ValuedObject])?
-//;
     
 // ---------------------------------------------------------------------------------------------------
 

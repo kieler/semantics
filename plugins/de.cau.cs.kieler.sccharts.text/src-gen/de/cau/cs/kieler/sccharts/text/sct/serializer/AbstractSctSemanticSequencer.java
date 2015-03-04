@@ -502,7 +502,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (id=ID callReference=[DefineNode|ID] parameters+=Expression? parameters+=Expression*)
+	 *     (id=ID callReference=[DefineNode|ID] parameters+=ValuedObjectReference? parameters+=ValuedObjectReference*)
 	 */
 	protected void sequence_CallNode(EObject context, CallNode semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -595,7 +595,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     (id=ID label=STRING? referencedScope=[State|ID] parameters+=Expression? parameters+=Expression*)
+	 *     (id=ID label=STRING? referencedScope=[State|ID] parameters+=ValuedObjectReference? parameters+=ValuedObjectReference*)
 	 */
 	protected void sequence_ReferenceNode(EObject context, ReferenceNode semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

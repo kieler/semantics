@@ -17010,8 +17010,8 @@ rule__CallNode__ParametersAssignment_5
     }
 :
 (
-{ before(grammarAccess.getCallNodeAccess().getParametersExpressionParserRuleCall_5_0()); }
-	ruleExpression{ after(grammarAccess.getCallNodeAccess().getParametersExpressionParserRuleCall_5_0()); }
+{ before(grammarAccess.getCallNodeAccess().getParametersValuedObjectReferenceParserRuleCall_5_0()); }
+	ruleValuedObjectReference{ after(grammarAccess.getCallNodeAccess().getParametersValuedObjectReferenceParserRuleCall_5_0()); }
 )
 
 ;
@@ -17025,8 +17025,8 @@ rule__CallNode__ParametersAssignment_6_1
     }
 :
 (
-{ before(grammarAccess.getCallNodeAccess().getParametersExpressionParserRuleCall_6_1_0()); }
-	ruleExpression{ after(grammarAccess.getCallNodeAccess().getParametersExpressionParserRuleCall_6_1_0()); }
+{ before(grammarAccess.getCallNodeAccess().getParametersValuedObjectReferenceParserRuleCall_6_1_0()); }
+	ruleValuedObjectReference{ after(grammarAccess.getCallNodeAccess().getParametersValuedObjectReferenceParserRuleCall_6_1_0()); }
 )
 
 ;
@@ -17183,8 +17183,8 @@ rule__ReferenceNode__ParametersAssignment_7
     }
 :
 (
-{ before(grammarAccess.getReferenceNodeAccess().getParametersExpressionParserRuleCall_7_0()); }
-	ruleExpression{ after(grammarAccess.getReferenceNodeAccess().getParametersExpressionParserRuleCall_7_0()); }
+{ before(grammarAccess.getReferenceNodeAccess().getParametersValuedObjectReferenceParserRuleCall_7_0()); }
+	ruleValuedObjectReference{ after(grammarAccess.getReferenceNodeAccess().getParametersValuedObjectReferenceParserRuleCall_7_0()); }
 )
 
 ;
@@ -17198,8 +17198,8 @@ rule__ReferenceNode__ParametersAssignment_8_1
     }
 :
 (
-{ before(grammarAccess.getReferenceNodeAccess().getParametersExpressionParserRuleCall_8_1_0()); }
-	ruleExpression{ after(grammarAccess.getReferenceNodeAccess().getParametersExpressionParserRuleCall_8_1_0()); }
+{ before(grammarAccess.getReferenceNodeAccess().getParametersValuedObjectReferenceParserRuleCall_8_1_0()); }
+	ruleValuedObjectReference{ after(grammarAccess.getReferenceNodeAccess().getParametersValuedObjectReferenceParserRuleCall_8_1_0()); }
 )
 
 ;

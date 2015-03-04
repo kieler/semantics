@@ -934,7 +934,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
 
 
     // -------------------------------------------------------------------------
-    // Transform a region
+    // Transform a dataflow region
     public def dispatch KNode translate(Dataflow d, boolean loadLazy) {
         val dNode = d.createNode().putToLookUpWith(d) => [ node |
             node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
@@ -952,6 +952,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 }
             }
             
+            // translate direct dataflow modelling
             for (f: d.features) {
                 val vo = f.valuedObject
                 node.children += vo.createNode(node) => [
@@ -968,7 +969,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     node.children += expr.translate(d.features.indexOf(f), node, d)    
                 ]
             }
-            
             node.addCollapseExpand(d.label)
         ]
         return dNode
@@ -1017,12 +1017,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         return n
     }
     
+    val commutativeOps = newArrayList("+", "*", "&", "|")
+    
     private def dispatch KNode translate(Expression expr, int index, KNode parentNode, Dataflow d) {
         val nNode = expr.createNode(parentNode).putToLookUpWith(expr)
         switch(expr) {
             OperatorExpression: {
                 val op = expr.operator
-                val commutativeOps = newArrayList("+", "*", "&", "|")
                 nNode.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT)
                 nNode.createDefaultNodeShape
                 nNode.addDefaultLayoutParameter
@@ -1056,53 +1057,32 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                                     it.target = nNode
                                     it.sourcePort = subVo.getNode(parentNode).getPort(subVo.reference.portMap)
                                     it.targetPort = nNode.getPort(se.portMap)
-//                                        it.addRoundedBendsPolyline(4, 1) => [
-//                                        // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
-//                                        it.addArrowDecorator() => [
-//                                        ]
-//                                        it.addJunctionPointDecorator
-//                                    ]
                                     it.createEdgeStyle
                                 ]
                             ]
                             parentNode.children += inputNode
                         } else if (decl.isOutput) {
                             // case vor is output
+                            // get the index of the dataflow feature
                             var fIndex = 0
                             for (f: d.features) {
                                 if (f.valuedObject.equals(subVo)) {
                                     fIndex = d.features.indexOf(f)
                                 }
                             }
-                            
-                            // kante vom temporären wert, sollte nur eine geben
-                            // davon brauch ich die source
-                            // gilt nur für outputs von CallNodes,
-                            // bei direkter Verwendung von outputs funzt das nicht
+                            // get the source node and port of the output node
+                            // (should only be one incoming edge, so take this one)
                             val refVo = d.features.get(fIndex).valuedObject
                             nNode.createEdge(se) => [
-                                //it.source = refVo.getNode(parentNode)
                                 it.source = refVo.getNode(parentNode).incomingEdges.get(0).source 
                                 it.target = nNode
-                                //it.sourcePort = refVo.getNode(parentNode).getPort(refVo.reference.portMap)
                                 it.sourcePort = refVo.getNode(parentNode).incomingEdges.get(0).sourcePort
                                 it.targetPort = nNode.getPort(se.portMap)
-//                                it.addRoundedBendsPolyline(4, 1) => [
-//                                    // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
-//                                    it.addArrowDecorator() => [
-//                                    ]
-//                                    it.addJunctionPointDecorator
-//                                ]
                                 it.createEdgeStyle
                             ]
-                            
-                            
                         } else {
-                            // the subVo is not an input (maybe output or both)
-                            // whats still to do here?
+                            // the current subVo is vor, but not an input (maybe "nothing" or both)
                             // re: trennen zwischen df und opExpr!!!!
-                            //re2: statt df casten einfach d mit uebergeben und verwenden
-                            //val df = expr.eContainer as Dataflow
                             var findex = 0
                             for (f: d.features) {
                                 if (f.valuedObject.equals(subVo)) {
@@ -1113,21 +1093,36 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                             val refVo = d.features.get(findex).valuedObject//d.valuedObjects.get(d.valuedObjects.indexOf(subVo))
                             val refExpr = d.features.get(findex).expression//d.expressions.get(d.valuedObjects.indexOf(subVo))
                             
-                            nNode.createEdge(se) => [
-                                //it.source = refExpr.getNode(parentNode)
-                                it.source = refVo.getNode(parentNode) 
-                                it.target = nNode
-                                //it.sourcePort = getNode(callNode).getPort(se.portMap)
-                                it.sourcePort = refVo.getNode(parentNode).getPort(refVo.reference.portMap)
-                                it.targetPort = nNode.getPort(se.portMap)
-//                                it.addRoundedBendsPolyline(4, 1) => [
-//                                    // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
-//                                    it.addArrowDecorator() => [
-//                                    ]
-//                                    it.addJunctionPointDecorator
-//                                ]
-                                it.createEdgeStyle
+                            val inputNode = subVo.createNode(parentNode) => [
+                                it.addPolygon.createInputNodeShape
+                                it.addDefaultLayoutParameter
+                                it.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
+                                it.addPort(subVo, PortSide::EAST)
+                                  .addLayoutParam(LayoutOptions::OFFSET, -2.0f)
+                                it.createLabel(it).configureInsideTopCenteredNodeLabel(
+                                    subVo.serialize as String, 6, KlighdConstants::DEFAULT_FONT_NAME)
+                                
+                                it.createEdge(se) => [
+                                    it.source = subVo.getNode(parentNode)
+                                    it.target = nNode
+                                    it.sourcePort = subVo.getNode(parentNode).getPort(subVo.reference.portMap)
+                                    it.targetPort = nNode.getPort(se.portMap)
+                                    it.createEdgeStyle
+                                ]
                             ]
+                            parentNode.children += inputNode
+                            
+                            // old: refVo, but subVo seems to work fine 
+                            
+//                            nNode.createEdge(se) => [
+//                                //it.source = refExpr.getNode(parentNode)
+//                                it.source = refVo.getNode(parentNode) 
+//                                it.target = nNode
+//                                //it.sourcePort = getNode(callNode).getPort(se.portMap)
+//                                it.sourcePort = refVo.getNode(parentNode).getPort(refVo.reference.portMap)
+//                                it.targetPort = nNode.getPort(se.portMap)
+//                                it.createEdgeStyle
+//                            ]
                         }
                         // handle subExpressions in else case
                     } else {
@@ -1147,12 +1142,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         it.sourcePort = nNode.getPort(vo.reference.portMap)
                         //it.targetPort = vo.getNode().getPort(vo.reference.portMap)
                         it.targetPort = vo.getNode(parentNode).getPort(vo.reference.portMap)
-//                        it.addRoundedBendsPolyline(4, 1) => [
-//                            // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
-//                            it.addArrowDecorator() => [
-//                            ]
-//                            it.addJunctionPointDecorator
-//                        ]
                         it.createEdgeStyle
                     ]
                 } else {
@@ -1164,12 +1153,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         it.sourcePort = nNode.getPort(expr.portMap)
                         it.targetPort = (expr.eContainer).getNode(parentNode).getPort(expr.portMap) 
                         //it.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
-//                        it.addRoundedBendsPolyline(4, 1) => [
-//                            // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
-//                            it.addArrowDecorator() => [
-//                            ]
-//                            it.addJunctionPointDecorator
-//                        ]
                         it.createEdgeStyle
                     ]
                 }
@@ -1189,7 +1172,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 val voRef = d.features.get(index).valuedObject
                 //val voRef = d.valuedObjects.get(index) // <-- alte Variante
                 val feature = d.features.get(index)
-                
                 // current features (expr) is not attached to a call/reference node
                 if (feature.node == null) {
                     val inputNode = vo.createNode(parentNode) => [
@@ -1208,26 +1190,16 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                             it.sourcePort = vo.getNode(parentNode).getPort(vo.reference.portMap)
                             //it.targetPort = nNode.getPort(voRef.reference.portMap)
                             it.targetPort = voRef.getNode(parentNode).getPort(voRef.reference.portMap)
-                            
-//                            it.addRoundedBendsPolyline(4, 1) => [
-//                                // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
-//                                it.addArrowDecorator() => [
-//                                ]
-//                                it.addJunctionPointDecorator
-//                            ]
                             it.createEdgeStyle
                         ]
                     ]
-                    
                     parentNode.children += inputNode
-                    //println("vor.... expr: " + expr)
                     return inputNode
                 } else {
                     val fNode = d.features.get(index).node
                     if (fNode instanceof CallNode) {
                         val cNode = d.features.get(index).node as CallNode
-                        val dNode = cNode.referencedScope as DefineNode
-                        cNode.getNode().createEdge(vo) => [
+                        cNode.getNode().createEdge(expr) => [
                             it.source = cNode.getNode()
                             it.target = voRef.getNode(parentNode)
                             it.sourcePort = cNode.getNode().getPort(expr.valuedObject.reference.portMap)
@@ -1238,7 +1210,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     if (fNode instanceof ReferenceNode) {
                         val trn_node = (fNode as ReferenceNode).getNode()//trn.getNode()
                         //val trn_vo = refVo
-                        trn_node.createEdge(vo) => [ //trn.getNode().createEdge(vo) => [
+                        trn_node.createEdge(expr) => [ //trn.getNode().createEdge(vo) => [
                             it.source = trn_node
                             it.target = voRef.getNode(parentNode)
                             it.sourcePort = trn_node.getPort(expr.valuedObject.reference.portMap) //trn_vo.reference.portMap)
@@ -1249,23 +1221,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 }
             }
             default: {
-                println("default... expr: " + expr)
+                println("default case ...missing expr: " + expr)
             }
         }
         return nNode
-    }
-    
-    private def KNode createDefaultNodeShape(KNode n) {
-//        n.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT)
-        n.addRoundedRectangle(3, 3) => [
-            it.setBackgroundGradient("#ff8".color, "#ff8".color, 90)
-            it.setSurroundingSpace(0, 0)
-            it.invisible = false
-            it.foreground = "black".color
-            it.lineWidth = 1
-        ]
-        
-        return n
     }
     
     // -------------------------------------------------------------------------
@@ -1275,7 +1234,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         switch(expr) {
             OperatorExpression: {
                 val op = expr.operator
-                val commutativeOps = newArrayList("+", "*", "&", "|")
                 nNode.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT)
                 nNode.createDefaultNodeShape
                 nNode.addDefaultLayoutParameter
@@ -1315,29 +1273,17 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                                 it.target = nNode
                                 it.sourcePort = callExpr.getNode(callNode).getPort(refVo.reference.portMap)
                                 it.targetPort = nNode.getPort(se.portMap)
-//                                it.addRoundedBendsPolyline(4, 1) => [
-//                                    // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
-//                                    it.addArrowDecorator() => [
-//                                    ]
-//                                    it.addJunctionPointDecorator
-//                                ]
                                 it.createEdgeStyle
                             ]
                             // else: input edges!!!!
                         } else {
-                        nNode.createEdge(se) => [
-                            it.source = getNode(callNode)
-                            it.target = nNode
-                            it.sourcePort = getNode(callNode).getPort(se.portMap)
-                            it.targetPort = nNode.getPort(se.portMap)
-//                            it.addRoundedBendsPolyline(4, 1) => [
-//                                    // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
-//                                    it.addArrowDecorator() => [
-//                                    ]
-//                                    it.addJunctionPointDecorator
-//                                ]
-                            it.createEdgeStyle
-                        ]
+                            nNode.createEdge(se) => [
+                                it.source = getNode(callNode)
+                                it.target = nNode
+                                it.sourcePort = getNode(callNode).getPort(se.portMap)
+                                it.targetPort = nNode.getPort(se.portMap)
+                                it.createEdgeStyle
+                            ]
                         }
                     } else {
                         // recursive call to transform subExpressions
@@ -1345,7 +1291,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     }
                     // weitere else Fälle: function call und text expression ?!
                 ]
-                
                 // eContainer ist die DefineNde, aber nicht für subExpressions
                 if (expr.eContainer instanceof DefineNode) {
                     // port for expression output
@@ -1357,15 +1302,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         it.target = getNode(callNode)
                         it.sourcePort = nNode.getPort(vo.reference.portMap)
                         it.targetPort = getNode(callNode).getPort(vo.reference.portMap)
-//                        it.addRoundedBendsPolyline(4, 1) => [
-//                            // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
-//                            it.addArrowDecorator() => [
-//                            ]
-//                            it.addJunctionPointDecorator
-//                        ]
                         it.createEdgeStyle
                     ]
-                    
                 } else {
                     // port for another subExpression output
                     nNode.addPort(expr, PortSide::EAST)
@@ -1376,34 +1314,24 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         it.sourcePort = nNode.getPort(expr.portMap)
                         it.targetPort = (expr.eContainer).getNode(callNode).getPort(expr.portMap) 
                         //it.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
-//                        it.addRoundedBendsPolyline(4, 1) => [
-//                            // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
-//                            it.addArrowDecorator() => [
-//                            ]
-//                            it.addJunctionPointDecorator
-//                        ]
                         it.createEdgeStyle
                     ]
                 }
-                return nNode
             }
             IntValue: {
                 nNode.translateConstExpression(expr, callNode)
-                return nNode
             }
             FloatValue: {
                 nNode.translateConstExpression(expr, callNode)
-                return nNode
             }
             BoolValue: {
                 nNode.translateConstExpression(expr, callNode)
-                return nNode
             }
             default: {
-                println("default: " + expr)
-                return nNode
+                println("default case...missing expression: " + expr)
             }
         }
+        return nNode
     }
     // translate a const expression: just create input node an edge
     public def dispatch KNode translateConstExpression(KNode n, Expression expr, KNode parentNode) {
@@ -1434,13 +1362,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 it.target = (expr.eContainer).getNode(parentNode) // das ist auch die aufrufende Expr. + node
                 it.targetPort = (expr.eContainer).getNode(parentNode).getPort(expr.portMap)
             }
-            
-//            it.addRoundedBendsPolyline(4, 1) => [
-//                // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
-//                it.addArrowDecorator() => [
-//                ]
-//                it.addJunctionPointDecorator
-//            ]
             it.createEdgeStyle
         ]
         return n
@@ -1462,28 +1383,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             it.sourcePort = n.getPort(expr.portMap)
             it.targetPort = (expr.eContainer).getNode(callNode).getPort(expr.portMap) 
             //it.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
-//            it.addRoundedBendsPolyline(4, 1) => [
-//                // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
-//                it.addArrowDecorator() => [
-//                ]
-//                it.addJunctionPointDecorator
-//            ]
             it.createEdgeStyle
         ]
-        return n
-    }
-    
-    private def KNode addDefaultLayoutParameter(KNode n) {
-        n.addLayoutParam(LayoutOptions::NODE_LABEL_PLACEMENT, NodeLabelPlacement::insideTopCenter)
-        n.addLayoutParam(LayoutOptions::PORT_LABEL_PLACEMENT, PortLabelPlacement::INSIDE)
-        n.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER);
-        
-        // add shadow if option is checked
-        if (SHOW_SHADOW.booleanValue) {
-            n.KRendering.shadow = "black".color;
-            n.KRendering.shadow.XOffset = 4;
-            n.KRendering.shadow.YOffset = 4;
-        }
         return n
     }
     
@@ -1495,8 +1396,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         if (n instanceof CallNode) {
             nNode.setMinimalNodeSize(MINIMALNODEWIDTH * 2, MINIMALNODEHEIGHT * 2)
             nNode.createDefaultNodeShape
-        }
-        else {
+        } else {
         	nNode.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT)
             nNode.createDefaultNodeShape
 		}
@@ -1504,7 +1404,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         // set up some default layout parameters
         nNode.addDefaultLayoutParameter
 
-        // add node ports
+        // translate specific ReferenceNode elements
         if (n instanceof ReferenceNode) {
             val ref = (n as ReferenceNode)
             nNode.createLabel(nNode).configureInsideTopCenteredNodeLabel(
@@ -1558,12 +1458,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                                 it.target = nNode
                                 it.sourcePort = inNode.getPort(param.reference.portMap)
                                 it.targetPort = nNode.ports.get(ref.parameters.indexOf(p))
-//                                it.addRoundedBendsPolyline(4, 1) => [
-//                                    // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
-//                                    it.addArrowDecorator() => [
-//                                    ]
-//                                    it.addJunctionPointDecorator
-//                                ]
                                 it.createEdgeStyle
                             ]
                         ]
@@ -1571,13 +1465,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         println("p is: " + p)
                     }
                 }
-            ]            
-        } // really need to set invisible here? better skip defineNodes when traversing all df nodes
-        // already skipped when traversing all nodes of current df
-//        else if (n instanceof DefineNode) {
-//            nNode.KRendering.invisible = true
-//        }
-        else if (n instanceof CallNode) {
+            ]
+            // translate specific CallNode elements
+        } else if (n instanceof CallNode) {
             val call = n as CallNode
             val refID = call.callReference.id
             nNode.createLabel(nNode).configureInsideTopCenteredNodeLabel(
@@ -1617,36 +1507,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     ]
                 ]]
                 
-                //create output node  // not used for the moment
-//                val pNode = call.eContainer.node
-//                pNode.children += call.createNode(pNode) => [ node|
-//                    node.addPolygon.createOutputNodeShape
-//                    node.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
-//                    node.addDefaultLayoutParameter
-//                    node.addPort("", 0f, 0f, 2, PortSide::WEST)
-//                    println("port: " + node.addPort("", 0f, 0f, 2, PortSide::WEST))
-//                    node.createLabel(node).configureInsideCenteredNodeLabel(
-//                         call.id, 6, KlighdConstants::DEFAULT_FONT_NAME)
-//                    
-//                    //create Edge
-//                    pNode.createEdge(call) => [
-//                        it.source = nNode
-//                        it.target = node
-//                        it.sourcePort = nNode.getPort(ref.outputs.get(0).valuedObjects.get(0).reference.portMap)
-//                        it.targetPort = node.ports.get(0)
-//                        it.addRoundedBendsPolyline(4, 1) => [
-//                            // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
-//                            it.addArrowDecorator() => [
-//                            ]
-//                        ]
-//                    ]
-//                    //println("pNode.child: " + node)
-//                ]
-                
-                // translate states
-//                ref.states.forEach[ s|
-//                    nNode.children += s.translate
-//                ]
+                // translate states if control flow is defined instead of dataflow
                 if (!ref.states.nullOrEmpty) {
                     val synthesis = delegate.get()
                     synthesis.use(usedContext)
@@ -1654,14 +1515,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         nNode.children += synthesis.translate(s)
                     }
                 }
-                
-            // what is still to do herre?
-            } else if (call.callReference instanceof CallNode) {
-                val ref = call.callReference as CallNode
-                val dNode = call.eContainer.node
-                
-                // create output node if neccessary and edge
-                
             }
             
             // create input nodes for call parameters
@@ -1695,18 +1548,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                                 it.target = nNode
                                 it.sourcePort = inNode.getPort(param.reference.portMap)
                                 it.targetPort = nNode.ports.get(call.parameters.indexOf(p))
-//                                it.addRoundedBendsPolyline(4, 1) => [
-//                                    // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
-//                                    it.addArrowDecorator() => [
-//                                    ]
-//                                    it.addJunctionPointDecorator
-//                                ]
                                 it.createEdgeStyle
                             ]
                         ]
-                    } else {
-                        println("p is: " + p)
-                    }
+                    } // no more else case, because parameters are only allowed to be vor's
+//                     else {
+//                        println("p is: " + p)
+//                    }
                 }
             ]
             
@@ -1719,9 +1567,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             }
             nNode.initiallyCollapse
         }
-        /*
-         * the "default" else, in case something is missing
-         */
+         // the "default" else, in case something is missing
         else {
             nNode.createLabel(nNode).configureInsideTopCenteredNodeLabel(
                 if(n.label.nullOrEmpty) "" else " " + n.label,
@@ -1731,16 +1577,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         }
         return nNode
     }
-    
-    // Edgestyle
-    def KEdge createEdgeStyle(KEdge edge) {
-        edge.addRoundedBendsPolyline(4, 1) => [
-            it.addArrowDecorator
-            it.addJunctionPointDecorator
-        ]
-        return edge
-    } 
-    
     
     // -------------------------------------------------------------------------
     // -- Helper: Ports 
@@ -1815,6 +1651,33 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
   		}
   		obj
 	}
+	/*
+	 * some helper methods for node shapes and layout
+	 */
+	private def KNode createDefaultNodeShape(KNode n) {
+        n.addRoundedRectangle(3, 3) => [
+            it.setBackgroundGradient("#ff8".color, "#ff8".color, 90)
+            it.setSurroundingSpace(0, 0)
+            it.invisible = false
+            it.foreground = "black".color
+            it.lineWidth = 1
+        ]
+        return n
+    }
+    
+    private def KNode addDefaultLayoutParameter(KNode n) {
+        n.addLayoutParam(LayoutOptions::NODE_LABEL_PLACEMENT, NodeLabelPlacement::insideTopCenter)
+        n.addLayoutParam(LayoutOptions::PORT_LABEL_PLACEMENT, PortLabelPlacement::INSIDE)
+        n.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER);
+        
+        // add shadow if option is checked
+        if (SHOW_SHADOW.booleanValue) {
+            n.KRendering.shadow = "black".color;
+            n.KRendering.shadow.XOffset = 4;
+            n.KRendering.shadow.YOffset = 4;
+        }
+        return n
+    }
     
     def KPolygon createInputNodeShape(KPolygon poly) {
         poly => [
@@ -1838,6 +1701,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             it.points += createKPosition(LEFT,  0, 0.25f, TOP,  0, 0);
             it.background = "white".color
         ];
+    }
+    // Edgestyle
+    def KEdge createEdgeStyle(KEdge edge) {
+        edge.addRoundedBendsPolyline(4, 1) => [
+            it.addArrowDecorator
+            it.addJunctionPointDecorator
+        ]
+        return edge
     }
 }
 

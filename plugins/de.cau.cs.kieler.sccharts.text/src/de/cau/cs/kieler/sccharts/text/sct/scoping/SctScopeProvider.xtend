@@ -39,6 +39,7 @@ import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.xtext.scoping.impl.SimpleScope
+import org.eclipse.emf.ecore.EAttribute
 
 /**
  * This class implements to scoping for referencedScope (used in KiCoUtil.parse()) and for binding (used in the sct Xtext editor).
@@ -61,7 +62,6 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
     
     public def IScope scope_referenceNode_referencedScope(EObject context, EReference reference) {
         val superScope = super.getScope(context.eContainer, reference)
-
         val res = context.eResource
         if (res != null) {
             val resSet = res.resourceSet
@@ -81,108 +81,32 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
         return IScope.NULLSCOPE;
     }
     
-    /*
-     * die folgenden beiden Methoden dienen zur Anzeige aller möglichen valuedObjects
-     * in einer Datenflussumgebung und nochmals explizit für DefineNodes
-     * Das muss aber nochmals überarbeitet werden, da nicht alles korrekt erfasst wird.
-     */
-    
-//    public def IScope defineNode_ValuedObjectReferenceScope(EObject context, EReference reference) {
-//        if (context instanceof DefineNode) {
-//            val superScope = super.getScope(context.eContainer, reference)
-//            
-//            println("NOCHMAL DefineNode")
-//            println("dn.eC: " + (context as DefineNode).eContainer) // = dataflow
-//            println("df.ec: " + ((context as DefineNode).eContainer as Dataflow).eContainer)
-//            
-//            val voIterable = <ValuedObject>newArrayList
-//            val dn = context as DefineNode
-//            dn.inputs.forEach[
-//                if (it.input){
-//                    voIterable += valuedObjects
-//                }
-//            ]
-//            val df = dn.eContainer as Dataflow
-//            df.declarations.forEach[
-//                if (it.input) {
-//                    voIterable += valuedObjects
-//                }
-//            ]
-//            
-//            return Scopes.scopeFor(voIterable, superScope)
-//        }
-//        return IScope.NULLSCOPE
-//    }
-//    
-//    public def IScope dataflow_ValuedObjectReferenceScope(EObject context, EReference reference) {
-//        //var EObject theContext = context;
-//        //val obj = theContext
-//        if (context instanceof Dataflow) {
-//            val df = context as Dataflow
-////            println("df: " + df + " ref: " + reference)
-////            println("df.trn: " + df.nodes.filter(e|e instanceof TestReferenceNode))
-//            val superScope = super.getScope(context.eContainer, reference)
-////            println("df_vor_scope")
-//            val res = context.eResource
-////            println("context: " + context)
-//            
-//            val trns = df.nodes.filter(e|e instanceof TestReferenceNode)
-//            val voIterable = <ValuedObject>newArrayList
-//            //add local output vo's
-//            df.declarations.forEach[
-//                if (it.input) {
-//                    voIterable += valuedObjects
-//                }
-//            ]
-//            //add global output co's
-////            println("df.eC: " + df.eContainer)
-//            (df.eContainer as State).declarations.forEach[
-//                if (it.input) {
-//                    voIterable += valuedObjects
-//                }
-//            ]
-//            for (trn: trns) {
-//                (trn as TestReferenceNode).referencedScope.declarations.forEach[
-//                    if (it.output) {
-////                        println("output: " + it)
-//                        voIterable += valuedObjects
-////                        println("voList: " + voIterable)
-//                    }
-//                ]
-//            }
-//            return Scopes.scopeFor(voIterable)
-//            //return IScope.NULLSCOPE;
-//            //return superScope
-//        } else {
-//            return IScope.NULLSCOPE;
-//        }
-//    }
-
-// funzt wie bei der referencedNode
-            /*was ist hier mit?*/
-//    public def IScope referenceNode_SenderScope(EObject context, EReference reference) {
-//        var EObject theContext = context;
-//        val obj = theContext.eGet(pack.referenceNode_ReferencedScope, true);
-//        if (!isProxy(obj)) {
-//            val refScope = obj as Scope
-//            
-//            val voIterable = <ValuedObject>newArrayList
-//            refScope.declarations.forEach[
-//                //if (it.output) voIterable += valuedObjects
-//                if (it.input) voIterable += valuedObjects
-//            ]
-//            
-//            return Scopes.scopeFor(voIterable);
-//        } else {
-//            return IScope.NULLSCOPE;
-//        }
-//    }
-    
-    
+    public def IScope scope_callNode_callReference(EObject context, EReference reference) {
+        println("ganz neu: " + context)
+        val superScope = super.getScope(context.eContainer, reference)
+        val res = context.eResource
+        if (res != null) {
+            val resSet = res.resourceSet
+            if (resSet != null) {
+                val callRef = <DefineNode>newArrayList
+                for (r: resSet.resources) {
+                    val contentList = r.contents.filter(e|e instanceof DefineNode).toList
+                    if (!contentList.nullOrEmpty) {
+                        for (content: contentList) {
+                            callRef += content as DefineNode
+                        }
+                    }
+                }
+                return Scopes.scopeFor(callRef, nameProvider, superScope)
+            }
+        }
+        return IScope.NULLSCOPE
+    }
     
     public def IScope dataflowFeature_ValuedObjectReferenceScope(EObject context, EReference reference) {
         var EObject theContext = context;
         val obj = theContext.eGet(pack.dataflowFeature_Node, true)
+        val test = theContext.eGet(pack.dataflowFeature_ValuedObject, true)
         if (!isProxy(obj)) {
             // case of RefNode: get outputs of referencedScope (scchart)
             if (obj instanceof ReferenceNode) {
@@ -205,25 +129,32 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
                 return Scopes.scopeFor(voIterable)
             }
         } else {
+            println("nullScope")
             return IScope.NULLSCOPE
         }
     }
     
-//    public def IScope scope_DataflowFeature_node(EObject context, EReference reference) {
-//        
-//        println("test " + context)
-//        val s = context as State
-//        val d = s.concurrencies.filter(typeof(Dataflow)).toList
-//        val nodeList = <Node>newArrayList
-//        d.forEach[
-//            nodeList += it.nodes.filter(typeof(DefineNode))
-//            nodeList += it.nodes.filter(typeof(TestReferenceNode))
-//        ] 
-//        println("nl: " + nodeList)
-//        
-//        return Scopes.scopeFor(nodeList)
-//    }
     
+    public def IScope scope_DataflowFeature_node(EObject context, EReference reference) {
+        println("test " + context)
+        val s = context as State
+        val d = s.concurrencies.filter(typeof(Dataflow)).toList
+        val nodeList = <Node>newArrayList
+        s.concurrencies.filter(typeof(Dataflow)).forEach[
+            nodeList += it.nodes.filter(typeof(ReferenceNode))
+        ]
+        println("nl: " + nodeList)
+        println("scope for nl: " + Scopes.scopeFor(nodeList))
+        
+        val voIterable = <ValuedObject>newArrayList
+        s.declarations.filter[it.output].forEach[
+            voIterable += valuedObjects
+        ]
+        println("voi: " + voIterable)
+        println("scope for vo: " + Scopes.scopeFor(voIterable))
+//        return Scopes.scopeFor(nodeList)
+        return null 
+    }
     
     public def IScope scope_ValuedObjectReference_valuedObject(EObject context, EReference reference) {
 //		if (context instanceof ReferenceNode) {
@@ -243,10 +174,11 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
         }
         return null;
     }
+    
+    
         
     public def IScope scope_Scope_referencedScope(EObject context, EReference reference) {
         val superScope = super.getScope(context.eContainer, reference)
-
         val res = context.eResource
         if (res != null) {
             val resSet = res.resourceSet

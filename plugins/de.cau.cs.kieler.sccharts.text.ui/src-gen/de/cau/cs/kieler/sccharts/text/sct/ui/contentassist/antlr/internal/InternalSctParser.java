@@ -23342,7 +23342,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             int alt94=2;
             int LA94_0 = input.LA(1);
 
-            if ( ((LA94_0>=RULE_ID && LA94_0<=RULE_BOOLEAN)||LA94_0==17||LA94_0==20||LA94_0==22||LA94_0==25||LA94_0==45||LA94_0==75) ) {
+            if ( (LA94_0==RULE_ID) ) {
                 alt94=1;
             }
             switch (alt94) {
@@ -25888,7 +25888,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
             int alt99=2;
             int LA99_0 = input.LA(1);
 
-            if ( ((LA99_0>=RULE_ID && LA99_0<=RULE_BOOLEAN)||LA99_0==17||LA99_0==20||LA99_0==22||LA99_0==25||LA99_0==45||LA99_0==75) ) {
+            if ( (LA99_0==RULE_ID) ) {
                 alt99=1;
             }
             switch (alt99) {
@@ -49982,28 +49982,28 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__CallNode__ParametersAssignment_5"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17007:1: rule__CallNode__ParametersAssignment_5 : ( ruleExpression ) ;
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17007:1: rule__CallNode__ParametersAssignment_5 : ( ruleValuedObjectReference ) ;
     public final void rule__CallNode__ParametersAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17011:1: ( ( ruleExpression ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17012:1: ( ruleExpression )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17011:1: ( ( ruleValuedObjectReference ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17012:1: ( ruleValuedObjectReference )
             {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17012:1: ( ruleExpression )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17013:1: ruleExpression
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17012:1: ( ruleValuedObjectReference )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17013:1: ruleValuedObjectReference
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getCallNodeAccess().getParametersExpressionParserRuleCall_5_0()); 
+               before(grammarAccess.getCallNodeAccess().getParametersValuedObjectReferenceParserRuleCall_5_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleExpression_in_rule__CallNode__ParametersAssignment_534398);
-            ruleExpression();
+            pushFollow(FollowSets001.FOLLOW_ruleValuedObjectReference_in_rule__CallNode__ParametersAssignment_534398);
+            ruleValuedObjectReference();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getCallNodeAccess().getParametersExpressionParserRuleCall_5_0()); 
+               after(grammarAccess.getCallNodeAccess().getParametersValuedObjectReferenceParserRuleCall_5_0()); 
             }
 
             }
@@ -50027,28 +50027,28 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__CallNode__ParametersAssignment_6_1"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17022:1: rule__CallNode__ParametersAssignment_6_1 : ( ruleExpression ) ;
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17022:1: rule__CallNode__ParametersAssignment_6_1 : ( ruleValuedObjectReference ) ;
     public final void rule__CallNode__ParametersAssignment_6_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17026:1: ( ( ruleExpression ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17027:1: ( ruleExpression )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17026:1: ( ( ruleValuedObjectReference ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17027:1: ( ruleValuedObjectReference )
             {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17027:1: ( ruleExpression )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17028:1: ruleExpression
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17027:1: ( ruleValuedObjectReference )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17028:1: ruleValuedObjectReference
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getCallNodeAccess().getParametersExpressionParserRuleCall_6_1_0()); 
+               before(grammarAccess.getCallNodeAccess().getParametersValuedObjectReferenceParserRuleCall_6_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleExpression_in_rule__CallNode__ParametersAssignment_6_134429);
-            ruleExpression();
+            pushFollow(FollowSets001.FOLLOW_ruleValuedObjectReference_in_rule__CallNode__ParametersAssignment_6_134429);
+            ruleValuedObjectReference();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getCallNodeAccess().getParametersExpressionParserRuleCall_6_1_0()); 
+               after(grammarAccess.getCallNodeAccess().getParametersValuedObjectReferenceParserRuleCall_6_1_0()); 
             }
 
             }
@@ -50481,28 +50481,28 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceNode__ParametersAssignment_7"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17180:1: rule__ReferenceNode__ParametersAssignment_7 : ( ruleExpression ) ;
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17180:1: rule__ReferenceNode__ParametersAssignment_7 : ( ruleValuedObjectReference ) ;
     public final void rule__ReferenceNode__ParametersAssignment_7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17184:1: ( ( ruleExpression ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17185:1: ( ruleExpression )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17184:1: ( ( ruleValuedObjectReference ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17185:1: ( ruleValuedObjectReference )
             {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17185:1: ( ruleExpression )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17186:1: ruleExpression
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17185:1: ( ruleValuedObjectReference )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17186:1: ruleValuedObjectReference
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getReferenceNodeAccess().getParametersExpressionParserRuleCall_7_0()); 
+               before(grammarAccess.getReferenceNodeAccess().getParametersValuedObjectReferenceParserRuleCall_7_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleExpression_in_rule__ReferenceNode__ParametersAssignment_734755);
-            ruleExpression();
+            pushFollow(FollowSets001.FOLLOW_ruleValuedObjectReference_in_rule__ReferenceNode__ParametersAssignment_734755);
+            ruleValuedObjectReference();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getReferenceNodeAccess().getParametersExpressionParserRuleCall_7_0()); 
+               after(grammarAccess.getReferenceNodeAccess().getParametersValuedObjectReferenceParserRuleCall_7_0()); 
             }
 
             }
@@ -50526,28 +50526,28 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceNode__ParametersAssignment_8_1"
-    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17195:1: rule__ReferenceNode__ParametersAssignment_8_1 : ( ruleExpression ) ;
+    // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17195:1: rule__ReferenceNode__ParametersAssignment_8_1 : ( ruleValuedObjectReference ) ;
     public final void rule__ReferenceNode__ParametersAssignment_8_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17199:1: ( ( ruleExpression ) )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17200:1: ( ruleExpression )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17199:1: ( ( ruleValuedObjectReference ) )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17200:1: ( ruleValuedObjectReference )
             {
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17200:1: ( ruleExpression )
-            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17201:1: ruleExpression
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17200:1: ( ruleValuedObjectReference )
+            // ../de.cau.cs.kieler.sccharts.text.ui/src-gen/de/cau/cs/kieler/sccharts/text/sct/ui/contentassist/antlr/internal/InternalSct.g:17201:1: ruleValuedObjectReference
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getReferenceNodeAccess().getParametersExpressionParserRuleCall_8_1_0()); 
+               before(grammarAccess.getReferenceNodeAccess().getParametersValuedObjectReferenceParserRuleCall_8_1_0()); 
             }
-            pushFollow(FollowSets001.FOLLOW_ruleExpression_in_rule__ReferenceNode__ParametersAssignment_8_134786);
-            ruleExpression();
+            pushFollow(FollowSets001.FOLLOW_ruleValuedObjectReference_in_rule__ReferenceNode__ParametersAssignment_8_134786);
+            ruleValuedObjectReference();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getReferenceNodeAccess().getParametersExpressionParserRuleCall_8_1_0()); 
+               after(grammarAccess.getReferenceNodeAccess().getParametersValuedObjectReferenceParserRuleCall_8_1_0()); 
             }
 
             }
@@ -57134,18 +57134,18 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
     static final String DFA27_acceptS =
         "\1\uffff\1\1\60\uffff\1\2";
     static final String DFA27_specialS =
-        "\2\uffff\1\51\1\1\1\15\1\50\1\57\1\26\1\31\1\2\1\41\1\10\1\7\1\52"+
-        "\1\37\1\45\1\5\1\36\1\43\1\12\1\34\1\20\1\32\1\3\1\27\1\53\1\35"+
-        "\1\54\1\4\1\40\1\33\1\25\1\23\1\0\1\13\1\16\1\55\1\30\1\46\1\11"+
-        "\1\22\1\44\1\17\1\14\1\56\1\42\1\21\1\6\1\47\1\24\1\uffff}>";
+        "\2\uffff\1\57\1\1\1\56\1\25\1\35\1\31\1\2\1\42\1\7\1\10\1\51\1\40"+
+        "\1\46\1\5\1\37\1\44\1\12\1\34\1\17\1\32\1\3\1\26\1\52\1\36\1\53"+
+        "\1\4\1\41\1\33\1\24\1\22\1\0\1\13\1\15\1\54\1\27\1\47\1\11\1\21"+
+        "\1\30\1\45\1\16\1\14\1\55\1\43\1\20\1\6\1\50\1\23\1\uffff}>";
     static final String[] DFA27_transitionS = {
-            "\1\41\4\uffff\1\10\7\uffff\1\1\1\62\6\uffff\1\1\1\62\1\uffff"+
-            "\1\60\1\61\1\14\1\15\1\16\1\17\1\55\1\56\1\57\1\52\1\53\1\54"+
-            "\11\uffff\1\32\1\33\1\34\1\35\1\36\1\37\1\40\3\uffff\1\21\1"+
-            "\uffff\1\51\1\22\1\7\1\uffff\1\3\4\uffff\1\4\1\uffff\1\23\1"+
-            "\20\1\uffff\1\5\1\42\2\uffff\1\6\1\uffff\1\43\1\45\1\46\1\50"+
-            "\1\11\1\12\1\13\1\44\1\uffff\1\24\1\25\1\26\1\27\1\30\1\31\1"+
-            "\47",
+            "\1\40\4\uffff\1\7\7\uffff\1\1\1\62\6\uffff\1\1\1\62\1\uffff"+
+            "\1\60\1\61\1\13\1\14\1\15\1\16\1\55\1\56\1\57\1\52\1\53\1\54"+
+            "\11\uffff\1\31\1\32\1\33\1\34\1\35\1\36\1\37\3\uffff\1\20\1"+
+            "\uffff\1\51\1\21\1\5\1\uffff\1\3\4\uffff\1\6\1\uffff\1\22\1"+
+            "\17\1\uffff\1\50\1\41\2\uffff\1\4\1\uffff\1\42\1\44\1\45\1\47"+
+            "\1\10\1\11\1\12\1\43\1\uffff\1\23\1\24\1\25\1\26\1\27\1\30\1"+
+            "\46",
             "",
             "\1\uffff",
             "\1\uffff",
@@ -57235,10 +57235,10 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA27_33 = input.LA(1);
+                        int LA27_32 = input.LA(1);
 
                          
-                        int index27_33 = input.index();
+                        int index27_32 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred31_InternalSct()) ) {s = 1;}
@@ -57246,7 +57246,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 50;}
 
                          
-                        input.seek(index27_33);
+                        input.seek(index27_32);
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
@@ -57265,10 +57265,10 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         if ( s>=0 ) return s;
                         break;
                     case 2 : 
-                        int LA27_9 = input.LA(1);
+                        int LA27_8 = input.LA(1);
 
                          
-                        int index27_9 = input.index();
+                        int index27_8 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred31_InternalSct()) ) {s = 1;}
@@ -57276,14 +57276,14 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 50;}
 
                          
-                        input.seek(index27_9);
+                        input.seek(index27_8);
                         if ( s>=0 ) return s;
                         break;
                     case 3 : 
-                        int LA27_23 = input.LA(1);
+                        int LA27_22 = input.LA(1);
 
                          
-                        int index27_23 = input.index();
+                        int index27_22 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred31_InternalSct()) ) {s = 1;}
@@ -57291,14 +57291,14 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 50;}
 
                          
-                        input.seek(index27_23);
+                        input.seek(index27_22);
                         if ( s>=0 ) return s;
                         break;
                     case 4 : 
-                        int LA27_28 = input.LA(1);
+                        int LA27_27 = input.LA(1);
 
                          
-                        int index27_28 = input.index();
+                        int index27_27 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred31_InternalSct()) ) {s = 1;}
@@ -57306,14 +57306,14 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 50;}
 
                          
-                        input.seek(index27_28);
+                        input.seek(index27_27);
                         if ( s>=0 ) return s;
                         break;
                     case 5 : 
-                        int LA27_16 = input.LA(1);
+                        int LA27_15 = input.LA(1);
 
                          
-                        int index27_16 = input.index();
+                        int index27_15 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred31_InternalSct()) ) {s = 1;}
@@ -57321,7 +57321,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 50;}
 
                          
-                        input.seek(index27_16);
+                        input.seek(index27_15);
                         if ( s>=0 ) return s;
                         break;
                     case 6 : 
@@ -57340,10 +57340,10 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         if ( s>=0 ) return s;
                         break;
                     case 7 : 
-                        int LA27_12 = input.LA(1);
+                        int LA27_10 = input.LA(1);
 
                          
-                        int index27_12 = input.index();
+                        int index27_10 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred31_InternalSct()) ) {s = 1;}
@@ -57351,7 +57351,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 50;}
 
                          
-                        input.seek(index27_12);
+                        input.seek(index27_10);
                         if ( s>=0 ) return s;
                         break;
                     case 8 : 
@@ -57370,10 +57370,10 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         if ( s>=0 ) return s;
                         break;
                     case 9 : 
-                        int LA27_39 = input.LA(1);
+                        int LA27_38 = input.LA(1);
 
                          
-                        int index27_39 = input.index();
+                        int index27_38 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred31_InternalSct()) ) {s = 1;}
@@ -57381,14 +57381,14 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 50;}
 
                          
-                        input.seek(index27_39);
+                        input.seek(index27_38);
                         if ( s>=0 ) return s;
                         break;
                     case 10 : 
-                        int LA27_19 = input.LA(1);
+                        int LA27_18 = input.LA(1);
 
                          
-                        int index27_19 = input.index();
+                        int index27_18 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred31_InternalSct()) ) {s = 1;}
@@ -57396,14 +57396,14 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 50;}
 
                          
-                        input.seek(index27_19);
+                        input.seek(index27_18);
                         if ( s>=0 ) return s;
                         break;
                     case 11 : 
-                        int LA27_34 = input.LA(1);
+                        int LA27_33 = input.LA(1);
 
                          
-                        int index27_34 = input.index();
+                        int index27_33 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred31_InternalSct()) ) {s = 1;}
@@ -57411,7 +57411,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 50;}
 
                          
-                        input.seek(index27_34);
+                        input.seek(index27_33);
                         if ( s>=0 ) return s;
                         break;
                     case 12 : 
@@ -57430,10 +57430,10 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         if ( s>=0 ) return s;
                         break;
                     case 13 : 
-                        int LA27_4 = input.LA(1);
+                        int LA27_34 = input.LA(1);
 
                          
-                        int index27_4 = input.index();
+                        int index27_34 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred31_InternalSct()) ) {s = 1;}
@@ -57441,25 +57441,10 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 50;}
 
                          
-                        input.seek(index27_4);
+                        input.seek(index27_34);
                         if ( s>=0 ) return s;
                         break;
                     case 14 : 
-                        int LA27_35 = input.LA(1);
-
-                         
-                        int index27_35 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_35);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 15 : 
                         int LA27_42 = input.LA(1);
 
                          
@@ -57474,187 +57459,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index27_42);
                         if ( s>=0 ) return s;
                         break;
-                    case 16 : 
-                        int LA27_21 = input.LA(1);
-
-                         
-                        int index27_21 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_21);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 17 : 
-                        int LA27_46 = input.LA(1);
-
-                         
-                        int index27_46 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_46);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 18 : 
-                        int LA27_40 = input.LA(1);
-
-                         
-                        int index27_40 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_40);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 19 : 
-                        int LA27_32 = input.LA(1);
-
-                         
-                        int index27_32 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_32);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 20 : 
-                        int LA27_49 = input.LA(1);
-
-                         
-                        int index27_49 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_49);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 21 : 
-                        int LA27_31 = input.LA(1);
-
-                         
-                        int index27_31 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_31);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 22 : 
-                        int LA27_7 = input.LA(1);
-
-                         
-                        int index27_7 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_7);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 23 : 
-                        int LA27_24 = input.LA(1);
-
-                         
-                        int index27_24 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_24);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 24 : 
-                        int LA27_37 = input.LA(1);
-
-                         
-                        int index27_37 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_37);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 25 : 
-                        int LA27_8 = input.LA(1);
-
-                         
-                        int index27_8 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_8);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 26 : 
-                        int LA27_22 = input.LA(1);
-
-                         
-                        int index27_22 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_22);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 27 : 
-                        int LA27_30 = input.LA(1);
-
-                         
-                        int index27_30 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_30);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 28 : 
+                    case 15 : 
                         int LA27_20 = input.LA(1);
 
                          
@@ -57669,11 +57474,11 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index27_20);
                         if ( s>=0 ) return s;
                         break;
-                    case 29 : 
-                        int LA27_26 = input.LA(1);
+                    case 16 : 
+                        int LA27_46 = input.LA(1);
 
                          
-                        int index27_26 = input.index();
+                        int index27_46 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred31_InternalSct()) ) {s = 1;}
@@ -57681,14 +57486,14 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 50;}
 
                          
-                        input.seek(index27_26);
+                        input.seek(index27_46);
                         if ( s>=0 ) return s;
                         break;
-                    case 30 : 
-                        int LA27_17 = input.LA(1);
+                    case 17 : 
+                        int LA27_39 = input.LA(1);
 
                          
-                        int index27_17 = input.index();
+                        int index27_39 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred31_InternalSct()) ) {s = 1;}
@@ -57696,14 +57501,14 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 50;}
 
                          
-                        input.seek(index27_17);
+                        input.seek(index27_39);
                         if ( s>=0 ) return s;
                         break;
-                    case 31 : 
-                        int LA27_14 = input.LA(1);
+                    case 18 : 
+                        int LA27_31 = input.LA(1);
 
                          
-                        int index27_14 = input.index();
+                        int index27_31 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred31_InternalSct()) ) {s = 1;}
@@ -57711,14 +57516,14 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 50;}
 
                          
-                        input.seek(index27_14);
+                        input.seek(index27_31);
                         if ( s>=0 ) return s;
                         break;
-                    case 32 : 
-                        int LA27_29 = input.LA(1);
+                    case 19 : 
+                        int LA27_49 = input.LA(1);
 
                          
-                        int index27_29 = input.index();
+                        int index27_49 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred31_InternalSct()) ) {s = 1;}
@@ -57726,14 +57531,14 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 50;}
 
                          
-                        input.seek(index27_29);
+                        input.seek(index27_49);
                         if ( s>=0 ) return s;
                         break;
-                    case 33 : 
-                        int LA27_10 = input.LA(1);
+                    case 20 : 
+                        int LA27_30 = input.LA(1);
 
                          
-                        int index27_10 = input.index();
+                        int index27_30 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred31_InternalSct()) ) {s = 1;}
@@ -57741,100 +57546,10 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 50;}
 
                          
-                        input.seek(index27_10);
+                        input.seek(index27_30);
                         if ( s>=0 ) return s;
                         break;
-                    case 34 : 
-                        int LA27_45 = input.LA(1);
-
-                         
-                        int index27_45 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_45);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 35 : 
-                        int LA27_18 = input.LA(1);
-
-                         
-                        int index27_18 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_18);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 36 : 
-                        int LA27_41 = input.LA(1);
-
-                         
-                        int index27_41 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_41);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 37 : 
-                        int LA27_15 = input.LA(1);
-
-                         
-                        int index27_15 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_15);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 38 : 
-                        int LA27_38 = input.LA(1);
-
-                         
-                        int index27_38 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_38);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 39 : 
-                        int LA27_48 = input.LA(1);
-
-                         
-                        int index27_48 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_48);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 40 : 
+                    case 21 : 
                         int LA27_5 = input.LA(1);
 
                          
@@ -57849,11 +57564,11 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index27_5);
                         if ( s>=0 ) return s;
                         break;
-                    case 41 : 
-                        int LA27_2 = input.LA(1);
+                    case 22 : 
+                        int LA27_23 = input.LA(1);
 
                          
-                        int index27_2 = input.index();
+                        int index27_23 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred31_InternalSct()) ) {s = 1;}
@@ -57861,55 +57576,10 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 50;}
 
                          
-                        input.seek(index27_2);
+                        input.seek(index27_23);
                         if ( s>=0 ) return s;
                         break;
-                    case 42 : 
-                        int LA27_13 = input.LA(1);
-
-                         
-                        int index27_13 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_13);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 43 : 
-                        int LA27_25 = input.LA(1);
-
-                         
-                        int index27_25 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_25);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 44 : 
-                        int LA27_27 = input.LA(1);
-
-                         
-                        int index27_27 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred31_InternalSct()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 50;}
-
-                         
-                        input.seek(index27_27);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 45 : 
+                    case 23 : 
                         int LA27_36 = input.LA(1);
 
                          
@@ -57924,7 +57594,322 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index27_36);
                         if ( s>=0 ) return s;
                         break;
-                    case 46 : 
+                    case 24 : 
+                        int LA27_40 = input.LA(1);
+
+                         
+                        int index27_40 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_40);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 25 : 
+                        int LA27_7 = input.LA(1);
+
+                         
+                        int index27_7 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_7);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 26 : 
+                        int LA27_21 = input.LA(1);
+
+                         
+                        int index27_21 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_21);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 27 : 
+                        int LA27_29 = input.LA(1);
+
+                         
+                        int index27_29 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_29);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 28 : 
+                        int LA27_19 = input.LA(1);
+
+                         
+                        int index27_19 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_19);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 29 : 
+                        int LA27_6 = input.LA(1);
+
+                         
+                        int index27_6 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_6);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 30 : 
+                        int LA27_25 = input.LA(1);
+
+                         
+                        int index27_25 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_25);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 31 : 
+                        int LA27_16 = input.LA(1);
+
+                         
+                        int index27_16 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_16);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 32 : 
+                        int LA27_13 = input.LA(1);
+
+                         
+                        int index27_13 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_13);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 33 : 
+                        int LA27_28 = input.LA(1);
+
+                         
+                        int index27_28 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_28);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 34 : 
+                        int LA27_9 = input.LA(1);
+
+                         
+                        int index27_9 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_9);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 35 : 
+                        int LA27_45 = input.LA(1);
+
+                         
+                        int index27_45 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_45);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 36 : 
+                        int LA27_17 = input.LA(1);
+
+                         
+                        int index27_17 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_17);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 37 : 
+                        int LA27_41 = input.LA(1);
+
+                         
+                        int index27_41 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_41);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 38 : 
+                        int LA27_14 = input.LA(1);
+
+                         
+                        int index27_14 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_14);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 39 : 
+                        int LA27_37 = input.LA(1);
+
+                         
+                        int index27_37 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_37);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 40 : 
+                        int LA27_48 = input.LA(1);
+
+                         
+                        int index27_48 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_48);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 41 : 
+                        int LA27_12 = input.LA(1);
+
+                         
+                        int index27_12 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_12);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 42 : 
+                        int LA27_24 = input.LA(1);
+
+                         
+                        int index27_24 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_24);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 43 : 
+                        int LA27_26 = input.LA(1);
+
+                         
+                        int index27_26 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_26);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 44 : 
+                        int LA27_35 = input.LA(1);
+
+                         
+                        int index27_35 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_35);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 45 : 
                         int LA27_44 = input.LA(1);
 
                          
@@ -57939,11 +57924,11 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         input.seek(index27_44);
                         if ( s>=0 ) return s;
                         break;
-                    case 47 : 
-                        int LA27_6 = input.LA(1);
+                    case 46 : 
+                        int LA27_4 = input.LA(1);
 
                          
-                        int index27_6 = input.index();
+                        int index27_4 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred31_InternalSct()) ) {s = 1;}
@@ -57951,7 +57936,22 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
                         else if ( (true) ) {s = 50;}
 
                          
-                        input.seek(index27_6);
+                        input.seek(index27_4);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 47 : 
+                        int LA27_2 = input.LA(1);
+
+                         
+                        int index27_2 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred31_InternalSct()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 50;}
+
+                         
+                        input.seek(index27_2);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -61178,13 +61178,13 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_rule__CallNode__Group__3__Impl_in_rule__CallNode__Group__315280 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000800L});
         public static final BitSet FOLLOW_rule__CallNode__Group__4_in_rule__CallNode__Group__315283 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__CallNode__CallReferenceAssignment_3_in_rule__CallNode__Group__3__Impl15310 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__CallNode__Group__4__Impl_in_rule__CallNode__Group__415340 = new BitSet(new long[]{0x00002000025203E0L,0x0000000000001880L});
+        public static final BitSet FOLLOW_rule__CallNode__Group__4__Impl_in_rule__CallNode__Group__415340 = new BitSet(new long[]{0x0000000002020020L,0x0000000000001080L});
         public static final BitSet FOLLOW_rule__CallNode__Group__5_in_rule__CallNode__Group__415343 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_75_in_rule__CallNode__Group__4__Impl15371 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__CallNode__Group__5__Impl_in_rule__CallNode__Group__515402 = new BitSet(new long[]{0x00002000025203E0L,0x0000000000001880L});
+        public static final BitSet FOLLOW_rule__CallNode__Group__5__Impl_in_rule__CallNode__Group__515402 = new BitSet(new long[]{0x0000000002020020L,0x0000000000001080L});
         public static final BitSet FOLLOW_rule__CallNode__Group__6_in_rule__CallNode__Group__515405 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__CallNode__ParametersAssignment_5_in_rule__CallNode__Group__5__Impl15432 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__CallNode__Group__6__Impl_in_rule__CallNode__Group__615463 = new BitSet(new long[]{0x00002000025203E0L,0x0000000000001880L});
+        public static final BitSet FOLLOW_rule__CallNode__Group__6__Impl_in_rule__CallNode__Group__615463 = new BitSet(new long[]{0x0000000002020020L,0x0000000000001080L});
         public static final BitSet FOLLOW_rule__CallNode__Group__7_in_rule__CallNode__Group__615466 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__CallNode__Group_6__0_in_rule__CallNode__Group__6__Impl15493 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000080L});
         public static final BitSet FOLLOW_rule__CallNode__Group__7__Impl_in_rule__CallNode__Group__715524 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
@@ -61192,7 +61192,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_76_in_rule__CallNode__Group__7__Impl15555 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__CallNode__Group__8__Impl_in_rule__CallNode__Group__815586 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_66_in_rule__CallNode__Group__8__Impl15614 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__CallNode__Group_6__0__Impl_in_rule__CallNode__Group_6__015663 = new BitSet(new long[]{0x00002000025203E0L,0x0000000000000800L});
+        public static final BitSet FOLLOW_rule__CallNode__Group_6__0__Impl_in_rule__CallNode__Group_6__015663 = new BitSet(new long[]{0x0000000002020020L});
         public static final BitSet FOLLOW_rule__CallNode__Group_6__1_in_rule__CallNode__Group_6__015666 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_71_in_rule__CallNode__Group_6__0__Impl15694 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__CallNode__Group_6__1__Impl_in_rule__CallNode__Group_6__115725 = new BitSet(new long[]{0x0000000000000002L});
@@ -61262,13 +61262,13 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_rule__ReferenceNode__Group__5__Impl_in_rule__ReferenceNode__Group__517163 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000800L});
         public static final BitSet FOLLOW_rule__ReferenceNode__Group__6_in_rule__ReferenceNode__Group__517166 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ReferenceNode__ReferencedScopeAssignment_5_in_rule__ReferenceNode__Group__5__Impl17193 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ReferenceNode__Group__6__Impl_in_rule__ReferenceNode__Group__617223 = new BitSet(new long[]{0x00002000025203E0L,0x0000000000001880L});
+        public static final BitSet FOLLOW_rule__ReferenceNode__Group__6__Impl_in_rule__ReferenceNode__Group__617223 = new BitSet(new long[]{0x0000000002020020L,0x0000000000001080L});
         public static final BitSet FOLLOW_rule__ReferenceNode__Group__7_in_rule__ReferenceNode__Group__617226 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_75_in_rule__ReferenceNode__Group__6__Impl17254 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ReferenceNode__Group__7__Impl_in_rule__ReferenceNode__Group__717285 = new BitSet(new long[]{0x00002000025203E0L,0x0000000000001880L});
+        public static final BitSet FOLLOW_rule__ReferenceNode__Group__7__Impl_in_rule__ReferenceNode__Group__717285 = new BitSet(new long[]{0x0000000002020020L,0x0000000000001080L});
         public static final BitSet FOLLOW_rule__ReferenceNode__Group__8_in_rule__ReferenceNode__Group__717288 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ReferenceNode__ParametersAssignment_7_in_rule__ReferenceNode__Group__7__Impl17315 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ReferenceNode__Group__8__Impl_in_rule__ReferenceNode__Group__817346 = new BitSet(new long[]{0x00002000025203E0L,0x0000000000001880L});
+        public static final BitSet FOLLOW_rule__ReferenceNode__Group__8__Impl_in_rule__ReferenceNode__Group__817346 = new BitSet(new long[]{0x0000000002020020L,0x0000000000001080L});
         public static final BitSet FOLLOW_rule__ReferenceNode__Group__9_in_rule__ReferenceNode__Group__817349 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ReferenceNode__Group_8__0_in_rule__ReferenceNode__Group__8__Impl17376 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000080L});
         public static final BitSet FOLLOW_rule__ReferenceNode__Group__9__Impl_in_rule__ReferenceNode__Group__917407 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
@@ -61276,7 +61276,7 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_76_in_rule__ReferenceNode__Group__9__Impl17438 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ReferenceNode__Group__10__Impl_in_rule__ReferenceNode__Group__1017469 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_66_in_rule__ReferenceNode__Group__10__Impl17497 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__ReferenceNode__Group_8__0__Impl_in_rule__ReferenceNode__Group_8__017550 = new BitSet(new long[]{0x00002000025203E0L,0x0000000000000800L});
+        public static final BitSet FOLLOW_rule__ReferenceNode__Group_8__0__Impl_in_rule__ReferenceNode__Group_8__017550 = new BitSet(new long[]{0x0000000002020020L});
         public static final BitSet FOLLOW_rule__ReferenceNode__Group_8__1_in_rule__ReferenceNode__Group_8__017553 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_71_in_rule__ReferenceNode__Group_8__0__Impl17581 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__ReferenceNode__Group_8__1__Impl_in_rule__ReferenceNode__Group_8__117612 = new BitSet(new long[]{0x0000000000000002L});
@@ -61967,8 +61967,8 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_ruleTransition_in_rule__State__OutgoingTransitionsAssignment_734297 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_ID_in_rule__CallNode__IdAssignment_134328 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_ID_in_rule__CallNode__CallReferenceAssignment_334363 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExpression_in_rule__CallNode__ParametersAssignment_534398 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExpression_in_rule__CallNode__ParametersAssignment_6_134429 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValuedObjectReference_in_rule__CallNode__ParametersAssignment_534398 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValuedObjectReference_in_rule__CallNode__ParametersAssignment_6_134429 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_ID_in_rule__DefineNode__IdAssignment_234460 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleDeclaration_in_rule__DefineNode__InputsAssignment_434491 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleDeclaration_in_rule__DefineNode__OutputsAssignment_834522 = new BitSet(new long[]{0x0000000000000002L});
@@ -61978,8 +61978,8 @@ public class InternalSctParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_RULE_ID_in_rule__ReferenceNode__IdAssignment_134654 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_STRING_in_rule__ReferenceNode__LabelAssignment_234685 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_ID_in_rule__ReferenceNode__ReferencedScopeAssignment_534720 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExpression_in_rule__ReferenceNode__ParametersAssignment_734755 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleExpression_in_rule__ReferenceNode__ParametersAssignment_8_134786 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValuedObjectReference_in_rule__ReferenceNode__ParametersAssignment_734755 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleValuedObjectReference_in_rule__ReferenceNode__ParametersAssignment_8_134786 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleAnnotation_in_rule__Transition__AnnotationsAssignment_034817 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleTransitionTypeLegacy_in_rule__Transition__TypeAssignment_1_034848 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleTransitionType_in_rule__Transition__TypeAssignment_1_134879 = new BitSet(new long[]{0x0000000000000002L});
