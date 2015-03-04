@@ -24,7 +24,7 @@ import java.io.IOException;
 
 
     public class FileWriter {
-        public static void main(String content, String uri) {
+        public void writeToFile(String content, String uri) {
  
                 FileOutputStream fop = null;
                 File file;

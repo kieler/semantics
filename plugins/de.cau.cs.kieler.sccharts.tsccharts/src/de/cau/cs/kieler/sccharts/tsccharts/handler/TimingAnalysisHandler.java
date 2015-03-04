@@ -93,6 +93,8 @@ import de.cau.cs.kieler.scg.impl.ControlFlowImpl;
  * @kieler.rating
  */
 public class TimingAnalysisHandler extends AbstractHandler {
+    
+    private FileWriter fileWriter = new FileWriter();
 
     public TimingAnalysisHandler() {
         Guice.createInjector().injectMembers(this);
@@ -298,7 +300,7 @@ public class TimingAnalysisHandler extends AbstractHandler {
                     String codeTargetFile = uri.replace(".sct", ".c");
                     String codeTargetFilePath = codeTargetFile.replace("file:", "");
 
-                    FileWriter.main(codeString, codeTargetFilePath);
+                    fileWriter.writeToFile(codeString, codeTargetFilePath);
                 }
 
                 // get assumptions
@@ -318,7 +320,7 @@ public class TimingAnalysisHandler extends AbstractHandler {
                 // .ta file string complete, write it to file
                 String requestFile = uri.replace(".sct", ".ta");
                 String requestFilePath = requestFile.replace("file:", "");
-                FileWriter.main(stringBuilder.toString(), requestFilePath);
+                fileWriter.writeToFile(stringBuilder.toString(), requestFilePath);
                 
                 
 

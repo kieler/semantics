@@ -13,13 +13,19 @@
  */
 package de.cau.cs.kieler.sccharts.tsccharts;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Set;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -27,10 +33,12 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ui.progress.UIJob;
+import org.eclipse.xtext.ui.util.ResourceUtil;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Multimap;
+import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
@@ -49,7 +57,10 @@ import de.cau.cs.kieler.kitt.tracing.TracingManager;
 import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties;
 import de.cau.cs.kieler.klighd.util.ModelingUtil;
 import de.cau.cs.kieler.sccharts.Region;
+import de.cau.cs.kieler.sccharts.SCChartsFactory;
 import de.cau.cs.kieler.sccharts.State;
+import de.cau.cs.kieler.sccharts.tsccharts.handler.FileWriter;
+import de.cau.cs.kieler.sccharts.tsccharts.handler.TimingRequestResult;
 import de.cau.cs.kieler.scg.Assignment;
 import de.cau.cs.kieler.scg.ControlFlow;
 import de.cau.cs.kieler.scg.Link;
@@ -64,6 +75,10 @@ import de.cau.cs.kieler.scg.ScgFactory;
 public class TimingAnalysis extends Job {
 
     public static final boolean DEBUG = true;
+    
+    private FileWriter fileWriter = new FileWriter();
+    
+    private TimingAnnotationProvider timingAnnotationProvider = new TimingAnnotationProvider();
 
     // no side effects on runtime, so static OK here
     public static KRenderingExtensions renderingExtensions = new KRenderingExtensions();
@@ -103,6 +118,8 @@ public class TimingAnalysis extends Job {
     private State scchart;
     private HashMultimap<Region, WeakReference<KText>> timingLabels;
     private HashMap<Region, String> timingResults;
+
+    private Object annotationProvider;
 
     /**
      * @param name
@@ -213,19 +230,18 @@ public class TimingAnalysis extends Job {
             // Stop as soon as possible when job canceled
             return Status.CANCEL_STATUS;
         }
-        HashMap<Integer, Region> ttpRegionMap = new HashMap<Integer, Region>();
+        HashMap<Integer, Region> tppRegionMap = new HashMap<Integer, Region>();
         
-        // Debugging, may be removed
-        EList<Node> debugNodeList = scg.getNodes();
-        Iterator<Node> debugNodeListIterator = debugNodeList.iterator();
-        while(debugNodeListIterator.hasNext()){
-           if (nodeRegionMapping.get(debugNodeListIterator.next()) == null) {
-               System.out.println("Node has no tracing map information.");
-           }
-        }
-        // End Debugging
+        // It is normal that some nodes of the SCG will be mapped to null, because they belong to the 
+        // SCChart itself not to a Region of the SCChart (they cannot be attributed to the outermost 
+        // Region in the root state, because there may be several of those). So create a dummy region 
+        // to represent the SCChart in Timing Analysis.
+        Region scchartDummyRegion = SCChartsFactory.eINSTANCE.createRegion();
+        scchartDummyRegion.setId("SCChartDummyRegion");
         
-        int highestInsertedTTPNumber = insertTTP(scg, nodeRegionMapping, ttpRegionMap);
+        // insert timing program points
+        int highestInsertedTPPNumber = 
+                insertTPP(scg, nodeRegionMapping, tppRegionMap, scchartDummyRegion);
 
         // Step 4: Compile SCG to C code
 
@@ -253,6 +269,7 @@ public class TimingAnalysis extends Job {
         }
 
         String code = compilationResult.getString();
+        // Debug, might be removed
         System.out.print(code);
 
         // Step 5: Send C code to timing analyzer
@@ -261,8 +278,57 @@ public class TimingAnalysis extends Job {
             // Stop as soon as possible when job canceled
             return Status.CANCEL_STATUS;
         }
+        
+        IFile file = ResourceUtil.getFile(scchart.eResource());
+        String uri = file.getLocationURI().toString();
+        
+        // Write the generated code to file
+        String codeTargetFile = uri.replace(".sct", ".c");
+        String codeTargetFilePath = codeTargetFile.replace("file:", "");
+        fileWriter.writeToFile(code, codeTargetFilePath);
+        
 
-        // TODO ima
+        // get assumptions
+        String assumptionFile = uri.replace(".sct", ".ass");
+        String assumptionFilePath = assumptionFile.replace("file:", "");
+        StringBuilder stringBuilder = new StringBuilder();
+        timingAnnotationProvider.getAssumptions(assumptionFilePath, stringBuilder);
+        // just debug, may be removed
+        System.out.println(stringBuilder.toString());
+
+        // write timing requests appended to the assumptionString
+        LinkedList<TimingRequestResult> resultList =
+                timingAnnotationProvider.writeTimingRequests(highestInsertedTPPNumber, stringBuilder);
+        // just debug, may be removed
+        System.out.println(stringBuilder.toString());
+
+        // .ta file string complete, write it to file
+        String requestFile = uri.replace(".sct", ".ta");
+        String requestFilePath = requestFile.replace("file:", "");
+        fileWriter.writeToFile(stringBuilder.toString(), requestFilePath);
+
+        Runtime rt = Runtime.getRuntime();
+        String command = "/Users/ima/shared/ptc/bin/ptc " + requestFilePath;
+        try {
+            Process pr = rt.exec(command);
+            // wait for the timing analysis tool to complete its job
+            pr.waitFor();
+        } catch (IOException e) {
+            System.out.println("Error: Timing analysis tool could not be invoked.");
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            System.out.println("The thread for timing analysis tool invocation has been interrupted.");
+            e.printStackTrace();
+        }
+        
+        // Refresh to make sure the .c file can be found
+        try {
+            ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
+        } catch (CoreException e) {
+            System.out.println("The refreshing of files could not be completed.");
+            e.printStackTrace();
+        }
+           
 
         // Step 6: Retrieve timing data and associate with regions
 
@@ -271,20 +337,20 @@ public class TimingAnalysis extends Job {
             return Status.CANCEL_STATUS;
         }
 
-        // TODO remove this test code
-
-        for (Node node : nodeRegionMapping.keySet()) {
-            Region r = nodeRegionMapping.get(node);
-            if (r != null) {
-                if (timingResults.containsKey(r)) {
-                    timingResults.put(r, timingResults.get(r) + " " + node.toString());
-                } else {
-                    timingResults.put(r, node.toString());
-                }
-            } else {
-                // In this case the node is mapped to the root state and thus to no region
-            }
-        }
+//        // TODO remove this test code
+//
+//        for (Node node : nodeRegionMapping.keySet()) {
+//            Region r = nodeRegionMapping.get(node);
+//            if (r != null) {
+//                if (timingResults.containsKey(r)) {
+//                    timingResults.put(r, timingResults.get(r) + " " + node.toString());
+//                } else {
+//                    timingResults.put(r, node.toString());
+//                }
+//            } else {
+//                // In this case the node is mapped to the root state and thus to no region
+//            }
+//        }
 
         // TODO ima
 
@@ -320,7 +386,7 @@ public class TimingAnalysis extends Job {
      * associated with different regions from the original SCChart, of which the SCG is a
      * compilation result. This means, the method determines, at which edges of the SCG a context
      * switch between threads happens (which is determined with the help of a map provided by
-     * tracing). Into those edges, it inserts Assignment nodes with a Timing Program Point (TTP) for
+     * tracing). Into those edges, it inserts Assignment nodes with a Timing Program Point (TPP) for
      * the interface of Interactive Timing Analysis.
      * 
      * @param scg
@@ -328,33 +394,42 @@ public class TimingAnalysis extends Job {
      * @param nodeRegionMapping
      *            A map determined by tracing, which relates the nodes of a sequential SCG with
      *            regions of the corresponding SCChart.
-     * @param ttpRegionMap
-     *            A map, into which the method stores the related region for each TTP (which will be
+     * @param tppRegionMap
+     *            A map, into which the method stores the related region for each TPP (which will be
      *            the one corresponding to the thread, to which the context is switched a the
-     *            location where the TTP is inserted.
+     *            location where the TPP is inserted.
+     * @param scchartDummyRegion 
      * @param debugNodeList 
-     * @return returns -1, if the TTP-insertion ran into a problem else the highest inserted TTP
+     * @return returns -1, if the TPP-insertion ran into a problem else the highest inserted TPP
      *         number
      */
-    private int insertTTP(SCGraph scg, HashMap<Node, Region> nodeRegionMapping,
-            HashMap<Integer, Region> ttpRegionMap) {
+    private int insertTPP(SCGraph scg, HashMap<Node, Region> nodeRegionMapping,
+            HashMap<Integer, Region> tppRegionMap, Region scchartDummyRegion) {
         // Get all edges of the sequential scg
         Iterator<ControlFlow> edgeIter =
                 Iterators.filter(
                         ModelingUtil.eAllContentsOfType2(scg, Node.class, ControlFlow.class),
                         ControlFlow.class);
         ArrayList<Link> visitedEdges = new ArrayList<Link>();
-        // insertion starts with TTP(1);
-        int ttpCounter = 1;
+        // insertion starts with TPP(1);
+        int tppCounter = 1;
         while (edgeIter.hasNext()) {
-            if (ttpCounter == 13) {
-                // avoid a TTP with the number 13, as this one has a special meaning for the timing
+            if (tppCounter == 13) {
+                // avoid a TPP with the number 13, as this one has a special meaning for the timing
                 // analysis tool prototype
-                ttpCounter = 1 + ttpCounter;
+                tppCounter = 1 + tppCounter;
             }
             ControlFlow currentEdge = edgeIter.next();
             // get the region the target node of the edge stems from
             Region targetRegion = nodeRegionMapping.get(currentEdge.getTarget());
+            if (targetRegion == null) {
+                // It is normal that nodes of the SCG get mapped to null, if they are considered to 
+                // belong to the scchart but not to one of its regions, for the timing analysis, 
+                // they are attributed to a dummy region representing all parts of the scchart that 
+                // does not belong to a region (thus enabling us to keep track of the timing for those 
+                // parts
+                targetRegion = scchartDummyRegion;
+            }
             // get the region the source node of the edge stems from
             EObject edgeEContainer = currentEdge.eContainer();
             Node sourceNode = null;
@@ -365,6 +440,10 @@ public class TimingAnalysis extends Job {
                 return -1;
             }
             Region sourceRegion = nodeRegionMapping.get(sourceNode);
+            if (sourceRegion == null) {
+                // Nodes that do not belong to a region are attributed to the scchart dummy region
+                sourceRegion = scchartDummyRegion;
+            }
             // check if the mapping has yielded a complete answer
             if ((targetRegion != null) && (sourceRegion != null)) {
                 // check for a context switch, in any other case nothing will be done
@@ -374,11 +453,11 @@ public class TimingAnalysis extends Job {
                     if (!(visitedEdges.contains(currentEdge))) {
                         // now this edge is processed, record that
                         visitedEdges.add(currentEdge);
-                        // insert ttp node, keep it for the redirection of other edges
-                        Assignment ttp = insertTTP(scg, currentEdge, ttpCounter);
-                        // Save which Region starts at this TTP value
-                        ttpRegionMap.put(ttpCounter, targetRegion);
-                        ttpCounter = ttpCounter + 1;
+                        // insert tpp node, keep it for the redirection of other edges
+                        Assignment tpp = insertSingleTPP(scg, currentEdge, tppCounter);
+                        // Save which Region starts at this TPP value
+                        tppRegionMap.put(tppCounter, targetRegion);
+                        tppCounter = tppCounter + 1;
                         // make sure that all edges that also point to the same target node as the
                         // current edge redirected to the TPP as well
                         EList<Link> targetIncomingEdges = currentEdge.getTarget().getIncoming();
@@ -388,7 +467,7 @@ public class TimingAnalysis extends Job {
                                 Link redirectionLink = targetIncomingIterator.next();
                                 if ((!(currentEdge.equals(redirectionLink)))
                                         && (!(visitedEdges.contains(redirectionLink)))) {
-                                    redirectionLink.setTarget(ttp);
+                                    redirectionLink.setTarget(tpp);
                                     visitedEdges.add(redirectionLink);
                                 }
                             }
@@ -400,28 +479,36 @@ public class TimingAnalysis extends Job {
                 System.out.println("A mapping for at least one node of an edge cannot be found.");
             }
         }
-        return ttpCounter - 1;
+        return tppCounter - 1;
     }
 
     /**
-     * @param currentEdge
-     * @param ttpCounter
+     * Method inserts a single timing program point for interactive timing analysis in the edge 
+     * given as parameter controlFlow. This happens by inserting an Assignment with the TPP as 
+     * text expression as new target of the edge and connecting it by a new edge with the original 
+     * target of the edge.
+     * 
+     * @param controlFlow
+     *        The edge, into which the TPP node is to be inserted.
+     * @param tppNumber 
+     *        The number of the TPP to be created, for example the 2 in 'TPP(2);'
      * @return
+     *   The Assignment wit the TPP
      */
-    private Assignment insertTTP(SCGraph scg, ControlFlow currentEdge, int ttpCounter) {
+    private Assignment insertSingleTPP(SCGraph scg, ControlFlow controlFlow, int tppNumber) {
         // make target reachable via a new edge
-        Node target = currentEdge.getTarget();
+        Node target = controlFlow.getTarget();
         ControlFlow newEdge = ScgFactory.eINSTANCE.createControlFlow();
         newEdge.setTarget(target);
-        // prepare assignment node with the ttp
-        Assignment ttp = ScgFactory.eINSTANCE.createAssignment();
-        TextExpression ttpText = KExpressionsFactory.eINSTANCE.createTextExpression();
-        ttpText.setText("TTP(" + ttpCounter + ")");
-        ttp.setAssignment(ttpText);
+        // prepare assignment node with the tpp
+        Assignment tpp = ScgFactory.eINSTANCE.createAssignment();
+        TextExpression tppText = KExpressionsFactory.eINSTANCE.createTextExpression();
+        tppText.setText("TPP(" + tppNumber + ")");
+        tpp.setAssignment(tppText);
         // insert the new assignment node in the edge
-        ttp.setNext(newEdge);
-        currentEdge.setTarget(ttp);
-        scg.getNodes().add(ttp);
-        return ttp;
+        tpp.setNext(newEdge);
+        controlFlow.setTarget(tpp);
+        scg.getNodes().add(tpp);
+        return tpp;
     }
 }
