@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sccharts.impl;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.sccharts.CallNode;
 import de.cau.cs.kieler.sccharts.DefineNode;
 import de.cau.cs.kieler.sccharts.Node;
@@ -47,7 +48,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.CallNodeImpl#getCallReference <em>Call Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.CallNodeImpl#getParameters <em>Parameters</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.CallNodeImpl#getReferencedScope <em>Referenced Scope</em>}</li>
  * </ul>
  * </p>
  *
@@ -79,17 +79,7 @@ public class CallNodeImpl extends NodeImpl implements CallNode {
      * @generated
      * @ordered
      */
-    protected EList<Expression> parameters;
-
-    /**
-     * The cached value of the '{@link #getReferencedScope() <em>Referenced Scope</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getReferencedScope()
-     * @generated
-     * @ordered
-     */
-    protected Scope referencedScope;
+    protected EList<ValuedObjectReference> parameters;
 
     /**
      * <!-- begin-user-doc -->
@@ -153,49 +143,11 @@ public class CallNodeImpl extends NodeImpl implements CallNode {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Expression> getParameters() {
+    public EList<ValuedObjectReference> getParameters() {
         if (parameters == null) {
-            parameters = new EObjectContainmentEList<Expression>(Expression.class, this, SCChartsPackage.CALL_NODE__PARAMETERS);
+            parameters = new EObjectContainmentEList<ValuedObjectReference>(ValuedObjectReference.class, this, SCChartsPackage.CALL_NODE__PARAMETERS);
         }
         return parameters;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Scope getReferencedScope() {
-        if (referencedScope != null && referencedScope.eIsProxy()) {
-            InternalEObject oldReferencedScope = (InternalEObject)referencedScope;
-            referencedScope = (Scope)eResolveProxy(oldReferencedScope);
-            if (referencedScope != oldReferencedScope) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.CALL_NODE__REFERENCED_SCOPE, oldReferencedScope, referencedScope));
-            }
-        }
-        return referencedScope;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Scope basicGetReferencedScope() {
-        return referencedScope;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setReferencedScope(Scope newReferencedScope) {
-        Scope oldReferencedScope = referencedScope;
-        referencedScope = newReferencedScope;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.CALL_NODE__REFERENCED_SCOPE, oldReferencedScope, referencedScope));
     }
 
     /**
@@ -225,9 +177,6 @@ public class CallNodeImpl extends NodeImpl implements CallNode {
                 return basicGetCallReference();
             case SCChartsPackage.CALL_NODE__PARAMETERS:
                 return getParameters();
-            case SCChartsPackage.CALL_NODE__REFERENCED_SCOPE:
-                if (resolve) return getReferencedScope();
-                return basicGetReferencedScope();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -246,10 +195,7 @@ public class CallNodeImpl extends NodeImpl implements CallNode {
                 return;
             case SCChartsPackage.CALL_NODE__PARAMETERS:
                 getParameters().clear();
-                getParameters().addAll((Collection<? extends Expression>)newValue);
-                return;
-            case SCChartsPackage.CALL_NODE__REFERENCED_SCOPE:
-                setReferencedScope((Scope)newValue);
+                getParameters().addAll((Collection<? extends ValuedObjectReference>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -269,9 +215,6 @@ public class CallNodeImpl extends NodeImpl implements CallNode {
             case SCChartsPackage.CALL_NODE__PARAMETERS:
                 getParameters().clear();
                 return;
-            case SCChartsPackage.CALL_NODE__REFERENCED_SCOPE:
-                setReferencedScope((Scope)null);
-                return;
         }
         super.eUnset(featureID);
     }
@@ -288,8 +231,6 @@ public class CallNodeImpl extends NodeImpl implements CallNode {
                 return callReference != null;
             case SCChartsPackage.CALL_NODE__PARAMETERS:
                 return parameters != null && !parameters.isEmpty();
-            case SCChartsPackage.CALL_NODE__REFERENCED_SCOPE:
-                return referencedScope != null;
         }
         return super.eIsSet(featureID);
     }

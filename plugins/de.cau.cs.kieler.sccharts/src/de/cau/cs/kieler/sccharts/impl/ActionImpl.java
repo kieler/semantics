@@ -46,8 +46,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getEffects <em>Effects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getTrigger <em>Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getDelay <em>Delay</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#isImmediate <em>Immediate</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getLabel <em>Label</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#isImmediate <em>Immediate</em>}</li>
  * </ul>
  * </p>
  *
@@ -102,26 +102,6 @@ public class ActionImpl extends AnnotatableImpl implements Action {
     protected int delay = DELAY_EDEFAULT;
 
     /**
-     * The default value of the '{@link #isImmediate() <em>Immediate</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isImmediate()
-     * @generated
-     * @ordered
-     */
-    protected static final boolean IMMEDIATE_EDEFAULT = false;
-
-    /**
-     * The cached value of the '{@link #isImmediate() <em>Immediate</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isImmediate()
-     * @generated
-     * @ordered
-     */
-    protected boolean immediate = IMMEDIATE_EDEFAULT;
-
-    /**
      * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -140,6 +120,26 @@ public class ActionImpl extends AnnotatableImpl implements Action {
      * @ordered
      */
     protected String label = LABEL_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isImmediate() <em>Immediate</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isImmediate()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean IMMEDIATE_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isImmediate() <em>Immediate</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isImmediate()
+     * @generated
+     * @ordered
+     */
+    protected boolean immediate = IMMEDIATE_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -308,10 +308,10 @@ public class ActionImpl extends AnnotatableImpl implements Action {
                 return getTrigger();
             case SCChartsPackage.ACTION__DELAY:
                 return getDelay();
-            case SCChartsPackage.ACTION__IMMEDIATE:
-                return isImmediate();
             case SCChartsPackage.ACTION__LABEL:
                 return getLabel();
+            case SCChartsPackage.ACTION__IMMEDIATE:
+                return isImmediate();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -335,11 +335,11 @@ public class ActionImpl extends AnnotatableImpl implements Action {
             case SCChartsPackage.ACTION__DELAY:
                 setDelay((Integer)newValue);
                 return;
-            case SCChartsPackage.ACTION__IMMEDIATE:
-                setImmediate((Boolean)newValue);
-                return;
             case SCChartsPackage.ACTION__LABEL:
                 setLabel((String)newValue);
+                return;
+            case SCChartsPackage.ACTION__IMMEDIATE:
+                setImmediate((Boolean)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -362,11 +362,11 @@ public class ActionImpl extends AnnotatableImpl implements Action {
             case SCChartsPackage.ACTION__DELAY:
                 setDelay(DELAY_EDEFAULT);
                 return;
-            case SCChartsPackage.ACTION__IMMEDIATE:
-                setImmediate(IMMEDIATE_EDEFAULT);
-                return;
             case SCChartsPackage.ACTION__LABEL:
                 setLabel(LABEL_EDEFAULT);
+                return;
+            case SCChartsPackage.ACTION__IMMEDIATE:
+                setImmediate(IMMEDIATE_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -386,10 +386,10 @@ public class ActionImpl extends AnnotatableImpl implements Action {
                 return trigger != null;
             case SCChartsPackage.ACTION__DELAY:
                 return delay != DELAY_EDEFAULT;
-            case SCChartsPackage.ACTION__IMMEDIATE:
-                return immediate != IMMEDIATE_EDEFAULT;
             case SCChartsPackage.ACTION__LABEL:
                 return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
+            case SCChartsPackage.ACTION__IMMEDIATE:
+                return immediate != IMMEDIATE_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -406,10 +406,10 @@ public class ActionImpl extends AnnotatableImpl implements Action {
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (delay: ");
         result.append(delay);
-        result.append(", immediate: ");
-        result.append(immediate);
         result.append(", label: ");
         result.append(label);
+        result.append(", immediate: ");
+        result.append(immediate);
         result.append(')');
         return result.toString();
     }

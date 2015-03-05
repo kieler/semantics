@@ -37,7 +37,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.Dataflow#getNodes <em>Nodes</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Dataflow#getFeatures <em>Features</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Dataflow#getEquations <em>Equations</em>}</li>
  * </ul>
  * </p>
  *
@@ -70,19 +70,19 @@ public interface Dataflow extends Concurrency {
     EList<Node> getNodes();
 
     /**
-     * Returns the value of the '<em><b>Features</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.sccharts.DataflowFeature}.
+     * Returns the value of the '<em><b>Equations</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.sccharts.Equation}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Features</em>' containment reference list isn't clear,
+     * If the meaning of the '<em>Equations</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Features</em>' containment reference list.
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getDataflow_Features()
+     * @return the value of the '<em>Equations</em>' containment reference list.
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getDataflow_Equations()
      * @model containment="true"
      * @generated
      */
-    EList<DataflowFeature> getFeatures();
+    EList<Equation> getEquations();
 
 } // Dataflow

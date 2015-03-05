@@ -389,17 +389,17 @@ ruleSingleDataflow returns [EObject current=null]
 )*)?((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSingleDataflowAccess().getFeaturesFeatureParserRuleCall_2_0_0()); 
+	        newCompositeNode(grammarAccess.getSingleDataflowAccess().getEquationsEquationParserRuleCall_2_0_0()); 
 	    }
-		lv_features_10_0=ruleFeature		{
+		lv_equations_10_0=ruleEquation		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getSingleDataflowRule());
 	        }
        		add(
        			$current, 
-       			"features",
-        		lv_features_10_0, 
-        		"Feature");
+       			"equations",
+        		lv_equations_10_0, 
+        		"Equation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -808,17 +808,17 @@ ruleDataflow returns [EObject current=null]
 )*((
 (
 		{ 
-	        newCompositeNode(grammarAccess.getDataflowAccess().getFeaturesFeatureParserRuleCall_8_0_0()); 
+	        newCompositeNode(grammarAccess.getDataflowAccess().getEquationsEquationParserRuleCall_8_0_0()); 
 	    }
-		lv_features_10_0=ruleFeature		{
+		lv_equations_10_0=ruleEquation		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getDataflowRule());
 	        }
        		add(
        			$current, 
-       			"features",
-        		lv_features_10_0, 
-        		"Feature");
+       			"equations",
+        		lv_equations_10_0, 
+        		"Equation");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -849,17 +849,17 @@ ruleDataflow returns [EObject current=null]
 
 
 
-// Entry rule entryRuleFeature
-entryRuleFeature returns [EObject current=null] 
+// Entry rule entryRuleEquation
+entryRuleEquation returns [EObject current=null] 
 	:
-	{ newCompositeNode(grammarAccess.getFeatureRule()); }
-	 iv_ruleFeature=ruleFeature 
-	 { $current=$iv_ruleFeature.current; } 
+	{ newCompositeNode(grammarAccess.getEquationRule()); }
+	 iv_ruleEquation=ruleEquation 
+	 { $current=$iv_ruleEquation.current; } 
 	 EOF 
 ;
 
-// Rule Feature
-ruleFeature returns [EObject current=null] 
+// Rule Equation
+ruleEquation returns [EObject current=null] 
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
@@ -869,7 +869,7 @@ ruleFeature returns [EObject current=null]
 	}
     {
         $current = forceCreateModelElement(
-            grammarAccess.getFeatureAccess().getDataflowFeatureAction_0(),
+            grammarAccess.getEquationAccess().getEquationAction_0(),
             $current);
     }
 )(((
@@ -879,27 +879,27 @@ ruleFeature returns [EObject current=null]
 		}
 		{
 			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getFeatureRule());
+	            $current = createModelElement(grammarAccess.getEquationRule());
 	        }
         }
 	otherlv_1=RULE_ID
 	{
-		newLeafNode(otherlv_1, grammarAccess.getFeatureAccess().getValuedObjectValuedObjectCrossReference_1_0_0_0()); 
+		newLeafNode(otherlv_1, grammarAccess.getEquationAccess().getValuedObjectValuedObjectCrossReference_1_0_0_0()); 
 	}
 
 )
 )	otherlv_2='=' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getFeatureAccess().getEqualsSignKeyword_1_0_1());
+    	newLeafNode(otherlv_2, grammarAccess.getEquationAccess().getEqualsSignKeyword_1_0_1());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getFeatureAccess().getExpressionExpressionParserRuleCall_1_0_2_0()); 
+	        newCompositeNode(grammarAccess.getEquationAccess().getExpressionExpressionParserRuleCall_1_0_2_0()); 
 	    }
 		lv_expression_3_0=ruleExpression		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getFeatureRule());
+	            $current = createModelElementForParent(grammarAccess.getEquationRule());
 	        }
        		set(
        			$current, 
@@ -912,7 +912,7 @@ ruleFeature returns [EObject current=null]
 )
 )	otherlv_4=';' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getFeatureAccess().getSemicolonKeyword_1_0_3());
+    	newLeafNode(otherlv_4, grammarAccess.getEquationAccess().getSemicolonKeyword_1_0_3());
     }
 )
     |((
@@ -922,18 +922,18 @@ ruleFeature returns [EObject current=null]
 		}
 		{
 			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getFeatureRule());
+	            $current = createModelElement(grammarAccess.getEquationRule());
 	        }
         }
 	otherlv_5=RULE_ID
 	{
-		newLeafNode(otherlv_5, grammarAccess.getFeatureAccess().getValuedObjectValuedObjectCrossReference_1_1_0_0()); 
+		newLeafNode(otherlv_5, grammarAccess.getEquationAccess().getValuedObjectValuedObjectCrossReference_1_1_0_0()); 
 	}
 
 )
 )	otherlv_6='=' 
     {
-    	newLeafNode(otherlv_6, grammarAccess.getFeatureAccess().getEqualsSignKeyword_1_1_1());
+    	newLeafNode(otherlv_6, grammarAccess.getEquationAccess().getEqualsSignKeyword_1_1_1());
     }
 (
 (
@@ -942,27 +942,27 @@ ruleFeature returns [EObject current=null]
 		}
 		{
 			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getFeatureRule());
+	            $current = createModelElement(grammarAccess.getEquationRule());
 	        }
         }
 	otherlv_7=RULE_ID
 	{
-		newLeafNode(otherlv_7, grammarAccess.getFeatureAccess().getNodeNodeCrossReference_1_1_2_0()); 
+		newLeafNode(otherlv_7, grammarAccess.getEquationAccess().getNodeNodeCrossReference_1_1_2_0()); 
 	}
 
 )
 )	otherlv_8='.' 
     {
-    	newLeafNode(otherlv_8, grammarAccess.getFeatureAccess().getFullStopKeyword_1_1_3());
+    	newLeafNode(otherlv_8, grammarAccess.getEquationAccess().getFullStopKeyword_1_1_3());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getFeatureAccess().getExpressionValuedObjectReferenceParserRuleCall_1_1_4_0()); 
+	        newCompositeNode(grammarAccess.getEquationAccess().getExpressionValuedObjectReferenceParserRuleCall_1_1_4_0()); 
 	    }
 		lv_expression_9_0=ruleValuedObjectReference		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getFeatureRule());
+	            $current = createModelElementForParent(grammarAccess.getEquationRule());
 	        }
        		set(
        			$current, 
@@ -975,7 +975,7 @@ ruleFeature returns [EObject current=null]
 )
 )	otherlv_10=';' 
     {
-    	newLeafNode(otherlv_10, grammarAccess.getFeatureAccess().getSemicolonKeyword_1_1_5());
+    	newLeafNode(otherlv_10, grammarAccess.getEquationAccess().getSemicolonKeyword_1_1_5());
     }
 )))
 ;

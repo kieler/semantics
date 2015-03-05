@@ -17,6 +17,7 @@ import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.sccharts.Dataflow;
 import de.cau.cs.kieler.sccharts.DataflowFeature;
+import de.cau.cs.kieler.sccharts.Equation;
 import de.cau.cs.kieler.sccharts.Node;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.State;
@@ -45,7 +46,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.DataflowImpl#getNodes <em>Nodes</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.DataflowImpl#getFeatures <em>Features</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.DataflowImpl#getEquations <em>Equations</em>}</li>
  * </ul>
  * </p>
  *
@@ -70,14 +71,14 @@ public class DataflowImpl extends ConcurrencyImpl implements Dataflow {
     protected EList<Node> nodes;
 
     /**
-     * The cached value of the '{@link #getFeatures() <em>Features</em>}' containment reference list.
+     * The cached value of the '{@link #getEquations() <em>Equations</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getFeatures()
+     * @see #getEquations()
      * @generated
      * @ordered
      */
-    protected EList<DataflowFeature> features;
+    protected EList<Equation> equations;
 
     /**
      * <!-- begin-user-doc -->
@@ -115,11 +116,11 @@ public class DataflowImpl extends ConcurrencyImpl implements Dataflow {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<DataflowFeature> getFeatures() {
-        if (features == null) {
-            features = new EObjectContainmentEList<DataflowFeature>(DataflowFeature.class, this, SCChartsPackage.DATAFLOW__FEATURES);
+    public EList<Equation> getEquations() {
+        if (equations == null) {
+            equations = new EObjectContainmentEList<Equation>(Equation.class, this, SCChartsPackage.DATAFLOW__EQUATIONS);
         }
-        return features;
+        return equations;
     }
 
     /**
@@ -132,8 +133,8 @@ public class DataflowImpl extends ConcurrencyImpl implements Dataflow {
         switch (featureID) {
             case SCChartsPackage.DATAFLOW__NODES:
                 return ((InternalEList<?>)getNodes()).basicRemove(otherEnd, msgs);
-            case SCChartsPackage.DATAFLOW__FEATURES:
-                return ((InternalEList<?>)getFeatures()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.DATAFLOW__EQUATIONS:
+                return ((InternalEList<?>)getEquations()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -148,8 +149,8 @@ public class DataflowImpl extends ConcurrencyImpl implements Dataflow {
         switch (featureID) {
             case SCChartsPackage.DATAFLOW__NODES:
                 return getNodes();
-            case SCChartsPackage.DATAFLOW__FEATURES:
-                return getFeatures();
+            case SCChartsPackage.DATAFLOW__EQUATIONS:
+                return getEquations();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -167,9 +168,9 @@ public class DataflowImpl extends ConcurrencyImpl implements Dataflow {
                 getNodes().clear();
                 getNodes().addAll((Collection<? extends Node>)newValue);
                 return;
-            case SCChartsPackage.DATAFLOW__FEATURES:
-                getFeatures().clear();
-                getFeatures().addAll((Collection<? extends DataflowFeature>)newValue);
+            case SCChartsPackage.DATAFLOW__EQUATIONS:
+                getEquations().clear();
+                getEquations().addAll((Collection<? extends Equation>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -186,8 +187,8 @@ public class DataflowImpl extends ConcurrencyImpl implements Dataflow {
             case SCChartsPackage.DATAFLOW__NODES:
                 getNodes().clear();
                 return;
-            case SCChartsPackage.DATAFLOW__FEATURES:
-                getFeatures().clear();
+            case SCChartsPackage.DATAFLOW__EQUATIONS:
+                getEquations().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -203,8 +204,8 @@ public class DataflowImpl extends ConcurrencyImpl implements Dataflow {
         switch (featureID) {
             case SCChartsPackage.DATAFLOW__NODES:
                 return nodes != null && !nodes.isEmpty();
-            case SCChartsPackage.DATAFLOW__FEATURES:
-                return features != null && !features.isEmpty();
+            case SCChartsPackage.DATAFLOW__EQUATIONS:
+                return equations != null && !equations.isEmpty();
         }
         return super.eIsSet(featureID);
     }

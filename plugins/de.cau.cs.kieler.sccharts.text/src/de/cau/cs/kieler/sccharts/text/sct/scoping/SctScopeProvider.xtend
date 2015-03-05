@@ -17,7 +17,7 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.sccharts.Binding
 import de.cau.cs.kieler.sccharts.CallNode
 import de.cau.cs.kieler.sccharts.Dataflow
-import de.cau.cs.kieler.sccharts.DataflowFeature
+import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.sccharts.DefineNode
 import de.cau.cs.kieler.sccharts.Node
 import de.cau.cs.kieler.sccharts.ReferenceNode
@@ -25,7 +25,6 @@ import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsPackage
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.TestReferenceNode
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.Collections
 import java.util.HashSet
@@ -39,7 +38,6 @@ import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.xtext.scoping.impl.SimpleScope
-import org.eclipse.emf.ecore.EAttribute
 
 /**
  * This class implements to scoping for referencedScope (used in KiCoUtil.parse()) and for binding (used in the sct Xtext editor).
@@ -103,10 +101,10 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
         return IScope.NULLSCOPE
     }
     
-    public def IScope dataflowFeature_ValuedObjectReferenceScope(EObject context, EReference reference) {
+    public def IScope equation_ValuedObjectReferenceScope(EObject context, EReference reference) {
         var EObject theContext = context;
-        val obj = theContext.eGet(pack.dataflowFeature_Node, true)
-        val test = theContext.eGet(pack.dataflowFeature_ValuedObject, true)
+        val obj = theContext.eGet(pack.equation_Node, true)
+        val test = theContext.eGet(pack.equation_ValuedObject, true)
         if (!isProxy(obj)) {
             // case of RefNode: get outputs of referencedScope (scchart)
             if (obj instanceof ReferenceNode) {
@@ -135,7 +133,7 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
     }
     
     
-    public def IScope scope_DataflowFeature_node(EObject context, EReference reference) {
+    public def IScope scope_Equation_node(EObject context, EReference reference) {
         println("test " + context)
         val s = context as State
         val d = s.concurrencies.filter(typeof(Dataflow)).toList
@@ -169,8 +167,8 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
 ////		    println(s.getScope(reference).allElements)
 //		    //return dataflow_ValuedObjectScope(context, reference)
 //		}
-        if (context instanceof DataflowFeature) {
-            return dataflowFeature_ValuedObjectReferenceScope(context, reference)
+        if (context instanceof Equation) {
+            return equation_ValuedObjectReferenceScope(context, reference)
         }
         return null;
     }

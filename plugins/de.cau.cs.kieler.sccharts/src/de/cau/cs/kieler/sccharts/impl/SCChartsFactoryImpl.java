@@ -86,7 +86,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.REFERENCE_NODE: return createReferenceNode();
             case SCChartsPackage.CALL_NODE: return createCallNode();
             case SCChartsPackage.DEFINE_NODE: return createDefineNode();
-            case SCChartsPackage.DATAFLOW_FEATURE: return createDataflowFeature();
+            case SCChartsPackage.EQUATION: return createEquation();
             case SCChartsPackage.BINDING: return createBinding();
             case SCChartsPackage.TRANSITION: return createTransition();
             case SCChartsPackage.TEXT_EFFECT: return createTextEffect();
@@ -218,9 +218,9 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    public DataflowFeature createDataflowFeature() {
-        DataflowFeatureImpl dataflowFeature = new DataflowFeatureImpl();
-        return dataflowFeature;
+    public DefineNode createDefineNode() {
+        DefineNodeImpl defineNode = new DefineNodeImpl();
+        return defineNode;
     }
 
     /**
@@ -228,9 +228,9 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
-    public DefineNode createDefineNode() {
-        DefineNodeImpl defineNode = new DefineNodeImpl();
-        return defineNode;
+    public Equation createEquation() {
+        EquationImpl equation = new EquationImpl();
+        return equation;
     }
 
     /**

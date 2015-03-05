@@ -273,28 +273,28 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
         return defineNodeItemProvider;
     }
 
-    /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.DataflowFeature} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected DataflowFeatureItemProvider dataflowFeatureItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.DataflowFeature}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createDataflowFeatureAdapter() {
-        if (dataflowFeatureItemProvider == null) {
-            dataflowFeatureItemProvider = new DataflowFeatureItemProvider(this);
-        }
-
-        return dataflowFeatureItemProvider;
-    }
+//    /**
+//     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.DataflowFeature} instances.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     */
+//    protected DataflowFeatureItemProvider dataflowFeatureItemProvider;
+//
+//    /**
+//     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.DataflowFeature}.
+//     * <!-- begin-user-doc -->
+//     * <!-- end-user-doc -->
+//     * @generated
+//     */
+//    @Override
+//    public Adapter createDataflowFeatureAdapter() {
+//        if (dataflowFeatureItemProvider == null) {
+//            dataflowFeatureItemProvider = new DataflowFeatureItemProvider(this);
+//        }
+//
+//        return dataflowFeatureItemProvider;
+//    }
 
     /**
      * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Dataflow} instances.
@@ -682,7 +682,7 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
         if (referenceNodeItemProvider != null) referenceNodeItemProvider.dispose();
         if (callNodeItemProvider != null) callNodeItemProvider.dispose();
         if (defineNodeItemProvider != null) defineNodeItemProvider.dispose();
-        if (dataflowFeatureItemProvider != null) dataflowFeatureItemProvider.dispose();
+//        if (dataflowFeatureItemProvider != null) dataflowFeatureItemProvider.dispose();
         if (bindingItemProvider != null) bindingItemProvider.dispose();
         if (transitionItemProvider != null) transitionItemProvider.dispose();
         if (textEffectItemProvider != null) textEffectItemProvider.dispose();

@@ -16,7 +16,7 @@ package de.cau.cs.kieler.sccharts.impl;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
-import de.cau.cs.kieler.sccharts.DataflowFeature;
+import de.cau.cs.kieler.sccharts.Equation;
 import de.cau.cs.kieler.sccharts.Node;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
@@ -31,20 +31,20 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Dataflow Feature</b></em>'.
+ * An implementation of the model object '<em><b>Equation</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.DataflowFeatureImpl#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.DataflowFeatureImpl#getNode <em>Node</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.DataflowFeatureImpl#getValuedObject <em>Valued Object</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.EquationImpl#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.EquationImpl#getNode <em>Node</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.EquationImpl#getValuedObject <em>Valued Object</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class DataflowFeatureImpl extends EObjectImpl implements DataflowFeature {
+public class EquationImpl extends EObjectImpl implements Equation {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -87,7 +87,7 @@ public class DataflowFeatureImpl extends EObjectImpl implements DataflowFeature 
      * <!-- end-user-doc -->
      * @generated
      */
-    protected DataflowFeatureImpl() {
+    protected EquationImpl() {
         super();
     }
 
@@ -98,7 +98,7 @@ public class DataflowFeatureImpl extends EObjectImpl implements DataflowFeature 
      */
     @Override
     protected EClass eStaticClass() {
-        return SCChartsPackage.Literals.DATAFLOW_FEATURE;
+        return SCChartsPackage.Literals.EQUATION;
     }
 
     /**
@@ -119,7 +119,7 @@ public class DataflowFeatureImpl extends EObjectImpl implements DataflowFeature 
         Expression oldExpression = expression;
         expression = newExpression;
         if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.DATAFLOW_FEATURE__EXPRESSION, oldExpression, newExpression);
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.EQUATION__EXPRESSION, oldExpression, newExpression);
             if (msgs == null) msgs = notification; else msgs.add(notification);
         }
         return msgs;
@@ -134,14 +134,14 @@ public class DataflowFeatureImpl extends EObjectImpl implements DataflowFeature 
         if (newExpression != expression) {
             NotificationChain msgs = null;
             if (expression != null)
-                msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.DATAFLOW_FEATURE__EXPRESSION, null, msgs);
+                msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.EQUATION__EXPRESSION, null, msgs);
             if (newExpression != null)
-                msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.DATAFLOW_FEATURE__EXPRESSION, null, msgs);
+                msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.EQUATION__EXPRESSION, null, msgs);
             msgs = basicSetExpression(newExpression, msgs);
             if (msgs != null) msgs.dispatch();
         }
         else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.DATAFLOW_FEATURE__EXPRESSION, newExpression, newExpression));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.EQUATION__EXPRESSION, newExpression, newExpression));
     }
 
     /**
@@ -155,7 +155,7 @@ public class DataflowFeatureImpl extends EObjectImpl implements DataflowFeature 
             node = (Node)eResolveProxy(oldNode);
             if (node != oldNode) {
                 if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.DATAFLOW_FEATURE__NODE, oldNode, node));
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.EQUATION__NODE, oldNode, node));
             }
         }
         return node;
@@ -179,7 +179,7 @@ public class DataflowFeatureImpl extends EObjectImpl implements DataflowFeature 
         Node oldNode = node;
         node = newNode;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.DATAFLOW_FEATURE__NODE, oldNode, node));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.EQUATION__NODE, oldNode, node));
     }
 
     /**
@@ -193,7 +193,7 @@ public class DataflowFeatureImpl extends EObjectImpl implements DataflowFeature 
             valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
             if (valuedObject != oldValuedObject) {
                 if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.DATAFLOW_FEATURE__VALUED_OBJECT, oldValuedObject, valuedObject));
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SCChartsPackage.EQUATION__VALUED_OBJECT, oldValuedObject, valuedObject));
             }
         }
         return valuedObject;
@@ -217,7 +217,7 @@ public class DataflowFeatureImpl extends EObjectImpl implements DataflowFeature 
         ValuedObject oldValuedObject = valuedObject;
         valuedObject = newValuedObject;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.DATAFLOW_FEATURE__VALUED_OBJECT, oldValuedObject, valuedObject));
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.EQUATION__VALUED_OBJECT, oldValuedObject, valuedObject));
     }
 
     /**
@@ -228,7 +228,7 @@ public class DataflowFeatureImpl extends EObjectImpl implements DataflowFeature 
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case SCChartsPackage.DATAFLOW_FEATURE__EXPRESSION:
+            case SCChartsPackage.EQUATION__EXPRESSION:
                 return basicSetExpression(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -242,12 +242,12 @@ public class DataflowFeatureImpl extends EObjectImpl implements DataflowFeature 
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case SCChartsPackage.DATAFLOW_FEATURE__EXPRESSION:
+            case SCChartsPackage.EQUATION__EXPRESSION:
                 return getExpression();
-            case SCChartsPackage.DATAFLOW_FEATURE__NODE:
+            case SCChartsPackage.EQUATION__NODE:
                 if (resolve) return getNode();
                 return basicGetNode();
-            case SCChartsPackage.DATAFLOW_FEATURE__VALUED_OBJECT:
+            case SCChartsPackage.EQUATION__VALUED_OBJECT:
                 if (resolve) return getValuedObject();
                 return basicGetValuedObject();
         }
@@ -262,13 +262,13 @@ public class DataflowFeatureImpl extends EObjectImpl implements DataflowFeature 
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case SCChartsPackage.DATAFLOW_FEATURE__EXPRESSION:
+            case SCChartsPackage.EQUATION__EXPRESSION:
                 setExpression((Expression)newValue);
                 return;
-            case SCChartsPackage.DATAFLOW_FEATURE__NODE:
+            case SCChartsPackage.EQUATION__NODE:
                 setNode((Node)newValue);
                 return;
-            case SCChartsPackage.DATAFLOW_FEATURE__VALUED_OBJECT:
+            case SCChartsPackage.EQUATION__VALUED_OBJECT:
                 setValuedObject((ValuedObject)newValue);
                 return;
         }
@@ -283,13 +283,13 @@ public class DataflowFeatureImpl extends EObjectImpl implements DataflowFeature 
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case SCChartsPackage.DATAFLOW_FEATURE__EXPRESSION:
+            case SCChartsPackage.EQUATION__EXPRESSION:
                 setExpression((Expression)null);
                 return;
-            case SCChartsPackage.DATAFLOW_FEATURE__NODE:
+            case SCChartsPackage.EQUATION__NODE:
                 setNode((Node)null);
                 return;
-            case SCChartsPackage.DATAFLOW_FEATURE__VALUED_OBJECT:
+            case SCChartsPackage.EQUATION__VALUED_OBJECT:
                 setValuedObject((ValuedObject)null);
                 return;
         }
@@ -304,14 +304,14 @@ public class DataflowFeatureImpl extends EObjectImpl implements DataflowFeature 
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case SCChartsPackage.DATAFLOW_FEATURE__EXPRESSION:
+            case SCChartsPackage.EQUATION__EXPRESSION:
                 return expression != null;
-            case SCChartsPackage.DATAFLOW_FEATURE__NODE:
+            case SCChartsPackage.EQUATION__NODE:
                 return node != null;
-            case SCChartsPackage.DATAFLOW_FEATURE__VALUED_OBJECT:
+            case SCChartsPackage.EQUATION__VALUED_OBJECT:
                 return valuedObject != null;
         }
         return super.eIsSet(featureID);
     }
 
-} //DataflowFeatureImpl
+} //EquationImpl

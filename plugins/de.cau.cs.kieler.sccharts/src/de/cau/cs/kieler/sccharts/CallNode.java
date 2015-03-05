@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sccharts;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -28,7 +29,6 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.CallNode#getCallReference <em>Call Reference</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.CallNode#getParameters <em>Parameters</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.CallNode#getReferencedScope <em>Referenced Scope</em>}</li>
  * </ul>
  * </p>
  *
@@ -55,7 +55,7 @@ public interface CallNode extends Node {
      * @return the value of the '<em>Call Reference</em>' reference.
      * @see #setCallReference(DefineNode)
      * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getCallNode_CallReference()
-     * @model
+     * @model required="true"
      * @generated
      */
     DefineNode getCallReference();
@@ -72,7 +72,7 @@ public interface CallNode extends Node {
 
     /**
      * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Expression}.
+     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Parameters</em>' reference list isn't clear,
@@ -84,32 +84,6 @@ public interface CallNode extends Node {
      * @model containment="true"
      * @generated
      */
-    EList<Expression> getParameters();
-
-    /**
-     * Returns the value of the '<em><b>Referenced Scope</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Referenced Scope</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Referenced Scope</em>' reference.
-     * @see #setReferencedScope(Scope)
-     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getCallNode_ReferencedScope()
-     * @model
-     * @generated
-     */
-    Scope getReferencedScope();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.CallNode#getReferencedScope <em>Referenced Scope</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Referenced Scope</em>' reference.
-     * @see #getReferencedScope()
-     * @generated
-     */
-    void setReferencedScope(Scope value);
+    EList<ValuedObjectReference> getParameters();
 
 } // CallNode

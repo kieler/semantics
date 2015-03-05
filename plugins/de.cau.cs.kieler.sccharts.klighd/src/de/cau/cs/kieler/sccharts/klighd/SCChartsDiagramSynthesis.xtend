@@ -63,7 +63,7 @@ import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.CallNode
 import de.cau.cs.kieler.sccharts.Dataflow
-import de.cau.cs.kieler.sccharts.DataflowFeature
+import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.sccharts.DefineNode
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.EntryAction
@@ -953,8 +953,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             }
             
             // translate direct dataflow modelling
-            for (f: d.features) {
-                val vo = f.valuedObject
+            for (eq: d.equations) {
+                val vo = eq.valuedObject
                 node.children += vo.createNode(node) => [
                     it.addPolygon.createOutputNodeShape
                     it.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
@@ -965,8 +965,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     ]
                     it.createLabel(it).configureInsideCenteredNodeLabel(
                         vo.reference.serialize as String, 6, KlighdConstants::DEFAULT_FONT_NAME)
-                    val expr = f.expression
-                    node.children += expr.translate(d.features.indexOf(f), node, d)    
+                    val expr = eq.expression
+                    node.children += expr.translate(d.equations.indexOf(eq), node, d)    
                 ]
             }
             node.addCollapseExpand(d.label)
@@ -1064,15 +1064,15 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         } else if (decl.isOutput) {
                             // case vor is output
                             // get the index of the dataflow feature
-                            var fIndex = 0
-                            for (f: d.features) {
-                                if (f.valuedObject.equals(subVo)) {
-                                    fIndex = d.features.indexOf(f)
+                            var eqIndex = 0
+                            for (eq: d.equations) {
+                                if (eq.valuedObject.equals(subVo)) {
+                                    eqIndex = d.equations.indexOf(eq)
                                 }
                             }
                             // get the source node and port of the output node
                             // (should only be one incoming edge, so take this one)
-                            val refVo = d.features.get(fIndex).valuedObject
+                            val refVo = d.equations.get(eqIndex).valuedObject
                             nNode.createEdge(se) => [
                                 it.source = refVo.getNode(parentNode).incomingEdges.get(0).source 
                                 it.target = nNode
@@ -1083,15 +1083,15 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         } else {
                             // the current subVo is vor, but not an input (maybe "nothing" or both)
                             // re: trennen zwischen df und opExpr!!!!
-                            var findex = 0
-                            for (f: d.features) {
-                                if (f.valuedObject.equals(subVo)) {
-                                    findex = d.features.indexOf(f)
+                            var eqIndex = 0
+                            for (eq: d.equations) {
+                                if (eq.valuedObject.equals(subVo)) {
+                                    eqIndex = d.equations.indexOf(eq)
                                 }
                             }
                             
-                            val refVo = d.features.get(findex).valuedObject//d.valuedObjects.get(d.valuedObjects.indexOf(subVo))
-                            val refExpr = d.features.get(findex).expression//d.expressions.get(d.valuedObjects.indexOf(subVo))
+                            val refVo = d.equations.get(eqIndex).valuedObject//d.valuedObjects.get(d.valuedObjects.indexOf(subVo))
+                            val refExpr = d.equations.get(eqIndex).expression//d.expressions.get(d.valuedObjects.indexOf(subVo))
                             
                             val inputNode = subVo.createNode(parentNode) => [
                                 it.addPolygon.createInputNodeShape
@@ -1129,11 +1129,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         parentNode.children += se.translate(index, parentNode, d)
                     }
                 ]
-                if (expr.eContainer instanceof DataflowFeature) {
+                if (expr.eContainer instanceof Equation) {
                 //if (expr.eContainer instanceof Dataflow) { // <-- alte Variante, jetzt DF-Feature
                     //val df = expr.eContainer as Dataflow // <-- dataflow d is already a parameter?!
                     //val vo = df.valuedObjects.get(index) // <-- alte Variante, jetzt DF-Feature
-                    val vo = d.features.get(index).valuedObject
+                    val vo = d.equations.get(index).valuedObject
                     nNode.addPort(vo, PortSide::EAST)
                     nNode.createEdge(parentNode) => [
                         it.source = nNode
@@ -1169,11 +1169,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             ValuedObjectReference: {
                 // expr = ValuedObjectReference: it.valuedObject = current input
                 val vo = expr.valuedObject
-                val voRef = d.features.get(index).valuedObject
+                val voRef = d.equations.get(index).valuedObject
                 //val voRef = d.valuedObjects.get(index) // <-- alte Variante
-                val feature = d.features.get(index)
+                val equation = d.equations.get(index)
                 // current features (expr) is not attached to a call/reference node
-                if (feature.node == null) {
+                if (equation.node == null) {
                     val inputNode = vo.createNode(parentNode) => [
                         it.addPolygon.createInputNodeShape
                         it.addDefaultLayoutParameter
@@ -1196,9 +1196,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     parentNode.children += inputNode
                     return inputNode
                 } else {
-                    val fNode = d.features.get(index).node
-                    if (fNode instanceof CallNode) {
-                        val cNode = d.features.get(index).node as CallNode
+                    val eqNode = d.equations.get(index).node
+                    if (eqNode instanceof CallNode) {
+                        val cNode = d.equations.get(index).node as CallNode
                         cNode.getNode().createEdge(expr) => [
                             it.source = cNode.getNode()
                             it.target = voRef.getNode(parentNode)
@@ -1207,13 +1207,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                             it.createEdgeStyle
                         ]
                     }
-                    if (fNode instanceof ReferenceNode) {
-                        val trn_node = (fNode as ReferenceNode).getNode()//trn.getNode()
+                    if (eqNode instanceof ReferenceNode) {
+                        val refNode = (eqNode as ReferenceNode).getNode()//trn.getNode()
                         //val trn_vo = refVo
-                        trn_node.createEdge(expr) => [ //trn.getNode().createEdge(vo) => [
-                            it.source = trn_node
+                        refNode.createEdge(expr) => [ //trn.getNode().createEdge(vo) => [
+                            it.source = refNode //trn_node
                             it.target = voRef.getNode(parentNode)
-                            it.sourcePort = trn_node.getPort(expr.valuedObject.reference.portMap) //trn_vo.reference.portMap)
+                            it.sourcePort = refNode.getPort(expr.valuedObject.reference.portMap) //trn_vo.reference.portMap)
                             it.targetPort = voRef.getNode(parentNode).getPort(voRef.reference.portMap)
                             it.createEdgeStyle
                         ]
@@ -1348,9 +1348,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         n.createEdge(parentNode) => [
             it.source = n
             it.sourcePort = n.getPort(expr.portMap)
-            if (expr.eContainer instanceof DataflowFeature) {
-                val f = (expr.eContainer as DataflowFeature)
-                val voRef = f.valuedObject
+            if (expr.eContainer instanceof Equation) {
+                val eq = (expr.eContainer as Equation)
+                val voRef = eq.valuedObject
                 it.target = voRef.getNode(parentNode)
                 it.targetPort = voRef.getNode(parentNode).getPort(voRef.reference.portMap)
 //            }

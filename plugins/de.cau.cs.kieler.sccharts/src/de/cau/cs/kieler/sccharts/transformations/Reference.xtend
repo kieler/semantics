@@ -226,12 +226,12 @@ class Reference {
                 refNode.referencedScope.declarations.filter[it.output].forEach[
                     refedOutputs += valuedObjects
                 ]
-                for (f: dataflow.features) {
-                    if (f.expression instanceof ValuedObjectReference) {
-                        val refedVo = (f.expression as ValuedObjectReference).valuedObject
+                for (eq: dataflow.equations) {
+                    if (eq.expression instanceof ValuedObjectReference) {
+                        val refedVo = (eq.expression as ValuedObjectReference).valuedObject
                         if (refedOutputs.contains(refedVo)) {
                             val newBinding = SCChartsFactory.eINSTANCE.createBinding
-                            newBinding.actual = f.valuedObject
+                            newBinding.actual = eq.valuedObject
                             newBinding.formal = refedVo
                             val rState = nodeMapping.get(refNode)
                             rState.bindings += newBinding
@@ -246,12 +246,12 @@ class Reference {
 			 * Traverse all DataflowFeatures of current Dataflow
 			 * and transform it to already implemented extended sccharts features
 			 */
-			for (f: dataflow.features.immutableCopy) {
-			    if (f.node != null) {
+			for (eq: dataflow.equations.immutableCopy) {
+			    if (eq.node != null) {
 			        // DataflowFeature has a valued object which is part of another node
-			        if (f.node instanceof CallNode) {
+			        if (eq.node instanceof CallNode) {
                         // DataflowFeature: f.node is a CallNode
-                        val cn = f.node as CallNode
+                        val cn = eq.node as CallNode
                         val defNode = cn.callReference
                         if (defNode.states.nullOrEmpty) {
                             /*
@@ -259,12 +259,12 @@ class Reference {
                              * => create new region with initial and final state for each expression
                              * and an assignment as transition effect 
                              */
-                            val refedVo = (f.expression as ValuedObjectReference).valuedObject
+                            val refedVo = (eq.expression as ValuedObjectReference).valuedObject
                             val exprIndex = defNode.valuedObjects.indexOf(refedVo)
                             val newExpr = defNode.expressions.get(exprIndex).copy
                             
                             val newAssignment = SCChartsFactory.eINSTANCE.createAssignment
-                            newAssignment.valuedObject = f.valuedObject
+                            newAssignment.valuedObject = eq.valuedObject
                             newAssignment.expression = newExpr
                             
                             val rRegion = parentState.createRegion("_"+dataflow.id+regionCounter)
@@ -347,9 +347,9 @@ class Reference {
                                 ]
                             ]
                             // replace output valued object
-                            val refedVo = (f.expression as ValuedObjectReference).valuedObject
+                            val refedVo = (eq.expression as ValuedObjectReference).valuedObject
                             for (s: rRegion.states) {
-                                s.replaceAllOccurrences(refedVo, f.valuedObject)
+                                s.replaceAllOccurrences(refedVo, eq.valuedObject)
                             }
                             /*
                              * remove transitions with no source or target state attached
@@ -398,8 +398,8 @@ class Reference {
                     idCounter = idCounter + 1
                     
                     val newAssignment = SCChartsFactory.eINSTANCE.createAssignment
-                    newAssignment.valuedObject = f.valuedObject
-                    newAssignment.expression = f.expression
+                    newAssignment.valuedObject = eq.valuedObject
+                    newAssignment.expression = eq.expression
                     
                     val transition = SCChartsFactory.eINSTANCE.createTransition
                     transition.sourceState = newState

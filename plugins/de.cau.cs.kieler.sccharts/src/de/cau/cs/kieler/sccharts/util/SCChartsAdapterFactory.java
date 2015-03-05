@@ -140,8 +140,8 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createDefineNodeAdapter();
             }
             @Override
-            public Adapter caseDataflowFeature(DataflowFeature object) {
-                return createDataflowFeatureAdapter();
+            public Adapter caseEquation(Equation object) {
+                return createEquationAdapter();
             }
             @Override
             public Adapter caseBinding(Binding object) {
@@ -336,20 +336,6 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.DataflowFeature <em>Dataflow Feature</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.DataflowFeature
-     * @generated
-     */
-    public Adapter createDataflowFeatureAdapter() {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.DefineNode <em>Define Node</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -360,6 +346,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createDefineNodeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Equation <em>Equation</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.Equation
+     * @generated
+     */
+    public Adapter createEquationAdapter() {
         return null;
     }
 

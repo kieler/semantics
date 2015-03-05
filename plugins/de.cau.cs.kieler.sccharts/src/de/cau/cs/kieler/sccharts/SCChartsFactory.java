@@ -103,15 +103,6 @@ public interface SCChartsFactory extends EFactory {
     CallNode createCallNode();
 
     /**
-     * Returns a new object of class '<em>Dataflow Feature</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Dataflow Feature</em>'.
-     * @generated
-     */
-    DataflowFeature createDataflowFeature();
-
-    /**
      * Returns a new object of class '<em>Define Node</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -119,6 +110,15 @@ public interface SCChartsFactory extends EFactory {
      * @generated
      */
     DefineNode createDefineNode();
+
+    /**
+     * Returns a new object of class '<em>Equation</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Equation</em>'.
+     * @generated
+     */
+    Equation createEquation();
 
     /**
      * Returns a new object of class '<em>Dataflow</em>'.

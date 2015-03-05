@@ -15,6 +15,8 @@ package de.cau.cs.kieler.sccharts;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
 
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -70,7 +72,7 @@ public interface ReferenceNode extends Node {
 
     /**
      * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Expression}.
+     * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Parameters</em>' containment reference list isn't clear,
@@ -82,6 +84,6 @@ public interface ReferenceNode extends Node {
      * @model containment="true"
      * @generated
      */
-    EList<Expression> getParameters();
+    EList<ValuedObjectReference> getParameters();
 
 } // ReferenceNode

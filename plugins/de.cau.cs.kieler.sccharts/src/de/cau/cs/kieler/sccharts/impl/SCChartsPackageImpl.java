@@ -28,6 +28,7 @@ import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.Effect;
 import de.cau.cs.kieler.sccharts.Emission;
 import de.cau.cs.kieler.sccharts.EntryAction;
+import de.cau.cs.kieler.sccharts.Equation;
 import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.For;
 import de.cau.cs.kieler.sccharts.FuncCall;
@@ -136,14 +137,14 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass dataflowFeatureEClass = null;
+    private EClass defineNodeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass defineNodeEClass = null;
+    private EClass equationEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -377,7 +378,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     public EAttribute getAction_Immediate() {
-        return (EAttribute)actionEClass.getEStructuralFeatures().get(3);
+        return (EAttribute)actionEClass.getEStructuralFeatures().get(4);
     }
 
     /**
@@ -386,7 +387,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     public EAttribute getAction_Label() {
-        return (EAttribute)actionEClass.getEStructuralFeatures().get(4);
+        return (EAttribute)actionEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -565,51 +566,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getCallNode_ReferencedScope() {
-        return (EReference)callNodeEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getDataflowFeature() {
-        return dataflowFeatureEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getDataflowFeature_Expression() {
-        return (EReference)dataflowFeatureEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getDataflowFeature_Node() {
-        return (EReference)dataflowFeatureEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getDataflowFeature_ValuedObject() {
-        return (EReference)dataflowFeatureEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EClass getDefineNode() {
         return defineNodeEClass;
     }
@@ -664,6 +620,42 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getEquation() {
+        return equationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getEquation_Expression() {
+        return (EReference)equationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getEquation_Node() {
+        return (EReference)equationEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getEquation_ValuedObject() {
+        return (EReference)equationEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getDataflow() {
         return dataflowEClass;
     }
@@ -682,7 +674,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getDataflow_Features() {
+    public EReference getDataflow_Equations() {
         return (EReference)dataflowEClass.getEStructuralFeatures().get(1);
     }
 
@@ -1123,8 +1115,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEReference(actionEClass, ACTION__EFFECTS);
         createEReference(actionEClass, ACTION__TRIGGER);
         createEAttribute(actionEClass, ACTION__DELAY);
-        createEAttribute(actionEClass, ACTION__IMMEDIATE);
         createEAttribute(actionEClass, ACTION__LABEL);
+        createEAttribute(actionEClass, ACTION__IMMEDIATE);
 
         assignmentEClass = createEClass(ASSIGNMENT);
         createEReference(assignmentEClass, ASSIGNMENT__VALUED_OBJECT);
@@ -1154,7 +1146,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         dataflowEClass = createEClass(DATAFLOW);
         createEReference(dataflowEClass, DATAFLOW__NODES);
-        createEReference(dataflowEClass, DATAFLOW__FEATURES);
+        createEReference(dataflowEClass, DATAFLOW__EQUATIONS);
 
         nodeEClass = createEClass(NODE);
         createEAttribute(nodeEClass, NODE__ID);
@@ -1167,7 +1159,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         callNodeEClass = createEClass(CALL_NODE);
         createEReference(callNodeEClass, CALL_NODE__CALL_REFERENCE);
         createEReference(callNodeEClass, CALL_NODE__PARAMETERS);
-        createEReference(callNodeEClass, CALL_NODE__REFERENCED_SCOPE);
 
         defineNodeEClass = createEClass(DEFINE_NODE);
         createEReference(defineNodeEClass, DEFINE_NODE__INPUTS);
@@ -1176,10 +1167,10 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEReference(defineNodeEClass, DEFINE_NODE__EXPRESSIONS);
         createEReference(defineNodeEClass, DEFINE_NODE__STATES);
 
-        dataflowFeatureEClass = createEClass(DATAFLOW_FEATURE);
-        createEReference(dataflowFeatureEClass, DATAFLOW_FEATURE__EXPRESSION);
-        createEReference(dataflowFeatureEClass, DATAFLOW_FEATURE__NODE);
-        createEReference(dataflowFeatureEClass, DATAFLOW_FEATURE__VALUED_OBJECT);
+        equationEClass = createEClass(EQUATION);
+        createEReference(equationEClass, EQUATION__EXPRESSION);
+        createEReference(equationEClass, EQUATION__NODE);
+        createEReference(equationEClass, EQUATION__VALUED_OBJECT);
 
         bindingEClass = createEClass(BINDING);
         createEReference(bindingEClass, BINDING__FORMAL);
@@ -1293,8 +1284,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEReference(getAction_Effects(), this.getEffect(), null, "effects", null, 0, -1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getAction_Trigger(), theKExpressionsPackage.getExpression(), null, "trigger", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getAction_Delay(), ecorePackage.getEInt(), "delay", "1", 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getAction_Immediate(), ecorePackage.getEBoolean(), "immediate", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getAction_Label(), ecorePackage.getEString(), "label", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+        initEAttribute(getAction_Immediate(), ecorePackage.getEBoolean(), "immediate", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getAssignment_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1324,7 +1315,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         initEClass(dataflowEClass, Dataflow.class, "Dataflow", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getDataflow_Nodes(), this.getNode(), null, "nodes", null, 0, -1, Dataflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDataflow_Features(), this.getDataflowFeature(), null, "features", null, 0, -1, Dataflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataflow_Equations(), this.getEquation(), null, "equations", null, 0, -1, Dataflow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(nodeEClass, Node.class, "Node", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getNode_Id(), ecorePackage.getEString(), "id", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1332,12 +1323,11 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         initEClass(referenceNodeEClass, ReferenceNode.class, "ReferenceNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getReferenceNode_ReferencedScope(), this.getScope(), null, "referencedScope", null, 0, 1, ReferenceNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getReferenceNode_Parameters(), theKExpressionsPackage.getExpression(), null, "parameters", null, 0, -1, ReferenceNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getReferenceNode_Parameters(), theKExpressionsPackage.getValuedObjectReference(), null, "parameters", null, 0, -1, ReferenceNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(callNodeEClass, CallNode.class, "CallNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getCallNode_CallReference(), this.getDefineNode(), null, "callReference", null, 0, 1, CallNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getCallNode_Parameters(), theKExpressionsPackage.getExpression(), null, "parameters", null, 0, -1, CallNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getCallNode_ReferencedScope(), this.getScope(), null, "referencedScope", null, 0, 1, CallNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getCallNode_CallReference(), this.getDefineNode(), null, "callReference", null, 1, 1, CallNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getCallNode_Parameters(), theKExpressionsPackage.getValuedObjectReference(), null, "parameters", null, 0, -1, CallNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(defineNodeEClass, DefineNode.class, "DefineNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getDefineNode_Inputs(), theKExpressionsPackage.getDeclaration(), null, "inputs", null, 0, -1, DefineNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1346,10 +1336,10 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEReference(getDefineNode_Expressions(), theKExpressionsPackage.getExpression(), null, "expressions", null, 0, -1, DefineNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getDefineNode_States(), this.getState(), null, "states", null, 0, -1, DefineNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(dataflowFeatureEClass, DataflowFeature.class, "DataflowFeature", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getDataflowFeature_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, DataflowFeature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDataflowFeature_Node(), this.getNode(), null, "node", null, 0, 1, DataflowFeature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDataflowFeature_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 0, 1, DataflowFeature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(equationEClass, Equation.class, "Equation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getEquation_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 1, 1, Equation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getEquation_Node(), this.getNode(), null, "node", null, 0, 1, Equation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getEquation_ValuedObject(), theKExpressionsPackage.getValuedObject(), null, "valuedObject", null, 1, 1, Equation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(bindingEClass, Binding.class, "Binding", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getBinding_Formal(), theKExpressionsPackage.getValuedObject(), null, "formal", null, 0, 1, Binding.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -35,13 +35,10 @@ SingleDataflow returns sccharts::Dataflow:
       'dataflow' (id=ID)? (label=STRING)? ('['for=For']')?  ':'
       (declarations+=Declaration)*
      )?
-    
-//    ((valuedObjects += [kexpressions::ValuedObject]) '=' (expressions += Expression) ';')*
-//    (nodes+=Node)*
     (
-        (features += Feature) 
+        (equations += Equation) 
         |
-        (nodes+=Node) // alt: + (nodes+=Node)+
+        (nodes += Node) // alt: + (nodes+=Node)+
     )*
 ;
 
@@ -70,18 +67,18 @@ Dataflow returns sccharts::Dataflow:
     'dataflow' (id=ID)? (label=STRING)? ('['for=For']')? ':'
     (declarations+=Declaration)*
     (
-        (features += Feature) 
+        (equations += Equation) 
         |
         (nodes+=Node) // alt: + (nodes+=Node)+
     )*
 ;
 
-Feature returns sccharts::DataflowFeature:
-    {sccharts::DataflowFeature}
+Equation returns sccharts::Equation:
+    {sccharts::Equation}
     (
         (valuedObject = [kexpressions::ValuedObject]) '=' (expression = Expression) ';'
         |
-        (valuedObject = [kexpressions::ValuedObject]) '=' node = [sccharts::Node|ID] '.' (expression = ValuedObjectReference) ';'
+        (valuedObject = [kexpressions::ValuedObject]) '=' (node = [sccharts::Node|ID]) '.' (expression = ValuedObjectReference) ';'
     )
 ;
 
@@ -173,7 +170,6 @@ Node returns sccharts::Node:
 CallNode returns sccharts::CallNode:
     {sccharts::CallNode}
     (id=ID) '=' callReference = [sccharts::DefineNode|ID]
-    //'(' (parameters+=Expression)? (',' parameters+=Expression)* ')'
     '(' (parameters+=ValuedObjectReference)? (',' parameters+=ValuedObjectReference)* ')'
     ';'
 ;
@@ -193,7 +189,6 @@ DefineNode returns sccharts::DefineNode:
 ReferenceNode returns sccharts::ReferenceNode:
     {sccharts::ReferenceNode}
     (id=ID) (label=STRING)? '=' 'ref' referencedScope = [sccharts::State|ID]
-    //'(' (parameters+=Expression)? (',' parameters+=Expression)* ')'
     '(' (parameters+=ValuedObjectReference)? (',' parameters+=ValuedObjectReference)* ')'
     ';'
 ;

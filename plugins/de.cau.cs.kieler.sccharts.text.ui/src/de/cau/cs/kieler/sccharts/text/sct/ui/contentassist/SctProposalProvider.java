@@ -70,7 +70,7 @@ public class SctProposalProvider extends AbstractSctProposalProvider {
     }
     
     @Override
-    public void completeFeature_Node(EObject model, Assignment assignment,
+    public void completeEquation_Node(EObject model, Assignment assignment,
             ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
         lookupCrossReference(((CrossReference)assignment.getTerminal()), context, acceptor, new Predicate<IEObjectDescription>() {
             

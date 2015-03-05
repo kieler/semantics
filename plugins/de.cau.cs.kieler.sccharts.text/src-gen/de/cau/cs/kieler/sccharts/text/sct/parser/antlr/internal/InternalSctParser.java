@@ -726,7 +726,7 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSingleDataflow"
-    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:270:1: ruleSingleDataflow returns [EObject current=null] : ( () ( ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= RULE_ID ) )? ( (lv_label_4_0= RULE_STRING ) )? (otherlv_5= '[' ( (lv_for_6_0= ruleFor ) ) otherlv_7= ']' )? otherlv_8= ':' ( (lv_declarations_9_0= ruleDeclaration ) )* )? ( ( (lv_features_10_0= ruleFeature ) ) | ( (lv_nodes_11_0= ruleNode ) ) )* ) ;
+    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:270:1: ruleSingleDataflow returns [EObject current=null] : ( () ( ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= RULE_ID ) )? ( (lv_label_4_0= RULE_STRING ) )? (otherlv_5= '[' ( (lv_for_6_0= ruleFor ) ) otherlv_7= ']' )? otherlv_8= ':' ( (lv_declarations_9_0= ruleDeclaration ) )* )? ( ( (lv_equations_10_0= ruleEquation ) ) | ( (lv_nodes_11_0= ruleNode ) ) )* ) ;
     public final EObject ruleSingleDataflow() throws RecognitionException {
         EObject current = null;
 
@@ -742,7 +742,7 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
 
         EObject lv_declarations_9_0 = null;
 
-        EObject lv_features_10_0 = null;
+        EObject lv_equations_10_0 = null;
 
         EObject lv_nodes_11_0 = null;
 
@@ -750,11 +750,11 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:273:28: ( ( () ( ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= RULE_ID ) )? ( (lv_label_4_0= RULE_STRING ) )? (otherlv_5= '[' ( (lv_for_6_0= ruleFor ) ) otherlv_7= ']' )? otherlv_8= ':' ( (lv_declarations_9_0= ruleDeclaration ) )* )? ( ( (lv_features_10_0= ruleFeature ) ) | ( (lv_nodes_11_0= ruleNode ) ) )* ) )
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:274:1: ( () ( ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= RULE_ID ) )? ( (lv_label_4_0= RULE_STRING ) )? (otherlv_5= '[' ( (lv_for_6_0= ruleFor ) ) otherlv_7= ']' )? otherlv_8= ':' ( (lv_declarations_9_0= ruleDeclaration ) )* )? ( ( (lv_features_10_0= ruleFeature ) ) | ( (lv_nodes_11_0= ruleNode ) ) )* )
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:273:28: ( ( () ( ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= RULE_ID ) )? ( (lv_label_4_0= RULE_STRING ) )? (otherlv_5= '[' ( (lv_for_6_0= ruleFor ) ) otherlv_7= ']' )? otherlv_8= ':' ( (lv_declarations_9_0= ruleDeclaration ) )* )? ( ( (lv_equations_10_0= ruleEquation ) ) | ( (lv_nodes_11_0= ruleNode ) ) )* ) )
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:274:1: ( () ( ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= RULE_ID ) )? ( (lv_label_4_0= RULE_STRING ) )? (otherlv_5= '[' ( (lv_for_6_0= ruleFor ) ) otherlv_7= ']' )? otherlv_8= ':' ( (lv_declarations_9_0= ruleDeclaration ) )* )? ( ( (lv_equations_10_0= ruleEquation ) ) | ( (lv_nodes_11_0= ruleNode ) ) )* )
             {
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:274:1: ( () ( ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= RULE_ID ) )? ( (lv_label_4_0= RULE_STRING ) )? (otherlv_5= '[' ( (lv_for_6_0= ruleFor ) ) otherlv_7= ']' )? otherlv_8= ':' ( (lv_declarations_9_0= ruleDeclaration ) )* )? ( ( (lv_features_10_0= ruleFeature ) ) | ( (lv_nodes_11_0= ruleNode ) ) )* )
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:274:2: () ( ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= RULE_ID ) )? ( (lv_label_4_0= RULE_STRING ) )? (otherlv_5= '[' ( (lv_for_6_0= ruleFor ) ) otherlv_7= ']' )? otherlv_8= ':' ( (lv_declarations_9_0= ruleDeclaration ) )* )? ( ( (lv_features_10_0= ruleFeature ) ) | ( (lv_nodes_11_0= ruleNode ) ) )*
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:274:1: ( () ( ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= RULE_ID ) )? ( (lv_label_4_0= RULE_STRING ) )? (otherlv_5= '[' ( (lv_for_6_0= ruleFor ) ) otherlv_7= ']' )? otherlv_8= ':' ( (lv_declarations_9_0= ruleDeclaration ) )* )? ( ( (lv_equations_10_0= ruleEquation ) ) | ( (lv_nodes_11_0= ruleNode ) ) )* )
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:274:2: () ( ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= RULE_ID ) )? ( (lv_label_4_0= RULE_STRING ) )? (otherlv_5= '[' ( (lv_for_6_0= ruleFor ) ) otherlv_7= ']' )? otherlv_8= ':' ( (lv_declarations_9_0= ruleDeclaration ) )* )? ( ( (lv_equations_10_0= ruleEquation ) ) | ( (lv_nodes_11_0= ruleNode ) ) )*
             {
             // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:274:2: ()
             // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:275:2: 
@@ -1045,7 +1045,7 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:389:5: ( ( (lv_features_10_0= ruleFeature ) ) | ( (lv_nodes_11_0= ruleNode ) ) )*
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:389:5: ( ( (lv_equations_10_0= ruleEquation ) ) | ( (lv_nodes_11_0= ruleNode ) ) )*
             loop14:
             do {
                 int alt14=3;
@@ -1106,21 +1106,21 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
 
                 switch (alt14) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:389:6: ( (lv_features_10_0= ruleFeature ) )
+            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:389:6: ( (lv_equations_10_0= ruleEquation ) )
             	    {
-            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:389:6: ( (lv_features_10_0= ruleFeature ) )
-            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:390:1: (lv_features_10_0= ruleFeature )
+            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:389:6: ( (lv_equations_10_0= ruleEquation ) )
+            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:390:1: (lv_equations_10_0= ruleEquation )
             	    {
-            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:390:1: (lv_features_10_0= ruleFeature )
-            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:391:3: lv_features_10_0= ruleFeature
+            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:390:1: (lv_equations_10_0= ruleEquation )
+            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:391:3: lv_equations_10_0= ruleEquation
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getSingleDataflowAccess().getFeaturesFeatureParserRuleCall_2_0_0()); 
+            	      	        newCompositeNode(grammarAccess.getSingleDataflowAccess().getEquationsEquationParserRuleCall_2_0_0()); 
             	      	    
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_ruleFeature_in_ruleSingleDataflow678);
-            	    lv_features_10_0=ruleFeature();
+            	    pushFollow(FollowSets000.FOLLOW_ruleEquation_in_ruleSingleDataflow678);
+            	    lv_equations_10_0=ruleEquation();
 
             	    state._fsp--;
             	    if (state.failed) return current;
@@ -1131,9 +1131,9 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
             	      	        }
             	             		add(
             	             			current, 
-            	             			"features",
-            	              		lv_features_10_0, 
-            	              		"Feature");
+            	             			"equations",
+            	              		lv_equations_10_0, 
+            	              		"Equation");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -1884,7 +1884,7 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDataflow"
-    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:689:1: ruleDataflow returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= RULE_ID ) )? ( (lv_label_4_0= RULE_STRING ) )? (otherlv_5= '[' ( (lv_for_6_0= ruleFor ) ) otherlv_7= ']' )? otherlv_8= ':' ( (lv_declarations_9_0= ruleDeclaration ) )* ( ( (lv_features_10_0= ruleFeature ) ) | ( (lv_nodes_11_0= ruleNode ) ) )* ) ;
+    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:689:1: ruleDataflow returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= RULE_ID ) )? ( (lv_label_4_0= RULE_STRING ) )? (otherlv_5= '[' ( (lv_for_6_0= ruleFor ) ) otherlv_7= ']' )? otherlv_8= ':' ( (lv_declarations_9_0= ruleDeclaration ) )* ( ( (lv_equations_10_0= ruleEquation ) ) | ( (lv_nodes_11_0= ruleNode ) ) )* ) ;
     public final EObject ruleDataflow() throws RecognitionException {
         EObject current = null;
 
@@ -1900,7 +1900,7 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
 
         EObject lv_declarations_9_0 = null;
 
-        EObject lv_features_10_0 = null;
+        EObject lv_equations_10_0 = null;
 
         EObject lv_nodes_11_0 = null;
 
@@ -1908,11 +1908,11 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:692:28: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= RULE_ID ) )? ( (lv_label_4_0= RULE_STRING ) )? (otherlv_5= '[' ( (lv_for_6_0= ruleFor ) ) otherlv_7= ']' )? otherlv_8= ':' ( (lv_declarations_9_0= ruleDeclaration ) )* ( ( (lv_features_10_0= ruleFeature ) ) | ( (lv_nodes_11_0= ruleNode ) ) )* ) )
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:693:1: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= RULE_ID ) )? ( (lv_label_4_0= RULE_STRING ) )? (otherlv_5= '[' ( (lv_for_6_0= ruleFor ) ) otherlv_7= ']' )? otherlv_8= ':' ( (lv_declarations_9_0= ruleDeclaration ) )* ( ( (lv_features_10_0= ruleFeature ) ) | ( (lv_nodes_11_0= ruleNode ) ) )* )
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:692:28: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= RULE_ID ) )? ( (lv_label_4_0= RULE_STRING ) )? (otherlv_5= '[' ( (lv_for_6_0= ruleFor ) ) otherlv_7= ']' )? otherlv_8= ':' ( (lv_declarations_9_0= ruleDeclaration ) )* ( ( (lv_equations_10_0= ruleEquation ) ) | ( (lv_nodes_11_0= ruleNode ) ) )* ) )
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:693:1: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= RULE_ID ) )? ( (lv_label_4_0= RULE_STRING ) )? (otherlv_5= '[' ( (lv_for_6_0= ruleFor ) ) otherlv_7= ']' )? otherlv_8= ':' ( (lv_declarations_9_0= ruleDeclaration ) )* ( ( (lv_equations_10_0= ruleEquation ) ) | ( (lv_nodes_11_0= ruleNode ) ) )* )
             {
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:693:1: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= RULE_ID ) )? ( (lv_label_4_0= RULE_STRING ) )? (otherlv_5= '[' ( (lv_for_6_0= ruleFor ) ) otherlv_7= ']' )? otherlv_8= ':' ( (lv_declarations_9_0= ruleDeclaration ) )* ( ( (lv_features_10_0= ruleFeature ) ) | ( (lv_nodes_11_0= ruleNode ) ) )* )
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:693:2: () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= RULE_ID ) )? ( (lv_label_4_0= RULE_STRING ) )? (otherlv_5= '[' ( (lv_for_6_0= ruleFor ) ) otherlv_7= ']' )? otherlv_8= ':' ( (lv_declarations_9_0= ruleDeclaration ) )* ( ( (lv_features_10_0= ruleFeature ) ) | ( (lv_nodes_11_0= ruleNode ) ) )*
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:693:1: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= RULE_ID ) )? ( (lv_label_4_0= RULE_STRING ) )? (otherlv_5= '[' ( (lv_for_6_0= ruleFor ) ) otherlv_7= ']' )? otherlv_8= ':' ( (lv_declarations_9_0= ruleDeclaration ) )* ( ( (lv_equations_10_0= ruleEquation ) ) | ( (lv_nodes_11_0= ruleNode ) ) )* )
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:693:2: () ( (lv_annotations_1_0= ruleAnnotation ) )* otherlv_2= 'dataflow' ( (lv_id_3_0= RULE_ID ) )? ( (lv_label_4_0= RULE_STRING ) )? (otherlv_5= '[' ( (lv_for_6_0= ruleFor ) ) otherlv_7= ']' )? otherlv_8= ':' ( (lv_declarations_9_0= ruleDeclaration ) )* ( ( (lv_equations_10_0= ruleEquation ) ) | ( (lv_nodes_11_0= ruleNode ) ) )*
             {
             // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:693:2: ()
             // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:694:2: 
@@ -2190,7 +2190,7 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:808:3: ( ( (lv_features_10_0= ruleFeature ) ) | ( (lv_nodes_11_0= ruleNode ) ) )*
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:808:3: ( ( (lv_equations_10_0= ruleEquation ) ) | ( (lv_nodes_11_0= ruleNode ) ) )*
             loop26:
             do {
                 int alt26=3;
@@ -2251,21 +2251,21 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
 
                 switch (alt26) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:808:4: ( (lv_features_10_0= ruleFeature ) )
+            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:808:4: ( (lv_equations_10_0= ruleEquation ) )
             	    {
-            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:808:4: ( (lv_features_10_0= ruleFeature ) )
-            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:809:1: (lv_features_10_0= ruleFeature )
+            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:808:4: ( (lv_equations_10_0= ruleEquation ) )
+            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:809:1: (lv_equations_10_0= ruleEquation )
             	    {
-            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:809:1: (lv_features_10_0= ruleFeature )
-            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:810:3: lv_features_10_0= ruleFeature
+            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:809:1: (lv_equations_10_0= ruleEquation )
+            	    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:810:3: lv_equations_10_0= ruleEquation
             	    {
             	    if ( state.backtracking==0 ) {
             	       
-            	      	        newCompositeNode(grammarAccess.getDataflowAccess().getFeaturesFeatureParserRuleCall_8_0_0()); 
+            	      	        newCompositeNode(grammarAccess.getDataflowAccess().getEquationsEquationParserRuleCall_8_0_0()); 
             	      	    
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_ruleFeature_in_ruleDataflow1413);
-            	    lv_features_10_0=ruleFeature();
+            	    pushFollow(FollowSets000.FOLLOW_ruleEquation_in_ruleDataflow1413);
+            	    lv_equations_10_0=ruleEquation();
 
             	    state._fsp--;
             	    if (state.failed) return current;
@@ -2276,9 +2276,9 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
             	      	        }
             	             		add(
             	             			current, 
-            	             			"features",
-            	              		lv_features_10_0, 
-            	              		"Feature");
+            	             			"equations",
+            	              		lv_equations_10_0, 
+            	              		"Equation");
             	      	        afterParserOrEnumRuleCall();
             	      	    
             	    }
@@ -2360,30 +2360,30 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleDataflow"
 
 
-    // $ANTLR start "entryRuleFeature"
-    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:853:1: entryRuleFeature returns [EObject current=null] : iv_ruleFeature= ruleFeature EOF ;
-    public final EObject entryRuleFeature() throws RecognitionException {
+    // $ANTLR start "entryRuleEquation"
+    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:853:1: entryRuleEquation returns [EObject current=null] : iv_ruleEquation= ruleEquation EOF ;
+    public final EObject entryRuleEquation() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleFeature = null;
+        EObject iv_ruleEquation = null;
 
 
         try {
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:854:2: (iv_ruleFeature= ruleFeature EOF )
-            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:855:2: iv_ruleFeature= ruleFeature EOF
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:854:2: (iv_ruleEquation= ruleEquation EOF )
+            // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:855:2: iv_ruleEquation= ruleEquation EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getFeatureRule()); 
+               newCompositeNode(grammarAccess.getEquationRule()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleFeature_in_entryRuleFeature1478);
-            iv_ruleFeature=ruleFeature();
+            pushFollow(FollowSets000.FOLLOW_ruleEquation_in_entryRuleEquation1478);
+            iv_ruleEquation=ruleEquation();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleFeature; 
+               current =iv_ruleEquation; 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleFeature1488); if (state.failed) return current;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleEquation1488); if (state.failed) return current;
 
             }
 
@@ -2397,12 +2397,12 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleFeature"
+    // $ANTLR end "entryRuleEquation"
 
 
-    // $ANTLR start "ruleFeature"
-    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:862:1: ruleFeature returns [EObject current=null] : ( () ( ( ( (otherlv_1= RULE_ID ) ) otherlv_2= '=' ( (lv_expression_3_0= ruleExpression ) ) otherlv_4= ';' ) | ( ( (otherlv_5= RULE_ID ) ) otherlv_6= '=' ( (otherlv_7= RULE_ID ) ) otherlv_8= '.' ( (lv_expression_9_0= ruleValuedObjectReference ) ) otherlv_10= ';' ) ) ) ;
-    public final EObject ruleFeature() throws RecognitionException {
+    // $ANTLR start "ruleEquation"
+    // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:862:1: ruleEquation returns [EObject current=null] : ( () ( ( ( (otherlv_1= RULE_ID ) ) otherlv_2= '=' ( (lv_expression_3_0= ruleExpression ) ) otherlv_4= ';' ) | ( ( (otherlv_5= RULE_ID ) ) otherlv_6= '=' ( (otherlv_7= RULE_ID ) ) otherlv_8= '.' ( (lv_expression_9_0= ruleValuedObjectReference ) ) otherlv_10= ';' ) ) ) ;
+    public final EObject ruleEquation() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_1=null;
@@ -2438,7 +2438,7 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
                       current = forceCreateModelElement(
-                          grammarAccess.getFeatureAccess().getDataflowFeatureAction_0(),
+                          grammarAccess.getEquationAccess().getEquationAction_0(),
                           current);
                   
             }
@@ -2519,14 +2519,14 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                       			if (current==null) {
-                      	            current = createModelElement(grammarAccess.getFeatureRule());
+                      	            current = createModelElement(grammarAccess.getEquationRule());
                       	        }
                               
                     }
-                    otherlv_1=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleFeature1551); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleEquation1551); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      		newLeafNode(otherlv_1, grammarAccess.getFeatureAccess().getValuedObjectValuedObjectCrossReference_1_0_0_0()); 
+                      		newLeafNode(otherlv_1, grammarAccess.getEquationAccess().getValuedObjectValuedObjectCrossReference_1_0_0_0()); 
                       	
                     }
 
@@ -2535,10 +2535,10 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_2=(Token)match(input,21,FollowSets000.FOLLOW_21_in_ruleFeature1563); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,21,FollowSets000.FOLLOW_21_in_ruleEquation1563); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_2, grammarAccess.getFeatureAccess().getEqualsSignKeyword_1_0_1());
+                          	newLeafNode(otherlv_2, grammarAccess.getEquationAccess().getEqualsSignKeyword_1_0_1());
                           
                     }
                     // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:895:1: ( (lv_expression_3_0= ruleExpression ) )
@@ -2549,10 +2549,10 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getFeatureAccess().getExpressionExpressionParserRuleCall_1_0_2_0()); 
+                      	        newCompositeNode(grammarAccess.getEquationAccess().getExpressionExpressionParserRuleCall_1_0_2_0()); 
                       	    
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleExpression_in_ruleFeature1584);
+                    pushFollow(FollowSets000.FOLLOW_ruleExpression_in_ruleEquation1584);
                     lv_expression_3_0=ruleExpression();
 
                     state._fsp--;
@@ -2560,7 +2560,7 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                       	        if (current==null) {
-                      	            current = createModelElementForParent(grammarAccess.getFeatureRule());
+                      	            current = createModelElementForParent(grammarAccess.getEquationRule());
                       	        }
                              		set(
                              			current, 
@@ -2576,10 +2576,10 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_4=(Token)match(input,23,FollowSets000.FOLLOW_23_in_ruleFeature1596); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,23,FollowSets000.FOLLOW_23_in_ruleEquation1596); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_4, grammarAccess.getFeatureAccess().getSemicolonKeyword_1_0_3());
+                          	newLeafNode(otherlv_4, grammarAccess.getEquationAccess().getSemicolonKeyword_1_0_3());
                           
                     }
 
@@ -2608,14 +2608,14 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                       			if (current==null) {
-                      	            current = createModelElement(grammarAccess.getFeatureRule());
+                      	            current = createModelElement(grammarAccess.getEquationRule());
                       	        }
                               
                     }
-                    otherlv_5=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleFeature1628); if (state.failed) return current;
+                    otherlv_5=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleEquation1628); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      		newLeafNode(otherlv_5, grammarAccess.getFeatureAccess().getValuedObjectValuedObjectCrossReference_1_1_0_0()); 
+                      		newLeafNode(otherlv_5, grammarAccess.getEquationAccess().getValuedObjectValuedObjectCrossReference_1_1_0_0()); 
                       	
                     }
 
@@ -2624,10 +2624,10 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_6=(Token)match(input,21,FollowSets000.FOLLOW_21_in_ruleFeature1640); if (state.failed) return current;
+                    otherlv_6=(Token)match(input,21,FollowSets000.FOLLOW_21_in_ruleEquation1640); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_6, grammarAccess.getFeatureAccess().getEqualsSignKeyword_1_1_1());
+                          	newLeafNode(otherlv_6, grammarAccess.getEquationAccess().getEqualsSignKeyword_1_1_1());
                           
                     }
                     // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:938:1: ( (otherlv_7= RULE_ID ) )
@@ -2644,14 +2644,14 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                       			if (current==null) {
-                      	            current = createModelElement(grammarAccess.getFeatureRule());
+                      	            current = createModelElement(grammarAccess.getEquationRule());
                       	        }
                               
                     }
-                    otherlv_7=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleFeature1664); if (state.failed) return current;
+                    otherlv_7=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleEquation1664); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      		newLeafNode(otherlv_7, grammarAccess.getFeatureAccess().getNodeNodeCrossReference_1_1_2_0()); 
+                      		newLeafNode(otherlv_7, grammarAccess.getEquationAccess().getNodeNodeCrossReference_1_1_2_0()); 
                       	
                     }
 
@@ -2660,10 +2660,10 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_8=(Token)match(input,24,FollowSets000.FOLLOW_24_in_ruleFeature1676); if (state.failed) return current;
+                    otherlv_8=(Token)match(input,24,FollowSets000.FOLLOW_24_in_ruleEquation1676); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_8, grammarAccess.getFeatureAccess().getFullStopKeyword_1_1_3());
+                          	newLeafNode(otherlv_8, grammarAccess.getEquationAccess().getFullStopKeyword_1_1_3());
                           
                     }
                     // ../de.cau.cs.kieler.sccharts.text/src-gen/de/cau/cs/kieler/sccharts/text/sct/parser/antlr/internal/InternalSct.g:958:1: ( (lv_expression_9_0= ruleValuedObjectReference ) )
@@ -2674,10 +2674,10 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
                     {
                     if ( state.backtracking==0 ) {
                        
-                      	        newCompositeNode(grammarAccess.getFeatureAccess().getExpressionValuedObjectReferenceParserRuleCall_1_1_4_0()); 
+                      	        newCompositeNode(grammarAccess.getEquationAccess().getExpressionValuedObjectReferenceParserRuleCall_1_1_4_0()); 
                       	    
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleValuedObjectReference_in_ruleFeature1697);
+                    pushFollow(FollowSets000.FOLLOW_ruleValuedObjectReference_in_ruleEquation1697);
                     lv_expression_9_0=ruleValuedObjectReference();
 
                     state._fsp--;
@@ -2685,7 +2685,7 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
                     if ( state.backtracking==0 ) {
 
                       	        if (current==null) {
-                      	            current = createModelElementForParent(grammarAccess.getFeatureRule());
+                      	            current = createModelElementForParent(grammarAccess.getEquationRule());
                       	        }
                              		set(
                              			current, 
@@ -2701,10 +2701,10 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_10=(Token)match(input,23,FollowSets000.FOLLOW_23_in_ruleFeature1709); if (state.failed) return current;
+                    otherlv_10=(Token)match(input,23,FollowSets000.FOLLOW_23_in_ruleEquation1709); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                          	newLeafNode(otherlv_10, grammarAccess.getFeatureAccess().getSemicolonKeyword_1_1_5());
+                          	newLeafNode(otherlv_10, grammarAccess.getEquationAccess().getSemicolonKeyword_1_1_5());
                           
                     }
 
@@ -2735,7 +2735,7 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleFeature"
+    // $ANTLR end "ruleEquation"
 
 
     // $ANTLR start "entryRuleSCChart"
@@ -26146,7 +26146,7 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_18_in_ruleSingleDataflow618 = new BitSet(new long[]{0x0000000000080000L});
         public static final BitSet FOLLOW_19_in_ruleSingleDataflow632 = new BitSet(new long[]{0x2007E02000010412L,0x000000007F000000L});
         public static final BitSet FOLLOW_ruleDeclaration_in_ruleSingleDataflow653 = new BitSet(new long[]{0x2007E02000010412L,0x000000007F000000L});
-        public static final BitSet FOLLOW_ruleFeature_in_ruleSingleDataflow678 = new BitSet(new long[]{0x0000002000000012L});
+        public static final BitSet FOLLOW_ruleEquation_in_ruleSingleDataflow678 = new BitSet(new long[]{0x0000002000000012L});
         public static final BitSet FOLLOW_ruleNode_in_ruleSingleDataflow705 = new BitSet(new long[]{0x0000002000000012L});
         public static final BitSet FOLLOW_ruleFor_in_entryRuleFor743 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleFor753 = new BitSet(new long[]{0x0000000000000002L});
@@ -26178,20 +26178,20 @@ public class InternalSctParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_18_in_ruleDataflow1355 = new BitSet(new long[]{0x0000000000080000L});
         public static final BitSet FOLLOW_19_in_ruleDataflow1369 = new BitSet(new long[]{0x2007E02000010412L,0x000000007F000000L});
         public static final BitSet FOLLOW_ruleDeclaration_in_ruleDataflow1390 = new BitSet(new long[]{0x2007E02000010412L,0x000000007F000000L});
-        public static final BitSet FOLLOW_ruleFeature_in_ruleDataflow1413 = new BitSet(new long[]{0x0000002000000012L});
+        public static final BitSet FOLLOW_ruleEquation_in_ruleDataflow1413 = new BitSet(new long[]{0x0000002000000012L});
         public static final BitSet FOLLOW_ruleNode_in_ruleDataflow1440 = new BitSet(new long[]{0x0000002000000012L});
-        public static final BitSet FOLLOW_ruleFeature_in_entryRuleFeature1478 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleFeature1488 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleFeature1551 = new BitSet(new long[]{0x0000000000200000L});
-        public static final BitSet FOLLOW_21_in_ruleFeature1563 = new BitSet(new long[]{0x04000008000003D0L,0x00000000002A8000L});
-        public static final BitSet FOLLOW_ruleExpression_in_ruleFeature1584 = new BitSet(new long[]{0x0000000000800000L});
-        public static final BitSet FOLLOW_23_in_ruleFeature1596 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleFeature1628 = new BitSet(new long[]{0x0000000000200000L});
-        public static final BitSet FOLLOW_21_in_ruleFeature1640 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleFeature1664 = new BitSet(new long[]{0x0000000001000000L});
-        public static final BitSet FOLLOW_24_in_ruleFeature1676 = new BitSet(new long[]{0x0000000000000010L,0x0000000000208000L});
-        public static final BitSet FOLLOW_ruleValuedObjectReference_in_ruleFeature1697 = new BitSet(new long[]{0x0000000000800000L});
-        public static final BitSet FOLLOW_23_in_ruleFeature1709 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEquation_in_entryRuleEquation1478 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleEquation1488 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleEquation1551 = new BitSet(new long[]{0x0000000000200000L});
+        public static final BitSet FOLLOW_21_in_ruleEquation1563 = new BitSet(new long[]{0x04000008000003D0L,0x00000000002A8000L});
+        public static final BitSet FOLLOW_ruleExpression_in_ruleEquation1584 = new BitSet(new long[]{0x0000000000800000L});
+        public static final BitSet FOLLOW_23_in_ruleEquation1596 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleEquation1628 = new BitSet(new long[]{0x0000000000200000L});
+        public static final BitSet FOLLOW_21_in_ruleEquation1640 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleEquation1664 = new BitSet(new long[]{0x0000000001000000L});
+        public static final BitSet FOLLOW_24_in_ruleEquation1676 = new BitSet(new long[]{0x0000000000000010L,0x0000000000208000L});
+        public static final BitSet FOLLOW_ruleValuedObjectReference_in_ruleEquation1697 = new BitSet(new long[]{0x0000000000800000L});
+        public static final BitSet FOLLOW_23_in_ruleEquation1709 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleSCChart_in_entryRuleSCChart1747 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleSCChart1757 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleAnnotation_in_ruleSCChart1803 = new BitSet(new long[]{0x2000000002010400L});

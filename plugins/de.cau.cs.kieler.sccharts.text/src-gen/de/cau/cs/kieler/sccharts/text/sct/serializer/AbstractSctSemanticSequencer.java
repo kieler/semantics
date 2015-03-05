@@ -25,11 +25,11 @@ import de.cau.cs.kieler.sccharts.Assignment;
 import de.cau.cs.kieler.sccharts.Binding;
 import de.cau.cs.kieler.sccharts.CallNode;
 import de.cau.cs.kieler.sccharts.Dataflow;
-import de.cau.cs.kieler.sccharts.DataflowFeature;
 import de.cau.cs.kieler.sccharts.DefineNode;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.Emission;
 import de.cau.cs.kieler.sccharts.EntryAction;
+import de.cau.cs.kieler.sccharts.Equation;
 import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.For;
 import de.cau.cs.kieler.sccharts.FunctionCallEffect;
@@ -376,12 +376,6 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 					return; 
 				}
 				else break;
-			case SCChartsPackage.DATAFLOW_FEATURE:
-				if(context == grammarAccess.getFeatureRule()) {
-					sequence_Feature(context, (DataflowFeature) semanticObject); 
-					return; 
-				}
-				else break;
 			case SCChartsPackage.DEFINE_NODE:
 				if(context == grammarAccess.getDefineNodeRule() ||
 				   context == grammarAccess.getNodeRule()) {
@@ -407,6 +401,12 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 				if(context == grammarAccess.getEntryActionRule() ||
 				   context == grammarAccess.getLocalActionRule()) {
 					sequence_EntryAction(context, (EntryAction) semanticObject); 
+					return; 
+				}
+				else break;
+			case SCChartsPackage.EQUATION:
+				if(context == grammarAccess.getEquationRule()) {
+					sequence_Equation(context, (Equation) semanticObject); 
 					return; 
 				}
 				else break;
@@ -517,7 +517,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 *         label=STRING? 
 	 *         for=For? 
 	 *         declarations+=Declaration* 
-	 *         (features+=Feature | nodes+=Node)*
+	 *         (equations+=Equation | nodes+=Node)*
 	 *     )
 	 */
 	protected void sequence_Dataflow(EObject context, Dataflow semanticObject) {
@@ -570,7 +570,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	 * Constraint:
 	 *     ((valuedObject=[ValuedObject|ID] expression=Expression) | (valuedObject=[ValuedObject|ID] node=[Node|ID] expression=ValuedObjectReference))
 	 */
-	protected void sequence_Feature(EObject context, DataflowFeature semanticObject) {
+	protected void sequence_Equation(EObject context, Equation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -640,7 +640,7 @@ public abstract class AbstractSctSemanticSequencer extends ActionsSemanticSequen
 	
 	/**
 	 * Constraint:
-	 *     ((annotations+=Annotation* id=ID? label=STRING? for=For? declarations+=Declaration*)? (features+=Feature | nodes+=Node)*)
+	 *     ((annotations+=Annotation* id=ID? label=STRING? for=For? declarations+=Declaration*)? (equations+=Equation | nodes+=Node)*)
 	 */
 	protected void sequence_SingleDataflow(EObject context, Dataflow semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

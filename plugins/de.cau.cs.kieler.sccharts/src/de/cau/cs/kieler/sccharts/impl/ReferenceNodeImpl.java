@@ -15,6 +15,8 @@ package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
 
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.sccharts.ReferenceNode;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
@@ -74,7 +76,7 @@ public class ReferenceNodeImpl extends NodeImpl implements ReferenceNode {
      * @generated
      * @ordered
      */
-    protected EList<Expression> parameters;
+    protected EList<ValuedObjectReference> parameters;
 
     /**
      * <!-- begin-user-doc -->
@@ -138,9 +140,9 @@ public class ReferenceNodeImpl extends NodeImpl implements ReferenceNode {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Expression> getParameters() {
+    public EList<ValuedObjectReference> getParameters() {
         if (parameters == null) {
-            parameters = new EObjectContainmentEList<Expression>(Expression.class, this, SCChartsPackage.REFERENCE_NODE__PARAMETERS);
+            parameters = new EObjectContainmentEList<ValuedObjectReference>(ValuedObjectReference.class, this, SCChartsPackage.REFERENCE_NODE__PARAMETERS);
         }
         return parameters;
     }
@@ -190,7 +192,7 @@ public class ReferenceNodeImpl extends NodeImpl implements ReferenceNode {
                 return;
             case SCChartsPackage.REFERENCE_NODE__PARAMETERS:
                 getParameters().clear();
-                getParameters().addAll((Collection<? extends Expression>)newValue);
+                getParameters().addAll((Collection<? extends ValuedObjectReference>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);

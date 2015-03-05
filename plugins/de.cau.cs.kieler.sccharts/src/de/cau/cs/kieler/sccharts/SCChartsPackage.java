@@ -126,22 +126,22 @@ public interface SCChartsPackage extends EPackage {
     int ACTION__DELAY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Immediate</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ACTION__IMMEDIATE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
-
-    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ACTION__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+    int ACTION__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+
+    /**
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ACTION__IMMEDIATE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
      * The number of structural features of the '<em>Action</em>' class.
@@ -749,16 +749,6 @@ public interface SCChartsPackage extends EPackage {
     int CALL_NODE = 10;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowFeatureImpl <em>Dataflow Feature</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.DataflowFeatureImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDataflowFeature()
-     * @generated
-     */
-    int DATAFLOW_FEATURE = 12;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.DefineNodeImpl <em>Define Node</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -869,13 +859,13 @@ public interface SCChartsPackage extends EPackage {
     int DATAFLOW__NODES = CONCURRENCY_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Features</b></em>' containment reference list.
+     * The feature id for the '<em><b>Equations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATAFLOW__FEATURES = CONCURRENCY_FEATURE_COUNT + 1;
+    int DATAFLOW__EQUATIONS = CONCURRENCY_FEATURE_COUNT + 1;
 
     /**
      * The number of structural features of the '<em>Dataflow</em>' class.
@@ -1022,22 +1012,13 @@ public interface SCChartsPackage extends EPackage {
     int CALL_NODE__PARAMETERS = NODE_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Referenced Scope</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CALL_NODE__REFERENCED_SCOPE = NODE_FEATURE_COUNT + 2;
-
-    /**
      * The number of structural features of the '<em>Call Node</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CALL_NODE_FEATURE_COUNT = NODE_FEATURE_COUNT + 3;
+    int CALL_NODE_FEATURE_COUNT = NODE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1121,13 +1102,23 @@ public interface SCChartsPackage extends EPackage {
     int DEFINE_NODE_FEATURE_COUNT = NODE_FEATURE_COUNT + 5;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.EquationImpl <em>Equation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.EquationImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEquation()
+     * @generated
+     */
+    int EQUATION = 12;
+
+    /**
      * The feature id for the '<em><b>Expression</b></em>' containment reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATAFLOW_FEATURE__EXPRESSION = 0;
+    int EQUATION__EXPRESSION = 0;
 
     /**
      * The feature id for the '<em><b>Node</b></em>' reference.
@@ -1136,7 +1127,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATAFLOW_FEATURE__NODE = 1;
+    int EQUATION__NODE = 1;
 
     /**
      * The feature id for the '<em><b>Valued Object</b></em>' reference.
@@ -1145,16 +1136,16 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATAFLOW_FEATURE__VALUED_OBJECT = 2;
+    int EQUATION__VALUED_OBJECT = 2;
 
     /**
-     * The number of structural features of the '<em>Dataflow Feature</em>' class.
+     * The number of structural features of the '<em>Equation</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATAFLOW_FEATURE_FEATURE_COUNT = 3;
+    int EQUATION_FEATURE_COUNT = 3;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.TransitionImpl <em>Transition</em>}' class.
@@ -1319,15 +1310,6 @@ public interface SCChartsPackage extends EPackage {
     int TRANSITION__DELAY = ACTION__DELAY;
 
     /**
-     * The feature id for the '<em><b>Immediate</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TRANSITION__IMMEDIATE = ACTION__IMMEDIATE;
-
-    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1335,6 +1317,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int TRANSITION__LABEL = ACTION__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TRANSITION__IMMEDIATE = ACTION__IMMEDIATE;
 
     /**
      * The feature id for the '<em><b>Priority</b></em>' attribute.
@@ -1481,15 +1472,6 @@ public interface SCChartsPackage extends EPackage {
     int LOCAL_ACTION__DELAY = ACTION__DELAY;
 
     /**
-     * The feature id for the '<em><b>Immediate</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int LOCAL_ACTION__IMMEDIATE = ACTION__IMMEDIATE;
-
-    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1497,6 +1479,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int LOCAL_ACTION__LABEL = ACTION__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOCAL_ACTION__IMMEDIATE = ACTION__IMMEDIATE;
 
     /**
      * The number of structural features of the '<em>Local Action</em>' class.
@@ -1544,15 +1535,6 @@ public interface SCChartsPackage extends EPackage {
     int ENTRY_ACTION__DELAY = LOCAL_ACTION__DELAY;
 
     /**
-     * The feature id for the '<em><b>Immediate</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ENTRY_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
-
-    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1560,6 +1542,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int ENTRY_ACTION__LABEL = LOCAL_ACTION__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
 
     /**
      * The number of structural features of the '<em>Entry Action</em>' class.
@@ -1607,15 +1598,6 @@ public interface SCChartsPackage extends EPackage {
     int DURING_ACTION__DELAY = LOCAL_ACTION__DELAY;
 
     /**
-     * The feature id for the '<em><b>Immediate</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DURING_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
-
-    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1623,6 +1605,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int DURING_ACTION__LABEL = LOCAL_ACTION__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DURING_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
 
     /**
      * The number of structural features of the '<em>During Action</em>' class.
@@ -1670,15 +1661,6 @@ public interface SCChartsPackage extends EPackage {
     int EXIT_ACTION__DELAY = LOCAL_ACTION__DELAY;
 
     /**
-     * The feature id for the '<em><b>Immediate</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int EXIT_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
-
-    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1686,6 +1668,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int EXIT_ACTION__LABEL = LOCAL_ACTION__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
 
     /**
      * The number of structural features of the '<em>Exit Action</em>' class.
@@ -1733,15 +1724,6 @@ public interface SCChartsPackage extends EPackage {
     int SUSPEND_ACTION__DELAY = LOCAL_ACTION__DELAY;
 
     /**
-     * The feature id for the '<em><b>Immediate</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SUSPEND_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
-
-    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1749,6 +1731,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int SUSPEND_ACTION__LABEL = LOCAL_ACTION__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Immediate</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUSPEND_ACTION__IMMEDIATE = LOCAL_ACTION__IMMEDIATE;
 
     /**
      * The feature id for the '<em><b>Weak</b></em>' attribute.
@@ -2122,60 +2113,6 @@ public interface SCChartsPackage extends EPackage {
     EReference getCallNode_Parameters();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.CallNode#getReferencedScope <em>Referenced Scope</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Referenced Scope</em>'.
-     * @see de.cau.cs.kieler.sccharts.CallNode#getReferencedScope()
-     * @see #getCallNode()
-     * @generated
-     */
-    EReference getCallNode_ReferencedScope();
-
-    /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.DataflowFeature <em>Dataflow Feature</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Dataflow Feature</em>'.
-     * @see de.cau.cs.kieler.sccharts.DataflowFeature
-     * @generated
-     */
-    EClass getDataflowFeature();
-
-    /**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.DataflowFeature#getExpression <em>Expression</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Expression</em>'.
-     * @see de.cau.cs.kieler.sccharts.DataflowFeature#getExpression()
-     * @see #getDataflowFeature()
-     * @generated
-     */
-    EReference getDataflowFeature_Expression();
-
-    /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.DataflowFeature#getNode <em>Node</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Node</em>'.
-     * @see de.cau.cs.kieler.sccharts.DataflowFeature#getNode()
-     * @see #getDataflowFeature()
-     * @generated
-     */
-    EReference getDataflowFeature_Node();
-
-    /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.DataflowFeature#getValuedObject <em>Valued Object</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Valued Object</em>'.
-     * @see de.cau.cs.kieler.sccharts.DataflowFeature#getValuedObject()
-     * @see #getDataflowFeature()
-     * @generated
-     */
-    EReference getDataflowFeature_ValuedObject();
-
-    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.DefineNode <em>Define Node</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2241,6 +2178,49 @@ public interface SCChartsPackage extends EPackage {
     EReference getDefineNode_States();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Equation <em>Equation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Equation</em>'.
+     * @see de.cau.cs.kieler.sccharts.Equation
+     * @generated
+     */
+    EClass getEquation();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.Equation#getExpression <em>Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Expression</em>'.
+     * @see de.cau.cs.kieler.sccharts.Equation#getExpression()
+     * @see #getEquation()
+     * @generated
+     */
+    EReference getEquation_Expression();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Equation#getNode <em>Node</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Node</em>'.
+     * @see de.cau.cs.kieler.sccharts.Equation#getNode()
+     * @see #getEquation()
+     * @generated
+     */
+    EReference getEquation_Node();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.sccharts.Equation#getValuedObject <em>Valued Object</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Valued Object</em>'.
+     * @see de.cau.cs.kieler.sccharts.Equation#getValuedObject()
+     * @see #getEquation()
+     * @generated
+     */
+    EReference getEquation_ValuedObject();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Dataflow <em>Dataflow</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2262,15 +2242,15 @@ public interface SCChartsPackage extends EPackage {
     EReference getDataflow_Nodes();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Dataflow#getFeatures <em>Features</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Dataflow#getEquations <em>Equations</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Features</em>'.
-     * @see de.cau.cs.kieler.sccharts.Dataflow#getFeatures()
+     * @return the meta object for the containment reference list '<em>Equations</em>'.
+     * @see de.cau.cs.kieler.sccharts.Dataflow#getEquations()
      * @see #getDataflow()
      * @generated
      */
-    EReference getDataflow_Features();
+    EReference getDataflow_Equations();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Binding <em>Binding</em>}'.
@@ -2990,48 +2970,6 @@ public interface SCChartsPackage extends EPackage {
         EReference CALL_NODE__PARAMETERS = eINSTANCE.getCallNode_Parameters();
 
         /**
-         * The meta object literal for the '<em><b>Referenced Scope</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference CALL_NODE__REFERENCED_SCOPE = eINSTANCE.getCallNode_ReferencedScope();
-
-        /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowFeatureImpl <em>Dataflow Feature</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.DataflowFeatureImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDataflowFeature()
-         * @generated
-         */
-        EClass DATAFLOW_FEATURE = eINSTANCE.getDataflowFeature();
-
-        /**
-         * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DATAFLOW_FEATURE__EXPRESSION = eINSTANCE.getDataflowFeature_Expression();
-
-        /**
-         * The meta object literal for the '<em><b>Node</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DATAFLOW_FEATURE__NODE = eINSTANCE.getDataflowFeature_Node();
-
-        /**
-         * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DATAFLOW_FEATURE__VALUED_OBJECT = eINSTANCE.getDataflowFeature_ValuedObject();
-
-        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.DefineNodeImpl <em>Define Node</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3082,6 +3020,40 @@ public interface SCChartsPackage extends EPackage {
         EReference DEFINE_NODE__STATES = eINSTANCE.getDefineNode_States();
 
         /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.EquationImpl <em>Equation</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.EquationImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getEquation()
+         * @generated
+         */
+        EClass EQUATION = eINSTANCE.getEquation();
+
+        /**
+         * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference EQUATION__EXPRESSION = eINSTANCE.getEquation_Expression();
+
+        /**
+         * The meta object literal for the '<em><b>Node</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference EQUATION__NODE = eINSTANCE.getEquation_Node();
+
+        /**
+         * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference EQUATION__VALUED_OBJECT = eINSTANCE.getEquation_ValuedObject();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.DataflowImpl <em>Dataflow</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -3100,12 +3072,12 @@ public interface SCChartsPackage extends EPackage {
         EReference DATAFLOW__NODES = eINSTANCE.getDataflow_Nodes();
 
         /**
-         * The meta object literal for the '<em><b>Features</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Equations</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference DATAFLOW__FEATURES = eINSTANCE.getDataflow_Features();
+        EReference DATAFLOW__EQUATIONS = eINSTANCE.getDataflow_Equations();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.BindingImpl <em>Binding</em>}' class.

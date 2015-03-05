@@ -48,8 +48,8 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.sccharts.Action#getEffects <em>Effects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Action#getTrigger <em>Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Action#getDelay <em>Delay</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sccharts.Action#isImmediate <em>Immediate</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Action#getLabel <em>Label</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Action#isImmediate <em>Immediate</em>}</li>
  * </ul>
  * </p>
  *
