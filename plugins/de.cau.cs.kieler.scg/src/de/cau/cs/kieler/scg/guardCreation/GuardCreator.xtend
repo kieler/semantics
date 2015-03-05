@@ -150,7 +150,9 @@ class GuardCreator extends AbstractGuardCreator {
     // -------------------------------------------------------------------------    
     override SCGraph createGuards(SCGraph scg, KielerCompilerContext context) {
 
-        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)) {
+        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
+            || scg.hasAnnotation(AbstractGuardCreator::ANNOTATION_GUARDCREATOR)
+        ) {
             return scg
         }
 
