@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include </home/karsten/Uni/Masterarbeit/WristWatch/ww_data.c>
 
 #define SIMUL
 

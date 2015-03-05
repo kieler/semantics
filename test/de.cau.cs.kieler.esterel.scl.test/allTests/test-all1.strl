@@ -1,15 +1,3 @@
-module Test1:
-
-nothing
-
-end module
-
-module Test2:
-
-pause
-
-end module
-
 module Test3:
 type t1;
 type t2;
@@ -19,7 +7,7 @@ constant c1 : t1;
 constant c2 : boolean;
 constant c3 = c1 : t1;
 constant c4 = 1 : integer;
-constant c5 = - 5 : integer;
+constant c5 = 5 : integer;
 constant c6 = true : boolean;
 constant c7 = false : boolean;
 constant c8 = "A string constant with ""double quotes""" : string;
@@ -36,11 +24,6 @@ procedure p2(t1)();
 procedure p3(integer, boolean, t2)();
 procedure p4(t1, t2)(t2, t2);
 procedure p5(integer, boolean)(integer, boolean, t1);
-task ta1()();
-task ta2(integer)();
-task ta3(integer, boolean, t2)();
-task ta4(t1, t2)(t2, t2);
-task ta5(integer, boolean)(boolean, integer, integer);
 input s1;
 input s2 : boolean;
 input s3 : combine integer with +;
@@ -83,7 +66,7 @@ pause;
 emit s10;
 emit s12(true or false);
 sustain s11;
-sustain s13(3 + 4 + 5);
+sustain s13((3 + 4) + 5);
 var v1 : integer in
   var v2 : integer,
       v3 : boolean,
@@ -117,14 +100,12 @@ var v1 : integer in
       v2 := ??tr1
     end trap;
     v2 := - v2;
-    v3 := not v1 + - v2 * ?se2 - v6 / v7 mod 5 < 3 and true or false;
     v3 := 5 = 3 or 5 <> 3 or 5 < 3 or 5 <= 3 or 5 > 3 or 5 >= 3;
     v1 := f3();
     v5 := f5(v5, v5);
     call p1()();
     call p2(v5)();
     call p3(v1, v3, v8)();
-    call p5(v1, v3)(5 + 3, true or false, f1());
     present s1 end present;
     present s2 end present;
     present s1 then
@@ -182,7 +163,7 @@ var v1 : integer in
       pause;
       pause
     each s1;
-    repeat 5 + 3 times
+    repeat (5 + 3) times
       nothing
     end repeat;
     repeat 2 times
@@ -247,9 +228,8 @@ var v1 : integer in
     await [s1 and s2 or s3];
     await immediate s1;
     await immediate [s1 and s2];
-    await 5 + 3 [s2 and s3];
+    await (5 + 3) [s2 and s3];
     await v1 s2;
-    await v1 + 5 [s2 or s3];
     every v1 s2 do
       nothing
     end every;
@@ -271,15 +251,15 @@ var v1 : integer in
     trap tr2,
          tr3 : integer,
          tr4 : boolean,
-         tr5 := 3 + 5 : integer,
+         tr5 := (3 + 5) : integer,
          tr6 : integer,
          tr7 : t1,
-         tr8 := 3 + 2 : integer,
+         tr8 := (3 + 2) : integer,
          tr9,
          tr10,
          tr11 in
       exit tr2;
-      exit tr3(5 + 3)
+      exit tr3((5 + 3))
     handle tr2 do
       nothing
     handle not tr3 do
@@ -297,10 +277,6 @@ var v1 : integer in
     var v10 : integer,
         v11 : boolean in
       exec
-        case ta5(v10, v11)(true or false, 3 + 4, 5 + 6) return s23 do
-          nothing
-      end exec;
-      exec
         case ta2(v10)() return s20
         case ta1()() return s21 do
           pause
@@ -312,7 +288,7 @@ var v1 : integer in
     signal ls1 in
       signal ls2,
              ls3 : boolean,
-             ls4 := 3 + v1 : integer,
+             ls4 := (3 + v1) : integer,
              ls5 := v3 or true : combine boolean with or in
         nothing
       end signal
@@ -323,7 +299,7 @@ var v1 : integer in
       nothing
     end signal;
     var lv1 : integer in
-      var lv2 := 3 + lv1 : integer,
+      var lv2 := (3 + lv1) : integer,
           lv3 := 3 : integer in
         nothing
       end var
