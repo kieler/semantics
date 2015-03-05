@@ -1,0 +1,274 @@
+/**
+ */
+package de.cau.cs.kieler.core.kexpressions.text.kext;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+
+/**
+ * <!-- begin-user-doc -->
+ * The <b>Package</b> for the model.
+ * It contains accessors for the meta objects to represent
+ * <ul>
+ *   <li>each class,</li>
+ *   <li>each feature of each class,</li>
+ *   <li>each enum,</li>
+ *   <li>and each data type</li>
+ * </ul>
+ * <!-- end-user-doc -->
+ * @see de.cau.cs.kieler.core.kexpressions.text.kext.KextFactory
+ * @model kind="package"
+ * @generated
+ */
+public interface KextPackage extends EPackage
+{
+  /**
+   * The package name.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  String eNAME = "kext";
+
+  /**
+   * The package namespace URI.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  String eNS_URI = "http://kieler.cs.cau.de/kext/kext";
+
+  /**
+   * The package namespace name.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  String eNS_PREFIX = "kext";
+
+  /**
+   * The singleton instance of the package.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  KextPackage eINSTANCE = de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextPackageImpl.init();
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextImpl <em>Kext</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextImpl
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextPackageImpl#getKext()
+   * @generated
+   */
+  int KEXT = 0;
+
+  /**
+   * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KEXT__DECLARATIONS = 0;
+
+  /**
+   * The feature id for the '<em><b>Assignments</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KEXT__ASSIGNMENTS = 1;
+
+  /**
+   * The number of structural features of the '<em>Kext</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KEXT_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.AssignmentImpl <em>Assignment</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.AssignmentImpl
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextPackageImpl#getAssignment()
+   * @generated
+   */
+  int ASSIGNMENT = 1;
+
+  /**
+   * The feature id for the '<em><b>Valued Object</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNMENT__VALUED_OBJECT = 0;
+
+  /**
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNMENT__EXPRESSION = 1;
+
+  /**
+   * The number of structural features of the '<em>Assignment</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNMENT_FEATURE_COUNT = 2;
+
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.text.kext.Kext <em>Kext</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Kext</em>'.
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.Kext
+   * @generated
+   */
+  EClass getKext();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getDeclarations <em>Declarations</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Declarations</em>'.
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getDeclarations()
+   * @see #getKext()
+   * @generated
+   */
+  EReference getKext_Declarations();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getAssignments <em>Assignments</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Assignments</em>'.
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.Kext#getAssignments()
+   * @see #getKext()
+   * @generated
+   */
+  EReference getKext_Assignments();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.core.kexpressions.text.kext.Assignment <em>Assignment</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Assignment</em>'.
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.Assignment
+   * @generated
+   */
+  EClass getAssignment();
+
+  /**
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.core.kexpressions.text.kext.Assignment#getValuedObject <em>Valued Object</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Valued Object</em>'.
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.Assignment#getValuedObject()
+   * @see #getAssignment()
+   * @generated
+   */
+  EReference getAssignment_ValuedObject();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.core.kexpressions.text.kext.Assignment#getExpression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see de.cau.cs.kieler.core.kexpressions.text.kext.Assignment#getExpression()
+   * @see #getAssignment()
+   * @generated
+   */
+  EReference getAssignment_Expression();
+
+  /**
+   * Returns the factory that creates the instances of the model.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the factory that creates the instances of the model.
+   * @generated
+   */
+  KextFactory getKextFactory();
+
+  /**
+   * <!-- begin-user-doc -->
+   * Defines literals for the meta objects that represent
+   * <ul>
+   *   <li>each class,</li>
+   *   <li>each feature of each class,</li>
+   *   <li>each enum,</li>
+   *   <li>and each data type</li>
+   * </ul>
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  interface Literals
+  {
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextImpl <em>Kext</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextImpl
+     * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextPackageImpl#getKext()
+     * @generated
+     */
+    EClass KEXT = eINSTANCE.getKext();
+
+    /**
+     * The meta object literal for the '<em><b>Declarations</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference KEXT__DECLARATIONS = eINSTANCE.getKext_Declarations();
+
+    /**
+     * The meta object literal for the '<em><b>Assignments</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference KEXT__ASSIGNMENTS = eINSTANCE.getKext_Assignments();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.core.kexpressions.text.kext.impl.AssignmentImpl <em>Assignment</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.AssignmentImpl
+     * @see de.cau.cs.kieler.core.kexpressions.text.kext.impl.KextPackageImpl#getAssignment()
+     * @generated
+     */
+    EClass ASSIGNMENT = eINSTANCE.getAssignment();
+
+    /**
+     * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ASSIGNMENT__VALUED_OBJECT = eINSTANCE.getAssignment_ValuedObject();
+
+    /**
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ASSIGNMENT__EXPRESSION = eINSTANCE.getAssignment_Expression();
+
+  }
+
+} //KextPackage
