@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
@@ -32,6 +33,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.ui.internal.editors.text.NextPreviousPulldownActionDelegate;
 import org.eclipse.ui.progress.UIJob;
 import org.eclipse.xtext.ui.util.ResourceUtil;
 
@@ -60,6 +62,7 @@ import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsFactory;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.tsccharts.handler.FileWriter;
+import de.cau.cs.kieler.sccharts.tsccharts.handler.RequestType;
 import de.cau.cs.kieler.sccharts.tsccharts.handler.TimingRequestResult;
 import de.cau.cs.kieler.scg.Assignment;
 import de.cau.cs.kieler.scg.ControlFlow;
@@ -75,9 +78,9 @@ import de.cau.cs.kieler.scg.ScgFactory;
 public class TimingAnalysis extends Job {
 
     public static final boolean DEBUG = true;
-    
+
     private FileWriter fileWriter = new FileWriter();
-    
+
     private TimingAnnotationProvider timingAnnotationProvider = new TimingAnnotationProvider();
 
     // no side effects on runtime, so static OK here
@@ -118,8 +121,6 @@ public class TimingAnalysis extends Job {
     private State scchart;
     private HashMultimap<Region, WeakReference<KText>> timingLabels;
     private HashMap<Region, String> timingResults;
-
-    private Object annotationProvider;
 
     /**
      * @param name
@@ -231,16 +232,18 @@ public class TimingAnalysis extends Job {
             return Status.CANCEL_STATUS;
         }
         HashMap<Integer, Region> tppRegionMap = new HashMap<Integer, Region>();
-        
-        // It is normal that some nodes of the SCG will be mapped to null, because they belong to the 
-        // SCChart itself not to a Region of the SCChart (they cannot be attributed to the outermost 
-        // Region in the root state, because there may be several of those). So create a dummy region 
+
+        // It is normal that some nodes of the SCG will be mapped to null, because they belong to
+        // the
+        // SCChart itself not to a Region of the SCChart (they cannot be attributed to the outermost
+        // Region in the root state, because there may be several of those). So create a dummy
+        // region
         // to represent the SCChart in Timing Analysis.
         Region scchartDummyRegion = SCChartsFactory.eINSTANCE.createRegion();
         scchartDummyRegion.setId("SCChartDummyRegion");
-        
+
         // insert timing program points
-        int highestInsertedTPPNumber = 
+        int highestInsertedTPPNumber =
                 insertTPP(scg, nodeRegionMapping, tppRegionMap, scchartDummyRegion);
 
         // Step 4: Compile SCG to C code
@@ -278,15 +281,14 @@ public class TimingAnalysis extends Job {
             // Stop as soon as possible when job canceled
             return Status.CANCEL_STATUS;
         }
-        
+
         IFile file = ResourceUtil.getFile(scchart.eResource());
         String uri = file.getLocationURI().toString();
-        
+
         // Write the generated code to file
         String codeTargetFile = uri.replace(".sct", ".c");
         String codeTargetFilePath = codeTargetFile.replace("file:", "");
         fileWriter.writeToFile(code, codeTargetFilePath);
-        
 
         // get assumptions
         String assumptionFile = uri.replace(".sct", ".ass");
@@ -298,7 +300,8 @@ public class TimingAnalysis extends Job {
 
         // write timing requests appended to the assumptionString
         LinkedList<TimingRequestResult> resultList =
-                timingAnnotationProvider.writeTimingRequests(highestInsertedTPPNumber, stringBuilder);
+                timingAnnotationProvider.writeTimingRequests(highestInsertedTPPNumber,
+                        stringBuilder);
         // just debug, may be removed
         System.out.println(stringBuilder.toString());
 
@@ -317,10 +320,11 @@ public class TimingAnalysis extends Job {
             System.out.println("Error: Timing analysis tool could not be invoked.");
             e.printStackTrace();
         } catch (InterruptedException e) {
-            System.out.println("The thread for timing analysis tool invocation has been interrupted.");
+            System.out
+                    .println("The thread for timing analysis tool invocation has been interrupted.");
             e.printStackTrace();
         }
-        
+
         // Refresh to make sure the .c file can be found
         try {
             ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
@@ -328,7 +332,6 @@ public class TimingAnalysis extends Job {
             System.out.println("The refreshing of files could not be completed.");
             e.printStackTrace();
         }
-           
 
         // Step 6: Retrieve timing data and associate with regions
 
@@ -337,22 +340,15 @@ public class TimingAnalysis extends Job {
             return Status.CANCEL_STATUS;
         }
 
-//        // TODO remove this test code
-//
-//        for (Node node : nodeRegionMapping.keySet()) {
-//            Region r = nodeRegionMapping.get(node);
-//            if (r != null) {
-//                if (timingResults.containsKey(r)) {
-//                    timingResults.put(r, timingResults.get(r) + " " + node.toString());
-//                } else {
-//                    timingResults.put(r, node.toString());
-//                }
-//            } else {
-//                // In this case the node is mapped to the root state and thus to no region
-//            }
-//        }
+        // construct uri, where the analysis file will deposit the response file (.ta)
+        State state = scchart;
+        String taFile = uri.replace(".sct", ".ta.out");
+        String taPath = taFile.replace("file:", "");
 
-        // TODO ima
+        //
+        timingAnnotationProvider.getTimingInformation(resultList, taPath);
+        extractTimingLabels(RequestType.LWCET, resultList, timingLabels, timingResults,
+                tppRegionMap, scchart);
 
         // Step 7: Feedback information back to the diagram
 
@@ -382,6 +378,114 @@ public class TimingAnalysis extends Job {
     }
 
     /**
+     * Method extracts timing labels with format <deep timing value> / <flat timing value> for the
+     * regions in the resultList.
+     * 
+     * @param lwcet
+     *            : The requestType for which the timing labels are to be extracted. The method
+     *            expects either RequestType.LWCET, RequestType.LBCET, RequestType.FWCET or
+     *            RequestType.FBCET
+     * @param resultList
+     *            A list with TimingRequestResults extracted from the timing analysis response file
+     * @param timingLabelList
+     *            A Map between the Regions of the SCChart which is to be annotated with timing
+     *            values and References to the associated labels
+     * @param regionLabelStringMap
+     *            A Map between Regions and the Strings that will be the timing information labels
+     *            to feed back to the diagram
+     * @param tppRegionMap
+     *            A Mapping between Timing Program Points and Regions
+     * @param rootState
+     */
+    private void extractTimingLabels(RequestType requestType,
+            LinkedList<TimingRequestResult> resultList,
+            HashMultimap<Region, WeakReference<KText>> timingLabelList,
+            HashMap<Region, String> regionLabelStringMap, HashMap<Integer, Region> tppRegionMap,
+            State rootState) {
+        // Integer because there will be calculations with those values
+        HashMap<Region, Integer> deepValues = new HashMap<Region, Integer>();
+        HashMap<Region, Integer> flatValues = new HashMap<Region, Integer>();
+        Iterator<TimingRequestResult> resultListIterator = resultList.iterator();
+        // fill the map for flat values
+        while (resultListIterator.hasNext()) {
+            TimingRequestResult currentResult = resultListIterator.next();
+            if (currentResult.getRequestType() == requestType) {
+                Region resultRegion =
+                        tppRegionMap.get(Integer.parseInt(currentResult.getStartPoint()));
+                if (flatValues.get(resultRegion) == null) {
+                    flatValues
+                            .put(resultRegion, Integer.parseInt(currentResult.getResult().get(0)));
+                } else {
+                    // there may be more than one timing result for a region, sum the values up
+                    flatValues.put(
+                            resultRegion,
+                            flatValues.get(resultRegion)
+                                    + Integer.parseInt(currentResult.getResult().get(0)));
+                }
+            }
+        }
+        calculateDeepTimingValues(rootState, flatValues, deepValues);
+        Iterator<Region> regionIterator = timingLabelList.keySet().iterator();
+        while (regionIterator.hasNext()) {
+            Region currentRegion = regionIterator.next();
+            regionLabelStringMap.put(currentRegion, deepValues.get(currentRegion) + " / "
+                    + flatValues.get(currentRegion));
+        }
+    }
+
+    /**
+     * The method takes a state and a Mapping between Regions and Integer values. For each region,
+     * it sums up the values for its child regions and itself and puts the result in a map
+     * associating regions with their deep timing values. It works recursively from state down to
+     * the innermost states of the given scchart.
+     * 
+     * @param state
+     *            The current state, in the original call the sccchart root state
+     * @param flatValues
+     *            Mapping of Regions to their flat timing values.
+     * @param deepValues
+     *            Mapping of Regions to their hierarchical timing values.
+     */
+    private void calculateDeepTimingValues(State state, HashMap<Region, Integer> flatValues,
+            HashMap<Region, Integer> deepValues) {
+        EList<Region> regionList = state.getRegions();
+        // base case is a state with
+        Iterator<Region> regionListIterator = regionList.iterator();
+        List<State> macroChildStates = timingAnnotationProvider.getMacroChildStates(state);
+        if (!macroChildStates.isEmpty()) {
+            Iterator<State> macroChildStatesIterator = macroChildStates.iterator();
+            while (macroChildStatesIterator.hasNext()) {
+                State macroChild = macroChildStatesIterator.next();
+                calculateDeepTimingValues(macroChild, flatValues, deepValues);
+            }
+        }
+        while (regionListIterator.hasNext()) {
+            Region childRegion = regionListIterator.next();
+            // Add the region's own flat value to its deep value
+            Integer flatTiming = flatValues.get(childRegion);
+            if (deepValues.get(childRegion) != null) {
+                deepValues.put(childRegion, deepValues.get(childRegion)
+                        + flatTiming);
+            } else {
+                deepValues.put(childRegion, flatTiming);
+            } 
+            Integer deepTiming = deepValues.get(childRegion);
+            // Add deep timing value of this region to the hierarchical timing value of its parent
+            // region
+            Region stateParentRegion = state.getParentRegion();
+            if (stateParentRegion != null) {
+                if (deepValues.get(stateParentRegion) != null) {
+                    deepValues.put(stateParentRegion, deepValues.get(stateParentRegion)
+                            + deepTiming);
+                } else {
+                    deepValues.put(stateParentRegion, deepTiming);
+                }
+            }
+            
+        }
+    }
+
+    /**
      * The method checks all edges of the SCG and finds edges, where source and target node are
      * associated with different regions from the original SCChart, of which the SCG is a
      * compilation result. This means, the method determines, at which edges of the SCG a context
@@ -398,8 +502,8 @@ public class TimingAnalysis extends Job {
      *            A map, into which the method stores the related region for each TPP (which will be
      *            the one corresponding to the thread, to which the context is switched a the
      *            location where the TPP is inserted.
-     * @param scchartDummyRegion 
-     * @param debugNodeList 
+     * @param scchartDummyRegion
+     * @param debugNodeList
      * @return returns -1, if the TPP-insertion ran into a problem else the highest inserted TPP
      *         number
      */
@@ -423,10 +527,11 @@ public class TimingAnalysis extends Job {
             // get the region the target node of the edge stems from
             Region targetRegion = nodeRegionMapping.get(currentEdge.getTarget());
             if (targetRegion == null) {
-                // It is normal that nodes of the SCG get mapped to null, if they are considered to 
-                // belong to the scchart but not to one of its regions, for the timing analysis, 
-                // they are attributed to a dummy region representing all parts of the scchart that 
-                // does not belong to a region (thus enabling us to keep track of the timing for those 
+                // It is normal that nodes of the SCG get mapped to null, if they are considered to
+                // belong to the scchart but not to one of its regions, for the timing analysis,
+                // they are attributed to a dummy region representing all parts of the scchart that
+                // does not belong to a region (thus enabling us to keep track of the timing for
+                // those
                 // parts
                 targetRegion = scchartDummyRegion;
             }
@@ -483,17 +588,16 @@ public class TimingAnalysis extends Job {
     }
 
     /**
-     * Method inserts a single timing program point for interactive timing analysis in the edge 
-     * given as parameter controlFlow. This happens by inserting an Assignment with the TPP as 
-     * text expression as new target of the edge and connecting it by a new edge with the original 
-     * target of the edge.
+     * Method inserts a single timing program point for interactive timing analysis in the edge
+     * given as parameter controlFlow. This happens by inserting an Assignment with the TPP as text
+     * expression as new target of the edge and connecting it by a new edge with the original target
+     * of the edge.
      * 
      * @param controlFlow
-     *        The edge, into which the TPP node is to be inserted.
-     * @param tppNumber 
-     *        The number of the TPP to be created, for example the 2 in 'TPP(2);'
-     * @return
-     *   The Assignment wit the TPP
+     *            The edge, into which the TPP node is to be inserted.
+     * @param tppNumber
+     *            The number of the TPP to be created, for example the 2 in 'TPP(2);'
+     * @return The Assignment wit the TPP
      */
     private Assignment insertSingleTPP(SCGraph scg, ControlFlow controlFlow, int tppNumber) {
         // make target reachable via a new edge

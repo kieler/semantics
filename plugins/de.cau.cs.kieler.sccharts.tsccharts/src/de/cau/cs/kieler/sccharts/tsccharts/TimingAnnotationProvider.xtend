@@ -43,30 +43,38 @@ class TimingAnnotationProvider {
     @Inject
     extension TSCChartsAnnotationExtension;
 
+    
+    // ALT
+    /* This method checks, whether we have timing information for this SCChart. If yes, it provides all 
+     * regions of the SCChart with two timing value annotations, one including,
+     * one excluding the WCRT for child regions. If no, the method checks whether SCChart and KTM have 
+     * already been assigned with Timing Domains and handles this, if not.
+     */
+    def public doTimingAnnotationsOLD(State scchart, LinkedList<TimingRequestResult> resultList, 
+        String fileName, HashMap<Integer, Integer> ttpRegionMapping) {
+        getTimingInformation(resultList, fileName);
+//        var TimeValueTable timeTable = extractTimeValueTable(resultList);
+//        var oldTypeMap = extractValueListOldType(timeTable, ttpRegionMapping);
+//        annotateStatesAndRegions(scchart, oldTypeMap);
+        //annotateRegionsFL(scchart, timeTable, ttpRegionMapping);
+
+    //if (timingInformation != null) {
+    //    annotateStatesAndRegions(scchart, timingInformation);
+    //}
+    }
+    
+    // NEU
     /* This method checks, whether we have timing information for this SCChart. If yes, it provides all 
      * regions of the SCChart with two timing value annotations, one including,
      * one excluding the WCRT for child regions. If no, the method checks whether SCChart and KTM have 
      * already been assigned with Timing Domains and handles this, if not.
      */
     def public doTimingAnnotations(State scchart, LinkedList<TimingRequestResult> resultList, 
-        String fileName, HashMap<Integer, Integer> ttpRegionMapping) {
-
-        //        // TimingDomains for test reasons
-        //        var Integer domainNumber = 0;
-        //        val regionList = scchart.regions;
-        //        val regionListIterator = regionList.iterator;
-        //        while (regionListIterator.hasNext()) {
-        //            val childRegion = regionListIterator.next;
-        //
-        ////            // threadTree will be used to determine program point pairs for requests of local timing
-        ////            val HashMap<Integer, LinkedList<Integer>> threadTree = new HashMap<Integer, LinkedList<Integer>>;
-        ////            domainNumber = setTimingDomainsSimple(childRegion, domainNumber, threadTree, null);
-        //        }
-        //val Map<Integer, Integer> timingInformation = getTimingInformation(fileName);
+        String fileName, HashMap<Integer, Region> ttpRegionMapping) {
         getTimingInformation(resultList, fileName);
-        var TimeValueTable timeTable = extractTimeValueTable(resultList);
-        var oldTypeMap = extractValueListOldType(timeTable, ttpRegionMapping);
-        annotateStatesAndRegions(scchart, oldTypeMap);
+//        var TimeValueTable timeTable = extractTimeValueTable(resultList);
+//        var oldTypeMap = extractValueListOldType(timeTable, ttpRegionMapping);
+//        annotateStatesAndRegions(scchart, oldTypeMap);
         //annotateRegionsFL(scchart, timeTable, ttpRegionMapping);
 
     //if (timingInformation != null) {
@@ -517,11 +525,14 @@ class TimingAnnotationProvider {
      * @param stringBuilder
      *      A StringBuilder, will typically already contain the beginning of a .ta file
      */
-    def LinkedList<TimingRequestResult> writeTimingRequests(int highestTTP, StringBuilder stringBuilder) {
+    def LinkedList<TimingRequestResult> writeTimingRequests(int highestTPP, StringBuilder stringBuilder) {
         val returnList = new LinkedList<TimingRequestResult>();
         var i = 0 as int
         stringBuilder.append("\n\n# Analysis Requests");
-        for (i = 1; i < highestTTP; i = i + 1) {
+        for (i = 1; i < highestTPP; i = i + 1) {
+            // there is no TPP with the number 13 (as this has special meaning for prototype analysis 
+            // tool)
+            if (!(i == 12) && !(i == 13)){
             var timingRequestResult1 = new TimingRequestResult();
             var timingRequestResult2 = new TimingRequestResult();
             var int successor = i + 1;
@@ -535,6 +546,7 @@ class TimingAnnotationProvider {
             timingRequestResult2.setStartPoint(i.toString());
             timingRequestResult2.setEndPoint(successor.toString());
             returnList.add(timingRequestResult2);
+        } 
         }
         return returnList;
     }

@@ -350,7 +350,7 @@ public class TimingAnalysisHandler extends AbstractHandler {
                     e.printStackTrace();
                 }
                 
-                annotationProvider.doTimingAnnotations(state, resultList, taPath, ttpRegionMapping);
+                annotationProvider.doTimingAnnotationsOLD(state, resultList, taPath, ttpRegionMapping);
                 List<Region> childRegions = state.getRegions();
                 Iterator<Region> childRegionsIterator = childRegions.iterator();
                 while (childRegionsIterator.hasNext()) {
