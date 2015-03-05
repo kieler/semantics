@@ -29,6 +29,7 @@ import java.util.LinkedList
 import de.cau.cs.kieler.scl.scl.StatementScope
 import de.cau.cs.kieler.core.kexpressions.Declaration
 import de.cau.cs.kieler.scl.scl.SclFactory
+import de.cau.cs.kieler.scl.scl.Parallel
 
 /**
  * @author ssm, krat
@@ -395,5 +396,23 @@ class SCLExtensions {
 
         nameVar
     }
+    
+    /**
+     * Removes redundant forks (i.e. forks with only one thread)
+     * @param statementSequence The StatementSequence to process
+     * @return StatementSequence wiithout redundant forks
+     */
+     def removeRedundantForks(StatementSequence statementSequence) {
+         for (parallel : statementSequence.eAllContents.toList.filter(Parallel)) {
+             if (parallel.threads.length <= 1) {
+                 val parent = parallel.eContainer.eContainer as StatementSequence
+                 val indexOfParallel = parent.statements.indexOf(parallel.eContainer)
+                 parent.statements.remove(indexOfParallel)
+                 if (parallel.threads.length == 1) {
+                     parent.statements.addAll(indexOfParallel, parallel.threads.head.statements)
+                 }
+             }
+         }
+     }
 
 }

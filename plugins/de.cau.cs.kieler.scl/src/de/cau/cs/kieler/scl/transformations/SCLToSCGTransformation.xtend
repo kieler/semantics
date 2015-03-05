@@ -94,6 +94,7 @@ class SCLToSCGTransformation extends AbstractModelTransformation {
     def SCLProgram initialize(SCLProgram scl) {
         scl.removeDoubleJumps
         scl.removeLocalDeclarations
+        scl.removeRedundantForks
 
         // Variable initialization
         scl.declarations.forEach [

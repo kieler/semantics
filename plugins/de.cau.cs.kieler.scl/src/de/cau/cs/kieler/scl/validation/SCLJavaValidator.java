@@ -99,13 +99,13 @@ public class SCLJavaValidator extends de.cau.cs.kieler.scl.validation.AbstractSC
      * Checks if goto target label is in scope
      */
     @Check
-    public void checkLabelExisting(Goto goingTo) {
-        EObject parent = goingTo.eContainer();
+    public void checkLabelExisting(Goto gotoStatement) {
+        EObject parent = gotoStatement.eContainer();
         while (!(parent instanceof Thread) && !(parent instanceof SCLProgram)) {
             parent = parent.eContainer();
         }
-        if (!labelExisting(((StatementSequence) parent).getStatements(), goingTo.getTargetLabel())) {
-            error("Label not in scope", goingTo, null, -1);
+        if (!labelExisting(((StatementSequence) parent).getStatements(), gotoStatement.getTargetLabel())) {
+            error("Label not in scope", gotoStatement, null, -1);
         }
     }
     
