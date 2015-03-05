@@ -56,10 +56,10 @@ import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.EmptyStatement
 
 /**
- * @author krat
- * 
  * Collection of methods and shortcuts to ease the Esterel to SCL transformation
- *
+ * 
+ * @author krat
+ * @kieler.rating proposed yellow 2015-03-04 krat
  */
 class EsterelToSclExtensions {
 
@@ -75,21 +75,21 @@ class EsterelToSclExtensions {
     /**
      * Searches a valuedObject in a declarations list by its name
      * 
-     * @param getValuedObject List of declarations
-     * @param searchedName    The string to search for
-     * @return                The ValuedObject with name n
+     * @param sclDeclarationList List of declarations
+     * @param searchedName The string to search for
+     * @return The ValuedObject with name n
      */
     def getValuedObjectByName(EList<Declaration> sclDeclarationList, String searchedName) {
         for (sclDeclaration : sclDeclarationList) {
-            val ret = sclDeclaration.valuedObjects.findFirst[name == searchedName]
-            if (ret != null)
-                return ret
+            val valuedObject = sclDeclaration.valuedObjects.findFirst[name == searchedName]
+            if (valuedObject != null)
+                return valuedObject
         }
         throw new TransformerException("getValuedObject: Signal not declared: " + searchedName)
     }
 
     /**
-     * Searches a valuedObject by name in the signalMap of EsterelToSclTransformation class
+     * Searches a valuedObject by name in the signalToVariableMap of the EsterelToSclTransformation class
      * 
      * @param searchedName The ValuedObject name to search for
      */
@@ -105,8 +105,8 @@ class EsterelToSclExtensions {
     /**
      * Returns a reference to a valued objects name
      * 
-     * @param  decls List of declarations
-     * @param  valObj 
+     * @param  sclDeclarationList List of declarations
+     * @param  searchedName The name of the searched ValuedObject
      * @return ValuedObjectReference to given name
      */
     def getValuedObjectReferenceByName(EList<Declaration> sclDeclarationList, String searchedName) {
@@ -128,19 +128,19 @@ class EsterelToSclExtensions {
     /**
      * Creates a reference to a ValuedObject
      * 
-     * @param  valObj The ValuedObject
+     * @param  valuedObjects The ValuedObject
      * @reutrn ValuedObjectReference to given ValuedObject
      */
-    def createValObjRef(ValuedObject valObj) {
+    def createValObjRef(ValuedObject valuedObjects) {
         KExpressionsFactory::eINSTANCE.createValuedObjectReference => [
-            valuedObject = valObj
+            valuedObject = valuedObjects
         ]
     }
 
     /**
-     * Returns a fresh label by appending the labelCount to "l" and incrementing label count
+     * Returns a unused label by appending the labelCount to "l" and incrementing label count
      * 
-     * @return A fresh label
+     * @return An unused label
      */
     def createNewUniqueLabel() {
         labelCount = labelCount + 1
@@ -156,103 +156,105 @@ class EsterelToSclExtensions {
     }
 
     /**
-     * Returns a fresh variable, i.e. one with a name which is not already on the signalMap
+     * Returns a new variable, i.e., one with a name which is not already on the signalToVariableMap
      * 
      * @param name The desired name, "_" will be appended until it is unqiue
-     * @return     A new ValuedObject with an unused name
+     * @return A new ValuedObject with an unused name
      */
     def createNewUniqueVariable(String name, ValueType t) {
-        val ret = createValuedObject(uniqueName(name))
-        signalToVariableMap.add(name -> ret)
-        signalToVariableMap.add(ret.name -> ret)
+        val newUniqueVariable = createValuedObject(uniqueName(name))
+        signalToVariableMap.add(name -> newUniqueVariable)
+        signalToVariableMap.add(newUniqueVariable.name -> newUniqueVariable)
 
-        ret
+        newUniqueVariable
     }
 
     /**
-     * Returns a fresh variable and adds it to give sScope
+     * Returns a fresh variable and adds it to given StatementScope
      * 
-     * @param sScope The StatementScope to add it to
-     * @param name   The desired name
-     * @param t      The type of the variable
-     * @return       A new ValuedObject with an unused name
+     * @param statementScope The StatementScope to add it to
+     * @param designatedName The desired name, "_" may be added to make it unique
+     * @param designatedName The type of the variable
+     * @return A new ValuedObject with an unused name
      */
-    def createFreshVar(StatementScope sScope, String name, ValueType t) {
-        val ret = createValuedObject(uniqueName(name))
-        sScope.declarations += createDeclaration => [
-            valuedObjects += ret
-            type = t
+    def ValuedObject createFreshVar(StatementScope statementScope, String designatedName, ValueType valueType) {
+        val newUniqueVariable = createValuedObject(uniqueName(designatedName))
+        statementScope.declarations += createDeclaration => [
+            valuedObjects += newUniqueVariable
+            type = valueType
         ]
-        signalToVariableMap.add(name -> ret)
-        signalToVariableMap.add(ret.name -> ret)
+        signalToVariableMap.add(designatedName -> newUniqueVariable)
+        signalToVariableMap.add(newUniqueVariable.name -> newUniqueVariable)
 
-        ret
+        newUniqueVariable
     }
 
     /**
      * Creates an EmptyStatement
      * 
-     * @param l The label of the EmptyStatement
+     * @param label The label of the EmptyStatement
+     * @return The created EmptyStatement
      */
-    def createEmptyStm(String l) {
+    def createEmptyStm(String label) {
         SclFactory::eINSTANCE.createEmptyStatement => [
-            label = l
+            it.label = label
         ]
     }
 
     /**
      * Takes a variable name and adds "_" until variable name is new
      * 
-     * @param s Desired variable name
+     * @param designatedName Desired variable name
      * @return  An unused variable name
      */
-    def String uniqueName(String s) {
+    def String uniqueName(String designatedName) {
 
         // The variable should not be on the current signalMap
-        if (signalToVariableMap.filter[key == s].nullOrEmpty) {
-            return s
+        if (signalToVariableMap.filter[key == designatedName].nullOrEmpty) {
+            return designatedName
         } else {
-            return uniqueName(s + "_")
+            return uniqueName(designatedName + "_")
         }
     }
 
     /**
      * Creates name that is not on the given list
      * 
-     * @param variables List of variable names
-     * @param s         The desired String, "_" are added until unique
-     * @return          Name that is not already in the list
+     * @param definedVariables List of variable names
+     * @param designatedName The desired String, "_" are added until unique
+     * @return Name that is not already in the list
      */
-    def String uniqueNameByList(LinkedList<String> variables, String s) {
-        if (!variables.contains(s)) {
-            return s;
+    def String uniqueNameByList(LinkedList<String> definedVariables, String designatedName) {
+        if (!definedVariables.contains(designatedName)) {
+            return designatedName;
         } else {
-            return uniqueNameByList(variables, s + "_")
+            return uniqueNameByList(definedVariables, designatedName + "_")
         }
     }
 
     /**
      * Creates a statement which increments a valued object by 1
      * 
-     * @param valObj The valued object to increment
-     * @return       A statement which increments valObj
+     * @param valuedObject The valued object to increment
+     * @return A statement which increments valObj
      */
-    def Statement incrementInt(ValuedObject valObj) {
+    def Statement incrementInt(ValuedObject valuedObject) {
         createStatement(
-            createAssignment(valObj,
+            createAssignment(valuedObject,
                 KExpressionsFactory::eINSTANCE.createOperatorExpression => [
                     operator = OperatorType::ADD
-                    subExpressions += createValObjRef(valObj)
+                    subExpressions += createValObjRef(valuedObject)
                     subExpressions += createIntValue(1)
                 ]))
     }
 
     /**
-     * Checks for valid names. The suffix "_val" is reserved for valued signals.
+     * Checks for valid names. The suffix "_val" is reserved for valued signals. Exception is thrown
+     * if the suffix is used.
      * 
      * @param esterelProgram The Esterel Program to validate
-     * @return               True if no invalid names
-     * @throws               IllegalArgumentException if variable ending with "_val" exists
+     * @return True if no invalid names
+     * @throws IllegalArgumentException if variable ending with "_val" exists
      */
     def boolean validateNames(Program esterelProgram) {
         esterelProgram.modules.forEach [
@@ -285,7 +287,8 @@ class EsterelToSclExtensions {
     }
 
     /**
-     * Checks, whether a variable is already declared even in the signalMap or as a value
+     * Checks, whether a variable is already declared either in the signalToVariableMap or in the
+     * signalToValueMap.
      * 
      * @param  n The to-be-checked variable name
      * @return Whether the name is already declared
@@ -576,11 +579,11 @@ class EsterelToSclExtensions {
      * @param curLabel Label at the end of the currently transformed thread
      * @param labelMap Map of which label is in which thread
          */
-    def createGotoj(String l, String curLabel, Multimap<String, String> labelMap) {
-        if (labelMap.get(curLabel).contains(l)) {
-            return createGotoStm(l)
+    def createGotoj(String label, String currentThreadEndLabel, Multimap<String, String> labelToThreadMap) {
+        if (labelToThreadMap.get(currentThreadEndLabel).contains(label)) {
+            return createGotoStm(label)
         } else {
-            return createGotoStm(curLabel)
+            return createGotoStm(currentThreadEndLabel)
         }
     }
 
