@@ -85,6 +85,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.esterel.kexpressions.IVariable
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
+import de.cau.cs.kieler.scl.extensions.SCLExtensions
 
 /**
  * This class contains methods to transform an Esterel program to SCL. The transformation is started
@@ -113,6 +114,9 @@ class EsterelToSclTransformation extends Transformation {
 
     @Inject
     extension TransformExpression
+    
+    @Inject 
+    extension SCLExtensions
 
     // Label at the end of currently transformed thread
     var String currentThreadEndLabel
@@ -176,7 +180,7 @@ class EsterelToSclTransformation extends Transformation {
      * @return The transformed SCL program
      */
     public def SCLProgram transformProgram(Program sourceEsterelProgram) {
-        System.out.println("Transforming to SCL...")
+        System.out.println("Transforming module " + sourceEsterelProgram.modules.head.name + " to SCL...")
 
         currentThreadEndLabel = "root"
         labelToThreadMap = HashMultimap.create()
@@ -248,6 +252,9 @@ class EsterelToSclTransformation extends Transformation {
             valuedObjects += synchronousTick
             synchronousTick.initialValue = createBoolValue(true)
         ]
+        
+        // Apply SCL optimization if triggered
+//        targetSclProgram.optimizeAll
 
         // As the number with which the labels are enumerated is a static variable of the EsterelToSclExtensions
         // class, the numer is resetted to 1 after each transformation for subsequent calls
@@ -747,7 +754,7 @@ class EsterelToSclTransformation extends Transformation {
                         statement = everyDo.statement
                     ]
                     end = EsterelFactory::eINSTANCE.createLoopDelay => [
-                        delay = everyDo.delay
+                        delay = everyDo.delay => [ isImmediate = false ]
                     ]
                 ])
         ]
