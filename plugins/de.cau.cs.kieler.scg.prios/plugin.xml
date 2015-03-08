@@ -23,13 +23,6 @@
             name="OptNodePriorities">
       </transformationMethod>
       <transformationMethod
-            class="de.cau.cs.kieler.scgprios.transform.SCGDEPtoSCGPRIOTransformation"
-            dependencies="SCLP"
-            id="SCGPRIO"
-            method="transform"
-            name="Priorities">
-      </transformationMethod>
-      <transformationMethod
             class="de.cau.cs.kieler.scgprios.transform.ThreadSegmentIDsTransformation"
             dependencies="SCGOPTPRIOIDS"
             id="SCGTSIDS"
