@@ -368,7 +368,7 @@
             editor="de.cau.cs.kieler.sccharts.text.sct.Sct"
             label="Priority Based Compilation"
             priority="90"
-            transformations="SCCHARTSPRIO2S">
+            transformations="SCCHARTSPRIO2S, S2SC">
       </editor>
       <editor
             editor="de.cau.cs.kieler.sccharts.text.sct.Sct"

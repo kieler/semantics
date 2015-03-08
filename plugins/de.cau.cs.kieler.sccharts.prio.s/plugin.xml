@@ -41,7 +41,8 @@
             class="de.cau.cs.kieler.sccharts.prio.s.xtend.SCChartsPrio2S"
             id="SCCHARTSPRIO2S"
             method="transform"
-            name="Prio S Code">
+            name="Prio S Code"
+            producesDependencies="S2SC">
       </transformationMethod>
    </extension>
 
