@@ -92,7 +92,10 @@ class InstantaneousSynchronizer extends AbstractSynchronizer {
 	 * 		Returns a {@code SynchronizerData} class including all mandatory data for the scheduler.
 	 */  
     override protected build(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
-        var data = new SynchronizerData()
+        var data = new SynchronizerData()=> [ 
+            setJoin(join)
+            setGuard(guard)
+        ]
 		
 		val joinSB = join.getCachedSchedulingBlock
 		
@@ -101,6 +104,8 @@ class InstantaneousSynchronizer extends AbstractSynchronizer {
         data.guardExpression.valuedObject = joinSB.guard.valuedObject
                 
         data.guardExpression.expression = exitNodes.head.getCachedSchedulingBlock.guard.valuedObject.reference
+        
+        guard.expression = data.guardExpression.expression
 
     }
        

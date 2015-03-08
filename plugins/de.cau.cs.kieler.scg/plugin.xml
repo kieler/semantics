@@ -41,21 +41,21 @@
          point="de.cau.cs.kieler.kico.transformation">
       <transformationMethod
             class="de.cau.cs.kieler.scg.transformations.DependencyTransformation"
-            dependencies="SCGBBGROUP, OPTSCG"
+            producesDependencies="SCGBBGROUP, OPTSCG"
             id="SCGDEP"
             method="transform"
             name="Dependencies">
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scg.transformations.BasicBlockTransformation"
-            dependencies="SCGGC"
+            producesDependencies="SCGGC"
             id="SCGBB"
             method="transform"
             name="BasicBlocks">
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scg.transformations.BasicBlockTransformationSCplus"
-            dependencies="SCGGC"
+            producesDependencies="SCGGC"
             id="SCGBBSCPLUS"
             method="transform"
             name="BasicBlocksSCplus">
@@ -68,21 +68,21 @@
       </transformationGroup>
       <transformationMethod
             class="de.cau.cs.kieler.scg.guardCreation.GuardCreator"
-            dependencies="SCGSCHEDULE"
+            producesDependencies="SCGSCHEDULE"
             id="SCGGC"
             method="transform"
             name="Guards">
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scg.schedulers.GuardScheduler"
-            dependencies="SCGSEQUENTIALIZE"
+            producesDependencies="SCGSEQUENTIALIZE"
             id="SCGSCHEDULE"
             method="schedule"
             name="Scheduling">
       </transformationMethod>
       <transformationMethod
             class="de.cau.cs.kieler.scg.sequentializer.GuardSequentializer"
-            dependencies="SCG2S"
+            producesDependencies="SCG2S"
             id="SCGSEQUENTIALIZE"
             method="sequentialize"
             name="Sequentialize">

@@ -73,7 +73,23 @@ import de.cau.cs.kieler.scg.Depth
  */
 
 class SurfaceSynchronizer extends AbstractSynchronizer {
- 
+
+    static final boolean DEBUG = false;
+
+    def static void debug(String debugText) {
+        debug(debugText, true);
+    }
+
+    def static void debug(String debugText, boolean lineBreak) {
+        if (DEBUG) {
+            if (lineBreak) {
+                System.out.println(debugText);
+            } else {
+                System.out.print(debugText);
+            }
+        }
+    }
+     
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
@@ -123,7 +139,10 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
 	 */  
     override protected build(Join join, Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
     	// Create a new SynchronizerData class which holds the data to return.
-        var data = new SynchronizerData() => [ setJoin(join) ]
+        var data = new SynchronizerData() => [ 
+            setJoin(join)
+            setGuard(guard)
+        ]
 		
 		// Since we are working we completely enriched SCGs, we can use the SCG extensions 
 		// to retrieve the scheduling block of the join node in question.
@@ -152,7 +171,7 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
             newGuard.expression = emptyExp.expression
             scg.guards += newGuard
             
-            System.out.println("Generated NEW guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize)
+            debug("Generated NEW guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize)
 		}
     }
     
@@ -344,7 +363,8 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
             while(sExp.subExpressions.size > OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER) {
                 val eExp = new EmptyExpression()  
                 eExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
-                eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
+//                eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
+                eExp.valuedObject.name = data.guard.valuedObject.name + "_fix" + fixcnt
                 data.valuedObjects.add(eExp.valuedObject)
                 val subExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
                 subExp.setOperator(OperatorType::AND)
@@ -364,7 +384,8 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
         	    while(tExp.subExpressions.size > OPERATOREXPRESSION_DEPTHLIMIT_SYNCHRONIZER) {
     	            val eExp = new EmptyExpression()  
 	                eExp.valuedObject = KExpressionsFactory::eINSTANCE.createValuedObject
-                	eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
+//                    eExp.valuedObject.name = data.guardExpression.valuedObject.name + "_fix" + fixcnt
+                    eExp.valuedObject.name = data.guard.valuedObject.name + "_fix" + fixcnt
             	    data.valuedObjects.add(eExp.valuedObject)
         	        val subExp = KExpressionsFactory::eINSTANCE.createOperatorExpression
     	            subExp.setOperator(OperatorType::OR)

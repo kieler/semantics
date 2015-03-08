@@ -22,6 +22,7 @@ import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.sequentializer.GuardExpression
 import java.util.HashMap
 import java.util.List
+import de.cau.cs.kieler.scg.Guard
 
 /**
  * The {@code SynchronizerData} class comprises members for the data mandatory to 
@@ -62,6 +63,10 @@ class SynchronizerData {
     
     @Property
     Join join
+
+    @Property
+    Guard guard
+
     
     /**
      * Map of additional assignments with respect to their scheduling blocks.

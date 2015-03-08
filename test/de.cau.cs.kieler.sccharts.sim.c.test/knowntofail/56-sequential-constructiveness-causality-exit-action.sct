@@ -1,0 +1,15 @@
+scchart sequentialconstructivenessexitaction {
+  output signal pure S;
+  output signal pure O;
+  input signal pure I;
+
+  initial state A {
+    exit / S;
+  }
+  --> B with S / O
+  --> C with I;
+
+  state B;
+
+  state C;
+}

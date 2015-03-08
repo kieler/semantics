@@ -589,9 +589,11 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                             val regionLabel = entry.getStringAnnotationValue(ANNOTATION_REGIONNAME)
                             entry.getThreadNodes.createHierarchy(NODEGROUPING_HIERARCHY, null) => [
                             	var text = ""
-                                if (!regionLabel.nullOrEmpty) text = regionLabel + " - "
                                 val threadPathType = threadTypes.get(entry)
-                                text = text + threadPathType.toString2
+                                if (threadPathType != null) {
+                                    if (!regionLabel.nullOrEmpty) text = regionLabel + " - "
+                                    text = text + threadPathType.toString2
+                                }
                                 
                                     addInsideTopLeftNodeLabel(text, 10, KlighdConstants::DEFAULT_FONT_NAME) => [
                                         it.foreground = REGIONLABEL.copy;

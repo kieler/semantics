@@ -14,7 +14,7 @@ Require-Bundle: org.eclipse.emf.ecore;bundle-version="2.5.0",
  com.google.inject;bundle-version="3.0.0",
  de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.sccharts.text,
- de.cau.cs.kieler.esterel.kexpressions;bundle-version="0.4.1"
+ de.cau.cs.kieler.esterel.kexpressions
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.synccharts,
  de.cau.cs.kieler.synccharts.impl,

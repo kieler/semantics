@@ -77,6 +77,8 @@ class BasicBlockTransformation extends Transformation {
     // -- Constants
     // -------------------------------------------------------------------------
     
+    public static val ANNOTATION_BASICBLOCKTRANSFORMATION = "basicBlocks" 
+    
     public static val String GUARDPREFIX = "g"
     
 	protected val SPLITSCHEDULINGBLOCKSATENTRY = false
@@ -116,7 +118,10 @@ class BasicBlockTransformation extends Transformation {
      */
     public def SCGraph transformSCGDEPToSCGBB(SCGraph scg) {
         
-        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)) {
+        if (scg.hasAnnotation(AbstractSequentializer::ANNOTATION_SEQUENTIALIZED)
+            || scg.hasAnnotation(BasicBlockTransformation::ANNOTATION_BASICBLOCKTRANSFORMATION)
+            || !scg.basicBlocks.empty
+        ) {
             return scg
         }
         
@@ -135,6 +140,10 @@ class BasicBlockTransformation extends Transformation {
         val basicBlockCache = <BasicBlock> newLinkedList
         scg.createBasicBlocks(scg.nodes.head, 0, basicBlockCache)
         scg.basicBlocks += basicBlockCache
+        
+        scg => [
+            annotations += createStringAnnotation(ANNOTATION_BASICBLOCKTRANSFORMATION, "")
+        ]        
         
         val time = (System.currentTimeMillis - timestamp) as float
         System.out.println("Basic Block transformation finished (time elapsed: "+(time / 1000)+"s).")    
