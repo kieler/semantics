@@ -179,11 +179,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     private static val SynthesisOption SHOW_SHADOW = SynthesisOption::createCheckOption("Shadow", true);
     
     //new option for showing port labels
-    private static val SynthesisOption SHOW_PORT_LABELS = SynthesisOption::createCheckOption("Port labels", true)
+//    private static val SynthesisOption SHOW_PORT_LABELS = SynthesisOption::createCheckOption("Port labels", true)
 
     override public getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_SIGNAL_DECLARATIONS, SHOW_STATE_ACTIONS, SHOW_LABELS, SHOW_DEPENDENCIES, SHOW_ORDER,
-            SHOW_REFERENCEEXPANSION, USE_ADAPTIVEZOOM, SHOW_SHADOW, PAPER_BW, SHOW_PORT_LABELS);
+            SHOW_REFERENCEEXPANSION, USE_ADAPTIVEZOOM, SHOW_SHADOW, PAPER_BW) //SHOW_PORT_LABELS);
     }
 
     override public getDisplayedLayoutOptions() {
@@ -1328,37 +1328,29 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 nNode.translateConstExpression(expr, callNode)
             }
             ValuedObjectReference: {
-                
-                // need to use a dummy node inside?
-                
                 // expr = ValuedObjectReference: it.valuedObject = current input
                 val vo = expr.valuedObject
-                val voRef = (callNode as CallNode).callReference.valuedObjects.get(voIndex)//d.equations.get(index).valuedObject
-                //val voRef = d.valuedObjects.get(index) // <-- alte Variante
-//                val equation = d.equations.get(index)
-                // current features (expr) is not attached to a call/reference node
-                
-                println("i'm here")
-                println("vo: " + vo + ", voRef: " + voRef)
-                println("getNode: " + getNode(callNode))
-                println("getPorts: " + getNode(callNode).getPort(vo.reference.portMap) + ", " + getNode(callNode).getPort(voRef.reference.portMap))
-                
-                nNode.createEdge(callNode) => [
+                val voRef = (callNode as CallNode).callReference.valuedObjects.get(voIndex)
+                // add ports to dummy node to create an edge from input to output
+                // inside(!) the call node
+                nNode.addPort(vo, PortSide::EAST, 1)
+                nNode.addPort(voRef, PortSide::WEST, 1)
+                // first part of the edge
+                nNode.createEdge(nNode) => [
                     it.source = getNode(callNode)
-                    it.target = getNode(callNode)
+                    it.target = nNode
                     it.sourcePort = getNode(callNode).getPort(vo.reference.portMap)
+                    it.targetPort = nNode.getNode(callNode).getPort(vo.reference.portMap)
+                    it.addRoundedBendsPolyline(4, 1) 
+                ]
+                // second part of the edge
+                nNode.createEdge(callNode) => [
+                    it.source = nNode
+                    it.target = getNode(callNode)
+                    it.sourcePort = nNode.getNode(callNode).getPort(voRef.reference.portMap)
                     it.targetPort = getNode(callNode).getPort(voRef.reference.portMap)
                     it.createEdgeStyle
                 ]
-                
-//                cNode.getNode().createEdge(expr) => [
-//                            it.source = cNode.getNode()
-//                            it.target = voRef.getNode(parentNode)
-//                            it.sourcePort = cNode.getNode().getPort(expr.valuedObject.reference.portMap)
-//                            it.targetPort = voRef.getNode(parentNode).getPort(voRef.reference.portMap)
-//                            it.createEdgeStyle
-//                        ]
-                
             }
             default: {
                 println("default case...missing expression: " + expr)
@@ -1428,7 +1420,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         //create specific node shape
         if (n instanceof CallNode) {
             nNode.setMinimalNodeSize(MINIMALNODEWIDTH * 2, MINIMALNODEHEIGHT * 2)
-            nNode.createDefaultNodeShape
+            nNode.createCallNodeShape
         } else {
         	nNode.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT)
             nNode.createDefaultNodeShape
@@ -1447,18 +1439,14 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             )
             ref.referencedScope.declarations.filter[it.input].forEach[valuedObjects.forEach[ vo|
                 nNode.addPort(vo.reference, PortSide::WEST) => [
-                    if (SHOW_PORT_LABELS.booleanValue) {
-                        it.createLabel(it).configureInsideCenteredNodeLabel(
-                            vo.name, 6, KlighdConstants::DEFAULT_FONT_NAME)
-                    }
+                    it.createLabel(it).configureInsideCenteredNodeLabel(
+                       vo.name, 6, KlighdConstants::DEFAULT_FONT_NAME)
                 ]
             ]]
             ref.referencedScope.declarations.filter[it.output].forEach[valuedObjects.forEach[ vo|
                 nNode.addPort(vo.reference, PortSide::EAST) => [
-                    if (SHOW_PORT_LABELS.booleanValue) {
-                        it.createLabel(it).configureInsideCenteredNodeLabel(
-                            vo.name, 6, KlighdConstants::DEFAULT_FONT_NAME)
-                    }
+                    it.createLabel(it).configureInsideCenteredNodeLabel(
+                       vo.name, 6, KlighdConstants::DEFAULT_FONT_NAME)
                 ]
             ]]
             // create input nodes for call parameters
@@ -1523,21 +1511,17 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 ref.inputs.forEach[valuedObjects.forEach[ vo|
                     nNode.addPort(vo.reference, PortSide::WEST) => [
                         it.addLayoutParam(LayoutOptions::OFFSET, -3.0f)
-                        if (SHOW_PORT_LABELS.booleanValue) {
-                            it.createLabel(it).configureInsideCenteredNodeLabel(
-                                vo.reference.serialize as String,
-                                6, KlighdConstants::DEFAULT_FONT_NAME)
-                        }
+                        it.createLabel(it).configureInsideCenteredNodeLabel(
+                            vo.reference.serialize as String,
+                            6, KlighdConstants::DEFAULT_FONT_NAME)
                     ]
                 ]]
                 ref.outputs.forEach[valuedObjects.forEach[ vo|
                     nNode.addPort(vo.reference, PortSide::EAST) => [
                         it.addLayoutParam(LayoutOptions::OFFSET, -3.0f)
-                        if (SHOW_PORT_LABELS.booleanValue) {
                         it.createLabel(it).configureInsideCenteredNodeLabel(
                             vo.reference.serialize as String,
                             6, KlighdConstants::DEFAULT_FONT_NAME)
-                        }
                     ]
                 ]]
                 
@@ -1585,15 +1569,12 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                                 it.createEdgeStyle
                             ]
                         ]
-                    } // no more else case, because parameters are only allowed to be vor's
-//                     else {
-//                        println("p is: " + p)
-//                    }
+                    }
                 }
             ]
             
             // set call nodes to initially collapsed
-            nNode.addCollapseExpand(" "/*if(ref.label.nullOrEmpty) " " + ref.id else " " + ref.label*/)
+            //nNode.addCollapseExpand(" "/*if(ref.label.nullOrEmpty) " " + ref.id else " " + ref.label*/)
             if (SHOW_SHADOW.booleanValue) {
                 nNode.KRendering.shadow = "black".color;
                 nNode.KRendering.shadow.XOffset = 4;
@@ -1616,12 +1597,9 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     // -- Helper: Ports 
     // -------------------------------------------------------------------------
     def KPort addPort(KNode node, String text, float x, float y, int size, PortSide side) {
-        // alt: node.createPort(text) => [
         node.createPort() => [
             it.addLayoutParam(LayoutOptions::PORT_SIDE, side);
-//            it.setPortPos(x, y)
             it.setPortSize(size, size)
-//            it.addRectangle.invisible = true;
             node.ports += it
         ]
     }
@@ -1636,30 +1614,15 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     		text = expression.serialize as String
     		obj = expression
   		}
-    	val textf = text
         node.createPort(obj) => [
             it.addLayoutParam(LayoutOptions::PORT_SIDE, side);
             it.setPortSize(size, size)
-//            if (SHOW_PORT_LABELS.booleanValue) {
-//                it.createLabel(it).configureOutsideBottomLeftNodeLabel(
-//                        textf,
-//                        6,
-//                        KlighdConstants::DEFAULT_FONT_NAME
-//                    )
-//            }
-            
             node.ports += it
         ]    
     }    
 
     def KPort addPort(KNode node, Expression expression, PortSide side) {
     	node.addPort(expression, 0, 0, 2, side) => [
-//    	    if (!SHOW_PORT_LABELS.booleanValue) {
-//                node.createLabel(node).configureInsideTopCenteredNodeLabel(
-//                      "test",
-//                      6,
-//                      KlighdConstants::DEFAULT_FONT_NAME)
-//            }
     	]
     }
     // new helper for valuedObject instead of Expression
@@ -1667,11 +1630,20 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         node.createPort(vo) => [
             it.addLayoutParam(LayoutOptions::PORT_SIDE, side)
             it.setPortSize(2, 2)
-//            if (SHOW_PORT_LABELS.booleanValue) {
-//                it.createLabel(it).configureOutsideBottomLeftNodeLabel(
-//                    vo.name, 6, KlighdConstants::DEFAULT_FONT_NAME
-//                )
-//            }
+            node.ports += it
+        ]
+    }
+    def KPort addPort(KNode node, ValuedObject vo, PortSide side, int size) {
+        node.createPort(vo) => [
+            it.addLayoutParam(LayoutOptions::PORT_SIDE, side)
+            it.setPortSize(size, size)
+            node.ports += it
+        ]
+    }
+    def KPort addPort(KNode node, Expression expr, PortSide side, int size) {
+        node.createPort(expr) => [
+            it.addLayoutParam(LayoutOptions::PORT_SIDE, side)
+            it.setPortSize(size, size)
             node.ports += it
         ]
     }
@@ -1696,6 +1668,45 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             it.foreground = "black".color
             it.lineWidth = 1
         ]
+        return n
+    }
+    private def KNode createCallNodeShape(KNode n){
+        n.addRoundedRectangle(3, 3) => [
+            it.setProperty(KlighdProperties::EXPANDED_RENDERING, true)
+            it.setBackgroundGradient("#fff".color, "#fff".color, 90)
+            it.setSurroundingSpace(2, 0)
+            it.invisible = false
+            it.foreground = "black".color
+            it.lineWidth = 1
+            it.addText("[-]") => [//]+ if(regionLabel.nullOrEmpty) "" else " " + regionLabel) => [//.putToLookUpWith(d) => [
+                it.foreground = "dimGray".color
+                it.fontSize = 10
+                it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
+                it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            ]
+            if (true) {
+               it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
+            }
+        ]
+        n.addDefaultLayoutParameter
+        n.addRoundedRectangle(3, 3) => [
+            it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true)
+            it.setBackgroundGradient("white".color, SCCHARTSGRAY, 90)
+            it.setSurroundingSpace(2, 0)
+            it.invisible = false
+            //it.foreground = "gray".color
+            it.lineWidth = 1
+            it.addText("[+]") => [//]+ if(regionLabel.nullOrEmpty) "" else " " + regionLabel) => [//.putToLookUpWith(d) => [
+                it.foreground = "dimGray".color
+                it.fontSize = 10
+                it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
+                it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            ];
+            if (true) {
+                it.addRectangle().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).invisible = true;
+            }
+        ]
+        n.addDefaultLayoutParameter
         return n
     }
     
