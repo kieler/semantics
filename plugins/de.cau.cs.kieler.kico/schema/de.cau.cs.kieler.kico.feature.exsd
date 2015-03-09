@@ -26,6 +26,7 @@ This extension point allowes the contribution of a compiler transformation to th
       <complexType>
          <sequence minOccurs="0" maxOccurs="unbounded">
             <element ref="featureClass" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="featureGroupClass" minOccurs="0" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -51,6 +52,26 @@ This extension point allowes the contribution of a compiler transformation to th
                </documentation>
                <appinfo>
                   <meta.attribute kind="java" basedOn="de.cau.cs.kieler.kico.Feature:de.cau.cs.kieler.kico.IFeature"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="featureGroupClass">
+      <annotation>
+         <documentation>
+            A class file that implements a feature group, i.e., set of features that can be identified using a single ID. Note that when used in not handled or produces dependencies within transformations, these feature groups will be expanded and just serve as a shortcut for defining each feature dependency seperately.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The implementing class for this specific feature group. It specifies a String identifier used in transformation declarations and a set of features that should be subsumed under this identifier. It can also provide a human readable name which by default is equivalent to the ID.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.kico.FeatureGroup:de.cau.cs.kieler.kico.IFeatureGroup"/>
                </appinfo>
             </annotation>
          </attribute>

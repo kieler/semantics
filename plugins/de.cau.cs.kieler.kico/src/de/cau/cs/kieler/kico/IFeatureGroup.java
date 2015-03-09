@@ -13,12 +13,11 @@
  */
 package de.cau.cs.kieler.kico;
 
-import org.eclipse.emf.ecore.EObject;
+import java.util.Set;
 
 /**
- * This interface defines what a concrete feature is. A feature is a combination of a test method
- * isContained() which tests for the existence of this feature in an EObject model. It returns true
- * if the feature is contained in the model and false otherwise. A string identifier represents the
+ * This interface defines what a concrete feature group is. A feature group must declare a set of
+ * features that are referenceable by one single ID.  A string identifier represents the
  * feature name. Optionally a name can be provided.
  * 
  * @author cmot
@@ -26,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * @kieler.rating 2015-03-09 proposed yellow
  * 
  */
-public interface IFeature {
+public interface IFeatureGroup {
 
     /**
      * Must supply a unique ID to identify this transformation.
@@ -48,12 +47,13 @@ public interface IFeature {
     // -------------------------------------------------------------------------
 
     /**
-     * Tests for the existence of this feature in an EObject model. It returns true if the feature
-     * is contained in the model and false otherwise.
-     * 
-     * @return the list
+     * This is the central method to declare for a feature group. It should return a set of
+     * feature IDs that are grouped together under one single ID. Note that a feature group
+     * is allowed also to contain other feature groups.
+     *
+     * @return the features that are contained in this feature group
      */
-    public boolean isContained(EObject model);
+    public Set<String> getFeatureIds();
 
     // -------------------------------------------------------------------------
 

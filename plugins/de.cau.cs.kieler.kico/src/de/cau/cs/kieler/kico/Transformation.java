@@ -31,13 +31,13 @@ import org.eclipse.emf.ecore.EObject;
 public abstract class Transformation implements ITransformation {
 
     /** The produces dependencies. */
-    private List<String> producesDependencies = new ArrayList<String>();
+    private List<String> producesFeatureIds = new ArrayList<String>();
 
     /** The not handles dependencies. */
-    private List<String> notHandlesDependencies = new ArrayList<String>();
+    private List<String> notHandlesFeatureIds = new ArrayList<String>();
 
     /** The central processor list. */
-    private List<ProcessorOption> processors = new ArrayList<ProcessorOption>();
+    private List<ProcessorOption> processorOptions = new ArrayList<ProcessorOption>();
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
@@ -61,7 +61,7 @@ public abstract class Transformation implements ITransformation {
      * @return the dependencies
      */
     public List<String> getProducesDependencies() {
-        return producesDependencies;
+        return producesFeatureIds;
     }
 
     // -------------------------------------------------------------------------
@@ -74,7 +74,7 @@ public abstract class Transformation implements ITransformation {
      *            the new dependencies
      */
     void setProducesDependencies(List<String> dependencies) {
-        this.producesDependencies = dependencies;
+        this.producesFeatureIds = dependencies;
     }
 
     // -------------------------------------------------------------------------
@@ -86,7 +86,7 @@ public abstract class Transformation implements ITransformation {
      * @return the dependencies
      */
     public List<String> getNotHandlesDependencies() {
-        return notHandlesDependencies;
+        return notHandlesFeatureIds;
     }
 
     // -------------------------------------------------------------------------
@@ -99,7 +99,7 @@ public abstract class Transformation implements ITransformation {
      *            the new dependencies
      */
     void setNotHandlesDependencies(List<String> dependencies) {
-        this.notHandlesDependencies = dependencies;
+        this.notHandlesFeatureIds = dependencies;
     }
 
     // -------------------------------------------------------------------------
@@ -110,8 +110,8 @@ public abstract class Transformation implements ITransformation {
      * 
      * @return the dependencies
      */
-    public List<ProcessorOption> getProcessors() {
-        return processors;
+    public List<ProcessorOption> getProcessorOptions() {
+        return processorOptions;
     }
 
     // -------------------------------------------------------------------------
@@ -123,10 +123,11 @@ public abstract class Transformation implements ITransformation {
      * @return the argument parameter type of the first processor
      */
     public Class<?> getParameterType() {
-        if (processors.size() > 0) {
-            ProcessorOption firstProcessorOption = processors.get(0);
+        if (processorOptions.size() > 0) {
+            ProcessorOption firstProcessorOption = processorOptions.get(0);
             // Ask KiCo for processor and return the getParameterType
-            Processor processor = KielerCompiler.getProcessor(firstProcessorOption.getId());
+            Processor processor =
+                    KielerCompiler.getProcessor(firstProcessorOption.getProcessorId());
             return processor.getParameterType();
         }
         return null;
@@ -140,10 +141,10 @@ public abstract class Transformation implements ITransformation {
      * @return the return argument type of the last processor
      */
     public Class<?> getReturnType() {
-        if (processors.size() > 0) {
-            ProcessorOption lastProcessorOption = processors.get(processors.size() - 1);
+        if (processorOptions.size() > 0) {
+            ProcessorOption lastProcessorOption = processorOptions.get(processorOptions.size() - 1);
             // Ask KiCo for processor and return the getReturnType
-            Processor processor = KielerCompiler.getProcessor(lastProcessorOption.getId());
+            Processor processor = KielerCompiler.getProcessor(lastProcessorOption.getProcessorId());
             return processor.getReturnType();
         }
         return null;
@@ -166,9 +167,9 @@ public abstract class Transformation implements ITransformation {
         EObject eObjectParam = eObject;
         EObject eObjectResult = null;
 
-        for (ProcessorOption processorOption : getProcessors()) {
-            // Ask KiCo for processor 
-            Processor processor = KielerCompiler.getProcessor(processorOption.getId());
+        for (ProcessorOption processorOption : getProcessorOptions()) {
+            // Ask KiCo for processor
+            Processor processor = KielerCompiler.getProcessor(processorOption.getProcessorId());
 
             if (processorOption.isOptional()) {
                 // TODO: check context whether processorOption is enabled
@@ -194,6 +195,6 @@ public abstract class Transformation implements ITransformation {
         // return the last EObject after applying this chain of processors to the input eObject
         return eObjectResult;
     }
-    
+
     // -------------------------------------------------------------------------
 }

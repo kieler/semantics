@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.kico;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * This interface defines what a concrete transformation must supply. This is an ID, an optional
@@ -52,12 +53,12 @@ public interface ITransformation {
      * 
      * @return the string
      */
-    public String handleFeature();
+    public String handleFeatureId();
 
     // -------------------------------------------------------------------------
 
     /**
-     * Optionally supply a list of feature IDs this transformation (potentially) produces. This
+     * Optionally supply a set of feature IDs this transformation (potentially) produces. This
      * means that for a full compilation these features must be transformed afterwards. Be advised
      * to use the minimal set of feature IDs here. Transformations indirectly specified here will be
      * forced to run afterwards. If null is returned then this means there are no produces
@@ -65,30 +66,31 @@ public interface ITransformation {
      * 
      * @return the list
      */
-    public List<String> getProducesFeatures();
+    public Set<String> getProducesFeatureIds();
 
     // -------------------------------------------------------------------------
 
     /**
-     * Optionally supply a list of feature IDs in order to specify features that cannot be handled
+     * Optionally supply a set of feature IDs in order to specify features that cannot be handled
      * by this transformation. Be advised to use the minimal set of feature IDs here.
      * Transformations indirectly specified here will be forced to run before this transformation.
      * If null is returned then this means there are no not handles dependencies.
      * 
      * @return the list
      */
-    public List<String> getNotHandlesFeatures();
+    public Set<String> getNotHandlesFeatureIds();
 
     // -------------------------------------------------------------------------
 
     /**
-     * Define a list of processors IDs that constitute this transformation in order to handle the
-     * defined feature. These processors will be run in the here defined order if this
-     * transformation is applied to a model. If null is returned then no processors should run.
+     * Define a list of processors options (processor IDs + optional flag) that constitute this
+     * transformation in order to handle the defined feature. These processors will be run in the
+     * here defined order if this transformation is applied to a model. If null is returned then no
+     * processors should run.
      * 
      * @return the list
      */
-    public List<ProcessorOption> getProcessors();
+    public List<ProcessorOption> getProcessorOptions();
 
     // -------------------------------------------------------------------------
 

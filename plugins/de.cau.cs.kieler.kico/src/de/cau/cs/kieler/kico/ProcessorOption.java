@@ -25,7 +25,10 @@ package de.cau.cs.kieler.kico;
  */
 class ProcessorOption {
 
-    private String id;
+    /** The id of the processor. */
+    private String processorId;
+    
+    /** The optional fag if the processor is optional in this context. */
     private boolean optional;
 
     // -------------------------------------------------------------------------
@@ -33,11 +36,11 @@ class ProcessorOption {
     /**
      * Instantiates a new processor option.
      *
-     * @param id the id
+     * @param processorId the id
      * @param optional the optional
      */
-    public ProcessorOption(String id, boolean optional) {
-        this.id = id;
+    public ProcessorOption(String processorId, boolean optional) {
+        this.processorId = processorId;
         this.optional = optional;
     }
 
@@ -48,8 +51,8 @@ class ProcessorOption {
      * 
      * @return the string
      */
-    public String getId() {
-        return id;
+    public String getProcessorId() {
+        return processorId;
     }
 
     // -------------------------------------------------------------------------

@@ -264,9 +264,9 @@ public class KiCoPlugin extends Plugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the registered features or the cached version.
+     * Gets the registered features and feature groups or the cached version.
      * 
-     * @return the registered features
+     * @return the registered features and feature groups
      */
     public static HashMap<String, Feature> getRegisteredFeatures(boolean forceReload) {
         // Return the cache if there is any and not forced to reload
