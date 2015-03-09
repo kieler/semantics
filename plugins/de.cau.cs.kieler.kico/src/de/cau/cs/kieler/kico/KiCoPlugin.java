@@ -44,9 +44,10 @@ import de.cau.cs.kieler.core.util.Pair;
  * @kieler.rating 2014-03-11 proposed yellow
  */
 public class KiCoPlugin extends Plugin {
-    
+
     /** The logger. */
-    @Inject Logger logger;
+    @Inject
+    static Logger logger;
 
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.kico"; //$NON-NLS-1$
@@ -212,42 +213,48 @@ public class KiCoPlugin extends Plugin {
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-    
+    // ██████╗.███████╗.██████╗.██╗███████╗████████╗██████╗..█████╗.████████╗██╗.██████╗.███╗...██╗
+    // ██╔══██╗██╔════╝██╔════╝.██║██╔════╝╚══██╔══╝██╔══██╗██╔══██╗╚══██╔══╝██║██╔═══██╗████╗..██║
+    // ██████╔╝█████╗..██║..███╗██║███████╗...██║...██████╔╝███████║...██║...██║██║...██║██╔██╗.██║
+    // ██╔══██╗██╔══╝..██║...██║██║╚════██║...██║...██╔══██╗██╔══██║...██║...██║██║...██║██║╚██╗██║
+    // ██║..██║███████╗╚██████╔╝██║███████║...██║...██║..██║██║..██║...██║...██║╚██████╔╝██║.╚████║
+    // ╚═╝..╚═╝╚══════╝.╚═════╝.╚═╝╚══════╝...╚═╝...╚═╝..╚═╝╚═╝..╚═╝...╚═╝...╚═╝.╚═════╝.╚═╝..╚═══╝
+    // -------------------------------------------------------------------------
+    // http://patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=registration
+
     /**
      * Gets the registered processors or the cached version.
      * 
      * @return the registered processors
      */
-    public HashMap<String, Processor> getRegisteredProcessors(String extensionPointId,
-            boolean forceReload) {
+    public static HashMap<String, Processor> getRegisteredProcessors(boolean forceReload) {
         // Return the cache if there is any and not forced to reload
         if (processorsCached != null && !forceReload) {
             return processorsCached;
         }
         // Otherwise inspect the extensions
         IConfigurationElement[] extensions =
-                Platform.getExtensionRegistry().getConfigurationElementsFor(extensionPointId);
+                Platform.getExtensionRegistry().getConfigurationElementsFor(
+                        PROCESSOR_EXTENSION_POINT_ID);
         // Clear the cache
         processorsCached = new HashMap<String, Processor>();
         // Walk thru every extension and instantiate the declared class, then put it into the cache
         for (IConfigurationElement extension : extensions) {
             String className = extension.getName();
             try {
-                Processor instance =
-                        (Processor) extension.createExecutableExtension("class");
+                Processor instance = (Processor) extension.createExecutableExtension("class");
                 String id = instance.getId();
                 className += " (" + id + ")";
                 if (processorsCached.containsKey(id)) {
-                    logger.severe("KiCo failed to register processor: " + extension
-                            + " for class " + className + " because this ID is already taken.");
+                    logger.severe("KiCo failed to register processor: " + extension + " for class "
+                            + className + " because this ID is already taken.");
                 } else {
                     processorsCached.put(id, instance);
-                    logger.info("KiCo register processor: " + extension
-                            + " for class " + className);
+                    logger.info("KiCo register processor: " + extension + " for class " + className);
                 }
             } catch (CoreException e) {
-                logger.severe("KiCo failed to register processor: " + extension
-                        + " for class " + className + ": " + KiCoUtil.getStackTraceString(e));
+                logger.severe("KiCo failed to register processor: " + extension + " for class "
+                        + className + ": " + KiCoUtil.getStackTraceString(e));
             }
         }
         return processorsCached;
@@ -255,42 +262,40 @@ public class KiCoPlugin extends Plugin {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Gets the registered features or the cached version.
      * 
      * @return the registered features
      */
-    public HashMap<String, Feature> getRegisteredFeatures(String extensionPointId,
-            boolean forceReload) {
+    public static HashMap<String, Feature> getRegisteredFeatures(boolean forceReload) {
         // Return the cache if there is any and not forced to reload
         if (featuresCached != null && !forceReload) {
             return featuresCached;
         }
         // Otherwise inspect the extensions
         IConfigurationElement[] extensions =
-                Platform.getExtensionRegistry().getConfigurationElementsFor(extensionPointId);
+                Platform.getExtensionRegistry().getConfigurationElementsFor(
+                        FEATURE_EXTENSION_POINT_ID);
         // Clear the cache
         featuresCached = new HashMap<String, Feature>();
         // Walk thru every extension and instantiate the declared class, then put it into the cache
         for (IConfigurationElement extension : extensions) {
             String className = extension.getName();
             try {
-                Feature instance =
-                        (Feature) extension.createExecutableExtension("class");
+                Feature instance = (Feature) extension.createExecutableExtension("class");
                 String id = instance.getId();
                 className += " (" + id + ")";
                 if (featuresCached.containsKey(id)) {
-                    logger.severe("KiCo failed to register feature: " + extension
-                            + " for class " + className + " because this ID is already taken.");
+                    logger.severe("KiCo failed to register feature: " + extension + " for class "
+                            + className + " because this ID is already taken.");
                 } else {
                     featuresCached.put(id, instance);
-                    logger.info("KiCo register feature: " + extension
-                            + " for class " + className);
+                    logger.info("KiCo register feature: " + extension + " for class " + className);
                 }
             } catch (CoreException e) {
-                logger.severe("KiCo failed to register feature: " + extension
-                        + " for class " + className + ": " + KiCoUtil.getStackTraceString(e));
+                logger.severe("KiCo failed to register feature: " + extension + " for class "
+                        + className + ": " + KiCoUtil.getStackTraceString(e));
             }
         }
         return featuresCached;
@@ -298,21 +303,21 @@ public class KiCoPlugin extends Plugin {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Gets the registered transformations or the cached version.
      * 
      * @return the registered transformations
      */
-    public HashMap<String, Transformation> getRegisteredTransformations(String extensionPointId,
-            boolean forceReload) {
+    public static HashMap<String, Transformation> getRegisteredTransformations(boolean forceReload) {
         // Return the cache if there is any and not forced to reload
         if (transformationsCached != null && !forceReload) {
             return transformationsCached;
         }
         // Otherwise inspect the extensions
         IConfigurationElement[] extensions =
-                Platform.getExtensionRegistry().getConfigurationElementsFor(extensionPointId);
+                Platform.getExtensionRegistry().getConfigurationElementsFor(
+                        TRANSFORMATION_EXTENSION_POINT_ID);
         // Clear the cache
         transformationsCached = new HashMap<String, Transformation>();
         // Walk thru every extension and instantiate the declared class, then put it into the cache
@@ -328,8 +333,8 @@ public class KiCoPlugin extends Plugin {
                             + " for class " + className + " because this ID is already taken.");
                 } else {
                     transformationsCached.put(id, instance);
-                    logger.info("KiCo register transformation: " + extension
-                            + " for class " + className);
+                    logger.info("KiCo register transformation: " + extension + " for class "
+                            + className);
                 }
             } catch (CoreException e) {
                 logger.severe("KiCo failed to register transformation: " + extension
@@ -339,49 +344,47 @@ public class KiCoPlugin extends Plugin {
         return transformationsCached;
 
     }
-    
+
     // -------------------------------------------------------------------------
-    
+
     /**
      * Gets the registered processors or the cached version.
      * 
      * @return the registered processors
      */
-    public HashMap<String, Creeper> getRegisteredCreepers(String extensionPointId,
-            boolean forceReload) {
+    public static HashMap<String, Creeper> getRegisteredCreepers(boolean forceReload) {
         // Return the cache if there is any and not forced to reload
         if (creepersCached != null && !forceReload) {
             return creepersCached;
         }
         // Otherwise inspect the extensions
         IConfigurationElement[] extensions =
-                Platform.getExtensionRegistry().getConfigurationElementsFor(extensionPointId);
+                Platform.getExtensionRegistry().getConfigurationElementsFor(
+                        CREEPER_EXTENSION_POINT_ID);
         // Clear the cache
         creepersCached = new HashMap<String, Creeper>();
         // Walk thru every extension and instantiate the declared class, then put it into the cache
         for (IConfigurationElement extension : extensions) {
             String className = extension.getName();
             try {
-                Creeper instance =
-                        (Creeper) extension.createExecutableExtension("class");
+                Creeper instance = (Creeper) extension.createExecutableExtension("class");
                 String id = instance.getId();
                 className += " (" + id + ")";
                 if (creepersCached.containsKey(id)) {
-                    logger.severe("KiCo failed to register creeper: " + extension
-                            + " for class " + className + " because this ID is already taken.");
+                    logger.severe("KiCo failed to register creeper: " + extension + " for class "
+                            + className + " because this ID is already taken.");
                 } else {
                     creepersCached.put(id, instance);
-                    logger.info("KiCo register creeper: " + extension
-                            + " for class " + className);
+                    logger.info("KiCo register creeper: " + extension + " for class " + className);
                 }
             } catch (CoreException e) {
-                logger.severe("KiCo failed to register creeper: " + extension
-                        + " for class " + className + ": " + KiCoUtil.getStackTraceString(e));
+                logger.severe("KiCo failed to register creeper: " + extension + " for class "
+                        + className + ": " + KiCoUtil.getStackTraceString(e));
             }
         }
         return creepersCached;
 
-    }    
+    }
 
     // -------------------------------------------------------------------------
 
@@ -392,7 +395,7 @@ public class KiCoPlugin extends Plugin {
      *            the force reload
      * @return the registered resource extensions
      */
-    public HashMap<String, ResourceExtension> getRegisteredResourceExtensions(boolean forceReload) {
+    public static HashMap<String, ResourceExtension> getRegisteredResourceExtensions(boolean forceReload) {
         if (resourceExtensionsCached != null && !forceReload) {
             return resourceExtensionsCached;
         }
@@ -409,8 +412,8 @@ public class KiCoPlugin extends Plugin {
                 resourceExtensionsCached.put(className, new ResourceExtension(className, extension,
                         isXMI.toLowerCase().equals("true"), editorID));
 
-                logger.info("KiCo register resource extension: " + extension
-                        + " for class " + className);
+                logger.info("KiCo register resource extension: " + extension + " for class "
+                        + className);
             } finally {
                 // do nothing
             }
@@ -420,144 +423,147 @@ public class KiCoPlugin extends Plugin {
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
+    // .....█████╗..██████╗.██████╗███████╗███████╗███████╗
+    // ....██╔══██╗██╔════╝██╔════╝██╔════╝██╔════╝██╔════╝
+    // ....███████║██║.....██║.....█████╗..███████╗███████╗
+    // ....██╔══██║██║.....██║.....██╔══╝..╚════██║╚════██║
+    // ....██║..██║╚██████╗╚██████╗███████╗███████║███████║
+    // ....╚═╝..╚═╝.╚═════╝.╚═════╝╚══════╝╚══════╝╚══════╝.
+    // -------------------------------------------------------------------------
 
     /**
-     * This returns a new the TransformationMap with all registered and loaded plug-ins that extend
-     * the KiCo extension point.
+     * Gets the processor by its id, if it is registered.
      * 
-     * @return the TransformationList
+     * @param id
+     *            the id
+     * @param forceReload
+     *            the force reload flag
+     * @return the processor
      */
-    public HashMap<String, Transformation> getRegisteredTransformations2() {
-        // if (transformationMap != null && !forceUpdate) {
-        // // return a cached version of the list
-        // // it is only built the first time
-        // return transformationMap;
-        // }
-        // // suggest calling the garbage collector: this may
-        // // remove any DataComponent threads still running (but not
-        // // linked==needed any more)
-        // System.gc();
-        // get the available interfaces and initialize them
-        IConfigurationElement[] transformations =
-                Platform.getExtensionRegistry().getConfigurationElementsFor(
-                        TRANSFORMATION_EXTENSION_POINT_ID);
-
-        HashMap<String, Transformation> transformationMap =
-                new HashMap<String, Transformation>(transformations.length);
-
-        for (int i = 0; i < transformations.length; i++) {
+    public static Processor getProcessor(String id, boolean forceReload) {
+        HashMap<String, Processor> cache = getRegisteredProcessors(forceReload);
+        if (!cache.containsKey(id)) {
             try {
-
-                String transformationClass = transformations[i].getAttribute("class");
-                Object transformationInstance = null;
-                if (transformationClass != null) {
-                    transformationInstance = transformations[i].createExecutableExtension("class");
-                }
-                String id = transformations[i].getAttribute("id");
-                String name = transformations[i].getAttribute("name");
-                String method = transformations[i].getAttribute("method");
-                String producesDependenciesString =
-                        transformations[i].getAttribute("producesDependencies");
-                String notHandlesDependenciesString =
-                        transformations[i].getAttribute("notHandlesDependencies");
-                String transformationsString = transformations[i].getAttribute("transformations");
-                String alternativesString = transformations[i].getAttribute("alternatives");
-
-                if (DEBUG) {
-                    // System.out.println("KiCo loading component: "
-                    // + transformations[i].getContributor().getName() + "::" + id);
-                }
-
-                Transformation transformation;
-                if (transformationInstance == null) {
-                    // The Transformation is defined as a GROUP by its dependencies
-                    transformation = new TransformationGroup();
-
-                    // Internally transformations of groups are represented as produces
-                    // dependencies!
-                    // Rationale: If a group is selected, these transformations are applied
-                    if (transformationsString != null) {
-                        String[] dependenciesArray = transformationsString.split(",");
-                        for (String dependency : dependenciesArray) {
-                            transformation.getProducesDependencies().add(dependency.trim());
-                        }
-                    }
-
-                    if (alternativesString != null) {
-                        if (alternativesString.equals("true")) {
-                            ((TransformationGroup) transformation).setAlternatives(true);
-                        }
-                    }
-
-                } else if (transformationInstance instanceof Transformation
-                        && (method == null || method.trim().length() == 0)) {
-                    // The specified class is a Transformation, use it directly
-                    transformation =
-                            (Transformation) transformations[i].createExecutableExtension("class");
-                    // Handle the case that wee need Google Guice for instantiation
-                    transformation.setTransformationInstance(getGuiceInstance(transformation));
-                } else {
-                    // The specified class is not a Transformation, use a new Transformation
-                    // instance as a wrapper
-                    transformation = new TransformationWrapper();
-                    // Handle the case that wee need Google Guice for instantiation
-                    transformation
-                            .setTransformationInstance(getGuiceInstance(transformationInstance));
-                    // Find the correct method and save it in the wrapper for later reflection calls
-                    Method transformationMethod =
-                            getInvokableMethod(transformationInstance, method);
-                    transformation.setTransformationMethod(transformationMethod);
-                }
-
-                transformation.setConfigurationElemenet(transformations[i]);
-
-                if (id != null) {
-                    transformation.setId(id);
-                    // Check if ID is already taken
-                    if (transformationMap.containsKey(id)) {
-                        showWarning("Extension '" + id + "' from component: "
-                                + transformations[i].getContributor().getName()
-                                + " cannot be loaded because this ID is already taken.",
-                                KiCoPlugin.PLUGIN_ID, null, true);
-                    } else {
-                        transformationMap.put(id, transformation);
-                    }
-                } else {
-                    showWarning("Extension id not configured for component: "
-                            + transformations[i].getContributor().getName(), KiCoPlugin.PLUGIN_ID,
-                            null, true);
-                }
-
-                if (name != null) {
-                    transformation.setName(name);
-                }
-
-                if (method != null) {
-                    transformation.setMethod(method);
-                }
-
-                if (producesDependenciesString != null) {
-                    String[] dependenciesArray = producesDependenciesString.split(",");
-                    for (String dependency : dependenciesArray) {
-                        transformation.getProducesDependencies().add(dependency.trim());
-                    }
-                }
-
-                if (notHandlesDependenciesString != null) {
-                    String[] dependenciesArray = notHandlesDependenciesString.split(",");
-                    for (String dependency : dependenciesArray) {
-                        transformation.getNotHandlesDependencies().add(dependency.trim());
-                    }
-                }
-
+                throw (new Exception("KiCo cannot find the processor with ID '" + id + "'"));
             } catch (Exception e) {
-                this.showWarning(transformations[i].getContributor().getName()
-                        + " could not be loaded.", null, e, true);
+                logger.severe(KiCoUtil.getStackTraceString(e));
             }
         }
-        return transformationMap;
+        return cache.get(id);
     }
 
+    /**
+     * Gets the processor by its id, if it is registered.
+     * 
+     * @param id
+     *            the id
+     * @return the processor
+     */
+    public static Processor getProcessor(String id) {
+        return getProcessor(id, false);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the feature by its id, if it is registered.
+     * 
+     * @param id
+     *            the id
+     * @param forceReload
+     *            the force reload flag
+     * @return the feature
+     */
+    public static Feature getFeature(String id, boolean forceReload) {
+        HashMap<String, Feature> cache = getRegisteredFeatures(forceReload);
+        if (!cache.containsKey(id)) {
+            try {
+                throw (new Exception("KiCo cannot find the feature with ID '" + id + "'"));
+            } catch (Exception e) {
+                logger.severe(KiCoUtil.getStackTraceString(e));
+            }
+        }
+        return cache.get(id);
+    }
+
+    /**
+     * Gets the feature by its id, if it is registered.
+     * 
+     * @param id
+     *            the id
+     * @return the feature
+     */
+    public static Feature getFeature(String id) {
+        return getFeature(id, false);
+    }
+
+    // -------------------------------------------------------------------------
+    /**
+     * Gets the transformation by its id, if it is registered.
+     * 
+     * @param id
+     *            the id
+     * @param forceReload
+     *            the force reload flag
+     * @return the transformation
+     */
+    public static Transformation getTransformation(String id, boolean forceReload) {
+        HashMap<String, Transformation> cache = getRegisteredTransformations(forceReload);
+        if (!cache.containsKey(id)) {
+            try {
+                throw (new Exception("KiCo cannot find the transformation with ID '" + id + "'"));
+            } catch (Exception e) {
+                logger.severe(KiCoUtil.getStackTraceString(e));
+            }
+        }
+        return cache.get(id);
+    }
+
+    /**
+     * Gets the transformation by its id, if it is registered.
+     * 
+     * @param id
+     *            the id
+     * @return the transformation
+     */
+    public static Transformation getTransformation(String id) {
+        return getTransformation(id, false);
+    }
+
+    // -------------------------------------------------------------------------
+    /**
+     * Gets the creeper by its id, if it is registered.
+     * 
+     * @param id
+     *            the id
+     * @param forceReload
+     *            the force reload flag
+     * @return the creeper
+     */
+    public static Creeper getCreeper(String id, boolean forceReload) {
+        HashMap<String, Creeper> cache = getRegisteredCreepers(forceReload);
+        if (!cache.containsKey(id)) {
+            try {
+                throw (new Exception("KiCo cannot find the creeper with ID '" + id + "'"));
+            } catch (Exception e) {
+                logger.severe(KiCoUtil.getStackTraceString(e));
+            }
+        }
+        return cache.get(id);
+    }
+
+    /**
+     * Gets the creeper by its id, if it is registered.
+     * 
+     * @param id
+     *            the id
+     * @return the creeper
+     */
+    public static Creeper getCreeper(String id) {
+        return getCreeper(id, false);
+    }
+
+    // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
     /**
@@ -587,6 +593,14 @@ public class KiCoPlugin extends Plugin {
     }
 
     // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // ....██████╗..███████╗███╗...██╗███████╗██████╗..█████╗.██╗.....
+    // ....██╔════╝.██╔════╝████╗..██║██╔════╝██╔══██╗██╔══██╗██║.....
+    // ....██║..███╗█████╗..██╔██╗.██║█████╗..██████╔╝███████║██║.....
+    // ....██║...██║██╔══╝..██║╚██╗██║██╔══╝..██╔══██╗██╔══██║██║.....
+    // ....╚██████╔╝███████╗██║.╚████║███████╗██║..██║██║..██║███████╗
+    // .....╚═════╝.╚══════╝╚═╝..╚═══╝╚══════╝╚═╝..╚═╝╚═╝..╚═╝╚══════╝
+    // -------------------------------------------------------------------------
 
     /**
      * Sets the parent shell that KIEM should use to display user dialogs.
@@ -600,6 +614,14 @@ public class KiCoPlugin extends Plugin {
         }
     }
 
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // ....███████╗██████╗.██████╗..██████╗.██████╗.███████╗
+    // ....██╔════╝██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██╔════╝
+    // ....█████╗..██████╔╝██████╔╝██║...██║██████╔╝███████╗
+    // ....██╔══╝..██╔══██╗██╔══██╗██║...██║██╔══██╗╚════██║
+    // ....███████╗██║..██║██║..██║╚██████╔╝██║..██║███████║
+    // ....╚══════╝╚═╝..╚═╝╚═╝..╚═╝.╚═════╝.╚═╝..╚═╝╚══════╝
     // -------------------------------------------------------------------------
 
     /**
@@ -842,33 +864,6 @@ public class KiCoPlugin extends Plugin {
     }
 
     // -------------------------------------------------------------------------
-
-    /**
-     * Gets the last error.
-     * 
-     * @return the last error
-     * @deprecated Use the method getAllErrors() of the compilation result, this method will only
-     *             return null.
-     */
-    public static String getLastError() {
-        // TODO:
-        return "";// lastError;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Resets the last error.
-     * 
-     * @deprecated Use the method getAllErrors() of the compilation result, this method will do
-     *             nothing.
-     * 
-     */
-    public static void resetLastError() {
-        // TODO:
-        // KiCoPlugin.lastError = null;
-    }
-
     // -------------------------------------------------------------------------
 
 }
