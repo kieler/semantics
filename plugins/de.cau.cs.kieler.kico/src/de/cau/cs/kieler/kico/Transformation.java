@@ -43,8 +43,8 @@ public abstract class Transformation implements ITransformation {
     // -------------------------------------------------------------------------
 
     /**
-     * This method may be overridden to optionally supply a name for this transformation. The
-     * default implementation will return the id in place of the name.
+     * This method may be overridden to optionally supply a human readable name for this
+     * transformation. The default implementation will return the id in place of the name.
      * 
      * @return the name
      */
@@ -165,7 +165,7 @@ public abstract class Transformation implements ITransformation {
         for (ProcessorOption processorOption : getProcessors()) {
             // TODO: ask Kico for processor and return the getReturnType
             Processor processor = null;
-            
+
             if (processorOption.isOptional()) {
                 // TODO: check context whether processorOption is enabled
                 boolean isEnabled = true;
@@ -186,7 +186,7 @@ public abstract class Transformation implements ITransformation {
                 return result;
             }
         }
-        
+
         // return the last EObject after applying this chain of processors to the input eObject
         return eObjectResult;
     }

@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * An instance of this class represents a registered processor which can run as a part of a
  * transformation. It is called indirectly when invoking the KielerCompiler.compile() method which
- * calles transformation's transform() method.
+ * calls transformation's transform() method.
  * 
  * @author cmot
  * @kieler.design 2015-03-09 proposed
@@ -33,8 +33,8 @@ public abstract class Processor implements IProcessor {
     // -------------------------------------------------------------------------
 
     /**
-     * This method may be overridden to optionally supply a name for this processor. The default
-     * implementation will return the id in place of the name.
+     * This method may be overridden to optionally supply a human readable name for this processor.
+     * The default implementation will return the id in place of the name.
      * 
      * @return the name
      */

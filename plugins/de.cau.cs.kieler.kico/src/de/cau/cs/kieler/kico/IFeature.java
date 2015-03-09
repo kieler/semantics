@@ -16,18 +16,20 @@ package de.cau.cs.kieler.kico;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * Interface for a processor which is the smallest element of a transformation. Each processor must
- * supply an id and a process method. Optionally a human readable name can be supplied.
+ * This interface defines what a concrete feature is. A feature is a combination of a test method
+ * isContained() which tests for the existence of this feature in an EObject model. It returns true
+ * if the feature is contained in the model and false otherwise. A string identifier represents the
+ * feature name. Optionally a name can be provided.
  * 
  * @author cmot
  * @kieler.design 2015-03-09 proposed
  * @kieler.rating 2015-03-09 proposed yellow
  * 
  */
-public interface IProcessor {
+public interface IFeature {
 
     /**
-     * Must supply a unique ID to identify this processor.
+     * Must supply a unique ID to identify this transformation.
      * 
      * @return the string
      */
@@ -36,7 +38,7 @@ public interface IProcessor {
     // -------------------------------------------------------------------------
 
     /**
-     * Optionally supply a human readable name for this processor. If null is returned then the id
+     * Optionally supply a human readable name for this feature. If null is returned then the id
      * will be used in place of the name.
      * 
      * @return the string
@@ -46,19 +48,12 @@ public interface IProcessor {
     // -------------------------------------------------------------------------
 
     /**
-     * Central transform method that implements a processor. It should return a specific EObject if
-     * there are any following transformations. A code generation will finally return a String
-     * object.<BR>
-     * <BR>
-     * Note that the first parameter type and the return type should be as specific as possible and
-     * state which objects this processor can handle and will return. These types are used for
-     * grouping transformations based on the compilation input.
+     * Tests for the existence of this feature in an EObject model. It returns true if the feature
+     * is contained in the model and false otherwise
      * 
-     * @param eObject
-     *            the e object
-     * @return the e object
+     * @return the list
      */
-    public Object process(EObject eObject, KielerCompilerContext context);
+    public boolean isContained(EObject model);
 
     // -------------------------------------------------------------------------
 
