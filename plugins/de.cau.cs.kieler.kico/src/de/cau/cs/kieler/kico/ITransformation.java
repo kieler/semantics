@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2014 by
+ * Copyright 2015 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -15,12 +15,14 @@ package de.cau.cs.kieler.kico;
 
 import java.util.List;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
+ * This interface defines what a concrete transformation must supply. This is an ID, an optional name,
+ * an optional list of produced features, an optional list of not handled features and the central
+ * list of processors that constitute this transformation.  
+ * 
  * @author cmot
- * @kieler.design 2014-03-11 proposed
- * @kieler.rating 2014-03-11 proposed yellow
+ * @kieler.design 2015-03-09 proposed
+ * @kieler.rating 2015-03-09 proposed yellow
  * 
  */
 public interface ITransformation {
@@ -36,7 +38,7 @@ public interface ITransformation {
 
     /**
      * Optionally supply a name for this transformation. If null is returned then the id will be
-     * used inplace of the name.
+     * used in place of the name.
      * 
      * @return the string
      */
@@ -45,59 +47,39 @@ public interface ITransformation {
     // -------------------------------------------------------------------------
 
     /**
-     * Optionally supply a list of transformation IDs whose features this transformation produces.
-     * This means that for a full compilation these features must be transformed afterwards. Be
-     * advised to use the minimal set of transformation IDs here. Transformations specified here
-     * will be forced to run afterwards. If null is returned then this means there are no produces
+     * Optionally supply a list of feature IDs this transformation (potentially) produces. This
+     * means that for a full compilation these features must be transformed afterwards. Be advised
+     * to use the minimal set of feature IDs here. Transformations indirectly specified here will be
+     * forced to run afterwards. If null is returned then this means there are no produces
      * dependencies.
      * 
      * @return the list
      */
-    public List<String> getProducesDependencies();
+    public List<String> getProducesFeatures();
 
     // -------------------------------------------------------------------------
 
     /**
-     * Optionally supply a list of transformation IDs whose features cannot be handled by this
-     * transformation. Be advised to use the minimal set of transformation IDs here. Transformations
-     * specified here will be forced to run before. If null is returned then this means there are no
-     * not handles dependencies.
+     * Optionally supply a list of feature IDs in order to specify features that cannot be handled
+     * by this transformation. Be advised to use the minimal set of feature IDs here.
+     * Transformations indirectly specified here will be forced to run before this transformation.
+     * If null is returned then this means there are no not handles dependencies.
      * 
      * @return the list
      */
-    public List<String> getNotHandlesDependencies();
+    public List<String> getNotHandlesFeatures();
 
     // -------------------------------------------------------------------------
 
     /**
-     * Central transform method that implements the transformation. It should return an EObject if
-     * there are any following transformations. A code generation will finally return a String
-     * object.
-     * 
-     * @param eObject
-     *            the e object
-     * @return the e object
-     */
-    public Object transform(EObject eObject);
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Define a list of post processor IDs that can or must run in the defined order AFTER this
-     * transformation is applied. If null is returned then no post processors should run.
+     * Define a list of processors IDs that constitute this transformation and must run in the
+     * defined order if this transformation is applied to a model. If null is returned then no 
+     * processors should run.
      * 
      * @return the list
      */
-    public List<ProcessorOption> postProcessors();
+    public List<ProcessorOption> getProcessors();
 
     // -------------------------------------------------------------------------
-
-    /**
-     * Define a list of pre processor IDs that can or must run in the defined order BEFORE the
-     * transformation is applied. If null is returned then no post processors should run.
-     * 
-     * @return the list
-     */
-    public List<ProcessorOption> preProcessors();
 
 }

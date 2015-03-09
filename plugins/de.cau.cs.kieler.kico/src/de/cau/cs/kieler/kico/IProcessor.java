@@ -13,21 +13,21 @@
  */
 package de.cau.cs.kieler.kico;
 
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * Interface for a processor which could run before of after a transformation.
+ * Interface for a processor which is the smallest element of a transformation. Each processor must
+ * supply an id and a process method. Optionally a human readable name can be supplied.
  * 
  * @author cmot
- * @kieler.design 2015-02-11 proposed
- * @kieler.rating 2015-02-11 proposed yellow
+ * @kieler.design 2015-03-09 proposed
+ * @kieler.rating 2015-03-09 proposed yellow
  * 
  */
 public interface IProcessor {
 
     /**
-     * Must supply a unique ID to identify this transformation.
+     * Must supply a unique ID to identify this processor.
      * 
      * @return the string
      */
@@ -36,8 +36,8 @@ public interface IProcessor {
     // -------------------------------------------------------------------------
 
     /**
-     * Optionally supply a name for this transformation. If null is returned then the id will be
-     * used inplace of the name.
+     * Optionally supply a name for this processor. If null is returned then the id will be used
+     * in place of the name.
      * 
      * @return the string
      */
@@ -46,15 +46,19 @@ public interface IProcessor {
     // -------------------------------------------------------------------------
 
     /**
-     * Central transform method that implements the transformation. It should return an EObject if
+     * Central transform method that implements a processor. It should return a specific EObject if
      * there are any following transformations. A code generation will finally return a String
-     * object.
+     * object.<BR>
+     * <BR>
+     * Note that the first parameter type and the return type should be as specific as possible and
+     * state which objects this processor can handle and will return. These types are used for
+     * grouping transformations based on the compilation input.
      * 
      * @param eObject
      *            the e object
      * @return the e object
      */
-    public Object transform(EObject eObject);
+    public Object process(EObject eObject, KielerCompilerContext context);
 
     // -------------------------------------------------------------------------
 

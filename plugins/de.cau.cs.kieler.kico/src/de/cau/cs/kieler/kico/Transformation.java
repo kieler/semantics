@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2014 by
+ * Copyright 2015 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -13,11 +13,9 @@
  */
 package de.cau.cs.kieler.kico;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -26,11 +24,11 @@ import org.eclipse.emf.ecore.EObject;
  * called one by another when invoking the transform() method.
  * 
  * @author cmot
- * @kieler.design 2014-03-11 proposed
- * @kieler.rating 2014-03-11 proposed yellow
+ * @kieler.design 2015-03-09 proposed
+ * @kieler.rating 2015-03-09 proposed yellow
  * 
  */
-public abstract class Transformation extends Processor {
+public abstract class Transformation implements ITransformation {
 
     /** The produces dependencies. */
     private List<String> producesDependencies = new ArrayList<String>();
@@ -42,29 +40,34 @@ public abstract class Transformation extends Processor {
     private List<ProcessorOption> processors = new ArrayList<ProcessorOption>();
 
     // -------------------------------------------------------------------------
-
-
-    /**
-     * Implements the transformation from EObject to EObject.
-     */
-    public abstract EObject transform(EObject eObject, KielerCompilerContext context);
-
+    // -------------------------------------------------------------------------
 
     /**
-     * Sets the method name that will be called when doTransform() is called. Set this to null if
-     * the class implements the ITransformation interface.
+     * This method may be overridden to optionally supply a name for this transformation. The
+     * default implementation will return the id in place of the name.
      * 
-     * @param method
-     *            the new method
+     * @return the name
      */
-    void setMethod(String method) {
-        this.method = method;
+    public String getName() {
+        return getId();
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the list of transformation IDs that represent produces dependencies to other
+     * Gets the list of produces feature IDs that indirectly represent dependencies to other
+     * transformations.
+     * 
+     * @return the dependencies
+     */
+    public List<String> getProducesDependencies() {
+        return producesDependencies;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the list of produces feature IDs that indirectly represent dependencies to other
      * transformations.
      * 
      * @param dependencies
@@ -77,20 +80,8 @@ public abstract class Transformation extends Processor {
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the list of transformation IDs that represent not handles dependencies to other
-     * transformations.
-     * 
-     * @param dependencies
-     *            the new dependencies
-     */
-    void setNotHandlesDependencies(List<String> dependencies) {
-        this.notHandlesDependencies = dependencies;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the list of transformation IDs that represent dependencies to other transformations.
+     * Gets the list of feature IDs of features that cannot be handled by this transformation which
+     * also indirectly represent dependencies to other transformations.
      * 
      * @return the dependencies
      */
@@ -101,15 +92,17 @@ public abstract class Transformation extends Processor {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the list of produces transformation IDs that represent dependencies to other
-     * transformations.
+     * Sets the list of feature IDs of features that cannot be handled by this transformation which
+     * also indirectly represent dependencies to other transformations.
      * 
-     * @return the dependencies
+     * @param dependencies
+     *            the new dependencies
      */
-    public List<String> getProducesDependencies() {
-        return producesDependencies;
+    void setNotHandlesDependencies(List<String> dependencies) {
+        this.notHandlesDependencies = dependencies;
     }
 
+    // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
     /**
@@ -122,32 +115,37 @@ public abstract class Transformation extends Processor {
     }
 
     // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
-     * Gets the id of the transformation.
+     * Gets the argument parameter type of the first processor.
      * 
-     * @return the id
+     * @return the argument parameter type of the first processor
      */
-    public String getId() {
-        return id;
+    public Class<?> getParameterType() {
+        if (processors.size() > 0) {
+            ProcessorOption firstProcessorOption = processors.get(0);
+            // TODO: ask Kico for processor and return the getParameterType
+        }
+        return null;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the name of this transformation. If the name is null then it returns the id that must no
-     * be null at any time.
+     * Gets the return argument type of the last processor.
      * 
-     * @return the name
+     * @return the return argument type of the last processor
      */
-    public String getName() {
-        if (name != null) {
-            return name;
-        } else {
-            return id;
+    public Class<?> getReturnType() {
+        if (processors.size() > 0) {
+            ProcessorOption lastProcessorOption = processors.get(processors.size() - 1);
+            // TODO: ask Kico for processor and return the getReturnType
         }
+        return null;
     }
 
+    // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
     /**
@@ -158,25 +156,39 @@ public abstract class Transformation extends Processor {
      *            the e object
      * @return the e object
      */
-    public final Object doTransform(EObject eObject, KielerCompilerContext context)
+    public final Object transform(final EObject eObject, final KielerCompilerContext context)
             throws Exception {
-        if (method == null) {
-            // A Transformation instance with the standard transformation method
-            return ((Transformation) transformationInstance).transform(eObject, context);
-        } else {
-            // Some other class instance with an individual transformation method
-            Object result;
-            try {
-                // First try WITH context
-                result = transformationMethod.invoke(transformationInstance, eObject, context);
-            } catch (java.lang.IllegalArgumentException e) {
-                // Then try WITHOUT context
-                result = transformationMethod.invoke(transformationInstance, eObject);
+
+        EObject eObjectParam = eObject;
+        EObject eObjectResult = null;
+
+        for (ProcessorOption processorOption : getProcessors()) {
+            // TODO: ask Kico for processor and return the getReturnType
+            Processor processor = null;
+            
+            if (processorOption.isOptional()) {
+                // TODO: check context whether processorOption is enabled
+                boolean isEnabled = true;
+                if (!isEnabled) {
+                    // If the optional processor is disabled then continue with the next processor
+                    continue;
+                }
             }
-            return result;
+
+            // Process the next processor
+            Object result = processor.process(eObjectParam, context);
+
+            // Inspect the result: If it is an EObject make it the next eObject, if not return it.
+            if (result instanceof EObject) {
+                eObjectResult = (EObject) result;
+                eObjectParam = eObjectResult;
+            } else {
+                return result;
+            }
         }
-
+        
+        // return the last EObject after applying this chain of processors to the input eObject
+        return eObjectResult;
     }
-
     // -------------------------------------------------------------------------
 }
