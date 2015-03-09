@@ -546,8 +546,19 @@ class TimingAnnotationProvider {
             timingRequestResult2.setStartPoint(i.toString());
             timingRequestResult2.setEndPoint(successor.toString());
             returnList.add(timingRequestResult2);
-        } 
+        }       
         }
+        stringBuilder.append("\nFWCET " + i + " exit\nLWCET " + i + " exit");
+        var timingRequestResultFinal1 = new TimingRequestResult();
+        var timingRequestResultFinal2 = new TimingRequestResult();
+        timingRequestResultFinal1.setRequestType(RequestType.FWCET);
+        timingRequestResultFinal2.setRequestType(RequestType.LWCET);
+        timingRequestResultFinal1.setStartPoint(i.toString());
+        timingRequestResultFinal2.setStartPoint(i.toString());
+        timingRequestResultFinal1.setEndPoint("exit");
+        timingRequestResultFinal2.setEndPoint("exit");
+        returnList.add(timingRequestResultFinal1);
+        returnList.add(timingRequestResultFinal2);
         return returnList;
     }
 }
