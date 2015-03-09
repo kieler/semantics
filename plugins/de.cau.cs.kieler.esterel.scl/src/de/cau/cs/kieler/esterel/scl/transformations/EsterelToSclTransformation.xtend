@@ -125,7 +125,7 @@ class EsterelToSclTransformation extends Transformation {
     var Multimap<String, String> labelToThreadMap
 
     // List of exit signals and the corresponding label
-    var HashMap<ISignal, Pair<ValuedObject, String>> exitToLabelMap
+    var protected HashMap<ISignal, Pair<ValuedObject, String>> exitToLabelMap
     
     // List of variables for valued traps
     var protected HashMap<ISignal, ValuedObject> valuedExitVariables
@@ -254,14 +254,13 @@ class EsterelToSclTransformation extends Transformation {
         ]
         
         // Apply SCL optimization if triggered
-//        targetSclProgram.optimizeAll
+        if (optimizeTransformation)
+            targetSclProgram.optimizeAll
 
         // As the number with which the labels are enumerated is a static variable of the EsterelToSclExtensions
         // class, the numer is resetted to 1 after each transformation for subsequent calls
         resetLabelCount
 
-        // Optimize
-        //        program.optimizeAll
         // Return the transformed program 
         System.out.println("Transformation to SCL finished")
 
@@ -355,7 +354,7 @@ class EsterelToSclTransformation extends Transformation {
         // Get the LAST defined valued object (with respect to local signals) as this is the one on the
         // closest surrounding Scope. Signals with the same name defined in higher hierachical levels
         // (and appear closer to the begin of the signal map) may be shadowed out.
-        val emitVariable = signalToVariableMap.findLast[it.key == emit.signal.name].value
+        val emitVariable = signalToVariableMap.findLast[ it.key == emit.signal.name ].value
 
         val emitOperation = createOr(emitVariable.createValObjRef, createBoolValue(true))
 
@@ -967,7 +966,11 @@ class EsterelToSclTransformation extends Transformation {
 
         signals.forEach[resetLocalSignalsThread.add(createAssignment(it.value, createBoolValue(false)))]
         if (!optimizeTransformation || terms) {
-            resetLocalSignalsThread.add(ifThenGoto(createNot(f_term.createValObjRef), threadStart, false))
+            val hasTerminated = createConditional
+            hasTerminated.expression = createNot(f_term.createValObjRef)
+            hasTerminated.statements += createStatement(SclFactory::eINSTANCE.createPause)
+            hasTerminated.statements += createGotoStm(threadStart)
+            resetLocalSignalsThread.add(hasTerminated)
         } else if (optimizeTransformation) {
             resetLocalSignalsThread.add(SclFactory::eINSTANCE.createPause)
             resetLocalSignalsThread.addGoto(threadStart)
@@ -1435,16 +1438,20 @@ class EsterelToSclTransformation extends Transformation {
         val trapEndLabel = createNewUniqueLabel
         labelToThreadMap.put(currentThreadEndLabel, trapEndLabel)
         val exitVariables = new LinkedList<ValuedObject>
-
+        
         // Create flags for every trap declaration; add them to the exitMap
         trap.trapDeclList.trapDecls.forEach [
             var ValuedObject singleExit
             var ValuedObject singleExit_val
             // Unvalued trap
             singleExit = createFreshVar(statementScope, it.name, ValueType::BOOL)
+            signalToVariableMap.removeLast //Remove from map as they are no signals
+            signalToVariableMap.removeLast
             if (it.channelDescr != null) {
                 if (it.channelDescr.type.type.getName() == "PURE") {
                     singleExit_val = createNewUniqueVariable(it.name + "_val", ValueType::HOST)
+                    signalToVariableMap.removeLast //Remove from map as they are no signals
+                    signalToVariableMap.removeLast
                     val hostType = it.channelDescr.type.typeID
                     val singleExitVal = singleExit_val
                     statementScope.declarations += createDeclaration => [
@@ -1519,15 +1526,20 @@ class EsterelToSclTransformation extends Transformation {
 
         // Transform trap handlers
         val trapHandlers = createParallel
+        val oldThreadsEndLabel = currentThreadEndLabel
         for (trapHandler : trap.trapHandler) {
+            val currentHandlerThreadEnd = createNewUniqueLabel;
+            currentThreadEndLabel = currentHandlerThreadEnd
             trapHandlers.threads += createThread => [
                 add(
                     createConditional => [
                         expression = trapHandler.trapExpr.transformExp
                         statements += trapHandler.statement.transformStatement(newSseq).statements
                     ])
+                 addLabel(currentHandlerThreadEnd)
             ]
         }
+        currentThreadEndLabel = oldThreadsEndLabel
         if (!trapHandlers.threads.nullOrEmpty)
             statementScope.add(trapHandlers)
         targetStatementSequence.add(statementScope)
@@ -1894,10 +1906,10 @@ class EsterelToSclTransformation extends Transformation {
             val doUpto = ^do.end as DoUpto
             val abort = EsterelFactory::eINSTANCE.createAbort => [
                 body = EsterelFactory.eINSTANCE.createAbortInstance => [
-                    delay = doUpto.expr
+                    delay = EcoreUtil.copy(doUpto.expr)
                 ]
                 statement = EsterelFactory::eINSTANCE.createSequence => [
-                    list += ^do.statement
+                    list += EcoreUtil.copy(^do.statement)
                     list += EsterelFactory::eINSTANCE.createHalt
                 ]
             ]
@@ -1906,12 +1918,12 @@ class EsterelToSclTransformation extends Transformation {
             val doWatching = ^do.end as DoWatching
             val abort = EsterelFactory::eINSTANCE.createAbort => [
                 body = EsterelFactory.eINSTANCE.createAbortInstance => [
-                    delay = doWatching.delay
+                    delay = EcoreUtil.copy(doWatching.delay)
                     if (doWatching.end != null) {
-                        statement = doWatching.end.statement
+                        statement = EcoreUtil.copy(doWatching.end.statement)
                     }
                 ]
-                statement = ^do.statement
+                statement = EcoreUtil.copy(^do.statement)
             ]
             abort.transformStatement(targetStatementSequence)
         } else {

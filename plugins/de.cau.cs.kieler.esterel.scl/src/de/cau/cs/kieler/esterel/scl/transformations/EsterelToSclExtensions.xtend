@@ -94,11 +94,12 @@ class EsterelToSclExtensions {
      * @param searchedName The ValuedObject name to search for
      */
     def getValuedObjectByName(String searchedName) {
-        for (variable : signalToVariableMap) {
-            val ret = signalToVariableMap.findLast[key == searchedName]
-            if (ret != null)
-                return ret.value
-        }
+        val ret = signalToVariableMap.findLast[key == searchedName]
+        if (ret != null)
+            return ret.value
+        val retExit = exitToLabelMap.filter[p1, p2| p1.name == searchedName].values.last
+        if (retExit != null)
+            return retExit.key
         throw new TransformerException("getValuedObject: Signal not declared: " + searchedName)
     }
 
