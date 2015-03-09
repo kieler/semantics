@@ -1327,6 +1327,39 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             BoolValue: {
                 nNode.translateConstExpression(expr, callNode)
             }
+            ValuedObjectReference: {
+                
+                // need to use a dummy node inside?
+                
+                // expr = ValuedObjectReference: it.valuedObject = current input
+                val vo = expr.valuedObject
+                val voRef = (callNode as CallNode).callReference.valuedObjects.get(voIndex)//d.equations.get(index).valuedObject
+                //val voRef = d.valuedObjects.get(index) // <-- alte Variante
+//                val equation = d.equations.get(index)
+                // current features (expr) is not attached to a call/reference node
+                
+                println("i'm here")
+                println("vo: " + vo + ", voRef: " + voRef)
+                println("getNode: " + getNode(callNode))
+                println("getPorts: " + getNode(callNode).getPort(vo.reference.portMap) + ", " + getNode(callNode).getPort(voRef.reference.portMap))
+                
+                nNode.createEdge(callNode) => [
+                    it.source = getNode(callNode)
+                    it.target = getNode(callNode)
+                    it.sourcePort = getNode(callNode).getPort(vo.reference.portMap)
+                    it.targetPort = getNode(callNode).getPort(voRef.reference.portMap)
+                    it.createEdgeStyle
+                ]
+                
+//                cNode.getNode().createEdge(expr) => [
+//                            it.source = cNode.getNode()
+//                            it.target = voRef.getNode(parentNode)
+//                            it.sourcePort = cNode.getNode().getPort(expr.valuedObject.reference.portMap)
+//                            it.targetPort = voRef.getNode(parentNode).getPort(voRef.reference.portMap)
+//                            it.createEdgeStyle
+//                        ]
+                
+            }
             default: {
                 println("default case...missing expression: " + expr)
             }
@@ -1482,6 +1515,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 val ref = call.callReference as DefineNode
                 // add ChildNodes for called Reference
                 for (expr : ref.expressions) {
+                    println("ref expr: " + expr)
                     val index = ref.expressions.indexOf(expr)
                     nNode.children +=  expr.translate(index, call)
                 }
