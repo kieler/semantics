@@ -36,7 +36,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class KielerCompiler {
 
-    
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
     // .....█████╗..██████╗.██████╗███████╗███████╗███████╗
@@ -72,7 +71,7 @@ public class KielerCompiler {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Gets the transformation by its id, if it is registered.
      * 
@@ -99,7 +98,12 @@ public class KielerCompiler {
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-    
+    // ....██████╗.██████╗..██████╗..██████╗███████╗███████╗███████╗
+    // ....██╔══██╗██╔══██╗██╔═══██╗██╔════╝██╔════╝██╔════╝██╔════╝
+    // ....██████╔╝██████╔╝██║...██║██║.....█████╗..███████╗███████╗
+    // ....██╔═══╝.██╔══██╗██║...██║██║.....██╔══╝..╚════██║╚════██║
+    // ....██║.....██║..██║╚██████╔╝╚██████╗███████╗███████║███████║
+    // ....╚═╝.....╚═╝..╚═╝.╚═════╝..╚═════╝╚══════╝╚══════╝╚══════╝
     // -------------------------------------------------------------------------
 
     /**
@@ -564,71 +568,6 @@ public class KielerCompiler {
     }
 
     // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-
-    /**
-     * Update mapping between transformation IDs and transformations.
-     * 
-     * @param force
-     *            the force
-     */
-    private static void updateMapping(boolean force) {
-        if (transformations == null || id2transformations == null || force) {
-            id2transformations = KiCoPlugin.getInstance().getRegisteredTransformations();
-            transformations = new ArrayList<Transformation>();
-            for (Entry<String, Transformation> localTransformation : id2transformations.entrySet()) {
-                transformations.add(localTransformation.getValue());
-            }
-        }
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the transformation for a transformation ID. If no registered transformation is found for
-     * an ID then a runtime exception is raised.
-     * 
-     * @param transformationID
-     *            the transformation id
-     * @return the transformation
-     */
-    public static Transformation getTransformation(String transformationID) {
-        updateMapping(false);
-        Transformation transformation = id2transformations.get(transformationID);
-        if (transformation == null) {
-            KiCoPlugin
-                    .getInstance()
-                    .showError(
-                            "Cannot find a transformation with the ID '"
-                                    + transformationID
-                                    + "'. Make sure that the transformation with this ID is registered and its"
-                                    + " declaring plugin is loaded. Make sure that the ID does exactly match"
-                                    + " (case sensitive). Maybe you forgot to separate multiple ID's by a"
-                                    + " comma.", KiCoPlugin.PLUGIN_ID, null, true);
-            // throw new RuntimeException("Cannot find a transformation with the ID '"
-            // + transformationID
-            // + "'. Make sure that the transformation with this ID is registered and its"
-            // + " declaring plugin is loaded. Make sure that the ID does exactly match"
-            // + " (case sensitive). Maybe you forgot to separate multiple ID's by a"
-            // + " comma.");
-        }
-        return transformation;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the list of all registered transformations.
-     * 
-     * @return the registered transformations
-     */
-    public static List<Transformation> getRegisteredTransformations() {
-        if (transformations == null) {
-            KielerCompiler.updateMapping(true);
-        }
-        return transformations;
-    }
-
     // -------------------------------------------------------------------------
 
     /**

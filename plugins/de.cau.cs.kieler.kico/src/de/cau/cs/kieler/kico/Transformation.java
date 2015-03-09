@@ -125,7 +125,9 @@ public abstract class Transformation implements ITransformation {
     public Class<?> getParameterType() {
         if (processors.size() > 0) {
             ProcessorOption firstProcessorOption = processors.get(0);
-            // TODO: ask Kico for processor and return the getParameterType
+            // Ask KiCo for processor and return the getParameterType
+            Processor processor = KielerCompiler.getProcessor(firstProcessorOption.getId());
+            return processor.getParameterType();
         }
         return null;
     }
@@ -140,7 +142,9 @@ public abstract class Transformation implements ITransformation {
     public Class<?> getReturnType() {
         if (processors.size() > 0) {
             ProcessorOption lastProcessorOption = processors.get(processors.size() - 1);
-            // TODO: ask Kico for processor and return the getReturnType
+            // Ask KiCo for processor and return the getReturnType
+            Processor processor = KielerCompiler.getProcessor(lastProcessorOption.getId());
+            return processor.getReturnType();
         }
         return null;
     }
@@ -163,8 +167,8 @@ public abstract class Transformation implements ITransformation {
         EObject eObjectResult = null;
 
         for (ProcessorOption processorOption : getProcessors()) {
-            // TODO: ask Kico for processor and return the getReturnType
-            Processor processor = null;
+            // Ask KiCo for processor 
+            Processor processor = KielerCompiler.getProcessor(processorOption.getId());
 
             if (processorOption.isOptional()) {
                 // TODO: check context whether processorOption is enabled
@@ -190,5 +194,6 @@ public abstract class Transformation implements ITransformation {
         // return the last EObject after applying this chain of processors to the input eObject
         return eObjectResult;
     }
+    
     // -------------------------------------------------------------------------
 }

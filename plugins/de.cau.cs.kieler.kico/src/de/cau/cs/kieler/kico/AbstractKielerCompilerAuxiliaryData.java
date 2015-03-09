@@ -21,6 +21,6 @@ package de.cau.cs.kieler.kico;
  * @kieler.rating 2014-09-22 proposed yellow
  * 
  */
-public abstract class AbstractKielerCompilerAncillaryData {
+public abstract class AbstractKielerCompilerAuxiliaryData {
 
 }

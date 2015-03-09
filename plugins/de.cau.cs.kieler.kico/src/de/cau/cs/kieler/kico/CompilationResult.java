@@ -50,9 +50,9 @@ public class CompilationResult {
     /** All last/occurred warnings processed for this compilation. */
     private String allWarnings = null;
     
-    /** Ancillary data. */
-    private List<AbstractKielerCompilerAncillaryData> ancillaryData = 
-            new ArrayList<AbstractKielerCompilerAncillaryData>();
+    /** Auxiliary data. */
+    private List<AbstractKielerCompilerAuxiliaryData> auxiliaryData = 
+            new ArrayList<AbstractKielerCompilerAuxiliaryData>();
 
     /**
      * Indicates that the compilation is done and no further compilation steps are needed or
@@ -383,15 +383,15 @@ public class CompilationResult {
     /**
      * @return the ancillaryData
      */
-    public List<AbstractKielerCompilerAncillaryData> getAncillaryData() {
-        return ancillaryData;
+    public List<AbstractKielerCompilerAuxiliaryData> getAncillaryData() {
+        return auxiliaryData;
     }
 
     /**
      * @param ancillaryData the ancillaryData to set
      */
-    public void setAncillaryData(List<AbstractKielerCompilerAncillaryData> ancillaryData) {
-        this.ancillaryData = ancillaryData;
+    public void setAncillaryData(List<AbstractKielerCompilerAuxiliaryData> ancillaryData) {
+        this.auxiliaryData = ancillaryData;
     }
 
     // -------------------------------------------------------------------------
