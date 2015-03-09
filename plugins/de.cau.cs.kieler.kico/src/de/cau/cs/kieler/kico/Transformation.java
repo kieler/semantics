@@ -22,32 +22,15 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * An instance of this class represents a registered transformation that may be called indirectly by
- * invoking the KielerCompiler.compile() method.
+ * invoking the KielerCompiler.compile() method. It consists of a list of processors which are
+ * called one by another when invoking the transform() method.
  * 
  * @author cmot
  * @kieler.design 2014-03-11 proposed
  * @kieler.rating 2014-03-11 proposed yellow
  * 
  */
-public abstract class Transformation {
-
-    /** The configuration element for accessing the plug-in ID. */
-    private IConfigurationElement configEle;
-
-    /** The transformation method */
-    private Method transformationMethod = null;
-
-    /** The transformation instance, if this is a wrapper only. May be guiced for the injected case. */
-    private Object transformationInstance = null;
-
-    /** The name. */
-    private String name = null;
-
-    /** The id. */
-    private String id = null;
-
-    /** The method. */
-    private String method = null;
+public abstract class Transformation extends Processor {
 
     /** The produces dependencies. */
     private List<String> producesDependencies = new ArrayList<String>();
@@ -55,128 +38,17 @@ public abstract class Transformation {
     /** The not handles dependencies. */
     private List<String> notHandlesDependencies = new ArrayList<String>();
 
-    /** The pre processors. */
-    private List<ProcessorOption> preProcessors = new ArrayList<ProcessorOption>();
-
-    /** The post processors. */
-    private List<ProcessorOption> postProcessors = new ArrayList<ProcessorOption>();
+    /** The central processor list. */
+    private List<ProcessorOption> processors = new ArrayList<ProcessorOption>();
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Gets the argument parameter type.
-     * 
-     * @return the argument parameter type
-     */
-    public Class<?> getParameterType() {
-        Method transformMethod = null;
-        if (method == null) {
-            try {
-                transformMethod =
-                        ((Transformation) transformationInstance).getClass().getMethod("transform",
-                                EObject.class);
-            } catch (Exception e) {
-                return null;
-            }
-        } else {
-            transformMethod = transformationMethod;
-        }
-        if (transformMethod == null) {
-            throw (new RuntimeException("The declared transformation method '" + method
-                    + "' of transformation '" + id
-                    + "' was not found. If you declared a method you must not extend the "
-                    + "Transformation abstract class at the same time."));
-        }
-        Class<?>[] classArray = transformMethod.getParameterTypes();
-        if (classArray.length > 0) {
-            return classArray[0];
-        }
-        return null;
-    }
-
-    // -------------------------------------------------------------------------
 
     /**
      * Implements the transformation from EObject to EObject.
      */
     public abstract EObject transform(EObject eObject, KielerCompilerContext context);
 
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the configuration element. This method is needed to instantiate several component
-     * instances only.
-     * 
-     * @param configEleParam
-     *            the new configuration element
-     */
-    public final void setConfigurationElemenet(final IConfigurationElement configEleParam) {
-        this.configEle = configEleParam;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the configuration element. This method is needed to instantiate several component
-     * instances only.
-     * 
-     * @return the configuration element
-     */
-    public final IConfigurationElement getConfigurationElement() {
-        return this.configEle;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the transformation method that contains the transform method specified. This class
-     * instance then is just a wrapper for this transformation instance.
-     * 
-     * @param object
-     *            the new transformation instance
-     */
-    void setTransformationMethod(Method method) {
-        transformationMethod = method;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the transformation instance that contains the transform method specified. This class
-     * instance then is just a wrapper for this transformation instance.
-     * 
-     * @param object
-     *            the new transformation instance
-     */
-    void setTransformationInstance(Object object) {
-        transformationInstance = object;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the name of the transformation.
-     * 
-     * @param name
-     *            the new name
-     */
-    void setName(String name) {
-        this.name = name;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the id of this transformation.
-     * 
-     * @param id
-     *            the new id
-     */
-    void setId(String id) {
-        this.id = id.trim();
-    }
-
-    // -------------------------------------------------------------------------
 
     /**
      * Sets the method name that will be called when doTransform() is called. Set this to null if
@@ -241,23 +113,12 @@ public abstract class Transformation {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the list of pre processors.
+     * Gets the central list of processors which this transformation consists of.
      * 
      * @return the dependencies
      */
-    public List<ProcessorOption> getPreProcessors() {
-        return preProcessors;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the list of post processors.
-     * 
-     * @return the dependencies
-     */
-    public List<ProcessorOption> getPostProcessors() {
-        return postProcessors;
+    public List<ProcessorOption> getProcessors() {
+        return processors;
     }
 
     // -------------------------------------------------------------------------

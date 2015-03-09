@@ -58,7 +58,7 @@ public class CompilationResult {
      * Indicates that the compilation is done and no further compilation steps are needed or
      * possible.
      */
-    private boolean currentTransformationdone = false;
+    private boolean currentTransformationDone = false;
 
     // -------------------------------------------------------------------------
 
@@ -363,7 +363,7 @@ public class CompilationResult {
      * @return the done
      */
     public boolean isCurrentTransformationDone() {
-        return currentTransformationdone;
+        return currentTransformationDone;
     }
 
     // -------------------------------------------------------------------------
@@ -375,7 +375,7 @@ public class CompilationResult {
      *            the done to set
      */
     public void setCurrentTransformationDone(boolean done) {
-        this.currentTransformationdone = done;
+        this.currentTransformationDone = done;
     }
 
     // -------------------------------------------------------------------------
