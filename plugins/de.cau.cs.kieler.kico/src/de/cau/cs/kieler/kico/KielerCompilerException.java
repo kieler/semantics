@@ -78,25 +78,10 @@ public class KielerCompilerException extends Exception {
      * @return the stack trace
      */
     public String getStackTraceString() {
-        return KielerCompilerException.getStackTraceString(this);
+        return KiCoUtil.getStackTraceString(this);
     }
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Gets the stack trace of an exception as a string.
-     * 
-     * @param t
-     *            the t
-     * @return the error stack trace
-     */
-    public static String getStackTraceString(Throwable t) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        t.printStackTrace(pw);
-        return sw.toString(); // stack trace as a string
-    }
-
-    // -------------------------------------------------------------------------
 
 }

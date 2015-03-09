@@ -16,6 +16,8 @@ package de.cau.cs.kieler.kico;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -289,5 +291,22 @@ public class KiCoUtil {
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the stack trace of an exception as a string.
+     * 
+     * @param t
+     *            the t
+     * @return the error stack trace
+     */
+    public static String getStackTraceString(Throwable t) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        t.printStackTrace(pw);
+        return sw.toString(); // stack trace as a string
+    }
+
+    // -------------------------------------------------------------------------
+
 
 }

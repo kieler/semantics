@@ -15,7 +15,9 @@ package de.cau.cs.kieler.kico;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
@@ -29,6 +31,7 @@ import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import com.google.inject.Guice;
+import com.google.inject.Inject;
 
 import de.cau.cs.kieler.core.util.Pair;
 
@@ -41,15 +44,29 @@ import de.cau.cs.kieler.core.util.Pair;
  * @kieler.rating 2014-03-11 proposed yellow
  */
 public class KiCoPlugin extends Plugin {
+    
+    /** The logger. */
+    @Inject Logger logger;
 
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.kico"; //$NON-NLS-1$
 
+    /** The Constant PROCESSOR_EXTENSION_POINT_ID. */
+    public static final String PROCESSOR_EXTENSION_POINT_ID = "de.cau.cs.kieler.kico.processor";
+
+    /** The Constant FEATURE_EXTENSION_POINT_ID. */
+    public static final String FEATURE_EXTENSION_POINT_ID = "de.cau.cs.kieler.kico.feature";
+
+    /** The Constant TRANSFORMATION_EXTENSION_POINT_ID. */
+    public static final String TRANSFORMATION_EXTENSION_POINT_ID =
+            "de.cau.cs.kieler.kico.transformation";
+
     /** The Constant EXTENSION_POINT_ID. */
-    public static final String TRANSFORMATION_EXTENSION_POINT_ID = "de.cau.cs.kieler.kico.transformation";
-    
-    /** The Constant EXTENSION_EXTENSION_POINT_ID. */
-    public static final String EXTENSION_EXTENSION_POINT_ID = "de.cau.cs.kieler.kico.extension";
+    public static final String CREEPER_EXTENSION_POINT_ID = "de.cau.cs.kieler.kico.creeper";
+
+    /** The Constant RESOURCEEXTENSION_EXTENSION_POINT_ID. */
+    public static final String RESOURCEEXTENSION_EXTENSION_POINT_ID =
+            "de.cau.cs.kieler.kico.extension";
 
     /** The Constant KICO_MSGDLG_TITLE. */
     public static final String KICO_MSGDLG_TITLE = "KIELER Compiler";
@@ -59,9 +76,6 @@ public class KiCoPlugin extends Plugin {
 
     /** The shared instance. */
     private static KiCoPlugin plugin;
-    
-    /** The resource extension cached. */
-    private static HashMap<String, ResourceExtension> resourceExtensionCached = null;
 
     /**
      * The parent shell iff a GUI is used. This shell may be used to prompt a save-dialog to save
@@ -75,6 +89,26 @@ public class KiCoPlugin extends Plugin {
 
     // -------------------------------------------------------------------------
 
+    /* MAIN DATA CACHES */
+
+    /** The cached registered processors. */
+    private static HashMap<String, Processor> processorsCached = null;
+
+    /** The cached registered features. */
+    private static HashMap<String, Feature> featuresCached = null;
+
+    /** The cached registered transformations. */
+    private static HashMap<String, Transformation> transformationsCached = null;
+
+    /** The cached registered creepers. */
+    private static HashMap<String, Creeper> creepersCached = null;
+
+    /** The cached resource extensions. */
+    private static HashMap<String, ResourceExtension> resourceExtensionsCached = null;
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
     /**
      * The constructor.
      */
@@ -86,7 +120,7 @@ public class KiCoPlugin extends Plugin {
 
     /**
      * Returns the shared instance.
-     *
+     * 
      * @return the shared instance
      */
     public static KiCoPlugin getInstance() {
@@ -177,14 +211,223 @@ public class KiCoPlugin extends Plugin {
     }
 
     // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the registered processors or the cached version.
+     * 
+     * @return the registered processors
+     */
+    public HashMap<String, Processor> getRegisteredProcessors(String extensionPointId,
+            boolean forceReload) {
+        // Return the cache if there is any and not forced to reload
+        if (processorsCached != null && !forceReload) {
+            return processorsCached;
+        }
+        // Otherwise inspect the extensions
+        IConfigurationElement[] extensions =
+                Platform.getExtensionRegistry().getConfigurationElementsFor(extensionPointId);
+        // Clear the cache
+        processorsCached = new HashMap<String, Processor>();
+        // Walk thru every extension and instantiate the declared class, then put it into the cache
+        for (IConfigurationElement extension : extensions) {
+            String className = extension.getName();
+            try {
+                Processor instance =
+                        (Processor) extension.createExecutableExtension("class");
+                String id = instance.getId();
+                className += " (" + id + ")";
+                if (processorsCached.containsKey(id)) {
+                    logger.severe("KiCo failed to register processor: " + extension
+                            + " for class " + className + " because this ID is already taken.");
+                } else {
+                    processorsCached.put(id, instance);
+                    logger.info("KiCo register processor: " + extension
+                            + " for class " + className);
+                }
+            } catch (CoreException e) {
+                logger.severe("KiCo failed to register processor: " + extension
+                        + " for class " + className + ": " + KiCoUtil.getStackTraceString(e));
+            }
+        }
+        return processorsCached;
+
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the registered features or the cached version.
+     * 
+     * @return the registered features
+     */
+    public HashMap<String, Feature> getRegisteredFeatures(String extensionPointId,
+            boolean forceReload) {
+        // Return the cache if there is any and not forced to reload
+        if (featuresCached != null && !forceReload) {
+            return featuresCached;
+        }
+        // Otherwise inspect the extensions
+        IConfigurationElement[] extensions =
+                Platform.getExtensionRegistry().getConfigurationElementsFor(extensionPointId);
+        // Clear the cache
+        featuresCached = new HashMap<String, Feature>();
+        // Walk thru every extension and instantiate the declared class, then put it into the cache
+        for (IConfigurationElement extension : extensions) {
+            String className = extension.getName();
+            try {
+                Feature instance =
+                        (Feature) extension.createExecutableExtension("class");
+                String id = instance.getId();
+                className += " (" + id + ")";
+                if (featuresCached.containsKey(id)) {
+                    logger.severe("KiCo failed to register feature: " + extension
+                            + " for class " + className + " because this ID is already taken.");
+                } else {
+                    featuresCached.put(id, instance);
+                    logger.info("KiCo register feature: " + extension
+                            + " for class " + className);
+                }
+            } catch (CoreException e) {
+                logger.severe("KiCo failed to register feature: " + extension
+                        + " for class " + className + ": " + KiCoUtil.getStackTraceString(e));
+            }
+        }
+        return featuresCached;
+
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the registered transformations or the cached version.
+     * 
+     * @return the registered transformations
+     */
+    public HashMap<String, Transformation> getRegisteredTransformations(String extensionPointId,
+            boolean forceReload) {
+        // Return the cache if there is any and not forced to reload
+        if (transformationsCached != null && !forceReload) {
+            return transformationsCached;
+        }
+        // Otherwise inspect the extensions
+        IConfigurationElement[] extensions =
+                Platform.getExtensionRegistry().getConfigurationElementsFor(extensionPointId);
+        // Clear the cache
+        transformationsCached = new HashMap<String, Transformation>();
+        // Walk thru every extension and instantiate the declared class, then put it into the cache
+        for (IConfigurationElement extension : extensions) {
+            String className = extension.getName();
+            try {
+                Transformation instance =
+                        (Transformation) extension.createExecutableExtension("class");
+                String id = instance.getId();
+                className += " (" + id + ")";
+                if (transformationsCached.containsKey(id)) {
+                    logger.severe("KiCo failed to register transformation: " + extension
+                            + " for class " + className + " because this ID is already taken.");
+                } else {
+                    transformationsCached.put(id, instance);
+                    logger.info("KiCo register transformation: " + extension
+                            + " for class " + className);
+                }
+            } catch (CoreException e) {
+                logger.severe("KiCo failed to register transformation: " + extension
+                        + " for class " + className + ": " + KiCoUtil.getStackTraceString(e));
+            }
+        }
+        return transformationsCached;
+
+    }
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the registered processors or the cached version.
+     * 
+     * @return the registered processors
+     */
+    public HashMap<String, Creeper> getRegisteredCreepers(String extensionPointId,
+            boolean forceReload) {
+        // Return the cache if there is any and not forced to reload
+        if (creepersCached != null && !forceReload) {
+            return creepersCached;
+        }
+        // Otherwise inspect the extensions
+        IConfigurationElement[] extensions =
+                Platform.getExtensionRegistry().getConfigurationElementsFor(extensionPointId);
+        // Clear the cache
+        creepersCached = new HashMap<String, Creeper>();
+        // Walk thru every extension and instantiate the declared class, then put it into the cache
+        for (IConfigurationElement extension : extensions) {
+            String className = extension.getName();
+            try {
+                Creeper instance =
+                        (Creeper) extension.createExecutableExtension("class");
+                String id = instance.getId();
+                className += " (" + id + ")";
+                if (creepersCached.containsKey(id)) {
+                    logger.severe("KiCo failed to register creeper: " + extension
+                            + " for class " + className + " because this ID is already taken.");
+                } else {
+                    creepersCached.put(id, instance);
+                    logger.info("KiCo register creeper: " + extension
+                            + " for class " + className);
+                }
+            } catch (CoreException e) {
+                logger.severe("KiCo failed to register creeper: " + extension
+                        + " for class " + className + ": " + KiCoUtil.getStackTraceString(e));
+            }
+        }
+        return creepersCached;
+
+    }    
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the registered resource extensions.
+     * 
+     * @param forceReload
+     *            the force reload
+     * @return the registered resource extensions
+     */
+    public HashMap<String, ResourceExtension> getRegisteredResourceExtensions(boolean forceReload) {
+        if (resourceExtensionsCached != null && !forceReload) {
+            return resourceExtensionsCached;
+        }
+        IConfigurationElement[] resourceExtensions =
+                Platform.getExtensionRegistry().getConfigurationElementsFor(
+                        RESOURCEEXTENSION_EXTENSION_POINT_ID);
+        resourceExtensionsCached = new HashMap<String, ResourceExtension>();
+        for (int i = 0; i < resourceExtensions.length; i++) {
+            try {
+                String className = resourceExtensions[i].getAttribute("className");
+                String extension = resourceExtensions[i].getAttribute("extensionName");
+                String isXMI = resourceExtensions[i].getAttribute("isXMI");
+                String editorID = resourceExtensions[i].getAttribute("editor_id");
+                resourceExtensionsCached.put(className, new ResourceExtension(className, extension,
+                        isXMI.toLowerCase().equals("true"), editorID));
+
+                logger.info("KiCo register resource extension: " + extension
+                        + " for class " + className);
+            } finally {
+                // do nothing
+            }
+        }
+        return resourceExtensionsCached;
+    }
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
      * This returns a new the TransformationMap with all registered and loaded plug-ins that extend
      * the KiCo extension point.
-     *
+     * 
      * @return the TransformationList
      */
-    public HashMap<String, Transformation> getRegisteredTransformations() {
+    public HashMap<String, Transformation> getRegisteredTransformations2() {
         // if (transformationMap != null && !forceUpdate) {
         // // return a cached version of the list
         // // it is only built the first time
@@ -196,7 +439,8 @@ public class KiCoPlugin extends Plugin {
         // System.gc();
         // get the available interfaces and initialize them
         IConfigurationElement[] transformations =
-                Platform.getExtensionRegistry().getConfigurationElementsFor(TRANSFORMATION_EXTENSION_POINT_ID);
+                Platform.getExtensionRegistry().getConfigurationElementsFor(
+                        TRANSFORMATION_EXTENSION_POINT_ID);
 
         HashMap<String, Transformation> transformationMap =
                 new HashMap<String, Transformation>(transformations.length);
@@ -212,8 +456,10 @@ public class KiCoPlugin extends Plugin {
                 String id = transformations[i].getAttribute("id");
                 String name = transformations[i].getAttribute("name");
                 String method = transformations[i].getAttribute("method");
-                String producesDependenciesString = transformations[i].getAttribute("producesDependencies");
-                String notHandlesDependenciesString = transformations[i].getAttribute("notHandlesDependencies");
+                String producesDependenciesString =
+                        transformations[i].getAttribute("producesDependencies");
+                String notHandlesDependenciesString =
+                        transformations[i].getAttribute("notHandlesDependencies");
                 String transformationsString = transformations[i].getAttribute("transformations");
                 String alternativesString = transformations[i].getAttribute("alternatives");
 
@@ -227,7 +473,8 @@ public class KiCoPlugin extends Plugin {
                     // The Transformation is defined as a GROUP by its dependencies
                     transformation = new TransformationGroup();
 
-                    // Internally transformations of groups are represented as produces dependencies!
+                    // Internally transformations of groups are represented as produces
+                    // dependencies!
                     // Rationale: If a group is selected, these transformations are applied
                     if (transformationsString != null) {
                         String[] dependenciesArray = transformationsString.split(",");
@@ -313,46 +560,6 @@ public class KiCoPlugin extends Plugin {
 
     // -------------------------------------------------------------------------
 
-
-    /**
-     * Gets the registered resource extensions.
-     *
-     * @param forceReload the force reload
-     * @return the registered resource extensions
-     */
-    public HashMap<String, ResourceExtension> getRegisteredResourceExtensions(boolean forceReload) {
-        
-        if (resourceExtensionCached != null && !forceReload) {
-            return resourceExtensionCached;
-        }
-        
-        IConfigurationElement[] resourceExtensions =
-                Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_EXTENSION_POINT_ID);
-
-        resourceExtensionCached = new HashMap<String, ResourceExtension>();
-
-        for (int i = 0; i < resourceExtensions.length; i++) {
-            try {
-
-                String className = resourceExtensions[i].getAttribute("className");
-                String extension = resourceExtensions[i].getAttribute("extensionName");
-                String isXMI = resourceExtensions[i].getAttribute("isXMI");
-                String editorID = resourceExtensions[i].getAttribute("editor_id");
-                resourceExtensionCached.put(className, new ResourceExtension(className, extension, isXMI.toLowerCase().equals("true"), editorID));
-
-                if (DEBUG) {
-                     System.out.println("KiCo register resource extension: "
-                       + extension + " for class " + className);
-                }
-            } 
-            finally {
-            
-            }
-        }
-
-        return resourceExtensionCached;
-    }
-    
     /**
      * Gets the resource extension for an model. Note that for this method to work there must be a
      * plugin that uses the extension point de.cau.cs.kieler.kico.extension to register a
@@ -380,7 +587,7 @@ public class KiCoPlugin extends Plugin {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Sets the parent shell that KIEM should use to display user dialogs.
      * 
@@ -638,9 +845,10 @@ public class KiCoPlugin extends Plugin {
 
     /**
      * Gets the last error.
-     *
+     * 
      * @return the last error
-     * @deprecated Use the method getAllErrors()  of the compilation result, this method will only return null.
+     * @deprecated Use the method getAllErrors() of the compilation result, this method will only
+     *             return null.
      */
     public static String getLastError() {
         // TODO:
@@ -652,7 +860,8 @@ public class KiCoPlugin extends Plugin {
     /**
      * Resets the last error.
      * 
-     * @deprecated Use the method getAllErrors()  of the compilation result, this method will do nothing.
+     * @deprecated Use the method getAllErrors() of the compilation result, this method will do
+     *             nothing.
      * 
      */
     public static void resetLastError() {
