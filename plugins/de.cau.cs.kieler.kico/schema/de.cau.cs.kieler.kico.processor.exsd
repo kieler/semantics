@@ -25,8 +25,7 @@ This extension point allowes the contribution of a compiler transformation to th
       </annotation>
       <complexType>
          <sequence minOccurs="0" maxOccurs="unbounded">
-            <element ref="transformationClass" minOccurs="0" maxOccurs="unbounded"/>
-            <element ref="transformationGroup" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="processorClass" minOccurs="0" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -38,48 +37,21 @@ This extension point allowes the contribution of a compiler transformation to th
       </complexType>
    </element>
 
-   <element name="transformationClass">
+   <element name="processorClass">
       <annotation>
          <documentation>
-            A class file that implements an interface declaring a transform() method, an id() method, a name(), and a produces or not handles dependencies() methods.
+            A class file that implements an interface declaring a transform() method, an id() method, a name().
          </documentation>
       </annotation>
       <complexType>
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The implementing class for this specific transformations. It must satisfy the interface ITransformation and implement Transformation.
+                  The implementing class for this specific processor. It must satisfy the interface IProcessor and implement Processor.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.kico.Transformation:de.cau.cs.kieler.kico.ITransformation"/>
+                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.kico.Processor:de.cau.cs.kieler.kico.IProcessor"/>
                </appinfo>
-            </annotation>
-         </attribute>
-      </complexType>
-   </element>
-
-   <element name="transformationGroup">
-      <complexType>
-         <attribute name="id" type="string" use="required">
-            <annotation>
-               <documentation>
-                  A unique id of this transformation group that is also used by other transformations to reference it.
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="transformations" type="string" use="required">
-            <annotation>
-               <documentation>
-                  Dependencies for this group must be given as comma seperated values, e.g.:
-dep1, dep2, dep3
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="name" type="string">
-            <annotation>
-               <documentation>
-                  The optional name of the transformation group. If nothing is provided the id will be taken inplace of the name.
-               </documentation>
             </annotation>
          </attribute>
       </complexType>

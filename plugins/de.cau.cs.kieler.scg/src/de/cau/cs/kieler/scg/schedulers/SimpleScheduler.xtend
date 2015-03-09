@@ -193,7 +193,7 @@ class SimpleScheduler extends AbstractScheduler {
 //        val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = 
 //            Guice.createInjector().getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
 //        context.compilationResult.ancillaryData += potentialInstantaneousLoopAnalyzer.analyze(scg)
-        val pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
+        val pilData = context.compilationResult.getAuxiliaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
         
 
         // Create and fill a list for all scheduling blocks.

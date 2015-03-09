@@ -381,17 +381,23 @@ public class CompilationResult {
     // -------------------------------------------------------------------------
 
     /**
-     * @return the ancillaryData
+     * Gets the ancillary data.
+     *
+     * @return the auxiliary Data
      */
-    public List<AbstractKielerCompilerAuxiliaryData> getAncillaryData() {
+    public List<AbstractKielerCompilerAuxiliaryData> getAuxiliaryData() {
         return auxiliaryData;
     }
 
+    // -------------------------------------------------------------------------
+
     /**
-     * @param ancillaryData the ancillaryData to set
+     * Sets the auxiliaryData data.
+     *
+     * @param auxiliaryData the ancillaryData to set
      */
-    public void setAncillaryData(List<AbstractKielerCompilerAuxiliaryData> ancillaryData) {
-        this.auxiliaryData = ancillaryData;
+    public void setAncillaryData(List<AbstractKielerCompilerAuxiliaryData> auxiliaryData) {
+        this.auxiliaryData = auxiliaryData;
     }
 
     // -------------------------------------------------------------------------

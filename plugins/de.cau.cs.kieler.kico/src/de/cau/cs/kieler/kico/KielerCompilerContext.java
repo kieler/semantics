@@ -46,20 +46,20 @@ public class KielerCompilerContext {
     /** The main resource for a compile run. */
     private Resource mainResource = null;
 
-    /** The originally selected transformation IDs. */
-    private List<String> selectedTransformationIDs = new ArrayList<String>();
+    /** The originally selected transformation Ids. */
+    private List<String> selectedTransformationIds = new ArrayList<String>();
 
-    /** The originally priorized transformation IDs. */
-    private List<String> priorizedTransformationIDs = new ArrayList<String>();
+    /** The originally priorized transformation Ids. */
+    private List<String> priorizedTransformationIds = new ArrayList<String>();
 
-    /** The originally disabled transformation IDs. */
-    private List<String> disabledTransformationIDs = new ArrayList<String>();
+    /** The originally disabled transformation Ids. */
+    private List<String> disabledTransformationIds = new ArrayList<String>();
 
     /** The (intermediate) compilation result. */
     CompilationResult compilationResult = null;
 
     /** The transformation used for compilation. */
-    private List<String> compilationTransformationIDs = new ArrayList<String>();
+    private List<String> compilationTransformationIds = new ArrayList<String>();
 
     /** The internal compile graph is the 'state' of a compilation. */
     private List<TransformationDummy> graph = null;
@@ -92,17 +92,17 @@ public class KielerCompilerContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the list of priorized transformations IDs which are preferred if an alternative group is
+     * Gets the list of priorized transformations Ids which are preferred if an alternative group is
      * selected an no other transformation is selected.
      * 
      * @return the priorized transformations
      */
-    public List<String> getPriorizedTransformationsIDs() {
+    public List<String> getPriorizedTransformationsIds() {
         // FIXME: THIS IS A TEMPORARY HACK!!! REMOVE THIS HACK LATER AND EVAL THE EXTENSION POINT
         // FROM KICO.UI TO FILL THIS!
-        priorizedTransformationIDs.clear();
-        priorizedTransformationIDs.add("S2ARDUINO");
-        return priorizedTransformationIDs;
+        priorizedTransformationIds.clear();
+        priorizedTransformationIds.add("S2ARDUINO");
+        return priorizedTransformationIds;
     }
 
     // -------------------------------------------------------------------------
@@ -112,12 +112,12 @@ public class KielerCompilerContext {
      * constructor is only advised if you do not intent to compile any model but want to calculate
      * pre-requirements.
      * 
-     * @param selectedAndDisabledTransformationIDs
+     * @param selectedAndDisabledTransformationIds
      *            the selected and disabled transformation i ds
      */
-    public KielerCompilerContext(String selectedAndDisabledTransformationIDs) {
+    public KielerCompilerContext(String selectedAndDisabledTransformationIds) {
         compilationResult = new CompilationResult();
-        parseSelectedAndDisabledTransformationIDs(selectedAndDisabledTransformationIDs);
+        parseSelectedAndDisabledTransformationIds(selectedAndDisabledTransformationIds);
     }
 
     // -------------------------------------------------------------------------
@@ -125,14 +125,14 @@ public class KielerCompilerContext {
     /**
      * Instantiates a new kieler compiler context with an original source model.
      * 
-     * @param selectedAndDisabledTransformationIDs
+     * @param selectedAndDisabledTransformationIds
      *            the selected and disabled transformation i ds
      * @param eObject
      *            the e object
      */
-    public KielerCompilerContext(String selectedAndDisabledTransformationIDs, EObject eObject) {
+    public KielerCompilerContext(String selectedAndDisabledTransformationIds, EObject eObject) {
         compilationResult = new CompilationResult(eObject);
-        parseSelectedAndDisabledTransformationIDs(selectedAndDisabledTransformationIDs);
+        parseSelectedAndDisabledTransformationIds(selectedAndDisabledTransformationIds);
     }
 
     // -------------------------------------------------------------------------
@@ -142,16 +142,16 @@ public class KielerCompilerContext {
      * constructor is only advised if you do not intent to compile any model but want to calculate
      * pre-requirements.
      * 
-     * @param selectedTransformationIDs
+     * @param selectedTransformationIds
      *            the selected transformation i ds
-     * @param disabledTransformationIDs
+     * @param disabledTransformationIds
      *            the disabled transformation i ds
      */
-    public KielerCompilerContext(List<String> selectedTransformationIDs,
-            List<String> disabledTransformationIDs) {
+    public KielerCompilerContext(List<String> selectedTransformationIds,
+            List<String> disabledTransformationIds) {
         compilationResult = new CompilationResult();
-        copySelectedAndDisabledTransformationIDs(selectedTransformationIDs,
-                disabledTransformationIDs);
+        copySelectedAndDisabledTransformationIds(selectedTransformationIds,
+                disabledTransformationIds);
     }
 
     // -------------------------------------------------------------------------
@@ -159,39 +159,39 @@ public class KielerCompilerContext {
     /**
      * Instantiates a new kieler compiler context with an original source model.
      * 
-     * @param selectedTransformationIDs
+     * @param selectedTransformationIds
      *            the selected transformation i ds
-     * @param disabledTransformationIDs
+     * @param disabledTransformationIds
      *            the disabled transformation i ds
      * @param eObject
      *            the e object
      */
-    public KielerCompilerContext(List<String> selectedTransformationIDs,
-            List<String> disabledTransformationIDs, EObject eObject) {
+    public KielerCompilerContext(List<String> selectedTransformationIds,
+            List<String> disabledTransformationIds, EObject eObject) {
         compilationResult = new CompilationResult(eObject);
-        copySelectedAndDisabledTransformationIDs(selectedTransformationIDs,
-                disabledTransformationIDs);
+        copySelectedAndDisabledTransformationIds(selectedTransformationIds,
+                disabledTransformationIds);
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Copy the selected and disabled transformation ID lists.
+     * Copy the selected and disabled transformation Id lists.
      * 
-     * @param selectedTransformationIDs
+     * @param selectedTransformationIds
      *            the selected transformation i ds
-     * @param disabledTransformationIDs
+     * @param disabledTransformationIds
      *            the disabled transformation i ds
      */
-    private void copySelectedAndDisabledTransformationIDs(List<String> selectedTransformationIDs,
-            List<String> disabledTransformationIDs) {
-        this.selectedTransformationIDs.clear();
-        this.disabledTransformationIDs.clear();
-        for (String transformationID : selectedTransformationIDs) {
-            this.selectedTransformationIDs.add(transformationID);
+    private void copySelectedAndDisabledTransformationIds(List<String> selectedTransformationIds,
+            List<String> disabledTransformationIds) {
+        this.selectedTransformationIds.clear();
+        this.disabledTransformationIds.clear();
+        for (String transformationId : selectedTransformationIds) {
+            this.selectedTransformationIds.add(transformationId);
         }
-        for (String transformationID : disabledTransformationIDs) {
-            this.disabledTransformationIDs.add(transformationID);
+        for (String transformationId : disabledTransformationIds) {
+            this.disabledTransformationIds.add(transformationId);
         }
     }
 
@@ -200,27 +200,27 @@ public class KielerCompilerContext {
     /**
      * Parses the selected and disabled transformation i ds.
      * 
-     * @param selectedAndDisabledTransformationIDs
+     * @param selectedAndDisabledTransformationIds
      *            the selected and disabled transformation i ds
      */
-    private void parseSelectedAndDisabledTransformationIDs(
-            String selectedAndDisabledTransformationIDs) {
+    private void parseSelectedAndDisabledTransformationIds(
+            String selectedAndDisabledTransformationIds) {
 
-        String trimmed = selectedAndDisabledTransformationIDs.replace(" ", "");
+        String trimmed = selectedAndDisabledTransformationIds.replace(" ", "");
         if (trimmed.length() == 0) {
             return;
         }
-        String[] transformationIDArray = trimmed.split(",");
-        if (transformationIDArray == null) {
+        String[] transformationIdArray = trimmed.split(",");
+        if (transformationIdArray == null) {
             return;
         }
-        this.selectedTransformationIDs.clear();
-        this.disabledTransformationIDs.clear();
-        for (String transformation : Arrays.asList(transformationIDArray)) {
+        this.selectedTransformationIds.clear();
+        this.disabledTransformationIds.clear();
+        for (String transformation : Arrays.asList(transformationIdArray)) {
             if (transformation.startsWith("!")) {
-                disabledTransformationIDs.add(transformation.substring(1));
+                disabledTransformationIds.add(transformation.substring(1));
             } else {
-                selectedTransformationIDs.add(transformation);
+                selectedTransformationIds.add(transformation);
             }
         }
     }
@@ -352,23 +352,23 @@ public class KielerCompilerContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the selected transformation IDs.
+     * Gets the selected transformation Ids.
      * 
-     * @return the selected transformation IDs
+     * @return the selected transformation Ids
      */
-    public List<String> getSelectedTransformationIDs() {
-        return selectedTransformationIDs;
+    public List<String> getSelectedTransformationIds() {
+        return selectedTransformationIds;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the disabled transformation IDs.
+     * Gets the disabled transformation Ids.
      * 
-     * @return the disabled transformation IDs
+     * @return the disabled transformation Ids
      */
-    public List<String> getDisabledTransformationIDs() {
-        return disabledTransformationIDs;
+    public List<String> getDisabledTransformationIds() {
+        return disabledTransformationIds;
     }
 
     // -------------------------------------------------------------------------
@@ -376,12 +376,12 @@ public class KielerCompilerContext {
     /**
      * Builds the graph adding only defaults for alternatives iff not prioritized.
      * 
-     * @param prioritizedTransformationIDs
+     * @param prioritizedTransformationIds
      *            the prioritized transformation i ds
      * @return the list
      */
-    public void buildGraph(List<String> prioritizedTransformationIDs) {
-        buildGraph(prioritizedTransformationIDs, true);
+    public void buildGraph(List<String> prioritizedTransformationIds) {
+        buildGraph(prioritizedTransformationIds, true);
     }
 
     // -------------------------------------------------------------------------
@@ -399,15 +399,15 @@ public class KielerCompilerContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Builds the graph with filtering optional transformation IDs of alternative groups.
+     * Builds the graph with filtering optional transformation Ids of alternative groups.
      * 
-     * @param prioritizedTransformationIDs
+     * @param prioritizedTransformationIds
      *            the prioritized transformation i ds
      * @param preselectAlternatives
      *            the preselect alternatives
      * @return the list
      */
-    public void buildGraph(List<String> prioritizedTransformationIDs, boolean preselectAlternatives) {
+    public void buildGraph(List<String> prioritizedTransformationIds, boolean preselectAlternatives) {
         ArrayList<TransformationDummy> returnList = new ArrayList<TransformationDummy>();
 
         transformation2graph.clear();
@@ -434,7 +434,7 @@ public class KielerCompilerContext {
                 producesDependencies = new ArrayList<String>();
                 if (preselectAlternatives) {
                     // If this is an alternative group, then ONLY add the SELECTED alternative
-                    // according to the prioritizedTransformationIDs (input)
+                    // according to the prioritizedTransformationIds (input)
                     TransformationGroup group =
                             (TransformationGroup) transformationDummy.transformation;
                     List<String> priorized = new ArrayList<String>();
@@ -443,8 +443,8 @@ public class KielerCompilerContext {
                     // priorized.add("S2ARDUINO");
 
                     String selectedAlternative =
-                            (group).getSelectedProducesDependency(prioritizedTransformationIDs,
-                                    disabledTransformationIDs, priorized);
+                            (group).getSelectedProducesDependency(prioritizedTransformationIds,
+                                    disabledTransformationIds, priorized);
                     producesDependencies.add(selectedAlternative);
                 } else {
                     // Also here by convention in GROUP alternatives consider ther produces dependencies
@@ -494,7 +494,7 @@ public class KielerCompilerContext {
 
                     if (preselectAlternatives) {
                         // If this is an alternative group, then ONLY add the SELECTED alternative
-                        // according to the prioritizedTransformationIDs (input)
+                        // according to the prioritizedTransformationIds (input)
                         break;
                     }
 
@@ -580,7 +580,7 @@ public class KielerCompilerContext {
     /**
      * Checks if is prerequirements. Note that if switched off no dependencies are considered. The
      * transformations will be applied straight forward in the order defined by the
-     * transformationIDs list.
+     * transformationIds list.
      * 
      * @return true, if is prerequirements
      */
@@ -593,7 +593,7 @@ public class KielerCompilerContext {
     /**
      * Sets the prerequirements. Note that if switched off no dependencies are considered. The
      * transformations will be applied straight forward in the order defined by the
-     * transformationIDs list.
+     * transformationIds list.
      * 
      * @param prerequirements
      *            the new prerequirements
@@ -651,24 +651,24 @@ public class KielerCompilerContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the transformationIDs that are/will be used for compilation.
+     * Gets the transformationIds that are/will be used for compilation.
      * 
-     * @return the compilation transformation IDs
+     * @return the compilation transformation Ids
      */
-    public List<String> getCompilationTransformationIDs() {
-        return compilationTransformationIDs;
+    public List<String> getCompilationTransformationIds() {
+        return compilationTransformationIds;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the compilation transformation ID. Internally used by KiCo.
+     * Sets the compilation transformation Id. Internally used by KiCo.
      * 
-     * @param compilationTransformationIDs
-     *            the new compilation transformation ID
+     * @param compilationTransformationIds
+     *            the new compilation transformation Id
      */
-    public void setCompilationTransformationIDs(List<String> compilationTransformationIDs) {
-        this.compilationTransformationIDs = compilationTransformationIDs;
+    public void setCompilationTransformationIds(List<String> compilationTransformationIds) {
+        this.compilationTransformationIds = compilationTransformationIds;
     }
 
     // -------------------------------------------------------------------------

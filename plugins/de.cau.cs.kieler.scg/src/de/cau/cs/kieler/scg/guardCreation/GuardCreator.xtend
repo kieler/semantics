@@ -161,7 +161,7 @@ class GuardCreator extends AbstractGuardCreator {
 
         val PotentialInstantaneousLoopAnalyzer potentialInstantaneousLoopAnalyzer = Guice.createInjector().
             getInstance(typeof(PotentialInstantaneousLoopAnalyzer))
-        context.compilationResult.ancillaryData += potentialInstantaneousLoopAnalyzer.analyze(scg)
+        context.compilationResult.getAuxiliaryData += potentialInstantaneousLoopAnalyzer.analyze(scg)
 
         //        pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
         /**

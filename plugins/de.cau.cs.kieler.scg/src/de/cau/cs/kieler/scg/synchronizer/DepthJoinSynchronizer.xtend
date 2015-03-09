@@ -158,7 +158,7 @@ class DepthJoinSynchronizer extends SurfaceSynchronizer {
         // to retrieve the scheduling block of the join node in question.
         val joinSB = join.getCachedSchedulingBlock
         
-        val pilData = compilerContext.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
+        val pilData = compilerContext.compilationResult.getAuxiliaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
         
         // The valued object of the GuardExpression of the synchronizer is the guard of the
         // scheduling block of the join node. 

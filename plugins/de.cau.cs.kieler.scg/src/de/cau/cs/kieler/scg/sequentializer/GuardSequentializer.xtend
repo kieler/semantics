@@ -145,7 +145,7 @@ class GuardSequentializer extends AbstractSequentializer {
         val timestamp = System.currentTimeMillis
         compilerContext = context
         
-        val pilData = context.compilationResult.ancillaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
+        val pilData = context.compilationResult.getAuxiliaryData.filter(typeof(PotentialInstantaneousLoopResult)).head.criticalNodes.toSet
           
         /**
          * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 

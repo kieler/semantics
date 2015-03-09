@@ -30,7 +30,10 @@ public class KielerCompilerException extends Exception {
     private static final long serialVersionUID = -2363146434608966197L;
 
     /** The transformation id that caused the exception. */
-    private String transformationID;
+    private String transformationId;
+
+    /** The transformation id that caused the exception. */
+    private String processorId;
 
     // -------------------------------------------------------------------------
 
@@ -40,9 +43,9 @@ public class KielerCompilerException extends Exception {
      * @param transformationID
      *            the transformation id
      */
-    public KielerCompilerException(String transformationID, String errorMessage) {
+    public KielerCompilerException(String transformationId, String errorMessage) {
         super(errorMessage);
-        this.transformationID = transformationID;
+        this.transformationId = transformationId;
     }
 
     // -------------------------------------------------------------------------
@@ -53,10 +56,10 @@ public class KielerCompilerException extends Exception {
      * @param transformationID
      *            the transformation id
      */
-    public KielerCompilerException(String transformationID, Exception exception) {
+    public KielerCompilerException(String transformationId, Exception exception) {
         super(exception.getMessage(), exception.getCause());
         this.setStackTrace(exception.getStackTrace());
-        this.transformationID = transformationID;
+        this.transformationId = transformationId;
     }
 
     // -------------------------------------------------------------------------
@@ -67,7 +70,7 @@ public class KielerCompilerException extends Exception {
      * @return the transformation id
      */
     public String getTransformationID() {
-        return transformationID;
+        return transformationId;
     }
 
     // -------------------------------------------------------------------------
