@@ -84,7 +84,7 @@ public class KielerCompilerContext {
      */
     public KielerCompilerContext(String stringArguments, EObject eObject) {
         compilationResult = new CompilationResult(eObject);
-        parseStringArguments(stringArguments);
+        selection = new KielerCompilerSelection(stringArguments);
     }
 
     // -------------------------------------------------------------------------
