@@ -58,11 +58,10 @@ public interface ITransformation {
     // -------------------------------------------------------------------------
 
     /**
-     * Optionally supply a set of feature IDs this transformation (potentially) produces. This
-     * means that for a full compilation these features must be transformed afterwards. Be advised
-     * to use the minimal set of feature IDs here. Transformations indirectly specified here will be
-     * forced to run afterwards. If null is returned then this means there are no produces
-     * dependencies.
+     * Optionally supply a set of feature IDs this transformation (potentially) produces. This means
+     * that for a full compilation these features must be transformed afterwards. Be advised to use
+     * the minimal set of feature IDs here. Transformations indirectly specified here will be forced
+     * to run afterwards. If null is returned then this means there are no produces dependencies.
      * 
      * @return the list
      */
@@ -71,10 +70,10 @@ public interface ITransformation {
     // -------------------------------------------------------------------------
 
     /**
-     * Optionally supply a set of feature IDs in order to specify features that cannot be handled
-     * by this transformation. Be advised to use the minimal set of feature IDs here.
-     * Transformations indirectly specified here will be forced to run before this transformation.
-     * If null is returned then this means there are no not handles dependencies.
+     * Optionally supply a set of feature IDs in order to specify features that cannot be handled by
+     * this transformation. Be advised to use the minimal set of feature IDs here. Transformations
+     * indirectly specified here will be forced to run before this transformation. If null is
+     * returned then this means there are no not handles dependencies.
      * 
      * @return the list
      */
@@ -91,6 +90,18 @@ public interface ITransformation {
      * @return the list
      */
     public List<ProcessorOption> getProcessorOptions();
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Inplace transformations should return false here. This is also the default value and the more
+     * efficient strategy. However, if a transformation, i.e., a processor within the transformation
+     * requires to work on a real copy of the model then the transformation implementation should
+     * return true here an KiCo will provide the transformation with a copy of the model as input.
+     * 
+     * @return true, if successful
+     */
+    public boolean requireModelCopyAsInput();
 
     // -------------------------------------------------------------------------
 

@@ -34,11 +34,39 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  */
 public class KielerCompilerContext {
 
+    /**
+     * The originally selected transformation Ids. These define which transformations are selected
+     * for compilation
+     */
+    private List<String> selectedFeatureIds = new ArrayList<String>();
+
+    /** The originally selected transformation Ids. Specifically selected transformations. */
+    private List<String> selectedTransformationIds = new ArrayList<String>();
+
+    /**
+     * The originally priorized transformation Ids. Specifically priorized transformations that are
+     * selected if a feature is selected that multiple transformations can handle, like ABORT or
+     * CODEGENERATION.
+     */
+    private List<String> priorizedTransformationIds = new ArrayList<String>();
+
+    /**
+     * The optionally switched off processors
+     */
+    private List<String> selectedFeatureIds = new ArrayList<String>();
+
+    
+    /** The (intermediate) compilation result. */
+    CompilationResult compilationResult = null;
+
+    /**
+     * The flag to automatically select transformations based on the selected features (defining the
+     * target) and the model features (defining the requirements).
+     */
+    private boolean autoSelect = false;
+
     /** The global verbose mode. */
     private boolean verboseMode = false;
-
-    /** Further included models can be searched by a scoper. */
-    private ArrayList<EObject> includedModels = new ArrayList<EObject>();
 
     /** The resource set of all models for a compile run. */
     private ResourceSet modelResourceSet = null;
@@ -46,36 +74,21 @@ public class KielerCompilerContext {
     /** The main resource for a compile run. */
     private Resource mainResource = null;
 
-    /** The originally selected transformation Ids. */
-    private List<String> selectedTransformationIds = new ArrayList<String>();
-
-    /** The originally priorized transformation Ids. */
-    private List<String> priorizedTransformationIds = new ArrayList<String>();
-
-    /** The originally disabled transformation Ids. */
-    private List<String> disabledTransformationIds = new ArrayList<String>();
-
-    /** The (intermediate) compilation result. */
-    CompilationResult compilationResult = null;
+    /** Further included models can be searched by a scoper. */
+    private ArrayList<EObject> includedModels = new ArrayList<EObject>();
 
     /** The transformation used for compilation. */
     private List<String> compilationTransformationIds = new ArrayList<String>();
 
-    /** The internal compile graph is the 'state' of a compilation. */
-    private List<FeatureDummy> graph = null;
+    // /** The internal compile graph is the 'state' of a compilation. */
+    // private List<FeatureDummy> graph = null;
+    //
+    // /** The cached transformations to graph elements. */
+    // private static HashMap<Transformation, FeatureDummy> transformation2graph =
+    // new HashMap<Transformation, FeatureDummy>();;
 
-    /** The cached transformations to graph elements. */
-    private static HashMap<Transformation, FeatureDummy> transformation2graph =
-            new HashMap<Transformation, FeatureDummy>();;
-
-    /** The flag to output no grous. */
-    private boolean noGrous = false;
-
-    /** The flag to calculate prerequirements. */
-    private boolean prerequirements = false;
-
-    /** The flag to do all transformations inplace and NOT on a copy. */
-    private boolean inplace = false;
+    // /** The flag to output no grous. */
+    // private boolean noGrous = false;
 
     /**
      * The flag to create a dummy resource if no resource is present (e.g. because inplace ==
@@ -447,7 +460,8 @@ public class KielerCompilerContext {
                                     disabledTransformationIds, priorized);
                     producesDependencies.add(selectedAlternative);
                 } else {
-                    // Also here by convention in GROUP alternatives consider ther produces dependencies
+                    // Also here by convention in GROUP alternatives consider ther produces
+                    // dependencies
                     List<String> allAlternative =
                             ((TransformationGroup) transformationDummy.transformation)
                                     .getProducesFeatureIds();
@@ -467,7 +481,8 @@ public class KielerCompilerContext {
                     FeatureDummy otherTransformationDummy =
                             transformation2graph.get(otherTransformationOrGroup);
 
-                    // Example: dummy-ABORT produces otherDummy=INIT ==> dummy=ABORT-->otherDummy=INIT
+                    // Example: dummy-ABORT produces otherDummy=INIT ==>
+                    // dummy=ABORT-->otherDummy=INIT
                     // Insert dependency in dummy that produces other dummy
                     transformationDummy.dependencies.add(otherTransformationDummy);
                     // Insert reverse dependency in other dummy
@@ -476,13 +491,15 @@ public class KielerCompilerContext {
             }
 
             // Handle not handles dependencies
-            
+
             // 14.02.2015: Attention: if we hit a transformation GROUP that is not handled, we mus
             // fully resolve this group first into sets of transformations:
-            // we resolve group $G$ to the set of transformations $T$ where we follow all pseudo dependencies from $G$ until we hit
-            // the first transformation, which then must be part of $T$. If we hit another group $G_i$ we recursively follow each 
+            // we resolve group $G$ to the set of transformations $T$ where we follow all pseudo
+            // dependencies from $G$ until we hit
+            // the first transformation, which then must be part of $T$. If we hit another group
+            // $G_i$ we recursively follow each
             // pseudo dependencies of $G_i$.
-            
+
             for (String notHandlesDependencyId : notHandlesDependencies) {
                 Transformation otherTransformationOrGroup =
                         KielerCompiler.getTransformation(notHandlesDependencyId);
@@ -498,43 +515,44 @@ public class KielerCompilerContext {
                         break;
                     }
 
-                    HashSet<FeatureDummy> otherResolvedTransformationDummys = resolveTransformationGroup(otherTransformationDummy);
+                    HashSet<FeatureDummy> otherResolvedTransformationDummys =
+                            resolveTransformationGroup(otherTransformationDummy);
                     for (FeatureDummy otherResolvedTransformationDummy : otherResolvedTransformationDummys) {
-                        // Example: dummy=ABORT not handles otherDummy=DURING ==> otherDummy=DURING-->dummy=ABORT
+                        // Example: dummy=ABORT not handles otherDummy=DURING ==>
+                        // otherDummy=DURING-->dummy=ABORT
                         // Insert dependency in other dummy
                         otherResolvedTransformationDummy.dependencies.add(transformationDummy);
                         // Insert reverse dependency in dummy that
-                        transformationDummy.reverseDependencies.add(otherResolvedTransformationDummy);
+                        transformationDummy.reverseDependencies
+                                .add(otherResolvedTransformationDummy);
                     }
                 }
             }
-            
+
         }
 
         // set the graph of this context to the new built graph
         graph = returnList;
     }
 
-    
     // -------------------------------------------------------------------------
-    
+
     public HashSet<FeatureDummy> resolveTransformationGroup(FeatureDummy transformationDummy) {
         HashSet<FeatureDummy> returnList = new HashSet<FeatureDummy>();
         if (transformationDummy.isGroup()) {
             // follow pseudo dependencies
             for (FeatureDummy groupTransformationDummy : transformationDummy.dependencies) {
-                 returnList.addAll(resolveTransformationGroup(groupTransformationDummy));
+                returnList.addAll(resolveTransformationGroup(groupTransformationDummy));
             }
-        }
-        else {
-            // We arrived at a transformation that is NOT a group. This is the resolved transformation we
+        } else {
+            // We arrived at a transformation that is NOT a group. This is the resolved
+            // transformation we
             // are looking for.
             returnList.add(transformationDummy);
         }
         return returnList;
     }
 
-    
     // -------------------------------------------------------------------------
 
     /**
@@ -554,52 +572,30 @@ public class KielerCompilerContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Checks if is no groups flag is set. If false then mark groups, i.e., boolean mark alternative
-     * groups if ONE of the alternatives is selected and mark non-alternatives groups if ALL are
-     * selected.
+     * The flag to automatically select transformations based on the selected features (defining the
+     * target) and the model features (defining the requirements). Note that if switched off no
+     * dependencies are considered. The transformations will be applied straight forward in the
+     * order defined by the transformationIds list.
      * 
-     * @return true, if is no groups
+     * @return true, if is autoSelect
      */
-    public boolean isNoGroups() {
-        return this.noGrous;
-    }
-
-    /**
-     * Sets the no groups flag. If false then mark groups, i.e., boolean mark alternative groups if
-     * ONE of the alternatives is selected and mark non-alternatives groups if ALL are selected.
-     * 
-     * @param noGrous
-     *            the new no groups
-     */
-    public void setNoGroups(boolean noGrous) {
-        this.noGrous = noGrous;
+    public boolean isAutoSelect() {
+        return this.autoSelect;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Checks if is prerequirements. Note that if switched off no dependencies are considered. The
-     * transformations will be applied straight forward in the order defined by the
-     * transformationIds list.
+     * Sets the autoSelect flag to automatically select transformations based on the selected
+     * features (defining the target) and the model features (defining the requirements). Note that
+     * if switched off no dependencies are considered. The transformations will be applied straight
+     * forward in the order defined by the transformationIds list.
      * 
-     * @return true, if is prerequirements
+     * @param autoSelect
+     *            the new autoSelect
      */
-    public boolean isPrerequirements() {
-        return this.prerequirements;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the prerequirements. Note that if switched off no dependencies are considered. The
-     * transformations will be applied straight forward in the order defined by the
-     * transformationIds list.
-     * 
-     * @param prerequirements
-     *            the new prerequirements
-     */
-    public void setPrerequirements(boolean prerequirements) {
-        this.prerequirements = prerequirements;
+    public void setAutoSelect(boolean autoSelect) {
+        this.autoSelect = autoSelect;
     }
 
     // -------------------------------------------------------------------------
@@ -623,29 +619,6 @@ public class KielerCompilerContext {
      */
     public void setCreateDummyResource(boolean dummyResource) {
         this.dummyResource = dummyResource;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Checks if is inplace.
-     * 
-     * @return true, if is inplace
-     */
-    public boolean isInplace() {
-        return this.inplace;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the inplace.
-     * 
-     * @param inplace
-     *            the new inplace
-     */
-    public void setInplace(boolean inplace) {
-        this.inplace = inplace;
     }
 
     // -------------------------------------------------------------------------

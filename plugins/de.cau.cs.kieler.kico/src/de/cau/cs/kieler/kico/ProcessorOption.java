@@ -13,10 +13,10 @@
  */
 package de.cau.cs.kieler.kico;
 
-
 /**
  * An processor option item as a pair of a processor ID combined with a boolean indicating if this
- * processor is optional (for the defined transformation) or not.
+ * processor is optional (for the defined transformation) or not. If it is optional it can be set to
+ * be active by default or not.
  * 
  * @author cmot
  * @kieler.design 2014-03-11 proposed
@@ -27,21 +27,34 @@ class ProcessorOption {
 
     /** The id of the processor. */
     private String processorId;
-    
-    /** The optional fag if the processor is optional in this context. */
+
+    /** The optional flag tells if the processor is optional in this context. */
     private boolean optional;
+
+    /**
+     * The defaultActive flag tells if the processor is active by default. Note that the processor
+     * needs to be optional, otherwise defaultActive will be ignored.
+     */
+    private boolean defaultActive;
 
     // -------------------------------------------------------------------------
 
     /**
-     * Instantiates a new processor option.
-     *
-     * @param processorId the id
-     * @param optional the optional
+     * Instantiates a new processor option. The optional flag tells if the processor is optional in
+     * this context.The defaultActive flag tells if the processor is active by default. Note that
+     * the processor needs to be optional, otherwise defaultActive will be ignored.
+     * 
+     * @param processorId
+     *            the id
+     * @param optional
+     *            the optional
+     * @param defaultActive
+     *            the default active
      */
-    public ProcessorOption(String processorId, boolean optional) {
+    public ProcessorOption(String processorId, boolean optional, boolean defaultActive) {
         this.processorId = processorId;
         this.optional = optional;
+        this.defaultActive = defaultActive;
     }
 
     // -------------------------------------------------------------------------
@@ -58,12 +71,24 @@ class ProcessorOption {
     // -------------------------------------------------------------------------
 
     /**
-     * Returns whether the processor is optional. 
-     *
+     * Returns whether the processor is optional in this context.
+     * 
      * @return true, if is optional
      */
     public boolean isOptional() {
         return optional;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Returns whether the processor is active by default if it is an optional processor in this
+     * context.
+     * 
+     * @return true, if is optional
+     */
+    public boolean isDefaultActive() {
+        return defaultActive;
     }
 
     // -------------------------------------------------------------------------

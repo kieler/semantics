@@ -163,7 +163,7 @@ public class KiCoServer extends HttpServer {
             } else {
                 debug("Model parsed");
                 context.setVerboseMode(verbose);
-                context.setPrerequirements(!strict);
+                context.setAutoSelect(!strict);
                 context.setMainResource(mainModel.eResource());
 
                 // process the model

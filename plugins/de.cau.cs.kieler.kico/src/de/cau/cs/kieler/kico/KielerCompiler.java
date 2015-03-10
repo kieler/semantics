@@ -876,7 +876,7 @@ public class KielerCompiler {
             final EObject eObject, final boolean prerequirements, final boolean inplace) {
         KielerCompilerContext context =
                 new KielerCompilerContext(selectedAndDisabledTransformationIds, eObject);
-        context.setPrerequirements(prerequirements);
+        context.setAutoSelect(prerequirements);
         context.setInplace(inplace);
         compile(context);
         return context.getCompilationResult();
@@ -907,7 +907,7 @@ public class KielerCompiler {
         KielerCompilerContext context =
                 new KielerCompilerContext(selectedTransformationIds, disabledTransformationIds,
                         eObject);
-        context.setPrerequirements(prerequirements);
+        context.setAutoSelect(prerequirements);
         context.setInplace(inplace);
         compile(context);
         return context.getCompilationResult();
@@ -958,7 +958,7 @@ public class KielerCompiler {
         // 3. mark nodes, including groups
         markNodes(context, context.getSelectedTransformationIds(), true);
 
-        if (context.isPrerequirements()) {
+        if (context.isAutoSelect()) {
             // 4. mark reverse dependencies
             markReverseDependencies(context);
         }

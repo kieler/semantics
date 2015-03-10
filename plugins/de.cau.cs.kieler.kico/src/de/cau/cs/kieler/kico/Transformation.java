@@ -43,7 +43,7 @@ public abstract class Transformation implements ITransformation {
 
     /** The not handles dependencies. */
     private Set<Feature> cachedResolvedNotHandlesFeatures = null;
-    
+
     /** The cached handles feature. */
     private Feature cachedHandlesFeature = null;
 
@@ -68,7 +68,7 @@ public abstract class Transformation implements ITransformation {
 
     /**
      * Gets the feature that this transformation handles.
-     *
+     * 
      * @return the handle feature
      */
     public Feature getHandleFeature() {
@@ -78,7 +78,7 @@ public abstract class Transformation implements ITransformation {
         cachedHandlesFeature = KielerCompiler.getFeature(getHandleFeatureId());
         return cachedHandlesFeature;
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -202,6 +202,23 @@ public abstract class Transformation implements ITransformation {
     }
 
     // -------------------------------------------------------------------------
+
+    /**
+     * Inplace transformations should return false here. This is also the default value and the more
+     * efficient strategy. However, if a transformation, i.e., a processor within the transformation
+     * requires to work on a real copy of the model then the transformation implementation should
+     * return true here an KiCo will provide the transformation with a copy of the model as input.
+     * Override this method to return true;
+     * 
+     * @return true ONLY if the model transformation really requires a copy of the model as the
+     *         input. Typically model transformations should return false here for faster
+     *         processing.
+     */
+    public boolean requireModelCopyAsInput() {
+        return false;
+    }
+
+    // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
     /**
@@ -223,7 +240,8 @@ public abstract class Transformation implements ITransformation {
             Processor processor = KielerCompiler.getProcessor(processorOption.getProcessorId());
 
             if (processorOption.isOptional()) {
-                // TODO: check context whether processorOption is enabled in the KielerCompilerContext
+                // TODO: check context whether processorOption is enabled in the
+                // KielerCompilerContext
                 boolean isEnabled = true;
                 if (!isEnabled) {
                     // If the optional processor is disabled then continue with the next processor
