@@ -514,7 +514,7 @@ public class TimingAnalysis extends Job {
                 Iterators.filter(
                         ModelingUtil.eAllContentsOfType2(scg, Node.class, ControlFlow.class),
                         ControlFlow.class);
-        ArrayList<Link> visitedEdges = new ArrayList<Link>();
+        ArrayList<Link> redirectedEdges = new ArrayList<Link>();
         // insertion starts with TPP(1);
         int tppCounter = 1;
         while (edgeIter.hasNext()) {
@@ -524,8 +524,9 @@ public class TimingAnalysis extends Job {
                 tppCounter = 1 + tppCounter;
             }
             ControlFlow currentEdge = edgeIter.next();
+            Node edgeTarget = currentEdge.getTarget();
             // get the region the target node of the edge stems from
-            Region targetRegion = nodeRegionMapping.get(currentEdge.getTarget());
+            Region targetRegion = nodeRegionMapping.get(edgeTarget);
             if (targetRegion == null) {
                 // It is normal that nodes of the SCG get mapped to null, if they are considered to
                 // belong to the scchart but not to one of its regions, for the timing analysis,
@@ -555,25 +556,25 @@ public class TimingAnalysis extends Job {
                 if (!(sourceRegion.equals(targetRegion))) {
                     // also, if this edge has been visited before, there is nothing to do (important
                     // for edges that have the same target node as other edges)
-                    if (!(visitedEdges.contains(currentEdge))) {
+                    if (!(redirectedEdges.contains(currentEdge))) {
                         // now this edge is processed, record that
-                        visitedEdges.add(currentEdge);
+                        redirectedEdges.add(currentEdge);
                         // insert tpp node, keep it for the redirection of other edges
-                        Assignment tpp = insertSingleTPP(scg, currentEdge, tppCounter);
+                        Assignment tpp = insertSingleTPP(scg, currentEdge, tppCounter, redirectedEdges);
                         // Save which Region starts at this TPP value
                         tppRegionMap.put(tppCounter, targetRegion);
                         tppCounter = tppCounter + 1;
                         // make sure that all edges that also point to the same target node as the
-                        // current edge redirected to the TPP as well
-                        EList<Link> targetIncomingEdges = currentEdge.getTarget().getIncoming();
+                        // current edge did before redirection are redirected to the TPP as well
+                        EList<Link> targetIncomingEdges = edgeTarget.getIncoming();
                         if (targetIncomingEdges.size() > 1) {
                             Iterator<Link> targetIncomingIterator = targetIncomingEdges.iterator();
                             while (targetIncomingIterator.hasNext()) {
                                 Link redirectionLink = targetIncomingIterator.next();
                                 if ((!(currentEdge.equals(redirectionLink)))
-                                        && (!(visitedEdges.contains(redirectionLink)))) {
+                                        && (!(redirectedEdges.contains(redirectionLink)))) {
                                     redirectionLink.setTarget(tpp);
-                                    visitedEdges.add(redirectionLink);
+                                    redirectedEdges.add(redirectionLink);
                                 }
                             }
                         }
@@ -597,12 +598,17 @@ public class TimingAnalysis extends Job {
      *            The edge, into which the TPP node is to be inserted.
      * @param tppNumber
      *            The number of the TPP to be created, for example the 2 in 'TPP(2);'
+     * @param redirectedEdges 
+     *            The list of already redirectedEdges, into which the newly created edge has to be 
+     *            inserted to keep it from being redirected again
      * @return The Assignment wit the TPP
      */
-    private Assignment insertSingleTPP(SCGraph scg, ControlFlow controlFlow, int tppNumber) {
+    private Assignment insertSingleTPP(SCGraph scg, ControlFlow controlFlow, int tppNumber, 
+            ArrayList<Link> redirectedEdges) {
         // make target reachable via a new edge
         Node target = controlFlow.getTarget();
         ControlFlow newEdge = ScgFactory.eINSTANCE.createControlFlow();
+        redirectedEdges.add(newEdge);
         newEdge.setTarget(target);
         // prepare assignment node with the tpp
         Assignment tpp = ScgFactory.eINSTANCE.createAssignment();
