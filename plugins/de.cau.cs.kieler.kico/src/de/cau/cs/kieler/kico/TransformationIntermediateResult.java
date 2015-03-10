@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.kico;
 
+import org.eclipse.emf.ecore.EObject;
+
 /**
  * This class holds information about the intermediate results of transformations.
  * 
@@ -22,4 +24,27 @@ package de.cau.cs.kieler.kico;
  * 
  */
 public class TransformationIntermediateResult extends IntermediateResult {
+
+    /**
+     * Instantiates a new transformation intermediate result.
+     */
+    public TransformationIntermediateResult() {
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Instantiates a new transformation intermediate result.
+     * 
+     * @param initialModel
+     *            the initial model
+     */
+    public TransformationIntermediateResult(EObject initialModel) {
+        this.setId("");
+        this.setResult(initialModel);
+        this.setDuration(0);
+    }
+    
+    // -------------------------------------------------------------------------
+
 }

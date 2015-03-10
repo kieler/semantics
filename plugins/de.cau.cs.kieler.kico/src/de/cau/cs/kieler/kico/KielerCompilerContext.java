@@ -14,9 +14,6 @@
 package de.cau.cs.kieler.kico;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -76,7 +73,8 @@ public class KielerCompilerContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Instantiates a new kieler compiler context with an original source model.
+     * Instantiates a new kieler compiler context with an original source model and calculates the
+     * transformation chain.
      * 
      * @param stringArguments
      *            the string arguments
@@ -86,37 +84,19 @@ public class KielerCompilerContext {
     public KielerCompilerContext(String stringArguments, EObject eObject) {
         compilationResult = new CompilationResult(eObject);
         selection = new KielerCompilerSelection(stringArguments);
+        recalculateTransformationChain();
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Instantiates a new kieler compiler context without any original source model. Using this
-     * constructor is only advised if you do not intent to compile any model but want to calculate
-     * pre-requirements.
+     * Instantiates a new kieler compiler context with an original source model and calculates the
+     * transformation chain.
      * 
      * @param selectedTransformationIds
-     *            the selected transformation i ds
+     *            the selected feature and transformation IDs
      * @param disabledTransformationIds
-     *            the disabled transformation i ds
-     */
-    public KielerCompilerContext(List<String> selectedTransformationIds,
-            List<String> disabledTransformationIds) {
-        compilationResult = new CompilationResult();
-        selection.clear();
-        selection.setSelectedTransformationIds(selectedTransformationIds);
-        selection.setDisabledTransformationIds(disabledTransformationIds);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Instantiates a new kieler compiler context with an original source model.
-     * 
-     * @param selectedTransformationIds
-     *            the selected transformation i ds
-     * @param disabledTransformationIds
-     *            the disabled transformation i ds
+     *            the disabled transformation IDs
      * @param eObject
      *            the e object
      */
@@ -124,8 +104,9 @@ public class KielerCompilerContext {
             List<String> disabledTransformationIds, EObject eObject) {
         compilationResult = new CompilationResult(eObject);
         selection.clear();
-        selection.setSelectedTransformationIds(selectedTransformationIds);
+        selection.setSelectedFeatureAndTransformationIds(selectedTransformationIds);
         selection.setDisabledTransformationIds(disabledTransformationIds);
+        recalculateTransformationChain();
     }
 
     // -------------------------------------------------------------------------
@@ -185,6 +166,7 @@ public class KielerCompilerContext {
     }
 
     // -------------------------------------------------------------------------
+
     /**
      * Sets the included model resource.
      * 
@@ -229,17 +211,6 @@ public class KielerCompilerContext {
     public void setVerboseMode(boolean verboseMode) {
         this.verboseMode = verboseMode;
     }
-
-    // -------------------------------------------------------------------------
-    //
-    // /**
-    // * Gets the graph which represents the current compilation state of a compilation run.
-    // *
-    // * @return the graph
-    // */
-    // public List<FeatureDummy> getGraph() {
-    // return this.graph;
-    // }
 
     // -------------------------------------------------------------------------
 
@@ -295,7 +266,7 @@ public class KielerCompilerContext {
      * features, transformations and processors.
      */
     public void recalculateTransformationChain() {
-        // TODO: Main work :-)
+        // TODO: Main work of calculating the transformation chain :-)
     }
 
     // -------------------------------------------------------------------------
@@ -305,8 +276,10 @@ public class KielerCompilerContext {
      * The flag to automatically select transformations based on the selected features (defining the
      * target) and the model features (defining the requirements). Note that if switched off no
      * dependencies are considered and only the current feature or transformation selection is
-     * processed. The transformations will be applied straight forward in the order defined by the
-     * transformationIds list.
+     * processed. Then features and transformations will be applied straight forward in the order
+     * defined by the transformationIds list. If auto select is switched on, the selected features
+     * and transformations are possibly re-ordered and may also be filtered if not present in the
+     * model.
      * 
      * @return true, if is autoSelect
      */
@@ -355,32 +328,8 @@ public class KielerCompilerContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the transformationIds that are/will be used for compilation.
-     * 
-     * @return the compilation transformation Ids
-     */
-    public List<String> getCompilationTransformationIds() {
-        return compilationTransformationIds;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the compilation transformation Id. Internally used by KiCo.
-     * 
-     * @param compilationTransformationIds
-     *            the new compilation transformation Id
-     */
-    public void setCompilationTransformationIds(List<String> compilationTransformationIds) {
-        this.compilationTransformationIds = compilationTransformationIds;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
      * Gets the transformation object that should exist if this is a compile run. By convention this
-     * is the first model of the intermediate results. The following will return null if you
-     * requested a pre-requirement analysis.
+     * is the first model of the intermediate results.
      * 
      * @return the transformation object
      */
@@ -415,10 +364,10 @@ public class KielerCompilerContext {
         } else {
             if (getCompilationResult().getTransformationIntermediateResults().size() < 1) {
                 getCompilationResult().getTransformationIntermediateResults().add(
-                        new IntermediateResult("", eObject, 0));
+                        new TransformationIntermediateResult(eObject));
             } else {
                 getCompilationResult().getTransformationIntermediateResults().add(0,
-                        new IntermediateResult("", eObject, 0));
+                        new TransformationIntermediateResult(eObject));
             }
         }
     }
