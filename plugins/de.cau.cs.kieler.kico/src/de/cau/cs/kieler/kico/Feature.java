@@ -26,6 +26,9 @@ import java.util.Set;
  * 
  */
 public abstract class Feature implements IFeature {
+    
+    /** The cached alternative transformations. */
+    private Set<Transformation> cachedAlternativeTransformations = null;
 
     // -------------------------------------------------------------------------
 
@@ -48,13 +51,16 @@ public abstract class Feature implements IFeature {
      * @return the alternative transformations
      */
     public Set<Transformation> getAlternativeTransformations() {
-        Set<Transformation> set = new HashSet<Transformation>();
+        if (cachedAlternativeTransformations != null) {
+            return cachedAlternativeTransformations;
+        }
+        cachedAlternativeTransformations = new HashSet<Transformation>();
         for (Transformation transformation : KielerCompiler.getTransformations()) {
             if (transformation.getHandleFeature() == this) {
-                set.add(transformation);
+                cachedAlternativeTransformations.add(transformation);
             }
         }
-        return set;
+        return cachedAlternativeTransformations;
     }
 
     // -------------------------------------------------------------------------
