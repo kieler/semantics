@@ -141,6 +141,7 @@ public class TimingAnalysis extends Job {
      */
     @Override
     protected IStatus run(IProgressMonitor monitor) {
+        long startTime = System.currentTimeMillis();
         // Step 1: Compile SCChart to sequentialized SCG
 
         if (monitor.isCanceled()) {
@@ -370,10 +371,14 @@ public class TimingAnalysis extends Job {
                         }
                     }
                 }
+               
                 return Status.OK_STATUS;
             }
         }.schedule();
-
+        long stopTime = System.currentTimeMillis();
+        long elapsedTime = stopTime - startTime;
+        System.out.println
+            ("Interactive Timing Analysis completed (elapsed time: " + elapsedTime + " ms).");
         return Status.OK_STATUS;
     }
 

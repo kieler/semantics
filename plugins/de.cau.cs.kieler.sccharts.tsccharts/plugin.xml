@@ -9,13 +9,6 @@
       <menuContribution
             allPopups="false"
             locationURI="toolbar:de.cau.cs.kieler.layout.toolbar">
-         <command
-               commandId="de.cau.cs.kieler.sccharts.tsccharts.TimingAnalysis"
-               icon="icons/wcet.png"
-               label="TH"
-               style="push"
-               tooltip="Show WCET values, Legend: (flat WCET/deep WCET)">
-         </command>
       </menuContribution>
    </extension>
    <extension
