@@ -119,7 +119,7 @@ public class CompilationResult {
      */
     public IntermediateResult addIntermediateResult(String transformationID) {
         IntermediateResult intermediateResult = new IntermediateResult();
-        intermediateResult.setTransformationId(transformationID);
+        intermediateResult.setId(transformationID);
         intermediateResults.add(intermediateResult);
         return intermediateResult;
     }

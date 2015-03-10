@@ -179,7 +179,7 @@ public class KiCoServer extends HttpServer {
                     // modelname,durationsum,
                     for (int c = 0; c < results.size(); c++) {
                         IntermediateResult result = (results.get(c));
-                        String transformationID = result.getTransformationID();
+                        String transformationID = result.getId();
                         long duration = result.getDuration();
                         if (transformationID != null && transformationID.length() > 0) {
                             performanceString =
