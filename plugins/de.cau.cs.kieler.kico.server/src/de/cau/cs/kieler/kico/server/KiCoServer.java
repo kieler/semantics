@@ -170,7 +170,7 @@ public class KiCoServer extends HttpServer {
                 CompilationResult compilationResult = KielerCompiler.compile(context);
 
                 if (performance) {
-                    List<IntermediateResult> results = compilationResult.getIntermediateResults();
+                    List<IntermediateResult> results = compilationResult.getTransformationIntermediateResults();
                     long durationAll = 0;
                     for (int c = 0; c < results.size(); c++) {
                         durationAll += (results.get(c)).getDuration();

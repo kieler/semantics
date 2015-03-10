@@ -655,7 +655,7 @@ public class KielerCompilerContext {
      */
     public EObject getTransformationObject() {
         if ((getCompilationResult() == null
-                || getCompilationResult().getIntermediateResults().get(0) == null || (!(getCompilationResult()
+                || getCompilationResult().getTransformationIntermediateResults().get(0) == null || (!(getCompilationResult()
                 .getTransformationObject() instanceof EObject)))) {
             // throw new RuntimeException(
             // "compiler(context) must be called with a model to compile as the first elements"
@@ -680,11 +680,11 @@ public class KielerCompilerContext {
             this.compilationResult = new CompilationResult(eObject);
             return;
         } else {
-            if (getCompilationResult().getIntermediateResults().size() < 1) {
-                getCompilationResult().getIntermediateResults().add(
+            if (getCompilationResult().getTransformationIntermediateResults().size() < 1) {
+                getCompilationResult().getTransformationIntermediateResults().add(
                         new IntermediateResult("", eObject, 0));
             } else {
-                getCompilationResult().getIntermediateResults().add(0,
+                getCompilationResult().getTransformationIntermediateResults().add(0,
                         new IntermediateResult("", eObject, 0));
             }
         }

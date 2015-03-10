@@ -1163,14 +1163,14 @@ public class KielerCompiler {
             // If this is the FIRST successful transformation AND we are NOT in
             // verbose mode
             // then clear all possibly previous errors
-            if (context.getCompilationResult().getIntermediateResults().size() <= 1
+            if (context.getCompilationResult().getTransformationIntermediateResults().size() <= 1
                     && !context.isVerboseMode()) {
                 context.getCompilationResult().resetPostponedErrors();
             }
 
             String compilationTransformationId = transformation.getId();
             IntermediateResult intermediateResult =
-                    context.getCompilationResult().addIntermediateResult(
+                    context.getCompilationResult().addTransformationIntermediateResult(
                             compilationTransformationId);
 
             // Add to compilation result

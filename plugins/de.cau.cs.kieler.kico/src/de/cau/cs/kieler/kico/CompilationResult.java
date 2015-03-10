@@ -34,7 +34,7 @@ import de.cau.cs.kieler.core.util.Pair;
 public class CompilationResult {
 
     /** The intermediate results. */
-    private List<IntermediateResult> intermediateResults = new ArrayList<IntermediateResult>();
+    private List<TransformationIntermediateResult> intermediateResults = new ArrayList<TransformationIntermediateResult>();
 
     /** The postponed error list transformation id. */
     private List<KielerCompilerException> postponedErrors =
@@ -95,30 +95,33 @@ public class CompilationResult {
      */
     public void clear(EObject sourceModel) {
         intermediateResults.clear();
-        intermediateResults.add(new IntermediateResult("", sourceModel, 0));
+        TransformationIntermediateResult intermediateResult = new TransformationIntermediateResult();
+        intermediateResult.setId("");
+        intermediateResult.setResult(sourceModel);
+        intermediateResults.add(intermediateResult);
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Access all intermediate results.
+     * Access all transformation intermediate results.
      * 
      * @return the intermediate results
      */
-    public List<IntermediateResult> getIntermediateResults() {
+    public List<TransformationIntermediateResult> getTransformationIntermediateResults() {
         return intermediateResults;
     }
 
     // -------------------------------------------------------------------------
     
     /**
-     * Adds a new intermediate result for a given transformationID.
+     * Adds a new transformation intermediate result for a given transformation ID.
      *
      * @param transformationID the transformation id
      * @return the intermediate result
      */
-    public IntermediateResult addIntermediateResult(String transformationID) {
-        IntermediateResult intermediateResult = new IntermediateResult();
+    public TransformationIntermediateResult addTransformationIntermediateResult(String transformationID) {
+        TransformationIntermediateResult intermediateResult = new TransformationIntermediateResult();
         intermediateResult.setId(transformationID);
         intermediateResults.add(intermediateResult);
         return intermediateResult;
@@ -127,14 +130,14 @@ public class CompilationResult {
     // -------------------------------------------------------------------------
     
     /**
-     * Gets the last intermediate transformation result. Returns null if there is no transformation
+     * Gets the last transformation intermediate transformation result. Returns null if there is no transformation
      * result at all.
      * 
      * @return the e object
      */
-    public IntermediateResult getLastIntermediateResult() {
+    public TransformationIntermediateResult getLastIntermediateResult() {
         if (intermediateResults.size() > 0) {
-            IntermediateResult lastResult = intermediateResults.get(intermediateResults.size() - 1);
+            TransformationIntermediateResult lastResult = intermediateResults.get(intermediateResults.size() - 1);
             return lastResult;
         }
         return null;
@@ -143,14 +146,14 @@ public class CompilationResult {
     // -------------------------------------------------------------------------
     
     /**
-     * Gets the first intermediate transformation result. Returns null if there is no transformation
+     * Gets the first transformation intermediate transformation result. Returns null if there is no transformation
      * result at all.
      * 
      * @return the e object
      */
-    public IntermediateResult getFirstIntermediateResult() {
+    public TransformationIntermediateResult getFirstIntermediateResult() {
         if (intermediateResults.size() > 0) {
-            IntermediateResult lastResult = intermediateResults.get(0);
+            TransformationIntermediateResult lastResult = intermediateResults.get(0);
             return lastResult;
         }
         return null;
@@ -381,9 +384,9 @@ public class CompilationResult {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the ancillary data.
+     * Gets the auxiliary data.
      *
-     * @return the auxiliary Data
+     * @return the auxiliary data
      */
     public List<AbstractKielerCompilerAuxiliaryData> getAuxiliaryData() {
         return auxiliaryData;
@@ -392,11 +395,11 @@ public class CompilationResult {
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the auxiliaryData data.
+     * Sets the auxiliary data.
      *
-     * @param auxiliaryData the ancillaryData to set
+     * @param auxiliaryData the auxiliary data to set
      */
-    public void setAncillaryData(List<AbstractKielerCompilerAuxiliaryData> auxiliaryData) {
+    public void setAuxiliaryData(List<AbstractKielerCompilerAuxiliaryData> auxiliaryData) {
         this.auxiliaryData = auxiliaryData;
     }
 
