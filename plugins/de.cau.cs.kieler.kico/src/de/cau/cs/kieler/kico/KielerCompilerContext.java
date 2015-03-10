@@ -51,7 +51,7 @@ public class KielerCompilerContext {
     private List<String> priorizedTransformationIds = new ArrayList<String>();
 
     /**
-     * The optionally switched off processors
+     * The optionally switched off processor options
      */
     private List<String> disabledProcessorIds = new ArrayList<String>();
 
