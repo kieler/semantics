@@ -58,7 +58,7 @@ public interface IProcessor {
      *            the e object
      * @return the e object
      */
-    public Object process(EObject eObject, KielerCompilerContext context);
+    public Object process(EObject eObject, KielerCompilerContext context) throws Exception;
 
     // -------------------------------------------------------------------------
 

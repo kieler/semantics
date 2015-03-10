@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 
 /**
  * An instance of this class represents a registered transformation that may be called indirectly by
@@ -229,8 +230,7 @@ public abstract class Transformation implements ITransformation {
      *            the e object
      * @return the e object
      */
-    public final Object transform(final EObject eObject, final KielerCompilerContext context)
-            throws Exception {
+    public final Object transform(final EObject eObject, final KielerCompilerContext context) {
 
         EObject eObjectParam = eObject;
         EObject eObjectResult = null;
@@ -238,6 +238,8 @@ public abstract class Transformation implements ITransformation {
         for (ProcessorOption processorOption : getProcessorOptions()) {
             // Ask KiCo for processor
             Processor processor = KielerCompiler.getProcessor(processorOption.getProcessorId());
+            String transformationId = this.getId();
+            String processorId = processor.getId();
 
             if (processorOption.isOptional()) {
                 // TODO: check context whether processorOption is enabled in the
@@ -249,15 +251,41 @@ public abstract class Transformation implements ITransformation {
                 }
             }
 
-            // Process the next processor
-            Object result = processor.process(eObjectParam, context);
+            TransformationIntermediateResult transformationIntermediateResult =
+                    context.getCompilationResult().getLastIntermediateResult();
 
-            // Inspect the result: If it is an EObject make it the next eObject, if not return it.
-            if (result instanceof EObject) {
-                eObjectResult = (EObject) result;
-                eObjectParam = eObjectResult;
-            } else {
-                return result;
+            ProcessorIntermediateResult processorIntermediateResult =
+                    new ProcessorIntermediateResult();
+            processorIntermediateResult.setId(processorId);
+            transformationIntermediateResult.addSubIntermediateResult(processorIntermediateResult);
+            processorIntermediateResult.setDuration(-1);
+
+            long start = 0;
+            long end = 0;
+
+            try {
+                // Process the next processor
+                start = System.currentTimeMillis();
+                Object result = processor.process(eObjectParam, context);
+                end = System.currentTimeMillis();
+
+                // Add to compilation result
+                processorIntermediateResult.setResult(result);
+
+                // Add performance result
+                processorIntermediateResult.setDuration(end - start);
+
+                // Inspect the result: If it is an EObject make it the next eObject, if not return
+                // it.
+                if (result instanceof EObject) {
+                    eObjectResult = (EObject) result;
+                    eObjectParam = eObjectResult;
+                } else {
+                    return result;
+                }
+            } catch (Exception exception) {
+                context.getCompilationResult().addPostponedError(
+                        new KielerCompilerException(processorId, transformationId, exception));
             }
         }
 

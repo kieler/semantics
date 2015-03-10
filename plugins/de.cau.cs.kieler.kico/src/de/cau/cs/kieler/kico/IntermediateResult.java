@@ -70,11 +70,11 @@ public abstract class IntermediateResult {
     /**
      * Sets the id of the intermediate result.
      * 
-     * @param transformationID
+     * @param id
      *            the new id
      */
-    public void setId(String transformationID) {
-        this.id = transformationID;
+    public void setId(String id) {
+        this.id = id;
     }
 
     // -------------------------------------------------------------------------

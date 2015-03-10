@@ -186,7 +186,7 @@ public class CompilationResult {
      * @return the e object
      */
     public Object getTransformationObject() {
-        IntermediateResult intermediateResult = getFirstIntermediateResult();
+        TransformationIntermediateResult intermediateResult = getFirstIntermediateResult();
         if (intermediateResult != null) {
             return intermediateResult.getResult();
         }
