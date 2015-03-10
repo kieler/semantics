@@ -64,7 +64,7 @@ public class KielerCompiler {
 
     /**
      * Gets all registered processors.
-     *
+     * 
      * @return the processors
      */
     public static Set<Processor> getProcessors() {
@@ -75,7 +75,7 @@ public class KielerCompiler {
         }
         return set;
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -93,7 +93,7 @@ public class KielerCompiler {
 
     /**
      * Gets all registered features.
-     *
+     * 
      * @return the features
      */
     public static Set<Feature> getFeatures() {
@@ -104,10 +104,9 @@ public class KielerCompiler {
         }
         return set;
     }
-    
+
     // -------------------------------------------------------------------------
 
-    
     /**
      * Gets the transformation by its id, if it is registered.
      * 
@@ -123,7 +122,7 @@ public class KielerCompiler {
 
     /**
      * Gets all registered transformations.
-     *
+     * 
      * @return the transformations
      */
     public static Set<Transformation> getTransformations() {
@@ -134,9 +133,8 @@ public class KielerCompiler {
         }
         return set;
     }
-    
-    // -------------------------------------------------------------------------
 
+    // -------------------------------------------------------------------------
 
     /**
      * Gets the creeper by its id, if it is registered.
@@ -153,7 +151,7 @@ public class KielerCompiler {
 
     /**
      * Gets all registered creepers.
-     *
+     * 
      * @return the creepers
      */
     public static Set<Creeper> getCreepers() {
@@ -164,10 +162,8 @@ public class KielerCompiler {
         }
         return set;
     }
-    
-    // -------------------------------------------------------------------------
 
-    
+    // -------------------------------------------------------------------------
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
@@ -364,7 +360,6 @@ public class KielerCompiler {
                 if (alternative && !dependencyReferenced && !groupReferenced) {
                     if (transformationDummy.reverseDependencies.size() == 0) {
                         toBeDeleted = transformationDummy;
-                        debug("REMOVE " + transformationDummy.id);
                         found = true;
                         break;
                     }
@@ -374,7 +369,6 @@ public class KielerCompiler {
                 context.getGraph().remove(toBeDeleted);
                 for (FeatureDummy transformationDummy : context.getGraph()) {
                     if (transformationDummy.reverseDependencies.contains(toBeDeleted)) {
-                        debug("REMOVE " + toBeDeleted.id + " from " + transformationDummy.id);
                         transformationDummy.reverseDependencies.remove(toBeDeleted);
                     }
                 }
@@ -705,7 +699,6 @@ public class KielerCompiler {
                         if (!exists) {
                             // Add default here because no alternative of this group is yet included
                             // take the first alternative group member that is not disabled! //TODO:
-                            debug("### " + transformation.getName());
                             List<String> allPrioDependencies = transformationIds;
                             // TODO: check if produces dependencies is right!
                             String defaultTransformation =
@@ -930,7 +923,6 @@ public class KielerCompiler {
      * @return the compilation result
      */
     public static CompilationResult compile(KielerCompilerContext context) {
-        updateMapping(DEBUG);
         long start = System.currentTimeMillis();
 
         // as this is a compile run, the following MUST be set
@@ -938,7 +930,7 @@ public class KielerCompiler {
         if (transformationEObject == null) {
             KiCoPlugin.getInstance().showError(
                     "No model was supplied for this compilation run! Aborting compilation.",
-                    KiCoPlugin.PLUGIN_Id, null, true);
+                    KiCoPlugin.PLUGIN_ID, null, true);
             return context.getCompilationResult();
         }
 
@@ -1094,13 +1086,8 @@ public class KielerCompiler {
                 // Class<?> parameterType = transformedObject.getClass();
                 Class<?> handledParameterType = transformation.getParameterType();
                 if (handledParameterType != null) {
-                    if (DEBUG) {
-                        System.out.println("PERFORM TRANSFORMATION: " + compilationTransformationId
-                        // + " ( is " + parameterType.getName() + " handled by "
-                        // + handledParameterType.getName() + "? "
-                        // + handledParameterType.isInstance(transformedObject) + " )"
-                                );
-                    }
+                    KiCoPlugin.logger
+                            .info("PERFORM TRANSFORMATION: " + compilationTransformationId);
                     if (handledParameterType.isInstance(transformedObject)) {
 
                         KielerCompilerProgressMonitor subMonitor = null;
@@ -1165,7 +1152,7 @@ public class KielerCompiler {
             }
 
             start = System.currentTimeMillis();
-            object = transformation.doTransform(transformedObject, context);
+            object = transformation.transform(transformedObject, context);
             end = System.currentTimeMillis();
         } catch (Exception exception) {
             context.getCompilationResult().addPostponedError(

@@ -47,7 +47,7 @@ public class KiCoPlugin extends Plugin {
 
     /** The logger. */
     @Inject
-    static Logger logger;
+    public static Logger logger;
 
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.kico"; //$NON-NLS-1$
