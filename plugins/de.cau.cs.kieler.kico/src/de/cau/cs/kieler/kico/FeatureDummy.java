@@ -25,13 +25,13 @@ import java.util.List;
  * @kieler.rating 2014-03-11 proposed yellow
  * 
  */
-public class TransformationDummy {
+public class FeatureDummy {
 
     /** The dependencies. */
-    public HashSet<TransformationDummy> dependencies = new HashSet<TransformationDummy>();
+    public HashSet<FeatureDummy> dependencies = new HashSet<FeatureDummy>();
 
     /** The reverse dependencies. */
-    public HashSet<TransformationDummy> reverseDependencies = new HashSet<TransformationDummy>();
+    public HashSet<FeatureDummy> reverseDependencies = new HashSet<FeatureDummy>();
 
     /** The transformation. */
     public Transformation transformation;
@@ -40,14 +40,14 @@ public class TransformationDummy {
     public String id;
     
     /** The parent graph/list if any */
-    public List<TransformationDummy> parent = null;
+    public List<FeatureDummy> parent = null;
 
     /** The marked. */
     public boolean marked = false;
     
     public int order = -1;
     
-    public TransformationDummy() {
+    public FeatureDummy() {
 
     }
 
@@ -63,7 +63,7 @@ public class TransformationDummy {
         return false;
     }
     
-    public TransformationDummy(Transformation transformation) {
+    public FeatureDummy(Transformation transformation) {
         this.id = transformation.getId();
         this.transformation = transformation;
     }

@@ -23,7 +23,6 @@ import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.kico.TransformationDummy
 import de.cau.cs.kieler.kico.ui.KiCoDisabledSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionAction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
@@ -33,6 +32,7 @@ import java.util.List
 import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kico.FeatureDummy
 
 /**
  * KLighD visualization for KIELER Compiler transformation dependencies (for selecting compilation).
@@ -41,7 +41,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2014-04-08 proposed cmot
  * @kieler.rating 2014-04-08 proposed yellow
  */
-class KiCoDiagramFlatSynthesis extends AbstractDiagramSynthesis<List<TransformationDummy>> {
+class KiCoDiagramFlatSynthesis extends AbstractDiagramSynthesis<List<FeatureDummy>> {
 
     // -------------------------------------------------------------------------
     // We need some extensions 
@@ -93,10 +93,10 @@ class KiCoDiagramFlatSynthesis extends AbstractDiagramSynthesis<List<Transformat
         [it.red = 210; it.green = 230; it.blue = 230];
 
     // -------------------------------------------------------------------------
-    def TransformationDummy container(TransformationDummy transformationDummy) {
+    def FeatureDummy container(FeatureDummy transformationDummy) {
         if (transformationDummy != null && transformationDummy.reverseDependencies != null &&
             transformationDummy.reverseDependencies.length > 0) {
-            var TransformationDummy possibleContainer = null
+            var FeatureDummy possibleContainer = null
             for (reverseDependency : transformationDummy.reverseDependencies) {
                 if (reverseDependency.group) {
                     if (possibleContainer != null && possibleContainer != reverseDependency) {
@@ -190,7 +190,7 @@ class KiCoDiagramFlatSynthesis extends AbstractDiagramSynthesis<List<Transformat
 //    private HashMap<TransformationDummy, TransformationDummy> connected = new HashMap<TransformationDummy, TransformationDummy>();
 
     // The Main entry transform function   
-    override transform(List<TransformationDummy> model) {
+    override transform(List<FeatureDummy> model) {
         val knode = model.createNode();
 
         for (elem : model) {
@@ -204,13 +204,13 @@ class KiCoDiagramFlatSynthesis extends AbstractDiagramSynthesis<List<Transformat
         return knode;
     }
 
-    def String getLabel(TransformationDummy s) {
+    def String getLabel(FeatureDummy s) {
         s.transformation.name
     }
 
     // -------------------------------------------------------------------------
     // Transform a state    
-    def KNode translate(TransformationDummy transformationDummy) {
+    def KNode translate(FeatureDummy transformationDummy) {
 
         val root = transformationDummy.createNode().putToLookUpWith(transformationDummy) => [ node |
             node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
@@ -299,7 +299,7 @@ class KiCoDiagramFlatSynthesis extends AbstractDiagramSynthesis<List<Transformat
 
     // -------------------------------------------------------------------------
     // Translate a transition
-    def KEdge translateTransition(TransformationDummy source, TransformationDummy dest, boolean dashed) {
+    def KEdge translateTransition(FeatureDummy source, FeatureDummy dest, boolean dashed) {
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;

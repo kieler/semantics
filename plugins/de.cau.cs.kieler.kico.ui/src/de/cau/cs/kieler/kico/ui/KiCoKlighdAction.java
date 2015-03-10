@@ -25,7 +25,7 @@ import de.cau.cs.kieler.core.krendering.KRendering;
 import de.cau.cs.kieler.core.krendering.KRoundedRectangle;
 import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
-import de.cau.cs.kieler.kico.TransformationDummy;
+import de.cau.cs.kieler.kico.FeatureDummy;
 import de.cau.cs.kieler.klighd.ViewContext;
 
 /**
@@ -44,10 +44,10 @@ public abstract class KiCoKlighdAction {
     public static KRenderingExtensions kRenderingExtensions = new KRenderingExtensions();
 
     /** The transformation dummy2 k node. */
-    private static HashMap<TransformationDummy, KRoundedRectangle> transformationDummyKRoundedRectangle =
-            new HashMap<TransformationDummy, KRoundedRectangle>();
-    private static HashMap<TransformationDummy, KText> transformationDummy2KText =
-            new HashMap<TransformationDummy, KText>();
+    private static HashMap<FeatureDummy, KRoundedRectangle> transformationDummyKRoundedRectangle =
+            new HashMap<FeatureDummy, KRoundedRectangle>();
+    private static HashMap<FeatureDummy, KText> transformationDummy2KText =
+            new HashMap<FeatureDummy, KText>();
 
     // -------------------------------------------------------------------------
 
@@ -107,7 +107,7 @@ public abstract class KiCoKlighdAction {
      *            the context
      * @return the k text
      */
-    public static KText getKText(final TransformationDummy transformationDummy,
+    public static KText getKText(final FeatureDummy transformationDummy,
             final ViewContext context) {
         if (!transformationDummy2KText.containsKey(transformationDummy)) {
             KText kText = context.getTargetElement(transformationDummy, KText.class);
@@ -129,7 +129,7 @@ public abstract class KiCoKlighdAction {
      * @return the k rounded rectangle
      */
     public static KRoundedRectangle getKRoundedRectangle(
-            final TransformationDummy transformationDummy, final ViewContext context) {
+            final FeatureDummy transformationDummy, final ViewContext context) {
         if (!transformationDummyKRoundedRectangle.containsKey(transformationDummy)) {
             // KNode kNode = context.getViewContext().getTargetElement(transformationDummy,
             // KNode.class);
@@ -155,7 +155,7 @@ public abstract class KiCoKlighdAction {
      * @param backgroundColor
      *            the background color
      */
-    public static void setLabelColor(final TransformationDummy transformationDummy,
+    public static void setLabelColor(final FeatureDummy transformationDummy,
             final ViewContext context, KColor foregroundColor, KColor backgroundColor) {
         KText kText = getKText(transformationDummy, context);
         if (kText != null) {
@@ -179,7 +179,7 @@ public abstract class KiCoKlighdAction {
      * @param color2
      *            the color2
      */
-    public static void setStateColor(final TransformationDummy transformationDummy,
+    public static void setStateColor(final FeatureDummy transformationDummy,
             final ViewContext context, KColor color1, KColor color2) {
         KRoundedRectangle rect = getKRoundedRectangle(transformationDummy, context);
         if (rect != null) {

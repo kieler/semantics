@@ -62,11 +62,11 @@ public class KielerCompilerContext {
     private List<String> compilationTransformationIds = new ArrayList<String>();
 
     /** The internal compile graph is the 'state' of a compilation. */
-    private List<TransformationDummy> graph = null;
+    private List<FeatureDummy> graph = null;
 
     /** The cached transformations to graph elements. */
-    private static HashMap<Transformation, TransformationDummy> transformation2graph =
-            new HashMap<Transformation, TransformationDummy>();;
+    private static HashMap<Transformation, FeatureDummy> transformation2graph =
+            new HashMap<Transformation, FeatureDummy>();;
 
     /** The flag to output no grous. */
     private boolean noGrous = false;
@@ -334,7 +334,7 @@ public class KielerCompilerContext {
      * 
      * @return the graph
      */
-    public List<TransformationDummy> getGraph() {
+    public List<FeatureDummy> getGraph() {
         return this.graph;
     }
 
@@ -408,14 +408,14 @@ public class KielerCompilerContext {
      * @return the list
      */
     public void buildGraph(List<String> prioritizedTransformationIds, boolean preselectAlternatives) {
-        ArrayList<TransformationDummy> returnList = new ArrayList<TransformationDummy>();
+        ArrayList<FeatureDummy> returnList = new ArrayList<FeatureDummy>();
 
         transformation2graph.clear();
         List<Transformation> transformations = KielerCompiler.getRegisteredTransformations();
 
         // Build all nodes first
         for (Transformation transformation : transformations) {
-            TransformationDummy transformationDummy = new TransformationDummy(transformation);
+            FeatureDummy transformationDummy = new FeatureDummy(transformation);
 
             returnList.add(transformationDummy);
             transformationDummy.parent = returnList;
@@ -426,10 +426,10 @@ public class KielerCompilerContext {
 
         // Calculate dependencies
         for (Transformation transformation : transformations) {
-            TransformationDummy transformationDummy = transformation2graph.get(transformation);
+            FeatureDummy transformationDummy = transformation2graph.get(transformation);
 
-            List<String> producesDependencies = transformation.getProducesDependencies();
-            List<String> notHandlesDependencies = transformation.getNotHandlesDependencies();
+            List<String> producesDependencies = transformation.getProducesFeatureIds();
+            List<String> notHandlesDependencies = transformation.getNotHandlesFeatureIds();
             if (transformationDummy.isAlternative()) {
                 producesDependencies = new ArrayList<String>();
                 if (preselectAlternatives) {
@@ -450,7 +450,7 @@ public class KielerCompilerContext {
                     // Also here by convention in GROUP alternatives consider ther produces dependencies
                     List<String> allAlternative =
                             ((TransformationGroup) transformationDummy.transformation)
-                                    .getProducesDependencies();
+                                    .getProducesFeatureIds();
                     for (String alternative : allAlternative) {
                         producesDependencies.add(alternative);
                     }
@@ -464,7 +464,7 @@ public class KielerCompilerContext {
                 if (otherTransformationOrGroup != null) {
                     // System.out.println("Dependencies for " + transformation.getId());
                     // System.out.println("  " + otherTransformationOrGroup.getId());
-                    TransformationDummy otherTransformationDummy =
+                    FeatureDummy otherTransformationDummy =
                             transformation2graph.get(otherTransformationOrGroup);
 
                     // Example: dummy-ABORT produces otherDummy=INIT ==> dummy=ABORT-->otherDummy=INIT
@@ -489,7 +489,7 @@ public class KielerCompilerContext {
                 if (otherTransformationOrGroup != null) {
                     // System.out.println("Dependencies for " + transformation.getId());
                     // System.out.println("  " + otherTransformationOrGroup.getId());
-                    TransformationDummy otherTransformationDummy =
+                    FeatureDummy otherTransformationDummy =
                             transformation2graph.get(otherTransformationOrGroup);
 
                     if (preselectAlternatives) {
@@ -498,8 +498,8 @@ public class KielerCompilerContext {
                         break;
                     }
 
-                    HashSet<TransformationDummy> otherResolvedTransformationDummys = resolveTransformationGroup(otherTransformationDummy);
-                    for (TransformationDummy otherResolvedTransformationDummy : otherResolvedTransformationDummys) {
+                    HashSet<FeatureDummy> otherResolvedTransformationDummys = resolveTransformationGroup(otherTransformationDummy);
+                    for (FeatureDummy otherResolvedTransformationDummy : otherResolvedTransformationDummys) {
                         // Example: dummy=ABORT not handles otherDummy=DURING ==> otherDummy=DURING-->dummy=ABORT
                         // Insert dependency in other dummy
                         otherResolvedTransformationDummy.dependencies.add(transformationDummy);
@@ -518,11 +518,11 @@ public class KielerCompilerContext {
     
     // -------------------------------------------------------------------------
     
-    public HashSet<TransformationDummy> resolveTransformationGroup(TransformationDummy transformationDummy) {
-        HashSet<TransformationDummy> returnList = new HashSet<TransformationDummy>();
+    public HashSet<FeatureDummy> resolveTransformationGroup(FeatureDummy transformationDummy) {
+        HashSet<FeatureDummy> returnList = new HashSet<FeatureDummy>();
         if (transformationDummy.isGroup()) {
             // follow pseudo dependencies
-            for (TransformationDummy groupTransformationDummy : transformationDummy.dependencies) {
+            for (FeatureDummy groupTransformationDummy : transformationDummy.dependencies) {
                  returnList.addAll(resolveTransformationGroup(groupTransformationDummy));
             }
         }
@@ -544,7 +544,7 @@ public class KielerCompilerContext {
      *            the transformation
      * @return the graph transformation dummy
      */
-    public TransformationDummy getGraphTransformationDummy(Transformation transformation) {
+    public FeatureDummy getGraphTransformationDummy(Transformation transformation) {
         if (transformation2graph != null) {
             return transformation2graph.get(transformation);
         }

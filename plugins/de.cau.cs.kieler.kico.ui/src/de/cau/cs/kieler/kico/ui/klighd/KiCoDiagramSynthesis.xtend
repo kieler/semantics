@@ -23,7 +23,6 @@ import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.util.Pair
-import de.cau.cs.kieler.kico.TransformationDummy
 import de.cau.cs.kieler.kico.ui.KiCoDisabledSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionAction
 import de.cau.cs.kieler.kiml.options.Direction
@@ -37,6 +36,7 @@ import java.util.List
 import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kico.FeatureDummy
 
 //import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 
@@ -47,7 +47,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2014-04-08 proposed cmot
  * @kieler.rating 2014-04-08 proposed yellow
  */
-class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationDummy>> {
+class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<FeatureDummy>> {
 
     static final boolean DEBUG = false;
 
@@ -115,10 +115,10 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
 
 
     // -------------------------------------------------------------------------
-    def TransformationDummy container(TransformationDummy transformationDummy) {
+    def FeatureDummy container(FeatureDummy transformationDummy) {
         if (transformationDummy != null && transformationDummy.reverseDependencies != null &&
             transformationDummy.reverseDependencies.length > 0) {
-            var TransformationDummy possibleContainer = null
+            var FeatureDummy possibleContainer = null
             for (reverseDependency : transformationDummy.reverseDependencies) {
                 if (reverseDependency.group) {
                     if (possibleContainer != null && possibleContainer != reverseDependency) {
@@ -136,15 +136,15 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
     }
 
     // -------------------------------------------------------------------------
-    def TransformationDummy getHierarchicalSource(TransformationDummy source, TransformationDummy dest) {
+    def FeatureDummy getHierarchicalSource(FeatureDummy source, FeatureDummy dest) {
         var returnPair = getHierarchicalSource(source, dest, 0)
         if (returnPair.first == -1) {
             return null
         }
-        return (returnPair.last as TransformationDummy)
+        return (returnPair.last as FeatureDummy)
     }
 
-    def Pair<Integer, TransformationDummy> getHierarchicalSource(TransformationDummy source, TransformationDummy dest,
+    def Pair<Integer, FeatureDummy> getHierarchicalSource(FeatureDummy source, FeatureDummy dest,
         int cnt) {
         if (source == null || dest == null) {
             return new Pair(-1, null)
@@ -170,16 +170,16 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
         return new Pair(-1, null)
     }
 
-    def TransformationDummy getHierarchicalDest(TransformationDummy source, TransformationDummy dest) {
+    def FeatureDummy getHierarchicalDest(FeatureDummy source, FeatureDummy dest) {
         var returnPair = getHierarchicalDest(source, dest, 0)
         if (returnPair.first == -1) {
             return null
         }
 
-        return (returnPair.last as TransformationDummy)
+        return (returnPair.last as FeatureDummy)
     }
 
-    def Pair<Integer, TransformationDummy> getHierarchicalDest(TransformationDummy source, TransformationDummy dest,
+    def Pair<Integer, FeatureDummy> getHierarchicalDest(FeatureDummy source, FeatureDummy dest,
         int cnt) {
         if (source == null || dest == null) {
             return new Pair(-1, null)
@@ -210,7 +210,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
     private static ArrayList<Integer> connected = new ArrayList<Integer>();
     
     // The Main entry transform function   
-    override transform(List<TransformationDummy> model) {
+    override transform(List<FeatureDummy> model) {
         connected.clear
 
         val knode = model.createNode();
@@ -226,13 +226,13 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
         return knode;
     }
 
-    def String getLabel(TransformationDummy s) {
+    def String getLabel(FeatureDummy s) {
         s.transformation.name
     }
 
     // -------------------------------------------------------------------------
     // Transform a state    
-    def  KNode translate(TransformationDummy transformationDummy) {
+    def  KNode translate(FeatureDummy transformationDummy) {
 
         val root = transformationDummy.createNode().putToLookUpWith(transformationDummy) => [ node |
             node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
@@ -356,7 +356,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
 
     // -------------------------------------------------------------------------
     // Translate a Group
-    def KNode translateGroup(TransformationDummy transformationDummy) {
+    def KNode translateGroup(FeatureDummy transformationDummy) {
         return createNode() => [ node |
             if (transformationDummy.group) {
                 node.setLayoutOption(KlighdProperties::EXPAND, false);
@@ -418,7 +418,7 @@ class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<TransformationD
 
     // -------------------------------------------------------------------------
     // Translate a transition
-    def KEdge translateTransition(TransformationDummy source, TransformationDummy dest) {
+    def KEdge translateTransition(FeatureDummy source, FeatureDummy dest) {
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;

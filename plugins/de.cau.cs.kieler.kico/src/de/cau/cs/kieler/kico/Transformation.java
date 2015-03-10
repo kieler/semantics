@@ -14,7 +14,9 @@
 package de.cau.cs.kieler.kico;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -31,10 +33,19 @@ import org.eclipse.emf.ecore.EObject;
 public abstract class Transformation implements ITransformation {
 
     /** The produces dependencies. */
-    private List<String> producesFeatureIds = new ArrayList<String>();
+    private Set<Feature> cachedProducesFeatures = null;
+
+    /** The produces dependencies. */
+    private Set<Feature> cachedResolvedProducesFeatures = null;
 
     /** The not handles dependencies. */
-    private List<String> notHandlesFeatureIds = new ArrayList<String>();
+    private Set<Feature> cachedNotHandlesFeatures = null;
+
+    /** The not handles dependencies. */
+    private Set<Feature> cachedResolvedNotHandlesFeatures = null;
+    
+    /** The cached handles feature. */
+    private Feature cachedHandlesFeature = null;
 
     /** The central processor list. */
     private List<ProcessorOption> processorOptions = new ArrayList<ProcessorOption>();
@@ -53,53 +64,93 @@ public abstract class Transformation implements ITransformation {
     }
 
     // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
-     * Gets the list of produces feature IDs that indirectly represent dependencies to other
+     * Gets the feature that this transformation handles.
+     *
+     * @return the handle feature
+     */
+    public Feature getHandleFeature() {
+        if (cachedHandlesFeature != null) {
+            return cachedHandlesFeature;
+        }
+        cachedHandlesFeature = KielerCompiler.getFeature(getHandleFeatureId());
+        return cachedHandlesFeature;
+    }
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the list of produces features that indirectly represent dependencies to other
      * transformations.
      * 
      * @return the dependencies
      */
-    public List<String> getProducesDependencies() {
-        return producesFeatureIds;
+    public Set<Feature> getProducesFeatures() {
+        if (cachedProducesFeatures != null) {
+            return cachedProducesFeatures;
+        }
+        cachedProducesFeatures = new HashSet<Feature>();
+        for (String featureId : this.getProducesFeatureIds()) {
+            Feature feature = KielerCompiler.getFeature(featureId);
+            cachedProducesFeatures.add(feature);
+        }
+        return cachedProducesFeatures;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the list of produces feature IDs that indirectly represent dependencies to other
-     * transformations.
+     * Gets the list of produces features that indirectly represent dependencies to other
+     * transformations. All items are fully resolved so each item can only be a Feature and not a
+     * FeatureGroup.
      * 
-     * @param dependencies
-     *            the new dependencies
+     * @return the features
      */
-    void setProducesDependencies(List<String> dependencies) {
-        this.producesFeatureIds = dependencies;
+    public Set<Feature> getResolvedProducesFeatures() {
+        if (cachedResolvedProducesFeatures != null) {
+            return cachedResolvedProducesFeatures;
+        }
+        cachedResolvedProducesFeatures = Feature.resolveFeatures(getProducesFeatures());
+        return cachedResolvedProducesFeatures;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the list of feature IDs of features that cannot be handled by this transformation which
-     * also indirectly represent dependencies to other transformations.
+     * Gets the list of features that cannot be handled by this transformation which also indirectly
+     * represent dependencies to other transformations.
      * 
      * @return the dependencies
      */
-    public List<String> getNotHandlesDependencies() {
-        return notHandlesFeatureIds;
+    public Set<Feature> getNotHandlesFeatures() {
+        if (cachedNotHandlesFeatures != null) {
+            return cachedNotHandlesFeatures;
+        }
+        cachedNotHandlesFeatures = new HashSet<Feature>();
+        for (String featureId : this.getNotHandlesFeatureIds()) {
+            Feature feature = KielerCompiler.getFeature(featureId);
+            cachedNotHandlesFeatures.add(feature);
+        }
+        return cachedNotHandlesFeatures;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the list of feature IDs of features that cannot be handled by this transformation which
-     * also indirectly represent dependencies to other transformations.
+     * Gets the list of features that cannot be handled by this transformation which also indirectly
+     * represent dependencies to other transformations. All items are fully resolved so each item
+     * can only be a Feature and not a FeatureGroup.
      * 
-     * @param dependencies
-     *            the new dependencies
+     * @return the features
      */
-    void setNotHandlesDependencies(List<String> dependencies) {
-        this.notHandlesFeatureIds = dependencies;
+    public Set<Feature> getResolvedNotHandlesFeatures() {
+        if (cachedResolvedNotHandlesFeatures != null) {
+            return cachedResolvedNotHandlesFeatures;
+        }
+        cachedResolvedNotHandlesFeatures = Feature.resolveFeatures(getNotHandlesFeatures());
+        return cachedResolvedNotHandlesFeatures;
     }
 
     // -------------------------------------------------------------------------
@@ -172,7 +223,7 @@ public abstract class Transformation implements ITransformation {
             Processor processor = KielerCompiler.getProcessor(processorOption.getProcessorId());
 
             if (processorOption.isOptional()) {
-                // TODO: check context whether processorOption is enabled
+                // TODO: check context whether processorOption is enabled in the KielerCompilerContext
                 boolean isEnabled = true;
                 if (!isEnabled) {
                     // If the optional processor is disabled then continue with the next processor

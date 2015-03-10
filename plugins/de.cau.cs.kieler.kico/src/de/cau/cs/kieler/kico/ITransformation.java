@@ -53,7 +53,7 @@ public interface ITransformation {
      * 
      * @return the string
      */
-    public String handleFeatureId();
+    public String getHandleFeatureId();
 
     // -------------------------------------------------------------------------
 

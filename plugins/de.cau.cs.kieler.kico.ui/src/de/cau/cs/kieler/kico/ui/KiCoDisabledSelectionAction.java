@@ -16,7 +16,7 @@ package de.cau.cs.kieler.kico.ui;
 import java.util.Arrays;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
-import de.cau.cs.kieler.kico.TransformationDummy;
+import de.cau.cs.kieler.kico.FeatureDummy;
 import de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesis;
 import de.cau.cs.kieler.klighd.IAction;
 
@@ -54,8 +54,8 @@ public class KiCoDisabledSelectionAction extends KiCoKlighdAction implements IAc
 
         KNode kNode = context.getKNode();
 
-        TransformationDummy transformationDummy =
-                (TransformationDummy) context.getDomainElement(kNode);
+        FeatureDummy transformationDummy =
+                (FeatureDummy) context.getDomainElement(kNode);
 
         if (transformationDummy != null) {
             String id = transformationDummy.id;

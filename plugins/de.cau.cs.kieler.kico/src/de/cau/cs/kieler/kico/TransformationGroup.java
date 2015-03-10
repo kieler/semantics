@@ -58,8 +58,8 @@ public class TransformationGroup extends Transformation {
      * {@inheritDoc}
      */
     @Override
-    public List<String> getProducesDependencies() {
-        return super.getProducesDependencies();
+    public List<String> getProducesFeatureIds() {
+        return super.getProducesFeatureIds();
 //        throw new RuntimeException(
 //                "getDependencies() should not be called on a TransformationGroup. You"
 //                        + "must call getDependencies(List<String> prioritizedTransformationIDs).");
@@ -71,8 +71,8 @@ public class TransformationGroup extends Transformation {
      * {@inheritDoc}
      */
     @Override
-    public List<String> getNotHandlesDependencies() {
-        return super.getNotHandlesDependencies();
+    public List<String> getNotHandlesFeatureIds() {
+        return super.getNotHandlesFeatureIds();
 //        throw new RuntimeException(
 //                "getDependencies() should not be called on a TransformationGroup. You"
 //                        + "must call getDependencies(List<String> prioritizedTransformationIDs).");
@@ -102,7 +102,7 @@ public class TransformationGroup extends Transformation {
      * @return the dependencies
      */
     public String getSelectedProducesDependency(List<String> selectedTransformationIDs, List<String> disabledTransformationIDs, List<String> priorizedTransformationIDs) {
-        return getSelectedDependency(super.getProducesDependencies(), selectedTransformationIDs, disabledTransformationIDs, priorizedTransformationIDs);        
+        return getSelectedDependency(super.getProducesFeatureIds(), selectedTransformationIDs, disabledTransformationIDs, priorizedTransformationIDs);        
     }
 
     /**
@@ -116,7 +116,7 @@ public class TransformationGroup extends Transformation {
      * @return the dependencies
      */
     public String getSelectedNotHandlesDependency(List<String> selectedTransformationIDs, List<String> disabledTransformationIDs, List<String> priorizedTransformationIDs) {
-       return getSelectedDependency(super.getNotHandlesDependencies(), selectedTransformationIDs, disabledTransformationIDs, priorizedTransformationIDs);        
+       return getSelectedDependency(super.getNotHandlesFeatureIds(), selectedTransformationIDs, disabledTransformationIDs, priorizedTransformationIDs);        
     }
         
 

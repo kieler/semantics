@@ -34,10 +34,10 @@ import org.eclipse.emf.ecore.EObject;
 public abstract class FeatureGroup extends Feature implements IFeatureGroup {
 
     /** The cached (direct) features where each item may be a Feature or FeatureGroup. */
-    HashSet<Feature> cachedFeatures = null;
+    Set<Feature> cachedFeatures = null;
 
     /** The cached resolved features where each item is Feature and not a FeatureGroup. */
-    HashSet<Feature> cachedResolvedFeatures = null;
+    Set<Feature> cachedResolvedFeatures = null;
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
@@ -77,8 +77,7 @@ public abstract class FeatureGroup extends Feature implements IFeatureGroup {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the set of features as registered in KielerCompiler. Each item in this set can be a
-     * Feature or FeatureGroup.
+     * Gets the set of features. Each item in this set can be a Feature or FeatureGroup.
      * 
      * @return the features
      */
@@ -97,8 +96,8 @@ public abstract class FeatureGroup extends Feature implements IFeatureGroup {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the set of features as registered in KielerCompiler. All items are fully resolved so
-     * each item can only be a Feature and not a FeatureGroup.
+     * Gets the set of features. All items are fully resolved so each item can only be a Feature and
+     * not a FeatureGroup.
      * 
      * @return the features
      */
@@ -106,25 +105,8 @@ public abstract class FeatureGroup extends Feature implements IFeatureGroup {
         if (cachedResolvedFeatures != null) {
             return cachedResolvedFeatures;
         }
-        cachedResolvedFeatures = new HashSet<Feature>();
-        for (String featureId : this.getFeatureIds()) {
-            Feature feature = KielerCompiler.getFeature(featureId);
-            resolveFeatures(cachedResolvedFeatures, feature);
-        }
+        cachedResolvedFeatures = Feature.resolveFeatures(getFeatures());
         return cachedResolvedFeatures;
-    }
-
-    public void resolveFeatures(Set<Feature> resolvedFeatures, Feature feature) {
-        if (feature instanceof FeatureGroup) {
-            // If must be resolved, recursive call
-            FeatureGroup featureGroup = (FeatureGroup) feature;
-            for (Feature subFeature : featureGroup.getFeatures()) {
-                resolveFeatures(resolvedFeatures, subFeature);
-            }
-        } else {
-            // If is already resolved (because no FeatureGroup)
-            resolvedFeatures.add(feature);
-        }
     }
 
     // -------------------------------------------------------------------------

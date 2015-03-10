@@ -16,8 +16,11 @@ package de.cau.cs.kieler.kico;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -60,6 +63,22 @@ public class KielerCompiler {
     // -------------------------------------------------------------------------
 
     /**
+     * Gets all registered processors.
+     *
+     * @return the processors
+     */
+    public static Set<Processor> getProcessors() {
+        Map<String, Processor> map = KiCoPlugin.getRegisteredProcessors(false);
+        Set<Processor> set = new HashSet<Processor>();
+        for (Entry<String, Processor> entry : map.entrySet()) {
+            set.add(entry.getValue());
+        }
+        return set;
+    }
+    
+    // -------------------------------------------------------------------------
+
+    /**
      * Gets the feature by its id, if it is registered.
      * 
      * @param id
@@ -72,6 +91,23 @@ public class KielerCompiler {
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Gets all registered features.
+     *
+     * @return the features
+     */
+    public static Set<Feature> getFeatures() {
+        Map<String, Feature> map = KiCoPlugin.getRegisteredFeatures(false);
+        Set<Feature> set = new HashSet<Feature>();
+        for (Entry<String, Feature> entry : map.entrySet()) {
+            set.add(entry.getValue());
+        }
+        return set;
+    }
+    
+    // -------------------------------------------------------------------------
+
+    
     /**
      * Gets the transformation by its id, if it is registered.
      * 
@@ -86,6 +122,23 @@ public class KielerCompiler {
     // -------------------------------------------------------------------------
 
     /**
+     * Gets all registered transformations.
+     *
+     * @return the transformations
+     */
+    public static Set<Transformation> getTransformations() {
+        Map<String, Transformation> map = KiCoPlugin.getRegisteredTransformations(false);
+        Set<Transformation> set = new HashSet<Transformation>();
+        for (Entry<String, Transformation> entry : map.entrySet()) {
+            set.add(entry.getValue());
+        }
+        return set;
+    }
+    
+    // -------------------------------------------------------------------------
+
+
+    /**
      * Gets the creeper by its id, if it is registered.
      * 
      * @param id
@@ -95,6 +148,26 @@ public class KielerCompiler {
     public static Creeper getCreeper(String id) {
         return KiCoPlugin.getCreeper(id, false);
     }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets all registered creepers.
+     *
+     * @return the creepers
+     */
+    public static Set<Creeper> getCreepers() {
+        Map<String, Creeper> map = KiCoPlugin.getRegisteredCreepers(false);
+        Set<Creeper> set = new HashSet<Creeper>();
+        for (Entry<String, Creeper> entry : map.entrySet()) {
+            set.add(entry.getValue());
+        }
+        return set;
+    }
+    
+    // -------------------------------------------------------------------------
+
+    
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
@@ -115,11 +188,11 @@ public class KielerCompiler {
      *            the graph
      * @return true, if is dependency referenced
      */
-    private static boolean isDependencyReferenced(TransformationDummy transformationDummy,
+    private static boolean isDependencyReferenced(FeatureDummy transformationDummy,
             KielerCompilerContext context) {
-        for (TransformationDummy otherTransformationDummy : context.getGraph()) {
+        for (FeatureDummy otherTransformationDummy : context.getGraph()) {
             if (!otherTransformationDummy.isGroup()) {
-                for (TransformationDummy groupTransformationDummy : otherTransformationDummy.dependencies) {
+                for (FeatureDummy groupTransformationDummy : otherTransformationDummy.dependencies) {
                     if (groupTransformationDummy == transformationDummy) {
                         return true;
                     }
@@ -140,15 +213,15 @@ public class KielerCompiler {
      *            the graph
      * @return true, if is alternative
      */
-    private static boolean isAlternative(TransformationDummy transformationDummy,
+    private static boolean isAlternative(FeatureDummy transformationDummy,
             KielerCompilerContext context) {
-        for (TransformationDummy otherTransformationDummy : context.getGraph()) {
+        for (FeatureDummy otherTransformationDummy : context.getGraph()) {
             if (otherTransformationDummy.isAlternative()) {
                 // By convention: Group transformations are internally handled as produce
                 // dependencies
                 // Rationale: If a group is selected, these transformations are applied
                 for (String alternative : otherTransformationDummy.transformation
-                        .getProducesDependencies()) {
+                        .getProducesFeatureIds()) {
                     if (transformationDummy.id.equals(alternative)) {
                         return true;
                     }
@@ -169,11 +242,11 @@ public class KielerCompiler {
      *            the graph
      * @return true, if is group referenced
      */
-    private static boolean isGroupReferenced(TransformationDummy transformationDummy,
+    private static boolean isGroupReferenced(FeatureDummy transformationDummy,
             KielerCompilerContext context) {
-        for (TransformationDummy otherTransformationDummy : context.getGraph()) {
+        for (FeatureDummy otherTransformationDummy : context.getGraph()) {
             if (otherTransformationDummy.isGroup() && !otherTransformationDummy.isAlternative()) {
-                for (TransformationDummy groupTransformationDummy : otherTransformationDummy.dependencies) {
+                for (FeatureDummy groupTransformationDummy : otherTransformationDummy.dependencies) {
                     if (groupTransformationDummy == transformationDummy) {
                         return true;
                     }
@@ -231,11 +304,11 @@ public class KielerCompiler {
      */
     public static void removeFromGraph(KielerCompilerContext context,
             List<String> transformationIds, boolean removeSelected) {
-        List<TransformationDummy> graph = context.getGraph();
-        TransformationDummy toBeDeleted = null;
+        List<FeatureDummy> graph = context.getGraph();
+        FeatureDummy toBeDeleted = null;
         do {
             toBeDeleted = null;
-            for (TransformationDummy transformationDummy : graph) {
+            for (FeatureDummy transformationDummy : graph) {
                 boolean found = false;
                 for (String transformationId : transformationIds) {
                     if (transformationId.equals(transformationDummy.id)) {
@@ -254,7 +327,7 @@ public class KielerCompiler {
             }
             if (toBeDeleted != null) {
                 graph.remove(toBeDeleted);
-                for (TransformationDummy transformationDummy : graph) {
+                for (FeatureDummy transformationDummy : graph) {
                     if (transformationDummy.reverseDependencies.contains(toBeDeleted)) {
                         // System.out.println("REMOVE " + toBeDeleted.id
                         // + " from reverse-dependencies of " + transformationDummy.id);
@@ -280,10 +353,10 @@ public class KielerCompiler {
      */
     public static void cleanupImpossibleAlternatives(KielerCompilerContext context) {
         boolean found = true;
-        TransformationDummy toBeDeleted = null;
+        FeatureDummy toBeDeleted = null;
         while (found) {
             found = false;
-            for (TransformationDummy transformationDummy : context.getGraph()) {
+            for (FeatureDummy transformationDummy : context.getGraph()) {
                 boolean dependencyReferenced = isDependencyReferenced(transformationDummy, context);
                 boolean alternative = isAlternative(transformationDummy, context);
                 boolean groupReferenced = isGroupReferenced(transformationDummy, context);
@@ -299,7 +372,7 @@ public class KielerCompiler {
             }
             if (found) {
                 context.getGraph().remove(toBeDeleted);
-                for (TransformationDummy transformationDummy : context.getGraph()) {
+                for (FeatureDummy transformationDummy : context.getGraph()) {
                     if (transformationDummy.reverseDependencies.contains(toBeDeleted)) {
                         debug("REMOVE " + toBeDeleted.id + " from " + transformationDummy.id);
                         transformationDummy.reverseDependencies.remove(toBeDeleted);
@@ -322,10 +395,10 @@ public class KielerCompiler {
     private static void markGroupNodes(KielerCompilerContext context,
             TransformationGroup transformationGroup) {
         // TODO: Check if this is right!
-        for (String groupTransformationId : transformationGroup.getProducesDependencies()) {
+        for (String groupTransformationId : transformationGroup.getProducesFeatureIds()) {
             Transformation groupTransformation = getTransformation(groupTransformationId);
             if (groupTransformation != null) {
-                TransformationDummy groupTransformationDummy =
+                FeatureDummy groupTransformationDummy =
                         context.getGraphTransformationDummy(groupTransformation);
                 groupTransformationDummy.marked = true;
                 // System.out.println("Marking " + groupTransformationDummy.id);
@@ -355,7 +428,7 @@ public class KielerCompiler {
             Transformation transformation = getTransformation(transformationId);
 
             if (transformation != null) {
-                TransformationDummy transformationDummy =
+                FeatureDummy transformationDummy =
                         context.getGraphTransformationDummy(transformation);
                 transformationDummy.marked = true;
                 // System.out.println("Marking " + transformationDummy.id);
@@ -376,11 +449,11 @@ public class KielerCompiler {
      * @param transformationDummy
      *            the transformation dummy
      */
-    private static void markReverseDependencies(TransformationDummy transformationDummy) {
+    private static void markReverseDependencies(FeatureDummy transformationDummy) {
         if (transformationDummy != null && !transformationDummy.marked) {
             transformationDummy.marked = true;
             // System.out.println("Marking " + transformationDummy.id);
-            for (TransformationDummy otherTransformationDummy : transformationDummy.reverseDependencies) {
+            for (FeatureDummy otherTransformationDummy : transformationDummy.reverseDependencies) {
                 markReverseDependencies(otherTransformationDummy);
             }
         }
@@ -395,8 +468,8 @@ public class KielerCompiler {
      *            the graph
      */
     public static void markReverseDependencies(KielerCompilerContext context) {
-        List<TransformationDummy> startNodes = new ArrayList<TransformationDummy>();
-        for (TransformationDummy transformationDummy : context.getGraph()) {
+        List<FeatureDummy> startNodes = new ArrayList<FeatureDummy>();
+        for (FeatureDummy transformationDummy : context.getGraph()) {
             if (transformationDummy.marked) {
                 transformationDummy.marked = false; // Reset recursion stop indicator before calling
                 // recursive function
@@ -405,7 +478,7 @@ public class KielerCompiler {
         }
 
         // Start recursion from the start nodes
-        for (TransformationDummy transformationDummy : startNodes) {
+        for (FeatureDummy transformationDummy : startNodes) {
             markReverseDependencies(transformationDummy);
         }
     }
@@ -418,8 +491,8 @@ public class KielerCompiler {
      * @param transformationDummy
      *            the transformation dummy
      */
-    private static void markParentGroup(TransformationDummy transformationDummy) {
-        for (TransformationDummy parent : transformationDummy.parent) {
+    private static void markParentGroup(FeatureDummy transformationDummy) {
+        for (FeatureDummy parent : transformationDummy.parent) {
             if (!parent.marked && parent.isGroup()) {
                 parent.marked = true;
                 markParentGroup(parent);
@@ -434,7 +507,7 @@ public class KielerCompiler {
      *            the graph
      */
     public static void markParentGroups(KielerCompilerContext context) {
-        for (TransformationDummy transformationDummy : context.getGraph()) {
+        for (FeatureDummy transformationDummy : context.getGraph()) {
             if (transformationDummy.marked) {
                 markParentGroup(transformationDummy);
             }
@@ -451,10 +524,10 @@ public class KielerCompiler {
      */
     public static void eliminatedUnmarkedNodes(KielerCompilerContext context) {
         boolean found = true;
-        TransformationDummy toBeDeleted = null;
+        FeatureDummy toBeDeleted = null;
         while (found) {
             found = false;
-            for (TransformationDummy transformationDummy : context.getGraph()) {
+            for (FeatureDummy transformationDummy : context.getGraph()) {
                 if (!transformationDummy.marked) {
                     toBeDeleted = transformationDummy;
                     // System.out.println("REMOVE " + transformationDummy.id);
@@ -464,7 +537,7 @@ public class KielerCompiler {
             }
             if (found) {
                 context.getGraph().remove(toBeDeleted);
-                for (TransformationDummy transformationDummy : context.getGraph()) {
+                for (FeatureDummy transformationDummy : context.getGraph()) {
                     if (transformationDummy.reverseDependencies.contains(toBeDeleted)) {
                         // System.out.println("REMOVE " + toBeDeleted.id
                         // + " from reverse-dependencies of " + transformationDummy.id);
@@ -502,10 +575,10 @@ public class KielerCompiler {
      *            the graph
      * @return the transformation dummy with no dependencies
      */
-    private static List<TransformationDummy> getTransformationDummyWithNoDependencies(
+    private static List<FeatureDummy> getTransformationDummyWithNoDependencies(
             KielerCompilerContext context) {
-        List<TransformationDummy> returnList = new ArrayList<TransformationDummy>();
-        for (TransformationDummy transformationDummy : context.getGraph()) {
+        List<FeatureDummy> returnList = new ArrayList<FeatureDummy>();
+        for (FeatureDummy transformationDummy : context.getGraph()) {
             if (transformationDummy.dependencies.size() == 0) {
                 returnList.add(transformationDummy);
             }
@@ -524,12 +597,12 @@ public class KielerCompiler {
      *            the order
      * @return the int
      */
-    private static int visit(TransformationDummy transformationDummy, int order) {
+    private static int visit(FeatureDummy transformationDummy, int order) {
         if (transformationDummy.order == -1) {
             // This transformationDummy has not been seen yet
             transformationDummy.order = -2;
             int tmpOrder = order;
-            for (TransformationDummy nextTransformationDummy : transformationDummy.reverseDependencies) {
+            for (FeatureDummy nextTransformationDummy : transformationDummy.reverseDependencies) {
                 if (nextTransformationDummy != transformationDummy) {
                     tmpOrder = visit(nextTransformationDummy, tmpOrder);
                 }
@@ -550,17 +623,17 @@ public class KielerCompiler {
      *            the context
      */
     private static void topologicalSort(KielerCompilerContext context) {
-        List<TransformationDummy> initialTransformationDummys =
+        List<FeatureDummy> initialTransformationDummys =
                 getTransformationDummyWithNoDependencies(context);
         int tmpOrder = 0;
-        for (TransformationDummy initialTransformationDummy : initialTransformationDummys) {
+        for (FeatureDummy initialTransformationDummy : initialTransformationDummys) {
             tmpOrder = visit(initialTransformationDummy, tmpOrder);
         }
 
         // Now insert into return list by order
-        List<TransformationDummy> graph = context.getGraph();
+        List<FeatureDummy> graph = context.getGraph();
         String[] returnArray = new String[graph.size()];
-        for (TransformationDummy transformationDummy : graph) {
+        for (FeatureDummy transformationDummy : graph) {
             returnArray[transformationDummy.order - 1] = transformationDummy.id;
         }
         context.setCompilationTransformationIds(Arrays.asList(returnArray));
@@ -613,7 +686,7 @@ public class KielerCompiler {
                         // Add/expand all NON-alternative group members
                         // TODO: check if produces dependencies is right!
                         for (String otherTransformationId : transformationGroup
-                                .getProducesDependencies()) {
+                                .getProducesFeatureIds()) {
                             returnList.add(otherTransformationId);
                         }
                     } else {
@@ -621,7 +694,7 @@ public class KielerCompiler {
                         boolean exists = false;
                         // TODO: check if produces dependencies is right!
                         for (String otherTransformationId : transformationGroup
-                                .getProducesDependencies()) {
+                                .getProducesFeatureIds()) {
                             for (String returnListItem : transformationIds) {
                                 if (returnListItem.equals(otherTransformationId)) {
                                     exists = true;
@@ -679,7 +752,7 @@ public class KielerCompiler {
                             boolean allMarked = true;
                             // TODO: check if produces dependencies is right!
                             List<String> dependencyIds =
-                                    expandGroups(group.getProducesDependencies(),
+                                    expandGroups(group.getProducesFeatureIds(),
                                             disabledTransformationIds,
                                             context.getPriorizedTransformationsIds());
                             for (String dependencyId : dependencyIds) {
