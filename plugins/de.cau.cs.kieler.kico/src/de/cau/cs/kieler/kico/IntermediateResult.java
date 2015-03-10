@@ -13,6 +13,9 @@
  */
 package de.cau.cs.kieler.kico;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * This class holds information about the intermediate results and the transformation or process
  * leading to this intermediate result together with performance measurements.
@@ -32,6 +35,9 @@ public abstract class IntermediateResult {
 
     /** The result of the intermediate result. */
     private Object result;
+    
+    /** The list of sub intermediate results this intermediate result consists of, may be an empty list. */
+    private List<IntermediateResult> subIntermediateResults = new LinkedList<IntermediateResult>();
 
     // -------------------------------------------------------------------------
 
@@ -129,4 +135,27 @@ public abstract class IntermediateResult {
     }
 
     // -------------------------------------------------------------------------
+
+    /**
+     * Adds a sub intermediate result.
+     *
+     * @param intermediateResult the intermediate result
+     */
+    public void addSubIntermediateResult(IntermediateResult intermediateResult) {
+        subIntermediateResults.add(intermediateResult);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Adds an sub intermediate result.
+     *
+     * @return the sub intermediate results
+     */
+    public List<IntermediateResult> getSubIntermediateResults() {
+        return subIntermediateResults;
+    }
+
+    // -------------------------------------------------------------------------
+    
 }
