@@ -26,20 +26,19 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * This class implements the context of a KielerCompiler call.
- *
+ * 
  * @author cmot
  * @kieler.design 2015-03-09 proposed
  * @kieler.rating 2015-03-09 proposed yellow
  */
 public class KielerCompilerContext {
 
-
     /** The (intermediate) compilation result. */
     CompilationResult compilationResult = null;
 
     /** The user selection for interactive compilation. */
     private KielerCompilerSelection selection = new KielerCompilerSelection();
-    
+
     /**
      * The flag to automatically select transformations based on the selected features (defining the
      * target) and the model features (defining the requirements).
@@ -58,8 +57,8 @@ public class KielerCompilerContext {
     /** Further included models can be searched by a scoper. */
     private ArrayList<EObject> includedModels = new ArrayList<EObject>();
 
-    /** The transformation used for compilation. */
-    private List<String> compilationTransformationIds = new ArrayList<String>();
+    /** The calculated transformation chain used for compilation. */
+    private List<Transformation> compilationChain = new ArrayList<Transformation>();
 
     /**
      * The flag to create a dummy resource if no resource is present (e.g. because inplace ==
@@ -78,9 +77,11 @@ public class KielerCompilerContext {
 
     /**
      * Instantiates a new kieler compiler context with an original source model.
-     *
-     * @param stringArguments the string arguments
-     * @param eObject the e object
+     * 
+     * @param stringArguments
+     *            the string arguments
+     * @param eObject
+     *            the e object
      */
     public KielerCompilerContext(String stringArguments, EObject eObject) {
         compilationResult = new CompilationResult(eObject);
@@ -102,8 +103,9 @@ public class KielerCompilerContext {
     public KielerCompilerContext(List<String> selectedTransformationIds,
             List<String> disabledTransformationIds) {
         compilationResult = new CompilationResult();
-        copySelectedAndDisabledTransformationIds(selectedTransformationIds,
-                disabledTransformationIds);
+        selection.clear();
+        selection.setSelectedTransformationIds(selectedTransformationIds);
+        selection.setDisabledTransformationIds(disabledTransformationIds);
     }
 
     // -------------------------------------------------------------------------
@@ -121,34 +123,14 @@ public class KielerCompilerContext {
     public KielerCompilerContext(List<String> selectedTransformationIds,
             List<String> disabledTransformationIds, EObject eObject) {
         compilationResult = new CompilationResult(eObject);
-        copySelectedAndDisabledTransformationIds(selectedTransformationIds,
-                disabledTransformationIds);
+        selection.clear();
+        selection.setSelectedTransformationIds(selectedTransformationIds);
+        selection.setDisabledTransformationIds(disabledTransformationIds);
     }
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
-    /**
-     * Copy the selected and disabled transformation Id lists.
-     * 
-     * @param selectedTransformationIds
-     *            the selected transformation i ds
-     * @param disabledTransformationIds
-     *            the disabled transformation i ds
-     */
-    private void copySelectedAndDisabledTransformationIds(List<String> selectedTransformationIds,
-            List<String> disabledTransformationIds) {
-        this.selectedTransformationIds.clear();
-        this.disabledTransformationIds.clear();
-        for (String transformationId : selectedTransformationIds) {
-            this.selectedTransformationIds.add(transformationId);
-        }
-        for (String transformationId : disabledTransformationIds) {
-            this.disabledTransformationIds.add(transformationId);
-        }
-    }
-
-    // -------------------------------------------------------------------------
     /**
      * Reset included models.
      */
@@ -160,8 +142,9 @@ public class KielerCompilerContext {
 
     /**
      * Sets additionally included models that can be searched by a scoper.
-     *
-     * @param includedModel the included model
+     * 
+     * @param includedModel
+     *            the included model
      */
     public void addIncludedModel(EObject includedModel) {
         this.includedModels.add(includedModel);
@@ -171,7 +154,7 @@ public class KielerCompilerContext {
 
     /**
      * Gets the included model resource.
-     *
+     * 
      * @return the included model resource
      */
     public ResourceSet getModelResourceSet() {
@@ -181,8 +164,9 @@ public class KielerCompilerContext {
     // -------------------------------------------------------------------------
     /**
      * Sets the included model resource.
-     *
-     * @param resourceSet the new model resource set
+     * 
+     * @param resourceSet
+     *            the new model resource set
      * @return the included model resource
      */
     public void setModelResourceSet(ResourceSet resourceSet) {
@@ -203,8 +187,9 @@ public class KielerCompilerContext {
     // -------------------------------------------------------------------------
     /**
      * Sets the included model resource.
-     *
-     * @param resource the new main resource
+     * 
+     * @param resource
+     *            the new main resource
      * @return the included model resource
      */
     public void setMainResource(Resource resource) {
@@ -215,7 +200,7 @@ public class KielerCompilerContext {
 
     /**
      * Get additionally included models that can be searched by a scoper.
-     *
+     * 
      * @return the included models
      */
     public ArrayList<EObject> getIncludedModels() {
@@ -233,6 +218,8 @@ public class KielerCompilerContext {
         return this.verboseMode;
     }
 
+    // -------------------------------------------------------------------------
+
     /**
      * Sets the verbose mode.
      * 
@@ -244,15 +231,15 @@ public class KielerCompilerContext {
     }
 
     // -------------------------------------------------------------------------
-
-    /**
-     * Gets the graph which represents the current compilation state of a compilation run.
-     * 
-     * @return the graph
-     */
-    public List<FeatureDummy> getGraph() {
-        return this.graph;
-    }
+    //
+    // /**
+    // * Gets the graph which represents the current compilation state of a compilation run.
+    // *
+    // * @return the graph
+    // */
+    // public List<FeatureDummy> getGraph() {
+    // return this.graph;
+    // }
 
     // -------------------------------------------------------------------------
 
@@ -268,223 +255,58 @@ public class KielerCompilerContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the selected transformation Ids.
+     * Gets the user selection for interactive compilation.
      * 
-     * @return the selected transformation Ids
+     * @return the selection
      */
-    public List<String> getSelectedTransformationIds() {
-        return selectedTransformationIds;
+    public KielerCompilerSelection getSelection() {
+        return selection;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the disabled transformation Ids.
+     * Sets the user selection for interactive compilation.
      * 
-     * @return the disabled transformation Ids
+     * @param selection
+     *            the new selection
      */
-    public List<String> getDisabledTransformationIds() {
-        return disabledTransformationIds;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Builds the graph adding only defaults for alternatives iff not prioritized.
-     * 
-     * @param prioritizedTransformationIds
-     *            the prioritized transformation i ds
-     * @return the list
-     */
-    public void buildGraph(List<String> prioritizedTransformationIds) {
-        buildGraph(prioritizedTransformationIds, true);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Builds the full graph with all alternatives.
-     * 
-     * @return the list
-     */
-    public void buildGraph() {
-        buildGraph(new ArrayList<String>(), false);
+    public void setSelection(KielerCompilerSelection selection) {
+        this.selection = selection;
+        recalculateTransformationChain();
     }
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
     /**
-     * Builds the graph with filtering optional transformation Ids of alternative groups.
+     * Gets the transformation chain as it was calculated, derived by the selection .
      * 
-     * @param prioritizedTransformationIds
-     *            the prioritized transformation i ds
-     * @param preselectAlternatives
-     *            the preselect alternatives
-     * @return the list
+     * @return the transformation chain
      */
-    public void buildGraph(List<String> prioritizedTransformationIds, boolean preselectAlternatives) {
-        ArrayList<FeatureDummy> returnList = new ArrayList<FeatureDummy>();
-
-        transformation2graph.clear();
-        List<Transformation> transformations = KielerCompiler.getRegisteredTransformations();
-
-        // Build all nodes first
-        for (Transformation transformation : transformations) {
-            FeatureDummy transformationDummy = new FeatureDummy(transformation);
-
-            returnList.add(transformationDummy);
-            transformationDummy.parent = returnList;
-            transformation2graph.put(transformation, transformationDummy);
-            // System.out.println("Adding Dummy node for " + transformation.getId() + ", "
-            // + transformation.toString());
-        }
-
-        // Calculate dependencies
-        for (Transformation transformation : transformations) {
-            FeatureDummy transformationDummy = transformation2graph.get(transformation);
-
-            List<String> producesDependencies = transformation.getProducesFeatureIds();
-            List<String> notHandlesDependencies = transformation.getNotHandlesFeatureIds();
-            if (transformationDummy.isAlternative()) {
-                producesDependencies = new ArrayList<String>();
-                if (preselectAlternatives) {
-                    // If this is an alternative group, then ONLY add the SELECTED alternative
-                    // according to the prioritizedTransformationIds (input)
-                    TransformationGroup group =
-                            (TransformationGroup) transformationDummy.transformation;
-                    List<String> priorized = new ArrayList<String>();
-
-                    // FIXME: BAD HACK FOR WEIHNACHTSFEIER, USE KICO.UI EXTENSION POINT!!!
-                    // priorized.add("S2ARDUINO");
-
-                    String selectedAlternative =
-                            (group).getSelectedProducesDependency(prioritizedTransformationIds,
-                                    disabledTransformationIds, priorized);
-                    producesDependencies.add(selectedAlternative);
-                } else {
-                    // Also here by convention in GROUP alternatives consider ther produces
-                    // dependencies
-                    List<String> allAlternative =
-                            ((TransformationGroup) transformationDummy.transformation)
-                                    .getProducesFeatureIds();
-                    for (String alternative : allAlternative) {
-                        producesDependencies.add(alternative);
-                    }
-                }
-            }
-
-            // Handle produces depencencies
-            for (String producesDependencyId : producesDependencies) {
-                Transformation otherTransformationOrGroup =
-                        KielerCompiler.getTransformation(producesDependencyId);
-                if (otherTransformationOrGroup != null) {
-                    // System.out.println("Dependencies for " + transformation.getId());
-                    // System.out.println("  " + otherTransformationOrGroup.getId());
-                    FeatureDummy otherTransformationDummy =
-                            transformation2graph.get(otherTransformationOrGroup);
-
-                    // Example: dummy-ABORT produces otherDummy=INIT ==>
-                    // dummy=ABORT-->otherDummy=INIT
-                    // Insert dependency in dummy that produces other dummy
-                    transformationDummy.dependencies.add(otherTransformationDummy);
-                    // Insert reverse dependency in other dummy
-                    otherTransformationDummy.reverseDependencies.add(transformationDummy);
-                }
-            }
-
-            // Handle not handles dependencies
-
-            // 14.02.2015: Attention: if we hit a transformation GROUP that is not handled, we mus
-            // fully resolve this group first into sets of transformations:
-            // we resolve group $G$ to the set of transformations $T$ where we follow all pseudo
-            // dependencies from $G$ until we hit
-            // the first transformation, which then must be part of $T$. If we hit another group
-            // $G_i$ we recursively follow each
-            // pseudo dependencies of $G_i$.
-
-            for (String notHandlesDependencyId : notHandlesDependencies) {
-                Transformation otherTransformationOrGroup =
-                        KielerCompiler.getTransformation(notHandlesDependencyId);
-                if (otherTransformationOrGroup != null) {
-                    // System.out.println("Dependencies for " + transformation.getId());
-                    // System.out.println("  " + otherTransformationOrGroup.getId());
-                    FeatureDummy otherTransformationDummy =
-                            transformation2graph.get(otherTransformationOrGroup);
-
-                    if (preselectAlternatives) {
-                        // If this is an alternative group, then ONLY add the SELECTED alternative
-                        // according to the prioritizedTransformationIds (input)
-                        break;
-                    }
-
-                    HashSet<FeatureDummy> otherResolvedTransformationDummys =
-                            resolveTransformationGroup(otherTransformationDummy);
-                    for (FeatureDummy otherResolvedTransformationDummy : otherResolvedTransformationDummys) {
-                        // Example: dummy=ABORT not handles otherDummy=DURING ==>
-                        // otherDummy=DURING-->dummy=ABORT
-                        // Insert dependency in other dummy
-                        otherResolvedTransformationDummy.dependencies.add(transformationDummy);
-                        // Insert reverse dependency in dummy that
-                        transformationDummy.reverseDependencies
-                                .add(otherResolvedTransformationDummy);
-                    }
-                }
-            }
-
-        }
-
-        // set the graph of this context to the new built graph
-        graph = returnList;
+    public List<Transformation> getTransformationChain() {
+        return compilationChain;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Resolve transformation group.
-     *
-     * @param transformationDummy the transformation dummy
-     * @return the hash set
+     * Recalculate transformation chain as based on the current selection and the registered
+     * features, transformations and processors.
      */
-    public HashSet<FeatureDummy> resolveTransformationGroup(FeatureDummy transformationDummy) {
-        HashSet<FeatureDummy> returnList = new HashSet<FeatureDummy>();
-        if (transformationDummy.isGroup()) {
-            // follow pseudo dependencies
-            for (FeatureDummy groupTransformationDummy : transformationDummy.dependencies) {
-                returnList.addAll(resolveTransformationGroup(groupTransformationDummy));
-            }
-        } else {
-            // We arrived at a transformation that is NOT a group. This is the resolved
-            // transformation we
-            // are looking for.
-            returnList.add(transformationDummy);
-        }
-        return returnList;
+    public void recalculateTransformationChain() {
+        // TODO: Main work :-)
     }
 
     // -------------------------------------------------------------------------
-
-    /**
-     * Gets the graph transformation dummy.
-     * 
-     * @param transformation
-     *            the transformation
-     * @return the graph transformation dummy
-     */
-    public FeatureDummy getGraphTransformationDummy(Transformation transformation) {
-        if (transformation2graph != null) {
-            return transformation2graph.get(transformation);
-        }
-        return null;
-    }
-
     // -------------------------------------------------------------------------
 
     /**
      * The flag to automatically select transformations based on the selected features (defining the
      * target) and the model features (defining the requirements). Note that if switched off no
-     * dependencies are considered. The transformations will be applied straight forward in the
-     * order defined by the transformationIds list.
+     * dependencies are considered and only the current feature or transformation selection is
+     * processed. The transformations will be applied straight forward in the order defined by the
+     * transformationIds list.
      * 
      * @return true, if is autoSelect
      */
@@ -581,8 +403,9 @@ public class KielerCompilerContext {
     /**
      * Sets the transformation object that must exist if this is a compile run. By convention this
      * is the first model of the intermediate results.
-     *
-     * @param eObject the new transformation object
+     * 
+     * @param eObject
+     *            the new transformation object
      * @return the e object
      */
     public void setTransformationObject(EObject eObject) {

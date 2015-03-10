@@ -29,13 +29,10 @@ import java.util.List;
 public class KielerCompilerSelection {
 
     /**
-     * The originally selected transformation Ids. These define which transformations are selected
-     * for compilation
+     * The originally selected feature and transformation Ids. These define which transformations
+     * are selected for compilation
      */
-    private List<String> selectedFeatureIds = new ArrayList<String>();
-
-    /** The originally selected transformation Ids. Specifically selected transformations. */
-    private List<String> selectedTransformationIds = new ArrayList<String>();
+    private List<String> selectedFeatureAndTransformationIds = new ArrayList<String>();
 
     /** The optionally disabled transformation Ids. These transformations will be skipped. */
     private List<String> disabledTransformationIds = new ArrayList<String>();
@@ -82,8 +79,7 @@ public class KielerCompilerSelection {
      * Clears all selection lists.
      */
     public void clear() {
-        selectedFeatureIds.clear();
-        selectedTransformationIds.clear();
+        selectedFeatureAndTransformationIds.clear();
         disabledTransformationIds.clear();
         preferredTransformationIds.clear();
         enabledProcessorOptionIds.clear();
@@ -94,8 +90,9 @@ public class KielerCompilerSelection {
 
     /**
      * Append a selection based on string arguments to the current selection.
-     *
-     * @param stringArguments the string arguments
+     * 
+     * @param stringArguments
+     *            the string arguments
      */
     public void appendSelection(String stringArguments) {
         parseStringArguments(stringArguments, false);
@@ -111,9 +108,11 @@ public class KielerCompilerSelection {
      * with a "*". Transformation IDs start with a preceding "T_" and processor options with "P_". <BR>
      * Example:<BR>
      * "ABORT, *T_ABORT_WTO,!P_DEADCODE"
-     *
-     * @param stringArguments the string arguments
-     * @param clear the clear
+     * 
+     * @param stringArguments
+     *            the string arguments
+     * @param clear
+     *            the clear
      */
     private void parseStringArguments(String stringArguments, boolean clear) {
 
@@ -127,7 +126,7 @@ public class KielerCompilerSelection {
         }
         if (clear) {
             // Clear all ID lists
-            this.selectedTransformationIds.clear();
+            this.selectedFeatureAndTransformationIds.clear();
             this.preferredTransformationIds.clear();
             this.disabledTransformationIds.clear();
             this.enabledProcessorOptionIds.clear();
@@ -166,7 +165,7 @@ public class KielerCompilerSelection {
             } else if (isTransformation) {
                 if (!disabled) {
                     if (!preferred) {
-                        selectedTransformationIds.add(idTrimmed);
+                        selectedFeatureAndTransformationIds.add("T_" + idTrimmed);
                     } else {
                         preferredTransformationIds.add(idTrimmed);
                     }
@@ -175,7 +174,7 @@ public class KielerCompilerSelection {
                 }
             } else {
                 // everything else is assumed a feature
-                selectedFeatureIds.add(idTrimmed);
+                selectedFeatureAndTransformationIds.add(idTrimmed);
             }
         }
     }
@@ -189,17 +188,11 @@ public class KielerCompilerSelection {
      */
     public String toString() {
         StringBuilder returnString = new StringBuilder();
-        for (String item : selectedFeatureIds) {
+        for (String item : selectedFeatureAndTransformationIds) {
             if (returnString.length() != 0) {
                 returnString.append(",");
             }
             returnString.append(item);
-        }
-        for (String item : selectedTransformationIds) {
-            if (returnString.length() != 0) {
-                returnString.append(",");
-            }
-            returnString.append("T_" + item);
         }
         for (String item : disabledTransformationIds) {
             if (returnString.length() != 0) {
@@ -230,12 +223,14 @@ public class KielerCompilerSelection {
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-    
+
     /**
      * Copies a list to another list.
-     *
-     * @param copyFrom the copy from
-     * @param copyTo the copy to
+     * 
+     * @param copyFrom
+     *            the copy from
+     * @param copyTo
+     *            the copy to
      */
     private static void copyList(List<String> copyFrom, List<String> copyTo) {
         copyTo.clear();
@@ -248,23 +243,12 @@ public class KielerCompilerSelection {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the selected feature ids.
+     * Gets the selected feature and transformation ids.
      * 
-     * @return the selected feature ids
+     * @return the selected feature and transformation ids
      */
-    public List<String> getSelectedFeatureIds() {
-        return selectedFeatureIds;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the selected transformation ids.
-     * 
-     * @return the selected transformation ids
-     */
-    public List<String> getSelectedTransformationIds() {
-        return selectedTransformationIds;
+    public List<String> getSelectedFeatureAndTransformationIds() {
+        return selectedFeatureAndTransformationIds;
     }
 
     // -------------------------------------------------------------------------
@@ -312,33 +296,25 @@ public class KielerCompilerSelection {
     }
 
     // -------------------------------------------------------------------------
- 
-    /**
-     * Sets the selected feature ids.
-     *
-     * @param selectedFeatureIds the new selected feature ids
-     */
-    public void setSelectedFeatureIds(List<String> selectedFeatureIds) {
-        copyList(selectedFeatureIds, this.selectedFeatureIds);
-    }
-
-    // -------------------------------------------------------------------------
 
     /**
-     * Sets the selected transformation ids.
-     *
-     * @param selectedTransformationIds the new selected transformation ids
+     * Sets the selected feature and transformation ids.
+     * 
+     * @param selectedFeatureAndTransformationIds
+     *            the new selected feature and transformation ids
      */
-    public void setSelectedTransformationIds(List<String> selectedTransformationIds) {
-        copyList(selectedTransformationIds, this.selectedTransformationIds);
+    public void setSelectedFeatureAndTransformationIds(
+            List<String> selectedFeatureAndTransformationIds) {
+        copyList(selectedFeatureAndTransformationIds, this.selectedFeatureAndTransformationIds);
     }
 
     // -------------------------------------------------------------------------
 
     /**
      * Sets the disabled transformation ids.
-     *
-     * @param disabledTransformationIds the new disabled transformation ids
+     * 
+     * @param disabledTransformationIds
+     *            the new disabled transformation ids
      */
     public void setDisabledTransformationIds(List<String> disabledTransformationIds) {
         copyList(disabledTransformationIds, this.disabledTransformationIds);
@@ -348,8 +324,9 @@ public class KielerCompilerSelection {
 
     /**
      * Sets the preferred transformation ids.
-     *
-     * @param preferredTransformationIds the new preferred transformation ids
+     * 
+     * @param preferredTransformationIds
+     *            the new preferred transformation ids
      */
     public void setPreferredTransformationIds(List<String> preferredTransformationIds) {
         copyList(preferredTransformationIds, this.preferredTransformationIds);
@@ -359,8 +336,9 @@ public class KielerCompilerSelection {
 
     /**
      * Sets the enabled processor option ids.
-     *
-     * @param enabledProcessorOptionIds the new enabled processor option ids
+     * 
+     * @param enabledProcessorOptionIds
+     *            the new enabled processor option ids
      */
     public void setEnabledProcessorOptionIds(List<String> enabledProcessorOptionIds) {
         copyList(enabledProcessorOptionIds, this.enabledProcessorOptionIds);
@@ -370,13 +348,14 @@ public class KielerCompilerSelection {
 
     /**
      * Sets the disabled processor option ids.
-     *
-     * @param disabledProcessorOptionIds the new disabled processor option ids
+     * 
+     * @param disabledProcessorOptionIds
+     *            the new disabled processor option ids
      */
     public void setDisabledProcessorOptionIds(List<String> disabledProcessorOptionIds) {
         copyList(disabledProcessorOptionIds, this.disabledProcessorOptionIds);
     }
 
     // -------------------------------------------------------------------------
-    
+
 }
