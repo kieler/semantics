@@ -53,7 +53,7 @@ public class KielerCompilerContext {
     /**
      * The optionally switched off processors
      */
-    private List<String> selectedFeatureIds = new ArrayList<String>();
+    private List<String> disabledProcessorIds = new ArrayList<String>();
 
     
     /** The (intermediate) compilation result. */

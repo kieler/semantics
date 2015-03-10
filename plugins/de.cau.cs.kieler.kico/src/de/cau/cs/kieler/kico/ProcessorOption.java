@@ -14,9 +14,9 @@
 package de.cau.cs.kieler.kico;
 
 /**
- * An processor option item as a pair of a processor ID combined with a boolean indicating if this
- * processor is optional (for the defined transformation) or not. If it is optional it can be set to
- * be active by default or not.
+ * An processor option is mainly a reference to a processor. Additionally there can be defined an ID
+ * to switch the option on or off together with a default value whether the option is active or not
+ * (if it is not switched on or off specifically.
  * 
  * @author cmot
  * @kieler.design 2014-03-11 proposed
@@ -28,8 +28,11 @@ class ProcessorOption {
     /** The id of the processor. */
     private String processorId;
 
-    /** The optional flag tells if the processor is optional in this context. */
-    private boolean optional;
+    /**
+     * The optional switchId string can be used to switch the processor option on or off in a
+     * compile call.
+     */
+    private String switchId;
 
     /**
      * The defaultActive flag tells if the processor is active by default. Note that the processor
@@ -40,20 +43,40 @@ class ProcessorOption {
     // -------------------------------------------------------------------------
 
     /**
-     * Instantiates a new processor option. The optional flag tells if the processor is optional in
-     * this context.The defaultActive flag tells if the processor is active by default. Note that
-     * the processor needs to be optional, otherwise defaultActive will be ignored.
+     * Instantiates a new processor option. This processor option cannot be switched off and hence
+     * has no switchId.
      * 
      * @param processorId
      *            the id
-     * @param optional
+     * @param switchId
      *            the optional
      * @param defaultActive
      *            the default active
      */
-    public ProcessorOption(String processorId, boolean optional, boolean defaultActive) {
+    public ProcessorOption(String processorId) {
         this.processorId = processorId;
-        this.optional = optional;
+        this.switchId = null;
+        this.defaultActive = true;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Instantiates a new processor option. The optional switchId string can be used to switch the
+     * processor option on or off in a compile call. The defaultActive flag tells if the processor
+     * is active by default. Note that the processor needs to be optional, otherwise defaultActive
+     * will be ignored.
+     * 
+     * @param processorId
+     *            the id
+     * @param switchId
+     *            the optional
+     * @param defaultActive
+     *            the default active
+     */
+    public ProcessorOption(String processorId, String switchId, boolean defaultActive) {
+        this.processorId = processorId;
+        this.switchId = switchId;
         this.defaultActive = defaultActive;
     }
 
@@ -76,7 +99,19 @@ class ProcessorOption {
      * @return true, if is optional
      */
     public boolean isOptional() {
-        return optional;
+        return (switchId != null);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the optional switchId string which can be used to switch the processor option on or off
+     * in a compile call.
+     * 
+     * @return the switch id
+     */
+    public String getSwitchId() {
+        return switchId;
     }
 
     // -------------------------------------------------------------------------
