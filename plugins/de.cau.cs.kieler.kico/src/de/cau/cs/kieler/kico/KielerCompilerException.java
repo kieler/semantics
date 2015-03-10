@@ -32,7 +32,7 @@ public class KielerCompilerException extends Exception {
     /** The transformation id that caused the exception. */
     private String transformationId;
 
-    /** The transformation id that caused the exception. */
+    /** The processor id that caused the exception. */
     private String processorId;
 
     // -------------------------------------------------------------------------
@@ -40,11 +40,16 @@ public class KielerCompilerException extends Exception {
     /**
      * Instantiates a new kieler compiler exception.
      * 
-     * @param transformationID
+     * @param processorId
+     *            the processor id
+     * @param transformationId
      *            the transformation id
+     * @param message
+     *            the message
      */
-    public KielerCompilerException(String transformationId, String errorMessage) {
-        super(errorMessage);
+    public KielerCompilerException(String processorId, String transformationId, String message) {
+        super(message);
+        this.processorId = processorId;
         this.transformationId = transformationId;
     }
 
@@ -53,13 +58,29 @@ public class KielerCompilerException extends Exception {
     /**
      * Instantiates a new kieler compiler exception.
      * 
-     * @param transformationID
+     * @param processorId
+     *            the processor id
+     * @param transformationId
      *            the transformation id
+     * @param exception
+     *            the exception
      */
-    public KielerCompilerException(String transformationId, Exception exception) {
+    public KielerCompilerException(String processorId, String transformationId, Exception exception) {
         super(exception.getMessage(), exception.getCause());
         this.setStackTrace(exception.getStackTrace());
+        this.processorId = processorId;
         this.transformationId = transformationId;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the processor id of the processor that caused the exception.
+     * 
+     * @return the processor id
+     */
+    public String getProcessorId() {
+        return processorId;
     }
 
     // -------------------------------------------------------------------------
@@ -69,7 +90,7 @@ public class KielerCompilerException extends Exception {
      * 
      * @return the transformation id
      */
-    public String getTransformationID() {
+    public String getTransformationId() {
         return transformationId;
     }
 
@@ -85,6 +106,5 @@ public class KielerCompilerException extends Exception {
     }
 
     // -------------------------------------------------------------------------
-
 
 }

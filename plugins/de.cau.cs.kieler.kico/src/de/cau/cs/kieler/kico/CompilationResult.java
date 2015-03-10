@@ -272,7 +272,7 @@ public class CompilationResult {
      */
     public void processPostponedWarnings() {
         for (KielerCompilerException exception : postponedWarnings) {
-            String transformationID = exception.getTransformationID();
+            String transformationID = exception.getTransformationId();
 
             if (allWarnings != null) {
                 allWarnings += ", ";
@@ -296,7 +296,7 @@ public class CompilationResult {
      */
     public void processPostponedErrors() {
         for (KielerCompilerException exception : postponedErrors) {
-            String transformationID = exception.getTransformationID();
+            String transformationID = exception.getTransformationId();
 
             if (allErrors != null) {
                 allErrors += ", ";
