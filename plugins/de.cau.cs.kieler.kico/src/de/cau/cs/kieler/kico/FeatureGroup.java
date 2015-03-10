@@ -34,10 +34,10 @@ import org.eclipse.emf.ecore.EObject;
 public abstract class FeatureGroup extends Feature implements IFeatureGroup {
 
     /** The cached (direct) features where each item may be a Feature or FeatureGroup. */
-    Set<Feature> cachedFeatures = null;
+    private Set<Feature> cachedFeatures = null;
 
     /** The cached resolved features where each item is Feature and not a FeatureGroup. */
-    Set<Feature> cachedResolvedFeatures = null;
+    private Set<Feature> cachedResolvedFeatures = null;
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
@@ -74,6 +74,75 @@ public abstract class FeatureGroup extends Feature implements IFeatureGroup {
         return true;
     }
 
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the list of transformations that are able to handle the features of this feature group.
+     * 
+     * @return the alternative transformations
+     */
+    public Set<Transformation> getHandlingTransformations() {
+        if (cachedHandlingTransformations != null) {
+            return cachedHandlingTransformations;
+        }
+        cachedHandlingTransformations = new HashSet<Transformation>();
+        for (Transformation transformation : KielerCompiler.getTransformations()) {
+            for (Feature feature : this.getResolvedFeatures()) {
+                if (transformation.getHandleFeature() == feature) {
+                    cachedHandlingTransformations.add(transformation);
+                }
+            }
+        }
+        return cachedHandlingTransformations;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the list of transformations that declare to produce features of this feature group.
+     * 
+     * @return the producing transformations
+     */
+    public Set<Transformation> getProducingTransformations() {
+        if (cachedProducingTransformations != null) {
+            return cachedProducingTransformations;
+        }
+        cachedProducingTransformations = new HashSet<Transformation>();
+        for (Transformation transformation : KielerCompiler.getTransformations()) {
+            for (Feature feature : this.getResolvedFeatures()) {
+                if (transformation.getProducesFeatures() == feature) {
+                    cachedProducingTransformations.add(transformation);
+                }
+            }
+        }
+        return cachedProducingTransformations;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the list of transformations that declare not being able to handle some features of this
+     * feature group.
+     * 
+     * @return the not handling transformations
+     */
+    public Set<Transformation> getNotHandlingTransformations() {
+        if (cachedNotHandlingTransformations != null) {
+            return cachedNotHandlingTransformations;
+        }
+        cachedNotHandlingTransformations = new HashSet<Transformation>();
+        for (Transformation transformation : KielerCompiler.getTransformations()) {
+            for (Feature feature : this.getResolvedFeatures()) {
+                if (transformation.getNotHandlesFeatures() == feature) {
+                    cachedNotHandlingTransformations.add(transformation);
+                }
+            }
+        }
+        return cachedNotHandlingTransformations;
+    }
+
+    // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
     /**

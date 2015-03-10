@@ -27,8 +27,15 @@ import java.util.Set;
  */
 public abstract class Feature implements IFeature {
     
-    /** The cached alternative transformations. */
-    private Set<Transformation> cachedAlternativeTransformations = null;
+    /** The cached handling/alternative transformations. */
+    protected Set<Transformation> cachedHandlingTransformations = null;
+
+    /** The cached producing transformations. */
+    protected Set<Transformation> cachedProducingTransformations = null;
+
+    /** The cached not handling transformations. */
+    protected Set<Transformation> cachedNotHandlingTransformations = null;
+
 
     // -------------------------------------------------------------------------
 
@@ -43,25 +50,68 @@ public abstract class Feature implements IFeature {
     }
 
     // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
-     * Gets the list of alternative transformations that are able to transform this feature because
-     * they declared to be able to handle it.
+     * Gets the list of transformations that are able to handle this feature because
+     * they declared to be able to handle it. For a single Feature (not a group) this
+     * means a set of alternative transformations that can be used to transform away
+     * the feature. 
      * 
      * @return the alternative transformations
      */
-    public Set<Transformation> getAlternativeTransformations() {
-        if (cachedAlternativeTransformations != null) {
-            return cachedAlternativeTransformations;
+    public Set<Transformation> getHandlingTransformations() {
+        if (cachedHandlingTransformations != null) {
+            return cachedHandlingTransformations;
         }
-        cachedAlternativeTransformations = new HashSet<Transformation>();
+        cachedHandlingTransformations = new HashSet<Transformation>();
         for (Transformation transformation : KielerCompiler.getTransformations()) {
             if (transformation.getHandleFeature() == this) {
-                cachedAlternativeTransformations.add(transformation);
+                cachedHandlingTransformations.add(transformation);
             }
         }
-        return cachedAlternativeTransformations;
+        return cachedHandlingTransformations;
     }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the list of transformations that declare to produce this feature.
+     * 
+     * @return the producing transformations
+     */
+    public Set<Transformation> getProducingTransformations() {
+        if (cachedProducingTransformations != null) {
+            return cachedProducingTransformations;
+        }
+        cachedProducingTransformations = new HashSet<Transformation>();
+        for (Transformation transformation : KielerCompiler.getTransformations()) {
+            if (transformation.getProducesFeatures() == this) {
+                cachedProducingTransformations.add(transformation);
+            }
+        }
+        return cachedProducingTransformations;
+    }
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the list of transformations that declare not being able to handle this feature.
+     * 
+     * @return the not handling transformations
+     */
+    public Set<Transformation> getNotHandlingTransformations() {
+        if (cachedNotHandlingTransformations != null) {
+            return cachedNotHandlingTransformations;
+        }
+        cachedNotHandlingTransformations = new HashSet<Transformation>();
+        for (Transformation transformation : KielerCompiler.getTransformations()) {
+            if (transformation.getNotHandlesFeatures() == this) {
+                cachedNotHandlingTransformations.add(transformation);
+            }
+        }
+        return cachedNotHandlingTransformations;
+    }    
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
