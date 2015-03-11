@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 
 /**
  * An instance of this class represents a registered transformation that may be called indirectly by
@@ -205,18 +204,17 @@ public abstract class Transformation implements ITransformation {
     // -------------------------------------------------------------------------
 
     /**
-     * Inplace transformations should return false here. This is also the default value and the more
+     * Non-Inplace transformations should return false here. The default value is true and the more
      * efficient strategy. However, if a transformation, i.e., a processor within the transformation
      * requires to work on a real copy of the model then the transformation implementation should
-     * return true here an KiCo will provide the transformation with a copy of the model as input.
-     * Override this method to return true;
+     * return false here an KiCo will provide the transformation with a copy of the model as input.
+     * Override this method to return false;
      * 
-     * @return true ONLY if the model transformation really requires a copy of the model as the
-     *         input. Typically model transformations should return false here for faster
-     *         processing.
+     * @return false ONLY if the model transformation really requires a copy of the model as the
+     *         input. Typically model transformations should return true here for faster processing.
      */
-    public boolean requireModelCopyAsInput() {
-        return false;
+    public boolean isInplace() {
+        return true;
     }
 
     // -------------------------------------------------------------------------

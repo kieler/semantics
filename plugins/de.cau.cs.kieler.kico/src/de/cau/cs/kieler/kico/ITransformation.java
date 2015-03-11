@@ -94,14 +94,16 @@ public interface ITransformation {
     // -------------------------------------------------------------------------
 
     /**
-     * Inplace transformations should return false here. This is also the default value and the more
+     * Non-Inplace transformations should return false here. The default value is true and the more
      * efficient strategy. However, if a transformation, i.e., a processor within the transformation
      * requires to work on a real copy of the model then the transformation implementation should
-     * return true here an KiCo will provide the transformation with a copy of the model as input.
+     * return false here an KiCo will provide the transformation with a copy of the model as input.
+     * Override this method to return false;
      * 
-     * @return true, if successful
+     * @return false ONLY if the model transformation really requires a copy of the model as the
+     *         input. Typically model transformations should return true here for faster processing.
      */
-    public boolean requireModelCopyAsInput();
+    public boolean isInplace();
 
     // -------------------------------------------------------------------------
 
