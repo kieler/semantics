@@ -81,7 +81,13 @@ public class KielerCompilerContext {
 
     /**
      * Instantiates a new kieler compiler context with an original source model and calculates the
-     * transformation chain.
+     * transformation chain. <BR>
+     * <BR>
+     * The string artuments are a list of IDs, where disabled IDs are marked with a "!" before the
+     * ID and preferred with a "*". Transformation IDs start with a preceding "T_" and processor
+     * options with "P_". <BR>
+     * Example:<BR>
+     * "ABORT, *T_ABORT_WTO,!P_DEADCODE"
      * 
      * @param stringArguments
      *            the string arguments
@@ -100,19 +106,30 @@ public class KielerCompilerContext {
      * Instantiates a new kieler compiler context with an original source model and calculates the
      * transformation chain.
      * 
-     * @param selectedTransformationIds
+     * @param selectedFeatureAndTransformationIds
      *            the selected feature and transformation IDs
      * @param disabledTransformationIds
      *            the disabled transformation IDs
+     * @param preferredTransformationIds
+     *            the preferred transformation ids
+     * @param enabledProcessorOptionIds
+     *            the enabled processor option ids
+     * @param disabledProcessorOptionIds
+     *            the disabled processor option ids
      * @param eObject
      *            the e object
      */
-    public KielerCompilerContext(List<String> selectedTransformationIds,
-            List<String> disabledTransformationIds, EObject eObject) {
+    public KielerCompilerContext(List<String> selectedFeatureAndTransformationIds,
+            List<String> disabledTransformationIds, List<String> preferredTransformationIds,
+            List<String> enabledProcessorOptionIds, List<String> disabledProcessorOptionIds,
+            EObject eObject) {
         compilationResult = new CompilationResult(eObject);
         selection.clear();
-        selection.setSelectedFeatureAndTransformationIds(selectedTransformationIds);
+        selection.setSelectedFeatureAndTransformationIds(selectedFeatureAndTransformationIds);
         selection.setDisabledTransformationIds(disabledTransformationIds);
+        selection.setPreferredTransformationIds(preferredTransformationIds);
+        selection.setEnabledProcessorOptionIds(enabledProcessorOptionIds);
+        selection.setDisabledProcessorOptionIds(disabledProcessorOptionIds);
         recomputeTransformationChain(true);
     }
 
@@ -282,9 +299,9 @@ public class KielerCompilerContext {
      * Recompute transformation chain as based on the current selection and the registered features,
      * transformations and processors. If forceUpdate is true then the internal representation of
      * transformations is also recomputed. If the model or the user selection changed forceUpdate
-     * should be true, otherwise it mostly should be false.
-     * <BR><BR>
-     * This is also the hook to 
+     * should be true, otherwise it mostly should be false. <BR>
+     * <BR>
+     * This is also the hook to
      * 
      * @param forceUpdate
      *            the force update
