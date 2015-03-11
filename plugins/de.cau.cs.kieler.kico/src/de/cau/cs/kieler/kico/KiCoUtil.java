@@ -23,7 +23,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
@@ -39,8 +38,6 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;
-
-import de.cau.cs.kieler.core.util.Pair;
 
 /**
  * This class is a collection of utility methods for handling models in/with KiCo.
@@ -104,8 +101,9 @@ public class KiCoUtil {
         // extension was found.
         List<String> extensionKeyList =
                 new LinkedList<String>(getRegXtext().getExtensionToFactoryMap().keySet());
+        KiCoPlugin.getInstance();
         HashMap<String, ResourceExtension> resourceExtensionMap =
-                KiCoPlugin.getInstance().getRegisteredResourceExtensions(false);
+                KiCoPlugin.getRegisteredResourceExtensions(false);
         if (KiCoPlugin.DEBUG) {
             System.out.println("MODEL eCLASS: " + model.eClass().getName());
         }
