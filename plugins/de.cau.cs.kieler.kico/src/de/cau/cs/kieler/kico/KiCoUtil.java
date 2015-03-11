@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -304,6 +305,24 @@ public class KiCoUtil {
         PrintWriter pw = new PrintWriter(sw);
         t.printStackTrace(pw);
         return sw.toString(); // stack trace as a string
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the model hash.
+     *
+     * @param eObject the e object
+     * @return the model hash
+     */
+    public int getModelHash(EObject eObject) {
+        int hashValue = 0;
+        TreeIterator<?> treeIterator = eObject.eAllContents();
+        while (treeIterator.hasNext()) {
+            Object obj = treeIterator.next();
+            hashValue += obj.toString().hashCode();
+        }
+        return hashValue;
     }
 
     // -------------------------------------------------------------------------
