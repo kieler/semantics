@@ -274,7 +274,12 @@ public class KielerCompilerContext {
      * features, transformations and processors.
      */
     public void recalculateTransformationChain() {
-        // TODO: Main work of calculating the transformation chain :-)
+        TransformationDummyGraph graph = new TransformationDummyGraph(this);
+        compilationChain = new ArrayList<Transformation>();
+        List<TransformationDummy> dummies = graph.getTransformationDummies(false);
+        for (TransformationDummy dummy : dummies) {
+            compilationChain.add(dummy.transformation);
+        }
     }
 
     // -------------------------------------------------------------------------
