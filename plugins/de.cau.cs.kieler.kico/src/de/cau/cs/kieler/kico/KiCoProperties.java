@@ -11,11 +11,10 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kico.klighd;
+package de.cau.cs.kieler.kico;
 
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
-import de.cau.cs.kieler.kico.CompilationResult;
 
 /**
  * @author als
@@ -23,8 +22,8 @@ import de.cau.cs.kieler.kico.CompilationResult;
  * @kieler.rating 2014-09-22 proposed yellow
  * 
  */
-public final class KiCoKLighDProperties {
-    private KiCoKLighDProperties() {
+public final class KiCoProperties {
+    private KiCoProperties() {
     }
 
     public static final IProperty<CompilationResult> COMPILATION_RESULT =

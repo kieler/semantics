@@ -28,6 +28,7 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.LayoutOptions
+import de.cau.cs.kieler.kitt.klighd.actions.MemorizedCollapseExpandAction
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption
 import de.cau.cs.kieler.klighd.KlighdConstants
@@ -39,7 +40,6 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import java.util.List
 import javax.inject.Inject
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.kitt.klighd.actions.MemorizedCollapseExpandAction;
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*

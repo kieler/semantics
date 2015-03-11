@@ -14,12 +14,11 @@
 package de.cau.cs.kieler.kico;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 
-import de.cau.cs.kieler.core.util.Pair;
+import de.cau.cs.kieler.kitt.tracing.Tracing;
 
 /**
  * This class is the extended version of the transformation result including intermediate results
@@ -59,6 +58,8 @@ public class CompilationResult {
      * possible.
      */
     private boolean currentTransformationdone = false;
+    
+    public Tracing tracing;//TODO delete when kico is redesigned
 
     // -------------------------------------------------------------------------
 

@@ -38,12 +38,12 @@ class TracingReport {
     public val targetElementNotInMapping = newHashSet();
     public val targetElementNotInModel = newHashSet();
 
-    new(Object sourceModel, Object targetModel, TracingMapping tracingMapping) {
+    new(Tracing tracing, Object sourceModel, Object targetModel, TracingMapping tracingMapping) {
         mapping = tracingMapping;
 
         //find correct source and target models due to inplace transformation delegation
         if (mapping.inPlace) {
-            val realSource = TracingManager.getTracingChain(sourceModel).getModels(mapping).first as EObject;
+            val realSource = tracing.getTracingChain().getModels(mapping).first as EObject;
             if (realSource instanceof EObject) {
                 source = realSource as EObject;
             } else {

@@ -24,6 +24,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import de.cau.cs.kieler.kitt.tracing.Tracing;
+
 /**
  * This class implements the context of a KielerCompiler call
  * 
@@ -88,6 +90,8 @@ public class KielerCompilerContext {
 
     /** The progress monitor for the currently called transformation. */
     private KielerCompilerProgressMonitor currentTransformationProgressMonitor = null;
+    
+    public boolean tracing; //TODO delete when kico is redesigned
 
     // -------------------------------------------------------------------------
 

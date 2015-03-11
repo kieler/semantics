@@ -52,6 +52,7 @@ public class KiCoAsynchronousCompilation extends Job {
     /** Compiler selection */
     private final KiCoSelection transformations;
     /** Flag if additional progress information should be displayed */
+    private final boolean tracing;
     private boolean showsProgress = false;
     /** Flag if this job should update corresponding ModelView when finished compiling */
     private boolean updateModelView = false;
@@ -71,7 +72,7 @@ public class KiCoAsynchronousCompilation extends Job {
      * @param transformations
      */
     public KiCoAsynchronousCompilation(KiCoModelView modelView, EObject sourceModel,
-            String sourceFile, KiCoSelection transformations) {
+            String sourceFile, KiCoSelection transformations, boolean tracing) {
         super("Compiling: " + sourceFile);
 
         this.modelView = modelView;
@@ -85,6 +86,7 @@ public class KiCoAsynchronousCompilation extends Job {
 
         this.sourceModel = sourceModel;
         this.transformations = transformations;
+        this.tracing = tracing;
 
         // compilation placeholder
         this.model = new KiCoMessageModel("Compilation in progress...");
@@ -101,6 +103,7 @@ public class KiCoAsynchronousCompilation extends Job {
             context.setPrerequirements(transformations.isAdvanced());
             context.setInplace(false);
             context.setProgressMonitor(monitor);
+            context.tracing = tracing;
             // Do turn this on ONLY if you temporary want to SEE simulation transformations in KiCo selection view
             context.setCreateDummyResource(true);
             result = KielerCompiler.compile(context);

@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.sccharts.klighd
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KLabel
 import de.cau.cs.kieler.core.kgraph.KNode
@@ -26,11 +27,12 @@ import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.kico.KielerCompiler
+import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.kiml.klayoutdata.KLayoutData
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.tracing.internal.TracingEdgeNode
-import de.cau.cs.kieler.kitt.tracing.TracingManager
 import de.cau.cs.kieler.kitt.tracing.internal.TracingMapping
+import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.Action
@@ -42,12 +44,10 @@ import de.cau.cs.kieler.scg.Dependency
 import de.cau.cs.kieler.scg.RelativeWrite_Read
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Write_Write
-import java.util.Collection
 import java.util.HashMap
 import org.eclipse.emf.ecore.EObject
 
 import static extension com.google.common.base.Predicates.*
-import de.cau.cs.kieler.core.kexpressions.ValuedObject
 
 /**
  * @author als
@@ -80,8 +80,10 @@ class SCGDepExtension {
     def addSCGDependcyEdges(KNode rootNode, State scc) {
         val tracking = adapters.get(rootNode);
         if (tracking != null) {
-            TracingManager.activateTracing(scc);
-            val result = KielerCompiler.compile("SCGDEP", scc, true, false);
+            val context = new KielerCompilerContext("SCGDEP", scc);
+            context.prerequirements = true;
+            context.tracing = true;
+            val result = KielerCompiler.compile(context);
             val compiledModel = result.object;
             val attachNode = rootNode.children.head;
             val equivalenceClasses = new TracingMapping(null);
@@ -102,7 +104,7 @@ class SCGDepExtension {
             if (compiledModel instanceof SCGraph && attachNode != null) {
                 val scg = compiledModel as SCGraph;
 
-                val mapping = TracingManager.getMapping(scg, scc);
+                val mapping = result.tracing.getMapping(scg, scc);
                 if (mapping != null) {
                     val filterDiagramPredicate = KLabel.instanceOf.or(KRectangle.instanceOf);
                     val filterModelPredicate = Action.instanceOf.or(ValuedObject.instanceOf);

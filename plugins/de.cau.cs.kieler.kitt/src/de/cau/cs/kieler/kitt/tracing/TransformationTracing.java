@@ -125,7 +125,8 @@ public class TransformationTracing {
         }
     }
 
-    private static HashMap<Thread, TracingMapping> activeTransformations =
+    private static HashMap<Thread, Tracing> activeTracings = new HashMap<Thread, Tracing>(8);
+    private static HashMap<Thread, TracingMapping> tracingMappings =
             new HashMap<Thread, TracingMapping>(8);
     private static HashMap<Thread, AutomaticTracingAdapter> tracingAdapter =
             new HashMap<Thread, AutomaticTracingAdapter>(8);
@@ -133,28 +134,6 @@ public class TransformationTracing {
             new HashMap<Thread, List<EObject>>(8);
     private static HashMap<Thread, HashMultimap<EObject, EObject>> appiledDefaultTracings =
             new HashMap<Thread, HashMultimap<EObject, EObject>>(8);
-
-    /**
-     * @see startTransformationTracing(sourceModel, null, null, true)
-     */
-    public static boolean startTransformationTracing(final EObject sourceModel) {
-        return startTransformationTracing(sourceModel, null, null, true);
-    }
-
-    /**
-     * @see startTransformationTracing(sourceModel, null, name, true)
-     */
-    public static boolean startTransformationTracing(final EObject sourceModel, String name) {
-        return startTransformationTracing(sourceModel, null, name, true);
-    }
-
-    /**
-     * @see startTransformationTracing(sourceModel, null, null, inPlaceTransformation)
-     */
-    public static boolean startTransformationTracing(final EObject sourceModel,
-            final boolean inPlaceTransformation) {
-        return startTransformationTracing(sourceModel, null, null, inPlaceTransformation);
-    }
 
     /**
      * Starts a new transformation tracing in the current thread if traing is activated for the
@@ -172,49 +151,95 @@ public class TransformationTracing {
      * @throws IllegalStateException
      *             if another transformation is currently running in the same thread.
      */
-    public static boolean startTransformationTracing(final EObject sourceModel,
+    static void startTransformationTracing(final Tracing tracing, final EObject sourceModel,
             final EObject targetModel, final String name, final boolean inPlaceTransformation) {
         Preconditions.checkNotNull(sourceModel, "Source model is null");
         Thread t = Thread.currentThread();
-        if (TracingManager.isTracingActivated(sourceModel)) {
-            if (activeTransformations.containsKey(t)) {
-                activeTransformations.remove(t);// try to fix
-                throw new IllegalStateException(
-                        "Cannot start transformation tracing for given model until other current transformation on the same model have finished");
-            }
-            if (inPlaceTransformation) {
-                TracingChain tracingChain = TracingManager.getTracingChain(sourceModel);
-                if (tracingChain != null) {
-                    TracingMapping inPlaceMapping = tracingChain.getInPlaceMapping(sourceModel);
-                    if (inPlaceMapping != null) {
-                        TracingMapping tracingMapping = new TracingMapping(inPlaceMapping, name);
-                        AutomaticTracingAdapter adapter =
-                                new AutomaticTracingAdapter(tracingMapping);
-                        // add automatic tracing adapter
-                        sourceModel.eAdapters().add(adapter);
-                        adapter.setActive(true);
-                        // register
-                        activeTransformations.put(t, tracingMapping);
-                        tracingAdapter.put(t, adapter);
-                        appiledDefaultTracings.put(t, HashMultimap.<EObject, EObject> create());
-                        return true;
-                    }
+        if (activeTracings.containsKey(t)) {
+            // try to fix next compilation
+            activeTracings.remove(t);
+            tracingMappings.remove(t);
+            tracingAdapter.remove(t);
+            tracingDefaults.remove(t);
+            appiledDefaultTracings.remove(t);
+            throw new IllegalStateException(
+                    "Cannot start transformation tracing for given model until other current transformation on the same model have finished");
+        }
+        TracingMapping tracingMapping;
+        if (inPlaceTransformation) {
+            TracingChain tracingChain = tracing.getTracingChain();
+            if (tracingChain != null) {
+                TracingMapping inPlaceMapping = tracingChain.getInPlaceMapping(sourceModel);
+                if (inPlaceMapping != null) {
+                    tracingMapping = new TracingMapping(inPlaceMapping, name);
+                } else {
+                    throw new IllegalArgumentException(
+                            "Cannot find predecessor for inplace tracing");
                 }
             } else {
-                TracingMapping tracingMapping = new TracingMapping(name);
-                AutomaticTracingAdapter adapter = new AutomaticTracingAdapter(tracingMapping);
-                // add automatic tracing adapter
-                if (targetModel != null) {
-                    targetModel.eAdapters().add(adapter);
-                }
-                adapter.setActive(true);
-                activeTransformations.put(t, tracingMapping);
-                tracingAdapter.put(t, adapter);
-                appiledDefaultTracings.put(t, HashMultimap.<EObject, EObject> create());
-                return true;
+                throw new IllegalArgumentException("Cannot continue tracing ");
             }
+        } else {
+            tracingMapping = new TracingMapping(name);
         }
-        return false;
+        AutomaticTracingAdapter adapter = new AutomaticTracingAdapter(tracingMapping);
+        // add automatic tracing adapter
+        if (inPlaceTransformation) {
+            sourceModel.eAdapters().add(adapter);
+        } else if (targetModel != null) {
+            targetModel.eAdapters().add(adapter);
+        }
+        adapter.setActive(true);
+        activeTracings.put(t, tracing);
+        tracingMappings.put(t, tracingMapping);
+        tracingAdapter.put(t, adapter);
+        appiledDefaultTracings.put(t, HashMultimap.<EObject, EObject> create());
+    }
+
+    /**
+     * Completes the current model transformation in the current thread with given source and target
+     * model and saves all tracing information. If createReport is true the tracing data will be
+     * checked against the given model and a {@link TracingReport} is returned.
+     * 
+     * @param sourceModel
+     *            the source model
+     * @param targetModel
+     *            the target model
+     * @return TracingReport if createReport is true else null
+     */
+    static TracingReport finishTransformationTracing(final EObject sourceModel,
+            final Object targetModel, boolean createReport) {
+        TracingReport report = null;
+        Thread t = Thread.currentThread();
+        if (activeTracings.containsKey(t)) {
+            Tracing tracing = activeTracings.get(t);
+            TracingMapping mapping = tracingMappings.get(t);
+            AutomaticTracingAdapter adapter = tracingAdapter.get(t);
+            if (mapping != null && sourceModel != null && targetModel != null) {
+                // stop and remove tracing adapter
+                adapter.setActive(false);
+                if (mapping.isInPlace()) {
+                    sourceModel.eAdapters().remove(adapter);
+                } else if (targetModel instanceof EObject) {
+                    ((EObject) targetModel).eAdapters().remove(adapter);
+                }
+                // create report
+                if (KiTTPlugin.DEBUG || createReport) {
+                    report = new TracingReport(tracing, sourceModel, targetModel, mapping);
+                    if (KiTTPlugin.DEBUG) {
+                        report.printReport();
+                    }
+                }
+                // store data in tracing chain
+                tracing.addTransformationTrace(sourceModel, targetModel, mapping);
+            }
+            activeTracings.remove(t);
+            tracingMappings.remove(t);
+            tracingAdapter.remove(t);
+            tracingDefaults.remove(t);
+            appiledDefaultTracings.remove(t);
+        }
+        return report;
     }
 
     /**
@@ -232,75 +257,30 @@ public class TransformationTracing {
     public static boolean creationalTransformation(final EObject sourceModel,
             final EObject targetModel) {
         Thread t = Thread.currentThread();
-        if (activeTransformations.containsKey(t)) {
+        if (activeTracings.containsKey(t)) {
+            Tracing tracing = activeTracings.get(t);
             // finish running transformation
-            TracingMapping mapping = activeTransformations.get(t);
+            TracingMapping mapping = tracingMappings.get(t);
             if (mapping.isInPlace()) {
-                finishTransformationTracing(sourceModel, sourceModel);
+                finishTransformationTracing(sourceModel, sourceModel, false);
             } else {
-                finishTransformationTracing(sourceModel, targetModel);
+                finishTransformationTracing(sourceModel, targetModel, false);
             }
             // start new non inplace transformation
-            startTransformationTracing(sourceModel, targetModel, mapping.getTitle(), false);
+            startTransformationTracing(tracing, sourceModel, targetModel, mapping.getTitle(), false);
             return true;
         }
         return false;
     }
 
     /**
-     * Completes the current model transformation in the current thread with given source and traget
-     * model and saves all tracing information.
+     * Since KiCo does not support a proper way to identify transformations which support tracing
+     * they need to skip explicitly.
      * 
-     * @param sourceModel
-     *            the source model
-     * @param targetModel
-     *            the target model
+     * @param model
      */
-    public static void finishTransformationTracing(final EObject sourceModel,
-            final Object targetModel) {
-        finishTransformationTracing(sourceModel, targetModel, false);
-    }
-
-    /**
-     * Completes the current model transformation in the current thread with given source and target
-     * model and saves all tracing information. If createReport is true the tracing data will be
-     * checked against the given model and a {@link TracingReport} is returned.
-     * 
-     * @param sourceModel
-     *            the source model
-     * @param targetModel
-     *            the target model
-     * @return TracingReport if createReport is true else null
-     */
-    public static TracingReport finishTransformationTracing(final EObject sourceModel,
-            final Object targetModel, boolean createReport) {
-        TracingReport report = null;
-        Thread t = Thread.currentThread();
-        TracingMapping mapping = activeTransformations.get(t);
-        AutomaticTracingAdapter adapter = tracingAdapter.get(t);
-        if (mapping != null && sourceModel != null && targetModel != null) {
-            // stop and remove tracing adapter
-            adapter.setActive(false);
-            if (mapping.isInPlace()) {
-                sourceModel.eAdapters().remove(adapter);
-            } else if (targetModel instanceof EObject) {
-                ((EObject) targetModel).eAdapters().remove(adapter);
-            }
-            // create report
-            if (KiTTPlugin.DEBUG || createReport) {
-                report = new TracingReport(sourceModel, targetModel, mapping);
-                if (KiTTPlugin.DEBUG) {
-                    report.printReport();
-                }
-            }
-            // store data in tracing chain
-            TracingManager.addTransformationTrace(sourceModel, targetModel, mapping);
-        }
-        activeTransformations.remove(t);
-        tracingAdapter.remove(t);
-        tracingDefaults.remove(t);
-        appiledDefaultTracings.remove(t);
-        return report;
+    public static void skipTransformationTracing(final EObject model) {
+        finishTransformationTracing(model, model, false);
     }
 
     /**
@@ -309,7 +289,7 @@ public class TransformationTracing {
      * @return true if there is an active transformation else false
      */
     public static boolean isTracingActive() {
-        return activeTransformations.get(Thread.currentThread()) != null;
+        return activeTracings.get(Thread.currentThread()) != null;
     }
 
     // -----------------
@@ -325,7 +305,7 @@ public class TransformationTracing {
      * @return copy
      */
     public static <T extends EObject> T tracedCopy(final T original) {
-        TracingMapping mapping = activeTransformations.get(Thread.currentThread());
+        TracingMapping mapping = tracingMappings.get(Thread.currentThread());
         if (mapping != null) {
             return mapping.mappedCopy(original);
         } else {
@@ -367,7 +347,7 @@ public class TransformationTracing {
      */
     public static <T extends EObject> T trace(final T eObject, final EObject origin) {
         Thread t = Thread.currentThread();
-        TracingMapping mapping = activeTransformations.get(t);
+        TracingMapping mapping = tracingMappings.get(t);
         if (mapping != null) {
             HashMultimap<EObject, EObject> appiledDefaultTracing = appiledDefaultTracings.get(t);
             // Remove any default tracing if applied
@@ -452,8 +432,8 @@ public class TransformationTracing {
      */
     public static <T extends EObject> T traceToDefault(final T eObject) {
         Thread t = Thread.currentThread();
-        if (activeTransformations.containsKey(t) && tracingDefaults.get(t) != null) {
-            TracingMapping mapping = activeTransformations.get(t);
+        if (activeTracings.containsKey(t) && tracingDefaults.get(t) != null) {
+            TracingMapping mapping = tracingMappings.get(t);
             HashMultimap<EObject, EObject> appiledDefaultTracing = appiledDefaultTracings.get(t);
             List<EObject> tracingDefaultList = tracingDefaults.get(t);
             if (!mapping.contains(eObject)) {

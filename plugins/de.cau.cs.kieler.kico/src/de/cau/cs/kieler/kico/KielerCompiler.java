@@ -23,7 +23,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import de.cau.cs.kieler.kitt.tracing.Tracing;
 import de.cau.cs.kieler.kitt.tracing.TransformationTracing;
 
 /**
@@ -36,10 +38,10 @@ import de.cau.cs.kieler.kitt.tracing.TransformationTracing;
  * 
  */
 public class KielerCompiler {
-    
+
     /** The Constant DEBUG. */
-//    public static final boolean DEBUG = java.lang.management.ManagementFactory.getRuntimeMXBean()
-//            .getInputArguments().toString().contains("-agentlib:jdwp");
+    // public static final boolean DEBUG = java.lang.management.ManagementFactory.getRuntimeMXBean()
+    // .getInputArguments().toString().contains("-agentlib:jdwp");
     static final boolean DEBUG = false;
 
     static void debug(String debugText) {
@@ -54,7 +56,7 @@ public class KielerCompiler {
                 System.out.print(debugText);
             }
         }
-    }    
+    }
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
@@ -105,9 +107,11 @@ public class KielerCompiler {
             KielerCompilerContext context) {
         for (TransformationDummy otherTransformationDummy : context.getGraph()) {
             if (otherTransformationDummy.isAlternative()) {
-                // By convention: Group transformations are internally handled as produce dependencies
+                // By convention: Group transformations are internally handled as produce
+                // dependencies
                 // Rationale: If a group is selected, these transformations are applied
-                for (String alternative : otherTransformationDummy.transformation.getProducesDependencies()) {
+                for (String alternative : otherTransformationDummy.transformation
+                        .getProducesDependencies()) {
                     if (transformationDummy.id.equals(alternative)) {
                         return true;
                     }
@@ -260,8 +264,7 @@ public class KielerCompiler {
                 context.getGraph().remove(toBeDeleted);
                 for (TransformationDummy transformationDummy : context.getGraph()) {
                     if (transformationDummy.reverseDependencies.contains(toBeDeleted)) {
-                        debug("REMOVE " + toBeDeleted.id + " from "
-                                + transformationDummy.id);
+                        debug("REMOVE " + toBeDeleted.id + " from " + transformationDummy.id);
                         transformationDummy.reverseDependencies.remove(toBeDeleted);
                     }
                 }
@@ -281,7 +284,7 @@ public class KielerCompiler {
      */
     private static void markGroupNodes(KielerCompilerContext context,
             TransformationGroup transformationGroup) {
-        //TODO: Check if this is right!
+        // TODO: Check if this is right!
         for (String groupTransformationID : transformationGroup.getProducesDependencies()) {
             Transformation groupTransformation = getTransformation(groupTransformationID);
             if (groupTransformation != null) {
@@ -602,12 +605,17 @@ public class KielerCompiler {
      *            the transformation i ds
      * @return the list
      */
-    private static List<String> expandGroups(List<String> transformationIDs, List<String> disabledTransformationIDs, List<String> priorizedTransformationIDs) {
-        List<String> returnList = expandGroupsHelper(transformationIDs, disabledTransformationIDs, priorizedTransformationIDs);
+    private static List<String> expandGroups(List<String> transformationIDs,
+            List<String> disabledTransformationIDs, List<String> priorizedTransformationIDs) {
+        List<String> returnList =
+                expandGroupsHelper(transformationIDs, disabledTransformationIDs,
+                        priorizedTransformationIDs);
         while (returnList.size() != transformationIDs.size()) {
             // find fixed point
             transformationIDs = returnList;
-            returnList = expandGroupsHelper(transformationIDs, disabledTransformationIDs, priorizedTransformationIDs);
+            returnList =
+                    expandGroupsHelper(transformationIDs, disabledTransformationIDs,
+                            priorizedTransformationIDs);
         }
         return returnList;
     }
@@ -621,7 +629,8 @@ public class KielerCompiler {
      *            the transformation i ds
      * @return the list
      */
-    private static List<String> expandGroupsHelper(List<String> transformationIDs, List<String> disabledTransformationIDs, List<String> priorizedTransformationIDs) {
+    private static List<String> expandGroupsHelper(List<String> transformationIDs,
+            List<String> disabledTransformationIDs, List<String> priorizedTransformationIDs) {
         List<String> returnList = new ArrayList<String>();
         for (String transformationID : transformationIDs) {
             Transformation transformation = getTransformation(transformationID);
@@ -630,15 +639,17 @@ public class KielerCompiler {
                     TransformationGroup transformationGroup = (TransformationGroup) transformation;
                     if (!transformationGroup.isAlternatives()) {
                         // Add/expand all NON-alternative group members
-                        //TODO: check if produces dependencies is right!
-                        for (String otherTransformationID : transformationGroup.getProducesDependencies()) {
+                        // TODO: check if produces dependencies is right!
+                        for (String otherTransformationID : transformationGroup
+                                .getProducesDependencies()) {
                             returnList.add(otherTransformationID);
                         }
                     } else {
                         // Add/expand ONE alternative group members (if no other already exists)
                         boolean exists = false;
-                        //TODO: check if produces dependencies is right!
-                        for (String otherTransformationID : transformationGroup.getProducesDependencies()) {
+                        // TODO: check if produces dependencies is right!
+                        for (String otherTransformationID : transformationGroup
+                                .getProducesDependencies()) {
                             for (String returnListItem : transformationIDs) {
                                 if (returnListItem.equals(otherTransformationID)) {
                                     exists = true;
@@ -651,9 +662,11 @@ public class KielerCompiler {
                             // take the first alternative group member that is not disabled! //TODO:
                             debug("### " + transformation.getName());
                             List<String> allPrioDependencies = transformationIDs;
-                            //TODO: check if produces dependencies is right!
+                            // TODO: check if produces dependencies is right!
                             String defaultTransformation =
-                                    transformationGroup.getSelectedProducesDependency(transformationIDs, disabledTransformationIDs, priorizedTransformationIDs);
+                                    transformationGroup.getSelectedProducesDependency(
+                                            transformationIDs, disabledTransformationIDs,
+                                            priorizedTransformationIDs);
                             returnList.add(defaultTransformation);
                         }
                     }
@@ -674,7 +687,8 @@ public class KielerCompiler {
      *            the context
      * @return the list
      */
-    private static void eliminateGroupIds(KielerCompilerContext context, boolean allGroups, List<String> disabledTransformationIDs) {
+    private static void eliminateGroupIds(KielerCompilerContext context, boolean allGroups,
+            List<String> disabledTransformationIDs) {
         List<String> returnList = new ArrayList<String>();
         for (String transformationID : context.getCompilationTransformationIDs()) {
             Transformation transformation = getTransformation(transformationID);
@@ -691,8 +705,11 @@ public class KielerCompiler {
                             returnList.add(transformationID);
                         } else {
                             boolean allMarked = true;
-                            //TODO: check if produces dependencies is right!
-                            List<String> dependencyIDs = expandGroups(group.getProducesDependencies(), disabledTransformationIDs, context.getPriorizedTransformationsIDs());
+                            // TODO: check if produces dependencies is right!
+                            List<String> dependencyIDs =
+                                    expandGroups(group.getProducesDependencies(),
+                                            disabledTransformationIDs,
+                                            context.getPriorizedTransformationsIDs());
                             for (String dependencyID : dependencyIDs) {
                                 boolean found = false;
                                 for (String searchTransformationID : context
@@ -884,10 +901,14 @@ public class KielerCompiler {
         if (context.getMainResource() == null) {
             context.setMainResource(transformationEObject.eResource());
         }
+        
+        if(context.tracing){ //TODO delete when kico is redesigned
+            context.getCompilationResult().tracing = new Tracing();
+        }
 
         // If not inplace then produce a copy of the input EObject
         if (!context.isInplace()) {
-            EObject copiedObject = copy(transformationEObject);
+            EObject copiedObject = copy(transformationEObject, context);
             // replace (first) intermediate object
             context.getCompilationResult().clear(copiedObject);
             // make the new copy the transformedObject
@@ -972,10 +993,12 @@ public class KielerCompiler {
             // Feed back the last transformation result for the NEXT transformation
             EObject object = context.getCompilationResult().getEObject();
             if (object != null) {
-                //create copy to create a intermediate result for every selected transformation
-                if (!context.isInplace() && context.getSelectedTransformationIDs().contains(compilationTransformationID)) {
-                    transformedObject = copy(object);
-                }else{
+                // create copy to create a intermediate result for every selected transformation
+                if (!context.isInplace()
+                        && context.getSelectedTransformationIDs().contains(
+                                compilationTransformationID)) {
+                    transformedObject = copy(object, context);
+                } else {
                     transformedObject = object;
                 }
             } else {
@@ -990,9 +1013,9 @@ public class KielerCompiler {
             monitor.done();
         }
         long end = System.currentTimeMillis();
-        String seconds = (((float)(end-start))/1000) + "";
-        System.out.println("KIELER Compiler compiled in "+seconds+" seconds.");
-        
+        String seconds = (((float) (end - start)) / 1000) + "";
+        System.out.println("KIELER Compiler compiled in " + seconds + " seconds.");
+
         context.getCompilationResult().processPostponedWarnings();
         context.getCompilationResult().processPostponedErrors();
         return context.getCompilationResult();
@@ -1105,17 +1128,21 @@ public class KielerCompiler {
                 }
                 res = context.getMainResource();
             }
-            
-            //Perform transformation and traces all steps
-            TransformationTracing.startTransformationTracing(transformedObject, transformationID);
+
+            // Perform transformation and traces all steps
+            if (context.tracing) {
+                context.getCompilationResult().tracing.startTransformationTracing(transformedObject, transformationID);
+            }
             start = System.currentTimeMillis();
             object = transformation.doTransform(transformedObject, context);
             end = System.currentTimeMillis();
         } catch (Exception exception) {
             context.getCompilationResult().addPostponedError(
                     new KielerCompilerException(transformationID, exception));
-        } finally{
-            TransformationTracing.finishTransformationTracing(transformedObject, object);
+        } finally {
+            if (context.tracing) {
+                context.getCompilationResult().tracing.finishTransformationTracing(transformedObject, object);
+            }
         }
 
         if (object != null) {
@@ -1128,13 +1155,15 @@ public class KielerCompiler {
             }
 
             String compilationTransformationID = transformation.getId();
-            IntermediateResult intermediateResult = context.getCompilationResult().addIntermediateResult(compilationTransformationID);
-            
+            IntermediateResult intermediateResult =
+                    context.getCompilationResult().addIntermediateResult(
+                            compilationTransformationID);
+
             // Add to compilation result
             intermediateResult.setResut(object);
-            
+
             // Add performance result
-            intermediateResult.setDuration(end-start);
+            intermediateResult.setDuration(end - start);
 
             if (!(object instanceof EObject)) {
                 // in this case we CANNOT do any further transformation calls
@@ -1145,16 +1174,22 @@ public class KielerCompiler {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Creates and returns a copy of the given model and preserves its tracings if necessary.
-     * @param original model
+     * 
+     * @param original
+     *            model
      * @return copy model
      */
-    private static EObject copy(EObject original){
-        TransformationTracing.startTransformationTracing(original, false);
-        EObject copy = TransformationTracing.tracedCopy(original);
-        TransformationTracing.finishTransformationTracing(original, copy); 
-        return copy;
+    private static EObject copy(EObject original, KielerCompilerContext context) {
+        if (context.tracing) {
+            context.getCompilationResult().tracing.startTransformationTracing(original, false);
+            EObject copy = TransformationTracing.tracedCopy(original);
+            context.getCompilationResult().tracing.finishTransformationTracing(original, copy);
+            return copy;
+        } else {
+            return EcoreUtil.copy(original);
+        }
     }
 }

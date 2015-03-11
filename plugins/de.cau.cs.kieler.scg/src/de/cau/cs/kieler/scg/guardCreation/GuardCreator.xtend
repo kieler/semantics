@@ -38,7 +38,6 @@ import de.cau.cs.kieler.scg.synchronizer.SynchronizerSelector
 import java.util.HashMap
 import java.util.List
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kico.KielerCompilerContext
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.ScheduledBlock
@@ -60,6 +59,8 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.sequentializer.AbstractSequentializer
 import de.cau.cs.kieler.scg.optimizer.CopyPropagation
+import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -452,11 +453,13 @@ class GuardCreator extends AbstractGuardCreator {
     } */
     // --- CREATE GUARDS: GO BLOCK 
     protected def void createGoBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
+        guard.setDefaultTrace
         guard.expression = scg.findValuedObjectByName(GOGUARDNAME).reference
     }
 
     // --- CREATE GUARDS: DEPTH BLOCK 
     protected def void createDepthBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
+        guard.setDefaultTrace
         guard.expression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
             setOperator(OperatorType::PRE)
             subExpressions.add(schedulingBlock.basicBlock.preGuard.reference)
@@ -465,7 +468,7 @@ class GuardCreator extends AbstractGuardCreator {
 
     // --- CREATE GUARDS: SYNCHRONIZER BLOCK 
     protected def void createSynchronizerBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
-
+        guard.setDefaultTrace
         // The simple scheduler uses the SurfaceSynchronizer. 
         // The result of the synchronizer is stored in the synchronizerData class joinData.
         val join = schedulingBlock.nodes.head as Join
@@ -495,6 +498,7 @@ class GuardCreator extends AbstractGuardCreator {
 
     // --- CREATE GUARDS: STANDARD BLOCK 
     protected def void createStandardBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
+        guard.setDefaultTrace
         val basicBlock = schedulingBlock.basicBlock
 
         val relevantPredecessors = <Predecessor>newHashSet
@@ -540,6 +544,7 @@ class GuardCreator extends AbstractGuardCreator {
     // --- CREATE GUARDS: SUBSEQUENT SCHEDULING BLOCK 
     protected def void createSubsequentSchedulingBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock,
         SCGraph scg) {
+        guard.setDefaultTrace
         if (guard.schizophrenic && schedulingBlock.basicBlock.entryBlock) {
             guard.expression = FALSE
         } else {
@@ -561,7 +566,7 @@ class GuardCreator extends AbstractGuardCreator {
      */
     protected def Expression predecessorExpression(Guard guard, Predecessor predecessor, SchedulingBlock schedulingBlock,
         SCGraph scg) {
-
+        guard.setDefaultTrace
         // Return a solely reference as expression if the predecessor is not a conditional
         if (predecessor.branchType == BranchType::NORMAL) {
             return predecessor.basicBlock.schedulingBlocks.last.guard.valuedObject.reference

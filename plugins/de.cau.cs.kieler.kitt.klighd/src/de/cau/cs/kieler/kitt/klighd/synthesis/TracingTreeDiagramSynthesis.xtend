@@ -32,7 +32,6 @@ import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kitt.klighd.actions.MemorizedCollapseExpandAction
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingProperties
 import de.cau.cs.kieler.kitt.klighd.tracing.TracingSynthesisOption
-import de.cau.cs.kieler.kitt.tracing.TracingManager
 import de.cau.cs.kieler.kitt.tracing.TracingTreeExtensions
 import de.cau.cs.kieler.kitt.tracingtree.EObjectWrapper
 import de.cau.cs.kieler.kitt.tracingtree.ModelWrapper
@@ -137,8 +136,6 @@ class TracingTreeDiagramSynthesis extends AbstractDiagramSynthesis<ModelWrapper>
             ];
         }
 
-        //This is a special case where the model itself is its own tracing
-        TracingManager.activateTracing(model);
         return rootNode;
     }
 
