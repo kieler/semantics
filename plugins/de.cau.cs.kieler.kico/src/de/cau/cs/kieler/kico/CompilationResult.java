@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2014 by
+ * Copyright 2015 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -24,8 +24,8 @@ import org.eclipse.emf.ecore.EObject;
  * be the source model.
  * 
  * @author cmot ssm
- * @kieler.design 2014-05-21 proposed
- * @kieler.rating 2014-05-21 proposed yellow
+ * @kieler.design 2015-03-11 proposed
+ * @kieler.rating 2015-03-11 proposed yellow
  * 
  */
 public class CompilationResult {
