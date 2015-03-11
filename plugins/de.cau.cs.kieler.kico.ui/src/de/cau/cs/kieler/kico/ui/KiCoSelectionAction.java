@@ -60,7 +60,7 @@ public class KiCoSelectionAction extends KiCoKlighdAction implements IAction {
 
         if (transformationDummy != null) {
             int activeEditorID = KiCoSelectionView.getActiveEditorID();
-            String id = transformationDummy.id;
+            String id = transformationDummy.transformationId;
 
             KiCoSelectionView.removeRequiredTransformationVisualization(activeEditorID);
 
@@ -81,7 +81,7 @@ public class KiCoSelectionAction extends KiCoKlighdAction implements IAction {
                           KiCoDiagramSynthesis.BLACK, KiCoDiagramSynthesis.BLUE1);
                   setStateColor(otherAlternative, context.getViewContext(),
                           KiCoDiagramSynthesis.BLUE1, KiCoDiagramSynthesis.BLUE2);
-                  KiCoSelectionView.removeSelectedTransformation(otherAlternative.id,
+                  KiCoSelectionView.removeSelectedTransformation(otherAlternative.transformationId,
                           activeEditorID);
               }
                 

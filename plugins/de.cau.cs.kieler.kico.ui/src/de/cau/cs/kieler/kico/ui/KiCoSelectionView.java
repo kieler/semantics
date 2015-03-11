@@ -1196,7 +1196,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                             getAllTransformations(activeEditorID);
                     List<String> allTransformationIDs = new ArrayList<String>();
                     for (TransformationDummy transformationDummy : allTransformations) {
-                        allTransformationIDs.add(transformationDummy.id);
+                        allTransformationIDs.add(transformationDummy.transformationId);
                     }
                     addSelectedTransformationVisualization(activeEditorID, allTransformationIDs);
                     List<String> selectedAndExcludedTransformations =

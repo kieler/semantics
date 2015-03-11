@@ -58,7 +58,7 @@ public class KiCoDisabledSelectionAction extends KiCoKlighdAction implements IAc
                 (TransformationDummy) context.getDomainElement(kNode);
 
         if (transformationDummy != null) {
-            String id = transformationDummy.id;
+            String id = transformationDummy.transformationId;
 
             if (!KiCoSelectionView.isSelectedTransformation(id,
                     KiCoSelectionView.getActiveEditorID())) {
