@@ -283,17 +283,20 @@ public class KielerCompilerContext {
      * transformations and processors. If forceUpdate is true then the internal representation of
      * transformations is also recomputed. If the model or the user selection changed forceUpdate
      * should be true, otherwise it mostly should be false.
+     * <BR><BR>
+     * This is also the hook to 
      * 
      * @param forceUpdate
      *            the force update
      */
-    public void recomputeTransformationChain(boolean forceUpdate) {
+    public TransformationDummyGraph recomputeTransformationChain(boolean forceUpdate) {
         TransformationDummyGraph graph = new TransformationDummyGraph(this);
         compilationChain = new ArrayList<Transformation>();
         List<TransformationDummy> dummies = graph.getTransformationDummies(forceUpdate);
         for (TransformationDummy dummy : dummies) {
             compilationChain.add(dummy.transformation);
         }
+        return graph;
     }
 
     // -------------------------------------------------------------------------
