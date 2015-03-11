@@ -52,39 +52,39 @@ public class KiCoDisabledSelectionAction extends KiCoKlighdAction implements IAc
      */
     public ActionResult execute(final ActionContext context) {
 
-        KNode kNode = context.getKNode();
-
-        TransformationDummy transformationDummy =
-                (TransformationDummy) context.getDomainElement(kNode);
-
-        if (transformationDummy != null) {
-            String id = transformationDummy.transformationId;
-
-            if (!KiCoSelectionView.isSelectedTransformation(id,
-                    KiCoSelectionView.getActiveEditorID())) {
-                // Disabled Select
-                setLabelColor(transformationDummy, context.getViewContext(),
-                        KiCoDiagramSynthesis.DARKGRAY, KiCoDiagramSynthesis.GRAY1);
-                setStateColor(transformationDummy, context.getViewContext(),
-                        KiCoDiagramSynthesis.GRAY1, KiCoDiagramSynthesis.GRAY2);
-                KiCoSelectionView.addSelectedTransformation(id,
-                        KiCoSelectionView.getActiveEditorID(), false);
-            } else {
-                // Un select
-                setLabelColor(transformationDummy, context.getViewContext(),
-                        KiCoDiagramSynthesis.BLACK, KiCoDiagramSynthesis.BLUE1);
-                setStateColor(transformationDummy, context.getViewContext(),
-                        KiCoDiagramSynthesis.BLUE1, KiCoDiagramSynthesis.BLUE2);
-                KiCoSelectionView.removeSelectedTransformation(id,
-                        KiCoSelectionView.getActiveEditorID());
-            }
-
-            System.out.println(Arrays.toString(KiCoSelectionView.getSelectedAndDisabledTransformations(
-                    KiCoSelectionView.getActiveEditorID()).toArray()));
-
-            // notify listeners about currently active transformations
-            KiCoSelectionView.updateActiveTransformationsProperty();
-        }
+//        KNode kNode = context.getKNode();
+//
+//        TransformationDummy transformationDummy =
+//                (TransformationDummy) context.getDomainElement(kNode);
+//
+//        if (transformationDummy != null) {
+//            String id = transformationDummy.transformationId;
+//
+//            if (!KiCoSelectionView.isSelectedTransformation(id,
+//                    KiCoSelectionView.getActiveEditorID())) {
+//                // Disabled Select
+//                setLabelColor(transformationDummy, context.getViewContext(),
+//                        KiCoDiagramSynthesis.DARKGRAY, KiCoDiagramSynthesis.GRAY1);
+//                setStateColor(transformationDummy, context.getViewContext(),
+//                        KiCoDiagramSynthesis.GRAY1, KiCoDiagramSynthesis.GRAY2);
+//                KiCoSelectionView.addSelectedTransformation(id,
+//                        KiCoSelectionView.getActiveEditorID(), false);
+//            } else {
+//                // Un select
+//                setLabelColor(transformationDummy, context.getViewContext(),
+//                        KiCoDiagramSynthesis.BLACK, KiCoDiagramSynthesis.BLUE1);
+//                setStateColor(transformationDummy, context.getViewContext(),
+//                        KiCoDiagramSynthesis.BLUE1, KiCoDiagramSynthesis.BLUE2);
+//                KiCoSelectionView.removeSelectedTransformation(id,
+//                        KiCoSelectionView.getActiveEditorID());
+//            }
+//
+//            System.out.println(Arrays.toString(KiCoSelectionView.getSelectedAndDisabledTransformations(
+//                    KiCoSelectionView.getActiveEditorID()).toArray()));
+//
+//            // notify listeners about currently active transformations
+//            KiCoSelectionView.updateActiveTransformationsProperty();
+//        }
 
         return ActionResult.createResult(true).dontAnimateLayout();
     }

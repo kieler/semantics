@@ -14,7 +14,9 @@ import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.kico.Feature;
 import de.cau.cs.kieler.kico.KiCoPlugin;
+import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.Transformation;
 import de.cau.cs.kieler.kico.ui.CompileChains.CompileChain;
 
@@ -108,16 +110,16 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
                 }
                 String transformationIDs = editors[i].getAttribute("transformations");
                 
-                ArrayList<String> transformations = new ArrayList<String>();
+                ArrayList<String> features = new ArrayList<String>();
                 // The special case where we want to add ALL registered transformations 
                 if (transformationIDs.equals("ALL")) {
-                   for (Transformation transformation :  KiCoPlugin.getInstance().getRegisteredTransformations().values()) {
-                       transformations.add(transformation.getId());
+                   for (Feature feature :  KielerCompiler.getFeatures()) {
+                       features.add(feature.getId());
                    }
                 } else {
                     String[] transformationIDsArray = transformationIDs.split(",");
                     for (String transformationID : transformationIDsArray) {
-                        transformations.add(transformationID.trim());
+                        features.add(transformationID.trim());
                     }
                 }
 
@@ -136,7 +138,7 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
                 CompileChain item = new CompileChain();
                 item.setPriority(priority);
                 item.label = label;
-                item.transformations = transformations;
+                item.transformations = features;
                 compileChains.insertItem(item);
 
                 
