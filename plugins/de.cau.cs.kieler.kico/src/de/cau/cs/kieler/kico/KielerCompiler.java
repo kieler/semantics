@@ -1033,9 +1033,7 @@ public class KielerCompiler {
 
         long start = 0;
         long end = 0;
-        String transformationId = "unknown";
         Object object = null;
-        transformationId = transformation.getId();
         Resource res = transformedObject.eResource();
         if (context.isCreateDummyResource()) {
             // If we should create a dummy resource then save it after each successful
