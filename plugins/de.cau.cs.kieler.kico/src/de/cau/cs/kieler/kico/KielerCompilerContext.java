@@ -44,6 +44,12 @@ public class KielerCompilerContext {
      */
     private boolean autoSelect = false;
 
+    /**
+     * The overall compilation is inplace and should happen directly on the source model (as far as
+     * there is no meta model change).
+     */
+    private boolean isInplace = false;
+
     /** The global verbose mode. */
     private boolean verboseMode = false;
 
@@ -445,4 +451,30 @@ public class KielerCompilerContext {
     }
 
     // -------------------------------------------------------------------------
+
+    /**
+     * Checks if the overall compilation is inplace and should happen directly on the source model
+     * (as far as there is no meta model change).
+     * 
+     * @return true, if is inplace
+     */
+    public boolean isInplace() {
+        return isInplace;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the checks if the overall compilation is inplace and should happen directly on the
+     * source model (as far as there is no meta model change).
+     * 
+     * @param isInplace
+     *            the new checks if is inplace
+     */
+    public void setIsInplace(boolean isInplace) {
+        this.isInplace = isInplace;
+    }
+
+    // -------------------------------------------------------------------------
+    
 }
