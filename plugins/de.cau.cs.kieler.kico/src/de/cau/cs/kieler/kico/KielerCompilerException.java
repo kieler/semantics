@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.kico;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
 /**
  * This class implements the exception used in the KielerCompiler to gather all warnings and errors.

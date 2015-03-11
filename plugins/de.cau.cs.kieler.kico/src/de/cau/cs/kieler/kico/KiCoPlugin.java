@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2014 by
+ * Copyright 2015 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kico;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
@@ -33,15 +32,12 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 
-import de.cau.cs.kieler.core.util.Pair;
-
-// TODO: Auto-generated Javadoc
 /**
  * The activator class controls the plug-in life cycle.
  * 
  * @author cmot ssm
- * @kieler.design 2014-03-11 proposed
- * @kieler.rating 2014-03-11 proposed yellow
+ * @kieler.design 2015-03-11 proposed
+ * @kieler.rating 2015-03-11 proposed yellow
  */
 public class KiCoPlugin extends Plugin {
 
@@ -130,35 +126,35 @@ public class KiCoPlugin extends Plugin {
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Checks if is e object.
-     * 
-     * @param clazz
-     *            the clazz
-     * @return true, if is e object
-     */
-    private static boolean isEObject(Class<?> clazz) {
-        if (EObject.class.isAssignableFrom(clazz)) {
-            return true;
-        }
-        return false;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Checks if is isKielerCompilerContext.
-     * 
-     * @param clazz
-     *            the clazz
-     * @return true, if is e object
-     */
-    private static boolean isKielerCompilerContext(Class<?> clazz) {
-        if (KielerCompilerContext.class.isAssignableFrom(clazz)) {
-            return true;
-        }
-        return false;
-    }
+//    /**
+//     * Checks if is e object.
+//     * 
+//     * @param clazz
+//     *            the clazz
+//     * @return true, if is e object
+//     */
+//    private static boolean isEObject(Class<?> clazz) {
+//        if (EObject.class.isAssignableFrom(clazz)) {
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    // -------------------------------------------------------------------------
+//
+//    /**
+//     * Checks if is isKielerCompilerContext.
+//     * 
+//     * @param clazz
+//     *            the clazz
+//     * @return true, if is e object
+//     */
+//    private static boolean isKielerCompilerContext(Class<?> clazz) {
+//        if (KielerCompilerContext.class.isAssignableFrom(clazz)) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     // -------------------------------------------------------------------------
 
@@ -176,40 +172,40 @@ public class KiCoPlugin extends Plugin {
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Gets the invokable method.
-     * 
-     * @param object
-     *            the object
-     * @param method
-     *            the method
-     * @return the invokable method
-     */
-    private Method getInvokableMethod(Object object, String method) {
-        for (Method providedMethod : object.getClass().getMethods()) {
-            String providedMethodName = providedMethod.getName();
-            Class<?>[] parameterTypes = providedMethod.getParameterTypes();
-            if (providedMethodName.equals(method)) {
-                // Case where signature is 'method(EObject eObject)'
-                if (parameterTypes.length == 1) {
-                    Class<?> parameterType = parameterTypes[0];
-                    if (isEObject(parameterType)) {
-                        return providedMethod;
-                    }
-                }
-                // Case where signature is 'method(EObject eObject, KielerCompilerContext
-                // kielerCompilerContext)'
-                if (parameterTypes.length == 2) {
-                    Class<?> parameterType1 = parameterTypes[0];
-                    Class<?> parameterType2 = parameterTypes[1];
-                    if (isEObject(parameterType1) && isKielerCompilerContext(parameterType2)) {
-                        return providedMethod;
-                    }
-                }
-            }
-        }
-        return null;
-    }
+//    /**
+//     * Gets the invokable method.
+//     * 
+//     * @param object
+//     *            the object
+//     * @param method
+//     *            the method
+//     * @return the invokable method
+//     */
+//    private Method getInvokableMethod(Object object, String method) {
+//        for (Method providedMethod : object.getClass().getMethods()) {
+//            String providedMethodName = providedMethod.getName();
+//            Class<?>[] parameterTypes = providedMethod.getParameterTypes();
+//            if (providedMethodName.equals(method)) {
+//                // Case where signature is 'method(EObject eObject)'
+//                if (parameterTypes.length == 1) {
+//                    Class<?> parameterType = parameterTypes[0];
+//                    if (isEObject(parameterType)) {
+//                        return providedMethod;
+//                    }
+//                }
+//                // Case where signature is 'method(EObject eObject, KielerCompilerContext
+//                // kielerCompilerContext)'
+//                if (parameterTypes.length == 2) {
+//                    Class<?> parameterType1 = parameterTypes[0];
+//                    Class<?> parameterType2 = parameterTypes[1];
+//                    if (isEObject(parameterType1) && isKielerCompilerContext(parameterType2)) {
+//                        return providedMethod;
+//                    }
+//                }
+//            }
+//        }
+//        return null;
+//    }
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
@@ -578,8 +574,9 @@ public class KiCoPlugin extends Plugin {
      * @return the resource extension
      */
     public ResourceExtension getResourceExtension(Object model) {
+        KiCoPlugin.getInstance();
         HashMap<String, ResourceExtension> resourceExtensionMap =
-                KiCoPlugin.getInstance().getRegisteredResourceExtensions(false);
+                KiCoPlugin.getRegisteredResourceExtensions(false);
         ResourceExtension specificExtension = null;
         if (model instanceof EObject) {
             specificExtension = resourceExtensionMap.get(((EObject) model).eClass().getName());

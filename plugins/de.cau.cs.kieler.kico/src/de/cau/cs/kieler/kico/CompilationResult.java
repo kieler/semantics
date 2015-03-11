@@ -14,12 +14,9 @@
 package de.cau.cs.kieler.kico;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-
-import de.cau.cs.kieler.core.util.Pair;
 
 /**
  * This class is the extended version of the transformation result including intermediate results
