@@ -44,7 +44,7 @@ public class KielerCompilerSelection {
      */
     private List<String> preferredTransformationIds = new ArrayList<String>();
 
-    /** The optionally disabled processor options. */
+    /** The optionally enabled processor options. */
     private List<String> enabledProcessorOptionIds = new ArrayList<String>();
 
     /** The optionally disabled processor options. */
@@ -354,6 +354,84 @@ public class KielerCompilerSelection {
      */
     public void setDisabledProcessorOptionIds(List<String> disabledProcessorOptionIds) {
         copyList(disabledProcessorOptionIds, this.disabledProcessorOptionIds);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if feature is selected.
+     * 
+     * @param featureId
+     *            the feature id
+     * @return true, if is selected
+     */
+    public boolean isFeatureSelected(String featureId) {
+        return this.selectedFeatureAndTransformationIds.contains(featureId);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if transformation is selected.
+     * 
+     * @param transformationId
+     *            the transformation id
+     * @return true, if is selected
+     */
+    public boolean isTransformationSelected(String transformationId) {
+        return this.selectedFeatureAndTransformationIds.contains("T_" + transformationId);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if transformation is preferred.
+     * 
+     * @param transformationId
+     *            the transformation id
+     * @return true, if is transformation preferred
+     */
+    public boolean isTransformationPreferred(String transformationId) {
+        return this.preferredTransformationIds.contains(transformationId);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if transformation is disabled.
+     * 
+     * @param transformationId
+     *            the transformation id
+     * @return true, if is transformation disabled
+     */
+    public boolean isTransformationDisabled(String transformationId) {
+        return this.disabledTransformationIds.contains(transformationId);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if processor option is enabled.
+     * 
+     * @param processorOptionId
+     *            the processor option id
+     * @return true, if is processor option enabled
+     */
+    public boolean isProcessorOptionEnabled(String processorOptionId) {
+        return this.enabledProcessorOptionIds.contains(processorOptionId);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if processor option is disabled.
+     * 
+     * @param processorOptionId
+     *            the processor option id
+     * @return true, if is processor option disabled
+     */
+    public boolean isProcessorOptionDisabled(String processorOptionId) {
+        return this.disabledProcessorOptionIds.contains(processorOptionId);
     }
 
     // -------------------------------------------------------------------------
