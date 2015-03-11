@@ -490,7 +490,7 @@ public class KielerCompilerContext {
      * @param isInplace
      *            the new checks if is inplace
      */
-    public void setIsInplace(boolean isInplace) {
+    public void setInplace(boolean isInplace) {
         this.isInplace = isInplace;
     }
 
