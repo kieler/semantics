@@ -367,7 +367,7 @@ public class KiCoUtil {
      *            the force no update
      * @return the transformation object features
      */
-    public Set<Feature> getModelFeatures(EObject model, boolean forceUpdate,
+    public static Set<Feature> getModelFeatures(EObject model, boolean forceUpdate,
             boolean forceFastCached) {
         if (forceFastCached) {
             // The quick lookup in our cache, the caller must be sure that the model has not changed

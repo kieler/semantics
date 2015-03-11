@@ -16,7 +16,8 @@ package de.cau.cs.kieler.kico;
 import java.util.HashSet;
 
 /**
- * This class represents a transformation dummy for fast processing transformation dependencies.
+ * This class represents a transformation dummy for fast processing transformation dependencies. For
+ * fast processing all attributes of this class are public. Only for internal KiCo usage!
  * 
  * @author cmot
  * @kieler.design 2015-03-11 proposed
