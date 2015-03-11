@@ -36,7 +36,7 @@ import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
-import de.cau.cs.kieler.kico.FeatureDummy;
+import de.cau.cs.kieler.kico.TransformationDummy;
 import de.cau.cs.kieler.kico.ui.CompileChains.CompileChain;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager.KiCoSelectionChangeEventListerner;
 import de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesis;
@@ -559,11 +559,11 @@ public class KiCoSelectionView extends DiagramViewPart {
      *            the editor id
      * @return the transformation dummy
      */
-    public static FeatureDummy resolveTransformationDummy(String transformationID,
+    public static TransformationDummy resolveTransformationDummy(String transformationID,
             int editorID) {
         KielerCompilerContext context = getKielerCompilerContext(editorID);
         if (context != null) {
-            for (FeatureDummy transformationDummy : context.getGraph()) {
+            for (TransformationDummy transformationDummy : context.getGraph()) {
                 if (transformationDummy.id.equals(transformationID)) {
                     return transformationDummy;
                 } else if (transformationDummy.id.equals(transformationID.replace("!", ""))) {
@@ -587,7 +587,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                 KiCoSelectionView.getRequiredTransformations(editorID, true);
         ViewContext context = instance.getViewer().getViewContext();
         for (String requiredTransformationID : requiredTransformations) {
-            FeatureDummy requiredTransformationDummy =
+            TransformationDummy requiredTransformationDummy =
                     resolveTransformationDummy(requiredTransformationID,
                             KiCoSelectionView.getActiveEditorID());
             if (requiredTransformationDummy != null) {
@@ -616,7 +616,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                     KiCoSelectionView.getRequiredTransformations(editorID, true);
             ViewContext context = instance.getViewer().getViewContext();
             for (String requiredTransformationID : requiredTransformations) {
-                FeatureDummy requiredTransformationDummy =
+                TransformationDummy requiredTransformationDummy =
                         resolveTransformationDummy(requiredTransformationID, editorID);
                 if (requiredTransformationDummy != null) {
                     if (!isSelectedTransformationDisabled(requiredTransformationID, editorID)) {
@@ -643,7 +643,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                 KiCoSelectionView.getSelectedAndDisabledTransformations(editorID);
         ViewContext context = instance.getViewer().getViewContext();
         for (String selectedTransformationID : selectedTransformations) {
-            FeatureDummy selectedTransformationDummy =
+            TransformationDummy selectedTransformationDummy =
                     resolveTransformationDummy(selectedTransformationID, editorID);
             if (selectedTransformationDummy != null) {
                 if (!isSelectedTransformationDisabled(selectedTransformationID, editorID)) {
@@ -669,12 +669,12 @@ public class KiCoSelectionView extends DiagramViewPart {
      * 
      * @return the all transformations
      */
-    public static List<FeatureDummy> getAllTransformations(int editorID) {
+    public static List<TransformationDummy> getAllTransformations(int editorID) {
         KielerCompilerContext context = getKielerCompilerContext(editorID);
         if (context != null) {
             return context.getGraph();
         }
-        return new ArrayList<FeatureDummy>();
+        return new ArrayList<TransformationDummy>();
     }
 
     // -------------------------------------------------------------------------
@@ -689,17 +689,17 @@ public class KiCoSelectionView extends DiagramViewPart {
      *            the editor id
      * @return the list
      */
-    public static List<FeatureDummy> calculateOtherAlternativeTransformations(
+    public static List<TransformationDummy> calculateOtherAlternativeTransformations(
             String transformationDummyID, int editorID) {
-        List<FeatureDummy> returnList = new ArrayList<FeatureDummy>();
-        FeatureDummy transformationDummy =
+        List<TransformationDummy> returnList = new ArrayList<TransformationDummy>();
+        TransformationDummy transformationDummy =
                 resolveTransformationDummy(transformationDummyID, editorID);
         if (transformationDummy != null && transformationDummy.reverseDependencies != null) {
-            for (FeatureDummy reverseDependency : transformationDummy.reverseDependencies) {
+            for (TransformationDummy reverseDependency : transformationDummy.reverseDependencies) {
                 if (reverseDependency.isAlternative()) {
                     // in this case the parent is an alternative group and we need to deselect ALL
                     // OTHER alternatives
-                    for (FeatureDummy otherAlternative : reverseDependency.dependencies) {
+                    for (TransformationDummy otherAlternative : reverseDependency.dependencies) {
                         if (otherAlternative != transformationDummy) {
                             returnList.add(otherAlternative);
                         }
@@ -723,7 +723,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                 KiCoSelectionView.getSelectedAndDisabledTransformations(editorID);
         ViewContext context = instance.getViewer().getViewContext();
         for (String selectedTransformationID : selectedTransformations) {
-            FeatureDummy selectedTransformationDummy =
+            TransformationDummy selectedTransformationDummy =
                     resolveTransformationDummy(selectedTransformationID,
                             KiCoSelectionView.getActiveEditorID());
             if (selectedTransformationDummy != null) {
@@ -747,7 +747,7 @@ public class KiCoSelectionView extends DiagramViewPart {
             List<String> transformationDummyIDs) {
         ViewContext context = instance.getViewer().getViewContext();
         for (String selectedTransformationID : transformationDummyIDs) {
-            FeatureDummy selectedTransformationDummy =
+            TransformationDummy selectedTransformationDummy =
                     resolveTransformationDummy(selectedTransformationID,
                             KiCoSelectionView.getActiveEditorID());
             if (selectedTransformationDummy != null) {
@@ -1192,10 +1192,10 @@ public class KiCoSelectionView extends DiagramViewPart {
                 }
                 int activeEditorID = getActiveEditorID();
                 if (allSelected) {
-                    List<FeatureDummy> allTransformations =
+                    List<TransformationDummy> allTransformations =
                             getAllTransformations(activeEditorID);
                     List<String> allTransformationIDs = new ArrayList<String>();
-                    for (FeatureDummy transformationDummy : allTransformations) {
+                    for (TransformationDummy transformationDummy : allTransformations) {
                         allTransformationIDs.add(transformationDummy.id);
                     }
                     addSelectedTransformationVisualization(activeEditorID, allTransformationIDs);
