@@ -315,7 +315,7 @@ public class KiCoUtil {
      * @param eObject the e object
      * @return the model hash
      */
-    public int getModelHash(EObject eObject) {
+    public static int getModelHash(EObject eObject) {
         int hashValue = 0;
         TreeIterator<?> treeIterator = eObject.eAllContents();
         while (treeIterator.hasNext()) {
