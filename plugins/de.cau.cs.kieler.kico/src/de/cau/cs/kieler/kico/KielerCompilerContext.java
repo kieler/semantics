@@ -14,7 +14,9 @@
 package de.cau.cs.kieler.kico;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
@@ -323,6 +325,23 @@ public class KielerCompilerContext {
      */
     public void setCreateDummyResource(boolean dummyResource) {
         this.dummyResource = dummyResource;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Retrieves the set of features for the transformation object (the main source model).
+     * 
+     * @param model
+     *            the model
+     * @return the transformation object features
+     */
+    public Set<Feature> getTransformationObjectFeatures() {
+        EObject mainModel = getTransformationObject();
+        if (mainModel != null) {
+            return KiCoUtil.getModelFeatures(mainModel, false, false);
+        }
+        throw new RuntimeException("No main model found to compile. Cannot calculate feature list.");
     }
 
     // -------------------------------------------------------------------------
