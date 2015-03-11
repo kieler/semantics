@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2014 by
+ * Copyright 2015 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -13,15 +13,12 @@
  */
 package de.cau.cs.kieler.kico;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -36,8 +33,8 @@ import com.google.inject.Inject;
  * infrastructure for compiling via consecutive modal transformations.
  * 
  * @author cmot
- * @kieler.design 2014-03-13 proposed
- * @kieler.rating 2014-03-13 proposed yellow
+ * @kieler.design 2015-03-11 proposed
+ * @kieler.rating 2015-03-11 proposed yellow
  * 
  */
 public class KielerCompiler {
@@ -556,7 +553,6 @@ public class KielerCompiler {
     // }
     // }
 
-
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
@@ -873,43 +869,15 @@ public class KielerCompiler {
             transformationEObject = copiedObject;
         }
 
-        // 1. build graph (with initially requested transformation Ids as a tie
-        // breaker for alternative groups)
-        context.buildGraph(context.getSelectedTransformationIds());
-
-        // 2. eliminate unused alternative paths
-        cleanupImpossibleAlternatives(context);
-
-        // 3. mark nodes, including groups
-        markNodes(context, context.getSelectedTransformationIds(), true);
-
-        if (context.isAutoSelect()) {
-            // 4. mark reverse dependencies
-            markReverseDependencies(context);
-        }
-
-        // 4b. mark parent groups
-        markParentGroups(context);
-
-        // 5. eliminate unmarked nodes
-        eliminatedUnmarkedNodes(context);
-
-        // 5b remove excluded transformations
-        removeFromGraph(context, context.getDisabledTransformationIds());
-
-        // 6. topological sort
-        topologicalSort(context);
-
-        // 7. final cleanup, eliminate any groups
-        eliminateGroupIds(context, true, context.getDisabledTransformationIds());
-
-        List<String> compilationTransformationIds = context.getCompilationTransformationIds();
+        // Compute and retrieve the compilation chain. This method hides all the tough work figuring
+        // out the right transformations based on the selection.
+        List<Transformation> compilationTransformations = context.getTransformationChain(true);
 
         // The progress monitor is optional and may be null!
         IProgressMonitor monitor = context.getProgressMonitor();
 
         int doneWork = 0;
-        int totalWork = compilationTransformationIds.size();
+        int totalWork = compilationTransformations.size();
         if (monitor != null) {
             monitor.beginTask("Compiling, performing " + totalWork + "transformations.",
                     totalWork * 100);
@@ -919,9 +887,7 @@ public class KielerCompiler {
         // transformationEObject from the context
         EObject transformedObject = transformationEObject;
 
-        for (String compilationTransformationId : compilationTransformationIds) {
-            Transformation transformation = getTransformation(compilationTransformationId);
-
+        for (Transformation transformation : compilationTransformations) {
             // Reset the done flag for the next transformation step
             context.getCompilationResult().setCurrentTransformationDone(false);
 

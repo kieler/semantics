@@ -54,7 +54,8 @@ public class TransformationDummyGraph {
 
     /**
      * Gets the transformation dummies. If the list does not exist yet, then compute it. Also
-     * re-compute if forceUpdate is true.
+     * re-compute if forceUpdate is true. If the model or the user selection changed forceUpdate
+     * should be true, otherwise it mostly should be false.
      * 
      * @return the transformation dummies
      */

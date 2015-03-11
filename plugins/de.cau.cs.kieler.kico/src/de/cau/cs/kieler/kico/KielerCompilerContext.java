@@ -62,7 +62,7 @@ public class KielerCompilerContext {
     private ArrayList<EObject> includedModels = new ArrayList<EObject>();
 
     /** The calculated transformation chain used for compilation. */
-    private List<Transformation> compilationChain = new ArrayList<Transformation>();
+    private List<Transformation> compilationChain = null;
 
     /**
      * The flag to create a dummy resource if no resource is present (e.g. because inplace ==
@@ -91,7 +91,7 @@ public class KielerCompilerContext {
     public KielerCompilerContext(String stringArguments, EObject eObject) {
         compilationResult = new CompilationResult(eObject);
         selection = new KielerCompilerSelection(stringArguments);
-        recalculateTransformationChain();
+        recomputeTransformationChain(true);
     }
 
     // -------------------------------------------------------------------------
@@ -113,7 +113,7 @@ public class KielerCompilerContext {
         selection.clear();
         selection.setSelectedFeatureAndTransformationIds(selectedTransformationIds);
         selection.setDisabledTransformationIds(disabledTransformationIds);
-        recalculateTransformationChain();
+        recomputeTransformationChain(true);
     }
 
     // -------------------------------------------------------------------------
@@ -251,31 +251,46 @@ public class KielerCompilerContext {
      */
     public void setSelection(KielerCompilerSelection selection) {
         this.selection = selection;
-        recalculateTransformationChain();
+        recomputeTransformationChain(true);
     }
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the transformation chain as it was calculated, derived by the selection .
+     * Gets the transformation chain as it was calculated, derived by the selection. If there was
+     * not yet a compilation chain computed or forceUpdate is true then this method will first
+     * trigger a fresh computation of the compilation chain. The transformation chain is computed
+     * prior to the real compilation and can also be used for visualization purposes. If the model
+     * or the user selection changed forceUpdate should be true, otherwise it mostly should be
+     * false.
      * 
+     * @param forceUpdate
+     *            the force update
      * @return the transformation chain
      */
-    public List<Transformation> getTransformationChain() {
+    public List<Transformation> getTransformationChain(boolean forceUpdate) {
+        if (compilationChain == null || forceUpdate) {
+            recomputeTransformationChain(true);
+        }
         return compilationChain;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Recalculate transformation chain as based on the current selection and the registered
-     * features, transformations and processors.
+     * Recompute transformation chain as based on the current selection and the registered features,
+     * transformations and processors. If forceUpdate is true then the internal representation of
+     * transformations is also recomputed. If the model or the user selection changed forceUpdate
+     * should be true, otherwise it mostly should be false.
+     * 
+     * @param forceUpdate
+     *            the force update
      */
-    public void recalculateTransformationChain() {
+    public void recomputeTransformationChain(boolean forceUpdate) {
         TransformationDummyGraph graph = new TransformationDummyGraph(this);
         compilationChain = new ArrayList<Transformation>();
-        List<TransformationDummy> dummies = graph.getTransformationDummies(false);
+        List<TransformationDummy> dummies = graph.getTransformationDummies(forceUpdate);
         for (TransformationDummy dummy : dummies) {
             compilationChain.add(dummy.transformation);
         }
@@ -480,5 +495,5 @@ public class KielerCompilerContext {
     }
 
     // -------------------------------------------------------------------------
-    
+
 }
