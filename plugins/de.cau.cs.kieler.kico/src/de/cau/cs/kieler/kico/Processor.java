@@ -57,7 +57,7 @@ public abstract class Processor implements IProcessor {
             return null;
         }
         if (transformMethod == null) {
-            throw (new RuntimeException("The transformation method of transformation '" + getId()
+            throw (new RuntimeException("The process method of processor '" + getId()
                     + "' was not found. If you declared a method you must not extend the "
                     + "Transformation abstract class at the same time."));
         }
@@ -83,7 +83,7 @@ public abstract class Processor implements IProcessor {
             return null;
         }
         if (transformMethod == null) {
-            throw (new RuntimeException("The transformation method of transformation '" + getId()
+            throw (new RuntimeException("The process method of processor '" + getId()
                     + "' was not found. If you declared a method you must not extend the "
                     + "Transformation abstract class at the same time."));
         }
