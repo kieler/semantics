@@ -126,7 +126,9 @@ class TracingMapping {
      */
     def smartPut(Object origin, Object target) {
         if (rmapping.containsKey(origin)) { //origin is brother element
-            origin.origins.fold(false)[ret, it|ret || it.put(target)];
+            origin.origins.fold(false)[changed, orig | 
+                orig.put(target) || changed //Always side effect call first to prevent lost by lazy evaluation
+            ];
         } else {
             origin.put(target)
         }
