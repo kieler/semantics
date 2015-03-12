@@ -50,7 +50,8 @@ import de.cau.cs.kieler.kico.KielerCompiler
  * @kieler.design 2014-04-08 proposed cmot
  * @kieler.rating 2014-04-08 proposed yellow
  */
-class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<List<Feature>> {
+//class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<List<Feature>> {
+class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelectionDiagramModel> {
 
     static final boolean DEBUG = false;
 
@@ -452,14 +453,19 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<List<Featur
         return null;
     }
 
+
+//    // The Main entry transform function   
+//    override transform(List<Feature> model) {
+//        
+//    }
     
     // The Main entry transform function   
-    override transform(List<Feature> model) {
+    override transform(KiCoSelectionDiagramModel model) {
         //connected.clear
 
         val knode = model.createNode();
 
-        for (elem : model) {
+        for (elem : model.visibleFeatures) {
             if (elem.container == null) {
                 val kNode = elem.translate;
                 knode.children.add(kNode);
