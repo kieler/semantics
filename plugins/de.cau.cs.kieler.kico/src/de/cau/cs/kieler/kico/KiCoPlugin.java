@@ -242,14 +242,14 @@ public class KiCoPlugin extends Plugin {
                 String id = instance.getId();
                 className += " (" + id + ")";
                 if (processorsCached.containsKey(id)) {
-                    logger.severe("KiCo failed to register processor: " + extension + " for class "
+                    logError("KiCo failed to register processor: " + extension + " for class "
                             + className + " because this ID is already taken.");
                 } else {
                     processorsCached.put(id, instance);
-                    logger.info("KiCo register processor: " + extension + " for class " + className);
+                    logInfo("KiCo register processor: " + extension + " for class " + className);
                 }
             } catch (CoreException e) {
-                logger.severe("KiCo failed to register processor: " + extension + " for class "
+                logError("KiCo failed to register processor: " + extension + " for class "
                         + className + ": " + KiCoUtil.getStackTraceString(e));
             }
         }
@@ -283,14 +283,14 @@ public class KiCoPlugin extends Plugin {
                 String id = instance.getId();
                 className += " (" + id + ")";
                 if (featuresCached.containsKey(id)) {
-                    logger.severe("KiCo failed to register feature: " + extension + " for class "
+                    logError("KiCo failed to register feature: " + extension + " for class "
                             + className + " because this ID is already taken.");
                 } else {
                     featuresCached.put(id, instance);
-                    logger.info("KiCo register feature: " + extension + " for class " + className);
+                    logInfo("KiCo register feature: " + extension + " for class " + className);
                 }
             } catch (CoreException e) {
-                logger.severe("KiCo failed to register feature: " + extension + " for class "
+                logError("KiCo failed to register feature: " + extension + " for class "
                         + className + ": " + KiCoUtil.getStackTraceString(e));
             }
         }
@@ -325,15 +325,15 @@ public class KiCoPlugin extends Plugin {
                 String id = instance.getId();
                 className += " (" + id + ")";
                 if (transformationsCached.containsKey(id)) {
-                    logger.severe("KiCo failed to register transformation: " + extension
+                    logError("KiCo failed to register transformation: " + extension
                             + " for class " + className + " because this ID is already taken.");
                 } else {
                     transformationsCached.put(id, instance);
-                    logger.info("KiCo register transformation: " + extension + " for class "
+                    logInfo("KiCo register transformation: " + extension + " for class "
                             + className);
                 }
             } catch (CoreException e) {
-                logger.severe("KiCo failed to register transformation: " + extension
+                logError("KiCo failed to register transformation: " + extension
                         + " for class " + className + ": " + KiCoUtil.getStackTraceString(e));
             }
         }
@@ -367,14 +367,14 @@ public class KiCoPlugin extends Plugin {
                 String id = instance.getId();
                 className += " (" + id + ")";
                 if (hooksCached.containsKey(id)) {
-                    logger.severe("KiCo failed to register hook: " + extension + " for class "
+                    logError("KiCo failed to register hook: " + extension + " for class "
                             + className + " because this ID is already taken.");
                 } else {
                     hooksCached.put(id, instance);
-                    logger.info("KiCo register hook: " + extension + " for class " + className);
+                    logInfo("KiCo register hook: " + extension + " for class " + className);
                 }
             } catch (CoreException e) {
-                logger.severe("KiCo failed to register hook: " + extension + " for class "
+                logError("KiCo failed to register hook: " + extension + " for class "
                         + className + ": " + KiCoUtil.getStackTraceString(e));
             }
         }
@@ -408,7 +408,7 @@ public class KiCoPlugin extends Plugin {
                 resourceExtensionsCached.put(className, new ResourceExtension(className, extension,
                         isXMI.toLowerCase().equals("true"), editorID));
 
-                logger.info("KiCo register resource extension: " + extension + " for class "
+                logInfo("KiCo register resource extension: " + extension + " for class "
                         + className);
             } finally {
                 // do nothing
@@ -442,7 +442,7 @@ public class KiCoPlugin extends Plugin {
             try {
                 throw (new Exception("KiCo cannot find the processor with ID '" + id + "'"));
             } catch (Exception e) {
-                logger.severe(KiCoUtil.getStackTraceString(e));
+                logError(KiCoUtil.getStackTraceString(e));
             }
         }
         return cache.get(id);
@@ -476,7 +476,7 @@ public class KiCoPlugin extends Plugin {
             try {
                 throw (new Exception("KiCo cannot find the feature with ID '" + id + "'"));
             } catch (Exception e) {
-                logger.severe(KiCoUtil.getStackTraceString(e));
+                logError(KiCoUtil.getStackTraceString(e));
             }
         }
         return cache.get(id);
@@ -509,7 +509,7 @@ public class KiCoPlugin extends Plugin {
             try {
                 throw (new Exception("KiCo cannot find the transformation with ID '" + id + "'"));
             } catch (Exception e) {
-                logger.severe(KiCoUtil.getStackTraceString(e));
+                logError(KiCoUtil.getStackTraceString(e));
             }
         }
         return cache.get(id);
@@ -542,7 +542,7 @@ public class KiCoPlugin extends Plugin {
             try {
                 throw (new Exception("KiCo cannot find the hook with ID '" + id + "'"));
             } catch (Exception e) {
-                logger.severe(KiCoUtil.getStackTraceString(e));
+                logError(KiCoUtil.getStackTraceString(e));
             }
         }
         return cache.get(id);
@@ -598,7 +598,7 @@ public class KiCoPlugin extends Plugin {
     // ....╚██████╔╝███████╗██║.╚████║███████╗██║..██║██║..██║███████╗
     // .....╚═════╝.╚══════╝╚═╝..╚═══╝╚══════╝╚═╝..╚═╝╚═╝..╚═╝╚══════╝
     // -------------------------------------------------------------------------
-
+    
     /**
      * Sets the parent shell that KIEM should use to display user dialogs.
      * 
@@ -619,6 +619,32 @@ public class KiCoPlugin extends Plugin {
     // ....██╔══╝..██╔══██╗██╔══██╗██║...██║██╔══██╗╚════██║
     // ....███████╗██║..██║██║..██║╚██████╔╝██║..██║███████║
     // ....╚══════╝╚═╝..╚═╝╚═╝..╚═╝.╚═════╝.╚═╝..╚═╝╚══════╝
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Log an error.
+     *
+     * @param msg the msg
+     */
+    private static void logError(String msg) {
+        if (logger != null) {
+            logger.severe(msg);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Log an info.
+     *
+     * @param msg the msg
+     */
+    private static void logInfo(String msg) {
+        if (logger != null) {
+            logger.info(msg);
+        }
+    }
+
     // -------------------------------------------------------------------------
 
     /**
