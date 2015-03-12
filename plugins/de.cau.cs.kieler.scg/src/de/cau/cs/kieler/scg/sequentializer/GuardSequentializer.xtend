@@ -260,7 +260,19 @@ class GuardSequentializer extends AbstractSequentializer {
 			for (guard : guards) {
 //				System.out.println("Sequentializing guard " + guard.valuedObject.name)
 				if (!placedGuards.contains(guard)) {
-			    	val assignment2 = ScgFactory::eINSTANCE.createAssignment.trace(sBlock)
+			    	val assignment2 = ScgFactory::eINSTANCE.createAssignment
+			    	//Bad KITT stuff
+			    	//TODO improve with help of ssm
+			    	if(scheduleBlock.additionalGuards.contains(guard) && guard.valuedObject.name.startsWith("_cond")){
+			    	    val conditionalSchedulingBlockGuardName = guard.valuedObject.name.substring(5);
+			    	    for (sb : schedule.scheduleBlocks) {
+                            if(sb.schedulingBlock.guard.valuedObject.name.equals(conditionalSchedulingBlockGuardName)) {
+                                assignment2.trace(sb.schedulingBlock)
+                            }
+                        }
+			    	} else{
+			    	    assignment2.trace(sBlock)			    	    
+			    	}
 					assignment2.addGuardExpression(guard, nextControlFlows, scg, nodeCache)
 					placedGuards += guard
 				}
