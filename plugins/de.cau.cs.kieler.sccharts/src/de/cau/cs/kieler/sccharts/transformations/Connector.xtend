@@ -17,6 +17,9 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.StateType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import com.google.common.collect.Sets
 
 /**
  * SCCharts Connector Transformation.
@@ -25,7 +28,30 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class Connector {
+class Connector extends Transformation {
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::CONNECTOR_ID;
+    }
+
+    override getName() {
+        return SCChartsTransformation::CONNECTOR_NAME;
+    }
+
+    override getHandleFeatureId() {
+        return SCChartsFeature::CONNECTOR_ID;
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet();
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet();
+    }
+    //-------------------------------------------------------------------------
 
     @Inject
     extension SCChartsExtension
