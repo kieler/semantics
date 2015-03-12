@@ -5,16 +5,8 @@
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesis"
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis"
             id="de.cau.cs.kieler.kico.ui.klighd.diagramSynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramFlatSynthesis"
-            id="de.cau.cs.kieler.kico.ui.klighd.diagramFlatSynthesis">
-      </diagramSynthesis>
-      <diagramSynthesis
-            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramFlatNoGroupsSynthesis"
-            id="de.cau.cs.kieler.kico.ui.klighd.diagramFlatNoGroupsSynthesis">
       </diagramSynthesis>
    </extension>
    <extension

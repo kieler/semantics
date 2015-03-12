@@ -50,7 +50,7 @@ import de.cau.cs.kieler.kico.KielerCompiler
  * @kieler.design 2014-04-08 proposed cmot
  * @kieler.rating 2014-04-08 proposed yellow
  */
-class KiCoDiagramSynthesis extends AbstractDiagramSynthesis<List<Feature>> {
+class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<List<Feature>> {
 
     static final boolean DEBUG = false;
 

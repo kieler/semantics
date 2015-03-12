@@ -18,7 +18,7 @@ import java.util.List;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.kico.TransformationDummy;
-import de.cau.cs.kieler.kico.ui.klighd.KiCoDiagramSynthesis;
+import de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis;
 import de.cau.cs.kieler.klighd.IAction;
 
 /**
