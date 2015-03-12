@@ -206,7 +206,7 @@ public class KiCoSelectionView extends DiagramViewPart {
      */
     public static List<String> getSelection(int editorID) {
         KiCoSelectionDiagramModel selectionModel = getSelectionModel(editorID);
-        if (selectionModel == null) {
+        if (selectionModel == null || selectionModel.getSelection() == null) {
             return new ArrayList<String>();
         }
         return selectionModel.getSelection().getSelectedFeatureAndTransformationIds();
