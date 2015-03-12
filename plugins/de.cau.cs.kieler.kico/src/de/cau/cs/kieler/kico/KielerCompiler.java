@@ -1048,7 +1048,7 @@ public class KielerCompiler {
         }
 
         start = System.currentTimeMillis();
-        object = transformation.transform(transformedObject, context);
+        object = transformation.doTransform(transformedObject, context);
         end = System.currentTimeMillis();
 
         // Add to compilation result

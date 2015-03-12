@@ -228,7 +228,7 @@ public abstract class Transformation implements ITransformation {
      *            the e object
      * @return the e object
      */
-    public final Object transform(final EObject eObject, final KielerCompilerContext context) {
+    public final Object doTransform(final EObject eObject, final KielerCompilerContext context) {
 
         EObject eObjectParam = eObject;
         EObject eObjectResult = null;
@@ -240,9 +240,10 @@ public abstract class Transformation implements ITransformation {
             String processorId = processor.getId();
 
             if (processorOption.isOptional()) {
-                // TODO: check context whether processorOption is enabled in the
-                // KielerCompilerContext
-                boolean isEnabled = true;
+                // Check context whether processorOption is enabled in the
+                boolean isEnabled =
+                        context.getSelection().isProcessorOptionEnabled(
+                                processorOption.getProcessorOptionId());
                 if (!isEnabled) {
                     // If the optional processor is disabled then continue with the next processor
                     continue;
