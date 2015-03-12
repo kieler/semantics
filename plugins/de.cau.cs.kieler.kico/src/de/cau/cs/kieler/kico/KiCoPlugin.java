@@ -126,35 +126,35 @@ public class KiCoPlugin extends Plugin {
 
     // -------------------------------------------------------------------------
 
-//    /**
-//     * Checks if is e object.
-//     * 
-//     * @param clazz
-//     *            the clazz
-//     * @return true, if is e object
-//     */
-//    private static boolean isEObject(Class<?> clazz) {
-//        if (EObject.class.isAssignableFrom(clazz)) {
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    // -------------------------------------------------------------------------
-//
-//    /**
-//     * Checks if is isKielerCompilerContext.
-//     * 
-//     * @param clazz
-//     *            the clazz
-//     * @return true, if is e object
-//     */
-//    private static boolean isKielerCompilerContext(Class<?> clazz) {
-//        if (KielerCompilerContext.class.isAssignableFrom(clazz)) {
-//            return true;
-//        }
-//        return false;
-//    }
+    // /**
+    // * Checks if is e object.
+    // *
+    // * @param clazz
+    // * the clazz
+    // * @return true, if is e object
+    // */
+    // private static boolean isEObject(Class<?> clazz) {
+    // if (EObject.class.isAssignableFrom(clazz)) {
+    // return true;
+    // }
+    // return false;
+    // }
+    //
+    // // -------------------------------------------------------------------------
+    //
+    // /**
+    // * Checks if is isKielerCompilerContext.
+    // *
+    // * @param clazz
+    // * the clazz
+    // * @return true, if is e object
+    // */
+    // private static boolean isKielerCompilerContext(Class<?> clazz) {
+    // if (KielerCompilerContext.class.isAssignableFrom(clazz)) {
+    // return true;
+    // }
+    // return false;
+    // }
 
     // -------------------------------------------------------------------------
 
@@ -172,40 +172,40 @@ public class KiCoPlugin extends Plugin {
 
     // -------------------------------------------------------------------------
 
-//    /**
-//     * Gets the invokable method.
-//     * 
-//     * @param object
-//     *            the object
-//     * @param method
-//     *            the method
-//     * @return the invokable method
-//     */
-//    private Method getInvokableMethod(Object object, String method) {
-//        for (Method providedMethod : object.getClass().getMethods()) {
-//            String providedMethodName = providedMethod.getName();
-//            Class<?>[] parameterTypes = providedMethod.getParameterTypes();
-//            if (providedMethodName.equals(method)) {
-//                // Case where signature is 'method(EObject eObject)'
-//                if (parameterTypes.length == 1) {
-//                    Class<?> parameterType = parameterTypes[0];
-//                    if (isEObject(parameterType)) {
-//                        return providedMethod;
-//                    }
-//                }
-//                // Case where signature is 'method(EObject eObject, KielerCompilerContext
-//                // kielerCompilerContext)'
-//                if (parameterTypes.length == 2) {
-//                    Class<?> parameterType1 = parameterTypes[0];
-//                    Class<?> parameterType2 = parameterTypes[1];
-//                    if (isEObject(parameterType1) && isKielerCompilerContext(parameterType2)) {
-//                        return providedMethod;
-//                    }
-//                }
-//            }
-//        }
-//        return null;
-//    }
+    // /**
+    // * Gets the invokable method.
+    // *
+    // * @param object
+    // * the object
+    // * @param method
+    // * the method
+    // * @return the invokable method
+    // */
+    // private Method getInvokableMethod(Object object, String method) {
+    // for (Method providedMethod : object.getClass().getMethods()) {
+    // String providedMethodName = providedMethod.getName();
+    // Class<?>[] parameterTypes = providedMethod.getParameterTypes();
+    // if (providedMethodName.equals(method)) {
+    // // Case where signature is 'method(EObject eObject)'
+    // if (parameterTypes.length == 1) {
+    // Class<?> parameterType = parameterTypes[0];
+    // if (isEObject(parameterType)) {
+    // return providedMethod;
+    // }
+    // }
+    // // Case where signature is 'method(EObject eObject, KielerCompilerContext
+    // // kielerCompilerContext)'
+    // if (parameterTypes.length == 2) {
+    // Class<?> parameterType1 = parameterTypes[0];
+    // Class<?> parameterType2 = parameterTypes[1];
+    // if (isEObject(parameterType1) && isKielerCompilerContext(parameterType2)) {
+    // return providedMethod;
+    // }
+    // }
+    // }
+    // }
+    // return null;
+    // }
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
@@ -242,15 +242,16 @@ public class KiCoPlugin extends Plugin {
                 String id = instance.getId();
                 className += " (" + id + ")";
                 if (processorsCached.containsKey(id)) {
-                    logError("KiCo failed to register processor: " + extension + " for class "
-                            + className + " because this ID is already taken.");
+                    KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo failed to register processor: "
+                            + extension + " for class " + className
+                            + " because this ID is already taken.", null);
                 } else {
                     processorsCached.put(id, instance);
                     logInfo("KiCo register processor: " + extension + " for class " + className);
                 }
             } catch (CoreException e) {
-                logError("KiCo failed to register processor: " + extension + " for class "
-                        + className + ": " + KiCoUtil.getStackTraceString(e));
+                KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo failed to register processor: "
+                        + extension + " for class " + className, e);
             }
         }
         return processorsCached;
@@ -283,15 +284,16 @@ public class KiCoPlugin extends Plugin {
                 String id = instance.getId();
                 className += " (" + id + ")";
                 if (featuresCached.containsKey(id)) {
-                    logError("KiCo failed to register feature: " + extension + " for class "
-                            + className + " because this ID is already taken.");
+                    KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo failed to register feature: "
+                            + extension + " for class " + className
+                            + " because this ID is already taken.", null);
                 } else {
                     featuresCached.put(id, instance);
                     logInfo("KiCo register feature: " + extension + " for class " + className);
                 }
             } catch (CoreException e) {
-                logError("KiCo failed to register feature: " + extension + " for class "
-                        + className + ": " + KiCoUtil.getStackTraceString(e));
+                KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo failed to register feature: "
+                        + extension + " for class " + className, e);
             }
         }
         return featuresCached;
@@ -325,16 +327,17 @@ public class KiCoPlugin extends Plugin {
                 String id = instance.getId();
                 className += " (" + id + ")";
                 if (transformationsCached.containsKey(id)) {
-                    logError("KiCo failed to register transformation: " + extension
-                            + " for class " + className + " because this ID is already taken.");
+                    KiCoUtil.logError(KiCoPlugin.PLUGIN_ID,
+                            "KiCo failed to register transformation: " + extension + " for class "
+                                    + className + " because this ID is already taken.", null);
                 } else {
                     transformationsCached.put(id, instance);
                     logInfo("KiCo register transformation: " + extension + " for class "
                             + className);
                 }
-            } catch (CoreException e) {
-                logError("KiCo failed to register transformation: " + extension
-                        + " for class " + className + ": " + KiCoUtil.getStackTraceString(e));
+            } catch (Exception e) {
+                KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo failed to register transformation: "
+                        + extension + " for class " + className, e);
             }
         }
         return transformationsCached;
@@ -367,15 +370,16 @@ public class KiCoPlugin extends Plugin {
                 String id = instance.getId();
                 className += " (" + id + ")";
                 if (hooksCached.containsKey(id)) {
-                    logError("KiCo failed to register hook: " + extension + " for class "
-                            + className + " because this ID is already taken.");
+                    KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo failed to register hook: "
+                            + extension + " for class " + className
+                            + " because this ID is already taken.", null);
                 } else {
                     hooksCached.put(id, instance);
                     logInfo("KiCo register hook: " + extension + " for class " + className);
                 }
             } catch (CoreException e) {
-                logError("KiCo failed to register hook: " + extension + " for class "
-                        + className + ": " + KiCoUtil.getStackTraceString(e));
+                KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo failed to register hook: "
+                        + extension + " for class " + className, e);
             }
         }
         return hooksCached;
@@ -391,7 +395,8 @@ public class KiCoPlugin extends Plugin {
      *            the force reload
      * @return the registered resource extensions
      */
-    public static HashMap<String, ResourceExtension> getRegisteredResourceExtensions(boolean forceReload) {
+    public static HashMap<String, ResourceExtension> getRegisteredResourceExtensions(
+            boolean forceReload) {
         if (resourceExtensionsCached != null && !forceReload) {
             return resourceExtensionsCached;
         }
@@ -439,11 +444,9 @@ public class KiCoPlugin extends Plugin {
     public static Processor getProcessor(String id, boolean forceReload) {
         HashMap<String, Processor> cache = getRegisteredProcessors(forceReload);
         if (!cache.containsKey(id)) {
-            try {
-                throw (new Exception("KiCo cannot find the processor with ID '" + id + "'"));
-            } catch (Exception e) {
-                logError(KiCoUtil.getStackTraceString(e));
-            }
+            KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo cannot find the processor with ID '" + id
+                    + "'", null);
+            return null;
         }
         return cache.get(id);
     }
@@ -473,11 +476,9 @@ public class KiCoPlugin extends Plugin {
     public static Feature getFeature(String id, boolean forceReload) {
         HashMap<String, Feature> cache = getRegisteredFeatures(forceReload);
         if (!cache.containsKey(id)) {
-            try {
-                throw (new Exception("KiCo cannot find the feature with ID '" + id + "'"));
-            } catch (Exception e) {
-                logError(KiCoUtil.getStackTraceString(e));
-            }
+            KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo cannot find the feature with ID '" + id
+                    + "'", null);
+            return null;
         }
         return cache.get(id);
     }
@@ -506,11 +507,9 @@ public class KiCoPlugin extends Plugin {
     public static Transformation getTransformation(String id, boolean forceReload) {
         HashMap<String, Transformation> cache = getRegisteredTransformations(forceReload);
         if (!cache.containsKey(id)) {
-            try {
-                throw (new Exception("KiCo cannot find the transformation with ID '" + id + "'"));
-            } catch (Exception e) {
-                logError(KiCoUtil.getStackTraceString(e));
-            }
+            KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo cannot find the transformation with ID '"
+                    + id + "'", null);
+            return null;
         }
         return cache.get(id);
     }
@@ -539,11 +538,9 @@ public class KiCoPlugin extends Plugin {
     public static Hook getHook(String id, boolean forceReload) {
         HashMap<String, Hook> cache = getRegisteredHooks(forceReload);
         if (!cache.containsKey(id)) {
-            try {
-                throw (new Exception("KiCo cannot find the hook with ID '" + id + "'"));
-            } catch (Exception e) {
-                logError(KiCoUtil.getStackTraceString(e));
-            }
+            KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo cannot find the hook with ID '" + id
+                    + "'", null);
+            return null;
         }
         return cache.get(id);
     }
@@ -598,7 +595,7 @@ public class KiCoPlugin extends Plugin {
     // ....╚██████╔╝███████╗██║.╚████║███████╗██║..██║██║..██║███████╗
     // .....╚═════╝.╚══════╝╚═╝..╚═══╝╚══════╝╚═╝..╚═╝╚═╝..╚═╝╚══════╝
     // -------------------------------------------------------------------------
-    
+
     /**
      * Sets the parent shell that KIEM should use to display user dialogs.
      * 
@@ -620,24 +617,12 @@ public class KiCoPlugin extends Plugin {
     // ....███████╗██║..██║██║..██║╚██████╔╝██║..██║███████║
     // ....╚══════╝╚═╝..╚═╝╚═╝..╚═╝.╚═════╝.╚═╝..╚═╝╚══════╝
     // -------------------------------------------------------------------------
-    
-    /**
-     * Log an error.
-     *
-     * @param msg the msg
-     */
-    private static void logError(String msg) {
-        if (logger != null) {
-            logger.severe(msg);
-        }
-    }
-
-    // -------------------------------------------------------------------------
 
     /**
      * Log an info.
-     *
-     * @param msg the msg
+     * 
+     * @param msg
+     *            the msg
      */
     private static void logInfo(String msg) {
         if (logger != null) {

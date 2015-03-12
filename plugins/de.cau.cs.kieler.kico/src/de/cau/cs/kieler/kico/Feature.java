@@ -129,6 +129,18 @@ public abstract class Feature implements IFeature {
     }
 
     // -------------------------------------------------------------------------
+
+    /**
+     * Checks if is alternative feature meaning that there are more than one transformation
+     * tranforming this feature.
+     * 
+     * @return true, if is alternative
+     */
+    public boolean isAlternative() {
+        return ((!(this instanceof FeatureGroup)) && (this.getHandlingTransformations().size() > 1));
+    }
+
+    // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
     /**

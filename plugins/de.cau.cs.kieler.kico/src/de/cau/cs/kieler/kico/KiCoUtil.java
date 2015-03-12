@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -32,6 +34,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
+import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
@@ -411,5 +414,49 @@ public class KiCoUtil {
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Log error.
+     *
+     * @param pluginId the plugin id
+     * @param msg the msg
+     * @param e the e
+     */
+    public static void logError(String pluginId, String msg, Exception e) {
+        StatusManager.getManager().handle(
+                new Status(IStatus.ERROR, pluginId, msg, e),
+                StatusManager.LOG);        
+    }
+
+
+    // -------------------------------------------------------------------------
+   
+    /**
+     * Log warning.
+     *
+     * @param pluginId the plugin id
+     * @param msg the msg
+     * @param e the e
+     */
+    public static void logWarning(String pluginId, String msg, Exception e) {
+        StatusManager.getManager().handle(
+                new Status(IStatus.WARNING, pluginId, msg, e),
+                StatusManager.LOG);        
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Log info.
+     *
+     * @param pluginId the plugin id
+     * @param msg the msg
+     * @param e the e
+     */
+    public static void logInfo(String pluginId, String msg, Exception e) {
+        StatusManager.getManager().handle(
+                new Status(IStatus.INFO, pluginId, msg, e),
+                StatusManager.LOG);        
+    }
 
 }

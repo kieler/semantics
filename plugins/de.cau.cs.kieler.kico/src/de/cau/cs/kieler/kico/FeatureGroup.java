@@ -16,7 +16,9 @@ package de.cau.cs.kieler.kico;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.ui.statushandlers.StatusManager;
 
 /**
  * An instance of this class represents a registered feature group a transformation can declare to
@@ -157,7 +159,12 @@ public abstract class FeatureGroup extends Feature implements IFeatureGroup {
         cachedFeatures = new HashSet<Feature>();
         for (String featureId : this.getFeatureIds()) {
             Feature feature = KielerCompiler.getFeature(featureId);
-            cachedFeatures.add(feature);
+            if (feature == null) {
+                KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "Feature '" + this.getId()
+                        + "' references a feature '" + featureId + "' that cannot be found.", null);
+            } else {
+                cachedFeatures.add(feature);
+            }
         }
         return cachedFeatures;
     }
