@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.kico;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -51,6 +52,17 @@ public abstract class Transformation implements ITransformation {
     private List<ProcessorOption> processorOptions = new ArrayList<ProcessorOption>();
 
     // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    /**
+     * Instantiates a new transformation.
+     */
+    public Transformation() {
+        // By default add the default processor option that will be used to refer to the
+        // transformation method itself
+        processorOptions.add(ProcessorOption.getDefaultThisProcessorOption());
+    }
+
     // -------------------------------------------------------------------------
 
     /**
@@ -176,6 +188,9 @@ public abstract class Transformation implements ITransformation {
     public Class<?> getParameterType() {
         if (processorOptions.size() > 0) {
             ProcessorOption firstProcessorOption = processorOptions.get(0);
+            if (firstProcessorOption == ProcessorOption.getDefaultThisProcessorOption()) {
+                return getTransformationMethodParameterType();
+            }
             // Ask KiCo for processor and return the getParameterType
             Processor processor =
                     KielerCompiler.getProcessor(firstProcessorOption.getProcessorId());
@@ -194,6 +209,9 @@ public abstract class Transformation implements ITransformation {
     public Class<?> getReturnType() {
         if (processorOptions.size() > 0) {
             ProcessorOption lastProcessorOption = processorOptions.get(processorOptions.size() - 1);
+            if (lastProcessorOption == ProcessorOption.getDefaultThisProcessorOption()) {
+                return getTransformationMethodReturnType();
+            }
             // Ask KiCo for processor and return the getReturnType
             Processor processor = KielerCompiler.getProcessor(lastProcessorOption.getProcessorId());
             return processor.getReturnType();
@@ -221,6 +239,78 @@ public abstract class Transformation implements ITransformation {
     // -------------------------------------------------------------------------
 
     /**
+     * The transform method can be overridden by a transformation to simplify the transformation
+     * definition. the default processor option (which by default is the only processor option in
+     * the list of processor options) refers to this transform() method. Other processor options may
+     * be added before and after this transform method. Note: If the default processor option is
+     * removed this transform() method may not be considered. It is mainly a design decision choice
+     * if a transformation should only be build from re-usable processors or also carry a
+     * main-processor (represented by the default processor option).
+     * 
+     * @param eObject
+     *            the e object
+     * @param context
+     *            the context
+     * @return the object
+     */
+    public Object transform(final EObject eObject, final KielerCompilerContext context) {
+        return eObject;
+    }
+
+    // --------------------------------------------
+
+    /**
+     * Gets the argument parameter type for the transform method.
+     * 
+     * @return the argument parameter type
+     */
+    public Class<?> getTransformationMethodParameterType() {
+        Method transformMethod = null;
+        try {
+            transformMethod =
+                    ((Transformation) this).getClass().getMethod("transform", EObject.class);
+        } catch (Exception e) {
+            return null;
+        }
+        if (transformMethod == null) {
+            throw (new RuntimeException("The transformation method of transformation '" + getId()
+                    + "' was not found. If you declared a method you must not extend the "
+                    + "Transformation abstract class at the same time."));
+        }
+        Class<?>[] classArray = transformMethod.getParameterTypes();
+        if (classArray.length > 0) {
+            return classArray[0];
+        }
+        return null;
+    }
+
+    // --------------------------------------------
+
+    /**
+     * Gets the return argument type for the transform method.
+     * 
+     * @return the return argument type
+     */
+    public Class<?> getTransformationMethodReturnType() {
+        Method transformMethod = null;
+        try {
+            transformMethod =
+                    ((Transformation) this).getClass().getMethod("transform", EObject.class);
+        } catch (Exception e) {
+            return null;
+        }
+        if (transformMethod == null) {
+            throw (new RuntimeException("The transformation method of transformation '" + getId()
+                    + "' was not found. If you declared a method you must not extend the "
+                    + "Transformation abstract class at the same time."));
+        }
+        return transformMethod.getReturnType();
+    }
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    /**
      * Do the transformation based on the method field. It should return an EObject if there are any
      * following transformations. A code generation will finally return a String object.
      * 
@@ -234,10 +324,14 @@ public abstract class Transformation implements ITransformation {
         EObject eObjectResult = null;
 
         for (ProcessorOption processorOption : getProcessorOptions()) {
-            // Ask KiCo for processor
-            Processor processor = KielerCompiler.getProcessor(processorOption.getProcessorId());
             String transformationId = this.getId();
-            String processorId = processor.getId();
+            Processor processor = null;
+            String processorId = "TRANSFORM_METHOD";
+            if (processorOption != ProcessorOption.getDefaultThisProcessorOption()) {
+                // Ask KiCo for processor
+                processor = KielerCompiler.getProcessor(processorOption.getProcessorId());
+                processorId = processor.getId();
+            }
 
             if (processorOption.isOptional()) {
                 // Check context whether processorOption is enabled in the
@@ -263,10 +357,20 @@ public abstract class Transformation implements ITransformation {
             long end = 0;
 
             try {
-                // Process the next processor
-                start = System.currentTimeMillis();
-                Object result = processor.process(eObjectParam, context);
-                end = System.currentTimeMillis();
+                // Call the transform method if the default processor option, otherwise call the
+                // processor
+                Object result = null;
+                if (processorOption == ProcessorOption.getDefaultThisProcessorOption()) {
+                    // Process the next processor
+                    start = System.currentTimeMillis();
+                    result = this.transform(eObjectParam, context);
+                    end = System.currentTimeMillis();
+                } else {
+                    // Process the next processor
+                    start = System.currentTimeMillis();
+                    result = processor.process(eObjectParam, context);
+                    end = System.currentTimeMillis();
+                }
 
                 // Add to compilation result
                 processorIntermediateResult.setResult(result);

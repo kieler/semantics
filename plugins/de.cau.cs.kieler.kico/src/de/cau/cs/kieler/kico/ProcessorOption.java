@@ -40,6 +40,25 @@ class ProcessorOption {
      */
     private boolean defaultEnabled;
 
+    /** The default this processor option. */
+    private static ProcessorOption defaultThisProcessorOption = null;
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Returns the single default this processor option that is used in transformations to refer to
+     * the transformation method.
+     * 
+     * @return the default this processor option
+     */
+    public static ProcessorOption getDefaultThisProcessorOption() {
+        if (defaultThisProcessorOption == null) {
+            defaultThisProcessorOption =
+                    new ProcessorOption("TRANSFORMATION_METHOD");
+        }
+        return defaultThisProcessorOption;
+    }
+
     // -------------------------------------------------------------------------
 
     /**
