@@ -6,7 +6,7 @@
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
       <diagramSynthesis
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis"
-            id="de.cau.cs.kieler.kico.ui.klighd.diagramSynthesis">
+            id="de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis">
       </diagramSynthesis>
    </extension>
    <extension

@@ -881,7 +881,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         
 //        if (hierarchyMode == 0) {
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
-                    "de.cau.cs.kieler.kico.ui.klighd.diagramSynthesis");
+                    "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis");
 //        } else {
 //            properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
 //                    "de.cau.cs.kieler.kico.ui.klighd.diagramFlatNoGroupsSynthesis");
