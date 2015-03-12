@@ -16,7 +16,7 @@ package de.cau.cs.kieler.kico;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * This interface defines what a concrete creeper is. A creeper is an EObject processing or
+ * This interface defines what a concrete hook is. A hook is an EObject processing or
  * observation unit that is invoked before/after each transformation, processor or snapshot.
  * 
  * @author cmot
@@ -24,10 +24,10 @@ import org.eclipse.emf.ecore.EObject;
  * @kieler.rating 2015-03-09 proposed yellow
  * 
  */
-public interface ICreeper {
+public interface IHook {
 
     /**
-     * Must supply a unique ID to identify this creeper.
+     * Must supply a unique ID to identify this hook.
      * 
      * @return the string
      */
@@ -36,7 +36,7 @@ public interface ICreeper {
     // -------------------------------------------------------------------------
 
     /**
-     * Optionally supply a human readable name for this creeper. If null is returned then the id
+     * Optionally supply a human readable name for this hook. If null is returned then the id
      * will be used in place of the name.
      * 
      * @return the string

@@ -59,7 +59,7 @@ public class KiCoPlugin extends Plugin {
             "de.cau.cs.kieler.kico.transformation";
 
     /** The Constant EXTENSION_POINT_ID. */
-    public static final String CREEPER_EXTENSION_POINT_ID = "de.cau.cs.kieler.kico.creeper";
+    public static final String CREEPER_EXTENSION_POINT_ID = "de.cau.cs.kieler.kico.hook";
 
     /** The Constant RESOURCEEXTENSION_EXTENSION_POINT_ID. */
     public static final String RESOURCEEXTENSION_EXTENSION_POINT_ID =
@@ -97,8 +97,8 @@ public class KiCoPlugin extends Plugin {
     /** The cached registered transformations. */
     private static HashMap<String, Transformation> transformationsCached = null;
 
-    /** The cached registered creepers. */
-    private static HashMap<String, Creeper> creepersCached = null;
+    /** The cached registered hooks. */
+    private static HashMap<String, Hook> hooksCached = null;
 
     /** The cached resource extensions. */
     private static HashMap<String, ResourceExtension> resourceExtensionsCached = null;
@@ -348,37 +348,37 @@ public class KiCoPlugin extends Plugin {
      * 
      * @return the registered processors
      */
-    public static HashMap<String, Creeper> getRegisteredCreepers(boolean forceReload) {
+    public static HashMap<String, Hook> getRegisteredHooks(boolean forceReload) {
         // Return the cache if there is any and not forced to reload
-        if (creepersCached != null && !forceReload) {
-            return creepersCached;
+        if (hooksCached != null && !forceReload) {
+            return hooksCached;
         }
         // Otherwise inspect the extensions
         IConfigurationElement[] extensions =
                 Platform.getExtensionRegistry().getConfigurationElementsFor(
                         CREEPER_EXTENSION_POINT_ID);
         // Clear the cache
-        creepersCached = new HashMap<String, Creeper>();
+        hooksCached = new HashMap<String, Hook>();
         // Walk thru every extension and instantiate the declared class, then put it into the cache
         for (IConfigurationElement extension : extensions) {
             String className = extension.getName();
             try {
-                Creeper instance = (Creeper) extension.createExecutableExtension("class");
+                Hook instance = (Hook) extension.createExecutableExtension("class");
                 String id = instance.getId();
                 className += " (" + id + ")";
-                if (creepersCached.containsKey(id)) {
-                    logger.severe("KiCo failed to register creeper: " + extension + " for class "
+                if (hooksCached.containsKey(id)) {
+                    logger.severe("KiCo failed to register hook: " + extension + " for class "
                             + className + " because this ID is already taken.");
                 } else {
-                    creepersCached.put(id, instance);
-                    logger.info("KiCo register creeper: " + extension + " for class " + className);
+                    hooksCached.put(id, instance);
+                    logger.info("KiCo register hook: " + extension + " for class " + className);
                 }
             } catch (CoreException e) {
-                logger.severe("KiCo failed to register creeper: " + extension + " for class "
+                logger.severe("KiCo failed to register hook: " + extension + " for class "
                         + className + ": " + KiCoUtil.getStackTraceString(e));
             }
         }
-        return creepersCached;
+        return hooksCached;
 
     }
 
@@ -528,19 +528,19 @@ public class KiCoPlugin extends Plugin {
 
     // -------------------------------------------------------------------------
     /**
-     * Gets the creeper by its id, if it is registered.
+     * Gets the hook by its id, if it is registered.
      * 
      * @param id
      *            the id
      * @param forceReload
      *            the force reload flag
-     * @return the creeper
+     * @return the hook
      */
-    public static Creeper getCreeper(String id, boolean forceReload) {
-        HashMap<String, Creeper> cache = getRegisteredCreepers(forceReload);
+    public static Hook getHook(String id, boolean forceReload) {
+        HashMap<String, Hook> cache = getRegisteredHooks(forceReload);
         if (!cache.containsKey(id)) {
             try {
-                throw (new Exception("KiCo cannot find the creeper with ID '" + id + "'"));
+                throw (new Exception("KiCo cannot find the hook with ID '" + id + "'"));
             } catch (Exception e) {
                 logger.severe(KiCoUtil.getStackTraceString(e));
             }
@@ -549,14 +549,14 @@ public class KiCoPlugin extends Plugin {
     }
 
     /**
-     * Gets the creeper by its id, if it is registered.
+     * Gets the hook by its id, if it is registered.
      * 
      * @param id
      *            the id
-     * @return the creeper
+     * @return the hook
      */
-    public static Creeper getCreeper(String id) {
-        return getCreeper(id, false);
+    public static Hook getHook(String id) {
+        return getHook(id, false);
     }
 
     // -------------------------------------------------------------------------

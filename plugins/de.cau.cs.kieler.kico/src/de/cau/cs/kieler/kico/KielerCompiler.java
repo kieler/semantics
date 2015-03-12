@@ -141,27 +141,27 @@ public class KielerCompiler {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the creeper by its id, if it is registered.
+     * Gets the hook by its id, if it is registered.
      * 
      * @param id
      *            the id
-     * @return the creeper
+     * @return the hook
      */
-    public static Creeper getCreeper(String id) {
-        return KiCoPlugin.getCreeper(id, false);
+    public static Hook getHook(String id) {
+        return KiCoPlugin.getHook(id, false);
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets all registered creepers.
+     * Gets all registered hooks.
      * 
-     * @return the creepers
+     * @return the hooks
      */
-    public static Set<Creeper> getCreepers() {
-        Map<String, Creeper> map = KiCoPlugin.getRegisteredCreepers(false);
-        Set<Creeper> set = new HashSet<Creeper>();
-        for (Entry<String, Creeper> entry : map.entrySet()) {
+    public static Set<Hook> getHooks() {
+        Map<String, Hook> map = KiCoPlugin.getRegisteredHooks(false);
+        Set<Hook> set = new HashSet<Hook>();
+        for (Entry<String, Hook> entry : map.entrySet()) {
             set.add(entry.getValue());
         }
         return set;

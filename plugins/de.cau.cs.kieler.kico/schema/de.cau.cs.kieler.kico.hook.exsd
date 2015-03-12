@@ -25,7 +25,7 @@ This extension point allowes the contribution of a compiler transformation to th
       </annotation>
       <complexType>
          <sequence minOccurs="0" maxOccurs="unbounded">
-            <element ref="creeperClass" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="hookClass" minOccurs="0" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -37,20 +37,20 @@ This extension point allowes the contribution of a compiler transformation to th
       </complexType>
    </element>
 
-   <element name="creeperClass">
+   <element name="hookClass">
       <annotation>
          <documentation>
-            A class file that implements a creeper, i.e., an EObject processing or observation before/after each transformation, processor or snapshot.
+            A class file that implements a hook, i.e., an EObject processing or observation before/after each transformation, processor or snapshot.
          </documentation>
       </annotation>
       <complexType>
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  The implementing class for this specific creeper. It specifies postTransform, preTransform, preProcessor, postProcessor, preSnapshot and postSnapshot methods that may modify or inspect the given EObject model. A creeper should also define an indentifier and a name to enable or disable it. If no human readable name is provided then the ID is taken as the name.
+                  The implementing class for this specific hook. It specifies postTransform, preTransform, preProcessor, postProcessor, preSnapshot and postSnapshot methods that may modify or inspect the given EObject model. A hook should also define an indentifier and a name to enable or disable it. If no human readable name is provided then the ID is taken as the name.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.kico.Creeper:de.cau.cs.kieler.kico.ICreeper"/>
+                  <meta.attribute kind="java" basedOn="de.cau.cs.kieler.kico.Hook:de.cau.cs.kieler.kico.IHook"/>
                </appinfo>
             </annotation>
          </attribute>

@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.kico;
 
 /**
- * An instance of this class represents a registered creeper which can run during compilation
+ * An instance of this class represents a registered hook which can run during compilation
  * manipulating the model in between transformations.
  * 
  * @author cmot
@@ -22,7 +22,7 @@ package de.cau.cs.kieler.kico;
  * @kieler.rating 2015-03-09 proposed yellow
  * 
  */
-public abstract class Creeper implements ICreeper {
+public abstract class Hook implements IHook {
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
