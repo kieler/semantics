@@ -34,7 +34,7 @@ import com.google.common.collect.Sets
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class Abort extends Transformation {
+class AbortWTO extends Transformation {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
@@ -78,7 +78,7 @@ class Abort extends Transformation {
     //-------------------------------------------------------------------------
     // The new DEFAULT abort transformation, previously transformAbortAlternative.
     // Transforming Aborts.
-    def State transformAbort(State rootState) {
+    def State transform(State rootState) {
         val targetRootState = rootState.fixAllPriorities;
 
         nameCache.clear
