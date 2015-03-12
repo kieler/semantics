@@ -55,6 +55,30 @@
         <transformationClass
               class="de.cau.cs.kieler.sccharts.transformations.Initialization">
         </transformationClass>
+     </extension>
+     <extension
+           point="de.cau.cs.kieler.kico.feature">
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Abort">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Connector">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Entry">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Exit">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Initialization">
+        </featureClass>
+        <featureGroupClass
+              class="de.cau.cs.kieler.sccharts.featuregroups.SCCharts">
+        </featureGroupClass>
+        <featureGroupClass
+              class="de.cau.cs.kieler.sccharts.featuregroups.Statecharts">
+        </featureGroupClass>
      </extension>   
 
 
