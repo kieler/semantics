@@ -16,6 +16,8 @@ package de.cau.cs.kieler.kico;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EObject;
+
 /**
  * An instance of this class represents a registered feature a transformation can declare to handle,
  * not handle or produce.
@@ -26,7 +28,7 @@ import java.util.Set;
  * 
  */
 public abstract class Feature implements IFeature {
-    
+
     /** The cached handling/alternative transformations. */
     protected Set<Transformation> cachedHandlingTransformations = null;
 
@@ -35,7 +37,6 @@ public abstract class Feature implements IFeature {
 
     /** The cached not handling transformations. */
     protected Set<Transformation> cachedNotHandlingTransformations = null;
-
 
     // -------------------------------------------------------------------------
 
@@ -50,13 +51,27 @@ public abstract class Feature implements IFeature {
     }
 
     // -------------------------------------------------------------------------
+
+    /**
+     * This default implementation will return false. Specific implementations should use the most
+     * possible general parameter and calculate the return value based on whether the features is
+     * contained.
+     * 
+     * @param model
+     *            the model
+     * @return true, if is s contained
+     */
+    public boolean isContained(EObject model) {
+        return false;
+    }
+
+    // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the list of transformations that are able to handle this feature because
-     * they declared to be able to handle it. For a single Feature (not a group) this
-     * means a set of alternative transformations that can be used to transform away
-     * the feature. 
+     * Gets the list of transformations that are able to handle this feature because they declared
+     * to be able to handle it. For a single Feature (not a group) this means a set of alternative
+     * transformations that can be used to transform away the feature.
      * 
      * @return the alternative transformations
      */
@@ -92,7 +107,7 @@ public abstract class Feature implements IFeature {
         }
         return cachedProducingTransformations;
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -111,7 +126,7 @@ public abstract class Feature implements IFeature {
             }
         }
         return cachedNotHandlingTransformations;
-    }    
+    }
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
