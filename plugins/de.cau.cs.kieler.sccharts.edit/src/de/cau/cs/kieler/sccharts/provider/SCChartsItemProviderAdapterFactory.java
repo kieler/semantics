@@ -273,7 +273,30 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
         return defineNodeItemProvider;
     }
 
-//    /**
+/**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.Equation} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected EquationItemProvider equationItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.sccharts.Equation}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createEquationAdapter() {
+        if (equationItemProvider == null) {
+            equationItemProvider = new EquationItemProvider(this);
+        }
+
+        return equationItemProvider;
+    }
+
+    //    /**
 //     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.sccharts.DataflowFeature} instances.
 //     * <!-- begin-user-doc -->
 //     * <!-- end-user-doc -->
@@ -682,7 +705,7 @@ public class SCChartsItemProviderAdapterFactory extends SCChartsAdapterFactory i
         if (referenceNodeItemProvider != null) referenceNodeItemProvider.dispose();
         if (callNodeItemProvider != null) callNodeItemProvider.dispose();
         if (defineNodeItemProvider != null) defineNodeItemProvider.dispose();
-//        if (dataflowFeatureItemProvider != null) dataflowFeatureItemProvider.dispose();
+        if (equationItemProvider != null) equationItemProvider.dispose();
         if (bindingItemProvider != null) bindingItemProvider.dispose();
         if (transitionItemProvider != null) transitionItemProvider.dispose();
         if (textEffectItemProvider != null) textEffectItemProvider.dispose();

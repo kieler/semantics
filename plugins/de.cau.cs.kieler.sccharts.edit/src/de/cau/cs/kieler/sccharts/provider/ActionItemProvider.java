@@ -79,8 +79,8 @@ public class ActionItemProvider
             super.getPropertyDescriptors(object);
 
             addDelayPropertyDescriptor(object);
-            addImmediatePropertyDescriptor(object);
             addLabelPropertyDescriptor(object);
+            addImmediatePropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -218,8 +218,8 @@ public class ActionItemProvider
 
         switch (notification.getFeatureID(Action.class)) {
             case SCChartsPackage.ACTION__DELAY:
-            case SCChartsPackage.ACTION__IMMEDIATE:
             case SCChartsPackage.ACTION__LABEL:
+            case SCChartsPackage.ACTION__IMMEDIATE:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
             case SCChartsPackage.ACTION__EFFECTS:

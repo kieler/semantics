@@ -221,6 +221,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     private static val int MINIMALNODEWIDTH = 40
     private static val int MINIMALNODEHEIGHT = 40
     private var regionCounter = 0
+    private static val int PORTFONTSIZE = 10
+    private static val int LABELFONTSIZE = 10
 
     // -------------------------------------------------------------------------
     // The Main entry transform function   
@@ -952,19 +954,19 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 }
             }
             
-            // translate direct dataflow modelling
+            // translate all direct dataflow equations
             for (eq: d.equations) {
                 val vo = eq.valuedObject
                 node.children += vo.createNode(node) => [
                     it.addPolygon.createOutputNodeShape
-                    it.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
+                    it.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
                     it.addDefaultLayoutParameter
                     //add Port
                     it.addPort(vo.reference, PortSide::WEST) => [
                         it.addLayoutParam(LayoutOptions::OFFSET, -2.0f)
                     ]
-                    it.createLabel(it).configureInsideCenteredNodeLabel(
-                        vo.reference.serialize as String, 6, KlighdConstants::DEFAULT_FONT_NAME)
+                    it.createLabel(it).configureInsideTopCenteredNodeLabel(
+                        vo.reference.serialize as String, LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
                     val expr = eq.expression
                     node.children += expr.translate(d.equations.indexOf(eq), node, d)    
                 ]
@@ -984,7 +986,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 it.setSurroundingSpace(2, 0);
                 it.invisible = false;
                 it.foreground = "gray".color
-                it.lineWidth = 2 //1;
+                it.lineWidth = 1
                 //it.addText("[-]" + if(d.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(d) => [
                 it.addText("[-]" + if(regionLabel.nullOrEmpty) "" else " " + regionLabel) => [//.putToLookUpWith(d) => [
                     it.foreground = "dimGray".color
@@ -1002,7 +1004,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 it.setSurroundingSpace(2, 0) //(4, 0);
                 it.invisible = false;
                 it.foreground = "gray".color
-                it.lineWidth = 2 //1;
+                it.lineWidth = 1
                 //it.addText("[+]" + if(d.label.nullOrEmpty) "" else " " + regionLabel).putToLookUpWith(d) => [
                 it.addText("[+]" + if(regionLabel.nullOrEmpty) "" else " " + regionLabel) => [//.putToLookUpWith(d) => [
                     it.foreground = "dimGray".color
@@ -1032,7 +1034,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     nNode.addLayoutParam(LayoutOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_SIDE)
                 }
                 nNode.createLabel(nNode).configureInsideTopCenteredNodeLabel(
-                    op.toString(), 6, KlighdConstants::DEFAULT_FONT_NAME 
+                    op.toString(), LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME 
                 )
                 expr.subExpressions.forEach[ se|
                     nNode.addPort(se, PortSide::WEST)
@@ -1046,11 +1048,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                             val inputNode = subVo.createNode(parentNode) => [
                                 it.addPolygon.createInputNodeShape
                                 it.addDefaultLayoutParameter
-                                it.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
+                                it.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
                                 it.addPort(subVo, PortSide::EAST)
                                   .addLayoutParam(LayoutOptions::OFFSET, -2.0f)
                                 it.createLabel(it).configureInsideTopCenteredNodeLabel(
-                                    subVo.serialize as String, 6, KlighdConstants::DEFAULT_FONT_NAME)
+                                    subVo.serialize as String, LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
                                 
                                 it.createEdge(se) => [
                                     it.source = subVo.getNode(parentNode)
@@ -1096,11 +1098,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                             val inputNode = subVo.createNode(parentNode) => [
                                 it.addPolygon.createInputNodeShape
                                 it.addDefaultLayoutParameter
-                                it.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
+                                it.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
                                 it.addPort(subVo, PortSide::EAST)
                                   .addLayoutParam(LayoutOptions::OFFSET, -2.0f)
                                 it.createLabel(it).configureInsideTopCenteredNodeLabel(
-                                    subVo.serialize as String, 6, KlighdConstants::DEFAULT_FONT_NAME)
+                                    subVo.serialize as String, LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
                                 
                                 it.createEdge(se) => [
                                     it.source = subVo.getNode(parentNode)
@@ -1177,11 +1179,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     val inputNode = vo.createNode(parentNode) => [
                         it.addPolygon.createInputNodeShape
                         it.addDefaultLayoutParameter
-                        it.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
+                        it.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
                         it.addPort(vo, PortSide::EAST)
                             .addLayoutParam(LayoutOptions::OFFSET, -2.0f)
                         it.createLabel(it).configureInsideTopCenteredNodeLabel(
-                            vo.serialize as String, 6, KlighdConstants::DEFAULT_FONT_NAME)
+                            vo.serialize as String, LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
 
                         it.createEdge(vo) => [
                             it.source = vo.getNode(parentNode)
@@ -1243,7 +1245,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 }
                 nNode.createLabel(nNode)
                      .configureInsideTopCenteredNodeLabel(op.toString(),
-                                                          6,
+                                                          LABELFONTSIZE,
                                                           KlighdConstants::DEFAULT_FONT_NAME
                 )
                 
@@ -1361,13 +1363,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     // translate a const expression: just create input node an edge
     public def dispatch KNode translateConstExpression(KNode n, Expression expr, KNode parentNode) {
         n.addPolygon.createInputNodeShape
-        n.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
+        n.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
         n.addDefaultLayoutParameter
         n.addPort(expr, PortSide::EAST) => [
             addLayoutParam(LayoutOptions::OFFSET, -2.0f)
         ]
-        n.createLabel(n).configureInsideCenteredNodeLabel(expr.serialize as String,
-                                                          6, KlighdConstants::DEFAULT_FONT_NAME)
+        n.createLabel(n).configureInsideTopCenteredNodeLabel(expr.serialize as String,
+                                                          LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
         
         //trennen zwischen Dataflow als eC und opExp!!
         n.createEdge(parentNode) => [
@@ -1394,13 +1396,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     // translate a const expression: just create input node an edge
     public def dispatch KNode translateConstExpression(KNode n, Expression expr, Node callNode) {
         n.addPolygon.createInputNodeShape
-        n.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
+        n.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
         n.addDefaultLayoutParameter
         n.addPort(expr, PortSide::EAST) => [
             addLayoutParam(LayoutOptions::OFFSET, -2.0f)
         ]
-        n.createLabel(n).configureInsideCenteredNodeLabel(expr.serialize as String,
-                                                          6, KlighdConstants::DEFAULT_FONT_NAME)
+        n.createLabel(n).configureInsideTopCenteredNodeLabel(expr.serialize as String,
+                                                          LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
         
         n.createEdge(callNode) => [
             it.source = n
@@ -1416,49 +1418,41 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     // Transform a Node
     public def dispatch KNode translate(Node n) {
         val nNode = n.createNode().putToLookUpWith(n)
-        
-        //create specific node shape
-        if (n instanceof CallNode) {
-            nNode.setMinimalNodeSize(MINIMALNODEWIDTH * 2, MINIMALNODEHEIGHT * 2)
-            nNode.createCallNodeShape
-        } else {
-        	nNode.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT)
-            nNode.createDefaultNodeShape
-		}
-        
-        // set up some default layout parameters
-        nNode.addDefaultLayoutParameter
 
         // translate specific ReferenceNode elements
         if (n instanceof ReferenceNode) {
-            val ref = (n as ReferenceNode)
+            nNode.setMinimalNodeSize(MINIMALNODEWIDTH * 2, MINIMALNODEHEIGHT * 1.5f)
+            nNode.createDefaultNodeShape
+            
+            val refNode = (n as ReferenceNode)
+            val refedScope = refNode.referencedScope as State
             nNode.createLabel(nNode).configureInsideTopCenteredNodeLabel(
-                if(n.label.nullOrEmpty) ref.id else " " + n.label,
-                6,
+                if(n.label.nullOrEmpty) refedScope.id else " " + n.label,
+                LABELFONTSIZE,
                 KlighdConstants::DEFAULT_FONT_NAME
             )
-            ref.referencedScope.declarations.filter[it.input].forEach[valuedObjects.forEach[ vo|
+            refedScope.declarations.filter[it.input].forEach[valuedObjects.forEach[ vo|
                 nNode.addPort(vo.reference, PortSide::WEST) => [
                     it.createLabel(it).configureInsideCenteredNodeLabel(
-                       vo.name, 6, KlighdConstants::DEFAULT_FONT_NAME)
+                       vo.name, PORTFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
                 ]
             ]]
-            ref.referencedScope.declarations.filter[it.output].forEach[valuedObjects.forEach[ vo|
+            refedScope.declarations.filter[it.output].forEach[valuedObjects.forEach[ vo|
                 nNode.addPort(vo.reference, PortSide::EAST) => [
                     it.createLabel(it).configureInsideCenteredNodeLabel(
-                       vo.name, 6, KlighdConstants::DEFAULT_FONT_NAME)
+                       vo.name, PORTFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
                 ]
             ]]
             // create input nodes for call parameters
-            // need to be improved if parameter is not an global/local input
-            val dNode = ref.eContainer.node
+            // dNode is the dataflow KNode containing the reference node
+            val dNode = refNode.eContainer.node
             val refInputs = <ValuedObject>newArrayList
-            ref.referencedScope.declarations.filter[it.input].forEach[
+            refedScope.declarations.filter[it.input].forEach[
                 refInputs += valuedObjects
             ]
             val refInputSize = refInputs.size
-            ref.parameters.forEach[ p|
-                if (ref.parameters.indexOf(p) >= refInputSize) {
+            refNode.parameters.forEach[ p|
+                if (refNode.parameters.indexOf(p) >= refInputSize) {
                     // if a call has more parameters than the referenced node: skip 
                 } else {
                     // else: add child nodes and edges if not already created
@@ -1466,35 +1460,37 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         val param = (p as ValuedObjectReference).valuedObject 
                         dNode.children += param.createNode(dNode) => [ inNode|
                             inNode.addPolygon.createInputNodeShape
-                            inNode.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
+                            inNode.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
                             inNode.addDefaultLayoutParameter
                             inNode.addPort(param.reference, PortSide::EAST) => [
                                 it.addLayoutParam(LayoutOptions::OFFSET, -2.0f)
                             ]
-                            inNode.createLabel(inNode).configureInsideCenteredNodeLabel(param.serialize as String,
-                                6, KlighdConstants::DEFAULT_FONT_NAME)
+                            inNode.createLabel(inNode).configureInsideTopCenteredNodeLabel(param.serialize as String,
+                                LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
                             //create Edge
-                            inNode.createEdge(ref) => [
+                            inNode.createEdge(refNode) => [
                                 it.source = inNode
                                 it.target = nNode
                                 it.sourcePort = inNode.getPort(param.reference.portMap)
-                                it.targetPort = nNode.ports.get(ref.parameters.indexOf(p))
+                                it.targetPort = nNode.ports.get(refNode.parameters.indexOf(p))
                                 it.createEdgeStyle
                             ]
                         ]
-                    } else {
-                        println("p is: " + p)
                     }
                 }
             ]
-            // translate specific CallNode elements
         } else if (n instanceof CallNode) {
+            // translate specific CallNode elements
             val call = n as CallNode
             val refID = call.callReference.id
-            nNode.createLabel(nNode).configureInsideTopCenteredNodeLabel(
-                if(n.label.nullOrEmpty) refID else " " + n.label,
-                                        6,
-                                        KlighdConstants::DEFAULT_FONT_NAME)
+            
+            nNode.setMinimalNodeSize(MINIMALNODEWIDTH * 2, MINIMALNODEHEIGHT * 2)
+            nNode.createCallNodeShape(refID)
+            
+//            nNode.createLabel(nNode).configureInsideTopCenteredNodeLabel(
+//                if(n.label.nullOrEmpty) refID else " " + n.label,
+//                                        LABELFONTSIZE,
+//                                        KlighdConstants::DEFAULT_FONT_NAME)
             
             //set up orthogonal edge routing inside call nodes
             nNode.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
@@ -1503,7 +1499,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 val ref = call.callReference as DefineNode
                 // add ChildNodes for called Reference
                 for (expr : ref.expressions) {
-                    println("ref expr: " + expr)
                     val index = ref.expressions.indexOf(expr)
                     nNode.children +=  expr.translate(index, call)
                 }
@@ -1513,7 +1508,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         it.addLayoutParam(LayoutOptions::OFFSET, -3.0f)
                         it.createLabel(it).configureInsideCenteredNodeLabel(
                             vo.reference.serialize as String,
-                            6, KlighdConstants::DEFAULT_FONT_NAME)
+                            PORTFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
                     ]
                 ]]
                 ref.outputs.forEach[valuedObjects.forEach[ vo|
@@ -1521,7 +1516,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         it.addLayoutParam(LayoutOptions::OFFSET, -3.0f)
                         it.createLabel(it).configureInsideCenteredNodeLabel(
                             vo.reference.serialize as String,
-                            6, KlighdConstants::DEFAULT_FONT_NAME)
+                            PORTFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
                     ]
                 ]]
                 
@@ -1536,7 +1531,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             }
             
             // create input nodes for call parameters
-            // need to be improved if parameter is not an global/local input
             val dNode = call.eContainer.node
             val refInputs = <ValuedObject>newArrayList
             val callRef = call.callReference as DefineNode
@@ -1553,13 +1547,13 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         val param = (p as ValuedObjectReference).valuedObject 
                         dNode.children += param.createNode(dNode) => [ inNode|
                             inNode.addPolygon.createInputNodeShape
-                            inNode.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT / 3)
+                            inNode.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
                             inNode.addDefaultLayoutParameter
                             inNode.addPort(param.reference, PortSide::EAST) => [
                                 it.addLayoutParam(LayoutOptions::OFFSET, -2.0f)
                             ]
-                            inNode.createLabel(inNode).configureInsideCenteredNodeLabel(param.serialize as String,
-                                6, KlighdConstants::DEFAULT_FONT_NAME)
+                            inNode.createLabel(inNode).configureInsideTopCenteredNodeLabel(param.serialize as String,
+                                LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
                             //create Edge
                             inNode.createEdge(call) => [
                                 it.source = inNode
@@ -1573,23 +1567,28 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                 }
             ]
             
+
+            
             // set call nodes to initially collapsed
-            //nNode.addCollapseExpand(" "/*if(ref.label.nullOrEmpty) " " + ref.id else " " + ref.label*/)
+            nNode.initiallyCollapse
             if (SHOW_SHADOW.booleanValue) {
                 nNode.KRendering.shadow = "black".color;
                 nNode.KRendering.shadow.XOffset = 4;
                 nNode.KRendering.shadow.YOffset = 4;
             }
-            nNode.initiallyCollapse
         }
          // the "default" else, in case something is missing
         else {
+            nNode.setMinimalNodeSize(MINIMALNODEWIDTH, MINIMALNODEHEIGHT)
+            nNode.createDefaultNodeShape
             nNode.createLabel(nNode).configureInsideTopCenteredNodeLabel(
                 if(n.label.nullOrEmpty) "" else " " + n.label,
-                6,
+                LABELFONTSIZE,
                 KlighdConstants::DEFAULT_FONT_NAME
             )
         }
+        // set up some default layout parameters
+        nNode.addDefaultLayoutParameter
         return nNode
     }
     
@@ -1670,7 +1669,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
         ]
         return n
     }
-    private def KNode createCallNodeShape(KNode n){
+    private def KNode createCallNodeShape(KNode n, String label){
         n.addRoundedRectangle(3, 3) => [
             it.setProperty(KlighdProperties::EXPANDED_RENDERING, true)
             it.setBackgroundGradient("#fff".color, "#fff".color, 90)
@@ -1678,7 +1677,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             it.invisible = false
             it.foreground = "black".color
             it.lineWidth = 1
-            it.addText("[-]") => [//]+ if(regionLabel.nullOrEmpty) "" else " " + regionLabel) => [//.putToLookUpWith(d) => [
+            it.addText("[-] " + label) => [//]+ if(regionLabel.nullOrEmpty) "" else " " + regionLabel) => [//.putToLookUpWith(d) => [
                 it.foreground = "dimGray".color
                 it.fontSize = 10
                 it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
@@ -1696,7 +1695,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             it.invisible = false
             //it.foreground = "gray".color
             it.lineWidth = 1
-            it.addText("[+]") => [//]+ if(regionLabel.nullOrEmpty) "" else " " + regionLabel) => [//.putToLookUpWith(d) => [
+            it.addText("[+] " + label) => [//]+ if(regionLabel.nullOrEmpty) "" else " " + regionLabel) => [//.putToLookUpWith(d) => [
                 it.foreground = "dimGray".color
                 it.fontSize = 10
                 it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);

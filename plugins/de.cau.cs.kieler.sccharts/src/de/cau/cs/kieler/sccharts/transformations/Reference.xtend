@@ -188,7 +188,6 @@ class Reference {
     		val parentState = dataflow.eContainer as State
     		var regionCounter = 0
 			var idCounter = 0
-			
 			/*
 			 * Transform ReferenceNodes first
 			 * => create new region and state, copy referenced scope
@@ -268,17 +267,12 @@ class Reference {
                     val newState2 = newRegion.createState("_" + dataflow.ID + idCounter)
                     newState2.label = dataflow.label + idCounter + "_end"
                     newState2.setFinal
-                            
-                    val transition = SCChartsFactory.eINSTANCE.createTransition
-                    transition.sourceState = newState
-                    transition.targetState = newState2
+                    
+                    val transition = createNewTransition(newState, newState2)
                     transition.setImmediate
                     
                     var eqCounter = 0
                     for (vo: defNode.valuedObjects) {
-//                        val newAssignment = SCChartsFactory.eINSTANCE.createAssignment
-//                        newAssignment.valuedObject = vo
-//                        newAssignment.expression = defNode.expressions.get(eqCounter).copy
                         val newAssignment = createNewAssignment(vo, defNode.expressions.get(eqCounter).copy)
                         
                         transition.effects += newAssignment
@@ -303,9 +297,6 @@ class Reference {
                                 if (vorMapping.containsKey(key)) {
                                     val tmpValuedObjectReference = vorMapping.get(key) 
                                     
-//                                    val newAssignment = SCChartsFactory.eINSTANCE.createAssignment
-//                                    newAssignment.valuedObject = eq.valuedObject
-//                                    newAssignment.expression = tmpValuedObjectReference.copy
                                     val newAssignment = createNewAssignment(eq.valuedObject, tmpValuedObjectReference.copy)
                                     
                                     val outputEffectTransition = newState2.outgoingTransitions.get(0)
@@ -321,10 +312,8 @@ class Reference {
                                             val newFinalState = newRegion.createState("_" + dataflow.ID + idCounter)
                                             newFinalState.label = dataflow.label + idCounter + "_end"
                                             newFinalState.setFinal
-                                        
-                                            val newTransition = SCChartsFactory.eINSTANCE.createTransition
-                                            newTransition.sourceState = newState2
-                                            newTransition.targetState = newFinalState
+                                            
+                                            val newTransition = createNewTransition(newState2, newFinalState)
                                             newTransition.setImmediate
                                         }
                                         val tmpValuedObject = KExpressionsFactory.eINSTANCE.createValuedObject
@@ -335,17 +324,9 @@ class Reference {
                                         tmpValuedObjectReference.valuedObject = tmpValuedObject
                                         
                                         val oldAssignment = assignmentMapping.get(key)
-                                        
-//                                        val newAssignment = SCChartsFactory.eINSTANCE.createAssignment
-//                                        newAssignment.valuedObject = oldAssignment.valuedObject
-//                                        newAssignment.expression = tmpValuedObjectReference.copy
                                         val newAssignment = createNewAssignment(oldAssignment.valuedObject, tmpValuedObjectReference.copy)
-                                        
                                         oldAssignment.valuedObject = tmpValuedObject
                                         
-//                                        val newAssignment2 = SCChartsFactory.eINSTANCE.createAssignment
-//                                        newAssignment2.valuedObject = eq.valuedObject
-//                                        newAssignment2.expression = tmpValuedObjectReference.copy
                                         val newAssignment2 = createNewAssignment(eq.valuedObject, tmpValuedObjectReference.copy)
                                         
                                         vorMapping.put(key, tmpValuedObjectReference)
@@ -372,10 +353,9 @@ class Reference {
 			        // case controlflow is modelled inside define node
 			        val newRegion = parentState.createRegion("_" + dataflow.id + regionCounter)
                     newRegion.label = dataflow.label + regionCounter
-                    regionCounter = regionCounter + 1
+                    
                             
                     val transitionMapping = <Transition, Transition> newHashMap
-                            
                     // copy states
                     for (s: defNode.states) {
                         val newState = s.copy
@@ -422,7 +402,6 @@ class Reference {
                             }
                         ]
                     ]
-                    
                     // replace input valued objects
                     defNode.inputs.forEach[ i|
                         i.valuedObjects.forEach[ vo|
@@ -431,51 +410,122 @@ class Reference {
                             ]
                         ]
                     ]
-                            
+                    // remember callNode and its initial state
                     var State initState
                     for (s: newRegion.states) {
                         if (s.initial) {
                             initState = s
                         }
                     }
-//                          for (s: parentRegion.states) {
-//                                s.replaceAllOccurrences(voRef, vo)
-//                            }
                     nodeMapping.put(callNode, initState)
+                    
+                    val outputRegion = parentState.createRegion("_" + dataflow.id + regionCounter + "_out")
+                    outputRegion.label = "_" + dataflow.id + regionCounter + "_out"
+                    var int stateCounter = 0
+                    // multiple outputs
+                    for (eq: dataflow.equations) {
+                        if (eq.node != null) {
+                            if (eq.node.equals(callNode)) {
+                                val key = callNode.id + "." + (eq.expression as ValuedObjectReference).valuedObject.name
+                                val vo = eq.valuedObject
+                                val voRef = (eq.expression as ValuedObjectReference).valuedObject
+                                
+                                if (vorMapping.containsKey(key)) {
+                                    val tmpValuedObjectReference = vorMapping.get(key)
+                                    val newAssignment = createNewAssignment(vo, tmpValuedObjectReference.copy)
+                                    
+                                    val oldFinalState = outputRegion.states.last
+                                    oldFinalState.setFinal(false)
+                                    oldFinalState.label = "_" + dataflow.id + regionCounter + "_out_mid_" + stateCounter
+                                    stateCounter = stateCounter + 1
+                                        
+                                    val newFinalState = outputRegion.createState("_" + dataflow.id + regionCounter + "_out_end")
+                                    newFinalState.label = "_" + dataflow.id + regionCounter + "_out_end"
+                                    newFinalState.setFinal
+                                        
+                                    val newTransition = createNewTransition(oldFinalState, newFinalState)
+                                    newTransition.setImmediate
+                                    newTransition.effects += newAssignment
+                                } else {
+                                    val tmpValuedObject = KExpressionsFactory.eINSTANCE.createValuedObject
+                                    tmpValuedObject.name = "tmp_" + tmpCounter
+                                    val tmpValuedObjectReference = KExpressionsFactory.eINSTANCE.createValuedObjectReference
+                                    tmpValuedObjectReference.valuedObject = tmpValuedObject
+                                    tmpCounter = tmpCounter + 1
+                                    
+                                    for (s: newRegion.states) {
+                                        s.replaceAllOccurrences(voRef, tmpValuedObject)
+                                    }
+                                    
+                                    vorMapping.put(key, tmpValuedObjectReference.copy)
+                                    
+                                    val newAssignment = createNewAssignment(vo, tmpValuedObjectReference.copy)
+                                    
+                                    if (outputRegion.states.nullOrEmpty) {
+                                        val initialState = outputRegion.createState("_" + dataflow.id + regionCounter + "_out_start")
+                                        initialState.label = "_" + dataflow.id + regionCounter + "_out_start"
+                                        initialState.setInitial
+                                        
+                                        val finalState = outputRegion.createState("_" + dataflow.id + regionCounter + "_out_end")
+                                        finalState.label = "_" + dataflow.id + regionCounter + "_out_end"
+                                        finalState.setFinal
+                                        
+                                        val newTransition = createNewTransition(initialState, finalState)
+                                        newTransition.setImmediate
+                                        newTransition.effects += newAssignment
+                                        
+                                    } else {
+                                        val oldFinalState = outputRegion.states.last
+                                        oldFinalState.setFinal(false)
+                                        oldFinalState.label = "_" + dataflow.id + regionCounter + "_out_mid_" + stateCounter
+                                        stateCounter = stateCounter + 1
+                                        
+                                        val newFinalState = outputRegion.createState("_" + dataflow.id + regionCounter + "_out_end")
+                                        newFinalState.label = "_" + dataflow.id + regionCounter + "_out_end"
+                                        newFinalState.setFinal
+                                        
+                                        val newTransition = createNewTransition(oldFinalState, newFinalState)
+                                        newTransition.setImmediate
+                                        newTransition.effects += newAssignment
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    createNewTransition(outputRegion.states.last, outputRegion.states.head)
+                    regionCounter = regionCounter + 1
 			    }
 			}
 			
+			val assignmentList = <Assignment> newArrayList			
 			for (eq: dataflow.equations) {
 			    if (eq.node == null) {
-			    /*
-                 * Equation: eq.node == null
-                 * => create new region with initial and final state for each expression
-                 * and create new assignment as transition effect
-                 */
-                    val rRegion = parentState.createRegion("_" + dataflow.id + regionCounter)
-                    rRegion.label = dataflow.label + regionCounter
+                    // Equation: eq.node == null
+                    // and create new assignment as transition effect
+                    assignmentList += createNewAssignment(eq.valuedObject, eq.expression)
+                }
+            }
+            if (!assignmentList.empty) {
+                // => create new region with initial and final state for each expression
+                val rRegion = parentState.createRegion("_" + dataflow.id + regionCounter)
+                rRegion.label = dataflow.label + regionCounter
                     
-                    val newState = rRegion.createState("_" + dataflow.ID + idCounter)
-                    newState.label = dataflow.label + idCounter + "_start"
-                    newState.setInitial
+                val newState = rRegion.createState("_" + dataflow.ID + idCounter)
+                newState.label = dataflow.label + idCounter + "_start"
+                newState.setInitial
                     
-                    val newState2 = rRegion.createState("_" + dataflow.id + idCounter)
-                    newState2.label = dataflow.label + idCounter + "_end"
-                    newState2.setFinal
+                val newState2 = rRegion.createState("_" + dataflow.id + idCounter)
+                newState2.label = dataflow.label + idCounter + "_end"
+                newState2.setFinal
                     
-                    regionCounter = regionCounter + 1
-                    idCounter = idCounter + 1
-                    
-//                    val newAssignment = SCChartsFactory.eINSTANCE.createAssignment
-//                    newAssignment.valuedObject = eq.valuedObject
-//                    newAssignment.expression = eq.expression
-                    
-                    val newAssignment = createNewAssignment(eq.valuedObject, eq.expression)
-                    
-                    val transition = SCChartsFactory.eINSTANCE.createTransition
-                    transition.sourceState = newState
-                    transition.targetState = newState2
-                    transition.effects += newAssignment
+                regionCounter = regionCounter + 1
+                idCounter = idCounter + 1
+                
+                val transition = createNewTransition(newState, newState2)
+                transition.setImmediate
+                                    
+                for (assign: assignmentList) {
+                    transition.effects += assign
                 }
             }
 			
@@ -501,6 +551,13 @@ class Reference {
    	    newAssignment.valuedObject = vo
    	    newAssignment.expression = expression
    	    return newAssignment
+   	}
+   	
+   	private def Transition createNewTransition(State sourceState, State targetState) {
+   	    val newTransition = SCChartsFactory.eINSTANCE.createTransition
+   	    newTransition.sourceState = sourceState
+   	    newTransition.targetState = targetState
+   	    return newTransition
    	}
     
     private def String findPropagatedName(String name) {
