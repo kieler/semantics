@@ -65,7 +65,7 @@ abstract class AbstractGuardCreator extends Transformation {
     // -- Sequentializer 
     // -------------------------------------------------------------------------            
 	
-    override transform(EObject eObject, KielerCompilerContext context) {
+    override doTransform(EObject eObject, KielerCompilerContext context) {
         createGuards(eObject as SCGraph, context)
     }
 	

@@ -65,7 +65,7 @@ abstract class AbstractSequentializer extends Transformation {
     // -- Sequentializer 
     // -------------------------------------------------------------------------            
 	
-    override transform(EObject eObject, KielerCompilerContext context) {
+    override doTransform(EObject eObject, KielerCompilerContext context) {
         sequentialize(eObject as SCGraph, context)
     }
 	

@@ -102,7 +102,7 @@ class BasicBlockTransformation extends Transformation {
      *          the root element of the input model
      * @return Returns the root element of the transformed model.
      */      
-	override transform(EObject eObject, KielerCompilerContext context) {
+	override doTransform(EObject eObject, KielerCompilerContext context) {
         return transformSCGDEPToSCGBB(eObject as SCGraph)
     }
     

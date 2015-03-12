@@ -265,7 +265,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                 // Create a dummy resource by calling serialization (this creates a dummy
                 // resource on the fly)
                  @SuppressWarnings("unused")
-                 KielerCompilerContext context = new KielerCompilerContext("");
+                 KielerCompilerContext context = new KielerCompilerContext("", null);
                  String discard = KiCoUtil.serialize(modelRoot, context, true);
                  resource = context.getMainResource();
         }
