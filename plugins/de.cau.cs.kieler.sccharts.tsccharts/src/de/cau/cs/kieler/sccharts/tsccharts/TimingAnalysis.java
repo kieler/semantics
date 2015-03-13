@@ -528,6 +528,10 @@ public class TimingAnalysis extends Job {
                 // analysis tool prototype
                 tppCounter = 1 + tppCounter;
             }
+            if (tppCounter == 6){
+                int test = 1;
+                int test2 = test;
+            }
             ControlFlow currentEdge = edgeIter.next();
             Node edgeTarget = currentEdge.getTarget();
             // get the region the target node of the edge stems from
