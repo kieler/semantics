@@ -30,4 +30,5 @@ Import-Package: de.cau.cs.kieler.core.model.handlers,
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.kiem.ui.datacomponent
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Export-Package: de.cau.cs.kieler.esterel.scl.transformations
 

@@ -146,7 +146,7 @@ class EsterelToSclTransformation extends Transformation {
     var LinkedList<ValuedObject> localDeclarations
 
     // The tick; i.e., tick is true all the time
-    var ValuedObject synchronousTick;
+    var protected ValuedObject synchronousTick;
 
     // Flag indicating if optimized transformations should be used
     var boolean optimizeTransformation
@@ -739,7 +739,6 @@ class EsterelToSclTransformation extends Transformation {
      * @return s The transformed statement
      */
     def dispatch StatementSequence transformStatement(EveryDo everyDo, StatementSequence targetStatementSequence) {
-        println("every delay " + everyDo.delay)
         val transformedEsterelStatement = EsterelFactory::eINSTANCE.createSequence => [
             list.add(
                 EsterelFactory::eINSTANCE.createAwait => [
@@ -750,10 +749,10 @@ class EsterelToSclTransformation extends Transformation {
             list.add(
                 EsterelFactory::eINSTANCE.createLoop => [
                     body = EsterelFactory::eINSTANCE.createLoopBody => [
-                        statement = everyDo.statement
+                        statement = EcoreUtil.copy(everyDo.statement)
                     ]
                     end = EsterelFactory::eINSTANCE.createLoopDelay => [
-                        delay = everyDo.delay => [ isImmediate = false ]
+                        delay = EcoreUtil.copy(everyDo.delay => [ isImmediate = false ])
                     ]
                 ])
         ]
@@ -876,8 +875,10 @@ class EsterelToSclTransformation extends Transformation {
                 targetStatementSequence.add(
                     createConditional => [
                         expression = transformExp(singleCase.event.expression)
-                        statements.addAll(
-                            transformStatement(singleCase.statement, createSclStatementSequence).statements)
+                        if (singleCase.statement != null) {
+                            statements.addAll(
+                                transformStatement(singleCase.statement, createSclStatementSequence).statements)
+                        }
                         statements.addGoto(statementEndLabel) // If statements was taken break out and terminate
                     ])
             }
@@ -1066,7 +1067,7 @@ class EsterelToSclTransformation extends Transformation {
         // Label at end of body
         val abortEndLabel = createNewUniqueLabel
         labelToThreadMap.put(currentThreadEndLabel, abortEndLabel)
-        val abortExpr = (abort.body as AbortInstance).delay.event.expr
+        val abortExpr = EcoreUtil.copy((abort.body as AbortInstance).delay.event.expr)
 
         // Delay Expression? E.g. abort p when 5 s
         val delayExpression = (abort.body as AbortInstance).delay.expr != null
@@ -1647,7 +1648,6 @@ class EsterelToSclTransformation extends Transformation {
                     //                    ).filter[it.name == (renaming as SignalRenaming).oldName.name]
                     //                    oldNamedValuedObject.forEach[ it.name = (renaming as SignalRenaming).newName.name ]
                     if (renaming instanceof SignalRenaming) {
-                        println((renaming as SignalRenaming).newName)
                         var Pair<String, ValuedObject> newName
                         if ((renaming as SignalRenaming).newName != null) {
                             newName = (renaming as SignalRenaming).oldName.name ->
@@ -1919,6 +1919,7 @@ class EsterelToSclTransformation extends Transformation {
             val abort = EsterelFactory::eINSTANCE.createAbort => [
                 body = EsterelFactory.eINSTANCE.createAbortInstance => [
                     delay = EcoreUtil.copy(doWatching.delay)
+                    doWatching.delay.event.expr = EcoreUtil.copy(delay.event.expr)
                     if (doWatching.end != null) {
                         statement = EcoreUtil.copy(doWatching.end.statement)
                     }
@@ -1927,7 +1928,7 @@ class EsterelToSclTransformation extends Transformation {
             ]
             abort.transformStatement(targetStatementSequence)
         } else {
-            ^do.statement.transformStatement(targetStatementSequence)
+            EcoreUtil.copy(^do.statement).transformStatement(targetStatementSequence)
         }
 
         targetStatementSequence

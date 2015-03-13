@@ -54,6 +54,7 @@ import de.cau.cs.kieler.scl.scl.Goto
 import de.cau.cs.kieler.scl.scl.Pause
 import de.cau.cs.kieler.scl.scl.Assignment
 import de.cau.cs.kieler.scl.scl.EmptyStatement
+import de.cau.cs.kieler.scl.scl.SCLProgram
 
 /**
  * Collection of methods and shortcuts to ease the Esterel to SCL transformation
@@ -413,6 +414,24 @@ class EsterelToSclExtensions {
             
          null
      }
+     
+     /**
+      * Counts the amount of statements in a given Esterel Program
+      * @param esterelProgram The given Esterel program
+      * @return Amount of stamtents
+      */
+      def countStatements(Program esterelProgram) {
+          esterelProgram.eAllContents.toList.filter(de.cau.cs.kieler.esterel.esterel.Statement).length
+      }
+      
+      /**
+      * Counts the amount of statements in a given SCL Program
+      * @param esterelProgram The given SCL program
+      * @return Amount of stamtents
+      */
+      def countStatements(SCLProgram sclProgram) {
+          sclProgram.eAllContents.toList.filter(Statement).length
+      }
 
     // -------------------------------------------------------------------------
     // -- Esterel Termination Check

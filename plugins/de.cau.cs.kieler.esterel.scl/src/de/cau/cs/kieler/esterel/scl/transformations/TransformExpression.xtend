@@ -29,6 +29,7 @@ import de.cau.cs.kieler.esterel.kexpressions.OperatorExpression
 import de.cau.cs.kieler.esterel.kexpressions.ValuedObjectReference
 import javax.xml.transform.TransformerException
 import de.cau.cs.kieler.esterel.esterel.TrapExpression
+import de.cau.cs.kieler.esterel.kexpressions.FloatValue
 
 /**
  * Transforms Esterels KExpressions to core KExpressions
@@ -46,7 +47,7 @@ class TransformExpression {
 
     @Inject
     extension EsterelToSclTransformation
-
+    
     /**
      * Transforms Esterel Operator Expression to KExpression Operator Expression.
      * 
@@ -150,9 +151,14 @@ class TransformExpression {
         val constantExpression = expression as ConstantExpression
         switch type {
             case ("int"):
-                return KExpressionsFactory::eINSTANCE.createIntValue => [
-                    value = Integer.parseInt(constantExpression.value)
-                ]
+                if (Integer.parseInt(constantExpression.value) >= 0) {
+                    return createIntValue(Integer.parseInt(constantExpression.value))
+                    
+                } else {
+                    return createOperatorExpression(OperatorType::SUB) => [
+                        subExpressions += createIntValue(-Integer.parseInt(constantExpression.value))
+                    ]
+                }
             case ("bool"):
                 return KExpressionsFactory::eINSTANCE.createBoolValue => [
                     value = Boolean.parseBoolean(constantExpression.value)
@@ -213,6 +219,21 @@ class TransformExpression {
             ]
         return createIntValue(intValue.value)
     }
+    
+    /**
+     * Transforms gloat values
+     * 
+     * @param floatValue The Esterel float value
+     * @return The corresponding KExpressions integer value
+     */
+    def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(FloatValue floatValue) {
+        if (floatValue.value < 0)
+            return KExpressionsFactory::eINSTANCE.createOperatorExpression => [
+                operator = OperatorType::SUB
+                subExpressions += createFloatValue(floatValue.value * -1)
+            ]
+        return createFloatValue(floatValue.value)
+    }
 
 	/**
 	 * Transforms FunctionExpressions
@@ -236,4 +257,14 @@ class TransformExpression {
 
         functionCall
     }
+    
+    /**
+     * When there is no expression given, for the Esterel meta-model this means a tick.
+     * 
+     * @param operatorExpression The Esterel null expression to transform
+     * @return The corresponding SCL OperatorExpression
+     */
+     def dispatch transformExp(Void nullExpression) {
+         synchronousTick.createValObjRef
+     }
 }

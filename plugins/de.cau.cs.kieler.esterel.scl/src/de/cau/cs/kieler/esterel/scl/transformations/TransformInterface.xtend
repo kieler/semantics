@@ -220,7 +220,11 @@ class TransformInterface {
         LinkedList<Pair<String, ValuedObject>> signalToVariableMap) {
         val newLocalDeclaration = createDeclaration => [
             if (variableDecl.type.type.getName() != "PURE") {
-                type = ValueType::getByName(variableDecl.type.type.getName())
+                if (variableDecl.type.type.getName() == "DOUBLE") {
+                    type = ValueType::FLOAT
+                } else {
+                    type = ValueType::getByName(variableDecl.type.type.getName())
+                }
             } else {
                 type = ValueType::HOST
                 hostType = variableDecl.type.typeID
