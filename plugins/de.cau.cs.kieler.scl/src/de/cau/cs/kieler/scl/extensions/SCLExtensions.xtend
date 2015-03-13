@@ -63,8 +63,7 @@ class SCLExtensions {
             var index = stmList.indexOf(statement)
             var justLabel = true
             var oldSseq = parent
-            while ((stmList.size > index + 1 && justLabel) || parent instanceof Conditional) {
-
+            while ((stmList.size > index + 1 || parent instanceof Conditional) && justLabel) {
                 // Check conditional following if in if-then-else branch
                 if (stmList.size == index + 1 && justLabel && parent instanceof Conditional) {
                     oldSseq = parent
@@ -89,7 +88,6 @@ class SCLExtensions {
                     }
                     index = index + 1
                 }
-
             }
         }
         toDelete.forEach[ it.eContainer.remove ]
@@ -303,6 +301,7 @@ class SCLExtensions {
             sSeq.removeUnreachableCode
             sSeq.removeSubseqeuentLabels
             sSeq.removeDoubleJumps
+            sSeq.removeRedundantForks
         } while (!EcoreUtil.equals(oldSseq, sSeq))
         sSeq
     }
