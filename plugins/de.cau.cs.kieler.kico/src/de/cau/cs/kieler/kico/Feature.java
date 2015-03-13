@@ -137,6 +137,15 @@ public abstract class Feature implements IFeature {
      * @return true, if is alternative
      */
     public boolean isAlternative() {
+//        boolean noFeatureGroup = !(this instanceof FeatureGroup);
+//        int handlingTransformations = 0;
+//        if (this.getHandlingTransformations() != null) {
+//            handlingTransformations = this.getHandlingTransformations().size();
+//        }
+//        if (noFeatureGroup && handlingTransformations > 1) {
+//            return true;
+//        }
+//        return false;
         return ((!(this instanceof FeatureGroup)) && (this.getHandlingTransformations().size() > 1));
     }
 
