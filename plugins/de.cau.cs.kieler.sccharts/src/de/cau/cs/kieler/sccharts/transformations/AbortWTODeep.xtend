@@ -32,7 +32,7 @@ import de.cau.cs.kieler.kico.Transformation
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class Abort extends Transformation {
+class AbortWTODeep extends Transformation {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --

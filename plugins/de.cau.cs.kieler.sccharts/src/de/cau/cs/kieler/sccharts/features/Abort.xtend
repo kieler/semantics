@@ -31,11 +31,11 @@ class Abort extends Feature {
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsFeature::INITIALIZATION_ID;
+        return SCChartsFeature::ABORT_ID;
     }
 
     override getName() {
-        return SCChartsFeature::INITIALIZATION_NAME;
+        return SCChartsFeature::ABORT_NAME;
     }
 
     //-------------------------------------------------------------------------

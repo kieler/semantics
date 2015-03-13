@@ -40,11 +40,11 @@ class Abort extends Transformation {
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsTransformation::ABORTWTO_ID;
+        return SCChartsTransformation::ABORT_ID;
     }
 
     override getName() {
-        return SCChartsTransformation::ABORTWTO_NAME;
+        return SCChartsTransformation::ABORT_NAME;
     }
 
     override getHandleFeatureId() {
