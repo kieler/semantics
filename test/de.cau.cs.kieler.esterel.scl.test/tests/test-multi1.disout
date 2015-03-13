@@ -1,0 +1,35 @@
+module stest:
+inputoutput A;
+inputoutput B;
+inputoutput C;
+inputoutput D;
+inputoutput X;
+inputoutput Y;
+inputoutput Z;
+inputoutput W;
+inputoutput T;
+inputoutput E;
+
+loop
+  abort
+    [
+      trap U in
+        loop
+          emit W;
+          if (A) {
+            emit X
+          };
+          pause
+        end loop
+      end trap
+    ||
+      loop
+        emit A;
+        pause
+      end loop
+    ]
+  when E;
+  emit T
+end loop
+
+end module

@@ -1,0 +1,16 @@
+module test_dacexample4:
+input R;
+input S;
+output A;
+
+every S do
+  loop
+    pause;
+    pause;
+    if (R) {
+      emit A
+    }
+  end loop
+end every
+
+end module

@@ -1,0 +1,21 @@
+module Test_Run5:
+type t1;
+type t2;
+type t3;
+
+run Foo [
+  type t3 / t4 ]
+
+end module
+
+module Foo:
+type t2;
+type t4;
+type t5;
+
+var a : t4,
+    b : t2 in
+  nothing
+end var
+
+end module

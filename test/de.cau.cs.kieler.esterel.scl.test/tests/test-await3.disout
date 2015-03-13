@@ -1,0 +1,43 @@
+module test_await3:
+input A;
+input B;
+input C;
+output D;
+output E;
+output F;
+
+loop
+  abort
+    loop
+      pause
+    end loop
+  when A;
+  emit D;
+  abort
+    loop
+      pause
+    end loop
+  when B;
+  emit E;
+  abort
+    loop
+      pause
+    end loop
+  when C;
+  emit F;
+  abort
+    loop
+      pause
+    end loop
+  when immediate A;
+  emit D;
+  abort
+    loop
+      pause
+    end loop
+  when 3 C;
+  emit E;
+  pause
+end loop
+
+end module

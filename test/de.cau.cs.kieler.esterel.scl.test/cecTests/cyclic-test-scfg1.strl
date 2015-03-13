@@ -1,0 +1,27 @@
+module try:
+input A;
+input B;
+input C;
+input D;
+output X;
+output Y;
+output Z;
+
+loop
+  trap U in
+      emit X;
+      pause
+    ||
+      loop
+        abort
+          pause;
+          emit Z;
+          present C then
+            exit U
+          end present
+        when X
+      end loop
+  end trap
+end loop
+
+end module

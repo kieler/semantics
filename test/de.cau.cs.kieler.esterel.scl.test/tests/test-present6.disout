@@ -1,0 +1,24 @@
+module test_present6:
+input A;
+input B;
+output C;
+output D;
+
+loop
+  if (A) {
+    emit C
+  };
+  if (B) {
+    emit D
+  };
+  pause;
+  if (A) {
+    emit D
+  };
+  if (B) {
+    emit C
+  };
+  pause
+end loop
+
+end module

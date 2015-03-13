@@ -1,0 +1,16 @@
+module test_suspend7:
+input A;
+input B;
+output C;
+output D;
+
+  suspend
+    sustain C
+  when immediate [not A]
+||
+  pause;
+  suspend
+    sustain D
+  when immediate [not B]
+
+end module

@@ -1,0 +1,56 @@
+module test_weakabort2:
+output A;
+output B;
+output C;
+input D;
+output E;
+output F;
+input G;
+output H;
+output I;
+input J;
+output K;
+output L;
+output M;
+
+loop
+  weak abort
+    emit A;
+    pause;
+    emit B;
+    pause;
+    emit C;
+    pause;
+    emit A;
+    emit B;
+    pause;
+    emit B;
+    emit C;
+    pause;
+    emit C;
+    emit A;
+    pause;
+    emit A;
+    emit B;
+    emit C;
+    pause;
+    pause
+  when
+    case 3 D do
+      emit E;
+      pause;
+      emit F
+    case 3 G do
+      emit H;
+      pause;
+      emit I
+    case 3 J do
+      emit K;
+      pause;
+      emit L
+  end weak abort;
+  emit M;
+  pause
+end loop
+
+end module

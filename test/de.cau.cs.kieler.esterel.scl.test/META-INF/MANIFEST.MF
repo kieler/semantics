@@ -20,12 +20,21 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.sccharts.scg,
  de.cau.cs.kieler.scg,
  de.cau.cs.kieler.scg.s,
+ de.cau.cs.kieler.s,
  de.cau.cs.kieler.esterel;bundle-version="0.3.3",
- de.cau.cs.kieler.sim.syncsignalreset,
- de.cau.cs.kieler.scl
+ de.cau.cs.kieler.scl,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ de.cau.cs.kieler.esterel.cec;bundle-version="0.1.4"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Import-Package: com.google.inject;version="1.3.0",
+ de.cau.cs.kieler.esterel.scl.transformations,
  de.cau.cs.kieler.kico,
- org.eclipse.emf.ecore.xmi.impl
+ org.eclipse.emf.ecore.xmi.impl,
+ org.eclipse.xtext.junit4.util,
+ org.eclipse.xtext.resource
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+

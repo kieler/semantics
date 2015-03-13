@@ -1,0 +1,86 @@
+module stest:
+input A;
+input B;
+input C;
+input D;
+input E;
+input F;
+output X;
+output Y;
+output Z;
+output W;
+output X1;
+output X2;
+output X3;
+output X4;
+output X5;
+output X6;
+output X7;
+output WW;
+
+loop
+  [
+    emit Y;
+    abort
+      loop
+        pause
+      end loop
+    when A;
+    pause;
+    pause;
+    emit X1
+  ||
+    abort
+      loop
+        pause
+      end loop
+    when B;
+    pause;
+    pause;
+    emit X2
+  ||
+    abort
+      loop
+        pause
+      end loop
+    when C;
+    pause;
+    pause;
+    emit X3
+  ||
+    emit Z;
+    pause;
+    [
+      abort
+        loop
+          pause
+        end loop
+      when D;
+      pause;
+      pause;
+      emit X4
+    ||
+      abort
+        loop
+          pause
+        end loop
+      when E;
+      pause;
+      pause;
+      emit X5
+    ||
+      abort
+        loop
+          pause
+        end loop
+      when F;
+      pause;
+      pause;
+      emit X7
+    ];
+    emit X6
+  ];
+  emit X
+end loop
+
+end module

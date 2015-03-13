@@ -1,0 +1,11 @@
+module test_trap1:
+
+trap T1 in
+  trap T2 in
+      exit T1
+    ||
+      exit T2
+  end trap
+end trap
+
+end module

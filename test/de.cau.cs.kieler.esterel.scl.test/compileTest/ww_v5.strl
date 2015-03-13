@@ -26,7 +26,7 @@ relation UL # UR # LL # LR # HS,
 
 % The main display
 
-type MAIN_DISPLAY_TYPE;
+type MAIN_DISPLAY_TYPE; 
 
 output MAIN_DISPLAY : MAIN_DISPLAY_TYPE;
 
@@ -39,7 +39,7 @@ output MINI_DISPLAY : MINI_DISPLAY_TYPE;
 % The alphabetic display
 
 output ALPHABETIC_DISPLAY : string;
-
+ 
 % The display positions
 
 type DISPLAY_POSITION;
@@ -528,15 +528,15 @@ loop
 
       % The mini display contains the regular watch time
       loop
-         var varWatchTime : WATCH_TIME_TYPE in
-         varWatchTime := ? WATCH_TIME;
-         emit MINI_DISPLAY (WATCH_TIME_TO_MINI_DISPLAY (varWatchTime))
+         var varWatchTime2 : WATCH_TIME_TYPE in
+         varWatchTime2 := (? WATCH_TIME);
+         emit MINI_DISPLAY (WATCH_TIME_TO_MINI_DISPLAY (varWatchTime2))
          end
-      each WATCH_TIME
+      each WATCH_TIME 
    ||
       % Stopwatch mode
 
-      abort
+      abort 
          emit ALPHABETIC_DISPLAY("ST");
          loop
             var varStopwatchTime : STOPWATCH_TIME_TYPE in
@@ -630,7 +630,7 @@ loop
    emit STOPWATCH_RUN_STATUS (true);
    emit BEEP (STOPWATCH_BEEP_VALUE);
    var preStopwatchTime : STOPWATCH_TIME_TYPE in
-   preStopwatchTime := pre(STOPWATCH_TIME);
+   preStopwatchTime := pre(?STOPWATCH_TIME);
    abort
       every HS do
          emit STOPWATCH_TIME (INCREMENT_STOPWATCH_TIME(preStopwatchTime));
@@ -642,7 +642,7 @@ loop
    % stopping the stopwatch
    emit BEEP (STOPWATCH_BEEP_VALUE)
 end loop
-end module
+end module 
 
 % The LAP_FILTER module
 %----------------------
