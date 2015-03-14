@@ -31,13 +31,13 @@ import java.util.HashMap
 import de.cau.cs.kieler.esterel.kexpressions.CombineOperator
 
 /**
- * This class contains a method to transform an Esterel modules interface to KExpressions declarations
+ * This class contains a methods to transform an Esterel modules interface to KExpressions declarations
  * and adds them to a given SCL program. Also local variable declarations are handled here.
  *
  * @author krat
- * @kieler.rating proposed yellow 2015-02-09 krat
+ * @kieler.rating yellow 2015-03-14 review KI-63 by ssm, ima, cmot
  */
-class TransformInterface {
+class EsterelDeclarationsTransformation {
 
     @Inject
     extension KExpressionsExtension
