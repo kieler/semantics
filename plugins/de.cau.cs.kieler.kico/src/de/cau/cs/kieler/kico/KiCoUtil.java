@@ -18,6 +18,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -395,7 +396,7 @@ public class KiCoUtil {
         // 1. forceUpdate == true, or
         // 2. the model was not processed earlier, or
         // 3. the model has changed
-        
+
         // Calculate the features, go thru all features and request isContained
         Set<Feature> featureList = new HashSet<Feature>();
         for (Feature feature : KielerCompiler.getFeatures()) {
@@ -403,7 +404,7 @@ public class KiCoUtil {
                 featureList.add(feature);
             }
         }
-        
+
         // Cache the result
         cachedFeatures.put(model, featureList);
         // Cache the hash
@@ -414,49 +415,157 @@ public class KiCoUtil {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Log error.
-     *
-     * @param pluginId the plugin id
-     * @param msg the msg
-     * @param e the e
+     * 
+     * @param pluginId
+     *            the plugin id
+     * @param msg
+     *            the msg
+     * @param e
+     *            the e
      */
     public static void logError(String pluginId, String msg, Exception e) {
-        StatusManager.getManager().handle(
-                new Status(IStatus.ERROR, pluginId, msg, e),
-                StatusManager.LOG);        
+        StatusManager.getManager().handle(new Status(IStatus.ERROR, pluginId, msg, e),
+                StatusManager.LOG);
     }
 
-
     // -------------------------------------------------------------------------
-   
+
     /**
      * Log warning.
-     *
-     * @param pluginId the plugin id
-     * @param msg the msg
-     * @param e the e
+     * 
+     * @param pluginId
+     *            the plugin id
+     * @param msg
+     *            the msg
+     * @param e
+     *            the e
      */
     public static void logWarning(String pluginId, String msg, Exception e) {
-        StatusManager.getManager().handle(
-                new Status(IStatus.WARNING, pluginId, msg, e),
-                StatusManager.LOG);        
+        StatusManager.getManager().handle(new Status(IStatus.WARNING, pluginId, msg, e),
+                StatusManager.LOG);
     }
 
     // -------------------------------------------------------------------------
 
     /**
      * Log info.
-     *
-     * @param pluginId the plugin id
-     * @param msg the msg
-     * @param e the e
+     * 
+     * @param pluginId
+     *            the plugin id
+     * @param msg
+     *            the msg
+     * @param e
+     *            the e
      */
     public static void logInfo(String pluginId, String msg, Exception e) {
-        StatusManager.getManager().handle(
-                new Status(IStatus.INFO, pluginId, msg, e),
-                StatusManager.LOG);        
+        StatusManager.getManager().handle(new Status(IStatus.INFO, pluginId, msg, e),
+                StatusManager.LOG);
     }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Gets the specific transformation method with parameter more specific than EObject but will
+     * fall back to the EObject case if not found
+     * 
+     * @param object
+     *            the object
+     * @param methodName
+     *            the method name
+     * @return the specific transformation method or fall back
+     */
+    public static Method getSpecificTransformationMethodOrFallBack(Object object, String transformationId) {
+        Method transformMethod = null;
+        Method fallbackMethod = null; // is the EObject method
+        try {
+            Method[] methods = ((Transformation) object).getClass().getMethods();
+            for (Method m : methods) {
+                if (m.getName().equals("transform")) {
+                    // now look if the second parameter is EObject or more specific
+                    Class<?>[] parameters = m.getParameterTypes();
+                    if (parameters != null && parameters.length > 0) {
+                        Class<?> parameter = parameters[0];
+                        if (!parameter.getName().equals("org.eclipse.emf.ecore.EObject")) {
+                            System.out.println(m.getName() + " (" + parameter.getName() + ")");
+                            // not an EObject - more specific
+                            transformMethod = m;
+                        } else {
+                            System.out.println(m.getName() + " (org.eclipse.emf.ecore.EObject)");
+                            // an EOBject - fallBack
+                            fallbackMethod = m;
+                        }
+                    }
+                }
+            }
+            if (transformMethod == null && fallbackMethod != null) {
+                transformMethod = fallbackMethod;
+            }
+//            transformMethod =
+//                    ((Transformation) object).getClass().getMethod("transform", EObject.class,
+//                            KielerCompilerContext.class);
+        } catch (Exception e) {
+            return null;
+        }
+        if (transformMethod == null) {
+            throw (new RuntimeException("The transformation method of transformation '" +transformationId
+                    + "' was not found."));
+        }
+        return transformMethod;
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Gets the specific transformation method with parameter more specific than EObject but will
+     * fall back to the EObject case if not found
+     * 
+     * @param object
+     *            the object
+     * @param methodName
+     *            the method name
+     * @return the specific transformation method or fall back
+     */
+    public static Method getSpecificProcessMethodOrFallBack(Object object, String processId) {
+        Method transformMethod = null;
+        Method fallbackMethod = null; // is the EObject method
+        try {
+            Method[] methods = ((Processor) object).getClass().getMethods();
+            for (Method m : methods) {
+                if (m.getName().equals("process")) {
+                    Class<?>[] parameters = m.getParameterTypes();
+                    if (parameters != null && parameters.length > 0) {
+                        Class<?> parameter = parameters[0];
+                        if (!parameter.getClass().getName().equals("org.eclipse.emf.ecore.EObject")) {
+                            System.out.println(m.getName() + " (" + parameter.getName() + ")");
+                            // not an EObject - more specific
+                            transformMethod = m;
+                        } else {
+                            System.out.println(m.getName() + " (org.eclipse.emf.ecore.EObject)");
+                            // an EOBject - fallBack
+                            fallbackMethod = m;
+                        }
+                    }
+                }
+            }
+            if (transformMethod == null && fallbackMethod != null) {
+                transformMethod = fallbackMethod;
+            }
+//            transformMethod =
+//                    ((Processor) object).getClass().getMethod("process", EObject.class,
+//                            KielerCompilerContext.class);
+        } catch (Exception e) {
+            return null;
+        }
+        if (transformMethod == null) {
+            throw (new RuntimeException("The process method of processor '" + processId
+                    + "' was not found."));
+        }
+        return transformMethod;
+    }
+
+    // ------------------------------------------------------------------------
 
 }

@@ -52,7 +52,9 @@ public abstract class Processor implements IProcessor {
     public Class<?> getParameterType() {
         Method transformMethod = null;
         try {
-            transformMethod = ((Processor) this).getClass().getMethod("process", EObject.class);
+            transformMethod =
+                    ((Processor) this).getClass().getMethod("process", EObject.class,
+                            KielerCompilerContext.class);
         } catch (Exception e) {
             return null;
         }
@@ -78,7 +80,9 @@ public abstract class Processor implements IProcessor {
     public Class<?> getReturnType() {
         Method transformMethod = null;
         try {
-            transformMethod = ((Processor) this).getClass().getMethod("process", EObject.class);
+            transformMethod =
+                    ((Processor) this).getClass().getMethod("process", EObject.class,
+                            KielerCompilerContext.class);
         } catch (Exception e) {
             return null;
         }

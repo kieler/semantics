@@ -266,8 +266,27 @@ public abstract class Transformation implements ITransformation {
      * @return the object
      */
     public Object transform(final EObject eObject, final KielerCompilerContext context) {
-        return eObject;
+        // Either this method is overridden, or the transform method (w/o a context)
+        return transform(eObject);
     }
+    
+    // --------------------------------------------
+
+    /**
+     * The transform method can be overridden by a transformation to simplify the transformation
+     * definition. the default processor option (which by default is the only processor option in
+     * the list of processor options) refers to this transform() method. Other processor options may
+     * be added before and after this transform method. Note: If the default processor option is
+     * removed this transform() method may not be considered. It is mainly a design decision choice
+     * if a transformation should only be build from re-usable processors or also carry a
+     * main-processor (represented by the default processor option).
+     *
+     * @param eObject the e object
+     * @return the object
+     */
+    public Object transform(final EObject eObject) {
+        return eObject;
+    }    
 
     // --------------------------------------------
 
@@ -277,13 +296,7 @@ public abstract class Transformation implements ITransformation {
      * @return the argument parameter type
      */
     public Class<?> getTransformationMethodParameterType() {
-        Method transformMethod = null;
-        try {
-            transformMethod =
-                    ((Transformation) this).getClass().getMethod("transform", EObject.class);
-        } catch (Exception e) {
-            return null;
-        }
+        Method transformMethod = KiCoUtil.getSpecificTransformationMethodOrFallBack(this, getId()); 
         if (transformMethod == null) {
             throw (new RuntimeException("The transformation method of transformation '" + getId()
                     + "' was not found. If you declared a method you must not extend the "
@@ -304,13 +317,7 @@ public abstract class Transformation implements ITransformation {
      * @return the return argument type
      */
     public Class<?> getTransformationMethodReturnType() {
-        Method transformMethod = null;
-        try {
-            transformMethod =
-                    ((Transformation) this).getClass().getMethod("transform", EObject.class);
-        } catch (Exception e) {
-            return null;
-        }
+        Method transformMethod = KiCoUtil.getSpecificTransformationMethodOrFallBack(this, getId()); 
         if (transformMethod == null) {
             throw (new RuntimeException("The transformation method of transformation '" + getId()
                     + "' was not found. If you declared a method you must not extend the "

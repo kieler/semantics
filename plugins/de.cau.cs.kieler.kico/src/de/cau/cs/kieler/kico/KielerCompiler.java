@@ -39,9 +39,6 @@ import com.google.inject.Inject;
  */
 public class KielerCompiler {
 
-    /** The logger. */
-    @Inject
-    public static Logger logger;
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
@@ -977,8 +974,7 @@ public class KielerCompiler {
                 // Class<?> parameterType = transformedObject.getClass();
                 Class<?> handledParameterType = transformation.getParameterType();
                 if (handledParameterType != null) {
-                    KiCoPlugin.logger
-                            .info("PERFORM TRANSFORMATION: " + compilationTransformationId);
+                    KiCoPlugin.logInfo("PERFORM TRANSFORMATION: " + compilationTransformationId);
                     if (handledParameterType.isInstance(transformedObject)) {
 
                         KielerCompilerProgressMonitor subMonitor = null;

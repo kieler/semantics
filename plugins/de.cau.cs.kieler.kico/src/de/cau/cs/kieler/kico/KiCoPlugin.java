@@ -624,7 +624,7 @@ public class KiCoPlugin extends Plugin {
      * @param msg
      *            the msg
      */
-    private static void logInfo(String msg) {
+    public static void logInfo(String msg) {
         if (logger != null) {
             logger.info(msg);
         }
@@ -873,5 +873,5 @@ public class KiCoPlugin extends Plugin {
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-
+    
 }
