@@ -134,7 +134,10 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static boolean advancedMode = true;
 
     /** The flag for expanding or collapsing all groups. */
-    public static boolean allExpanded = false;
+    public final static boolean ALL_EXPANDED_DEFAULT = true;
+
+    /** The flag for expanding or collapsing all groups. */
+    public static boolean allExpanded = ALL_EXPANDED_DEFAULT;
 
     /** The flag for selecting or deselecting all transformations. */
     public static boolean allSelected = false;
@@ -790,7 +793,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                     lastEditor = "";
                     lastEditorID = "";
                     // Next view is collapsed again
-                    allExpanded = false;
+                    allExpanded = ALL_EXPANDED_DEFAULT;
                     if (allExpanded) {
                         actionExpandAllToggle.setImageDescriptor(ICON_COLLAPSEALL);
                         actionExpandAllToggle
@@ -827,7 +830,7 @@ public class KiCoSelectionView extends DiagramViewPart {
     
     private void updateView(int activeEditorID, List<String> visibleFeatureIds) {
         // Next view is collapsed again
-        allExpanded = false;
+        allExpanded = ALL_EXPANDED_DEFAULT;
         if (allExpanded) {
             actionExpandAllToggle.setImageDescriptor(ICON_COLLAPSEALL);
             actionExpandAllToggle.setToolTipText("Collapse all expanded transformation groups.");
@@ -1208,45 +1211,8 @@ public class KiCoSelectionView extends DiagramViewPart {
                     actionExpandAllToggle
                             .setToolTipText("Expand all collapsed transformation groups.");
                 }
-
-                if (allExpanded) {
-                    final IViewer viewer = thisPart.getViewer();
-                    for (EObject k : Iterables.filter(
-                            Iterables2.toIterable(viewer.getViewContext().getViewModel()
-                                    .eAllContents()), new Predicate<EObject>() {
-
-                                public boolean apply(EObject arg0) {
-                                    return arg0 instanceof KNode && !viewer.isExpanded(arg0);
-                                }
-                            })) {
-                        // ViewContext vc = viewer.getViewContext();
-                        viewer.expand((KNode) k);
-                    }
-                } else {
-                    // final IViewer<?> viewer = thisPart.getViewer();
-                    // for (EObject k : Iterables.filter(
-                    // Iterables2.toIterable(viewer.getViewContext().getViewModel()
-                    // .eAllContents()), new Predicate<EObject>() {
-                    //
-                    // public boolean apply(EObject arg0) {
-                    // return arg0 instanceof KNode && viewer.isExpanded(arg0);
-                    // }
-                    // })) {
-                    // ViewContext vc = viewer.getViewContext();
-                    // viewer.collapse((KNode) k);
-                    // }
-                    lastEditor = "";
-                    updateView(lastWorkbenchPartReference);
-                }
-
-                // Object object = vc.getSourceElement(k);
-                // if (object instanceof TransformationDummy) {
-                // TransformationDummy transformationDummy = (TransformationDummy) object;
-                // if (!transformationDummy.isGroup()) {
-                // viewer.collapse((KNode) k);
-                //
-                // }
-                // }
+                // Perform expand or collapse action
+                expandAllNodes(allExpanded);
 
                 LightDiagramServices.layoutDiagram(thisPart);
             }
@@ -1257,6 +1223,49 @@ public class KiCoSelectionView extends DiagramViewPart {
         return actionExpandAllToggle;
     }
 
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Expand or collapse all nodes.
+     *
+     * @param expand the expand
+     */
+    private void expandAllNodes(boolean expand) {
+        final IDiagramWorkbenchPart thisPart = this;
+        if (expand) {
+            final IViewer viewer = thisPart.getViewer();
+            for (EObject k : Iterables.filter(
+                    Iterables2.toIterable(viewer.getViewContext().getViewModel()
+                            .eAllContents()), new Predicate<EObject>() {
+
+                        public boolean apply(EObject arg0) {
+                            return arg0 instanceof KNode && !viewer.isExpanded(arg0);
+                        }
+                    })) {
+                // ViewContext vc = viewer.getViewContext();
+                viewer.expand((KNode) k);
+            }
+        } else {
+            // final IViewer<?> viewer = thisPart.getViewer();
+            // for (EObject k : Iterables.filter(
+            // Iterables2.toIterable(viewer.getViewContext().getViewModel()
+            // .eAllContents()), new Predicate<EObject>() {
+            //
+            // public boolean apply(EObject arg0) {
+            // return arg0 instanceof KNode && viewer.isExpanded(arg0);
+            // }
+            // })) {
+            // ViewContext vc = viewer.getViewContext();
+            // viewer.collapse((KNode) k);
+            // }
+            lastEditor = "";
+            updateView(lastWorkbenchPartReference);
+        }
+        
+    }
+
+    
     // -------------------------------------------------------------------------
 
     /**
@@ -1322,11 +1331,13 @@ public class KiCoSelectionView extends DiagramViewPart {
         if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
             // The initialization case
             // Sometimes the initialization happens too fast for klighd thus do it delayed
+            final boolean  allExpanded = this.allExpanded;
             new UIJob("Init" + KiCoSelectionView.class.getName()) {
 
                 @Override
                 public IStatus runInUIThread(IProgressMonitor monitor) {
                     DiagramViewManager.initializeView(instance, model, null, properties);
+                    expandAllNodes(allExpanded);
                     return Status.OK_STATUS;
                 }
             }.schedule();

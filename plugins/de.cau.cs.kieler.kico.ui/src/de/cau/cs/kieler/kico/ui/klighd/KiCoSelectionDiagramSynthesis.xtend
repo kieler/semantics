@@ -450,7 +450,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                 // if this is a typical FeatureGroup
                 if (other instanceof FeatureGroup) {
                     if ((other as FeatureGroup).features.contains(feature)) {
-                        System.out.println("CONTAINER for Feature " + feature.id + " is " + other.id)
+                        //System.out.println("CONTAINER for Feature " + feature.id + " is " + other.id)
 
                         return other;
                     }
@@ -462,15 +462,14 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                     val otherHandlingTransformations = other.handlingTransformations;
                     if (transformationToSearchFor != null) {
                         if (otherHandlingTransformations.contains(transformationToSearchFor)) {
-                            System.out.println(
-                                "CONTAINER for ALTERNATIVE TransformationFeature " + feature.id + " is " + other.id)
+                            //System.out.println("CONTAINER for ALTERNATIVE TransformationFeature " + feature.id + " is " + other.id)
                             return other;
                         }
                     }
                 }
             }
         }
-        System.out.println("CONTAINER for Feature " + feature.id + " not found")
+        //System.out.println("CONTAINER for Feature " + feature.id + " not found")
         return null;
     }
 
@@ -626,8 +625,8 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
     // -------------------------------------------------------------------------
     // Transform a state    
     def KNode translate(Feature feature) {
-        System.out.print(">>> " + feature);
-        System.out.println(" >>> " + feature.getId);
+        //System.out.print(">>> " + feature);
+        //System.out.println(" >>> " + feature.getId);
         val root = feature.createNode().putToLookUpWith(feature) => [ node |
             node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
             val cornerRadius = if(!feature.isGroup) 17 else 8;
@@ -702,7 +701,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
 
                     for (dest : feature.dependencies) {
 
-                        System.out.println("FROM " + feature.id + " TO " + dest.id)
+                        //System.out.println("FROM " + feature.id + " TO " + dest.id)
                         var transSource = feature
                         var transDest = dest
 
@@ -710,7 +709,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                         transSource = feature.getHierarchicalSource(dest)
                         transDest = feature.getHierarchicalDest(dest)
 
-                        System.out.println("== HIERACHICALLY FROM " + transSource.id + " TO " + transDest.id)
+                        //System.out.println("== HIERACHICALLY FROM " + transSource.id + " TO " + transDest.id)
 
                         if (transSource != null && transDest != null) {
 
