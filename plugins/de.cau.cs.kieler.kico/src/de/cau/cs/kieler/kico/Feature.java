@@ -121,8 +121,10 @@ public abstract class Feature implements IFeature {
         }
         cachedNotHandlingTransformations = new HashSet<Transformation>();
         for (Transformation transformation : KielerCompiler.getTransformations()) {
-            if (transformation.getNotHandlesFeatures() == this) {
-                cachedNotHandlingTransformations.add(transformation);
+            for (Feature transformationNotHandlingFeature : transformation.getNotHandlesFeatures()) {
+                if (transformationNotHandlingFeature == this) {
+                    cachedNotHandlingTransformations.add(transformation);
+                }
             }
         }
         return cachedNotHandlingTransformations;
@@ -137,15 +139,15 @@ public abstract class Feature implements IFeature {
      * @return true, if is alternative
      */
     public boolean isAlternative() {
-//        boolean noFeatureGroup = !(this instanceof FeatureGroup);
-//        int handlingTransformations = 0;
-//        if (this.getHandlingTransformations() != null) {
-//            handlingTransformations = this.getHandlingTransformations().size();
-//        }
-//        if (noFeatureGroup && handlingTransformations > 1) {
-//            return true;
-//        }
-//        return false;
+        // boolean noFeatureGroup = !(this instanceof FeatureGroup);
+        // int handlingTransformations = 0;
+        // if (this.getHandlingTransformations() != null) {
+        // handlingTransformations = this.getHandlingTransformations().size();
+        // }
+        // if (noFeatureGroup && handlingTransformations > 1) {
+        // return true;
+        // }
+        // return false;
         return ((!(this instanceof FeatureGroup)) && (this.getHandlingTransformations().size() > 1));
     }
 

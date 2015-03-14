@@ -106,7 +106,13 @@ public abstract class Transformation implements ITransformation {
         cachedProducesFeatures = new HashSet<Feature>();
         for (String featureId : this.getProducesFeatureIds()) {
             Feature feature = KielerCompiler.getFeature(featureId);
-            cachedProducesFeatures.add(feature);
+            if (feature == null) {
+                KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "Transformation '" + this.getId()
+                        + "' references a feature '" + featureId
+                        + "' it produces, but this feature cannot be found.", null);
+            } else {
+                cachedProducesFeatures.add(feature);
+            }
         }
         return cachedProducesFeatures;
     }
@@ -143,7 +149,13 @@ public abstract class Transformation implements ITransformation {
         cachedNotHandlesFeatures = new HashSet<Feature>();
         for (String featureId : this.getNotHandlesFeatureIds()) {
             Feature feature = KielerCompiler.getFeature(featureId);
-            cachedNotHandlesFeatures.add(feature);
+            if (feature == null) {
+                KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "Transformation '" + this.getId()
+                        + "' references a feature '" + featureId
+                        + "' it cannot handle, but this feature cannot be found.", null);
+            } else {
+                cachedNotHandlesFeatures.add(feature);
+            }
         }
         return cachedNotHandlesFeatures;
     }
