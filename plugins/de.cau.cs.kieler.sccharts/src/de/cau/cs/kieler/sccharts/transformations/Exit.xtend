@@ -48,7 +48,7 @@ class Exit extends Transformation {
     }
 
     override getProducesFeatureIds() {
-        return Sets.newHashSet();
+        return Sets.newHashSet(SCChartsFeature::CONNECTOR_ID);
     }
 
     override getNotHandlesFeatureIds() {
