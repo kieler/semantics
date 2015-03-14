@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
+import de.cau.cs.kieler.kico.Feature;
 import de.cau.cs.kieler.kico.TransformationDummy;
 import de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis;
 import de.cau.cs.kieler.klighd.IAction;
@@ -53,10 +54,21 @@ public class KiCoSelectionAction extends KiCoKlighdAction implements IAction {
      */
     public ActionResult execute(final ActionContext context) {
 
-//        KNode kNode = context.getKNode();
+        KNode kNode = context.getKNode();
 //
-//        TransformationDummy transformationDummy =
-//                (TransformationDummy) context.getDomainElement(kNode);
+        Feature feature =
+                (Feature) context.getDomainElement(kNode);
+        
+        if (feature != null) {
+          int activeEditorID = KiCoSelectionView.getActiveEditorID();
+          KiCoSelectionView.getSelectedCompileChainIndex(activeEditorID);
+          String id = feature.getId();
+          
+          System.out.println("Selected feature: " + id);
+          
+          
+            
+        }
 //
 //        if (transformationDummy != null) {
 //            int activeEditorID = KiCoSelectionView.getActiveEditorID();

@@ -124,7 +124,7 @@ public class KiCoSelectionView extends DiagramViewPart {
             new HashMap<Integer, KiCoSelectionDiagramModel>();
 
     /** The selected compile chain per editor instance. */
-    static HashMap<String, Integer> selectedCompileChainIndex = new HashMap<String, Integer>();
+    static HashMap<Integer, Integer> selectedCompileChainIndex = new HashMap<Integer, Integer>();
 
     /** The auto-calculated required transformations per editor instance. */
     static HashMap<Integer, List<String>> requiredTransformations =
@@ -150,10 +150,13 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static final int MAXHIERARCHYMODE = 2;
 
     /** The last editor. */
-    String lastEditor = null;
+    String lastEditorModelName = null;
+
+    /** The last editor id (the hash code of the editor part). */
+    int lastEditorId = -1;
 
     /** The last editor ID. */
-    String lastEditorID = null;
+    String lastEditorTypeID = null;
 
     /** The registered editors. */
     static HashMap<String, CompileChains> registeredEditors = KiCoUIPlugin.getInstance()
@@ -263,22 +266,24 @@ public class KiCoSelectionView extends DiagramViewPart {
      *            the combo index
      */
     public void updateVisibleTransformations(int selectedIndex) {
-        String editorID = this.lastEditorID;
-        setSelectedCompileChainIndex(lastEditor, selectedIndex);
+        String editorID = this.lastEditorTypeID;
+        setSelectedCompileChainIndex(lastEditorId, selectedIndex);
         CompileChains compileChain = registeredEditors.get(editorID);
         CompileChain item = compileChain.getItems().get(selectedIndex);
         List<String> visibleTransformations = item.transformations;
         updateView(getActiveEditorID(), visibleTransformations);
     }
 
+    // -------------------------------------------------------------------------
+
     /**
      * Update compile chain combo. This method needs to be called after another editor is selected
      * and the selection possibly changes.
      */
-    public void updateCompileChainCombo(String editorTypeID, String editor) {
+    public void updateCompileChainCombo(String editorTypeID, int editorId) {
         CompileChains compileChain = registeredEditors.get(editorTypeID);
         if (compileChain != null && compileChain.getCount() > 1) {
-            int selectedIndex = getSelectedCompileChainIndex(editor);
+            int selectedIndex = getSelectedCompileChainIndex(editorId);
             if (compileChain.getCount() > 1) {
                 combo.setVisible(true);
             } else {
@@ -295,17 +300,17 @@ public class KiCoSelectionView extends DiagramViewPart {
     /**
      * Gets the selected compile chain as an index.
      * 
-     * @param editorID
+     * @param editorModelName
      *            the editor id
      * @return the selected compile chain index
      */
-    public static int getSelectedCompileChainIndex(String editorID) {
-        KiCoSelectionView.selectedCompileChainIndex.get(editorID);
-        if (!KiCoSelectionView.selectedCompileChainIndex.containsKey(editorID)) {
+    public static int getSelectedCompileChainIndex(int editorId) {
+        KiCoSelectionView.selectedCompileChainIndex.get(editorId);
+        if (!KiCoSelectionView.selectedCompileChainIndex.containsKey(editorId)) {
             int defaultIndex = 0;
-            KiCoSelectionView.selectedCompileChainIndex.put(editorID, defaultIndex);
+            KiCoSelectionView.selectedCompileChainIndex.put(editorId, defaultIndex);
         }
-        return KiCoSelectionView.selectedCompileChainIndex.get(editorID).intValue();
+        return KiCoSelectionView.selectedCompileChainIndex.get(editorId).intValue();
     }
 
     // -------------------------------------------------------------------------
@@ -318,7 +323,7 @@ public class KiCoSelectionView extends DiagramViewPart {
      * @param index
      *            the index
      */
-    public static void setSelectedCompileChainIndex(String editorID, int index) {
+    public static void setSelectedCompileChainIndex(int editorID, int index) {
         KiCoSelectionView.selectedCompileChainIndex.put(editorID, index);
     }
 
@@ -787,11 +792,14 @@ public class KiCoSelectionView extends DiagramViewPart {
                 // otherwise we (before) switched to another
                 // opened editor. Note that updateView() is called BEFORE updateViewOnClose() by
                 // Eclipse.
-                if (lastEditor == partName) {
+                int currentEditorId = getEditorID(editorPart);
+                if (lastEditorId == currentEditorId) {
+//              if (lastEditorModelName == partName) {
                     clearAll = true;
                     // Clear last editor because we closed it
-                    lastEditor = "";
-                    lastEditorID = "";
+                    lastEditorModelName = "";
+                    lastEditorTypeID = "";
+                    lastEditorId = -1;
                     // Next view is collapsed again
                     allExpanded = ALL_EXPANDED_DEFAULT;
                     if (allExpanded) {
@@ -805,7 +813,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                     }
                 }
 
-                int activeEditorID = getActiveEditorID(editorPart);
+                int activeEditorID = getEditorID(editorPart);
 
                 List<String> selectedAndExcludedTransformations = getSelection(activeEditorID);
 
@@ -924,21 +932,23 @@ public class KiCoSelectionView extends DiagramViewPart {
 
         if (ref != null) {
             IWorkbenchPart part = ref.getPart(true);
-            String editorID = ref.getId();
-            if (registeredEditors.containsKey(editorID)) {
+            String editorTypeID = ref.getId();
+            if (registeredEditors.containsKey(editorTypeID)) {
                 if (part instanceof EditorPart) {
                     EditorPart editorPart = (EditorPart) part;
-                    String partName = (editorPart).getPartName();
+                    String currentPartName = (editorPart).getPartName();
+                    int currentEditorId = getEditorID(editorPart);
 
-                    updateCompileChainCombo(editorID, partName);
-                    int selectedIndex = getSelectedCompileChainIndex(partName);
-                    CompileChains compileChain = registeredEditors.get(editorID);
+                    updateCompileChainCombo(editorTypeID, currentEditorId);
+                    int selectedIndex = getSelectedCompileChainIndex(currentEditorId);
+                    CompileChains compileChain = registeredEditors.get(editorTypeID);
                     CompileChain item = compileChain.getItems().get(selectedIndex);
                     List<String> visibleTransformations = item.transformations;
 
-                    if (!partName.equals(lastEditor)) {
-                        lastEditor = partName;
-                        lastEditorID = editorID;
+                    if (currentEditorId != lastEditorId) {
+                        lastEditorId = currentEditorId;
+                        lastEditorModelName = currentPartName;
+                        lastEditorTypeID = editorTypeID;
                         updateView(getActiveEditorID(), visibleTransformations);
                     }
                 }
@@ -1105,7 +1115,8 @@ public class KiCoSelectionView extends DiagramViewPart {
                 if (hierarchyMode > MAXHIERARCHYMODE) {
                     hierarchyMode = 0;
                 }
-                lastEditor = "";
+                lastEditorId = -1;
+                lastEditorModelName = "";
                 updateView(lastWorkbenchPartReference);
 
             }
@@ -1259,7 +1270,8 @@ public class KiCoSelectionView extends DiagramViewPart {
             // ViewContext vc = viewer.getViewContext();
             // viewer.collapse((KNode) k);
             // }
-            lastEditor = "";
+            lastEditorId = -1;
+            lastEditorModelName = "";
             updateView(lastWorkbenchPartReference);
         }
         
@@ -1307,15 +1319,23 @@ public class KiCoSelectionView extends DiagramViewPart {
     // KlighdSynthesisProperties.newInstance(null));
 
     /**
-     * Gets the active editor id.
+     * Gets the active editor id that is the hashCode of the active editor part.
      * 
      * @return the active editor id
      */
     public static int getActiveEditorID() {
-        return getActiveEditorID(getActiveEditor());
+        return getEditorID(getActiveEditor());
     }
 
-    public static int getActiveEditorID(IEditorPart editorPart) {
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the editor id that is the hash Code of an editor part.
+     *
+     * @param editorPart the editor part
+     * @return the active editor id
+     */
+    public static int getEditorID(IEditorPart editorPart) {
         if (editorPart != null) {
             return editorPart.hashCode();
         }
