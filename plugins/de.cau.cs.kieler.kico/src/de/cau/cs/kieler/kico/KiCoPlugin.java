@@ -171,7 +171,7 @@ public class KiCoPlugin extends Plugin {
     }
 
     // -------------------------------------------------------------------------
-
+    
     // /**
     // * Gets the invokable method.
     // *
@@ -239,6 +239,8 @@ public class KiCoPlugin extends Plugin {
             String className = extension.getName();
             try {
                 Processor instance = (Processor) extension.createExecutableExtension("class");
+                // Handle the case that wee need Google Guice for instantiation
+                instance = (Processor) getGuiceInstance(instance);
                 String id = instance.getId();
                 className += " (" + id + ")";
                 if (processorsCached.containsKey(id)) {
@@ -281,6 +283,8 @@ public class KiCoPlugin extends Plugin {
             String className = extension.getName();
             try {
                 Feature instance = (Feature) extension.createExecutableExtension("class");
+                // Handle the case that wee need Google Guice for instantiation
+                instance = (Feature) getGuiceInstance(instance);                
                 String id = instance.getId();
                 className += " (" + id + ")";
                 if (featuresCached.containsKey(id)) {
@@ -324,6 +328,8 @@ public class KiCoPlugin extends Plugin {
             try {
                 Transformation instance =
                         (Transformation) extension.createExecutableExtension("class");
+                // Handle the case that wee need Google Guice for instantiation
+                instance = (Transformation) getGuiceInstance(instance);                
                 String id = instance.getId();
                 className += " (" + id + ")";
                 if (transformationsCached.containsKey(id)) {
@@ -367,6 +373,8 @@ public class KiCoPlugin extends Plugin {
             String className = extension.getName();
             try {
                 Hook instance = (Hook) extension.createExecutableExtension("class");
+                // Handle the case that wee need Google Guice for instantiation
+                instance = (Hook) getGuiceInstance(instance);                
                 String id = instance.getId();
                 className += " (" + id + ")";
                 if (hooksCached.containsKey(id)) {

@@ -51,6 +51,9 @@ public abstract class Transformation implements ITransformation {
     /** The central processor list. */
     private List<ProcessorOption> processorOptions = new ArrayList<ProcessorOption>();
 
+//    /** The transformation instance that is guiced for the injected case. */
+//    private Object guicedTransformationInstance = null;
+//
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
@@ -382,12 +385,16 @@ public abstract class Transformation implements ITransformation {
                 if (processorOption == ProcessorOption.getDefaultThisProcessorOption()) {
                     // Process the next processor
                     start = System.currentTimeMillis();
-                    result = this.transform(eObjectParam, context);
+                    Method transformMethod = KiCoUtil.getSpecificTransformationMethodOrFallBack(this, getId()); 
+                    result = transformMethod.invoke(this, eObject, context);
+                    //result = this.transform(eObjectParam, context);
                     end = System.currentTimeMillis();
                 } else {
                     // Process the next processor
                     start = System.currentTimeMillis();
-                    result = processor.process(eObjectParam, context);
+                    //result = processor.process(eObjectParam, context);
+                    Method transformMethod = KiCoUtil.getSpecificProcessMethodOrFallBack(processor, getId()); 
+                    result = transformMethod.invoke(this, eObject, context);
                     end = System.currentTimeMillis();
                 }
 
@@ -416,4 +423,26 @@ public abstract class Transformation implements ITransformation {
     }
 
     // -------------------------------------------------------------------------
+//
+//    /**
+//     * Gets the guiced transformation instance.
+//     *
+//     * @return the guicedTransformationInstance
+//     */
+//    public Object getGuicedTransformationInstance() {
+//        return guicedTransformationInstance;
+//    }
+//
+//    // -------------------------------------------------------------------------
+//
+//    /**
+//     * Sets the guiced transformation instance.
+//     *
+//     * @param guicedTransformationInstance the guicedTransformationInstance to set
+//     */
+//    public void setGuicedTransformationInstance(Object guicedTransformationInstance) {
+//        this.guicedTransformationInstance = guicedTransformationInstance;
+//    }
+//
+//    // -------------------------------------------------------------------------
 }

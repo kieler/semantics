@@ -20,6 +20,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import com.google.common.collect.Sets
+import de.cau.cs.kieler.kico.KielerCompilerContext
 
 /**
  * SCCharts Connector Transformation.
@@ -64,7 +65,7 @@ class Connector extends Transformation {
     //-------------------------------------------------------------------------
     // Turn every connector into a simple state and turn all outgoing 
     // transitions into immediate transitions.
-    def State transform(State rootState) {
+    def State transform(State rootState, KielerCompilerContext context) {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
