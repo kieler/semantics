@@ -16,9 +16,7 @@ package de.cau.cs.kieler.kico;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.ui.statushandlers.StatusManager;
 
 /**
  * An instance of this class represents a registered feature group a transformation can declare to

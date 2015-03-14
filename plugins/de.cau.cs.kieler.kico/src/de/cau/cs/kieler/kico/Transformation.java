@@ -338,8 +338,6 @@ public abstract class Transformation implements ITransformation {
      * @return the e object
      */
     public final Object doTransform(final EObject eObject, final KielerCompilerContext context) {
-
-        EObject eObjectParam = eObject;
         EObject eObjectResult = null;
 
         for (ProcessorOption processorOption : getProcessorOptions()) {
@@ -417,7 +415,6 @@ public abstract class Transformation implements ITransformation {
                 // it.
                 if (result instanceof EObject) {
                     eObjectResult = (EObject) result;
-                    eObjectParam = eObjectResult;
                 } else {
                     return result;
                 }
