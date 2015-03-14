@@ -45,6 +45,37 @@ public abstract class Processor implements IProcessor {
     // -------------------------------------------------------------------------
 
     /**
+     * The central process method should be overridden by a specific processor. The default method
+     * does nothing but returning the given EOject.
+     * 
+     * @param eObject
+     *            the e object
+     * @param context
+     *            the context
+     * @return the object
+     */
+    public Object process(final EObject eObject, final KielerCompilerContext context) {
+        // Either this method is overridden, or the transform method (w/o a context)
+        return process(eObject);
+    }
+
+    // --------------------------------------------
+
+    /**
+     * The central process method should be overridden by a specific processor. The default method
+     * does nothing but returning the given EOject.
+     * 
+     * @param eObject
+     *            the e object
+     * @return the object
+     */
+    public Object process(final EObject eObject) {
+        return eObject;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Gets the argument parameter type.
      * 
      * @return the argument parameter type

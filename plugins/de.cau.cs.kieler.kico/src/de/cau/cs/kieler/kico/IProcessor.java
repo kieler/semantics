@@ -52,13 +52,40 @@ public interface IProcessor {
      * <BR>
      * Note that the first parameter type and the return type should be as specific as possible and
      * state which objects this processor can handle and will return. These types are used for
-     * grouping transformations based on the compilation input.
+     * grouping transformations based on the compilation input. <BR>
+     * <BR>
+     * This method will be called with precedence compared to process(EObject). Nevertheless there
+     * should not be both methods implemented in a processor.
+     * 
+     * @param eObject
+     *            the e object
+     * @param context
+     *            the context
+     * @return the e object
+     * @throws Exception
+     *             the exception
+     */
+    public Object process(EObject eObject, KielerCompilerContext context) throws Exception;
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Central transform method that implements a processor. It should return a specific EObject if
+     * there are any following transformations. A code generation will finally return a String
+     * object.<BR>
+     * <BR>
+     * Note that the first parameter type and the return type should be as specific as possible and
+     * state which objects this processor can handle and will return. These types are used for
+     * grouping transformations based on the compilation input.<BR>
+     * <BR>
+     * The method process(EObject, KielerCompilerContext) will be called with precedence compared to
+     * this method. Nevertheless there should not be both methods implemented in a processor.
      * 
      * @param eObject
      *            the e object
      * @return the e object
      */
-    public Object process(EObject eObject, KielerCompilerContext context) throws Exception;
+    public Object process(EObject eObject) throws Exception;
 
     // -------------------------------------------------------------------------
 
