@@ -80,10 +80,9 @@ public class KielerCompilerContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Instantiates a new kieler compiler context with an original source model and calculates the
-     * transformation chain. <BR>
+     * Instantiates a new kieler compiler context with an original source model. <BR>
      * <BR>
-     * The string artuments are a list of IDs, where disabled IDs are marked with a "!" before the
+     * The string arguments are a list of IDs, where disabled IDs are marked with a "!" before the
      * ID and preferred with a "*". Transformation IDs start with a preceding "T_" and processor
      * options with "P_". <BR>
      * Example:<BR>
@@ -97,14 +96,12 @@ public class KielerCompilerContext {
     public KielerCompilerContext(String stringArguments, EObject eObject) {
         compilationResult = new CompilationResult(eObject);
         selection = new KielerCompilerSelection(stringArguments);
-        recomputeTransformationChain(true);
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Instantiates a new kieler compiler context with an original source model and calculates the
-     * transformation chain.
+     * Instantiates a new kieler compiler context with an original source model.
      * 
      * @param selectedFeatureAndTransformationIds
      *            the selected feature and transformation IDs
@@ -130,7 +127,6 @@ public class KielerCompilerContext {
         selection.setPreferredTransformationIds(preferredTransformationIds);
         selection.setEnabledProcessorOptionIds(enabledProcessorOptionIds);
         selection.setDisabledProcessorOptionIds(disabledProcessorOptionIds);
-        recomputeTransformationChain(true);
     }
 
     // -------------------------------------------------------------------------
@@ -268,7 +264,6 @@ public class KielerCompilerContext {
      */
     public void setSelection(KielerCompilerSelection selection) {
         this.selection = selection;
-        recomputeTransformationChain(true);
     }
 
     // -------------------------------------------------------------------------

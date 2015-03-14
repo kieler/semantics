@@ -48,6 +48,9 @@ public class TransformationDummyGraph {
      * Instantiates a new transformation dummy graph.
      */
     public TransformationDummyGraph(KielerCompilerContext context) {
+        // Set the context. This is where this graph belongs to! We later need access to the
+        // selection of the context to build the graph
+        this.context = context;
     }
 
     // -------------------------------------------------------------------------
