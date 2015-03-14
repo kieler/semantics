@@ -18,6 +18,7 @@ import java.util.List;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.kico.Feature;
+import de.cau.cs.kieler.kico.KielerCompilerSelection;
 import de.cau.cs.kieler.kico.TransformationDummy;
 import de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis;
 import de.cau.cs.kieler.klighd.IAction;
@@ -55,66 +56,82 @@ public class KiCoSelectionAction extends KiCoKlighdAction implements IAction {
     public ActionResult execute(final ActionContext context) {
 
         KNode kNode = context.getKNode();
-//
-        Feature feature =
-                (Feature) context.getDomainElement(kNode);
-        
+        //
+        Feature feature = (Feature) context.getDomainElement(kNode);
+
         if (feature != null) {
-          int activeEditorID = KiCoSelectionView.getActiveEditorID();
-          KiCoSelectionView.getSelectedCompileChainIndex(activeEditorID);
-          String id = feature.getId();
-          
-          System.out.println("Selected feature: " + id);
-          
-          
-            
+            int activeEditorID = KiCoSelectionView.getActiveEditorID();
+            KiCoSelectionDiagramModel selectionModel =
+                    KiCoSelectionView.getSelectionModel(activeEditorID);
+            KielerCompilerSelection selection = selectionModel.getSelection();
+
+            if (selection != null) {
+                String id = feature.getId();
+                // Test if the feature is already selected, then unselect it otherwise select it
+
+                if (selection.getSelectedFeatureAndTransformationIds().contains(id)) {
+                    // Remove the feature from the selection Model
+                    KielerCompilerSelection.remove(id,
+                            selection.getSelectedFeatureAndTransformationIds());
+                } else {
+                    // Add the feature to the selection Model
+                    KielerCompilerSelection.add(id,
+                            selection.getSelectedFeatureAndTransformationIds(), true);
+                }
+                System.out.println("Selected features are: " + selection);
+            }
+
         }
-//
-//        if (transformationDummy != null) {
-//            int activeEditorID = KiCoSelectionView.getActiveEditorID();
-//            String id = transformationDummy.transformationId;
-//
-//            KiCoSelectionView.removeRequiredTransformationVisualization(activeEditorID);
-//
-//            if (!KiCoSelectionView.isSelectedTransformation(id, activeEditorID)) {
-//                // Select
-//                setLabelColor(transformationDummy, context.getViewContext(),
-//                        KiCoDiagramSynthesis.WHITE, KiCoDiagramSynthesis.BLUE3);
-//                setStateColor(transformationDummy, context.getViewContext(),
-//                        KiCoDiagramSynthesis.BLUE3, KiCoDiagramSynthesis.BLUE4);
-//                KiCoSelectionView.addSelectedTransformation(id,
-//                        KiCoSelectionView.getActiveEditorID(), true);
-//
-//
-//              // Unselect OTHER alternatives
-//              List<TransformationDummy> otherAlternatives = KiCoSelectionView.calculateOtherAlternativeTransformations(id, activeEditorID);
-//              for (TransformationDummy otherAlternative : otherAlternatives) {
-//                  setLabelColor(otherAlternative, context.getViewContext(),
-//                          KiCoDiagramSynthesis.BLACK, KiCoDiagramSynthesis.BLUE1);
-//                  setStateColor(otherAlternative, context.getViewContext(),
-//                          KiCoDiagramSynthesis.BLUE1, KiCoDiagramSynthesis.BLUE2);
-//                  KiCoSelectionView.removeSelectedTransformation(otherAlternative.transformationId,
-//                          activeEditorID);
-//              }
-//                
-//            } else {
-//                // Un select
-//                setLabelColor(transformationDummy, context.getViewContext(),
-//                        KiCoDiagramSynthesis.BLACK, KiCoDiagramSynthesis.BLUE1);
-//                setStateColor(transformationDummy, context.getViewContext(),
-//                        KiCoDiagramSynthesis.BLUE1, KiCoDiagramSynthesis.BLUE2);
-//                KiCoSelectionView.removeSelectedTransformation(id,
-//                        KiCoSelectionView.getActiveEditorID());
-//            }
-//
-//            KiCoSelectionView.addRequiredTransformationVisualization(activeEditorID);
-//
-//            System.out.println(Arrays.toString(KiCoSelectionView.getSelectedAndDisabledTransformations(
-//                    KiCoSelectionView.getActiveEditorID()).toArray()));
-//
-//            // notify listeners about currently active transformations
-//            KiCoSelectionView.updateActiveTransformationsProperty();
-//        }
+        //
+        // if (transformationDummy != null) {
+        // int activeEditorID = KiCoSelectionView.getActiveEditorID();
+        // String id = transformationDummy.transformationId;
+        //
+        // KiCoSelectionView.removeRequiredTransformationVisualization(activeEditorID);
+        //
+        // if (!KiCoSelectionView.isSelectedTransformation(id, activeEditorID)) {
+        // // Select
+        // setLabelColor(transformationDummy, context.getViewContext(),
+        // KiCoDiagramSynthesis.WHITE, KiCoDiagramSynthesis.BLUE3);
+        // setStateColor(transformationDummy, context.getViewContext(),
+        // KiCoDiagramSynthesis.BLUE3, KiCoDiagramSynthesis.BLUE4);
+        // KiCoSelectionView.addSelectedTransformation(id,
+        // KiCoSelectionView.getActiveEditorID(), true);
+        //
+        //
+        // // Unselect OTHER alternatives
+        // List<TransformationDummy> otherAlternatives =
+        // KiCoSelectionView.calculateOtherAlternativeTransformations(id, activeEditorID);
+        // for (TransformationDummy otherAlternative : otherAlternatives) {
+        // setLabelColor(otherAlternative, context.getViewContext(),
+        // KiCoDiagramSynthesis.BLACK, KiCoDiagramSynthesis.BLUE1);
+        // setStateColor(otherAlternative, context.getViewContext(),
+        // KiCoDiagramSynthesis.BLUE1, KiCoDiagramSynthesis.BLUE2);
+        // KiCoSelectionView.removeSelectedTransformation(otherAlternative.transformationId,
+        // activeEditorID);
+        // }
+        //
+        // } else {
+        // // Un select
+        // setLabelColor(transformationDummy, context.getViewContext(),
+        // KiCoDiagramSynthesis.BLACK, KiCoDiagramSynthesis.BLUE1);
+        // setStateColor(transformationDummy, context.getViewContext(),
+        // KiCoDiagramSynthesis.BLUE1, KiCoDiagramSynthesis.BLUE2);
+        // KiCoSelectionView.removeSelectedTransformation(id,
+        // KiCoSelectionView.getActiveEditorID());
+        // }
+        //
+        // KiCoSelectionView.addRequiredTransformationVisualization(activeEditorID);
+        //
+        // System.out.println(Arrays.toString(KiCoSelectionView.getSelectedAndDisabledTransformations(
+        // KiCoSelectionView.getActiveEditorID()).toArray()));
+        //
+        // // notify listeners about currently active transformations
+        // KiCoSelectionView.updateActiveTransformationsProperty();
+        // }
+        
+        // notify listeners about currently active transformations
+        KiCoSelectionView.updateActiveTransformationsProperty();
 
         return ActionResult.createResult(true).dontAnimateLayout();
     }

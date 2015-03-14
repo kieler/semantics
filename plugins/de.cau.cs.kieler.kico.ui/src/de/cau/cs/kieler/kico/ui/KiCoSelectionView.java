@@ -1404,10 +1404,10 @@ public class KiCoSelectionView extends DiagramViewPart {
      * Notifies all listeners about the new selection
      */
     public static void updateActiveTransformationsProperty() {
-//        KiCoSelection currentSelection =
-//                new KiCoSelection(getActiveEditorID(), selection.get(getActiveEditorID()),
-//                        requiredTransformations.get(getActiveEditorID()), advancedMode);
-//        selectionEventManger.fireSelectionChangeEvent(currentSelection);
+        KiCoSelection currentSelection =
+                new KiCoSelection(getActiveEditorID(), getSelection(getActiveEditorID()),
+                        requiredTransformations.get(getActiveEditorID()), advancedMode);
+        selectionEventManger.fireSelectionChangeEvent(currentSelection);
     }
 
     // -------------------------------------------------------------------------

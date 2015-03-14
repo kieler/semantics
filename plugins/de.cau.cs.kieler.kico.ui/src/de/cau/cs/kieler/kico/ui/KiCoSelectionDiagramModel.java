@@ -37,10 +37,18 @@ public class KiCoSelectionDiagramModel {
     private Set<Feature> visibleFeatures = new HashSet<Feature>();
 
     /** The selection. */
-    private KielerCompilerSelection selection;
+    private KielerCompilerSelection selection = new KielerCompilerSelection("");
 
     /** The graph. */
     private TransformationDummyGraph graph;
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Instantiates a new ki co selection diagram model.
+     */
+    public KiCoSelectionDiagramModel() {
+    }
 
     // -------------------------------------------------------------------------
 

@@ -436,4 +436,48 @@ public class KielerCompilerSelection {
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Removes the feature or transformation or processor to the end of the given selection list if
+     * it was part of this list. If it can be removed then true is returned. If there was no such
+     * element to remove then false is returned.
+     *
+     * @param elementId the element id to add to the list
+     * @param elementIdList the selection list to add the element id to
+     * @return true, if successfully removed the elementId
+     */
+    public static boolean remove(String elementId, List<String> elementIdList) {
+        for (String otherElementId : elementIdList) {
+            if (otherElementId.equals(elementId)) {
+                elementIdList.remove(otherElementId);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // -------------------------------------------------------------------------
+    /**
+     * Adds the feature or transformation or processor to the end of the given selection list if it
+     * is no already included, if the forced flag is set and the element is already in the list then
+     * remove it and add it to the end.
+     * 
+     * @param elementId
+     *            the element id to add to the list
+     * @param elementIdList
+     *            the selection list to add the element id to
+     * @param forceAdding
+     *            the force adding at the end of the list even if the element is already in
+     */
+    public static void add(String elementId, List<String> elementIdList, boolean forceAdding) {
+        boolean found = elementIdList.contains(elementId);
+        if (forceAdding && found) {
+            remove(elementId, elementIdList);
+        }
+        if (!found || forceAdding) {
+            elementIdList.add(elementId);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
 }
