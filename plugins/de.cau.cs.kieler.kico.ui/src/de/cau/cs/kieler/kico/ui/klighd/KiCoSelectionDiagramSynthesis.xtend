@@ -557,6 +557,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
             if (feature.group) {
                 node.setLayoutOption(KlighdProperties::EXPAND, false);
             }
+            //node.setLayoutOption(LayoutOptions::SPACING, 0f);
             if (feature.alternative) {
 
                 // WHAT TO DO WITH TRANSFORMATION OPTIONS?!

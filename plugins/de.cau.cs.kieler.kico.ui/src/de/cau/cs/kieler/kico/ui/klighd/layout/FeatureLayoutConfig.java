@@ -17,7 +17,7 @@ import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.kiml.LayoutOptionData;
 import de.cau.cs.kieler.kiml.config.SemanticLayoutConfig;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
-import de.cau.cs.kieler.kico.TransformationDummy;
+import de.cau.cs.kieler.kico.Feature;
 
 /**
  * TransformationDummy layout configuration class.
@@ -27,7 +27,7 @@ import de.cau.cs.kieler.kico.TransformationDummy;
  * @kieler.rating 2014-04-08 proposed yellow
  * 
  */
-public class TransformationDummyLayoutConfig extends SemanticLayoutConfig {
+public class FeatureLayoutConfig extends SemanticLayoutConfig {
 
     /** the priority for this semantic layout configuration. */
     public static final int PRIORITY = 100;
@@ -49,7 +49,7 @@ public class TransformationDummyLayoutConfig extends SemanticLayoutConfig {
      */
     @Override
     protected IProperty<?>[] getAffectedOptions(final Object semanticElem) {
-        if (semanticElem instanceof TransformationDummy) {
+        if (semanticElem instanceof Feature) {
             return new IProperty<?>[] { LayoutOptions.ALGORITHM, LayoutOptions.SPACING };
         }
         return null;
@@ -62,7 +62,7 @@ public class TransformationDummyLayoutConfig extends SemanticLayoutConfig {
      */
     @Override
     protected Object getSemanticValue(final Object semanticElem, final LayoutOptionData layoutOption) {
-        if (semanticElem instanceof TransformationDummy) {
+        if (semanticElem instanceof Feature) {
             if (layoutOption.equals(LayoutOptions.SPACING)) {
                 return 0f;
             }

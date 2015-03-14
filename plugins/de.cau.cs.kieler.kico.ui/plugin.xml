@@ -24,43 +24,13 @@
    <extension
          point="de.cau.cs.kieler.kiml.layoutConfigs">
       <staticConfig
-            class="de.cau.cs.kieler.kico.TransformationDummy"
-            option="de.cau.cs.kieler.spacing"
-            value="0.0">
-      </staticConfig>
-      <staticConfig
-            class="de.cau.cs.kieler.kico.TransformationDummy"
-            option="de.cau.cs.kieler.borderSpacing"
-            value="0.0">
-      </staticConfig>
-      <staticConfig
-            class="de.cau.cs.kieler.kico.TransformationDummy"
-            option="de.cau.cs.kieler.sizeConstraint"
-            value="[MINIMUM_SIZE, DEFAULT_MINIMUM_SIZE]">
-      </staticConfig>
-      <staticConfig
-            class="de.cau.cs.kieler.kico.TransformationDummy"
-            option="de.cau.cs.kieler.expandNodes"
-            value="true">
-      </staticConfig>
-      <staticConfig
-            class="de.cau.cs.kieler.kico.TransformationDummy"
-            option="de.cau.cs.kieler.interactive"
-            value="true">
-      </staticConfig>
-      <staticConfig
-            class="java.lang.Object"
-            option="de.cau.cs.kieler.spacing"
-            value="20.0">
-      </staticConfig>
-      <staticConfig
             class="java.lang.Object"
             option="de.cau.cs.kieler.direction"
             value="RIGHT">
       </staticConfig>
       <semanticConfig
-            class="de.cau.cs.kieler.kico.TransformationDummy"
-            config="de.cau.cs.kieler.kico.ui.klighd.layout.TransformationDummyLayoutConfig">
+            class="de.cau.cs.kieler.kico.Feature"
+            config="de.cau.cs.kieler.kico.ui.klighd.layout.FeatureLayoutConfig">
       </semanticConfig>
    </extension>
    <extension
