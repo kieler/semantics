@@ -489,11 +489,11 @@ public class KiCoUtil {
                     if (parameters != null && parameters.length > 0) {
                         Class<?> parameter = parameters[0];
                         if (!parameter.getName().equals("org.eclipse.emf.ecore.EObject")) {
-                            System.out.println(m.getName() + " (" + parameter.getName() + ")");
+//                            System.out.println(m.getName() + " (" + parameter.getName() + ")");
                             // not an EObject - more specific
                             transformMethod = m;
                         } else {
-                            System.out.println(m.getName() + " (org.eclipse.emf.ecore.EObject)");
+//                            System.out.println(m.getName() + " (org.eclipse.emf.ecore.EObject)");
                             // an EOBject - fallBack
                             fallbackMethod = m;
                         }
@@ -539,11 +539,11 @@ public class KiCoUtil {
                     if (parameters != null && parameters.length > 0) {
                         Class<?> parameter = parameters[0];
                         if (!parameter.getClass().getName().equals("org.eclipse.emf.ecore.EObject")) {
-                            System.out.println(m.getName() + " (" + parameter.getName() + ")");
+//                            System.out.println(m.getName() + " (" + parameter.getName() + ")");
                             // not an EObject - more specific
                             transformMethod = m;
                         } else {
-                            System.out.println(m.getName() + " (org.eclipse.emf.ecore.EObject)");
+//                            System.out.println(m.getName() + " (org.eclipse.emf.ecore.EObject)");
                             // an EOBject - fallBack
                             fallbackMethod = m;
                         }
