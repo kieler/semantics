@@ -13,7 +13,11 @@
  */
 package de.cau.cs.kieler.kico.ui.klighd;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import de.cau.cs.kieler.kico.Feature;
+import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.Transformation;
 
 /**
@@ -50,5 +54,39 @@ public class TransformationFeature extends Feature {
         return transformation.getName();
     }
 
+    //-------------------------------------------------------------------------
+
+    /**
+     * Gets the real transformation hidden behind this feature.
+     *
+     * @return the transformation
+     */
+    public Transformation getTransformation() {
+        return transformation;
+    }
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * Gets the list of transformations that declare not being able to handle this feature.
+     * 
+     * @return the not handling transformations
+     */
+    public Set<Transformation> getNotHandlingTransformations() {
+        Feature linkedFeature = transformation.getHandleFeature();
+        
+        if (cachedNotHandlingTransformations != null) {
+            return cachedNotHandlingTransformations;
+        }
+        cachedNotHandlingTransformations = new HashSet<Transformation>();
+        for (Transformation transformation : KielerCompiler.getTransformations()) {
+            for (Feature transformationNotHandlingFeature : transformation.getNotHandlesFeatures()) {
+                if (transformationNotHandlingFeature == linkedFeature) {
+                    cachedNotHandlingTransformations.add(transformation);
+                }
+            }
+        }
+        return cachedNotHandlingTransformations;
+    }
 
 }
