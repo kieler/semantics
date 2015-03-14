@@ -62,7 +62,7 @@ class TransformExpression {
             val signal = signalToVariableMap.findLast [
                 (operatorExpression.subExpressions.head as ValuedObjectReference).valuedObject.name == it.key
             ].value
-            return createValObjRef(signalToValueMap.get(signal))
+            return createValuedObjectReference(signalToValueMap.get(signal))
         }
         
         KExpressionsFactory::eINSTANCE.createOperatorExpression => [
@@ -115,7 +115,7 @@ class TransformExpression {
      * @return The corresponding KExpressions ValuedObjectReference
      */
     def dispatch de.cau.cs.kieler.core.kexpressions.Expression transformExp(TrapExpression trapExpression) {
-        valuedExitVariables.get(trapExpression.trap).createValObjRef
+        valuedExitVariables.get(trapExpression.trap).createValuedObjectReference
     }
 
 	/**
@@ -188,7 +188,7 @@ class TransformExpression {
                 ]
             default:
                 if (signalToVariableMap.findLast[ key == constantExpression.value ] != null) {
-                    return signalToVariableMap.findLast[ key == constantExpression.value ].value.createValObjRef
+                    return signalToVariableMap.findLast[ key == constantExpression.value ].value.createValuedObjectReference
                 } else {
                     throw new IllegalArgumentException("Unknown datatype: " + type)
                 }
@@ -265,6 +265,6 @@ class TransformExpression {
      * @return The corresponding SCL OperatorExpression
      */
      def dispatch transformExp(Void nullExpression) {
-         synchronousTick.createValObjRef
+         synchronousTick.createValuedObjectReference
      }
 }
