@@ -51,9 +51,6 @@ public abstract class Transformation implements ITransformation {
     /** The central processor list. */
     private List<ProcessorOption> processorOptions = new ArrayList<ProcessorOption>();
 
-//    /** The transformation instance that is guiced for the injected case. */
-//    private Object guicedTransformationInstance = null;
-//
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
@@ -385,8 +382,14 @@ public abstract class Transformation implements ITransformation {
                 if (processorOption == ProcessorOption.getDefaultThisProcessorOption()) {
                     // Process the next processor
                     start = System.currentTimeMillis();
-                    Method transformMethod = KiCoUtil.getSpecificTransformationMethodOrFallBack(this, getId()); 
-                    result = transformMethod.invoke(this, eObject, context);
+                    Method transformMethod = KiCoUtil.getSpecificTransformationMethodOrFallBack(this, getId());
+                    if (transformMethod.getParameterTypes().length == 2) {
+                        // first try more specific method
+                        result = transformMethod.invoke(this, eObject, context);
+                    } else {
+                        // fall back to single parameter method otherwise
+                        result = transformMethod.invoke(this, eObject);
+                    }
                     //result = this.transform(eObjectParam, context);
                     end = System.currentTimeMillis();
                 } else {
@@ -394,7 +397,13 @@ public abstract class Transformation implements ITransformation {
                     start = System.currentTimeMillis();
                     //result = processor.process(eObjectParam, context);
                     Method transformMethod = KiCoUtil.getSpecificProcessMethodOrFallBack(processor, getId()); 
-                    result = transformMethod.invoke(this, eObject, context);
+                    if (transformMethod.getParameterTypes().length == 2) {
+                        // first try more specific method
+                        result = transformMethod.invoke(this, eObject, context);
+                    } else {
+                        // fall back to single parameter method otherwise
+                        result = transformMethod.invoke(this, eObject);
+                    }
                     end = System.currentTimeMillis();
                 }
 
@@ -423,26 +432,5 @@ public abstract class Transformation implements ITransformation {
     }
 
     // -------------------------------------------------------------------------
-//
-//    /**
-//     * Gets the guiced transformation instance.
-//     *
-//     * @return the guicedTransformationInstance
-//     */
-//    public Object getGuicedTransformationInstance() {
-//        return guicedTransformationInstance;
-//    }
-//
-//    // -------------------------------------------------------------------------
-//
-//    /**
-//     * Sets the guiced transformation instance.
-//     *
-//     * @param guicedTransformationInstance the guicedTransformationInstance to set
-//     */
-//    public void setGuicedTransformationInstance(Object guicedTransformationInstance) {
-//        this.guicedTransformationInstance = guicedTransformationInstance;
-//    }
-//
-//    // -------------------------------------------------------------------------
+
 }

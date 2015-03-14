@@ -28,9 +28,6 @@ import org.eclipse.emf.ecore.EObject;
  * 
  */
 public abstract class Processor implements IProcessor {
-    
-//    /** The transformation instance that is guiced for the injected case. */
-//    private Object guicedProcessorInstance = null;
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
@@ -98,27 +95,6 @@ public abstract class Processor implements IProcessor {
     }
 
     // -------------------------------------------------------------------------
-//
-//    /**
-//     * Gets the guiced processor instance.
-//     *
-//     * @return the guicedProcessorInstance
-//     */
-//    public Object getGuicedProcessorInstance() {
-//        return guicedProcessorInstance;
-//    }
-//
-//    // -------------------------------------------------------------------------
-//
-//    /**
-//     * Sets the guiced processor instance.
-//     *
-//     * @param guicedProcessorInstance the guicedProcessorInstance to set
-//     */
-//    public void setGuicedProcessorInstance(Object guicedProcessorInstance) {
-//        this.guicedProcessorInstance = guicedProcessorInstance;
-//    }
-//
-//    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
 }
