@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.kico.ui;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,9 +48,16 @@ public class KiCoSelection {
      * @param advancedMode
      *            Indicates if compiler should run in advanced mode
      */
-    public KiCoSelection(int editorID, List<String> selection, List<String> implicitSelection,
+    public KiCoSelection(int editorID, KiCoSelectionDiagramModel selectionModel, List<String> implicitSelection,
             boolean advanced) {
         this.editorID = editorID;
+        List<String> selection = new ArrayList<String>();
+        if (selectionModel != null) {
+            String[] selectionRaw = selectionModel.getSelection().toString().split(",");
+            for (String selectionRawItem : selectionRaw) {
+                selection.add(selectionRawItem);
+            }
+        }
         if (selection != null) {
             this.selection = new LinkedList<String>(selection);
         } else {

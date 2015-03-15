@@ -13,19 +13,17 @@
  */
 package de.cau.cs.kieler.kico.ui;
 
-import java.util.Arrays;
-
 import de.cau.cs.kieler.core.kgraph.KNode;
-import de.cau.cs.kieler.kico.TransformationDummy;
-import de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis;
+import de.cau.cs.kieler.kico.Feature;
+import de.cau.cs.kieler.kico.KielerCompilerSelection;
 import de.cau.cs.kieler.klighd.IAction;
 
 /**
  * This action realizes the disabled selection if transformation IDs.
  * 
  * @author cmot
- * @kieler.design 2014-04-08 proposed
- * @kieler.rating 2014-04-08 proposed yellow
+ * @kieler.design 2015-03-15 proposed
+ * @kieler.rating 2015-03-15 proposed yellow
  */
 public class KiCoDisabledSelectionAction extends KiCoKlighdAction implements IAction {
 
@@ -52,39 +50,32 @@ public class KiCoDisabledSelectionAction extends KiCoKlighdAction implements IAc
      */
     public ActionResult execute(final ActionContext context) {
 
-//        KNode kNode = context.getKNode();
-//
-//        TransformationDummy transformationDummy =
-//                (TransformationDummy) context.getDomainElement(kNode);
-//
-//        if (transformationDummy != null) {
-//            String id = transformationDummy.transformationId;
-//
-//            if (!KiCoSelectionView.isSelectedTransformation(id,
-//                    KiCoSelectionView.getActiveEditorID())) {
-//                // Disabled Select
-//                setLabelColor(transformationDummy, context.getViewContext(),
-//                        KiCoDiagramSynthesis.DARKGRAY, KiCoDiagramSynthesis.GRAY1);
-//                setStateColor(transformationDummy, context.getViewContext(),
-//                        KiCoDiagramSynthesis.GRAY1, KiCoDiagramSynthesis.GRAY2);
-//                KiCoSelectionView.addSelectedTransformation(id,
-//                        KiCoSelectionView.getActiveEditorID(), false);
-//            } else {
-//                // Un select
-//                setLabelColor(transformationDummy, context.getViewContext(),
-//                        KiCoDiagramSynthesis.BLACK, KiCoDiagramSynthesis.BLUE1);
-//                setStateColor(transformationDummy, context.getViewContext(),
-//                        KiCoDiagramSynthesis.BLUE1, KiCoDiagramSynthesis.BLUE2);
-//                KiCoSelectionView.removeSelectedTransformation(id,
-//                        KiCoSelectionView.getActiveEditorID());
-//            }
-//
-//            System.out.println(Arrays.toString(KiCoSelectionView.getSelectedAndDisabledTransformations(
-//                    KiCoSelectionView.getActiveEditorID()).toArray()));
-//
-//            // notify listeners about currently active transformations
-//            KiCoSelectionView.updateActiveTransformationsProperty();
-//        }
+        KNode kNode = context.getKNode();
+        Feature feature = (Feature) context.getDomainElement(kNode);
+
+        if (feature != null) {
+            int activeEditorID = KiCoSelectionView.getActiveEditorID();
+            KiCoSelectionDiagramModel selectionModel =
+                    KiCoSelectionView.getSelectionModel(activeEditorID);
+            KielerCompilerSelection selection = selectionModel.getSelection();
+
+            if (selection != null) {
+                // Test if the transformation is already disabled, then unselect it otherwise select
+                // it
+                if (!KiCoSelectionView.isDisabledTransformation(feature, selection)) {
+                    KiCoSelectionView.disableTransformation(feature, selection,
+                            context.getViewContext());
+                } else {
+                    KiCoSelectionView.enableTransformation(feature, selection,
+                            context.getViewContext());
+                }
+                System.out.println("Selected features are: " + selection);
+            }
+
+        }
+
+        // Notify listeners about currently active transformations
+        KiCoSelectionView.notifySelectionChangeEventListener();
 
         return ActionResult.createResult(true).dontAnimateLayout();
     }

@@ -42,6 +42,8 @@ import de.cau.cs.kieler.kico.FeatureGroup
 import de.cau.cs.kieler.kico.KielerCompiler
 import java.util.Set
 import java.util.HashSet
+import java.util.HashMap
+import de.cau.cs.kieler.kico.Transformation
 
 //import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 /**
@@ -56,6 +58,8 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
 
     static final boolean DEBUG = false;
 
+    static private HashMap<Transformation, TransformationFeature> transformationFeatureMap = new HashMap<Transformation, TransformationFeature>();
+
     def static void debug(String debugText) {
         debug(debugText, true);
     }
@@ -68,6 +72,14 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                 System.out.print(debugText);
             }
         }
+    }
+
+    def public static getTransformationFeature(Transformation transformation) {
+        transformationFeatureMap.get(transformation)
+    }
+
+    def public static clearCache() {
+        transformationFeatureMap.clear
     }
 
     // -------------------------------------------------------------------------
@@ -450,8 +462,8 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                 // if this is a typical FeatureGroup
                 if (other instanceof FeatureGroup) {
                     if ((other as FeatureGroup).features.contains(feature)) {
-                        //System.out.println("CONTAINER for Feature " + feature.id + " is " + other.id)
 
+                        //System.out.println("CONTAINER for Feature " + feature.id + " is " + other.id)
                         return other;
                     }
                 }
@@ -462,6 +474,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                     val otherHandlingTransformations = other.handlingTransformations;
                     if (transformationToSearchFor != null) {
                         if (otherHandlingTransformations.contains(transformationToSearchFor)) {
+
                             //System.out.println("CONTAINER for ALTERNATIVE TransformationFeature " + feature.id + " is " + other.id)
                             return other;
                         }
@@ -469,6 +482,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                 }
             }
         }
+
         //System.out.println("CONTAINER for Feature " + feature.id + " not found")
         return null;
     }
@@ -495,6 +509,8 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
     override transform(KiCoSelectionDiagramModel model) {
 
         connected.clear
+        transformationFeatureMap.clear
+        
         val knode = model.createNode();
 
         for (elem : model.visibleFeatures) {
@@ -563,6 +579,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                 // WHAT TO DO WITH TRANSFORMATION OPTIONS?!
                 for (transformation : feature.handlingTransformations) {
                     val child = new TransformationFeature(transformation)
+                    transformationFeatureMap.put(transformation, child)
                     val childKNode = child.translate;
                     node.children += childKNode;
                 }
@@ -580,26 +597,6 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                 node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
                 node.setLayoutOption(LayoutOptions::DIRECTION, Direction::RIGHT);
             }
-            node.addRectangle() => [
-                it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
-                it.setBackgroundGradient("white".color, GRAY, 90);
-                it.setSelectionBackgroundGradient("white".color, GRAY, 90); // Selection KLighD trick
-                it.setSurroundingSpace(2, 0);
-                it.invisible = false;
-                it.foreground = "gray".color
-                it.lineWidth = 1;
-                //FIXME: hacky workaround
-                it.addText("[-]" + getSpacedOut(feature.label, 2) + " ") => [
-                    it.foreground = "dimGray".color
-                    //                    it.foreground = "white".color
-                    it.fontSize = 10
-                    it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
-                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-                ];
-                if (feature.group) {
-                    it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
-                }
-            ];
             node.addRectangle() => [
                 it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
                 it.setBackgroundGradient("white".color, GRAY, 90);
@@ -620,12 +617,33 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                     it.addRectangle().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).invisible = true;
                 }
             ]
+            node.addRectangle() => [
+                it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
+                it.setBackgroundGradient("white".color, GRAY, 90);
+                it.setSelectionBackgroundGradient("white".color, GRAY, 90); // Selection KLighD trick
+                it.setSurroundingSpace(2, 0);
+                it.invisible = false;
+                it.foreground = "gray".color
+                it.lineWidth = 1;
+                //FIXME: hacky workaround
+                it.addText("[-]" + getSpacedOut(feature.label, 2) + " ") => [
+                    it.foreground = "dimGray".color
+                    //                    it.foreground = "white".color
+                    it.fontSize = 10
+                    it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
+                    it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                ];
+                if (feature.group) {
+                    it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
+                }
+            ];
         ];
     }
 
     // -------------------------------------------------------------------------
     // Transform a state    
     def KNode translate(Feature feature) {
+
         //System.out.print(">>> " + feature);
         //System.out.println(" >>> " + feature.getId);
         val root = feature.createNode().putToLookUpWith(feature) => [ node |
@@ -711,7 +729,6 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                         transDest = feature.getHierarchicalDest(dest)
 
                         //System.out.println("== HIERACHICALLY FROM " + transSource.id + " TO " + transDest.id)
-
                         if (transSource != null && transDest != null) {
 
                             debug(" CHK  CONT '" + transSource.id + "' TO '" + transDest.id + "'")

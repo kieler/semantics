@@ -484,7 +484,7 @@ public class KiCoPlugin extends Plugin {
     public static Feature getFeature(String id, boolean forceReload) {
         HashMap<String, Feature> cache = getRegisteredFeatures(forceReload);
         if (!cache.containsKey(id)) {
-            KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo cannot find the feature with ID '" + id
+            KiCoUtil.logWarning(KiCoPlugin.PLUGIN_ID, "KiCo cannot find the feature with ID '" + id
                     + "'", null);
             return null;
         }
@@ -515,7 +515,7 @@ public class KiCoPlugin extends Plugin {
     public static Transformation getTransformation(String id, boolean forceReload) {
         HashMap<String, Transformation> cache = getRegisteredTransformations(forceReload);
         if (!cache.containsKey(id)) {
-            KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo cannot find the transformation with ID '"
+            KiCoUtil.logWarning(KiCoPlugin.PLUGIN_ID, "KiCo cannot find the transformation with ID '"
                     + id + "'", null);
             return null;
         }
@@ -546,7 +546,7 @@ public class KiCoPlugin extends Plugin {
     public static Hook getHook(String id, boolean forceReload) {
         HashMap<String, Hook> cache = getRegisteredHooks(forceReload);
         if (!cache.containsKey(id)) {
-            KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "KiCo cannot find the hook with ID '" + id
+            KiCoUtil.logWarning(KiCoPlugin.PLUGIN_ID, "KiCo cannot find the hook with ID '" + id
                     + "'", null);
             return null;
         }

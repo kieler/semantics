@@ -3,6 +3,7 @@ package de.cau.cs.kieler.kico.ui;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -34,13 +35,16 @@ import com.google.common.collect.Iterables;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
+import de.cau.cs.kieler.kico.Feature;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
+import de.cau.cs.kieler.kico.Transformation;
 import de.cau.cs.kieler.kico.TransformationDummy;
 import de.cau.cs.kieler.kico.ui.CompileChains.CompileChain;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager.KiCoSelectionChangeEventListerner;
 import de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis;
+import de.cau.cs.kieler.kico.ui.klighd.TransformationFeature;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
 import de.cau.cs.kieler.klighd.IDiagramWorkbenchPart;
 import de.cau.cs.kieler.klighd.IViewer;
@@ -134,7 +138,7 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static boolean advancedMode = true;
 
     /** The flag for expanding or collapsing all groups. */
-    public final static boolean ALL_EXPANDED_DEFAULT = true;
+    public final static boolean ALL_EXPANDED_DEFAULT = false;
 
     /** The flag for expanding or collapsing all groups. */
     public static boolean allExpanded = ALL_EXPANDED_DEFAULT;
@@ -192,7 +196,7 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-    
+
     public static KiCoSelectionDiagramModel getSelectionModel(int editorID) {
         if (!KiCoSelectionView.knownModels.containsKey(editorID)) {
             KiCoSelectionDiagramModel model = new KiCoSelectionDiagramModel();
@@ -203,58 +207,58 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Gets the selected transformations as a list of Strings of their IDs.
-     * 
-     * @param editorID
-     *            the editor id
-     * @return the selected transformations
-     */
-    public static List<String> getSelection(int editorID) {
-        KiCoSelectionDiagramModel selectionModel = getSelectionModel(editorID);
-        if (selectionModel == null || selectionModel.getSelection() == null) {
-            return new ArrayList<String>();
-        }
-        return selectionModel.getSelection().getSelectedFeatureAndTransformationIds();
-    }
+    // /**
+    // * Gets the selected transformations as a list of Strings of their IDs.
+    // *
+    // * @param editorID
+    // * the editor id
+    // * @return the selected transformations
+    // */
+    // public static List<String> getSelection(int editorID) {
+    // KiCoSelectionDiagramModel selectionModel = getSelectionModel(editorID);
+    // if (selectionModel == null || selectionModel.getSelection() == null) {
+    // return new ArrayList<String>();
+    // }
+    // return selectionModel.getSelection().getSelectedFeatureAndTransformationIds();
+    // }
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Gets the selected transformations as a list of Strings of their IDs.
-     * 
-     * @param editorID
-     *            the editor id
-     * @return the selected transformations
-     */
-    public static List<String> getSelectedTransformations(int editorID) {
-        List<String> selectedAndDisabledList = getSelection(editorID);
-        List<String> returnList = new ArrayList<String>();
-        for (String selectedAndDisabled : selectedAndDisabledList) {
-            if (!selectedAndDisabled.startsWith("!")) {
-                returnList.add(selectedAndDisabled);
-            }
-        }
-        return returnList;
-    }
-
-    /**
-     * Gets the disabled transformations as a list of Strings of their IDs.
-     * 
-     * @param editorID
-     *            the editor id
-     * @return the selected transformations
-     */
-    public static List<String> getDisabledTransformations(int editorID) {
-        List<String> selectedAndDisabledList = getSelection(editorID);
-        List<String> returnList = new ArrayList<String>();
-        for (String selectedAndDisabled : selectedAndDisabledList) {
-            if (selectedAndDisabled.startsWith("!")) {
-                returnList.add(selectedAndDisabled.substring(1));
-            }
-        }
-        return returnList;
-    }
+    // /**
+    // * Gets the selected transformations as a list of Strings of their IDs.
+    // *
+    // * @param editorID
+    // * the editor id
+    // * @return the selected transformations
+    // */
+    // public static List<String> getSelectedTransformations(int editorID) {
+    // List<String> selectedAndDisabledList = getSelection(editorID);
+    // List<String> returnList = new ArrayList<String>();
+    // for (String selectedAndDisabled : selectedAndDisabledList) {
+    // if (!selectedAndDisabled.startsWith("!")) {
+    // returnList.add(selectedAndDisabled);
+    // }
+    // }
+    // return returnList;
+    // }
+    //
+    // /**
+    // * Gets the disabled transformations as a list of Strings of their IDs.
+    // *
+    // * @param editorID
+    // * the editor id
+    // * @return the selected transformations
+    // */
+    // public static List<String> getDisabledTransformations(int editorID) {
+    // List<String> selectedAndDisabledList = getSelection(editorID);
+    // List<String> returnList = new ArrayList<String>();
+    // for (String selectedAndDisabled : selectedAndDisabledList) {
+    // if (selectedAndDisabled.startsWith("!")) {
+    // returnList.add(selectedAndDisabled.substring(1));
+    // }
+    // }
+    // return returnList;
+    // }
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
@@ -330,76 +334,76 @@ public class KiCoSelectionView extends DiagramViewPart {
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
-    /**
-     * Checks if a transformation is selected.
-     * 
-     * @param transformationDummyID
-     *            the transformation dummy id
-     * @param editorID
-     *            the editor id
-     * @return true, if is selected transformation
-     */
-    public static boolean isSelectedTransformation(String transformationDummyID, int editorID) {
-        return isSelectedTransformation(transformationDummyID, getSelection(editorID));
-    }
+    // /**
+    // * Checks if a transformation is selected.
+    // *
+    // * @param featureId
+    // * the transformation dummy id
+    // * @param editorID
+    // * the editor id
+    // * @return true, if is selected transformation
+    // */
+    // public static boolean isSelectedTransformation(String featureId, int editorID) {
+    // return isSelectedTransformation(featureId, getSelection(editorID));
+    // }
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Checks if a transformation is selected.
-     * 
-     * @param transformationDummyID
-     *            the transformation dummy id
-     * @param selectedList
-     *            the selected list
-     * @return true, if is selected transformation
-     */
-    public static boolean isSelectedTransformation(String transformationDummyID,
-            List<String> selectedList) {
-        for (String transformationID : selectedList) {
-            if (transformationID.startsWith("!")) {
-                transformationID = transformationID.substring(1);
-            }
-            if (transformationID.equals(transformationDummyID)) {
-                return true;
-            }
-        }
-        return false;
-    }
+    // /**
+    // * Checks if a transformation is selected.
+    // *
+    // * @param featureId
+    // * the transformation dummy id
+    // * @param selectedList
+    // * the selected list
+    // * @return true, if is selected transformation
+    // */
+    // public static boolean isSelectedTransformation(String featureId,
+    // List<String> selectedList) {
+    // for (String transformationID : selectedList) {
+    // if (transformationID.startsWith("!")) {
+    // transformationID = transformationID.substring(1);
+    // }
+    // if (transformationID.equals(featureId)) {
+    // return true;
+    // }
+    // }
+    // return false;
+    // }
+
+    // // -------------------------------------------------------------------------
+    //
+    // /**
+    // * Checks if a selected transformation is enabled.
+    // *
+    // * @param featureId
+    // * the transformation dummy id
+    // * @param editorID
+    // * the editor id
+    // * @return true, if is selected transformation
+    // */
+    // public static boolean isSelectedTransformationDisabled(String featureId,
+    // int editorID) {
+    // return isSelectedTransformationDisabled(featureId, getSelection(editorID));
+    // }
 
     // -------------------------------------------------------------------------
 
     /**
      * Checks if a selected transformation is enabled.
      * 
-     * @param transformationDummyID
-     *            the transformation dummy id
-     * @param editorID
-     *            the editor id
-     * @return true, if is selected transformation
-     */
-    public static boolean isSelectedTransformationDisabled(String transformationDummyID,
-            int editorID) {
-        return isSelectedTransformationDisabled(transformationDummyID, getSelection(editorID));
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Checks if a selected transformation is enabled.
-     * 
-     * @param transformationDummyID
+     * @param featureId
      *            the transformation dummy id
      * @param selectedList
      *            the selected list
      * @return true, if is selected transformation
      */
-    public static boolean isSelectedTransformationDisabled(String transformationDummyID,
+    public static boolean isSelectedTransformationDisabled(String featureId,
             List<String> selectedList) {
         for (String transformationID : selectedList) {
             if (transformationID.startsWith("!")) {
                 transformationID = transformationID.substring(1);
-                if (transformationID.equals(transformationDummyID.replace("!", ""))) {
+                if (transformationID.equals(featureId.replace("!", ""))) {
                     return true;
                 }
             }
@@ -409,365 +413,590 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     // -------------------------------------------------------------------------
 
+    // /**
+    // * Adds the transformation to be selected.
+    // *
+    // * @param featureId
+    // * the transformation dummy id
+    // * @param editorID
+    // * the editor id
+    // * @param enabled
+    // * the enabled
+    // */
+    // public static void addSelectedTransformation(String featureId, int editorID,
+    // boolean enabled) {
+    // addSelectedTransformation(featureId, getSelection(editorID), enabled);
+    // }
+    //
+    // // -------------------------------------------------------------------------
+
+    // /**
+    // * Adds the transformation to be selected.
+    // *
+    // * @param featureId
+    // * the transformation dummy id
+    // * @param selectedList
+    // * the selected list
+    // */
+    // public static void addSelectedTransformation(String featureId,
+    // List<String> selectedList, boolean enabled) {
+    // removeSelectedTransformation(featureId, selectedList);
+    // if (!enabled) {
+    // featureId = "!" + featureId;
+    // }
+    // selectedList.add(featureId);
+    // }
+    //
+    // // -------------------------------------------------------------------------
+    // //
+    // /**
+    // * Removes the transformation from the list of selected transformations.
+    // *
+    // * @param featureId
+    // * the transformation dummy id
+    // * @param editorID
+    // * the editor id
+    // */
+    // public static void removeSelectedTransformation(String featureId, int editorID) {
+    // removeSelectedTransformation(featureId, getSelection(editorID));
+    // }
+    //
+    // // -------------------------------------------------------------------------
+    //
+    // /**
+    // * Removes the transformation from the list of selected transformations.
+    // *
+    // * @param featureId
+    // * the transformation dummy id
+    // * @param selectedList
+    // * the selected list
+    // */
+    // public static void removeSelectedTransformation(String featureId,
+    // List<String> selectedList) {
+    // int found = -1;
+    // for (String transformationID : selectedList) {
+    // String enabledTransformationID = transformationID;
+    // if (enabledTransformationID.startsWith("!")) {
+    // enabledTransformationID = enabledTransformationID.substring(1);
+    // }
+    // if (enabledTransformationID.equals(featureId)) {
+    // found = selectedList.indexOf(transformationID);
+    // break;
+    // }
+    // }
+    // if (found > -1) {
+    // selectedList.remove(found);
+    // }
+    // }
+    //
+    // // -------------------------------------------------------------------------
+
+    // /**
+    // * Gets and possibly recalculated the additionally required transformations as a list of
+    // Strings
+    // * of their IDs.
+    // *
+    // * @param editorID
+    // * the editor id
+    // * @return the selected transformations
+    // */
+    // public static List<String> getRequiredTransformations(int editorID) {
+    // return getRequiredTransformations(editorID, false);
+    // }
+
+    // -------------------------------------------------------------------------
+
+    // /**
+    // * Gets and possibly recalculated the additionally required transformations as a list of
+    // Strings
+    // * of their IDs.
+    // *
+    // * @param editorID
+    // * the editor id
+    // * @param recalculate
+    // * the recalculate
+    // * @return the selected transformations
+    // */
+    // public static List<String> getRequiredTransformations(int editorID, boolean recalculate) {
+    // if (!KiCoSelectionView.requiredTransformations.containsKey(editorID)) {
+    // List<String> requiredList = new ArrayList<String>();
+    // KiCoSelectionView.requiredTransformations.put(editorID, requiredList);
+    // }
+    // List<String> requiredList = KiCoSelectionView.requiredTransformations.get(editorID);
+    //
+    // if (recalculate) {
+    // requiredList.clear();
+    // List<String> selectedTransformations = getSelectedTransformations(editorID);
+    // List<String> disabledTransformations = getDisabledTransformations(editorID);
+    // List<String> allRequiredTransformations =
+    // KielerCompiler.calculatePreRequirements(selectedTransformations,
+    // disabledTransformations, false);
+    // for (String requiredTransformation : allRequiredTransformations) {
+    // boolean found = false;
+    // for (String selectedTransformation : selectedTransformations) {
+    // if (selectedTransformation.equals(requiredTransformation)) {
+    // found = true;
+    // break;
+    // }
+    // }
+    // if (!found) {
+    // // if this is a required transformation ONLY (which is not selected) then add it
+    // requiredList.add(requiredTransformation);
+    // }
+    // }
+    // }
+    //
+    // return requiredList;
+    //
+    // }
+
+    // -------------------------------------------------------------------------
+
+    // /**
+    // * Gets the KielerCompiler context (with the graph of TransformationDummies) for an editor.
+    // *
+    // * @param editorID
+    // * the editor id
+    // * @return the model
+    // */
+    // public static KielerCompilerContext getKielerCompilerContext(int editorID) {
+    // if (knownModels.containsKey(editorID)) {
+    // return knownModels.get(editorID);
+    // }
+    // return null;
+    // }
+
+    // -------------------------------------------------------------------------
+
+    // /**
+    // * Tries to resolve transformation dummy by its ID and the current editor.
+    // *
+    // * @param transformationID
+    // * the transformation id
+    // * @param editorID
+    // * the editor id
+    // * @return the transformation dummy
+    // */
+    // public static TransformationDummy resolveTransformationDummy(String transformationID,
+    // int editorID) {
+    // KielerCompilerContext context = getKielerCompilerContext(editorID);
+    // if (context != null) {
+    // for (TransformationDummy transformationDummy : context.getGraph()) {
+    // if (transformationDummy.id.equals(transformationID)) {
+    // return transformationDummy;
+    // } else if (transformationDummy.id.equals(transformationID.replace("!", ""))) {
+    // return transformationDummy;
+    // }
+    // }
+    // }
+    // return null;
+    // }
+
+    // -------------------------------------------------------------------------
+
     /**
-     * Adds the transformation to be selected.
+     * Tries to resolve the Feature or TransformationFeature by its Id.
      * 
-     * @param transformationDummyID
-     *            the transformation dummy id
+     * @param featureId
+     *            the feature id
+     * @return the feature
+     */
+    public static Feature resolveFeature(String featureId) {
+        // Return a feature directly
+        Feature returnFeature = null;
+        if (!featureId.startsWith("T_")) {
+            returnFeature = KielerCompiler.getFeature(featureId);
+        } else {
+            // Or if this was no feature, try resolving a TransformationFeature
+            Transformation transformation =
+                    KielerCompiler.getTransformation(featureId.substring(2));
+            returnFeature = KiCoSelectionDiagramSynthesis.getTransformationFeature(transformation);
+        }
+        return returnFeature;
+    }
+
+    // -------------------------------------------------------------------------
+    //
+    // /**
+    // * Removes the required transformation visualization.
+    // *
+    // * @param editorID
+    // * the editor id
+    // */
+    // public static void removeRequiredTransformationVisualization(int editorID) {
+    // List<String> requiredTransformations =
+    // KiCoSelectionView.getRequiredTransformations(editorID, true);
+    // ViewContext context = instance.getViewer().getViewContext();
+    // for (String requiredTransformationID : requiredTransformations) {
+    // TransformationDummy requiredTransformationDummy =
+    // resolveTransformationDummy(requiredTransformationID,
+    // KiCoSelectionView.getActiveEditorID());
+    // if (requiredTransformationDummy != null) {
+    // if (!isSelectedTransformationDisabled(requiredTransformationID, editorID)) {
+    // KiCoKlighdAction.setLabelColor(requiredTransformationDummy, context,
+    // KiCoDiagramSynthesis.BLACK, KiCoDiagramSynthesis.BLUE1);
+    // KiCoKlighdAction.setStateColor(requiredTransformationDummy, context,
+    // KiCoDiagramSynthesis.BLUE1, KiCoDiagramSynthesis.BLUE2);
+    // }
+    // }
+    // }
+    //
+    // }
+    //
+    // // -------------------------------------------------------------------------
+    //
+    // /**
+    // * Adds the required transformation visualization if the advanced mode is turned on.
+    // *
+    // * @param editorID
+    // * the editor id
+    // */
+    // public static void addRequiredTransformationVisualization(int editorID) {
+    // if (advancedMode) {
+    // List<String> requiredTransformations =
+    // KiCoSelectionView.getRequiredTransformations(editorID, true);
+    // ViewContext context = instance.getViewer().getViewContext();
+    // for (String requiredTransformationID : requiredTransformations) {
+    // TransformationDummy requiredTransformationDummy =
+    // resolveTransformationDummy(requiredTransformationID, editorID);
+    // if (requiredTransformationDummy != null) {
+    // if (!isSelectedTransformationDisabled(requiredTransformationID, editorID)) {
+    // KiCoKlighdAction.setLabelColor(requiredTransformationDummy, context,
+    // KiCoDiagramSynthesis.WHITE, KiCoDiagramSynthesis.BLUE3b);
+    // KiCoKlighdAction.setStateColor(requiredTransformationDummy, context,
+    // KiCoDiagramSynthesis.BLUE3b, KiCoDiagramSynthesis.BLUE3b);
+    // }
+    // }
+    // }
+    // }
+    // }
+    //
+    // -------------------------------------------------------------------------
+    //
+
+    /**
+     * Updates the selected transformation visualization.
+     * 
      * @param editorID
      *            the editor id
-     * @param enabled
-     *            the enabled
      */
-    public static void addSelectedTransformation(String transformationDummyID, int editorID,
-            boolean enabled) {
-        addSelectedTransformation(transformationDummyID, getSelection(editorID), enabled);
-    }
+    public static void updateSelectionTransformationVisualization(int editorId) {
+        KiCoSelectionDiagramModel selectionModel = getSelectionModel(editorId);
+        KielerCompilerSelection selection = selectionModel.getSelection();
+        ViewContext context = instance.getViewer().getViewContext();
 
-    // -------------------------------------------------------------------------
-
-    /**
-     * Adds the transformation to be selected.
-     * 
-     * @param transformationDummyID
-     *            the transformation dummy id
-     * @param selectedList
-     *            the selected list
-     */
-    public static void addSelectedTransformation(String transformationDummyID,
-            List<String> selectedList, boolean enabled) {
-        removeSelectedTransformation(transformationDummyID, selectedList);
-        if (!enabled) {
-            transformationDummyID = "!" + transformationDummyID;
+        for (String selected : selection.getSelectedFeatureAndTransformationIds()) {
+            Feature feature = resolveFeature(selected);
+            KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.SELECT);
         }
-        selectedList.add(transformationDummyID);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Removes the transformation from the list of selected transformations.
-     * 
-     * @param transformationDummyID
-     *            the transformation dummy id
-     * @param editorID
-     *            the editor id
-     */
-    public static void removeSelectedTransformation(String transformationDummyID, int editorID) {
-        removeSelectedTransformation(transformationDummyID, getSelection(editorID));
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Removes the transformation from the list of selected transformations.
-     * 
-     * @param transformationDummyID
-     *            the transformation dummy id
-     * @param selectedList
-     *            the selected list
-     */
-    public static void removeSelectedTransformation(String transformationDummyID,
-            List<String> selectedList) {
-        int found = -1;
-        for (String transformationID : selectedList) {
-            String enabledTransformationID = transformationID;
-            if (enabledTransformationID.startsWith("!")) {
-                enabledTransformationID = enabledTransformationID.substring(1);
+        for (String selected : selection.getDisabledTransformationIds()) {
+            Transformation transformation = KielerCompiler.getTransformation(selected);
+            Feature feature = transformation.getHandleFeature();
+            if (feature.isAlternative()) {
+                // resolve a TransformationFeature instead
+                feature = resolveFeature("T_" + selected);
             }
-            if (enabledTransformationID.equals(transformationDummyID)) {
-                found = selectedList.indexOf(transformationID);
-                break;
-            }
+            KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.SELECT);
         }
-        if (found > -1) {
-            selectedList.remove(found);
+
+    }
+
+    // -------------------------------------------------------------------------
+    // HELPER METHODS FOR SELETION, DESELECTION
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if a feature or transformation (feature) is selected.
+     * 
+     * @param feature
+     *            the feature
+     * @param selection
+     *            the selection
+     * @return true, if is selected feature
+     */
+    public static boolean isSelectedFeature(Feature feature, KielerCompilerSelection selection) {
+        String id = feature.getId();
+        if (feature instanceof TransformationFeature) {
+            id = "T_" + id;
+        }
+        return selection.getSelectedFeatureAndTransformationIds().contains(id);
+    }
+
+    // -------------------------
+
+    /**
+     * Selects a feature or transformation feature. If the feature was disabled, then enable it
+     * first.
+     * 
+     * @param feature
+     *            the feature
+     * @param selection
+     *            the selection
+     * @param context
+     *            the context
+     */
+    public static void selectFeature(Feature feature, KielerCompilerSelection selection,
+            ViewContext context) {
+        if (!isSelectedFeature(feature, selection)) {
+            if (isDisabledTransformation(feature, selection)) {
+                enableTransformation(feature, selection, context);
+            }
+            String id = feature.getId();
+            if (feature instanceof TransformationFeature) {
+                id = "T_" + id;
+            }
+            KielerCompilerSelection.add(id, selection.getSelectedFeatureAndTransformationIds(),
+                    true);
+            KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.SELECT);
+        }
+    }
+
+    // -------------------------
+
+    /**
+     * Unselects a feature or transformation feature.
+     * 
+     * @param feature
+     *            the feature
+     * @param selection
+     *            the selection
+     * @param context
+     *            the context
+     */
+    public static void unselectFeature(Feature feature, KielerCompilerSelection selection,
+            ViewContext context) {
+        if (isSelectedFeature(feature, selection)) {
+            String id = feature.getId();
+            if (feature instanceof TransformationFeature) {
+                id = "T_" + id;
+            }
+            KielerCompilerSelection.remove(id, selection.getSelectedFeatureAndTransformationIds());
+            KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.NORMAL);
+        }
+    }
+
+    // -------------------------
+
+    /**
+     * Gets the transformation id for a feature where there is only a SINGLE transformation, if it
+     * is a TransformationFeature (a hidden transformation) it returns the transformation id, if it
+     * is an alternative feature, then return null.
+     * 
+     * @param feature
+     *            the feature
+     * @return the transformation id
+     */
+    private static String getTransformationId(Feature feature) {
+        String featureId = feature.getId();
+        String transformationId = featureId;
+        if (!(feature instanceof TransformationFeature)) {
+            Set<Transformation> transformations = feature.getHandlingTransformations();
+            if (!transformations.isEmpty()) {
+                transformationId = transformations.iterator().next().getId();
+            }
+        } else if (feature.isAlternative()) {
+            return null;
+        }
+        return transformationId;
+    }
+
+    // -------------------------
+
+    /**
+     * Checks if a single transformation for a feature or a concrete transformation of an
+     * alternative is disabled.
+     * 
+     * @param feature
+     *            the feature
+     * @param selection
+     *            the selection
+     * @return true, if is disabled transformation
+     */
+    public static boolean isDisabledTransformation(Feature feature,
+            KielerCompilerSelection selection) {
+        String transformationId = getTransformationId(feature);
+        if (transformationId == null) {
+            return false;
+        }
+        return selection.getDisabledTransformationIds().contains(transformationId);
+    }
+
+    // -------------------------
+
+    /**
+     * Disable a transformation (TransformationFeature) or a feature that has onlye one handling
+     * transformation. If the feature was selected, then unselect it first!
+     * 
+     * @param feature
+     *            the feature
+     * @param selection
+     *            the selection
+     * @param context
+     *            the context
+     */
+    public static void disableTransformation(Feature feature, KielerCompilerSelection selection,
+            ViewContext context) {
+        if ((!feature.isAlternative()) && !isDisabledTransformation(feature, selection)) {
+            if (isSelectedFeature(feature, selection)) {
+                unselectFeature(feature, selection, context);
+            }
+            String transformationId = getTransformationId(feature);
+            KielerCompilerSelection.add(transformationId, selection.getDisabledTransformationIds(),
+                    true);
+            KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.DISABLE);
+        }
+    }
+
+    // -------------------------
+
+    /**
+     * Enable a transformation (TransformationFeature) or a feature that has only one handling
+     * transformation.
+     * 
+     * @param feature
+     *            the feature
+     * @param selection
+     *            the selection
+     * @param context
+     *            the context
+     */
+    public static void enableTransformation(Feature feature, KielerCompilerSelection selection,
+            ViewContext context) {
+        if ((!feature.isAlternative()) && isDisabledTransformation(feature, selection)) {
+            String transformationId = getTransformationId(feature);
+            KielerCompilerSelection.remove(transformationId,
+                    selection.getDisabledTransformationIds());
+            KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.NORMAL);
         }
     }
 
     // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-//    /**
-//     * Gets and possibly recalculated the additionally required transformations as a list of Strings
-//     * of their IDs.
-//     * 
-//     * @param editorID
-//     *            the editor id
-//     * @return the selected transformations
-//     */
-//    public static List<String> getRequiredTransformations(int editorID) {
-//        return getRequiredTransformations(editorID, false);
-//    }
+    // /**
+    // * Adds the selected transformation visualization.
+    // *
+    // * @param editorID
+    // * the editor id
+    // */
+    // public static void addSelectedTransformationVisualization(int editorID) {
+    // List<String> selectedTransformations = KiCoSelectionView.getSelection(editorID);
+    // ViewContext context = instance.getViewer().getViewContext();
+    // for (String selectedTransformationID : selectedTransformations) {
+    // TransformationDummy selectedTransformationDummy =
+    // resolveTransformationDummy(selectedTransformationID, editorID);
+    // if (selectedTransformationDummy != null) {
+    // if (!isSelectedTransformationDisabled(selectedTransformationID, editorID)) {
+    // KiCoKlighdAction.setLabelColor(selectedTransformationDummy, context,
+    // KiCoDiagramSynthesis.WHITE, KiCoDiagramSynthesis.BLUE3);
+    // KiCoKlighdAction.setStateColor(selectedTransformationDummy, context,
+    // KiCoDiagramSynthesis.BLUE3, KiCoDiagramSynthesis.BLUE4);
+    // } else {
+    // KiCoKlighdAction.setLabelColor(selectedTransformationDummy, context,
+    // KiCoDiagramSynthesis.DARKGRAY, KiCoDiagramSynthesis.GRAY1);
+    // KiCoKlighdAction.setStateColor(selectedTransformationDummy, context,
+    // KiCoDiagramSynthesis.GRAY1, KiCoDiagramSynthesis.GRAY2);
+    // }
+    //
+    // }
+    // }
+    // }
 
     // -------------------------------------------------------------------------
 
-//    /**
-//     * Gets and possibly recalculated the additionally required transformations as a list of Strings
-//     * of their IDs.
-//     * 
-//     * @param editorID
-//     *            the editor id
-//     * @param recalculate
-//     *            the recalculate
-//     * @return the selected transformations
-//     */
-//    public static List<String> getRequiredTransformations(int editorID, boolean recalculate) {
-//        if (!KiCoSelectionView.requiredTransformations.containsKey(editorID)) {
-//            List<String> requiredList = new ArrayList<String>();
-//            KiCoSelectionView.requiredTransformations.put(editorID, requiredList);
-//        }
-//        List<String> requiredList = KiCoSelectionView.requiredTransformations.get(editorID);
-//
-//        if (recalculate) {
-//            requiredList.clear();
-//            List<String> selectedTransformations = getSelectedTransformations(editorID);
-//            List<String> disabledTransformations = getDisabledTransformations(editorID);
-//            List<String> allRequiredTransformations =
-//                    KielerCompiler.calculatePreRequirements(selectedTransformations,
-//                            disabledTransformations, false);
-//            for (String requiredTransformation : allRequiredTransformations) {
-//                boolean found = false;
-//                for (String selectedTransformation : selectedTransformations) {
-//                    if (selectedTransformation.equals(requiredTransformation)) {
-//                        found = true;
-//                        break;
-//                    }
-//                }
-//                if (!found) {
-//                    // if this is a required transformation ONLY (which is not selected) then add it
-//                    requiredList.add(requiredTransformation);
-//                }
-//            }
-//        }
-//
-//        return requiredList;
-//
-//    }
+    // /**
+    // * Gets the all transformations.
+    // *
+    // * @return the all transformations
+    // */
+    // public static List<TransformationDummy> getAllTransformations(int editorID) {
+    // KielerCompilerContext context = getKielerCompilerContext(editorID);
+    // if (context != null) {
+    // return context.getGraph();
+    // }
+    // return new ArrayList<TransformationDummy>();
+    // }
+    //
+    // // -------------------------------------------------------------------------
+    //
+    // /**
+    // * Removes other possibly selected alternatives for a transformation from the list of selected
+    // * transformations.
+    // *
+    // * @param featureId
+    // * the transformation dummy id
+    // * @param editorID
+    // * the editor id
+    // * @return the list
+    // */
+    // public static List<TransformationDummy> calculateOtherAlternativeTransformations(
+    // String featureId, int editorID) {
+    // List<TransformationDummy> returnList = new ArrayList<TransformationDummy>();
+    // TransformationDummy transformationDummy =
+    // resolveTransformationDummy(featureId, editorID);
+    // if (transformationDummy != null && transformationDummy.reverseDependencies != null) {
+    // for (TransformationDummy reverseDependency : transformationDummy.reverseDependencies) {
+    // if (reverseDependency.isAlternative()) {
+    // // in this case the parent is an alternative group and we need to deselect ALL
+    // // OTHER alternatives
+    // for (TransformationDummy otherAlternative : reverseDependency.dependencies) {
+    // if (otherAlternative != transformationDummy) {
+    // returnList.add(otherAlternative);
+    // }
+    // }
+    // }
+    // }
+    // }
+    // return returnList;
+    // }
 
     // -------------------------------------------------------------------------
 
-//    /**
-//     * Gets the KielerCompiler context (with the graph of TransformationDummies) for an editor.
-//     * 
-//     * @param editorID
-//     *            the editor id
-//     * @return the model
-//     */
-//    public static KielerCompilerContext getKielerCompilerContext(int editorID) {
-//        if (knownModels.containsKey(editorID)) {
-//            return knownModels.get(editorID);
-//        }
-//        return null;
-//    }
+    // /**
+    // * Removes the selected transformation visualization.
+    // *
+    // * @param editorID
+    // * the editor id
+    // */
+    // public static void removeSelectedTransformationVisualization(int editorID) {
+    // List<String> selectedTransformations = KiCoSelectionView.getSelection(editorID);
+    // ViewContext context = instance.getViewer().getViewContext();
+    // for (String selectedTransformationID : selectedTransformations) {
+    // TransformationDummy selectedTransformationDummy =
+    // resolveTransformationDummy(selectedTransformationID,
+    // KiCoSelectionView.getActiveEditorID());
+    // if (selectedTransformationDummy != null) {
+    // KiCoKlighdAction.setLabelColor(selectedTransformationDummy, context,
+    // KiCoDiagramSynthesis.BLACK, KiCoDiagramSynthesis.BLUE1);
+    // KiCoKlighdAction.setStateColor(selectedTransformationDummy, context,
+    // KiCoDiagramSynthesis.BLUE1, KiCoDiagramSynthesis.BLUE2);
+    // }
+    // }
+    // }
 
     // -------------------------------------------------------------------------
-
-//    /**
-//     * Tries to resolve transformation dummy by its ID and the current editor.
-//     * 
-//     * @param transformationID
-//     *            the transformation id
-//     * @param editorID
-//     *            the editor id
-//     * @return the transformation dummy
-//     */
-//    public static TransformationDummy resolveTransformationDummy(String transformationID,
-//            int editorID) {
-//        KielerCompilerContext context = getKielerCompilerContext(editorID);
-//        if (context != null) {
-//            for (TransformationDummy transformationDummy : context.getGraph()) {
-//                if (transformationDummy.id.equals(transformationID)) {
-//                    return transformationDummy;
-//                } else if (transformationDummy.id.equals(transformationID.replace("!", ""))) {
-//                    return transformationDummy;
-//                }
-//            }
-//        }
-//        return null;
-//    }
-
-    // -------------------------------------------------------------------------
-//
-//    /**
-//     * Removes the required transformation visualization.
-//     * 
-//     * @param editorID
-//     *            the editor id
-//     */
-//    public static void removeRequiredTransformationVisualization(int editorID) {
-//        List<String> requiredTransformations =
-//                KiCoSelectionView.getRequiredTransformations(editorID, true);
-//        ViewContext context = instance.getViewer().getViewContext();
-//        for (String requiredTransformationID : requiredTransformations) {
-//            TransformationDummy requiredTransformationDummy =
-//                    resolveTransformationDummy(requiredTransformationID,
-//                            KiCoSelectionView.getActiveEditorID());
-//            if (requiredTransformationDummy != null) {
-//                if (!isSelectedTransformationDisabled(requiredTransformationID, editorID)) {
-//                    KiCoKlighdAction.setLabelColor(requiredTransformationDummy, context,
-//                            KiCoDiagramSynthesis.BLACK, KiCoDiagramSynthesis.BLUE1);
-//                    KiCoKlighdAction.setStateColor(requiredTransformationDummy, context,
-//                            KiCoDiagramSynthesis.BLUE1, KiCoDiagramSynthesis.BLUE2);
-//                }
-//            }
-//        }
-//
-//    }
-//
-//    // -------------------------------------------------------------------------
-//
-//    /**
-//     * Adds the required transformation visualization if the advanced mode is turned on.
-//     * 
-//     * @param editorID
-//     *            the editor id
-//     */
-//    public static void addRequiredTransformationVisualization(int editorID) {
-//        if (advancedMode) {
-//            List<String> requiredTransformations =
-//                    KiCoSelectionView.getRequiredTransformations(editorID, true);
-//            ViewContext context = instance.getViewer().getViewContext();
-//            for (String requiredTransformationID : requiredTransformations) {
-//                TransformationDummy requiredTransformationDummy =
-//                        resolveTransformationDummy(requiredTransformationID, editorID);
-//                if (requiredTransformationDummy != null) {
-//                    if (!isSelectedTransformationDisabled(requiredTransformationID, editorID)) {
-//                        KiCoKlighdAction.setLabelColor(requiredTransformationDummy, context,
-//                                KiCoDiagramSynthesis.WHITE, KiCoDiagramSynthesis.BLUE3b);
-//                        KiCoKlighdAction.setStateColor(requiredTransformationDummy, context,
-//                                KiCoDiagramSynthesis.BLUE3b, KiCoDiagramSynthesis.BLUE3b);
-//                    }
-//                }
-//            }
-//        }
-//    }
-//
-    // -------------------------------------------------------------------------
-//
-//    /**
-//     * Adds the selected transformation visualization.
-//     * 
-//     * @param editorID
-//     *            the editor id
-//     */
-//    public static void addSelectedTransformationVisualization(int editorID) {
-//        List<String> selectedTransformations = KiCoSelectionView.getSelection(editorID);
-//        ViewContext context = instance.getViewer().getViewContext();
-//        for (String selectedTransformationID : selectedTransformations) {
-//            TransformationDummy selectedTransformationDummy =
-//                    resolveTransformationDummy(selectedTransformationID, editorID);
-//            if (selectedTransformationDummy != null) {
-//                if (!isSelectedTransformationDisabled(selectedTransformationID, editorID)) {
-//                    KiCoKlighdAction.setLabelColor(selectedTransformationDummy, context,
-//                            KiCoDiagramSynthesis.WHITE, KiCoDiagramSynthesis.BLUE3);
-//                    KiCoKlighdAction.setStateColor(selectedTransformationDummy, context,
-//                            KiCoDiagramSynthesis.BLUE3, KiCoDiagramSynthesis.BLUE4);
-//                } else {
-//                    KiCoKlighdAction.setLabelColor(selectedTransformationDummy, context,
-//                            KiCoDiagramSynthesis.DARKGRAY, KiCoDiagramSynthesis.GRAY1);
-//                    KiCoKlighdAction.setStateColor(selectedTransformationDummy, context,
-//                            KiCoDiagramSynthesis.GRAY1, KiCoDiagramSynthesis.GRAY2);
-//                }
-//
-//            }
-//        }
-//    }
-
-    // -------------------------------------------------------------------------
-
-//    /**
-//     * Gets the all transformations.
-//     * 
-//     * @return the all transformations
-//     */
-//    public static List<TransformationDummy> getAllTransformations(int editorID) {
-//        KielerCompilerContext context = getKielerCompilerContext(editorID);
-//        if (context != null) {
-//            return context.getGraph();
-//        }
-//        return new ArrayList<TransformationDummy>();
-//    }
-//
-//    // -------------------------------------------------------------------------
-//
-//    /**
-//     * Removes other possibly selected alternatives for a transformation from the list of selected
-//     * transformations.
-//     * 
-//     * @param transformationDummyID
-//     *            the transformation dummy id
-//     * @param editorID
-//     *            the editor id
-//     * @return the list
-//     */
-//    public static List<TransformationDummy> calculateOtherAlternativeTransformations(
-//            String transformationDummyID, int editorID) {
-//        List<TransformationDummy> returnList = new ArrayList<TransformationDummy>();
-//        TransformationDummy transformationDummy =
-//                resolveTransformationDummy(transformationDummyID, editorID);
-//        if (transformationDummy != null && transformationDummy.reverseDependencies != null) {
-//            for (TransformationDummy reverseDependency : transformationDummy.reverseDependencies) {
-//                if (reverseDependency.isAlternative()) {
-//                    // in this case the parent is an alternative group and we need to deselect ALL
-//                    // OTHER alternatives
-//                    for (TransformationDummy otherAlternative : reverseDependency.dependencies) {
-//                        if (otherAlternative != transformationDummy) {
-//                            returnList.add(otherAlternative);
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        return returnList;
-//    }
-
-    // -------------------------------------------------------------------------
-
-//    /**
-//     * Removes the selected transformation visualization.
-//     * 
-//     * @param editorID
-//     *            the editor id
-//     */
-//    public static void removeSelectedTransformationVisualization(int editorID) {
-//        List<String> selectedTransformations = KiCoSelectionView.getSelection(editorID);
-//        ViewContext context = instance.getViewer().getViewContext();
-//        for (String selectedTransformationID : selectedTransformations) {
-//            TransformationDummy selectedTransformationDummy =
-//                    resolveTransformationDummy(selectedTransformationID,
-//                            KiCoSelectionView.getActiveEditorID());
-//            if (selectedTransformationDummy != null) {
-//                KiCoKlighdAction.setLabelColor(selectedTransformationDummy, context,
-//                        KiCoDiagramSynthesis.BLACK, KiCoDiagramSynthesis.BLUE1);
-//                KiCoKlighdAction.setStateColor(selectedTransformationDummy, context,
-//                        KiCoDiagramSynthesis.BLUE1, KiCoDiagramSynthesis.BLUE2);
-//            }
-//        }
-//    }
-
-    // -------------------------------------------------------------------------
-//
-//    /**
-//     * Adds the selected transformation visualization.
-//     * 
-//     * @param editorID
-//     *            the editor id
-//     */
-//    public static void addSelectedTransformationVisualization(int editorID,
-//            List<String> transformationDummyIDs) {
-//        ViewContext context = instance.getViewer().getViewContext();
-//        for (String selectedTransformationID : transformationDummyIDs) {
-//            TransformationDummy selectedTransformationDummy =
-//                    resolveTransformationDummy(selectedTransformationID,
-//                            KiCoSelectionView.getActiveEditorID());
-//            if (selectedTransformationDummy != null) {
-//                KiCoKlighdAction.setLabelColor(selectedTransformationDummy, context,
-//                        KiCoDiagramSynthesis.WHITE, KiCoDiagramSynthesis.BLUE3);
-//                KiCoKlighdAction.setStateColor(selectedTransformationDummy, context,
-//                        KiCoDiagramSynthesis.BLUE3, KiCoDiagramSynthesis.BLUE4);
-//            }
-//        }
-//    }
+    //
+    // /**
+    // * Adds the selected transformation visualization.
+    // *
+    // * @param editorID
+    // * the editor id
+    // */
+    // public static void addSelectedTransformationVisualization(int editorID,
+    // List<String> featureIds) {
+    // ViewContext context = instance.getViewer().getViewContext();
+    // for (String selectedTransformationID : featureIds) {
+    // TransformationDummy selectedTransformationDummy =
+    // resolveTransformationDummy(selectedTransformationID,
+    // KiCoSelectionView.getActiveEditorID());
+    // if (selectedTransformationDummy != null) {
+    // KiCoKlighdAction.setLabelColor(selectedTransformationDummy, context,
+    // KiCoDiagramSynthesis.WHITE, KiCoDiagramSynthesis.BLUE3);
+    // KiCoKlighdAction.setStateColor(selectedTransformationDummy, context,
+    // KiCoDiagramSynthesis.BLUE3, KiCoDiagramSynthesis.BLUE4);
+    // }
+    // }
+    // }
 
     // -------------------------------------------------------------------------
 
@@ -794,7 +1023,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                 // Eclipse.
                 int currentEditorId = getEditorID(editorPart);
                 if (lastEditorId == currentEditorId) {
-//              if (lastEditorModelName == partName) {
+                    // if (lastEditorModelName == partName) {
                     clearAll = true;
                     // Clear last editor because we closed it
                     lastEditorModelName = "";
@@ -813,19 +1042,22 @@ public class KiCoSelectionView extends DiagramViewPart {
                     }
                 }
 
+                // Clear all selections
                 int activeEditorID = getEditorID(editorPart);
+                KiCoSelectionDiagramModel selectionModel = getSelectionModel(activeEditorID);
+                selectionModel.getSelection().clear();
 
-                List<String> selectedAndExcludedTransformations = getSelection(activeEditorID);
-
-                while (selectedAndExcludedTransformations.size() > 0) {
-                    String transformationID = selectedAndExcludedTransformations.get(0);
-                    removeSelectedTransformation(transformationID, activeEditorID);
-                }
+                // while (selectedAndExcludedTransformations.size() > 0) {
+                // String transformationID = selectedAndExcludedTransformations.get(0);
+                // removeSelectedTransformation(transformationID, activeEditorID);
+                // }
 
                 if (clearAll) {
-//                    removeSelectedTransformationVisualization(activeEditorID);
+                    // removeSelectedTransformationVisualization(activeEditorID);
                     updateView(activeEditorID, new ArrayList<String>());
-                    updateActiveTransformationsProperty();
+                    notifySelectionChangeEventListener();
+                    // Clear cache
+                    KiCoSelectionAction.clearCache();
                 }
             }
         }
@@ -833,9 +1065,8 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     // -------------------------------------------------------------------------
 
-    
     // -------------------------------------------------------------------------
-    
+
     private void updateView(int activeEditorID, List<String> visibleFeatureIds) {
         // Next view is collapsed again
         allExpanded = ALL_EXPANDED_DEFAULT;
@@ -851,59 +1082,59 @@ public class KiCoSelectionView extends DiagramViewPart {
         KiCoSelectionDiagramModel model = getSelectionModel(activeEditorID);
         model.setVisibleFeatures(KielerCompiler.getFeatures(), visibleFeatureIds);
 
-//        List<String> selectedTransformationIDs = new ArrayList<String>();
-//        List<String> disabledTransformationIDs = new ArrayList<String>();
-//        List<String> selectedAndExcludedTransformations = getSelection(activeEditorID);
-//        for (String transformation : selectedAndExcludedTransformations) {
-//            if (transformation.startsWith("!")) {
-//                disabledTransformationIDs.add(transformation.substring(1));
-//            } else {
-//                selectedTransformationIDs.add(transformation);
-//            }
-//        }
-//
-//        KielerCompilerContext context =
-//                new KielerCompilerContext(selectedTransformationIDs, disabledTransformationIDs);
-//
-//        context.buildGraph();
-//
-//        if (compileMode >= 1) {
-//            // 2. eliminate unused alternative paths
-//            KielerCompiler.cleanupImpossibleAlternatives(context);
-//        }
-//        if (compileMode >= 2) {
-//            // 3. mark nodes, including groups
-//            KielerCompiler.markNodes(context, context.getSelectedTransformationIDs(), true);
-//        }
-//        if (compileMode >= 3) {
-//            // 4. mark reverse dependencies
-//            KielerCompiler.markReverseDependencies(context);
-//        }
-//        if (compileMode >= 4) {
-//            // 5. eliminate unmarked nodes
-//            KielerCompiler.eliminatedUnmarkedNodes(context);
-//        }
-//        if (compileMode >= 5) {
-//            // 5b remove excluded transformations
-//            if (disabledTransformationIDs.size() > 0) {
-//                KielerCompiler.removeFromGraph(context, context.getDisabledTransformationIDs());
-//            }
-//        }
-//        KielerCompiler.reduceGraph(context, visibleTransformations);
-//        knownModels.put(activeEditorID, context);
+        // List<String> selectedTransformationIDs = new ArrayList<String>();
+        // List<String> disabledTransformationIDs = new ArrayList<String>();
+        // List<String> selectedAndExcludedTransformations = getSelection(activeEditorID);
+        // for (String transformation : selectedAndExcludedTransformations) {
+        // if (transformation.startsWith("!")) {
+        // disabledTransformationIDs.add(transformation.substring(1));
+        // } else {
+        // selectedTransformationIDs.add(transformation);
+        // }
+        // }
+        //
+        // KielerCompilerContext context =
+        // new KielerCompilerContext(selectedTransformationIDs, disabledTransformationIDs);
+        //
+        // context.buildGraph();
+        //
+        // if (compileMode >= 1) {
+        // // 2. eliminate unused alternative paths
+        // KielerCompiler.cleanupImpossibleAlternatives(context);
+        // }
+        // if (compileMode >= 2) {
+        // // 3. mark nodes, including groups
+        // KielerCompiler.markNodes(context, context.getSelectedTransformationIDs(), true);
+        // }
+        // if (compileMode >= 3) {
+        // // 4. mark reverse dependencies
+        // KielerCompiler.markReverseDependencies(context);
+        // }
+        // if (compileMode >= 4) {
+        // // 5. eliminate unmarked nodes
+        // KielerCompiler.eliminatedUnmarkedNodes(context);
+        // }
+        // if (compileMode >= 5) {
+        // // 5b remove excluded transformations
+        // if (disabledTransformationIDs.size() > 0) {
+        // KielerCompiler.removeFromGraph(context, context.getDisabledTransformationIDs());
+        // }
+        // }
+        // KielerCompiler.reduceGraph(context, visibleTransformations);
+        // knownModels.put(activeEditorID, context);
         KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
-        
-//        if (hierarchyMode == 0) {
-            properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
-                    "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis");
-//        } else {
-//            properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
-//                    "de.cau.cs.kieler.kico.ui.klighd.diagramFlatNoGroupsSynthesis");
-//        } else {
-//            properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
-//                    "de.cau.cs.kieler.kico.ui.klighd.diagramFlatSynthesis");
-//        }
-            
+
+        // if (hierarchyMode == 0) {
+        properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
+                "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis");
+        // } else {
+        // properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
+        // "de.cau.cs.kieler.kico.ui.klighd.diagramFlatNoGroupsSynthesis");
+        // } else {
+        // properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
+        // "de.cau.cs.kieler.kico.ui.klighd.diagramFlatSynthesis");
+        // }
+
         // Hide zoom buttons
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
                 ZoomConfigButtonsHandling.HIDE);
@@ -912,12 +1143,13 @@ public class KiCoSelectionView extends DiagramViewPart {
         updateDiagram(model, properties);
 
         if (KiCoSelectionView.advancedMode) {
-//            KiCoSelectionView.addRequiredTransformationVisualization(activeEditorID);
+            // KiCoSelectionView.addRequiredTransformationVisualization(activeEditorID);
         }
-//        KiCoSelectionView.addSelectedTransformationVisualization(activeEditorID);
+        // KiCoSelectionView.addSelectedTransformationVisualization(activeEditorID);
+        updateSelectionTransformationVisualization(activeEditorID);
 
         // notify listeners about currently active transformations
-        updateActiveTransformationsProperty();
+        notifySelectionChangeEventListener();
     }
 
     // -------------------------------------------------------------------------
@@ -1080,13 +1312,13 @@ public class KiCoSelectionView extends DiagramViewPart {
                 actionAdvancedToggle.setChecked(advancedMode);
 
                 if (advancedMode) {
-//                    addRequiredTransformationVisualization(getActiveEditorID());
+                    // addRequiredTransformationVisualization(getActiveEditorID());
                 } else {
-//                    removeRequiredTransformationVisualization(getActiveEditorID());
+                    // removeRequiredTransformationVisualization(getActiveEditorID());
                 }
 
                 // notify listeners about currently active transformations
-                updateActiveTransformationsProperty();
+                notifySelectionChangeEventListener();
 
             }
         };
@@ -1164,29 +1396,29 @@ public class KiCoSelectionView extends DiagramViewPart {
                     actionSelectAllToggle.setToolTipText("Select all transformations.");
                 }
                 int activeEditorID = getActiveEditorID();
-//                if (allSelected) {
-//                    List<TransformationDummy> allTransformations =
-//                            getAllTransformations(activeEditorID);
-//                    List<String> allTransformationIDs = new ArrayList<String>();
-//                    for (TransformationDummy transformationDummy : allTransformations) {
-//                        allTransformationIDs.add(transformationDummy.transformationId);
-//                    }
-//                    addSelectedTransformationVisualization(activeEditorID, allTransformationIDs);
-//                    List<String> selectedAndExcludedTransformations = getSelection(activeEditorID);
-//                    for (String transformationID : allTransformationIDs) {
-//                        addSelectedTransformation(transformationID,
-//                                selectedAndExcludedTransformations, true);
-//                    }
-//                } else {
-//                    List<String> selectedAndExcludedTransformations = getSelection(activeEditorID);
-//                    removeSelectedTransformationVisualization(activeEditorID);
-//
-//                    while (selectedAndExcludedTransformations.size() > 0) {
-//                        String transformationID = selectedAndExcludedTransformations.get(0);
-//                        removeSelectedTransformation(transformationID, activeEditorID);
-//                    }
-//                }
-                updateActiveTransformationsProperty();
+                // if (allSelected) {
+                // List<TransformationDummy> allTransformations =
+                // getAllTransformations(activeEditorID);
+                // List<String> allTransformationIDs = new ArrayList<String>();
+                // for (TransformationDummy transformationDummy : allTransformations) {
+                // allTransformationIDs.add(transformationDummy.transformationId);
+                // }
+                // addSelectedTransformationVisualization(activeEditorID, allTransformationIDs);
+                // List<String> selectedAndExcludedTransformations = getSelection(activeEditorID);
+                // for (String transformationID : allTransformationIDs) {
+                // addSelectedTransformation(transformationID,
+                // selectedAndExcludedTransformations, true);
+                // }
+                // } else {
+                // List<String> selectedAndExcludedTransformations = getSelection(activeEditorID);
+                // removeSelectedTransformationVisualization(activeEditorID);
+                //
+                // while (selectedAndExcludedTransformations.size() > 0) {
+                // String transformationID = selectedAndExcludedTransformations.get(0);
+                // removeSelectedTransformation(transformationID, activeEditorID);
+                // }
+                // }
+                notifySelectionChangeEventListener();
                 LightDiagramServices.layoutDiagram(thisPart);
             }
         };
@@ -1234,21 +1466,21 @@ public class KiCoSelectionView extends DiagramViewPart {
         return actionExpandAllToggle;
     }
 
-    
     // -------------------------------------------------------------------------
-    
+
     /**
      * Expand or collapse all nodes.
-     *
-     * @param expand the expand
+     * 
+     * @param expand
+     *            the expand
      */
     private void expandAllNodes(boolean expand) {
         final IDiagramWorkbenchPart thisPart = this;
         if (expand) {
             final IViewer viewer = thisPart.getViewer();
             for (EObject k : Iterables.filter(
-                    Iterables2.toIterable(viewer.getViewContext().getViewModel()
-                            .eAllContents()), new Predicate<EObject>() {
+                    Iterables2.toIterable(viewer.getViewContext().getViewModel().eAllContents()),
+                    new Predicate<EObject>() {
 
                         public boolean apply(EObject arg0) {
                             return arg0 instanceof KNode && !viewer.isExpanded(arg0);
@@ -1270,14 +1502,17 @@ public class KiCoSelectionView extends DiagramViewPart {
             // ViewContext vc = viewer.getViewContext();
             // viewer.collapse((KNode) k);
             // }
+
+            // Clear cache
+            KiCoSelectionAction.clearCache();
+
             lastEditorId = -1;
             lastEditorModelName = "";
             updateView(lastWorkbenchPartReference);
         }
-        
+
     }
 
-    
     // -------------------------------------------------------------------------
 
     /**
@@ -1331,8 +1566,9 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     /**
      * Gets the editor id that is the hash Code of an editor part.
-     *
-     * @param editorPart the editor part
+     * 
+     * @param editorPart
+     *            the editor part
      * @return the active editor id
      */
     public static int getEditorID(IEditorPart editorPart) {
@@ -1351,7 +1587,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
             // The initialization case
             // Sometimes the initialization happens too fast for klighd thus do it delayed
-            final boolean  allExpanded = this.allExpanded;
+            final boolean allExpanded = this.allExpanded;
             new UIJob("Init" + KiCoSelectionView.class.getName()) {
 
                 @Override
@@ -1403,9 +1639,9 @@ public class KiCoSelectionView extends DiagramViewPart {
     /**
      * Notifies all listeners about the new selection
      */
-    public static void updateActiveTransformationsProperty() {
+    public static void notifySelectionChangeEventListener() {
         KiCoSelection currentSelection =
-                new KiCoSelection(getActiveEditorID(), getSelection(getActiveEditorID()),
+                new KiCoSelection(getActiveEditorID(), getSelectionModel(getActiveEditorID()),
                         requiredTransformations.get(getActiveEditorID()), advancedMode);
         selectionEventManger.fireSelectionChangeEvent(currentSelection);
     }

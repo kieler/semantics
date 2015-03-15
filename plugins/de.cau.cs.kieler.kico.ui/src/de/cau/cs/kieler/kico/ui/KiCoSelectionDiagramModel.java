@@ -51,7 +51,7 @@ public class KiCoSelectionDiagramModel {
     }
 
     // -------------------------------------------------------------------------
-
+    
     /**
      * Constructs a list of visible features by copying the features from the feature list that also
      * appear in the visibleFeatureId list.
