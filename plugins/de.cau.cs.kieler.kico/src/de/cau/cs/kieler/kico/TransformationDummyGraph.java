@@ -102,13 +102,24 @@ public class TransformationDummyGraph {
                 String transformationId = selectedId.substring(2);
                 transformation = KielerCompiler.getTransformation(transformationId);
             } else {
-                // At this point we found a transformationId that is a transformation (possibly
-                // handling a feature)
-                // Now insert a new transformationDummy for this transformation, respecting all
-                // dependencies
-                transformation = getTransformationHandlingFeature(selectedId, selection);
-                if (transformation != null) {
-                    addTransformationToGraph(transformation);
+                // We now know that selectedId is a feature. If it is a FeatureGroup we have
+                // to select all included features!
+                Feature feature = KielerCompiler.getFeature(selectedId);
+                if (feature instanceof FeatureGroup) {
+                    FeatureGroup featureGroup = (FeatureGroup) feature;
+                    Set<Feature> features = featureGroup.getResolvedFeatures();
+                    for (Feature innerFeature : features) {
+                        transformation =
+                                getTransformationHandlingFeature(innerFeature.getId(), selection);
+                        if (transformation != null) {
+                            addTransformationToGraph(transformation);
+                        }
+                    }
+                } else {
+                    transformation = getTransformationHandlingFeature(selectedId, selection);
+                    if (transformation != null) {
+                        addTransformationToGraph(transformation);
+                    }
                 }
             }
         }

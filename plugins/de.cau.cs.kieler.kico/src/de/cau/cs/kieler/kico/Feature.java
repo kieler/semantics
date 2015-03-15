@@ -165,7 +165,7 @@ public abstract class Feature implements IFeature {
     public static Set<Feature> resolveFeatures(Set<Feature> features) {
         Set<Feature> resolvedFeatures = new HashSet<Feature>();
         for (Feature feature : features) {
-            resolveFeatures(resolvedFeatures, feature);
+            resolveFeatures(resolvedFeatures, feature, false);
         }
         return resolvedFeatures;
     }
@@ -173,19 +173,43 @@ public abstract class Feature implements IFeature {
     // -------------------------------------------------------------------------
 
     /**
-     * Resolve features helper method.
+     * Resolve a set of features and return a new set of resolved features, where all features are
+     * of type Feature including intermediate FeatureGroups.
+     * 
+     * @param features
+     *            the features
+     * @return the sets the
+     */
+    public static Set<Feature> resolveFeaturesAll(Set<Feature> features) {
+        Set<Feature> resolvedFeaturesAll = new HashSet<Feature>();
+        for (Feature feature : features) {
+            resolveFeatures(resolvedFeaturesAll, feature, true);
+        }
+        return resolvedFeaturesAll;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Resolve features helper method. If all is set, also intermediate FeatureGroups are included
+     * into to the resulting set.
      * 
      * @param resolvedFeatures
      *            the resolved features
      * @param feature
      *            the feature
+     * @param all
+     *            the all
      */
-    private static void resolveFeatures(Set<Feature> resolvedFeatures, Feature feature) {
+    private static void resolveFeatures(Set<Feature> resolvedFeatures, Feature feature, boolean all) {
         if (feature instanceof FeatureGroup) {
             // If must be resolved, recursive call
             FeatureGroup featureGroup = (FeatureGroup) feature;
+            if (all) {
+                resolvedFeatures.add(feature);
+            }
             for (Feature subFeature : featureGroup.getFeatures()) {
-                resolveFeatures(resolvedFeatures, subFeature);
+                resolveFeatures(resolvedFeatures, subFeature, all);
             }
         } else {
             // If is already resolved (because no FeatureGroup)

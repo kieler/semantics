@@ -39,6 +39,9 @@ public abstract class FeatureGroup extends Feature implements IFeatureGroup {
     /** The cached resolved features where each item is Feature and not a FeatureGroup. */
     private Set<Feature> cachedResolvedFeatures = null;
 
+    /** The cached resolved features also with all intermediate feature groups. */
+    private Set<Feature> cachedResolvedFeaturesAll = null;
+
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
@@ -181,6 +184,22 @@ public abstract class FeatureGroup extends Feature implements IFeatureGroup {
         }
         cachedResolvedFeatures = Feature.resolveFeatures(getFeatures());
         return cachedResolvedFeatures;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the set of features. All items are fully resolved. Same as getResolvedFeatures but
+     * includes also all intermediate FeatureGroups.
+     * 
+     * @return the features
+     */
+    public Set<Feature> getResolvedFeaturesAll() {
+        if (cachedResolvedFeaturesAll != null) {
+            return cachedResolvedFeaturesAll;
+        }
+        cachedResolvedFeaturesAll = Feature.resolveFeaturesAll(getFeatures());
+        return cachedResolvedFeaturesAll;
     }
 
     // -------------------------------------------------------------------------
