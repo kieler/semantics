@@ -539,7 +539,7 @@ public class KiCoUtil {
                     Class<?>[] parameters = m.getParameterTypes();
                     if (parameters != null && parameters.length > 0) {
                         Class<?> parameter = parameters[0];
-                        if (!parameter.getClass().getName().equals("org.eclipse.emf.ecore.EObject")) {
+                        if (!parameter.getName().equals("org.eclipse.emf.ecore.EObject")) {
                             // System.out.println(m.getName() + " (" + parameter.getName() + ")");
                             // not an EObject - more specific
                             transformMethod = m;
@@ -589,7 +589,8 @@ public class KiCoUtil {
                     Class<?>[] parameters = m.getParameterTypes();
                     if (parameters != null && parameters.length > 0) {
                         Class<?> parameter = parameters[0];
-                        if (!parameter.getClass().getName().equals("org.eclipse.emf.ecore.EObject")) {
+                        String compareName = parameter.getName();
+                        if (!compareName.equals("org.eclipse.emf.ecore.EObject")) {
                             // System.out.println(m.getName() + " (" + parameter.getName() + ")");
                             // not an EObject - more specific
                             transformMethod = m;
