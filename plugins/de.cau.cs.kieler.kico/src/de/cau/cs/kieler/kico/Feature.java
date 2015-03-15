@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.kico;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -55,13 +57,37 @@ public abstract class Feature implements IFeature {
     /**
      * This default implementation will return false. Specific implementations should use the most
      * possible general parameter and calculate the return value based on whether the features is
-     * contained.
+     * contained. This method should not be called directly! Call doIsContained() instead!
      * 
      * @param model
      *            the model
      * @return true, if is s contained
      */
     public boolean isContained(EObject model) {
+        return false;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Call the most specific isContained method suitable for the parameter. The default will just return false.
+     *
+     * @param model the model
+     * @return true, if successful
+     */
+    public final boolean doIsContained(EObject model) {
+        Method transformMethod = KiCoUtil.getSpecificIsContainedMethodOrFallBack(this, getId()); 
+        boolean result;
+        try {
+            result = (Boolean) transformMethod.invoke(this, model);
+            return result;
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 

@@ -257,7 +257,8 @@ public abstract class Transformation implements ITransformation {
      * be added before and after this transform method. Note: If the default processor option is
      * removed this transform() method may not be considered. It is mainly a design decision choice
      * if a transformation should only be build from re-usable processors or also carry a
-     * main-processor (represented by the default processor option).
+     * main-processor (represented by the default processor option). This method should not be
+     * called directly!
      * 
      * @param eObject
      *            the e object
@@ -269,7 +270,7 @@ public abstract class Transformation implements ITransformation {
         // Either this method is overridden, or the transform method (w/o a context)
         return transform(eObject);
     }
-    
+
     // --------------------------------------------
 
     /**
@@ -279,14 +280,16 @@ public abstract class Transformation implements ITransformation {
      * be added before and after this transform method. Note: If the default processor option is
      * removed this transform() method may not be considered. It is mainly a design decision choice
      * if a transformation should only be build from re-usable processors or also carry a
-     * main-processor (represented by the default processor option).
-     *
-     * @param eObject the e object
+     * main-processor (represented by the default processor option). This method should not be
+     * called directly!
+     * 
+     * @param eObject
+     *            the e object
      * @return the object
      */
     public Object transform(final EObject eObject) {
         return eObject;
-    }    
+    }
 
     // --------------------------------------------
 
@@ -296,7 +299,7 @@ public abstract class Transformation implements ITransformation {
      * @return the argument parameter type
      */
     public Class<?> getTransformationMethodParameterType() {
-        Method transformMethod = KiCoUtil.getSpecificTransformationMethodOrFallBack(this, getId()); 
+        Method transformMethod = KiCoUtil.getSpecificTransformationMethodOrFallBack(this, getId());
         if (transformMethod == null) {
             throw (new RuntimeException("The transformation method of transformation '" + getId()
                     + "' was not found. If you declared a method you must not extend the "
@@ -317,7 +320,7 @@ public abstract class Transformation implements ITransformation {
      * @return the return argument type
      */
     public Class<?> getTransformationMethodReturnType() {
-        Method transformMethod = KiCoUtil.getSpecificTransformationMethodOrFallBack(this, getId()); 
+        Method transformMethod = KiCoUtil.getSpecificTransformationMethodOrFallBack(this, getId());
         if (transformMethod == null) {
             throw (new RuntimeException("The transformation method of transformation '" + getId()
                     + "' was not found. If you declared a method you must not extend the "
@@ -380,7 +383,8 @@ public abstract class Transformation implements ITransformation {
                 if (processorOption == ProcessorOption.getDefaultThisProcessorOption()) {
                     // Process the next processor
                     start = System.currentTimeMillis();
-                    Method transformMethod = KiCoUtil.getSpecificTransformationMethodOrFallBack(this, getId());
+                    Method transformMethod =
+                            KiCoUtil.getSpecificTransformationMethodOrFallBack(this, getId());
                     if (transformMethod.getParameterTypes().length == 2) {
                         // first try more specific method
                         result = transformMethod.invoke(this, eObject, context);
@@ -388,19 +392,20 @@ public abstract class Transformation implements ITransformation {
                         // fall back to single parameter method otherwise
                         result = transformMethod.invoke(this, eObject);
                     }
-                    //result = this.transform(eObjectParam, context);
+                    // result = this.transform(eObjectParam, context);
                     end = System.currentTimeMillis();
                 } else {
                     // Process the next processor
                     start = System.currentTimeMillis();
-                    //result = processor.process(eObjectParam, context);
-                    Method transformMethod = KiCoUtil.getSpecificProcessMethodOrFallBack(processor, getId()); 
-                    if (transformMethod.getParameterTypes().length == 2) {
+                    // result = processor.process(eObjectParam, context);
+                    Method processMethod =
+                            KiCoUtil.getSpecificProcessMethodOrFallBack(processor, getId());
+                    if (processMethod.getParameterTypes().length == 2) {
                         // first try more specific method
-                        result = transformMethod.invoke(this, eObject, context);
+                        result = processMethod.invoke(this, eObject, context);
                     } else {
                         // fall back to single parameter method otherwise
-                        result = transformMethod.invoke(this, eObject);
+                        result = processMethod.invoke(this, eObject);
                     }
                     end = System.currentTimeMillis();
                 }

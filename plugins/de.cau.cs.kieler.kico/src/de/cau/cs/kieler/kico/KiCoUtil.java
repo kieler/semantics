@@ -400,7 +400,7 @@ public class KiCoUtil {
         // Calculate the features, go thru all features and request isContained
         Set<Feature> featureList = new HashSet<Feature>();
         for (Feature feature : KielerCompiler.getFeatures()) {
-            if (feature.isContained(model)) {
+            if ((!(feature instanceof FeatureGroup)) && feature.doIsContained(model)) {
                 featureList.add(feature);
             }
         }
@@ -468,16 +468,17 @@ public class KiCoUtil {
     // ------------------------------------------------------------------------
 
     /**
-     * Gets the specific transformation method with parameter more specific than EObject but will
-     * fall back to the EObject case if not found
+     * For a transformation, gets the specific transformation method with parameter more specific
+     * than EObject but will fall back to the EObject case if not found.
      * 
      * @param object
      *            the object
-     * @param methodName
-     *            the method name
+     * @param transformationId
+     *            the transformation id
      * @return the specific transformation method or fall back
      */
-    public static Method getSpecificTransformationMethodOrFallBack(Object object, String transformationId) {
+    public static Method getSpecificTransformationMethodOrFallBack(Object object,
+            String transformationId) {
         Method transformMethod = null;
         Method fallbackMethod = null; // is the EObject method
         try {
@@ -489,11 +490,11 @@ public class KiCoUtil {
                     if (parameters != null && parameters.length > 0) {
                         Class<?> parameter = parameters[0];
                         if (!parameter.getName().equals("org.eclipse.emf.ecore.EObject")) {
-//                            System.out.println(m.getName() + " (" + parameter.getName() + ")");
+                            // System.out.println(m.getName() + " (" + parameter.getName() + ")");
                             // not an EObject - more specific
                             transformMethod = m;
                         } else {
-//                            System.out.println(m.getName() + " (org.eclipse.emf.ecore.EObject)");
+                            // System.out.println(m.getName() + " (org.eclipse.emf.ecore.EObject)");
                             // an EOBject - fallBack
                             fallbackMethod = m;
                         }
@@ -503,15 +504,15 @@ public class KiCoUtil {
             if (transformMethod == null && fallbackMethod != null) {
                 transformMethod = fallbackMethod;
             }
-//            transformMethod =
-//                    ((Transformation) object).getClass().getMethod("transform", EObject.class,
-//                            KielerCompilerContext.class);
+            // transformMethod =
+            // ((Transformation) object).getClass().getMethod("transform", EObject.class,
+            // KielerCompilerContext.class);
         } catch (Exception e) {
             return null;
         }
         if (transformMethod == null) {
-            throw (new RuntimeException("The transformation method of transformation '" +transformationId
-                    + "' was not found."));
+            throw (new RuntimeException("The transformation method of transformation '"
+                    + transformationId + "' was not found."));
         }
         return transformMethod;
     }
@@ -519,13 +520,13 @@ public class KiCoUtil {
     // ------------------------------------------------------------------------
 
     /**
-     * Gets the specific transformation method with parameter more specific than EObject but will
-     * fall back to the EObject case if not found
+     * For a processor, gets the specific process method with parameter more specific than EObject
+     * but will fall back to the EObject case if not found.
      * 
      * @param object
      *            the object
-     * @param methodName
-     *            the method name
+     * @param processId
+     *            the process id
      * @return the specific transformation method or fall back
      */
     public static Method getSpecificProcessMethodOrFallBack(Object object, String processId) {
@@ -539,11 +540,11 @@ public class KiCoUtil {
                     if (parameters != null && parameters.length > 0) {
                         Class<?> parameter = parameters[0];
                         if (!parameter.getClass().getName().equals("org.eclipse.emf.ecore.EObject")) {
-//                            System.out.println(m.getName() + " (" + parameter.getName() + ")");
+                            // System.out.println(m.getName() + " (" + parameter.getName() + ")");
                             // not an EObject - more specific
                             transformMethod = m;
                         } else {
-//                            System.out.println(m.getName() + " (org.eclipse.emf.ecore.EObject)");
+                            // System.out.println(m.getName() + " (org.eclipse.emf.ecore.EObject)");
                             // an EOBject - fallBack
                             fallbackMethod = m;
                         }
@@ -553,14 +554,64 @@ public class KiCoUtil {
             if (transformMethod == null && fallbackMethod != null) {
                 transformMethod = fallbackMethod;
             }
-//            transformMethod =
-//                    ((Processor) object).getClass().getMethod("process", EObject.class,
-//                            KielerCompilerContext.class);
+            // transformMethod =
+            // ((Processor) object).getClass().getMethod("process", EObject.class,
+            // KielerCompilerContext.class);
         } catch (Exception e) {
             return null;
         }
         if (transformMethod == null) {
             throw (new RuntimeException("The process method of processor '" + processId
+                    + "' was not found."));
+        }
+        return transformMethod;
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * For a feature, gets the specific is contained method with parameter more specific than
+     * EObject but will fall back to the EObject case if not found.
+     * 
+     * @param object
+     *            the object
+     * @param featureId
+     *            the feature id
+     * @return the specific transformation method or fall back
+     */
+    public static Method getSpecificIsContainedMethodOrFallBack(Object object, String featureId) {
+        Method transformMethod = null;
+        Method fallbackMethod = null; // is the EObject method
+        try {
+            Method[] methods = ((Feature) object).getClass().getMethods();
+            for (Method m : methods) {
+                if (m.getName().equals("isContained")) {
+                    Class<?>[] parameters = m.getParameterTypes();
+                    if (parameters != null && parameters.length > 0) {
+                        Class<?> parameter = parameters[0];
+                        if (!parameter.getClass().getName().equals("org.eclipse.emf.ecore.EObject")) {
+                            // System.out.println(m.getName() + " (" + parameter.getName() + ")");
+                            // not an EObject - more specific
+                            transformMethod = m;
+                        } else {
+                            // System.out.println(m.getName() + " (org.eclipse.emf.ecore.EObject)");
+                            // an EOBject - fallBack
+                            fallbackMethod = m;
+                        }
+                    }
+                }
+            }
+            if (transformMethod == null && fallbackMethod != null) {
+                transformMethod = fallbackMethod;
+            }
+            // transformMethod =
+            // ((Processor) object).getClass().getMethod("process", EObject.class,
+            // KielerCompilerContext.class);
+        } catch (Exception e) {
+            return null;
+        }
+        if (transformMethod == null) {
+            throw (new RuntimeException("The isContained method of feature '" + featureId
                     + "' was not found."));
         }
         return transformMethod;

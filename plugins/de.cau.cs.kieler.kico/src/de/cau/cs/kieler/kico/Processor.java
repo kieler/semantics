@@ -46,7 +46,7 @@ public abstract class Processor implements IProcessor {
 
     /**
      * The central process method should be overridden by a specific processor. The default method
-     * does nothing but returning the given EOject.
+     * does nothing but returning the given EOject. This method should not be called directly!
      * 
      * @param eObject
      *            the e object
@@ -63,7 +63,7 @@ public abstract class Processor implements IProcessor {
 
     /**
      * The central process method should be overridden by a specific processor. The default method
-     * does nothing but returning the given EOject.
+     * does nothing but returning the given EOject. This method should not be called directly!
      * 
      * @param eObject
      *            the e object

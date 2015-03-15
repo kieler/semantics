@@ -76,6 +76,17 @@ public class KielerCompilerSelection {
     // -------------------------------------------------------------------------
 
     /**
+     * Returns true if there is nothing seletec.
+     *
+     * @return true, if successful
+     */
+    public boolean noSelection() {
+       return (selectedFeatureAndTransformationIds.size() == 0);
+    }
+    
+    // -------------------------------------------------------------------------
+
+    /**
      * Clears all selection lists.
      */
     public void clear() {

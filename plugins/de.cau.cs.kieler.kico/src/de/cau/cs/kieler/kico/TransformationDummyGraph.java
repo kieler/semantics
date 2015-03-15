@@ -124,13 +124,14 @@ public class TransformationDummyGraph {
             }
         }
 
-        // If auto selection is true, then add
+        // If auto selection is true, then
+        // 0. IF ANYTHING IS SELECTED (traget/marked end) then add
         // 1. features, "selected" by occurrence in the model
         // 2. (recursive) features produced by transformations already selected
         // 2b. recursion stops if a selected feature is hit! (marking the end)
         // Note: nothandles is not considered here, it does not affect the selected transformations
         // but only the ORDER (-> dependencies)
-        if (context.isAutoSelect()) {
+        if (context.isAutoSelect() && (!selection.noSelection())) {
             Set<Feature> modelFeatures = context.getTransformationObjectFeatures();
             for (Feature modelFeature : modelFeatures) {
                 addFeatureToGraph(modelFeature);
