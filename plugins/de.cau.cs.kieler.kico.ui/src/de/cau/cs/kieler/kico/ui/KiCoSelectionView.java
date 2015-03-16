@@ -41,6 +41,7 @@ import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
 import de.cau.cs.kieler.kico.Transformation;
 import de.cau.cs.kieler.kico.TransformationDummy;
+import de.cau.cs.kieler.kico.TransformationDummyGraph;
 import de.cau.cs.kieler.kico.ui.CompileChains.CompileChain;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager.KiCoSelectionChangeEventListerner;
 import de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis;
@@ -197,10 +198,24 @@ public class KiCoSelectionView extends DiagramViewPart {
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
+    /**
+     * Gets the selection model or creates one (with the currently active opened model) if no one exists.
+     *
+     * @param editorID the editor id
+     * @return the selection model
+     */
     public static KiCoSelectionDiagramModel getSelectionModel(int editorID) {
         if (!KiCoSelectionView.knownModels.containsKey(editorID)) {
-            KiCoSelectionDiagramModel model = new KiCoSelectionDiagramModel();
-            KiCoSelectionView.knownModels.put(editorID, model);
+            // We now have toe create a new selection model an a compiler context (which includes
+            // the selection)
+            KielerCompilerSelection selection = new KielerCompilerSelection("");
+
+            EObject model = KiCoUIPlugin.getActiveModel();
+
+            KielerCompilerContext context = new KielerCompilerContext(selection, model);
+
+            KiCoSelectionDiagramModel selectionModel = new KiCoSelectionDiagramModel(context);
+            KiCoSelectionView.knownModels.put(editorID, selectionModel);
         }
         return KiCoSelectionView.knownModels.get(editorID);
     }
@@ -670,6 +685,57 @@ public class KiCoSelectionView extends DiagramViewPart {
     // }
     // }
     // }
+
+    // /**
+    // * Calculates the view model feature. For typical features this is the feature itself, for
+    // alternatives the TransformationFeature
+    // * is returned
+    // *
+    // * @param feature the feature
+    // * @return the feature to colorize
+    // */
+    // private static Feature getFeatureToColorize(Feature feature) {
+    //
+    // }
+
+    /**
+     * Adds the required transformation visualization if the advanced mode is turned on.
+     * 
+     * @param editorID
+     *            the editor id
+     */
+    public static void addRequiredTransformationVisualization(int editorID) {
+        if (advancedMode) {
+            KiCoSelectionDiagramModel selectionModel = getSelectionModel(editorID);
+            KielerCompilerContext compilerContext = selectionModel.getContext();
+            KielerCompilerSelection selection = compilerContext.getSelection();
+            Set<Feature> autoSelectedFeatures =
+                    compilerContext.recomputeTransformationChain(true).getAutoSelectedFeatures(
+                            false);
+
+            ViewContext context = instance.getViewer().getViewContext();
+            for (Feature autoSelectedFeature : autoSelectedFeatures) {
+                if (autoSelectedFeature.isAlternative()) {
+                    // Maybe additionally colorize transformation (respecting preferences)
+                    // if a transformation is not already selected
+                    Transformation transformation =
+                            TransformationDummyGraph.getTransformationHandlingFeature(
+                                    autoSelectedFeature.getId(), selection);
+                    if (!selection.isTransformationSelected(transformation.getId())) {
+                        TransformationFeature transformationFeature =
+                                KiCoSelectionDiagramSynthesis
+                                        .getTransformationFeature(transformation);
+                        KiCoSelectionAction.colorize(transformationFeature, context,
+                                KiCoSelectionAction.AUTOSELECT);
+                    }
+                }
+                KiCoSelectionAction.colorize(autoSelectedFeature, context,
+                        KiCoSelectionAction.AUTOSELECT);
+            }
+
+        }
+    }
+
     //
     // -------------------------------------------------------------------------
     //
@@ -682,8 +748,13 @@ public class KiCoSelectionView extends DiagramViewPart {
      */
     public static void updateSelectionTransformationVisualization(int editorId) {
         KiCoSelectionDiagramModel selectionModel = getSelectionModel(editorId);
-        KielerCompilerSelection selection = selectionModel.getSelection();
+        KielerCompilerSelection selection = selectionModel.getContext().getSelection();
         ViewContext context = instance.getViewer().getViewContext();
+
+        // First set the normal color for all features
+        for (Feature visibleFeature : KiCoSelectionDiagramSynthesis.getVisibleFeatures()) {
+            KiCoSelectionAction.colorize(visibleFeature, context, KiCoSelectionAction.NORMAL);
+        }
 
         for (String selected : selection.getSelectedFeatureAndTransformationIds()) {
             Feature feature = resolveFeature(selected);
@@ -697,6 +768,10 @@ public class KiCoSelectionView extends DiagramViewPart {
                 feature = resolveFeature("T_" + selected);
             }
             KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.SELECT);
+        }
+
+        if (KiCoSelectionView.advancedMode) {
+            KiCoSelectionView.addRequiredTransformationVisualization(editorId);
         }
 
     }
@@ -1045,7 +1120,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                 // Clear all selections
                 int activeEditorID = getEditorID(editorPart);
                 KiCoSelectionDiagramModel selectionModel = getSelectionModel(activeEditorID);
-                selectionModel.getSelection().clear();
+                selectionModel.getContext().getSelection().clear();
 
                 // while (selectedAndExcludedTransformations.size() > 0) {
                 // String transformationID = selectedAndExcludedTransformations.get(0);
@@ -1079,8 +1154,8 @@ public class KiCoSelectionView extends DiagramViewPart {
         }
 
         // Update the visible view model
-        KiCoSelectionDiagramModel model = getSelectionModel(activeEditorID);
-        model.setVisibleFeatures(KielerCompiler.getFeatures(), visibleFeatureIds);
+        KiCoSelectionDiagramModel selectionModel = getSelectionModel(activeEditorID);
+        selectionModel.setVisibleFeatures(KielerCompiler.getFeatures(), visibleFeatureIds);
 
         // List<String> selectedTransformationIDs = new ArrayList<String>();
         // List<String> disabledTransformationIDs = new ArrayList<String>();
@@ -1140,11 +1215,8 @@ public class KiCoSelectionView extends DiagramViewPart {
                 ZoomConfigButtonsHandling.HIDE);
 
         // Set the selection view model
-        updateDiagram(model, properties);
+        updateDiagram(selectionModel, properties);
 
-        if (KiCoSelectionView.advancedMode) {
-            // KiCoSelectionView.addRequiredTransformationVisualization(activeEditorID);
-        }
         // KiCoSelectionView.addSelectedTransformationVisualization(activeEditorID);
         updateSelectionTransformationVisualization(activeEditorID);
 
@@ -1311,11 +1383,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                 advancedMode = !advancedMode;
                 actionAdvancedToggle.setChecked(advancedMode);
 
-                if (advancedMode) {
-                    // addRequiredTransformationVisualization(getActiveEditorID());
-                } else {
-                    // removeRequiredTransformationVisualization(getActiveEditorID());
-                }
+                updateSelectionTransformationVisualization(getActiveEditorID());
 
                 // notify listeners about currently active transformations
                 notifySelectionChangeEventListener();
@@ -1547,11 +1615,6 @@ public class KiCoSelectionView extends DiagramViewPart {
     }
 
     // -------------------------------------------------------------------------
-
-    // // Force to reload and adapt to currently selected editor
-    // Object model = KielerCompiler.buildGraph();
-    // DiagramViewManager.getInstance().createView(getPartId(), null, model,
-    // KlighdSynthesisProperties.newInstance(null));
 
     /**
      * Gets the active editor id that is the hashCode of the active editor part.

@@ -101,6 +101,22 @@ public class KielerCompilerContext {
     // -------------------------------------------------------------------------
 
     /**
+     * Instantiates a new kieler compiler context with an original source model and an existing
+     * KielerCompilerSelection.
+     * 
+     * @param selection
+     *            the selection
+     * @param eObject
+     *            the e object
+     */
+    public KielerCompilerContext(KielerCompilerSelection selection, EObject eObject) {
+        compilationResult = new CompilationResult(eObject);
+        this.selection = selection;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Instantiates a new kieler compiler context with an original source model.
      * 
      * @param selectedFeatureAndTransformationIds

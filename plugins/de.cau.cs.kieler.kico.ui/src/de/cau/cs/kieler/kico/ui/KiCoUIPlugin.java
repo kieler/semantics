@@ -8,6 +8,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.statushandlers.IStatusAdapterConstants;
 import org.eclipse.ui.statushandlers.StatusAdapter;
@@ -19,6 +20,7 @@ import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.Transformation;
 import de.cau.cs.kieler.kico.ui.CompileChains.CompileChain;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -267,4 +269,17 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the currently active model.
+     *
+     * @return the active model
+     */
+    public static EObject getActiveModel() {
+        // TODO: There should be a better mechanism to get the currently active model!
+        return KiemPlugin.getOpenedModelRootObjects().get("de.cau.cs.kieler.kico.klighd.view");
+    }
+    
+    // -------------------------------------------------------------------------
+    
 }

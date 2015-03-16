@@ -57,7 +57,7 @@ public class KiCoDisabledSelectionAction extends KiCoKlighdAction implements IAc
             int activeEditorID = KiCoSelectionView.getActiveEditorID();
             KiCoSelectionDiagramModel selectionModel =
                     KiCoSelectionView.getSelectionModel(activeEditorID);
-            KielerCompilerSelection selection = selectionModel.getSelection();
+            KielerCompilerSelection selection = selectionModel.getContext().getSelection();
 
             if (selection != null) {
                 // Test if the transformation is already disabled, then unselect it otherwise select

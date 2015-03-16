@@ -53,7 +53,7 @@ public class KiCoSelection {
         this.editorID = editorID;
         List<String> selection = new ArrayList<String>();
         if (selectionModel != null) {
-            String[] selectionRaw = selectionModel.getSelection().toString().split(",");
+            String[] selectionRaw = selectionModel.getContext().getSelection().toString().split(",");
             for (String selectionRawItem : selectionRaw) {
                 selection.add(selectionRawItem);
             }

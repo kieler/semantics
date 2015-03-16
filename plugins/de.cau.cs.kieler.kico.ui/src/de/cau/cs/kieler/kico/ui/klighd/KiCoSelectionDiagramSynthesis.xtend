@@ -59,6 +59,8 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
     static final boolean DEBUG = false;
 
     static private HashMap<Transformation, TransformationFeature> transformationFeatureMap = new HashMap<Transformation, TransformationFeature>();
+    static private HashSet<Feature> visibleFeatures = new HashSet<Feature>()
+
 
     def static void debug(String debugText) {
         debug(debugText, true);
@@ -77,9 +79,14 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
     def public static getTransformationFeature(Transformation transformation) {
         transformationFeatureMap.get(transformation)
     }
+    
+    def public static getVisibleFeatures() {
+        return visibleFeatures;        
+    }
 
     def public static clearCache() {
         transformationFeatureMap.clear
+        visibleFeatures.clear
     }
 
     // -------------------------------------------------------------------------
@@ -509,7 +516,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
     override transform(KiCoSelectionDiagramModel model) {
 
         connected.clear
-        transformationFeatureMap.clear
+        clearCache()
         
         val knode = model.createNode();
 
@@ -580,10 +587,12 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                 for (transformation : feature.handlingTransformations) {
                     val child = new TransformationFeature(transformation)
                     transformationFeatureMap.put(transformation, child)
+                    visibleFeatures.add(child)
                     val childKNode = child.translate;
                     node.children += childKNode;
                 }
             } else {
+                visibleFeatures.add(feature)
                 val featureGroup = (feature as FeatureGroup);
                 val features = featureGroup.features;
                 for (child : features) {

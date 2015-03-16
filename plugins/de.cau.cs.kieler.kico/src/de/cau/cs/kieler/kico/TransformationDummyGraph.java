@@ -68,14 +68,7 @@ public class TransformationDummyGraph {
      */
     public List<TransformationDummy> getTransformationDummies(boolean forceUpdate) {
         if (transformationDummies == null || forceUpdate) {
-            transformationDummies = new ArrayList<TransformationDummy>();
-            // 1. build the graph considering the user selection
-            buildGraph();
-            // 2. calculate dependencies considering produces & nothandles relations
-            calculateDependencies();
-            // 3. sort the dummies, the order of the dummies is then the order in which the
-            // transformations should be processed
-            topologicalSort();
+            recalculateGraphWithDependenciesAndAutoSelectFeatures();
         }
         return transformationDummies;
     }
@@ -434,12 +427,33 @@ public class TransformationDummyGraph {
 
     /**
      * Gets the auto selected features as computed based on the model features and the selection if
-     * auto-select is true. Note that the graph need to be computed before.
+     * auto-select is true. If forceUpdate == true then the features will be recalculated otherwiese
+     * a cached version is used if one exists. If no cached version exists the features are
+     * calculated.
      * 
      * @return the autoSelectedFeatures
      */
-    public Set<Feature> getAutoSelectedFeatures() {
+    public Set<Feature> getAutoSelectedFeatures(boolean forceUpdate) {
+        if (autoSelectedFeatures == null || forceUpdate) {
+            recalculateGraphWithDependenciesAndAutoSelectFeatures();
+        }
         return autoSelectedFeatures;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Recalculate graph with dependencies and auto select features.
+     */
+    private void recalculateGraphWithDependenciesAndAutoSelectFeatures() {
+        transformationDummies = new ArrayList<TransformationDummy>();
+        // 1. build the graph considering the user selection
+        buildGraph();
+        // 2. calculate dependencies considering produces & nothandles relations
+        calculateDependencies();
+        // 3. sort the dummies, the order of the dummies is then the order in which the
+        // transformations should be processed
+        topologicalSort();
     }
 
     // -------------------------------------------------------------------------

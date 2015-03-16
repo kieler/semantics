@@ -18,13 +18,12 @@ import java.util.List;
 import java.util.Set;
 
 import de.cau.cs.kieler.kico.Feature;
-import de.cau.cs.kieler.kico.KielerCompilerSelection;
-import de.cau.cs.kieler.kico.TransformationDummyGraph;
+import de.cau.cs.kieler.kico.KielerCompilerContext;
 
 /**
  * An instance of this class represents a selection diagram for the KiCo.ui KLighD view. It is a
- * compilation of the following: The visible features, the KielerCompilerSelection, the
- * TransformationDummyGraph.
+ * compilation of the following: The visible features, the KielerCompilerContext. The latter
+ * includes the selection and the graph with auto selected features.
  * 
  * @author cmot
  * @kieler.design 2015-03-12 proposed
@@ -36,22 +35,20 @@ public class KiCoSelectionDiagramModel {
     /** The visible features. */
     private Set<Feature> visibleFeatures = new HashSet<Feature>();
 
-    /** The selection. */
-    private KielerCompilerSelection selection = new KielerCompilerSelection("");
-
-    /** The graph. */
-    private TransformationDummyGraph graph;
+    /** The compiler context including the selection and the graph. */
+    private KielerCompilerContext context = null;
 
     // -------------------------------------------------------------------------
 
     /**
      * Instantiates a new ki co selection diagram model.
      */
-    public KiCoSelectionDiagramModel() {
+    public KiCoSelectionDiagramModel(KielerCompilerContext context) {
+        this.context = context;
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Constructs a list of visible features by copying the features from the feature list that also
      * appear in the visibleFeatureId list.
@@ -61,7 +58,8 @@ public class KiCoSelectionDiagramModel {
      * @param visibleFeatureIds
      *            the visible feature ids
      */
-    public void setVisibleFeatures(Set<Feature> features, List<String> visibleFeatureIds) {
+    public void setVisibleFeatures(Set<Feature> features,
+            List<String> visibleFeatureIds) {
         visibleFeatures.clear();
         for (Feature feature : features) {
             if (visibleFeatureIds.contains(feature.getId())) {
@@ -84,47 +82,24 @@ public class KiCoSelectionDiagramModel {
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the Kieler Compiler selection.
+     * Sets the Kieler Compiler context.
      * 
-     * @param selection
-     *            the new selection
+     * @param context
+     *            the new context
      */
-    public void setSelection(KielerCompilerSelection selection) {
-        this.selection = selection;
+    public void setContext(KielerCompilerContext context) {
+        this.context = context;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the Kieler Compiler selection.
+     * Gets the Kieler Compiler context including the selection and the graph.
      * 
-     * @return the selection
+     * @return the context
      */
-    public KielerCompilerSelection getSelection() {
-        return selection;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Sets the TransformationDummyGraph.
-     * 
-     * @param graph
-     *            the new graph
-     */
-    public void setGraph(TransformationDummyGraph graph) {
-        this.graph = graph;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the graph.
-     * 
-     * @return the graph
-     */
-    public TransformationDummyGraph getGraph() {
-        return graph;
+    public KielerCompilerContext getContext() {
+        return context;
     }
 
     // -------------------------------------------------------------------------
