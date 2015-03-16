@@ -87,7 +87,10 @@ public class TransformationDummyGraph {
 
     /**
      * Builds the graph consisting of all selected (feature) transformations. Note that there will
-     * no dependencies yet that complete the graph.
+     * no dependencies yet that complete the graph. Building the graph has the side effect that if
+     * the auto select flag is true (KielerCompilerSelection) then the autoSelectedFeatures set will
+     * also be computed. If the auto select flag is false then the autoSelectedFeatures set will be
+     * the empty set.
      * 
      * @param context
      *            the context
