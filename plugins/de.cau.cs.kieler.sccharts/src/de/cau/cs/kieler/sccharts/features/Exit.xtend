@@ -44,7 +44,7 @@ class Exit extends Feature {
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        val allStates = model.getAllContainedStatesList;
+        val allStates = model.getAllStates.immutableCopy;
 
         for (state : allStates) {
             if (state.exitActions.size > 0) {

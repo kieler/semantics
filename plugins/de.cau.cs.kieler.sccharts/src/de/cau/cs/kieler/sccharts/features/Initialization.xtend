@@ -47,7 +47,7 @@ class Initialization extends Feature {
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        val allStates = model.getAllContainedStatesList;
+        val allStates = model.getAllStates.immutableCopy;
 
         for (state : allStates) {
             val valuedObjects = state.valuedObjects.filter[initialValue != null]
