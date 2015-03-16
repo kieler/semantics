@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kico;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -41,6 +42,9 @@ public class TransformationDummyGraph {
 
     /** The context used for this graph. */
     private KielerCompilerContext context;
+
+    /** The set of auto selected features, based on the model and the selection. */
+    private Set<Feature> autoSelectedFeatures = new HashSet<Feature>();
 
     // -------------------------------------------------------------------------
 
@@ -91,6 +95,11 @@ public class TransformationDummyGraph {
     private void buildGraph() {
         // Go thru selected features and retrieve the transformation handling it, preserving the
         // disabled+preferred transformations
+
+        // Collect all selected (base) features here, for feature groups collect their fully
+        // resolved features.
+        Set<Feature> selectedFeatures = new HashSet<Feature>();
+
         KielerCompilerSelection selection = context.getSelection();
         // Go thru all selected Ids
         for (String selectedId : selection.getSelectedFeatureAndTransformationIds()) {
@@ -101,6 +110,8 @@ public class TransformationDummyGraph {
                 // If this is a transformation already, remove the T_ - marker
                 String transformationId = selectedId.substring(2);
                 transformation = KielerCompiler.getTransformation(transformationId);
+                // Remember selection
+                selectedFeatures.add(transformation.getHandleFeature());
             } else {
                 // We now know that selectedId is a feature. If it is a FeatureGroup we have
                 // to select all included features!
@@ -114,12 +125,16 @@ public class TransformationDummyGraph {
                         if (transformation != null) {
                             addTransformationToGraph(transformation);
                         }
+                        // Remember selection
+                        selectedFeatures.add(innerFeature);
                     }
                 } else {
                     transformation = getTransformationHandlingFeature(selectedId, selection);
                     if (transformation != null) {
                         addTransformationToGraph(transformation);
                     }
+                    // Remember selection
+                    selectedFeatures.add(feature);
                 }
             }
         }
@@ -131,10 +146,27 @@ public class TransformationDummyGraph {
         // 2b. recursion stops if a selected feature is hit! (marking the end)
         // Note: nothandles is not considered here, it does not affect the selected transformations
         // but only the ORDER (-> dependencies)
+        autoSelectedFeatures.clear();
         if (context.isAutoSelect() && (!selection.noSelection())) {
+            Set<Feature> featuresToAdd = new HashSet<Feature>();
             Set<Feature> modelFeatures = context.getTransformationObjectFeatures();
             for (Feature modelFeature : modelFeatures) {
-                addFeatureToGraph(modelFeature);
+                for (Feature selectedFeature : selectedFeatures) {
+                    Set<Feature> moreFeaturesToAdd =
+                            modelFeature.getProduceNotHandledByPathTo(selectedFeature);
+                    featuresToAdd.addAll(moreFeaturesToAdd);
+                }
+            }
+
+            // Now add all transformations for these features
+            for (Feature featureToAdd : featuresToAdd) {
+
+                // Add to autoselected feature set if this was no initial selection by the user
+                if (!selectedFeatures.contains(featureToAdd)) {
+                    autoSelectedFeatures.add(featureToAdd);
+                }
+
+                addFeatureToGraph(featureToAdd);
             }
         }
 
@@ -143,8 +175,8 @@ public class TransformationDummyGraph {
     // ------------------------------------------
 
     /**
-     * Adds the transformation as a transformation dummy for this feature and proceeds with produced
-     * features if the feature is not a selected one (which marks a STOP).
+     * Adds the transformation as a transformation dummy for this feature respecting the preferred
+     * and selected transformations.
      * 
      * @param feature
      *            the feature
@@ -156,28 +188,20 @@ public class TransformationDummyGraph {
                 getTransformationHandlingFeature(feature.getId(), context.getSelection());
         if (transformation != null) {
             addTransformationToGraph(transformation);
-            // Do recursion iff not have hit a selected feature, we want to stop at selected
-            // features!
-            if (!context.getSelection().isFeatureSelected(feature.getId())) {
-                // Follow the path of produce relations and add nodes
-                for (Feature producedFeature : transformation.getProducesFeatures()) {
-                    addFeatureToGraph(producedFeature);
-                }
-            }
         }
     }
 
     // ------------------------------------------
 
     /**
-     * Gets the transformation that handles feature respecting the peferred and disabled
-     * transformations.
+     * Gets the transformation that handles feature respecting 1. the selected, 2. the preferred and
+     * disabled transformations.
      * 
      * @param featureId
      *            the feature id
      * @return the transformation handling feature
      */
-    private static Transformation getTransformationHandlingFeature(String featureId,
+    public static Transformation getTransformationHandlingFeature(String featureId,
             KielerCompilerSelection selection) {
         // A preferred, not disabled transformation handling a feature or a transformation
         Transformation transformation = null;
@@ -188,17 +212,28 @@ public class TransformationDummyGraph {
         // disabled
         Feature feature = KielerCompiler.getFeature(featureId);
         Set<Transformation> handlingTransformations = feature.getHandlingTransformations();
+        // First search any selected transformation (if any)
         // First search the preferred transformation
         for (Transformation handlingTransformation : handlingTransformations) {
             String handlingTransformationId = handlingTransformation.getId();
-            if (!selection.isTransformationDisabled(handlingTransformationId)) {
-                // the transformation is not disabled
-                if (selection.isTransformationPreferred(handlingTransformationId)) {
-                    // found a preferred transformation, that is not disabled
-                    transformation = handlingTransformation;
+            if (selection.isTransformationSelected(handlingTransformationId)) {
+                // the transformation selected, so we take it :-)
+                transformation = handlingTransformation;
+            }
+        }
+        // Then search the preferred transformation (IF transformation is still NULL)
+        if (transformation == null) {
+            for (Transformation handlingTransformation : handlingTransformations) {
+                String handlingTransformationId = handlingTransformation.getId();
+                if (!selection.isTransformationDisabled(handlingTransformationId)) {
+                    // the transformation is not disabled
+                    if (selection.isTransformationPreferred(handlingTransformationId)) {
+                        // found a preferred transformation, that is not disabled
+                        transformation = handlingTransformation;
+                    }
+                    // Remember in case we do not find a preferred transformation
+                    backupTransformation = handlingTransformation;
                 }
-                // Remember in case we do not find a preferred transformation
-                backupTransformation = handlingTransformation;
             }
         }
         // If transformationId is STILL null, this means no preferred transformation has
@@ -390,6 +425,18 @@ public class TransformationDummyGraph {
         } else {
             return order;
         }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the auto selected features as computed based on the model features and the selection if
+     * auto-select is true. Note that the graph need to be computed before.
+     * 
+     * @return the autoSelectedFeatures
+     */
+    public Set<Feature> getAutoSelectedFeatures() {
+        return autoSelectedFeatures;
     }
 
     // -------------------------------------------------------------------------

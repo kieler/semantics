@@ -70,13 +70,15 @@ public abstract class Feature implements IFeature {
     // -------------------------------------------------------------------------
 
     /**
-     * Call the most specific isContained method suitable for the parameter. The default will just return false.
-     *
-     * @param model the model
+     * Call the most specific isContained method suitable for the parameter. The default will just
+     * return false.
+     * 
+     * @param model
+     *            the model
      * @return true, if successful
      */
     public final boolean doIsContained(EObject model) {
-        Method transformMethod = KiCoUtil.getSpecificIsContainedMethodOrFallBack(this, getId()); 
+        Method transformMethod = KiCoUtil.getSpecificIsContainedMethodOrFallBack(this, getId());
         boolean result;
         try {
             result = (Boolean) transformMethod.invoke(this, model);
@@ -92,6 +94,120 @@ public abstract class Feature implements IFeature {
     }
 
     // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if there exists a path on produce-dependencies or nothandledby-dependencies from this
+     * feature to a target Feature.
+     * 
+     * @param targetFeature
+     *            the target feature
+     * @return true, if successful
+     */
+    public final boolean existsProduceNotHandledByPathTo(Feature targetFeature) {
+        return existsProduceNotHandledByPathTo(this, targetFeature);
+    }
+
+    /**
+     * Checks if there exists a path on produce-dependencies or nothandledby-dependencies from this
+     * feature to a target Feature.
+     * 
+     * @param targetFeature
+     *            the target feature
+     * @return true, if successful
+     */
+    public final Set<Feature> getProduceNotHandledByPathTo(Feature targetFeature) {
+        return getProduceNotHandledByPathTo(this, targetFeature);
+    }
+    
+    
+    private final  Set<Feature> getProduceNotHandledByPathTo(Feature fromFeature, Feature targetFeature) {
+        HashSet<Feature> returnFeatures = new HashSet<Feature>(); 
+        
+        // Recursion ends here, we have found a path
+        if (fromFeature == targetFeature) {
+            // return collected features (as this path is valid!)
+            returnFeatures.add(fromFeature);
+            return returnFeatures;
+        }
+
+        // Check produced features
+        for (Transformation transformation : fromFeature.getHandlingTransformations()) {
+            for (Feature producedFeature : transformation.getProducesFeatures()) {
+                // producedFeature == feature that is (possibly) produced by a transformation
+                // handling the fromFeature, so fromFeature must be transformed before
+                // producedFeature.
+                Set<Feature> moreFeatures = getProduceNotHandledByPathTo(producedFeature, targetFeature);
+                if (moreFeatures.size() > 0) {
+                    // Return the collected features
+                    returnFeatures.addAll(moreFeatures); 
+                    // Now that we know its a valid path, also add our fragment
+                    returnFeatures.add(fromFeature);
+                }
+            }
+        }
+
+        // Check not handled by features
+        for (Transformation transformation : fromFeature.getNotHandlingTransformations()) {
+            Feature notHandledByFeature = transformation.getHandleFeature();
+            // notHandledByFeature == feature whose transformation cannot handle the fromFeature, so
+            // fromFeature must be transformed before notHandledByFeature.
+            Set<Feature> moreFeatures = getProduceNotHandledByPathTo(notHandledByFeature, targetFeature);
+            if (moreFeatures.size() > 0) {
+                // Return the collected features
+                returnFeatures.addAll(moreFeatures); 
+                // Now that we know its a valid path, also add our fragment
+                returnFeatures.add(fromFeature);
+            }
+        }
+
+        // Return an empty set of features if this path is not valid, or the collected features, if this path was valid!
+        return returnFeatures;
+    }
+
+    
+    /**
+     * Checks if there exists a path on produce-dependencies or nothandledby-dependencies from this
+     * feature to a target Feature. This is an internal helper method.
+     * 
+     * @param fromFeature
+     *            the from feature
+     * @param targetFeature
+     *            the target feature
+     * @return true, if successful
+     */
+    private final boolean existsProduceNotHandledByPathTo(Feature fromFeature, Feature targetFeature) {
+        // Recursion ends here, we have found a path
+        if (fromFeature == targetFeature) {
+            return true;
+        }
+
+        // Check produced features
+        for (Transformation transformation : fromFeature.getHandlingTransformations()) {
+            for (Feature producedFeature : transformation.getProducesFeatures()) {
+                // producedFeature == feature that is (possibly) produced by a transformation
+                // handling the fromFeature, so fromFeature must be transformed before
+                // producedFeature.
+                if (existsProduceNotHandledByPathTo(producedFeature, targetFeature)) {
+                    return true;
+                }
+            }
+        }
+
+        // Check not handled by features
+        for (Transformation transformation : fromFeature.getNotHandlingTransformations()) {
+            Feature notHandledByFeature = transformation.getHandleFeature();
+            // notHandledByFeature == feature whose transformation cannot handle the fromFeature, so
+            // fromFeature must be transformed before notHandledByFeature.
+            if (existsProduceNotHandledByPathTo(notHandledByFeature, targetFeature)) {
+                return true;
+            }
+        }
+
+        // No path found, return false;
+        return false;
+    }
+
     // -------------------------------------------------------------------------
 
     /**
