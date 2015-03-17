@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
@@ -276,9 +278,11 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
      * @return the active model
      */
     public static EObject getActiveModel() {
+        final IPath modelViewPath = new Path("de.cau.cs.kieler.kico.klighd.view");
         // TODO: There should be a better mechanism to get the currently active model!
-        return KiemPlugin.getOpenedModelRootObjects().get("de.cau.cs.kieler.kico.klighd.view");
-    }
+        EObject model = KiemPlugin.getOpenedModelRootObjects().get(modelViewPath);
+        return model;
+    }                                                     
     
     // -------------------------------------------------------------------------
     

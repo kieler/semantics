@@ -339,9 +339,13 @@ public class KiCoUtil {
         TreeIterator<?> treeIterator = eObject.eAllContents();
         while (treeIterator.hasNext()) {
             Object obj = treeIterator.next();
+            if (obj instanceof EObject) {
+               EObject innerEObject = (EObject)obj;
+               hashValue += getModelHash(innerEObject); 
+            }
             hashValue += obj.toString().hashCode();
         }
-        return hashValue;
+        return Math.abs(hashValue) + 1;
     }
 
     // -------------------------------------------------------------------------

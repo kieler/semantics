@@ -522,6 +522,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
 
         for (elem : model.visibleFeatures) {
             if (elem.visibleContainer(model.visibleFeatures) == null) {
+                visibleFeatures.add(elem);
                 val kNode = elem.translate;
                 knode.children.add(kNode);
             }
@@ -596,6 +597,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                 val featureGroup = (feature as FeatureGroup);
                 val features = featureGroup.features;
                 for (child : features) {
+                    visibleFeatures.add(child)
                     val childKNode = child.translate;
                     node.children += childKNode;
                 }

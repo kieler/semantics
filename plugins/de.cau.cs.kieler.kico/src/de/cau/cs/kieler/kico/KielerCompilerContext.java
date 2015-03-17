@@ -63,6 +63,9 @@ public class KielerCompilerContext {
 
     /** The calculated transformation chain used for compilation. */
     private List<Transformation> compilationChain = null;
+    
+    /** The internal graph. */
+    private TransformationDummyGraph graph = null;
 
     /**
      * The flag to create a dummy resource if no resource is present (e.g. because inplace ==
@@ -318,7 +321,7 @@ public class KielerCompilerContext {
      *            the force update
      */
     public TransformationDummyGraph recomputeTransformationChain(boolean forceUpdate) {
-        TransformationDummyGraph graph = new TransformationDummyGraph(this);
+        graph = new TransformationDummyGraph(this);
         compilationChain = new ArrayList<Transformation>();
         List<TransformationDummy> dummies = graph.getTransformationDummies(forceUpdate);
         for (TransformationDummy dummy : dummies) {
@@ -409,9 +412,13 @@ public class KielerCompilerContext {
      * @return the transformation object
      */
     public EObject getTransformationObject() {
-        if ((getCompilationResult() == null
-                || getCompilationResult().getTransformationIntermediateResults().get(0) == null || (!(getCompilationResult()
-                .getTransformationObject() instanceof EObject)))) {
+        if (getCompilationResult() == null) {
+            return null;
+        }
+        if (getCompilationResult().getTransformationIntermediateResults().get(0) == null) {
+            return null;
+        }
+        if (!(getCompilationResult().getTransformationObject() instanceof EObject)) {
             // throw new RuntimeException(
             // "compiler(context) must be called with a model to compile as the first elements"
             // + " of intermediate results in the compiled results object");

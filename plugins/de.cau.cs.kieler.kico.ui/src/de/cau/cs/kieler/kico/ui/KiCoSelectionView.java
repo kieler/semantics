@@ -709,6 +709,10 @@ public class KiCoSelectionView extends DiagramViewPart {
             KiCoSelectionDiagramModel selectionModel = getSelectionModel(editorID);
             KielerCompilerContext compilerContext = selectionModel.getContext();
             KielerCompilerSelection selection = compilerContext.getSelection();
+            compilerContext.setAutoSelect(true);
+//            EObject testObject = compilerContext.getTransformationObject();
+//            compilerContext.setTransformationObject(KiCoUIPlugin.getActiveModel());
+//            EObject testObject2 = compilerContext.getTransformationObject();
             Set<Feature> autoSelectedFeatures =
                     compilerContext.recomputeTransformationChain(true).getAutoSelectedFeatures(
                             false);
@@ -733,7 +737,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                         KiCoSelectionAction.AUTOSELECT);
             }
 
-        }
+        } 
     }
 
     //
@@ -822,7 +826,8 @@ public class KiCoSelectionView extends DiagramViewPart {
             }
             KielerCompilerSelection.add(id, selection.getSelectedFeatureAndTransformationIds(),
                     true);
-            KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.SELECT);
+            updateSelectionTransformationVisualization(getActiveEditorID());
+            //KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.SELECT);
         }
     }
 
@@ -846,7 +851,8 @@ public class KiCoSelectionView extends DiagramViewPart {
                 id = "T_" + id;
             }
             KielerCompilerSelection.remove(id, selection.getSelectedFeatureAndTransformationIds());
-            KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.NORMAL);
+            //KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.NORMAL);
+            updateSelectionTransformationVisualization(getActiveEditorID());
         }
     }
 
@@ -1382,6 +1388,12 @@ public class KiCoSelectionView extends DiagramViewPart {
                 // TOGGLE
                 advancedMode = !advancedMode;
                 actionAdvancedToggle.setChecked(advancedMode);
+                
+                // Update the auto select flag in the compiler context
+                KiCoSelectionDiagramModel selectionModel = getSelectionModel(getActiveEditorID());
+                KielerCompilerContext compilerContext = selectionModel.getContext();
+                compilerContext.setAutoSelect(true);
+
 
                 updateSelectionTransformationVisualization(getActiveEditorID());
 
