@@ -135,7 +135,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
     public static val KColor GRAY1 = RENDERING_FACTORY.createKColor() =>
         [it.red = 248; it.green = 248; it.blue = 248];
     public static val KColor GRAY2 = RENDERING_FACTORY.createKColor() =>
-        [it.red = 210; it.green = 230; it.blue = 230];
+        [it.red = 210; it.green = 210; it.blue = 210];
 
     //    // -------------------------------------------------------------------------
     //    def Feature container(Feature transformationDummy) {

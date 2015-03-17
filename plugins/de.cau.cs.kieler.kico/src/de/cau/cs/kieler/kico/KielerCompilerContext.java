@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.xtext.EcoreUtil2;
 
 /**
  * This class implements the context of a KielerCompiler call.
@@ -389,16 +390,23 @@ public class KielerCompilerContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Retrieves the set of features for the transformation object (the main source model).
+     * Retrieves the set of features for the transformation object (the main source model). If
+     * contrary forceFastCached is true then this will just return the cached version if there
+     * exists one or null otherwise. ForceFastCached should ONLY be used if it is sure that the
+     * model has not changed. ForceFastCached will also prevent a recalculation if the model hash.
+     * If ForceFastCached is true the caller must be sure that the model has not changed and was
+     * previously been processed. The default is forceUpdate == false and forceFastCached == false.
      * 
-     * @param model
-     *            the model
+     * @param forceUpdate
+     *            the force update
+     * @param forceFastCached
+     *            the force fast cached
      * @return the transformation object features
      */
-    public Set<Feature> getTransformationObjectFeatures() {
+    public Set<Feature> getTransformationObjectFeatures(boolean forceUpdate, boolean forceFastCached) {
         EObject mainModel = getTransformationObject();
         if (mainModel != null) {
-            return KiCoUtil.getModelFeatures(mainModel, false, false);
+            return KiCoUtil.getModelFeatures(mainModel, forceUpdate, forceFastCached);
         }
         throw new RuntimeException("No main model found to compile. Cannot calculate feature list.");
     }

@@ -65,8 +65,8 @@ public abstract class KiCoKlighdAction {
             KiCoSelectionDiagramSynthesis.BLUE3, KiCoSelectionDiagramSynthesis.BLUE3b,
             KiCoSelectionDiagramSynthesis.GRAY1 };
     private static final KColor STATE2[] = { KiCoSelectionDiagramSynthesis.BLUE2,
-            KiCoSelectionDiagramSynthesis.BLUE4, KiCoSelectionDiagramSynthesis.BLUE4b,
-            KiCoSelectionDiagramSynthesis.GRAY2 };
+            KiCoSelectionDiagramSynthesis.BLUE4, KiCoSelectionDiagramSynthesis.BLUE3b,
+            KiCoSelectionDiagramSynthesis.GRAY1 };
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------

@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.ui.statushandlers.StatusManager;
+import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
@@ -340,8 +341,8 @@ public class KiCoUtil {
         while (treeIterator.hasNext()) {
             Object obj = treeIterator.next();
             if (obj instanceof EObject) {
-               EObject innerEObject = (EObject)obj;
-               hashValue += getModelHash(innerEObject); 
+                EObject innerEObject = (EObject) obj;
+                hashValue += getModelHash(innerEObject);
             }
             hashValue += obj.toString().hashCode();
         }
@@ -383,6 +384,9 @@ public class KiCoUtil {
             }
             return null;
         }
+        // The following is NECESSARY because we need to make sure that all model features are
+        // exposed and ALSO that the hash is calculated correctly
+        EcoreUtil2.resolveAll(model);
         // Typically we need the model hash (to compare if we have an old one or to insert/update)
         int currentHash = getModelHash(model);
         if (!forceUpdate) {

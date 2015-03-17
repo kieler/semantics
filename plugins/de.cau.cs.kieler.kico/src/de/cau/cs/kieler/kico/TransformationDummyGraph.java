@@ -138,16 +138,19 @@ public class TransformationDummyGraph {
             }
         }
 
-        // If advanced auto selection is true, then consider model features and dependencies as follows
+        // If advanced auto selection is true, then consider model features and dependencies as
+        // follows
         // Consider features f1...fn present in the model
-        // If there is a path over produced/not-handled-by transformations to selected feature/transformation
+        // If there is a path over produced/not-handled-by transformations to selected
+        // feature/transformation
         // .... o Add all features's transformations on this path to the graph
         // .... o Respect preferred/disable transformations on this path
-        // Note: The destinction of nothandles is not considered here, it does not affect the selected transformations
+        // Note: The destinction of nothandles is not considered here, it does not affect the
+        // selected transformations
         // but only the ORDER (-> dependencies)
         if (context.isAdvancedSelect() && (!selection.noSelection())) {
             Set<Feature> featuresToAdd = new HashSet<Feature>();
-            Set<Feature> modelFeatures = context.getTransformationObjectFeatures();
+            Set<Feature> modelFeatures = context.getTransformationObjectFeatures(false, false);
             for (Feature modelFeature : modelFeatures) {
                 for (Feature selectedFeature : selectedFeatures) {
                     Set<Feature> moreFeaturesToAdd =
@@ -158,10 +161,8 @@ public class TransformationDummyGraph {
 
             // Now add all transformations for these features
             for (Feature featureToAdd : featuresToAdd) {
-                // Add to autoselected feature set if this was no initial selection by the user
-                if (!selectedFeatures.contains(featureToAdd)) {
-                    autoSelectedFeatures.add(featureToAdd);
-                }
+                // Add to autoselected feature set (also if this was initially selected by the user!)
+                autoSelectedFeatures.add(featureToAdd);
                 addFeatureToGraph(featureToAdd);
             }
         }
