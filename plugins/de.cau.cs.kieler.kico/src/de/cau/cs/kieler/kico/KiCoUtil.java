@@ -33,6 +33,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -386,14 +387,16 @@ public class KiCoUtil {
         }
         // The following is NECESSARY because we need to make sure that all model features are
         // exposed and ALSO that the hash is calculated correctly
-        EcoreUtil2.resolveAll(model);
+        //EcoreUtil2.resolveAll(model);
+        Resource r = model.eResource();
+        EObject modelCopy = EcoreUtil.copy(model);
         // Typically we need the model hash (to compare if we have an old one or to insert/update)
-        int currentHash = getModelHash(model);
+        int currentHash = getModelHash(modelCopy);
         if (!forceUpdate) {
             // Try to find previous results
-            if (cachedFeatures.containsKey(model) && cachedHashes.containsKey(model)) {
+            if (cachedFeatures.containsKey(model) && cachedHashes.containsKey(modelCopy)) {
                 // Compare hashes
-                int previousHash = cachedHashes.get(model);
+                int previousHash = cachedHashes.get(modelCopy);
                 if (previousHash == currentHash) {
                     // No updates are required, just return the cached feature list
                     return cachedFeatures.get(model);

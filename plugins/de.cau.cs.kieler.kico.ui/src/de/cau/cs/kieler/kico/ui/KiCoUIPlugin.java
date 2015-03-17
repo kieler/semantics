@@ -15,8 +15,11 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.statushandlers.IStatusAdapterConstants;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
+import org.eclipse.xtext.ui.editor.XtextEditor;
+import org.eclipse.xtext.ui.editor.utils.EditorUtils;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
 import de.cau.cs.kieler.kico.Feature;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KielerCompiler;
@@ -278,9 +281,12 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
      * @return the active model
      */
     public static EObject getActiveModel() {
-        final IPath modelViewPath = new Path("de.cau.cs.kieler.kico.klighd.view");
-        // TODO: There should be a better mechanism to get the currently active model!
-        EObject model = KiemPlugin.getOpenedModelRootObjects().get(modelViewPath);
+        // The following is WRONG! We don't want a (possibly) compiled model here but the plain model from the editor!
+//        final IPath modelViewPath = new Path("de.cau.cs.kieler.kico.klighd.view");
+//        // TODO: There should be a better mechanism to get the currently active model!
+//        EObject model = KiemPlugin.getOpenedModelRootObjects().get(modelViewPath);
+        XtextEditor xtextEditor = EditorUtils.getActiveXtextEditor();
+        EObject model = XtextModelingUtil.getModelFromXtextEditor(xtextEditor, true);
         return model;
     }                                                     
     
