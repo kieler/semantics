@@ -702,45 +702,46 @@ public class KiCoSelectionView extends DiagramViewPart {
     // }
 
     /**
-     * Adds the required transformation visualization if the advanced mode is turned on.
+     * Adds the required transformation visualization if the advanced mode is turned on. Also if
+     * advanced mode is off selecting a feature group might mean selecting several features so this
+     * runs also when advanced mode is off.
      * 
      * @param editorID
      *            the editor id
      */
     public static void addRequiredTransformationVisualization(int editorID) {
-        if (advancedMode) {
-            KiCoSelectionDiagramModel selectionModel = getSelectionModel(editorID);
-            KielerCompilerContext compilerContext = selectionModel.getContext();
-            KielerCompilerSelection selection = compilerContext.getSelection();
-            compilerContext.setAutoSelect(true);
-            EObject testObject = compilerContext.getTransformationObject();
-            compilerContext.setTransformationObject(KiCoUIPlugin.getActiveModel());
-            EObject testObject2 = compilerContext.getTransformationObject();
-            Set<Feature> autoSelectedFeatures =
-                    compilerContext.recomputeTransformationChain(true).getAutoSelectedFeatures(
-                            false);
+        KiCoSelectionDiagramModel selectionModel = getSelectionModel(editorID);
+        KielerCompilerContext compilerContext = selectionModel.getContext();
+        KielerCompilerSelection selection = compilerContext.getSelection();
+        // Update the actual advanced mode here
+        // This might influence the auto select results:
+        // if OFF: only consider feature groups 
+        // if ON: also consider produce dependencies & model features
+        compilerContext.setAutoSelect(advancedMode);
+        EObject testObject = compilerContext.getTransformationObject();
+        compilerContext.setTransformationObject(KiCoUIPlugin.getActiveModel());
+        EObject testObject2 = compilerContext.getTransformationObject();
+        Set<Feature> autoSelectedFeatures =
+                compilerContext.recomputeTransformationChain(true).getAutoSelectedFeatures(false);
 
-            ViewContext context = instance.getViewer().getViewContext();
-            for (Feature autoSelectedFeature : autoSelectedFeatures) {
-                if (autoSelectedFeature.isAlternative()) {
-                    // Maybe additionally colorize transformation (respecting preferences)
-                    // if a transformation is not already selected
-                    Transformation transformation =
-                            TransformationDummyGraph.getTransformationHandlingFeature(
-                                    autoSelectedFeature.getId(), selection);
-                    if (transformation != null
-                            && !selection.isTransformationSelected(transformation.getId())) {
-                        TransformationFeature transformationFeature =
-                                KiCoSelectionDiagramSynthesis
-                                        .getTransformationFeature(transformation);
-                        KiCoSelectionAction.colorize(transformationFeature, context,
-                                KiCoSelectionAction.AUTOSELECT);
-                    }
+        ViewContext context = instance.getViewer().getViewContext();
+        for (Feature autoSelectedFeature : autoSelectedFeatures) {
+            if (autoSelectedFeature.isAlternative()) {
+                // Maybe additionally colorize transformation (respecting preferences)
+                // if a transformation is not already selected
+                Transformation transformation =
+                        TransformationDummyGraph.getTransformationHandlingFeature(
+                                autoSelectedFeature.getId(), selection);
+                if (transformation != null
+                        && !selection.isTransformationSelected(transformation.getId())) {
+                    TransformationFeature transformationFeature =
+                            KiCoSelectionDiagramSynthesis.getTransformationFeature(transformation);
+                    KiCoSelectionAction.colorize(transformationFeature, context,
+                            KiCoSelectionAction.AUTOSELECT);
                 }
-                KiCoSelectionAction.colorize(autoSelectedFeature, context,
-                        KiCoSelectionAction.AUTOSELECT);
             }
-
+            KiCoSelectionAction.colorize(autoSelectedFeature, context,
+                    KiCoSelectionAction.AUTOSELECT);
         }
     }
 
@@ -764,9 +765,8 @@ public class KiCoSelectionView extends DiagramViewPart {
             KiCoSelectionAction.colorize(visibleFeature, context, KiCoSelectionAction.NORMAL);
         }
 
-        if (KiCoSelectionView.advancedMode) {
-            KiCoSelectionView.addRequiredTransformationVisualization(editorId);
-        }
+        // This must run in advanced mode ON and OFF, because of possibly selected feature groups
+        KiCoSelectionView.addRequiredTransformationVisualization(editorId);
 
         for (String selected : selection.getSelectedFeatureAndTransformationIds()) {
             Feature feature = resolveFeature(selected);
