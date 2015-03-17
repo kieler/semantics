@@ -761,6 +761,10 @@ public class KiCoSelectionView extends DiagramViewPart {
             KiCoSelectionAction.colorize(visibleFeature, context, KiCoSelectionAction.NORMAL);
         }
 
+        if (KiCoSelectionView.advancedMode) {
+            KiCoSelectionView.addRequiredTransformationVisualization(editorId);
+        }
+
         for (String selected : selection.getSelectedFeatureAndTransformationIds()) {
             Feature feature = resolveFeature(selected);
             KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.SELECT);
@@ -775,10 +779,7 @@ public class KiCoSelectionView extends DiagramViewPart {
             KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.DISABLE);
         }
 
-        if (KiCoSelectionView.advancedMode) {
-            KiCoSelectionView.addRequiredTransformationVisualization(editorId);
-        }
-
+        
     }
 
     // -------------------------------------------------------------------------
@@ -928,7 +929,8 @@ public class KiCoSelectionView extends DiagramViewPart {
             String transformationId = getTransformationId(feature);
             KielerCompilerSelection.add(transformationId, selection.getDisabledTransformationIds(),
                     true);
-            KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.DISABLE);
+            //KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.DISABLE);
+            updateSelectionTransformationVisualization(getActiveEditorID());
         }
     }
 
@@ -951,7 +953,8 @@ public class KiCoSelectionView extends DiagramViewPart {
             String transformationId = getTransformationId(feature);
             KielerCompilerSelection.remove(transformationId,
                     selection.getDisabledTransformationIds());
-            KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.NORMAL);
+            //KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.NORMAL);
+            updateSelectionTransformationVisualization(getActiveEditorID());
         }
     }
 

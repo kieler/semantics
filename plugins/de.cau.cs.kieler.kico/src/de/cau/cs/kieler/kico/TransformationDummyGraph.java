@@ -129,6 +129,10 @@ public class TransformationDummyGraph {
                     }
                 } else {
                     transformation = getTransformationHandlingFeature(selectedId, selection);
+                    Feature possiblyAlternativeFeature = KielerCompiler.getFeature(selectedId);
+                    if (possiblyAlternativeFeature.isAlternative()) {
+                        autoSelectedFeatures.add(possiblyAlternativeFeature);
+                    }
                     if (transformation != null) {
                         addTransformationToGraph(transformation);
                     }
