@@ -127,29 +127,29 @@ class SctScopeProvider extends AbstractDeclarativeScopeProvider {
                 return Scopes.scopeFor(voIterable)
             }
         } else {
-            println("nullScope")
+//            println("nullScope")
             return IScope.NULLSCOPE
         }
     }
     
     
     public def IScope scope_Equation_node(EObject context, EReference reference) {
-        println("test " + context)
+//        println("test " + context)
         val s = context as State
         val d = s.concurrencies.filter(typeof(Dataflow)).toList
         val nodeList = <Node>newArrayList
         s.concurrencies.filter(typeof(Dataflow)).forEach[
             nodeList += it.nodes.filter(typeof(ReferenceNode))
         ]
-        println("nl: " + nodeList)
-        println("scope for nl: " + Scopes.scopeFor(nodeList))
+//        println("nl: " + nodeList)
+//        println("scope for nl: " + Scopes.scopeFor(nodeList))
         
         val voIterable = <ValuedObject>newArrayList
         s.declarations.filter[it.output].forEach[
             voIterable += valuedObjects
         ]
-        println("voi: " + voIterable)
-        println("scope for vo: " + Scopes.scopeFor(voIterable))
+//        println("voi: " + voIterable)
+//        println("scope for vo: " + Scopes.scopeFor(voIterable))
 //        return Scopes.scopeFor(nodeList)
         return null 
     }

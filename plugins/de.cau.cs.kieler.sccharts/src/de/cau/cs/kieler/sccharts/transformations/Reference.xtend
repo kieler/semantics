@@ -35,6 +35,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.sccharts.Equation
 import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.sccharts.Effect
 
 /**
  * SCCharts Reference Transformation.
@@ -68,7 +69,7 @@ class Reference {
     // ...
     def State transform(State rootState) {
         val targetRootState = rootState.fixAllPriorities;
-		
+        // Transform dataflows first
 		targetRootState.transformDataflows
         // Traverse all referenced states
         targetRootState.allContainedStates.filter[ referencedState ].toList.immutableCopy.forEach[
@@ -177,13 +178,11 @@ class Reference {
         ]     
     }
     
-    // transform dataflow
     def transformDataflows(State state) {
     	val dataflows = <Dataflow> newHashSet
+    	// traverse all dataflows
     	state.getAllContainedStates.forEach[ dataflows += concurrencies.filter(typeof(Dataflow))]
-    	
     	val nodeMapping = <Node, State> newHashMap
-    	
     	for(dataflow : dataflows.immutableCopy) {
     		val parentState = dataflow.eContainer as State
     		var regionCounter = 0
@@ -196,8 +195,8 @@ class Reference {
             for(refNode: dataflow.nodes.filter(typeof(ReferenceNode))) {
                 val rRegion = parentState.createRegion("_" + dataflow.id + regionCounter)
                 rRegion.label = dataflow.label + regionCounter
-                val newState = rRegion.createState("_" + refNode.ID + idCounter)
-                newState.label = refNode.label + idCounter
+                val newState = rRegion.createState("_" + refNode.id + idCounter)
+                newState.label = if (refNode.label != null) {refNode.label + idCounter} else {refNode.id + idCounter}
                 regionCounter = regionCounter + 1
                 idCounter = idCounter + 1
                 newState.setInitial
@@ -225,25 +224,36 @@ class Reference {
                     refedOutputs += valuedObjects
                 ]
                 for (eq: dataflow.equations) {
-                    if (eq.expression instanceof ValuedObjectReference) {
-                        val refedVo = (eq.expression as ValuedObjectReference).valuedObject
-                        if (refedOutputs.contains(refedVo)) {
-                            val newBinding = SCChartsFactory.eINSTANCE.createBinding
-                            newBinding.actual = eq.valuedObject
-                            newBinding.formal = refedVo
-                            val rState = nodeMapping.get(refNode)
-                            rState.bindings += newBinding
+                    if (eq.node != null) {
+                        if (eq.node.equals(refNode)) {
+                            val refedVo = (eq.expression as ValuedObjectReference).valuedObject
+                            if (refedOutputs.contains(refedVo)) {
+                                val newBinding = SCChartsFactory.eINSTANCE.createBinding
+                                newBinding.actual = eq.valuedObject
+                                newBinding.formal = refedVo
+                                val rState = nodeMapping.get(refNode)
+                                rState.bindings += newBinding
+                            }
                         }
                     }
+//                    if (eq.expression instanceof ValuedObjectReference) {
+//                        val refedVo = (eq.expression as ValuedObjectReference).valuedObject
+//                        if (refedOutputs.contains(refedVo)) {
+//                            val newBinding = SCChartsFactory.eINSTANCE.createBinding
+//                            newBinding.actual = eq.valuedObject
+//                            newBinding.formal = refedVo
+//                            val rState = nodeMapping.get(refNode)
+//                            rState.bindings += newBinding
+//                        }
+//                    }
                 }
-                // recursive transformation call
-                (refNode.referencedScope as State).transformDataflows
+                // recursive call at the end of the method, not already here
+//                (newState.referencedScope as State).transform
             }
-			
+			// transform call nodes
 			val assignmentMapping = <String, Assignment> newHashMap
 			val voMapping = <String, ValuedObject> newHashMap
-			val vorMapping = <String, ValuedObjectReference> newHashMap
-			var tmpCounter = 0
+			val transitionsMapping = <String, Transition> newHashMap
 			for(callNode: dataflow.nodes.filter(typeof(CallNode))) {
 			    val defNode = callNode.callReference
 			    val refedInputs = <ValuedObject>newArrayList
@@ -294,52 +304,85 @@ class Reference {
                         if (eq.node != null) {
                             if (eq.node.equals(callNode)) {
                                 val key = callNode.id + "." + (eq.expression as ValuedObjectReference).valuedObject.name
-                                if (vorMapping.containsKey(key)) {
-                                    val tmpValuedObjectReference = vorMapping.get(key) 
+                                val vo = eq.valuedObject
+                                
+                                if (voMapping.containsKey(key)) {
+                                    val existingValuedObject = voMapping.get(key)
                                     
-                                    val newAssignment = createNewAssignment(eq.valuedObject, tmpValuedObjectReference.copy)
-                                    
-                                    val outputEffectTransition = newState2.outgoingTransitions.get(0)
-                                    outputEffectTransition.effects += newAssignment 
-                                    
-                                } else {
-                                    if (voMapping.containsKey(key)) {
-                                        if (newRegion.states.size == 2) {
-                                            // create new final state
+                                    if (newRegion.states.size == 2) {
+                                        // create new final state
                                             newState2.setFinal(false)
                                             newState2.label = dataflow.label + idCounter + "_mid"
                                         
-                                            val newFinalState = newRegion.createState("_" + dataflow.ID + idCounter)
+                                            val newFinalState = newRegion.createState("_" + dataflow.id + idCounter)
                                             newFinalState.label = dataflow.label + idCounter + "_end"
                                             newFinalState.setFinal
                                             
                                             val newTransition = createNewTransition(newState2, newFinalState)
                                             newTransition.setImmediate
-                                        }
-                                        val tmpValuedObject = KExpressionsFactory.eINSTANCE.createValuedObject
-                                        tmpValuedObject.name = "tmp_" + tmpCounter
-                                        tmpCounter = tmpCounter + 1
-                                        
-                                        val tmpValuedObjectReference = KExpressionsFactory.eINSTANCE.createValuedObjectReference
-                                        tmpValuedObjectReference.valuedObject = tmpValuedObject
-                                        
-                                        val oldAssignment = assignmentMapping.get(key)
-                                        val newAssignment = createNewAssignment(oldAssignment.valuedObject, tmpValuedObjectReference.copy)
-                                        oldAssignment.valuedObject = tmpValuedObject
-                                        
-                                        val newAssignment2 = createNewAssignment(eq.valuedObject, tmpValuedObjectReference.copy)
-                                        
-                                        vorMapping.put(key, tmpValuedObjectReference)
-                                        
-                                        val outputEffectTransition = newState2.outgoingTransitions.get(0)
-                                        outputEffectTransition.effects += newAssignment
-                                        outputEffectTransition.effects += newAssignment2
-                                    } else {
-                                        val oldAssignment = assignmentMapping.get(key)
-                                        voMapping.put(key, oldAssignment.valuedObject)
-                                        oldAssignment.valuedObject = eq.valuedObject
                                     }
+                                    
+                                    val newAssignment = createNewAssignment(vo, existingValuedObject.reference)
+                                    newState2.outgoingTransitions.get(0).effects += newAssignment
+                                    
+                                } else {
+                                    
+                                    val oldAssignment = assignmentMapping.get(key)
+                                    oldAssignment.valuedObject = vo
+                                    
+                                    voMapping.put(key, vo)
                                 }
+                                
+                                
+//                                if (vorMapping.containsKey(key)) {
+//                                    // case: more then one call of same output
+//                                    val tmpValuedObjectReference = vorMapping.get(key) 
+//                                    
+//                                    val newAssignment = createNewAssignment(eq.valuedObject, tmpValuedObjectReference.copy)
+//                                    
+//                                    val outputEffectTransition = newState2.outgoingTransitions.get(0)
+//                                    outputEffectTransition.effects += newAssignment 
+//                                    
+//                                } else {
+//                                    // case: first call of output
+//                                    if (voMapping.containsKey(key)) {
+//                                        if (newRegion.states.size == 2) {
+//                                            // create new final state
+//                                            newState2.setFinal(false)
+//                                            newState2.label = dataflow.label + idCounter + "_mid"
+//                                        
+//                                            val newFinalState = newRegion.createState("_" + dataflow.id + idCounter)
+//                                            newFinalState.label = dataflow.label + idCounter + "_end"
+//                                            newFinalState.setFinal
+//                                            
+//                                            val newTransition = createNewTransition(newState2, newFinalState)
+//                                            newTransition.setImmediate
+//                                        }
+//                                        
+//                                        val tmpValuedObject = KExpressionsFactory.eINSTANCE.createValuedObject
+//                                        tmpValuedObject.name = "tmp_" + tmpCounter
+//                                        tmpCounter = tmpCounter + 1
+//                                        
+//                                        val tmpValuedObjectReference = KExpressionsFactory.eINSTANCE.createValuedObjectReference
+//                                        tmpValuedObjectReference.valuedObject = tmpValuedObject
+//                                        
+//                                        val oldAssignment = assignmentMapping.get(key)
+//                                        val newAssignment = createNewAssignment(oldAssignment.valuedObject, tmpValuedObjectReference.copy)
+//                                        oldAssignment.valuedObject = tmpValuedObject
+//                                        
+//                                        val newAssignment2 = createNewAssignment(eq.valuedObject, tmpValuedObjectReference.copy)
+//                                        
+//                                        vorMapping.put(key, tmpValuedObjectReference)
+//                                        
+//                                        val outputEffectTransition = newState2.outgoingTransitions.get(0)
+//                                        outputEffectTransition.effects += newAssignment
+//                                        outputEffectTransition.effects += newAssignment2
+//                                    } else {
+//                                        val oldAssignment = assignmentMapping.get(key)
+//                                        voMapping.put(key, oldAssignment.valuedObject)
+//                                        oldAssignment.valuedObject = eq.valuedObject
+//                                    }
+//                                }
                             }
                         }
                     }
@@ -354,7 +397,6 @@ class Reference {
 			        val newRegion = parentState.createRegion("_" + dataflow.id + regionCounter)
                     newRegion.label = dataflow.label + regionCounter
                     
-                            
                     val transitionMapping = <Transition, Transition> newHashMap
                     // copy states
                     for (s: defNode.states) {
@@ -419,10 +461,9 @@ class Reference {
                     }
                     nodeMapping.put(callNode, initState)
                     
-                    val outputRegion = parentState.createRegion("_" + dataflow.id + regionCounter + "_out")
-                    outputRegion.label = "_" + dataflow.id + regionCounter + "_out"
-                    var int stateCounter = 0
-                    // multiple outputs
+//                    val outputRegion = parentState.createRegion("_" + dataflow.id + regionCounter + "_out")
+//                    outputRegion.label = "_" + dataflow.id + regionCounter + "_out"
+                    // deal with multiple use of outputs
                     for (eq: dataflow.equations) {
                         if (eq.node != null) {
                             if (eq.node.equals(callNode)) {
@@ -430,70 +471,100 @@ class Reference {
                                 val vo = eq.valuedObject
                                 val voRef = (eq.expression as ValuedObjectReference).valuedObject
                                 
-                                if (vorMapping.containsKey(key)) {
-                                    val tmpValuedObjectReference = vorMapping.get(key)
-                                    val newAssignment = createNewAssignment(vo, tmpValuedObjectReference.copy)
-                                    
-                                    val oldFinalState = outputRegion.states.last
-                                    oldFinalState.setFinal(false)
-                                    oldFinalState.label = "_" + dataflow.id + regionCounter + "_out_mid_" + stateCounter
-                                    stateCounter = stateCounter + 1
-                                        
-                                    val newFinalState = outputRegion.createState("_" + dataflow.id + regionCounter + "_out_end")
-                                    newFinalState.label = "_" + dataflow.id + regionCounter + "_out_end"
-                                    newFinalState.setFinal
-                                        
-                                    val newTransition = createNewTransition(oldFinalState, newFinalState)
-                                    newTransition.setImmediate
-                                    newTransition.effects += newAssignment
-                                } else {
-                                    val tmpValuedObject = KExpressionsFactory.eINSTANCE.createValuedObject
-                                    tmpValuedObject.name = "tmp_" + tmpCounter
-                                    val tmpValuedObjectReference = KExpressionsFactory.eINSTANCE.createValuedObjectReference
-                                    tmpValuedObjectReference.valuedObject = tmpValuedObject
-                                    tmpCounter = tmpCounter + 1
-                                    
+                                if (voMapping.containsKey(key)) {
                                     for (s: newRegion.states) {
-                                        s.replaceAllOccurrences(voRef, tmpValuedObject)
+                                        for (t: s.allContainedTransitions) {
+                                            if (transitionsMapping.containsKey(key+t.id)) {
+                                                val newAssignment = createNewAssignment(vo, voMapping.get(key).reference)
+                                                transitionsMapping.get(key+t.id).effects += newAssignment
+                                            }
+                                        }
                                     }
-                                    
-                                    vorMapping.put(key, tmpValuedObjectReference.copy)
-                                    
-                                    val newAssignment = createNewAssignment(vo, tmpValuedObjectReference.copy)
-                                    
-                                    if (outputRegion.states.nullOrEmpty) {
-                                        val initialState = outputRegion.createState("_" + dataflow.id + regionCounter + "_out_start")
-                                        initialState.label = "_" + dataflow.id + regionCounter + "_out_start"
-                                        initialState.setInitial
-                                        
-                                        val finalState = outputRegion.createState("_" + dataflow.id + regionCounter + "_out_end")
-                                        finalState.label = "_" + dataflow.id + regionCounter + "_out_end"
-                                        finalState.setFinal
-                                        
-                                        val newTransition = createNewTransition(initialState, finalState)
-                                        newTransition.setImmediate
-                                        newTransition.effects += newAssignment
-                                        
-                                    } else {
-                                        val oldFinalState = outputRegion.states.last
-                                        oldFinalState.setFinal(false)
-                                        oldFinalState.label = "_" + dataflow.id + regionCounter + "_out_mid_" + stateCounter
-                                        stateCounter = stateCounter + 1
-                                        
-                                        val newFinalState = outputRegion.createState("_" + dataflow.id + regionCounter + "_out_end")
-                                        newFinalState.label = "_" + dataflow.id + regionCounter + "_out_end"
-                                        newFinalState.setFinal
-                                        
-                                        val newTransition = createNewTransition(oldFinalState, newFinalState)
-                                        newTransition.setImmediate
-                                        newTransition.effects += newAssignment
+                                } else {
+                                    for (s: newRegion.states) {
+                                        for (t: s.allContainedTransitions) {
+                                            for (assign: t.allContainedAssignments) {
+                                                if (assign.valuedObject.equals(voRef)) {
+                                                    assign.valuedObject = vo
+                                                    voMapping.put(key, vo)
+                                                    transitionsMapping.put(key + t.id, t)
+                                                } //else {
+//                                                    if (voMapping.containsKey(key)) {
+//                                                        if (t.equals(transitionsMapping.get(key+t.id))) {
+//                                                            val newAssignment = createNewAssignment(vo, voMapping.get(key).reference)
+//                                                            t.effects += newAssignment
+//                                                        }
+//                                                    }
+//                                                }
+                                            }
+                                        }
                                     }
                                 }
+                                
+//                                if (vorMapping.containsKey(key)) {
+//                                    val tmpValuedObjectReference = vorMapping.get(key)
+//                                    val newAssignment = createNewAssignment(vo, tmpValuedObjectReference.copy)
+//                                    
+//                                    val oldFinalState = outputRegion.states.last
+//                                    oldFinalState.setFinal(false)
+//                                    oldFinalState.label = "_" + dataflow.id + regionCounter + "_out_mid_" + stateCounter
+//                                    stateCounter = stateCounter + 1
+//                                        
+//                                    val newFinalState = outputRegion.createState("_" + dataflow.id + regionCounter + "_out_end")
+//                                    newFinalState.label = "_" + dataflow.id + regionCounter + "_out_end"
+//                                    newFinalState.setFinal
+//                                        
+//                                    val newTransition = createNewTransition(oldFinalState, newFinalState)
+//                                    newTransition.setImmediate
+//                                    newTransition.effects += newAssignment
+//                                } else {
+//                                    val tmpValuedObject = KExpressionsFactory.eINSTANCE.createValuedObject
+//                                    tmpValuedObject.name = "tmp_" + tmpCounter
+//                                    val tmpValuedObjectReference = KExpressionsFactory.eINSTANCE.createValuedObjectReference
+//                                    tmpValuedObjectReference.valuedObject = tmpValuedObject
+//                                    tmpCounter = tmpCounter + 1
+//                                    
+//                                    for (s: newRegion.states) {
+//                                        s.replaceAllOccurrences(voRef, tmpValuedObject)
+//                                    }
+//                                    
+//                                    vorMapping.put(key, tmpValuedObjectReference.copy)
+//                                    
+//                                    val newAssignment = createNewAssignment(vo, tmpValuedObjectReference.copy)
+//                                    
+//                                    if (outputRegion.states.nullOrEmpty) {
+//                                        val initialState = outputRegion.createState("_" + dataflow.id + regionCounter + "_out_start")
+//                                        initialState.label = "_" + dataflow.id + regionCounter + "_out_start"
+//                                        initialState.setInitial
+//                                        
+//                                        val finalState = outputRegion.createState("_" + dataflow.id + regionCounter + "_out_end")
+//                                        finalState.label = "_" + dataflow.id + regionCounter + "_out_end"
+//                                        finalState.setFinal
+//                                        
+//                                        val newTransition = createNewTransition(initialState, finalState)
+//                                        newTransition.setImmediate
+//                                        newTransition.effects += newAssignment
+//                                        
+//                                    } else {
+//                                        val oldFinalState = outputRegion.states.last
+//                                        oldFinalState.setFinal(false)
+//                                        oldFinalState.label = "_" + dataflow.id + regionCounter + "_out_mid_" + stateCounter
+//                                        stateCounter = stateCounter + 1
+//                                        
+//                                        val newFinalState = outputRegion.createState("_" + dataflow.id + regionCounter + "_out_end")
+//                                        newFinalState.label = "_" + dataflow.id + regionCounter + "_out_end"
+//                                        newFinalState.setFinal
+//                                        
+//                                        val newTransition = createNewTransition(oldFinalState, newFinalState)
+//                                        newTransition.setImmediate
+//                                        newTransition.effects += newAssignment
+//                                    }
+//                                }
                             }
                         }
                     }
-                    createNewTransition(outputRegion.states.last, outputRegion.states.head)
-                    regionCounter = regionCounter + 1
+//                    createNewTransition(outputRegion.states.last, outputRegion.states.head)
+//                    regionCounter = regionCounter + 1
 			    }
 			}
 			
@@ -505,6 +576,8 @@ class Reference {
                     assignmentList += createNewAssignment(eq.valuedObject, eq.expression)
                 }
             }
+//            println("al: " + assignmentList)
+//            println("ps: " + parentState)
             if (!assignmentList.empty) {
                 // => create new region with initial and final state for each expression
                 val rRegion = parentState.createRegion("_" + dataflow.id + regionCounter)
@@ -528,6 +601,12 @@ class Reference {
                     transition.effects += assign
                 }
             }
+            // recursive call, to get all nested dataflows after reference
+            parentState.allContainedRegions.forEach[
+                states.forEach[
+                    transform
+                ]
+            ]
 			
             // remove (old) dataflow and empty regions
     		dataflow.remove

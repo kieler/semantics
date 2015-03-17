@@ -944,18 +944,21 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             node.addLayoutParam(LayoutOptions::DIRECTION, Direction::RIGHT)
             node.addLayoutParam(Properties::THOROUGHNESS, 100)
             node.addLayoutParam(Properties::NODE_PLACER, NodePlacementStrategy::BRANDES_KOEPF)
-            
+            println("children: " + node.children)
             for (n : d.nodes) {
                 if (n instanceof DefineNode) {
                     //skip
+                    println("DefineNode: " + n)
                 } else {
                     // translate reference/call nodes
+                    println("else: " + n)
                     node.children += n.translate;
                 }
             }
-            
+            println("children: " + node.children)
             // translate all direct dataflow equations
             for (eq: d.equations) {
+                println("eq: " + eq + ", " + eq.valuedObject)
                 val vo = eq.valuedObject
                 node.children += vo.createNode(node) => [
                     it.addPolygon.createOutputNodeShape
@@ -968,10 +971,17 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     it.createLabel(it).configureInsideTopCenteredNodeLabel(
                         vo.reference.serialize as String, LABELFONTSIZE, KlighdConstants::DEFAULT_FONT_NAME)
                     val expr = eq.expression
-                    node.children += expr.translate(d.equations.indexOf(eq), node, d)    
+                    println("children: " + node.children)
+                    node.children += expr.translate(d.equations.indexOf(eq), node, d)
+                        
                 ]
             }
+            println("children: " + node.children)
+            node.children.forEach[
+                println(it + ", " + it.id + ", " )
+            ]
             node.addCollapseExpand(d.label)
+            
         ]
         return dNode
     }
@@ -1196,8 +1206,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                         ]
                     ]
                     parentNode.children += inputNode
+//                    nNode.remove
                     return inputNode
                 } else {
+                    println("i'm here")
                     val eqNode = d.equations.get(index).node
                     if (eqNode instanceof CallNode) {
                         val cNode = d.equations.get(index).node as CallNode
@@ -1218,8 +1230,11 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                             it.sourcePort = refNode.getPort(expr.valuedObject.reference.portMap) //trn_vo.reference.portMap)
                             it.targetPort = voRef.getNode(parentNode).getPort(voRef.reference.portMap)
                             it.createEdgeStyle
+                            println("refNode: " + refNode + ", " + voRef.getNode(parentNode))
                         ]
                     }
+                    // reicht das schon, damit keine unsichtbaren nodes zurückgegeben werden?
+                    return eqNode.node
                 }
             }
             default: {
@@ -1418,10 +1433,10 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
     // Transform a Node
     public def dispatch KNode translate(Node n) {
         val nNode = n.createNode().putToLookUpWith(n)
-
+        println("nNode: " + nNode)
         // translate specific ReferenceNode elements
         if (n instanceof ReferenceNode) {
-            nNode.setMinimalNodeSize(MINIMALNODEWIDTH * 2, MINIMALNODEHEIGHT * 1.5f)
+            nNode.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT * 1.5f)
             nNode.createDefaultNodeShape
             
             val refNode = (n as ReferenceNode)
@@ -1459,6 +1474,7 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     if (p instanceof ValuedObjectReference) {
                         val param = (p as ValuedObjectReference).valuedObject 
                         dNode.children += param.createNode(dNode) => [ inNode|
+                            println("inNode: " + inNode)
                             inNode.addPolygon.createInputNodeShape
                             inNode.setMinimalNodeSize(MINIMALNODEWIDTH * 1.5f, MINIMALNODEHEIGHT / 2)
                             inNode.addDefaultLayoutParameter
@@ -1486,11 +1502,6 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
             
             nNode.setMinimalNodeSize(MINIMALNODEWIDTH * 2, MINIMALNODEHEIGHT * 2)
             nNode.createCallNodeShape(refID)
-            
-//            nNode.createLabel(nNode).configureInsideTopCenteredNodeLabel(
-//                if(n.label.nullOrEmpty) refID else " " + n.label,
-//                                        LABELFONTSIZE,
-//                                        KlighdConstants::DEFAULT_FONT_NAME)
             
             //set up orthogonal edge routing inside call nodes
             nNode.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
