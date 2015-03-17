@@ -138,12 +138,12 @@ public class TransformationDummyGraph {
             }
         }
 
-        // If auto selection is true, then
-        // 0. IF ANYTHING IS SELECTED (traget/marked end) then add
-        // 1. features, "selected" by occurrence in the model
-        // 2. (recursive) features produced by transformations already selected
-        // 2b. recursion stops if a selected feature is hit! (marking the end)
-        // Note: nothandles is not considered here, it does not affect the selected transformations
+        // If advanced auto selection is true, then consider model features and dependencies as follows
+        // Consider features f1...fn present in the model
+        // If there is a path over produced/not-handled-by transformations to selected feature/transformation
+        // .... o Add all features's transformations on this path to the graph
+        // .... o Respect preferred/disable transformations on this path
+        // Note: The destinction of nothandles is not considered here, it does not affect the selected transformations
         // but only the ORDER (-> dependencies)
         if (context.isAdvancedSelect() && (!selection.noSelection())) {
             Set<Feature> featuresToAdd = new HashSet<Feature>();
@@ -158,12 +158,10 @@ public class TransformationDummyGraph {
 
             // Now add all transformations for these features
             for (Feature featureToAdd : featuresToAdd) {
-
                 // Add to autoselected feature set if this was no initial selection by the user
                 if (!selectedFeatures.contains(featureToAdd)) {
                     autoSelectedFeatures.add(featureToAdd);
                 }
-
                 addFeatureToGraph(featureToAdd);
             }
         }
