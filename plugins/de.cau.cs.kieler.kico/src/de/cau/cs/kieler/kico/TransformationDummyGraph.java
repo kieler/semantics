@@ -33,10 +33,6 @@ import com.google.inject.Inject;
  */
 public class TransformationDummyGraph {
 
-    /** The logger. */
-    @Inject
-    public static Logger logger;
-
     /** The transformation dummies. */
     private List<TransformationDummy> transformationDummies = null;
 
@@ -246,12 +242,12 @@ public class TransformationDummyGraph {
         if (transformation == null) {
             if (backupTransformation == null) {
                 // Log an error here!
-                logger.severe("Error building a graph: Feature '" + featureId
+                KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "Error building a graph: Feature '" + featureId
                         + "' is selected but no (enabled) transformation handling this feature"
                         + " is found. Building compile graph aborted. Solutions: 1. Do not select"
                         + " this feature or 2. do not disabled transformations hat can handle this"
                         + " feature or 3. register another transformation that can handle this "
-                        + "feature.");
+                        + "feature.", null);
                 return null;
             }
             transformation = backupTransformation;
