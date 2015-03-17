@@ -89,6 +89,8 @@ public class TransformationDummyGraph {
      *            the context
      */
     private void buildGraph() {
+        autoSelectedFeatures.clear();
+
         // Go thru selected features and retrieve the transformation handling it, preserving the
         // disabled+preferred transformations
 
@@ -116,6 +118,7 @@ public class TransformationDummyGraph {
                     FeatureGroup featureGroup = (FeatureGroup) feature;
                     Set<Feature> features = featureGroup.getResolvedFeatures();
                     for (Feature innerFeature : features) {
+                        autoSelectedFeatures.add(innerFeature);
                         transformation =
                                 getTransformationHandlingFeature(innerFeature.getId(), selection);
                         if (transformation != null) {
@@ -142,7 +145,6 @@ public class TransformationDummyGraph {
         // 2b. recursion stops if a selected feature is hit! (marking the end)
         // Note: nothandles is not considered here, it does not affect the selected transformations
         // but only the ORDER (-> dependencies)
-        autoSelectedFeatures.clear();
         if (context.isAutoSelect() && (!selection.noSelection())) {
             Set<Feature> featuresToAdd = new HashSet<Feature>();
             Set<Feature> modelFeatures = context.getTransformationObjectFeatures();
