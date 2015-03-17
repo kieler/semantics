@@ -385,18 +385,12 @@ public class KiCoUtil {
             }
             return null;
         }
-        // The following is NECESSARY because we need to make sure that all model features are
-        // exposed and ALSO that the hash is calculated correctly
-        //EcoreUtil2.resolveAll(model);
-        Resource r = model.eResource();
-        EObject modelCopy = EcoreUtil.copy(model);
-        // Typically we need the model hash (to compare if we have an old one or to insert/update)
-        int currentHash = getModelHash(modelCopy);
+        int currentHash = getModelHash(model);
         if (!forceUpdate) {
             // Try to find previous results
-            if (cachedFeatures.containsKey(model) && cachedHashes.containsKey(modelCopy)) {
+            if (cachedFeatures.containsKey(model) && cachedHashes.containsKey(model)) {
                 // Compare hashes
-                int previousHash = cachedHashes.get(modelCopy);
+                int previousHash = cachedHashes.get(model);
                 if (previousHash == currentHash) {
                     // No updates are required, just return the cached feature list
                     return cachedFeatures.get(model);
