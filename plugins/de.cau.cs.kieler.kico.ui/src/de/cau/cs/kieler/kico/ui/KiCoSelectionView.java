@@ -717,7 +717,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         // This might influence the auto select results:
         // if OFF: only consider feature groups 
         // if ON: also consider produce dependencies & model features
-        compilerContext.setAutoSelect(advancedMode);
+        compilerContext.setAdvancedSelect(advancedMode);
         EObject testObject = compilerContext.getTransformationObject();
         compilerContext.setTransformationObject(KiCoUIPlugin.getActiveModel());
         EObject testObject2 = compilerContext.getTransformationObject();
@@ -1401,7 +1401,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                 // Update the auto select flag in the compiler context
                 KiCoSelectionDiagramModel selectionModel = getSelectionModel(getActiveEditorID());
                 KielerCompilerContext compilerContext = selectionModel.getContext();
-                compilerContext.setAutoSelect(true);
+                compilerContext.setAdvancedSelect(true);
 
                 updateSelectionTransformationVisualization(getActiveEditorID());
 

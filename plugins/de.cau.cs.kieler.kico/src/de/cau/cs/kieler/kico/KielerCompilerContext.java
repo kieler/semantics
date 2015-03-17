@@ -38,10 +38,11 @@ public class KielerCompilerContext {
     private KielerCompilerSelection selection = new KielerCompilerSelection();
 
     /**
-     * The flag to automatically select transformations based on the selected features (defining the
-     * target) and the model features (defining the requirements).
+     * The flag to automatically select not only based on feature groups but also auto select
+     * transformations based on the selected features (defining the target) and the model features
+     * (defining the requirements).
      */
-    private boolean autoSelect = false;
+    private boolean advancedSelect = false;
 
     /**
      * The overall compilation is inplace and should happen directly on the source model (as far as
@@ -63,7 +64,7 @@ public class KielerCompilerContext {
 
     /** The calculated transformation chain used for compilation. */
     private List<Transformation> compilationChain = null;
-    
+
     /** The internal graph. */
     private TransformationDummyGraph graph = null;
 
@@ -334,33 +335,32 @@ public class KielerCompilerContext {
     // -------------------------------------------------------------------------
 
     /**
-     * The flag to automatically select transformations based on the selected features (defining the
-     * target) and the model features (defining the requirements). Note that if switched off no
-     * dependencies are considered and only the current feature or transformation selection is
-     * processed. Then features and transformations will be applied straight forward in the order
-     * defined by the transformationIds list. If auto select is switched on, the selected features
+     * The flag to additionally automatically select transformations based on the selected features
+     * (defining the target) and the model features (defining the requirements). Note that if
+     * switched off no dependencies or model features are considered and only the current
+     * feature/feature group or transformation selection is processed. Note that selected features
      * and transformations are possibly re-ordered and may also be filtered if not present in the
      * model.
      * 
-     * @return true, if is autoSelect
+     * @return true, if is advancedSelect is switched on
      */
-    public boolean isAutoSelect() {
-        return this.autoSelect;
+    public boolean isAdvancedSelect() {
+        return this.advancedSelect;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the autoSelect flag to automatically select transformations based on the selected
-     * features (defining the target) and the model features (defining the requirements). Note that
-     * if switched off no dependencies are considered. The transformations will be applied straight
-     * forward in the order defined by the transformationIds list.
+     * Sets the advancedSelect flag to automatically advanced select transformations based on the
+     * selected features (defining the target) and the model features (defining the requirements)
+     * considering the produced and not-handled-by dependencies. Note that if switched off no
+     * dependencies are considered.
      * 
      * @param autoSelect
      *            the new autoSelect
      */
-    public void setAutoSelect(boolean autoSelect) {
-        this.autoSelect = autoSelect;
+    public void setAdvancedSelect(boolean advancedSelect) {
+        this.advancedSelect = advancedSelect;
     }
 
     // -------------------------------------------------------------------------

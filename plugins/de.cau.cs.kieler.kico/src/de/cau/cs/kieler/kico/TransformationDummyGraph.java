@@ -145,7 +145,7 @@ public class TransformationDummyGraph {
         // 2b. recursion stops if a selected feature is hit! (marking the end)
         // Note: nothandles is not considered here, it does not affect the selected transformations
         // but only the ORDER (-> dependencies)
-        if (context.isAutoSelect() && (!selection.noSelection())) {
+        if (context.isAdvancedSelect() && (!selection.noSelection())) {
             Set<Feature> featuresToAdd = new HashSet<Feature>();
             Set<Feature> modelFeatures = context.getTransformationObjectFeatures();
             for (Feature modelFeature : modelFeatures) {
