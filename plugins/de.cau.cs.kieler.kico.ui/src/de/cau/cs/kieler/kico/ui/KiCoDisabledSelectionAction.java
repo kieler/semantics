@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kico.ui;
 
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.kico.Feature;
+import de.cau.cs.kieler.kico.FeatureGroup;
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
 import de.cau.cs.kieler.klighd.IAction;
 
@@ -59,9 +60,20 @@ public class KiCoDisabledSelectionAction extends KiCoKlighdAction implements IAc
                     KiCoSelectionView.getSelectionModel(activeEditorID);
             KielerCompilerSelection selection = selectionModel.getContext().getSelection();
 
-            if (selection != null) {
+            boolean skip = false;
+
+            // Only allow disabling of TransformationFeatures or Features with a single transformation only
+            if (feature instanceof FeatureGroup) {
+                skip = true;
+            }
+            if (feature.isAlternative()) {
+                skip = true;
+            }
+
+            if (selection != null && !skip) {
                 // Test if the transformation is already disabled, then unselect it otherwise select
                 // it
+
                 if (!KiCoSelectionView.isDisabledTransformation(feature, selection)) {
                     KiCoSelectionView.disableTransformation(feature, selection,
                             context.getViewContext());
