@@ -167,6 +167,7 @@ public class TransformationDummyGraph {
                 addFeatureToGraph(featureToAdd);
             }
         }
+        System.out.println(autoSelectedFeatures.toArray());
 
     }
 

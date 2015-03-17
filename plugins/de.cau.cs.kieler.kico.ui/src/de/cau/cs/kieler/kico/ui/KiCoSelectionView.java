@@ -36,6 +36,7 @@ import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.kico.Feature;
+import de.cau.cs.kieler.kico.FeatureGroup;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
@@ -710,9 +711,9 @@ public class KiCoSelectionView extends DiagramViewPart {
             KielerCompilerContext compilerContext = selectionModel.getContext();
             KielerCompilerSelection selection = compilerContext.getSelection();
             compilerContext.setAutoSelect(true);
-//            EObject testObject = compilerContext.getTransformationObject();
-//            compilerContext.setTransformationObject(KiCoUIPlugin.getActiveModel());
-//            EObject testObject2 = compilerContext.getTransformationObject();
+            EObject testObject = compilerContext.getTransformationObject();
+            compilerContext.setTransformationObject(KiCoUIPlugin.getActiveModel());
+            EObject testObject2 = compilerContext.getTransformationObject();
             Set<Feature> autoSelectedFeatures =
                     compilerContext.recomputeTransformationChain(true).getAutoSelectedFeatures(
                             false);
@@ -771,7 +772,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                 // resolve a TransformationFeature instead
                 feature = resolveFeature("T_" + selected);
             }
-            KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.SELECT);
+            KiCoSelectionAction.colorize(feature, context, KiCoSelectionAction.DISABLE);
         }
 
         if (KiCoSelectionView.advancedMode) {
@@ -861,13 +862,16 @@ public class KiCoSelectionView extends DiagramViewPart {
     /**
      * Gets the transformation id for a feature where there is only a SINGLE transformation, if it
      * is a TransformationFeature (a hidden transformation) it returns the transformation id, if it
-     * is an alternative feature, then return null.
+     * is an alternative feature, then return null. If it is a feature group it returns also null.
      * 
      * @param feature
      *            the feature
      * @return the transformation id
      */
     private static String getTransformationId(Feature feature) {
+        if (feature instanceof FeatureGroup) {
+            return null;
+        }
         String featureId = feature.getId();
         String transformationId = featureId;
         if (!(feature instanceof TransformationFeature)) {
