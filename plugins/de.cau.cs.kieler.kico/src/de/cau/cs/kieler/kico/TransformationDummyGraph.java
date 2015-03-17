@@ -167,7 +167,6 @@ public class TransformationDummyGraph {
                 addFeatureToGraph(featureToAdd);
             }
         }
-        System.out.println(autoSelectedFeatures.toArray());
 
     }
 
@@ -194,7 +193,10 @@ public class TransformationDummyGraph {
 
     /**
      * Gets the transformation that handles feature respecting 1. the selected, 2. the preferred and
-     * disabled transformations.
+     * disabled transformations. A disabled transformation is only returned, if no other
+     * selected/preferred could be found. Disabled transformation still will be skipped when
+     * performing transformation, this situation might prone errors (when input/outputs do not fit)
+     * hence this throws a warning.
      * 
      * @param featureId
      *            the feature id
@@ -207,6 +209,10 @@ public class TransformationDummyGraph {
         // A non-preferred but not disabled transformation used if there is no preferred one
         // found
         Transformation backupTransformation = null;
+        // Take the disabledFallback ONLY if no selected/backup can be found, this means a throwing
+        // a warning because
+        // run time errors when compiling an skipping a transformation might arise
+        Transformation disabledFallbackTransformation = null;
         // If this is a feature, then find the first preferred transformation that is not
         // disabled
         Feature feature = KielerCompiler.getFeature(featureId);
@@ -232,6 +238,9 @@ public class TransformationDummyGraph {
                     }
                     // Remember in case we do not find a preferred transformation
                     backupTransformation = handlingTransformation;
+                } else {
+                    // Remember if there will be no transformation AND no backup!
+                    disabledFallbackTransformation = handlingTransformation;
                 }
             }
         }
@@ -241,14 +250,33 @@ public class TransformationDummyGraph {
         // transformation that handles this selected (!) feature, raise an error
         if (transformation == null) {
             if (backupTransformation == null) {
-                // Log an error here!
-                KiCoUtil.logError(KiCoPlugin.PLUGIN_ID, "Error building a graph: Feature '" + featureId
-                        + "' is selected but no (enabled) transformation handling this feature"
-                        + " is found. Building compile graph aborted. Solutions: 1. Do not select"
-                        + " this feature or 2. do not disabled transformations hat can handle this"
-                        + " feature or 3. register another transformation that can handle this "
-                        + "feature.", null);
-                return null;
+                if (disabledFallbackTransformation == null) {
+                    // Log an error here!
+                    KiCoUtil.logError(
+                            KiCoPlugin.PLUGIN_ID,
+                            "Error building a graph: Feature '"
+                                    + featureId
+                                    + "' is selected but no (enabled) transformation handling this feature"
+                                    + " is found. Also no disabled transformation is found as a fallback. This is a serious error. Building compile graph aborted. Solutions: 1. Do not select"
+                                    + " this feature or 2. do not disabled transformations hat can handle this"
+                                    + " feature or 3. register another transformation that can handle this "
+                                    + "feature.", null);
+                    return null;
+                } else {
+                    // Log a warning here!
+                    KiCoUtil.logWarning(
+                            KiCoPlugin.PLUGIN_ID,
+                            "Warning building a graph: Feature '"
+                                    + featureId
+                                    + "' is selected but no (enabled) transformation handling this feature"
+                                    + " is found. Taking a disabled one instead as a fallback. Caution: Because"
+                                    + "disabled transformations will be skipped, this might mean potential problem"
+                                    + "during compilation. Solutions: 1. Do not select"
+                                    + " this feature or 2. do not disabled transformations hat can handle this"
+                                    + " feature or 3. register another transformation that can handle this "
+                                    + "feature.", null);
+                    return disabledFallbackTransformation;
+                }
             }
             transformation = backupTransformation;
         }
