@@ -52,7 +52,7 @@ class AbortWTO extends Transformation {
     }
 
     override getProducesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeature::INITIALIZATION_ID, SCChartsFeature::ENTRYACTION_ID,
+        return Sets.newHashSet(SCChartsFeature::INITIALIZATION_ID, SCChartsFeature::ENTRY_ID,
             SCChartsFeature::CONNECTOR_ID);
     }
 

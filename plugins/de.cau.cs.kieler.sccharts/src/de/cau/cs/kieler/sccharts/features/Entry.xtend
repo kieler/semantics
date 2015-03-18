@@ -31,11 +31,11 @@ class Entry extends Feature {
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsFeature::ENTRYACTION_ID;
+        return SCChartsFeature::ENTRY_ID;
     }
 
     override getName() {
-        return SCChartsFeature::ENTRYACTION_NAME;
+        return SCChartsFeature::ENTRY_NAME;
     }
 
     //-------------------------------------------------------------------------

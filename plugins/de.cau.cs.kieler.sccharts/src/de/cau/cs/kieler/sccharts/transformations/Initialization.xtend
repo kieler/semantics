@@ -47,7 +47,7 @@ class Initialization extends Transformation {
     }
 
     override getProducesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeature::ENTRYACTION_ID);
+        return Sets.newHashSet(SCChartsFeature::ENTRY_ID);
     }
 
     override getNotHandlesFeatureIds() {

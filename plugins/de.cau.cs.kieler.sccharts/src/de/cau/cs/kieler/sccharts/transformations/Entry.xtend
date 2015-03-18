@@ -42,7 +42,7 @@ class Entry extends Transformation {
     }
 
     override getHandleFeatureId() {
-        return SCChartsFeature::ENTRYACTION_ID;
+        return SCChartsFeature::ENTRY_ID;
     }
 
     override getProducesFeatureIds() {

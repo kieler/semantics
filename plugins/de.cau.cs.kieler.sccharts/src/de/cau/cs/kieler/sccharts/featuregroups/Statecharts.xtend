@@ -38,8 +38,8 @@ class Statecharts extends FeatureGroup {
     }
 
     override getFeatureIds() {
-        Sets.newHashSet(SCChartsFeature::ABORT_ID, SCChartsFeature::CONNECTOR_ID, SCChartsFeature::ENTRYACTION_ID,
-            SCChartsFeature::EXITACTION_ID, SCChartsFeature::INITIALIZATION_ID);
+        Sets.newHashSet(SCChartsFeature::ABORT_ID, SCChartsFeature::CONNECTOR_ID, SCChartsFeature::ENTRY_ID,
+            SCChartsFeature::EXIT_ID, SCChartsFeature::INITIALIZATION_ID);
     }
 
 //-------------------------------------------------------------------------

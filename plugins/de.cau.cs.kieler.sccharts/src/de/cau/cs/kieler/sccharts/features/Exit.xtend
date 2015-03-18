@@ -31,11 +31,11 @@ class Exit extends Feature {
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsFeature::EXITACTION_ID;
+        return SCChartsFeature::EXIT_ID;
     }
 
     override getName() {
-        return SCChartsFeature::EXITACTION_NAME;
+        return SCChartsFeature::EXIT_NAME;
     }
 
     //-------------------------------------------------------------------------
