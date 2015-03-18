@@ -42,6 +42,9 @@ public abstract class Transformation implements ITransformation {
     /** The not handles dependencies. */
     private Set<Feature> cachedNotHandlesFeatures = null;
 
+    /** The inherited not handles dependencies from feature groups. */
+    private Set<Feature> cachedInheritedNotHandlesFeatures = null;
+
     /** The not handles dependencies. */
     private Set<Feature> cachedResolvedNotHandlesFeatures = null;
 
@@ -144,6 +147,22 @@ public abstract class Transformation implements ITransformation {
     // -------------------------------------------------------------------------
 
     /**
+     * Gets the set not handled features as inherited by all containing feature groups.
+     * 
+     * @return the features
+     */
+    public Set<Feature> getcachedInheritedNotHandlesFeatures() {
+        if (cachedInheritedNotHandlesFeatures != null) {
+            return cachedInheritedNotHandlesFeatures;
+        }
+        // Trigger calculation
+        getNotHandlesFeatures();
+        return cachedInheritedNotHandlesFeatures;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Gets the list of features that cannot be handled by this transformation which also indirectly
      * represent dependencies to other transformations.
      * 
@@ -154,6 +173,7 @@ public abstract class Transformation implements ITransformation {
             return cachedNotHandlesFeatures;
         }
         cachedNotHandlesFeatures = new HashSet<Feature>();
+        cachedInheritedNotHandlesFeatures = new HashSet<Feature>();
         for (String featureId : this.getNotHandlesFeatureIds()) {
             Feature feature = KielerCompiler.getFeature(featureId);
             if (feature == null) {
@@ -181,9 +201,11 @@ public abstract class Transformation implements ITransformation {
                     for (Feature innerInheritNotHandles : inheritNotHandles.asGroup()
                             .getResolvedFeatures()) {
                         cachedNotHandlesFeatures.add(innerInheritNotHandles);
+                        cachedInheritedNotHandlesFeatures.add(innerInheritNotHandles);
                     }
                 } else {
                     cachedNotHandlesFeatures.add(inheritNotHandles);
+                    cachedInheritedNotHandlesFeatures.add(inheritNotHandles);
                 }
             }
 
