@@ -37,7 +37,7 @@ class Extended extends FeatureGroup {
     }
 
     override getFeatureIds() {
-        Sets.newHashSet(SCChartsFeatureGroup::ADVANCED_ID, SCChartsFeatureGroup::STATECHARTS_ID,
+        Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID, SCChartsFeatureGroup::STATECHARTS_ID,
             SCChartsFeatureGroup::SYNCCHARTS_ID, SCChartsFeatureGroup::SCADEQUARTZESTEREL_ID)
     }
 

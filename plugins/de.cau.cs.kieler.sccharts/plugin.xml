@@ -179,7 +179,7 @@
               class="de.cau.cs.kieler.sccharts.featuregroups.Extended">
         </featureGroupClass>
         <featureGroupClass
-              class="de.cau.cs.kieler.sccharts.featuregroups.Advanced">
+              class="de.cau.cs.kieler.sccharts.featuregroups.Expansion">
         </featureGroupClass>
         <featureGroupClass
               class="de.cau.cs.kieler.sccharts.featuregroups.Statecharts">

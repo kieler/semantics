@@ -18,23 +18,23 @@ import de.cau.cs.kieler.kico.FeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 /**
- * Advanced SCCharts Feature Group.
+ * Expansion SCCharts Feature Group.
  * 
  * @author cmot
  * @kieler.design 2015-03-12 proposed 
  * @kieler.rating 2015-03-12 proposed yellow
  */
-class Advanced extends FeatureGroup {
+class Expansion extends FeatureGroup {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsFeatureGroup::ADVANCED_ID
+        return SCChartsFeatureGroup::EXPANSION_ID
     }
 
     override getName() {
-        return SCChartsFeatureGroup::ADVANCED_NAME
+        return SCChartsFeatureGroup::EXPANSION_NAME
     }
 
     override getFeatureIds() {
