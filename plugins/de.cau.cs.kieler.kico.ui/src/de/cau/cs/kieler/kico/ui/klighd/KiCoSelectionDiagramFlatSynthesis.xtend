@@ -65,6 +65,9 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
     private static val float TRANSITION_DASH_BLACK = 7;
     private static val float TRANSITION_DASH_WHITE = 3;
     private static val List<Float> TRANSITION_DASH_PATTERN = newArrayList(TRANSITION_DASH_BLACK, TRANSITION_DASH_WHITE);
+    private static val float TRANSITION_DOT_BLACK = 2;
+    private static val float TRANSITION_DOT_WHITE = 1;
+    private static val List<Float> TRANSITION_DOT_PATTERN = newArrayList(TRANSITION_DOT_BLACK, TRANSITION_DOT_WHITE);
 
     def static void debug(String debugText) {
         debug(debugText, true);
@@ -280,13 +283,13 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
             edge.source = source.node;
             edge.target = dest.node;
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-            edge.addSpline(1) => [
-                it.setForeground(DARKGRAY.copy)
+            edge.addSpline(2) => [
+                it.setForeground(BLUE3.copy)
             // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
             //                if (t.isImmediate2) {
-            //                    it.lineStyle = LineStyle::CUSTOM;
-            //                    it.lineStyle.dashPattern.clear;
-            //                    it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
+                it.lineStyle = LineStyle::CUSTOM;
+                it.lineStyle.dashPattern.clear;
+                it.lineStyle.dashPattern += TRANSITION_DOT_PATTERN;
             //                }
             //it.addArrowDecorator()
             ]

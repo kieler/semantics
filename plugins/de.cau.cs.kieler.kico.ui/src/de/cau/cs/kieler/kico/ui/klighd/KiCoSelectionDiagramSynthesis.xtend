@@ -61,7 +61,6 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
     static private HashMap<Transformation, TransformationFeature> transformationFeatureMap = new HashMap<Transformation, TransformationFeature>();
     static private HashSet<Feature> visibleFeatures = new HashSet<Feature>()
 
-
     def static void debug(String debugText) {
         debug(debugText, true);
     }
@@ -79,9 +78,9 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
     def public static getTransformationFeature(Transformation transformation) {
         transformationFeatureMap.get(transformation)
     }
-    
+
     def public static getVisibleFeatures() {
-        return visibleFeatures;        
+        return visibleFeatures;
     }
 
     def public static clearCache() {
@@ -269,7 +268,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                     }
                 }
 
-                // if this is a feature that consists of alternativs
+                // if this is a feature that consists of alternatives
                 else if (other.isAlternative && feature instanceof TransformationFeature) {
                     val transformationToSearchFor = (feature as TransformationFeature).transformation;
                     val otherHandlingTransformations = other.handlingTransformations;
@@ -302,6 +301,15 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
         return null;
     }
 
+    KiCoSelectionDiagramModel currentModel = null;
+
+    def isVisible(Feature feature) {
+        if (currentModel.visibleFeatures.contains(feature)) {
+            return true;
+        }
+        return false
+    }
+
     //    // The Main entry transform function   
     //    override transform(List<Feature> model) {
     //        
@@ -309,9 +317,11 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
     // The Main entry transform function   
     override transform(KiCoSelectionDiagramModel model) {
 
+        currentModel = model;
+
         connected.clear
         clearCache()
-        
+
         val knode = model.createNode();
 
         for (elem : model.visibleFeatures) {
@@ -337,7 +347,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
             for (producedFeature : transformation.producesFeatures) {
                 debug("     - Feature " + producedFeature.id)
             }
-            
+
             returnList.addAll(transformation.producesFeatures);
         }
 
@@ -384,7 +394,6 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
             //node.setLayoutOption(LayoutOptions::SPACING, 0f);
             if (feature.alternative) {
 
-                // WHAT TO DO WITH TRANSFORMATION OPTIONS?!
                 for (transformation : feature.handlingTransformations) {
                     val child = new TransformationFeature(transformation)
                     transformationFeatureMap.put(transformation, child)
@@ -393,13 +402,16 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                     node.children += childKNode;
                 }
             } else {
-                visibleFeatures.add(feature)
-                val featureGroup = (feature as FeatureGroup);
-                val features = featureGroup.features;
-                for (child : features) {
-                    visibleFeatures.add(child)
-                    val childKNode = child.translate;
-                    node.children += childKNode;
+                // Only proceed with features that should be visible!!!
+                if (feature.isVisible) {
+                    visibleFeatures.add(feature)
+                    val featureGroup = (feature as FeatureGroup);
+                    val features = featureGroup.features;
+                    for (child : features) {
+                        visibleFeatures.add(child)
+                        val childKNode = child.translate;
+                        node.children += childKNode;
+                    }
                 }
             }
             // credits to SSM :-)

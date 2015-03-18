@@ -257,7 +257,7 @@ class KiCoSelectionDiagramFlatGroupsSynthesis extends AbstractDiagramSynthesis<K
             edge.source = source.node;
             edge.target = dest.node;
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-            edge.addSpline(1) => [
+            edge.addSpline(2) => [
                 it.setForeground(DARKGRAY.copy)
             // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
             //                if (t.isImmediate2) {
@@ -265,7 +265,7 @@ class KiCoSelectionDiagramFlatGroupsSynthesis extends AbstractDiagramSynthesis<K
             //                    it.lineStyle.dashPattern.clear;
             //                    it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
             //                }
-            //it.addArrowDecorator()
+            it.addArrowDecorator()
             ]
         ];
     }
