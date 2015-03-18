@@ -43,10 +43,13 @@ public abstract class Transformation implements ITransformation {
     private Set<Feature> cachedNotHandlesFeatures = null;
 
     /** The inherited not handles dependencies from feature groups. */
-    private Set<Feature> cachedInheritedNotHandlesFeatures = null;
+    private Set<Feature> cachedNoInheritedNotHandlesFeatures = null;
 
     /** The not handles dependencies. */
     private Set<Feature> cachedResolvedNotHandlesFeatures = null;
+
+    /** The not handles dependencies. */
+    private Set<Feature> cachedNoInheritedResolvedNotHandlesFeatures = null;
 
     /** The cached handles feature. */
     private Feature cachedHandlesFeature = null;
@@ -147,33 +150,23 @@ public abstract class Transformation implements ITransformation {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the set not handled features as inherited by all containing feature groups.
-     * 
-     * @return the features
-     */
-    public Set<Feature> getcachedInheritedNotHandlesFeatures() {
-        if (cachedInheritedNotHandlesFeatures != null) {
-            return cachedInheritedNotHandlesFeatures;
-        }
-        // Trigger calculation
-        getNotHandlesFeatures();
-        return cachedInheritedNotHandlesFeatures;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
      * Gets the list of features that cannot be handled by this transformation which also indirectly
      * represent dependencies to other transformations.
      * 
+     * @param ignoreInherited
+     *            the ignore inherited
      * @return the dependencies
      */
-    public Set<Feature> getNotHandlesFeatures() {
+    public Set<Feature> getNotHandlesFeatures(boolean ignoreInherited) {
         if (cachedNotHandlesFeatures != null) {
-            return cachedNotHandlesFeatures;
+            if (ignoreInherited) {
+                return cachedNoInheritedNotHandlesFeatures;
+            } else {
+                return cachedNotHandlesFeatures;
+            }
         }
         cachedNotHandlesFeatures = new HashSet<Feature>();
-        cachedInheritedNotHandlesFeatures = new HashSet<Feature>();
+        cachedNoInheritedNotHandlesFeatures = new HashSet<Feature>();
         for (String featureId : this.getNotHandlesFeatureIds()) {
             Feature feature = KielerCompiler.getFeature(featureId);
             if (feature == null) {
@@ -185,9 +178,11 @@ public abstract class Transformation implements ITransformation {
                     // add all features of this group!
                     for (Feature innerFeature : feature.asGroup().getResolvedFeatures()) {
                         cachedNotHandlesFeatures.add(innerFeature);
+                        cachedNoInheritedNotHandlesFeatures.add(innerFeature);
                     }
                 } else {
                     cachedNotHandlesFeatures.add(feature);
+                    cachedNoInheritedNotHandlesFeatures.add(feature);
                 }
             }
         }
@@ -201,16 +196,18 @@ public abstract class Transformation implements ITransformation {
                     for (Feature innerInheritNotHandles : inheritNotHandles.asGroup()
                             .getResolvedFeatures()) {
                         cachedNotHandlesFeatures.add(innerInheritNotHandles);
-                        cachedInheritedNotHandlesFeatures.add(innerInheritNotHandles);
                     }
                 } else {
                     cachedNotHandlesFeatures.add(inheritNotHandles);
-                    cachedInheritedNotHandlesFeatures.add(inheritNotHandles);
                 }
             }
 
         }
-        return cachedNotHandlesFeatures;
+        if (ignoreInherited) {
+            return cachedNoInheritedNotHandlesFeatures;
+        } else {
+            return cachedNotHandlesFeatures;
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -222,12 +219,23 @@ public abstract class Transformation implements ITransformation {
      * 
      * @return the features
      */
-    public Set<Feature> getResolvedNotHandlesFeatures() {
+    public Set<Feature> getResolvedNotHandlesFeatures(boolean ignoreInherited) {
         if (cachedResolvedNotHandlesFeatures != null) {
+            if (ignoreInherited) {
+                return cachedNoInheritedResolvedNotHandlesFeatures;
+            } else {
+                return cachedResolvedNotHandlesFeatures;
+            }
+        }
+        if (ignoreInherited) {
+            cachedNoInheritedResolvedNotHandlesFeatures =
+                    Feature.resolveFeatures(getNotHandlesFeatures(true));
+            return cachedNoInheritedResolvedNotHandlesFeatures;
+        } else {
+            cachedResolvedNotHandlesFeatures =
+                    Feature.resolveFeatures(getNotHandlesFeatures(false));
             return cachedResolvedNotHandlesFeatures;
         }
-        cachedResolvedNotHandlesFeatures = Feature.resolveFeatures(getNotHandlesFeatures());
-        return cachedResolvedNotHandlesFeatures;
     }
 
     // -------------------------------------------------------------------------

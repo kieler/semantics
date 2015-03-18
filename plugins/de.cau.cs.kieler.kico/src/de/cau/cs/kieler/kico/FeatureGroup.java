@@ -144,19 +144,31 @@ public abstract class FeatureGroup extends Feature implements IFeatureGroup {
      * 
      * @return the not handling transformations
      */
-    public Set<Transformation> getNotHandlingTransformations() {
+    public Set<Transformation> getNotHandlingTransformations(boolean ignoreInherited) {
         if (cachedNotHandlingTransformations != null) {
-            return cachedNotHandlingTransformations;
+            if (ignoreInherited) {
+                return cachedNoInheritedNotHandlingTransformations;
+            } else {
+                return cachedNotHandlingTransformations;
+            }
         }
+        cachedNoInheritedNotHandlingTransformations = new HashSet<Transformation>();
         cachedNotHandlingTransformations = new HashSet<Transformation>();
         for (Transformation transformation : KielerCompiler.getTransformations()) {
             for (Feature feature : this.getResolvedFeatures()) {
-                if (transformation.getNotHandlesFeatures() == feature) {
+                if (transformation.getNotHandlesFeatures(true).contains(feature)) {
+                    cachedNoInheritedNotHandlingTransformations.add(transformation);
+                }
+                if (transformation.getNotHandlesFeatures(false).contains(feature)) {
                     cachedNotHandlingTransformations.add(transformation);
                 }
             }
         }
-        return cachedNotHandlingTransformations;
+        if (ignoreInherited) {
+            return cachedNoInheritedNotHandlingTransformations;
+        } else {
+            return cachedNotHandlingTransformations;
+        }
     }
 
     // -------------------------------------------------------------------------

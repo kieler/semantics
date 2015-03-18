@@ -151,7 +151,7 @@ public class TransformationDummyGraph {
             for (Feature modelFeature : modelFeatures) {
                 for (Feature selectedFeature : selectedFeatures) {
                     Set<Feature> moreFeaturesToAdd =
-                            modelFeature.getProduceNotHandledByPathTo(selectedFeature);
+                            modelFeature.getProduceNotHandledByPathTo(selectedFeature, false);
                     featuresToAdd.addAll(moreFeaturesToAdd);
                 }
             }
@@ -330,7 +330,7 @@ public class TransformationDummyGraph {
             }
 
             // Consider not handles relationships
-            for (Feature notHandlesFeature : dummyB.transformation.getNotHandlesFeatures()) {
+            for (Feature notHandlesFeature : dummyB.transformation.getNotHandlesFeatures(false)) {
                 for (Transformation notHandlesFeatureHandlingTransformation : notHandlesFeature
                         .getHandlingTransformations()) {
                     TransformationDummy dummyA =

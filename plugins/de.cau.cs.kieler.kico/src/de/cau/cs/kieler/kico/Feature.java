@@ -40,6 +40,9 @@ public abstract class Feature implements IFeature {
     /** The cached not handling transformations. */
     protected Set<Transformation> cachedNotHandlingTransformations = null;
 
+    /** The cached not handling transformations. */
+    protected Set<Transformation> cachedNoInheritedNotHandlingTransformations = null;
+
     /** The cached parent feature groups this feature belongs to. */
     protected Set<FeatureGroup> cachedFeatureGroups = null;
 
@@ -135,8 +138,8 @@ public abstract class Feature implements IFeature {
      *            the target feature
      * @return true, if successful
      */
-    public final boolean existsProduceNotHandledByPathTo(Feature targetFeature) {
-        return existsProduceNotHandledByPathTo(this, targetFeature);
+    public final boolean existsProduceNotHandledByPathTo(Feature targetFeature, boolean ignoreInherited) {
+        return existsProduceNotHandledByPathTo(this, targetFeature, ignoreInherited);
     }
 
     /**
@@ -147,12 +150,12 @@ public abstract class Feature implements IFeature {
      *            the target feature
      * @return true, if successful
      */
-    public final Set<Feature> getProduceNotHandledByPathTo(Feature targetFeature) {
-        return getProduceNotHandledByPathTo(this, targetFeature);
+    public final Set<Feature> getProduceNotHandledByPathTo(Feature targetFeature, boolean ignoreInherited) {
+        return getProduceNotHandledByPathTo(this, targetFeature, ignoreInherited);
     }
 
     private final Set<Feature> getProduceNotHandledByPathTo(Feature fromFeature,
-            Feature targetFeature) {
+            Feature targetFeature, boolean ignoreInherited) {
         HashSet<Feature> returnFeatures = new HashSet<Feature>();
 
         // Recursion ends here, we have found a path
@@ -169,7 +172,7 @@ public abstract class Feature implements IFeature {
                 // handling the fromFeature, so fromFeature must be transformed before
                 // producedFeature.
                 Set<Feature> moreFeatures =
-                        getProduceNotHandledByPathTo(producedFeature, targetFeature);
+                        getProduceNotHandledByPathTo(producedFeature, targetFeature, ignoreInherited);
                 if (moreFeatures.size() > 0) {
                     // Return the collected features
                     returnFeatures.addAll(moreFeatures);
@@ -180,12 +183,12 @@ public abstract class Feature implements IFeature {
         }
 
         // Check not handled by features
-        for (Transformation transformation : fromFeature.getNotHandlingTransformations()) {
+        for (Transformation transformation : fromFeature.getNotHandlingTransformations(ignoreInherited)) {
             Feature notHandledByFeature = transformation.getHandleFeature();
             // notHandledByFeature == feature whose transformation cannot handle the fromFeature, so
             // fromFeature must be transformed before notHandledByFeature.
             Set<Feature> moreFeatures =
-                    getProduceNotHandledByPathTo(notHandledByFeature, targetFeature);
+                    getProduceNotHandledByPathTo(notHandledByFeature, targetFeature, ignoreInherited);
             if (moreFeatures.size() > 0) {
                 // Return the collected features
                 returnFeatures.addAll(moreFeatures);
@@ -209,7 +212,7 @@ public abstract class Feature implements IFeature {
      *            the target feature
      * @return true, if successful
      */
-    private final boolean existsProduceNotHandledByPathTo(Feature fromFeature, Feature targetFeature) {
+    private final boolean existsProduceNotHandledByPathTo(Feature fromFeature, Feature targetFeature, boolean ignoreInherited) {
         // Recursion ends here, we have found a path
         if (fromFeature == targetFeature) {
             return true;
@@ -221,18 +224,18 @@ public abstract class Feature implements IFeature {
                 // producedFeature == feature that is (possibly) produced by a transformation
                 // handling the fromFeature, so fromFeature must be transformed before
                 // producedFeature.
-                if (existsProduceNotHandledByPathTo(producedFeature, targetFeature)) {
+                if (existsProduceNotHandledByPathTo(producedFeature, targetFeature, ignoreInherited)) {
                     return true;
                 }
             }
         }
 
         // Check not handled by features
-        for (Transformation transformation : fromFeature.getNotHandlingTransformations()) {
+        for (Transformation transformation : fromFeature.getNotHandlingTransformations(ignoreInherited)) {
             Feature notHandledByFeature = transformation.getHandleFeature();
             // notHandledByFeature == feature whose transformation cannot handle the fromFeature, so
             // fromFeature must be transformed before notHandledByFeature.
-            if (existsProduceNotHandledByPathTo(notHandledByFeature, targetFeature)) {
+            if (existsProduceNotHandledByPathTo(notHandledByFeature, targetFeature, ignoreInherited)) {
                 return true;
             }
         }
@@ -290,19 +293,33 @@ public abstract class Feature implements IFeature {
      * 
      * @return the not handling transformations
      */
-    public Set<Transformation> getNotHandlingTransformations() {
+    public Set<Transformation> getNotHandlingTransformations(boolean ignoreInherited) {
         if (cachedNotHandlingTransformations != null) {
-            return cachedNotHandlingTransformations;
+            if (ignoreInherited) {
+                return cachedNoInheritedNotHandlingTransformations;
+            } else {
+                return cachedNotHandlingTransformations;
+            }
         }
+        cachedNoInheritedNotHandlingTransformations = new HashSet<Transformation>();
         cachedNotHandlingTransformations = new HashSet<Transformation>();
         for (Transformation transformation : KielerCompiler.getTransformations()) {
-            for (Feature transformationNotHandlingFeature : transformation.getNotHandlesFeatures()) {
+            for (Feature transformationNotHandlingFeature : transformation.getNotHandlesFeatures(true)) {
+                if (transformationNotHandlingFeature == this) {
+                    cachedNoInheritedNotHandlingTransformations.add(transformation);
+                }
+            }
+            for (Feature transformationNotHandlingFeature : transformation.getNotHandlesFeatures(false)) {
                 if (transformationNotHandlingFeature == this) {
                     cachedNotHandlingTransformations.add(transformation);
                 }
             }
         }
-        return cachedNotHandlingTransformations;
+        if (ignoreInherited) {
+            return cachedNoInheritedNotHandlingTransformations;
+        } else {
+            return cachedNotHandlingTransformations;
+        }
     }
 
     // -------------------------------------------------------------------------
