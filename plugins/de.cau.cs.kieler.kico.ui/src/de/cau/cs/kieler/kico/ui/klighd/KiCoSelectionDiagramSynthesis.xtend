@@ -56,7 +56,7 @@ import de.cau.cs.kieler.kico.Transformation
 //class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<List<Feature>> {
 class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelectionDiagramModel> {
 
-    static final boolean DEBUG = false;
+    static final boolean DEBUG = true;
 
     static private HashMap<Transformation, TransformationFeature> transformationFeatureMap = new HashMap<Transformation, TransformationFeature>();
     static private HashSet<Feature> visibleFeatures = new HashSet<Feature>()
@@ -232,212 +232,6 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
     // Remember which super states already are connected (render just a single connection)
     private static ArrayList<Integer> connected = new ArrayList<Integer>();
 
-    //        // The Main entry transform function   
-    //        override transform(List<Feature> model) {
-    //            connected.clear
-    //    
-    //            val knode = model.createNode();
-    //    
-    //            for (elem : model) {
-    //                if (elem.container == null) {
-    //                    val kNode = elem.translate;
-    //                    knode.children.add(kNode);
-    //                }
-    //            }
-    //    
-    //    
-    //            return knode;
-    //        }
-    //    
-    //        def String getLabel(Feature s) {
-    //            s.transformation.name
-    //        }
-    //    
-    //        // -------------------------------------------------------------------------
-    //        // Transform a state    
-    //        def  KNode translate(Feature transformationDummy) {
-    //    
-    //            val root = transformationDummy.createNode().putToLookUpWith(transformationDummy) => [ node |
-    //                node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
-    //                val cornerRadius = if(!transformationDummy.isGroup) 17 else 8;
-    //                val lineWidth = 1;
-    //                val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;
-    //                //            figure.setProperty(KlighdProperties::, true);
-    //                figure.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
-    //                figure.addSingleClickAction(KiCoSelectionAction::ID);
-    //                figure.lineWidth = lineWidth;
-    //                figure.foreground = "gray".color;
-    //                // shaddow
-    //                figure.shadow = "black".color;
-    //                figure.shadow.XOffset = 4;
-    //                figure.shadow.YOffset = 4;
-    //                figure => [
-    //                    it.putToLookUpWith(transformationDummy)
-    //                        it.setBackgroundGradient(BLUE1.copy, BLUE2.copy, 90);
-    //                        it.setSelectionBackgroundGradient(BLUE1.copy, BLUE2.copy, 90);
-    //                    node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
-    //                    it.invisible = false;
-    //                    if (transformationDummy.group) {
-    //                        it.setGridPlacement(1);
-    //                    }
-    //                    if (transformationDummy.isGroup) {
-    //                        it.setProperty(KlighdProperties::TOOLTIP, transformationDummy.id);
-    //    
-    //                        // Get a smaller window-title-bare if this a macro state 
-    //                        if (!transformationDummy.label.empty)
-    //                            it.addRectangle => [
-    //                                it.invisible = true
-    //                                it.fontSize = 11;
-    //                                it.fontSize.propagateToChildren = true
-    //                                it.setForeground(DARKGRAY.copy)
-    //                                it.setFontBold(true);
-    //                                it.setGridPlacementData().from(LEFT, 0, 0, TOP, 8f, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
-    //                                it.addText("   " + transformationDummy.label + " ").
-    //                                    putToLookUpWith(transformationDummy) => [
-    //                                    // WORKAROUND UNTIL WE KNOW HOW TO DISABLE SELECTION OF LABELS!
-    //                                    it.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
-    //                                    it.addSingleClickAction(KiCoSelectionAction::ID);
-    //                                    it.setForeground(BLACK.copy);
-    //                                    it.setSelectionBackground(BLUE3.copy)
-    //                                    //                                it.setCursorSelectable(false)
-    //                                    //                                it.setSelectionInvisible(true)
-    //                                    it.setFontBold(true);
-    //                                    it.fontSize = 11;
-    //                                ];
-    //                            ];
-    //                    } else {
-    //                        it.setProperty(KlighdProperties::TOOLTIP, transformationDummy.id);
-    //    
-    //                        // For simple states we want a larger area 
-    //                        it.addText(" " + transformationDummy.label).putToLookUpWith(transformationDummy) => [
-    //                            // WORKAROUND UNTIL WE KNOW HOW TO DISABLE SELECTION OF LABELS!
-    //                            it.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
-    //                            it.addSingleClickAction(KiCoSelectionAction::ID);
-    //                            it.fontSize = 11;
-    //                            it.setForeground(BLACK.copy)
-    //                            it.setSelectionBackground(BLUE3.copy)
-    //                            //                        it.setCursorSelectable(false)
-    //                            //                        it.setSelectionInvisible(true)
-    //                            it.setFontBold(true);
-    //                            it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
-    //                        ];
-    //                    }
-    //                    if (transformationDummy.isGroup) {
-    //                        it.addChildArea().setGridPlacementData() => [
-    //                            from(LEFT, 3, 0, TOP, 3, 0).to(RIGHT, 3, 0, BOTTOM, 3, 0)
-    //                            minCellHeight = 5;
-    //                            minCellWidth = 5;
-    //                        ];
-    //                    } else {
-    //    
-    //                        //                    System.out.println("FROM "+source.id+" TO "+dest.id)
-    //                        for (dest : transformationDummy.dependencies) {
-    //    
-    //                            //                        System.out.println("FROM " + s.id + " TO " + dest.id)
-    //                            var transSource = transformationDummy
-    //                            var transDest = dest
-    //    
-    //                            //Calculate hierarchical source + destination (prevents inter level transitions)
-    //                            transSource = transformationDummy.getHierarchicalSource(dest)
-    //                            transDest = transformationDummy.getHierarchicalDest(dest)
-    //    
-    //                            if (transSource != null && transDest != null) {
-    //    
-    //                                debug(" CHK  CONT '" + transSource.id + "' TO '" + transDest.id + "'" )
-    //                                if (!(connected.contains(transSource.hashCode + transDest.hashCode))) {
-    //                                    //System.out.println(" DO   CONT '" + transSource.id + "' TO '" + transDest.id + "'  ::: " + connected.toString);
-    //                                    connected.add(transSource.hashCode + transDest.hashCode)
-    //                                    //System.out.println(" DONE  CONT '" + transSource.id + "' TO '" + transDest.id + "'  ::: " + connected.toString);
-    //                                    transSource.translateTransition(transDest)
-    //                                }
-    //                            }
-    //    
-    //                        }
-    //                    }
-    //                ];
-    //                if (transformationDummy.isGroup) {
-    //                    node.children += transformationDummy.translateGroup
-    //                }
-    //            ]
-    //    
-    //            return root
-    //        }
-    //    
-    //        // -------------------------------------------------------------------------
-    //        // Create a string of spaces with the length of the original text
-    //        def String getSpacedOut(int num) {
-    //            if (num > 0) {
-    //                return " " + getSpacedOut(num-1);
-    //            }
-    //            return ""
-    //        }
-    //    
-    //        // Create a string of spaces with the length of the original text
-    //        def String getSpacedOut(String originalText, int factor) {
-    //            return getSpacedOut(originalText.length * factor)
-    //        }
-    //    
-    //        // -------------------------------------------------------------------------
-    //        // Translate a Group
-    //        def KNode translateGroup(Feature transformationDummy) {
-    //            return createNode() => [ node |
-    //                if (transformationDummy.group) {
-    //                    node.setLayoutOption(KlighdProperties::EXPAND, false);
-    //                }
-    //                for (child : transformationDummy.dependencies) {
-    //                    val childKNode = child.translate;
-    //                    node.children += childKNode;
-    //                }
-    //                
-    //                // credits to SSM :-)
-    //                if (transformationDummy.alternative) {
-    //                    node.addLayoutParam(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered")
-    //                    node.addLayoutParam(LayoutOptions::SEPARATE_CC, false);
-    //                    node.setLayoutOption(LayoutOptions::DIRECTION, Direction::RIGHT);            
-    //                }
-    //    
-    //                node.addRectangle() => [
-    //                    it.setProperty(KlighdProperties::EXPANDED_RENDERING, true);
-    //                    it.setBackgroundGradient("white".color, GRAY, 90);
-    //                    it.setSelectionBackgroundGradient("white".color, GRAY, 90); // Selection KLighD trick
-    //                    it.setSurroundingSpace(2, 0);
-    //                    it.invisible = false;
-    //                    it.foreground = "gray".color
-    //                    it.lineWidth = 1;
-    //                    //FIXME: hacky workaround
-    //                    it.addText("[-]" + getSpacedOut(transformationDummy.label, 2) + " ") => [
-    //                        it.foreground = "dimGray".color
-    //    //                    it.foreground = "white".color
-    //                        it.fontSize = 10
-    //                        it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
-    //                        it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-    //                    ];
-    //                    if (transformationDummy.dependencies.size > 1) {
-    //                        it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
-    //                    }
-    //                ];
-    //                node.addRectangle() => [
-    //                    it.setProperty(KlighdProperties::COLLAPSED_RENDERING, true);
-    //                    it.setBackgroundGradient("white".color, GRAY, 90);
-    //                    it.setSelectionBackgroundGradient("white".color, GRAY, 90); // Selection KLighD trick
-    //                    it.setSurroundingSpace(4, 0);
-    //                    it.invisible = false;
-    //                    it.foreground = "gray".color
-    //                    it.lineWidth = 1;
-    //                    //FIXME: hacky workaround
-    //                    it.addText("[+]" + getSpacedOut(transformationDummy.label, 2) + " ") => [
-    //                        it.foreground = "dimGray".color
-    //    //                    it.foreground = "white".color
-    //                        it.fontSize = 10
-    //                        it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
-    //                        it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-    //                    ];
-    //                    if (transformationDummy.dependencies.size > 1) {
-    //                        it.addRectangle().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).invisible = true;
-    //                    }
-    //                ]
-    //            ];
-    //        }
     // -------------------------------------------------------------------------
     // Translate a transition
     def KEdge translateTransition(Feature source, Feature dest) {
@@ -535,9 +329,15 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
     // (B) cannot handle the feature that our feature transforms 
     def Set<Feature> dependencies(Feature feature) {
         var returnList = new HashSet<Feature>();
+        debug("Feature " + feature.id + " produces: ")
 
         // (A)
         for (transformation : feature.handlingTransformations) {
+            debug("   Transformation " + transformation.id + " produces: ")
+            for (producedFeature : transformation.producesFeatures) {
+                debug("     - Feature " + producedFeature.id)
+            }
+            
             returnList.addAll(transformation.producesFeatures);
         }
 

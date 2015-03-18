@@ -16,28 +16,31 @@ package de.cau.cs.kieler.kico.ui.klighd;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.common.collect.Sets;
+
 import de.cau.cs.kieler.kico.Feature;
 import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.Transformation;
 
 /**
- * This is a wrapper class so that transformations can be used seamles as Features in the diagram synth.    
+ * This is a wrapper class so that transformations can be used seamles as Features in the diagram
+ * synth.
  * 
  * @author cmot
- *
+ * 
  */
 public class TransformationFeature extends Feature {
-    
+
     private Transformation transformation;
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
     public TransformationFeature(Transformation transformation) {
         this.transformation = transformation;
     }
-    
-    //-------------------------------------------------------------------------
-    
+
+    // -------------------------------------------------------------------------
+
     /**
      * {@inheritDoc}
      */
@@ -45,7 +48,7 @@ public class TransformationFeature extends Feature {
         return transformation.getId();
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -54,18 +57,29 @@ public class TransformationFeature extends Feature {
         return transformation.getName();
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
      * Gets the real transformation hidden behind this feature.
-     *
+     * 
      * @return the transformation
      */
     public Transformation getTransformation() {
         return transformation;
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the handling transformation which in this wrapper case is the transformation we wrap.
+     * 
+     * @return the handling transformation
+     */
+    public Set<Transformation> getHandlingTransformations() {
+        return Sets.newHashSet(transformation);
+    }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Gets the list of transformations that declare not being able to handle this feature.
@@ -74,7 +88,7 @@ public class TransformationFeature extends Feature {
      */
     public Set<Transformation> getNotHandlingTransformations() {
         Feature linkedFeature = transformation.getHandleFeature();
-        
+
         if (cachedNotHandlingTransformations != null) {
             return cachedNotHandlingTransformations;
         }
