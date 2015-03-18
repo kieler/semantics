@@ -48,21 +48,18 @@ public class KiCoSelection {
      * @param advancedMode
      *            Indicates if compiler should run in advanced mode
      */
-    public KiCoSelection(int editorID, KiCoSelectionDiagramModel selectionModel, List<String> implicitSelection,
-            boolean advanced) {
+    public KiCoSelection(int editorID, KiCoSelectionDiagramModel selectionModel,
+            List<String> implicitSelection, boolean advanced) {
         this.editorID = editorID;
         List<String> selection = new ArrayList<String>();
         if (selectionModel != null) {
-            String[] selectionRaw = selectionModel.getContext().getSelection().toString().split(",");
+            String[] selectionRaw =
+                    selectionModel.getContext().getSelection().toString().split(",");
             for (String selectionRawItem : selectionRaw) {
                 selection.add(selectionRawItem);
             }
         }
-        if (selection != null) {
-            this.selection = new LinkedList<String>(selection);
-        } else {
-            this.selection = new LinkedList<String>();
-        }
+        this.selection = new LinkedList<String>(selection);
         this.advanced = advanced;
         // calculate ID
         if (this.selection.isEmpty()) {

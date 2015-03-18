@@ -13,10 +13,8 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
@@ -41,7 +39,6 @@ import de.cau.cs.kieler.kico.KielerCompiler;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
 import de.cau.cs.kieler.kico.Transformation;
-import de.cau.cs.kieler.kico.TransformationDummy;
 import de.cau.cs.kieler.kico.TransformationDummyGraph;
 import de.cau.cs.kieler.kico.ui.CompileChains.CompileChain;
 import de.cau.cs.kieler.kico.ui.KiCoSelectionChangeEventManager.KiCoSelectionChangeEventListerner;
@@ -718,9 +715,9 @@ public class KiCoSelectionView extends DiagramViewPart {
         // if OFF: only consider feature groups
         // if ON: also consider produce dependencies & model features
         compilerContext.setAdvancedSelect(advancedMode);
-        EObject testObject = compilerContext.getTransformationObject();
+        // Ensure to use the correct active model
         compilerContext.setTransformationObject(KiCoUIPlugin.getActiveModel());
-        EObject testObject2 = compilerContext.getTransformationObject();
+        // EObject testObject2 = compilerContext.getTransformationObject();
         Set<Feature> autoSelectedFeatures =
                 compilerContext.recomputeTransformationChain(true).getAutoSelectedFeatures(false);
 
@@ -1104,7 +1101,7 @@ public class KiCoSelectionView extends DiagramViewPart {
 
             if (part instanceof EditorPart) {
                 EditorPart editorPart = (EditorPart) part;
-                String partName = (editorPart).getPartName();
+                //String partName = (editorPart).getPartName();
 
                 boolean clearAll = false;
                 // Only in the following case we want to clear all because no editor is opened,
@@ -1486,7 +1483,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                     actionSelectAllToggle.setImageDescriptor(ICON_SELECTALL);
                     actionSelectAllToggle.setToolTipText("Select all transformations.");
                 }
-                int activeEditorID = getActiveEditorID();
+                //int activeEditorID = getActiveEditorID();
                 // if (allSelected) {
                 // List<TransformationDummy> allTransformations =
                 // getAllTransformations(activeEditorID);
@@ -1673,9 +1670,10 @@ public class KiCoSelectionView extends DiagramViewPart {
         if (this.getViewer() == null || this.getViewer().getViewContext() == null) {
             // The initialization case
             // Sometimes the initialization happens too fast for klighd thus do it delayed
-            final boolean allExpanded = this.allExpanded;
+            final boolean allExpanded = KiCoSelectionView.allExpanded;
             new UIJob("Init" + KiCoSelectionView.class.getName()) {
 
+                @SuppressWarnings("deprecation")
                 @Override
                 public IStatus runInUIThread(IProgressMonitor monitor) {
                     DiagramViewManager.initializeView(instance, model, null, properties);

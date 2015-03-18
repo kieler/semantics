@@ -2,12 +2,9 @@ package de.cau.cs.kieler.kico.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
@@ -23,9 +20,7 @@ import de.cau.cs.kieler.core.model.util.XtextModelingUtil;
 import de.cau.cs.kieler.kico.Feature;
 import de.cau.cs.kieler.kico.KiCoPlugin;
 import de.cau.cs.kieler.kico.KielerCompiler;
-import de.cau.cs.kieler.kico.Transformation;
 import de.cau.cs.kieler.kico.ui.CompileChains.CompileChain;
-import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
  * The activator class controls the plug-in life cycle.
