@@ -18,30 +18,28 @@ import de.cau.cs.kieler.kico.FeatureGroup
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 /**
- * Statecharts Feature Group.
+ * SyncCharts Feature Group.
  * 
  * @author cmot
  * @kieler.design 2015-03-12 proposed 
  * @kieler.rating 2015-03-12 proposed yellow
  */
-class Statecharts extends FeatureGroup {
+class SyncCharts extends FeatureGroup {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsFeatureGroup::STATECHARTS_ID
+        return SCChartsFeatureGroup::SYNCCHARTS_ID
     }
 
     override getName() {
-        return SCChartsFeatureGroup::STATECHARTS_NAME
+        return SCChartsFeatureGroup::SYNCCHARTS_NAME
     }
 
     override getFeatureIds() {
-        Sets.newHashSet(SCChartsFeature::ABORT_ID, SCChartsFeature::CONNECTOR_ID,
-             SCChartsFeature::ENTRY_ID, SCChartsFeature::EXIT_ID, 
-             SCChartsFeature::INITIALIZATION_ID, SCChartsFeature::COMPLEXFINALSTATE_ID, 
-             SCChartsFeature::DURINGACTION_ID);
+        Sets.newHashSet(SCChartsFeature::SIGNAL_ID, SCChartsFeature::COUNTDELAY_ID,
+             SCChartsFeature::SUSPEND_ID, SCChartsFeature::PRE_ID);
     }
 
 //-------------------------------------------------------------------------
