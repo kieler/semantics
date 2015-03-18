@@ -111,7 +111,14 @@ public abstract class Transformation implements ITransformation {
                         + "' references a feature '" + featureId
                         + "' it produces, but this feature cannot be found.", null);
             } else {
-                cachedProducesFeatures.add(feature);
+                if (feature.isGroup()) {
+                    // add all features of this group!
+                    for (Feature innerFeature : feature.asGroup().getResolvedFeatures()) {
+                        cachedNotHandlesFeatures.add(innerFeature);
+                    }
+                } else {
+                    cachedProducesFeatures.add(feature);
+                }
             }
         }
         return cachedProducesFeatures;
@@ -154,8 +161,32 @@ public abstract class Transformation implements ITransformation {
                         + "' references a feature '" + featureId
                         + "' it cannot handle, but this feature cannot be found.", null);
             } else {
-                cachedNotHandlesFeatures.add(feature);
+                if (feature.isGroup()) {
+                    // add all features of this group!
+                    for (Feature innerFeature : feature.asGroup().getResolvedFeatures()) {
+                        cachedNotHandlesFeatures.add(innerFeature);
+                    }
+                } else {
+                    cachedNotHandlesFeatures.add(feature);
+                }
             }
+        }
+        // META DEPENDENCY ADDITION: We need to add all features that are declared as not-manageable
+        // by ANY feature group
+        // our feature is part of! We inherit here all these not-handles dependencies!
+        Feature ourFeature = this.getHandleFeature();
+        for (FeatureGroup featureGroup : ourFeature.getAllParentFeatureGroups()) {
+            for (Feature inheritNotHandles : featureGroup.getNotHandlesFeatures()) {
+                if (inheritNotHandles.isGroup()) {
+                    for (Feature innerInheritNotHandles : inheritNotHandles.asGroup()
+                            .getResolvedFeatures()) {
+                        cachedNotHandlesFeatures.add(innerInheritNotHandles);
+                    }
+                } else {
+                    cachedNotHandlesFeatures.add(inheritNotHandles);
+                }
+            }
+
         }
         return cachedNotHandlesFeatures;
     }

@@ -22,6 +22,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import com.google.common.collect.Sets
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 
 /**
  * SCCharts WeakSuspend Transformation.

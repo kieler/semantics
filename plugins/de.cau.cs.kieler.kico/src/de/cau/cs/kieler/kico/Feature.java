@@ -40,6 +40,12 @@ public abstract class Feature implements IFeature {
     /** The cached not handling transformations. */
     protected Set<Transformation> cachedNotHandlingTransformations = null;
 
+    /** The cached parent feature groups this feature belongs to. */
+    protected Set<FeatureGroup> cachedFeatureGroups = null;
+
+    /** The cached parent feature groups this feature belongs to. */
+    protected Set<FeatureGroup> cachedAllFeatureGroups = null;
+
     // -------------------------------------------------------------------------
 
     /**
@@ -65,6 +71,31 @@ public abstract class Feature implements IFeature {
      */
     public boolean isContained(EObject model) {
         return false;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if this is a feature group.
+     * 
+     * @return true, if is group
+     */
+    public boolean isGroup() {
+        return (this instanceof FeatureGroup);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Returns the FeatureGroup is this feature is a feature group, null otherwise.
+     * 
+     * @return true, if is group
+     */
+    public FeatureGroup asGroup() {
+        if (!isGroup()) {
+            return null;
+        }
+        return (FeatureGroup) this;
     }
 
     // -------------------------------------------------------------------------
@@ -119,11 +150,11 @@ public abstract class Feature implements IFeature {
     public final Set<Feature> getProduceNotHandledByPathTo(Feature targetFeature) {
         return getProduceNotHandledByPathTo(this, targetFeature);
     }
-    
-    
-    private final  Set<Feature> getProduceNotHandledByPathTo(Feature fromFeature, Feature targetFeature) {
-        HashSet<Feature> returnFeatures = new HashSet<Feature>(); 
-        
+
+    private final Set<Feature> getProduceNotHandledByPathTo(Feature fromFeature,
+            Feature targetFeature) {
+        HashSet<Feature> returnFeatures = new HashSet<Feature>();
+
         // Recursion ends here, we have found a path
         if (fromFeature == targetFeature) {
             // return collected features (as this path is valid!)
@@ -137,10 +168,11 @@ public abstract class Feature implements IFeature {
                 // producedFeature == feature that is (possibly) produced by a transformation
                 // handling the fromFeature, so fromFeature must be transformed before
                 // producedFeature.
-                Set<Feature> moreFeatures = getProduceNotHandledByPathTo(producedFeature, targetFeature);
+                Set<Feature> moreFeatures =
+                        getProduceNotHandledByPathTo(producedFeature, targetFeature);
                 if (moreFeatures.size() > 0) {
                     // Return the collected features
-                    returnFeatures.addAll(moreFeatures); 
+                    returnFeatures.addAll(moreFeatures);
                     // Now that we know its a valid path, also add our fragment
                     returnFeatures.add(fromFeature);
                 }
@@ -152,20 +184,21 @@ public abstract class Feature implements IFeature {
             Feature notHandledByFeature = transformation.getHandleFeature();
             // notHandledByFeature == feature whose transformation cannot handle the fromFeature, so
             // fromFeature must be transformed before notHandledByFeature.
-            Set<Feature> moreFeatures = getProduceNotHandledByPathTo(notHandledByFeature, targetFeature);
+            Set<Feature> moreFeatures =
+                    getProduceNotHandledByPathTo(notHandledByFeature, targetFeature);
             if (moreFeatures.size() > 0) {
                 // Return the collected features
-                returnFeatures.addAll(moreFeatures); 
+                returnFeatures.addAll(moreFeatures);
                 // Now that we know its a valid path, also add our fragment
                 returnFeatures.add(fromFeature);
             }
         }
 
-        // Return an empty set of features if this path is not valid, or the collected features, if this path was valid!
+        // Return an empty set of features if this path is not valid, or the collected features, if
+        // this path was valid!
         return returnFeatures;
     }
 
-    
     /**
      * Checks if there exists a path on produce-dependencies or nothandledby-dependencies from this
      * feature to a target Feature. This is an internal helper method.
@@ -357,6 +390,66 @@ public abstract class Feature implements IFeature {
             // If is already resolved (because no FeatureGroup)
             resolvedFeatures.add(feature);
         }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the set of feature groups this feature belongs to.
+     * 
+     * @return the set of feature groups
+     */
+    public Set<FeatureGroup> getParentFeatureGroups() {
+        if (cachedFeatureGroups != null) {
+            return cachedFeatureGroups;
+        }
+        cachedFeatureGroups = new HashSet<FeatureGroup>();
+        for (Feature feature : KielerCompiler.getFeatures()) {
+            if (feature.isGroup() && feature.asGroup().getFeatures().contains(this)) {
+                cachedFeatureGroups.add(feature.asGroup());
+            }
+        }
+        return cachedFeatureGroups;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the set of feature groups this feature belongs to recursively following all groups up to
+     * the top most.
+     * 
+     * @return the set of feature groups
+     */
+    public Set<FeatureGroup> getAllParentFeatureGroups() {
+        if (cachedAllFeatureGroups != null) {
+            return cachedAllFeatureGroups;
+        }
+        cachedAllFeatureGroups = new HashSet<FeatureGroup>();
+        cachedAllFeatureGroups.addAll(getAllParentFeatureGroups(this));
+
+        return cachedAllFeatureGroups;
+     }
+    
+    // ---------------------------------
+    
+    /**
+     * Gets the set of feature groups this feature belongs to recursively following all groups up to
+     * the top most. Private helper method.
+     *
+     * @param group the group
+     * @return the all parent feature groups
+     */
+    private Set<FeatureGroup> getAllParentFeatureGroups(Feature featureContainedByGroup) {
+        HashSet<FeatureGroup> returnSet = new HashSet<FeatureGroup>();
+        for (Feature feature : KielerCompiler.getFeatures()) {
+            if (feature.isGroup() && feature.asGroup().getFeatures().contains(featureContainedByGroup)) {
+                // Add parent
+                returnSet.add(feature.asGroup());
+                // Continue with parent
+                returnSet.addAll(getAllParentFeatureGroups(feature));
+            }
+        }
+        return returnSet;
     }
 
     // -------------------------------------------------------------------------

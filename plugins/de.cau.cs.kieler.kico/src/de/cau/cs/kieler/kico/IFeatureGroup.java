@@ -17,8 +17,8 @@ import java.util.Set;
 
 /**
  * This interface defines what a concrete feature group is. A feature group must declare a set of
- * features that are referenceable by one single ID.  A string identifier represents the
- * feature name. Optionally a name can be provided.
+ * features that are referenceable by one single ID. A string identifier represents the feature
+ * name. Optionally a name can be provided.
  * 
  * @author cmot
  * @kieler.design 2015-03-09 proposed
@@ -47,14 +47,26 @@ public interface IFeatureGroup {
     // -------------------------------------------------------------------------
 
     /**
-     * This is the central method to declare for a feature group. It should return a set of
-     * feature IDs that are grouped together under one single ID. Note that a feature group
-     * is allowed also to contain other feature groups.
-     *
+     * This is the central method to declare for a feature group. It should return a set of feature
+     * IDs that are grouped together under one single ID. Note that a feature group is allowed also
+     * to contain other feature groups.
+     * 
      * @return the features that are contained in this feature group
      */
     public Set<String> getFeatureIds();
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Here groups or individual features can be defined that NOT A SINGLE transformation for
+     * features of this group is able to handle. This is a simple way of defining an order of groups
+     * of features. All transformations of features of this group will inherit these not handled
+     * features! The default implementation will return an empty set. Override to declare these meta
+     * dependencies.
+     * 
+     * @return the features that are contained in this feature group
+     */
+    public Set<String> getNotHandlesFeatureIds();
+
+    // -------------------------------------------------------------------------
 }

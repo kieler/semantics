@@ -20,6 +20,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import com.google.common.collect.Sets
+import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 
 /**
  * SCCharts TriggerEffect Transformation.
@@ -49,8 +50,12 @@ class TriggerEffect extends Transformation {
         return Sets.newHashSet()
     }
 
+    // THIS IS NOW DONE INDIRECTLY BY DECLARING META DEPENDENCIES ON FEATURE GROUPS
+    //override getNotHandlesFeatureIds() {
+    //    return Sets.newHashSet(SCChartsFeatureGroup::EXTENDED_ID)
+    //}
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeature::CONNECTOR_ID)
+        return Sets.newHashSet()
     }
 
     //-------------------------------------------------------------------------    

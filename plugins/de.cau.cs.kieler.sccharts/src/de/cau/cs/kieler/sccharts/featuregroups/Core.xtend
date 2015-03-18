@@ -41,5 +41,9 @@ class Core extends FeatureGroup {
         Sets.newHashSet(SCChartsFeature::TRIGGEREFFECT_ID, SCChartsFeature::SURFACEDEPTH_ID)
     }
 
+    override getNotHandlesFeatureIds() {
+        Sets.newHashSet(SCChartsFeatureGroup::EXTENDED_ID);
+    }
+
 //-------------------------------------------------------------------------
 }
