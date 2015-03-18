@@ -31,11 +31,11 @@ class Entry extends Feature {
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsFeature::ENTRY_ID;
+        return SCChartsFeature::ENTRY_ID
     }
 
     override getName() {
-        return SCChartsFeature::ENTRY_NAME;
+        return SCChartsFeature::ENTRY_NAME
     }
 
     //-------------------------------------------------------------------------
@@ -44,14 +44,13 @@ class Entry extends Feature {
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        val allStates = model.getAllStates.immutableCopy;
-
+        val allStates = model.getAllStates.immutableCopy
         for (state : allStates) {
             if (state.entryActions.size > 0) {
-                return true;
+                return true
             }
         }
-        return false;
+        return false
     }
 
 }

@@ -31,11 +31,11 @@ class Abort extends Feature {
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsFeature::ABORT_ID;
+        return SCChartsFeature::ABORT_ID
     }
 
     override getName() {
-        return SCChartsFeature::ABORT_NAME;
+        return SCChartsFeature::ABORT_NAME
     }
 
     //-------------------------------------------------------------------------
@@ -44,20 +44,18 @@ class Abort extends Feature {
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        val allStates = model.getAllContainedStatesList;
-
+        val allStates = model.getAllContainedStatesList
         for (state : allStates) {
             val stateHasUntransformedTransitions = ((state.outgoingTransitions.size > 1) || ((state.outgoingTransitions.
                 size == 1) && (!(state.outgoingTransitions.filter[typeTermination].filter[trigger == null].size == 1))))
 
             //val stateHasUntransformedAborts = (!(state.outgoingTransitions.filter[!typeTermination].nullOrEmpty))
-
             //        if (state.hierarchical && stateHasUntransformedAborts && state.label != "WaitAandB") {
             if ((state.hasInnerStatesOrRegions || state.hasInnerActions) && stateHasUntransformedTransitions) {
-                return true;
+                return true
             }
         }
-        return false;
+        return false
     }
 
 }

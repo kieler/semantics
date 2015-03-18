@@ -31,6 +31,9 @@ public class SCChartsFeature {
 
     public final static String FOR_ID = "FOR";
     public final static String FOR_NAME = "For";
+    
+    public final static String MAP_ID = "MAP";
+    public final static String MAP_NAME = "Map";
 
     public final static String WEAKSUSPEND_ID = "WEAKSUSPEND";
     public final static String WEAKSUSPEND_NAME = "Weak Suspend";
@@ -62,8 +65,8 @@ public class SCChartsFeature {
     public final static String ABORT_ID = "ABORT";
     public final static String ABORT_NAME = "Abort";
 
-    public final static String DURINGACTION_ID = "DURINGACTION";
-    public final static String DURINGACTION_NAME = "During Action";
+    public final static String DURING_ID = "DURING";
+    public final static String DURING_NAME = "During Action";
 
     public final static String INITIALIZATION_ID = "INITIALIZATION";
     public final static String INITIALIZATION_NAME = "Initialization";
@@ -83,4 +86,12 @@ public class SCChartsFeature {
     public final static String SURFACEDEPTH_ID = "SURFACEDEPTH";
     public final static String SURFACEDEPTH_NAME = "Suface/Depth";
 
+    public final static String EXPOSELOCALVALUEDOBJECT_ID = "EXPOSELOCALVALUEDOBJECT";
+    public final static String EXPOSELOCALVALUEDOBJECT_NAME = "Expore Local ValuedObject";
+
+    public final static String INPUTOUTPUT_ID = "INPUTOUTPUT";
+    public final static String INPUTOUTPUT_NAME = "Input and Output";
+
+    public final static String TERMINATION_ID = "TERMINATION";
+    public final static String TERMINATION_NAME = "Termination";
 }

@@ -31,11 +31,11 @@ class Exit extends Feature {
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsFeature::EXIT_ID;
+        return SCChartsFeature::EXIT_ID
     }
 
     override getName() {
-        return SCChartsFeature::EXIT_NAME;
+        return SCChartsFeature::EXIT_NAME
     }
 
     //-------------------------------------------------------------------------
@@ -44,14 +44,13 @@ class Exit extends Feature {
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        val allStates = model.getAllStates.immutableCopy;
-
+        val allStates = model.getAllStates.immutableCopy
         for (state : allStates) {
             if (state.exitActions.size > 0) {
-                return true;
+                return true
             }
         }
-        return false;
+        return false
     }
 
 }

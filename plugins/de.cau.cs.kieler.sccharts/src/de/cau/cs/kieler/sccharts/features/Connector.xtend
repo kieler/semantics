@@ -32,11 +32,11 @@ class Connector extends Feature {
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsFeature::CONNECTOR_ID;
+        return SCChartsFeature::CONNECTOR_ID
     }
 
     override getName() {
-        return SCChartsFeature::CONNECTOR_NAME;
+        return SCChartsFeature::CONNECTOR_NAME
     }
 
     //-------------------------------------------------------------------------
@@ -45,14 +45,13 @@ class Connector extends Feature {
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        val allStates = model.getAllContainedStatesList;
-
+        val allStates = model.getAllContainedStatesList
         for (state : allStates) {
             if (state.type == StateType::CONNECTOR) {
-                return true;
+                return true
             }
         }
-        return false;
+        return false
     }
 
 }

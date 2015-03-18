@@ -32,11 +32,11 @@ class Initialization extends Feature {
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsFeature::INITIALIZATION_ID;
+        return SCChartsFeature::INITIALIZATION_ID
     }
 
     override getName() {
-        return SCChartsFeature::INITIALIZATION_NAME;
+        return SCChartsFeature::INITIALIZATION_NAME
     }
 
     //-------------------------------------------------------------------------
@@ -47,16 +47,14 @@ class Initialization extends Feature {
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        val allStates = model.getAllStates.immutableCopy;
-
+        val allStates = model.getAllStates.immutableCopy
         for (state : allStates) {
             val valuedObjects = state.valuedObjects.filter[initialValue != null]
-
             if (!valuedObjects.nullOrEmpty) {
-                return true;
+                return true
             }
         }
-        return false;
+        return false
     }
 
 }
