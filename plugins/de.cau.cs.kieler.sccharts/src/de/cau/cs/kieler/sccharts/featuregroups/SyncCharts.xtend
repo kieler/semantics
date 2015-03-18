@@ -39,7 +39,7 @@ class SyncCharts extends FeatureGroup {
 
     override getFeatureIds() {
         Sets.newHashSet(SCChartsFeature::SIGNAL_ID, SCChartsFeature::COUNTDELAY_ID,
-             SCChartsFeature::SUSPEND_ID, SCChartsFeature::PRE_ID);
+             SCChartsFeature::SUSPEND_ID, SCChartsFeature::PRE_ID)
     }
 
 //-------------------------------------------------------------------------

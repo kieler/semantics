@@ -39,7 +39,7 @@ class ScadeQuartzEsterel extends FeatureGroup {
 
     override getFeatureIds() {
         Sets.newHashSet(SCChartsFeature::WEAKSUSPEND_ID, SCChartsFeature::DEFERRED_ID,
-             SCChartsFeature::HISTORY_ID, SCChartsFeature::STATIC_ID);
+             SCChartsFeature::HISTORY_ID, SCChartsFeature::STATIC_ID)
     }
 
 //-------------------------------------------------------------------------

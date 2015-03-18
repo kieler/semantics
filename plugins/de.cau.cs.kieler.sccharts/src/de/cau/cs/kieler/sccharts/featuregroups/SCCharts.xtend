@@ -37,7 +37,7 @@ class SCCharts extends FeatureGroup {
     }
 
     override getFeatureIds() {
-        Sets.newHashSet(SCChartsFeatureGroup::STATECHARTS_ID);
+        Sets.newHashSet(SCChartsFeatureGroup::STATECHARTS_ID)
     }
 
 //-------------------------------------------------------------------------

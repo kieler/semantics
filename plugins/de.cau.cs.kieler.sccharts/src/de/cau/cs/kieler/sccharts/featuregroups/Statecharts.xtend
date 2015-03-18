@@ -41,7 +41,7 @@ class Statecharts extends FeatureGroup {
         Sets.newHashSet(SCChartsFeature::ABORT_ID, SCChartsFeature::CONNECTOR_ID,
              SCChartsFeature::ENTRY_ID, SCChartsFeature::EXIT_ID, 
              SCChartsFeature::INITIALIZATION_ID, SCChartsFeature::COMPLEXFINALSTATE_ID, 
-             SCChartsFeature::DURINGACTION_ID);
+             SCChartsFeature::DURING_ID)
     }
 
 //-------------------------------------------------------------------------
