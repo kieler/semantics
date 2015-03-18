@@ -44,7 +44,22 @@
               class="de.cau.cs.kieler.sccharts.transformations.AbortWTO">
         </transformationClass>
         <transformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.ComplexFinalState">
+        </transformationClass>
+        <transformationClass
               class="de.cau.cs.kieler.sccharts.transformations.Connector">
+        </transformationClass>
+        <transformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Const">
+        </transformationClass>
+        <transformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.CountDelay">
+        </transformationClass>
+        <transformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Deferred">
+        </transformationClass>
+        <transformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.During">
         </transformationClass>
         <transformationClass
               class="de.cau.cs.kieler.sccharts.transformations.Entry">
@@ -53,7 +68,40 @@
               class="de.cau.cs.kieler.sccharts.transformations.Exit">
         </transformationClass>
         <transformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.For">
+        </transformationClass>
+        <transformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.History">
+        </transformationClass>
+        <transformationClass
               class="de.cau.cs.kieler.sccharts.transformations.Initialization">
+        </transformationClass>
+        <transformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.InputOutput">
+        </transformationClass>
+        <transformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Pre">
+        </transformationClass>
+        <transformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Reference">
+        </transformationClass>
+        <transformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Signal">
+        </transformationClass>
+        <transformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Static">
+        </transformationClass>
+        <transformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.SurfaceDepth">
+        </transformationClass>
+        <transformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.Suspend">
+        </transformationClass>
+        <transformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.TriggerEffect">
+        </transformationClass>
+        <transformationClass
+              class="de.cau.cs.kieler.sccharts.transformations.WeakSuspend">
         </transformationClass>
      </extension>
      <extension
@@ -97,9 +145,6 @@
         <featureClass
               class="de.cau.cs.kieler.sccharts.features.InputOutput">
         </featureClass>
-        <featureGroupClass
-              class="de.cau.cs.kieler.sccharts.featuregroups.SCCharts">
-        </featureGroupClass>
         <featureClass
               class="de.cau.cs.kieler.sccharts.features.Pre">
         </featureClass>
@@ -124,6 +169,18 @@
         <featureClass
               class="de.cau.cs.kieler.sccharts.features.WeakSuspend">
         </featureClass>
+        <featureGroupClass
+              class="de.cau.cs.kieler.sccharts.featuregroups.SCCharts">
+        </featureGroupClass>
+        <featureGroupClass
+              class="de.cau.cs.kieler.sccharts.featuregroups.Core">
+        </featureGroupClass>
+        <featureGroupClass
+              class="de.cau.cs.kieler.sccharts.featuregroups.Extended">
+        </featureGroupClass>
+        <featureGroupClass
+              class="de.cau.cs.kieler.sccharts.featuregroups.Advanced">
+        </featureGroupClass>
         <featureGroupClass
               class="de.cau.cs.kieler.sccharts.featuregroups.Statecharts">
         </featureGroupClass>

@@ -15,29 +15,30 @@ package de.cau.cs.kieler.sccharts.featuregroups
 
 import com.google.common.collect.Sets
 import de.cau.cs.kieler.kico.FeatureGroup
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 /**
- * SCCharts Feature Group.
+ * Advanced SCCharts Feature Group.
  * 
  * @author cmot
  * @kieler.design 2015-03-12 proposed 
  * @kieler.rating 2015-03-12 proposed yellow
  */
-class SCCharts extends FeatureGroup {
+class Advanced extends FeatureGroup {
 
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsFeatureGroup::SCCHARTS_ID
+        return SCChartsFeatureGroup::ADVANCED_ID
     }
 
     override getName() {
-        return SCChartsFeatureGroup::SCCHARTS_NAME
+        return SCChartsFeatureGroup::ADVANCED_NAME
     }
 
     override getFeatureIds() {
-        Sets.newHashSet(SCChartsFeatureGroup::EXTENDED_ID, SCChartsFeatureGroup::CORE_ID)
+        Sets.newHashSet(SCChartsFeature::CONST_ID, SCChartsFeature::REFERENCE_ID, SCChartsFeature::FOR_ID)
     }
 
 //-------------------------------------------------------------------------
