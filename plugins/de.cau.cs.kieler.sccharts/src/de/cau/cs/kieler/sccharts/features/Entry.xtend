@@ -44,7 +44,7 @@ class Entry extends Feature {
 
     // This method checks, if this feature is contained in a model
     def isContained(State model) {
-        val allStates = model.getAllStates.immutableCopy
+        val allStates = model.allStates.toList
         for (state : allStates) {
             if (state.entryActions.size > 0) {
                 return true
