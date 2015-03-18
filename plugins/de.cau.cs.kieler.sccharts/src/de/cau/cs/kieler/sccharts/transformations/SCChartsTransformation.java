@@ -71,11 +71,11 @@ public class SCChartsTransformation {
     public final static String INITIALIZATION_ID = "INITIALIZATION";
     public final static String INITIALIZATION_NAME = "Initialization";
 
-    public final static String EXITACTION_ID = "EXITACTION";
-    public final static String EXITACTION_NAME = "Exit Action";
+    public final static String EXIT_ID = "EXIT";
+    public final static String EXIT_NAME = "Exit Action";
 
-    public final static String ENTRYACTION_ID = "ENTRYACTION";
-    public final static String ENTRYACTION_NAME = "Entry Action";
+    public final static String ENTRY_ID = "ENTRY";
+    public final static String ENTRY_NAME = "Entry Action";
 
     public final static String CONNECTOR_ID = "CONNECTOR";
     public final static String CONNECTOR_NAME = "Connector";

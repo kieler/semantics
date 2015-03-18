@@ -152,8 +152,8 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static int compileMode = 0;
 
     /** The hierarchy or flat diagram synthesis mode. */
-    public static int hierarchyMode = 0; // 0 = hierarchy, 1 = flat & no groups, 2 = flat
-    public static final int MAXHIERARCHYMODE = 2;
+    public static int hierarchyMode = 0; // 0 = hierarchy, 1 = flat
+    public static final int MAXHIERARCHYMODE = 1;
 
     /** The last editor. */
     String lastEditorModelName = null;
@@ -715,7 +715,7 @@ public class KiCoSelectionView extends DiagramViewPart {
         KielerCompilerSelection selection = compilerContext.getSelection();
         // Update the actual advanced mode here
         // This might influence the auto select results:
-        // if OFF: only consider feature groups 
+        // if OFF: only consider feature groups
         // if ON: also consider produce dependencies & model features
         compilerContext.setAdvancedSelect(advancedMode);
         EObject testObject = compilerContext.getTransformationObject();
@@ -1214,16 +1214,16 @@ public class KiCoSelectionView extends DiagramViewPart {
         // knownModels.put(activeEditorID, context);
         KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
 
-        // if (hierarchyMode == 0) {
-        properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
-                "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis");
-        // } else {
-        // properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
-        // "de.cau.cs.kieler.kico.ui.klighd.diagramFlatNoGroupsSynthesis");
-        // } else {
-        // properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
-        // "de.cau.cs.kieler.kico.ui.klighd.diagramFlatSynthesis");
-        // }
+        if (hierarchyMode == 0) {
+            properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
+                    "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis");
+        } else {
+            properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
+                    "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatSynthesis");
+            // } else {
+            // properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
+            // "de.cau.cs.kieler.kico.ui.klighd.diagramFlatSynthesis");
+        }
 
         // Hide zoom buttons
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
@@ -1435,10 +1435,13 @@ public class KiCoSelectionView extends DiagramViewPart {
                 if (hierarchyMode > MAXHIERARCHYMODE) {
                     hierarchyMode = 0;
                 }
+                // Clear cache
+                KiCoSelectionAction.clearCache();
+
                 lastEditorId = -1;
                 lastEditorModelName = "";
-                updateView(lastWorkbenchPartReference);
 
+                updateView(lastWorkbenchPartReference);
             }
         };
         actionHierarchyToggle.setText("Toggle Hierarchical/Flat View");

@@ -36,11 +36,11 @@ class Exit extends Transformation {
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsTransformation::EXITACTION_ID;
+        return SCChartsTransformation::EXIT_ID;
     }
 
     override getName() {
-        return SCChartsTransformation::EXITACTION_NAME;
+        return SCChartsTransformation::EXIT_NAME;
     }
 
     override getHandleFeatureId() {

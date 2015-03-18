@@ -34,11 +34,11 @@ class Entry extends Transformation {
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsTransformation::ENTRYACTION_ID;
+        return SCChartsTransformation::ENTRY_ID;
     }
 
     override getName() {
-        return SCChartsTransformation::ENTRYACTION_NAME;
+        return SCChartsTransformation::ENTRY_NAME;
     }
 
     override getHandleFeatureId() {

@@ -8,6 +8,10 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis"
             id="de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis">
       </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatSynthesis"
+            id="de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatSynthesis">
+      </diagramSynthesis>
    </extension>
    <extension
          point="org.eclipse.ui.views">
