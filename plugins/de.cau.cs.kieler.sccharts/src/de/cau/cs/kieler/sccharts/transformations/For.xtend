@@ -18,6 +18,9 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import com.google.common.collect.Sets
 
 /**
  * SCCharts For Transformation.
@@ -26,8 +29,36 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class For {
+class For extends Transformation {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::FOR_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::FOR_NAME
+    }
+
+    override getHandleFeatureId() {
+        return SCChartsFeature::FOR_ID
+    }
+
+    override getProducesFeatureIds() {
+
+        // TODO: Check
+        return Sets.newHashSet()
+    }
+
+    override getNotHandlesFeatureIds() {
+
+        // TODO: Check
+        return Sets.newHashSet()
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension SCChartsExtension
 

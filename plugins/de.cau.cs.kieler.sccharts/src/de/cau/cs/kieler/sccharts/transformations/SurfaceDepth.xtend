@@ -21,6 +21,9 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.extensions.SCChartsOptimization
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import com.google.common.collect.Sets
 
 /**
  * SCCharts SurfaceDepth Transformation.
@@ -29,8 +32,32 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsOptimization
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class SurfaceDepth {
+class SurfaceDepth extends Transformation {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::SURFACEDEPTH_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::SURFACEDEPTH_NAME
+    }
+
+    override getHandleFeatureId() {
+        return SCChartsFeature::SURFACEDEPTH_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet();
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::TRIGGEREFFECT_ID)
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
@@ -68,16 +95,17 @@ class SurfaceDepth {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.allStates.toList.forEach[ targetState |
+        targetRootState.allStates.toList.forEach [ targetState |
             targetState.transformSurfaceDepth(targetRootState);
         ]
 
-        targetRootState.fixAllTextualOrdersByPriorities.optimizeSuperflousConditionalStates.optimizeSuperflousImmediateTransitions.fixDeadCode;
+        targetRootState.fixAllTextualOrdersByPriorities.optimizeSuperflousConditionalStates.
+            optimizeSuperflousImmediateTransitions.fixDeadCode;
     }
 
     def void transformSurfaceDepth(State state, State targetRootState) {
         if (state.outgoingTransitions.size > 0 && state.type == StateType::NORMAL &&
-            !state.outgoingTransitions.get(0).typeTermination && 
+            !state.outgoingTransitions.get(0).typeTermination &&
             (state.outgoingTransitions.get(0).trigger != null || !state.outgoingTransitions.get(0).immediate)) {
             val parentRegion = state.parentRegion;
 
@@ -103,8 +131,8 @@ class SurfaceDepth {
 
             var State previousState = surfaceState
             var State currentState = surfaceState
-            //System.out.println("Set currentState := " + surfaceState.id)
 
+            //System.out.println("Set currentState := " + surfaceState.id)
             for (transition : orderedTransitionList) {
 
                 if (!(transition.isImmediate) && !pauseInserted) {
@@ -116,8 +144,8 @@ class SurfaceDepth {
 
                     depthState = parentRegion.createState(GENERATED_PREFIX + "Pause").uniqueName
                     previousState.createImmediateTransitionTo(depthState)
-                    //System.out.println("Connect pause 1:" + previousState.id + " -> " + depthState.id);
 
+                    //System.out.println("Connect pause 1:" + previousState.id + " -> " + depthState.id);
                     val pauseState = parentRegion.createState(GENERATED_PREFIX + "Depth").uniqueName
                     depthState.createTransitionTo(pauseState)
 
@@ -125,17 +153,18 @@ class SurfaceDepth {
                     previousState = pauseState
                     currentState = null
 
-                    //System.out.println("Connect pause 2:" + depthState.id + " -> " + pauseState.id);
+                //System.out.println("Connect pause 2:" + depthState.id + " -> " + pauseState.id);
                 }
 
                 if (currentState == null) {
 
                     // Create a new state
                     currentState = parentRegion.createState(GENERATED_PREFIX + "S").uniqueName
-                    //System.out.println("New currentState := " + currentState.id)
 
+                    //System.out.println("New currentState := " + currentState.id)
                     // Connect
                     val connect = previousState.createImmediateTransitionTo(currentState)
+
                     //System.out.println("Connect:" + previousState.id + " -> " + currentState.id);
                     connect.setPriority(2)
 
@@ -158,8 +187,8 @@ class SurfaceDepth {
 
             // Connect back depth with surface state
             var T2tmp = previousState.createImmediateTransitionTo(depthState)
-            //System.out.println("Connect BACK:" + previousState.id + " -> " + depthState.id);
 
+            //System.out.println("Connect BACK:" + previousState.id + " -> " + depthState.id);
             // Afterwards do the DTO transformation
             /* Der Knoten _Pause ist besonders ausgezeichnet. Er hat meistens zwei
             eingehende Kanten T1 von der surface und T2 von dem feedback aus der depth.
@@ -180,7 +209,6 @@ class SurfaceDepth {
             var stateAfterDepth = depthState
 
             //System.out.println("stateAfterDepth:" + stateAfterDepth.id);
-
             var doDTO = false;
 
             if (doDTO) {
@@ -210,6 +238,7 @@ class SurfaceDepth {
                                 if ((TK1.targetState == TK2.targetState) &&
                                     ((TK1.trigger == TK2.trigger) || (TK1.trigger.equals2(TK2.trigger)))) {
                                     stateAfterDepth = K1
+
                                     //System.out.println("new stateAfterDepth:" + stateAfterDepth.id);
                                     val t = K2.incomingTransitions.get(0)
                                     t.setTargetState(stateAfterDepth)

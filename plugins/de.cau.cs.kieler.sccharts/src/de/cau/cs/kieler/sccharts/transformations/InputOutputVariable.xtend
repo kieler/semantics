@@ -18,6 +18,9 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import com.google.common.collect.Sets
 
 /**
  * SCCharts InputOutputVariable Transformation.
@@ -26,13 +29,38 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class InputOutputVariable {
+class InputOutputVariable extends Transformation {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::INPUTOUTPUT_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::INPUTOUTPUT_NAME
+    }
+
+    override getHandleFeatureId() {
+        return SCChartsFeature::INITIALIZATION_ID
+    }
+
+    override getProducesFeatureIds() {
+
+        // TODO: Check
+        return Sets.newHashSet()
+    }
+
+    override getNotHandlesFeatureIds() {
+
+        // TODO: Check
+        return Sets.newHashSet()
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension SCChartsExtension
-
-    // This prefix is used for naming of all generated signals, states and regions
-    static public final String GENERATED_PREFIX = "_"
 
     //-------------------------------------------------------------------------
     //--          I N P U T   O U T P U T   V A R I A B L E                  --
@@ -49,7 +77,7 @@ class InputOutputVariable {
     }
 
     def void transformInputOutputVariable(State state, State targetRootState) {
-        //TODO
+        //TODO: Implement this transformation
     }
 
 }

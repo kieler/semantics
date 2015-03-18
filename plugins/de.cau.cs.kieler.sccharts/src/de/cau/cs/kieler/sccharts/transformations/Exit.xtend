@@ -32,30 +32,31 @@ import com.google.common.collect.Sets
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class Exit extends Transformation {
+
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsTransformation::EXIT_ID;
+        return SCChartsTransformation::EXIT_ID
     }
 
     override getName() {
-        return SCChartsTransformation::EXIT_NAME;
+        return SCChartsTransformation::EXIT_NAME
     }
 
     override getHandleFeatureId() {
-        return SCChartsFeature::EXIT_ID;
+        return SCChartsFeature::EXIT_ID
     }
 
     override getProducesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeature::CONNECTOR_ID);
+        return Sets.newHashSet(SCChartsFeature::CONNECTOR_ID)
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeature::ABORT_ID);
+        return Sets.newHashSet(SCChartsFeature::ABORT_ID)
     }
-    //-------------------------------------------------------------------------
 
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
@@ -77,12 +78,12 @@ class Exit extends Transformation {
         val targetRootState = rootState.fixAllPriorities;
 
         // Prepare all states so that each reagion has at most one final state
-        targetRootState.getAllStates.toList.forEach[ targetState |
+        targetRootState.getAllStates.toList.forEach [ targetState |
             targetState.prepareExit(targetRootState);
         ]
 
         // Traverse all states
-        targetRootState.getAllStates.toList.forEach[ targetState |
+        targetRootState.getAllStates.toList.forEach [ targetState |
             targetState.transformExit(targetRootState);
         ]
         targetRootState.fixAllTextualOrdersByPriorities;

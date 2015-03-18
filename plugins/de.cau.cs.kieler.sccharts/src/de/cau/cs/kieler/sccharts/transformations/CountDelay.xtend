@@ -18,6 +18,9 @@ import de.cau.cs.kieler.core.kexpressions.extensions.KExpressionsExtension
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import com.google.common.collect.Sets
 
 /**
  * SCCharts CountDelay Transformation.
@@ -26,8 +29,32 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class CountDelay {
+class CountDelay extends Transformation {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::COUNTDELAY_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::COUNTDELAY_NAME
+    }
+
+    override getHandleFeatureId() {
+        return SCChartsFeature::COUNTDELAY_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::DURING_ID, SCChartsFeature::ENTRY_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::ABORT_ID)
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
@@ -59,7 +86,7 @@ class CountDelay {
             val parentState = sourceState.parentRegion.parentState
 
             val counter = parentState.createVariable(GENERATED_PREFIX + "counter").setTypeInt.uniqueName
-            
+
             //Add entry action
             val entryAction = sourceState.createEntryAction
             entryAction.addEffect(counter.assign(0.createIntValue))
@@ -67,7 +94,6 @@ class CountDelay {
             // The during action MUST be added to the PARENT state NOT the SOURCE state because
             // otherwise (for a strong abort) taking the strong abort transition would not be
             // allowed to be triggered from inside!
-
             // Add during action
             val duringAction = parentState.createDuringAction
             duringAction.setTrigger(transition.trigger)

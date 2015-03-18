@@ -20,6 +20,9 @@ import de.cau.cs.kieler.sccharts.TransitionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import com.google.common.collect.Sets
 
 /**
  * SCCharts Termination Transformation.
@@ -28,8 +31,36 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class Termination {
+class Termination extends Transformation {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::TERMINATION_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::TERMINATION_NAME
+    }
+
+    override getHandleFeatureId() {
+        return SCChartsFeature::TERMINATION_ID
+    }
+
+    override getProducesFeatureIds() {
+
+        // TODO: Check
+        return Sets.newHashSet()
+    }
+
+    override getNotHandlesFeatureIds() {
+
+        // TODO: Check
+        return Sets.newHashSet()
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
 
@@ -64,7 +95,7 @@ class Termination {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.getAllStates.forEach[ targetState |
+        targetRootState.getAllStates.forEach [ targetState |
             targetState.transformTermination(targetRootState);
         ]
         targetRootState.fixAllTextualOrdersByPriorities;

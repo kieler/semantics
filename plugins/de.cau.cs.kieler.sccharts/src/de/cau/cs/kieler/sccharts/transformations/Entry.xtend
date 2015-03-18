@@ -30,30 +30,31 @@ import com.google.common.collect.Sets
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class Entry extends Transformation {
+
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsTransformation::ENTRY_ID;
+        return SCChartsTransformation::ENTRY_ID
     }
 
     override getName() {
-        return SCChartsTransformation::ENTRY_NAME;
+        return SCChartsTransformation::ENTRY_NAME
     }
 
     override getHandleFeatureId() {
-        return SCChartsFeature::ENTRY_ID;
+        return SCChartsFeature::ENTRY_ID
     }
 
     override getProducesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeature::CONNECTOR_ID);
+        return Sets.newHashSet(SCChartsFeature::CONNECTOR_ID)
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeature::ABORT_ID);
+        return Sets.newHashSet(SCChartsFeature::ABORT_ID)
     }
-    //-------------------------------------------------------------------------
 
+    //-------------------------------------------------------------------------
     @Inject
     extension SCChartsExtension
 

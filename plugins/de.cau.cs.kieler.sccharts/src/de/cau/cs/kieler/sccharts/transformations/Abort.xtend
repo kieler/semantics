@@ -40,24 +40,24 @@ class Abort extends Transformation {
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsTransformation::ABORT_ID;
+        return SCChartsTransformation::ABORT_ID
     }
 
     override getName() {
-        return SCChartsTransformation::ABORT_NAME;
+        return SCChartsTransformation::ABORT_NAME
     }
 
     override getHandleFeatureId() {
-        return SCChartsFeature::ABORT_ID;
+        return SCChartsFeature::ABORT_ID
     }
 
     override getProducesFeatureIds() {
         return Sets.newHashSet(SCChartsFeature::INITIALIZATION_ID, SCChartsFeature::ENTRY_ID,
-            SCChartsFeature::CONNECTOR_ID);
+            SCChartsFeature::CONNECTOR_ID)
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeature::COUNTDELAY_ID, SCChartsFeature::COMPLEXFINALSTATE_ID);
+        return Sets.newHashSet(SCChartsFeature::COUNTDELAY_ID, SCChartsFeature::COMPLEXFINALSTATE_ID)
     }
 
     //-------------------------------------------------------------------------
@@ -72,7 +72,6 @@ class Abort extends Transformation {
     static public final String GENERATED_PREFIX = "_"
 
     private val nameCache = <String>newArrayList("_term")
-
 
     // FIXME: Delayed weak aborts need to be treated with a watcher region and a
     // delaying auxiliary signal there.

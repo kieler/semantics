@@ -17,6 +17,9 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import com.google.common.collect.Sets
 
 /**
  * SCCharts TriggerEffect Transformation.
@@ -25,8 +28,32 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension
  * @kieler.design 2013-09-05 proposed 
  * @kieler.rating 2013-09-05 proposed yellow
  */
-class TriggerEffect {
+class TriggerEffect extends Transformation {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::TRIGGEREFFECT_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::TRIGGEREFFECT_NAME
+    }
+
+    override getHandleFeatureId() {
+        return SCChartsFeature::TRIGGEREFFECT_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet()
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::CONNECTOR_ID)
+    }
+
+    //-------------------------------------------------------------------------    
     @Inject
     extension SCChartsExtension
 
@@ -55,21 +82,20 @@ class TriggerEffect {
     def void transformTriggerEffect(Transition transition, State targetRootState) {
 
         // Only apply this to transition that have both, a trigger (or is a termination) and one or more effects 
-        if (
-            ((transition.trigger != null || !transition.immediate || transition.typeTermination) && !transition.effects.nullOrEmpty)
-             || transition.effects.size > 1) {
+        if (((transition.trigger != null || !transition.immediate || transition.typeTermination) &&
+            !transition.effects.nullOrEmpty) || transition.effects.size > 1) {
             val targetState = transition.targetState
             val parentRegion = targetState.parentRegion
             val transitionOriginalTarget = transition.targetState
             var Transition lastTransition = transition
 
             for (effect : transition.effects.immutableCopy) {
-                    val effectState = parentRegion.createState(GENERATED_PREFIX + "S")
-                    effectState.uniqueName
-                    val effectTransition = createImmediateTransition.addEffect(effect)
-                    effectTransition.setSourceState(effectState)
-                    lastTransition.setTargetState(effectState)
-                    lastTransition = effectTransition
+                val effectState = parentRegion.createState(GENERATED_PREFIX + "S")
+                effectState.uniqueName
+                val effectTransition = createImmediateTransition.addEffect(effect)
+                effectTransition.setSourceState(effectState)
+                lastTransition.setTargetState(effectState)
+                lastTransition = effectTransition
             }
 
             lastTransition.setTargetState(transitionOriginalTarget)

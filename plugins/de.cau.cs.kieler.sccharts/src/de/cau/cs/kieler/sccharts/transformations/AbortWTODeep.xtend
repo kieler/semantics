@@ -39,29 +39,35 @@ class AbortWTODeep extends Transformation {
     //-------------------------------------------------------------------------
     override getId() {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")
-//        return SCChartsTransformation::ABORTWTO_ID;
+
+    //        return SCChartsTransformation::ABORTWTO_ID;
     }
 
     override getName() {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")
-//        return SCChartsTransformation::ABORTWTO_NAME;
+
+    //        return SCChartsTransformation::ABORTWTO_NAME;
     }
 
     override getHandleFeatureId() {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")
-//        return SCChartsFeature::ABORT_ID;
+
+    //        return SCChartsFeature::ABORT_ID;
     }
 
     override getProducesFeatureIds() {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")
-//        return Sets.newHashSet(SCChartsFeature::INITIALIZATION_ID, SCChartsFeature::ENTRYACTION_ID,
-//            SCChartsFeature::CONNECTOR_ID);
+
+    //        return Sets.newHashSet(SCChartsFeature::INITIALIZATION_ID, SCChartsFeature::ENTRYACTION_ID,
+    //            SCChartsFeature::CONNECTOR_ID);
     }
 
     override getNotHandlesFeatureIds() {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")
-//        return Sets.newHashSet(SCChartsFeature::COUNTDELAY_ID, SCChartsFeature::COMPLEXFINALSTATE_ID);
+
+    //        return Sets.newHashSet(SCChartsFeature::COUNTDELAY_ID, SCChartsFeature::COMPLEXFINALSTATE_ID);
     }
+
     //-------------------------------------------------------------------------
     //-------------------------------------------------------------------------
     @Inject
@@ -73,8 +79,7 @@ class AbortWTODeep extends Transformation {
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
 
-    private val nameCache = <String>newArrayList("_term")
-
+    //private val nameCache = <String>newArrayList("_term")
 
     //-------------------------------------------------------------------------
     //--     A B O R T     S P E C I A L      T R A N S F O R M A T I O N    --

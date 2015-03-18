@@ -29,30 +29,31 @@ import com.google.common.collect.Sets
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class Connector extends Transformation {
+
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsTransformation::CONNECTOR_ID;
+        return SCChartsTransformation::CONNECTOR_ID
     }
 
     override getName() {
-        return SCChartsTransformation::CONNECTOR_NAME;
+        return SCChartsTransformation::CONNECTOR_NAME
     }
 
     override getHandleFeatureId() {
-        return SCChartsFeature::CONNECTOR_ID;
+        return SCChartsFeature::CONNECTOR_ID
     }
 
     override getProducesFeatureIds() {
-        return Sets.newHashSet();
+        return Sets.newHashSet()
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet();
+        return Sets.newHashSet()
     }
-    //-------------------------------------------------------------------------
 
+    //-------------------------------------------------------------------------
     @Inject
     extension SCChartsExtension
 
@@ -68,14 +69,13 @@ class Connector extends Transformation {
         val targetRootState = rootState.fixAllPriorities;
 
         // Traverse all states
-        targetRootState.allStates.forEach [targetTransition | 
-             targetTransition.transformConnector(targetRootState);
+        targetRootState.allStates.forEach [ targetTransition |
+            targetTransition.transformConnector(targetRootState);
         ]
-            
-//        for (targetTransition : targetRootState.allStates) {
-//            targetTransition.transformConnector(targetRootState);
-//        }
 
+        //        for (targetTransition : targetRootState.allStates) {
+        //            targetTransition.transformConnector(targetRootState);
+        //        }
         targetRootState.fixAllTextualOrdersByPriorities;
     }
 

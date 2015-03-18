@@ -40,24 +40,24 @@ class AbortWTO extends Transformation {
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsTransformation::ABORTWTO_ID;
+        return SCChartsTransformation::ABORTWTO_ID
     }
 
     override getName() {
-        return SCChartsTransformation::ABORTWTO_NAME;
+        return SCChartsTransformation::ABORTWTO_NAME
     }
 
     override getHandleFeatureId() {
-        return SCChartsFeature::ABORT_ID;
+        return SCChartsFeature::ABORT_ID
     }
 
     override getProducesFeatureIds() {
         return Sets.newHashSet(SCChartsFeature::INITIALIZATION_ID, SCChartsFeature::ENTRY_ID,
-            SCChartsFeature::CONNECTOR_ID);
+            SCChartsFeature::CONNECTOR_ID)
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeature::COUNTDELAY_ID, SCChartsFeature::COMPLEXFINALSTATE_ID);
+        return Sets.newHashSet(SCChartsFeature::COUNTDELAY_ID, SCChartsFeature::COMPLEXFINALSTATE_ID)
     }
 
     //-------------------------------------------------------------------------

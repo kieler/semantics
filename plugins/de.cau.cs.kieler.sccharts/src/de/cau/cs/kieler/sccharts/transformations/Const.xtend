@@ -25,6 +25,9 @@ import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.BoolValue
 import de.cau.cs.kieler.core.kexpressions.FloatValue
 import de.cau.cs.kieler.core.kexpressions.DoubleValue
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import com.google.common.collect.Sets
 
 /**
  * SCCharts Const Transformation.
@@ -33,8 +36,32 @@ import de.cau.cs.kieler.core.kexpressions.DoubleValue
  * @kieler.design 2014-05-22 proposed 
  * @kieler.rating 2014-05-22 proposed yellow
  */
-class Const {
+class Const extends Transformation {
 
+    //-------------------------------------------------------------------------
+    //--                 K I C O      C O N F I G U R A T I O N              --
+    //-------------------------------------------------------------------------
+    override getId() {
+        return SCChartsTransformation::CONST_ID
+    }
+
+    override getName() {
+        return SCChartsTransformation::CONST_NAME
+    }
+
+    override getHandleFeatureId() {
+        return SCChartsFeature::CONST_ID
+    }
+
+    override getProducesFeatureIds() {
+        return Sets.newHashSet(SCChartsFeature::CONNECTOR_ID)
+    }
+
+    override getNotHandlesFeatureIds() {
+        return Sets.newHashSet()
+    }
+
+    //-------------------------------------------------------------------------
     @Inject
     extension AnnotationsExtensions
 
@@ -80,9 +107,10 @@ class Const {
                         replacementString = (replacement as BoolValue).value.toString
                     else if (replacement instanceof FloatValue)
                         replacementString = (replacement as FloatValue).value.toString
-                    else if(replacement instanceof DoubleValue) replacementString = (replacement as DoubleValue).value.
-                        toString else if(replacement instanceof TextExpression) replacementString = (replacement as TextExpression).
-                        text
+                    else if (replacement instanceof DoubleValue)
+                        replacementString = (replacement as DoubleValue).value.toString
+                    else if (replacement instanceof TextExpression)
+                        replacementString = (replacement as TextExpression).text
                     text = text.replaceAll(const.name, replacementString)
                 ]
             }

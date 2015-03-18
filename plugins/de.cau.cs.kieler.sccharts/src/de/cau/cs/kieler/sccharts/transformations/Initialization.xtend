@@ -22,6 +22,9 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import com.google.common.collect.Sets
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.sccharts.features.SCChartsFeature
+import com.google.common.collect.Sets
 
 /**
  * SCCharts Initialization Transformation.
@@ -31,28 +34,30 @@ import com.google.common.collect.Sets
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class Initialization extends Transformation {
+
     //-------------------------------------------------------------------------
     //--                 K I C O      C O N F I G U R A T I O N              --
     //-------------------------------------------------------------------------
     override getId() {
-        return SCChartsTransformation::INITIALIZATION_ID;
+        return SCChartsTransformation::INITIALIZATION_ID
     }
 
     override getName() {
-        return SCChartsTransformation::INITIALIZATION_NAME;
+        return SCChartsTransformation::INITIALIZATION_NAME
     }
 
     override getHandleFeatureId() {
-        return SCChartsFeature::INITIALIZATION_ID;
+        return SCChartsFeature::INITIALIZATION_ID
     }
 
     override getProducesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeature::ENTRY_ID);
+        return Sets.newHashSet(SCChartsFeature::ENTRY_ID)
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet();
+        return Sets.newHashSet()
     }
+
     //-------------------------------------------------------------------------
     @Inject
     extension KExpressionsExtension
