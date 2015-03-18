@@ -152,8 +152,8 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static int compileMode = 0;
 
     /** The hierarchy or flat diagram synthesis mode. */
-    public static int hierarchyMode = 0; // 0 = hierarchy, 1 = flat
-    public static final int MAXHIERARCHYMODE = 1;
+    public static int hierarchyMode = 0; // 0 = hierarchy, 1 = flat, 2= flat groups
+    public static final int MAXHIERARCHYMODE = 2;
 
     /** The last editor. */
     String lastEditorModelName = null;
@@ -1217,12 +1217,12 @@ public class KiCoSelectionView extends DiagramViewPart {
         if (hierarchyMode == 0) {
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                     "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis");
-        } else {
+        } else if (hierarchyMode == 1) {
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                     "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatSynthesis");
-            // } else {
-            // properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
-            // "de.cau.cs.kieler.kico.ui.klighd.diagramFlatSynthesis");
+        } else {
+            properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
+                    "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatGroupsSynthesis");
         }
 
         // Hide zoom buttons

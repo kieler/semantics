@@ -55,7 +55,7 @@ import de.cau.cs.kieler.core.krendering.LineStyle
  * @kieler.rating 2014-04-08 proposed yellow
  */
 //class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<List<Feature>> {
-class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSelectionDiagramModel> {
+class KiCoSelectionDiagramFlatGroupsSynthesis extends AbstractDiagramSynthesis<KiCoSelectionDiagramModel> {
 
     static final boolean DEBUG = false;
 
@@ -582,21 +582,11 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
 
             System.out.println("TRANSFORM " + elem.id);
 
-            if (!(elem instanceof FeatureGroup)) {
+            //            if (elem.visibleContainer(model.visibleFeatures) == null) {
+            visibleFeatures.add(elem);
+            val kNode = elem.translate;
+            knode.children.add(kNode);
 
-                //            if (elem.visibleContainer(model.visibleFeatures) == null) {
-                visibleFeatures.add(elem);
-                val kNode = elem.translate;
-                knode.children.add(kNode);
-
-            }
-
-            if (!(elem instanceof FeatureGroup)) {
-                for (Transformation transformation : elem.handlingTransformations) {
-                    val kNode2 = transformation.translate;
-                    knode.children.add(kNode2)
-                }
-            }
 
         //            }
         }
@@ -785,17 +775,18 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
                     it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
                 ];
                 if (feature instanceof FeatureGroup) {
-                    //                    for (dest : (feature as FeatureGroup).features) {
-                    //                        var transSource = feature
-                    //                        var transDest = dest
-                    //                        if (transSource != null && transDest != null) {
-                    //                            debug(" CHK  CONT '" + transSource.id + "' TO '" + transDest.id + "'")
-                    //                            if (!(connected.contains(transSource.hashCode + transDest.hashCode))) {
-                    //                                connected.add(transSource.hashCode + transDest.hashCode)
-                    //                                transSource.translateBelongTransition(transDest)
-                    //                            }
-                    //                        }
-                    //                    }
+                    for (dest : (feature as FeatureGroup).features) {
+                        var transSource = feature
+                        var transDest = dest
+                        if (transSource != null && transDest != null) {
+                            debug(" CHK  CONT '" + transSource.id + "' TO '" + transDest.id + "'")
+                            if (!(connected.contains(transSource.hashCode + transDest.hashCode))) {
+                                connected.add(transSource.hashCode + transDest.hashCode)
+                                transSource.translateBelongTransition(transDest)
+                            }
+                        }
+                    }
+
                 } else {
                 }
             ];
@@ -804,113 +795,5 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
         return root
     }
 
-    // -------------------------------------------------------------------------
-    // Transform a feature    
-    def KNode translate(Transformation transformation) {
-
-        //System.out.print(">>> " + feature);
-        //System.out.println(" >>> " + feature.getId);
-        val root = transformation.createNode().putToLookUpWith(transformation) => [ node |
-            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
-            val cornerRadius = 6;
-            val lineWidth = 1;
-            val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;
-            //            figure.setProperty(KlighdProperties::, true);
-            
-            // DO NOT ALLOW SELECTION
-            //figure.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
-            //figure.addSingleClickAction(KiCoSelectionAction::ID);
-            
-            figure.lineWidth = lineWidth;
-            figure.foreground = "gray".color;
-            // shaddow
-            figure.shadow = "black".color;
-            figure.shadow.XOffset = 4;
-            figure.shadow.YOffset = 4;
-            figure => [
-                //it.putToLookUpWith(tansformation)
-                it.setBackgroundGradient(BLUE1.copy, BLUE2.copy, 90);
-                it.setSelectionBackgroundGradient(BLUE1.copy, BLUE2.copy, 90);
-                node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
-                it.invisible = false;
-                var label = transformation.label;
-                it.setProperty(KlighdProperties::TOOLTIP, transformation.id);
-                // For simple states we want a larger area 
-                it.addText(" " + label).putToLookUpWith(transformation) => [
-                    // WORKAROUND UNTIL WE KNOW HOW TO DISABLE SELECTION OF LABELS!
-                    // DO NOT ALLOW SELECTION
-//                    it.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
-//                    it.addSingleClickAction(KiCoSelectionAction::ID);
-                    it.setSelectionBackground(BLUE2.copy)
-                    it.fontSize = 11;
-                    it.setForeground(BLACK.copy)
-                    //                        it.setCursorSelectable(false)
-                    //                        it.setSelectionInvisible(true)
-                    it.setFontBold(true);
-                    it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
-                ];
-                var transSource = transformation
-                var transDest = transformation.handleFeature
-                if (transSource != null && transDest != null) {
-                    debug(" CHK  CONT '" + transSource.id + "' TO '" + transDest.id + "'")
-                    if (!(connected.contains(transSource.hashCode + transDest.hashCode))) {
-                        connected.add(transSource.hashCode + transDest.hashCode)
-                        transSource.translateBelongTransition(transDest)
-                    }
-                }
-                for (dest : transformation.producesFeatures) {
-                    transSource = transformation
-                    transDest = dest
-                    if (transSource != null && transDest != null) {
-                        debug(" CHK  CONT '" + transSource.id + "' TO '" + transDest.id + "'")
-                        if (!(connected.contains(transSource.hashCode + transDest.hashCode))) {
-                            connected.add(transSource.hashCode + transDest.hashCode)
-                            transSource.translateProduceTransition(transDest)
-                        }
-                    }
-                }
-                for (source : transformation.notHandlesFeatures) {
-                    var transSource2 = source
-                    var transDest2 = transformation
-                    if (transSource2 != null && transDest2 != null) {
-                        debug(" CHK  CONT '" + transSource2.id + "' TO '" + transDest2.id + "'")
-                        if (!(connected.contains(transSource2.hashCode + transDest2.hashCode))) {
-                            connected.add(transSource2.hashCode + transDest2.hashCode)
-                            transSource2.translateNotHandledByTransition(transDest2)
-                        }
-                    }
-                }
-            //                    for (dest : feature.dependencies) {
-            //
-            //                        //System.out.println("FROM " + feature.id + " TO " + dest.id)
-            //                        var transSource = feature
-            //                        var transDest = dest
-            //
-            //                        //Calculate hierarchical source + destination (prevents inter level transitions)
-            //                        transSource = feature.getHierarchicalSource(dest)
-            //                        transDest = feature.getHierarchicalDest(dest)
-            //
-            //                        //System.out.println("== HIERACHICALLY FROM " + transSource.id + " TO " + transDest.id)
-            //                        if (transSource != null && transDest != null) {
-            //
-            //                            debug(" CHK  CONT '" + transSource.id + "' TO '" + transDest.id + "'")
-            //                            if (!(connected.contains(transSource.hashCode + transDest.hashCode))) {
-            //
-            //                                //System.out.println(" DO   CONT '" + transSource.id + "' TO '" + transDest.id + "'  ::: " + connected.toString);
-            //                                connected.add(transSource.hashCode + transDest.hashCode)
-            //
-            //                                //System.out.println(" DONE  CONT '" + transSource.id + "' TO '" + transDest.id + "'  ::: " + connected.toString);
-            //                                transSource.translateTransition(transDest)
-            //                            }
-            //                        }
-            //                }
-            ];
-        //            for (Transformation transformation : feature.handlingTransformations) {
-        //                node.children += transformation.translate
-        //            }
-        ]
-
-        return root
-    }
 
 }

@@ -51,7 +51,14 @@ public class KiCoSelectionAction extends KiCoKlighdAction implements IAction {
     public ActionResult execute(final ActionContext context) {
 
         KNode kNode = context.getKNode();
-        Feature feature = (Feature) context.getDomainElement(kNode);
+        Object obj =  context.getDomainElement(kNode);
+        
+        // Do not allow selections for Transformations
+        if (!(obj instanceof Feature)) {
+            return ActionResult.createResult(false).dontAnimateLayout();
+        }
+        
+        Feature feature = (Feature) obj;
 
         if (feature != null) {
             int activeEditorID = KiCoSelectionView.getActiveEditorID();
