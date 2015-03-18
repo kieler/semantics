@@ -51,7 +51,7 @@ class CountDelay extends Transformation {
     }
 
     override getNotHandlesFeatureIds() {
-        return Sets.newHashSet(SCChartsFeature::ABORT_ID)
+        return Sets.newHashSet()
     }
 
     //-------------------------------------------------------------------------
