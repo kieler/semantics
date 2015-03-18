@@ -38,7 +38,7 @@ public class SCChartsFeatureGroup {
     public final static String EXTENDED_ID = "EXTENDED";
     public final static String EXTENDED_NAME = "Extended SCCharts";
 
-    public final static String ADVANCED_ID = "ADVANCED";
+    public final static String ADVANCED_ID = "ADVANCEDSCCHARTS";
     public final static String ADVANCED_NAME = "Advanced SCCharts";
 
     public final static String CORE_ID = "CORE";

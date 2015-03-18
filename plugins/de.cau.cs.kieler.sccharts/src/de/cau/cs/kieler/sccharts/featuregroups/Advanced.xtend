@@ -38,7 +38,8 @@ class Advanced extends FeatureGroup {
     }
 
     override getFeatureIds() {
-        Sets.newHashSet(SCChartsFeature::CONST_ID, SCChartsFeature::REFERENCE_ID, SCChartsFeature::FOR_ID)
+        Sets.newHashSet(SCChartsFeature::FOR_ID, SCChartsFeature::CONST_ID,
+             SCChartsFeature::REFERENCE_ID )
     }
 
 //-------------------------------------------------------------------------
