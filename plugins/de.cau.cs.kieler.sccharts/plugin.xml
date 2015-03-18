@@ -62,7 +62,22 @@
               class="de.cau.cs.kieler.sccharts.features.Abort">
         </featureClass>
         <featureClass
+              class="de.cau.cs.kieler.sccharts.features.ComplexFinalState">
+        </featureClass>
+        <featureClass
               class="de.cau.cs.kieler.sccharts.features.Connector">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Const">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.CountDelay">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Deferred">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.During">
         </featureClass>
         <featureClass
               class="de.cau.cs.kieler.sccharts.features.Entry">
@@ -71,13 +86,52 @@
               class="de.cau.cs.kieler.sccharts.features.Exit">
         </featureClass>
         <featureClass
+              class="de.cau.cs.kieler.sccharts.features.For">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.History">
+        </featureClass>
+        <featureClass
               class="de.cau.cs.kieler.sccharts.features.Initialization">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.InputOutput">
         </featureClass>
         <featureGroupClass
               class="de.cau.cs.kieler.sccharts.featuregroups.SCCharts">
         </featureGroupClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Pre">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Reference">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Signal">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Static">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.SurfaceDepth">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.Suspend">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.TriggerEffect">
+        </featureClass>
+        <featureClass
+              class="de.cau.cs.kieler.sccharts.features.WeakSuspend">
+        </featureClass>
         <featureGroupClass
               class="de.cau.cs.kieler.sccharts.featuregroups.Statecharts">
+        </featureGroupClass>
+        <featureGroupClass
+              class="de.cau.cs.kieler.sccharts.featuregroups.ScadeQuartzEsterel">
+        </featureGroupClass>
+        <featureGroupClass
+              class="de.cau.cs.kieler.sccharts.featuregroups.SyncCharts">
         </featureGroupClass>
      </extension>   
 
