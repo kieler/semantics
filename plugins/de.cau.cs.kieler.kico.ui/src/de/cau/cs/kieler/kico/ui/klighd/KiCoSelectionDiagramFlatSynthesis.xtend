@@ -247,7 +247,8 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             edge.addSpline(2) => [
                 it.setForeground(DARKGRAY.copy)
                 it.lineStyle = LineStyle::CUSTOM;
@@ -264,7 +265,8 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             edge.addSpline(1) => [
                 it.setForeground(DARKGRAY.copy)
             // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
@@ -284,7 +286,8 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             edge.addSpline(2) => [
                 it.setForeground(BLUE3.copy)
                 // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
@@ -304,7 +307,8 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             edge.addSpline(2) => [
                 it.setForeground(DARKGRAY.copy)
                 // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
@@ -376,6 +380,10 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
         clearCache()
 
         val knode = model.createNode();
+        node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+        node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN)
+        node.setLayoutOption(LayoutOptions::SPACING, 2500f);
+        node.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
 
         for (elem : model.visibleFeatures) {
 
