@@ -99,7 +99,7 @@ public class KiCoModelChain {
             if(!models.contains(model)) {
                 tranformations.add(ir.getTransformationID());
                 models.add(model);
-                collapse.put(model, true);
+                collapse.put(model, false);//true
             }
         }
         collapse.put(models.getLast(), false);
