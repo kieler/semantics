@@ -249,7 +249,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
 
         // Only consider the visible features here!
         for (Feature other : KielerCompiler.getFeatures) {
-            if (other.isGroup) {
+            if (other.isGroupOrAlternative) {
 
                 // if this is a typical FeatureGroup
                 if (other instanceof FeatureGroup) {
@@ -356,7 +356,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
     // -------------------------------------------------------------------------
     // Get the display name for the feature
     def String getLabel(Feature s) {
-        s.id
+        s.name
     }
 
     // Display a feature as a group, if it has several handling transformations (alternative) or if it really is a feature group!
@@ -537,7 +537,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
 
                     for (dest : feature.dependencies) {
 
-                        //System.out.println("FROM " + feature.id + " TO " + dest.id)
+                        System.out.println("FROM " + feature.id + " TO " + dest.id)
                         var transSource = feature
                         var transDest = dest
 
@@ -545,7 +545,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                         transSource = feature.getHierarchicalSource(dest)
                         transDest = feature.getHierarchicalDest(dest)
 
-                        //System.out.println("== HIERACHICALLY FROM " + transSource.id + " TO " + transDest.id)
+                        System.out.println("== HIERACHICALLY FROM " + transSource.id + " TO " + transDest.id)
                         if (transSource != null && transDest != null) {
 
                             debug(" CHK  CONT '" + transSource.id + "' TO '" + transDest.id + "'")
