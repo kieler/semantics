@@ -54,6 +54,7 @@ import com.google.inject.Guice
 import static extension de.cau.cs.kieler.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Conditional
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -261,13 +262,13 @@ class GuardSequentializer extends AbstractSequentializer {
 //				System.out.println("Sequentializing guard " + guard.valuedObject.name)
 				if (!placedGuards.contains(guard)) {
 			    	val assignment2 = ScgFactory::eINSTANCE.createAssignment
-			    	//Bad KITT stuff
+			    	//Bad KITT stuff to trace conditionals correctly
 			    	//TODO improve with help of ssm
 			    	if(scheduleBlock.additionalGuards.contains(guard) && guard.valuedObject.name.startsWith("_cond")){
 			    	    val conditionalSchedulingBlockGuardName = guard.valuedObject.name.substring(5);
 			    	    for (sb : schedule.scheduleBlocks) {
                             if(sb.schedulingBlock.guard.valuedObject.name.equals(conditionalSchedulingBlockGuardName)) {
-                                assignment2.trace(sb.schedulingBlock)
+                                assignment2.trace(sb.schedulingBlock.nodes.filter(Conditional));
                             }
                         }
 			    	} else{
