@@ -34,18 +34,6 @@
       </view>
    </extension>
    <extension
-         point="de.cau.cs.kieler.kiml.layoutConfigs">
-      <staticConfig
-            class="java.lang.Object"
-            option="de.cau.cs.kieler.direction"
-            value="RIGHT">
-      </staticConfig>
-      <semanticConfig
-            class="de.cau.cs.kieler.kico.Feature"
-            config="de.cau.cs.kieler.kico.ui.klighd.layout.FeatureLayoutConfig">
-      </semanticConfig>
-   </extension>
-   <extension
          point="de.cau.cs.kieler.klighd.extensions">
       <action
             class="de.cau.cs.kieler.kico.ui.KiCoSelectionAction"

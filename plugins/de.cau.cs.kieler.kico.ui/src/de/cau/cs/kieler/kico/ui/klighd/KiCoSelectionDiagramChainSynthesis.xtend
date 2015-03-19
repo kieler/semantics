@@ -45,6 +45,8 @@ import java.util.HashSet
 import java.util.HashMap
 import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.core.krendering.LineStyle
+import de.cau.cs.kieler.klay.layered.properties.Properties
+import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
 
 //import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 /**
@@ -150,7 +152,7 @@ class KiCoSelectionDiagramChainSynthesis extends AbstractDiagramSynthesis<KiCoSe
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
             edge.addSpline(2) => [
                 it.setForeground(DARKGRAY.copy)
                 it.addArrowDecorator()
@@ -166,6 +168,16 @@ class KiCoSelectionDiagramChainSynthesis extends AbstractDiagramSynthesis<KiCoSe
         clearCache()
 
         val knode = model.createNode();
+
+        node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN)
+        node.setLayoutOption(LayoutOptions::SPACING, 2500f);
+        node.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+        node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+        node.setLayoutOption(Properties::THOROUGHNESS, 100)
+        node.setLayoutOption(LayoutOptions::SEPARATE_CC, false);
+        node.setLayoutOption(Properties::SAUSAGE_FOLDING, true)
+        node.setLayoutOption(Properties::NODE_LAYERING, LayeringStrategy::LONGEST_PATH)
+
         var Transformation lastNode = null;
 
         for (transformation : model.context.getTransformationChain(false)) {
@@ -174,7 +186,7 @@ class KiCoSelectionDiagramChainSynthesis extends AbstractDiagramSynthesis<KiCoSe
 
             val kNode = transformation.translate;
             knode.children.add(kNode);
-            
+
             // connect if not the first
             if (lastNode != null) {
                 lastNode.translate(transformation);
@@ -206,7 +218,6 @@ class KiCoSelectionDiagramChainSynthesis extends AbstractDiagramSynthesis<KiCoSe
         return getSpacedOut(originalText.length * factor)
     }
 
-
     // -------------------------------------------------------------------------
     // Transform a feature    
     def KNode translate(Transformation transformation) {
@@ -215,6 +226,14 @@ class KiCoSelectionDiagramChainSynthesis extends AbstractDiagramSynthesis<KiCoSe
         //System.out.println(" >>> " + feature.getId);
         val root = transformation.createNode().putToLookUpWith(transformation) => [ node |
             node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
+            node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN)
+            node.setLayoutOption(LayoutOptions::SPACING, 2500f);
+            node.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+            node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+            node.setLayoutOption(Properties::THOROUGHNESS, 100)
+            node.setLayoutOption(LayoutOptions::SEPARATE_CC, false);
+            node.setLayoutOption(Properties::SAUSAGE_FOLDING, true)
+            node.setLayoutOption(Properties::NODE_LAYERING, LayeringStrategy::LONGEST_PATH)
             val cornerRadius = 6;
             val lineWidth = 1;
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;
