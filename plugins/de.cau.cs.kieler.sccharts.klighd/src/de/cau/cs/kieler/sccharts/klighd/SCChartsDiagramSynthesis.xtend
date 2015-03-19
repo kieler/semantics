@@ -597,8 +597,8 @@ class SCChartsDiagramSynthesis extends AbstractDiagramSynthesis<Scope> {
                     if (!s.label.empty)
                         it.addRectangle => [
                             it.invisible = true
-                            it.fontSize = 11;
-                            it.fontSize.propagateToChildren = true
+//                            it.fontSize = 11;
+//                            it.fontSize.propagateToChildren = true
                             it.setFontBold(true);
                             it.setGridPlacementData().from(LEFT, 0, 0, TOP, 8f, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
                             var text = s.label

@@ -107,7 +107,7 @@ public class TimingAnalysis extends Job {
                 if (sourceElem instanceof Region) {
                     KText text = KRenderingFactory.eINSTANCE.createKText();
                     text.setText("???/???");
-                    renderingExtensions.setFontSize(text, 12);
+                    renderingExtensions.setFontSize(text, 18);
                     renderingExtensions.setForegroundColor(text, 255, 0, 0);
                     renderingExtensions.setPointPlacementData(text, renderingExtensions.RIGHT, 5,
                             0, renderingExtensions.TOP, 1, 0, HorizontalAlignment.RIGHT,
@@ -121,8 +121,8 @@ public class TimingAnalysis extends Job {
                 (KRectangle) rootNode.getChildren().get(0).getData(KRoundedRectangle.class)
                         .getChildren().get(0);
         KText text = KRenderingFactory.eINSTANCE.createKText();
-        text.setText("???/???");
-        renderingExtensions.setFontSize(text, 12);
+        text.setText("???");
+        renderingExtensions.setFontSize(text, 22);
         renderingExtensions.setForegroundColor(text, 255, 0, 0);
         renderingExtensions.setPointPlacementData(text, renderingExtensions.RIGHT, 5, 0,
                 renderingExtensions.TOP, 1, 0, HorizontalAlignment.RIGHT, VerticalAlignment.TOP, 5,
@@ -389,7 +389,7 @@ public class TimingAnalysis extends Job {
 
         //
         timingAnnotationProvider.getTimingInformation(resultList, taPath);
-        extractTimingLabels(RequestType.LWCET, resultList, timingLabels, timingResults,
+        extractTimingLabels(RequestType.FWCET, resultList, timingLabels, timingResults,
                 tppRegionMap, scchart);
 
         // Step 7: Feedback information back to the diagram
@@ -474,8 +474,18 @@ public class TimingAnalysis extends Job {
         Iterator<Region> regionIterator = timingLabelList.keySet().iterator();
         while (regionIterator.hasNext()) {
             Region currentRegion = regionIterator.next();
+            if (!(currentRegion == null)) {         
             regionLabelStringMap.put(currentRegion, deepValues.get(currentRegion) + " / "
                     + flatValues.get(currentRegion));
+            } else {
+                Integer WCRT = 0;
+                Iterator<Region> outerRegionsIterator = rootState.getRegions().iterator();
+                while (outerRegionsIterator.hasNext()) {
+                    Integer currentValue = deepValues.get(outerRegionsIterator.next());
+                    WCRT = WCRT + currentValue;
+                }
+                regionLabelStringMap.put(currentRegion, WCRT.toString());
+            }
         }
     }
 
