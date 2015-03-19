@@ -33,7 +33,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.ui.internal.editors.text.NextPreviousPulldownActionDelegate;
 import org.eclipse.ui.progress.UIJob;
 import org.eclipse.xtext.ui.util.ResourceUtil;
 
@@ -49,6 +48,7 @@ import de.cau.cs.kieler.core.krendering.HorizontalAlignment;
 import de.cau.cs.kieler.core.krendering.KContainerRendering;
 import de.cau.cs.kieler.core.krendering.KRectangle;
 import de.cau.cs.kieler.core.krendering.KRenderingFactory;
+import de.cau.cs.kieler.core.krendering.KRoundedRectangle;
 import de.cau.cs.kieler.core.krendering.KText;
 import de.cau.cs.kieler.core.krendering.VerticalAlignment;
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions;
@@ -61,6 +61,7 @@ import de.cau.cs.kieler.klighd.util.ModelingUtil;
 import de.cau.cs.kieler.sccharts.Region;
 import de.cau.cs.kieler.sccharts.SCChartsFactory;
 import de.cau.cs.kieler.sccharts.State;
+import de.cau.cs.kieler.sccharts.extensions.SCChartsExtension;
 import de.cau.cs.kieler.sccharts.tsccharts.handler.FileWriter;
 import de.cau.cs.kieler.sccharts.tsccharts.handler.RequestType;
 import de.cau.cs.kieler.sccharts.tsccharts.handler.TimingRequestResult;
@@ -84,7 +85,9 @@ public class TimingAnalysis extends Job {
     private TimingAnnotationProvider timingAnnotationProvider = new TimingAnnotationProvider();
 
     // no side effects on runtime, so static OK here
-    public static KRenderingExtensions renderingExtensions = new KRenderingExtensions();
+    private static KRenderingExtensions renderingExtensions = new KRenderingExtensions();
+    private static SCChartsExtension scchartsExtension = Guice.createInjector().getInstance(
+            SCChartsExtension.class);
 
     public static void startAnalysis(State rootState, KNode rootNode) {
         // Step 0: (Preprocessing)
@@ -114,6 +117,18 @@ public class TimingAnalysis extends Job {
                 }
             }
         }
+        KRectangle rectangle =
+                (KRectangle) rootNode.getChildren().get(0).getData(KRoundedRectangle.class)
+                        .getChildren().get(0);
+        KText text = KRenderingFactory.eINSTANCE.createKText();
+        text.setText("???/???");
+        renderingExtensions.setFontSize(text, 12);
+        renderingExtensions.setForegroundColor(text, 255, 0, 0);
+        renderingExtensions.setPointPlacementData(text, renderingExtensions.RIGHT, 5, 0,
+                renderingExtensions.TOP, 1, 0, HorizontalAlignment.RIGHT, VerticalAlignment.TOP, 5,
+                5, 0, 0);
+        rectangle.getChildren().add(text);
+        timingLabels.put(null, new WeakReference<KText>(text));
         // start analysis job
         new TimingAnalysis(rootState, timingLabels).schedule();
     }
@@ -192,33 +207,59 @@ public class TimingAnalysis extends Job {
                 Region region = null;
                 for (Object targetObj : targetElements) {
                     EObject targetElement = (EObject) targetObj;
-                    while (targetElement != null) {
-                        if (targetElement instanceof Region) {
-                            if (region != null && region != targetElement) {
-                                /*
-                                 * In this case the tracing associates multiple regions with the
-                                 * current node. If one of the regions is directly contained (depth
-                                 * 1) in the other take the inner one
-                                 */
-                                if (region.getStates().contains(targetElement.eContainer())) {
-                                    // new one is inner region
-                                    region = (Region) targetElement;
-                                    break;
-                                } else if (((Region) targetElement).getStates().contains(
-                                        region.eContainer())) {
-                                    // old one is inner region so keep it
-                                    break;
-                                } else {
-                                    // encapsulation depth higher than 1 or no encapsulation
-                                    throw new Error(
-                                            "Tracing associates multiple inconsistent regions "
-                                                    + "with a scg node");
+                    /*
+                     * If the associated element is NOT a macro state (refinement due to entry node
+                     * mappings) a region is searched to associate this node to
+                     */
+                    if (!(targetElement instanceof State && (scchartsExtension
+                            .hasInnerStatesOrRegions((State) targetElement) || scchartsExtension
+                            .hasInnerActions((State) targetElement)))
+                            && targetElements.size() > 1) {
+                        while (targetElement != null) {
+                            if (targetElement instanceof Region) {
+                                if (region != null && region != targetElement) {
+                                    EObject parentTest = region.eContainer();
+                                    while (parentTest != null) {
+                                        /*
+                                         * If new region candidate contains region the new candidate
+                                         * becomes the region this node is associated with.
+                                         * Otherwise the region already contains the new candidate.
+                                         * Assumtion: No node is mapped to elements in paralell
+                                         * Regions
+                                         */
+                                        if (parentTest instanceof Region
+                                                && parentTest == targetElement) {
+                                            region = (Region) parentTest;
+                                            break;
+                                        }
+                                        parentTest = parentTest.eContainer();
+                                    }
+                                    /*
+                                     * In this case the tracing associates multiple regions with the
+                                     * current node. If one of the regions is directly contained
+                                     * (depth 1) in the other take the inner one
+                                     */
+                                    // if (region.getStates().contains(targetElement.eContainer()))
+                                    // {
+                                    // // new one is inner region
+                                    // region = (Region) targetElement;
+                                    // break;
+                                    // } else if (((Region) targetElement).getStates().contains(
+                                    // region.eContainer())) {
+                                    // // old one is inner region so keep it
+                                    // break;
+                                    // } else {
+                                    // // encapsulation depth higher than 1 or no encapsulation
+                                    // throw new Error(
+                                    // "Tracing associates multiple inconsistent regions "
+                                    // + "with a scg node");
+                                    // }
                                 }
+                                region = (Region) targetElement;
+                                break;
+                            } else {
+                                targetElement = targetElement.eContainer();
                             }
-                            region = (Region) targetElement;
-                            break;
-                        } else {
-                            targetElement = targetElement.eContainer();
                         }
                     }
                 }
@@ -371,14 +412,14 @@ public class TimingAnalysis extends Job {
                         }
                     }
                 }
-               
+
                 return Status.OK_STATUS;
             }
         }.schedule();
         long stopTime = System.currentTimeMillis();
         long elapsedTime = stopTime - startTime;
-        System.out.println
-            ("Interactive Timing Analysis completed (elapsed time: " + elapsedTime + " ms).");
+        System.out.println("Interactive Timing Analysis completed (elapsed time: " + elapsedTime
+                + " ms).");
         return Status.OK_STATUS;
     }
 
@@ -469,11 +510,10 @@ public class TimingAnalysis extends Job {
             // Add the region's own flat value to its deep value
             Integer flatTiming = flatValues.get(childRegion);
             if (deepValues.get(childRegion) != null) {
-                deepValues.put(childRegion, deepValues.get(childRegion)
-                        + flatTiming);
+                deepValues.put(childRegion, deepValues.get(childRegion) + flatTiming);
             } else {
                 deepValues.put(childRegion, flatTiming);
-            } 
+            }
             Integer deepTiming = deepValues.get(childRegion);
             // Add deep timing value of this region to the hierarchical timing value of its parent
             // region
@@ -486,7 +526,7 @@ public class TimingAnalysis extends Job {
                     deepValues.put(stateParentRegion, deepTiming);
                 }
             }
-            
+
         }
     }
 
@@ -528,10 +568,6 @@ public class TimingAnalysis extends Job {
                 // analysis tool prototype
                 tppCounter = 1 + tppCounter;
             }
-            if (tppCounter == 6){
-                int test = 1;
-                int test2 = test;
-            }
             ControlFlow currentEdge = edgeIter.next();
             Node edgeTarget = currentEdge.getTarget();
             // get the region the target node of the edge stems from
@@ -569,7 +605,8 @@ public class TimingAnalysis extends Job {
                         // now this edge is processed, record that
                         redirectedEdges.add(currentEdge);
                         // insert tpp node, keep it for the redirection of other edges
-                        Assignment tpp = insertSingleTPP(scg, currentEdge, tppCounter, redirectedEdges);
+                        Assignment tpp =
+                                insertSingleTPP(scg, currentEdge, tppCounter, redirectedEdges);
                         // Save which Region starts at this TPP value
                         tppRegionMap.put(tppCounter, targetRegion);
                         tppCounter = tppCounter + 1;
@@ -607,12 +644,12 @@ public class TimingAnalysis extends Job {
      *            The edge, into which the TPP node is to be inserted.
      * @param tppNumber
      *            The number of the TPP to be created, for example the 2 in 'TPP(2);'
-     * @param redirectedEdges 
-     *            The list of already redirectedEdges, into which the newly created edge has to be 
+     * @param redirectedEdges
+     *            The list of already redirectedEdges, into which the newly created edge has to be
      *            inserted to keep it from being redirected again
      * @return The Assignment wit the TPP
      */
-    private Assignment insertSingleTPP(SCGraph scg, ControlFlow controlFlow, int tppNumber, 
+    private Assignment insertSingleTPP(SCGraph scg, ControlFlow controlFlow, int tppNumber,
             ArrayList<Link> redirectedEdges) {
         // make target reachable via a new edge
         Node target = controlFlow.getTarget();
