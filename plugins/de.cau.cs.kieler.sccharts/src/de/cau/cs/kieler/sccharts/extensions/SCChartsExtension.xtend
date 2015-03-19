@@ -1202,7 +1202,7 @@ class SCChartsExtension {
     			&& (obj as ValuedObjectReference).valuedObject == valuedObject
     		) 
     		{
-    			obj.replace(expression.copy)
+    			obj.replace(expression.nontracingCopy)
     		}
     	}
     }
@@ -1218,22 +1218,22 @@ class SCChartsExtension {
     			&& (obj as ValuedObjectReference).valuedObject == valuedObject
     		)  {
                 val valuedObjectReference = (obj as ValuedObjectReference)
-    		    val valuedObjectReferenceCopy = valuedObjectReference.copy;
+    		    val valuedObjectReferenceCopy = valuedObjectReference.nontracingCopy;
     		    val replacementValuedObjectReference = replacement.reference;
     			obj.replace(replacementValuedObjectReference)
       			replacementValuedObjectReference.indices.clear
       			for (index : valuedObjectReferenceCopy.indices) {
-                    replacementValuedObjectReference.indices.add(index.copy);
+                    replacementValuedObjectReference.indices.add(index.nontracingCopy);
       			}
     		}
 
     		else if (obj instanceof Assignment && (obj as Assignment).valuedObject == valuedObject)  {
     		    val assignment = (obj as Assignment)
-                val assignmentCopy = assignment.copy;
+                val assignmentCopy = assignment.nontracingCopy;
 				assignment.valuedObject = replacement;
                 assignment.indices.clear
                 for (index : assignmentCopy.indices) {
-                    assignment.indices.add(index.copy);
+                    assignment.indices.add(index.nontracingCopy);
                 }
     		}
 
@@ -1287,7 +1287,7 @@ class SCChartsExtension {
 //    		newState.declarations += state.declarations.copyAll
 //    		newState.^for = state.^for.copy
 //    		newState.annotations += state.annotations.copyAll
-        val newState = state.copy
+        val newState = state.nontracingCopy
     		
     		// Fix valued object references
     		state.valuedObjects.forEach[
