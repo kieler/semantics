@@ -28,13 +28,11 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -277,8 +275,8 @@ public class KiCoUtil {
                         InputStream in = new ByteArrayInputStream(text.getBytes());// StandardCharsets.UTF_8));
                         res.load(in, resourceSet.getLoadOptions());
                         returnEObject = res.getContents().get(0);
-                        Diagnostic result = Diagnostician.INSTANCE.validate(returnEObject);
-                        int problems = result.getSeverity();
+                        // Diagnostic result = Diagnostician.INSTANCE.validate(returnEObject);
+                        // int problems = result.getSeverity();
                         List<EObject> contents = returnEObject.eContents();
                         int count = 0;
                         for (EObject content : contents) {
@@ -288,9 +286,10 @@ public class KiCoUtil {
                         }
                         if (count == 0) {
                             // Assume this is not a correct model if only Annotations are in it!
-                            throw new Exception("Model only contains Annotations and is assumed not to be correctly parsed. Trying a different language parser.");
+                            throw new Exception(
+                                    "Model only contains Annotations and is assumed not to be correctly parsed. Trying a different language parser.");
                         }
-                        String test = KiCoUtil.serialize(returnEObject, context, false);
+                        // String test = KiCoUtil.serialize(returnEObject, context, false);
                         if (context != null && returnEObject != null) {
                             if (!mainModel) {
                                 context.addIncludedModel(returnEObject);
