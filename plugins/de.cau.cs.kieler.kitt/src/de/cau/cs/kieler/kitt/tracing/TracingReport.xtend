@@ -37,6 +37,8 @@ class TracingReport {
     public val targetElementInTragetMapping = newHashSet();
     public val targetElementNotInMapping = newHashSet();
     public val targetElementNotInModel = newHashSet();
+    
+    var validMapping = true;
 
     new(Tracing tracing, Object sourceModel, Object targetModel, TracingMapping tracingMapping) {
         mapping = tracingMapping;
@@ -63,6 +65,18 @@ class TracingReport {
     }
 
     private def void analyse() {
+
+        //check reverse mapping validity
+        mapping.internalMapping.keySet.forEach [ key |
+            mapping.internalMapping.get(key).forEach [ value |
+                validMapping = validMapping && mapping.internalReverseMapping.get(value).contains(key);
+            ]
+        ];
+        mapping.internalReverseMapping.keySet.forEach [ key |
+            mapping.internalReverseMapping.get(key).forEach [ value |
+                validMapping = validMapping && mapping.internalMapping.get(value).contains(key);
+            ]
+        ];
 
         //check source elements
         if (source != null) {
@@ -101,8 +115,11 @@ class TracingReport {
         }
     }
 
-    def void printReport() {
+    def void printReport() {        
         println("Mapping: " + mapping.title);
+        if(!validMapping){
+            println(" ReverseMapping is INVALID");
+        }
         if (sourceElementInTragetMapping.empty && sourceElementNotInMapping.empty && sourceElementNotInModel.empty) {
             println(" Source Mapping: OK");
         } else {

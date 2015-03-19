@@ -30,8 +30,6 @@ import de.cau.cs.kieler.kitt.tracingtree.ModelWrapper;
 /**
  * Manages tracing of models. This implementation is focused on chains of transformations. For
  * advanced tracing features use TracingTree directly.
- * <p>
- * Multiple concurrent transformation on the same source model are not supported yet.
  * 
  * @author als
  * @kieler.design 2015-02-25 proposed
@@ -45,7 +43,7 @@ public class Tracing {
 
     /** Tracing chain */
     private TracingChain chain;
-    
+    /** Generated reports */
     private HashMap<Object, TracingReport> reports = new HashMap<Object, TracingReport>();
 
     /**
@@ -86,12 +84,13 @@ public class Tracing {
      */
     public void startTransformationTracing(final EObject sourceModel, final EObject targetModel,
             final String name, final boolean inPlaceTransformation) {
-        TransformationTracing.startTransformationTracing(this, sourceModel, targetModel, name, inPlaceTransformation);
+        TransformationTracing.startTransformationTracing(this, sourceModel, targetModel, name,
+                inPlaceTransformation);
     }
 
     /**
-     * Completes the current model transformation in the current thread with given source and traget
-     * model and saves all tracing information.
+     * Completes the current model transformation in the current thread with given source and target
+     * model. All gathered information are stored.
      * 
      * @param sourceModel
      *            the source model
@@ -104,8 +103,9 @@ public class Tracing {
 
     /**
      * Completes the current model transformation in the current thread with given source and target
-     * model and saves all tracing information. If createReport is true the tracing data will be
-     * checked against the given model and a {@link TracingReport} is returned.
+     * model. All gathered information are stored. If createReport is true the tracing data will be
+     * validated with the given models and a {@link TracingReport} is returned. This will consume
+     * additional time.
      * 
      * @param sourceModel
      *            the source model
@@ -115,8 +115,10 @@ public class Tracing {
      */
     public TracingReport finishTransformationTracing(final EObject sourceModel,
             final Object targetModel, boolean createReport) {
-        TracingReport report = TransformationTracing.finishTransformationTracing(sourceModel, targetModel, createReport);
-        if(report != null){
+        TracingReport report =
+                TransformationTracing.finishTransformationTracing(sourceModel, targetModel,
+                        createReport);
+        if (report != null) {
             reports.put(sourceModel, report);
         }
         return report;
@@ -143,8 +145,8 @@ public class Tracing {
         }
         return null;
     }
-    
-    public TracingReport getReport(Object model){
+
+    public TracingReport getReport(Object model) {
         return reports.get(model);
     }
 
