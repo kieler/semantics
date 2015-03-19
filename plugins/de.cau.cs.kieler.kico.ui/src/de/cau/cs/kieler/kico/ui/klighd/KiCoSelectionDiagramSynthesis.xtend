@@ -356,7 +356,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
     // -------------------------------------------------------------------------
     // Get the display name for the feature
     def String getLabel(Feature s) {
-        s.name
+        s.id
     }
 
     // Display a feature as a group, if it has several handling transformations (alternative) or if it really is a feature group!
@@ -382,7 +382,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
     // Translate a Group
     def KNode translateGroup(Feature feature) {
         return createNode() => [ node |
-            if (feature.group) {
+            if (feature.isGroupOrAlternative) {
                 node.setLayoutOption(KlighdProperties::EXPAND, false);
             }
             //node.setLayoutOption(LayoutOptions::SPACING, 0f);
@@ -430,7 +430,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
-                if (feature.group) {
+                if (feature.isGroupOrAlternative) {
                     it.addRectangle().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0).invisible = true;
                 }
             ]
@@ -450,7 +450,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                     it.setPointPlacementData(createKPosition(LEFT, 5, 0, TOP, 2, 0), H_LEFT, V_TOP, 10, 10, 0, 0);
                     it.addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
                 ];
-                if (feature.group) {
+                if (feature.isGroupOrAlternative) {
                     it.addChildArea().setAreaPlacementData().from(LEFT, 0, 0, TOP, 10, 0).to(RIGHT, 0, 0, BOTTOM, 0, 0);
                 }
             ];
@@ -483,7 +483,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                 it.setSelectionBackgroundGradient(BLUE1.copy, BLUE2.copy, 90);
                 node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
                 it.invisible = false;
-                if (feature.group) {
+                if (feature.isGroupOrAlternative) {
                     it.setGridPlacement(1);
                 }
                 if (feature.isGroupOrAlternative) {
