@@ -73,13 +73,15 @@ public class TransformationTracing {
          */
         @Override
         public void notifyChanged(Notification notification) {
-            if (notification.getEventType() == Notification.SET) {
-                Object newValue = notification.getNewValue();
-                Object oldValue = notification.getOldValue();
+            if (active) {
+                if (notification.getEventType() == Notification.SET) {
+                    Object newValue = notification.getNewValue();
+                    Object oldValue = notification.getOldValue();
 
-                if (newValue instanceof EObject && oldValue instanceof EObject
-                        && newValue != oldValue) {
-                    traceToDefault((EObject) newValue);
+                    if (newValue instanceof EObject && oldValue instanceof EObject
+                            && newValue != oldValue) {
+                        traceToDefault((EObject) newValue);
+                    }
                 }
             }
 
