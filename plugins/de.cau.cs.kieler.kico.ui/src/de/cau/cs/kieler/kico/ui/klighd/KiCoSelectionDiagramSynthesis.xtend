@@ -360,7 +360,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
     }
 
     // Display a feature as a group, if it has several handling transformations (alternative) or if it really is a feature group!
-    def isGroup(Feature feature) {
+    def isGroupOrAlternative(Feature feature) {
         (feature instanceof FeatureGroup || feature.isAlternative);
     }
 
@@ -465,7 +465,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
         //System.out.println(" >>> " + feature.getId);
         val root = feature.createNode().putToLookUpWith(feature) => [ node |
             node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
-            val cornerRadius = if(!feature.isGroup) 17 else 8;
+            val cornerRadius = if(!feature.isGroupOrAlternative) 17 else 8;
             val lineWidth = 1;
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;
             //            figure.setProperty(KlighdProperties::, true);
@@ -486,7 +486,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                 if (feature.group) {
                     it.setGridPlacement(1);
                 }
-                if (feature.isGroup) {
+                if (feature.isGroupOrAlternative) {
                     it.setProperty(KlighdProperties::TOOLTIP, feature.id);
 
                     // Get a smaller window-title-bare if this a macro state 
@@ -527,7 +527,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                         it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
                     ];
                 }
-                if (feature.isGroup) {
+                if (feature.isGroupOrAlternative) {
                     it.addChildArea().setGridPlacementData() => [
                         from(LEFT, 3, 0, TOP, 3, 0).to(RIGHT, 3, 0, BOTTOM, 3, 0)
                         minCellHeight = 5;
@@ -561,7 +561,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
                     }
                 }
             ];
-            if (feature.isGroup) {
+            if (feature.isGroupOrAlternative) {
                 node.children += feature.translateGroup
             }
         ]
