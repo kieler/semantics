@@ -149,6 +149,8 @@ public class KiCoServer extends HttpServer {
                 }
             }
             
+            // Validate the selection
+            context.validateSelection();
             
             // answer with compiled & serialized model
             String lastError = "";

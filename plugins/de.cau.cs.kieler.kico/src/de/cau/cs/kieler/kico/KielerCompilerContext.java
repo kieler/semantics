@@ -105,6 +105,35 @@ public class KielerCompilerContext {
     // -------------------------------------------------------------------------
 
     /**
+     * Validates the selection and produces warnings for transformation or feature IDs that cannot
+     * be resolved.
+     * 
+     */
+    public void validateSelection() {
+        for (String id : selection.getSelectedFeatureAndTransformationIds()) {
+            if (id.startsWith("T_")) {
+                id = id.substring(2);
+                Transformation transformation = KielerCompiler.getTransformation(id);
+                if (transformation == null) {
+                    this.getCompilationResult().addPostponedWarning(
+                            new KielerCompilerException("KieleCompiler", "KielerCompiler",
+                                    "Transformation with '" + id + "' cannot be found."));
+                }
+            } else {
+                Feature feature = KielerCompiler.getFeature(id);
+                if (feature == null) {
+                    this.getCompilationResult().addPostponedWarning(
+                            new KielerCompilerException("KieleCompiler", "KielerCompiler",
+                                    "Feature with '" + id + "' cannot be found."));
+                }
+            }
+        }
+
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Instantiates a new kieler compiler context with an original source model and an existing
      * KielerCompilerSelection.
      * 
