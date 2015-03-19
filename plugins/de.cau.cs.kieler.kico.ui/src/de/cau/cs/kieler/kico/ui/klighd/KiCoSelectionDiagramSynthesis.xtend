@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2013 by
+ * Copyright 2015 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -23,8 +23,13 @@ import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.core.util.Pair
+import de.cau.cs.kieler.kico.Feature
+import de.cau.cs.kieler.kico.FeatureGroup
+import de.cau.cs.kieler.kico.KielerCompiler
+import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.kico.ui.KiCoDisabledSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionAction
+import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
@@ -32,61 +37,26 @@ import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.ArrayList
-import java.util.List
+import java.util.HashMap
+import java.util.HashSet
+import java.util.Set
 import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel
-import de.cau.cs.kieler.kico.Feature
-import de.cau.cs.kieler.kico.FeatureGroup
-import de.cau.cs.kieler.kico.KielerCompiler
-import java.util.Set
-import java.util.HashSet
-import java.util.HashMap
-import de.cau.cs.kieler.kico.Transformation
 
 //import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 /**
  * KLighD visualization for KIELER Compiler transformation dependencies (for selecting compilation).
  * 
  * @author cmot
- * @kieler.design 2014-04-08 proposed cmot
- * @kieler.rating 2014-04-08 proposed yellow
+ * @kieler.design 2015-03-19 proposed cmot
+ * @kieler.rating 2015-03-19 proposed yellow
  */
-//class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<List<Feature>> {
 class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelectionDiagramModel> {
-
-    static final boolean DEBUG = true;
+    static final boolean DEBUG = false;
 
     static private HashMap<Transformation, TransformationFeature> transformationFeatureMap = new HashMap<Transformation, TransformationFeature>();
     static private HashSet<Feature> visibleFeatures = new HashSet<Feature>()
-
-    def static void debug(String debugText) {
-        debug(debugText, true);
-    }
-
-    def static void debug(String debugText, boolean lineBreak) {
-        if (DEBUG) {
-            if (lineBreak) {
-                System.out.println(debugText);
-            } else {
-                System.out.print(debugText);
-            }
-        }
-    }
-
-    def public static getTransformationFeature(Transformation transformation) {
-        transformationFeatureMap.get(transformation)
-    }
-
-    def public static getVisibleFeatures() {
-        return visibleFeatures;
-    }
-
-    def public static clearCache() {
-        transformationFeatureMap.clear
-        visibleFeatures.clear
-    }
 
     // -------------------------------------------------------------------------
     // We need some extensions 
@@ -107,6 +77,42 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
 
     @Inject
     extension KColorExtensions
+
+    // -------------------------------------------------------------------------
+    // debug outputs
+    def static void debug(String debugText) {
+        debug(debugText, true);
+    }
+
+    def static void debug(String debugText, boolean lineBreak) {
+        if (DEBUG) {
+            if (lineBreak) {
+                System.out.println(debugText);
+            } else {
+                System.out.print(debugText);
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // access methods to get auxiliary TransformationFeatures
+    def public static getTransformationFeature(Transformation transformation) {
+        transformationFeatureMap.get(transformation)
+    }
+
+    // -------------------------------------------------------------------------
+    // Gets all displayed features
+    def public static getVisibleFeatures() {
+        return visibleFeatures;
+    }
+
+    // -------------------------------------------------------------------------
+    // Clear cache
+    def public static clearCache() {
+        transformationFeatureMap.clear
+        visibleFeatures.clear
+    }
+
 
     // --------------------------------------------------------------------------
     // Some color and pattern constants
@@ -136,28 +142,8 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
     public static val KColor GRAY2 = RENDERING_FACTORY.createKColor() =>
         [it.red = 210; it.green = 210; it.blue = 210];
 
-    //    // -------------------------------------------------------------------------
-    //    def Feature container(Feature transformationDummy) {
-    //        if (transformationDummy != null && transformationDummy.reverseDependencies != null &&
-    //            transformationDummy.reverseDependencies.length > 0) {
-    //            var Feature possibleContainer = null
-    //            for (reverseDependency : transformationDummy.reverseDependencies) {
-    //                if (reverseDependency.group) {
-    //                    if (possibleContainer != null && possibleContainer != reverseDependency) {
-    //                        return null
-    //                    }
-    //                    possibleContainer = reverseDependency
-    //                }
-    //            }
-    //            if (possibleContainer != null) {
-    //                return possibleContainer
-    //            }
-    //            return null;
-    //        }
-    //        return null;
-    //    }
-    //
     // -------------------------------------------------------------------------
+    // Gets the hierarchical source for from one feature to another feature
     def Feature getHierarchicalSource(Feature source, Feature dest) {
         var returnPair = getHierarchicalSource(source, dest, 0)
         if (returnPair.first == -1) {
@@ -166,6 +152,8 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
         return (returnPair.last as Feature)
     }
 
+    // -------------------------------------------------------------------------
+    // Gets the hierarchical source for from one feature to another feature - HELPER
     def Pair<Integer, Feature> getHierarchicalSource(Feature source, Feature dest, int cnt) {
         if (source == null || dest == null) {
             return new Pair(-1, null)
@@ -192,6 +180,8 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
         return new Pair(-1, null)
     }
 
+    // -------------------------------------------------------------------------
+    // Gets the hierarchical destination for from one feature to another feature 
     def Feature getHierarchicalDest(Feature source, Feature dest) {
         var returnPair = getHierarchicalDest(source, dest, 0)
         if (returnPair.first == -1) {
@@ -201,6 +191,8 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
         return (returnPair.last as Feature)
     }
 
+    // -------------------------------------------------------------------------
+    // Gets the hierarchical destination for from one feature to another feature - HELPER
     def Pair<Integer, Feature> getHierarchicalDest(Feature source, Feature dest, int cnt) {
         if (source == null || dest == null) {
             return new Pair(-1, null)
@@ -287,6 +279,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
         return null;
     }
 
+    // -------------------------------------------------------------------------
     // Considers just visible features as valid container
     def Feature visibleContainer(Feature feature, Set<Feature> visibleFeatures) {
 
@@ -301,8 +294,11 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
         return null;
     }
 
+    // The currnt diagram model to display
     KiCoSelectionDiagramModel currentModel = null;
 
+    // -------------------------------------------------------------------------
+    // True if this feature is visible as declared by the kico.ui extension
     def isVisible(Feature feature) {
         if (currentModel.visibleFeatures.contains(feature)) {
             return true;
@@ -310,11 +306,8 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
         return false
     }
 
-    //    // The Main entry transform function   
-    //    override transform(List<Feature> model) {
-    //        
-    //    }
-    // The Main entry transform function   
+    // -------------------------------------------------------------------------
+    //   The Main entry transform function   
     override transform(KiCoSelectionDiagramModel model) {
 
         currentModel = model;
@@ -335,6 +328,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
         return knode;
     }
 
+    // -------------------------------------------------------------------------
     // Must produce a list of features that can be (A) produced by the transformations and features that
     // (B) cannot handle the feature that our feature transforms 
     def Set<Feature> dependencies(Feature feature) {
@@ -574,5 +568,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
 
         return root
     }
+
+    // -------------------------------------------------------------------------
 
 }

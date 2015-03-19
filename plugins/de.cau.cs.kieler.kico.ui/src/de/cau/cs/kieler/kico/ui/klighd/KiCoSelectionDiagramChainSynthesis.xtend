@@ -22,41 +22,29 @@ import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.core.util.Pair
-import de.cau.cs.kieler.kico.ui.KiCoDisabledSelectionAction
-import de.cau.cs.kieler.kico.ui.KiCoSelectionAction
+import de.cau.cs.kieler.kico.Transformation
+import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
+import de.cau.cs.kieler.klay.layered.properties.Properties
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.ArrayList
+import java.util.HashMap
 import java.util.List
 import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel
-import de.cau.cs.kieler.kico.Feature
-import de.cau.cs.kieler.kico.FeatureGroup
-import de.cau.cs.kieler.kico.KielerCompiler
-import java.util.Set
-import java.util.HashSet
-import java.util.HashMap
-import de.cau.cs.kieler.kico.Transformation
-import de.cau.cs.kieler.core.krendering.LineStyle
-import de.cau.cs.kieler.klay.layered.properties.Properties
-import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
 
-//import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 /**
  * KLighD visualization for KIELER Compiler transformation dependencies (for selecting compilation).
  * 
  * @author cmot
- * @kieler.design 2014-04-08 proposed cmot
- * @kieler.rating 2014-04-08 proposed yellow
+ * @kieler.design 2015-03-19 proposed cmot
+ * @kieler.rating 2015-03-19 proposed yellow
  */
-//class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<List<Feature>> {
 class KiCoSelectionDiagramChainSynthesis extends AbstractDiagramSynthesis<KiCoSelectionDiagramModel> {
 
     static final boolean DEBUG = false;
@@ -71,28 +59,6 @@ class KiCoSelectionDiagramChainSynthesis extends AbstractDiagramSynthesis<KiCoSe
     private static val float TRANSITION_DOT_BLACK = 2;
     private static val float TRANSITION_DOT_WHITE = 1;
     private static val List<Float> TRANSITION_DOT_PATTERN = newArrayList(TRANSITION_DOT_BLACK, TRANSITION_DOT_WHITE);
-
-    def static void debug(String debugText) {
-        debug(debugText, true);
-    }
-
-    def static void debug(String debugText, boolean lineBreak) {
-        if (DEBUG) {
-            if (lineBreak) {
-                System.out.println(debugText);
-            } else {
-                System.out.print(debugText);
-            }
-        }
-    }
-
-    def public static getTransformationFeature(Transformation transformation) {
-        transformationFeatureMap.get(transformation)
-    }
-
-    def public static clearCache() {
-        transformationFeatureMap.clear
-    }
 
     // -------------------------------------------------------------------------
     // We need some extensions 
@@ -113,6 +79,41 @@ class KiCoSelectionDiagramChainSynthesis extends AbstractDiagramSynthesis<KiCoSe
 
     @Inject
     extension KColorExtensions
+
+
+    // -------------------------------------------------------------------------
+    // debug outputs
+    def static void debug(String debugText) {
+        debug(debugText, true);
+    }
+
+    def static void debug(String debugText, boolean lineBreak) {
+        if (DEBUG) {
+            if (lineBreak) {
+                System.out.println(debugText);
+            } else {
+                System.out.print(debugText);
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // access methods to get auxiliary TransformationFeatures
+    def public static getTransformationFeature(Transformation transformation) {
+        transformationFeatureMap.get(transformation)
+    }
+
+    // -------------------------------------------------------------------------
+    // Gets all displayed features
+    def public static getVisibleFeatures() {
+        return visibleFeatures;
+    }
+
+    // -------------------------------------------------------------------------
+    // Clear cache
+    def public static clearCache() {
+        transformationFeatureMap.clear
+    }
 
     // --------------------------------------------------------------------------
     // Some color and pattern constants
@@ -152,8 +153,13 @@ class KiCoSelectionDiagramChainSynthesis extends AbstractDiagramSynthesis<KiCoSe
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;
+            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
             //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-            edge.addSpline(2) => [
+            //edge.addSpline(2) => [
+            //    it.setForeground(DARKGRAY.copy)
+            //    it.addArrowDecorator()
+            //]
+            edge.addPolyline(2) => [
                 it.setForeground(DARKGRAY.copy)
                 it.addArrowDecorator()
             ]
@@ -169,14 +175,14 @@ class KiCoSelectionDiagramChainSynthesis extends AbstractDiagramSynthesis<KiCoSe
 
         val knode = model.createNode();
 
-        node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN)
-        node.setLayoutOption(LayoutOptions::SPACING, 2500f);
-        node.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-        node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-        node.setLayoutOption(Properties::THOROUGHNESS, 100)
-        node.setLayoutOption(LayoutOptions::SEPARATE_CC, false);
-        node.setLayoutOption(Properties::SAUSAGE_FOLDING, true)
-        node.setLayoutOption(Properties::NODE_LAYERING, LayeringStrategy::LONGEST_PATH)
+        knode.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN)
+        knode.setLayoutOption(LayoutOptions::SPACING, 25f);
+        knode.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+        knode.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+        knode.setLayoutOption(Properties::THOROUGHNESS, 100)
+        knode.setLayoutOption(LayoutOptions::SEPARATE_CC, false);
+        knode.setLayoutOption(Properties::SAUSAGE_FOLDING, true)
+        knode.setLayoutOption(Properties::NODE_LAYERING, LayeringStrategy::LONGEST_PATH)
 
         var Transformation lastNode = null;
 
@@ -205,35 +211,12 @@ class KiCoSelectionDiagramChainSynthesis extends AbstractDiagramSynthesis<KiCoSe
     }
 
     // -------------------------------------------------------------------------
-    // Create a string of spaces with the length of the original text
-    def String getSpacedOut(int num) {
-        if (num > 0) {
-            return " " + getSpacedOut(num - 1);
-        }
-        return ""
-    }
-
-    // Create a string of spaces with the length of the original text
-    def String getSpacedOut(String originalText, int factor) {
-        return getSpacedOut(originalText.length * factor)
-    }
-
-    // -------------------------------------------------------------------------
     // Transform a feature    
     def KNode translate(Transformation transformation) {
 
         //System.out.print(">>> " + feature);
         //System.out.println(" >>> " + feature.getId);
         val root = transformation.createNode().putToLookUpWith(transformation) => [ node |
-            node.setLayoutOption(LayoutOptions::EXPAND_NODES, true);
-            node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN)
-            node.setLayoutOption(LayoutOptions::SPACING, 2500f);
-            node.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-            node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-            node.setLayoutOption(Properties::THOROUGHNESS, 100)
-            node.setLayoutOption(LayoutOptions::SEPARATE_CC, false);
-            node.setLayoutOption(Properties::SAUSAGE_FOLDING, true)
-            node.setLayoutOption(Properties::NODE_LAYERING, LayeringStrategy::LONGEST_PATH)
             val cornerRadius = 6;
             val lineWidth = 1;
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;

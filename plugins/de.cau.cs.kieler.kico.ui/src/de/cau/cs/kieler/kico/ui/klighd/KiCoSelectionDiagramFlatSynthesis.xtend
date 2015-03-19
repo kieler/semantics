@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2013 by
+ * Copyright 2015 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -16,45 +16,39 @@ package de.cau.cs.kieler.kico.ui.klighd
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.core.krendering.KColor
+import de.cau.cs.kieler.core.krendering.LineStyle
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.core.util.Pair
+import de.cau.cs.kieler.kico.Feature
+import de.cau.cs.kieler.kico.FeatureGroup
+import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.kico.ui.KiCoDisabledSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionAction
+import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.ArrayList
+import java.util.HashMap
+import java.util.HashSet
 import java.util.List
 import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel
-import de.cau.cs.kieler.kico.Feature
-import de.cau.cs.kieler.kico.FeatureGroup
-import de.cau.cs.kieler.kico.KielerCompiler
-import java.util.Set
-import java.util.HashSet
-import java.util.HashMap
-import de.cau.cs.kieler.kico.Transformation
-import de.cau.cs.kieler.core.krendering.LineStyle
 
-//import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 /**
  * KLighD visualization for KIELER Compiler transformation dependencies (for selecting compilation).
  * 
  * @author cmot
- * @kieler.design 2014-04-08 proposed cmot
- * @kieler.rating 2014-04-08 proposed yellow
+ * @kieler.design 2015-03-19 proposed cmot
+ * @kieler.rating 2015-03-19 proposed yellow
  */
-//class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<List<Feature>> {
 class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSelectionDiagramModel> {
 
     static final boolean DEBUG = false;
@@ -70,33 +64,6 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
     private static val float TRANSITION_DOT_BLACK = 2;
     private static val float TRANSITION_DOT_WHITE = 1;
     private static val List<Float> TRANSITION_DOT_PATTERN = newArrayList(TRANSITION_DOT_BLACK, TRANSITION_DOT_WHITE);
-
-    def static void debug(String debugText) {
-        debug(debugText, true);
-    }
-
-    def static void debug(String debugText, boolean lineBreak) {
-        if (DEBUG) {
-            if (lineBreak) {
-                System.out.println(debugText);
-            } else {
-                System.out.print(debugText);
-            }
-        }
-    }
-
-    def public static getTransformationFeature(Transformation transformation) {
-        transformationFeatureMap.get(transformation)
-    }
-
-    def public static getVisibleFeatures() {
-        return visibleFeatures;
-    }
-
-    def public static clearCache() {
-        transformationFeatureMap.clear
-        visibleFeatures.clear
-    }
 
     // -------------------------------------------------------------------------
     // We need some extensions 
@@ -118,10 +85,45 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
     @Inject
     extension KColorExtensions
 
+    // -------------------------------------------------------------------------
+    // debug outputs
+    def static void debug(String debugText) {
+        debug(debugText, true);
+    }
+
+    def static void debug(String debugText, boolean lineBreak) {
+        if (DEBUG) {
+            if (lineBreak) {
+                System.out.println(debugText);
+            } else {
+                System.out.print(debugText);
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // access methods to get auxiliary TransformationFeatures
+    def public static getTransformationFeature(Transformation transformation) {
+        transformationFeatureMap.get(transformation)
+    }
+
+    // -------------------------------------------------------------------------
+    // Gets all displayed features
+    def public static getVisibleFeatures() {
+        return visibleFeatures;
+    }
+
+    // -------------------------------------------------------------------------
+    // Clear cache
+    def public static clearCache() {
+        transformationFeatureMap.clear
+        visibleFeatures.clear
+    }
+
     // --------------------------------------------------------------------------
     // Some color and pattern constants
     private static val KColor GRAY = RENDERING_FACTORY.createKColor() =>
-        [it.red = 240; it.green = 240; it.blue = 240];
+        [it.red = 210; it.green = 210; it.blue = 255];
     public static val KColor DARKGRAY = RENDERING_FACTORY.createKColor() =>
         [it.red = 140; it.green = 140; it.blue = 140];
     public static val KColor BLACK = RENDERING_FACTORY.createKColor() => [it.red = 0; it.green = 0; it.blue = 0];
@@ -146,136 +148,29 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
     public static val KColor GRAY2 = RENDERING_FACTORY.createKColor() =>
         [it.red = 210; it.green = 210; it.blue = 210];
 
-    //    // -------------------------------------------------------------------------
-    //    def Feature container(Feature transformationDummy) {
-    //        if (transformationDummy != null && transformationDummy.reverseDependencies != null &&
-    //            transformationDummy.reverseDependencies.length > 0) {
-    //            var Feature possibleContainer = null
-    //            for (reverseDependency : transformationDummy.reverseDependencies) {
-    //                if (reverseDependency.group) {
-    //                    if (possibleContainer != null && possibleContainer != reverseDependency) {
-    //                        return null
-    //                    }
-    //                    possibleContainer = reverseDependency
-    //                }
-    //            }
-    //            if (possibleContainer != null) {
-    //                return possibleContainer
-    //            }
-    //            return null;
-    //        }
-    //        return null;
-    //    }
-    //
-    // -------------------------------------------------------------------------
-    def Feature getHierarchicalSource(Feature source, Feature dest) {
-        var returnPair = getHierarchicalSource(source, dest, 0)
-        if (returnPair.first == -1) {
-            return null
-        }
-        return (returnPair.last as Feature)
-    }
-
-    def Pair<Integer, Feature> getHierarchicalSource(Feature source, Feature dest, int cnt) {
-        if (source == null || dest == null) {
-            return new Pair(-1, null)
-        }
-        if (dest.container == source.container) {
-
-            // if this is a group-internal transition
-            return new Pair(cnt, source)
-        } else {
-            val left = getHierarchicalSource(source.container, dest, cnt + 1)
-            val right = getHierarchicalSource(source, dest.container, cnt + 1)
-            if (left.first != -1 && right.first != -1) {
-                if (left.first < right.first) {
-                    return left
-                } else {
-                    return right
-                }
-            } else if (left.first != -1) {
-                return left
-            } else if (right.first != -1) {
-                return right
-            }
-        }
-        return new Pair(-1, null)
-    }
-
-    def Feature getHierarchicalDest(Feature source, Feature dest) {
-        var returnPair = getHierarchicalDest(source, dest, 0)
-        if (returnPair.first == -1) {
-            return null
-        }
-
-        return (returnPair.last as Feature)
-    }
-
-    def Pair<Integer, Feature> getHierarchicalDest(Feature source, Feature dest, int cnt) {
-        if (source == null || dest == null) {
-            return new Pair(-1, null)
-        }
-        if (dest.container == source.container) {
-
-            // if this is a group-internal transition
-            return new Pair(cnt, dest)
-        } else {
-            val left = getHierarchicalDest(source.container, dest, cnt + 1)
-            val right = getHierarchicalDest(source, dest.container, cnt + 1)
-            if (left.first != -1 && right.first != -1) {
-                if (left.first < right.first) {
-                    return left
-                } else {
-                    return right
-                }
-            } else if (left.first != -1) {
-                return left
-            } else if (right.first != -1) {
-                return right
-            }
-        }
-        return new Pair(-1, null)
-    }
-
     // -------------------------------------------------------------------------
     // Remember which super states already are connected (render just a single connection)
     private static ArrayList<Integer> connected = new ArrayList<Integer>();
 
     // -------------------------------------------------------------------------
     // Translate a transition from feature to transition
-    def KEdge translateNotHandledByTransition(Feature source, Transformation dest) {
+    def KEdge translateNotHandledByTransition(Feature source, Transformation dest, boolean inheritColor) {
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;
-            //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+            //             edge.addPolyline(2) => [
             edge.addSpline(2) => [
-                it.setForeground(DARKGRAY.copy)
+                if (inheritColor) {
+                    it.setForeground(GRAY.copy)
+                } else {
+                    it.setForeground(DARKGRAY.copy)
+                }
                 it.lineStyle = LineStyle::CUSTOM;
                 it.lineStyle.dashPattern.clear;
                 it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
                 it.addArrowDecorator()
-            ]
-        ];
-    }
-
-    // -------------------------------------------------------------------------
-    // Translate a transition from feature group to feature (BELONG)
-    def KEdge translateBelongTransition(Feature source, Feature dest) {
-        return createEdge() => [ edge |
-            edge.source = source.node;
-            edge.target = dest.node;
-            //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
-            edge.addSpline(1) => [
-                it.setForeground(DARKGRAY.copy)
-            // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
-            //                if (t.isImmediate2) {
-            //                    it.lineStyle = LineStyle::CUSTOM;
-            //                    it.lineStyle.dashPattern.clear;
-            //                    it.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
-            //                }
-            //it.addArrowDecorator()
             ]
         ];
     }
@@ -286,8 +181,9 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;
-            //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+            //             edge.addPolyline(2) => [
             edge.addSpline(2) => [
                 it.setForeground(BLUE3.copy)
                 // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
@@ -307,8 +203,9 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
         return createEdge() => [ edge |
             edge.source = source.node;
             edge.target = dest.node;
-            //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+            edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+            //edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+            //             edge.addPolyline(2) => [
             edge.addSpline(2) => [
                 it.setForeground(DARKGRAY.copy)
                 // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
@@ -322,56 +219,6 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
         ];
     }
 
-    // -------------------------------------------------------------------------
-    // Consider ALL registered features as valid container
-    def Feature container(Feature feature) {
-
-        // Only consider the visible features here!
-        for (Feature other : KielerCompiler.getFeatures) {
-            if (other.isGroup) {
-
-                // if this is a typical FeatureGroup
-                if (other instanceof FeatureGroup) {
-                    if ((other as FeatureGroup).features.contains(feature)) {
-
-                        //System.out.println("CONTAINER for Feature " + feature.id + " is " + other.id)
-                        return other;
-                    }
-                }
-
-                // if this is a feature that consists of alternativs
-                else if (other.isAlternative && feature instanceof TransformationFeature) {
-                    val transformationToSearchFor = (feature as TransformationFeature).transformation;
-                    val otherHandlingTransformations = other.handlingTransformations;
-                    if (transformationToSearchFor != null) {
-                        if (otherHandlingTransformations.contains(transformationToSearchFor)) {
-
-                            //System.out.println("CONTAINER for ALTERNATIVE TransformationFeature " + feature.id + " is " + other.id)
-                            return other;
-                        }
-                    }
-                }
-            }
-        }
-
-        //System.out.println("CONTAINER for Feature " + feature.id + " not found")
-        return null;
-    }
-
-    // Considers just visible features as valid container
-    def Feature visibleContainer(Feature feature, Set<Feature> visibleFeatures) {
-
-        // Only consider the visible features here!
-        for (Feature other : visibleFeatures) {
-            if (other.isGroup && (other instanceof FeatureGroup)) {
-                if ((other as FeatureGroup).features.contains(feature)) {
-                    return other;
-                }
-            }
-        }
-        return null;
-    }
-
     // ----------------------------------------------------------------------------
     // The Main entry transform function   
     override transform(KiCoSelectionDiagramModel model) {
@@ -380,11 +227,19 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
         clearCache()
 
         val knode = model.createNode();
-        node.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
-        node.setLayoutOption(LayoutOptions::DIRECTION, Direction::DOWN)
-        node.setLayoutOption(LayoutOptions::SPACING, 2500f);
-        node.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
 
+        knode.setLayoutOption(LayoutOptions::DIRECTION, Direction::RIGHT)
+        knode.setLayoutOption(LayoutOptions::SPACING, 25f);
+
+        //knode.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+        knode.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
+        knode.setLayoutOption(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
+
+        //knode.setLayoutOption(Properties::THOROUGHNESS, 100)
+        knode.setLayoutOption(LayoutOptions::SEPARATE_CC, false);
+
+        //knode.setLayoutOption(Properties::SAUSAGE_FOLDING, true)
+        //knode.setLayoutOption(Properties::NODE_LAYERING, LayeringStrategy::LONGEST_PATH)
         for (elem : model.visibleFeatures) {
 
             System.out.println("TRANSFORM " + elem.id);
@@ -411,28 +266,6 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
         return knode;
     }
 
-    //    // Must produce a list of features that can be (A) produced by the transformations 
-    //    def Set<Feature> dependenciesProduce(Feature feature) {
-    //        var returnList = new HashSet<Feature>();
-    //
-    //        // (A)
-    //        for (transformation : feature.handlingTransformations) {
-    //            returnList.addAll(transformation.producesFeatures);
-    //        }
-    //        returnList;
-    //    }
-    //
-    //    // Must produce a list of features that can be (B) cannot handle the feature that our feature transforms 
-    //    def Set<Feature> dependenciesNotHandledBy(Feature feature, boolean ignoreInherited) {
-    //        var returnList = new HashSet<Feature>();
-    //
-    //        // (B)
-    //        var transformations = feature.getNotHandlingTransformations(true);
-    //        for (transformation : transformations) {
-    //            returnList.add(transformation.handleFeature);
-    //        }
-    //        returnList;
-    //    }
     // -------------------------------------------------------------------------
     // Get the display name for the feature
     def String getLabel(Feature s) {
@@ -596,14 +429,22 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
                         }
                     }
                 }
+                val notHandlesNotInheritedFeatures = transformation.getNotHandlesFeatures(true)
                 for (source : transformation.getNotHandlesFeatures(IGNORE_INHERITED_DEPENDENCIES)) {
+                    var inheritColor = false;
+                    if (!IGNORE_INHERITED_DEPENDENCIES) {
+                        if (!(notHandlesNotInheritedFeatures.contains(source))) {
+                            inheritColor = true;
+                        }
+                    }
+
                     var transSource2 = source
                     var transDest2 = transformation
                     if (transSource2 != null && transDest2 != null) {
                         debug(" CHK  CONT '" + transSource2.id + "' TO '" + transDest2.id + "'")
                         if (!(connected.contains(transSource2.hashCode + transDest2.hashCode))) {
                             connected.add(transSource2.hashCode + transDest2.hashCode)
-                            transSource2.translateNotHandledByTransition(transDest2)
+                            transSource2.translateNotHandledByTransition(transDest2, inheritColor)
                         }
                     }
                 }
