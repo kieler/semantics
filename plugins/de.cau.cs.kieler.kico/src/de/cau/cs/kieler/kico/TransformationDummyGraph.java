@@ -101,36 +101,40 @@ public class TransformationDummyGraph {
                 // If this is a transformation already, remove the T_ - marker
                 String transformationId = selectedId.substring(2);
                 transformation = KielerCompiler.getTransformation(transformationId);
-                // Remember selection
-                selectedFeatures.add(transformation.getHandleFeature());
+                if (transformation != null) {
+                    // Remember selection
+                    selectedFeatures.add(transformation.getHandleFeature());
+                }
             } else {
                 // We now know that selectedId is a feature. If it is a FeatureGroup we have
                 // to select all included features!
                 Feature feature = KielerCompiler.getFeature(selectedId);
-                if (feature instanceof FeatureGroup) {
-                    FeatureGroup featureGroup = (FeatureGroup) feature;
-                    Set<Feature> features = featureGroup.getResolvedFeatures();
-                    for (Feature innerFeature : features) {
-                        autoSelectedFeatures.add(innerFeature);
-                        transformation =
-                                getTransformationHandlingFeature(innerFeature.getId(), selection);
+                if (feature != null) {
+                    if (feature instanceof FeatureGroup) {
+                        FeatureGroup featureGroup = (FeatureGroup) feature;
+                        Set<Feature> features = featureGroup.getResolvedFeatures();
+                        for (Feature innerFeature : features) {
+                            autoSelectedFeatures.add(innerFeature);
+                            transformation =
+                                    getTransformationHandlingFeature(innerFeature.getId(), selection);
+                            if (transformation != null) {
+                                addTransformationToGraph(transformation);
+                            }
+                            // Remember selection
+                            selectedFeatures.add(innerFeature);
+                        }
+                    } else {
+                        transformation = getTransformationHandlingFeature(selectedId, selection);
+                        Feature possiblyAlternativeFeature = KielerCompiler.getFeature(selectedId);
+                        if (possiblyAlternativeFeature.isAlternative()) {
+                            autoSelectedFeatures.add(possiblyAlternativeFeature);
+                        }
                         if (transformation != null) {
                             addTransformationToGraph(transformation);
                         }
                         // Remember selection
-                        selectedFeatures.add(innerFeature);
+                        selectedFeatures.add(feature);
                     }
-                } else {
-                    transformation = getTransformationHandlingFeature(selectedId, selection);
-                    Feature possiblyAlternativeFeature = KielerCompiler.getFeature(selectedId);
-                    if (possiblyAlternativeFeature.isAlternative()) {
-                        autoSelectedFeatures.add(possiblyAlternativeFeature);
-                    }
-                    if (transformation != null) {
-                        addTransformationToGraph(transformation);
-                    }
-                    // Remember selection
-                    selectedFeatures.add(feature);
                 }
             }
         }
@@ -213,6 +217,10 @@ public class TransformationDummyGraph {
         // If this is a feature, then find the first preferred transformation that is not
         // disabled
         Feature feature = KielerCompiler.getFeature(featureId);
+        if (feature == null) {
+            // This might be an incorrect specified feature ID, try to ignore it
+            return null;
+        }
         Set<Transformation> handlingTransformations = feature.getHandlingTransformations();
         // First search any selected transformation (if any)
         // First search the preferred transformation
