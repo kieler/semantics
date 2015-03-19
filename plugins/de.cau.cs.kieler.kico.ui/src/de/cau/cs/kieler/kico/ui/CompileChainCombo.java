@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kico.ui;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.action.ControlContribution;
