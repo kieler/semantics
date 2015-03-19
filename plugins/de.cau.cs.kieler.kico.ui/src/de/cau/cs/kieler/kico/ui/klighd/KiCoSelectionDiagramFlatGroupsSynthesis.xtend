@@ -406,7 +406,7 @@ class KiCoSelectionDiagramFlatGroupsSynthesis extends AbstractDiagramSynthesis<K
         var returnList = new HashSet<Feature>();
 
         // (B)
-        var transformations = feature.notHandlingTransformations;
+        var transformations = feature.getNotHandlingTransformations(false);
         for (transformation : transformations) {
             returnList.add(transformation.handleFeature);
         }

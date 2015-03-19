@@ -149,8 +149,8 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static int compileMode = 0;
 
     /** The hierarchy or flat diagram synthesis mode. */
-    public static int hierarchyMode = 0; // 0 = hierarchy, 1 = flat, 2= flat groups
-    public static final int MAXHIERARCHYMODE = 2;
+    public static int hierarchyMode = 0; // 0 = hierarchy, 1 = flat, 2=flat ignoring inherited, 3= flat groups
+    public static final int MAXHIERARCHYMODE = 4;
 
     /** The last editor. */
     String lastEditorModelName = null;
@@ -1215,12 +1215,21 @@ public class KiCoSelectionView extends DiagramViewPart {
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                     "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis");
         } else if (hierarchyMode == 1) {
+            de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatSynthesis.IGNORE_INHERITED_DEPENDENCIES  = false;
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                     "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatSynthesis");
-        } else {
+        } else if (hierarchyMode == 2) {
+            de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatSynthesis.IGNORE_INHERITED_DEPENDENCIES  = true;
+            properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
+                    "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatSynthesis");
+        } else if (hierarchyMode == 3) {
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                     "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatGroupsSynthesis");
+        } else {
+            properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
+                    "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramChainSynthesis");
         }
+        
 
         // Hide zoom buttons
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,

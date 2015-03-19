@@ -59,6 +59,8 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
 
     static final boolean DEBUG = false;
 
+    public static boolean IGNORE_INHERITED_DEPENDENCIES = false;
+
     static private HashMap<Transformation, TransformationFeature> transformationFeatureMap = new HashMap<Transformation, TransformationFeature>();
     static private HashSet<Feature> visibleFeatures = new HashSet<Feature>()
 
@@ -285,8 +287,8 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
             edge.setLayoutOption(LayoutOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
             edge.addSpline(2) => [
                 it.setForeground(BLUE3.copy)
-            // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
-            //                if (t.isImmediate2) {
+                // isImmediate2 consideres conditional nodes and normal terminations w/o a trigger
+                //                if (t.isImmediate2) {
                 it.lineStyle = LineStyle::CUSTOM;
                 it.lineStyle.dashPattern.clear;
                 it.lineStyle.dashPattern += TRANSITION_DOT_PATTERN;
@@ -401,29 +403,28 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
         return knode;
     }
 
-    // Must produce a list of features that can be (A) produced by the transformations 
-    def Set<Feature> dependenciesProduce(Feature feature) {
-        var returnList = new HashSet<Feature>();
-
-        // (A)
-        for (transformation : feature.handlingTransformations) {
-            returnList.addAll(transformation.producesFeatures);
-        }
-        returnList;
-    }
-
-    // Must produce a list of features that can be (B) cannot handle the feature that our feature transforms 
-    def Set<Feature> dependenciesNotHandledBy(Feature feature) {
-        var returnList = new HashSet<Feature>();
-
-        // (B)
-        var transformations = feature.notHandlingTransformations;
-        for (transformation : transformations) {
-            returnList.add(transformation.handleFeature);
-        }
-        returnList;
-    }
-
+    //    // Must produce a list of features that can be (A) produced by the transformations 
+    //    def Set<Feature> dependenciesProduce(Feature feature) {
+    //        var returnList = new HashSet<Feature>();
+    //
+    //        // (A)
+    //        for (transformation : feature.handlingTransformations) {
+    //            returnList.addAll(transformation.producesFeatures);
+    //        }
+    //        returnList;
+    //    }
+    //
+    //    // Must produce a list of features that can be (B) cannot handle the feature that our feature transforms 
+    //    def Set<Feature> dependenciesNotHandledBy(Feature feature, boolean ignoreInherited) {
+    //        var returnList = new HashSet<Feature>();
+    //
+    //        // (B)
+    //        var transformations = feature.getNotHandlingTransformations(true);
+    //        for (transformation : transformations) {
+    //            returnList.add(transformation.handleFeature);
+    //        }
+    //        returnList;
+    //    }
     // -------------------------------------------------------------------------
     // Get the display name for the feature
     def String getLabel(Feature s) {
@@ -469,11 +470,11 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
             //            figure.setProperty(KlighdProperties::, true);
             figure.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
             figure.addSingleClickAction(KiCoSelectionAction::ID);
-//            if (feature.isGroup) {
-//                figure.lineStyle = LineStyle::CUSTOM;
-//                figure.lineStyle.dashPattern.clear;
-//                figure.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
-//            }
+            //            if (feature.isGroup) {
+            //                figure.lineStyle = LineStyle::CUSTOM;
+            //                figure.lineStyle.dashPattern.clear;
+            //                figure.lineStyle.dashPattern += TRANSITION_DASH_PATTERN;
+            //            }
             figure.lineWidth = lineWidth;
             figure.foreground = "gray".color;
             // shaddow
@@ -487,9 +488,9 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
                 node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
                 it.invisible = false;
                 var label = feature.label;
-//                if (feature.isGroup) {
-//                    label = "[" + label + "]"
-//                }
+                //                if (feature.isGroup) {
+                //                    label = "[" + label + "]"
+                //                }
                 it.setProperty(KlighdProperties::TOOLTIP, feature.id);
                 // For simple states we want a larger area 
                 it.addText(" " + label).putToLookUpWith(feature) => [
@@ -536,11 +537,9 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
             val lineWidth = 1;
             val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;
             //            figure.setProperty(KlighdProperties::, true);
-            
             // DO NOT ALLOW SELECTION
             //figure.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
             //figure.addSingleClickAction(KiCoSelectionAction::ID);
-            
             figure.lineWidth = lineWidth;
             figure.foreground = "gray".color;
             // shaddow
@@ -559,8 +558,8 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
                 it.addText(" " + label).putToLookUpWith(transformation) => [
                     // WORKAROUND UNTIL WE KNOW HOW TO DISABLE SELECTION OF LABELS!
                     // DO NOT ALLOW SELECTION
-//                    it.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
-//                    it.addSingleClickAction(KiCoSelectionAction::ID);
+                    //                    it.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
+                    //                    it.addSingleClickAction(KiCoSelectionAction::ID);
                     it.setSelectionBackground(BLUE2.copy)
                     it.fontSize = 11;
                     it.setForeground(BLACK.copy)
@@ -589,7 +588,7 @@ class KiCoSelectionDiagramFlatSynthesis extends AbstractDiagramSynthesis<KiCoSel
                         }
                     }
                 }
-                for (source : transformation.notHandlesFeatures) {
+                for (source : transformation.getNotHandlesFeatures(IGNORE_INHERITED_DEPENDENCIES)) {
                     var transSource2 = source
                     var transDest2 = transformation
                     if (transSource2 != null && transDest2 != null) {

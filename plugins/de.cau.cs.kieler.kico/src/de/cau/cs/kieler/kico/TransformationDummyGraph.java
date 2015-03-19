@@ -158,7 +158,8 @@ public class TransformationDummyGraph {
 
             // Now add all transformations for these features
             for (Feature featureToAdd : featuresToAdd) {
-                // Add to autoselected feature set (also if this was initially selected by the user!)
+                // Add to autoselected feature set (also if this was initially selected by the
+                // user!)
                 autoSelectedFeatures.add(featureToAdd);
                 addFeatureToGraph(featureToAdd);
             }
@@ -170,7 +171,7 @@ public class TransformationDummyGraph {
 
     /**
      * Adds the transformation as a transformation dummy for this feature respecting the preferred
-     * and selected transformations.
+     * and selected transformations if it is not already in the graph.
      * 
      * @param feature
      *            the feature
@@ -282,12 +283,19 @@ public class TransformationDummyGraph {
     // ------------------------------------------
 
     /**
-     * Adds a TransformationDummy for the transformation to the graph.
+     * Adds a TransformationDummy for the transformation to the graph if it is not already in the
+     * graph.
      * 
      * @param transformationId
      *            the transformation id
      */
     private void addTransformationToGraph(Transformation transformation) {
+        for (TransformationDummy transformationDummy : transformationDummies) {
+            if (transformationDummy.transformation == transformation) {
+                // Already in the graph, leave
+                return;
+            }
+        }
         TransformationDummy transformationDummy = new TransformationDummy(this, transformation);
         this.transformationDummies.add(transformationDummy);
     }

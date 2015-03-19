@@ -16,6 +16,10 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatGroupsSynthesis"
             id="de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatGroupsSynthesis">
       </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramChainSynthesis"
+            id="de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramChainSynthesis">
+      </diagramSynthesis>
    </extension>
    <extension
          point="org.eclipse.ui.views">

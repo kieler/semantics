@@ -86,21 +86,18 @@ public class TransformationFeature extends Feature {
      * 
      * @return the not handling transformations
      */
-    public Set<Transformation> getNotHandlingTransformations() {
+    public Set<Transformation> getNotHandlingTransformations(boolean ignoreInherited) {
         Feature linkedFeature = transformation.getHandleFeature();
-
-        if (cachedNotHandlingTransformations != null) {
-            return cachedNotHandlingTransformations;
-        }
-        cachedNotHandlingTransformations = new HashSet<Transformation>();
+        HashSet<Transformation> returnSet = new HashSet<Transformation>();
         for (Transformation transformation : KielerCompiler.getTransformations()) {
-            for (Feature transformationNotHandlingFeature : transformation.getNotHandlesFeatures()) {
+            for (Feature transformationNotHandlingFeature : transformation
+                    .getNotHandlesFeatures(ignoreInherited)) {
                 if (transformationNotHandlingFeature == linkedFeature) {
-                    cachedNotHandlingTransformations.add(transformation);
+                    returnSet.add(transformation);
                 }
             }
         }
-        return cachedNotHandlingTransformations;
+        return returnSet;
     }
 
 }

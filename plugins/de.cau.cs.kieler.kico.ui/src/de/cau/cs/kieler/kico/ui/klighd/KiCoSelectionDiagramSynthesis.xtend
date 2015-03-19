@@ -352,7 +352,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
         }
 
         // (B)
-        var transformations = feature.notHandlingTransformations;
+        var transformations = feature.getNotHandlingTransformations(false);
         for (transformation : transformations) {
             returnList.add(transformation.handleFeature);
         }
