@@ -102,6 +102,7 @@ public class TransformationDummyGraph {
                 String transformationId = selectedId.substring(2);
                 transformation = KielerCompiler.getTransformation(transformationId);
                 if (transformation != null) {
+                    addTransformationToGraph(transformation);
                     // Remember selection
                     selectedFeatures.add(transformation.getHandleFeature());
                 }
