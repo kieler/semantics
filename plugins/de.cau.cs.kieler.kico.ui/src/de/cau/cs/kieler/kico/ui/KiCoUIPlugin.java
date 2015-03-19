@@ -140,7 +140,7 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
                 CompileChain item = new CompileChain();
                 item.setPriority(priority);
                 item.label = label;
-                item.transformations = features;
+                item.features = features;
                 compileChains.insertItem(item);
 
                 

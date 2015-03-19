@@ -149,7 +149,8 @@ public class KiCoSelectionView extends DiagramViewPart {
     public static int compileMode = 0;
 
     /** The hierarchy or flat diagram synthesis mode. */
-    public static int hierarchyMode = 0; // 0 = hierarchy, 1 = flat, 2=flat ignoring inherited, 3= flat groups
+    public static int hierarchyMode = 0; // 0 = hierarchy, 1 = flat, 2=flat ignoring inherited, 3=
+                                         // flat groups, 4 = transformation chain
     public static final int MAXHIERARCHYMODE = 4;
 
     /** The last editor. */
@@ -229,13 +230,13 @@ public class KiCoSelectionView extends DiagramViewPart {
      * @param comboIndex
      *            the combo index
      */
-    public void updateVisibleTransformations(int selectedIndex) {
+    public void updateVisibleFeatures(int selectedIndex) {
         String editorID = this.lastEditorTypeID;
         setSelectedCompileChainIndex(lastEditorId, selectedIndex);
         CompileChains compileChain = registeredEditors.get(editorID);
         CompileChain item = compileChain.getItems().get(selectedIndex);
-        List<String> visibleTransformations = item.transformations;
-        updateView(getActiveEditorID(), visibleTransformations);
+        List<String> visibleFeatures = item.features;
+        updateView(getActiveEditorID(), visibleFeatures);
     }
 
     // -------------------------------------------------------------------------
@@ -387,7 +388,24 @@ public class KiCoSelectionView extends DiagramViewPart {
 
     //
     // -------------------------------------------------------------------------
-    //
+
+    /**
+     * Possibly update model if visualization of transformation chain only otherwise do nothig.
+     */
+    public void possiblyUpdateModel() {
+        // if visualization chain model, then update the whole model!
+        if (hierarchyMode == 4) {
+            // Clear cache
+            KiCoSelectionAction.clearCache();
+
+            lastEditorId = -1;
+            lastEditorModelName = "";
+
+            updateView(lastWorkbenchPartReference);
+        }
+    }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Updates the selected transformation visualization.
@@ -617,7 +635,7 @@ public class KiCoSelectionView extends DiagramViewPart {
 
             if (part instanceof EditorPart) {
                 EditorPart editorPart = (EditorPart) part;
-                //String partName = (editorPart).getPartName();
+                // String partName = (editorPart).getPartName();
 
                 boolean clearAll = false;
                 // Only in the following case we want to clear all because no editor is opened,
@@ -698,11 +716,13 @@ public class KiCoSelectionView extends DiagramViewPart {
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                     "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramSynthesis");
         } else if (hierarchyMode == 1) {
-            de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatSynthesis.IGNORE_INHERITED_DEPENDENCIES  = false;
+            de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatSynthesis.IGNORE_INHERITED_DEPENDENCIES =
+                    false;
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                     "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatSynthesis");
         } else if (hierarchyMode == 2) {
-            de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatSynthesis.IGNORE_INHERITED_DEPENDENCIES  = true;
+            de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatSynthesis.IGNORE_INHERITED_DEPENDENCIES =
+                    true;
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                     "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramFlatSynthesis");
         } else if (hierarchyMode == 3) {
@@ -712,7 +732,7 @@ public class KiCoSelectionView extends DiagramViewPart {
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
                     "de.cau.cs.kieler.kico.ui.klighd.KiCoSelectionDiagramChainSynthesis");
         }
-        
+
         // Hide zoom buttons
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
                 ZoomConfigButtonsHandling.HIDE);
@@ -750,7 +770,7 @@ public class KiCoSelectionView extends DiagramViewPart {
                     int selectedIndex = getSelectedCompileChainIndex(currentEditorId);
                     CompileChains compileChain = registeredEditors.get(editorTypeID);
                     CompileChain item = compileChain.getItems().get(selectedIndex);
-                    List<String> visibleTransformations = item.transformations;
+                    List<String> visibleTransformations = item.features;
 
                     if (currentEditorId != lastEditorId) {
                         lastEditorId = currentEditorId;
@@ -896,6 +916,8 @@ public class KiCoSelectionView extends DiagramViewPart {
                 // notify listeners about currently active transformations
                 notifySelectionChangeEventListener();
 
+                // Possibly redraw model
+                possiblyUpdateModel();
             }
         };
         actionAdvancedToggle.setText("Autoselect Required Transformations");
@@ -974,31 +996,29 @@ public class KiCoSelectionView extends DiagramViewPart {
                     actionSelectAllToggle.setImageDescriptor(ICON_SELECTALL);
                     actionSelectAllToggle.setToolTipText("Select all transformations.");
                 }
-                //int activeEditorID = getActiveEditorID();
-                // if (allSelected) {
-                // List<TransformationDummy> allTransformations =
-                // getAllTransformations(activeEditorID);
-                // List<String> allTransformationIDs = new ArrayList<String>();
-                // for (TransformationDummy transformationDummy : allTransformations) {
-                // allTransformationIDs.add(transformationDummy.transformationId);
-                // }
-                // addSelectedTransformationVisualization(activeEditorID, allTransformationIDs);
-                // List<String> selectedAndExcludedTransformations = getSelection(activeEditorID);
-                // for (String transformationID : allTransformationIDs) {
-                // addSelectedTransformation(transformationID,
-                // selectedAndExcludedTransformations, true);
-                // }
-                // } else {
-                // List<String> selectedAndExcludedTransformations = getSelection(activeEditorID);
-                // removeSelectedTransformationVisualization(activeEditorID);
-                //
-                // while (selectedAndExcludedTransformations.size() > 0) {
-                // String transformationID = selectedAndExcludedTransformations.get(0);
-                // removeSelectedTransformation(transformationID, activeEditorID);
-                // }
-                // }
-                notifySelectionChangeEventListener();
-                LightDiagramServices.layoutDiagram(thisPart);
+                int activeEditorID = getActiveEditorID();
+                KiCoSelectionDiagramModel selectionModel = getSelectionModel(activeEditorID);
+                selectionModel.getContext().getSelection().getDisabledProcessorOptionIds().clear();
+                selectionModel.getContext().getSelection().getEnabledProcessorOptionIds().clear();
+                selectionModel.getContext().getSelection().getDisabledTransformationIds().clear();
+                if (allSelected) {
+                    Set<Feature> visibleFeatures = selectionModel.getVisibleFeatures();
+                    for (Feature feature : visibleFeatures) {
+                        KielerCompilerSelection.add(feature.getId(), selectionModel.getContext()
+                                .getSelection().getSelectedFeatureAndTransformationIds(), false);
+                    }
+                } else {
+                    selectionModel.getContext().getSelection()
+                            .getSelectedFeatureAndTransformationIds().clear();
+                }
+                // KiCoSelectionView.addSelectedTransformationVisualization(activeEditorID);
+                updateSelectionTransformationVisualization(activeEditorID);
+
+                // Notify listeners about currently active transformations
+                KiCoSelectionView.notifySelectionChangeEventListener();
+
+                // Possibly redraw model
+                possiblyUpdateModel();
             }
         };
         actionSelectAllToggle.setText("Select/Deselect All");
