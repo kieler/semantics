@@ -142,8 +142,12 @@ class BasicBlockTransformation extends Transformation {
         if (isTracingActive()) {
             for (BasicBlock bb : scg.basicBlocks) {
                 for (SchedulingBlock sb : bb.schedulingBlocks) {
-                    sb.trace(sb.nodes);
-                    bb.trace(sb.nodes);
+                    val nodes = sb.nodes;
+                    sb.trace(nodes);
+                    sb.guard?.trace(nodes);
+                    sb.guard?.valuedObject?.trace(nodes);
+                    bb.trace(nodes);
+                    bb.predecessors.trace(nodes);
                 }
             }
         }
