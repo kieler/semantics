@@ -1202,7 +1202,7 @@ class SCChartsExtension {
     			&& (obj as ValuedObjectReference).valuedObject == valuedObject
     		) 
     		{
-    			obj.replace(expression.nontracingCopy)
+    			obj.replace(expression.copy)
     		}
     	}
     }
