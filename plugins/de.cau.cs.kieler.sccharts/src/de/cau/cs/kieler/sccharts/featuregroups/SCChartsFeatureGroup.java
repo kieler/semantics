@@ -42,7 +42,7 @@ public class SCChartsFeatureGroup {
     public final static String EXPANSION_NAME = "Expansion";
 
     public final static String CORE_ID = "CORE";
-    public final static String CORE_NAME = "CORE SCCharts";
+    public final static String CORE_NAME = "Core SCCharts";
 
     public final static String SCCHARTS_ID = "SCCHARTS";
     public final static String SCCHARTS_NAME = "SCCharts";
