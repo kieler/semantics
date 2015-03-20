@@ -314,7 +314,6 @@ public class KielerCompiler {
                 // Class<?> parameterType = transformedObject.getClass();
                 Class<?> handledParameterType = transformation.getParameterType();
                 if (handledParameterType != null) {
-                    KiCoPlugin.logInfo("PERFORM TRANSFORMATION: " + compilationTransformationId);
                     if (handledParameterType.isInstance(transformedObject)) {
 
                         KielerCompilerProgressMonitor subMonitor = null;
@@ -324,9 +323,20 @@ public class KielerCompiler {
                         subMonitor = new KielerCompilerProgressMonitor(monitor, 100);
                         // Set the sub monitor for this transformation
                         context.setCurrentTransformationProgressMonitor(subMonitor);
-                        // Each subMonitor can use 0 - 100 % / work units
-                        performTransformation(transformedObject, transformation, context,
-                                subMonitor);
+                        
+                        // Possibly skip this transformation if the feature is not present
+                        Feature feature = transformation.getHandleFeature();
+                        if (feature.isContained(transformedObject)) {
+                            // FEATURE FOUND: PROCESSING
+                            KiCoPlugin.logInfo("PERFORM TRANSFORMATION: " + compilationTransformationId);
+                            // Each subMonitor can use 0 - 100 % / work units
+                            performTransformation(transformedObject, transformation, context,
+                                    subMonitor);
+                        } else {
+                            // FEATURE NOT FOUND: SKIPPING
+                            KiCoPlugin.logInfo("SKIPPING TRANSFORMATION: " + compilationTransformationId);
+                        }
+                        
                         context.getCompilationResult().setCurrentTransformationDone(true);
                         // Increment the main monitor with 100%-x% percent, where x% is the number
                         // of
@@ -358,7 +368,7 @@ public class KielerCompiler {
     private static void performTransformation(final EObject transformedObject,
             final Transformation transformation, final KielerCompilerContext context,
             final KielerCompilerProgressMonitor subMonitor) {
-
+        
         // Add a new transformation intermediate result. It is important to do this BEFORE the call
         // to transform because within the transform method processor intermediate results will be
         // produced and must be added to this transformation intermediate result.
