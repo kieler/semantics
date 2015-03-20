@@ -15,7 +15,6 @@ package de.cau.cs.kieler.kico.ui.klighd
 
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.KColor
 import de.cau.cs.kieler.core.krendering.LineStyle
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
@@ -32,12 +31,7 @@ import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel
 import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
-import java.util.ArrayList
-import java.util.HashMap
-import java.util.HashSet
-import java.util.List
 import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*

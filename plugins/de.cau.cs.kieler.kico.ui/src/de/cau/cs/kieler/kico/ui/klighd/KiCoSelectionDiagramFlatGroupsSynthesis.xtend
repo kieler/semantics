@@ -15,36 +15,25 @@ package de.cau.cs.kieler.kico.ui.klighd
 
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.KColor
+import de.cau.cs.kieler.core.krendering.LineStyle
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KNodeExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.core.util.Pair
+import de.cau.cs.kieler.kico.Feature
+import de.cau.cs.kieler.kico.FeatureGroup
 import de.cau.cs.kieler.kico.ui.KiCoDisabledSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionAction
-import de.cau.cs.kieler.kiml.options.Direction
+import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
-import de.cau.cs.kieler.klighd.KlighdConstants
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.ArrayList
-import java.util.List
 import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel
-import de.cau.cs.kieler.kico.Feature
-import de.cau.cs.kieler.kico.FeatureGroup
-import de.cau.cs.kieler.kico.KielerCompiler
-import java.util.Set
-import java.util.HashSet
-import java.util.HashMap
-import de.cau.cs.kieler.kico.Transformation
-import de.cau.cs.kieler.core.krendering.LineStyle
 
 /**
  * KLighD visualization for KIELER Compiler transformation dependencies (for selecting compilation).
@@ -54,15 +43,6 @@ import de.cau.cs.kieler.core.krendering.LineStyle
  * @kieler.rating 2015-03-19 proposed yellow
  */
 class KiCoSelectionDiagramFlatGroupsSynthesis extends KiCoSynthesis {
-
-//    static final boolean DEBUG = false;
-//
-//    static private HashMap<Transformation, TransformationFeature> transformationFeatureMap = new HashMap<Transformation, TransformationFeature>();
-//    static private HashSet<Feature> visibleFeatures = new HashSet<Feature>()
-//
-//    private static val float TRANSITION_DASH_BLACK = 7;
-//    private static val float TRANSITION_DASH_WHITE = 3;
-//    private static val List<Float> TRANSITION_DASH_PATTERN = newArrayList(TRANSITION_DASH_BLACK, TRANSITION_DASH_WHITE);
 
     // -------------------------------------------------------------------------
     // We need some extensions 
@@ -83,69 +63,6 @@ class KiCoSelectionDiagramFlatGroupsSynthesis extends KiCoSynthesis {
 
     @Inject
     extension KColorExtensions
-
-//    // -------------------------------------------------------------------------
-//    // debug outputs
-//    def static void debug(String debugText) {
-//        debug(debugText, true);
-//    }
-//
-//    def static void debug(String debugText, boolean lineBreak) {
-//        if (DEBUG) {
-//            if (lineBreak) {
-//                System.out.println(debugText);
-//            } else {
-//                System.out.print(debugText);
-//            }
-//        }
-//    }
-//
-//    // -------------------------------------------------------------------------
-//    // access methods to get auxiliary TransformationFeatures
-//    def public static getTransformationFeature(Transformation transformation) {
-//        transformationFeatureMap.get(transformation)
-//    }
-//
-//    // -------------------------------------------------------------------------
-//    // Gets all displayed features
-//    def public static getVisibleFeatures() {
-//        return visibleFeatures;
-//    }
-//
-//    // -------------------------------------------------------------------------
-//    // Clear cache
-//    def public static clearCache() {
-//        transformationFeatureMap.clear
-//        visibleFeatures.clear
-//    }
-//    
-//    // --------------------------------------------------------------------------
-//    // Some color and pattern constants
-//    private static val KColor GRAY = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 240; it.green = 240; it.blue = 240];
-//    public static val KColor DARKGRAY = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 140; it.green = 140; it.blue = 140];
-//    public static val KColor BLACK = RENDERING_FACTORY.createKColor() => [it.red = 0; it.green = 0; it.blue = 0];
-//    public static val KColor WHITE = RENDERING_FACTORY.createKColor() => [it.red = 255; it.green = 255; it.blue = 255];
-//
-//    // Some self-defined colors 
-//    public static val KColor BLUE1 = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 248; it.green = 249; it.blue = 253];
-//    public static val KColor BLUE2 = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 205; it.green = 220; it.blue = 243];
-//    public static val KColor BLUE3 = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 0; it.green = 0; it.blue = 255];
-//    public static val KColor BLUE3b = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 150; it.green = 150; it.blue = 255];
-//    public static val KColor BLUE4 = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 00; it.green = 00; it.blue = 180];
-//    public static val KColor BLUE4b = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 150 it.green = 150; it.blue = 180];
-//
-//    public static val KColor GRAY1 = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 248; it.green = 248; it.blue = 248];
-//    public static val KColor GRAY2 = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 210; it.green = 210; it.blue = 210];
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
@@ -197,13 +114,6 @@ class KiCoSelectionDiagramFlatGroupsSynthesis extends KiCoSynthesis {
 
         return knode;
     }
-
-//    // -------------------------------------------------------------------------
-//    // Get the display name for the feature
-//    def String getLabel(Feature s) {
-//        s.name
-//    }
-
 
     // -------------------------------------------------------------------------
     // Transform a feature    

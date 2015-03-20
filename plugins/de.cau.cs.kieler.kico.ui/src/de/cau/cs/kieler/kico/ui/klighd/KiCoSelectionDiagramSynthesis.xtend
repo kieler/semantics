@@ -15,7 +15,6 @@ package de.cau.cs.kieler.kico.ui.klighd
 
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.KColor
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
@@ -26,7 +25,6 @@ import de.cau.cs.kieler.core.util.Pair
 import de.cau.cs.kieler.kico.Feature
 import de.cau.cs.kieler.kico.FeatureGroup
 import de.cau.cs.kieler.kico.KielerCompiler
-import de.cau.cs.kieler.kico.Transformation
 import de.cau.cs.kieler.kico.ui.KiCoDisabledSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionAction
 import de.cau.cs.kieler.kico.ui.KiCoSelectionDiagramModel
@@ -34,10 +32,8 @@ import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klighd.KlighdConstants
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import java.util.ArrayList
-import java.util.HashMap
 import java.util.HashSet
 import java.util.Set
 import javax.inject.Inject

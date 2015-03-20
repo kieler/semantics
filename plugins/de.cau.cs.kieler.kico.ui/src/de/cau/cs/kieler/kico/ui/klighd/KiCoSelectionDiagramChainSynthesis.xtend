@@ -15,7 +15,6 @@ package de.cau.cs.kieler.kico.ui.klighd
 
 import de.cau.cs.kieler.core.kgraph.KEdge
 import de.cau.cs.kieler.core.kgraph.KNode
-import de.cau.cs.kieler.core.krendering.KColor
 import de.cau.cs.kieler.core.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.core.krendering.extensions.KEdgeExtensions
@@ -29,11 +28,7 @@ import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.klay.layered.p2layers.LayeringStrategy
 import de.cau.cs.kieler.klay.layered.properties.Properties
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
-import java.util.ArrayList
-import java.util.HashMap
-import java.util.List
 import javax.inject.Inject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
@@ -67,75 +62,6 @@ class KiCoSelectionDiagramChainSynthesis extends KiCoSynthesis {
     @Inject
     extension KColorExtensions
 
-//    // -------------------------------------------------------------------------
-//    // debug outputs
-//    def static void debug(String debugText) {
-//        debug(debugText, true);
-//    }
-//
-//    def static void debug(String debugText, boolean lineBreak) {
-//        if (DEBUG) {
-//            if (lineBreak) {
-//                System.out.println(debugText);
-//            } else {
-//                System.out.print(debugText);
-//            }
-//        }
-//    }
-//
-//    // -------------------------------------------------------------------------
-//    // access methods to get auxiliary TransformationFeatures
-//    def public static getTransformationFeature(Transformation transformation) {
-//        transformationFeatureMap.get(transformation)
-//    }
-//
-//    // -------------------------------------------------------------------------
-//    // Gets all displayed features
-//    def public static getVisibleFeatures() {
-//        return visibleFeatures;
-//    }
-//
-//    // -------------------------------------------------------------------------
-//    // Clear cache
-//    def public static clearCache() {
-//        transformationFeatureMap.clear
-//    }
-//
-//    // --------------------------------------------------------------------------
-//    // Some color and pattern constants
-//    private static val KColor GRAY = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 240; it.green = 240; it.blue = 240];
-//    public static val KColor DARKGRAY = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 140; it.green = 140; it.blue = 140];
-//    public static val KColor BLACK = RENDERING_FACTORY.createKColor() => [it.red = 0; it.green = 0; it.blue = 0];
-//    public static val KColor WHITE = RENDERING_FACTORY.createKColor() => [it.red = 255; it.green = 255; it.blue = 255];
-//
-//    // Some self-defined colors 
-//    public static val KColor YELLOW = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 254; it.green = 255; it.blue = 172];
-//    public static val KColor DARKYELLOW = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 130; it.green = 132; it.blue = 1];
-//    public static val KColor BLUE1 = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 248; it.green = 249; it.blue = 253];
-//    public static val KColor BLUE2 = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 205; it.green = 220; it.blue = 243];
-//    public static val KColor BLUE3 = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 0; it.green = 0; it.blue = 255];
-//    public static val KColor BLUE3b = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 150; it.green = 150; it.blue = 255];
-//    public static val KColor BLUE4 = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 00; it.green = 00; it.blue = 180];
-//    public static val KColor BLUE4b = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 150 it.green = 150; it.blue = 180];
-//
-//    public static val KColor GRAY1 = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 248; it.green = 248; it.blue = 248];
-//    public static val KColor GRAY2 = RENDERING_FACTORY.createKColor() =>
-//        [it.red = 210; it.green = 210; it.blue = 210];
-//
-//    // -------------------------------------------------------------------------
-//    // Remember which super states already are connected (render just a single connection)
-//    private static ArrayList<Integer> connected = new ArrayList<Integer>();
 
     // -------------------------------------------------------------------------
     // Translate a transition from feature to transition

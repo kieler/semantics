@@ -281,6 +281,9 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
 //        // TODO: There should be a better mechanism to get the currently active model!
 //        EObject model = KiemPlugin.getOpenedModelRootObjects().get(modelViewPath);
         XtextEditor xtextEditor = EditorUtils.getActiveXtextEditor();
+        if (xtextEditor == null) {
+            return null;
+        }
         EObject model = XtextModelingUtil.getModelFromXtextEditor(xtextEditor, true);
         return model;
     }                                                     
