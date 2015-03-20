@@ -326,7 +326,7 @@ public class KielerCompiler {
                         
                         // Possibly skip this transformation if the feature is not present
                         Feature feature = transformation.getHandleFeature();
-                        if (feature.isContained(transformedObject)) {
+                        if (feature.doIsContained(transformedObject)) {
                             // FEATURE FOUND: PROCESSING
                             KiCoPlugin.logInfo("PERFORM TRANSFORMATION: " + compilationTransformationId);
                             // Each subMonitor can use 0 - 100 % / work units
