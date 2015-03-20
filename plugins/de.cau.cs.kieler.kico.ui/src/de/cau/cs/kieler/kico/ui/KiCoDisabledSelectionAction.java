@@ -55,6 +55,11 @@ public class KiCoDisabledSelectionAction extends KiCoKlighdAction implements IAc
         Feature feature = (Feature) context.getDomainElement(kNode);
 
         if (feature != null) {
+            
+            if (!(KiCoSelectionView.isEditorValid())) {
+                return ActionResult.createResult(false);
+            }
+            
             int activeEditorID = KiCoSelectionView.getActiveEditorID();
             KiCoSelectionDiagramModel selectionModel =
                     KiCoSelectionView.getSelectionModel(activeEditorID);

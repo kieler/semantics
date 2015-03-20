@@ -17,6 +17,7 @@ import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.kico.Feature;
 import de.cau.cs.kieler.kico.KielerCompilerSelection;
 import de.cau.cs.kieler.klighd.IAction;
+import de.cau.cs.kieler.klighd.IAction.ActionResult;
 
 /**
  * This action realizes the enabled selection if transformation IDs.
@@ -61,6 +62,11 @@ public class KiCoSelectionAction extends KiCoKlighdAction implements IAction {
         Feature feature = (Feature) obj;
 
         if (feature != null) {
+
+            if (!(KiCoSelectionView.isEditorValid())) {
+                return ActionResult.createResult(false);
+            }
+            
             int activeEditorID = KiCoSelectionView.getActiveEditorID();
             KiCoSelectionDiagramModel selectionModel =
                     KiCoSelectionView.getSelectionModel(activeEditorID);
@@ -85,4 +91,5 @@ public class KiCoSelectionAction extends KiCoKlighdAction implements IAction {
     }
     
     // -------------------------------------------------------------------------
+    
 }

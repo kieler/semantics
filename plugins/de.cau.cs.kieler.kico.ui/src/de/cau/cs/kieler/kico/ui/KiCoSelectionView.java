@@ -902,7 +902,11 @@ public class KiCoSelectionView extends DiagramViewPart {
         }
         actionAdvancedToggle = new Action("", IAction.AS_CHECK_BOX) {
             public void run() {
-                // TOGGLE
+                if (!(KiCoSelectionView.isEditorValid())) {
+                    actionAdvancedToggle.setChecked(advancedMode);
+                    return;
+                }
+                // ACATION TOGGLE ADVANCED
                 advancedMode = !advancedMode;
                 actionAdvancedToggle.setChecked(advancedMode);
 
@@ -940,7 +944,10 @@ public class KiCoSelectionView extends DiagramViewPart {
         }
         actionHierarchyToggle = new Action("", IAction.AS_PUSH_BUTTON) {
             public void run() {
-                // TOGGLE
+                if (!(KiCoSelectionView.isEditorValid())) {
+                    return;
+                }
+                // ACTION TOGGLE MODE
                 hierarchyMode = hierarchyMode + 1;
                 if (hierarchyMode > MAXHIERARCHYMODE) {
                     hierarchyMode = 0;
@@ -987,7 +994,10 @@ public class KiCoSelectionView extends DiagramViewPart {
         final IDiagramWorkbenchPart thisPart = this;
         actionSelectAllToggle = new Action("", IAction.AS_PUSH_BUTTON) {
             public void run() {
-                // TOGGLE
+                if (!(KiCoSelectionView.isEditorValid())) {
+                    return;
+                }
+                // ACTION SELECT ALL / NONE
                 allSelected = !allSelected;
                 if (allSelected) {
                     actionSelectAllToggle.setImageDescriptor(ICON_DESELECTALL);
@@ -1042,7 +1052,10 @@ public class KiCoSelectionView extends DiagramViewPart {
         final IDiagramWorkbenchPart thisPart = this;
         actionExpandAllToggle = new Action("", IAction.AS_PUSH_BUTTON) {
             public void run() {
-                // TOGGLE
+                if (!(KiCoSelectionView.isEditorValid())) {
+                    return;
+                }
+                // ACTION EXPAND / COLLAPSE
                 allExpanded = !allExpanded;
                 if (allExpanded) {
                     actionExpandAllToggle.setImageDescriptor(ICON_COLLAPSEALL);
@@ -1239,6 +1252,27 @@ public class KiCoSelectionView extends DiagramViewPart {
                 new KiCoSelection(getActiveEditorID(), getSelectionModel(getActiveEditorID()),
                         requiredTransformations.get(getActiveEditorID()), advancedMode);
         selectionEventManger.fireSelectionChangeEvent(currentSelection);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if the currently active editor valid w.r.t. eligamility of selecting/unselecting.
+     * Otherwiese selection actions should be prevented.
+     * 
+     * @return true, if is editor valid
+     */
+    public static boolean isEditorValid() {
+        if (KiCoSelectionView.getActiveEditor() == null) {
+            return false;
+        }
+        if (KiCoUIPlugin.getActiveModel() == null) {
+            return false;
+        }
+        if (KiCoSelectionView.getSelectionModel(KiCoSelectionView.getActiveEditorID()) != null) {
+            return true;
+        }
+        return false;
     }
 
     // -------------------------------------------------------------------------

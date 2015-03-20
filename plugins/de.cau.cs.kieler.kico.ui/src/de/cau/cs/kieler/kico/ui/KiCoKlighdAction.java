@@ -69,7 +69,7 @@ public abstract class KiCoKlighdAction {
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-    
+
     /**
      * Clear cached elements. Should be called if view context changes!
      */
@@ -250,5 +250,6 @@ public abstract class KiCoKlighdAction {
     }
 
     // -------------------------------------------------------------------------
+
 
 }
