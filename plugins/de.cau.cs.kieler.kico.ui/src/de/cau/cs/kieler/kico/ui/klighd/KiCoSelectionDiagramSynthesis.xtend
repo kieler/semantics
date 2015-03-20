@@ -52,12 +52,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2015-03-19 proposed cmot
  * @kieler.rating 2015-03-19 proposed yellow
  */
-class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelectionDiagramModel> {
-    static final boolean DEBUG = false;
-
-    static private HashMap<Transformation, TransformationFeature> transformationFeatureMap = new HashMap<Transformation, TransformationFeature>();
-    static private HashSet<Feature> visibleFeatures = new HashSet<Feature>()
-
+class KiCoSelectionDiagramSynthesis extends KiCoSynthesis  {
+    
     // -------------------------------------------------------------------------
     // We need some extensions 
     @Inject
@@ -77,70 +73,6 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
 
     @Inject
     extension KColorExtensions
-
-    // -------------------------------------------------------------------------
-    // debug outputs
-    def static void debug(String debugText) {
-        debug(debugText, true);
-    }
-
-    def static void debug(String debugText, boolean lineBreak) {
-        if (DEBUG) {
-            if (lineBreak) {
-                System.out.println(debugText);
-            } else {
-                System.out.print(debugText);
-            }
-        }
-    }
-
-    // -------------------------------------------------------------------------
-    // access methods to get auxiliary TransformationFeatures
-    def public static getTransformationFeature(Transformation transformation) {
-        transformationFeatureMap.get(transformation)
-    }
-
-    // -------------------------------------------------------------------------
-    // Gets all displayed features
-    def public static getVisibleFeatures() {
-        return visibleFeatures;
-    }
-
-    // -------------------------------------------------------------------------
-    // Clear cache
-    def public static clearCache() {
-        transformationFeatureMap.clear
-        visibleFeatures.clear
-    }
-
-
-    // --------------------------------------------------------------------------
-    // Some color and pattern constants
-    private static val KColor GRAY = RENDERING_FACTORY.createKColor() =>
-        [it.red = 240; it.green = 240; it.blue = 240];
-    public static val KColor DARKGRAY = RENDERING_FACTORY.createKColor() =>
-        [it.red = 140; it.green = 140; it.blue = 140];
-    public static val KColor BLACK = RENDERING_FACTORY.createKColor() => [it.red = 0; it.green = 0; it.blue = 0];
-    public static val KColor WHITE = RENDERING_FACTORY.createKColor() => [it.red = 255; it.green = 255; it.blue = 255];
-
-    // Some self-defined colors 
-    public static val KColor BLUE1 = RENDERING_FACTORY.createKColor() =>
-        [it.red = 248; it.green = 249; it.blue = 253];
-    public static val KColor BLUE2 = RENDERING_FACTORY.createKColor() =>
-        [it.red = 205; it.green = 220; it.blue = 243];
-    public static val KColor BLUE3 = RENDERING_FACTORY.createKColor() =>
-        [it.red = 0; it.green = 0; it.blue = 255];
-    public static val KColor BLUE3b = RENDERING_FACTORY.createKColor() =>
-        [it.red = 150; it.green = 150; it.blue = 255];
-    public static val KColor BLUE4 = RENDERING_FACTORY.createKColor() =>
-        [it.red = 00; it.green = 00; it.blue = 180];
-    public static val KColor BLUE4b = RENDERING_FACTORY.createKColor() =>
-        [it.red = 150 it.green = 150; it.blue = 180];
-
-    public static val KColor GRAY1 = RENDERING_FACTORY.createKColor() =>
-        [it.red = 248; it.green = 248; it.blue = 248];
-    public static val KColor GRAY2 = RENDERING_FACTORY.createKColor() =>
-        [it.red = 210; it.green = 210; it.blue = 210];
 
     // -------------------------------------------------------------------------
     // Gets the hierarchical source for from one feature to another feature
@@ -279,32 +211,7 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
         return null;
     }
 
-    // -------------------------------------------------------------------------
-    // Considers just visible features as valid container
-    def Feature visibleContainer(Feature feature, Set<Feature> visibleFeatures) {
 
-        // Only consider the visible features here!
-        for (Feature other : visibleFeatures) {
-            if (other.isGroup && (other instanceof FeatureGroup)) {
-                if ((other as FeatureGroup).features.contains(feature)) {
-                    return other;
-                }
-            }
-        }
-        return null;
-    }
-
-    // The currnt diagram model to display
-    KiCoSelectionDiagramModel currentModel = null;
-
-    // -------------------------------------------------------------------------
-    // True if this feature is visible as declared by the kico.ui extension
-    def isVisible(Feature feature) {
-        if (currentModel.visibleFeatures.contains(feature)) {
-            return true;
-        }
-        return false
-    }
 
     // -------------------------------------------------------------------------
     //   The Main entry transform function   
@@ -351,31 +258,6 @@ class KiCoSelectionDiagramSynthesis extends AbstractDiagramSynthesis<KiCoSelecti
             returnList.add(transformation.handleFeature);
         }
         returnList;
-    }
-
-    // -------------------------------------------------------------------------
-    // Get the display name for the feature
-    def String getLabel(Feature s) {
-        s.name
-    }
-
-    // Display a feature as a group, if it has several handling transformations (alternative) or if it really is a feature group!
-    def isGroupOrAlternative(Feature feature) {
-        (feature instanceof FeatureGroup || feature.isAlternative);
-    }
-
-    // -------------------------------------------------------------------------
-    // Create a string of spaces with the length of the original text
-    def String getSpacedOut(int num) {
-        if (num > 0) {
-            return " " + getSpacedOut(num - 1);
-        }
-        return ""
-    }
-
-    // Create a string of spaces with the length of the original text
-    def String getSpacedOut(String originalText, int factor) {
-        return getSpacedOut(originalText.length * factor)
     }
 
     // -------------------------------------------------------------------------

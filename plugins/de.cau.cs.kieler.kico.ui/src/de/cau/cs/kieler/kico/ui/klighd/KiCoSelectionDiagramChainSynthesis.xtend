@@ -45,20 +45,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.design 2015-03-19 proposed cmot
  * @kieler.rating 2015-03-19 proposed yellow
  */
-class KiCoSelectionDiagramChainSynthesis extends AbstractDiagramSynthesis<KiCoSelectionDiagramModel> {
-
-    static final boolean DEBUG = false;
-
-    public static boolean IGNORE_INHERITED_DEPENDENCIES = false;
-
-    static private HashMap<Transformation, TransformationFeature> transformationFeatureMap = new HashMap<Transformation, TransformationFeature>();
-
-    private static val float TRANSITION_DASH_BLACK = 7;
-    private static val float TRANSITION_DASH_WHITE = 3;
-    private static val List<Float> TRANSITION_DASH_PATTERN = newArrayList(TRANSITION_DASH_BLACK, TRANSITION_DASH_WHITE);
-    private static val float TRANSITION_DOT_BLACK = 2;
-    private static val float TRANSITION_DOT_WHITE = 1;
-    private static val List<Float> TRANSITION_DOT_PATTERN = newArrayList(TRANSITION_DOT_BLACK, TRANSITION_DOT_WHITE);
+class KiCoSelectionDiagramChainSynthesis extends KiCoSynthesis {
 
     // -------------------------------------------------------------------------
     // We need some extensions 
@@ -80,75 +67,75 @@ class KiCoSelectionDiagramChainSynthesis extends AbstractDiagramSynthesis<KiCoSe
     @Inject
     extension KColorExtensions
 
-    // -------------------------------------------------------------------------
-    // debug outputs
-    def static void debug(String debugText) {
-        debug(debugText, true);
-    }
-
-    def static void debug(String debugText, boolean lineBreak) {
-        if (DEBUG) {
-            if (lineBreak) {
-                System.out.println(debugText);
-            } else {
-                System.out.print(debugText);
-            }
-        }
-    }
-
-    // -------------------------------------------------------------------------
-    // access methods to get auxiliary TransformationFeatures
-    def public static getTransformationFeature(Transformation transformation) {
-        transformationFeatureMap.get(transformation)
-    }
-
-    // -------------------------------------------------------------------------
-    // Gets all displayed features
-    def public static getVisibleFeatures() {
-        return visibleFeatures;
-    }
-
-    // -------------------------------------------------------------------------
-    // Clear cache
-    def public static clearCache() {
-        transformationFeatureMap.clear
-    }
-
-    // --------------------------------------------------------------------------
-    // Some color and pattern constants
-    private static val KColor GRAY = RENDERING_FACTORY.createKColor() =>
-        [it.red = 240; it.green = 240; it.blue = 240];
-    public static val KColor DARKGRAY = RENDERING_FACTORY.createKColor() =>
-        [it.red = 140; it.green = 140; it.blue = 140];
-    public static val KColor BLACK = RENDERING_FACTORY.createKColor() => [it.red = 0; it.green = 0; it.blue = 0];
-    public static val KColor WHITE = RENDERING_FACTORY.createKColor() => [it.red = 255; it.green = 255; it.blue = 255];
-
-    // Some self-defined colors 
-    public static val KColor YELLOW = RENDERING_FACTORY.createKColor() =>
-        [it.red = 254; it.green = 255; it.blue = 172];
-    public static val KColor DARKYELLOW = RENDERING_FACTORY.createKColor() =>
-        [it.red = 130; it.green = 132; it.blue = 1];
-    public static val KColor BLUE1 = RENDERING_FACTORY.createKColor() =>
-        [it.red = 248; it.green = 249; it.blue = 253];
-    public static val KColor BLUE2 = RENDERING_FACTORY.createKColor() =>
-        [it.red = 205; it.green = 220; it.blue = 243];
-    public static val KColor BLUE3 = RENDERING_FACTORY.createKColor() =>
-        [it.red = 0; it.green = 0; it.blue = 255];
-    public static val KColor BLUE3b = RENDERING_FACTORY.createKColor() =>
-        [it.red = 150; it.green = 150; it.blue = 255];
-    public static val KColor BLUE4 = RENDERING_FACTORY.createKColor() =>
-        [it.red = 00; it.green = 00; it.blue = 180];
-    public static val KColor BLUE4b = RENDERING_FACTORY.createKColor() =>
-        [it.red = 150 it.green = 150; it.blue = 180];
-
-    public static val KColor GRAY1 = RENDERING_FACTORY.createKColor() =>
-        [it.red = 248; it.green = 248; it.blue = 248];
-    public static val KColor GRAY2 = RENDERING_FACTORY.createKColor() =>
-        [it.red = 210; it.green = 210; it.blue = 210];
-
-    // -------------------------------------------------------------------------
-    // Remember which super states already are connected (render just a single connection)
-    private static ArrayList<Integer> connected = new ArrayList<Integer>();
+//    // -------------------------------------------------------------------------
+//    // debug outputs
+//    def static void debug(String debugText) {
+//        debug(debugText, true);
+//    }
+//
+//    def static void debug(String debugText, boolean lineBreak) {
+//        if (DEBUG) {
+//            if (lineBreak) {
+//                System.out.println(debugText);
+//            } else {
+//                System.out.print(debugText);
+//            }
+//        }
+//    }
+//
+//    // -------------------------------------------------------------------------
+//    // access methods to get auxiliary TransformationFeatures
+//    def public static getTransformationFeature(Transformation transformation) {
+//        transformationFeatureMap.get(transformation)
+//    }
+//
+//    // -------------------------------------------------------------------------
+//    // Gets all displayed features
+//    def public static getVisibleFeatures() {
+//        return visibleFeatures;
+//    }
+//
+//    // -------------------------------------------------------------------------
+//    // Clear cache
+//    def public static clearCache() {
+//        transformationFeatureMap.clear
+//    }
+//
+//    // --------------------------------------------------------------------------
+//    // Some color and pattern constants
+//    private static val KColor GRAY = RENDERING_FACTORY.createKColor() =>
+//        [it.red = 240; it.green = 240; it.blue = 240];
+//    public static val KColor DARKGRAY = RENDERING_FACTORY.createKColor() =>
+//        [it.red = 140; it.green = 140; it.blue = 140];
+//    public static val KColor BLACK = RENDERING_FACTORY.createKColor() => [it.red = 0; it.green = 0; it.blue = 0];
+//    public static val KColor WHITE = RENDERING_FACTORY.createKColor() => [it.red = 255; it.green = 255; it.blue = 255];
+//
+//    // Some self-defined colors 
+//    public static val KColor YELLOW = RENDERING_FACTORY.createKColor() =>
+//        [it.red = 254; it.green = 255; it.blue = 172];
+//    public static val KColor DARKYELLOW = RENDERING_FACTORY.createKColor() =>
+//        [it.red = 130; it.green = 132; it.blue = 1];
+//    public static val KColor BLUE1 = RENDERING_FACTORY.createKColor() =>
+//        [it.red = 248; it.green = 249; it.blue = 253];
+//    public static val KColor BLUE2 = RENDERING_FACTORY.createKColor() =>
+//        [it.red = 205; it.green = 220; it.blue = 243];
+//    public static val KColor BLUE3 = RENDERING_FACTORY.createKColor() =>
+//        [it.red = 0; it.green = 0; it.blue = 255];
+//    public static val KColor BLUE3b = RENDERING_FACTORY.createKColor() =>
+//        [it.red = 150; it.green = 150; it.blue = 255];
+//    public static val KColor BLUE4 = RENDERING_FACTORY.createKColor() =>
+//        [it.red = 00; it.green = 00; it.blue = 180];
+//    public static val KColor BLUE4b = RENDERING_FACTORY.createKColor() =>
+//        [it.red = 150 it.green = 150; it.blue = 180];
+//
+//    public static val KColor GRAY1 = RENDERING_FACTORY.createKColor() =>
+//        [it.red = 248; it.green = 248; it.blue = 248];
+//    public static val KColor GRAY2 = RENDERING_FACTORY.createKColor() =>
+//        [it.red = 210; it.green = 210; it.blue = 210];
+//
+//    // -------------------------------------------------------------------------
+//    // Remember which super states already are connected (render just a single connection)
+//    private static ArrayList<Integer> connected = new ArrayList<Integer>();
 
     // -------------------------------------------------------------------------
     // Translate a transition from feature to transition
@@ -209,49 +196,6 @@ class KiCoSelectionDiagramChainSynthesis extends AbstractDiagramSynthesis<KiCoSe
         }
 
         return knode;
-    }
-
-    // -------------------------------------------------------------------------
-    // Get the display name for the transformation
-    def String getLabel(Transformation s) {
-        "T_" + s.name
-    }
-
-    //--------------------------------------------------------------------------
-    // Creates a message to the user
-    def KNode translate(String message) {
-        val root = message.createNode() => [ node |
-            val cornerRadius = 0;
-            val lineWidth = 2;
-            val figure = node.addRoundedRectangle(cornerRadius, cornerRadius, lineWidth).background = "white".color;
-            //            figure.setProperty(KlighdProperties::, true);
-            // DO NOT ALLOW SELECTION
-            //figure.addDoubleClickAction(KiCoDisabledSelectionAction::ID);
-            //figure.addSingleClickAction(KiCoSelectionAction::ID);
-            figure.lineWidth = 0;
-            figure.foreground = WHITE;
-            // shaddow
-            //figure.shadow = "black".color;
-            //figure.shadow.XOffset = 4;
-            //figure.shadow.YOffset = 4;
-            figure => [
-                //it.putToLookUpWith(tansformation)
-                it.setBackgroundGradient(WHITE.copy, WHITE.copy, 90);
-                it.setSelectionBackgroundGradient(WHITE.copy, WHITE.copy, 90);
-                node.setMinimalNodeSize(2 * figure.cornerWidth, 2 * figure.cornerHeight);
-                it.invisible = false;
-                var label = message;
-                // For simple states we want a larger area 
-                it.addText(" " + label) => [
-                    it.setSelectionBackground(WHITE.copy)
-                    it.fontSize = 11;
-                    it.setForeground(DARKGRAY.copy)
-                    it.setFontBold(true);
-                    it.setGridPlacementData().from(LEFT, 9, 0, TOP, 8f, 0).to(RIGHT, 8, 0, BOTTOM, 8, 0);
-                ];
-            ];
-        ]
-        return root
     }
 
     // -------------------------------------------------------------------------
