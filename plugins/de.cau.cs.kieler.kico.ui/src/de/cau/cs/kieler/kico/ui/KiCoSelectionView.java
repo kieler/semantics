@@ -991,7 +991,7 @@ public class KiCoSelectionView extends DiagramViewPart {
             return actionSelectAllToggle;
         }
 
-        final IDiagramWorkbenchPart thisPart = this;
+        //final IDiagramWorkbenchPart thisPart = this;
         actionSelectAllToggle = new Action("", IAction.AS_PUSH_BUTTON) {
             public void run() {
                 if (!(KiCoSelectionView.isEditorValid())) {
