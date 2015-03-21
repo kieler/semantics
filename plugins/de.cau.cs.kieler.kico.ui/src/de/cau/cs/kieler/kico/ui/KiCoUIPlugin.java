@@ -110,20 +110,29 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
                 } catch (Exception e) {
                     //ignore
                 }
-                String transformationIDs = editors[i].getAttribute("transformations");
+                String featuresIDs = editors[i].getAttribute("features");
+                String priorizedIDs = editors[i].getAttribute("priorized");
+                
                 
                 ArrayList<String> features = new ArrayList<String>();
                 // The special case where we want to add ALL registered transformations 
-                if (transformationIDs.equals("ALL")) {
+                if (featuresIDs.equals("ALL")) {
                    for (Feature feature :  KielerCompiler.getFeatures()) {
                        features.add(feature.getId());
                    }
                 } else {
-                    String[] transformationIDsArray = transformationIDs.split(",");
-                    for (String transformationID : transformationIDsArray) {
-                        features.add(transformationID.trim());
+                    String[] featureIDsArray = featuresIDs.split(",");
+                    for (String featureID : featureIDsArray) {
+                        features.add(featureID.trim());
                     }
                 }
+                
+                ArrayList<String> priorized = new ArrayList<String>();
+                // The special case where we want to add ALL registered transformations 
+                    String[] priorizedIDsArray = featuresIDs.split(",");
+                    for (String priorizedID : priorizedIDsArray) {
+                        priorized.add(priorizedID.trim());
+                    }
 
 
                 // The case for ANY editor
@@ -141,6 +150,7 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
                 item.setPriority(priority);
                 item.label = label;
                 item.features = features;
+                item.priorized = priorized;
                 compileChains.insertItem(item);
 
                 
