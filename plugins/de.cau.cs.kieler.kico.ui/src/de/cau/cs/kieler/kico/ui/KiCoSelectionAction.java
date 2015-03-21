@@ -78,7 +78,7 @@ public class KiCoSelectionAction extends KiCoKlighdAction implements IAction {
                 } else {
                     KiCoSelectionView.unselectFeature(feature, selection, context.getViewContext());
                 }
-                System.out.println("Selected features are: " + selection);
+                //System.out.println("Selected features are: " + selection);
             }
 
         }
