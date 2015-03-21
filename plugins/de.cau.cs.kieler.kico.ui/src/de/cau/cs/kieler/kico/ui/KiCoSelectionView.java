@@ -233,15 +233,16 @@ public class KiCoSelectionView extends DiagramViewPart {
     public void updateVisibleFeatures(int selectedIndex) {
         // Clear cache
         KiCoSelectionAction.clearCache();
-        //lastEditorId = -1;
-        //lastEditorModelName = "";
-        
+        // lastEditorId = -1;
+        // lastEditorModelName = "";
+
         String editorID = this.lastEditorTypeID;
         setSelectedCompileChainIndex(lastEditorId, selectedIndex);
         CompileChains compileChain = registeredEditors.get(editorID);
         CompileChain item = compileChain.getItems().get(selectedIndex);
         List<String> visibleFeatures = item.features;
-        updateView(getActiveEditorID(), visibleFeatures);
+        List<String> preferredTransformations = item.preferred;
+        updateView(getActiveEditorID(), visibleFeatures, preferredTransformations);
     }
 
     // -------------------------------------------------------------------------
@@ -680,7 +681,7 @@ public class KiCoSelectionView extends DiagramViewPart {
 
                 if (clearAll) {
                     // removeSelectedTransformationVisualization(activeEditorID);
-                    updateView(activeEditorID, new ArrayList<String>());
+                    updateView(activeEditorID, new ArrayList<String>(), new ArrayList<String>());
                     notifySelectionChangeEventListener();
                     // Clear cache
                     KiCoSelectionAction.clearCache();
@@ -692,7 +693,8 @@ public class KiCoSelectionView extends DiagramViewPart {
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
-    private void updateView(int activeEditorID, List<String> visibleFeatureIds) {
+    private void updateView(int activeEditorID, List<String> visibleFeatureIds,
+            List<String> preferrdTransformationIds) {
         // Next view is collapsed again
         allExpanded = ALL_EXPANDED_DEFAULT;
         if (allExpanded) {
@@ -706,6 +708,12 @@ public class KiCoSelectionView extends DiagramViewPart {
         // Update the visible view model
         KiCoSelectionDiagramModel selectionModel = getSelectionModel(activeEditorID);
         selectionModel.setVisibleFeatures(KielerCompiler.getFeatures(), visibleFeatureIds);
+        // Update preferred transformations
+        selectionModel.getContext().getSelection().getPreferredTransformationIds().clear();
+        for (String elementId : preferrdTransformationIds) {
+            KielerCompilerSelection.add(elementId, selectionModel.getContext().getSelection()
+                    .getPreferredTransformationIds(), false);
+        }
 
         KlighdSynthesisProperties properties = new KlighdSynthesisProperties();
 
@@ -775,13 +783,14 @@ public class KiCoSelectionView extends DiagramViewPart {
                     int selectedIndex = getSelectedCompileChainIndex(currentEditorId);
                     CompileChains compileChain = registeredEditors.get(editorTypeID);
                     CompileChain item = compileChain.getItems().get(selectedIndex);
-                    List<String> visibleTransformations = item.features;
+                    List<String> visibleFeatures = item.features;
+                    List<String> preferredTransformations = item.preferred;
 
                     if (currentEditorId != lastEditorId) {
                         lastEditorId = currentEditorId;
                         lastEditorModelName = currentPartName;
                         lastEditorTypeID = editorTypeID;
-                        updateView(getActiveEditorID(), visibleTransformations);
+                        updateView(getActiveEditorID(), visibleFeatures, preferredTransformations);
                     }
                 }
 
@@ -996,7 +1005,7 @@ public class KiCoSelectionView extends DiagramViewPart {
             return actionSelectAllToggle;
         }
 
-        //final IDiagramWorkbenchPart thisPart = this;
+        // final IDiagramWorkbenchPart thisPart = this;
         actionSelectAllToggle = new Action("", IAction.AS_PUSH_BUTTON) {
             public void run() {
                 if (!(KiCoSelectionView.isEditorValid())) {

@@ -19,6 +19,7 @@ import java.util.Set;
 
 import de.cau.cs.kieler.kico.Feature;
 import de.cau.cs.kieler.kico.KielerCompilerContext;
+import de.cau.cs.kieler.kico.Transformation;
 
 /**
  * An instance of this class represents a selection diagram for the KiCo.ui KLighD view. It is a

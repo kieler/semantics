@@ -102,45 +102,42 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
                 try {
                     label = editors[i].getAttribute("label").trim();
                 } catch (Exception e) {
-                    //ignore
+                    // ignore
                 }
                 String priority = "0";
                 try {
                     priority = editors[i].getAttribute("priority").trim();
                 } catch (Exception e) {
-                    //ignore
+                    // ignore
                 }
                 String featuresIDs = editors[i].getAttribute("features");
-                String priorizedIDs = editors[i].getAttribute("priorized");
-                
-                
+                String preferredIDs = editors[i].getAttribute("preferred");
+
                 ArrayList<String> features = new ArrayList<String>();
-                // The special case where we want to add ALL registered transformations 
+                // The special case where we want to add ALL registered transformations
                 if (featuresIDs.equals("ALL")) {
-                   for (Feature feature :  KielerCompiler.getFeatures()) {
-                       features.add(feature.getId());
-                   }
+                    for (Feature feature : KielerCompiler.getFeatures()) {
+                        features.add(feature.getId());
+                    }
                 } else {
                     String[] featureIDsArray = featuresIDs.split(",");
                     for (String featureID : featureIDsArray) {
                         features.add(featureID.trim());
                     }
                 }
-                
-                ArrayList<String> priorized = new ArrayList<String>();
-                // The special case where we want to add ALL registered transformations 
-                    String[] priorizedIDsArray = featuresIDs.split(",");
-                    for (String priorizedID : priorizedIDsArray) {
-                        priorized.add(priorizedID.trim());
-                    }
 
+                ArrayList<String> preferred = new ArrayList<String>();
+                // The special case where we want to add ALL registered transformations
+                String[] preferredIDsArray = preferredIDs.split(",");
+                for (String preferredID : preferredIDsArray) {
+                    preferred.add(preferredID.trim());
+                }
 
                 // The case for ANY editor
                 if (editorID == null || editorID.equals("*") || editorID.equals("")) {
                     editorID = "*";
                 }
-                
-                
+
                 CompileChains compileChains = returnHashMap.get(editorID);
                 if (compileChains == null) {
                     compileChains = new CompileChains(editorID);
@@ -150,10 +147,9 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
                 item.setPriority(priority);
                 item.label = label;
                 item.features = features;
-                item.priorized = priorized;
+                item.preferred = preferred;
                 compileChains.insertItem(item);
 
-                
             } catch (Exception e) {
                 this.showWarning(editors[i].getContributor().getName() + " could not be loaded.",
                         null, e, true);
@@ -279,25 +275,26 @@ public class KiCoUIPlugin extends AbstractUIPlugin {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Gets the currently active model.
-     *
+     * 
      * @return the active model
      */
     public static EObject getActiveModel() {
-        // The following is WRONG! We don't want a (possibly) compiled model here but the plain model from the editor!
-//        final IPath modelViewPath = new Path("de.cau.cs.kieler.kico.klighd.view");
-//        // TODO: There should be a better mechanism to get the currently active model!
-//        EObject model = KiemPlugin.getOpenedModelRootObjects().get(modelViewPath);
+        // The following is WRONG! We don't want a (possibly) compiled model here but the plain
+        // model from the editor!
+        // final IPath modelViewPath = new Path("de.cau.cs.kieler.kico.klighd.view");
+        // // TODO: There should be a better mechanism to get the currently active model!
+        // EObject model = KiemPlugin.getOpenedModelRootObjects().get(modelViewPath);
         XtextEditor xtextEditor = EditorUtils.getActiveXtextEditor();
         if (xtextEditor == null) {
             return null;
         }
         EObject model = XtextModelingUtil.getModelFromXtextEditor(xtextEditor, true);
         return model;
-    }                                                     
-    
+    }
+
     // -------------------------------------------------------------------------
-    
+
 }
