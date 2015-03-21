@@ -231,6 +231,11 @@ public class KiCoSelectionView extends DiagramViewPart {
      *            the combo index
      */
     public void updateVisibleFeatures(int selectedIndex) {
+        // Clear cache
+        KiCoSelectionAction.clearCache();
+        //lastEditorId = -1;
+        //lastEditorModelName = "";
+        
         String editorID = this.lastEditorTypeID;
         setSelectedCompileChainIndex(lastEditorId, selectedIndex);
         CompileChains compileChain = registeredEditors.get(editorID);

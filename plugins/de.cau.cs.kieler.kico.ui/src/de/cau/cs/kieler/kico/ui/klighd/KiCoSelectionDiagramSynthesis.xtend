@@ -415,7 +415,7 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis  {
 
                     for (dest : feature.dependencies) {
 
-                        System.out.println("FROM " + feature.id + " TO " + dest.id)
+                        //System.out.println("FROM " + feature.id + " TO " + dest.id)
                         var transSource = feature
                         var transDest = dest
 
@@ -423,7 +423,7 @@ class KiCoSelectionDiagramSynthesis extends KiCoSynthesis  {
                         transSource = feature.getHierarchicalSource(dest)
                         transDest = feature.getHierarchicalDest(dest)
 
-                        System.out.println("== HIERACHICALLY FROM " + transSource.id + " TO " + transDest.id)
+                        //System.out.println("== HIERACHICALLY FROM " + transSource.id + " TO " + transDest.id)
                         if (transSource != null && transDest != null) {
 
                             debug(" CHK  CONT '" + transSource.id + "' TO '" + transDest.id + "'")
