@@ -86,6 +86,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 import de.cau.cs.kieler.esterel.kexpressions.IVariable
 import de.cau.cs.kieler.core.kexpressions.CombineOperator
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
+import de.cau.cs.kieler.esterel.esterel.Constant
+import de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls
 
 /**
  * This class contains methods to transform an Esterel program to SCL. The transformation is started
@@ -785,7 +787,7 @@ class EsterelToSclTransformation extends Transformation {
      */
     def StatementSequence createSclPause(StatementSequence targetStatementSequence) {
         val sclPause = SclFactory::eINSTANCE.createPause.createStatementSequence
-        pauseTransformation.forEach[it.apply(sclPause)]
+        pauseTransformation.forEach[ it.apply(sclPause) ]
 
         targetStatementSequence.add(sclPause)
     }
@@ -1654,6 +1656,7 @@ class EsterelToSclTransformation extends Transformation {
                     //                    ).filter[it.name == (renaming as SignalRenaming).oldName.name]
                     //                    oldNamedValuedObject.forEach[ it.name = (renaming as SignalRenaming).newName.name ]
                     if (renaming instanceof SignalRenaming) {
+                        if ((renaming as SignalRenaming).oldName.name != (renaming as SignalRenaming).newName.name) {
                         var Pair<String, ValuedObject> newName
                         if ((renaming as SignalRenaming).newName != null) {
                             newName = (renaming as SignalRenaming).oldName.name ->
@@ -1663,11 +1666,26 @@ class EsterelToSclTransformation extends Transformation {
                         }
                         signalToVariableMap.add(newName)
                         signals.add(newName)
+                        }
                     } else if (renaming instanceof ConstantRenaming) {
+                        if ((renaming as ConstantRenaming).newName != null) {
+                            if ((renaming as ConstantRenaming).newName.name != (renaming as ConstantRenaming).oldName.name) {
                         val newName = (renaming as ConstantRenaming).oldName.name ->
                             signalToVariableMap.findLast[key == (renaming as ConstantRenaming).newName.name].value
                         signalToVariableMap.add(newName)
                         signals.add(newName)
+                        }
+                        }
+                        // Give the constant a fixed valued (e.g. 42 / c1)
+                        else {
+                            val type = (runCopy.module.module.interface.eAllContents.toList.filter(Constant).
+                                findFirst[ it.name == (renaming as ConstantRenaming).oldName.name ].eContainer.eContainer as OneTypeConstantDecls
+                            ).type.type
+                            
+                            val value = createFreshVar(statementScope, (renaming as ConstantRenaming).oldName.name, ValueType.getByName(type.getName))
+                                value.initialValue = (renaming as ConstantRenaming).newValue.transformExp(type.literal)
+                                println("init " + value.initialValue)
+                        }
                     }
                 }
             ]
@@ -1734,7 +1752,10 @@ class EsterelToSclTransformation extends Transformation {
         StatementSequence targetStatementSequence) {
 
         // Mark variables with suffix to distinguish from signals
-        localVariable.eAllContents.toList.filter(IVariable).forEach[name = name + "_var"]
+        localVariable.eAllContents.toList.filter(IVariable).forEach[
+            if (!name.endsWith("_var"))
+                name = name + "_var"
+        ]
 
         val statementScope = createStatementScope
 
@@ -1763,6 +1784,7 @@ class EsterelToSclTransformation extends Transformation {
     def dispatch StatementSequence transformStatement(Assignment assignment, StatementSequence targetStatementSequence) {
 
         // Get the last defined variable with the corresponding name
+        println("var " + assignment.^var.name)
         val assignedVariable = signalToVariableMap.findLast[key == assignment.^var.name].value
         val newValue = transformExp(assignment.expr, assignedVariable.type.toString)
 
